@@ -44,7 +44,7 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
     if (!buffer)
         return;
 
-    /* look for a server or channel using this buffer */
+    /* Look for a server or channel using this buffer. */
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -76,7 +76,7 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
         }
     }
 
-    /* no server or channel found */
+    /* No server or channel found */
 }
 
 /*
@@ -165,7 +165,7 @@ irc_buffer_close_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -178,8 +178,8 @@ irc_buffer_close_cb (const void *pointer, void *data,
         if (ptr_channel)
         {
             /*
-             * remove channel from autojoin if autojoin_dynamic is set,
-             * still connected to server and not quitting/upgrading WeeChat
+             * Remove channel from autojoin if autojoin_dynamic is set,
+             * still connected to server and not quitting/upgrading WeeChat.
              */
             if (ptr_server
                 && IRC_SERVER_OPTION_BOOLEAN(ptr_server,
@@ -191,7 +191,7 @@ irc_buffer_close_cb (const void *pointer, void *data,
                 irc_join_remove_channel_from_autojoin (ptr_server,
                                                        ptr_channel->name);
             }
-            /* send PART for channel if its buffer is closed */
+            /* Send PART for channel if its buffer is closed. */
             if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                 && (ptr_channel->nicks))
             {
@@ -203,19 +203,19 @@ irc_buffer_close_cb (const void *pointer, void *data,
         {
             if (!ptr_server->disconnected)
             {
-                /* send QUIT to server, then disconnect */
+                /* Send QUIT to server, then disconnect. */
                 irc_command_quit_server (ptr_server, NULL);
                 irc_server_disconnect (ptr_server, 0, 0);
             }
 
-            /* disable reconnection */
+            /* Disable reconnection. */
             ptr_server->reconnect_delay = 0;
             ptr_server->reconnect_start = 0;
 
-            /* consider auto-join has never been done */
+            /* Consider auto-join has never been done. */
             ptr_server->autojoin_done = 0;
 
-            /* close server channels/privates */
+            /* Close server channels/privates. */
             ptr_channel = ptr_server->channels;
             while (ptr_channel)
             {
@@ -226,12 +226,12 @@ irc_buffer_close_cb (const void *pointer, void *data,
             }
 
             /*
-             * close remaining channels/privates
-             * (which are not yet in server->channels)
+             * Close remaining channels/privates
+             * (which are not yet in server->channels).
              */
             irc_buffer_close_server_channels (ptr_server);
 
-            /* close list buffer */
+            /* Close list buffer. */
             if (ptr_server->list->buffer)
                 weechat_buffer_close (ptr_server->list->buffer);
 
@@ -266,7 +266,7 @@ irc_buffer_nickcmp_cb (const void *pointer, void *data,
 {
     struct t_irc_server *server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     if (pointer)
@@ -280,7 +280,7 @@ irc_buffer_nickcmp_cb (const void *pointer, void *data,
     }
     else
     {
-        /* default is RFC 1459 casemapping comparison */
+        /* Default is RFC 1459 casemapping comparison. */
         return weechat_strcasecmp_range (nick1, nick2, 29);
     }
 }
@@ -414,7 +414,7 @@ irc_buffer_move_near_server (struct t_irc_server *server,
                 }
             }
         }
-        /* move to next buffer */
+        /* Move to next buffer. */
         ptr_buffer = weechat_hdata_move (hdata_buffer, ptr_buffer, 1);
     }
 
@@ -433,7 +433,7 @@ irc_buffer_move_near_server (struct t_irc_server *server,
     }
     else
     {
-        /* use last channel/pv number + 1 */
+        /* Use last channel/pv number + 1. */
         switch (channel_type)
         {
             case IRC_CHANNEL_TYPE_CHANNEL:
@@ -456,7 +456,7 @@ irc_buffer_move_near_server (struct t_irc_server *server,
         number_found = weechat_buffer_get_integer (server->buffer, "number") + 1;
     }
 
-    /* switch to number found */
+    /* Switch to number found. */
     if ((number_found >= 1) && (number_found != number))
     {
         snprintf (str_number, sizeof (str_number), "%d", number_found);

@@ -19,11 +19,11 @@
 
 struct t_config_file *typing_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *typing_config_section_look = NULL;
 
-/* typing config, look section */
+/* Typing config, look section */
 
 struct t_config_option *typing_config_look_delay_purge_paused = NULL;
 struct t_config_option *typing_config_look_delay_purge_typing = NULL;
@@ -45,7 +45,7 @@ typing_config_reload (const void *pointer, void *data,
 {
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -64,7 +64,7 @@ void
 typing_config_change_enabled (const void *pointer, void *data,
                               struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -81,7 +81,7 @@ void
 typing_config_change_item_max_length (const void *pointer, void *data,
                                       struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -97,7 +97,7 @@ void
 typing_config_change_item_text (const void *pointer, void *data,
                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -122,7 +122,7 @@ typing_config_init (void)
     if (!typing_config_file)
         return 0;
 
-    /* look */
+    /* Look */
     typing_config_section_look = weechat_config_new_section (
         typing_config_file, "look",
         0, 0,

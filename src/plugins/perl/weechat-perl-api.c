@@ -101,7 +101,7 @@ API_FUNC(register)
     API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (perl_registered_script)
     {
-        /* script already registered */
+        /* Script is already registered. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" already "
                                          "registered (register ignored)"),
@@ -125,7 +125,7 @@ API_FUNC(register)
 
     if (plugin_script_search (perl_scripts, name))
     {
-        /* another script already exists with same name */
+        /* Another script already exists with same name. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
@@ -134,7 +134,7 @@ API_FUNC(register)
         API_RETURN_ERROR;
     }
 
-    /* register script */
+    /* Register script. */
     perl_current_script = plugin_script_add (weechat_perl_plugin,
                                              &perl_data,
                                              (perl_current_script_filename) ?
@@ -564,7 +564,7 @@ API_FUNC(list_new)
     const char *result;
     dXSARGS;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) items;
     (void) cv;
 
@@ -2249,7 +2249,7 @@ weechat_perl_api_hook_command_cb (const void *pointer, void *data,
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argv;
 
     script = (struct t_plugin_script *)pointer;
@@ -2867,10 +2867,10 @@ API_FUNC(hook_connect)
                                                          SvIV (ST (2)), /* port */
                                                          SvIV (ST (3)), /* ipv6 */
                                                          SvIV (ST (4)), /* retry */
-                                                         NULL, /* gnutls session */
-                                                         NULL, /* gnutls callback */
-                                                         0,    /* gnutls DH key size */
-                                                         NULL, /* gnutls priorities */
+                                                         NULL, /* GnuTLS session */
+                                                         NULL, /* GnuTLS callback */
+                                                         0,    /* GnuTLS DH key size */
+                                                         NULL, /* GnuTLS priorities */
                                                          local_hostname,
                                                          &weechat_perl_api_hook_connect_cb,
                                                          function,
@@ -2949,7 +2949,7 @@ weechat_perl_api_hook_print_cb (const void *pointer, void *data,
     static char timebuffer[64];
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) date_usec;
     (void) tags_count;
 
@@ -3628,7 +3628,7 @@ API_FUNC(unhook_all)
 {
     dXSARGS;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) cv;
     (void) items;
 
@@ -3804,7 +3804,7 @@ API_FUNC(buffer_search_main)
     const char *result;
     dXSARGS;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) items;
     (void) cv;
 
@@ -3820,7 +3820,7 @@ API_FUNC(current_buffer)
     const char *result;
     dXSARGS;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) items;
     (void) cv;
 
@@ -4033,7 +4033,7 @@ API_FUNC(current_window)
     const char *result;
     dXSARGS;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) items;
     (void) cv;
 
@@ -4473,7 +4473,7 @@ weechat_perl_api_bar_item_build_cb (const void *pointer, void *data,
     {
         if (strncmp (ptr_function, "(extra)", 7) == 0)
         {
-            /* new callback: data, item, window, buffer, extra_info */
+            /* New callback: data, item, window, buffer, extra_info */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -4487,7 +4487,7 @@ weechat_perl_api_bar_item_build_cb (const void *pointer, void *data,
         }
         else
         {
-            /* old callback: data, item, window */
+            /* Old callback: data, item, window */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -4868,7 +4868,7 @@ API_FUNC(infolist_new)
     const char *result;
     dXSARGS;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) items;
     (void) cv;
 
@@ -5824,7 +5824,7 @@ weechat_perl_api_init (pTHX)
     newXS ("DynaLoader::boot_DynaLoader", boot_DynaLoader, __FILE__);
     newXS ("weechat::__output__", weechat_perl_output, "weechat");
 
-    /* interface functions */
+    /* Interface functions */
     API_DEF_FUNC(register);
     API_DEF_FUNC(plugin_get_name);
     API_DEF_FUNC(charset_set);
@@ -6053,7 +6053,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(upgrade_read);
     API_DEF_FUNC(upgrade_close);
 
-    /* interface constants */
+    /* Interface constants */
     stash = gv_stashpv ("weechat", TRUE);
     for (i = 0; weechat_script_constants[i].name; i++)
     {

@@ -68,7 +68,7 @@ secure_config_get_passphrase_from_user (const char *error)
         }
         if (passphrase[0])
         {
-            /* the special value " " (one space) disables passphrase */
+            /* The special value " " (one space) disables passphrase. */
             if (strcmp (passphrase, " ") == 0)
             {
                 gui_chat_printf (NULL,
@@ -77,7 +77,7 @@ secure_config_get_passphrase_from_user (const char *error)
             }
             else if (strcmp (passphrase, "\x03") == 0)
             {
-                /* ctrl-c pressed, just exit now */
+                /* Ctrl-c pressed, just exit now. */
                 exit (1);
             }
             else
@@ -141,7 +141,7 @@ int
 secure_config_reload_cb (const void *pointer, void *data,
                          struct t_config_file *config_file)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -157,7 +157,7 @@ secure_config_reload_cb (const void *pointer, void *data,
 
     secure_data_encrypted = 0;
 
-    /* remove all secured data */
+    /* Remove all secured data. */
     hashtable_remove_all (secure_hashtable_data);
 
     return config_file_reload (config_file);
@@ -173,16 +173,16 @@ secure_config_check_crypt_option_cb (const void *pointer, void *data,
                                      struct t_config_option *option,
                                      const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) value;
 
-    /* any value allowed while reading config */
+    /* Any value allowed while reading config. */
     if (secure_config_loading)
         return 1;
 
-    /* no encrypted data => changes allowed */
+    /* No encrypted data => changes allowed. */
     if (secure_hashtable_data_encrypted->items_count == 0)
         return 1;
 
@@ -209,7 +209,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
     char *buffer, *decrypted, str_error[1024];
     int length_buffer, length_decrypted, rc, hash_algo, cipher;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -220,15 +220,15 @@ secure_config_data_read_cb (const void *pointer, void *data,
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
-    /* special line indicating if a passphrase must be used to decrypt data */
+    /* Special line indicating if a passphrase must be used to decrypt data. */
     if (strcmp (option_name, SECURE_DATA_PASSPHRASE_FLAG) == 0)
     {
         secure_data_encrypted = config_file_string_to_boolean (value);
         if (secure_data_encrypted && !secure_passphrase && !gui_init_ok)
         {
             /*
-             * if a passphrase command is set, read passphrase from the output
-             * of the command
+             * If a passphrase command is set, read passphrase from the output
+             * of the command.
              */
             if (CONFIG_STRING(secure_config_crypt_passphrase_command)[0])
             {
@@ -236,7 +236,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
                     CONFIG_STRING(secure_config_crypt_passphrase_command));
             }
 
-            /* ask passphrase to the user (if no file, or file not found) */
+            /* Ask passphrase to the user (if no file, or file not found). */
             if (!secure_passphrase)
                 secure_config_get_passphrase_from_user ("");
         }
@@ -245,12 +245,12 @@ secure_config_data_read_cb (const void *pointer, void *data,
 
     if (!secure_data_encrypted)
     {
-        /* clear data: just store value in hashtable */
+        /* Clear data: just store value in hashtable. */
         hashtable_set (secure_hashtable_data, option_name, value);
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
-    /* check that passphrase is set */
+    /* Check that passphrase is set. */
     if (!secure_passphrase)
     {
         gui_chat_printf (NULL,
@@ -261,7 +261,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
-    /* get hash algorithm */
+    /* Get hash algorithm. */
     hash_algo = weecrypto_get_hash_algo (
         config_file_option_string (secure_config_crypt_hash_algo));
     if (hash_algo == GCRY_MD_NONE)
@@ -277,7 +277,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
-    /* get cipher */
+    /* Get cipher. */
     cipher = weecrypto_get_cipher (
         config_file_option_string (secure_config_crypt_cipher));
     if (cipher == GCRY_CIPHER_NONE)
@@ -293,7 +293,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
-    /* decrypt data */
+    /* Decrypt data. */
     buffer = malloc (strlen (value) + 1);
     if (!buffer)
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -368,7 +368,7 @@ secure_config_data_write_map_cb (void *data,
     char *buffer, *buffer_base16;
     int length_buffer, rc, hash_algo, cipher;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     config_file = (struct t_config_file *)data;
@@ -406,7 +406,7 @@ secure_config_data_write_map_cb (void *data,
 
     if (secure_passphrase)
     {
-        /* encrypt password using passphrase */
+        /* Encrypt password using passphrase. */
         rc = secure_encrypt_data (
             (const char *)value, strlen ((const char *)value) + 1,
             hash_algo,
@@ -442,7 +442,7 @@ secure_config_data_write_map_cb (void *data,
     }
     else
     {
-        /* store password as plain text */
+        /* Store password as plain text. */
         config_file_write_line (config_file, key,
                                 "\"%s\"", (const char *)value);
     }
@@ -459,12 +459,12 @@ secure_config_data_write_map_encrypted_cb (void *data,
 {
     struct t_config_file *config_file;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     config_file = (struct t_config_file *)data;
 
-    /* store data as-is (it is already encrypted) */
+    /* Store data as-is (it is already encrypted). */
     config_file_write_line (config_file, key, "\"%s\"", (const char *)value);
 }
 
@@ -477,19 +477,19 @@ secure_config_data_write_cb (const void *pointer, void *data,
                              struct t_config_file *config_file,
                              const char *section_name)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
-    /* write name of section */
+    /* Write name of section. */
     if (!config_file_write_line (config_file, section_name, NULL))
         return WEECHAT_CONFIG_WRITE_ERROR;
 
     if (secure_hashtable_data->items_count > 0)
     {
         /*
-         * write a special line indicating if a passphrase must be used to
-         * decrypt data (if not, then data is stored as plain text)
+         * Write a special line indicating if a passphrase must be used to
+         * decrypt data (if not, then data is stored as plain text).
          */
         if (!config_file_write_line (config_file,
                                      SECURE_DATA_PASSPHRASE_FLAG,
@@ -497,16 +497,16 @@ secure_config_data_write_cb (const void *pointer, void *data,
         {
             return WEECHAT_CONFIG_WRITE_ERROR;
         }
-        /* encrypt and write secured data */
+        /* Encrypt and write secured data. */
         hashtable_map (secure_hashtable_data,
                        &secure_config_data_write_map_cb, config_file);
     }
     else if (secure_hashtable_data_encrypted->items_count > 0)
     {
         /*
-         * if there is encrypted data, that means passphrase was not set and
+         * If there is encrypted data, that means passphrase was not set and
          * we were unable to decrypt => just save the encrypted content
-         * as-is (so that content of sec.conf is not lost)
+         * as-is (so that content of sec.conf is not lost).
          */
         if (!config_file_write_line (config_file,
                                      SECURE_DATA_PASSPHRASE_FLAG, "on"))
@@ -536,7 +536,7 @@ secure_config_init_options (void)
     if (!secure_config_file)
         return 0;
 
-    /* crypt */
+    /* Crypt */
     secure_config_section_crypt = config_file_new_section (
         secure_config_file, "crypt",
         0, 0,
@@ -602,7 +602,7 @@ secure_config_init_options (void)
             NULL, NULL, NULL);
     }
 
-    /* data */
+    /* Data */
     secure_config_section_data = config_file_new_section (
         secure_config_file, "data",
         0, 0,

@@ -95,7 +95,7 @@ xfer_network_resolve_addr (const char *str_address, const char *str_port,
     rc = getaddrinfo (str_address, str_port, &hints, &ainfo);
 
     /*
-     * workaround for termux where an IP address as integer is not supported:
+     * Workaround for termux where an IP address as integer is not supported:
      * it returns an error EAI_NONAME (8); in this case we manually convert
      * the integer to IPv4 string, for example: 3232235778 -> 192.168.1.2
      */
@@ -193,7 +193,7 @@ xfer_network_child_read_cb (const void *pointer, void *data, int fd)
     char bufpipe[1 + 1 + 32 + 1];
     int num_read;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) fd;
 
@@ -206,10 +206,10 @@ xfer_network_child_read_cb (const void *pointer, void *data, int fd)
         xfer->last_activity = time (NULL);
         xfer_file_calculate_speed (xfer, 0);
 
-        /* read error code */
+        /* Read error code. */
         switch (bufpipe[1] - '0')
         {
-            /* errors for sender */
+            /* Errors for sender */
             case XFER_ERROR_READ_LOCAL:
                 weechat_printf (NULL,
                                 _("%s%s: unable to read local file"),
@@ -225,7 +225,7 @@ xfer_network_child_read_cb (const void *pointer, void *data, int fd)
                                 _("%s%s: unable to read ACK from receiver"),
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 break;
-            /* errors for receiver */
+            /* Errors for receiver */
             case XFER_ERROR_CONNECT_SENDER:
                 weechat_printf (NULL,
                                 _("%s%s: unable to connect to sender"),
@@ -261,7 +261,7 @@ xfer_network_child_read_cb (const void *pointer, void *data, int fd)
                 break;
         }
 
-        /* read new DCC status */
+        /* Read new DCC status. */
         switch (bufpipe[0] - '0')
         {
             case XFER_STATUS_CONNECTING:
@@ -271,7 +271,7 @@ xfer_network_child_read_cb (const void *pointer, void *data, int fd)
             case XFER_STATUS_ACTIVE:
                 if (xfer->status == XFER_STATUS_CONNECTING)
                 {
-                    /* connection was successful by child, init transfer times */
+                    /* Connection was successful by child, init transfer times. */
                     xfer->status = XFER_STATUS_ACTIVE;
                     gettimeofday (&xfer->start_transfer, NULL);
                     xfer->last_check_time = xfer->start_transfer;
@@ -332,7 +332,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
 
     switch (pid = fork ())
     {
-        case -1:  /* fork failed */
+        case -1:  /* Fork failed */
             weechat_printf (NULL,
                             _("%s%s: unable to fork (%s)"),
                             weechat_prefix ("error"),
@@ -341,7 +341,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
             xfer_close (xfer, XFER_STATUS_FAILED);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             return;
-        case 0:  /* child process */
+        case 0:  /* Child process */
             rc = setuid (getuid ());
             (void) rc;
             close (xfer->child_read);
@@ -372,7 +372,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
                     xfer->size,
                     xfer_protocol_string[xfer->protocol]);
 
-    /* parent process */
+    /* Parent process */
     xfer->child_pid = pid;
     close (xfer->child_write);
     xfer->child_write = -1;
@@ -422,7 +422,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
 
     switch (pid = fork ())
     {
-        case -1:  /* fork failed */
+        case -1:  /* Fork failed */
             weechat_printf (NULL,
                             _("%s%s: unable to fork (%s)"),
                             weechat_prefix ("error"),
@@ -431,7 +431,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
             xfer_close (xfer, XFER_STATUS_FAILED);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             return;
-        case 0:  /* child process */
+        case 0:  /* Child process */
             rc = setuid (getuid ());
             (void) rc;
             close (xfer->child_read);
@@ -449,7 +449,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
             _exit (EXIT_SUCCESS);
     }
 
-    /* parent process */
+    /* Parent process */
     xfer->child_pid = pid;
     close (xfer->child_write);
     xfer->child_write = -1;
@@ -466,7 +466,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
 void
 xfer_network_child_kill (struct t_xfer *xfer)
 {
-    /* kill process */
+    /* Kill process. */
     if (xfer->child_pid > 0)
     {
         kill (xfer->child_pid, SIGKILL);
@@ -475,7 +475,7 @@ xfer_network_child_kill (struct t_xfer *xfer)
         xfer->child_pid = 0;
     }
 
-    /* close pipe used with child */
+    /* Close pipe used with child. */
     if (xfer->child_read != -1)
     {
         close (xfer->child_read);
@@ -501,7 +501,7 @@ xfer_network_fd_cb (const void *pointer, void *data, int fd)
     socklen_t length;
     char str_address[NI_MAXHOST];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) fd;
 
@@ -647,7 +647,7 @@ xfer_network_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_xfer *xfer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -680,7 +680,7 @@ xfer_network_connect_chat_recv_cb (const void *pointer, void *data,
     struct t_xfer *xfer;
     int flags;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) gnutls_rc;
     (void) ip_address;
@@ -690,7 +690,7 @@ xfer_network_connect_chat_recv_cb (const void *pointer, void *data,
     weechat_unhook (xfer->hook_connect);
     xfer->hook_connect = NULL;
 
-    /* connection OK? */
+    /* Connection OK? */
     if (status == WEECHAT_HOOK_CONNECT_OK)
     {
         xfer->sock = sock;
@@ -724,7 +724,7 @@ xfer_network_connect_chat_recv_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* connection error */
+    /* Connection error */
     switch (status)
     {
         case WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
@@ -817,7 +817,7 @@ xfer_network_connect (struct t_xfer *xfer)
 
     if (XFER_IS_SEND(xfer->type) || (xfer->type == XFER_TYPE_FILE_RECV_PASSIVE))
     {
-        /* create socket */
+        /* Create socket. */
         if (xfer->sock < 0)
         {
             xfer->sock = socket (xfer->local_address->sa_family, SOCK_STREAM,
@@ -826,7 +826,7 @@ xfer_network_connect (struct t_xfer *xfer)
                 return 0;
         }
 
-        /* listen to socket */
+        /* Listen to socket. */
         flags = fcntl (xfer->sock, F_GETFL);
         if (flags == -1)
             flags = 0;
@@ -842,7 +842,7 @@ xfer_network_connect (struct t_xfer *xfer)
                                          &xfer_network_fd_cb,
                                          xfer, NULL);
 
-        /* add timeout */
+        /* Add timeout. */
         if (weechat_config_integer (xfer_config_network_timeout) > 0)
         {
             xfer->hook_timer = weechat_hook_timer (weechat_config_integer (xfer_config_network_timeout) * 1000,
@@ -851,12 +851,12 @@ xfer_network_connect (struct t_xfer *xfer)
                                                    xfer, NULL);
         }
 
-        /* send signal if type is file or chat "send" */
+        /* Send signal if type is file or chat "send". */
         if ((xfer->type == XFER_TYPE_FILE_RECV_PASSIVE) && !XFER_HAS_ENDED(xfer->status))
             xfer_send_signal (xfer, "xfer_send_ready");
     }
 
-    /* for chat receiving, connect to listening host */
+    /* For chat receiving, connect to listening host. */
     if (xfer->type == XFER_TYPE_CHAT_RECV)
     {
         xfer->hook_connect = weechat_hook_connect (xfer->proxy,
@@ -867,7 +867,7 @@ xfer_network_connect (struct t_xfer *xfer)
                                                    xfer, NULL);
     }
 
-    /* for file receiving, connection is made in child process (blocking) */
+    /* For file receiving, connection is made in child process (blocking). */
 
     return 1;
 }
@@ -886,7 +886,7 @@ xfer_network_connect_init (struct t_xfer *xfer)
     else
     {
         xfer->status = XFER_STATUS_CONNECTING;
-        /* for a file: launch child process */
+        /* For a file: launch child process. */
         if (XFER_IS_FILE(xfer->type) && XFER_IS_ACTIVE(xfer->type))
             xfer_network_recv_file_fork (xfer);
     }

@@ -40,7 +40,7 @@ TEST_GROUP(RelayClient)
 
     void setup ()
     {
-        /* disable auto-open of relay buffer (it would pollute other tests) */
+        /* Disable auto-open of relay buffer (it would pollute other tests). */
         config_file_option_set (relay_config_look_auto_open_buffer, "off", 1);
 
         server = relay_server_new ("weechat", RELAY_PROTOCOL_WEECHAT, NULL,
@@ -65,7 +65,7 @@ TEST_GROUP(RelayClient)
         relay_server_free (server);
         server = NULL;
 
-        /* restore auto-open of relay buffer */
+        /* Restore auto-open of relay buffer. */
         config_file_option_reset (relay_config_look_auto_open_buffer, 1);
     }
 };
@@ -81,15 +81,15 @@ TEST(RelayClient, RecvText)
     CHECK(client);
     LONGS_EQUAL(RELAY_CLIENT_DATA_TEXT_LINE, client->recv_data_type);
 
-    /* data without any end-of-line is kept as partial message */
+    /* Data without any end-of-line is kept as partial message. */
     relay_client_recv_text (client, "unknown1");
     STRCMP_EQUAL("unknown1", client->partial_message);
 
-    /* complete lines are consumed, the remaining data is kept */
+    /* Complete lines are consumed, the remaining data is kept. */
     relay_client_recv_text (client, " arg\nunknown2 arg\npartial");
     STRCMP_EQUAL("partial", client->partial_message);
 
-    /* data ending with end-of-line: nothing is kept */
+    /* Data ending with end-of-line: nothing is kept. */
     relay_client_recv_text (client, " end\n");
     POINTERS_EQUAL(NULL, client->partial_message);
 }
@@ -113,7 +113,7 @@ TEST(RelayClient, RecvTextLimit)
     chunk_size = 1024 * 1024;
     WEE_NEW_CHUNK(chunk_size);
 
-    /* feed 16 MB with no end-of-line */
+    /* Feed 16 MB with no end-of-line. */
     for (i = 0; i < 16; i++)
     {
         relay_client_recv_text (client, chunk);
@@ -121,10 +121,10 @@ TEST(RelayClient, RecvTextLimit)
     CHECK(client->partial_message);
     length = strlen (client->partial_message);
 
-    /* the partial message must be bounded (not ~16 MB) */
+    /* The partial message must be bounded (not ~16 MB). */
     LONGS_EQUAL(RELAY_CLIENT_PARTIAL_MESSAGE_MAX_LENGTH, length);
 
-    /* feeding more data must not grow it any further */
+    /* Feeding more data must not grow it any further. */
     for (i = 0; i < 16; i++)
     {
         relay_client_recv_text (client, chunk);
@@ -148,17 +148,17 @@ TEST(RelayClient, RecvTextLimitIgnoreData)
     chunk_size = 3 * 1024 * 1024;
     WEE_NEW_CHUNK(chunk_size);
 
-    /* 3 MB, then 6 MB: below the limit, data is accumulated */
+    /* 3 MB, then 6 MB: below the limit, data is accumulated. */
     relay_client_recv_text (client, chunk);
     LONGS_EQUAL(chunk_size, strlen (client->partial_message));
     relay_client_recv_text (client, chunk);
     LONGS_EQUAL(2 * chunk_size, strlen (client->partial_message));
 
-    /* 9 MB would exceed the limit: all the data received is ignored */
+    /* 9 MB would exceed the limit: all the data received is ignored. */
     relay_client_recv_text (client, chunk);
     LONGS_EQUAL(2 * chunk_size, strlen (client->partial_message));
 
-    /* smaller data still fitting in the partial message is accumulated */
+    /* Smaller data still fitting in the partial message is accumulated. */
     chunk_size = 1024 * 1024;
     WEE_NEW_CHUNK(chunk_size);
     relay_client_recv_text (client, chunk);

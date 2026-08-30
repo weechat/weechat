@@ -298,7 +298,7 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
                                       ptr_channel->name, message);
     if (list_messages)
     {
-        /* display only if capability "echo-message" is NOT enabled */
+        /* Display only if capability "echo-message" is NOT enabled. */
         if (!weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
         {
             action = ((strncmp (message, "\001ACTION ", 8) == 0)
@@ -352,8 +352,8 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
     else
     {
         /*
-         * if send unknown commands is enabled and that input data is a
-         * command, then send this command to IRC server
+         * If send unknown commands is enabled and that input data is a
+         * command, then send this command to IRC server.
          */
         if (!force_user_message
             && weechat_config_boolean (irc_config_network_send_unknown_commands)
@@ -411,7 +411,7 @@ irc_input_data_cb (const void *pointer, void *data,
                    struct t_gui_buffer *buffer,
                    const char *input_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -449,7 +449,7 @@ irc_input_send_cb (const void *pointer, void *data,
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -543,19 +543,19 @@ irc_input_send_cb (const void *pointer, void *data,
                     ptr_buffer = ptr_channel->buffer;
             }
 
-            /* set tags to use by default */
+            /* Set tags to use by default. */
             irc_server_set_send_default_tags (tags);
 
-            /* send text to buffer, or execute command */
+            /* Send text to buffer, or execute command. */
             if (force_user_message
                 || weechat_string_input_for_buffer (ptr_message))
             {
-                /* text as input */
+                /* Text as input */
                 irc_input_data (ptr_buffer, ptr_message, flags, 1);
             }
             else
             {
-                /* command */
+                /* Command */
                 data_with_colors = irc_color_encode (
                     ptr_message,
                     weechat_config_boolean (irc_config_network_colors_send));
@@ -565,7 +565,7 @@ irc_input_send_cb (const void *pointer, void *data,
                 free (data_with_colors);
             }
 
-            /* reset tags to use by default */
+            /* Reset tags to use by default. */
             irc_server_set_send_default_tags (NULL);
         }
     }

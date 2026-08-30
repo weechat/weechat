@@ -64,7 +64,7 @@ typing_status_self_free_value_cb (struct t_hashtable *hashtable,
     struct t_gui_buffer *ptr_buffer;
     struct t_typing_status *ptr_typing_status;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     ptr_buffer = (struct t_gui_buffer *)key;
@@ -167,7 +167,7 @@ typing_status_nicks_free_value_cb (struct t_hashtable *hashtable,
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *ptr_nicks;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     ptr_buffer = (struct t_gui_buffer *)key;
@@ -200,7 +200,7 @@ typing_status_nick_free_value_cb (struct t_hashtable *hashtable,
     const char *ptr_nick;
     struct t_typing_status *ptr_typing_status;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     ptr_nick = (const char *)key;

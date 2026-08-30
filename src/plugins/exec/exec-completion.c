@@ -27,7 +27,7 @@ exec_completion_commands_ids_cb (const void *pointer, void *data,
     struct t_exec_cmd *ptr_exec_cmd;
     char str_number[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;

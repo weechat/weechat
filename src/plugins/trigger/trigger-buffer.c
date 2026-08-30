@@ -34,7 +34,7 @@ trigger_buffer_match_filters (struct t_trigger *trigger)
 {
     int i;
 
-    /* trigger is matching if there are no filters at all */
+    /* Trigger is matching if there are no filters at all. */
     if (!trigger_buffer_filters)
         return 1;
 
@@ -42,7 +42,7 @@ trigger_buffer_match_filters (struct t_trigger *trigger)
     {
         if (trigger_buffer_filters[i][0] == '@')
         {
-            /* check if the hook matches the filter */
+            /* Check if the hook matches the filter. */
             if (weechat_strcasecmp (
                     trigger_hook_type_string[weechat_config_enum (trigger->options[TRIGGER_OPTION_HOOK])],
                     trigger_buffer_filters[i] + 1) == 0)
@@ -52,13 +52,13 @@ trigger_buffer_match_filters (struct t_trigger *trigger)
         }
         else
         {
-            /* check if the name matches the filter */
+            /* Check if the name matches the filter. */
             if (weechat_string_match (trigger->name, trigger_buffer_filters[i], 0))
                 return 1;
         }
     }
 
-    /* trigger does not match the filters */
+    /* Trigger does not match the filters. */
     return 0;
 }
 
@@ -114,18 +114,18 @@ trigger_buffer_input_cb (const void *pointer, void *data,
                          struct t_gui_buffer *buffer,
                          const char *input_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
-    /* close buffer */
+    /* Close buffer. */
     if (strcmp (input_data, "q") == 0)
     {
         weechat_buffer_close (buffer);
         return WEECHAT_RC_OK;
     }
 
-    /* set filters */
+    /* Set filters. */
     if (strcmp (input_data, "*") == 0)
         weechat_buffer_set (buffer, "localvar_del_filter", "");
     else
@@ -145,7 +145,7 @@ int
 trigger_buffer_close_cb (const void *pointer, void *data,
                          struct t_gui_buffer *buffer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -207,7 +207,7 @@ trigger_buffer_open (const char *filter, int switch_to_buffer)
                     buffer_props, "localvar_set_channel", TRIGGER_BUFFER_NAME);
                 weechat_hashtable_set (
                     buffer_props, "localvar_set_no_log", "1");
-                /* disable all highlights on this buffer */
+                /* Disable all highlights on this buffer. */
                 weechat_hashtable_set (buffer_props, "highlight_words", "-");
             }
             trigger_buffer = weechat_buffer_new_props (
@@ -218,7 +218,7 @@ trigger_buffer_open (const char *filter, int switch_to_buffer)
             weechat_hashtable_free (buffer_props);
         }
 
-        /* failed to create buffer ? then return */
+        /* Failed to create buffer ? Then return. */
         if (!trigger_buffer)
             return;
     }
@@ -248,7 +248,7 @@ trigger_buffer_hashtable_map_cb (void *data,
     const char *value_type;
     char *value_no_color;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     context = (struct t_trigger_context *)data;
@@ -323,7 +323,7 @@ trigger_buffer_display_trigger (struct t_trigger *trigger,
     if (!trigger_buffer)
         return 0;
 
-    /* check if trigger matches the filter(s) */
+    /* Check if trigger matches the filter(s). */
     if (!trigger_buffer_match_filters (trigger))
         return 0;
 

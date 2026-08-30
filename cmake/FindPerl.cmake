@@ -14,7 +14,7 @@
 #  PERL_LFLAGS = perl compiler options for linking
 
 if(PERL_FOUND)
-  # Already in cache, be silent
+  # Already in cache, be silent.
   set(PERL_FIND_QUIETLY TRUE)
 endif()
 
@@ -40,7 +40,7 @@ if(PERL_EXECUTABLE)
     OUTPUT_VARIABLE PERL_LFLAGS
   )
 
-  # remove the new lines from the output by replacing them with empty strings
+  # Remove the new lines from the output by replacing them with empty strings.
   string(REPLACE "\n" "" PERL_INTERNAL_DIR "${PERL_INTERNAL_DIR}")
   string(REPLACE "\n" "" PERL_CFLAGS "${PERL_CFLAGS}")
   string(REPLACE "\n" "" PERL_LFLAGS "${PERL_LFLAGS}")

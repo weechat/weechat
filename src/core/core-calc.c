@@ -37,7 +37,7 @@ enum t_calc_symbol
 void
 calc_list_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -210,12 +210,12 @@ calc_sanitize_decimal_number (char *string)
             count_sep++;
             if (index_last_sep < 0)
             {
-                /* last separator found */
+                /* Last separator found */
                 index_last_sep = i;
             }
             else
             {
-                /* another separator found */
+                /* Another separator found */
                 if (!different_sep && (string[i] != string[index_last_sep]))
                 {
                     different_sep = 1;
@@ -228,8 +228,8 @@ calc_sanitize_decimal_number (char *string)
     if ((count_sep > 1) && !different_sep)
     {
         /*
-         * case of only thousands separators, like 123.456.789
-         * => we strip all separators
+         * Case of only thousands separators, like 123.456.789
+         * => we strip all separators.
          */
         index_last_sep = -1;
     }
@@ -246,7 +246,7 @@ calc_sanitize_decimal_number (char *string)
             && !isdigit ((unsigned char)string[i])
             && (string[i] != '-'))
         {
-            /* another separator found before the last one: skip it */
+            /* Another separator found before the last one: skip it. */
             i++;
         }
         else
@@ -275,7 +275,7 @@ calc_format_result (double value, char *result, int max_size)
 
     snprintf (result, max_size,
               "%.10f",
-              /* ensure result is not "-0" */
+              /* Ensure result is not "-0". */
               (value == -0.0) ? 0.0 : value);
 
     has_decimal = calc_sanitize_decimal_number (result);
@@ -330,20 +330,20 @@ calc_expression (const char *expr)
     list_values = NULL;
     list_ops = NULL;
 
-    /* return 0 by default in case of error */
+    /* Return 0 by default in case of error. */
     snprintf (str_result, sizeof (str_result), "0");
 
     if (!expr)
         goto end;
 
-    /* stack with values */
+    /* Stack with values */
     list_values = arraylist_new (32, 0, 1,
                                  NULL, NULL,
                                  &calc_list_free_cb, NULL);
     if (!list_values)
         goto end;
 
-    /* stack with operators */
+    /* Stack with operators */
     list_ops = arraylist_new (32, 0, 1,
                               NULL, NULL,
                               &calc_list_free_cb, NULL);
@@ -355,7 +355,7 @@ calc_expression (const char *expr)
     {
         if (ptr_expr[0] == ' ')
         {
-            /* ignore spaces */
+            /* Ignore spaces. */
             continue;
         }
         else if (ptr_expr[0] == '(')
@@ -418,7 +418,7 @@ calc_expression (const char *expr)
                 calc_operation_stacks (list_values, list_ops);
                 index_op--;
             }
-            /* remove "(" from operators */
+            /* Remove "(" from operators. */
             index_op = arraylist_size (list_ops) - 1;
             if (index_op >= 0)
                 arraylist_remove (list_ops, index_op);
@@ -426,7 +426,7 @@ calc_expression (const char *expr)
         }
         else
         {
-            /* operator */
+            /* Operator */
             ptr_expr2 = ptr_expr + 1;
             while (ptr_expr2[0] && (ptr_expr2[0] != ' ') && (ptr_expr2[0] != '(')
                    && (ptr_expr2[0] != ')') && (ptr_expr2[0] != '.')

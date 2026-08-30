@@ -57,10 +57,10 @@ TEST_GROUP(GuiHotlist)
                                              NULL, NULL, NULL,
                                              NULL, NULL, NULL);
         }
-        /* buffer "test1": 1 low */
+        /* Buffer "test1": 1 low */
         gui_hotlist_add (buffer_test[0], GUI_HOTLIST_LOW, NULL, 0);
         gui_buffer_set (buffer_test[0], "localvar_set_priority", "6");
-        /* buffer "test2": 1 low, 2 messages, 3 highlights */
+        /* Buffer "test2": 1 low, 2 messages, 3 highlights */
         gui_hotlist_add (buffer_test[1], GUI_HOTLIST_PRIVATE, NULL, 0);
         gui_hotlist_add (buffer_test[1], GUI_HOTLIST_MESSAGE, NULL, 0);
         gui_hotlist_add (buffer_test[1], GUI_HOTLIST_MESSAGE, NULL, 0);
@@ -68,7 +68,7 @@ TEST_GROUP(GuiHotlist)
         gui_hotlist_add (buffer_test[1], GUI_HOTLIST_HIGHLIGHT, NULL, 0);
         gui_hotlist_add (buffer_test[1], GUI_HOTLIST_HIGHLIGHT, NULL, 0);
         gui_buffer_set (buffer_test[1], "localvar_set_priority", "4");
-        /* buffer "Test3": 2 private */
+        /* Buffer "Test3": 2 private */
         gui_hotlist_add (buffer_test[2], GUI_HOTLIST_PRIVATE, NULL, 0);
         gui_hotlist_add (buffer_test[2], GUI_HOTLIST_PRIVATE, NULL, 0);
         gui_buffer_set (buffer_test[2], "localvar_set_priority", "8");
@@ -344,41 +344,41 @@ TEST(GuiHotlist, RestoreAllBuffers)
 
 TEST(GuiHotlist, Resort)
 {
-    /* with default sort */
+    /* With default sort */
     POINTERS_EQUAL(buffer_test[1], gui_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[2], gui_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[0], gui_hotlist->next_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(NULL, gui_hotlist->next_hotlist->next_hotlist->next_hotlist);
 
-    /* sort by buffer number */
+    /* Sort by buffer number */
     config_file_option_set (config_look_hotlist_sort, "buffer.number", 1);
     POINTERS_EQUAL(buffer_test[0], gui_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[1], gui_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[2], gui_hotlist->next_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(NULL, gui_hotlist->next_hotlist->next_hotlist->next_hotlist);
 
-    /* sort by buffer number (descending) */
+    /* Sort by buffer number (descending) */
     config_file_option_set (config_look_hotlist_sort, "-buffer.number", 1);
     POINTERS_EQUAL(buffer_test[2], gui_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[1], gui_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[0], gui_hotlist->next_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(NULL, gui_hotlist->next_hotlist->next_hotlist->next_hotlist);
 
-    /* sort by buffer name (case-sensitive) */
+    /* Sort by buffer name (case-sensitive) */
     config_file_option_set (config_look_hotlist_sort, "buffer.name", 1);
     POINTERS_EQUAL(buffer_test[2], gui_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[0], gui_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[1], gui_hotlist->next_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(NULL, gui_hotlist->next_hotlist->next_hotlist->next_hotlist);
 
-    /* sort by buffer name (case-insensitive) */
+    /* Sort by buffer name (case-insensitive) */
     config_file_option_set (config_look_hotlist_sort, "~buffer.name", 1);
     POINTERS_EQUAL(buffer_test[0], gui_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[1], gui_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[2], gui_hotlist->next_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(NULL, gui_hotlist->next_hotlist->next_hotlist->next_hotlist);
 
-    /* sort by local variable "priority" (descending) */
+    /* Sort by local variable "priority" (descending) */
     config_file_option_set (config_look_hotlist_sort, "-buffer.local_variables.priority", 1);
     POINTERS_EQUAL(buffer_test[2], gui_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[0], gui_hotlist->next_hotlist->buffer);
@@ -397,20 +397,20 @@ TEST(GuiHotlist, Clear)
 {
     CHECK(gui_hotlist);
 
-    /* clear only low join/part (1) */
+    /* Clear only low join/part (1) */
     gui_hotlist_clear (1);
 
     POINTERS_EQUAL(buffer_test[1], gui_hotlist->buffer);
     POINTERS_EQUAL(buffer_test[2], gui_hotlist->next_hotlist->buffer);
     POINTERS_EQUAL(NULL, gui_hotlist->next_hotlist->next_hotlist);
 
-    /* clear low join/part (1) + private (4) */
+    /* Clear low join/part (1) + private (4) */
     gui_hotlist_clear (5);
 
     POINTERS_EQUAL(buffer_test[1], gui_hotlist->buffer);
     POINTERS_EQUAL(NULL, gui_hotlist->next_hotlist);
 
-    /* clear whole hotlist (1=join/part + 2=msg + 4=private + 5=highlight) */
+    /* Clear whole hotlist (1=join/part + 2=msg + 4=private + 5=highlight) */
     gui_hotlist_clear (15);
 
     POINTERS_EQUAL(NULL, gui_hotlist);

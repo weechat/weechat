@@ -27,7 +27,7 @@ spell_completion_langs_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -55,7 +55,7 @@ spell_completion_enchant_add_dict_cb (const char *lang_tag,
                                       const char *provider_file,
                                       void *user_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) provider_name;
     (void) provider_desc;
     (void) provider_file;
@@ -82,7 +82,7 @@ spell_completion_dicts_cb (const void *pointer, void *data,
     const AspellDictInfo *dict;
 #endif /* USE_ENCHANT */
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;

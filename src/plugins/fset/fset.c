@@ -47,7 +47,7 @@ fset_debug_dump_cb (const void *pointer, void *data,
                     const char *signal, const char *type_data,
                     void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -93,7 +93,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     const char *ptr_filter;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -129,7 +129,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     fset_hdata_fset_option = weechat_hdata_get ("fset_option");
 
-    /* hook some signals */
+    /* Hook some signals. */
     weechat_hook_signal ("debug_dump", &fset_debug_dump_cb, NULL, NULL);
     weechat_hook_signal ("window_scrolled",
                          &fset_buffer_window_scrolled_cb, NULL, NULL);
@@ -154,7 +154,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     fset_mouse_end ();

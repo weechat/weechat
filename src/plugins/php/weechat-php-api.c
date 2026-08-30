@@ -98,7 +98,7 @@ API_FUNC(register)
     API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (php_registered_script)
     {
-        /* script already registered */
+        /* Script is already registered. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" already "
                                          "registered (register ignored)"),
@@ -118,7 +118,7 @@ API_FUNC(register)
 
     if (plugin_script_search (php_scripts, ZSTR_VAL(name)))
     {
-        /* another script already exists with same name */
+        /* Another script already exists with same name. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
@@ -128,7 +128,7 @@ API_FUNC(register)
         API_RETURN_ERROR;
     }
 
-    /* resolve shutdown func */
+    /* Resolve shutdown func. */
     shutdown_func_name = NULL;
     if (zend_is_callable (shutdown_func, 0, NULL))
     {
@@ -136,7 +136,7 @@ API_FUNC(register)
         shutdown_func_name = shutdown_func_name_tmp;
     }
 
-    /* register script */
+    /* Register script. */
     php_current_script = plugin_script_add (weechat_php_plugin,
                                             &php_data,
                                             (php_current_script_filename) ?
@@ -2468,7 +2468,7 @@ weechat_php_api_hook_command_cb (const void *pointer, void *data,
     int rc;
     void *func_argv[3];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argv;
 
     func_argv[1] = (char *)API_PTR2STR(buffer);
@@ -3079,7 +3079,7 @@ weechat_php_api_hook_print_cb (const void *pointer, void *data,
     int rc;
     void *func_argv[9];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) date_usec;
 
     func_argv[1] = (char *)API_PTR2STR(buffer);
@@ -5989,7 +5989,7 @@ static void
 forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
 {
 #if PHP_VERSION_ID >= 80000
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) ht;
     (void) execute_data;
 

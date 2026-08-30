@@ -21,12 +21,12 @@
 
 
 /*
- * trigger context id to correlate messages in monitor buffer with
- * the running trigger
+ * Trigger context id to correlate messages in monitor buffer with
+ * the running trigger.
  */
 unsigned long trigger_context_id = 0;
 
-/* hashtable used to evaluate "conditions" */
+/* Hashtable used to evaluate "conditions" */
 struct t_hashtable *trigger_callback_hashtable_options_conditions = NULL;
 
 
@@ -86,7 +86,7 @@ trigger_callback_get_irc_server_channel (const char *irc_server_name,
     if (!hdata_irc_server)
         return;
 
-    /* search the server by name in list of servers */
+    /* Search the server by name in list of servers. */
     *irc_server = weechat_hdata_get_list (hdata_irc_server, "irc_servers");
     while (*irc_server)
     {
@@ -105,7 +105,7 @@ trigger_callback_get_irc_server_channel (const char *irc_server_name,
     if (!hdata_irc_channel)
         return;
 
-    /* search the channel by name in list of channels on the server */
+    /* Search the channel by name in list of channels on the server. */
     *irc_channel = weechat_hdata_pointer (hdata_irc_server,
                                           *irc_server, "channels");
     while (*irc_channel)
@@ -196,18 +196,18 @@ trigger_callback_set_tags (struct t_gui_buffer *buffer,
         else if (strncmp (tags[i], "irc_tag_", 8) == 0)
         {
             /*
-             * example:
+             * Example:
              *   tag: "irc_tag_time=2021-12-30T21:02:50.038Z"
              * is added in the hashtable like this:
              *   key  : "tg_tag_irc_time"
-             *   value: "2021-12-30T21:02:50.038Z"
+             *   value: "2021-12-30T21:02:50.038Z".
              */
             pos = strchr (tags[i] + 8, '=');
             if (!pos || (pos > tags[i] + 8))
             {
                 if (pos)
                 {
-                    /* tag with value */
+                    /* Tag with value */
                     key = weechat_strndup (tags[i] + 8, pos - tags[i] - 8);
                     if (key)
                     {
@@ -219,7 +219,7 @@ trigger_callback_set_tags (struct t_gui_buffer *buffer,
                 }
                 else
                 {
-                    /* tag without value */
+                    /* Tag without value */
                     snprintf (str_temp, sizeof (str_temp),
                               "tg_tag_irc_%s", tags[i] + 8);
                     weechat_hashtable_set (extra_vars, str_temp, NULL);
@@ -371,7 +371,7 @@ trigger_callback_regex (struct t_trigger *trigger,
 
     for (i = 0; i < trigger->regex_count; i++)
     {
-        /* if regex is not set (invalid) for command "regex replace", skip it */
+        /* If regex is not set (invalid) for command "regex replace", skip it. */
         if ((trigger->regex[i].command == TRIGGER_REGEX_COMMAND_REPLACE)
             && !trigger->regex[i].regex)
         {
@@ -434,7 +434,7 @@ trigger_callback_regex (struct t_trigger *trigger,
 
         if (value)
         {
-            /* display debug info on trigger buffer */
+            /* Display debug info on trigger buffer. */
             if (trigger_buffer && display_monitor)
             {
                 weechat_printf_date_tags (trigger_buffer, 0, "no_trigger",
@@ -507,7 +507,7 @@ trigger_callback_run_command (struct t_trigger *trigger,
                                                        NULL);
         if (command_eval)
         {
-            /* display debug info on trigger buffer */
+            /* Display debug info on trigger buffer. */
             if (trigger_buffer && display_monitor)
             {
                 weechat_printf_date_tags (
@@ -561,7 +561,7 @@ trigger_callback_execute (struct t_trigger *trigger,
         trigger_context_id + 1 : 0;
     context->id = trigger_context_id;
 
-    /* display debug info on trigger buffer */
+    /* Display debug info on trigger buffer. */
     if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
         trigger_buffer_open (NULL, 0);
     display_monitor = trigger_buffer_display_trigger (trigger, context);
@@ -573,17 +573,17 @@ trigger_callback_execute (struct t_trigger *trigger,
         context->start_run_command = context->start_check_conditions;
     }
 
-    /* check conditions */
+    /* Check conditions. */
     if (trigger_callback_check_conditions (trigger,
                                            context->pointers,
                                            context->extra_vars))
     {
-        /* replace text with regex */
+        /* Replace text with regex. */
         if (weechat_trigger_plugin->debug >= 1)
             gettimeofday (&(context->start_check_conditions), NULL);
         trigger_callback_regex (trigger, context, display_monitor);
 
-        /* execute command(s) */
+        /* Execute command(s). */
         if (weechat_trigger_plugin->debug >= 1)
             gettimeofday (&(context->start_run_command), NULL);
         trigger_callback_run_command (trigger, context, display_monitor);
@@ -642,7 +642,7 @@ trigger_callback_signal_cb (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
 
-    /* split IRC message (if signal_data is an IRC message) */
+    /* Split IRC message (if signal_data is an IRC message). */
     irc_server_name = NULL;
     ptr_irc_message = NULL;
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
@@ -692,13 +692,13 @@ trigger_callback_signal_cb (const void *pointer, void *data,
     }
     free (irc_server_name);
 
-    /* create hashtable (if not already created) */
+    /* Create hashtable (if not already created). */
     if (!ctx.extra_vars)
     {
         TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
     }
 
-    /* add data in hashtable used for conditions/replace/command */
+    /* Add data in hashtable used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.extra_vars, "tg_signal", signal);
     ptr_signal_data = NULL;
@@ -728,7 +728,7 @@ trigger_callback_signal_cb (const void *pointer, void *data,
     }
     weechat_hashtable_set (ctx.extra_vars, "tg_signal_data", ptr_signal_data);
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     if (!trigger_callback_execute (trigger, &ctx))
         trigger_rc = WEECHAT_RC_OK;
 
@@ -749,7 +749,7 @@ trigger_callback_hsignal_cb (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
-    /* duplicate hashtable */
+    /* Duplicate hashtable. */
     if (hashtable
         && (strcmp (weechat_hashtable_get_string (hashtable, "type_keys"), "string") == 0))
     {
@@ -768,17 +768,17 @@ trigger_callback_hsignal_cb (const void *pointer, void *data,
         }
     }
 
-    /* create hashtable (if not already created) */
+    /* Create hashtable (if not already created). */
     if (!ctx.extra_vars)
     {
         TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
     }
 
-    /* add data in hashtable used for conditions/replace/command */
+    /* Add data in hashtable used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.extra_vars, "tg_signal", signal);
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     if (!trigger_callback_execute (trigger, &ctx))
         trigger_rc = WEECHAT_RC_OK;
 
@@ -811,7 +811,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
 
-    /* split IRC message (if string is an IRC message) */
+    /* Split IRC message (if string is an IRC message). */
     if ((strncmp (modifier, "irc_in_", 7) == 0)
         || (strncmp (modifier, "irc_in2_", 8) == 0)
         || (strncmp (modifier, "irc_out1_", 9) == 0)
@@ -837,7 +837,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
         TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
     }
 
-    /* add data in hashtable used for conditions/replace/command */
+    /* Add data in hashtable used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.extra_vars, "tg_modifier", modifier);
     weechat_hashtable_set (ctx.extra_vars, "tg_modifier_data", modifier_data);
@@ -849,10 +849,10 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                                "tg_string_nocolor", string_no_color);
     }
 
-    /* add special variables for a WeeChat message */
+    /* Add special variables for a WeeChat message. */
     if (strcmp (modifier, "weechat_print") == 0)
     {
-        /* set "tg_prefix" and "tg_message" */
+        /* Set "tg_prefix" and "tg_message". */
         pos = strchr (string, '\t');
         if (pos)
         {
@@ -873,7 +873,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
         else
             weechat_hashtable_set (ctx.extra_vars, "tg_message", string);
 
-        /* set "tg_prefix_nocolor" and "tg_message_nocolor" */
+        /* Set "tg_prefix_nocolor" and "tg_message_nocolor". */
         if (string_no_color)
         {
             pos = strchr (string_no_color, '\t');
@@ -902,10 +902,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
             }
         }
 
-        /*
-         * extract buffer/tags from modifier data
-         * (format: "buffer_pointer;tags")
-         */
+        /* Extract buffer/tags from modifier data (format: "buffer_pointer;tags"). */
         pos = strchr (modifier_data, ';');
         if (pos)
         {
@@ -960,7 +957,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
         }
     }
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     (void) trigger_callback_execute (trigger, &ctx);
 
 end:
@@ -1003,7 +1000,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
     weechat_hashtable_remove (ctx.extra_vars, "tags_count");
     weechat_hashtable_remove (ctx.extra_vars, "tags");
 
-    /* add data in hashtables used for conditions/replace/command */
+    /* Add data in hashtables used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     ptr_value = weechat_hashtable_get (line, "buffer");
     if (!ptr_value || (ptr_value[0] != '0') || (ptr_value[1] != 'x'))
@@ -1024,7 +1021,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
                                  0,
                                  &num_tags);
 
-    /* build string with tags and commas around: ",tag1,tag2,tag3," */
+    /* Build string with tags and commas around: ",tag1,tag2,tag3,". */
     if (weechat_asprintf (&str_tags,
                           ",%s,",
                           (ptr_value) ? ptr_value : "") >= 0)
@@ -1033,13 +1030,13 @@ trigger_callback_line_cb (const void *pointer, void *data,
         free (str_tags);
     }
 
-    /* build prefix without colors */
+    /* Build prefix without colors. */
     ptr_value = weechat_hashtable_get (line, "prefix");
     string_no_color = weechat_string_remove_color (ptr_value, NULL);
     weechat_hashtable_set (ctx.extra_vars, "tg_prefix_nocolor", string_no_color);
     free (string_no_color);
 
-    /* build message without colors */
+    /* Build message without colors. */
     ptr_value = weechat_hashtable_get (line, "message");
     string_no_color = weechat_string_remove_color (ptr_value, NULL);
     weechat_hashtable_set (ctx.extra_vars, "tg_message_nocolor", string_no_color);
@@ -1051,7 +1048,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
         goto end;
     }
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     (void) trigger_callback_execute (trigger, &ctx);
 
     hashtable = weechat_hashtable_new (32,
@@ -1060,7 +1057,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
                                        NULL, NULL);
     if (hashtable)
     {
-        /* copy updated variables into the result "hashtable" */
+        /* Copy updated variables into the result "hashtable". */
         for (ptr_item = weechat_list_get (ctx.vars_updated, 0); ptr_item;
              ptr_item = weechat_list_next (ptr_item))
         {
@@ -1069,7 +1066,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
             {
                 if (strcmp (ptr_key, "tags") == 0)
                 {
-                    /* remove commas at the beginning/end of tags */
+                    /* Remove commas at the beginning/end of tags. */
                     ptr_value = weechat_hashtable_get (ctx.extra_vars, ptr_key);
                     if (ptr_value && ptr_value[0])
                     {
@@ -1128,7 +1125,7 @@ trigger_callback_print_cb  (const void *pointer, void *data,
 
     ctx.buffer = buffer;
 
-    /* do nothing if the buffer does not match buffers defined in the trigger */
+    /* Do nothing if the buffer does not match buffers defined in the trigger. */
     if (trigger->hook_print_buffers
         && !weechat_buffer_match_list (buffer, trigger->hook_print_buffers))
         goto end;
@@ -1136,7 +1133,7 @@ trigger_callback_print_cb  (const void *pointer, void *data,
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
     TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
-    /* add data in hashtables used for conditions/replace/command */
+    /* Add data in hashtables used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.pointers, "buffer", buffer);
     tv.tv_sec = date;
@@ -1165,7 +1162,7 @@ trigger_callback_print_cb  (const void *pointer, void *data,
     str_tags = weechat_string_rebuild_split_string (tags, ",", 0, -1);
     if (str_tags)
     {
-        /* build string with tags and commas around: ",tag1,tag2,tag3," */
+        /* Build string with tags and commas around: ",tag1,tag2,tag3,". */
         if (weechat_asprintf (&str_tags2, ",%s,", str_tags) >= 0)
         {
             weechat_hashtable_set (ctx.extra_vars, "tg_tags", str_tags2);
@@ -1176,7 +1173,7 @@ trigger_callback_print_cb  (const void *pointer, void *data,
     if (!trigger_callback_set_tags (buffer, tags, tags_count, ctx.extra_vars))
         goto end;
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     if (!trigger_callback_execute (trigger, &ctx))
         trigger_rc = WEECHAT_RC_OK;
 
@@ -1203,7 +1200,7 @@ trigger_callback_command_cb  (const void *pointer, void *data,
 
     ctx.buffer = buffer;
 
-    /* add data in hashtables used for conditions/replace/command */
+    /* Add data in hashtables used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.pointers, "buffer", buffer);
     snprintf (str_value, sizeof (str_value), "%d", argc);
@@ -1232,7 +1229,7 @@ trigger_callback_command_cb  (const void *pointer, void *data,
         weechat_hashtable_set (ctx.extra_vars, "tg_shell_argc", "0");
     }
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     if (!trigger_callback_execute (trigger, &ctx))
         trigger_rc = WEECHAT_RC_OK;
 
@@ -1256,12 +1253,12 @@ trigger_callback_command_run_cb  (const void *pointer, void *data,
 
     ctx.buffer = buffer;
 
-    /* add data in hashtables used for conditions/replace/command */
+    /* Add data in hashtables used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.pointers, "buffer", buffer);
     weechat_hashtable_set (ctx.extra_vars, "tg_command", command);
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     if (!trigger_callback_execute (trigger, &ctx))
         trigger_rc = WEECHAT_RC_OK;
 
@@ -1284,9 +1281,9 @@ trigger_callback_timer_cb  (const void *pointer, void *data,
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
     /*
-     * remove the hook if this is the last call to timer
+     * Remove the hook if this is the last call to timer
      * (because WeeChat will remove the hook after this call, so the pointer
-     * will become invalid)
+     * will become invalid).
      */
     if ((remaining_calls == 0) && trigger->hooks)
     {
@@ -1298,7 +1295,7 @@ trigger_callback_timer_cb  (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
-    /* add data in hashtable used for conditions/replace/command */
+    /* Add data in hashtable used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     snprintf (str_temp, sizeof (str_temp), "%d", remaining_calls);
     weechat_hashtable_set (ctx.extra_vars, "tg_remaining_calls", str_temp);
@@ -1306,7 +1303,7 @@ trigger_callback_timer_cb  (const void *pointer, void *data,
     weechat_util_strftimeval (str_temp, sizeof (str_temp), "%FT%T.%f", &tv_now);
     weechat_hashtable_set (ctx.extra_vars, "tg_date", str_temp);
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     if (!trigger_callback_execute (trigger, &ctx))
         trigger_rc = WEECHAT_RC_OK;
 
@@ -1326,12 +1323,12 @@ trigger_callback_config_cb  (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
-    /* add data in hashtable used for conditions/replace/command */
+    /* Add data in hashtable used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.extra_vars, "tg_option", option);
     weechat_hashtable_set (ctx.extra_vars, "tg_value", value);
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     if (!trigger_callback_execute (trigger, &ctx))
         trigger_rc = WEECHAT_RC_OK;
 
@@ -1357,7 +1354,7 @@ trigger_callback_focus_cb (const void *pointer, void *data,
 
     ctx.extra_vars = weechat_hashtable_dup (info);
 
-    /* add data in hashtables used for conditions/replace/command */
+    /* Add data in hashtables used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, info);
     ptr_value = weechat_hashtable_get (info, "_window");
     if (ptr_value && ptr_value[0] && (strncmp (ptr_value, "0x", 2) == 0))
@@ -1374,7 +1371,7 @@ trigger_callback_focus_cb (const void *pointer, void *data,
             weechat_hashtable_set (ctx.pointers, "buffer", (void *)value);
     }
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     (void) trigger_callback_execute (trigger, &ctx);
 
 end:
@@ -1396,13 +1393,13 @@ trigger_callback_info_cb (const void *pointer, void *data,
 
     TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
-    /* add data in hashtable used for conditions/replace/command */
+    /* Add data in hashtable used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.extra_vars, "tg_info_name", info_name);
     weechat_hashtable_set (ctx.extra_vars, "tg_arguments", arguments);
     weechat_hashtable_set (ctx.extra_vars, "tg_info", "");
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     (void) trigger_callback_execute (trigger, &ctx);
 
 end:
@@ -1434,11 +1431,11 @@ trigger_callback_info_hashtable_cb (const void *pointer, void *data,
 
     ctx.extra_vars = weechat_hashtable_dup (hashtable);
 
-    /* add data in hashtable used for conditions/replace/command */
+    /* Add data in hashtable used for conditions/replace/command. */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.extra_vars, "tg_info_name", info_name);
 
-    /* execute the trigger (conditions, regex, command) */
+    /* Execute the trigger (conditions, regex, command). */
     (void) trigger_callback_execute (trigger, &ctx);
 
     ret_hashtable = weechat_hashtable_new (32,
@@ -1447,7 +1444,7 @@ trigger_callback_info_hashtable_cb (const void *pointer, void *data,
                                            NULL, NULL);
     if (ret_hashtable)
     {
-        /* copy updated variables into the result "ret_hashtable" */
+        /* Copy updated variables into the result "ret_hashtable". */
         for (ptr_item = weechat_list_get (ctx.vars_updated, 0); ptr_item;
              ptr_item = weechat_list_next (ptr_item))
         {

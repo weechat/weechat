@@ -44,7 +44,7 @@ secure_buffer_display_data (void *data,
 {
     int *line;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) value;
 
     line = (int *)data;
@@ -82,7 +82,7 @@ secure_buffer_display (void)
 
     gui_buffer_clear (secure_buffer);
 
-    /* set title buffer */
+    /* Set title buffer. */
     gui_buffer_set_title (secure_buffer,
                           _("WeeChat secured data (sec.conf) | "
                             "Keys: [alt-v] Toggle values"));
@@ -107,13 +107,13 @@ secure_buffer_display (void)
                        config_file_option_string (secure_config_crypt_cipher),
                        (CONFIG_BOOLEAN(secure_config_crypt_salt)) ? _("on") : _("off"));
 
-    /* display passphrase */
+    /* Display passphrase. */
     line++;
     gui_chat_printf_y (secure_buffer, line++,
                        (secure_passphrase) ?
                        _("Passphrase is set") : _("Passphrase is not set"));
 
-    /* display secured data */
+    /* Display secured data. */
     count = secure_hashtable_data->items_count;
     count_encrypted = secure_hashtable_data_encrypted->items_count;
     if (count > 0)
@@ -124,7 +124,7 @@ secure_buffer_display (void)
         hashtable_map (secure_hashtable_data,
                        &secure_buffer_display_data, &line);
     }
-    /* display secured data not decrypted */
+    /* Display secured data not decrypted. */
     if (count_encrypted > 0)
     {
         line++;
@@ -151,7 +151,7 @@ secure_buffer_input_cb (const void *pointer, void *data,
                         struct t_gui_buffer *buffer,
                         const char *input_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -169,7 +169,7 @@ int
 secure_buffer_close_cb (const void *pointer, void *data,
                         struct t_gui_buffer *buffer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;

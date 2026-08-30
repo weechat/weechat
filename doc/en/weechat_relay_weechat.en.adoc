@@ -2623,10 +2623,10 @@ Example of hdata with two buffers (weechat core and libera server) and two
 keys (_number_ and _full_name_):
 
 ....
-# command
+# Command
 hdata buffer:gui_buffers(*) number,full_name
 
-# response
+# Response
 ┌────────┬──────────────────────────┬───╥─────────┬───┬──────────────╥─────────┬───┬───────────────────┐
 │ buffer │ number:int,full_name:str │ 2 ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │ irc.server.libera │
 └────────┴──────────────────────────┴───╨─────────┴───┴──────────────╨─────────┴───┴───────────────────┘
@@ -2637,10 +2637,10 @@ hdata buffer:gui_buffers(*) number,full_name
 Example of hdata with lines of core buffer:
 
 ....
-# command
+# Command
 hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 
-# response
+# Response
 ┌─────────────────────────────┬─────┬────╥──
 │ buffer/lines/line/line_data │ ... │ 50 ║ ...
 └─────────────────────────────┴─────┴────╨──
@@ -2667,10 +2667,10 @@ hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 Example of hdata with nicklist:
 
 ....
-# command
+# Command
 nicklist
 
-# response
+# Response
 ┌───────────────────┬──
 │ buffer/nick_group │ ...
 └───────────────────┴──
@@ -2711,10 +2711,10 @@ nicklist
 Example of empty hdata (hotlist is empty in WeeChat):
 
 ....
-# command
+# Command
 hdata hotlist:gui_hotlist(*)
 
-# response
+# Response
 ┌────────┬────────┬───┐
 │ (NULL) │ (NULL) │ 0 │
 └────────┴────────┴───┘
@@ -2775,10 +2775,10 @@ An item is:
 Example of infolist with two buffers (weechat core and libera server):
 
 ....
-# command
+# Command
 infolist buffer
 
-# response
+# Response
 ┌────────┬───╥────┬─────────┬─────┬─────────┬─────╥────┬─────────┬─────┬─────────┬─────┐
 │ buffer │ 2 ║ 42 │ pointer │ ptr │ 0x12345 │ ... ║ 42 │ pointer │ ptr │ 0x6789a │ ... │
 └────────┴───╨────┴─────────┴─────┴─────────┴─────╨────┴─────────┴─────┴─────────┴─────┘

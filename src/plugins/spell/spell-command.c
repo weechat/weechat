@@ -33,7 +33,7 @@ spell_command_iso_to_lang (const char *code)
             return strdup (spell_langs[i].name);
     }
 
-    /* lang code not found */
+    /* Lang code not found */
     return strdup ("Unknown");
 }
 
@@ -54,7 +54,7 @@ spell_command_iso_to_country (const char *code)
             return strdup (spell_countries[i].name);
     }
 
-    /* country code not found */
+    /* Country code not found */
     return strdup ("Unknown");
 }
 
@@ -73,7 +73,7 @@ spell_enchant_dict_describe_cb (const char *lang_tag,
     char *country, *lang, *pos, *iso;
     char str_dict[256];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) provider_name;
     (void) provider_desc;
     (void) provider_file;
@@ -347,13 +347,13 @@ spell_command_cb (const void *pointer, void *data,
     struct t_infolist *infolist;
     int number;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
     if (argc == 1)
     {
-        /* display spell status */
+        /* Display spell status. */
         weechat_printf (NULL, "");
         weechat_printf (NULL,
                         /* TRANSLATORS: second "%s" is "aspell" or "enchant". */
@@ -388,7 +388,7 @@ spell_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* enable spell */
+    /* Enable spell. */
     if (weechat_strcmp (argv[1], "enable") == 0)
     {
         weechat_config_option_set (spell_config_check_enabled, "1", 1);
@@ -396,7 +396,7 @@ spell_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* disable spell */
+    /* Disable spell. */
     if (weechat_strcmp (argv[1], "disable") == 0)
     {
         weechat_config_option_set (spell_config_check_enabled, "0", 1);
@@ -404,7 +404,7 @@ spell_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* toggle spell */
+    /* Toggle spell. */
     if (weechat_strcmp (argv[1], "toggle") == 0)
     {
         if (spell_enabled)
@@ -420,14 +420,14 @@ spell_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* list of dictionaries */
+    /* Display list of dictionaries. */
     if (weechat_strcmp (argv[1], "listdict") == 0)
     {
         spell_command_speller_list_dicts ();
         return WEECHAT_RC_OK;
     }
 
-    /* set dictionary for current buffer */
+    /* Set dictionary for current buffer. */
     if (weechat_strcmp (argv[1], "setdict") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
@@ -438,25 +438,25 @@ spell_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* delete dictionary used on current buffer */
+    /* Delete dictionary used on current buffer. */
     if (weechat_strcmp (argv[1], "deldict") == 0)
     {
         spell_command_set_dict (buffer, NULL);
         return WEECHAT_RC_OK;
     }
 
-    /* add word to personal dictionary */
+    /* Add word to personal dictionary. */
     if (weechat_strcmp (argv[1], "addword") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         if (argc > 3)
         {
-            /* use a given dict */
+            /* Use a given dict. */
             spell_command_add_word (buffer, argv[2], argv_eol[3]);
         }
         else
         {
-            /* use default dict */
+            /* Use default dict. */
             spell_command_add_word (buffer, NULL, argv_eol[2]);
         }
         return WEECHAT_RC_OK;

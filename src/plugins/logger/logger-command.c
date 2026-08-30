@@ -109,7 +109,7 @@ logger_command_cb (const void *pointer, void *data,
                    struct t_gui_buffer *buffer,
                    int argc, char **argv, char **argv_eol)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) argv_eol;

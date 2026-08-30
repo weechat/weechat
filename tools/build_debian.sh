@@ -43,7 +43,7 @@
 
 set -o errexit
 
-# default values for options from environment variables
+# Default values for options from environment variables
 default_packager_name="Sébastien Helleu"
 default_packager_email="flashcode@flashtux.org"
 default_jobs=""
@@ -113,27 +113,27 @@ test_patches ()
 
 # ================================== START ==================================
 
-# package name/email
+# Package name/email
 [ -z "${PACKAGER_NAME}" ] && PACKAGER_NAME="${default_packager_name}" && PACKAGER_EMAIL="${default_packager_email}"
 if [ -z "${PACKAGER_EMAIL}" ]; then
     echo >&2 "ERROR: PACKAGER_EMAIL must be set if PACKAGER_NAME is set."
     exit 1
 fi
 
-# simultaneous jobs for compilation (dpkg-buildpackage -jN)
+# Simultaneous jobs for compilation (dpkg-buildpackage -jN)
 [ -z "${JOBS}" ] && JOBS="${default_jobs}"
 
-# retry build
+# Retry build
 [ -z "${RETRY_BUILD}" ] && RETRY_BUILD="${default_retry_build}"
 
-# check git repository
+# Check git repository.
 root_dir=$(git rev-parse --show-toplevel)
 if [ -z "${root_dir}" ] || [ ! -e "${root_dir}/.git" ] || [ ! -d "${root_dir}/debian-stable" ]; then
     error "this script must be run from WeeChat git repository."
 fi
 cd "${root_dir}"
 
-# check command line arguments
+# Check command line arguments.
 if [ $# -eq 0 ]; then
     usage 0
 fi
@@ -144,12 +144,12 @@ if [ $# -lt 2 ]; then
     error_usage "missing arguments"
 fi
 
-# command line arguments
+# Command line arguments
 version="$1"
 distro="$2"
 
-# separate version and revision
-# example: devel => devel / 1, stable-2 => stable / 2, 1.9-2 => 1.9 / 2
+# Separate version and revision.
+# Example: devel => devel / 1, stable-2 => stable / 2, 1.9-2 => 1.9 / 2
 tmp_version=$(expr "${version}" : '\([^/]*\)-') || true
 DEB_REVISION=""
 if [ -n "${tmp_version}" ]; then
@@ -160,7 +160,7 @@ if [ -z "${DEB_REVISION}" ]; then
     DEB_REVISION="1"
 fi
 
-# convert version "stable" to its number
+# Convert version "stable" to its number.
 if [ "${version}" = "stable" ]; then
     version="$("${root_dir}/version.sh" stable)"
 fi
@@ -169,17 +169,17 @@ if [ -z "${version}" ]; then
     error_usage "unknown version"
 fi
 
-# extract distro type (debian, ubuntu, ...)
+# Extract distro type (debian, ubuntu, ...).
 distro_type=$(expr "${distro}" : '\([^/]*\)/') || true
 
-# extract distro name (sid, jessie, wily, ...)
+# Extract distro name (sid, jessie, wily, ...).
 distro_name=$(expr "${distro}" : '[^/]*/\([a-z]*\)') || true
 
 if [ -z "${distro_type}" ] || [ -z "${distro_name}" ]; then
     error_usage "missing distro type/name"
 fi
 
-# set distro for dch
+# Set distro for dch.
 if [ "${distro_type}" = "ubuntu" ]; then
     # ubuntu
     if [ "${version}" = "devel" ]; then
@@ -193,7 +193,7 @@ else
 fi
 
 if [ "${version}" = "devel" ]; then
-    # devel packages: weechat-devel(-xxx)_X.Y-1~dev20150511_arch.deb
+    # Devel packages: weechat-devel(-xxx)_X.Y-1~dev20150511_arch.deb
     DEB_DIR="debian-devel"
     DEB_NAME="weechat-devel"
     DEB_VERSION="$("${root_dir}/version.sh" devel)-1~dev$(date '+%Y%m%d')"
@@ -204,7 +204,7 @@ if [ "${version}" = "devel" ]; then
     DCH_URGENCY="low"
     DCH_CHANGELOG="Repository snapshot"
 else
-    # stable packages: weechat-(-xxx)_X.Y-1_arch.deb
+    # Stable packages: weechat-(-xxx)_X.Y-1_arch.deb
     DEB_DIR="debian-stable"
     DEB_NAME="weechat"
     DEB_VERSION="${version}-${DEB_REVISION}"
@@ -213,33 +213,33 @@ else
     DCH_CHANGELOG="New upstream release"
 fi
 
-# display build info
+# Display build info.
 echo "=== Building ${DEB_NAME}-${DEB_VERSION} on ${distro_type}/${distro_name} (${DCH_DISTRO}) ==="
 
 # ================================== BUILD ==================================
 
-# apply patch (if needed, for old distros)
+# Apply patch (if needed, for old distros).
 patch_file="${root_dir}/tools/debian/patches/weechat_${distro_type}_${distro_name}.patch"
 if [ -f "${patch_file}" ]; then
     echo " - Applying patch ${patch_file}"
     git apply "${patch_file}"
 fi
 
-# create a symlink "debian" -> "debian-{stable|devel}"
+# Create a symlink "debian" -> "debian-{stable|devel}".
 rm -f debian
 ln -s -f "${DEB_DIR}" debian
 
-# update debian changelog
+# Update debian changelog.
 if [ "${version}" = "devel" ]; then
     rm -f "${DEB_DIR}/changelog"
 fi
 
-# create/update changelog
+# Create/update changelog.
 echo " - Updating changelog: ${DEB_NAME} ${DEB_VERSION} (${DCH_DISTRO}, ${DCH_URGENCY}), ${PACKAGER_NAME} <${PACKAGER_EMAIL}>: ${DCH_CHANGELOG}"
 DEBFULLNAME="${PACKAGER_NAME}" DEBEMAIL="${PACKAGER_EMAIL}" dch "${DCH_CREATE}" --package "${DEB_NAME}" --newversion "${DEB_VERSION}" --distribution "${DCH_DISTRO}" --urgency "${DCH_URGENCY}" "${DCH_CHANGELOG}"
 
-# if retry build is enabled, patch debian/rules to run dh_auto_build
-# multiple times if needed
+# If retry build is enabled, patch debian/rules to run dh_auto_build
+# multiple times if needed.
 if [ "${RETRY_BUILD}" != "0" ]; then
     cat <<EOF >> debian/rules
 
@@ -248,9 +248,9 @@ override_dh_auto_build:
 EOF
 fi
 
-# build packages (without debug symbols)
+# Build packages (without debug symbols).
 DEB_BUILD_OPTIONS="noddebs" dpkg-buildpackage -us -uc --jobs="${JOBS}"
 
-# all OK!
+# All OK!
 echo " - Build OK [${DEB_NAME}-${DEB_VERSION}]"
 exit 0

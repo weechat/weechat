@@ -108,7 +108,7 @@ gui_key_init (void)
     gui_key_grab_count = 0;
     gui_key_last_activity_time = time (NULL);
 
-    /* create default keys and save them in a separate list */
+    /* Create default keys and save them in a separate list. */
     for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
         gui_keys[context] = NULL;
@@ -147,7 +147,7 @@ gui_key_search_context (const char *context)
             return i;
     }
 
-    /* context not found */
+    /* Context not found */
     return -1;
 }
 
@@ -208,19 +208,19 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
     struct t_gui_key *ptr_key_raw, *ptr_key;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
 
-    /* get expanded name (for example: \x01+U => ctrl-u) */
+    /* Get expanded name (for example: \x01+U => ctrl-u). */
     rc = gui_key_expand (gui_key_combo, &key_name, &key_name_alias);
     if (rc && key_name && key_name_alias)
     {
         /*
-         * the key name should be valid UTF-8 at this point,
+         * The key name should be valid UTF-8 at this point,
          * but some mouse codes can return ISO chars (for coordinates),
-         * then we will convert them to UTF-8 string
+         * then we will convert them to UTF-8 string.
          */
         if (!utf8_is_valid (key_name, -1, NULL))
         {
@@ -232,7 +232,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
             }
             else
             {
-                /* conversion failed, then just replace invalid chars by '?' */
+                /* Conversion failed, then just replace invalid chars by '?'. */
                 utf8_normalize (key_name, '?');
             }
         }
@@ -246,12 +246,12 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
             }
             else
             {
-                /* conversion failed, then just replace invalid chars by '?' */
+                /* Conversion failed, then just replace invalid chars by '?'. */
                 utf8_normalize (key_name_alias, '?');
             }
         }
 
-        /* add expanded key to input buffer */
+        /* Add expanded key to input buffer. */
         if (gui_current_window->buffer->input)
         {
             ptr_key_raw = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
@@ -260,7 +260,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
                                       key_name_alias);
             gui_input_insert_string (gui_current_window->buffer,
                                      (ptr_key_raw) ? key_name : key_name_alias);
-            /* add command bound to key (if found) */
+            /* Add command bound to key (if found). */
             if (gui_key_grab_command && (ptr_key_raw || ptr_key))
             {
                 gui_input_insert_string (gui_current_window->buffer, " ");
@@ -276,7 +276,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
         }
     }
 
-    /* end grab mode */
+    /* End grab mode. */
     gui_key_grab = 0;
     gui_key_grab_count = 0;
     gui_key_grab_command = 0;
@@ -338,11 +338,11 @@ gui_key_legacy_internal_code (const char *key)
             if (key[0])
             {
                 /*
-                 * note: the terminal makes no difference between ctrl-x and
+                 * Note: the terminal makes no difference between ctrl-x and
                  * ctrl-shift-x, so for now WeeChat automatically converts any
                  * ctrl-letter key to lower case: when the user tries to bind
                  * "ctrl-A", the key "ctrl-a" is actually added
-                 * (lower case is forced for ctrl keys)
+                 * (lower case is forced for ctrl keys).
                  */
                 str_key[0] = ((key[0] >= 'A') && (key[0] <= 'Z')) ?
                     key[0] + ('a' - 'A') : key[0];
@@ -431,7 +431,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
 
         while (string_strncmp (key, "\x01[\x01", 3) == 0)
         {
-            /* key: meta + meta-something: increase meta and skip it */
+            /* Key: meta + meta-something: increase meta and skip it. */
             meta++;
             key += 2;
         }
@@ -474,7 +474,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
                         && (!key[2]
                             || (isdigit ((unsigned char)key[2]) && !key[3])))))
             {
-                /* incomplete sequence: 1 to 3 digits with nothing after */
+                /* Incomplete sequence: 1 to 3 digits with nothing after */
                 goto error;
             }
 
@@ -490,7 +490,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
             if ((key[0] == '1') && (key[1] == ';')
                 && ((key[2] >= '1') && (key[2] <= '9')))
             {
-                /* modifier, format: "1;1" to "1;9" */
+                /* Modifier, format: "1;1" to "1;9" */
                 modifier = key[2] - '0' - 1;
                 if ((modifier & 0x01) || (modifier & 0x08))
                     shift = 1;
@@ -510,7 +510,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
                     || (key[2] == '$') || (key[2] == '@')))
             {
                 /*
-                 * format: "00;N~" to "99;N~" (urxvt: ~ ^ $ @)
+                 * Format: "00;N~" to "99;N~" (urxvt: ~ ^ $ @)
                  * or "00~" to "99~" (urxvt: ~ ^ $ @)
                  */
                 number = ((key[0] - '0') * 10) + (key[1] - '0');
@@ -560,9 +560,9 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
                          || (key[1] == '$') || (key[1] == '@')))
             {
                 /*
-                 * format: "0;N~" to "9;N~" (urxvt: ~ ^ $ @)
+                 * Format: "0;N~" to "9;N~" (urxvt: ~ ^ $ @)
                  * or "0~" to "9~" (urxvt: ~ ^ $ @)
-                 * */
+                 */
                 number = key[0] - '0';
                 if ((number == 1) || (number == 7))
                     snprintf (str_alias, sizeof (str_alias), "home");
@@ -611,7 +611,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
             else if (((key[0] >= 'A') && (key[0] <= 'Z'))
                      || ((key[0] >= 'a') && (key[0] <= 'z')))
             {
-                /* format: "A" to "Z" */
+                /* Format: "A" to "Z" */
                 if (key[0] == 'A')
                     snprintf (str_alias, sizeof (str_alias), "up");
                 else if (key[0] == 'a')
@@ -661,7 +661,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
             }
             else if (key[0] == '[')
             {
-                /* some sequences specific to Linux console */
+                /* Some sequences specific to Linux console */
                 key++;
                 if (!key[0])
                     goto error;
@@ -679,7 +679,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
             }
             else
             {
-                /* unknown sequence */
+                /* Unknown sequence */
                 key = utf8_next_char (key);
             }
 
@@ -689,14 +689,14 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
 
             if (!str_alias[0])
             {
-                /* unknown sequence: keep raw key code as-is */
+                /* Unknown sequence: keep raw key code as-is. */
                 snprintf (str_alias, sizeof (str_alias), "%s", str_raw);
                 ctrl = 0;
                 meta = 0;
                 shift = 0;
             }
 
-            /* add modifier(s) + key (raw) */
+            /* Add modifier(s) + key (raw). */
             if (str_raw[0])
             {
                 for (i = 0; i < meta_initial; i++)
@@ -706,7 +706,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
                 string_dyn_concat (str_dyn_key, str_raw, -1);
             }
 
-            /* add modifier(s) + key (alias) */
+            /* Add modifier(s) + key (alias). */
             if (str_alias[0])
             {
                 for (i = 0; i < meta; i++)
@@ -722,7 +722,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
         }
         else
         {
-            /* automatically convert ctrl-[A-Z] to ctrl-[a-z] (lower case) */
+            /* Automatically convert ctrl-[A-Z] to ctrl-[a-z] (lower case). */
             if (ctrl && (key[0] >= 'A') && (key[0] <= 'Z'))
             {
                 snprintf (str_raw, sizeof (str_raw),
@@ -1014,7 +1014,7 @@ gui_key_insert_sorted (struct t_gui_key **keys,
 
         if (pos_key)
         {
-            /* insert key into the list (before key found) */
+            /* Insert key into the list (before key found). */
             key->prev_key = pos_key->prev_key;
             key->next_key = pos_key;
             if (pos_key->prev_key)
@@ -1025,7 +1025,7 @@ gui_key_insert_sorted (struct t_gui_key **keys,
         }
         else
         {
-            /* add key to the end */
+            /* Add key to the end. */
             key->prev_key = *last_key;
             key->next_key = NULL;
             (*last_key)->next_key = key;
@@ -1034,7 +1034,7 @@ gui_key_insert_sorted (struct t_gui_key **keys,
     }
     else
     {
-        /* first key in list */
+        /* First key in list */
         key->prev_key = NULL;
         key->next_key = NULL;
         *keys = key;
@@ -1166,14 +1166,14 @@ gui_key_set_score (struct t_gui_key *key)
     if (key->key[0] != '@')
         return;
 
-    /* basic score for key with area */
+    /* Basic score for key with area */
     score |= 1 << bonus;
     bonus--;
 
-    /* add score for each area type */
+    /* Add score for each area type. */
     for (area = 0; area < 2; area++)
     {
-        /* bonus if area type is "any" */
+        /* Bonus if area type is "any" */
         if (key->area_name[area]
             && (key->area_type[area] == GUI_KEY_FOCUS_ANY))
         {
@@ -1182,10 +1182,10 @@ gui_key_set_score (struct t_gui_key *key)
         bonus--;
     }
 
-    /* add score for each area name */
+    /* Add score for each area name. */
     for (area = 0; area < 2; area++)
     {
-        /* bonus if area name is "*" */
+        /* Bonus if area name is "*" */
         if (key->area_name[area]
             && (strcmp (key->area_name[area], "*") == 0))
         {
@@ -1214,11 +1214,11 @@ gui_key_is_safe (int context, const char *key)
     if (!key || !key[0])
         return 0;
 
-    /* all keys are safe in cursor mode */
+    /* All keys are safe in cursor mode. */
     if (context == GUI_KEY_CONTEXT_CURSOR)
         return 1;
 
-    /* "@" is allowed at beginning for mouse context */
+    /* "@" is allowed at beginning for mouse context. */
     if ((key[0] == '@') && (context == GUI_KEY_CONTEXT_MOUSE))
         return 1;
 
@@ -1233,7 +1233,7 @@ gui_key_is_safe (int context, const char *key)
         if (strncmp (key, gui_key_modifier_list[i],
                      strlen (gui_key_modifier_list[i])) == 0)
         {
-            /* key is safe */
+            /* Key is safe. */
             return 1;
         }
     }
@@ -1243,12 +1243,12 @@ gui_key_is_safe (int context, const char *key)
         if (strncmp (key, gui_key_alias_list[i],
                      strlen (gui_key_alias_list[i])) == 0)
         {
-            /* key is safe */
+            /* Key is safe. */
             return 1;
         }
     }
 
-    /* key is not safe */
+    /* Key is not safe. */
     return 0;
 }
 
@@ -1279,7 +1279,7 @@ gui_key_chunk_seems_valid (const char *chunk)
     if (!chunk || !chunk[0])
         return 0;
 
-    /* skip modifiers */
+    /* Skip modifiers. */
     found = 1;
     while (found)
     {
@@ -1296,7 +1296,7 @@ gui_key_chunk_seems_valid (const char *chunk)
         }
     }
 
-    /* check if it's an alias */
+    /* Check if it's an alias. */
     found = 0;
     for (i = 0; gui_key_alias_list[i]; i++)
     {
@@ -1345,7 +1345,7 @@ gui_key_seems_valid (int context, const char *key)
     if (!key || !key[0])
         return 0;
 
-    /* "@" is allowed at beginning for cursor/mouse contexts */
+    /* "@" is allowed at beginning for cursor/mouse contexts. */
     if ((key[0] == '@')
         && ((context == GUI_KEY_CONTEXT_CURSOR)
             || (context == GUI_KEY_CONTEXT_MOUSE)))
@@ -1382,7 +1382,7 @@ gui_key_option_change_cb (const void *pointer, void *data,
     struct t_gui_key *ptr_key;
     int context;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1573,7 +1573,7 @@ gui_key_search (struct t_gui_key *keys, const char *key)
             return ptr_key;
     }
 
-    /* key not found */
+    /* Key not found */
     return NULL;
 }
 
@@ -1635,7 +1635,7 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
     for (ptr_key = (buffer) ? buffer->keys : gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
     {
-        /* ignore keys with no command */
+        /* Ignore keys with no command. */
         if (!ptr_key->command || !ptr_key->command[0])
             continue;
 
@@ -1653,7 +1653,7 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
                 {
                     rc1 = rc;
                     key1_found = ptr_key;
-                    /* exit immediately if raw key is an exact match */
+                    /* Exit immediately if raw key is an exact match. */
                     if (rc == 2)
                         break;
                 }
@@ -1751,14 +1751,14 @@ gui_key_bind_plugin_hashtable_map_cb (void *data,
     struct t_gui_key *ptr_key;
     struct t_config_option *ptr_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     user_data = (int *)data;
 
     if (user_data && key && value)
     {
-        /* ignore special key "__quiet" */
+        /* Ignore special key "__quiet". */
         if (strcmp (key, "__quiet") == 0)
             return;
 
@@ -1769,9 +1769,9 @@ gui_key_bind_plugin_hashtable_map_cb (void *data,
                 user_data[1]++;
         }
         /*
-         * adjust default value (command) of key option in config, so that
+         * Adjust default value (command) of key option in config, so that
          * fset buffer shows the key as modified only if the user actually
-         * changed the command bound to the key
+         * changed the command bound to the key.
          */
         ptr_option = config_file_search_option (
             weechat_config_file,
@@ -2042,15 +2042,15 @@ gui_key_focus_command (const char *key, int context,
     for (ptr_key = gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
     {
-        /* ignore key if it has not area name or key for area */
+        /* Ignore key if it has not area name or key for area. */
         if (!ptr_key->area_name[0] || !ptr_key->area_key)
             continue;
 
-        /* the special command "-" is used to ignore key */
+        /* The special command "-" is used to ignore key. */
         if (strcmp (ptr_key->command, "-") == 0)
             continue;
 
-        /* ignore key if key for area is not matching (context: cursor) */
+        /* Ignore key if key for area is not matching (context: cursor). */
         if ((context == GUI_KEY_CONTEXT_CURSOR)
             && (string_strncmp (key, ptr_key->area_key,
                                 utf8_strlen (ptr_key->area_key)) != 0))
@@ -2058,19 +2058,19 @@ gui_key_focus_command (const char *key, int context,
             continue;
         }
 
-        /* ignore key if key for area is not matching (context: mouse) */
+        /* Ignore key if key for area is not matching (context: mouse). */
         if ((context == GUI_KEY_CONTEXT_MOUSE)
             && !string_match (key, ptr_key->area_key, 1))
         {
             continue;
         }
 
-        /* ignore mouse event if not explicit requested */
+        /* Ignore mouse event if not explicit requested. */
         if ((context == GUI_KEY_CONTEXT_MOUSE) &&
             (string_match (key, "*-event-*", 1) != string_match (ptr_key->area_key, "*-event-*", 1)))
             continue;
 
-        /* check if focus is matching with key */
+        /* Check if focus is matching with key. */
         matching = gui_key_focus_matching (ptr_key, hashtable_focus);
         if (!matching)
             continue;
@@ -2080,7 +2080,7 @@ gui_key_focus_command (const char *key, int context,
         if (!hashtable)
             continue;
 
-        /* get buffer */
+        /* Get buffer. */
         ptr_buffer = gui_current_window->buffer;
         str_buffer = hashtable_get (hashtable, "_buffer");
         if (str_buffer && str_buffer[0])
@@ -2338,7 +2338,7 @@ gui_key_pressed (const char *key_str)
     key_name = NULL;
     key_name_alias = NULL;
 
-    /* add key to buffer */
+    /* Add key to buffer. */
     insert_into_input = (gui_key_combo[0] == '\0');
     length = strlen (gui_key_combo);
     length_key = strlen (key_str);
@@ -2355,7 +2355,7 @@ gui_key_pressed (const char *key_str)
         goto end_no_input;
     }
 
-    /* if we are in "show mode", increase counter and return */
+    /* If we are in "show mode", increase counter and return. */
     if (gui_key_grab)
     {
         if (gui_key_grab_count == 0)
@@ -2367,7 +2367,7 @@ gui_key_pressed (const char *key_str)
         goto end_no_input;
     }
 
-    /* check if we have a mouse event */
+    /* Check if we have a mouse event. */
     if (!gui_mouse_event_pending)
     {
         /* "<" = SGR event, "M" = UTF-8 event */
@@ -2378,18 +2378,18 @@ gui_key_pressed (const char *key_str)
         }
     }
 
-    /* mouse event pending */
+    /* Mouse event pending */
     if (gui_mouse_event_pending)
     {
         event_size = gui_mouse_event_size (gui_key_combo);
         if (event_size == 0)
         {
-            /* incomplete event */
+            /* Incomplete event */
             goto end_no_input;
         }
         if (event_size > 0)
         {
-            /* complete event */
+            /* Complete event */
             saved_char = gui_key_combo[event_size];
             gui_key_combo[event_size] = '\0';
             if (gui_key_debug)
@@ -2402,7 +2402,7 @@ gui_key_pressed (const char *key_str)
             gui_mouse_event_pending = 0;
             goto end_no_input;
         }
-        /* not a mouse event, just go on and process gui_key_combo */
+        /* Not a mouse event, just go on and process gui_key_combo */
     }
 
     rc_expand = gui_key_expand (gui_key_combo, &key_name, &key_name_alias);
@@ -2429,7 +2429,7 @@ gui_key_pressed (const char *key_str)
     switch (context)
     {
         case GUI_KEY_CONTEXT_DEFAULT:
-            /* look for key combo in key table for current buffer */
+            /* Look for key combo in key table for current buffer. */
             ptr_key = gui_key_search_part (
                 gui_current_window->buffer,
                 context,
@@ -2438,7 +2438,7 @@ gui_key_pressed (const char *key_str)
                 &exact_match);
             if (ptr_key)
                 buffer_key = 1;
-            /* if key is not found for buffer, then look in general table */
+            /* If key is not found for buffer, then look in general table. */
             if (!ptr_key)
             {
                 ptr_key = gui_key_search_part (
@@ -2459,7 +2459,7 @@ gui_key_pressed (const char *key_str)
                 &exact_match);
             if (!ptr_key)
             {
-                /* fallback to default context */
+                /* Fallback to default context. */
                 ptr_key = gui_key_search_part (
                     NULL,
                     GUI_KEY_CONTEXT_DEFAULT,
@@ -2484,13 +2484,13 @@ gui_key_pressed (const char *key_str)
     if (ptr_key)
     {
         /*
-         * key is found, but it can be partial match
+         * Key is found, but it can be partial match
          * (in this case, gui_key_combo is kept and we'll wait for
-         * the next key)
+         * the next key).
          */
         if (exact_match)
         {
-            /* exact combo found => execute command */
+            /* Exact combo found => execute command. */
             if (gui_key_debug)
             {
                 gui_key_debug_print_key (gui_key_combo, key_name,
@@ -2563,7 +2563,7 @@ gui_key_pressed (const char *key_str)
 
     if (rc_expand && key_name_alias && key_name_alias[0])
     {
-        /* key is complete */
+        /* Key is complete. */
         if (gui_key_debug)
         {
             gui_key_debug_print_key (gui_key_combo, key_name, key_name_alias,
@@ -2572,13 +2572,13 @@ gui_key_pressed (const char *key_str)
         gui_key_combo[0] = '\0';
     }
 
-    /* in debug mode, don't insert anything in input */
+    /* In debug mode, don't insert anything in input. */
     if (gui_key_debug)
         goto end_no_input;
 
     /*
-     * if this is first key and not found (even partial) => return 1
-     * else return 0 (= silently discard sequence of bad keys)
+     * If this is first key and not found (even partial) => return 1
+     * else return 0 (= silently discard sequence of bad keys).
      */
     rc = insert_into_input;
     goto end;
@@ -2618,7 +2618,7 @@ gui_key_free (int context,
         config_file_option_free (ptr_option, 1);
     }
 
-    /* free memory */
+    /* Free memory. */
     free (key->key);
     string_free_split (key->chunks);
     for (i = 0; i < 2; i++)
@@ -2628,7 +2628,7 @@ gui_key_free (int context,
     free (key->area_key);
     free (key->command);
 
-    /* remove key from keys list */
+    /* Remove key from keys list. */
     if (key->prev_key)
         (key->prev_key)->next_key = key->next_key;
     if (key->next_key)
@@ -2788,7 +2788,7 @@ gui_key_buffer_search (int start_index, int max_index, const char *string)
             return i;
     }
 
-    /* string not found */
+    /* String not found */
     return -1;
 }
 
@@ -2920,7 +2920,7 @@ gui_key_paste_check (int bracketed_paste)
         max_lines = 1;
     if (gui_key_get_paste_lines () > max_lines)
     {
-        /* ask user what to do */
+        /* Ask user what to do. */
         gui_key_paste_start ();
         return 1;
     }
@@ -2936,7 +2936,7 @@ int
 gui_key_paste_bracketed_timer_cb (const void *pointer, void *data,
                                   int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -3034,18 +3034,18 @@ gui_key_end (void)
 {
     int context;
 
-    /* free key buffer */
+    /* Free key buffer. */
     free (gui_key_buffer);
 
     for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
-        /* free keys */
+        /* Free keys. */
         gui_key_free_all (context,
                           &gui_keys[context],
                           &last_gui_key[context],
                           &gui_keys_count[context],
                           0);
-        /* free default keys */
+        /* Free default keys. */
         gui_key_free_all (context,
                           &gui_default_keys[context],
                           &last_gui_default_key[context],
@@ -3066,7 +3066,7 @@ gui_key_hdata_key_cb (const void *pointer, void *data,
     int context;
     char str_list[128];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

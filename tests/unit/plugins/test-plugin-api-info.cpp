@@ -708,10 +708,10 @@ TEST(PluginApiInfo, InfolistBarCb)
 {
     struct t_infolist *infolist;
 
-    /* invalid bar pointer */
+    /* Invalid bar pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "bar", (void *)0x1, NULL));
 
-    /* all bars */
+    /* All bars */
     infolist = hook_infolist_get (NULL, "bar", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -721,7 +721,7 @@ TEST(PluginApiInfo, InfolistBarCb)
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one bar with pointer */
+    /* One bar with pointer */
     infolist = hook_infolist_get (NULL, "bar", gui_bars, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -729,7 +729,7 @@ TEST(PluginApiInfo, InfolistBarCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one bar with name (mask) */
+    /* One bar with name (mask) */
     infolist = hook_infolist_get (NULL, "bar", NULL, "titl*");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -747,10 +747,10 @@ TEST(PluginApiInfo, InfolistBarItemCb)
 {
     struct t_infolist *infolist;
 
-    /* invalid bar item pointer */
+    /* Invalid bar item pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "bar_item", (void *)0x1, NULL));
 
-    /* all bar items */
+    /* All bar items */
     infolist = hook_infolist_get (NULL, "bar_item", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -760,7 +760,7 @@ TEST(PluginApiInfo, InfolistBarItemCb)
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one bar item with pointer */
+    /* One bar item with pointer */
     infolist = hook_infolist_get (NULL, "bar_item", gui_bar_items, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -768,7 +768,7 @@ TEST(PluginApiInfo, InfolistBarItemCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one bar item with name (mask) */
+    /* One bar item with name (mask) */
     infolist = hook_infolist_get (NULL, "bar_item", NULL, "tim*");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -787,10 +787,10 @@ TEST(PluginApiInfo, InfolistBarWindowCb)
     struct t_infolist *infolist;
     struct t_gui_bar *ptr_bar;
 
-    /* invalid bar window pointer */
+    /* Invalid bar window pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "bar_window", (void *)0x1, NULL));
 
-    /* all bar windows */
+    /* All bar windows */
     infolist = hook_infolist_get (NULL, "bar_window", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -804,7 +804,7 @@ TEST(PluginApiInfo, InfolistBarWindowCb)
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one bar window with pointer */
+    /* One bar window with pointer */
     infolist = hook_infolist_get (NULL, "bar_window", gui_windows->bar_windows, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -824,10 +824,10 @@ TEST(PluginApiInfo, InfolistBufferCb)
 {
     struct t_infolist *infolist;
 
-    /* invalid buffer pointer */
+    /* Invalid buffer pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "buffer", (void *)0x1, NULL));
 
-    /* all buffers */
+    /* All buffers */
     infolist = hook_infolist_get (NULL, "buffer", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -835,7 +835,7 @@ TEST(PluginApiInfo, InfolistBufferCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one buffer with pointer */
+    /* One buffer with pointer */
     infolist = hook_infolist_get (NULL, "buffer", gui_buffers, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -843,7 +843,7 @@ TEST(PluginApiInfo, InfolistBufferCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one buffer with name (mask) */
+    /* One buffer with name (mask) */
     infolist = hook_infolist_get (NULL, "buffer", NULL, "core.w*");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -862,10 +862,10 @@ TEST(PluginApiInfo, InfolistBufferLinesCb)
     struct t_infolist *infolist;
     time_t date;
 
-    /* invalid buffer lines pointer */
+    /* Invalid buffer lines pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "buffer_lines", (void *)0x1, NULL));
 
-    /* lines of core buffer */
+    /* Lines of core buffer */
     infolist = hook_infolist_get (NULL, "buffer_lines", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -874,7 +874,7 @@ TEST(PluginApiInfo, InfolistBufferLinesCb)
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
-    /* lines of core buffer (using buffer pointer) */
+    /* Lines of core buffer (using buffer pointer) */
     infolist = hook_infolist_get (NULL, "buffer_lines", gui_buffers, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -893,13 +893,13 @@ TEST(PluginApiInfo, InfolistFilterCb)
     struct t_infolist *infolist;
     struct t_gui_filter *ptr_filter1, *ptr_filter2;
 
-    /* without filters */
+    /* Without filters */
     infolist = hook_infolist_get (NULL, "filter", NULL, NULL);
     CHECK(infolist);
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* with two filters */
+    /* With two filters */
     ptr_filter1 = gui_filter_new (1, "test_filter1", "core.weechat",
                                   "tag1", "regex1.*");
     CHECK(ptr_filter1);
@@ -919,7 +919,7 @@ TEST(PluginApiInfo, InfolistFilterCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one filter with name (mask) */
+    /* One filter with name (mask) */
     infolist = hook_infolist_get (NULL, "filter", NULL, "test_*2");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -942,20 +942,20 @@ TEST(PluginApiInfo, InfolistHistoryCb)
 {
     struct t_infolist *infolist;
 
-    /* invalid history pointer */
+    /* Invalid history pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "history", (void *)0x1, NULL));
 
     gui_input_insert_string (gui_buffers, "abc");
     gui_input_return (gui_buffers);
 
-    /* global history */
+    /* Global history */
     infolist = hook_infolist_get (NULL, "history", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
     STRCMP_EQUAL("abc", infolist_string (infolist, "text"));
     infolist_free (infolist);
 
-    /* history of core buffer */
+    /* History of core buffer */
     input_data (gui_buffers, "abc", NULL, 1, 0);
     infolist = hook_infolist_get (NULL, "history", gui_buffers, NULL);
     CHECK(infolist);
@@ -976,10 +976,10 @@ TEST(PluginApiInfo, InfolistHookCb)
     struct t_hook *ptr_hook;
     char *name, str_args[1024];
 
-    /* invalid hook pointer */
+    /* Invalid hook pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "hook", (void *)0x1, NULL));
 
-    /* all hooks */
+    /* All hooks */
     infolist = hook_infolist_get (NULL, "hook", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -991,7 +991,7 @@ TEST(PluginApiInfo, InfolistHookCb)
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one command with pointer */
+    /* One command with pointer */
     infolist = hook_infolist_get (NULL, "hook", ptr_hook, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1000,7 +1000,7 @@ TEST(PluginApiInfo, InfolistHookCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one command with name */
+    /* One command with name */
     snprintf (str_args, sizeof (str_args), "command,%s", name);
     infolist = hook_infolist_get (NULL, "hook", NULL, str_args);
     CHECK(infolist);
@@ -1010,7 +1010,7 @@ TEST(PluginApiInfo, InfolistHookCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* all completion hooks */
+    /* All completion hooks */
     infolist = hook_infolist_get (NULL, "hook", NULL, "completion");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1032,7 +1032,7 @@ TEST(PluginApiInfo, InfolistHotlistCb)
 
     gui_buffer_set (gui_buffers, "hotlist", "2");
 
-    /* hotlist (one buffer) */
+    /* Hotlist (one buffer) */
     infolist = hook_infolist_get (NULL, "hotlist", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1044,7 +1044,7 @@ TEST(PluginApiInfo, InfolistHotlistCb)
 
     gui_buffer_set (gui_buffers, "hotlist", "-1");
 
-    /* hotlist (empty) */
+    /* Hotlist (empty) */
     infolist = hook_infolist_get (NULL, "hotlist", NULL, NULL);
     CHECK(infolist);
     POINTERS_EQUAL(NULL, infolist_next (infolist));
@@ -1060,10 +1060,10 @@ TEST(PluginApiInfo, InfolistKeyCb)
 {
     struct t_infolist *infolist;
 
-    /* invalid key context */
+    /* Invalid key context */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "key", NULL, "invalid_context"));
 
-    /* keys */
+    /* Keys */
     infolist = hook_infolist_get (NULL, "key", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1071,7 +1071,7 @@ TEST(PluginApiInfo, InfolistKeyCb)
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
-    /* keys of context "search" */
+    /* Keys of context "search" */
     infolist = hook_infolist_get (NULL, "key", NULL, "search");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1095,7 +1095,7 @@ TEST(PluginApiInfo, InfolistLayoutCb)
     gui_layout_add (ptr_layout);
     gui_layout_window_store (ptr_layout);
 
-    /* layouts */
+    /* Layouts */
     infolist = hook_infolist_get (NULL, "layout", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1105,7 +1105,7 @@ TEST(PluginApiInfo, InfolistLayoutCb)
 
     gui_layout_remove (ptr_layout);
 
-    /* no layouts */
+    /* No layouts */
     infolist = hook_infolist_get (NULL, "layout", NULL, NULL);
     CHECK(infolist);
     POINTERS_EQUAL(NULL, infolist_next (infolist));
@@ -1121,13 +1121,13 @@ TEST(PluginApiInfo, InfolistNicklistCb)
 {
     struct t_infolist *infolist;
 
-    /* missing buffer pointer */
+    /* Missing buffer pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "nicklist", NULL, NULL));
 
-    /* invalid buffer pointer */
+    /* Invalid buffer pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "nicklist", (void *)0x1, NULL));
 
-    /* nicklist */
+    /* Nicklist */
     infolist = hook_infolist_get (NULL, "nicklist", gui_buffers, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1146,13 +1146,13 @@ TEST(PluginApiInfo, InfolistOptionCb)
 {
     struct t_infolist *infolist;
 
-    /* invalid option name */
+    /* Invalid option name */
     infolist = hook_infolist_get (NULL, "option", NULL, "invalid.name");
     CHECK(infolist);
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* all options */
+    /* All options */
     infolist = hook_infolist_get (NULL, "option", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1160,7 +1160,7 @@ TEST(PluginApiInfo, InfolistOptionCb)
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
-    /* option with name */
+    /* Option with name */
     infolist = hook_infolist_get (NULL, "option", NULL, "weechat.look.mouse");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1182,10 +1182,10 @@ TEST(PluginApiInfo, InfolistPluginCb)
     const char *ptr_name;
     char *name;
 
-    /* invalid plugin pointer */
+    /* Invalid plugin pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "plugin", (void *)0x1, NULL));
 
-    /* all plugins */
+    /* All plugins */
     infolist = hook_infolist_get (NULL, "plugin", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1197,7 +1197,7 @@ TEST(PluginApiInfo, InfolistPluginCb)
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one plugin with pointer */
+    /* One plugin with pointer */
     infolist = hook_infolist_get (NULL, "plugin", ptr_plugin, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1205,7 +1205,7 @@ TEST(PluginApiInfo, InfolistPluginCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one plugin with name */
+    /* One plugin with name */
     infolist = hook_infolist_get (NULL, "plugin", NULL, "spel*");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1226,7 +1226,7 @@ TEST(PluginApiInfo, InfolistProxyCb)
     struct t_infolist *infolist;
     struct t_proxy *ptr_proxy1, *ptr_proxy2;
 
-    /* invalid proxy pointer */
+    /* Invalid proxy pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "proxy", (void *)0x1, NULL));
 
     ptr_proxy1 = proxy_new ("proxy1", "http", "off",
@@ -1236,7 +1236,7 @@ TEST(PluginApiInfo, InfolistProxyCb)
                             "proxy2.example.com", "9000", "user2", "pass2");
     CHECK(ptr_proxy2);
 
-    /* all proxies */
+    /* All proxies */
     infolist = hook_infolist_get (NULL, "proxy", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1244,7 +1244,7 @@ TEST(PluginApiInfo, InfolistProxyCb)
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one proxy with pointer */
+    /* One proxy with pointer */
     infolist = hook_infolist_get (NULL, "proxy", ptr_proxy2, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1252,7 +1252,7 @@ TEST(PluginApiInfo, InfolistProxyCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one proxy with name (mask) */
+    /* One proxy with name (mask) */
     infolist = hook_infolist_get (NULL, "proxy", NULL, "*xy1");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1291,13 +1291,13 @@ TEST(PluginApiInfo, InfolistWindowCb)
 {
     struct t_infolist *infolist;
 
-    /* invalid window pointer */
+    /* Invalid window pointer */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "window", (void *)0x1, NULL));
 
-    /* invalid window number */
+    /* Invalid window number */
     POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "window", NULL, "123"));
 
-    /* all windows */
+    /* All windows */
     infolist = hook_infolist_get (NULL, "window", NULL, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1305,7 +1305,7 @@ TEST(PluginApiInfo, InfolistWindowCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one window with pointer */
+    /* One window with pointer */
     infolist = hook_infolist_get (NULL, "window", gui_windows, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1313,7 +1313,7 @@ TEST(PluginApiInfo, InfolistWindowCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* current window */
+    /* Current window */
     infolist = hook_infolist_get (NULL, "window", NULL, "current");
     CHECK(infolist);
     CHECK(infolist_next (infolist));
@@ -1321,7 +1321,7 @@ TEST(PluginApiInfo, InfolistWindowCb)
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
-    /* one window with number */
+    /* One window with number */
     infolist = hook_infolist_get (NULL, "window", NULL, "1");
     CHECK(infolist);
     CHECK(infolist_next (infolist));

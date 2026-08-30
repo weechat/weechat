@@ -54,12 +54,12 @@ TEST(CoreSecure, DeriveKey)
     LONGS_EQUAL(0, secure_derive_key (salt, passphrase, NULL, 0));
     LONGS_EQUAL(0, secure_derive_key (salt, passphrase, key, 0));
 
-    /* test with key size == 64 (SHA512) */
+    /* Test with key size == 64 (SHA512) */
     memset (key, 0, 64);
     LONGS_EQUAL(1, secure_derive_key (salt, passphrase, key, 64));
     MEMCMP_EQUAL(sha512_bin, key, 64);
 
-    /* test with key size == 32 (too small for SHA512) */
+    /* Test with key size == 32 (too small for SHA512) */
     memset (key, 0, 64);
     LONGS_EQUAL(1, secure_derive_key (salt, passphrase, key, 32));
     MEMCMP_EQUAL(sha512_bin, key, 32);
@@ -81,7 +81,7 @@ TEST(CoreSecure, EncryptDecryptData)
     int length_password, length_encrypted_data, length_decrypted_data;
     char *encrypted_data, *decrypted_data;
 
-    /* compute length of password, including the final \0 */
+    /* Compute length of password, including the final \0. */
     length_password = strlen (password) + 1;
 
     for (i = 0; i <= secure_config_crypt_hash_algo->max; i++)
@@ -97,15 +97,15 @@ TEST(CoreSecure, EncryptDecryptData)
             if (cipher == GCRY_CIPHER_NONE)
                 continue;
 
-            /* initialize data */
+            /* Initialize data. */
             encrypted_data = NULL;
             decrypted_data = NULL;
             length_encrypted_data = 0;
             length_decrypted_data = 0;
 
             /*
-             * encrypt the password with a hash algo, cipher and arbitrary
-             * passphrase
+             * Encrypt the password with a hash algo, cipher and arbitrary
+             * passphrase.
              */
             rc = secure_encrypt_data (password,
                                       length_password,
@@ -116,7 +116,7 @@ TEST(CoreSecure, EncryptDecryptData)
                                       &length_encrypted_data);
             LONGS_EQUAL(0, rc);
 
-            /* decrypt the encrypted password */
+            /* Decrypt the encrypted password. */
             rc = secure_decrypt_data (encrypted_data,
                                       length_encrypted_data,
                                       hash_algo,
@@ -126,11 +126,11 @@ TEST(CoreSecure, EncryptDecryptData)
                                       &length_decrypted_data);
             LONGS_EQUAL(0, rc);
 
-            /* check decrypted data */
+            /* Check decrypted data. */
             LONGS_EQUAL(length_password, length_decrypted_data);
             STRCMP_EQUAL(password, decrypted_data);
 
-            /* free encrypted/decrypted data */
+            /* Free encrypted/decrypted data. */
             free (encrypted_data);
             free (decrypted_data);
         }

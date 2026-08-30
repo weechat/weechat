@@ -87,7 +87,7 @@ TEST_GROUP(CoreConfigFileWithNewOptions)
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
-        /* auto-created as enum with WeeChat >= 4.1.0 */
+        /* Auto-created as enum with WeeChat >= 4.1.0 */
         ptr_option_int_str = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "test_integer_values", "integer", "", "v1|v2|v3", 0, 0, "v2", NULL, 0,
@@ -255,7 +255,7 @@ TEST(CoreConfigFile, GetConfigsByPriority)
     struct t_arraylist *all_configs;
     int config_count;
 
-    /* count number of configuration files */
+    /* Count number of configuration files. */
     config_count = 0;
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
@@ -263,24 +263,24 @@ TEST(CoreConfigFile, GetConfigsByPriority)
         config_count++;
     }
 
-    /* get list of configuration files by priority (highest to lowest) */
+    /* Get list of configuration files by priority (highest to lowest). */
     all_configs = config_file_get_configs_by_priority ();
     CHECK(all_configs);
 
-    /* ensure we have all files in the list (and not more) */
+    /* Ensure we have all files in the list (and not more). */
     LONGS_EQUAL(config_count, arraylist_size (all_configs));
 
-    /* check core configuration files (they have higher priority) */
+    /* Check core configuration files (they have higher priority). */
     POINTERS_EQUAL(secure_config_file, arraylist_get (all_configs, 0));
     POINTERS_EQUAL(weechat_config_file, arraylist_get (all_configs, 1));
     POINTERS_EQUAL(plugin_config_file, arraylist_get (all_configs, 2));
 
-    /* check first plugin configuration file (with highest priority) */
+    /* Check first plugin configuration file (with highest priority). */
     ptr_config = (struct t_config_file *)arraylist_get (all_configs, 3);
     CHECK(ptr_config);
     STRCMP_EQUAL("charset", ptr_config->name);
 
-    /* check last plugin configuration file (with lowest priority) */
+    /* Check last plugin configuration file (with lowest priority). */
     ptr_config = (struct t_config_file *)arraylist_get (all_configs,
                                                         config_count - 1);
     CHECK(ptr_config);
@@ -419,7 +419,7 @@ TEST(CoreConfigFile, NewOption)
     struct t_config_option *ptr_option;
     int *ptr_themable;
 
-    /* plain types are not themable */
+    /* Plain types are not themable. */
     LONGS_EQUAL(0, test_new_option_themable (
                     weechat_config_section_look,
                     "test_themable", "boolean", NULL, "off"));
@@ -433,12 +433,12 @@ TEST(CoreConfigFile, NewOption)
                     weechat_config_section_look,
                     "test_themable", "enum", "v1|v2|v3", "v2"));
 
-    /* color options are always themable, even without the suffix */
+    /* Color options are always themable, even without the suffix. */
     LONGS_EQUAL(1, test_new_option_themable (
                     weechat_config_section_color,
                     "test_themable", "color", NULL, "blue"));
 
-    /* the "|themable" suffix marks an option of any type as themable */
+    /* The "|themable" suffix marks an option of any type as themable. */
     LONGS_EQUAL(1, test_new_option_themable (
                     weechat_config_section_look,
                     "test_themable", "boolean|themable", NULL, "off"));
@@ -455,7 +455,7 @@ TEST(CoreConfigFile, NewOption)
                     weechat_config_section_color,
                     "test_themable", "color|themable", NULL, "blue"));
 
-    /* an invalid type or unknown suffix is refused (option not created) */
+    /* An invalid type or unknown suffix is refused (option not created). */
     LONGS_EQUAL(-1, test_new_option_themable (
                     weechat_config_section_look,
                     "test_themable", "string|xxx", NULL, "value"));
@@ -466,7 +466,7 @@ TEST(CoreConfigFile, NewOption)
                     weechat_config_section_look,
                     "test_themable", "xxx", NULL, "value"));
 
-    /* the flag is reachable via config_file_option_get_pointer */
+    /* The flag is reachable via config_file_option_get_pointer. */
     ptr_option = config_file_new_option (
         weechat_config_file, weechat_config_section_look,
         "test_themable", "string|themable", "", NULL, 0, 0, "value", NULL, 0,
@@ -727,7 +727,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetReset)
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set (NULL, NULL, 1));
 
-    /* boolean */
+    /* Boolean */
     LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set (ptr_option_bool, "zzz", 1));
@@ -744,7 +744,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetReset)
                 config_file_option_reset (ptr_option_bool, 1));
     LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
 
-    /* integer */
+    /* Integer */
     LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set (ptr_option_int, "zzz", 1));
@@ -765,7 +765,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetReset)
                 config_file_option_reset (ptr_option_int, 1));
     LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
 
-    /* integer with string values (enum with WeeChat >= 4.1.0) */
+    /* Integer with string values (enum with WeeChat >= 4.1.0) */
     LONGS_EQUAL(1, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set (ptr_option_int_str, "zzz", 1));
@@ -776,7 +776,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetReset)
                 config_file_option_reset (ptr_option_int_str, 1));
     LONGS_EQUAL(1, CONFIG_INTEGER(ptr_option_int_str));
 
-    /* string */
+    /* String */
     STRCMP_EQUAL("value", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set (ptr_option_str, "xxx", 1));
@@ -787,7 +787,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetReset)
                 config_file_option_reset (ptr_option_str, 1));
     STRCMP_EQUAL("value", CONFIG_STRING(ptr_option_str));
 
-    /* color */
+    /* Color */
     LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set (ptr_option_col, "zzz", 1));
@@ -836,7 +836,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetReset)
                 config_file_option_reset (ptr_option_col, 1));
     LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
 
-    /* enum */
+    /* Enum */
     LONGS_EQUAL(1, CONFIG_ENUM(ptr_option_enum));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set (ptr_option_enum, "zzz", 1));
@@ -876,7 +876,7 @@ TEST(CoreConfigFileWithNewOptions, OptionToggle)
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_toggle (ptr_option_bool, NULL, -1, 1));
 
-    /* boolean */
+    /* Boolean */
     LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_toggle (ptr_option_bool,
@@ -903,7 +903,7 @@ TEST(CoreConfigFileWithNewOptions, OptionToggle)
                 config_file_option_reset (ptr_option_bool, 1));
     LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
 
-    /* integer */
+    /* Integer */
     LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_toggle (ptr_option_int,
@@ -931,7 +931,7 @@ TEST(CoreConfigFileWithNewOptions, OptionToggle)
                 config_file_option_reset (ptr_option_int, 1));
     LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
 
-    /* integer with string values (enum with WeeChat >= 4.1.0) */
+    /* Integer with string values (enum with WeeChat >= 4.1.0) */
     LONGS_EQUAL(1, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_toggle (ptr_option_int_str,
@@ -955,7 +955,7 @@ TEST(CoreConfigFileWithNewOptions, OptionToggle)
                 config_file_option_reset (ptr_option_int_str, 1));
     LONGS_EQUAL(1, CONFIG_INTEGER(ptr_option_int_str));
 
-    /* string */
+    /* String */
     STRCMP_EQUAL("value", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_toggle (ptr_option_str,
@@ -984,7 +984,7 @@ TEST(CoreConfigFileWithNewOptions, OptionToggle)
                 config_file_option_reset (ptr_option_str, 1));
     STRCMP_EQUAL("value", CONFIG_STRING(ptr_option_str));
 
-    /* color */
+    /* Color */
     LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_toggle (ptr_option_col,
@@ -1007,7 +1007,7 @@ TEST(CoreConfigFileWithNewOptions, OptionToggle)
                 config_file_option_reset (ptr_option_col, 1));
     LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
 
-    /* enum */
+    /* Enum */
     LONGS_EQUAL(1, CONFIG_ENUM(ptr_option_enum));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_toggle (ptr_option_enum,
@@ -1052,7 +1052,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set_default (NULL, NULL, 1));
 
-    /* boolean */
+    /* Boolean */
     LONGS_EQUAL(0, CONFIG_BOOLEAN_DEFAULT(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
                 config_file_option_set_default (ptr_option_bool, NULL, 1));
@@ -1068,7 +1068,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
                 config_file_option_set_default (ptr_option_bool, "toggle", 1));
     LONGS_EQUAL(1, CONFIG_BOOLEAN_DEFAULT(ptr_option_bool));
 
-    /* integer */
+    /* Integer */
     LONGS_EQUAL(100, CONFIG_INTEGER_DEFAULT(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
                 config_file_option_set_default (ptr_option_int, NULL, 1));
@@ -1088,7 +1088,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
                 config_file_option_set_default (ptr_option_int, "--3", 1));
     LONGS_EQUAL(62, CONFIG_INTEGER_DEFAULT(ptr_option_int));
 
-    /* integer with string values (enum with WeeChat >= 4.1.0) */
+    /* Integer with string values (enum with WeeChat >= 4.1.0) */
     LONGS_EQUAL(1, CONFIG_INTEGER_DEFAULT(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
                 config_file_option_set_default (ptr_option_int_str, NULL, 1));
@@ -1098,7 +1098,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
                 config_file_option_set_default (ptr_option_int_str, "v3", 1));
     LONGS_EQUAL(2, CONFIG_INTEGER_DEFAULT(ptr_option_int_str));
 
-    /* string */
+    /* String */
     STRCMP_EQUAL("value", CONFIG_STRING_DEFAULT(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
                 config_file_option_set_default (ptr_option_str, "xxx", 1));
@@ -1106,7 +1106,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
                 config_file_option_set_default (ptr_option_str, "test", 1));
     STRCMP_EQUAL("test", CONFIG_STRING_DEFAULT(ptr_option_str));
 
-    /* color */
+    /* Color */
     LONGS_EQUAL(9, CONFIG_COLOR_DEFAULT(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set_default (ptr_option_col, "zzz", 1));
@@ -1152,7 +1152,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
                 | GUI_COLOR_EXTENDED_KEEPATTR_FLAG,
                 CONFIG_COLOR_DEFAULT(ptr_option_col));
 
-    /* enum */
+    /* Enum */
     LONGS_EQUAL(1, CONFIG_ENUM_DEFAULT(ptr_option_enum));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
                 config_file_option_set_default (ptr_option_enum, NULL, 1));
@@ -1620,7 +1620,7 @@ TEST(CoreConfigFile, OptionFreeData)
 
 TEST(CoreConfigFile, OptionFree)
 {
-    /* test free of NULL option */
+    /* Test free of NULL option. */
     config_file_option_free (NULL, 1);
 }
 

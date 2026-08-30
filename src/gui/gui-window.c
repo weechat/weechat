@@ -78,7 +78,7 @@ gui_window_search_by_number (int number)
             return ptr_win;
     }
 
-    /* window not found */
+    /* Window not found */
     return NULL;
 }
 
@@ -104,7 +104,7 @@ gui_window_search_by_xy (int x, int y)
         }
     }
 
-    /* no window at this location */
+    /* No window at this location */
     return NULL;
 }
 
@@ -146,11 +146,11 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     *beginning = NULL;
     *end = NULL;
 
-    /* not in a window? */
+    /* Not in a window? */
     if (!window)
         return;
 
-    /* in window, but not in chat area? */
+    /* In window, but not in chat area? */
     win_x = x - window->win_chat_x;
     win_y = y - window->win_chat_y;
     if ((win_x < 0)
@@ -161,23 +161,23 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
         return;
     }
 
-    /* add horizontal scroll (buffers with free content) */
+    /* Add horizontal scroll (buffers with free content). */
     if (window->scroll->start_col > 0)
         win_x += window->scroll->start_col;
 
     *line_x = win_x;
 
-    /* we are in chat area */
+    /* We are in chat area. */
     *chat = 1;
 
-    /* get line */
+    /* Get line. */
     if (win_y >= window->coords_size)
         return;
     *line = window->coords[win_y].line;
     if (!*line)
         return;
 
-    /* no data for line? */
+    /* No data for line? */
     if (!window->coords[win_y].data)
         return;
 
@@ -427,7 +427,7 @@ gui_window_scroll_search (struct t_gui_window *window,
             return ptr_scroll;
     }
 
-    /* scroll not found for buffer */
+    /* Scroll not found for buffer */
     return NULL;
 }
 
@@ -535,13 +535,13 @@ gui_window_scroll_switch (struct t_gui_window *window,
 
     ptr_scroll = gui_window_scroll_search (window, buffer);
 
-    /* scroll is already selected (first in list)? */
+    /* Scroll is already selected (first in list)? */
     if (ptr_scroll && (ptr_scroll == window->scroll))
         return;
 
     if (ptr_scroll)
     {
-        /* scroll found, move it in first position */
+        /* Scroll found, move it in first position. */
         if (ptr_scroll->prev_scroll)
             (ptr_scroll->prev_scroll)->next_scroll = ptr_scroll->next_scroll;
         if (ptr_scroll->next_scroll)
@@ -553,7 +553,7 @@ gui_window_scroll_switch (struct t_gui_window *window,
     }
     else
     {
-        /* scroll not found, create one and add it at first position */
+        /* Scroll not found, create one and add it at first position. */
         new_scroll = malloc (sizeof (*new_scroll));
         if (new_scroll)
         {
@@ -625,8 +625,8 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
         }
 
         /*
-         * parent window leaf becomes node and we add 2 leafs below
-         * (#1 is parent win, #2 is new win)
+         * Parent window leaf becomes node and we add 2 leafs below
+         * (#1 is parent win, #2 is new win).
          */
 
         parent_window->ptr_tree = child1;
@@ -638,11 +638,11 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
         child2->parent_node = ptr_tree;
         child2->child1 = NULL;
         child2->child2 = NULL;
-        child2->window = NULL;    /* will be assigned by new window below */
+        child2->window = NULL;    /* Will be assigned by new window below. */
 
         ptr_tree->child1 = child1;
         ptr_tree->child2 = child2;
-        ptr_tree->window = NULL;  /* leaf becomes node */
+        ptr_tree->window = NULL;  /* Leaf becomes node. */
 
         ptr_leaf = child2;
     }
@@ -657,7 +657,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     if (!new_window)
         return NULL;
 
-    /* create scroll structure */
+    /* Create scroll structure. */
     new_window->scroll = malloc (sizeof (*new_window->scroll));
     if (!new_window->scroll)
     {
@@ -665,7 +665,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
         return NULL;
     }
 
-    /* create window objects */
+    /* Create window objects. */
     if (!gui_window_objects_init (new_window))
     {
         free (new_window->scroll);
@@ -673,10 +673,10 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
         return NULL;
     }
 
-    /* number */
+    /* Number */
     new_window->number = (last_gui_window) ? last_gui_window->number + 1 : 1;
 
-    /* position & size */
+    /* Position & size */
     new_window->win_x = x;
     new_window->win_y = y;
     new_window->win_width = width;
@@ -684,7 +684,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     new_window->win_width_pct = width_pct;
     new_window->win_height_pct = height_pct;
 
-    /* chat window */
+    /* Chat window */
     new_window->win_chat_x = 0;
     new_window->win_chat_y = 0;
     new_window->win_chat_width = 0;
@@ -692,31 +692,31 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     new_window->win_chat_cursor_x = 0;
     new_window->win_chat_cursor_y = 0;
 
-    /* bar windows */
+    /* Bar windows */
     new_window->bar_windows = NULL;
     new_window->last_bar_window = NULL;
 
-    /* refresh */
+    /* Refresh */
     new_window->refresh_needed = 0;
 
-    /* buffer and layout infos */
+    /* Buffer and layout infos */
     new_window->buffer = buffer;
     new_window->layout_plugin_name = NULL;
     new_window->layout_buffer_name = NULL;
 
-    /* scroll */
+    /* Scroll */
     gui_window_scroll_init (new_window->scroll, buffer);
     new_window->scroll_changed = 0;
 
-    /* coordinates */
+    /* Coordinates */
     new_window->coords_size = 0;
     new_window->coords = NULL;
 
-    /* tree */
+    /* Tree */
     new_window->ptr_tree = ptr_leaf;
     ptr_leaf->window = new_window;
 
-    /* add window to windows queue */
+    /* Add window to windows queue. */
     new_window->prev_window = last_gui_window;
     if (last_gui_window)
         last_gui_window->next_window = new_window;
@@ -725,14 +725,14 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     last_gui_window = new_window;
     new_window->next_window = NULL;
 
-    /* create bar windows */
+    /* Create bar windows. */
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE]) != GUI_BAR_TYPE_ROOT)
             gui_bar_window_new (ptr_bar, new_window);
     }
 
-    /* send signal */
+    /* Send signal. */
     (void) hook_signal_send ("window_opened",
                              WEECHAT_HOOK_SIGNAL_POINTER, new_window);
 
@@ -762,7 +762,7 @@ gui_window_valid (struct t_gui_window *window)
             return 1;
     }
 
-    /* window not found */
+    /* Window not found */
     return 0;
 }
 
@@ -792,7 +792,7 @@ gui_window_search_with_buffer (struct t_gui_buffer *buffer)
             return ptr_window;
     }
 
-    /* no window displaying buffer */
+    /* No window displaying buffer */
     return NULL;
 }
 
@@ -1033,30 +1033,30 @@ gui_window_free (struct t_gui_window *window)
     if (window->buffer)
         gui_buffer_add_value_num_displayed (window->buffer, -1);
 
-    /* free data */
+    /* Free data. */
     if (window->gui_objects)
     {
         gui_window_objects_free (window, 1);
         free (window->gui_objects);
     }
 
-    /* remove bar windows */
+    /* Remove bar windows. */
     while (window->bar_windows)
     {
         gui_bar_window_free (window->bar_windows, window);
     }
 
-    /* free other data */
+    /* Free other data. */
     free (window->layout_plugin_name);
     free (window->layout_buffer_name);
 
-    /* remove scroll list */
+    /* Remove scroll list. */
     gui_window_scroll_free_all (window);
 
-    /* free coords */
+    /* Free coordinates. */
     free (window->coords);
 
-    /* remove window from windows list */
+    /* Remove window from windows list. */
     if (window->prev_window)
         (window->prev_window)->next_window = window->next_window;
     if (window->next_window)
@@ -1181,7 +1181,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
     time_letter = ' ';
     scroll_from_end_free_buffer = 0;
 
-    /* search direction */
+    /* Search direction. */
     if (scroll[0] == '-')
     {
         direction = -1;
@@ -1198,7 +1198,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         scroll++;
     }
 
-    /* search number and letter */
+    /* Search number and letter. */
     pos = scroll;
     while (pos && pos[0] && isdigit ((unsigned char)pos[0]))
     {
@@ -1223,18 +1223,18 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         }
     }
 
-    /* at least number or letter has to he given */
+    /* At least number or letter has to be given */
     if ((number == 0) && (time_letter == ' '))
         return;
 
-    /* do the scroll! */
+    /* Do the scroll! */
     stop = 0;
     count_msg = 0;
     if (direction < 0)
     {
         /*
-         * it's not possible to scroll before first line of buffer on a buffer
-         * with free content
+         * It's not possible to scroll before first line of buffer on a buffer
+         * with free content.
          */
         if (!scroll_from_end_free_buffer && !window->scroll->start_line
            && (window->buffer->type == GUI_BUFFER_TYPE_FREE))
@@ -1298,10 +1298,10 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                     diff_date = ptr_line->data->date - old_date;
                 switch (time_letter)
                 {
-                    case 's': /* seconds */
+                    case 's': /* Seconds */
                         if (number == 0)
                         {
-                            /* stop if line has different second */
+                            /* Stop if line has different second. */
                             if ((line_date.tm_sec != old_line_date.tm_sec)
                                 || (line_date.tm_min != old_line_date.tm_min)
                                 || (line_date.tm_hour != old_line_date.tm_hour)
@@ -1314,10 +1314,10 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                         else if (diff_date >= number)
                             stop = 1;
                         break;
-                    case 'm': /* minutes */
+                    case 'm': /* Minutes */
                         if (number == 0)
                         {
-                            /* stop if line has different minute */
+                            /* Stop if line has different minute. */
                             if ((line_date.tm_min != old_line_date.tm_min)
                                 || (line_date.tm_hour != old_line_date.tm_hour)
                                 || (line_date.tm_mday != old_line_date.tm_mday)
@@ -1328,10 +1328,10 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                         else if (diff_date >= number * 60)
                             stop = 1;
                         break;
-                    case 'h': /* hours */
+                    case 'h': /* Hours */
                         if (number == 0)
                         {
-                            /* stop if line has different hour */
+                            /* Stop if line has different hour. */
                             if ((line_date.tm_hour != old_line_date.tm_hour)
                                 || (line_date.tm_mday != old_line_date.tm_mday)
                                 || (line_date.tm_mon != old_line_date.tm_mon)
@@ -1341,10 +1341,10 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                         else if (diff_date >= number * 60 * 60)
                             stop = 1;
                         break;
-                    case 'd': /* days */
+                    case 'd': /* Days */
                         if (number == 0)
                         {
-                            /* stop if line has different day */
+                            /* Stop if line has different day. */
                             if ((line_date.tm_mday != old_line_date.tm_mday)
                                 || (line_date.tm_mon != old_line_date.tm_mon)
                                 || (line_date.tm_year != old_line_date.tm_year))
@@ -1353,30 +1353,30 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                         else if (diff_date >= number * 60 * 60 * 24)
                             stop = 1;
                         break;
-                    case 'M': /* months */
+                    case 'M': /* Months */
                         if (number == 0)
                         {
-                            /* stop if line has different month */
+                            /* Stop if line has different month. */
                             if ((line_date.tm_mon != old_line_date.tm_mon)
                                 || (line_date.tm_year != old_line_date.tm_year))
                                 stop = 1;
                         }
                         /*
-                         * we consider month is 30 days, who will notice
+                         * We consider month is 30 days, who will notice
                          * I'm too lazy to code exact date diff ? ;)
                          */
                         else if (diff_date >= number * 60 * 60 * 24 * 30)
                             stop = 1;
                         break;
-                    case 'y': /* years */
+                    case 'y': /* Years */
                         if (number == 0)
                         {
-                            /* stop if line has different year */
+                            /* Stop if line has different year. */
                             if (line_date.tm_year != old_line_date.tm_year)
                                 stop = 1;
                         }
                         /*
-                         * we consider year is 365 days, who will notice
+                         * We consider year is 365 days, who will notice
                          * I'm too lazy to code exact date diff ? ;)
                          */
                         else if (diff_date >= number * 60 * 60 * 24 * 365)
@@ -1424,7 +1424,7 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
     number = 0;
     percentage = 0;
 
-    /* search direction */
+    /* Search direction. */
     if (scroll[0] == '-')
     {
         direction = -1;
@@ -1436,7 +1436,7 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
         scroll++;
     }
 
-    /* search number and percentage */
+    /* Search number and percentage. */
     pos = scroll;
     while (pos && pos[0] && isdigit ((unsigned char)pos[0]))
     {
@@ -1452,17 +1452,17 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
         pos[0] = saved_char;
     }
 
-    /* for percentage, compute number of columns */
+    /* For percentage, compute number of columns. */
     if (percentage)
     {
         number = (window->win_chat_width * number) / 100;
     }
 
-    /* number must be different from 0 */
+    /* Number must be different from 0. */
     if (number == 0)
         return;
 
-    /* do the horizontal scroll! */
+    /* Do the horizontal scroll! */
     start_col = window->scroll->start_col + (number * direction);
     if (start_col < 0)
         start_col = 0;
@@ -1504,7 +1504,7 @@ gui_window_scroll_previous_highlight (struct t_gui_window *window)
                 }
                 ptr_line = ptr_line->prev_line;
             }
-            /* no previous highlight, scroll to bottom */
+            /* No previous highlight, scroll to bottom. */
             gui_window_scroll_bottom (window);
         }
     }
@@ -1541,7 +1541,7 @@ gui_window_scroll_next_highlight (struct t_gui_window *window)
                 }
                 ptr_line = ptr_line->next_line;
             }
-            /* no next highlight, scroll to bottom */
+            /* No next highlight, scroll to bottom. */
             gui_window_scroll_bottom (window);
         }
     }
@@ -1880,7 +1880,7 @@ gui_window_zoom (struct t_gui_window *window)
     ptr_layout = gui_layout_search (GUI_LAYOUT_ZOOM);
     if (ptr_layout)
     {
-        /* restore layout as it was before zooming a window */
+        /* Restore layout as it was before zooming a window. */
         (void) hook_signal_send ("window_unzoom",
                                  WEECHAT_HOOK_SIGNAL_POINTER,
                                  gui_current_window);
@@ -1893,7 +1893,7 @@ gui_window_zoom (struct t_gui_window *window)
     }
     else
     {
-        /* store layout and zoom on current window */
+        /* Store layout and zoom on current window. */
         ptr_layout = gui_layout_alloc (GUI_LAYOUT_ZOOM);
         if (ptr_layout)
         {
@@ -1920,7 +1920,7 @@ gui_window_hdata_window_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1970,7 +1970,7 @@ gui_window_hdata_window_scroll_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2002,7 +2002,7 @@ gui_window_hdata_window_tree_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

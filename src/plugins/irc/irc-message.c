@@ -204,7 +204,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
     ptr_message = message;
 
     /*
-     * we will use this message as example:
+     * We will use this message as example:
      *
      *   @time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :Hello world!
      */
@@ -214,6 +214,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         /*
          * Read tags: they are optional and enabled only if client enabled
          * a server capability.
+         *
          * See: https://ircv3.net/specs/extensions/message-tags
          */
         pos = strchr (ptr_message, ' ');
@@ -235,14 +236,14 @@ irc_message_parse (struct t_irc_server *server, const char *message,
     if (message_without_tags)
         *message_without_tags = strdup (ptr_message);
 
-    /* now we have: ptr_message --> ":nick!user@host PRIVMSG #weechat :Hello world!" */
+    /* Now we have: ptr_message --> ":nick!user@host PRIVMSG #weechat :Hello world!". */
     if (ptr_message[0] == ':')
     {
-        /* read host/nick */
+        /* Read host/nick. */
         pos3 = strchr (ptr_message, '@');
         pos2 = strchr (ptr_message, '!');
         pos = strchr (ptr_message, ' ');
-        /* if the prefix doesn't contain a '!', split the nick at '@' */
+        /* If the prefix doesn't contain a '!', split the nick at '@'. */
         if (!pos2 || (pos && pos2 > pos))
             pos2 = pos3;
         if (pos2 && pos3 && (pos3 > pos2))
@@ -278,7 +279,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         }
     }
 
-    /* now we have: ptr_message --> "PRIVMSG #weechat :Hello world!" */
+    /* Now we have: ptr_message --> "PRIVMSG #weechat :Hello world!". */
     if (ptr_message[0])
     {
         pos = strchr (ptr_message, ' ');
@@ -293,7 +294,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
             {
                 pos++;
             }
-            /* now we have: pos --> "#weechat :Hello world!" */
+            /* Now we have: pos --> "#weechat :Hello world!". */
             if (arguments)
                 *arguments = strdup (pos);
             if (pos_arguments)
@@ -639,7 +640,7 @@ irc_message_is_empty (const char *message)
         ptr_msg = weechat_utf8_next_char (ptr_msg);
     }
 
-    /* only newlines => consider message is empty */
+    /* Only newlines => consider message is empty. */
     return 1;
 }
 
@@ -785,7 +786,7 @@ irc_message_ignored (struct t_irc_server *server, const char *message)
     if (!server || !message)
         return 0;
 
-    /* parse raw message */
+    /* Parse raw message. */
     irc_message_parse (server,
                        message,
                        NULL,  /* tags */
@@ -804,13 +805,13 @@ irc_message_ignored (struct t_irc_server *server, const char *message)
                        NULL,  /* pos_channel */
                        NULL);  /* pos_text */
 
-    /* remove colors from host */
+    /* Remove colors from host. */
     host_no_color = (host) ? irc_color_decode (host, 0) : NULL;
 
-    /* search channel */
+    /* Search channel. */
     ptr_channel = (channel) ? irc_channel_search (server, channel) : NULL;
 
-    /* check if message is ignored or not */
+    /* Check if message is ignored or not. */
     ignored = irc_ignore_check (
         server,
         (ptr_channel) ? ptr_channel->name : channel,
@@ -843,27 +844,27 @@ irc_message_replace_vars (struct t_irc_server *server,
     var_channel = (channel_name) ? channel_name : empty_string;
     var_server = (server) ? server->name : empty_string;
 
-    /* replace nick */
+    /* Replace nick. */
     temp = weechat_string_replace (string, "$nick", var_nick);
     if (!temp)
         return NULL;
     res = temp;
 
-    /* replace channel */
+    /* Replace channel. */
     temp = weechat_string_replace (res, "$channel", var_channel);
     free (res);
     if (!temp)
         return NULL;
     res = temp;
 
-    /* replace server */
+    /* Replace server. */
     temp = weechat_string_replace (res, "$server", var_server);
     free (res);
     if (!temp)
         return NULL;
     res = temp;
 
-    /* return result */
+    /* Return result. */
     return res;
 }
 
@@ -883,7 +884,7 @@ irc_message_hide_password (struct t_irc_server *server, const char *target,
     if (!text)
         return NULL;
 
-    /* check if the password must be hidden for this nick */
+    /* Check if the password must be hidden for this nick. */
     hide_password = 0;
     if (irc_config_nicks_hide_password)
     {
@@ -898,7 +899,7 @@ irc_message_hide_password (struct t_irc_server *server, const char *target,
         }
     }
 
-    /* hide password in message displayed using modifier */
+    /* Hide password in message displayed using modifier. */
     if (hide_password)
     {
         return weechat_hook_modifier_exec ("irc_message_auth", server->name,
@@ -1009,7 +1010,7 @@ irc_message_split_string (struct t_irc_message_split_context *context,
     if (!context)
         return 0;
 
-    max_length -= 2;  /* by default: 512 - 2 = 510 bytes */
+    max_length -= 2;  /* By default: 512 - 2 = 510 bytes */
     if (max_length_nick_user_host >= 0)
         max_length -= max_length_nick_user_host;
     else
@@ -1022,7 +1023,7 @@ irc_message_split_string (struct t_irc_message_split_context *context,
     if (suffix)
         max_length -= strlen (suffix);
 
-    /* debug message */
+    /* Debug message */
     if (weechat_irc_plugin->debug >= 2)
     {
         weechat_printf (NULL,
@@ -1036,9 +1037,9 @@ irc_message_split_string (struct t_irc_message_split_context *context,
     if ((max_length < 2) || !arguments || !arguments[0])
     {
         /*
-         * max length is not known (server probably sent values that are not
+         * Max length is not known (server probably sent values that are not
          * consistent), or no arguments => in this case, we just return message
-         * as-is (no split)
+         * as-is (no split).
          */
         if (weechat_asprintf (&message,
                               "%s%s%s %s%s%s%s%s",
@@ -1182,7 +1183,7 @@ irc_message_split_join (struct t_irc_message_split_context *context,
 
     rc = 0;
 
-    max_length -= 2;  /* by default: 512 - 2 = 510 bytes */
+    max_length -= 2;  /* By default: 512 - 2 = 510 bytes */
 
     channels = NULL;
     channels_count = 0;
@@ -1388,16 +1389,16 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
     int index_multiline_args;
 
     /*
-     * message sent looks like:
+     * Message sent looks like:
      *   PRIVMSG #channel :hello world!
      *
-     * when IRC server sends message to other people, message looks like:
+     * When IRC server sends message to other people, message looks like:
      *   :nick!user@host.com PRIVMSG #channel :hello world!
      */
 
     rc = 1;
 
-    /* privmsg/notice with empty message: not allowed */
+    /* Privmsg/notice with empty message: not allowed */
     if (irc_message_is_empty (arguments))
         return 1;
 
@@ -1410,10 +1411,10 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
 
         irc_batch_generate_random_ref (batch_ref, sizeof (batch_ref) - 1);
 
-        /* start batch */
+        /* Start batch. */
         irc_message_start_batch (context, target, batch_ref);
 
-        /* add messages */
+        /* Add messages. */
         list_lines = weechat_string_split (arguments, "\n", NULL, 0, 0,
                                            &count_lines);
         if (list_lines)
@@ -1451,7 +1452,7 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
                         || (context->total_bytes + length_tags
                             + (int)strlen (list_lines[i + 1]) >= multiline_max_bytes)))
                 {
-                    /* start new batch if we have reached max lines/bytes */
+                    /* Start new batch if we have reached max lines/bytes. */
                     irc_message_end_batch (context, batch_ref);
                     snprintf (name, sizeof (name),
                               "multiline_args%d", index_multiline_args);
@@ -1469,7 +1470,7 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
             weechat_string_free_split (list_lines);
         }
 
-        /* end batch */
+        /* End batch. */
         irc_message_end_batch (context, batch_ref);
 
         snprintf (name, sizeof (name),
@@ -1485,7 +1486,7 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
         {
             for (i = 0; i < count_lines; i++)
             {
-                /* for CTCP, prefix is ":\001xxxx " and suffix "\001" */
+                /* For CTCP, prefix is ":\001xxxx " and suffix "\001". */
                 prefix[0] = '\0';
                 suffix[0] = '\0';
                 ptr_args = list_lines[i];
@@ -1551,7 +1552,7 @@ irc_message_split_005 (struct t_irc_message_split_context *context,
      *     :are available on this server
      */
 
-    /* search suffix */
+    /* Search suffix. */
     suffix[0] = '\0';
     pos = strstr (arguments, " :");
     if (pos)
@@ -1625,7 +1626,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
             server->msg_max_length :
             IRC_SERVER_OPTION_INTEGER(
                 server, IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH);
-        /* if split disabled, use a high max_length to prevent any split */
+        /* If split disabled, use a high max_length to prevent any split. */
         if (split_msg_max_length == 0)
             split_msg_max_length = INT_MAX - 16;
         multiline_max_bytes = server->multiline_max_bytes;
@@ -1638,7 +1639,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
         multiline_max_lines = 0;
     }
 
-    /* debug message */
+    /* Debug message */
     if (weechat_irc_plugin->debug >= 2)
     {
         weechat_printf (NULL, "irc_message_split: message='%s', max length=%d",
@@ -1771,7 +1772,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
         /* JOIN #channel1,#channel2,#channel3 key1,key2 */
         if ((int)strlen (message) > split_msg_max_length - 2)
         {
-            /* split join if it's too long */
+            /* Split join if it's too long. */
             split_ok = irc_message_split_join (&split_context, tags, host,
                                                arguments, split_msg_max_length);
         }
@@ -1809,7 +1810,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
     else if (weechat_strcasecmp (command, "353") == 0)
     {
         /*
-         * list of users on channel:
+         * List of users on channel:
          *   :server 353 mynick = #channel :mynick nick1 @nick2 +nick3
          */
         if (index_args + 2 <= argc - 1)

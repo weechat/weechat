@@ -136,44 +136,42 @@ gui_line_prefix_is_same_nick (struct t_gui_line *line, int direction)
     struct t_gui_line *other_line;
 
     /*
-     * if line is not displayed, has a highlight, or does not have a tag
-     * beginning with "prefix_nick" => display standard prefix
+     * If line is not displayed, has a highlight, or does not have a tag
+     * beginning with "prefix_nick" => display standard prefix.
      */
     if (!line->data->displayed || line->data->highlight
         || !gui_line_search_tag_starting_with (line, "prefix_nick"))
         return 0;
 
-    /* no nick on line => display standard prefix */
+    /* No nick on line => display standard prefix. */
     nick = gui_line_get_nick_tag (line);
     if (!nick)
         return 0;
 
-    /*
-     * previous line is not found => display standard prefix
-     */
+    /* Previous line is not found => display standard prefix. */
     other_line = (direction < 0) ?
         gui_line_get_prev_displayed (line) :
         gui_line_get_next_displayed (line);
     if (!other_line)
         return 0;
 
-    /* buffer is not the same as the other line => display standard prefix */
+    /* Buffer is not the same as the other line => display standard prefix. */
     if (line->data->buffer != other_line->data->buffer)
         return 0;
 
     /*
-     * the other line does not have a tag beginning with "prefix_nick"
-     * => display standard prefix
+     * The other line does not have a tag beginning with "prefix_nick"
+     * => display standard prefix.
      */
     if (!gui_line_search_tag_starting_with (other_line, "prefix_nick"))
         return 0;
 
-    /* no nick on previous line => display standard prefix */
+    /* No nick on previous line => display standard prefix. */
     nick_other = gui_line_get_nick_tag (other_line);
     if (!nick_other)
         return 0;
 
-    /* prefix can be hidden/replaced if nicks are equal */
+    /* Prefix can be hidden/replaced if nicks are equal. */
     return (strcmp (nick, nick_other) == 0) ? 1 : 0;
 }
 
@@ -200,10 +198,10 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
             && CONFIG_STRING(config_look_prefix_same_nick_middle)[0]
             && gui_line_prefix_is_same_nick (line, 1))
         {
-            /* same nick: return empty prefix or value from option */
+            /* Same nick: return empty prefix or value from option. */
             if (strcmp (CONFIG_STRING(config_look_prefix_same_nick_middle), " ") == 0)
             {
-                /* return empty prefix */
+                /* Return empty prefix. */
                 if (prefix)
                     *prefix = gui_chat_prefix_empty;
                 if (length)
@@ -213,7 +211,7 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
             }
             else
             {
-                /* return prefix from option "weechat.look.prefix_same_nick_middle" */
+                /* Return prefix from option "weechat.look.prefix_same_nick_middle". */
                 if (prefix)
                     *prefix = CONFIG_STRING(config_look_prefix_same_nick_middle);
                 if (length)
@@ -230,10 +228,10 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
         }
         else
         {
-            /* same nick: return empty prefix or value from option */
+            /* Same nick: return empty prefix or value from option. */
             if (strcmp (CONFIG_STRING(config_look_prefix_same_nick), " ") == 0)
             {
-                /* return empty prefix */
+                /* Return empty prefix. */
                 if (prefix)
                     *prefix = gui_chat_prefix_empty;
                 if (length)
@@ -243,7 +241,7 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
             }
             else
             {
-                /* return prefix from option "weechat.look.prefix_same_nick" */
+                /* Return prefix from option "weechat.look.prefix_same_nick". */
                 if (prefix)
                     *prefix = CONFIG_STRING(config_look_prefix_same_nick);
                 if (length)
@@ -261,7 +259,7 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
     }
     else
     {
-        /* not same nick: return prefix from line */
+        /* Not same nick: return prefix from line. */
         if (prefix)
             *prefix = line->data->prefix;
         if (length)
@@ -283,22 +281,22 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 {
     int length_time, length_buffer, length_suffix, prefix_length, prefix_is_nick;
 
-    /* return immediately if buffer has free content (no alignment) */
+    /* Return immediately if buffer has free content (no alignment). */
     if (buffer->type == GUI_BUFFER_TYPE_FREE)
         return 0;
 
-    /* return immediately if line has no time (not aligned) */
+    /* Return immediately if line has no time (not aligned). */
     if (line->data->date == 0)
         return 0;
 
-    /* return immediately if alignment for end of lines is "time" */
+    /* Return immediately if alignment for end of lines is "time". */
     if (!first_line
         && (CONFIG_ENUM(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_TIME))
     {
         return 0;
     }
 
-    /* length of time */
+    /* Length of time */
     if (buffer->time_for_each_line)
     {
         length_time = (gui_chat_time_length == 0) ? 0 : gui_chat_time_length + 1;
@@ -306,14 +304,14 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     else
         length_time = 0;
 
-    /* return immediately if alignment for end of lines is "buffer" */
+    /* Return immediately if alignment for end of lines is "buffer". */
     if (!first_line
         && (CONFIG_ENUM(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_BUFFER))
     {
         return length_time;
     }
 
-    /* length of buffer name (when many buffers are merged) */
+    /* Length of buffer name (when many buffers are merged). */
     if (buffer->mixed_lines && (buffer->active != 2))
     {
         if ((CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
@@ -332,14 +330,14 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     else
         length_buffer = 0;
 
-    /* return immediately if alignment for end of lines is "prefix" */
+    /* Return immediately if alignment for end of lines is "prefix". */
     if (!first_line
         && (CONFIG_ENUM(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_PREFIX))
     {
         return length_time + length_buffer;
     }
 
-    /* length of prefix */
+    /* Length of prefix */
     gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL,
                                      &prefix_is_nick);
     if (prefix_is_nick)
@@ -503,11 +501,11 @@ gui_line_is_displayed (struct t_gui_line *line)
     if (!line)
         return 0;
 
-    /* line is hidden if filters are enabled and flag "displayed" is not set */
+    /* Line is hidden if filters are enabled and flag "displayed" is not set. */
     if (gui_filters_enabled && !line->data->displayed)
         return 0;
 
-    /* in all other cases, line is displayed */
+    /* In all other cases, line is displayed. */
     return 1;
 }
 
@@ -611,16 +609,16 @@ gui_line_search_by_id (struct t_gui_buffer *buffer, long long id)
     if (!buffer || !buffer->own_lines)
         return NULL;
 
-    /* no line in buffer */
+    /* No line in buffer */
     ptr_line = buffer->own_lines->first_line;
     if (!ptr_line)
         return NULL;
 
-    /* the id searched is lower than the first one in the buffer */
+    /* The id searched is lower than the first one in the buffer. */
     if (ptr_line->data && (ptr_line->data->id > id))
         return NULL;
 
-    /* the id searched is greater than the last one in the buffer */
+    /* The id searched is greater than the last one in the buffer. */
     ptr_line = buffer->own_lines->last_line;
     if (ptr_line && ptr_line->data && (ptr_line->data->id < id))
         return NULL;
@@ -636,7 +634,7 @@ gui_line_search_by_id (struct t_gui_buffer *buffer, long long id)
         }
     }
 
-    /* line not found */
+    /* Line not found */
     return NULL;
 }
 
@@ -810,7 +808,7 @@ gui_line_has_tag_no_filter (struct t_gui_line_data *line_data)
             return 1;
     }
 
-    /* tag not found, line may be filtered */
+    /* Tag not found, line may be filtered. */
     return 0;
 }
 
@@ -842,7 +840,7 @@ gui_line_match_tags (struct t_gui_line_data *line_data,
             tag_found = 0;
             tag_negated = 0;
 
-            /* check if tag is negated (prefixed with a '!') */
+            /* Check if tag is negated (prefixed with a '!'). */
             if ((ptr_tag[0] == '!') && ptr_tag[1])
             {
                 ptr_tag++;
@@ -899,7 +897,7 @@ gui_line_search_tag_starting_with (struct t_gui_line *line, const char *tag)
             return line->data->tags_array[i];
     }
 
-    /* tag not found */
+    /* Tag not found */
     return NULL;
 }
 
@@ -939,7 +937,7 @@ gui_line_has_highlight (struct t_gui_line *line)
     const char *ptr_nick;
     regmatch_t regex_match;
 
-    /* remove color codes from line message */
+    /* Remove color codes from line message. */
     msg_no_color = gui_color_decode (line->data->message, NULL);
     if (!msg_no_color)
     {
@@ -949,8 +947,8 @@ gui_line_has_highlight (struct t_gui_line *line)
     ptr_msg_no_color = msg_no_color;
 
     /*
-     * highlights are disabled on this buffer? (special value "-" means that
-     * buffer does not want any highlight)
+     * Highlights are disabled on this buffer? (special value "-" means that
+     * buffer does not want any highlight).
      */
     if (line->data->buffer->highlight_words
         && (strcmp (line->data->buffer->highlight_words, "-") == 0))
@@ -960,9 +958,9 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
     /*
-     * check if highlight is disabled for line; also check if the line is an
+     * Check if highlight is disabled for line; also check if the line is an
      * action message (for example tag "irc_action") and get pointer on the nick
-     * (tag "nick_xxx"), these info will be used later (see below)
+     * (tag "nick_xxx"), these info will be used later (see below).
      */
     no_highlight = 0;
     action = 0;
@@ -990,29 +988,29 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
     /*
-     * if the line is an action message and that we know the nick, we skip
+     * If the line is an action message and that we know the nick, we skip
      * the nick if it is at beginning of message (to not highlight an action
-     * from another user if his nick is in our highlight settings)
+     * from another user if his nick is in our highlight settings).
      */
     if (action && ptr_nick)
     {
         length = strlen (ptr_nick);
         if (strncmp (ptr_msg_no_color, ptr_nick, length) == 0)
         {
-            /* skip nick at beginning (for example: "FlashCode") */
+            /* Skip nick at beginning (for example: "FlashCode"). */
             ptr_msg_no_color += length;
         }
         else if (ptr_msg_no_color[0]
                  && (strncmp (ptr_msg_no_color + 1, ptr_nick, length) == 0))
         {
-            /* skip prefix and nick at beginning (for example: "@FlashCode") */
+            /* Skip prefix and nick at beginning (for example: "@FlashCode"). */
             ptr_msg_no_color += length + 1;
         }
     }
 
     /*
-     * check if highlight is disabled by a regex
-     * (with global option "weechat.look.highlight_disable_regex")
+     * Check if highlight is disabled by a regex
+     * (with global option "weechat.look.highlight_disable_regex").
      */
     if (config_highlight_disable_regex)
     {
@@ -1026,8 +1024,8 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
     /*
-     * check if highlight is disabled by a regex
-     * (with buffer property "highlight_disable_regex")
+     * Check if highlight is disabled by a regex
+     * (with buffer property "highlight_disable_regex").
      */
     if (line->data->buffer->highlight_disable_regex_compiled)
     {
@@ -1041,8 +1039,8 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
     /*
-     * check if highlight is forced by a tag
-     * (with global option "weechat.look.highlight_tags")
+     * Check if highlight is forced by a tag
+     * (with global option "weechat.look.highlight_tags").
      */
     if (config_highlight_tags
         && gui_line_match_tags (line->data,
@@ -1054,8 +1052,8 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
     /*
-     * check if highlight is forced by a tag
-     * (with buffer property "highlight_tags")
+     * Check if highlight is forced by a tag
+     * (with buffer property "highlight_tags").
      */
     if (line->data->buffer->highlight_tags
         && gui_line_match_tags (line->data,
@@ -1067,8 +1065,8 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
     /*
-     * check that line matches highlight tags, if any (if no tag is specified,
-     * then any tag is allowed)
+     * Check that line matches highlight tags, if any (if no tag is specified,
+     * then any tag is allowed).
      */
     if (line->data->buffer->highlight_tags_restrict_count > 0)
     {
@@ -1082,8 +1080,8 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
     /*
-     * there is highlight on line if one of buffer highlight words matches line
-     * or one of global highlight words matches line
+     * There is highlight on line if one of buffer highlight words matches line
+     * or one of global highlight words matches line.
      */
     highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
                                                            line->data->buffer->highlight_words);
@@ -1253,8 +1251,8 @@ gui_line_add_to_list (struct t_gui_lines *lines,
     lines->last_line = line;
 
     /*
-     * adjust "prefix_max_length" if this prefix length is > max
-     * (only if the line is displayed
+     * Adjust "prefix_max_length" if this prefix length is > max
+     * (only if the line is displayed.
      */
     if (line->data->displayed)
     {
@@ -1267,7 +1265,7 @@ gui_line_add_to_list (struct t_gui_lines *lines,
     }
     else
     {
-        /* adjust "lines_hidden" if the line is hidden */
+        /* Adjust "lines_hidden" if the line is hidden. */
         (lines->lines_hidden)++;
     }
 
@@ -1306,7 +1304,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
 
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        /* reset scroll for any window scroll starting with this line */
+        /* Reset scroll for any window scroll starting with this line. */
         for (ptr_scroll = ptr_win->scroll; ptr_scroll;
              ptr_scroll = ptr_scroll->next_scroll)
         {
@@ -1331,7 +1329,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
             if (ptr_scroll->text_search_start_line == line)
                 ptr_scroll->text_search_start_line = NULL;
         }
-        /* remove line from coords */
+        /* Remove line from coords. */
         gui_window_coords_remove_line (ptr_win, line);
     }
 
@@ -1342,7 +1340,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
     if (prefix_length == lines->prefix_max_length)
         lines->prefix_max_length_refresh = 1;
 
-    /* move read marker if it was on line we are removing */
+    /* Move read marker if it was on line we are removing. */
     if (lines->last_read_line == line)
     {
         lines->last_read_line = lines->last_read_line->prev_line;
@@ -1350,15 +1348,15 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
         gui_buffer_ask_chat_refresh (buffer, 1);
     }
 
-    /* adjust "lines_hidden" if the line was hidden */
+    /* Adjust "lines_hidden" if the line was hidden. */
     if (!line->data->displayed && (lines->lines_hidden > 0))
         (lines->lines_hidden)--;
 
-    /* free data */
+    /* Free data. */
     if (free_data)
         gui_line_free_data (line);
 
-    /* remove line from list */
+    /* Remove line from list. */
     if (line->prev_line)
         (line->prev_line)->next_line = line->next_line;
     if (line->next_line)
@@ -1451,7 +1449,7 @@ gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
     if (!buffer || !line)
         return;
 
-    /* first remove mixed line if it exists */
+    /* First remove mixed line if it exists. */
     if (buffer->mixed_lines)
     {
         for (ptr_line = buffer->mixed_lines->first_line; ptr_line;
@@ -1468,7 +1466,7 @@ gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
         }
     }
 
-    /* remove line from lines list */
+    /* Remove line from lines list. */
     gui_line_remove_from_list (buffer, buffer->own_lines, line, 1);
 }
 
@@ -1599,9 +1597,9 @@ gui_line_generate_id (struct t_gui_buffer *buffer)
     id = ((long long)tv.tv_sec * 1000000LL) + (long long)(tv.tv_usec);
 
     /*
-     * ensure we never use the same id for two lines in the buffer and that
+     * Ensure we never use the same id for two lines in the buffer and that
      * the returned id is strictly greater than the last assigned one in the
-     * buffer
+     * buffer.
      */
     if (id <= buffer->lines_last_id_assigned)
         id = buffer->lines_last_id_assigned + 1;
@@ -1679,12 +1677,12 @@ gui_line_new_with_id (struct t_gui_buffer *buffer, long long id, int y,
     if (!buffer)
         return NULL;
 
-    /* create new line */
+    /* Create new line. */
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
         return NULL;
 
-    /* create data for line */
+    /* Create data for line. */
     new_line_data = malloc (sizeof (*new_line_data));
     if (!new_line_data)
     {
@@ -1693,7 +1691,7 @@ gui_line_new_with_id (struct t_gui_buffer *buffer, long long id, int y,
     }
     new_line->data = new_line_data;
 
-    /* fill data in new line */
+    /* Fill data in new line. */
     new_line->data->buffer = buffer;
     new_line->data->message = (message) ? strdup (message) : strdup ("");
 
@@ -1740,7 +1738,7 @@ gui_line_new_with_id (struct t_gui_buffer *buffer, long long id, int y,
         new_line->data->highlight = 0;
     }
 
-    /* set display flag (check if line is filtered or not) */
+    /* Set display flag (check if line is filtered or not). */
     new_line->data->displayed = gui_filter_check_line (new_line->data);
 
     new_line->prev_line = NULL;
@@ -1841,7 +1839,7 @@ gui_line_hook_update (struct t_gui_line *line,
 
     if (line->data->buffer->type == GUI_BUFFER_TYPE_FREE)
     {
-        /* the field "y" can be changed on buffer with free content */
+        /* The field "y" can be changed on buffer with free content. */
         ptr_value = hashtable_get (hashtable2, "y");
         if (ptr_value)
         {
@@ -1936,7 +1934,7 @@ gui_line_hook_update (struct t_gui_line *line,
         new_message = strdup (ptr_value2);
         if (new_message && !line->data->buffer->input_multiline)
         {
-            /* if input_multiline is not set, keep only first line */
+            /* If input_multiline is not set, keep only first line. */
             pos_newline = strchr (new_message, '\n');
             if (pos_newline)
                 pos_newline[0] = '\0';
@@ -1948,11 +1946,11 @@ gui_line_hook_update (struct t_gui_line *line,
 
     max_notify_level = gui_line_get_max_notify_level (line);
 
-    /* if tags were updated but not notify_level, adjust notify level */
+    /* If tags were updated but not notify_level, adjust notify level. */
     if (tags_updated && !notify_level_updated)
         gui_line_set_notify_level (line, max_notify_level);
 
-    /* adjust flag "displayed" if tags were updated */
+    /* Adjust flag "displayed" if tags were updated. */
     if (tags_updated)
         line->data->displayed = gui_filter_check_line (line->data);
 
@@ -1991,14 +1989,14 @@ gui_line_add (struct t_gui_line *line, int add_to_hotlist)
     long long id_min;
 
     /*
-     * remove line(s) if necessary, according to history options:
+     * Remove line(s) if necessary, according to history options:
      *   max_lines:   if > 0, keep only N lines in buffer
-     *   max_minutes: if > 0, keep only lines from last N minutes
+     *   max_minutes: if > 0, keep only lines from last N minutes.
      *
-     * this function is called only on buffers with formatted content, so the
+     * This function is called only on buffers with formatted content, so the
      * identifier of a line is its date of print, with microseconds precision:
      * comparing it with the oldest date allowed is the same as comparing the
-     * dates of print themselves
+     * dates of print themselves.
      */
     lines_removed = 0;
     id_min = ((long long)time (NULL)
@@ -2016,17 +2014,17 @@ gui_line_add (struct t_gui_line *line, int add_to_hotlist)
         lines_removed++;
     }
 
-    /* add line to lines list */
+    /* Add line to lines list. */
     gui_line_add_to_list (line->data->buffer->own_lines, line);
 
-    /* update hotlist and/or send signals for line */
+    /* Update hotlist and/or send signals for line. */
     if (line->data->displayed)
     {
         if ((line->data->notify_level >= GUI_HOTLIST_MIN)
             && line->data->highlight)
         {
             /*
-             * skip hotlist recomputation while replaying a line from an
+             * Skip hotlist recomputation while replaying a line from an
              * upgrade file: the hotlist is restored separately from its
              * own saved state (see upgrade_weechat_read_hotlist()), which
              * always clears the hotlist before rebuilding it, so anything
@@ -2037,7 +2035,7 @@ gui_line_add (struct t_gui_line *line, int add_to_hotlist)
              * and not to the whole "weechat_upgrading" window, which stays
              * set well after replay ends (through plugin init/reconnect),
              * or real messages arriving in that window would silently
-             * never reach the hotlist
+             * never reach the hotlist.
              */
             if (add_to_hotlist)
             {
@@ -2075,7 +2073,7 @@ gui_line_add (struct t_gui_line *line, int add_to_hotlist)
                     free (message_for_signal);
                 }
             }
-            /* see comment above about skipping this while replaying */
+            /* See comment above about skipping this while replaying. */
             if (add_to_hotlist
                 && (line->data->notify_level >= GUI_HOTLIST_MIN))
             {
@@ -2095,16 +2093,16 @@ gui_line_add (struct t_gui_line *line, int add_to_hotlist)
                                        line->data->buffer);
     }
 
-    /* add mixed line, if buffer is attached to at least one other buffer */
+    /* Add mixed line, if buffer is attached to at least one other buffer. */
     if (line->data->buffer->mixed_lines)
     {
         gui_line_mixed_add (line->data->buffer->mixed_lines, line->data);
     }
 
     /*
-     * if some lines were removed, force a full refresh if at least one window
+     * If some lines were removed, force a full refresh if at least one window
      * is displaying buffer and that number of lines in buffer is lower than
-     * window height
+     * window height.
      */
     if (lines_removed > 0)
     {
@@ -2140,12 +2138,12 @@ gui_line_add_y (struct t_gui_line *line)
     int old_line_displayed;
 
     /*
-     * search if line exists for "y": fast path for the common append case
+     * Search if line exists for "y": fast path for the common append case
      * (lines added in increasing "y" order, e.g. when restoring a buffer
      * from an upgrade file) to avoid an O(n) scan from the first line on
      * every call; since the list is ordered by "y", if the last line's "y"
      * is already lower than the new one, no earlier line can match either,
-     * so the scan below would have reached the end (ptr_line = NULL) anyway
+     * so the scan below would have reached the end (ptr_line = NULL) anyway.
      */
     if (line->data->buffer->own_lines->last_line
         && (line->data->buffer->own_lines->last_line->data->y < line->data->y))
@@ -2164,29 +2162,29 @@ gui_line_add_y (struct t_gui_line *line)
 
     if (ptr_line && (ptr_line->data->y == line->data->y))
     {
-        /* replace line data with the new data */
+        /* Replace line data with the new data. */
         old_line_displayed = ptr_line->data->displayed;
         if (ptr_line->data->message)
         {
-            /* remove line from coords if the content is changing */
+            /* Remove line from coords if the content is changing. */
             for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
             {
                 gui_window_coords_remove_line (ptr_win, ptr_line);
             }
         }
 
-        /* replace ptr_line by line in list */
+        /* Replace ptr_line by line in list. */
         gui_line_free_data (ptr_line);
         ptr_line->data = line->data;
         free (line);
     }
     else
     {
-        /* add line to lines list */
+        /* Add line to lines list. */
         old_line_displayed = 1;
         if (ptr_line)
         {
-            /* add before line found */
+            /* Add before line found. */
             line->prev_line = ptr_line->prev_line;
             line->next_line = ptr_line;
             if (ptr_line->prev_line)
@@ -2197,7 +2195,7 @@ gui_line_add_y (struct t_gui_line *line)
         }
         else
         {
-            /* add at end of list */
+            /* Add at end of list. */
             line->prev_line = line->data->buffer->own_lines->last_line;
             if (line->data->buffer->own_lines->first_line)
                 line->data->buffer->own_lines->last_line->next_line = line;
@@ -2211,7 +2209,7 @@ gui_line_add_y (struct t_gui_line *line)
         line->data->buffer->own_lines->lines_count++;
     }
 
-    /* check if line is filtered or not */
+    /* Check if line is filtered or not. */
     if (old_line_displayed && !ptr_line->data->displayed)
     {
         (ptr_line->data->buffer->own_lines->lines_hidden)++;
@@ -2273,7 +2271,7 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
     struct t_gui_lines *new_lines;
     struct t_gui_line *ptr_line1, *ptr_line2;
 
-    /* search first other buffer with same number */
+    /* Search first other buffer with same number. */
     ptr_buffer_found = NULL;
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -2287,7 +2285,7 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
     if (!ptr_buffer_found)
         return;
 
-    /* mix all lines (sorting by date) to a new structure "new_lines" */
+    /* Mix all lines (sorting by date) to a new structure "new_lines". */
     new_lines = gui_line_lines_alloc ();
     if (!new_lines)
         return;
@@ -2309,7 +2307,7 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
             }
             else
             {
-                /* look for older line by comparing time */
+                /* Look for older line by comparing time. */
                 if (ptr_line1->data->date <= ptr_line2->data->date)
                 {
                     while (ptr_line1
@@ -2332,18 +2330,18 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
         }
     }
 
-    /* ask refresh of prefix/buffer max length for mixed lines */
+    /* Ask refresh of prefix/buffer max length for mixed lines. */
     new_lines->prefix_max_length_refresh = 1;
     new_lines->buffer_max_length_refresh = 1;
 
-    /* free old mixed lines */
+    /* Free old mixed lines. */
     if (ptr_buffer_found->mixed_lines)
     {
         gui_line_mixed_free_all (ptr_buffer_found);
         free (ptr_buffer_found->mixed_lines);
     }
 
-    /* use new structure with mixed lines in all buffers with correct number */
+    /* Use new structure with mixed lines in all buffers with correct number. */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -2365,7 +2363,7 @@ gui_line_hdata_lines_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2396,7 +2394,7 @@ gui_line_hdata_line_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2427,7 +2425,7 @@ gui_line_hdata_line_data_update_cb (void *data,
     struct t_gui_window *ptr_win;
     int rc, update_coords;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     line_data = (struct t_gui_line_data *)pointer;
@@ -2492,7 +2490,7 @@ gui_line_hdata_line_data_update_cb (void *data,
         new_value = (value) ? strdup (value) : NULL;
         if (new_value && !line_data->buffer->input_multiline)
         {
-            /* if input_multiline is not set, keep only first line */
+            /* If input_multiline is not set, keep only first line. */
             pos_newline = strchr (new_value, '\n');
             if (pos_newline)
                 pos_newline[0] = '\0';
@@ -2532,7 +2530,7 @@ gui_line_hdata_line_data_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2594,7 +2592,7 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_string (ptr_item, "str_time", line->data->str_time))
         return 0;
 
-    /* write tags */
+    /* Write tags. */
     if (!infolist_new_var_integer (ptr_item, "tags_count", line->data->tags_count))
         return 0;
     length = 0;

@@ -22,11 +22,11 @@
 #include "irc-server.h"
 
 
-/* timers to run "ison" and "whois" commands */
+/* Timers to run "ison" and "whois" commands */
 struct t_hook *irc_notify_timer_ison = NULL;    /* timer for "ison"         */
 struct t_hook *irc_notify_timer_whois = NULL;   /* timer for "whois"        */
 
-/* hsignal for redirected commands */
+/* Hsignal for redirected commands */
 struct t_hook *irc_notify_hsignal = NULL;
 
 
@@ -72,7 +72,7 @@ irc_notify_valid (struct t_irc_server *server, struct t_irc_notify *notify)
         }
     }
 
-    /* notify not found */
+    /* Notify not found */
     return 0;
 }
 
@@ -97,7 +97,7 @@ irc_notify_search (struct t_irc_server *server, const char *nick)
             return ptr_notify;
     }
 
-    /* notify not found */
+    /* Notify not found */
     return NULL;
 }
 
@@ -192,7 +192,7 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
         new_notify->away_message = NULL;
         new_notify->ison_received = 0;
 
-        /* add notify to notify list on server */
+        /* Add notify to notify list on server. */
         new_notify->prev_notify = server->last_notify;
         if (server->last_notify)
             server->last_notify->next_notify = new_notify;
@@ -217,19 +217,19 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
 void
 irc_notify_check_now (struct t_irc_notify *notify)
 {
-    /* don't send anything if we are not connected to the server */
+    /* Don't send anything if we are not connected to the server. */
     if (!notify->server->is_connected)
         return;
 
     if (notify->server->monitor > 0)
     {
-        /* send MONITOR for nick */
+        /* Send MONITOR for nick. */
         irc_server_sendf (notify->server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                           "MONITOR + %s", notify->nick);
     }
     else
     {
-        /* send ISON for nick (MONITOR not supported on server) */
+        /* Send ISON for nick (MONITOR not supported on server). */
         irc_redirect_new (notify->server, "ison", "notify", 1, NULL, 0, NULL);
         irc_server_sendf (notify->server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                           "ISON :%s", notify->nick);
@@ -237,7 +237,7 @@ irc_notify_check_now (struct t_irc_notify *notify)
 
     if (notify->check_away)
     {
-        /* send WHOIS for nick */
+        /* Send WHOIS for nick. */
         irc_redirect_new (notify->server, "whois", "notify", 1, notify->nick, 0,
                           "301,401");
         irc_server_sendf (notify->server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
@@ -386,7 +386,7 @@ irc_notify_new_for_server (struct t_irc_server *server)
         weechat_string_free_split (items);
     }
 
-    /* if we are using MONITOR, send it now with new nicks monitored */
+    /* If we are using MONITOR, send it now with new nicks monitored. */
     if (server->is_connected && (server->monitor > 0))
         irc_notify_send_monitor (server);
 }
@@ -421,14 +421,14 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify,
     (void) weechat_hook_signal_send ("irc_notify_removing",
                                      WEECHAT_HOOK_SIGNAL_POINTER, notify);
 
-    /* free data */
+    /* Free data. */
     if (notify->nick)
     {
         if ((server->monitor > 0) && remove_monitor
             && (server->is_connected)
             && !weechat_irc_plugin->unload_with_upgrade)
         {
-            /* remove one monitored nick */
+            /* Remove one monitored nick. */
             irc_server_sendf (notify->server,
                               IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                               "MONITOR - %s", notify->nick);
@@ -437,7 +437,7 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify,
     }
     free (notify->away_message);
 
-    /* remove notify from list */
+    /* Remove notify from list. */
     if (notify->prev_notify)
         (notify->prev_notify)->next_notify = notify->next_notify;
     if (notify->next_notify)
@@ -463,7 +463,7 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify,
 void
 irc_notify_free_all (struct t_irc_server *server)
 {
-    /* remove all monitored nicks */
+    /* Remove all monitored nicks. */
     if ((server->monitor > 0) && (server->is_connected)
         && !weechat_irc_plugin->unload_with_upgrade)
     {
@@ -471,7 +471,7 @@ irc_notify_free_all (struct t_irc_server *server)
                           "MONITOR C");
     }
 
-    /* free notify list */
+    /* Free notify list. */
     while (server->notify_list)
     {
         irc_notify_free (server, server->notify_list, 0);
@@ -684,7 +684,7 @@ irc_notify_set_is_on_server (struct t_irc_notify *notify, const char *host,
     if (!notify)
         return;
 
-    /* same status, then do nothing */
+    /* Same status, then do nothing. */
     if (notify->is_on_server == is_on_server)
         return;
 
@@ -707,7 +707,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
     if (!notify)
         return;
 
-    /* same away message, then do nothing */
+    /* Same away message, then do nothing. */
     if ((!notify->away_message && !away_message)
         || (notify->away_message && away_message
             && (strcmp (notify->away_message, away_message) == 0)))
@@ -777,7 +777,7 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
     struct t_irc_server *ptr_server;
     struct t_irc_notify *ptr_notify;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -788,20 +788,20 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
     command = weechat_hashtable_get (hashtable, "command");
     output = weechat_hashtable_get (hashtable, "output");
 
-    /* if there is an error on redirection, just ignore result */
+    /* If there is an error on redirection, just ignore result. */
     if (error && error[0])
         return WEECHAT_RC_OK;
 
-    /* missing things in redirection */
+    /* Missing things in redirection? */
     if (!server || !pattern || !command || !output)
         return WEECHAT_RC_OK;
 
-    /* search server */
+    /* Search server. */
     ptr_server = irc_server_search (server);
     if (!ptr_server)
         return WEECHAT_RC_OK;
 
-    /* search for start of arguments in command sent to server */
+    /* Search for start of arguments in command sent to server. */
     ptr_args = strchr (command, ' ');
     if (!ptr_args)
         return WEECHAT_RC_OK;
@@ -813,10 +813,10 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
     if (!ptr_args[0])
         return WEECHAT_RC_OK;
 
-    /* read output of command */
+    /* Read output of command. */
     if (strcmp (pattern, "ison") == 0)
     {
-        /* redirection of command "ison" */
+        /* Redirection of command "ison" */
         messages = weechat_string_split (
             output,
             "\n",
@@ -940,7 +940,7 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
     }
     else if (strcmp (pattern, "whois") == 0)
     {
-        /* redirection of command "whois" */
+        /* Redirection of command "whois" */
         ptr_notify = irc_notify_search (ptr_server, ptr_args);
         if (ptr_notify)
         {
@@ -980,17 +980,17 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
                     {
                         if (strcmp (irc_cmd, "401") == 0)
                         {
-                            /* no such nick/channel */
+                            /* No such nick/channel */
                             no_such_nick = 1;
                         }
                         else if (strcmp (irc_cmd, "301") == 0)
                         {
-                            /* away message */
+                            /* Away message */
                             pos = strchr (arguments, ':');
                             if (pos)
                             {
                                 pos++;
-                                /* nick is away */
+                                /* Nick is away. */
                                 irc_notify_set_away_message (ptr_notify, pos);
                                 away_message_updated = 1;
                             }
@@ -1002,7 +1002,7 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
             }
             if (!away_message_updated && !no_such_nick)
             {
-                /* nick is back */
+                /* Nick is back. */
                 irc_notify_set_away_message (ptr_notify, NULL);
             }
         }
@@ -1024,7 +1024,7 @@ irc_notify_timer_ison_cb (const void *pointer, void *data, int remaining_calls)
     struct t_irc_server *ptr_server;
     struct t_hashtable *hashtable;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -1081,7 +1081,7 @@ irc_notify_timer_whois_cb (const void *pointer, void *data,
     struct t_irc_server *ptr_server;
     struct t_irc_notify *ptr_notify, *ptr_next_notify;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -1099,9 +1099,9 @@ irc_notify_timer_whois_cb (const void *pointer, void *data,
                 if (ptr_notify->check_away)
                 {
                     /*
-                     * redirect whois, and get only 2 messages:
+                     * Redirect whois, and get only 2 messages:
                      * 301: away message
-                     * 401: no such nick/channel
+                     * 401: no such nick/channel.
                      */
                     irc_redirect_new (ptr_server, "whois", "notify", 1,
                                       ptr_notify->nick, 0, "301,401");
@@ -1128,7 +1128,7 @@ irc_notify_hdata_notify_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

@@ -12,7 +12,7 @@
 
 struct t_infolist;
 
-/* line structures */
+/* Line structures */
 
 struct t_gui_line_data
 {
@@ -58,7 +58,7 @@ struct t_gui_lines
     int prefix_max_length_refresh;     /* refresh asked for prefix max len. */
 };
 
-/* line functions */
+/* Line functions */
 
 extern struct t_gui_lines *gui_line_lines_alloc (void);
 extern void gui_line_lines_free (struct t_gui_lines *lines);

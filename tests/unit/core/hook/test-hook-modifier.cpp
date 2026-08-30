@@ -51,14 +51,14 @@ test_modifier_cb (const void *pointer, void *data,
     unsigned long value;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
 
     new_string = NULL;
 
-    /* split modifier_data, which is: "buffer_pointer;tags" */
+    /* Split modifier_data, which is: "buffer_pointer;tags". */
     items = string_split (modifier_data, ";", NULL,
                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
@@ -79,7 +79,7 @@ test_modifier_cb (const void *pointer, void *data,
     if (!ptr_plugin)
         goto error;
 
-    /* do nothing on a buffer different from "core.test" */
+    /* Do nothing on a buffer different from "core.test". */
     if ((strcmp (ptr_plugin, "core") != 0)
         || (strcmp (ptr_buffer->name, TEST_BUFFER_NAME) != 0))
     {
@@ -106,33 +106,33 @@ test_modifier_cb (const void *pointer, void *data,
 
     if (ptr_tags && strstr (ptr_tags, "add_prefix"))
     {
-        /* add a prefix in message */
+        /* Add a prefix in message. */
         snprintf (new_string, length, "new prefix\t%s (modified)", ptr_msg);
     }
     else if (ptr_tags && strstr (ptr_tags, "add_date_prefix"))
     {
-        /* add a date/prefix in message */
+        /* Add a date/prefix in message. */
         snprintf (new_string, length, "new prefix\t%s (modified)", ptr_msg);
     }
     else if (ptr_tags && strstr (ptr_tags, "update_prefix"))
     {
-        /* update the prefix */
+        /* Update the prefix. */
         snprintf (new_string, length, "new prefix\t%s (modified)", ptr_msg);
     }
     else if (ptr_tags && strstr (ptr_tags, "remove_prefix"))
     {
-        /* remove the prefix */
+        /* Remove the prefix. */
         snprintf (new_string, length, " \t%s (modified)", ptr_msg);
     }
     else if (ptr_tags && strstr (ptr_tags, "remove_date_prefix"))
     {
-        /* remove the date/prefix */
+        /* Remove the date/prefix. */
         snprintf (new_string, length, "\t\t%s (modified)", ptr_msg);
     }
 
     if (!new_string[0])
     {
-        /* default message returned: just add " (modified)" to the string */
+        /* Default message returned: just add " (modified)" to the string. */
         snprintf (new_string, length, "%s (modified)", string);
     }
 
@@ -157,7 +157,7 @@ TEST(HookModifier, Modifier)
     struct t_gui_line *ptr_line;
     struct t_hook *hook;
 
-    /* create/open a test buffer */
+    /* Create/open a test buffer. */
     test_buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                                   NULL, NULL, NULL,
                                   NULL, NULL, NULL);
@@ -165,7 +165,7 @@ TEST(HookModifier, Modifier)
 
     hook = hook_modifier (NULL, "weechat_print", &test_modifier_cb, NULL, NULL);
 
-    /* check hook contents */
+    /* Check hook contents. */
     CHECK(hook);
     POINTERS_EQUAL(NULL, hook->plugin);
     STRCMP_EQUAL(NULL, hook->subplugin);
@@ -179,28 +179,28 @@ TEST(HookModifier, Modifier)
     POINTERS_EQUAL(&test_modifier_cb, HOOK_MODIFIER(hook, callback));
     STRCMP_EQUAL("weechat_print", HOOK_MODIFIER(hook, modifier));
 
-    /* message without prefix: unchanged */
+    /* Message without prefix: unchanged. */
     gui_chat_printf_date_tags (test_buffer, 0, NULL, " \tmessage");
     ptr_line = test_buffer->own_lines->last_line;
     CHECK(ptr_line->data->date > 0);
     STRCMP_EQUAL("", ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
-    /* message without prefix: add a prefix */
+    /* Message without prefix: add a prefix. */
     gui_chat_printf_date_tags (test_buffer, 0, "add_prefix", " \tmessage");
     ptr_line = test_buffer->own_lines->last_line;
     CHECK(ptr_line->data->date > 0);
     STRCMP_EQUAL("new prefix", ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
-    /* message without date: unchanged */
+    /* Message without date: unchanged */
     gui_chat_printf_date_tags (test_buffer, 0, NULL, "\t\tmessage");
     ptr_line = test_buffer->own_lines->last_line;
     LONGS_EQUAL(0, ptr_line->data->date);
     STRCMP_EQUAL(NULL, ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
-    /* message without date: add a date/prefix */
+    /* Message without date: add a date/prefix. */
     gui_chat_printf_date_tags (test_buffer, 0, "add_date_prefix",
                                "\t\tmessage");
     ptr_line = test_buffer->own_lines->last_line;
@@ -208,14 +208,14 @@ TEST(HookModifier, Modifier)
     STRCMP_EQUAL("new prefix", ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
-    /* standard message: unchanged */
+    /* Standard message: unchanged */
     gui_chat_printf_date_tags (test_buffer, 0, NULL, "prefix\tmessage");
     ptr_line = test_buffer->own_lines->last_line;
     CHECK(ptr_line->data->date > 0);
     STRCMP_EQUAL("prefix", ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
-    /* standard message: update the prefix */
+    /* Standard message: update the prefix. */
     gui_chat_printf_date_tags (test_buffer, 0, "update_prefix",
                                "prefix\tmessage");
     ptr_line = test_buffer->own_lines->last_line;
@@ -223,7 +223,7 @@ TEST(HookModifier, Modifier)
     STRCMP_EQUAL("new prefix", ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
-    /* standard message: remove the prefix */
+    /* Standard message: remove the prefix. */
     gui_chat_printf_date_tags (test_buffer, 0, "remove_prefix",
                                "prefix\tmessage");
     ptr_line = test_buffer->own_lines->last_line;
@@ -231,7 +231,7 @@ TEST(HookModifier, Modifier)
     STRCMP_EQUAL("", ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
-    /* standard message: remove the date/prefix */
+    /* Standard message: remove the date/prefix. */
     gui_chat_printf_date_tags (test_buffer, 0, "remove_date_prefix",
                                "prefix\tmessage");
     ptr_line = test_buffer->own_lines->last_line;
@@ -239,7 +239,7 @@ TEST(HookModifier, Modifier)
     STRCMP_EQUAL(NULL, ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
-    /* close the test buffer */
+    /* Close the test buffer. */
     gui_buffer_close (test_buffer);
 }
 

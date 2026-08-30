@@ -59,12 +59,12 @@ TEST(CoreList, New)
     list = weelist_new();
     CHECK(list);
 
-    /* check initial values */
+    /* Check initial values. */
     POINTERS_EQUAL(NULL, list->items);
     POINTERS_EQUAL(NULL, list->last_item);
     LONGS_EQUAL(0, list->size);
 
-    /* free list */
+    /* Free list. */
     weelist_free (list);
 }
 
@@ -91,7 +91,7 @@ TEST(CoreList, Add)
     POINTERS_EQUAL(NULL, weelist_add (NULL, LIST_VALUE_TEST,
                                       WEECHAT_LIST_POS_END, NULL));
 
-    /* add an element at the end */
+    /* Add an element at the end. */
     item1 = weelist_add (list, LIST_VALUE_ZZZ, WEECHAT_LIST_POS_END,
                          (void *)str_user_data);
     CHECK(item1);
@@ -99,10 +99,10 @@ TEST(CoreList, Add)
     CHECK(item1->user_data);
     STRCMP_EQUAL(LIST_VALUE_ZZZ, item1->data);
     POINTERS_EQUAL(str_user_data, item1->user_data);
-    LONGS_EQUAL(1, list->size);  /* list is now: ["zzz"] */
+    LONGS_EQUAL(1, list->size);  /* List is now: ["zzz"]. */
     POINTERS_EQUAL(item1, list->items);
 
-    /* add an element at the beginning */
+    /* Add an element at the beginning. */
     item2 = weelist_add (list, LIST_VALUE_TEST, WEECHAT_LIST_POS_BEGINNING,
                          (void *)str_user_data);
     CHECK(item2);
@@ -110,11 +110,11 @@ TEST(CoreList, Add)
     CHECK(item2->user_data);
     STRCMP_EQUAL(LIST_VALUE_TEST, item2->data);
     POINTERS_EQUAL(str_user_data, item2->user_data);
-    LONGS_EQUAL(2, list->size);  /* list is now: ["test", "zzz"] */
+    LONGS_EQUAL(2, list->size);  /* List is now: ["test", "zzz"]. */
     POINTERS_EQUAL(item2, list->items);
     POINTERS_EQUAL(item1, list->items->next_item);
 
-    /* add an element, using sort */
+    /* Add an element, using sort. */
     item3 = weelist_add (list, LIST_VALUE_XYZ, WEECHAT_LIST_POS_SORT,
                          (void *)str_user_data);
     CHECK(item3);
@@ -122,15 +122,15 @@ TEST(CoreList, Add)
     CHECK(item3->user_data);
     STRCMP_EQUAL(LIST_VALUE_XYZ, item3->data);
     POINTERS_EQUAL(str_user_data, item3->user_data);
-    LONGS_EQUAL(3, list->size);  /* list is now: ["test", "xyz", "zzz"] */
+    LONGS_EQUAL(3, list->size);  /* List is now: ["test", "xyz", "zzz"]. */
     POINTERS_EQUAL(item2, list->items);
     POINTERS_EQUAL(item3, list->items->next_item);
     POINTERS_EQUAL(item1, list->items->next_item->next_item);
 
-    /* free list */
+    /* Free list. */
     weelist_free (list);
 
-    /* test free of NULL list */
+    /* Test free of NULL list. */
     weelist_free (NULL);
 }
 
@@ -149,7 +149,7 @@ TEST(CoreList, Search)
 
     list = test_list_new ();
 
-    /* search an element */
+    /* Search an element. */
 
     POINTERS_EQUAL(NULL, weelist_search (NULL, NULL));
     POINTERS_EQUAL(NULL, weelist_search (list, NULL));
@@ -170,7 +170,7 @@ TEST(CoreList, Search)
     CHECK(ptr_item);
     STRCMP_EQUAL(LIST_VALUE_ZZZ, ptr_item->data);
 
-    /* search the position of an element */
+    /* Search the position of an element. */
 
     LONGS_EQUAL(-1, weelist_search_pos (NULL, NULL));
     LONGS_EQUAL(-1, weelist_search_pos (list, NULL));
@@ -183,7 +183,7 @@ TEST(CoreList, Search)
     LONGS_EQUAL(1, weelist_search_pos (list, LIST_VALUE_XYZ));
     LONGS_EQUAL(2, weelist_search_pos (list, LIST_VALUE_ZZZ));
 
-    /* case-insensitive search of an element */
+    /* Case-insensitive search of an element. */
 
     POINTERS_EQUAL(NULL, weelist_casesearch (NULL, NULL));
     POINTERS_EQUAL(NULL, weelist_casesearch (list, NULL));
@@ -207,7 +207,7 @@ TEST(CoreList, Search)
     CHECK(ptr_item);
     STRCMP_EQUAL(LIST_VALUE_ZZZ, ptr_item->data);
 
-    /* case-insensitive search of an element position */
+    /* Case-insensitive search of an element position. */
 
     LONGS_EQUAL(-1, weelist_casesearch_pos (NULL, NULL));
     LONGS_EQUAL(-1, weelist_casesearch_pos (list, NULL));
@@ -220,7 +220,7 @@ TEST(CoreList, Search)
     LONGS_EQUAL(1, weelist_casesearch_pos (list, LIST_VALUE_XYZ));
     LONGS_EQUAL(2, weelist_casesearch_pos (list, LIST_VALUE_ZZZ));
 
-    /* free list */
+    /* Free list. */
     weelist_free (list);
 }
 
@@ -238,7 +238,7 @@ TEST(CoreList, Get)
 
     list = test_list_new ();
 
-    /* get an element by position */
+    /* Get an element by position. */
 
     POINTERS_EQUAL(NULL, weelist_get (NULL, -1));
     POINTERS_EQUAL(NULL, weelist_get (list, -1));
@@ -258,7 +258,7 @@ TEST(CoreList, Get)
     CHECK(ptr_item);
     STRCMP_EQUAL(LIST_VALUE_ZZZ, ptr_item->data);
 
-    /* get string value of an element */
+    /* Get string value of an element. */
 
     STRCMP_EQUAL(NULL, weelist_string (NULL));
 
@@ -271,7 +271,7 @@ TEST(CoreList, Get)
     ptr_item = weelist_get(list, 2);
     STRCMP_EQUAL(LIST_VALUE_ZZZ, weelist_string (ptr_item));
 
-    /* get user_data value of an element */
+    /* Get user_data value of an element. */
     POINTERS_EQUAL(NULL, weelist_user_data (NULL));
 
     ptr_item = weelist_get(list, 0);
@@ -283,7 +283,7 @@ TEST(CoreList, Get)
     ptr_item = weelist_get(list, 2);
     POINTERS_EQUAL(&list_value_user_data_zzz, weelist_user_data (ptr_item));
 
-    /* free list */
+    /* Free list. */
     weelist_free (list);
 }
 
@@ -310,7 +310,7 @@ TEST(CoreList, Set)
     weelist_set (ptr_item, another_test);
     STRCMP_EQUAL(another_test, ptr_item->data);
 
-    /* free list */
+    /* Free list. */
     weelist_free (list);
 }
 
@@ -327,7 +327,7 @@ TEST(CoreList, Move)
 
     list = test_list_new ();
 
-    /* get next item */
+    /* Get next item. */
 
     ptr_item = weelist_get (list, 0);
     STRCMP_EQUAL(LIST_VALUE_TEST, ptr_item->data);
@@ -338,7 +338,7 @@ TEST(CoreList, Move)
     ptr_item = weelist_next (ptr_item);
     POINTERS_EQUAL(NULL, ptr_item);
 
-    /* get previous item */
+    /* Get previous item. */
 
     ptr_item = weelist_get(list, 2);
     STRCMP_EQUAL(LIST_VALUE_ZZZ, ptr_item->data);
@@ -347,7 +347,7 @@ TEST(CoreList, Move)
     ptr_item = weelist_prev (ptr_item);
     STRCMP_EQUAL(LIST_VALUE_TEST, ptr_item->data);
 
-    /* free list */
+    /* Free list. */
     weelist_free (list);
 }
 
@@ -364,7 +364,7 @@ TEST(CoreList, Free)
 
     list = test_list_new ();
 
-    /* remove one element */
+    /* Remove one element. */
 
     ptr_item = weelist_get(list, 1);
     STRCMP_EQUAL(LIST_VALUE_XYZ, ptr_item->data);
@@ -380,14 +380,14 @@ TEST(CoreList, Free)
     ptr_item = weelist_get (list, 2);
     POINTERS_EQUAL(NULL, ptr_item);
 
-    /* remove all elements */
+    /* Remove all elements. */
 
     weelist_remove_all (list);
     LONGS_EQUAL(0, list->size);
     POINTERS_EQUAL(NULL, list->items);
     POINTERS_EQUAL(NULL, list->last_item);
 
-    /* free list */
+    /* Free list. */
     weelist_free (list);
 }
 

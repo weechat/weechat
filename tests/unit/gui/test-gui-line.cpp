@@ -315,14 +315,14 @@ TEST(GuiLine, IsDisplayed)
 
     old_gui_filters_enabled = gui_filters_enabled;
 
-    /* filters NOT enabled: line is always displayed */
+    /* Filters NOT enabled: line is always displayed */
     gui_filters_enabled = 0;
     line.data->displayed = 0;
     LONGS_EQUAL(1, gui_line_is_displayed (&line));
     line.data->displayed = 1;
     LONGS_EQUAL(1, gui_line_is_displayed (&line));
 
-    /* filters enabled: line is displayed only if displayed == 1 */
+    /* Filters enabled: line is displayed only if displayed == 1 */
     gui_filters_enabled = 1;
     line.data->displayed = 0;
     LONGS_EQUAL(0, gui_line_is_displayed (&line));
@@ -393,13 +393,13 @@ TEST(GuiLine, SearchById)
         gui_line_search_by_id (gui_buffers,
                                gui_buffers->own_lines->last_line->data->id));
 
-    /* buffer without any line */
+    /* Buffer without any line */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
     POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 0));
     POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 100));
 
-    /* buffer with two lines, with a gap between the two identifiers */
+    /* Buffer with two lines, with a gap between the two identifiers */
     line1 = gui_line_new_with_id (buffer, 100, -1, 0, 0,
                                   NULL, NULL, "line1", -1, NULL);
     CHECK(line1);
@@ -412,7 +412,7 @@ TEST(GuiLine, SearchById)
     POINTERS_EQUAL(line1, gui_line_search_by_id (buffer, 100));
     POINTERS_EQUAL(line2, gui_line_search_by_id (buffer, 200));
 
-    /* the search is stopped as soon as a lower identifier is found */
+    /* The search is stopped as soon as a lower identifier is found. */
     POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 150));
     POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 50));
     POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 300));
@@ -478,14 +478,14 @@ TEST(GuiLine, MatchTags)
     char ***tags_array;
     int tags_count;
 
-    /* line without tags */
+    /* Line without tags */
     WEE_LINE_MATCH_TAGS(0, NULL, NULL);
     WEE_LINE_MATCH_TAGS(0, NULL, "irc_join");
     WEE_LINE_MATCH_TAGS(0, NULL, "!*");
     WEE_LINE_MATCH_TAGS(1, NULL, "!irc_join");
     WEE_LINE_MATCH_TAGS(1, NULL, "*");
 
-    /* line with one tag */
+    /* Line with one tag */
     WEE_LINE_MATCH_TAGS(0, "irc_join", NULL);
     WEE_LINE_MATCH_TAGS(0, "irc_join", "irc_quit");
     WEE_LINE_MATCH_TAGS(0, "irc_join", "!*");
@@ -493,7 +493,7 @@ TEST(GuiLine, MatchTags)
     WEE_LINE_MATCH_TAGS(1, "irc_join", "*");
     WEE_LINE_MATCH_TAGS(1, "irc_join", "irc_quit,*");
 
-    /* line with two tags */
+    /* Line with two tags */
     WEE_LINE_MATCH_TAGS(0, "irc_join,nick_test", NULL);
     WEE_LINE_MATCH_TAGS(0, "irc_join,nick_test", "irc_quit");
     WEE_LINE_MATCH_TAGS(0, "irc_join,nick_test", "irc_part,irc_quit");
@@ -768,56 +768,56 @@ TEST(GuiLine, SetNotifyLevel)
     gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(GUI_HOTLIST_LOW, line.data->notify_level);
 
-    /* notify: none */
+    /* Notify: none */
     line.data->notify_level = 99;
     gui_line_tags_alloc (line.data, "notify_none");
     gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(-1, line.data->notify_level);
     gui_line_tags_free (line.data);
 
-    /* notify: message */
+    /* Notify: message */
     line.data->notify_level = 99;
     gui_line_tags_alloc (line.data, "notify_message");
     gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(GUI_HOTLIST_MESSAGE, line.data->notify_level);
     gui_line_tags_free (line.data);
 
-    /* notify: private */
+    /* Notify: private */
     line.data->notify_level = 99;
     gui_line_tags_alloc (line.data, "notify_private");
     gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(GUI_HOTLIST_PRIVATE, line.data->notify_level);
     gui_line_tags_free (line.data);
 
-    /* notify: highlight */
+    /* Notify: highlight */
     line.data->notify_level = 99;
     gui_line_tags_alloc (line.data, "notify_highlight");
     gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, line.data->notify_level);
     gui_line_tags_free (line.data);
 
-    /* notify: highlight, max: private */
+    /* Notify: highlight, max: private */
     line.data->notify_level = 99;
     gui_line_tags_alloc (line.data, "notify_highlight");
     gui_line_set_notify_level (&line, GUI_HOTLIST_PRIVATE);
     LONGS_EQUAL(GUI_HOTLIST_PRIVATE, line.data->notify_level);
     gui_line_tags_free (line.data);
 
-    /* notify: highlight, max: message */
+    /* Notify: highlight, max: message */
     line.data->notify_level = 99;
     gui_line_tags_alloc (line.data, "notify_highlight");
     gui_line_set_notify_level (&line, GUI_HOTLIST_MESSAGE);
     LONGS_EQUAL(GUI_HOTLIST_MESSAGE, line.data->notify_level);
     gui_line_tags_free (line.data);
 
-    /* notify: highlight, max: low */
+    /* Notify: highlight, max: low */
     line.data->notify_level = 99;
     gui_line_tags_alloc (line.data, "notify_highlight");
     gui_line_set_notify_level (&line, GUI_HOTLIST_LOW);
     LONGS_EQUAL(GUI_HOTLIST_LOW, line.data->notify_level);
     gui_line_tags_free (line.data);
 
-    /* notify: highlight, max: -1 */
+    /* Notify: highlight, max: -1 */
     line.data->notify_level = 99;
     gui_line_tags_alloc (line.data, "notify_highlight");
     gui_line_set_notify_level (&line, -1);
@@ -842,55 +842,55 @@ TEST(GuiLine, SetHighlight)
     //line.data->message = strdup ("test");
     gui_line_tags_alloc (line.data, NULL);
 
-    /* notify: none */
+    /* Notify: none */
     line.data->notify_level = -1;
     line.data->highlight = -1;
     gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(0, line.data->highlight);
 
-    /* notify: low */
+    /* Notify: low */
     line.data->notify_level = 0;
     line.data->highlight = -1;
     gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(0, line.data->highlight);
 
-    /* notify: message */
+    /* Notify: message */
     line.data->notify_level = 1;
     line.data->highlight = -1;
     gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(0, line.data->highlight);
 
-    /* notify: private */
+    /* Notify: private */
     line.data->notify_level = 2;
     line.data->highlight = -1;
     gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(0, line.data->highlight);
 
-    /* notify: highlight */
+    /* Notify: highlight */
     line.data->notify_level = 3;
     line.data->highlight = -1;
     gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
     LONGS_EQUAL(1, line.data->highlight);
 
-    /* notify: message, max: private */
+    /* Notify: message, max: private */
     line.data->notify_level = 2;
     line.data->highlight = -1;
     gui_line_set_highlight (&line, GUI_HOTLIST_PRIVATE);
     LONGS_EQUAL(0, line.data->highlight);
 
-    /* notify: message, max: message */
+    /* Notify: message, max: message */
     line.data->notify_level = 1;
     line.data->highlight = -1;
     gui_line_set_highlight (&line, GUI_HOTLIST_MESSAGE);
     LONGS_EQUAL(0, line.data->highlight);
 
-    /* notify: low, max: low */
+    /* Notify: low, max: low */
     line.data->notify_level = 0;
     line.data->highlight = -1;
     gui_line_set_highlight (&line, GUI_HOTLIST_LOW);
     LONGS_EQUAL(0, line.data->highlight);
 
-    /* notify: none, max: -1 */
+    /* Notify: none, max: -1 */
     line.data->notify_level = -1;
     line.data->highlight = -1;
     gui_line_set_highlight (&line, -1);
@@ -898,7 +898,7 @@ TEST(GuiLine, SetHighlight)
 
     config_file_option_set (config_look_highlight, "test", 1);
 
-    /* notify: message, line with highlight */
+    /* Notify: message, line with highlight */
     line.data->message = strdup ("this is a test");
     line.data->notify_level = 1;
     line.data->highlight = -1;
@@ -927,14 +927,14 @@ TEST(GuiLine, GenerateId)
 
     CHECK(buffer->lines_last_id_assigned == -1LL);
 
-    /* the id is the current date/time, with microseconds precision */
+    /* The id is the current date/time, with microseconds precision. */
     id = gui_line_generate_id (buffer);
     CHECK(id > ((long long)(time (NULL) - 1) * 1000000LL));
 
-    /* the generated id does not change the last id assigned in the buffer */
+    /* The generated id does not change the last id assigned in the buffer. */
     CHECK(buffer->lines_last_id_assigned == -1LL);
 
-    /* the id is forced when the last id assigned is in the future */
+    /* The id is forced when the last id assigned is in the future. */
     buffer->lines_last_id_assigned = id + 1000000;
     CHECK(gui_line_generate_id (buffer) == id + 1000001);
 
@@ -953,14 +953,14 @@ TEST(GuiLine, GetDatePrinted)
     time_t date_printed;
     int date_usec_printed;
 
-    /* no line data: both values are set to 0 */
+    /* No line data: both values are set to 0. */
     date_printed = 123;
     date_usec_printed = 456;
     gui_line_get_date_printed (NULL, &date_printed, &date_usec_printed);
     LONGS_EQUAL(0, date_printed);
     LONGS_EQUAL(0, date_usec_printed);
 
-    /* buffer with formatted content: the date of print is the identifier */
+    /* Buffer with formatted content: the date of print is the identifier. */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
 
@@ -969,7 +969,7 @@ TEST(GuiLine, GetDatePrinted)
     CHECK(line);
     gui_line_add (line, 0);
 
-    /* NULL pointers are allowed */
+    /* Null pointers are allowed. */
     gui_line_get_date_printed (line->data, NULL, NULL);
 
     gui_line_get_date_printed (line->data, &date_printed, &date_usec_printed);
@@ -978,7 +978,7 @@ TEST(GuiLine, GetDatePrinted)
 
     gui_buffer_close (buffer);
 
-    /* buffer with free content: there is no date of print */
+    /* Buffer with free content: there is no date of print. */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
     CHECK(buffer);
 
@@ -1009,7 +1009,7 @@ TEST(GuiLine, NewWithId)
                    gui_line_new_with_id (NULL, 123, 0, 0, 0,
                                          NULL, NULL, NULL, -1, NULL));
 
-    /* buffer with formatted content: the id received is used */
+    /* Buffer with formatted content: the id received is used. */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
 
@@ -1021,8 +1021,8 @@ TEST(GuiLine, NewWithId)
     gui_line_add (line, 0);
 
     /*
-     * an id lower than or equal to the last one assigned is increased, so that
-     * the ids stay unique and sorted in the buffer
+     * An id lower than or equal to the last one assigned is increased, so that
+     * the ids stay unique and sorted in the buffer.
      */
     line = gui_line_new_with_id (buffer, 12, -1, 0, 0,
                                  NULL, NULL, "message", -1, NULL);
@@ -1040,7 +1040,7 @@ TEST(GuiLine, NewWithId)
 
     gui_buffer_close (buffer);
 
-    /* buffer with free content: the id received is ignored, "y" is used */
+    /* Buffer with free content: the id received is ignored, "y" is used. */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
     CHECK(buffer);
 
@@ -1079,7 +1079,7 @@ TEST(GuiLine, New)
                        date.tv_sec, date.tv_usec,
                        NULL, NULL, NULL, -1, NULL));
 
-    /* create a new test buffer (formatted content) */
+    /* Create a new test buffer (formatted content). */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
 
@@ -1144,9 +1144,9 @@ TEST(GuiLine, New)
     POINTERS_EQUAL(NULL, line2->next_line);
 
     /*
-     * simulate a last assigned id in the future and display 2 lines: the ids
+     * Simulate a last assigned id in the future and display 2 lines: the ids
      * must be forced to the next values, so that they stay unique and
-     * strictly increasing in the buffer
+     * strictly increasing in the buffer.
      */
     last_id = buffer->lines_last_id_assigned + 1000000;
     buffer->lines_last_id_assigned = last_id;
@@ -1166,7 +1166,7 @@ TEST(GuiLine, New)
 
     gui_buffer_close (buffer);
 
-    /* create a new test buffer (free content) */
+    /* Create a new test buffer (free content). */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
     CHECK(buffer);
 
@@ -1179,7 +1179,7 @@ TEST(GuiLine, New)
     POINTERS_EQUAL(NULL, line1->prev_line);
     POINTERS_EQUAL(NULL, line1->next_line);
     POINTERS_EQUAL(buffer, line1->data->buffer);
-    /* on buffers with free content, the id of a line is its number ("y") */
+    /* On buffers with free content, the id of a line is its number ("y"). */
     LONGS_EQUAL(0, line1->data->id);
     LONGS_EQUAL(0, line1->data->y);
     CHECK(buffer->lines_last_id_assigned == -1LL);
@@ -1261,7 +1261,7 @@ TEST(GuiLine, Add)
     date.tv_sec = date_printed.tv_sec;
     date.tv_usec = date_printed.tv_usec;
 
-    /* make the hotlist "add conditions" always true for this test */
+    /* Make the hotlist "add conditions" always true for this test. */
     config_file_option_set (config_look_hotlist_add_conditions, "1", 1);
 
     buffer = gui_buffer_new_user ("test_add", GUI_BUFFER_TYPE_FORMATTED);
@@ -1270,14 +1270,14 @@ TEST(GuiLine, Add)
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     POINTERS_EQUAL(NULL, gui_hotlist);
 
-    /* the buffer has no line yet */
+    /* The buffer has no line yet. */
     POINTERS_EQUAL(NULL, buffer->own_lines->first_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
     LONGS_EQUAL(0, buffer->own_lines->lines_count);
 
     /*
-     * add a first line with notify level "none" (not added to the hotlist):
-     * it becomes both the first and the last line of the buffer
+     * Add a first line with notify level "none" (not added to the hotlist):
+     * it becomes both the first and the last line of the buffer.
      */
     line1 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
@@ -1292,7 +1292,7 @@ TEST(GuiLine, Add)
     POINTERS_EQUAL(NULL, line1->next_line);
     POINTERS_EQUAL(NULL, gui_hotlist);
 
-    /* add a second line: it is appended after the first one */
+    /* Add a second line: it is appended after the first one. */
     line2 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           "notify_none", "prefix", "message2", 0, NULL);
@@ -1307,8 +1307,8 @@ TEST(GuiLine, Add)
     POINTERS_EQUAL(NULL, gui_hotlist);
 
     /*
-     * a line with notify level "message" is added to the hotlist with
-     * priority "message" (add_to_hotlist == 1)
+     * A line with notify level "message" is added to the hotlist with
+     * priority "message" (add_to_hotlist == 1).
      */
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     line3 = gui_line_new (buffer, -1,
@@ -1323,9 +1323,9 @@ TEST(GuiLine, Add)
     POINTERS_EQUAL(buffer, gui_hotlist->buffer);
 
     /*
-     * the same "message" line added with add_to_hotlist == 0 must NOT be
+     * The same "message" line added with add_to_hotlist == 0 must NOT be
      * added to the hotlist (non-highlighted counterpart of the highlight
-     * check below)
+     * check below).
      */
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     POINTERS_EQUAL(NULL, gui_hotlist);
@@ -1337,8 +1337,8 @@ TEST(GuiLine, Add)
     POINTERS_EQUAL(NULL, gui_hotlist);
 
     /*
-     * a line with notify level "private" is added to the hotlist with
-     * priority "private"
+     * A line with notify level "private" is added to the hotlist with
+     * priority "private".
      */
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     line3 = gui_line_new (buffer, -1,
@@ -1352,8 +1352,8 @@ TEST(GuiLine, Add)
     POINTERS_EQUAL(buffer, gui_hotlist->buffer);
 
     /*
-     * a highlighted line added normally (add_to_hotlist == 1) is added to the
-     * hotlist with priority "highlight"
+     * A highlighted line added normally (add_to_hotlist == 1) is added to the
+     * hotlist with priority "highlight".
      */
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     line3 = gui_line_new (buffer, -1,
@@ -1369,12 +1369,12 @@ TEST(GuiLine, Add)
     POINTERS_EQUAL(buffer, gui_hotlist->buffer);
 
     /*
-     * a highlighted line replayed from an upgrade file (add_to_hotlist == 0)
+     * A highlighted line replayed from an upgrade file (add_to_hotlist == 0)
      * must NOT be added to the hotlist (it is restored separately, see
      * upgrade_weechat_read_buffer_line()); the saved time string, passed as
      * known_str_time, is reused verbatim instead of being recomputed: here
      * "12:34" (hours and minutes only), which the default time format
-     * "%H:%M:%S" would never produce, so it can only come from known_str_time
+     * "%H:%M:%S" would never produce, so it can only come from known_str_time.
      */
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     POINTERS_EQUAL(NULL, gui_hotlist);
@@ -1387,12 +1387,12 @@ TEST(GuiLine, Add)
     LONGS_EQUAL(1, line3->data->highlight);
     LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, line3->data->notify_level);
     STRCMP_EQUAL("12:34", line3->data->str_time);
-    gui_line_add (line3, 0);  /* do not add to hotlist */
+    gui_line_add (line3, 0);  /* Do not add to hotlist */
     POINTERS_EQUAL(NULL, gui_hotlist);
 
     /*
-     * a line that is not displayed must NOT be added to the hotlist, even
-     * when it is a highlight
+     * A line that is not displayed must NOT be added to the hotlist, even
+     * when it is a highlight.
      */
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     line3 = gui_line_new (buffer, -1,
@@ -1409,8 +1409,8 @@ TEST(GuiLine, Add)
     gui_buffer_close (buffer);
 
     /*
-     * check that the oldest lines are removed when the max number of lines in
-     * buffer is reached (option weechat.history.max_buffer_lines_number)
+     * Check that the oldest lines are removed when the max number of lines in
+     * buffer is reached (option weechat.history.max_buffer_lines_number).
      */
     config_file_option_set (config_history_max_buffer_lines_number, "2", 1);
     buffer = gui_buffer_new_user ("test_add_max_lines",
@@ -1429,7 +1429,7 @@ TEST(GuiLine, Add)
     gui_line_add (line2, 1);
     LONGS_EQUAL(2, buffer->own_lines->lines_count);
 
-    /* adding a third line removes the oldest one (line1) */
+    /* Adding a third line removes the oldest one (line1). */
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           "notify_none", NULL, "line3", 0, NULL);
@@ -1442,16 +1442,16 @@ TEST(GuiLine, Add)
     gui_buffer_close (buffer);
 
     /*
-     * check that the lines older than the max number of minutes are removed
+     * Check that the lines older than the max number of minutes are removed
      * (option weechat.history.max_buffer_lines_minutes); the age of a line is
-     * given by its identifier, which is the date of print
+     * given by its identifier, which is the date of print.
      */
     config_file_option_set (config_history_max_buffer_lines_minutes, "1", 1);
     buffer = gui_buffer_new_user ("test_add_max_minutes",
                                   GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
 
-    /* line displayed one hour ago */
+    /* Line displayed one hour ago */
     line1 = gui_line_new_with_id (buffer,
                                   ((long long)(time (NULL) - 3600)) * 1000000LL,
                                   -1,
@@ -1460,7 +1460,7 @@ TEST(GuiLine, Add)
     gui_line_add (line1, 1);
     LONGS_EQUAL(1, buffer->own_lines->lines_count);
 
-    /* line displayed 10 seconds ago */
+    /* Line displayed 10 seconds ago */
     line2 = gui_line_new_with_id (buffer,
                                   ((long long)(time (NULL) - 10)) * 1000000LL,
                                   -1,
@@ -1468,12 +1468,12 @@ TEST(GuiLine, Add)
                                   "notify_none", NULL, "line2", 0, NULL);
     gui_line_add (line2, 1);
 
-    /* the line displayed one hour ago has been removed */
+    /* The line displayed one hour ago has been removed. */
     LONGS_EQUAL(1, buffer->own_lines->lines_count);
     POINTERS_EQUAL(line2, buffer->own_lines->first_line);
     POINTERS_EQUAL(line2, buffer->own_lines->last_line);
 
-    /* line displayed now: the line displayed 10 seconds ago is kept */
+    /* Line displayed now: the line displayed 10 seconds ago is kept. */
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           "notify_none", NULL, "line3", 0, NULL);
@@ -1499,14 +1499,14 @@ TEST(GuiLine, AddY)
     buffer = gui_buffer_new_user ("test_add_y", GUI_BUFFER_TYPE_FREE);
     CHECK(buffer);
 
-    /* a free-content buffer starts with no line */
+    /* A free-content buffer starts with no line. */
     POINTERS_EQUAL(NULL, buffer->own_lines->first_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
     LONGS_EQUAL(0, buffer->own_lines->lines_count);
 
     /*
-     * first line at y == 0: the buffer is empty (last_line == NULL), so the
-     * fast path is not taken and the (empty) scan appends the line
+     * First line at y == 0: the buffer is empty (last_line == NULL), so the
+     * fast path is not taken and the (empty) scan appends the line.
      */
     WEE_LINE_ADD_Y(0, "line0");
     LONGS_EQUAL(1, buffer->own_lines->lines_count);
@@ -1517,8 +1517,8 @@ TEST(GuiLine, AddY)
     STRCMP_EQUAL("line0", ptr_line->data->message);
 
     /*
-     * append y == 2 leaving a gap: last_line->y (0) < 2, so the fast path
-     * appends directly (gui_line_add_y does not fill gaps by itself)
+     * Append y == 2 leaving a gap: last_line->y (0) < 2, so the fast path
+     * appends directly (gui_line_add_y does not fill gaps by itself).
      */
     WEE_LINE_ADD_Y(2, "line2");
     LONGS_EQUAL(2, buffer->own_lines->lines_count);
@@ -1526,8 +1526,8 @@ TEST(GuiLine, AddY)
     STRCMP_EQUAL("line2", buffer->own_lines->last_line->data->message);
 
     /*
-     * insert y == 1 in the middle: last_line->y (2) is not < 1, so the full
-     * scan runs and inserts the line before y == 2
+     * Insert y == 1 in the middle: last_line->y (2) is not < 1, so the full
+     * scan runs and inserts the line before y == 2.
      */
     WEE_LINE_ADD_Y(1, "line1");
     LONGS_EQUAL(3, buffer->own_lines->lines_count);
@@ -1544,8 +1544,8 @@ TEST(GuiLine, AddY)
     POINTERS_EQUAL(ptr_line, buffer->own_lines->last_line);
 
     /*
-     * replace a middle line (y == 1): the scan finds the existing line and
-     * replaces its data, the line count is unchanged
+     * Replace a middle line (y == 1): the scan finds the existing line and
+     * replaces its data, the line count is unchanged.
      */
     WEE_LINE_ADD_Y(1, "line1-new");
     LONGS_EQUAL(3, buffer->own_lines->lines_count);
@@ -1554,9 +1554,9 @@ TEST(GuiLine, AddY)
     STRCMP_EQUAL("line1-new", ptr_line->data->message);
 
     /*
-     * replace the LAST line (y == 2): the fast path must NOT trigger here
+     * Replace the LAST line (y == 2): the fast path must NOT trigger here
      * (last_line->y (2) is not < 2); if it used "<=" the line would be
-     * wrongly appended as a duplicate instead of replaced
+     * wrongly appended as a duplicate instead of replaced.
      */
     WEE_LINE_ADD_Y(2, "line2-new");
     LONGS_EQUAL(3, buffer->own_lines->lines_count);
@@ -1569,7 +1569,7 @@ TEST(GuiLine, AddY)
     LONGS_EQUAL(10, buffer->own_lines->last_line->data->y);
     STRCMP_EQUAL("line10", buffer->own_lines->last_line->data->message);
 
-    /* final list must stay ordered by y: 0, 1, 2, 10 */
+    /* Final list must stay ordered by y: 0, 1, 2, 10. */
     ptr_line = buffer->own_lines->first_line;
     LONGS_EQUAL(0, ptr_line->data->y);
     ptr_line = ptr_line->next_line;

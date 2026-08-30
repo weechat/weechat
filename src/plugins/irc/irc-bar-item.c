@@ -39,7 +39,7 @@ irc_bar_item_buffer_plugin (const void *pointer, void *data,
     struct t_irc_server *server;
     struct t_irc_channel *channel;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -194,7 +194,7 @@ irc_bar_item_buffer_name (const void *pointer, void *data,
                           struct t_gui_buffer *buffer,
                           struct t_hashtable *extra_info)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -215,7 +215,7 @@ irc_bar_item_buffer_short_name (const void *pointer, void *data,
                                 struct t_gui_buffer *buffer,
                                 struct t_hashtable *extra_info)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -241,7 +241,7 @@ irc_bar_item_channel (const void *pointer, void *data,
     struct t_irc_server *server;
     struct t_irc_channel *channel;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -317,7 +317,7 @@ irc_bar_item_nick (const void *pointer, void *data,
     char buf[512];
     struct t_irc_server *server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -350,7 +350,7 @@ irc_bar_item_host (const void *pointer, void *data,
 {
     struct t_irc_server *server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -381,7 +381,7 @@ irc_bar_item_nick_host (const void *pointer, void *data,
     char buf[512];
     struct t_irc_server *server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -416,7 +416,7 @@ irc_bar_item_lag (const void *pointer, void *data,
     char buf[128];
     struct t_irc_server *server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -459,7 +459,7 @@ irc_bar_item_tls_version (const void *pointer, void *data,
     gnutls_protocol_t version;
     const char *color;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -526,7 +526,7 @@ irc_bar_item_nick_modes (const void *pointer, void *data,
     struct t_irc_server *server;
     char *buf;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -563,7 +563,7 @@ irc_bar_item_nick_prefix (const void *pointer, void *data,
     struct t_irc_nick *ptr_nick;
     char str_prefix[64];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -625,7 +625,7 @@ irc_bar_item_focus_buffer_nicklist (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -661,7 +661,7 @@ irc_bar_item_buffer_switch (const void *pointer, void *data,
                             const char *signal,
                             const char *type_data, void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;

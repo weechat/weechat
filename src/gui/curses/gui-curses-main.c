@@ -98,10 +98,10 @@ gui_main_get_password (const char **prompt, char *password, int size)
     while (i < size - 1)
     {
         ch = getch ();
-        /* enter */
+        /* Enter */
         if (ch == '\n')
             break;
-        /* terminal lost or ctrl-c */
+        /* Terminal lost or ctrl-c */
         if ((ch == ERR) || (ch == 3))
         {
             password[0] = 3;
@@ -139,7 +139,7 @@ gui_main_get_password (const char **prompt, char *password, int size)
 void
 gui_main_signal_sigint (int signo)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) signo;
 
     weechat_quit = 1;
@@ -155,7 +155,7 @@ gui_main_init (void)
     struct t_gui_buffer *ptr_buffer;
     char title[256];
 
-    /* allow ctrl-c to quit WeeChat in headless mode */
+    /* Allow ctrl-c to quit WeeChat in headless mode. */
     if (weechat_headless)
         signal_catch (SIGINT, &gui_main_signal_sigint);
 
@@ -171,7 +171,7 @@ gui_main_init (void)
 
     gui_color_alloc ();
 
-    /* build prefixes according to configuration */
+    /* Build prefixes according to configuration. */
     gui_chat_prefix_build ();
 
     refresh ();
@@ -181,18 +181,18 @@ gui_main_init (void)
 
     gui_window_read_terminal_size ();
 
-    /* init clipboard buffer */
+    /* Init clipboard buffer. */
     gui_input_clipboard = NULL;
 
-    /* get time length */
+    /* Get time length. */
     gui_chat_time_length = gui_chat_get_time_length ();
 
-    /* init bar items */
+    /* Initialize bar items. */
     gui_bar_item_init ();
 
     gui_init_ok = 0;
 
-    /* create core buffer */
+    /* Create core buffer. */
     ptr_buffer = gui_buffer_new (NULL, GUI_BUFFER_MAIN,
                                  NULL, NULL, NULL,
                                  NULL, NULL, NULL);
@@ -202,18 +202,18 @@ gui_main_init (void)
 
         ptr_buffer->num_displayed = 1;
 
-        /* set short name */
+        /* Set short name. */
         if (!ptr_buffer->short_name)
             ptr_buffer->short_name = strdup (GUI_BUFFER_MAIN);
 
-        /* set title for core buffer */
+        /* Set title for core buffer. */
         snprintf (title, sizeof (title), "WeeChat %s %s - %s",
                   version_get_version (),
                   WEECHAT_COPYRIGHT_DATE,
                   WEECHAT_WEBSITE);
         gui_buffer_set_title (ptr_buffer, title);
 
-        /* create main window (using full space) */
+        /* Create main window (using full space). */
         if (gui_window_new (NULL, ptr_buffer, 0, 0,
                             gui_term_cols, gui_term_lines, 100, 100))
         {
@@ -221,7 +221,7 @@ gui_main_init (void)
             gui_window_set_title (CONFIG_STRING(config_look_window_title));
         }
 
-        /* switch to buffer */
+        /* Switch to buffer. */
         gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 0);
     }
 
@@ -240,7 +240,7 @@ gui_main_init (void)
 void
 gui_main_signal_sigwinch (int signo)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) signo;
 
     gui_signal_sigwinch_received = 1;
@@ -272,18 +272,18 @@ gui_main_refreshes (void)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
 
-    /* refresh color buffer if needed */
+    /* Refresh color buffer if needed. */
     if (gui_color_buffer_refresh_needed)
     {
         gui_color_buffer_display ();
         gui_color_buffer_refresh_needed = 0;
     }
 
-    /* compute max length for prefix/buffer if needed */
+    /* Compute max length for prefix/buffer if needed. */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        /* compute buffer/prefix max length for own_lines */
+        /* Compute buffer/prefix max length for own_lines. */
         if (ptr_buffer->own_lines)
         {
             if (ptr_buffer->own_lines->buffer_max_length_refresh)
@@ -295,7 +295,7 @@ gui_main_refreshes (void)
                 gui_line_compute_prefix_max_length (ptr_buffer->own_lines);
         }
 
-        /* compute buffer/prefix max length for mixed_lines */
+        /* Compute buffer/prefix max length for mixed_lines. */
         if (ptr_buffer->mixed_lines)
         {
             if (ptr_buffer->mixed_lines->buffer_max_length_refresh)
@@ -308,28 +308,28 @@ gui_main_refreshes (void)
         }
     }
 
-    /* refresh window if needed */
+    /* Refresh window if needed. */
     if (gui_window_refresh_needed)
     {
         gui_window_refresh_screen ((gui_window_refresh_needed > 1) ? 1 : 0);
         gui_window_refresh_needed = 0;
     }
 
-    /* refresh bars if needed */
+    /* Refresh bars if needed. */
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (ptr_bar->bar_refresh_needed)
             gui_bar_draw (ptr_bar);
     }
 
-    /* refresh window if needed (if asked during refresh of bars) */
+    /* Refresh window if needed (if asked during refresh of bars). */
     if (gui_window_refresh_needed)
     {
         gui_window_refresh_screen ((gui_window_refresh_needed > 1) ? 1 : 0);
         gui_window_refresh_needed = 0;
     }
 
-    /* refresh windows if needed */
+    /* Refresh windows if needed. */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (ptr_win->refresh_needed)
@@ -340,7 +340,7 @@ gui_main_refreshes (void)
         }
     }
 
-    /* refresh chat buffers if needed */
+    /* Refresh chat buffers if needed. */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -353,7 +353,7 @@ gui_main_refreshes (void)
 
     if (!gui_window_bare_display)
     {
-        /* refresh bars if needed */
+        /* Refresh bars if needed. */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
             if (ptr_bar->bar_refresh_needed)
@@ -362,7 +362,7 @@ gui_main_refreshes (void)
             }
         }
 
-        /* move cursor (for cursor mode) */
+        /* Move cursor (for cursor mode). */
         if (gui_cursor_mode)
             gui_window_move_cursor ();
     }
@@ -380,14 +380,14 @@ gui_main_loop (void)
 
     send_signal_sigwinch = 0;
 
-    /* catch SIGWINCH signal: redraw screen */
+    /* Catch SIGWINCH signal: redraw screen. */
     if (!weechat_headless)
     {
         gui_signal_sigwinch_received = 1;
         signal_catch (SIGWINCH, &gui_main_signal_sigwinch);
     }
 
-    /* hook stdin (read keyboard) */
+    /* Hook stdin (read keyboard). */
     if (weechat_headless)
     {
         hook_fd_keyboard = NULL;
@@ -402,10 +402,10 @@ gui_main_loop (void)
 
     while (!weechat_quit)
     {
-        /* execute timer hooks */
+        /* Execute timer hooks. */
         hook_timer_exec ();
 
-        /* auto reset of color pairs */
+        /* Auto reset of color pairs. */
         if (gui_color_pairs_auto_reset)
         {
             gui_color_reset_pairs ();
@@ -434,17 +434,17 @@ gui_main_loop (void)
 
         gui_color_pairs_auto_reset_pending = 0;
 
-        /* execute fd hooks */
+        /* Execute fd hooks. */
         hook_fd_exec ();
 
-        /* run process (with fork) */
+        /* Run process (with fork). */
         hook_process_exec ();
 
-        /* handle signals received */
+        /* Handle signals received. */
         signal_handle ();
     }
 
-    /* remove keyboard hook */
+    /* Remove keyboard hook. */
     unhook (hook_fd_keyboard);
 }
 
@@ -461,8 +461,8 @@ gui_main_end (int clean_exit)
     if (clean_exit)
     {
         /*
-         * final refreshes, to see messages just before exiting
-         * (if we are upgrading, don't refresh anything!)
+         * Final refreshes, to see messages just before exiting
+         * (if we are upgrading, don't refresh anything!).
          */
         if (!weechat_upgrading)
         {
@@ -471,33 +471,33 @@ gui_main_end (int clean_exit)
                 gui_main_refreshes ();
         }
 
-        /* disable bracketed paste mode */
+        /* Disable bracketed paste mode. */
         gui_window_set_bracketed_paste_mode (0);
 
-        /* disable mouse */
+        /* Disable mouse. */
         gui_mouse_disable ();
 
-        /* remove bar items and bars */
+        /* Remove bar items and bars. */
         gui_bar_item_end ();
         gui_bar_free_all ();
 
-        /* remove filters */
+        /* Remove filters. */
         gui_filter_free_all ();
 
-        /* free clipboard buffer */
+        /* Free clipboard buffer. */
         free (gui_input_clipboard);
 
-        /* delete layouts */
+        /* Delete layouts. */
         gui_layout_remove_all ();
 
-        /* delete all windows */
+        /* Delete all windows. */
         while (gui_windows)
         {
             gui_window_free (gui_windows);
         }
         gui_window_tree_free (&gui_windows_tree);
 
-        /* delete all buffers */
+        /* Delete all buffers. */
         while (gui_buffers)
         {
             gui_buffer_close (gui_buffers);
@@ -505,23 +505,23 @@ gui_main_end (int clean_exit)
 
         gui_init_ok = 0;
 
-        /* delete global history */
+        /* Delete global history. */
         gui_history_global_free ();
 
-        /* end color */
+        /* End color. */
         gui_color_end ();
 
-        /* free some variables used for chat area */
+        /* Free some variables used for chat area. */
         gui_chat_end ();
 
-        /* free some variables used for nicklist */
+        /* Free some variables used for nicklist. */
         gui_nicklist_end ();
 
-        /* free some variables used for hotlist */
+        /* Free some variables used for hotlist. */
         gui_hotlist_end ();
     }
 
-    /* end of Curses output */
+    /* End Curses output. */
     refresh ();
     endwin ();
 }

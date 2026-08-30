@@ -36,14 +36,14 @@ struct t_gui_hotlist
     struct t_gui_hotlist *next_hotlist;    /* link to next hotlist          */
 };
 
-/* history variables */
+/* History variables */
 
 extern struct t_gui_hotlist *gui_hotlist;
 extern struct t_gui_hotlist *last_gui_hotlist;
 extern struct t_gui_buffer *gui_hotlist_initial_buffer;
 extern int gui_add_hotlist;
 
-/* hotlist functions */
+/* Hotlist functions */
 
 extern int gui_hotlist_search_priority (const char *priority);
 extern struct t_gui_hotlist *gui_hotlist_add (struct t_gui_buffer *buffer,

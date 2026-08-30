@@ -28,7 +28,7 @@ extern int secure_derive_key (const char *salt, const char *passphrase,
 extern "C" int
 LLVMFuzzerInitialize (int *argc, char ***argv)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -46,7 +46,7 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
     char *str, hash[1024], *encrypted, *decrypted;
     int length_encrypted, length_decrypted;
 
-    /* ignore empty or huge data */
+    /* Ignore empty or huge data. */
     if ((size == 0) || (size > 65536))
         return 0;
 

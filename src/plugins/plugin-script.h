@@ -34,7 +34,7 @@
 #define WEECHAT_SCRIPT_CONST_STR(__name)                                \
     { #__name, 0, __name }
                                     \
-/* constants which defines return types for weechat_<lang>_exec functions */
+/* Constants which defines return types for weechat_<lang>_exec functions */
 
 enum t_weechat_script_exec_type
 {

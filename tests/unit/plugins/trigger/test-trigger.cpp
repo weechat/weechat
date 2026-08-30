@@ -174,12 +174,12 @@ TEST(Trigger, RegexSplit)
     regex_count = 0;
     regex = NULL;
 
-    /* free of regex with invalid arguments */
+    /* Free of regex with invalid arguments */
     trigger_regex_free (NULL, NULL);
     trigger_regex_free (&regex_count, NULL);
     trigger_regex_free (NULL, &regex);
 
-    /* no regex_count / regex */
+    /* No regex_count / regex */
     LONGS_EQUAL(0, trigger_regex_split (NULL, NULL, NULL));
     LONGS_EQUAL(0, trigger_regex_split (NULL, &regex_count, NULL));
     LONGS_EQUAL(0, trigger_regex_split (NULL, NULL, &regex));
@@ -188,34 +188,34 @@ TEST(Trigger, RegexSplit)
     WEE_CHECK_REGEX_SPLIT(0, 0, NULL);
     WEE_CHECK_REGEX_SPLIT(0, 0, "");
 
-    /* regex too short (default command "s") */
+    /* Regex too short (default command "s") */
     WEE_CHECK_REGEX_SPLIT(-1, 0, "/");
     WEE_CHECK_REGEX_SPLIT(-1, 0, "/a");
 
-    /* regex too short with command "s" (regex replace) */
+    /* Regex too short with command "s" (regex replace) */
     WEE_CHECK_REGEX_SPLIT(-1, 0, "s/");
     WEE_CHECK_REGEX_SPLIT(-1, 0, "s///");
     WEE_CHECK_REGEX_SPLIT(-1, 0, "s/a");
 
-    /* regex too short with command "y" (translate chars) */
+    /* Regex too short with command "y" (translate chars) */
     WEE_CHECK_REGEX_SPLIT(-1, 0, "y/");
     WEE_CHECK_REGEX_SPLIT(-1, 0, "y///");
     WEE_CHECK_REGEX_SPLIT(-1, 0, "y/a");
 
-    /* missing second delimiter */
+    /* Missing second delimiter */
     WEE_CHECK_REGEX_SPLIT(-1, 0, "/abc");
     WEE_CHECK_REGEX_SPLIT(-1, 0, "s/abc");
     WEE_CHECK_REGEX_SPLIT(-1, 0, "y/abc");
 
-    /* invalid command */
+    /* Invalid command */
     WEE_CHECK_REGEX_SPLIT(-1, 0, "a/a/b");
     WEE_CHECK_REGEX_SPLIT(-1, 0, "z/a/b");
 
-    /* invalid regex */
+    /* Invalid regex */
     WEE_CHECK_REGEX_SPLIT(-2, 0, "/*/a");
     WEE_CHECK_REGEX_SPLIT(-2, 0, "s/*/a");
 
-    /* simple regex (implicit command "s") */
+    /* Simple regex (implicit command "s") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "/a/b");
     STRCMP_EQUAL(NULL, regex[0].variable);
     STRCMP_EQUAL("a", regex[0].str_regex);
@@ -223,7 +223,7 @@ TEST(Trigger, RegexSplit)
     STRCMP_EQUAL("b", regex[0].replace);
     STRCMP_EQUAL("b", regex[0].replace_escaped);
 
-    /* simple regex replace (command "s") */
+    /* Simple regex replace (command "s") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "s/a/b");
     STRCMP_EQUAL(NULL, regex[0].variable);
     STRCMP_EQUAL("a", regex[0].str_regex);
@@ -231,7 +231,7 @@ TEST(Trigger, RegexSplit)
     STRCMP_EQUAL("b", regex[0].replace);
     STRCMP_EQUAL("b", regex[0].replace_escaped);
 
-    /* simple translate chars (command "y") */
+    /* Simple translate chars (command "y") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "y/${chars:a-h}/${chars:A-H}");
     STRCMP_EQUAL(NULL, regex[0].variable);
     STRCMP_EQUAL("${chars:a-h}", regex[0].str_regex);
@@ -239,7 +239,7 @@ TEST(Trigger, RegexSplit)
     STRCMP_EQUAL("${chars:A-H}", regex[0].replace);
     STRCMP_EQUAL(NULL, regex[0].replace_escaped);
 
-    /* simple regex replace with variable (implicit command "s") */
+    /* Simple regex replace with variable (implicit command "s") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "/a/b/var");
     STRCMP_EQUAL("var", regex[0].variable);
     STRCMP_EQUAL("a", regex[0].str_regex);
@@ -247,7 +247,7 @@ TEST(Trigger, RegexSplit)
     STRCMP_EQUAL("b", regex[0].replace);
     STRCMP_EQUAL("b", regex[0].replace_escaped);
 
-    /* simple regex replace with variable (command "s") */
+    /* Simple regex replace with variable (command "s") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "s/a/b/var");
     STRCMP_EQUAL("var", regex[0].variable);
     STRCMP_EQUAL("a", regex[0].str_regex);
@@ -255,7 +255,7 @@ TEST(Trigger, RegexSplit)
     STRCMP_EQUAL("b", regex[0].replace);
     STRCMP_EQUAL("b", regex[0].replace_escaped);
 
-    /* simple translate chars with variable (command "y") */
+    /* Simple translate chars with variable (command "y") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "y/${chars:a-h}/${chars:A-H}/var");
     STRCMP_EQUAL("var", regex[0].variable);
     STRCMP_EQUAL("${chars:a-h}", regex[0].str_regex);
@@ -359,7 +359,7 @@ TEST(Trigger, RegexSplit)
     STRCMP_EQUAL("MNO", regex[2].replace);
     STRCMP_EQUAL(NULL, regex[2].replace_escaped);
 
-    /* mixed regex replace and translate chars */
+    /* Mixed regex replace and translate chars */
     WEE_CHECK_REGEX_SPLIT(0, 2,
                           "s/abc/defghi/var1 y/${chars:x-z}/${chars:X-Z}/var2");
     STRCMP_EQUAL("var1", regex[0].variable);
@@ -389,7 +389,7 @@ TEST(Trigger, SplitCommand)
     commands_count = 0;
     commands = NULL;
 
-    /* no commands_count / commands */
+    /* No commands_count / commands */
     trigger_split_command (NULL, NULL, NULL);
     LONGS_EQUAL(0, commands_count);
     POINTERS_EQUAL(NULL, commands);
@@ -408,19 +408,19 @@ TEST(Trigger, SplitCommand)
     LONGS_EQUAL(0, commands_count);
     POINTERS_EQUAL(NULL, commands);
 
-    /* one command */
+    /* One command */
     trigger_split_command ("/test", &commands_count, &commands);
     LONGS_EQUAL(1, commands_count);
     CHECK(commands);
     STRCMP_EQUAL("/test", commands[0]);
 
-    /* one command with an escaped semicolon */
+    /* One command with an escaped semicolon */
     trigger_split_command ("/test arg\\;test", &commands_count, &commands);
     LONGS_EQUAL(1, commands_count);
     CHECK(commands);
     STRCMP_EQUAL("/test arg;test", commands[0]);
 
-    /* two commands */
+    /* Two commands */
     trigger_split_command ("/test1;/test2", &commands_count, &commands);
     LONGS_EQUAL(2, commands_count);
     CHECK(commands);
@@ -467,32 +467,32 @@ TEST(Trigger, New)
     struct t_trigger *trigger;
     int hook_type, enabled;
 
-    /* invalid name */
+    /* Invalid name */
     POINTERS_EQUAL(NULL, trigger_new ("-test", "on", "signal", "test", "", "",
                                       "/print test", "ok", "none"));
 
-    /* invalid hook type */
+    /* Invalid hook type */
     POINTERS_EQUAL(NULL, trigger_new ("test", "on", "abc", "test", "", "",
                                       "/print test", "ok", "none"));
 
-    /* invalid return code */
+    /* Invalid return code */
     POINTERS_EQUAL(NULL, trigger_new ("test", "on", "signal", "test", "", "",
                                       "/print test", "abc", "none"));
 
-    /* invalid post action */
+    /* Invalid post action */
     POINTERS_EQUAL(NULL, trigger_new ("test", "on", "signal", "test", "", "",
                                       "/print test", "ok", "abc"));
 
-    /* name already used */
+    /* Name already used */
     trigger = trigger_new ("test", "on", "signal", "test", "", "", "", "", "");
     POINTERS_EQUAL(NULL, trigger_new ("test", "on", "signal", "test", "", "",
                                       "", "", ""));
     trigger_free (trigger);
 
-    /* test a trigger of each type */
+    /* Test a trigger of each type. */
     for (hook_type = 0; hook_type < TRIGGER_NUM_HOOK_TYPES; hook_type++)
     {
-        /* test enabled/disabled trigger */
+        /* Test enabled/disabled trigger. */
         for (enabled = 0; enabled < 2; enabled++)
         {
             printf ("Creating %s trigger with hook \"%s\"\n",
@@ -574,7 +574,7 @@ TEST(Trigger, New)
         }
     }
 
-    /* trigger with multiple regex */
+    /* Trigger with multiple regex */
     trigger = trigger_new (
             "test",
             "on",
@@ -588,35 +588,38 @@ TEST(Trigger, New)
     CHECK(trigger);
     LONGS_EQUAL(3, trigger->regex_count);
     CHECK(trigger->regex);
-    /* regex 1 */
+
+    /* Regex 1 */
     STRCMP_EQUAL("var1", trigger->regex[0].variable);
     STRCMP_EQUAL("abc", trigger->regex[0].str_regex);
     CHECK(trigger->regex[0].regex);
     STRCMP_EQUAL("def", trigger->regex[0].replace);
     STRCMP_EQUAL("def", trigger->regex[0].replace_escaped);
-    /* regex 2 */
+
+    /* Regex 2 */
     STRCMP_EQUAL("var2", trigger->regex[1].variable);
     STRCMP_EQUAL("ghi", trigger->regex[1].str_regex);
     CHECK(trigger->regex[0].regex);
     STRCMP_EQUAL("jkl", trigger->regex[1].replace);
     STRCMP_EQUAL("jkl", trigger->regex[1].replace_escaped);
-    /* regex 3 */
+
+    /* Regex 3 */
     STRCMP_EQUAL("var3", trigger->regex[2].variable);
     STRCMP_EQUAL("mno", trigger->regex[2].str_regex);
     CHECK(trigger->regex[2].regex);
     STRCMP_EQUAL("pqr\\x20stu", trigger->regex[2].replace);
     STRCMP_EQUAL("pqr stu", trigger->regex[2].replace_escaped);
-    /* free trigger */
+
     trigger_free (trigger);
 
-    /* search trigger */
+    /* Search trigger. */
     POINTERS_EQUAL(NULL, trigger_search (NULL));
     POINTERS_EQUAL(NULL, trigger_search (""));
     POINTERS_EQUAL(NULL, trigger_search ("abc"));
     POINTERS_EQUAL(NULL, trigger_search_with_option (NULL));
     POINTERS_EQUAL(NULL, trigger_search_with_option (config_look_day_change));
 
-    /* test free of NULL trigger */
+    /* Test free of NULL trigger. */
     trigger_free (NULL);
 }
 

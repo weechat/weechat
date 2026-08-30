@@ -45,10 +45,10 @@
 #define WEECHAT_AUTHOR_NAME      "Sébastien Helleu"
 #define WEECHAT_AUTHOR_EMAIL     "flashcode@flashtux.org"
 
-/* log file */
+/* Log file */
 #define WEECHAT_LOG_NAME "weechat.log"
 
-/* license */
+/* License */
 #define WEECHAT_LICENSE_TEXT \
     "WeeChat is free software; you can redistribute it and/or modify\n" \
     "it under the terms of the GNU General Public License as published by\n" \
@@ -64,7 +64,7 @@
     "You should have received a copy of the GNU General Public License\n" \
     "along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.\n\n"
 
-/* directory separator, depending on OS */
+/* Directory separator, depending on OS */
 #ifdef _WIN32
     #define DIR_SEPARATOR       "\\"
     #define DIR_SEPARATOR_CHAR  '\\'
@@ -73,20 +73,20 @@
     #define DIR_SEPARATOR_CHAR  '/'
 #endif /* _WIN32 */
 
-/* some systems like GNU/Hurd do not define PATH_MAX */
+/* Some systems like GNU/Hurd do not define PATH_MAX. */
 #ifndef PATH_MAX
     #define PATH_MAX 4096
 #endif /* PATH_MAX */
 
-/* internal charset */
+/* Internal charset */
 #define WEECHAT_INTERNAL_CHARSET "UTF-8"
 
-/* name of environment variable with an extra lib dir */
+/* Name of environment variable with an extra lib dir */
 #define WEECHAT_EXTRA_LIBDIR "WEECHAT_EXTRA_LIBDIR"
 
 struct t_weelist;
 
-/* global variables and functions */
+/* Global variables and functions */
 extern int weechat_headless;
 extern int weechat_daemon;
 extern int weechat_log_stdout;

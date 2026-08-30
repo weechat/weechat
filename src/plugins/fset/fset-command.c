@@ -72,7 +72,7 @@ fset_command_fset (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     struct t_gui_window *ptr_window;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -440,7 +440,7 @@ fset_command_fset (const void *pointer, void *data,
     }
     else
     {
-        /* set new filter */
+        /* Set new filter. */
         if (!fset_buffer)
             fset_buffer_open ();
         weechat_buffer_set (fset_buffer, "display", "1");
@@ -465,11 +465,11 @@ fset_command_run_set_cb (const void *pointer, void *data,
     struct t_fset_option_max_length *old_max_length;
     struct t_hashtable *eval_extra_vars, *eval_options;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
-    /* ignore /set command if issued on fset buffer */
+    /* Ignore /set command if issued on fset buffer. */
     if (fset_buffer && (buffer == fset_buffer))
         return WEECHAT_RC_OK;
 
@@ -492,8 +492,8 @@ fset_command_run_set_cb (const void *pointer, void *data,
         goto end;
 
     /*
-     * ignore "diff" and "env" arguments for /set
-     * (we must not catch that in fset!)
+     * Ignore "diff" and "env" arguments for /set
+     * (we must not catch that in fset!).
      */
     if ((argc > 1)
         && ((weechat_strcmp (argv[1], "diff") == 0)
@@ -502,7 +502,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
         goto end;
     }
 
-    /* backup current options/max length field/selected line/filter */
+    /* Backup current options/max length field/selected line/filter. */
     old_options = fset_options;
     fset_options = fset_option_get_arraylist_options ();
     old_count_marked = fset_option_count_marked;
@@ -515,7 +515,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
 
     fset_option_get_options ();
 
-    /* evaluate condition to catch /set command */
+    /* Evaluate condition to catch /set command. */
     condition_ok = 0;
     eval_extra_vars = weechat_hashtable_new (
         32,
@@ -546,7 +546,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
     weechat_hashtable_free (eval_extra_vars);
     weechat_hashtable_free (eval_options);
 
-    /* check condition to trigger the fset buffer */
+    /* Check condition to trigger the fset buffer. */
     if (condition_ok)
     {
         weechat_arraylist_free (old_options);
@@ -589,7 +589,7 @@ fset_command_run_key_cb (const void *pointer, void *data,
 {
     const char *ptr_args;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;

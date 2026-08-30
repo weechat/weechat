@@ -30,7 +30,7 @@ typing_bar_item_nicks_map_cb (void *data,
     const char *ptr_nick;
     struct t_typing_status *ptr_typing_status;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     str_nicks_typing = (char **)data;
@@ -67,7 +67,7 @@ typing_bar_item_typing (const void *pointer, void *data,
     const char *ptr_text;
     int max_length;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;

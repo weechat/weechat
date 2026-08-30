@@ -140,7 +140,7 @@ hook_line_exec (struct t_gui_line *line)
                                         HOOK_LINE(ptr_hook, tags_count),
                                         HOOK_LINE(ptr_hook, tags_array))))
         {
-            /* create the hashtable that will be sent to callback */
+            /* Create the hashtable that will be sent to callback. */
             if (!hashtable)
             {
                 hashtable = hashtable_new (32,
@@ -170,7 +170,7 @@ hook_line_exec (struct t_gui_line *line)
             HASHTABLE_SET_STR_NOT_NULL("prefix", line->data->prefix);
             HASHTABLE_SET_STR_NOT_NULL("message", line->data->message);
 
-            /* run callback */
+            /* Run callback. */
             hook_callback_start (ptr_hook, &hook_exec_cb);
             hashtable2 = (HOOK_LINE(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
@@ -230,7 +230,7 @@ hook_line_hdata_hook_line_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

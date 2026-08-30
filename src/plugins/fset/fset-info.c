@@ -29,7 +29,7 @@ fset_info_infolist_fset_option_cb (const void *pointer, void *data,
     struct t_fset_option *ptr_fset_option;
     int num_options, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -43,7 +43,7 @@ fset_info_infolist_fset_option_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one option */
+        /* Build list with only one option. */
         if (!fset_option_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
@@ -53,7 +53,7 @@ fset_info_infolist_fset_option_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all options matching arguments */
+        /* Build list with all options matching arguments. */
         num_options = weechat_arraylist_size (fset_options);
         for (i = 0; i < num_options; i++)
         {
@@ -83,7 +83,7 @@ fset_info_infolist_fset_option_cb (const void *pointer, void *data,
 void
 fset_info_init (void)
 {
-    /* infolist hooks */
+    /* Infolist hooks */
     weechat_hook_infolist (
         "fset_option",
         N_("list of fset options"),
@@ -92,7 +92,7 @@ fset_info_init (void)
            "(wildcard \"*\" is allowed) (optional)"),
         &fset_info_infolist_fset_option_cb, NULL, NULL);
 
-    /* hdata hooks */
+    /* Hdata hooks */
     weechat_hook_hdata (
         "fset_option", N_("fset options"),
         &fset_option_hdata_option_cb, NULL, NULL);

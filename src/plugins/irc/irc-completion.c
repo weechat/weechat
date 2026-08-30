@@ -37,7 +37,7 @@ irc_completion_server_cb (const void *pointer, void *data,
 {
     IRC_BUFFER_GET_SERVER(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -63,7 +63,7 @@ irc_completion_server_nick_cb (const void *pointer, void *data,
 {
     IRC_BUFFER_GET_SERVER(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -91,7 +91,7 @@ irc_completion_server_channels_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -108,7 +108,7 @@ irc_completion_server_channels_cb (const void *pointer, void *data,
             }
         }
 
-        /* add current channel first in list */
+        /* Add current channel first in list. */
         if (ptr_channel)
         {
             weechat_completion_list_add (completion, ptr_channel->name,
@@ -133,7 +133,7 @@ irc_completion_server_privates_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -169,7 +169,7 @@ irc_completion_server_nicks_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -190,7 +190,7 @@ irc_completion_server_nicks_cb (const void *pointer, void *data,
             }
         }
 
-        /* add self nick at the end */
+        /* Add self nick at the end. */
         weechat_completion_list_add (completion, ptr_server->nick,
                                      1, WEECHAT_LIST_POS_END);
     }
@@ -214,7 +214,7 @@ irc_completion_server_prefix_modes_filter_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -230,7 +230,7 @@ irc_completion_server_prefix_modes_filter_cb (const void *pointer, void *data,
                                      1, WEECHAT_LIST_POS_END);
     }
 
-    /* add filter on regular users at the end */
+    /* Add filter on regular users at the end. */
     weechat_completion_list_add (completion, "-*",
                                  1, WEECHAT_LIST_POS_END);
 
@@ -249,7 +249,7 @@ irc_completion_servers_cb (const void *pointer, void *data,
 {
     struct t_irc_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -277,7 +277,7 @@ irc_completion_channel_cb (const void *pointer, void *data,
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -336,7 +336,7 @@ irc_completion_channel_nicks_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -354,29 +354,29 @@ irc_completion_channel_nicks_cb (const void *pointer, void *data,
                                                  1,
                                                  WEECHAT_LIST_POS_SORT);
                 }
-                /* add recent speakers on channel */
+                /* Add recent speakers on channel. */
                 if (weechat_config_enum (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS)
                 {
                     irc_completion_channel_nicks_add_speakers (completion, ptr_server, ptr_channel, 0);
                 }
-                /* add nicks whose make highlights on me recently on this channel */
+                /* Add nicks whose make highlights on me recently on this channel. */
                 if (weechat_config_enum (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS_HIGHLIGHTS)
                 {
                     irc_completion_channel_nicks_add_speakers (completion, ptr_server, ptr_channel, 1);
                 }
-                /* add self nick at the end */
+                /* Add self nick at the end. */
                 weechat_completion_list_add (completion,
                                              ptr_server->nick,
                                              1,
                                              WEECHAT_LIST_POS_END);
                 break;
             case IRC_CHANNEL_TYPE_PRIVATE:
-                /* remote nick */
+                /* Remote nick */
                 weechat_completion_list_add (completion,
                                              ptr_channel->name,
                                              1,
                                              WEECHAT_LIST_POS_SORT);
-                /* add self nick at the end */
+                /* Add self nick at the end. */
                 weechat_completion_list_add (completion,
                                              ptr_server->nick,
                                              1,
@@ -404,7 +404,7 @@ irc_completion_channel_nicks_hosts_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -461,7 +461,7 @@ irc_completion_modelist_masks_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -504,7 +504,7 @@ irc_completion_modelist_numbers_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -546,7 +546,7 @@ irc_completion_channel_topic_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -560,7 +560,7 @@ irc_completion_channel_topic_cb (const void *pointer, void *data,
                                     weechat_utf8_strlen (ptr_channel->name)) == 0)
         {
             /*
-             * if topic starts with channel name, add another channel name
+             * If topic starts with channel name, add another channel name
              * before topic, so that completion will be:
              *   /topic #test #test is a test channel
              * instead of
@@ -602,7 +602,7 @@ irc_completion_channels_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -619,7 +619,7 @@ irc_completion_channels_cb (const void *pointer, void *data,
             {
                 if (ptr_server2 == ptr_server)
                 {
-                    /* will be added later to completions */
+                    /* Will be added later to completions. */
                     weechat_list_add (channels_current_server,
                                       ptr_channel2->name,
                                       WEECHAT_LIST_POS_SORT,
@@ -636,7 +636,7 @@ irc_completion_channels_cb (const void *pointer, void *data,
         }
     }
 
-    /* add channels of current server first in list */
+    /* Add channels of current server first in list. */
     for (i = weechat_list_size (channels_current_server) - 1; i >= 0; i--)
     {
         weechat_completion_list_add (
@@ -648,7 +648,7 @@ irc_completion_channels_cb (const void *pointer, void *data,
     }
     weechat_list_free (channels_current_server);
 
-    /* add current channel first in list */
+    /* Add current channel first in list. */
     if (ptr_channel)
     {
         weechat_completion_list_add (completion, ptr_channel->name,
@@ -674,7 +674,7 @@ irc_completion_channels_autojoin_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -718,7 +718,7 @@ irc_completion_privates_cb (const void *pointer, void *data,
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -755,7 +755,7 @@ irc_completion_msg_kick_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -788,7 +788,7 @@ irc_completion_msg_part_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -820,7 +820,7 @@ irc_completion_ignores_numbers_cb (const void *pointer, void *data,
     struct t_irc_ignore *ptr_ignore;
     char str_number[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -851,7 +851,7 @@ irc_completion_notify_nicks_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -896,21 +896,21 @@ irc_completion_raw_filters_cb (const void *pointer, void *data,
 
     IRC_BUFFER_GET_SERVER(buffer);
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
 
-    /* all messages */
+    /* All messages */
     weechat_completion_list_add (completion, "*",
                                  0, WEECHAT_LIST_POS_SORT);
 
-    /* condition */
+    /* Condition */
     weechat_completion_list_add (completion,
                                  "c:${recv} && ${command}==PRIVMSG",
                                  0, WEECHAT_LIST_POS_SORT);
 
-    /* message flag */
+    /* Message flag */
     weechat_completion_list_add (completion, "f:modified",
                                  0, WEECHAT_LIST_POS_SORT);
     weechat_completion_list_add (completion, "f:recv",
@@ -926,7 +926,7 @@ irc_completion_raw_filters_cb (const void *pointer, void *data,
     weechat_completion_list_add (completion, "m:privmsg",
                                  0, WEECHAT_LIST_POS_SORT);
 
-    /* server */
+    /* Server */
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {

@@ -63,7 +63,7 @@ TEST(HookSignal, ExtractFlags)
 
     hook_signal_extract_flags (NULL, NULL, NULL, NULL);
 
-    /* no flags */
+    /* No flags */
     snprintf (signal, sizeof (signal), "test");
     stop_on_error = -1;
     ignore_eat = -1;
@@ -72,7 +72,7 @@ TEST(HookSignal, ExtractFlags)
     LONGS_EQUAL(0, stop_on_error);
     LONGS_EQUAL(0, ignore_eat);
 
-    /* invalid flags (missing "]") */
+    /* Invalid flags (missing "]") */
     snprintf (signal, sizeof (signal), "[flags:test");
     stop_on_error = -1;
     ignore_eat = -1;
@@ -81,7 +81,7 @@ TEST(HookSignal, ExtractFlags)
     LONGS_EQUAL(0, stop_on_error);
     LONGS_EQUAL(0, ignore_eat);
 
-    /* unknown flag */
+    /* Unknown flag */
     snprintf (signal, sizeof (signal), "[flags:flag1]test");
     stop_on_error = -1;
     ignore_eat = -1;
@@ -90,7 +90,7 @@ TEST(HookSignal, ExtractFlags)
     LONGS_EQUAL(0, stop_on_error);
     LONGS_EQUAL(0, ignore_eat);
 
-    /* unknown flags */
+    /* Unknown flags */
     snprintf (signal, sizeof (signal), "[flags:flag1,flag2]test");
     stop_on_error = -1;
     ignore_eat = -1;

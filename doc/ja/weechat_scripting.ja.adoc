@@ -809,7 +809,7 @@ instead of an external command:
 [source,python]
 ----
 def get_status(data):
-    # do something blocking...
+    # Do something blocking...
     # ...
     return "this is the result"
 
@@ -926,7 +926,7 @@ def config_cb(data, option, value):
 # ...
 
 weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
-# 他のスクリプト言語の場合は "python" を適当なもの (perl/ruby/lua/tcl/guile/javascript) に変更してください
+# 他のスクリプト言語の場合は "python" を適当なもの (perl/ruby/lua/tcl/guile/javascript/php) に変更してください
 ----
 
 [[config_options_weechat]]

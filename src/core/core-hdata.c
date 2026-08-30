@@ -40,7 +40,7 @@ hdata_free_var_cb (struct t_hashtable *hashtable, const void *key, void *value)
 {
     struct t_hdata_var *var;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) key;
 
@@ -60,7 +60,7 @@ hdata_free_var_cb (struct t_hashtable *hashtable, const void *key, void *value)
 void
 hdata_free_list_cb (struct t_hashtable *hashtable, const void *key, void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) key;
 
@@ -265,9 +265,9 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
     if (strcmp (ptr_size, "*") == 0)
     {
         /*
-         * automatic size: look for NULL in array
+         * Automatic size: look for NULL in array
          * (this automatic size is possible only with pointers, so with
-         * types: string, pointer, hashtable)
+         * types: string, pointer, hashtable).
          */
         if ((var->type == WEECHAT_HDATA_STRING)
             || (var->type == WEECHAT_HDATA_SHARED_STRING)
@@ -302,11 +302,11 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
     }
     else
     {
-        /* fixed size: the size can be a name of variable or integer */
+        /* Fixed size: the size can be a name of variable or integer. */
         offset = hdata_get_var_offset (hdata, ptr_size);
         if (offset >= 0)
         {
-            /* size is the name of a variable in hdata, read it */
+            /* Size is the name of a variable in hdata, read it. */
             switch (hdata_get_var_type (hdata, ptr_size))
             {
                 case WEECHAT_HDATA_CHAR:
@@ -323,7 +323,7 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
         }
         else
         {
-            /* check if the size is a valid integer */
+            /* Check if the size is a valid integer. */
             if (util_parse_int (ptr_size, 10, &value))
                 return value;
         }
@@ -342,7 +342,7 @@ hdata_get_var_array_size_string (struct t_hdata *hdata, void *pointer,
 {
     struct t_hdata_var *var;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
 
     if (!hdata || !name)
@@ -469,7 +469,7 @@ hdata_check_pointer_map_cb (void *data, struct t_hashtable *hashtable,
     struct t_hdata *ptr_hdata;
     struct t_hdata_list *ptr_list;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) key;
 
@@ -479,7 +479,7 @@ hdata_check_pointer_map_cb (void *data, struct t_hashtable *hashtable,
     num_lists = &pointers[2];
     found = &pointers[3];
 
-    /* pointer already found in another list? just exit */
+    /* Pointer already found in another list? just exit. */
     if (*found)
         return;
 
@@ -517,16 +517,16 @@ hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer)
 
     if (list)
     {
-        /* search pointer in the given list */
+        /* Search pointer in the given list. */
         return hdata_check_pointer_in_list (hdata, list, pointer);
     }
     else
     {
-        /* search pointer in all lists with flag "check_pointers" */
+        /* Search pointer in all lists with flag "check_pointers". */
         pointers[0] = hdata;
         pointers[1] = pointer;
-        pointers[2] = 0;        /* number of lists with flag check_pointers */
-        pointers[3] = 0;        /* pointer found? (0/1) */
+        pointers[2] = 0;        /* Number of lists with flag check_pointers */
+        pointers[3] = 0;        /* Pointer found? (0/1) */
         hashtable_map (hdata->hash_list,
                        &hdata_check_pointer_map_cb,
                        pointers);
@@ -585,7 +585,7 @@ hdata_search (struct t_hdata *hdata,
 
     ret_pointer = NULL;
 
-    /* duplicate or create hashtable with pointers */
+    /* Duplicate or create hashtable with pointers. */
     if (pointers)
     {
         pointers2 = hashtable_dup (pointers);
@@ -599,7 +599,7 @@ hdata_search (struct t_hdata *hdata,
                                    NULL);
     }
 
-    /* duplicate or create hashtable with options */
+    /* Duplicate or create hashtable with options. */
     if (options)
     {
         options2 = hashtable_dup (options);
@@ -617,11 +617,11 @@ hdata_search (struct t_hdata *hdata,
 
     while (pointer)
     {
-        /* set pointer in hashtable (used for evaluating expression) */
+        /* Set pointer in hashtable (used for evaluating expression). */
         if (pointers2)
             hashtable_set (pointers2, hdata->name, pointer);
 
-        /* evaluate expression */
+        /* Evaluate expression. */
         result = eval_expression (search, pointers2, extra_vars, options2);
         rc = eval_is_true (result);
         free (result);
@@ -863,7 +863,7 @@ hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
                 return (*((char ***)(pointer + var->offset)))[index];
             else
             {
-                /* we cannot index a static array of strings */
+                /* We cannot index a static array of strings. */
                 return NULL;
             }
         }
@@ -1097,7 +1097,7 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
             if (pos)
             {
                 /*
-                 * for a hashtable, if there is a "." after name of hdata:
+                 * For a hashtable, if there is a "." after name of hdata:
                  * 1) If "()" is at the end, it is a function call to
                  *    hashtable_get_string().
                  * 2) Otherwise, get the value for this key in hashtable.
@@ -1180,20 +1180,20 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
             }
             else
             {
-                /* compare hashtables by pointer */
+                /* Compare hashtables by pointer. */
                 rc = (ptr_value1 < ptr_value2) ?
                     -1 : ((ptr_value1 > ptr_value2) ? 1 : 0);
             }
             break;
         case WEECHAT_HDATA_OTHER:
-            /* no comparison for other types */
+            /* No comparison for other types */
             rc = 0;
             break;
     }
 
     /*
-     * if we are on a pointer and that something else is in path (after "."),
-     * go on with this pointer and remaining path
+     * If we are on a pointer and that something else is in path (after "."),
+     * go on with this pointer and remaining path.
      */
     if ((type == WEECHAT_HDATA_POINTER) && pos)
     {
@@ -1335,15 +1335,15 @@ hdata_update (struct t_hdata *hdata, void *pointer,
     if (!hdata || !hashtable || !hdata->callback_update)
         return 0;
 
-    /* check if create of structure is allowed */
+    /* Check if create of structure is allowed. */
     if (hashtable_has_key (hashtable, "__create_allowed"))
         return (int)hdata->create_allowed;
 
-    /* check if delete of structure is allowed */
+    /* Check if delete of structure is allowed. */
     if (hashtable_has_key (hashtable, "__delete_allowed"))
         return (int)hdata->delete_allowed;
 
-    /* check if update of variable is allowed */
+    /* Check if update of variable is allowed. */
     value = hashtable_get (hashtable, "__update_allowed");
     if (value)
     {
@@ -1353,7 +1353,7 @@ hdata_update (struct t_hdata *hdata, void *pointer,
         return (var->update_allowed) ? 1 : 0;
     }
 
-    /* update data */
+    /* Update data. */
     hdata->update_pending = 1;
     rc = (hdata->callback_update) (hdata->callback_update_data,
                                    hdata, pointer, hashtable);
@@ -1458,7 +1458,7 @@ hdata_print_log_var_map_cb (void *data, struct t_hashtable *hashtable,
 {
     struct t_hdata_var *var;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) hashtable;
 
@@ -1483,7 +1483,7 @@ hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
 {
     struct t_hdata *ptr_hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) hashtable;
     (void) key;
@@ -1528,7 +1528,7 @@ void
 hdata_free_hdata_cb (struct t_hashtable *hashtable,
                      const void *key, void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) key;
 

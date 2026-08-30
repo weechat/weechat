@@ -5,7 +5,7 @@
 
 if(ENABLE_MAN OR ENABLE_DOC)
 
-  # docs languages
+  # Docs languages
   set(AUTOGEN_LANG de en fr it ja pl sr)
   set(MAN_LANG cs de en fr it ja pl ru sr)
   set(USER_LANG de en fr it ja pl sr)
@@ -44,7 +44,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       @ONLY
     )
 
-    # common asciidoctor arguments
+    # Common asciidoctor arguments
     set(ASCIIDOCTOR_ARGS
       -v
       -a experimental
@@ -59,7 +59,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a autogendir="${CMAKE_CURRENT_BINARY_DIR}/autogen"
     )
 
-    # asciidoctor arguments for user's guide
+    # Asciidoctor arguments for user's guide
     set(ASCIIDOCTOR_USER_ARGS
       -a toc=left
       -a toclevels=3
@@ -68,7 +68,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a docinfo1
     )
 
-    # asciidoctor arguments for plugin API reference
+    # Asciidoctor arguments for plugin API reference
     set(ASCIIDOCTOR_PLUGIN_API_ARGS
       -a toc=left
       -a toclevels=3
@@ -77,7 +77,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a docinfo1
     )
 
-    # asciidoctor arguments for scripting guide
+    # Asciidoctor arguments for scripting guide
     set(ASCIIDOCTOR_SCRIPTING_ARGS
       -a toc=left
       -a toclevels=3
@@ -86,7 +86,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a docinfo1
     )
 
-    # asciidoctor arguments for FAQ
+    # Asciidoctor arguments for FAQ
     set(ASCIIDOCTOR_FAQ_ARGS
       -a toc=left
       -a toclevels=2
@@ -95,7 +95,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a docinfo1
     )
 
-    # asciidoctor arguments for quickstart
+    # Asciidoctor arguments for quickstart
     set(ASCIIDOCTOR_QUICKSTART_ARGS
       -a toc=left
       -a toclevels=2
@@ -104,7 +104,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a docinfo1
     )
 
-    # asciidoctor arguments for relay "api"
+    # Asciidoctor arguments for relay "api"
     set(ASCIIDOCTOR_RELAY_API_ARGS
       -a toc=left
       -a toclevels=3
@@ -113,7 +113,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a docinfo1
     )
 
-    # asciidoctor arguments for relay "weechat"
+    # Asciidoctor arguments for relay "weechat"
     set(ASCIIDOCTOR_RELAY_WEECHAT_ARGS
       -a toc=left
       -a toclevels=3
@@ -122,7 +122,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a docinfo1
     )
 
-    # asciidoctor arguments for developer's guide
+    # Asciidoctor arguments for developer's guide
     set(ASCIIDOCTOR_DEV_ARGS
       -a toc=left
       -a toclevels=3
@@ -135,7 +135,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       set(AUTOGEN_FILES "")
       foreach(lang ${AUTOGEN_LANG})
         LIST(APPEND AUTOGEN_FILES
-          # plugin API reference
+          # Plugin API reference
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_completions.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_config_priority.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_hdata.${lang}.adoc"
@@ -144,12 +144,12 @@ if(ENABLE_MAN OR ENABLE_DOC)
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_infos_hashtable.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_plugins_priority.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_url_options.${lang}.adoc"
-          # user's guide
+          # User's guide
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_commands.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_default_aliases.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_irc_colors.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_options.${lang}.adoc"
-          # scripting duide
+          # Scripting guide
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_scripting_functions.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_scripting_constants.${lang}.adoc"
         )
@@ -157,11 +157,11 @@ if(ENABLE_MAN OR ENABLE_DOC)
       add_custom_target(doc-autogen ALL
         COMMAND "${CMAKE_COMMAND}" -E env "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src" "WEECHAT_DOCGEN_LOCALEDIR=${PROJECT_BINARY_DIR}/po" "${CMAKE_BINARY_DIR}/src/gui/curses/headless/weechat-headless" --temp-dir --doc-gen "${CMAKE_CURRENT_BINARY_DIR}/autogen"
         DEPENDS
-        # the headless binary is required
+        # The headless binary is required.
         weechat-headless
-        # translations must be compiled
+        # Translations must be compiled.
         translations
-        # all plugins must be loaded during doc generation
+        # All plugins must be loaded during doc generation.
         alias buflist charset exec fifo fset guile irc logger lua perl php python relay ruby script spell tcl trigger typing xfer
         BYPRODUCTS ${AUTOGEN_FILES}
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
@@ -175,7 +175,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         else()
           set(MANDIR_LANG "${MANDIR}/${lang}/man1")
         endif()
-        # man page: weechat
+        # Man page: weechat
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat.${lang}.1"
           COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o "weechat.${lang}.1" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat.1.${lang}.adoc"
@@ -188,7 +188,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         )
         add_custom_target(doc-man-weechat-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat.${lang}.1")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat.${lang}.1" DESTINATION "${MANDIR_LANG}" RENAME "weechat.1")
-        # man page: weechat-headless
+        # Man page: weechat-headless
         if(ENABLE_HEADLESS)
           add_custom_command(
             OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.${lang}.1"
@@ -207,7 +207,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
     endif()
 
     if(ENABLE_DOC)
-      # user's guide
+      # User's guide
       foreach(lang ${USER_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.${lang}.html"
@@ -228,7 +228,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         add_custom_target(doc-user-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.${lang}.html")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
-      # plugin API reference
+      # Plugin API reference
       foreach(lang ${PLUGIN_API_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.${lang}.html"
@@ -252,7 +252,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         add_custom_target(doc-plugin-api-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.${lang}.html")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
-      # scripting guide
+      # Scripting guide
       foreach(lang ${SCRIPTING_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.${lang}.html"
@@ -285,7 +285,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         add_custom_target(doc-faq-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.${lang}.html")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
-      # quickstart
+      # Quickstart
       foreach(lang ${QUICKSTART_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.${lang}.html"
@@ -300,7 +300,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         add_custom_target(doc-quickstart-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.${lang}.html")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
-      # relay "api"
+      # Relay "api"
       foreach(lang ${RELAY_API_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_api.${lang}.html"
@@ -316,7 +316,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         add_custom_target(doc-relay-api-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_api.${lang}.html")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_api.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
-      # relay "weechat"
+      # Relay "weechat"
       foreach(lang ${RELAY_WEECHAT_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_weechat.${lang}.html"
@@ -332,7 +332,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         add_custom_target(doc-relay-weechat-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_weechat.${lang}.html")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_weechat.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
-      # developer's guide
+      # Developer's guide
       foreach(lang ${DEV_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.${lang}.html"

@@ -112,33 +112,33 @@ enum t_irc_server_option
 
 #define IRC_SERVER_DEFAULT_NICKS "weechat1,weechat2,weechat3,weechat4,weechat5"
 
-/* number of queues for sending messages */
+/* Number of queues for sending messages */
 #define IRC_SERVER_NUM_OUTQUEUES_PRIO 3
 
-/* flags for irc_server_sendf() */
+/* Flags for irc_server_sendf() */
 #define IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE (1 << 0)
 #define IRC_SERVER_SEND_OUTQ_PRIO_HIGH      (1 << 1)
 #define IRC_SERVER_SEND_OUTQ_PRIO_LOW       (1 << 2)
 #define IRC_SERVER_SEND_RETURN_LIST         (1 << 3)
 #define IRC_SERVER_SEND_MULTILINE           (1 << 4)
 
-/* version strings */
+/* Version strings */
 #define IRC_SERVER_VERSION_CAP "302"
 
-/* multiline default limits */
+/* Multiline default limits */
 #define IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES 4096
 #define IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES 24
 
 /*
- * maximum length of an unterminated message (a received line without
+ * Maximum length of an unterminated message (a received line without
  * end-of-line) and of the accumulated "005" (ISUPPORT) data; these limits
  * protect against a server sending a huge amount of data without end-of-line
- * (or a flood of "005" messages), which would consume all the memory
+ * (or a flood of "005" messages), which would consume all the memory.
  */
 #define IRC_SERVER_RECV_MSG_MAX_LENGTH (64 * 1024)
 #define IRC_SERVER_ISUPPORT_MAX_LENGTH (64 * 1024)
 
-/* casemapping (string comparisons for nicks/channels) */
+/* Casemapping (string comparisons for nicks/channels) */
 enum t_irc_server_casemapping
 {
     IRC_SERVER_CASEMAPPING_RFC1459 = 0,    /* A-Z [ \ ] ^ ==> a-z { | } ~    */
@@ -148,7 +148,7 @@ enum t_irc_server_casemapping
     IRC_SERVER_NUM_CASEMAPPING,
 };
 
-/* utf8mapping (string comparisons for nicks/channels) */
+/* Utf8mapping (string comparisons for nicks/channels) */
 enum t_irc_server_utf8mapping
 {
     IRC_SERVER_UTF8MAPPING_NONE = 0,
@@ -157,7 +157,7 @@ enum t_irc_server_utf8mapping
     IRC_SERVER_NUM_UTF8MAPPING,
 };
 
-/* authentication method */
+/* Authentication method */
 enum t_irc_server_auth_method
 {
     IRC_SERVER_AUTH_METHOD_NONE = 0,
@@ -165,7 +165,7 @@ enum t_irc_server_auth_method
     IRC_SERVER_AUTH_METHOD_OTHER,
 };
 
-/* output queue of messages to server (for sending slowly to server) */
+/* Output queue of messages to server (for sending slowly to server) */
 
 struct t_irc_outqueue
 {
@@ -309,7 +309,7 @@ struct t_irc_message
     struct t_irc_message *next_message; /* link to next message              */
 };
 
-/* digest algorithms for fingerprint */
+/* Digest algorithms for fingerprint */
 
 enum t_irc_fingerprint_digest_algo
 {

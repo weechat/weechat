@@ -12,7 +12,7 @@ struct t_infolist_item;
 
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
 
-/* flags for fd hooks */
+/* Flags for fd hooks */
 #define HOOK_FD_FLAG_READ      (1 << 0)
 #define HOOK_FD_FLAG_WRITE     (1 << 1)
 #define HOOK_FD_FLAG_EXCEPTION (1 << 2)

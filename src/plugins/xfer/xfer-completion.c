@@ -27,7 +27,7 @@ xfer_completion_nick_cb (const void *pointer, void *data,
 {
     struct t_xfer *ptr_xfer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -35,12 +35,12 @@ xfer_completion_nick_cb (const void *pointer, void *data,
     ptr_xfer = xfer_search_by_buffer (buffer);
     if (ptr_xfer)
     {
-        /* remote nick */
+        /* Remote nick */
         weechat_completion_list_add (completion,
                                      ptr_xfer->remote_nick,
                                      0,
                                      WEECHAT_LIST_POS_SORT);
-        /* add self nick at the end */
+        /* Add self nick at the end. */
         weechat_completion_list_add (completion,
                                      ptr_xfer->local_nick,
                                      1,

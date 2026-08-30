@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-/* buflist contribution to built-in themes. */
+/* Buflist contribution to built-in themes */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -18,7 +18,7 @@
 
 
 /*
- * buflist contribution to the "light" theme: format strings tuned for
+ * Buflist contribution to the "light" theme: format strings tuned for
  * a light-background terminal. Each row is { option_full_name, value };
  * the table is NULL-terminated.
  */

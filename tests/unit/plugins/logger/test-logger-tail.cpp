@@ -76,7 +76,7 @@ TEST(LoggerTail, File)
     POINTERS_EQUAL(NULL, logger_tail_file (NULL, 0));
     POINTERS_EQUAL(NULL, logger_tail_file (NULL, 1));
 
-    /* write a small test file */
+    /* Write a small test file. */
     filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
                                       NULL, NULL, NULL);
     file = fopen (filename, "w");
@@ -118,7 +118,7 @@ TEST(LoggerTail, File)
     unlink (filename);
     free (filename);
 
-    /* write a small test file, with empty lines */
+    /* Write a small test file, with empty lines. */
     filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
                                       NULL, NULL, NULL);
     file = fopen (filename, "w");
@@ -181,7 +181,7 @@ TEST(LoggerTail, File)
     unlink (filename);
     free (filename);
 
-    /* write a bigger test file */
+    /* Write a bigger test file. */
     filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
                                       NULL, NULL, NULL);
     file = fopen (filename, "w");
@@ -252,7 +252,7 @@ TEST(LoggerTail, File)
     unlink (filename);
     free (filename);
 
-    /* write a bigger test file, with empty lines */
+    /* Write a bigger test file, with empty lines. */
     filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
                                       NULL, NULL, NULL);
     file = fopen (filename, "w");

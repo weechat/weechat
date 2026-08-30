@@ -50,7 +50,7 @@ struct t_gui_bar_window
                                               /* (only for non-root bars)   */
 };
 
-/* functions */
+/* Functions */
 
 extern int gui_bar_window_valid (struct t_gui_bar_window *bar_window);
 extern void gui_bar_window_search_by_xy (struct t_gui_window *window,
@@ -104,7 +104,7 @@ extern int gui_bar_window_add_to_infolist (struct t_infolist *infolist,
                                            struct t_gui_bar_window *bar_window);
 extern void gui_bar_window_print_log (struct t_gui_bar_window *bar_window);
 
-/* functions (GUI dependent) */
+/* Functions (GUI dependent) */
 
 extern int gui_bar_window_objects_init (struct t_gui_bar_window *bar_window);
 extern void gui_bar_window_objects_free (struct t_gui_bar_window *bar_window);

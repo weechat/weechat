@@ -189,7 +189,7 @@ gui_key_default_bindings (int context, int create_option)
         BIND("meta-l",            "/window bare");
         BIND("meta-m",            "/mute mouse toggle");
 
-        /* bind meta-j + {01..99} to switch to buffers # > 10 */
+        /* Bind meta-j + {01..99} to switch to buffers # > 10. */
         for (i = 1; i < 100; i++)
         {
             snprintf (key_str, sizeof (key_str), "meta-j,%1d,%1d", i / 10, i % 10);
@@ -216,7 +216,7 @@ gui_key_default_bindings (int context, int create_option)
     }
     else if (context == GUI_KEY_CONTEXT_CURSOR)
     {
-        /* general & move */
+        /* General & move */
         BIND("return",           "/cursor stop");
         BIND("up",               "/cursor move up");
         BIND("down",             "/cursor move down");
@@ -232,12 +232,12 @@ gui_key_default_bindings (int context, int create_option)
         BIND("meta-shift-down",  "/cursor move area_down");
         BIND("meta-shift-left",  "/cursor move area_left");
         BIND("meta-shift-right", "/cursor move area_right");
-        /* chat */
+        /* Chat */
         BIND("@chat:m", "hsignal:chat_quote_message;/cursor stop");
         BIND("@chat:l", "hsignal:chat_quote_focused_line;/cursor stop");
         BIND("@chat:q", "hsignal:chat_quote_prefix_message;/cursor stop");
         BIND("@chat:Q", "hsignal:chat_quote_time_prefix_message;/cursor stop");
-        /* nicklist */
+        /* Nicklist */
         BIND("@item(buffer_nicklist):b", "/window ${_window_number};/ban ${nick}");
         BIND("@item(buffer_nicklist):k", "/window ${_window_number};/kick ${nick}");
         BIND("@item(buffer_nicklist):K", "/window ${_window_number};/kickban ${nick}");
@@ -246,7 +246,7 @@ gui_key_default_bindings (int context, int create_option)
     }
     else if (context == GUI_KEY_CONTEXT_MOUSE)
     {
-        /* mouse events on chat area */
+        /* Mouse events on chat area */
         BIND("@chat:button1",                    "/window ${_window_number}");
         BIND("@chat:button1-gesture-left",       "/window ${_window_number};/buffer -1");
         BIND("@chat:button1-gesture-right",      "/window ${_window_number};/buffer +1");
@@ -256,7 +256,7 @@ gui_key_default_bindings (int context, int create_option)
         BIND("@chat:wheeldown",                  "/window scroll_down -window ${_window_number}");
         BIND("@chat:ctrl-wheelup",               "/window scroll_horiz -window ${_window_number} -10%");
         BIND("@chat:ctrl-wheeldown",             "/window scroll_horiz -window ${_window_number} +10%");
-        /* mouse events on nicklist */
+        /* Mouse events on nicklist */
         BIND("@bar(nicklist):button1-gesture-up",                "/bar scroll nicklist ${_window_number} -100%");
         BIND("@bar(nicklist):button1-gesture-down",              "/bar scroll nicklist ${_window_number} +100%");
         BIND("@bar(nicklist):button1-gesture-up-long",           "/bar scroll nicklist ${_window_number} b");
@@ -266,12 +266,12 @@ gui_key_default_bindings (int context, int create_option)
         BIND("@item(buffer_nicklist):button1-gesture-left",      "/window ${_window_number};/kick ${nick}");
         BIND("@item(buffer_nicklist):button1-gesture-left-long", "/window ${_window_number};/kickban ${nick}");
         BIND("@item(buffer_nicklist):button2-gesture-left",      "/window ${_window_number};/ban ${nick}");
-        /* mouse events on input */
+        /* Mouse events on input */
         BIND("@bar(input):button2", "/input grab_mouse_area");
-        /* mouse wheel on any bar */
+        /* Mouse wheel on any bar */
         BIND("@bar:wheelup",   "/bar scroll ${_bar_name} ${_window_number} -20%");
         BIND("@bar:wheeldown", "/bar scroll ${_bar_name} ${_window_number} +20%");
-        /* middle click to enable cursor mode at position */
+        /* Middle click to enable cursor mode at position */
         BIND("@*:button3", "/cursor go ${_x},${_y}");
     }
 }
@@ -290,17 +290,17 @@ gui_key_flush (int paste)
     char utf_partial_char[16];
     struct t_gui_buffer *old_buffer;
 
-    /* if paste pending or bracketed paste detected, just return */
+    /* If paste pending or bracketed paste detected, just return. */
     if (gui_key_paste_pending || gui_key_paste_bracketed)
         return;
 
-    /* if buffer is empty, just return */
+    /* If buffer is empty, just return. */
     if (gui_key_buffer_size == 0)
         return;
 
     /*
-     * if there's no paste pending, then we use buffer and do actions
-     * according to keys
+     * If there's no paste pending, then we use buffer and do actions
+     * according to keys.
      */
     gui_key_last_activity_time = time (NULL);
     last_key_used = -1;
@@ -311,8 +311,8 @@ gui_key_flush (int paste)
         key = gui_key_buffer[i];
 
         /*
-         * many terminal emulators send "\n" as "\r" when pasting, so replace
-         * them back
+         * Many terminal emulators send "\n" as "\r" when pasting, so replace
+         * them back.
          */
         if (paste && (key == '\r'))
             key = '\n';
@@ -326,9 +326,9 @@ gui_key_flush (int paste)
             key_str[0] = '\x01';
             key_str[1] = (char)key + '@';
             /*
-             * note: the terminal makes no difference between ctrl-x and
+             * Note: the terminal makes no difference between ctrl-x and
              * ctrl-shift-x, so for now WeeChat uses lower case letters for
-             * ctrl keys
+             * ctrl keys.
              */
             if ((key_str[1] >= 'A') && (key_str[1] <= 'Z'))
                 key_str[1] += 'a' - 'A';
@@ -357,9 +357,9 @@ gui_key_flush (int paste)
             length_key_str++;
 
             /*
-             * replace invalid chars by "?", but NOT last char of
+             * Replace invalid chars by "?", but NOT last char of
              * string, if it is incomplete UTF-8 char (another char
-             * will be added to the string on next iteration)
+             * will be added to the string on next iteration).
              */
             ptr_char = key_str;
             while (ptr_char && ptr_char[0])
@@ -388,7 +388,7 @@ gui_key_flush (int paste)
         }
         else
         {
-            /* convert input to UTF-8 */
+            /* Convert input to UTF-8. */
             key_temp[0] = (char)key;
             key_temp[1] = '\0';
             key_utf = string_iconv_to_internal (NULL, key_temp);
@@ -398,9 +398,9 @@ gui_key_flush (int paste)
         if (key_str[0])
         {
             /*
-             * send the signal "key_pressed" only if NOT reading a mouse event
+             * Send the signal "key_pressed" only if NOT reading a mouse event
              * or if the mouse code is valid UTF-8 (do not send partial mouse
-             * code which is not UTF-8 valid)
+             * code which is not UTF-8 valid).
              */
             if (!paste
                 && (i > gui_key_last_key_pressed_sent)
@@ -428,11 +428,11 @@ gui_key_flush (int paste)
                 gui_input_insert_string (gui_current_window->buffer, key_str);
                 gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
                                                             (!paste || !undo_done) ? 1 : 0,
-                                                            1); /* stop completion */
+                                                            1); /* Stop completion */
                 undo_done = 1;
             }
 
-            /* incremental text search in buffer lines or command line history */
+            /* Incremental text search in buffer lines or command line history */
             if ((old_buffer == gui_current_window->buffer)
                 && ((gui_current_window->buffer->text_search == GUI_BUFFER_SEARCH_LINES)
                     || (gui_current_window->buffer->text_search == GUI_BUFFER_SEARCH_HISTORY))
@@ -441,7 +441,7 @@ gui_key_flush (int paste)
                     || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
             {
                 /*
-                 * if following conditions are all true, then do not search
+                 * If following conditions are all true, then do not search
                  * again (search will not find any result and can take some time):
                  * - old search was not successful
                  * - searching a string (not a regex)
@@ -458,7 +458,7 @@ gui_key_flush (int paste)
                     && (strncmp (gui_current_window->buffer->input_buffer, input_old,
                                  strlen (input_old)) == 0))
                 {
-                    /* do not search text, just alert about text not found */
+                    /* Do not search text, just alert about text not found. */
                     if (CONFIG_BOOLEAN(config_look_search_text_not_found_alert))
                     {
                         fprintf (stderr, "\a");
@@ -474,14 +474,14 @@ gui_key_flush (int paste)
             free (input_old);
         }
 
-        /* prepare incomplete UTF-8 char for next iteration */
+        /* Prepare incomplete UTF-8 char for next iteration. */
         if (utf_partial_char[0])
             strcpy (key_str, utf_partial_char);
         else
             key_str[0] = '\0';
         length_key_str = strlen (key_str);
 
-        /* set last key used in buffer if combo buffer is empty */
+        /* Set last key used in buffer if combo buffer is empty. */
         if (gui_key_grab || gui_mouse_event_pending || !gui_key_combo[0])
             last_key_used = i;
     }
@@ -505,7 +505,7 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
     int ret, i, accept_paste, cancel_paste, text_added_to_buffer, pos;
     unsigned char buffer[4096];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) fd;
@@ -517,7 +517,7 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
     ret = read (STDIN_FILENO, buffer, sizeof (buffer));
     if (ret == 0)
     {
-        /* no data on stdin, terminal lost */
+        /* No data on stdin, terminal lost */
         if (!weechat_quit)
         {
             log_printf (_("Terminal lost, exiting WeeChat..."));
@@ -533,12 +533,12 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
     {
         if (gui_key_paste_pending && (buffer[i] == 25))
         {
-            /* ctrl-y: accept paste */
+            /* Ctrl-y: accept paste */
             accept_paste = 1;
         }
         else if (gui_key_paste_pending && (buffer[i] == 14))
         {
-            /* ctrl-n: cancel paste */
+            /* Ctrl-n: cancel paste */
             cancel_paste = 1;
         }
         else
@@ -564,17 +564,17 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
         {
             if (accept_paste)
             {
-                /* user is OK for pasting text, let's paste! */
+                /* User is OK for pasting text, let's paste! */
                 gui_key_paste_accept ();
             }
             else if (cancel_paste)
             {
-                /* user doesn't want to paste text: clear whole buffer! */
+                /* User doesn't want to paste text: clear whole buffer! */
                 gui_key_paste_cancel ();
             }
             else if (text_added_to_buffer)
             {
-                /* new text received while asking for paste, update message */
+                /* New text received while asking for paste, update message. */
                 gui_input_paste_pending_signal ();
             }
         }
@@ -589,14 +589,14 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
         pos = gui_key_buffer_search (0, -1, GUI_KEY_BRACKETED_PASTE_END);
         if (pos >= 0)
         {
-            /* remove the code for end of bracketed paste (ESC[201~) */
+            /* Remove the code for end of bracketed paste (ESC[201~). */
             gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
 
-            /* stop bracketed mode */
+            /* Stop bracketed mode. */
             gui_key_paste_bracketed_timer_remove ();
             gui_key_paste_bracketed_stop ();
 
-            /* if paste confirmation not displayed, flush buffer now */
+            /* If paste confirmation not displayed, flush buffer now. */
             if (!gui_key_paste_pending)
             {
                 gui_key_paste_finish ();

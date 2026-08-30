@@ -63,7 +63,7 @@ relay_remote_search_option (const char *option_name)
             return i;
     }
 
-    /* remote option not found */
+    /* Remote option not found */
     return -1;
 }
 
@@ -90,7 +90,7 @@ relay_remote_valid (struct t_relay_remote *remote)
             return 1;
     }
 
-    /* remote not found */
+    /* Remote not found */
     return 0;
 }
 
@@ -115,7 +115,7 @@ relay_remote_search (const char *name)
             return ptr_remote;
     }
 
-    /* remote not found */
+    /* Remote not found */
     return NULL;
 }
 
@@ -140,7 +140,7 @@ relay_remote_search_by_number (int number)
         i++;
     }
 
-    /* remote not found */
+    /* Remote not found */
     return NULL;
 }
 
@@ -169,7 +169,7 @@ relay_remote_name_valid (const char *name)
         ptr_name++;
     }
 
-    /* name is valid */
+    /* Name is valid. */
     return 1;
 }
 
@@ -201,7 +201,7 @@ relay_remote_parse_url (const char *url,
     if (!url || !url[0])
         return 0;
 
-    /* check scheme and extract TLS flag */
+    /* Check scheme and extract TLS flag. */
     if (strncmp (url, "http://", 7) == 0)
     {
         ptr_url = url + 7;
@@ -217,10 +217,10 @@ relay_remote_parse_url (const char *url,
         return 0;
     }
 
-    /* check if there is an IPv6 address with square brackets, like "[::1]" */
+    /* Check if there is an IPv6 address with square brackets, like "[::1]". */
     if (ptr_url[0] == '[')
     {
-        /* extract IPv6 address between square brackets */
+        /* Extract IPv6 address between square brackets. */
         pos = strchr (ptr_url, ']');
         if (!pos)
             return 0;
@@ -230,7 +230,7 @@ relay_remote_parse_url (const char *url,
     }
     else
     {
-        /* extract another address */
+        /* Extract another address. */
         pos = strrchr (ptr_url, ':');
         if (!pos)
             pos = strchr (ptr_url, '/');
@@ -243,7 +243,7 @@ relay_remote_parse_url (const char *url,
         }
     }
 
-    /* extract port number */
+    /* Extract port number. */
     pos = strrchr (ptr_url, ':');
     if (pos)
     {
@@ -371,7 +371,7 @@ relay_remote_find_pos (struct t_relay_remote *remote,
             return ptr_remote;
     }
 
-    /* position not found */
+    /* Position not found */
     return NULL;
 }
 
@@ -389,7 +389,7 @@ relay_remote_add (struct t_relay_remote *remote,
     pos_remote = relay_remote_find_pos (remote, *list_remotes);
     if (pos_remote)
     {
-        /* add remote before "pos_remote" */
+        /* Add remote before "pos_remote". */
         remote->prev_remote = pos_remote->prev_remote;
         remote->next_remote = pos_remote;
         if (pos_remote->prev_remote)
@@ -400,7 +400,7 @@ relay_remote_add (struct t_relay_remote *remote,
     }
     else
     {
-        /* add remote to end of list */
+        /* Add remote to end of list. */
         remote->prev_remote = *last_list_remote;
         remote->next_remote = NULL;
         if (*last_list_remote)
@@ -627,7 +627,7 @@ relay_remote_set_status (struct t_relay_remote *remote,
      * IMPORTANT: if changes are made in this function or sub-functions called,
      * please also update the function relay_remote_add_to_infolist:
      * when the flag force_disconnected_state is set to 1 we simulate
-     * a disconnected state for remote in infolist (used on /upgrade -save)
+     * a disconnected state for remote in infolist (used on /upgrade -save).
      */
 
     if (remote->status == status)
@@ -674,7 +674,7 @@ relay_remote_auto_connect_timer_cb (const void *pointer, void *data,
 {
     struct t_relay_remote *ptr_remote;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -767,7 +767,7 @@ relay_remote_rename (struct t_relay_remote *remote, const char *name)
 
     free (option_name);
 
-    /* re-insert remote in list (for sorting remotes by name) */
+    /* Re-insert remote in list (for sorting remotes by name). */
     if (remote->prev_remote)
         (remote->prev_remote)->next_remote = remote->next_remote;
     else
@@ -820,7 +820,7 @@ relay_remote_reconnect_schedule (struct t_relay_remote *remote)
         return;
     }
 
-    /* growing reconnect delay */
+    /* Growing reconnect delay */
     if (remote->reconnect_delay == 0)
         remote->reconnect_delay = weechat_config_integer (remote->options[RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY]);
     else
@@ -918,7 +918,7 @@ relay_remote_timer (void)
     {
         ptr_next_remote = ptr_remote->next_remote;
 
-        /* check if reconnection is pending */
+        /* Check if reconnection is pending. */
         if ((ptr_remote->sock <= 0)
             && (ptr_remote->reconnect_start > 0)
             && (current_time >= (ptr_remote->reconnect_start + ptr_remote->reconnect_delay)))
@@ -973,7 +973,7 @@ relay_remote_free (struct t_relay_remote *remote)
     if (!remote)
         return;
 
-    /* remove remote from list */
+    /* Remove remote from list. */
     if (remote->prev_remote)
         (remote->prev_remote)->next_remote = remote->next_remote;
     if (remote->next_remote)
@@ -983,7 +983,7 @@ relay_remote_free (struct t_relay_remote *remote)
     if (last_relay_remote == remote)
         last_relay_remote = remote->prev_remote;
 
-    /* free data */
+    /* Free data. */
     free (remote->name);
     for (i = 0; i < RELAY_REMOTE_NUM_OPTIONS; i++)
     {
@@ -1079,7 +1079,7 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
     }
     if (remote->ws_deflate->strm_deflate || remote->ws_deflate->strm_inflate)
     {
-        /* save the deflate/inflate dictionary, as it's required after /upgrade */
+        /* Save the deflate/inflate dictionary, as it's required after /upgrade. */
         dict = malloc (32768);
         if (dict)
         {

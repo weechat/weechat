@@ -73,7 +73,7 @@ TEST(CoreHashtable, HashDbj2)
 unsigned long long
 test_hashtable_hash_key_cb (struct t_hashtable *hashtable, const void *key)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) hashtable;
 
     return hashtable_hash_key_djb2 ((const char *)key) + 1;
@@ -89,7 +89,7 @@ int
 test_hashtable_keycmp_cb (struct t_hashtable *hashtable,
                           const void *key1, const void *key2)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) hashtable;
 
     return strcmp ((const char *)key1, (const char *)key2);
@@ -107,21 +107,21 @@ TEST(CoreHashtable, New)
     hashtable = hashtable_new (-1, NULL, NULL, NULL, NULL);
     POINTERS_EQUAL(NULL, hashtable);
 
-    /* test invalid size */
+    /* Test invalid size. */
     POINTERS_EQUAL(NULL,
                    hashtable_new (-1,
                                   WEECHAT_HASHTABLE_STRING,
                                   WEECHAT_HASHTABLE_STRING,
                                   NULL, NULL));
 
-    /* test invalid type for keys/values */
+    /* Test invalid type for keys/values. */
     POINTERS_EQUAL(NULL,
                    hashtable_new (32,
-                                  "xxxxx",  /* invalid */
-                                  "yyyyy",  /* invalid */
+                                  "xxxxx",  /* Invalid */
+                                  "yyyyy",  /* Invalid */
                                   NULL, NULL));
 
-    /* valid hashtable */
+    /* Test valid hashtable. */
     hashtable = hashtable_new (32,
                                WEECHAT_HASHTABLE_STRING,
                                WEECHAT_HASHTABLE_INTEGER,
@@ -167,7 +167,7 @@ TEST(CoreHashtable, SetGetRemove)
     long long value_longlong;
     time_t value_time;
 
-    /* free hashtable with NULL pointer */
+    /* Free hashtable with NULL pointer. */
     hashtable_free (NULL);
 
     hashtable = hashtable_new (32,
@@ -178,11 +178,11 @@ TEST(CoreHashtable, SetGetRemove)
     LONGS_EQUAL(32, hashtable->size);
     LONGS_EQUAL(0, hashtable->items_count);
 
-    /* invalid set of items */
+    /* Invalid set of items */
     POINTERS_EQUAL(NULL, hashtable_set_with_size (NULL, NULL, -1, NULL, -1));
     POINTERS_EQUAL(NULL, hashtable_set_with_size (NULL, NULL, -1, NULL, -1));
 
-    /* add an item in hashtable with NULL value */
+    /* Add an item in hashtable with NULL value. */
     item = hashtable_set (hashtable, str_key, NULL);
     CHECK(item);
     LONGS_EQUAL(1, hashtable->items_count);
@@ -197,7 +197,7 @@ TEST(CoreHashtable, SetGetRemove)
     POINTERS_EQUAL(NULL, item->prev_created_item);
     POINTERS_EQUAL(NULL, item->next_created_item);
 
-    /* set a string value for the same key */
+    /* Set a string value for the same key. */
     item = hashtable_set (hashtable, str_key, str_value);
     CHECK(item);
     LONGS_EQUAL(1, hashtable->items_count);
@@ -212,31 +212,31 @@ TEST(CoreHashtable, SetGetRemove)
     POINTERS_EQUAL(NULL, item->prev_created_item);
     POINTERS_EQUAL(NULL, item->next_created_item);
 
-    /* get item */
+    /* Get item. */
     item = hashtable_get_item (hashtable, str_key, &hash);
     CHECK(item);
     STRCMP_EQUAL(str_key, (const char *)item->key);
     STRCMP_EQUAL(str_value, (const char *)item->value);
     LONGS_EQUAL(2, hash);
 
-    /* get value */
+    /* Get value. */
     ptr_value = (const char *)hashtable_get (hashtable, str_key);
     CHECK(ptr_value);
     STRCMP_EQUAL(ptr_value, str_value);
 
-    /* check if key is in hashtable */
+    /* Check if key is in hashtable. */
     LONGS_EQUAL(0, hashtable_has_key (hashtable, NULL));
     LONGS_EQUAL(0, hashtable_has_key (hashtable, ""));
     LONGS_EQUAL(0, hashtable_has_key (hashtable, "xxx"));
     LONGS_EQUAL(1, hashtable_has_key (hashtable, str_key));
 
-    /* delete an item */
+    /* Delete an item. */
     hashtable_remove (hashtable, str_key);
     LONGS_EQUAL(0, hashtable->items_count);
     POINTERS_EQUAL(NULL, hashtable->oldest_item);
     POINTERS_EQUAL(NULL, hashtable->newest_item);
 
-    /* add an item with size in hashtable */
+    /* Add an item with size in hashtable. */
     item = hashtable_set_with_size (hashtable,
                                     str_key, strlen (str_key) + 1,
                                     str_value, strlen (str_value) + 1);
@@ -249,7 +249,7 @@ TEST(CoreHashtable, SetGetRemove)
     STRCMP_EQUAL(str_value, (const char *)item->value);
     LONGS_EQUAL(strlen (str_value) + 1, item->value_size);
 
-    /* add another item */
+    /* Add another item. */
     hashtable_set (hashtable, "xxx", "zzz");
     LONGS_EQUAL(2, hashtable->items_count);
     CHECK(hashtable->oldest_item);
@@ -263,8 +263,8 @@ TEST(CoreHashtable, SetGetRemove)
                  (const char *)hashtable->newest_item->key);
 
     /*
-     * test duplication of hashtable and check that duplicated content is
-     * exactly the same as initial hashtable
+     * Test duplication of hashtable and check that duplicated content is
+     * exactly the same as initial hashtable.
      */
     hashtable2 = hashtable_dup (hashtable);
     CHECK(hashtable2);
@@ -309,7 +309,7 @@ TEST(CoreHashtable, SetGetRemove)
         }
     }
 
-    /* remove all items */
+    /* Remove all items. */
     hashtable_remove_all (hashtable);
     POINTERS_EQUAL(NULL, hashtable->htable[0]);
     POINTERS_EQUAL(NULL, hashtable->htable[1]);
@@ -323,12 +323,12 @@ TEST(CoreHashtable, SetGetRemove)
     POINTERS_EQUAL(NULL, hashtable->oldest_item);
     POINTERS_EQUAL(NULL, hashtable->newest_item);
 
-    /* free hashtables */
+    /* Free hashtables. */
     hashtable_free (hashtable);
     hashtable_free (hashtable2);
 
     /*
-     * create a hashtable with size 8, and add 6 items,
+     * Create a hashtable with size 8, and add 6 items,
      * to check if many items with same hashed key work fine,
      * the expected htable inside hashtable is:
      *   +-----+
@@ -381,7 +381,7 @@ TEST(CoreHashtable, SetGetRemove)
     CHECK(item);
     POINTERS_EQUAL(item, hashtable->htable[6]);
 
-    /* check items by order of creation */
+    /* Check items by order of creation. */
     ptr_item = hashtable->oldest_item;
     STRCMP_EQUAL("weechat", (const char *)ptr_item->key);
     ptr_item = ptr_item->next_created_item;
@@ -398,7 +398,7 @@ TEST(CoreHashtable, SetGetRemove)
     ptr_item = ptr_item->next_created_item;
     POINTERS_EQUAL(NULL, ptr_item);
 
-    /* remove items and check again by order of creation */
+    /* Remove items and check again by order of creation. */
     hashtable_remove (hashtable, "fast");
     LONGS_EQUAL(5, hashtable->items_count);
     ptr_item = hashtable->oldest_item;
@@ -451,7 +451,7 @@ TEST(CoreHashtable, SetGetRemove)
     ptr_item = ptr_item->next_created_item;
     POINTERS_EQUAL(NULL, ptr_item);
 
-    /* check current content of hashtable */
+    /* Check current content of hashtable. */
     POINTERS_EQUAL(NULL, hashtable->htable[0]);
     POINTERS_EQUAL(NULL, hashtable->htable[1]);
     STRCMP_EQUAL("extensible", (const char *)hashtable->htable[2]->key);
@@ -461,10 +461,10 @@ TEST(CoreHashtable, SetGetRemove)
     POINTERS_EQUAL(NULL, hashtable->htable[6]);
     POINTERS_EQUAL(NULL, hashtable->htable[7]);
 
-    /* free hashtable */
+    /* Free hashtable. */
     hashtable_free (hashtable);
 
-    /* test hashtable: integer -> integer */
+    /* Test hashtable: integer -> integer. */
     hashtable = hashtable_new (8,
                                WEECHAT_HASHTABLE_INTEGER,
                                WEECHAT_HASHTABLE_INTEGER,
@@ -488,7 +488,7 @@ TEST(CoreHashtable, SetGetRemove)
     LONGS_EQUAL(500, *ptr_int);
     hashtable_free (hashtable);
 
-    /* test hashtable: pointer -> integer */
+    /* Test hashtable: pointer -> integer. */
     hashtable = hashtable_new (8,
                                WEECHAT_HASHTABLE_POINTER,
                                WEECHAT_HASHTABLE_INTEGER,
@@ -507,7 +507,7 @@ TEST(CoreHashtable, SetGetRemove)
     LONGS_EQUAL(500, *ptr_int);
     hashtable_free (hashtable);
 
-    /* test hashtable: time -> string */
+    /* Test hashtable: time -> string. */
     hashtable = hashtable_new (8,
                                WEECHAT_HASHTABLE_TIME,
                                WEECHAT_HASHTABLE_STRING,
@@ -525,7 +525,7 @@ TEST(CoreHashtable, SetGetRemove)
     STRCMP_EQUAL("test_1718036808", (const char *)hashtable_get (hashtable, &value_time));
     hashtable_free (hashtable);
 
-    /* test hashtable: long long -> string */
+    /* Test hashtable: long long -> string. */
     hashtable = hashtable_new (8,
                                WEECHAT_HASHTABLE_LONGLONG,
                                WEECHAT_HASHTABLE_STRING,
@@ -563,7 +563,7 @@ TEST(CoreHashtable, Rehash)
                                NULL);
     LONGS_EQUAL(4, hashtable->size);
 
-    /* fill up to the load factor limit: no rehash must happen yet */
+    /* Fill up to the load factor limit: no rehash must happen yet. */
     for (i = 0; i < 8; i++)
     {
         snprintf (key, sizeof (key), "key%d", i);
@@ -573,12 +573,12 @@ TEST(CoreHashtable, Rehash)
     LONGS_EQUAL(8, hashtable->items_count);
     LONGS_EQUAL(4, hashtable->size);
 
-    /* one more item pushes items_count above size * load factor: size doubles */
+    /* One more item pushes items_count above size * load factor: size doubles. */
     hashtable_set (hashtable, "key8", "value8");
     LONGS_EQUAL(9, hashtable->items_count);
     LONGS_EQUAL(8, hashtable->size);
 
-    /* all items must still be reachable with their original value after the rehash */
+    /* All items must still be reachable with their original value after the rehash. */
     for (i = 0; i < 9; i++)
     {
         snprintf (key, sizeof (key), "key%d", i);
@@ -586,7 +586,7 @@ TEST(CoreHashtable, Rehash)
         STRCMP_EQUAL(value, (const char *)hashtable_get (hashtable, key));
     }
 
-    /* each bucket must keep its items sorted by key after the rehash */
+    /* Each bucket must keep its items sorted by key after the rehash. */
     for (i = 0; i < hashtable->size; i++)
     {
         for (ptr_item = hashtable->htable[i];
@@ -598,7 +598,7 @@ TEST(CoreHashtable, Rehash)
         }
     }
 
-    /* fill up to the next load factor limit to trigger a second rehash */
+    /* Fill up to the next load factor limit to trigger a second rehash. */
     for (i = 9; i < 17; i++)
     {
         snprintf (key, sizeof (key), "key%d", i);
@@ -647,7 +647,7 @@ TEST(CoreHashtable, ShrinkBasic)
                                NULL,
                                NULL);
 
-    /* fill with enough items to stay below the grow threshold */
+    /* Fill with enough items to stay below the grow threshold. */
     for (i = 0; i < 20; i++)
     {
         snprintf (key, sizeof (key), "key%d", i);
@@ -657,7 +657,7 @@ TEST(CoreHashtable, ShrinkBasic)
     LONGS_EQUAL(20, hashtable->items_count);
     LONGS_EQUAL(32, hashtable->size);
 
-    /* remove down to 8 items: still above the shrink threshold */
+    /* Remove down to 8 items: still above the shrink threshold. */
     for (i = 19; i >= 8; i--)
     {
         snprintf (key, sizeof (key), "key%d", i);
@@ -666,12 +666,12 @@ TEST(CoreHashtable, ShrinkBasic)
     LONGS_EQUAL(8, hashtable->items_count);
     LONGS_EQUAL(32, hashtable->size);
 
-    /* one more removal pushes items_count below size / load factor: size halves */
+    /* One more removal pushes items_count below size / load factor: size halves. */
     hashtable_remove (hashtable, "key7");
     LONGS_EQUAL(7, hashtable->items_count);
     LONGS_EQUAL(16, hashtable->size);
 
-    /* all remaining items must still be reachable with their original value */
+    /* All remaining items must still be reachable with their original value. */
     for (i = 0; i < 7; i++)
     {
         snprintf (key, sizeof (key), "key%d", i);
@@ -679,7 +679,7 @@ TEST(CoreHashtable, ShrinkBasic)
         STRCMP_EQUAL(value, (const char *)hashtable_get (hashtable, key));
     }
 
-    /* each bucket must keep its items sorted by key after the shrink */
+    /* Each bucket must keep its items sorted by key after the shrink. */
     for (i = 0; i < hashtable->size; i++)
     {
         for (ptr_item = hashtable->htable[i];
@@ -715,7 +715,7 @@ TEST(CoreHashtable, ShrinkNoneAboveThreshold)
     LONGS_EQUAL(10, hashtable->items_count);
     LONGS_EQUAL(32, hashtable->size);
 
-    /* removing one item stays above the shrink threshold: no rehash */
+    /* Removing one item stays above the shrink threshold: no rehash. */
     hashtable_remove (hashtable, "key9");
     LONGS_EQUAL(9, hashtable->items_count);
     LONGS_EQUAL(32, hashtable->size);
@@ -735,7 +735,7 @@ TEST(CoreHashtable, ShrinkNoThrashNearBoundary)
                                NULL,
                                NULL);
 
-    /* fill to exactly half load: the boundary a naive design would react to */
+    /* Fill to exactly half load: the boundary a naive design would react to. */
     for (i = 0; i < 16; i++)
     {
         snprintf (key, sizeof (key), "key%d", i);
@@ -745,7 +745,7 @@ TEST(CoreHashtable, ShrinkNoThrashNearBoundary)
     LONGS_EQUAL(16, hashtable->items_count);
     LONGS_EQUAL(32, hashtable->size);
 
-    /* toggling a single extra item near that boundary must never resize */
+    /* Toggling a single extra item near that boundary must never resize. */
     for (i = 0; i < 3; i++)
     {
         hashtable_set (hashtable, "extra", "extra_value");
@@ -757,7 +757,7 @@ TEST(CoreHashtable, ShrinkNoThrashNearBoundary)
         LONGS_EQUAL(32, hashtable->size);
     }
 
-    /* remove real items down past the actual shrink threshold */
+    /* Remove real items down past the actual shrink threshold. */
     for (i = 15; i >= 7; i--)
     {
         snprintf (key, sizeof (key), "key%d", i);
@@ -766,7 +766,7 @@ TEST(CoreHashtable, ShrinkNoThrashNearBoundary)
     LONGS_EQUAL(7, hashtable->items_count);
     LONGS_EQUAL(16, hashtable->size);
 
-    /* the same toggle test must also be stable at the new (halved) size */
+    /* The same toggle test must also be stable at the new (halved) size. */
     for (i = 0; i < 3; i++)
     {
         hashtable_set (hashtable, "extra2", "extra_value2");
@@ -802,17 +802,17 @@ TEST(CoreHashtable, ShrinkMinSize)
     LONGS_EQUAL(5, hashtable->items_count);
     LONGS_EQUAL(32, hashtable->size);
 
-    /* first removal: size halves once (32 -> 16) */
+    /* First removal: size halves once (32 -> 16). */
     hashtable_remove (hashtable, "key0");
     LONGS_EQUAL(4, hashtable->items_count);
     LONGS_EQUAL(16, hashtable->size);
 
-    /* second removal: size halves again (16 -> 8, the minimum size) */
+    /* Second removal: size halves again (16 -> 8, the minimum size). */
     hashtable_remove (hashtable, "key1");
     LONGS_EQUAL(3, hashtable->items_count);
     LONGS_EQUAL(8, hashtable->size);
 
-    /* further removals down to zero items must never shrink below the minimum */
+    /* Further removals down to zero items must never shrink below the minimum. */
     hashtable_remove (hashtable, "key2");
     LONGS_EQUAL(2, hashtable->items_count);
     LONGS_EQUAL(8, hashtable->size);
@@ -827,7 +827,7 @@ TEST(CoreHashtable, ShrinkMinSize)
 
     hashtable_free (hashtable);
 
-    /* a hashtable created at the minimum size must never attempt to shrink */
+    /* A hashtable created at the minimum size must never attempt to shrink. */
     hashtable = hashtable_new (8,
                                WEECHAT_HASHTABLE_STRING,
                                WEECHAT_HASHTABLE_STRING,
@@ -860,7 +860,7 @@ TEST(CoreHashtable, ShrinkRemoveAllKeepsSize)
                                NULL,
                                NULL);
 
-    /* fill enough to force at least one grow */
+    /* Fill enough to force at least one grow. */
     for (i = 0; i < 20; i++)
     {
         snprintf (key, sizeof (key), "key%d", i);
@@ -871,14 +871,14 @@ TEST(CoreHashtable, ShrinkRemoveAllKeepsSize)
     CHECK(hashtable->size > 8);
     grown_size = hashtable->size;
 
-    /* removing everything at once must not shrink the table */
+    /* Removing everything at once must not shrink the table. */
     hashtable_remove_all (hashtable);
     LONGS_EQUAL(0, hashtable->items_count);
     POINTERS_EQUAL(NULL, hashtable->oldest_item);
     POINTERS_EQUAL(NULL, hashtable->newest_item);
     LONGS_EQUAL(grown_size, hashtable->size);
 
-    /* the hashtable must still work correctly at the retained size */
+    /* The hashtable must still work correctly at the retained size. */
     hashtable_set (hashtable, "foo", "bar");
     hashtable_set (hashtable, "baz", "qux");
     LONGS_EQUAL(2, hashtable->items_count);
@@ -894,7 +894,7 @@ test_hashtable_map_string_cb (void *data,
                               struct t_hashtable *hashtable,
                               const char *key, const char *value)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) hashtable;
     (void) data;
 
@@ -1091,7 +1091,7 @@ TEST(CoreHashtable, GetString)
 void
 test_hashtable_free_key (struct t_hashtable *hashtable, void *key)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) hashtable;
     (void) key;
 }
@@ -1104,7 +1104,7 @@ void
 test_hashtable_free_value (struct t_hashtable *hashtable,
                            const void *key, void *value)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) hashtable;
     (void) key;
     (void) value;

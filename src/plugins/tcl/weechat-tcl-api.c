@@ -136,7 +136,7 @@ API_FUNC(register)
     API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (tcl_registered_script)
     {
-        /* script already registered */
+        /* Script is already registered. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" already "
                                          "registered (register ignored)"),
@@ -160,7 +160,7 @@ API_FUNC(register)
 
     if (plugin_script_search (tcl_scripts, name))
     {
-        /* another script already exists with same name */
+        /* Another script already exists with same name. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
@@ -169,7 +169,7 @@ API_FUNC(register)
         API_RETURN_ERROR;
     }
 
-    /* register script */
+    /* Register script. */
     tcl_current_script = plugin_script_add (weechat_tcl_plugin,
                                             &tcl_data,
                                             (tcl_current_script_filename) ?
@@ -620,7 +620,7 @@ API_FUNC(list_new)
 {
     const char *result;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) clientData;
     (void) objc;
     (void) objv;
@@ -1186,7 +1186,7 @@ API_FUNC(config_new_section)
     const char *result;
     int can_add, can_delete;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) clientData;
 
     API_INIT_FUNC(1, "config_new_section", API_RETURN_EMPTY);
@@ -2280,7 +2280,7 @@ API_FUNC(print_y_datetime_tags)
 
 API_FUNC(log_print)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) clientData;
 
     API_INIT_FUNC(1, "log_print", API_RETURN_ERROR);
@@ -2306,7 +2306,7 @@ weechat_tcl_api_hook_command_cb (const void *pointer, void *data,
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argv;
 
     script = (struct t_plugin_script *)pointer;
@@ -2950,10 +2950,10 @@ API_FUNC(hook_connect)
                                                          port,
                                                          ipv6,
                                                          retry,
-                                                         NULL, /* gnutls session */
-                                                         NULL, /* gnutls callback */
-                                                         0,    /* gnutls DH key size */
-                                                         NULL, /* gnutls priorities */
+                                                         NULL, /* GnuTLS session */
+                                                         NULL, /* GnuTLS callback */
+                                                         0,    /* GnuTLS DH key size */
+                                                         NULL, /* GnuTLS priorities */
                                                          local_hostname,
                                                          &weechat_tcl_api_hook_connect_cb,
                                                          function,
@@ -3031,7 +3031,7 @@ weechat_tcl_api_hook_print_cb (const void *pointer, void *data,
     static char timebuffer[64];
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) date_usec;
     (void) tags_count;
 
@@ -3701,7 +3701,7 @@ API_FUNC(unhook)
 
 API_FUNC(unhook_all)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) clientData;
     (void) objc;
     (void) objv;
@@ -3874,7 +3874,7 @@ API_FUNC(buffer_search_main)
 {
     const char *result;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) clientData;
     (void) objc;
     (void) objv;
@@ -3890,7 +3890,7 @@ API_FUNC(current_buffer)
 {
     const char *result;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) clientData;
     (void) objc;
     (void) objv;
@@ -4096,7 +4096,7 @@ API_FUNC(current_window)
 {
     const char *result;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) clientData;
     (void) objc;
     (void) objv;
@@ -4528,7 +4528,7 @@ weechat_tcl_api_bar_item_build_cb (const void *pointer, void *data,
     {
         if (strncmp (ptr_function, "(extra)", 7) == 0)
         {
-            /* new callback: data, item, window, buffer, extra_info */
+            /* New callback: data, item, window, buffer, extra_info */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -4542,7 +4542,7 @@ weechat_tcl_api_bar_item_build_cb (const void *pointer, void *data,
         }
         else
         {
-            /* old callback: data, item, window */
+            /* Old callback: data, item, window */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -4893,7 +4893,7 @@ API_FUNC(infolist_new)
 {
     const char *result;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) clientData;
     (void) objc;
     (void) objv;
@@ -5793,14 +5793,14 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     char str_const[256];
     int i;
 
-    /* standard initializer */
+    /* Standard initializer */
     Tcl_Init (interp);
 
     Tcl_Eval (interp,"namespace eval weechat {}");
 
-    /* interface constants */
-    /* set variables, TODO: make them unmodifiable (thru Tcl_TraceVar) ? */
-    /* NOTE: it is not good for performance to convert "defines" to Tcl_Obj */
+    /* Interface constants */
+    /* Set variables, TODO: make them unmodifiable (thru Tcl_TraceVar)? */
+    /* NOTE: it is not good for performance to convert "defines" to Tcl_Obj. */
     for (i = 0; weechat_script_constants[i].name; i++)
     {
         snprintf (str_const, sizeof (str_const),
@@ -5820,7 +5820,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     /* add specific constant for `NULL` in tcl */
     Tcl_SetVar (interp, "::weechat::WEECHAT_NULL", WEECHAT_NULL_STRING, 0);
 
-    /* interface functions */
+    /* Interface functions */
     API_DEF_FUNC(register);
     API_DEF_FUNC(plugin_get_name);
     API_DEF_FUNC(charset_set);

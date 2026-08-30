@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-# files/directories excluded from tarballs
+# Files/directories excluded from tarballs.
 
 .git*                  export-ignore
 debian-devel           export-ignore

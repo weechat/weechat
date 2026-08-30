@@ -10,8 +10,8 @@
 #define IRC_NUM_COLORS        100
 
 /*
- * shift ncurses colors for compatibility with colors
- * in IRC messages (same as other IRC clients)
+ * Shift ncurses colors for compatibility with colors
+ * in IRC messages (same as other IRC clients).
  */
 
 #define WEECHAT_COLOR_BLACK   COLOR_BLACK
@@ -23,7 +23,7 @@
 #define WEECHAT_COLOR_CYAN    COLOR_YELLOW
 #define WEECHAT_COLOR_WHITE   COLOR_WHITE
 
-/* attributes in IRC messages for color & style (bold, ..) */
+/* Attributes in IRC messages for color & style (bold, ..) */
 
 #define IRC_COLOR_BOLD_CHAR          '\x02'  /* bold text                   */
 #define IRC_COLOR_BOLD_STR           "\x02"  /*   [02]...[02]               */
@@ -51,7 +51,7 @@
 
 #define IRC_COLOR_TERM2IRC_NUM_COLORS 16
 
-/* macros for WeeChat core and IRC colors */
+/* Macros for WeeChat core and IRC colors */
 
 #define IRC_COLOR_BAR_FG weechat_color("bar_fg")
 #define IRC_COLOR_BAR_BG weechat_color("bar_bg")

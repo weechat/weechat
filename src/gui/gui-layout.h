@@ -9,11 +9,11 @@
 
 #define GUI_LAYOUT_DEFAULT_NAME "default"
 
-/* layouts reserved for internal use */
+/* Layouts reserved for internal use */
 #define GUI_LAYOUT_ZOOM    "_zoom"
 #define GUI_LAYOUT_UPGRADE "_upgrade"
 
-/* layout structures */
+/* Layout structures */
 
 struct t_gui_layout_buffer
 {
@@ -53,13 +53,13 @@ struct t_gui_layout
     struct t_gui_layout *next_layout;  /* pointer to next layout            */
 };
 
-/* layout variables */
+/* Layout variables */
 
 extern struct t_gui_layout *gui_layouts;
 extern struct t_gui_layout *last_gui_layout;
 extern struct t_gui_layout *gui_layout_current;
 
-/* layout functions */
+/* Layout functions */
 
 extern struct t_gui_layout *gui_layout_search (const char *name);
 extern struct t_gui_layout *gui_layout_alloc (const char *name);

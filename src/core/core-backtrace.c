@@ -77,7 +77,7 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
         addr = (void *)((unsigned long)((const char *) addr) -
                         (unsigned long) info.dli_fbase);
 
-    /* use addr2line to find symbols names */
+    /* Use addr2line to find symbols names. */
     snprintf (cmd_line, sizeof (cmd_line),
               "addr2line --functions --demangle -e $(which %s) %p",
               info.dli_fname, addr);
@@ -122,12 +122,12 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
                                   number, function_name);
     pclose (output);
 #else
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) number;
     (void) address;
     (void) symbol;
 
-    /* no backtrace possible, we display nothing */
+    /* No backtrace possible, we display nothing. */
 #endif /* HAVE_BACKTRACE */
 }
 

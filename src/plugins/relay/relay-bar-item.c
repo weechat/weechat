@@ -32,7 +32,7 @@ relay_bar_item_input_prompt (const void *pointer, void *data,
     const char *ptr_input_prompt;
     struct t_relay_remote *ptr_remote;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;

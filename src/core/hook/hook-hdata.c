@@ -93,7 +93,7 @@ hook_hdata_get (struct t_weechat_plugin *plugin, const char *hdata_name)
     struct t_hook_exec_cb hook_exec_cb;
     struct t_hdata *value;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (!hdata_name || !hdata_name[0])
@@ -172,7 +172,7 @@ hook_hdata_hdata_hook_hdata_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

@@ -29,7 +29,7 @@ logger_info_log_file_cb (const void *pointer, void *data,
     struct t_gui_buffer *buffer;
     struct t_logger_buffer *logger_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -79,7 +79,7 @@ logger_info_infolist_logger_buffer_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_logger_buffer *ptr_logger_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -94,7 +94,7 @@ logger_info_infolist_logger_buffer_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one logger buffer */
+        /* Build list with only one logger buffer. */
         if (!logger_buffer_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
@@ -104,7 +104,7 @@ logger_info_infolist_logger_buffer_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all logger buffers */
+        /* Build list with all logger buffers. */
         for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
              ptr_logger_buffer = ptr_logger_buffer->next_buffer)
         {
@@ -129,7 +129,7 @@ logger_info_infolist_logger_buffer_cb (const void *pointer, void *data,
 void
 logger_info_init (void)
 {
-    /* info hooks */
+    /* Info hooks */
     weechat_hook_info (
         "logger_log_file",
         N_("path to current log filename for the buffer"),
@@ -137,7 +137,7 @@ logger_info_init (void)
            "(\"irc.libera.#weechat\")"),
         &logger_info_log_file_cb, NULL, NULL);
 
-    /* infolist hooks */
+    /* Infolist hooks */
     weechat_hook_infolist (
         "logger_buffer", N_("list of logger buffers"),
         N_("logger pointer (optional)"),

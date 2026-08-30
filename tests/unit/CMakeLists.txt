@@ -39,7 +39,7 @@ if(ENABLE_PHP)
   add_definitions(-DHAVE_PHP)
 endif()
 
-# unit tests (core)
+# Unit tests (core)
 set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   core/test-core-arraylist.cpp
   core/test-core-calc.cpp
@@ -104,7 +104,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
 )
 add_library(weechat_unit_tests_core STATIC ${LIB_WEECHAT_UNIT_TESTS_CORE_SRC})
 
-# unit tests (plugins)
+# Unit tests (plugins)
 set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
   plugins/test-plugins.cpp
   plugins/test-plugin-api-info.cpp
@@ -201,7 +201,7 @@ endif()
 
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
 
-# binary to run tests
+# Binary to run tests
 set(WEECHAT_TESTS_SRC
   tests.cpp tests.h
   tests-record.cpp tests-record.h
@@ -219,7 +219,7 @@ target_link_libraries(tests
   -rdynamic
 )
 
-# test for cmake (ctest)
+# Test for cmake (ctest)
 add_test(NAME unit
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
   COMMAND tests -v

@@ -10,7 +10,7 @@
 
 #include <time.h>
 
-/* modelist states */
+/* Modelist states */
 #define IRC_MODELIST_STATE_EMPTY      0
 #define IRC_MODELIST_STATE_RECEIVING  1
 #define IRC_MODELIST_STATE_RECEIVED   2

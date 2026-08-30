@@ -20,10 +20,10 @@
 
 
 /*
- * this list is sorted from the least secure to the most secure algorithm:
+ * This list is sorted from the least secure to the most secure algorithm:
  * "plain" is plain text password, the other values are hash algorithms;
  * during negotiation with the client, the highest value in this list matching
- * the client supported values is used
+ * the client supported values is used.
  */
 char *relay_auth_password_hash_algo_name[RELAY_NUM_PASSWORD_HASH_ALGOS] =
 { "plain", "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512" };
@@ -50,7 +50,7 @@ relay_auth_password_hash_algo_search (const char *name)
             return i;
     }
 
-    /* password hash algorithm not found */
+    /* Password hash algorithm not found */
     return -1;
 }
 
@@ -212,12 +212,12 @@ relay_auth_parse_sha (const char *parameters,
 
     if (!argv || (argc < 2))
     {
-        /* not enough parameters */
+        /* Not enough parameters */
         weechat_string_free_split (argv);
         return;
     }
 
-    /* parameter 1: salt */
+    /* Parameter 1: salt */
     if (salt_hexa)
     {
         *salt = malloc (strlen (argv[0]) + 1);
@@ -243,7 +243,7 @@ relay_auth_parse_sha (const char *parameters,
             *salt_size = strlen (*salt);
     }
 
-    /* parameter 2: the SHA256 or SHA512 hash */
+    /* Parameter 2: the SHA256 or SHA512 hash. */
     *hash = strdup (argv[1]);
 
     weechat_string_free_split (argv);
@@ -288,12 +288,12 @@ relay_auth_parse_pbkdf2 (const char *parameters,
 
     if (!argv || (argc < 3))
     {
-        /* not enough parameters */
+        /* Not enough parameters */
         weechat_string_free_split (argv);
         return;
     }
 
-    /* parameter 1: salt */
+    /* Parameter 1: salt */
     if (salt_hexa)
     {
         *salt = malloc (strlen (argv[0]) + 1);
@@ -319,11 +319,11 @@ relay_auth_parse_pbkdf2 (const char *parameters,
             *salt_size = strlen (*salt);
     }
 
-    /* parameter 2: iterations */
+    /* Parameter 2: iterations */
     if (!weechat_util_parse_int (argv[1], 10, iterations))
         *iterations = 0;
 
-    /* parameter 3: the PBKDF2 hash */
+    /* Parameter 3: the PBKDF2 hash */
     *hash = strdup (argv[2]);
 
     weechat_string_free_split (argv);
@@ -468,7 +468,7 @@ relay_auth_check_hash_pbkdf2 (const char *hash_pbkdf2_algo,
         {
             hash_hexa_len = weechat_string_base_encode ("16", hash, hash_size,
                                                         hash_hexa);
-            /* see relay_auth_check_hash_sha for rationale */
+            /* See relay_auth_check_hash_sha for rationale. */
             hash_pbkdf2_upper = weechat_string_toupper (hash_pbkdf2);
             if (hash_pbkdf2_upper
                 && ((int)strlen (hash_pbkdf2_upper) == hash_hexa_len)
@@ -508,7 +508,7 @@ relay_auth_password_hash (struct t_relay_client *client,
 
     str_hash_algo = NULL;
 
-    /* no authentication supported at all with weechat protocol? */
+    /* No authentication supported at all with weechat protocol? */
     if ((client->protocol == RELAY_PROTOCOL_WEECHAT)
         && (client->password_hash_algo < 0))
     {
@@ -546,7 +546,7 @@ relay_auth_password_hash (struct t_relay_client *client,
         goto end;
     }
 
-    /* only algo negotiated in handshake is allowed for protocol "weechat" */
+    /* Only algo negotiated in handshake is allowed for protocol "weechat". */
     if ((client->protocol == RELAY_PROTOCOL_WEECHAT)
         && (hash_algo != client->password_hash_algo))
     {
@@ -554,7 +554,7 @@ relay_auth_password_hash (struct t_relay_client *client,
         goto end;
     }
 
-    /* only algos matching allowed algos are allowed for protocol "api" */
+    /* Only algos matching allowed algos are allowed for protocol "api". */
     if ((client->protocol == RELAY_PROTOCOL_API)
         && (!weechat_string_match_list (
                 relay_auth_password_hash_algo_name[hash_algo],
@@ -571,10 +571,10 @@ relay_auth_password_hash (struct t_relay_client *client,
     {
         case RELAY_AUTH_PASSWORD_HASH_PLAIN:
             /*
-             * plain password is not handled here: it is checked by the
+             * Plain password is not handled here: it is checked by the
              * function relay_auth_check_password_plain; receiving the "plain"
              * algo in a hashed password means the client is trying to
-             * authenticate with the wrong form, so it is rejected
+             * authenticate with the wrong form, so it is rejected.
              */
             rc = -1;
             break;

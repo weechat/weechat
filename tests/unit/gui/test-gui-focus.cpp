@@ -36,7 +36,7 @@ TEST(GuiFocus, ToHashtable)
 
     memset (&focus_info, 0, sizeof (focus_info));
 
-    /* no line: all line keys are set to "-1" or an empty string */
+    /* No line: all line keys are set to "-1" or an empty string. */
     hashtable = gui_focus_to_hashtable (&focus_info, "button1");
     CHECK(hashtable);
     STRCMP_EQUAL("button1", (const char *)hashtable_get (hashtable, "_key"));
@@ -49,8 +49,8 @@ TEST(GuiFocus, ToHashtable)
     hashtable_free (hashtable);
 
     /*
-     * buffer with formatted content: the date of print is derived from the
-     * identifier of the line
+     * Buffer with formatted content: the date of print is derived from the
+     * identifier of the line.
      */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
@@ -74,7 +74,7 @@ TEST(GuiFocus, ToHashtable)
 
     gui_buffer_close (buffer);
 
-    /* buffer with free content: there is no date of print */
+    /* Buffer with free content: there is no date of print. */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
     CHECK(buffer);
     focus_info.buffer = buffer;

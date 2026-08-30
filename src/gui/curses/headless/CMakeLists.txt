@@ -4,7 +4,7 @@
 
 add_definitions(-DWEECHAT_HEADLESS)
 
-# fake ncurses lib (for headless mode and tests)
+# Fake ncurses lib (for headless mode and tests)
 set(LIB_WEECHAT_NCURSES_FAKE_SRC
   ncurses-fake.h
   ncurses-fake.c
@@ -45,5 +45,5 @@ target_link_libraries(${EXECUTABLE}
   coverage_config
 )
 
-# Install executable
+# Install executable.
 install(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)

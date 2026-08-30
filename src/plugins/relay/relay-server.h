@@ -18,7 +18,7 @@ struct t_relay_server
     char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */
     int port;                          /* listening on this port            */
-                                       /* or UNIX socket, if negative.      */
+                                       /* or UNIX socket, if negative       */
     char *path;                        /* listening on this path (UNIX),    */
                                        /* contains string representation of */
                                        /* port if IP                        */

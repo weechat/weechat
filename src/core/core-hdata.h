@@ -9,19 +9,19 @@
 
 #include <time.h>
 
-/* create a hdata variable (name is the same as the struct field */
+/* Create a hdata variable (name is the same as the struct field. */
 #define HDATA_VAR(__struct, __field, __type, __update_allowed,          \
                   __array_size, __hdata_name)                           \
     hdata_new_var (hdata, #__field, offsetof (__struct, __field),       \
                    WEECHAT_HDATA_##__type, __update_allowed,            \
                    __array_size, __hdata_name)
-/* create a hdata variable with a custom name */
+/* Create a hdata variable with a custom name. */
 #define HDATA_VAR_NAME(__struct, __field, __name, __type,               \
                        __update_allowed, __array_size, __hdata_name)    \
     hdata_new_var (hdata, __name, offsetof (__struct, __field),         \
                    WEECHAT_HDATA_##__type, __update_allowed,            \
                    __array_size, __hdata_name)
-/* create a hdata list */
+/* Create a hdata list. */
 #define HDATA_LIST(__name, __flags)                                     \
     hdata_new_list (hdata, #__name, &(__name), __flags);
 

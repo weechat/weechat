@@ -19,7 +19,7 @@ enum t_typing_status_state
     TYPING_STATUS_NUM_STATES,
 };
 
-/* typing status */
+/* Typing status */
 
 struct t_typing_status
 {

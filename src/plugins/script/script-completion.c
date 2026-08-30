@@ -28,7 +28,7 @@ script_completion_languages_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -56,7 +56,7 @@ script_completion_extensions_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -84,7 +84,7 @@ script_completion_scripts_cb (const void *pointer, void *data,
 {
     struct t_script_repo *ptr_script;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -113,7 +113,7 @@ script_completion_scripts_installed_cb (const void *pointer, void *data,
 {
     struct t_script_repo *ptr_script;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -151,7 +151,7 @@ script_completion_exec_file_cb (void *data, const char *filename)
     if (!pos)
         return;
 
-    /* ignore scripts that do not ends with expected extension */
+    /* Ignore scripts that do not ends with expected extension. */
     if (strcmp (pos + 1, extension) != 0)
         return;
 
@@ -180,7 +180,7 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
     int length, i;
     void *pointers[2];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -197,14 +197,14 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
             pointers[0] = completion;
             pointers[1] = script_extension[i];
 
-            /* look for files in <weechat_data_dir>/<language> */
+            /* Look for files in "<weechat_data_dir>/<language>". */
             snprintf (directory, length,
                       "%s/%s", weechat_data_dir, script_language[i]);
             weechat_exec_on_files (directory, 0, 0,
                                    &script_completion_exec_file_cb,
                                    pointers);
 
-            /* look for files in <weechat_data_dir>/<language>/autoload */
+            /* Look for files in "<weechat_data_dir>/<language>/autoload". */
             snprintf (directory, length,
                       "%s/%s/autoload", weechat_data_dir, script_language[i]);
             weechat_exec_on_files (directory, 0, 0,
@@ -233,7 +233,7 @@ script_completion_tags_cb (const void *pointer, void *data,
     char **list_tags;
     int num_tags, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;

@@ -59,7 +59,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        /* save server */
+        /* Save server. */
         infolist = weechat_infolist_new ();
         if (!infolist)
             return 0;
@@ -76,11 +76,11 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
         if (!rc)
             return 0;
 
-        /* save server channels and nicks */
+        /* Save server channels and nicks. */
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
-            /* save channel */
+            /* Save channel. */
             infolist = weechat_infolist_new ();
             if (!infolist)
                 return 0;
@@ -101,7 +101,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
                 for (ptr_nick = ptr_channel->nicks; ptr_nick;
                      ptr_nick = ptr_nick->next_nick)
                 {
-                    /* save nick */
+                    /* Save nick. */
                     infolist = weechat_infolist_new ();
                     if (!infolist)
                         return 0;
@@ -121,7 +121,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
                 for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
                      ptr_modelist = ptr_modelist->next_modelist)
                 {
-                    /* save modelist */
+                    /* Save modelist. */
                     infolist = weechat_infolist_new ();
                     if (!infolist)
                         return 0;
@@ -140,7 +140,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
                     for (ptr_item = ptr_modelist->items; ptr_item;
                          ptr_item = ptr_item->next_item)
                     {
-                        /* save modelist item */
+                        /* Save modelist item. */
                         infolist = weechat_infolist_new ();
                         if (!infolist)
                             return 0;
@@ -160,7 +160,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
             }
         }
 
-        /* save server redirects */
+        /* Save server redirects. */
         for (ptr_redirect = ptr_server->redirects; ptr_redirect;
              ptr_redirect = ptr_redirect->next_redirect)
         {
@@ -180,7 +180,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
                 return 0;
         }
 
-        /* save server notify list */
+        /* Save server notify list. */
         for (ptr_notify = ptr_server->notify_list; ptr_notify;
              ptr_notify = ptr_notify->next_notify)
         {
@@ -201,7 +201,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
         }
     }
 
-    /* save raw messages */
+    /* Save raw messages. */
     for (ptr_raw_message = irc_raw_messages; ptr_raw_message;
          ptr_raw_message = ptr_raw_message->next_message)
     {
@@ -221,11 +221,11 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
             return 0;
     }
 
-    /* save redirect patterns */
+    /* Save redirect patterns. */
     for (ptr_redirect_pattern = irc_redirect_patterns; ptr_redirect_pattern;
          ptr_redirect_pattern = ptr_redirect_pattern->next_redirect)
     {
-        /* save only temporary patterns (created by other plugins/scripts) */
+        /* Save only temporary patterns (created by other plugins/scripts). */
         if (ptr_redirect_pattern->temp_pattern)
         {
             infolist = weechat_infolist_new ();
@@ -353,7 +353,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
     struct t_irc_modelist_item *ptr_item;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) upgrade_file;
@@ -412,7 +412,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     }
                     /*
                      * "authentication_method" and "sasl_mechanism_used" are
-                     * new in WeeChat 4.0.0
+                     * new in WeeChat 4.0.0.
                      */
                     if (weechat_infolist_search_var (infolist, "authentication_method"))
                     {
@@ -446,7 +446,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     /*
                      * "cap_ls" and "cap_list" replace "cap_away_notify",
                      * "cap_account_notify" and "cap_extended_join"
-                     * in WeeChat 2.2
+                     * in WeeChat 2.2.
                      */
                     if (weechat_infolist_integer (infolist, "cap_away_notify"))
                     {
@@ -474,7 +474,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     /*
                      * "prefix" is not anymore in this infolist (since
                      * WeeChat 0.3.4), but we read it to keep compatibility
-                     * with old WeeChat versions, on /upgrade)
+                     * with old WeeChat versions, on /upgrade).
                      */
                     str = weechat_infolist_string (infolist, "prefix");
                     if (str)
@@ -799,49 +799,49 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         flags = weechat_infolist_integer (infolist, "flags");
                         if (flags > 0)
                         {
-                            /* channel owner */
+                            /* Channel owner */
                             if (flags & 1)
                             {
                                 irc_nick_set_mode (irc_upgrade_current_server,
                                                    irc_upgrade_current_channel,
                                                    ptr_nick, 1, 'q');
                             }
-                            /* channel admin */
+                            /* Channel admin */
                             if ((flags & 2) || (flags & 4))
                             {
                                 irc_nick_set_mode (irc_upgrade_current_server,
                                                    irc_upgrade_current_channel,
                                                    ptr_nick, 1, 'a');
                             }
-                            /* op */
+                            /* Op */
                             if (flags & 8)
                             {
                                 irc_nick_set_mode (irc_upgrade_current_server,
                                                    irc_upgrade_current_channel,
                                                    ptr_nick, 1, 'o');
                             }
-                            /* half-op */
+                            /* Half-op */
                             if (flags & 16)
                             {
                                 irc_nick_set_mode (irc_upgrade_current_server,
                                                    irc_upgrade_current_channel,
                                                    ptr_nick, 1, 'h');
                             }
-                            /* voice */
+                            /* Voice */
                             if (flags & 32)
                             {
                                 irc_nick_set_mode (irc_upgrade_current_server,
                                                    irc_upgrade_current_channel,
                                                    ptr_nick, 1, 'v');
                             }
-                            /* away */
+                            /* Away */
                             if (flags & 64)
                             {
                                 irc_nick_set_away (irc_upgrade_current_server,
                                                    irc_upgrade_current_channel,
                                                    ptr_nick, 1);
                             }
-                            /* channel user */
+                            /* Channel user */
                             if (flags & 128)
                             {
                                 irc_nick_set_mode (irc_upgrade_current_server,
@@ -855,7 +855,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
             case IRC_UPGRADE_TYPE_MODELIST:
                 if (irc_upgrade_current_server && irc_upgrade_current_channel)
                 {
-                    /* modelists are already created by the channel */
+                    /* Modelists are already created by the channel. */
                     irc_upgrade_current_modelist = irc_modelist_search (
                         irc_upgrade_current_channel,
                         weechat_infolist_string (infolist, "type")[0]);
@@ -971,11 +971,11 @@ irc_upgrade_set_buffer_properties (void)
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        /* set input prompt on server and all channels */
+        /* Set input prompt on server and all channels. */
         if (ptr_server->buffer)
             irc_server_set_buffer_input_prompt (ptr_server);
 
-        /* set modes on all channels */
+        /* Set modes on all channels. */
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {

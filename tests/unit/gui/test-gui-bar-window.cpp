@@ -228,13 +228,13 @@ TEST(GuiBarWindow, ComputeSpacersSize)
     POINTERS_EQUAL(NULL, gui_bar_window_compute_spacers_size (10, 20, 0));
     POINTERS_EQUAL(NULL, gui_bar_window_compute_spacers_size (10, 20, 0));
 
-    /* length on screen == bar window width */
+    /* Length on screen == bar window width */
     POINTERS_EQUAL(NULL, gui_bar_window_compute_spacers_size (20, 20, 3));
 
-    /* length on screen > bar window width */
+    /* Length on screen > bar window width */
     POINTERS_EQUAL(NULL, gui_bar_window_compute_spacers_size (25, 20, 3));
 
-    /* single spacer */
+    /* Single spacer */
     spacers = gui_bar_window_compute_spacers_size (10, 20, 1);
     CHECK(spacers);
     LONGS_EQUAL(10, spacers[0]);
@@ -369,7 +369,7 @@ TEST(GuiBarWindow, SetCurrentSize)
 
 TEST(GuiBarWindow, Free)
 {
-    /* test free of NULL bar window */
+    /* Test free of NULL bar window. */
     gui_bar_window_free (NULL, gui_current_window);
     gui_bar_window_free (NULL, NULL);
 }

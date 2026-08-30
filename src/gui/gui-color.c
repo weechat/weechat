@@ -35,12 +35,12 @@
 
 struct t_gui_color *gui_color[GUI_COLOR_NUM_COLORS]; /* GUI colors          */
 
-/* palette colors and aliases */
+/* Palette colors and aliases */
 struct t_hashtable *gui_color_hash_palette_color = NULL;
 struct t_hashtable *gui_color_hash_palette_alias = NULL;
 struct t_weelist *gui_color_list_with_alias = NULL;
 
-/* terminal colors */
+/* Terminal colors */
 int gui_color_term256[256] =
 {
     0x000000, 0x800000, 0x008000, 0x808000, 0x000080, 0x800080,  /*   0-5   */
@@ -127,7 +127,7 @@ gui_color_from_option (struct t_config_option *option)
             return NULL;
     }
 
-    /* never executed */
+    /* Never executed */
     return NULL;
 }
 
@@ -145,7 +145,7 @@ gui_color_search_config (const char *color_name)
     if (!color_name)
         return NULL;
 
-    /* search in weechat.conf colors (example: "chat_delimiters") */
+    /* Search in weechat.conf colors (example: "chat_delimiters"). */
     for (ptr_option = weechat_config_section_color->options;
          ptr_option; ptr_option = ptr_option->next_option)
     {
@@ -153,7 +153,7 @@ gui_color_search_config (const char *color_name)
             return gui_color_from_option (ptr_option);
     }
 
-    /* search in any configuration file (example: "irc.color.message_quit") */
+    /* Search in any configuration file (example: "irc.color.message_quit"). */
     if (strchr (color_name, '.'))
     {
         config_file_search_with_string (color_name, NULL, NULL, &ptr_option, NULL);
@@ -161,7 +161,7 @@ gui_color_search_config (const char *color_name)
             return gui_color_from_option (ptr_option);
     }
 
-    /* color not found */
+    /* Color not found */
     return NULL;
 }
 
@@ -243,14 +243,14 @@ gui_color_get_custom (const char *color_name)
     char *str_fg, *color_attr;
     const char *ptr_color_name, *pos_delim, *pos_bg;
 
-    /* attribute or other color name (GUI dependent) */
+    /* Attribute or other color name (GUI dependent) */
     index_color = (index_color + 1) % 32;
     color[index_color][0] = '\0';
 
     if (!color_name || !color_name[0])
         return color[index_color];
 
-    /* read extra attributes (bold, ..) */
+    /* Read extra attributes (bold, ..). */
     color_attr = NULL;
     ptr_color_name = color_name;
     while (gui_color_attr_get_flag (ptr_color_name[0]) > 0)
@@ -393,7 +393,7 @@ gui_color_get_custom (const char *color_name)
     }
     else
     {
-        /* custom color name (GUI dependent) */
+        /* Custom color name (GUI dependent) */
         fg_term = -1;
         bg_term = -1;
         fg = -1;
@@ -483,9 +483,9 @@ gui_color_get_custom (const char *color_name)
         if (color_fg[0] && color_bg[0])
         {
             /*
-             * note: until WeeChat 2.5, the separator was a comma, and it has
+             * Note: until WeeChat 2.5, the separator was a comma, and it has
              * been changed to a tilde (to prevent problems with /eval and
-             * ${color:FF,BB}
+             * ${color:FF,BB}.
              */
             snprintf (color[index_color], sizeof (color[index_color]),
                       "%c%c%s~%s",
@@ -566,7 +566,7 @@ gui_color_convert_rgb_to_term (int rgb, int limit)
             ((g2 - g1) * (g2 - g1)) +
             ((b2 - b1) * (b2 - b1));
 
-        /* exact match! */
+        /* Exact match! */
         if (diff == 0)
             return i;
 
@@ -577,7 +577,7 @@ gui_color_convert_rgb_to_term (int rgb, int limit)
         }
     }
 
-    /* return the closest color */
+    /* Return the closest color. */
     return best_color;
 }
 
@@ -674,10 +674,10 @@ gui_color_code_size (const char *string)
                             ptr_string += 2;
                     }
                     /*
-                     * note: the comma is an old separator not used any
+                     * Note: the comma is an old separator not used any
                      * more (since WeeChat 2.6), but we still use it here
                      * so in case of/upgrade this will not break colors in
-                     * old messages
+                     * old messages.
                      */
                     if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
                     {
@@ -853,10 +853,10 @@ gui_color_decode (const char *string, const char *replacement)
                                 ptr_string += 2;
                         }
                         /*
-                         * note: the comma is an old separator not used any
+                         * Note: the comma is an old separator not used any
                          * more (since WeeChat 2.6), but we still use it here
                          * so in case of/upgrade this will not break colors in
-                         * old messages
+                         * old messages.
                          */
                         if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
                         {
@@ -959,16 +959,16 @@ gui_color_decode_ansi_cb (void *data, const char *text)
 
     keep_colors = (data) ? 1 : 0;;
 
-    /* if we don't keep colors or if text is empty, just return empty string */
+    /* If we don't keep colors or if text is empty, just return empty string. */
     if (!keep_colors || !text || !text[0])
         return strdup ("");
 
-    /* only sequences ending with 'm' are used, the others are discarded */
+    /* Only sequences ending with 'm' are used, the others are discarded. */
     length = strlen (text);
     if (text[length - 1] != 'm')
         return strdup ("");
 
-    /* sequence "\33[m" resets color */
+    /* Sequence "\33[m" resets color. */
     if (length < 4)
         return strdup (gui_color_get_custom ("reset"));
 
@@ -976,7 +976,7 @@ gui_color_decode_ansi_cb (void *data, const char *text)
     items = NULL;
     output = NULL;
 
-    /* extract text between "\33[" and "m" */
+    /* Extract text between "\33[" and "m". */
     text2 = string_strndup (text + 2, length - 3);
     if (!text2)
         goto end;
@@ -999,46 +999,46 @@ gui_color_decode_ansi_cb (void *data, const char *text)
         value = atoi (items[i]);
         switch (value)
         {
-            case 0: /* reset */
+            case 0: /* Reset */
                 strcat (output, gui_color_get_custom ("reset"));
                 break;
-            case 1: /* bold */
+            case 1: /* Bold */
                 strcat (output, gui_color_get_custom ("bold"));
                 break;
-            case 2: /* dim */
+            case 2: /* Dim */
                 strcat (output, gui_color_get_custom ("dim"));
                 break;
-            case 3: /* italic */
+            case 3: /* Italic */
                 strcat (output, gui_color_get_custom ("italic"));
                 break;
-            case 4: /* underline */
+            case 4: /* Underline */
                 strcat (output, gui_color_get_custom ("underline"));
                 break;
-            case 5: /* blink */
+            case 5: /* Blink */
                 strcat (output, gui_color_get_custom ("blink"));
                 break;
-            case 7: /* reverse */
+            case 7: /* Reverse */
                 strcat (output, gui_color_get_custom ("reverse"));
                 break;
-            case 21: /* remove bold */
+            case 21: /* Remove bold */
                 strcat (output, gui_color_get_custom ("-bold"));
                 break;
-            case 22: /* remove dim */
+            case 22: /* Remove dim */
                 strcat (output, gui_color_get_custom ("-dim"));
                 break;
-            case 23: /* remove italic */
+            case 23: /* Remove italic */
                 strcat (output, gui_color_get_custom ("-italic"));
                 break;
-            case 24: /* remove underline */
+            case 24: /* Remove underline */
                 strcat (output, gui_color_get_custom ("-underline"));
                 break;
-            case 25: /* remove blink */
+            case 25: /* Remove blink */
                 strcat (output, gui_color_get_custom ("-blink"));
                 break;
-            case 27: /* remove reverse */
+            case 27: /* Remove reverse */
                 strcat (output, gui_color_get_custom ("-reverse"));
                 break;
-            case 30: /* text color */
+            case 30: /* Text color */
             case 31:
             case 32:
             case 33:
@@ -1051,7 +1051,7 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                           gui_color_ansi[value - 30]);
                 strcat (output, gui_color_get_custom (str_color));
                 break;
-            case 38: /* text color */
+            case 38: /* Text color */
                 if (i + 1 < num_items)
                 {
                     switch (atoi (items[i + 1]))
@@ -1070,7 +1070,7 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                                 i += 4;
                             }
                             break;
-                        case 5: /* terminal color (0-255) */
+                        case 5: /* Terminal color (0-255) */
                             if (i + 2 < num_items)
                             {
                                 snprintf (str_color, sizeof (str_color),
@@ -1082,10 +1082,10 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                     }
                 }
                 break;
-            case 39: /* default text color */
+            case 39: /* Default text color */
                 strcat (output, gui_color_get_custom ("default"));
                 break;
-            case 40: /* background color */
+            case 40: /* Background color */
             case 41:
             case 42:
             case 43:
@@ -1098,7 +1098,7 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                           gui_color_ansi[value - 40]);
                 strcat (output, gui_color_get_custom (str_color));
                 break;
-            case 48: /* background color */
+            case 48: /* Background color */
                 if (i + 1 < num_items)
                 {
                     switch (atoi (items[i + 1]))
@@ -1117,7 +1117,7 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                                 i += 4;
                             }
                             break;
-                        case 5: /* terminal color (0-255) */
+                        case 5: /* Terminal color (0-255) */
                             if (i + 2 < num_items)
                             {
                                 snprintf (str_color, sizeof (str_color),
@@ -1129,10 +1129,10 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                     }
                 }
                 break;
-            case 49: /* default background color */
+            case 49: /* Default background color */
                 strcat (output, gui_color_get_custom (",default"));
                 break;
-            case 90: /* text color (bright) */
+            case 90: /* Text color (bright) */
             case 91:
             case 92:
             case 93:
@@ -1145,7 +1145,7 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                           gui_color_ansi[value - 90 + 8]);
                 strcat (output, gui_color_get_custom (str_color));
                 break;
-            case 100: /* background color (bright) */
+            case 100: /* Background color (bright) */
             case 101:
             case 102:
             case 103:
@@ -1177,7 +1177,7 @@ end:
 char *
 gui_color_decode_ansi (const char *string, int keep_colors)
 {
-    /* allocate/compile regex if needed (first call) */
+    /* Allocate/compile regex if needed (first call). */
     if (!gui_color_regex_ansi)
     {
         gui_color_regex_ansi = malloc (sizeof (*gui_color_regex_ansi));
@@ -1227,7 +1227,7 @@ gui_color_add_ansi_flag (char **output, int flag)
             string_dyn_concat (output, "\x1B[4m", -1);
             break;
         case GUI_COLOR_EXTENDED_KEEPATTR_FLAG:
-            /* nothing to do here (really? not sure) */
+            /* Nothing to do here (really? not sure). */
             break;
     }
 }
@@ -1254,7 +1254,7 @@ gui_color_weechat_to_ansi (int color)
             return i;
     }
 
-    /* color not found */
+    /* Color not found */
     return -1;
 }
 
@@ -1430,10 +1430,10 @@ gui_color_encode_ansi (const char *string)
                             }
                         }
                         /*
-                         * note: the comma is an old separator not used any
+                         * Note: the comma is an old separator not used any
                          * more (since WeeChat 2.6), but we still use it here
                          * so in case of/upgrade this will not break colors in
-                         * old messages
+                         * old messages.
                          */
                         if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
                         {
@@ -1707,11 +1707,11 @@ gui_color_emphasize (const char *string,
     int rc, length_search, length_emphasis, length_result;
     int pos1, pos2, real_pos1, real_pos2, count_emphasis;
 
-    /* string is required */
+    /* String is required. */
     if (!string)
         return NULL;
 
-    /* search or regex is required */
+    /* Search or regex is required. */
     if (!search && !regex)
         return NULL;
 
@@ -1721,9 +1721,9 @@ gui_color_emphasize (const char *string,
     length_emphasis = strlen (color_emphasis);
 
     /*
-     * allocate space for 8 emphasized strings (8 before + 8 after = 16);
+     * Allocate space for 8 emphasized strings (8 before + 8 after = 16);
      * more space will be allocated later (if there are more than 8 emphasized
-     * strings)
+     * strings).
      */
     length_result = strlen (string) + (length_emphasis * 2 * 8) + 1;
     result = malloc (length_result);
@@ -1732,9 +1732,9 @@ gui_color_emphasize (const char *string,
     result[0] = '\0';
 
     /*
-     * build a string without color codes to search in this one (then with the
+     * Build a string without color codes to search in this one (then with the
      * position of text found, we will retrieve position in original string,
-     * which can contain color codes)
+     * which can contain color codes).
      */
     string_no_color = gui_color_decode (string, NULL);
     if (!string_no_color)
@@ -1754,14 +1754,14 @@ gui_color_emphasize (const char *string,
     {
         if (regex)
         {
-            /* search next match using the regex */
+            /* Search next match using the regex. */
             regex_match.rm_so = -1;
             rc = regexec (regex, ptr_no_color, 1, &regex_match, 0);
 
             /*
-             * no match found: exit the loop (if rm_no == 0, it is an empty
+             * No match found: exit the loop (if rm_no == 0, it is an empty
              * match at beginning of string: we consider there is no match, to
-             * prevent an infinite loop)
+             * prevent an infinite loop).
              */
             if ((rc != 0) || (regex_match.rm_so < 0) || (regex_match.rm_eo <= 0))
             {
@@ -1773,7 +1773,7 @@ gui_color_emphasize (const char *string,
         }
         else
         {
-            /* search next match in the string */
+            /* Search next match in the string. */
             if (case_sensitive)
                 pos = strstr (ptr_no_color, search);
             else
@@ -1793,8 +1793,8 @@ gui_color_emphasize (const char *string,
         }
 
         /*
-         * find the position of match in the original string (which can contain
-         * color codes)
+         * Find the position of match in the original string (which can contain
+         * color codes).
          */
         real_pos1 = gui_chat_string_real_pos (ptr_string,
                                               gui_chat_string_pos (ptr_no_color, pos1),
@@ -1804,11 +1804,11 @@ gui_color_emphasize (const char *string,
                                               0);
 
         /*
-         * concatenate following strings to the result:
+         * Concatenate following strings to the result:
          * - beginning of string (before match)
          * - emphasis color code
          * - the matching string
-         * - emphasis color code
+         * - emphasis color code.
          */
         if (real_pos1 > 0)
             strncat (result, ptr_string, real_pos1);
@@ -1816,15 +1816,15 @@ gui_color_emphasize (const char *string,
         strncat (result, ptr_string + real_pos1, real_pos2 - real_pos1);
         strcat (result, color_emphasis);
 
-        /* restart next loop after the matching string */
+        /* Restart next loop after the matching string. */
         ptr_string += real_pos2;
         ptr_no_color += pos2;
 
-        /* check if we should allocate more space for emphasis color codes */
+        /* Check if we should allocate more space for emphasis color codes. */
         count_emphasis++;
         if (count_emphasis == 8)
         {
-            /* allocate more space for emphasis color codes */
+            /* Allocate more space for emphasis color codes. */
             length_result += (length_emphasis * 2 * 8);
             result2 = realloc (result, length_result);
             if (!result2)
@@ -1867,7 +1867,7 @@ gui_color_palette_free_value_cb (struct t_hashtable *hashtable,
 {
     struct t_gui_color_palette *color_palette;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) key;
 
@@ -1923,7 +1923,7 @@ gui_color_palette_get_alias (const char *alias)
             return *ptr_number;
     }
 
-    /* alias not found */
+    /* Alias not found */
     return -1;
 }
 

@@ -38,7 +38,7 @@ plugin_script_config_init (struct t_weechat_plugin *weechat_plugin,
     if (!(*plugin_data->config_file))
         return 0;
 
-    /* look */
+    /* Look */
     ptr_section = weechat_config_new_section (*(plugin_data->config_file),
                                               "look",
                                               0, 0,

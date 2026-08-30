@@ -11,7 +11,7 @@
 
 #define GUI_FILTER_TAG_NO_FILTER "no_filter"
 
-/* filter structures */
+/* Filter structures */
 
 struct t_gui_line_data;
 
@@ -32,13 +32,13 @@ struct t_gui_filter
     struct t_gui_filter *next_filter;  /* link to next filter               */
 };
 
-/* filter variables */
+/* Filter variables */
 
 extern struct t_gui_filter *gui_filters;
 extern struct t_gui_filter *last_gui_filter;
 extern int gui_filters_enabled;
 
-/* filter functions */
+/* Filter functions */
 
 extern int gui_filter_check_line (struct t_gui_line_data *line_data);
 extern void gui_filter_buffer (struct t_gui_buffer *buffer,

@@ -100,7 +100,7 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
     const char *pos;
     char *item;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (!weechat_hooks[HOOK_TYPE_COMPLETION])
@@ -177,7 +177,7 @@ hook_completion_hdata_hook_completion_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

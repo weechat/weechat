@@ -8,10 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 /* Custom styles for Asciidoctor */
 
-/* themes/colors */
+/* Themes/colors */
 
 @media (prefers-color-scheme: dark) {
-  /* dark theme */
+  /* Dark theme */
   :root {
     color-scheme: dark;
     --body-bg-color: #1a1a1a;
@@ -44,7 +44,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 }
 
 @media (not (prefers-color-scheme: dark)), (prefers-color-scheme: light)  {
-  /* light theme */
+  /* Light theme */
   :root {
     color-scheme: light;
     --body-bg-color: #fff;
@@ -205,7 +205,7 @@ mark {
   color: var(--body-color);
 }
 
-/* asciidoctor styles tuning */
+/* Asciidoctor styles tuning */
 
 #header, #content, #footnotes, #footer {
   max-width: none;

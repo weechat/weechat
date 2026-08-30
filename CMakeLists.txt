@@ -14,16 +14,16 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_SKIP_RPATH ON)
 
-# compiler options
+# Compiler options
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsigned-char -fms-extensions -Wall -Wextra -Werror-implicit-function-declaration -Wformat -Werror=format-security")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -fms-extensions -Wall -Wextra")
 if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
-  # extra options specific to GCC
+  # Extra options specific to GCC
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wformat-overflow=2 -Wformat-truncation=2")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wformat-overflow=2 -Wformat-truncation=2")
 endif()
 
-# version
+# Version
 execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-major OUTPUT_VARIABLE VERSION_MAJOR)
 execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-minor OUTPUT_VARIABLE VERSION_MINOR)
 execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-patch OUTPUT_VARIABLE VERSION_PATCH)
@@ -36,10 +36,10 @@ else()
   set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 endif()
 
-# add definitions for version and license
+# Add definitions for version and license.
 add_definitions(-DWEECHAT_VERSION="${VERSION}" -DWEECHAT_LICENSE="GPL3")
 
-# package string
+# Package string
 set(PKG_STRING "${PROJECT_NAME} ${VERSION}")
 string(REPLACE "\";\"" "\ " PKG_STRING ${PKG_STRING})
 
@@ -110,7 +110,7 @@ option(ENABLE_TESTS          "Enable tests"                             OFF)
 option(ENABLE_FUZZ           "Enable fuzz testing"                      OFF)
 option(ENABLE_CODE_COVERAGE  "Enable code coverage"                     OFF)
 
-# code coverage
+# Code coverage
 add_library(coverage_config INTERFACE)
 if(ENABLE_CODE_COVERAGE)
   if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
@@ -124,12 +124,12 @@ if(ENABLE_CODE_COVERAGE)
   endif()
 endif()
 
-# headless mode is required for documentation
+# Headless mode is required for documentation.
 if(ENABLE_DOC AND NOT ENABLE_HEADLESS)
   message(FATAL_ERROR "Headless mode is required to build documentation.")
 endif()
 
-# all plugins (except javascript) are required for documentation
+# All plugins (except javascript) are required for documentation.
 if(ENABLE_DOC AND NOT ENABLE_DOC_INCOMPLETE
     AND (NOT ENABLE_NLS OR NOT ENABLE_ALIAS OR NOT ENABLE_BUFLIST
       OR NOT ENABLE_CHARSET OR NOT ENABLE_EXEC OR NOT ENABLE_FIFO
@@ -147,22 +147,22 @@ if(ENABLE_DOC AND NOT ENABLE_DOC_INCOMPLETE
   )
 endif()
 
-# headless mode is required for tests
+# Headless mode is required for tests.
 if(ENABLE_TESTS AND NOT ENABLE_HEADLESS)
   message(FATAL_ERROR "Headless mode is required for tests.")
 endif()
 
-# Set this to override aspell's dictionaries directory
+# Set this to override aspell's dictionaries directory.
 if(ASPELL_DICT_DIR)
   add_definitions(-DASPELL_DICT_DIR="${ASPELL_DICT_DIR}")
 endif()
 
-# Set this to override the myspell dictionaries directory when using enchant
+# Set this to override the myspell dictionaries directory when using enchant.
 if(ENCHANT_MYSPELL_DICT_DIR)
   add_definitions(-DENCHANT_MYSPELL_DICT_DIR="${ENCHANT_MYSPELL_DICT_DIR}")
 endif()
 
-# option WEECHAT_HOME
+# Option WEECHAT_HOME
 set(WEECHAT_HOME "${WEECHAT_HOME}" CACHE
   STRING "Force a single WeeChat home directory for config, logs, scripts, etc."
   FORCE)
@@ -190,7 +190,7 @@ check_symbol_exists("htonll" "sys/types.h;netinet/in.h;inttypes.h" HAVE_HTONLL)
 
 check_symbol_exists("eat_newline_glitch" "term.h" HAVE_EAT_NEWLINE_GLITCH)
 
-# Check if res_init requires libresolv
+# Check if res_init requires libresolv.
 check_function_exists(res_init, LIBC_HAS_RES_INIT)
 if(NOT LIBC_HAS_RES_INIT)
   find_library(RESOLV_LIBRARY resolv)
@@ -202,7 +202,7 @@ if(NOT LIBC_HAS_RES_INIT)
   endif()
 endif()
 
-# Check for Large File Support
+# Check for Large File Support.
 if(ENABLE_LARGEFILE)
   add_definitions(-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_LARGE_FILES)
 endif()
@@ -213,21 +213,21 @@ if(CMAKE_HOST_SOLARIS)
   add_definitions(-D_XPG4_2 -D__EXTENSIONS__)
 endif()
 
-# Check for libgcrypt
+# Check for libgcrypt.
 pkg_check_modules(LIBGCRYPT REQUIRED libgcrypt>=1.8.0)
 include_directories(${LIBGCRYPT_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBGCRYPT_LDFLAGS})
 
-# Check for GnuTLS
+# Check for GnuTLS.
 pkg_check_modules(GNUTLS REQUIRED gnutls>=3.6.3)
 include_directories(${GNUTLS_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${GNUTLS_LDFLAGS})
 
-# Check for zlib
+# Check for zlib.
 find_package(ZLIB REQUIRED)
 list(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
 
-# Check for zstd
+# Check for zstd.
 if(ENABLE_ZSTD)
   pkg_check_modules(LIBZSTD REQUIRED libzstd>=1.4.0)
   include_directories(${LIBZSTD_INCLUDE_DIRS})
@@ -235,14 +235,14 @@ if(ENABLE_ZSTD)
   add_definitions(-DHAVE_ZSTD)
 endif()
 
-# Check for cJSON
+# Check for cJSON.
 if(ENABLE_CJSON)
   pkg_check_modules(LIBCJSON REQUIRED libcjson)
   include_directories(${LIBCJSON_INCLUDE_DIRS})
   add_definitions(-DHAVE_CJSON)
 endif()
 
-# Check for iconv
+# Check for iconv.
 find_package(Iconv)
 if(ICONV_FOUND)
   if(ICONV_LIBRARY)
@@ -302,7 +302,7 @@ add_subdirectory(tests)
 
 configure_file(config.h.cmake config.h @ONLY)
 
-# set the git version in "config-git.h"
+# Set the git version in "config-git.h".
 add_custom_target(version_git ALL
   COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/set_git_version.sh" "${CMAKE_CURRENT_SOURCE_DIR}" "${VERSION}" "config-git.h"
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
@@ -323,7 +323,7 @@ add_custom_target(dist
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
-# pkgconfig file
+# Pkgconfig file
 set(PACKAGE "${PROJECT_NAME}")
 set(prefix "${CMAKE_INSTALL_PREFIX}")
 set(exec_prefix "\${prefix}")
@@ -332,10 +332,10 @@ set(includedir "\${prefix}/include")
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/weechat.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/weechat.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat.pc" DESTINATION "${LIBDIR}/pkgconfig")
 
-# cygport file (used to build Cygwin packages)
+# Cygport file (used to build Cygwin packages)
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/weechat.cygport.in" "${CMAKE_CURRENT_BINARY_DIR}/weechat-${VERSION}-1.cygport" @ONLY)
 
-# install some files (only on Cygwin)
+# Install some files (only on Cygwin).
 if(CYGWIN)
   install(FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS.md"
@@ -347,5 +347,5 @@ if(CYGWIN)
   )
 endif()
 
-# desktop file
+# Desktop file
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop" DESTINATION "${DATAROOTDIR}/applications")

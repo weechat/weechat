@@ -55,7 +55,7 @@ logger_check_conditions (struct t_gui_buffer *buffer, const char *conditions)
     if (!buffer)
         return 0;
 
-    /* empty conditions = always true */
+    /* Empty conditions = always true */
     if (!conditions || !conditions[0])
         return 1;
 
@@ -112,7 +112,7 @@ logger_get_file_path (void)
     path = NULL;
     path2 = NULL;
 
-    /* evaluate path */
+    /* Evaluate path. */
     options = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
@@ -126,7 +126,7 @@ logger_get_file_path (void)
     if (!path)
         goto end;
 
-    /* replace date/time specifiers in path */
+    /* Replace date/time specifiers in path. */
     length = strlen (path) + 256 + 1;
     path2 = malloc (length);
     if (!path2)
@@ -222,7 +222,7 @@ logger_get_level_for_buffer (struct t_gui_buffer *buffer)
     char *name, *option_name, *ptr_end;
     struct t_config_option *ptr_option;
 
-    /* no log for buffer if local variable "no_log" is defined for buffer */
+    /* No log for buffer if local variable "no_log" is defined for buffer */
     no_log = weechat_buffer_get_string (buffer, "localvar_no_log");
     if (no_log && no_log[0])
         return 0;
@@ -263,7 +263,7 @@ logger_get_level_for_buffer (struct t_gui_buffer *buffer)
     else
         free (name);
 
-    /* nothing found => return default level */
+    /* Nothing found => return default level. */
     return LOGGER_LEVEL_DEFAULT;
 }
 
@@ -316,12 +316,12 @@ logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
     else
         free (name);
 
-    /* nothing found => return default mask (if set) */
+    /* Nothing found => return default mask (if set). */
     if (weechat_config_string (logger_config_file_mask)
         && weechat_config_string (logger_config_file_mask)[0])
         return weechat_config_string (logger_config_file_mask);
 
-    /* no default mask set */
+    /* No default mask set */
     return NULL;
 }
 
@@ -356,7 +356,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     if (!dir_separator)
         return NULL;
 
-    /* replace date/time specifiers in mask */
+    /* Replace date/time specifiers in mask. */
     length = strlen (mask) + 256 + 1;
     mask2 = malloc (length);
     if (!mask2)
@@ -371,13 +371,13 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
         logger_config_file_replacement_char);
 
     /*
-     * local variables are expanded in each directory level of the mask
+     * Local variables are expanded in each directory level of the mask
      * separately: their values are not trusted (for example an IRC channel
      * name is chosen by the server), so any directory separator they contain
      * is replaced by the replacement char, and only the separators coming from
      * the mask itself are kept when the levels are joined again; this way a
      * buffer local variable can not add a directory level to the path of the
-     * log file
+     * log file.
      */
     items = weechat_string_split (mask2, dir_separator, NULL, 0, 0, &num_items);
     if (items)
@@ -401,7 +401,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     }
     else
     {
-        /* empty mask */
+        /* Empty mask */
         mask3 = strdup (mask2);
     }
     if (!mask3)
@@ -415,7 +415,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     if (!mask4)
         goto end;
 
-    /* convert to lower case? */
+    /* Convert to lower case? */
     if (weechat_config_boolean (logger_config_file_name_lower_case))
         mask5 = weechat_string_tolower (mask4);
     else
@@ -461,7 +461,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
     if (!dir_separator)
         return NULL;
 
-    /* get filename mask for buffer */
+    /* Get filename mask for buffer. */
     mask = logger_get_mask_for_buffer (buffer);
     if (!mask)
     {
@@ -483,7 +483,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
     if (!file_path)
         goto end;
 
-    /* build string with path + mask */
+    /* Build string with path + mask. */
     weechat_asprintf (
         &res,
         "%s%s%s",
@@ -508,7 +508,7 @@ logger_buffer_opened_signal_cb (const void *pointer, void *data,
                                 const char *signal,
                                 const char *type_data, void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -528,7 +528,7 @@ logger_buffer_closing_signal_cb (const void *pointer, void *data,
                                  const char *signal,
                                  const char *type_data, void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -548,7 +548,7 @@ logger_buffer_renamed_signal_cb (const void *pointer, void *data,
                                  const char *signal,
                                  const char *type_data, void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -569,7 +569,7 @@ logger_start_signal_cb (const void *pointer, void *data,
                         const char *signal, const char *type_data,
                         void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -591,7 +591,7 @@ logger_stop_signal_cb (const void *pointer, void *data,
 {
     struct t_logger_buffer *ptr_logger_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -613,7 +613,7 @@ logger_day_changed_signal_cb (const void *pointer, void *data,
                               const char *signal,
                               const char *type_data, void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -649,13 +649,13 @@ logger_get_line_tag_info (int tags_count, const char **tags,
         {
             if (strcmp (tags[i], "no_log") == 0)
             {
-                /* log disabled on line: set level to -1 */
+                /* Log disabled on line: set level to -1. */
                 *log_level = -1;
                 log_level_set = 1;
             }
             else if (strncmp (tags[i], "log", 3) == 0)
             {
-                /* set log level for line */
+                /* Set log level for line. */
                 if (isdigit ((unsigned char)tags[i][3]))
                 {
                     *log_level = (tags[i][3] - '0');
@@ -691,7 +691,7 @@ logger_print_cb (const void *pointer, void *data,
     const char *ptr_prefix, *ptr_message;
     int line_log_level, prefix_is_nick, color_lines;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) displayed;
@@ -756,7 +756,7 @@ logger_print_cb (const void *pointer, void *data,
 int
 logger_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -773,7 +773,7 @@ logger_timer_cb (const void *pointer, void *data, int remaining_calls)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -819,7 +819,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (logger_hook_print)

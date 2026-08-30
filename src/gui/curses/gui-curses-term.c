@@ -47,7 +47,7 @@ gui_term_set_eat_newline_glitch (int value)
 #if !defined(WEECHAT_HEADLESS) && defined(HAVE_EAT_NEWLINE_GLITCH)
     eat_newline_glitch = value;
 #else
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) value;
 #endif
 }
@@ -170,7 +170,7 @@ gui_term_theme_is_light (void)
         len = (int)(qend - q);
         if (len < 1 || len > 4)
             return 0;
-        /* high nibble of this component: width-independent brightness */
+        /* High nibble of this component: width-independent brightness */
         comp_high[i] = strtoul (q, NULL, 16) >> ((len - 1) * 4);
         q = qend;
         if (i < 2)

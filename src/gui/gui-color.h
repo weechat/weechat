@@ -44,8 +44,8 @@ enum t_gui_color_enum
     GUI_COLOR_CHAT_NICK_SELF,
     GUI_COLOR_CHAT_NICK_OTHER,
     /*
-     * following obsolete colors are kept here for compatibility
-     * with WeeChat <= 0.3.3
+     * Following obsolete colors are kept here for compatibility
+     * with WeeChat <= 0.3.3.
      */
     GUI_COLOR_CHAT_NICK1_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
     GUI_COLOR_CHAT_NICK2_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
@@ -103,7 +103,7 @@ enum t_gui_color_enum
 #define GUI_COLOR_CUSTOM_BAR_DELIM (gui_color_get_custom ("bar_delim"))
 #define GUI_COLOR_CUSTOM_BAR_BG    (gui_color_get_custom ("bar_bg"))
 
-/* color codes for chat and bars */
+/* Color codes for chat and bars */
 #define GUI_COLOR_FG_CHAR                     'F'
 #define GUI_COLOR_BG_CHAR                     'B'
 #define GUI_COLOR_FG_BG_CHAR                  '*'
@@ -117,7 +117,7 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_KEEPATTR_CHAR      '|'
 #define GUI_COLOR_EMPHASIS_CHAR               'E'
 
-/* color codes specific to bars */
+/* Color codes specific to bars */
 #define GUI_COLOR_BAR_CHAR                    'b'
 #define GUI_COLOR_BAR_FG_CHAR                 'F'
 #define GUI_COLOR_BAR_DELIM_CHAR              'D'
@@ -151,7 +151,7 @@ enum t_gui_color_enum
 
 #define GUI_COLOR_BUFFER_NAME "color"
 
-/* color structure */
+/* Color structure */
 
 struct t_gui_color
 {
@@ -161,7 +161,7 @@ struct t_gui_color
     char *string;                  /* WeeChat color: "\x19??", ?? is #color */
 };
 
-/* custom color in palette */
+/* Custom color in palette */
 
 struct t_gui_color_palette
 {
@@ -169,7 +169,7 @@ struct t_gui_color_palette
     int r, g, b;                   /* red/green/blue values for color       */
 };
 
-/* color variables */
+/* Color variables */
 
 extern struct t_gui_color *gui_color[];
 extern struct t_hashtable *gui_color_hash_palette_color;
@@ -177,7 +177,7 @@ extern struct t_hashtable *gui_color_hash_palette_alias;
 extern struct t_weelist *gui_color_list_with_alias;
 extern int gui_color_term256[];
 
-/* color functions */
+/* Color functions */
 
 extern const char *gui_color_from_option (struct t_config_option *option);
 extern const char *gui_color_search_config (const char *color_name);
@@ -201,7 +201,7 @@ extern void gui_color_palette_remove (int number);
 extern void gui_color_init (void);
 extern void gui_color_end (void);
 
-/* color functions (GUI dependent) */
+/* Color functions (GUI dependent) */
 
 extern int gui_color_search (const char *color_name);
 extern const char *gui_color_search_index (int index);

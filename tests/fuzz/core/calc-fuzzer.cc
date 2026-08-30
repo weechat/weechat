@@ -20,7 +20,7 @@ extern "C" int LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 {
     char *str;
 
-    /* ignore huge data */
+    /* Ignore huge data. */
     if (size > 65536)
         return 0;
 

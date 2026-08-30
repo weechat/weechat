@@ -62,7 +62,7 @@ relay_websocket_deflate_init_stream_deflate (struct t_relay_websocket_deflate *w
 
     compression = weechat_config_integer (relay_config_network_compression);
 
-    /* convert % to zlib compression level (1-9) */
+    /* Convert % to zlib compression level (1-9). */
     compression_level = (((compression - 1) * 9) / 100) + 1;
 
     rc = deflateInit2 (
@@ -177,7 +177,7 @@ relay_websocket_is_valid_http_get (enum t_relay_protocol protocol,
     if (!message)
         return 0;
 
-    /* the message must start with "GET /weechat" or "GET /api" */
+    /* The message must start with "GET /weechat" or "GET /api". */
     snprintf (string, sizeof (string),
               "GET /%s", relay_protocol_string[protocol]);
     length = strlen (string);
@@ -185,14 +185,14 @@ relay_websocket_is_valid_http_get (enum t_relay_protocol protocol,
     if (strncmp (message, string, length) != 0)
         return 0;
 
-    /* after "GET /weechat" or "GET /api", only a new line or " HTTP" is allowed */
+    /* After "GET /weechat" or "GET /api", only a new line or " HTTP" is allowed. */
     if ((message[length] != '\r') && (message[length] != '\n')
         && (strncmp (message + length, " HTTP", 5) != 0))
     {
         return 0;
     }
 
-    /* valid HTTP GET */
+    /* Valid HTTP GET */
     return 1;
 }
 
@@ -251,14 +251,14 @@ relay_websocket_client_handshake_valid (struct t_relay_http_request *request)
     if (!request || !request->headers)
         return -1;
 
-    /* check if we have header "Upgrade" with value "websocket" */
+    /* Check if we have header "Upgrade" with value "websocket". */
     value = weechat_hashtable_get (request->headers, "upgrade");
     if (!value)
         return -1;
     if (weechat_strcasecmp (value, "websocket") != 0)
         return -1;
 
-    /* check if we have header "Sec-WebSocket-Key" with non-empty value */
+    /* Check if we have header "Sec-WebSocket-Key" with non-empty value. */
     value = weechat_hashtable_get (request->headers, "sec-websocket-key");
     if (!value || !value[0])
         return -1;
@@ -275,7 +275,7 @@ relay_websocket_client_handshake_valid (struct t_relay_http_request *request)
         }
     }
 
-    /* client handshake is valid */
+    /* Client handshake is valid. */
     return 0;
 }
 
@@ -400,13 +400,13 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
         return NULL;
 
     /*
-     * concatenate header "Sec-WebSocket-Key" with the GUID
-     * (globally unique identifier)
+     * Concatenate header "Sec-WebSocket-Key" with the GUID
+     * (globally unique identifier).
      */
     if (weechat_asprintf (&key, "%s%s", sec_websocket_key, WEBSOCKET_GUID) < 0)
         return NULL;
 
-    /* compute 160-bit SHA1 on the key and encode it with base64 */
+    /* Compute 160-bit SHA1 on the key and encode it with base64. */
     if (!weechat_crypto_hash (key, strlen (key), "sha1", hash, &hash_size))
     {
         free (key);
@@ -481,7 +481,7 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
         }
     }
 
-    /* build the handshake (it will be sent as-is to client) */
+    /* Build the handshake (it will be sent as-is to client). */
     snprintf (handshake, sizeof (handshake),
               "HTTP/1.1 101 Switching Protocols\r\n"
               "Upgrade: websocket\r\n"
@@ -523,7 +523,7 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
 
     *size_decompressed = 0;
 
-    /* append "0x00 0x00 0xFF 0xFF" to data */
+    /* Append "0x00 0x00 0xFF 0xFF" to data. */
     size2 = size + sizeof (append_bytes);
     data2 = malloc (size2);
     if (!data2)
@@ -532,9 +532,9 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
     memcpy (data2 + size, append_bytes, sizeof (append_bytes));
 
     /*
-     * estimate the decompressed size, by default 10 * size, capped to the
+     * Estimate the decompressed size, by default 10 * size, capped to the
      * maximum allowed size (also prevents an integer overflow on the
-     * multiplication)
+     * multiplication).
      */
     dest_size = (size2 > WEBSOCKET_INFLATE_MAX_SIZE / 10) ?
         WEBSOCKET_INFLATE_MAX_SIZE : 10 * size2;
@@ -550,14 +550,14 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
     strm->next_out = (Bytef *)dest;
     strm->total_out = 0;
 
-    /* loop until we manage to decompress whole data in dest */
+    /* Loop until we manage to decompress whole data in dest. */
     while (1)
     {
         rc = inflate (strm, Z_SYNC_FLUSH);
         if (((rc == Z_STREAM_END) || (rc == Z_OK))
             && (strm->avail_in == 0))
         {
-            /* data successfully decompressed */
+            /* Data successfully decompressed */
             *size_decompressed = strm->total_out;
             break;
         }
@@ -565,16 +565,16 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
             || (((rc == Z_STREAM_END) || (rc == Z_OK))
                 && (strm->avail_in > 0)))
         {
-            /* output buffer is not large enough */
+            /* Output buffer is not large enough. */
             if (dest_size >= WEBSOCKET_INFLATE_MAX_SIZE)
             {
                 /*
-                 * decompressed data is too large: reject the frame
-                 * (protection against a "deflate bomb")
+                 * Decompressed data is too large: reject the frame
+                 * (protection against a "deflate bomb").
                  */
                 goto error;
             }
-            /* double the buffer, capped to the maximum allowed size */
+            /* Double the buffer, capped to the maximum allowed size. */
             new_size = (dest_size > WEBSOCKET_INFLATE_MAX_SIZE / 2) ?
                 WEBSOCKET_INFLATE_MAX_SIZE : dest_size * 2;
             strm->avail_out += (uInt)(new_size - dest_size);
@@ -587,7 +587,7 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
         }
         else
         {
-            /* any other error is fatal */
+            /* Any other error is fatal. */
             goto error;
         }
     }
@@ -646,7 +646,7 @@ relay_websocket_decode_frame (const unsigned char *buffer,
     index_buffer = 0;
     index_buffer_start_frame = 0;
 
-    /* loop to decode all frames in message */
+    /* Loop to decode all frames in message. */
     while (index_buffer < buffer_length)
     {
         index_buffer_start_frame = index_buffer;
@@ -659,18 +659,18 @@ relay_websocket_decode_frame (const unsigned char *buffer,
         /* RSV1 indicates whether this message is compressed */
         compressed = (buffer[index_buffer] & 64) ? 1 : 0;
 
-        /* check if frame is masked */
+        /* Check if frame is masked. */
         masked_frame = (buffer[index_buffer + 1] & 128) ? 1 : 0;
 
         /*
-         * error if the frame is not masked and we expect it to be masked,
+         * Error if the frame is not masked and we expect it to be masked,
          * in this case we must reject it and close the connection
-         * (see RFC 6455)
+         * (see RFC 6455).
          */
         if (!masked_frame && expect_masked_frame)
             return 0;
 
-        /* decode frame length */
+        /* Decode frame length. */
         length_frame = buffer[index_buffer + 1] & 127;
         index_buffer += 2;
         if (index_buffer >= buffer_length)
@@ -689,16 +689,16 @@ relay_websocket_decode_frame (const unsigned char *buffer,
         }
 
         /*
-         * reject the frame if its announced length is too big: this prevents
+         * Reject the frame if its announced length is too big: this prevents
          * a client from forcing an unbounded allocation (and unbounded
-         * accumulation of partial frames) by announcing a huge frame
+         * accumulation of partial frames) by announcing a huge frame.
          */
         if (length_frame > WEBSOCKET_FRAME_MAX_LENGTH)
             return 0;
 
         if (masked_frame)
         {
-            /* read mask (4 bytes) */
+            /* Read mask (4 bytes). */
             if (index_buffer + 4 > buffer_length)
                 goto missing_data;
             for (i = 0; i < 4; i++)
@@ -708,14 +708,14 @@ relay_websocket_decode_frame (const unsigned char *buffer,
             index_buffer += 4;
         }
 
-        /* check if we have enough data */
+        /* Check if we have enough data. */
         if ((length_frame > buffer_length)
             || (index_buffer + length_frame > buffer_length))
         {
             goto missing_data;
         }
 
-        /* add a new frame in array */
+        /* Add a new frame in array. */
         (*num_frames)++;
 
         frames2 = realloc (*frames, sizeof (**frames) * (*num_frames));
@@ -729,7 +729,7 @@ relay_websocket_decode_frame (const unsigned char *buffer,
         ptr_frame->payload_size = 0;
         ptr_frame->payload = NULL;
 
-        /* save opcode */
+        /* Save opcode. */
         switch (opcode)
         {
             case WEBSOCKET_FRAME_OPCODE_PING:
@@ -743,13 +743,13 @@ relay_websocket_decode_frame (const unsigned char *buffer,
                 break;
         }
 
-        /* allocate payload */
+        /* Allocate payload. */
         ptr_frame->payload = malloc (length_frame + 1);
         if (!ptr_frame->payload)
             return 0;
         ptr_frame->payload_size = length_frame;
 
-        /* fill payload */
+        /* Fill payload. */
         if (masked_frame)
         {
             for (i = 0; i < length_frame; i++)
@@ -764,8 +764,8 @@ relay_websocket_decode_frame (const unsigned char *buffer,
         ptr_frame->payload[length_frame] = '\0';
 
         /*
-         * decompress data if frame is not empty and if "permessage-deflate"
-         * is enabled and the message is compressed
+         * Decompress data if frame is not empty and if "permessage-deflate"
+         * is enabled and the message is compressed.
          */
         if ((length_frame > 0) && ws_deflate && ws_deflate->enabled && compressed)
         {
@@ -902,8 +902,8 @@ relay_websocket_encode_frame (struct t_relay_websocket_deflate *ws_deflate,
     size_compressed = 0;
 
     /*
-     * compress data if payload is not empty and if "permessage-deflate"
-     * is enabled
+     * Compress data if payload is not empty and if "permessage-deflate"
+     * is enabled.
      */
     if (((opcode == WEBSOCKET_FRAME_OPCODE_TEXT)
          || (opcode == WEBSOCKET_FRAME_OPCODE_BINARY))
@@ -939,7 +939,7 @@ relay_websocket_encode_frame (struct t_relay_websocket_deflate *ws_deflate,
         }
         if (!ws_deflate->server_context_takeover)
             relay_websocket_deflate_free_stream_deflate (ws_deflate);
-        /* set bit RSV1: indicate permessage-deflate compressed data */
+        /* Set bit RSV1: indicate permessage-deflate compressed data. */
         opcode |= 0x40;
     }
 
@@ -955,13 +955,13 @@ relay_websocket_encode_frame (struct t_relay_websocket_deflate *ws_deflate,
 
     if (data_size <= 125)
     {
-        /* length on one byte */
+        /* Length on one byte */
         frame[1] = data_size;
         index = 2;
     }
     else if (data_size <= 65535)
     {
-        /* length on 2 bytes */
+        /* Length on 2 bytes */
         frame[1] = 126;
         frame[2] = (data_size >> 8) & 0xFF;
         frame[3] = data_size & 0xFF;
@@ -969,7 +969,7 @@ relay_websocket_encode_frame (struct t_relay_websocket_deflate *ws_deflate,
     }
     else
     {
-        /* length on 8 bytes */
+        /* Length on 8 bytes */
         frame[1] = 127;
         frame[2] = (data_size >> 56) & 0xFF;
         frame[3] = (data_size >> 48) & 0xFF;
@@ -990,10 +990,10 @@ relay_websocket_encode_frame (struct t_relay_websocket_deflate *ws_deflate,
         index += 4;
     }
 
-    /* copy buffer after data_size */
+    /* Copy buffer after data_size. */
     memcpy (frame + index, ptr_data, data_size);
 
-    /* mask frame */
+    /* Mask frame. */
     if (mask_frame)
     {
         for (i = 0; i < data_size; i++)

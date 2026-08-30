@@ -56,11 +56,11 @@ relay_weechat_msg_new (const char *id)
     new_msg->data_alloc = RELAY_WEECHAT_MSG_INITIAL_ALLOC;
     new_msg->data_size = 0;
 
-    /* add size and compression flag (they will be set later) */
+    /* Add size and compression flag (they will be set later). */
     relay_weechat_msg_add_int (new_msg, 0);
     relay_weechat_msg_add_char (new_msg, 0);
 
-    /* add id */
+    /* Add id. */
     relay_weechat_msg_add_string (new_msg, id);
 
     return new_msg;
@@ -321,11 +321,11 @@ relay_weechat_msg_add_hashtable (struct t_relay_weechat_msg *msg,
             relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_LONG);
     }
 
-    /* number of items */
+    /* Number of items */
     count = weechat_hashtable_get_integer (hashtable, "items_count");
     relay_weechat_msg_add_int (msg, count);
 
-    /* add all items */
+    /* Add all items. */
     weechat_hashtable_map (hashtable,
                            &relay_weechat_msg_hashtable_map_cb, msg);
 }
@@ -390,7 +390,7 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
 
         if (list_path[index_path + 1])
         {
-            /* recursive call with next path */
+            /* Recursive call with next path */
             pos = strchr (list_path[index_path + 1], '(');
             if (pos)
                 pos[0] = '\0';
@@ -415,7 +415,7 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
         }
         else
         {
-            /* last path? then get pointer + values and fill message with them */
+            /* Last path? Then get pointer + values and fill message with them. */
             for (i = 0; list_path[i]; i++)
             {
                 relay_weechat_msg_add_pointer (msg, path_pointers[i]);
@@ -587,7 +587,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     num_path = 0;
     path_returned = NULL;
 
-    /* extract hdata name (head) from path */
+    /* Extract hdata name (head) from path. */
     pos = strchr (path, ':');
     if (!pos)
         goto end;
@@ -598,7 +598,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     if (!ptr_hdata_head)
         goto end;
 
-    /* split path */
+    /* Split path. */
     list_path = weechat_string_split (pos + 1, "/", NULL,
                                       WEECHAT_STRING_SPLIT_STRIP_LEFT
                                       | WEECHAT_STRING_SPLIT_STRIP_RIGHT
@@ -607,7 +607,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     if (!list_path)
         goto end;
 
-    /* extract pointer from first path (direct pointer or list name) */
+    /* Extract pointer from first path (direct pointer or list name). */
     pointer = NULL;
     pos_paren = strchr (list_path[0], '(');
     if (pos_paren)
@@ -640,9 +640,9 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
         goto end;
 
     /*
-     * build string with path where:
+     * Build string with path where:
      * - counters are removed
-     * - variable names are replaced by hdata name
+     * - variable names are replaced by hdata name.
      */
     path_returned = malloc (strlen (path) * 2);
     if (!path_returned)
@@ -666,7 +666,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
             pos_paren[0] = '(';
     }
 
-    /* split keys */
+    /* Split keys. */
     if (!keys)
         keys = weechat_hdata_get_string (ptr_hdata, "var_keys");
     list_keys = weechat_string_split (keys, ",", NULL,
@@ -677,7 +677,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     if (!list_keys)
         goto end;
 
-    /* build string with list of keys with types: "key1:type1,key2:type2,..." */
+    /* Build string with list of keys with types: "key1:type1,key2:type2,...". */
     keys_types = malloc (strlen (keys) + (num_keys * 8) + 1);
     if (!keys_types)
         goto end;
@@ -730,12 +730,12 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     if (!keys_types[0])
         goto end;
 
-    /* start hdata in message */
+    /* Start hdata in message. */
     relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HDATA);
     relay_weechat_msg_add_string (msg, path_returned);
     relay_weechat_msg_add_string (msg, keys_types);
 
-    /* "count" will be set later, with number of objects in hdata */
+    /* "count" will be set later, with number of objects in hdata. */
     pos_count = msg->data_size;
     count = 0;
     relay_weechat_msg_add_int (msg, 0);
@@ -788,11 +788,11 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
     if (!ptr_infolist)
         return;
 
-    /* start infolist in message */
+    /* Start infolist in message. */
     relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INFOLIST);
     relay_weechat_msg_add_string (msg, name);
 
-    /* count of items will be set later, with number of items in infolist */
+    /* Count of items will be set later, with number of items in infolist. */
     pos_count_items = msg->data_size;
     count_items = 0;
     relay_weechat_msg_add_int (msg, 0);
@@ -860,7 +860,7 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
                     }
                 }
 
-                /* set count of variables in item */
+                /* Set count of variables in item. */
                 count32 = htonl ((uint32_t)count_vars);
                 relay_weechat_msg_set_bytes (msg, pos_count_vars, &count32, 4);
 
@@ -869,7 +869,7 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
         }
     }
 
-    /* set count of items */
+    /* Set count of items. */
     count32 = htonl ((uint32_t)count_items);
     relay_weechat_msg_set_bytes (msg, pos_count_items, &count32, 4);
 
@@ -898,7 +898,7 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
 
     if (nicklist)
     {
-        /* send nicklist diffs */
+        /* Send nicklist diffs. */
         for (i = 0; i < nicklist->items_count; i++)
         {
             relay_weechat_msg_add_pointer (msg, buffer);
@@ -916,7 +916,7 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
     }
     else
     {
-        /* send full nicklist */
+        /* Send full nicklist. */
         ptr_group = NULL;
         ptr_nick = NULL;
         weechat_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
@@ -1018,7 +1018,7 @@ relay_weechat_msg_add_nicklist (struct t_relay_weechat_msg *msg,
     relay_weechat_msg_add_string (msg, "buffer/nicklist_item");
     relay_weechat_msg_add_string (msg, str_vars);
 
-    /* "count" will be set later, with number of objects in hdata */
+    /* "count" will be set later, with number of objects in hdata. */
     pos_count = msg->data_size;
     count = 0;
     relay_weechat_msg_add_int (msg, 0);
@@ -1069,7 +1069,7 @@ relay_weechat_msg_compress_zlib (struct t_relay_client *client,
     if (!dest)
         goto error;
 
-    /* convert % to zlib compression level (1-9) */
+    /* Convert % to zlib compression level (1-9). */
     compression = weechat_config_integer (relay_config_network_compression);
     compression_level = (((compression - 1) * 9) / 100) + 1;
 
@@ -1085,12 +1085,12 @@ relay_weechat_msg_compress_zlib (struct t_relay_client *client,
     if ((rc_compress != Z_OK) || ((int)dest_size + 5 >= msg->data_size))
         goto error;
 
-    /* set size and compression flag */
+    /* Set size and compression flag. */
     size32 = htonl ((uint32_t)(dest_size + 5));
     memcpy (dest, &size32, 4);
     dest[4] = RELAY_WEECHAT_COMPRESSION_ZLIB;
 
-    /* display message in raw buffer */
+    /* Display message in raw buffer. */
     snprintf (raw_message, sizeof (raw_message),
               "obj: %d/%d bytes (zlib: %d%%, %.2fms), id: %s",
               (int)dest_size + 5,
@@ -1099,7 +1099,7 @@ relay_weechat_msg_compress_zlib (struct t_relay_client *client,
               ((float)time_diff) / 1000,
               msg->id);
 
-    /* send compressed data */
+    /* Send compressed data. */
     relay_client_send (client, RELAY_MSG_STANDARD,
                        (const char *)dest, dest_size + 5,
                        raw_message);
@@ -1141,7 +1141,7 @@ relay_weechat_msg_compress_zstd (struct t_relay_client *client,
     if (!dest)
         goto error;
 
-    /* convert % to zstd compression level (1-19) */
+    /* Convert % to zstd compression level (1-19). */
     compression = weechat_config_integer (relay_config_network_compression);
     compression_level = (((compression - 1) * 19) / 100) + 1;
 
@@ -1157,12 +1157,12 @@ relay_weechat_msg_compress_zstd (struct t_relay_client *client,
     if ((comp_size == 0) || ((int)comp_size + 5 >= msg->data_size))
         goto error;
 
-    /* set size and compression flag */
+    /* Set size and compression flag. */
     size32 = htonl ((uint32_t)(comp_size + 5));
     memcpy (dest, &size32, 4);
     dest[4] = RELAY_WEECHAT_COMPRESSION_ZSTD;
 
-    /* display message in raw buffer */
+    /* Display message in raw buffer. */
     snprintf (raw_message, sizeof (raw_message),
               "obj: %d/%d bytes (zstd: %d%%, %.2fms), id: %s",
               (int)comp_size + 5,
@@ -1171,7 +1171,7 @@ relay_weechat_msg_compress_zstd (struct t_relay_client *client,
               ((float)time_diff) / 1000,
               msg->id);
 
-    /* send compressed data */
+    /* Send compressed data. */
     relay_client_send (client, RELAY_MSG_STANDARD,
                        (const char *)dest, comp_size + 5,
                        raw_message);
@@ -1183,7 +1183,7 @@ error:
 
     return rc;
 #else
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) client;
     (void) msg;
 
@@ -1221,15 +1221,15 @@ relay_weechat_msg_send (struct t_relay_client *client,
         }
     }
 
-    /* compression failed (or not asked), send uncompressed message */
+    /* Compression failed (or not asked), send uncompressed message. */
 
-    /* set size and compression flag */
+    /* Set size and compression flag. */
     size32 = htonl ((uint32_t)msg->data_size);
     relay_weechat_msg_set_bytes (msg, 0, &size32, 4);
     compression = RELAY_WEECHAT_COMPRESSION_OFF;
     relay_weechat_msg_set_bytes (msg, 4, &compression, 1);
 
-    /* send uncompressed data */
+    /* Send uncompressed data. */
     snprintf (raw_message, sizeof (raw_message),
               "obj: %d bytes, id: %s", msg->data_size, msg->id);
     relay_client_send (client, RELAY_MSG_STANDARD,

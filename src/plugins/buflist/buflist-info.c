@@ -52,7 +52,7 @@ buflist_info_infolist_buflist_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer;
     void *gui_buffers;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -76,13 +76,13 @@ buflist_info_infolist_buflist_cb (const void *pointer, void *data,
 
     gui_buffers = weechat_hdata_get_list (buflist_hdata_buffer, "gui_buffers");
 
-    /* build list with all buffers in buflist */
+    /* Build list with all buffers in buflist. */
     size = weechat_arraylist_size (buflist_list_buffers[item_index]);
     for (i = 0; i < size; i++)
     {
         ptr_buffer = weechat_arraylist_get (buflist_list_buffers[item_index], i);
 
-        /* check if ptr_buffer is still valid (buffer not closed) */
+        /* Check if ptr_buffer is still valid (buffer not closed). */
         if (weechat_hdata_check_pointer (buflist_hdata_buffer,
                                          gui_buffers, ptr_buffer))
         {

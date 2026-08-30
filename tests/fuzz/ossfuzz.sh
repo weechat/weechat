@@ -14,7 +14,7 @@ build_dir="${WORK}"/build
 
 cd "${src_dir}"
 
-# apply patch for Ubuntu Focal (needed because CMake version is too old)
+# Apply patch for Ubuntu Focal (needed because CMake version is too old).
 git apply tools/debian/patches/weechat_ubuntu_focal.patch
 
 mkdir -p "${build_dir}"

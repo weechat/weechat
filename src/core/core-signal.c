@@ -54,7 +54,7 @@ volatile sig_atomic_t signal_sigusr2_count = 0;
 void
 signal_sighup_cb (int signo)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) signo;
 
     signal_sighup_count++;
@@ -67,7 +67,7 @@ signal_sighup_cb (int signo)
 void
 signal_sigquit_cb (int signo)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) signo;
 
     signal_sigquit_count++;
@@ -80,7 +80,7 @@ signal_sigquit_cb (int signo)
 void
 signal_sigterm_cb (int signo)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) signo;
 
     signal_sigterm_count++;
@@ -93,7 +93,7 @@ signal_sigterm_cb (int signo)
 void
 signal_sigusr1_cb (int signo)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) signo;
 
     signal_sigusr1_count++;
@@ -106,7 +106,7 @@ signal_sigusr1_cb (int signo)
 void
 signal_sigusr2_cb (int signo)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) signo;
 
     signal_sigusr2_count++;
@@ -130,7 +130,7 @@ signal_search_number (int signal_number)
             return i;
     }
 
-    /* signal not found */
+    /* Signal not found */
     return -1;
 }
 
@@ -155,7 +155,7 @@ signal_search_name (const char *name)
             return signal_list[i].signal;
     }
 
-    /* signal not found */
+    /* Signal not found */
     return -1;
 }
 
@@ -314,17 +314,17 @@ signal_suspend (void)
 void
 signal_init (void)
 {
-    /* ignore some signals */
+    /* Ignore some signals. */
     signal_catch (SIGINT, SIG_IGN);
     signal_catch (SIGPIPE, SIG_IGN);
 
-    /* catch signals that can be customized */
+    /* Catch signals that can be customized. */
     signal_catch (SIGHUP, &signal_sighup_cb);
     signal_catch (SIGQUIT, &signal_sigquit_cb);
     signal_catch (SIGTERM, &signal_sigterm_cb);
     signal_catch (SIGUSR1, &signal_sigusr1_cb);
     signal_catch (SIGUSR2, &signal_sigusr2_cb);
 
-    /* in case of crash (oh no!) */
+    /* In case of crash (oh no!) */
     signal_catch (SIGSEGV, &debug_sigsegv_cb);
 }

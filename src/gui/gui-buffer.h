@@ -67,13 +67,13 @@ enum t_gui_buffer_search_history
 
 #define GUI_BUFFER_NUMBER_MAX (INT_MAX - 10000)
 
-/* search where in buffer lines? */
+/* Search where in buffer lines? */
 #define GUI_BUFFER_SEARCH_IN_MESSAGE        (1 << 0)
 #define GUI_BUFFER_SEARCH_IN_PREFIX         (1 << 1)
 
 #define GUI_BUFFER_INPUT_BLOCK_SIZE 256
 
-/* buffer structures */
+/* Buffer structures */
 
 struct t_gui_input_undo
 {
@@ -91,9 +91,9 @@ struct t_gui_buffer
     struct t_weechat_plugin *plugin;   /* plugin which created this buffer  */
                                        /* (NULL for a WeeChat buffer)       */
     /*
-     * when upgrading, plugins are not loaded, so we use next variable
+     * When upgrading, plugins are not loaded, so we use next variable
      * to store plugin name, then restore plugin pointer when plugin is
-     * loaded
+     * loaded.
      */
     char *plugin_name_for_upgrade;     /* plugin name when upgrading        */
 
@@ -261,7 +261,7 @@ struct t_gui_buffer_visited
     struct t_gui_buffer_visited *next_buffer; /* link to next variable      */
 };
 
-/* buffer variables */
+/* Buffer variables */
 
 extern struct t_gui_buffer *gui_buffers;
 extern struct t_gui_buffer *last_gui_buffer;
@@ -283,7 +283,7 @@ extern char *gui_buffer_properties_get_string[];
 extern char *gui_buffer_properties_get_pointer[];
 extern char *gui_buffer_properties_set[];
 
-/* buffer functions */
+/* Buffer functions */
 
 extern int gui_buffer_search_type (const char *type);
 extern int gui_buffer_search_notify (const char *notify);

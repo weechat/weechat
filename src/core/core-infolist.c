@@ -81,7 +81,7 @@ infolist_valid (struct t_infolist *infolist)
             return 1;
     }
 
-    /* list not found */
+    /* List not found */
     return 0;
 }
 
@@ -155,7 +155,7 @@ infolist_new_var_integer (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (int));
         if (new_var->value)
             *((int *)new_var->value) = value;
-        new_var->size = 0;  /* not used for an integer */
+        new_var->size = 0;  /* Not used for an integer */
 
         infolist_var_link (item, new_var);
     }
@@ -184,7 +184,7 @@ infolist_new_var_string (struct t_infolist_item *item,
         new_var->name = strdup (name);
         new_var->type = INFOLIST_STRING;
         new_var->value = (value) ? strdup (value) : NULL;
-        new_var->size = 0;  /* not used for a string */
+        new_var->size = 0;  /* Not used for a string */
 
         infolist_var_link (item, new_var);
     }
@@ -213,7 +213,7 @@ infolist_new_var_pointer (struct t_infolist_item *item,
         new_var->name = strdup (name);
         new_var->type = INFOLIST_POINTER;
         new_var->value = pointer;
-        new_var->size = 0;  /* not used for a pointer */
+        new_var->size = 0;  /* Not used for a pointer */
 
         infolist_var_link (item, new_var);
     }
@@ -285,7 +285,7 @@ infolist_new_var_time (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (time_t));
         if (new_var->value)
             *((time_t *)new_var->value) = time;
-        new_var->size = 0;  /* not used for a time */
+        new_var->size = 0;  /* Not used for a time */
 
         infolist_var_link (item, new_var);
     }
@@ -316,7 +316,7 @@ infolist_new_var_long (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (long));
         if (new_var->value)
             *((long *)new_var->value) = value;
-        new_var->size = 0;  /* not used for a long */
+        new_var->size = 0;  /* Not used for a long */
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -353,7 +353,7 @@ infolist_new_var_longlong (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (long long));
         if (new_var->value)
             *((long long *)new_var->value) = value;
-        new_var->size = 0;  /* not used for a long long */
+        new_var->size = 0;  /* Not used for a long long */
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -399,7 +399,7 @@ infolist_new_var_integer_take_name_ownership (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (int));
         if (new_var->value)
             *((int *)new_var->value) = value;
-        new_var->size = 0;  /* not used for an integer */
+        new_var->size = 0;  /* Not used for an integer */
 
         infolist_var_link (item, new_var);
     }
@@ -442,7 +442,7 @@ infolist_new_var_string_take_ownership (struct t_infolist_item *item,
         new_var->name = name;
         new_var->type = INFOLIST_STRING;
         new_var->value = value;
-        new_var->size = 0;  /* not used for a string */
+        new_var->size = 0;  /* Not used for a string */
 
         infolist_var_link (item, new_var);
     }
@@ -532,7 +532,7 @@ infolist_new_var_time_take_name_ownership (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (time_t));
         if (new_var->value)
             *((time_t *)new_var->value) = time;
-        new_var->size = 0;  /* not used for a time */
+        new_var->size = 0;  /* Not used for a time */
 
         infolist_var_link (item, new_var);
     }
@@ -576,7 +576,7 @@ infolist_new_var_long_take_name_ownership (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (long));
         if (new_var->value)
             *((long *)new_var->value) = value;
-        new_var->size = 0;  /* not used for a long */
+        new_var->size = 0;  /* Not used for a long */
 
         infolist_var_link (item, new_var);
     }
@@ -620,7 +620,7 @@ infolist_new_var_longlong_take_name_ownership (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (long long));
         if (new_var->value)
             *((long long *)new_var->value) = value;
-        new_var->size = 0;  /* not used for a long long */
+        new_var->size = 0;  /* Not used for a long long */
 
         infolist_var_link (item, new_var);
     }
@@ -719,7 +719,7 @@ infolist_item_search_var (struct t_infolist_item *item, const char *name)
         }
     }
 
-    /* not found after the cursor: wrap around and search from the start */
+    /* Not found after the cursor: wrap around and search from the start. */
     for (ptr_var = item->vars; ptr_var && (ptr_var != ptr_start);
          ptr_var = ptr_var->next_var)
     {
@@ -730,7 +730,7 @@ infolist_item_search_var (struct t_infolist_item *item, const char *name)
         }
     }
 
-    /* variable not found */
+    /* Variable not found */
     return NULL;
 }
 
@@ -760,7 +760,7 @@ infolist_fields (struct t_infolist *infolist)
     if (!infolist || !infolist->ptr_item)
         return NULL;
 
-    /* list of fields already asked ? if yes, just return string */
+    /* List of fields already asked ? If yes, just return string. */
     if (infolist->ptr_item->fields)
         return infolist->ptr_item->fields;
 
@@ -906,7 +906,7 @@ infolist_long (struct t_infolist *infolist, const char *var)
         }
     }
 
-    /* variable not found */
+    /* Variable not found */
     return 0;
 }
 
@@ -934,7 +934,7 @@ infolist_longlong (struct t_infolist *infolist, const char *var)
         }
     }
 
-    /* variable not found */
+    /* Variable not found */
     return 0;
 }
 
@@ -951,7 +951,7 @@ infolist_var_free (struct t_infolist_item *item,
     if (!item || !var)
         return;
 
-    /* remove var */
+    /* Remove var. */
     if (item->last_var == var)
         item->last_var = var->prev_var;
     if (var->prev_var)
@@ -965,7 +965,7 @@ infolist_var_free (struct t_infolist_item *item,
     if (var->next_var)
         (var->next_var)->prev_var = var->prev_var;
 
-    /* free data */
+    /* Free data. */
     free (var->name);
     if (((var->type == INFOLIST_INTEGER)
          || (var->type == INFOLIST_STRING)
@@ -996,7 +996,7 @@ infolist_item_free (struct t_infolist *infolist,
     if (!infolist || !item)
         return;
 
-    /* remove var */
+    /* Remove var. */
     if (infolist->last_item == item)
         infolist->last_item = item->prev_item;
     if (item->prev_item)
@@ -1010,7 +1010,7 @@ infolist_item_free (struct t_infolist *infolist,
     if (item->next_item)
         (item->next_item)->prev_item = item->prev_item;
 
-    /* free data */
+    /* Free data. */
     while (item->vars)
     {
         infolist_var_free (item, item->vars);
@@ -1034,7 +1034,7 @@ infolist_free (struct t_infolist *infolist)
     if (!infolist)
         return;
 
-    /* remove list */
+    /* Remove list. */
     if (last_weechat_infolist == infolist)
         last_weechat_infolist = infolist->prev_infolist;
     if (infolist->prev_infolist)
@@ -1048,7 +1048,7 @@ infolist_free (struct t_infolist *infolist)
     if (infolist->next_infolist)
         (infolist->next_infolist)->prev_infolist = infolist->prev_infolist;
 
-    /* free data */
+    /* Free data. */
     while (infolist->items)
     {
         infolist_item_free (infolist, infolist->items);

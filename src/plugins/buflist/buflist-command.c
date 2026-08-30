@@ -26,7 +26,7 @@ buflist_command_buflist (const void *pointer, void *data,
 {
     int i, index;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -72,7 +72,7 @@ buflist_command_buflist (const void *pointer, void *data,
         }
         else
         {
-            /* refresh all bar items used */
+            /* Refresh all bar items used. */
             buflist_bar_item_update (-1, 0);
         }
         return WEECHAT_RC_OK;

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-# Check for programs xgettext, msgmerge and msgfmt
+# Check for programs xgettext, msgmerge and msgfmt.
 find_program(XGETTEXT_EXECUTABLE xgettext REQUIRED)
 find_program(MSGMERGE_EXECUTABLE msgmerge REQUIRED)
 find_program(MSGFMT_EXECUTABLE msgfmt REQUIRED)
@@ -35,7 +35,7 @@ file(GLOB_RECURSE WEECHAT_SOURCES
 )
 list(SORT WEECHAT_SOURCES)
 
-# Create PO template file weechat.pot
+# Create PO template file weechat.pot.
 set(SRC_FILES)
 set(POT_DEPENDS)
 
@@ -57,7 +57,7 @@ set(UPDATE_PO_TARGETS)
 foreach(pofile ${PO_FILES})
   get_filename_component(polang ${pofile} NAME_WE)
 
-  # Compile .po files in build directory (to binary .mo files)
+  # Compile .po files in build directory (to binary .mo files).
   set(modir "${CMAKE_CURRENT_BINARY_DIR}/${polang}/LC_MESSAGES")
   file(MAKE_DIRECTORY "${modir}")
   set(mofile "${modir}/${PROJECT_NAME}.mo")
@@ -69,7 +69,7 @@ foreach(pofile ${PO_FILES})
     COMMENT "Compiling ${polang}.po"
   )
 
-  # Update .po files in source directory (if needed)
+  # Update .po files in source directory (if needed).
   add_custom_target(
     update-${pofile}
     COMMAND "${MSGMERGE_EXECUTABLE}" --quiet --update --previous --backup=none "${CMAKE_CURRENT_SOURCE_DIR}/${pofile}" "${POT_FILE_PATH}"
@@ -83,12 +83,12 @@ endforeach()
 
 add_custom_target(translations ALL DEPENDS ${MO_FILES})
 
-# Update weechat.pot in source directory (if needed)
+# Update weechat.pot in source directory (if needed).
 add_custom_target(
   update-${POT_FILE}
   COMMAND "${MSGMERGE_EXECUTABLE}" --quiet --update --backup=none "${CMAKE_CURRENT_SOURCE_DIR}/${POT_FILE}" "${POT_FILE_PATH}"
   COMMENT "Updating ${POT_FILE}"
 )
 
-# Update all .po and weechat.pot in source directory (if needed)
+# Update all .po and weechat.pot in source directory (if needed).
 add_custom_target(update-po DEPENDS update-${POT_FILE} ${UPDATE_PO_TARGETS})

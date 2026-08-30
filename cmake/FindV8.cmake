@@ -12,7 +12,7 @@
 #  V8_LIBRARY = path to where libv8.so* can be found
 
 if(V8_FOUND)
-  # Already in cache, be silent
+  # Already in cache, be silent.
   SET(V8_FIND_QUIETLY TRUE)
 endif()
 

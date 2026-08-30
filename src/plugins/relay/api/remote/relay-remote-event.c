@@ -99,11 +99,11 @@ relay_remote_event_line_is_already_read (struct t_gui_buffer *buffer,
         return 0;
     }
 
-    /* the read marker is before the first line: nothing has been read */
+    /* The read marker is before the first line: nothing has been read. */
     if (strcmp (ptr_first_line_not_read, "1") == 0)
         return 0;
 
-    /* no read marker: all the lines received have been read */
+    /* No read marker: all the lines received have been read. */
     if (last_read_line_id < 0)
         return 1;
 
@@ -206,8 +206,8 @@ relay_remote_build_string_tags (cJSON *json_tags,
             if (ptr_tag)
             {
                 /*
-                 * skip any "notify_xxx" tag if the line has already been read
-                 * on the remote, the tag "notify_none" is added below
+                 * Skip any "notify_xxx" tag if the line has already been read
+                 * on the remote, the tag "notify_none" is added below.
                  */
                 if (line_already_read
                     && (strncmp (ptr_tag, "notify_", 7) == 0))
@@ -230,8 +230,8 @@ relay_remote_build_string_tags (cJSON *json_tags,
     }
 
     /*
-     * add "notify_highlight" if line has highlight but no highlight tag
-     * was present, unless already read
+     * Add "notify_highlight" if line has highlight but no highlight tag
+     * was present, unless already read.
      */
     if (highlight && !tag_notify_highlight && !line_already_read)
     {
@@ -240,7 +240,7 @@ relay_remote_build_string_tags (cJSON *json_tags,
         weechat_string_dyn_concat (tags, "notify_highlight", -1);
     }
 
-    /* add "notify_none" if the line has been marked read remotely */
+    /* Add "notify_none" if the line has been marked read remotely. */
     if (line_already_read)
     {
         if ((*tags)[0])
@@ -248,7 +248,7 @@ relay_remote_build_string_tags (cJSON *json_tags,
         weechat_string_dyn_concat (tags, "notify_none", -1);
     }
 
-    /* add tag with remote line id */
+    /* Add tag with remote line id. */
     snprintf (str_tag_id, sizeof (str_tag_id), "relay_remote_line_id_%lld", line_id);
     if ((*tags)[0])
         weechat_string_dyn_concat (tags, ",", -1);
@@ -293,7 +293,7 @@ relay_remote_event_line_add (struct t_relay_remote_event *event)
 
     if (y >= 0)
     {
-        /* buffer with free content */
+        /* Buffer with free content */
         weechat_printf_y_datetime_tags (
             event->buffer,
             y,
@@ -307,7 +307,7 @@ relay_remote_event_line_add (struct t_relay_remote_event *event)
     }
     else
     {
-        /* buffer with formatted content */
+        /* Buffer with formatted content */
         weechat_printf_datetime_tags (
             event->buffer,
             tv_date.tv_sec,
@@ -368,7 +368,7 @@ relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, long long id)
         ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, -1);
     }
 
-    /* line not found */
+    /* Line not found */
     return NULL;
 }
 
@@ -489,7 +489,7 @@ relay_remote_event_handle_nick (struct t_gui_buffer *buffer, cJSON *json)
     ptr_nick = weechat_nicklist_search_nick (buffer, NULL, str_id);
     if (ptr_nick)
     {
-        /* update existing nick */
+        /* Update existing nick. */
         snprintf (str_id, sizeof (str_id), "%lld", id);
         weechat_nicklist_nick_set (buffer, ptr_nick, "id", str_id);
         weechat_nicklist_nick_set (buffer, ptr_nick, "color", color_name);
@@ -500,7 +500,7 @@ relay_remote_event_handle_nick (struct t_gui_buffer *buffer, cJSON *json)
     }
     else
     {
-        /* create a new nick */
+        /* Create a new nick. */
         if (parent_group_id < 0)
             return;
         snprintf (str_id, sizeof (str_id), "==id:%lld", parent_group_id);
@@ -546,7 +546,7 @@ relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
     ptr_group = weechat_nicklist_search_group (buffer, NULL, str_id);
     if (ptr_group)
     {
-        /* update existing group */
+        /* Update existing group. */
         snprintf (str_id, sizeof (str_id), "%lld", id);
         weechat_nicklist_group_set (buffer, ptr_group, "id", str_id);
         weechat_nicklist_group_set (buffer, ptr_group, "color", color_name);
@@ -555,7 +555,7 @@ relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
     }
     else
     {
-        /* create a new group */
+        /* Create a new group. */
         if (parent_group_id < 0)
             return;
         snprintf (str_id, sizeof (str_id), "==id:%lld", parent_group_id);
@@ -571,7 +571,7 @@ relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
         }
     }
 
-    /* add subgroups */
+    /* Add subgroups. */
     json_groups = cJSON_GetObjectItem (json, "groups");
     if (json_groups && cJSON_IsArray (json_groups))
     {
@@ -581,7 +581,7 @@ relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
         }
     }
 
-    /* add nicks */
+    /* Add nicks. */
     json_nicks = cJSON_GetObjectItem (json, "nicks");
     if (json_nicks && cJSON_IsArray (json_nicks))
     {
@@ -662,7 +662,7 @@ relay_remote_event_apply_props (void *data,
                                 const void *key,
                                 const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     weechat_buffer_set ((struct t_gui_buffer *)data,
@@ -775,7 +775,7 @@ relay_remote_event_remove_localvar_cb (void *data,
     cJSON *json;
     char str_local_var[1024];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) value;
 
@@ -788,7 +788,7 @@ relay_remote_event_remove_localvar_cb (void *data,
 
     if (!cJSON_GetObjectItem (json, key))
     {
-        /* local variable removed on remote? => remove it locally */
+        /* Local variable removed on remote? => remove it locally. */
         snprintf (str_local_var, sizeof (str_local_var),
                   "localvar_del_%s", (const char *)key);
         weechat_buffer_set (buffer, str_local_var, "");
@@ -816,7 +816,7 @@ relay_remote_event_initial_sync_buffers (struct t_relay_remote_event *event)
     if (!event || !event->remote)
         return;
 
-    /* build a list of existing buffers for the remote */
+    /* Build a list of existing buffers for the remote. */
     remote_buffers = weechat_arraylist_new (32, 0, 0,
                                             NULL, NULL, NULL, NULL);
     if (!remote_buffers)
@@ -835,7 +835,7 @@ relay_remote_event_initial_sync_buffers (struct t_relay_remote_event *event)
         ptr_buffer = weechat_hdata_move (relay_hdata_buffer, ptr_buffer, 1);
     }
 
-    /* build a list of remote buffers ids received in JSON */
+    /* Build a list of remote buffers ids received in JSON. */
     buffers_id = weechat_hashtable_new (32,
                                         WEECHAT_HASHTABLE_STRING,
                                         WEECHAT_HASHTABLE_POINTER,
@@ -857,7 +857,7 @@ relay_remote_event_initial_sync_buffers (struct t_relay_remote_event *event)
         }
     }
 
-    /* close any remote buffer that was not received in JSON */
+    /* Close any remote buffer that was not received in JSON. */
     list_size = weechat_arraylist_size (remote_buffers);
     for (i = 0; i < list_size; i++)
     {
@@ -931,7 +931,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     if (!buffer_props)
         return WEECHAT_RC_ERROR;
 
-    /* buffer base properties */
+    /* Buffer base properties */
     weechat_hashtable_set (buffer_props, "type", type);
     weechat_hashtable_set (buffer_props, "hidden", (hidden) ? "1" : "0");
     weechat_hashtable_set (buffer_props, "short_name", short_name);
@@ -948,7 +948,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props, "time_for_each_line",
                            (time_displayed) ? "1" : "0");
 
-    /* extra properties for relay */
+    /* Extra properties for relay */
     weechat_hashtable_set (buffer_props,
                            "localvar_set_relay_remote", event->remote->name);
     snprintf (str_number, sizeof (str_number), "%lld", id);
@@ -966,7 +966,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
                            "localvar_set_relay_remote_first_line_not_read",
                            (first_line_not_read) ? "1" : "0");
 
-    /* if buffer exists, set properties, otherwise create buffer */
+    /* If buffer exists, set properties, otherwise create buffer. */
     apply_props = 1;
     ptr_buffer = event->buffer;
     if (!ptr_buffer)
@@ -979,8 +979,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
             if (!ptr_buffer)
             {
                 /*
-                 * set input content and position only when the buffer is created;
-                 * subsequent updates will be handled via the "input" callback
+                 * Set input content and position only when the buffer is created;
+                 * subsequent updates will be handled via the "input" callback.
                  */
                 weechat_hashtable_set (buffer_props, "input", input);
                 snprintf (str_number, sizeof (str_number), "%d", input_position);
@@ -1010,9 +1010,9 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
         if (weechat_strcmp (event->name, "buffer_localvar_removed") == 0)
         {
             /*
-             * we don't know which variables have been removed, so we remove any
+             * We don't know which variables have been removed, so we remove any
              * local variable in the buffer that is not defined in the JSON
-             * object "local_variables" received
+             * object "local_variables" received.
              */
             pointers[0] = ptr_buffer;
             pointers[1] = json_vars;
@@ -1028,7 +1028,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
         }
         else
         {
-            /* add/update local variables */
+            /* Add/update local variables. */
             cJSON_ArrayForEach (json_var, json_vars)
             {
                 if (json_var->string
@@ -1046,7 +1046,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
         }
     }
 
-    /* add keys */
+    /* Add keys. */
     json_keys = cJSON_GetObjectItem (event->json, "keys");
     if (json_keys && cJSON_IsArray (json_keys))
     {
@@ -1071,7 +1071,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
         }
     }
 
-    /* add lines */
+    /* Add lines. */
     json_lines = cJSON_GetObjectItem (event->json, "lines");
     if (json_lines && cJSON_IsArray (json_lines))
     {
@@ -1085,7 +1085,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
         }
     }
 
-    /* add nicklist groups and nicks */
+    /* Add nicklist groups and nicks. */
     json_nicklist_root = cJSON_GetObjectItem (event->json, "nicklist_root");
     if (json_nicklist_root && cJSON_IsObject (json_nicklist_root))
         relay_remote_event_handle_nick_group (ptr_buffer, json_nicklist_root);
@@ -1187,7 +1187,7 @@ relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
     if (!json)
         goto end;
 
-    /* first request: GET /api/buffers */
+    /* First request: GET /api/buffers. */
     json_req1 = cJSON_CreateObject ();
     if (json_req1)
     {
@@ -1202,7 +1202,7 @@ relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
         cJSON_AddItemToArray (json, json_req1);
     }
 
-    /* second request: POST /api/sync */
+    /* Second request: POST /api/sync. */
     json_req2 = cJSON_CreateObject ();
     if (json_req2)
     {
@@ -1252,7 +1252,7 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
 
     if (!event->remote->version_ok)
     {
-        /* check version: the remote API must be exactly the same as local API */
+        /* Check version: the remote API must be exactly the same as local API. */
         if (weechat_strcmp (relay_api_version, RELAY_API_VERSION_STR) != 0)
         {
                 weechat_version_local = weechat_info_get ("version", NULL);
@@ -1337,7 +1337,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     if (!remote || !data)
         return;
 
-    /* display debug message */
+    /* Display debug message. */
     if (weechat_relay_plugin->debug >= 2)
     {
         weechat_printf (NULL,
@@ -1411,10 +1411,10 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
             relay_remote_event_initial_sync_buffers (&event);
         rc = WEECHAT_RC_OK;
         /*
-         * the buffer is searched again before each call to the callback:
+         * The buffer is searched again before each call to the callback:
          * the initial sync and the callback for event "buffer_closed" close
          * buffers, so a pointer searched once and reused for the next calls
-         * could point to a freed buffer
+         * could point to a freed buffer.
          */
         if (cJSON_IsArray (json_body))
         {

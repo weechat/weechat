@@ -26,7 +26,7 @@ struct t_gui_completion
     struct t_weechat_plugin *plugin; /* plugin which created this completion */
                                      /* with a call to API function          */
                                      /* "completion_new" (NULL for a buffer  */
-                                     /* internal completion even if the    . */
+                                     /* internal completion even if the      */
                                      /* buffer belongs to a plugin)          */
 
     /* completion context */
@@ -62,11 +62,11 @@ struct t_gui_completion
     struct t_gui_completion *next_completion; /* link to next completion     */
 };
 
-/* completion variables */
+/* Completion variables */
 
 extern int gui_completion_freeze;
 
-/* completion functions */
+/* Completion functions */
 
 extern struct t_gui_completion *gui_completion_new (struct t_weechat_plugin *plugin,
                                                     struct t_gui_buffer *buffer);

@@ -17,14 +17,14 @@
 
 
 /*
- * spellers: one by dictionary (key is name of dictionary (eg: "fr"), value is
- * pointer on AspellSpeller)
+ * Spellers: one by dictionary (key is name of dictionary (eg: "fr"), value is
+ * pointer on AspellSpeller).
  */
 struct t_hashtable *spell_spellers = NULL;
 
 /*
- * spellers by buffer (key is buffer pointer, value is pointer on
- * struct t_spell_speller_buffer)
+ * Spellers by buffer (key is buffer pointer, value is pointer on
+ * struct t_spell_speller_buffer).
  */
 struct t_hashtable *spell_speller_buffer = NULL;
 
@@ -90,7 +90,7 @@ spell_speller_check_dictionaries (const char *dict_list)
     if (!dict_list)
         return;
 
-    /* special value "-" is used to disable spell checking on a buffer */
+    /* Special value "-" is used to disable spell checking on a buffer. */
     if (strcmp (dict_list, "-") == 0)
         return;
 
@@ -161,7 +161,7 @@ spell_speller_new (const char *lang)
         return NULL;
     }
 #else
-    /* create a speller instance for the newly created cell */
+    /* Create a speller instance for the newly created cell. */
     config = new_aspell_config ();
     aspell_config_replace (config, "lang", lang);
 #ifdef ASPELL_DICT_DIR
@@ -169,7 +169,7 @@ spell_speller_new (const char *lang)
 #endif
 #endif /* USE_ENCHANT */
 
-    /* apply all options */
+    /* Apply all options. */
     infolist = weechat_infolist_get ("option", NULL, "spell.option.*");
     if (infolist)
     {
@@ -206,7 +206,7 @@ spell_speller_new (const char *lang)
     weechat_hashtable_set (spell_spellers, lang, new_speller);
 
 #ifndef USE_ENCHANT
-    /* free configuration */
+    /* Free configuration. */
     delete_aspell_config (config);
 #endif /* USE_ENCHANT */
 
@@ -253,12 +253,12 @@ spell_speller_remove_unused_cb (void *data,
 {
     struct t_hashtable *used_spellers;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) value;
 
     used_spellers = (struct t_hashtable *)data;
 
-    /* if speller is not in "used_spellers", remove it (not used anymore) */
+    /* If speller is not in "used_spellers", remove it (not used anymore). */
     if (!weechat_hashtable_has_key (used_spellers, key))
         weechat_hashtable_remove (hashtable, key);
 }
@@ -280,7 +280,7 @@ spell_speller_remove_unused (void)
                         SPELL_PLUGIN_NAME);
     }
 
-    /* create a hashtable that will contain all used spellers */
+    /* Create a hashtable that will contain all used spellers. */
     used_spellers = weechat_hashtable_new (32,
                                            WEECHAT_HASHTABLE_STRING,
                                            WEECHAT_HASHTABLE_STRING,
@@ -288,7 +288,7 @@ spell_speller_remove_unused (void)
     if (!used_spellers)
         return;
 
-    /* collect used spellers and store them in hashtable "used_spellers" */
+    /* Collect used spellers and store them in hashtable "used_spellers". */
     spell_speller_add_dicts_to_hash (used_spellers,
                                      weechat_config_string (spell_config_check_default_dict));
     infolist = weechat_infolist_get ("option", NULL, "spell.dict.*");
@@ -303,8 +303,8 @@ spell_speller_remove_unused (void)
     }
 
     /*
-     * look at current spellers, and remove spellers that are not in hashtable
-     * "used_spellers"
+     * Look at current spellers, and remove spellers that are not in hashtable
+     * "used_spellers".
      */
     weechat_hashtable_map (spell_spellers,
                            &spell_speller_remove_unused_cb,
@@ -327,7 +327,7 @@ spell_speller_free_value_cb (struct t_hashtable *hashtable,
     AspellSpeller *ptr_speller;
 #endif /* USE_ENCHANT */
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     if (weechat_spell_plugin->debug)
@@ -337,7 +337,7 @@ spell_speller_free_value_cb (struct t_hashtable *hashtable,
                         SPELL_PLUGIN_NAME, (const char *)key);
     }
 
-    /* free speller */
+    /* Free speller. */
 #ifdef USE_ENCHANT
     ptr_speller = (EnchantDict *)value;
     enchant_broker_free_dict (spell_enchant_broker, ptr_speller);
@@ -432,7 +432,7 @@ spell_speller_buffer_free_value_cb (struct t_hashtable *hashtable,
 {
     struct t_spell_speller_buffer *ptr_speller_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) key;
 

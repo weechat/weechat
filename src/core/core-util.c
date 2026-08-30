@@ -54,7 +54,7 @@ util_parse_int (const char *string, int base, int *result)
     if (!string || !string[0])
         return 0;
 
-    /* base must be 0 or between 2-36 (inclusive) */
+    /* Base must be 0 or between 2-36 (inclusive). */
     if ((base < 0) || (base == 1) || (base > 36))
         return 0;
 
@@ -92,7 +92,7 @@ util_parse_long (const char *string, int base, long *result)
     if (!string || !string[0])
         return 0;
 
-    /* base must be 0 or between 2-36 (inclusive) */
+    /* Base must be 0 or between 2-36 (inclusive). */
     if ((base < 0) || (base == 1) || (base > 36))
         return 0;
 
@@ -129,7 +129,7 @@ util_parse_longlong (const char *string, int base, long long *result)
     if (!string || !string[0])
         return 0;
 
-    /* base must be 0 or between 2-36 (inclusive) */
+    /* Base must be 0 or between 2-36 (inclusive). */
     if ((base < 0) || (base == 1) || (base > 36))
         return 0;
 
@@ -425,7 +425,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
     pos_dot = strchr (datetime, '.');
     if (pos_colon && !pos_hyphen)
     {
-        /* add current date: "19:04:55" -> "2025-08-30T19:04:55" */
+        /* Add current date: "19:04:55" -> "2025-08-30T19:04:55". */
         time_now = time (NULL);
         local_time = localtime (&time_now);
         strftime (str_date, sizeof (str_date), "%Y-%m-%dT", local_time);
@@ -437,7 +437,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
     }
     else if (!pos_colon && pos_hyphen && (!pos_dot || (pos_hyphen < pos_dot)))
     {
-        /* add time (midnight): "2025-08-30" -> "2025-08-30T00:00:00" */
+        /* Add time (midnight): "2025-08-30" -> "2025-08-30T00:00:00". */
         length = strlen (datetime) + 9 + 1;
         string = malloc (length);
         if (!string)
@@ -451,7 +451,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
             return 0;
     }
 
-    /* extract microseconds and remove them from string */
+    /* Extract microseconds and remove them from string. */
     pos = strchr (string, '.');
     if (!pos)
         pos = strchr (string, ',');
@@ -476,8 +476,8 @@ util_parse_time (const char *datetime, struct timeval *tv)
             if (util_parse_longlong (str_usec, 10, &value))
             {
                 /*
-                 * just in case: this should not happen as minus is not
-                 * supported and we truncate at 6 digits
+                 * Just in case: this should not happen as minus is not
+                 * supported and we truncate at 6 digits.
                  */
                 if (value < 0)
                     value = 0;
@@ -489,7 +489,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
         memmove (pos, pos2, strlen (pos2) + 1);
     }
 
-    /* extract timezone and remove it from string */
+    /* Extract timezone and remove it from string. */
     pos = strrchr (string, 'Z');
     if (!pos)
         pos = strrchr (string, 'z');
@@ -553,7 +553,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
         if (strchr (string, 'T'))
         {
             /* ISO 8601 format like: "2025-08-30T19:04:55" */
-            /* initialize structure, because strptime does not do it */
+            /* Initialize structure, because strptime does not do it. */
             memset (&tm_date, 0, sizeof (struct tm));
             pos = strptime (string, "%Y-%m-%dT%H:%M:%S", &tm_date);
             if (pos && (tm_date.tm_year > 0))
@@ -565,7 +565,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
                 }
                 else
                 {
-                    /* convert to UTC and add timezone_offset */
+                    /* Convert to UTC and add timezone_offset. */
                     time_now = mktime (&tm_date);
                     gmtime_r (&time_now, &tm_date_gm);
                     localtime_r (&time_now, &tm_date_local);
@@ -581,7 +581,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
         else if (strchr (string, 't'))
         {
             /* ISO 8601 format like: "2025-08-30t19:04:55" */
-            /* initialize structure, because strptime does not do it */
+            /* Initialize structure, because strptime does not do it. */
             memset (&tm_date, 0, sizeof (struct tm));
             pos = strptime (string, "%Y-%m-%dt%H:%M:%S", &tm_date);
             if (pos && (tm_date.tm_year > 0))
@@ -593,7 +593,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
                 }
                 else
                 {
-                    /* convert to UTC and add timezone_offset */
+                    /* Convert to UTC and add timezone_offset. */
                     time_now = mktime (&tm_date);
                     gmtime_r (&time_now, &tm_date_gm);
                     localtime_r (&time_now, &tm_date_local);
@@ -608,8 +608,8 @@ util_parse_time (const char *datetime, struct timeval *tv)
         }
         else
         {
-            /* like ISO 8601 but with space like: "2025-08-30 19:04:55" */
-            /* initialize structure, because strptime does not do it */
+            /* Like ISO 8601 but with space like: "2025-08-30 19:04:55" */
+            /* Initialize structure, because strptime does not do it. */
             memset (&tm_date, 0, sizeof (struct tm));
             pos = strptime (string, "%Y-%m-%d %H:%M:%S", &tm_date);
             if (pos && (tm_date.tm_year > 0))
@@ -621,7 +621,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
                 }
                 else
                 {
-                    /* convert to UTC and add timezone_offset */
+                    /* Convert to UTC and add timezone_offset. */
                     time_now = mktime (&tm_date);
                     gmtime_r (&time_now, &tm_date_gm);
                     localtime_r (&time_now, &tm_date_local);
@@ -637,7 +637,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
     }
     else
     {
-        /* timestamp format: "1704402062" */
+        /* Timestamp format: "1704402062" */
         if (util_parse_longlong (string, 10, &value) && (value >= 0))
         {
             tv->tv_sec = (time_t)value;

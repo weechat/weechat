@@ -92,7 +92,7 @@ struct t_gui_bar
     struct t_gui_bar *next_bar;         /* link to next bar                 */
 };
 
-/* variables */
+/* Variables */
 
 extern char *gui_bar_option_string[];
 extern char *gui_bar_type_string[];
@@ -105,7 +105,7 @@ extern struct t_gui_bar *last_gui_bar;
 extern struct t_gui_bar *gui_temp_bars;
 extern struct t_gui_bar *last_gui_temp_bar;
 
-/* functions */
+/* Functions */
 
 extern int gui_bar_valid (struct t_gui_bar *bar);
 extern int gui_bar_search_default_bar (const char *bar_name);

@@ -183,7 +183,7 @@ relay_command_relay (const void *pointer, void *data,
     char *path;
     int unix_socket, rc, update;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -468,7 +468,7 @@ relay_command_remote (const void *pointer, void *data,
     const char *ptr_totp_secret;
     char *remote_name;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -477,7 +477,7 @@ relay_command_remote (const void *pointer, void *data,
         || (weechat_strcmp (argv[1], "list") == 0)
         || (weechat_strcmp (argv[1], "listfull") == 0))
     {
-        /* list remotes */
+        /* List remotes. */
         remote_name = NULL;
         detailed_list = 0;
         for (i = 1; i < argc; i++)
@@ -754,7 +754,7 @@ relay_command_remote (const void *pointer, void *data,
     if (weechat_strcmp (argv[1], "rename") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
-        /* look for remote by name */
+        /* Look for remote by name. */
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
         {
@@ -767,7 +767,7 @@ relay_command_remote (const void *pointer, void *data,
                 "remote rename");
             return WEECHAT_RC_ERROR;
         }
-        /* check if target name already exists */
+        /* Check if target name already exists. */
         ptr_remote2 = relay_remote_search (argv[3]);
         if (ptr_remote2)
         {
@@ -780,7 +780,7 @@ relay_command_remote (const void *pointer, void *data,
                 "server rename");
             return WEECHAT_RC_ERROR;
         }
-        /* rename remote */
+        /* Rename remote. */
         if (relay_remote_rename (ptr_remote, argv[3]))
         {
             weechat_printf (
@@ -797,7 +797,7 @@ relay_command_remote (const void *pointer, void *data,
     if (weechat_strcmp (argv[1], "del") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
-        /* look for remote by name */
+        /* Look for remote by name. */
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
         {

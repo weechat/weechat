@@ -160,14 +160,14 @@ TEST(RelayHttp, AddToBodyLimit)
     request = relay_http_request_alloc ();
     CHECK(request);
 
-    /* announce a body larger than the maximum allowed */
+    /* Announce a body larger than the maximum allowed. */
     request->status = RELAY_HTTP_BODY;
     request->content_length = RELAY_HTTP_BODY_MAX_LENGTH + 1;
     partial = strdup ("some body data");
 
     relay_http_add_to_body (request, &partial);
 
-    /* the body must be rejected: nothing allocated, request ended */
+    /* The body must be rejected: nothing allocated, request ended. */
     POINTERS_EQUAL(NULL, request->body);
     LONGS_EQUAL(0, request->body_size);
     POINTERS_EQUAL(NULL, partial);
@@ -483,7 +483,7 @@ TEST(RelayHttp, ParseMethodPath)
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api/buffers?test=1&var=abc HTTP/1.1");
-    /* do it 2 times, to be sure it has no side effect */
+    /* Do it 2 times, to be sure it has no side effect. */
     relay_http_parse_method_path (request, "GET /api/buffers?test=1&var=abc HTTP/1.1");
     LONGS_EQUAL(RELAY_HTTP_HEADERS, request->status);
     STRCMP_EQUAL("GET /api/buffers?test=1&var=abc HTTP/1.1\n"
@@ -608,7 +608,7 @@ TEST(RelayHttp, ParseHeader)
     LONGS_EQUAL(123, request->content_length);
     relay_http_request_free (request);
 
-    /* websocket request */
+    /* Websocket request */
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api HTTP/1.1");
@@ -730,17 +730,17 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", "Basic \u26c4");
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
-    /* test invalid plain-text password ("test") */
+    /* Test invalid plain-text password ("test"). */
     hashtable_set (client->http_req->headers, "authorization", "Basic cGxhaW46dGVzdA==");
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
-    /* test valid plain-text password ("secret_password") */
+    /* Test valid plain-text password ("secret_password"). */
     hashtable_set (client->http_req->headers,
                    "authorization",
                    "Basic  cGxhaW46c2VjcmV0X3Bhc3N3b3Jk");
     LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
-    /* test invalid hash: "SHA128" */
+    /* Test invalid hash: "SHA128". */
     time_now = time (NULL);
     snprintf (salt_pass, sizeof (salt_pass),
               "%ld%s", time_now, bad_pwd);
@@ -756,7 +756,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(-5, relay_http_get_auth_status (client));
 
-    /* test invalid password hashed with SHA256: "test" */
+    /* Test invalid password hashed with SHA256: "test". */
     time_now = time (NULL);
     snprintf (salt_pass, sizeof (salt_pass),
               "%ld%s", time_now, bad_pwd);
@@ -772,7 +772,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
-    /* test invalid password hashed with SHA512: "test" */
+    /* Test invalid password hashed with SHA512: "test". */
     time_now = time (NULL);
     snprintf (salt_pass, sizeof (salt_pass),
               "%ld%s", time_now, bad_pwd);
@@ -788,7 +788,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
-    /* test valid password hashed with SHA256: "secret_password" but too old time (salt) */
+    /* Test valid password hashed with SHA256: "secret_password" but too old time (salt). */
     time_now = time (NULL) - 10;
     snprintf (salt_pass, sizeof (salt_pass),
               "%ld%s", time_now, good_pwd);
@@ -804,7 +804,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(-6, relay_http_get_auth_status (client));
 
-    /* test valid password hashed with SHA256: "secret_password" */
+    /* Test valid password hashed with SHA256: "secret_password". */
     time_now = time (NULL);
     snprintf (salt_pass, sizeof (salt_pass),
               "%ld%s", time_now, good_pwd);
@@ -820,7 +820,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
-    /* test valid password hashed with SHA512: "secret_password" */
+    /* Test valid password hashed with SHA512: "secret_password". */
     time_now = time (NULL);
     snprintf (salt_pass, sizeof (salt_pass),
               "%ld%s", time_now, good_pwd);
@@ -836,7 +836,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
-    /* test invalid number of iterations */
+    /* Test invalid number of iterations. */
     time_now = time (NULL);
     snprintf (salt, sizeof (salt), "%ld", time_now);
     LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (good_pwd, strlen (good_pwd),
@@ -854,7 +854,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(-7, relay_http_get_auth_status (client));
 
-    /* test invalid password hashed with PBKDF2+SHA256: "test" */
+    /* Test invalid password hashed with PBKDF2+SHA256: "test". */
     time_now = time (NULL);
     snprintf (salt, sizeof (salt), "%ld", time_now);
     LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (bad_pwd, strlen (bad_pwd),
@@ -872,7 +872,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
-    /* test valid password hashed with PBKDF2+SHA256: "secret_password" */
+    /* Test valid password hashed with PBKDF2+SHA256: "secret_password". */
     time_now = time (NULL);
     snprintf (salt, sizeof (salt), "%ld", time_now);
     LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (good_pwd, strlen (good_pwd),
@@ -890,7 +890,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
-    /* test valid password hashed with PBKDF2+SHA512: "secret_password" */
+    /* Test valid password hashed with PBKDF2+SHA512: "secret_password". */
     time_now = time (NULL);
     snprintf (salt, sizeof (salt), "%ld", time_now);
     LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (good_pwd, strlen (good_pwd),
@@ -908,7 +908,7 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
-    /* test invalid TOTP */
+    /* Test invalid TOTP. */
     hashtable_set (client->http_req->headers, "x-weechat-totp", "");
     LONGS_EQUAL(-4, relay_http_get_auth_status (client));
     hashtable_set (client->http_req->headers, "x-weechat-totp", "abcdef");
@@ -917,12 +917,12 @@ TEST(RelayHttp, GetAuthStatus)
     LONGS_EQUAL(-4, relay_http_get_auth_status (client));
     hashtable_remove (client->http_req->headers, "x-weechat-totp");
 
-    /* test valid TOTP without TOTP configuration */
+    /* Test valid TOTP without TOTP configuration. */
     hashtable_set (client->http_req->headers, "x-weechat-totp", "123456");
     LONGS_EQUAL(-4, relay_http_get_auth_status (client));
     hashtable_remove (client->http_req->headers, "x-weechat-totp");
 
-    /* test missing/invalid TOTP */
+    /* Test missing/invalid TOTP. */
     config_file_option_set (relay_config_network_totp_secret, "secretbase32", 1);
     config_file_option_set (relay_config_network_totp_window, "1", 1);
     LONGS_EQUAL(-3, relay_http_get_auth_status (client));
@@ -940,20 +940,20 @@ TEST(RelayHttp, GetAuthStatus)
     config_file_option_reset (relay_config_network_totp_window, 1);
     hashtable_remove (client->http_req->headers, "x-weechat-totp");
 
-    /* test invalid plain-text password ("test") via Sec-WebSocket-Protocol */
+    /* Test invalid plain-text password ("test") via Sec-WebSocket-Protocol. */
     hashtable_remove (client->http_req->headers, "authorization");
     hashtable_set (client->http_req->headers, "sec-websocket-protocol",
                    WEBSOCKET_SUB_PROTOCOL_API_WEECHAT
                    ", base64url.bearer.authorization.weechat.cGxhaW46dGVzdA");
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
-    /* test valid plain-text password ("secret_password") via Sec-WebSocket-Protocol */
+    /* Test valid plain-text password ("secret_password") via Sec-WebSocket-Protocol. */
     hashtable_set (client->http_req->headers, "sec-websocket-protocol",
                    WEBSOCKET_SUB_PROTOCOL_API_WEECHAT
                    ", base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk");
     LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
-    /* test auth via Sec-WebSocket-Protocol with base64url specific characters */
+    /* Test auth via Sec-WebSocket-Protocol with base64url specific characters. */
     config_file_option_set (relay_config_network_password, "..>..?.", 1);
     hashtable_set (client->http_req->headers, "sec-websocket-protocol",
                    WEBSOCKET_SUB_PROTOCOL_API_WEECHAT
@@ -1023,7 +1023,7 @@ TEST(RelayHttp, RecvLimit)
     int chunk_size, i;
     size_t length1, length2;
 
-    /* disable auto-open of relay buffer (it would pollute other tests) */
+    /* Disable auto-open of relay buffer (it would pollute other tests). */
     config_file_option_set (relay_config_look_auto_open_buffer, "off", 1);
 
     server = relay_server_new ("weechat", RELAY_PROTOCOL_WEECHAT, NULL,
@@ -1043,7 +1043,7 @@ TEST(RelayHttp, RecvLimit)
     memset (chunk, 'a', chunk_size);
     chunk[chunk_size] = '\0';
 
-    /* feed more than the maximum, with no end-of-line (16 MB) */
+    /* Feed more than the maximum, with no end-of-line (16 MB). */
     for (i = 0; i < 16; i++)
     {
         relay_http_recv (client, chunk, chunk_size);
@@ -1051,10 +1051,10 @@ TEST(RelayHttp, RecvLimit)
     CHECK(client->partial_message);
     length1 = strlen (client->partial_message);
 
-    /* the partial message must be bounded (not ~16 MB) */
+    /* The partial message must be bounded (not ~16 MB). */
     CHECK(length1 <= RELAY_HTTP_PARTIAL_MESSAGE_MAX_LENGTH + (size_t)chunk_size);
 
-    /* feeding more data must not grow it any further */
+    /* Feeding more data must not grow it any further. */
     for (i = 0; i < 16; i++)
     {
         relay_http_recv (client, chunk, chunk_size);
@@ -1066,7 +1066,7 @@ TEST(RelayHttp, RecvLimit)
     relay_client_free (client);
     relay_server_free (server);
 
-    /* restore auto-open of relay buffer */
+    /* Restore auto-open of relay buffer. */
     config_file_option_reset (relay_config_look_auto_open_buffer, 1);
 }
 
@@ -1103,7 +1103,7 @@ TEST(RelayHttp, Compress)
     LONGS_EQUAL(0, size);
     STRCMP_EQUAL("", encoding);
 
-    /* no "Accept-Encoding" header was received => no compression */
+    /* No "Accept-Encoding" header was received => no compression. */
     hashtable_remove_all (request->accept_encoding);
     size = -1;
     snprintf (encoding, sizeof (encoding), "test");
@@ -1113,7 +1113,7 @@ TEST(RelayHttp, Compress)
     LONGS_EQUAL(0, size);
     STRCMP_EQUAL("", encoding);
 
-    /* "Accept-Encoding: gzip" => gzip compression */
+    /* "Accept-Encoding: gzip" => gzip compression. */
     hashtable_remove_all (request->accept_encoding);
     hashtable_set (request->accept_encoding, "gzip", "");
     size = -1;
@@ -1126,7 +1126,7 @@ TEST(RelayHttp, Compress)
     free (buffer);
 
 #ifdef HAVE_ZSTD
-    /* "Accept-Encoding: gzip, zstd" => zstd compression */
+    /* "Accept-Encoding: gzip, zstd" => zstd compression. */
     hashtable_remove_all (request->accept_encoding);
     hashtable_set (request->accept_encoding, "gzip", "");
     hashtable_set (request->accept_encoding, "zstd", "");
@@ -1196,7 +1196,7 @@ TEST(RelayHttp, ResponseAllocFree)
 
     relay_http_response_free (response);
 
-    /* test free of NULL response */
+    /* Test free of NULL response. */
     relay_http_response_free (NULL);
 }
 

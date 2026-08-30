@@ -38,7 +38,7 @@ enum t_gui_key_focus
     GUI_KEY_NUM_FOCUS,
 };
 
-/* key structures */
+/* Key structures */
 
 struct t_gui_key
 {
@@ -54,7 +54,7 @@ struct t_gui_key
     struct t_gui_key *next_key;     /* link to next key                     */
 };
 
-/* key variables */
+/* Key variables */
 
 extern struct t_gui_key *gui_keys[GUI_KEY_NUM_CONTEXTS];
 extern struct t_gui_key *last_gui_key[GUI_KEY_NUM_CONTEXTS];
@@ -75,7 +75,7 @@ extern int gui_key_paste_pending;
 extern int gui_key_paste_bracketed;
 extern time_t gui_key_last_activity_time;
 
-/* key functions */
+/* Key functions */
 
 extern void gui_key_init (void);
 extern int gui_key_search_context (const char *context);
@@ -140,7 +140,7 @@ extern int gui_key_add_to_infolist (struct t_infolist *infolist,
                                     struct t_gui_key *key);
 extern void gui_key_print_log (struct t_gui_buffer *buffer);
 
-/* key functions (GUI dependent) */
+/* Key functions (GUI dependent) */
 
 extern void gui_key_default_bindings (int context, int create_option);
 

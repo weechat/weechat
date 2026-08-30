@@ -61,7 +61,7 @@ test_core_input_buffer_input_cb (const void *pointer, void *data,
                                  struct t_gui_buffer *buffer,
                                  const char *input_data)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -90,91 +90,91 @@ TEST(CoreInput, Data)
                                               NULL, NULL, 0, 0));
     LONGS_EQUAL(WEECHAT_RC_ERROR, input_data (gui_buffers, NULL, NULL, 0, 0));
 
-    /* on core buffer: command not found */
+    /* On core buffer: command not found */
     TEST_INPUT_DATA(WEECHAT_RC_ERROR, gui_buffers, "/xxx", NULL, 0, 0);
     RECORD_CHECK_MSG("core.weechat", "=!=",
                      "Unknown command \"xxx\" (type /help for help), "
                      "commands with similar name: -", NULL);
 
-    /* on test buffer: command not found */
+    /* On test buffer: command not found. */
     TEST_INPUT_DATA(WEECHAT_RC_ERROR, buffer, "/xxx", NULL, 0, 0);
     RECORD_CHECK_MSG("core.weechat", "=!=",
                      "Unknown command \"xxx\" (type /help for help), "
                      "commands with similar name: -", NULL);
 
-    /* on core buffer: command not found, but user_data == 1 */
+    /* On core buffer: command not found, but user_data == 1 */
     TEST_INPUT_DATA(WEECHAT_RC_ERROR, gui_buffers, "/xxx", NULL, 0, 1);
     RECORD_CHECK_MSG("core.weechat", "=!=",
                      "Unknown command \"xxx\" (type /help for help), "
                      "commands with similar name: -", NULL);
 
-    /* on test buffer: command not found, but user_data == 1 */
+    /* On test buffer: command not found, but user_data == 1. */
     TEST_INPUT_DATA(WEECHAT_RC_OK, buffer, "/xxx", NULL, 0, 1);
     RECORD_CHECK_NO_MSG();
 
-    /* on core buffer: empty text to buffer */
+    /* On core buffer: empty text to buffer. */
     TEST_INPUT_DATA(WEECHAT_RC_ERROR, gui_buffers, "", NULL, 0, 0);
     RECORD_CHECK_MSG("core.weechat", "=!=",
                      "You cannot write text in this buffer", NULL);
 
-    /* on test buffer: empty text to buffer */
+    /* On test buffer: empty text to buffer. */
     TEST_INPUT_DATA(WEECHAT_RC_OK, buffer, "", NULL, 0, 0);
     RECORD_CHECK_NO_MSG();
 
-    /* on core buffer: text to buffer */
+    /* On core buffer: text to buffer */
     TEST_INPUT_DATA(WEECHAT_RC_ERROR, gui_buffers, "test", NULL, 0, 0);
     RECORD_CHECK_MSG("core.weechat", "=!=",
                      "You cannot write text in this buffer", NULL);
 
-    /* on test buffer: text to buffer */
+    /* On test buffer: text to buffer. */
     TEST_INPUT_DATA(WEECHAT_RC_OK, buffer, "test", NULL, 0, 0);
     RECORD_CHECK_NO_MSG();
 
-    /* on core buffer: text to buffer (with two command chars) */
+    /* On core buffer: text to buffer (with two command chars) */
     TEST_INPUT_DATA(WEECHAT_RC_ERROR, gui_buffers, "//test", NULL, 0, 0);
     RECORD_CHECK_MSG("core.weechat", "=!=",
                      "You cannot write text in this buffer", NULL);
 
-    /* on test buffer: text to buffer (with two command chars) */
+    /* On test buffer: text to buffer (with two command chars). */
     TEST_INPUT_DATA(WEECHAT_RC_OK, buffer, "//test", NULL, 0, 0);
     RECORD_CHECK_NO_MSG();
 
-    /* on core buffer: valid command */
+    /* On core buffer: valid command */
     TEST_INPUT_DATA(WEECHAT_RC_OK, gui_buffers, "/print core\n/print line2", NULL, 0, 0);
     RECORD_CHECK_MSG("core.weechat", "", "core", NULL);
     LONGS_EQUAL(1, record_count_messages ());
 
-    /* on test buffer: valid command */
+    /* On test buffer: valid command. */
     TEST_INPUT_DATA(WEECHAT_RC_OK, buffer, "/print test\n/print line2", NULL, 0, 0);
     RECORD_CHECK_MSG("core.test", "", "test", NULL);
     LONGS_EQUAL(1, record_count_messages ());
 
-    /* on core buffer: forbidden command */
+    /* On core buffer: forbidden command */
     TEST_INPUT_DATA(WEECHAT_RC_ERROR, gui_buffers, "/print core\n/print line2", "*,!print", 0, 0);
     RECORD_CHECK_NO_MSG();
 
-    /* on test buffer: forbidden command */
+    /* On test buffer: forbidden command. */
     TEST_INPUT_DATA(WEECHAT_RC_ERROR, buffer, "/print test\n/print line2", "*,!print", 0, 0);
     RECORD_CHECK_NO_MSG();
 
-    /* on core buffer: valid command with split_newline */
+    /* On core buffer: valid command with split_newline. */
     TEST_INPUT_DATA(WEECHAT_RC_OK, gui_buffers, "/print core\n/print line2", NULL, 1, 0);
     RECORD_CHECK_MSG("core.weechat", "", "core", NULL);
     RECORD_CHECK_MSG("core.weechat", "", "line2", NULL);
     LONGS_EQUAL(2, record_count_messages ());
 
-    /* on test buffer: valid command with split_newline */
+    /* On test buffer: valid command with split_newline. */
     TEST_INPUT_DATA(WEECHAT_RC_OK, buffer, "/print test\n/print line2", NULL, 1, 0);
     RECORD_CHECK_MSG("core.test", "", "test", NULL);
     RECORD_CHECK_MSG("core.test", "", "line2", NULL);
     LONGS_EQUAL(2, record_count_messages ());
 
-    /* on core buffer: valid command but with commands disabled */
+    /* On core buffer: valid command but with commands disabled. */
     TEST_INPUT_DATA(WEECHAT_RC_ERROR, gui_buffers, "/print core\n/print line2", "-", 0, 0);
     RECORD_CHECK_MSG("core.weechat", "=!=", "You cannot write text in this buffer", NULL);
     LONGS_EQUAL(1, record_count_messages ());
 
-    /* on test buffer: valid command but with commands disabled */
+    /* On test buffer: valid command but with commands disabled. */
     TEST_INPUT_DATA(WEECHAT_RC_OK, buffer, "/print core\n/print line2", "-", 0, 0);
     RECORD_CHECK_NO_MSG();
 

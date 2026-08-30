@@ -29,13 +29,13 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     int i, item_index, item_line, num_keys, type;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
     ptr_buffer = NULL;
 
-    /* check bar item name */
+    /* Check bar item name. */
     ptr_bar_item_name = weechat_hashtable_get (info, "_bar_item_name");
     item_index = buflist_bar_item_get_index (ptr_bar_item_name);
     if (item_index < 0)
@@ -44,7 +44,7 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     if (!buflist_list_buffers[item_index])
         goto end;
 
-    /* check bar item line */
+    /* Check bar item line. */
     ptr_bar_item_line = weechat_hashtable_get (info, "_bar_item_line");
     if (!ptr_bar_item_line)
         goto end;
@@ -53,7 +53,7 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
         || (item_line >= weechat_arraylist_size (buflist_list_buffers[item_index])))
         goto end;
 
-    /* check if buffer pointer is still valid */
+    /* Check if buffer pointer is still valid. */
     ptr_buffer = weechat_arraylist_get (buflist_list_buffers[item_index],
                                         item_line);
     if (!ptr_buffer)
@@ -67,7 +67,7 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     }
 
 end:
-    /* get list of keys */
+    /* Get list of keys. */
     keys = weechat_hdata_get_string (buflist_hdata_buffer, "var_keys");
     list_keys = weechat_string_split (keys, ",", NULL,
                                       WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -77,7 +77,7 @@ end:
     if (!list_keys)
         return info;
 
-    /* browse keys and add values in hashtable */
+    /* Browse keys and add values in hashtable. */
     for (i = 0; i < num_keys; i++)
     {
         type = weechat_hdata_get_var_type (buflist_hdata_buffer, list_keys[i]);
@@ -130,18 +130,18 @@ end:
                                                          ptr_buffer, list_keys[i]) : -1);
                 weechat_hashtable_set (info, list_keys[i], str_value);
                 break;
-            default:  /* ignore other types */
+            default:  /* Ignore other types. */
                 break;
         }
     }
 
-    /* add pointer and plugin name */
+    /* Add pointer and plugin name. */
     snprintf (str_value, sizeof (str_value), "0x%lx", (unsigned long)ptr_buffer);
     weechat_hashtable_set (info, "pointer", str_value);
     weechat_hashtable_set (info, "plugin",
                            weechat_buffer_get_string (ptr_buffer, "plugin"));
 
-    /* add some local variables */
+    /* Add some local variables. */
     ptr_value = weechat_buffer_get_string (ptr_buffer, "localvar_type");
     weechat_hashtable_set (info, "localvar_type",
                            (ptr_value) ? ptr_value : "");
@@ -177,8 +177,8 @@ buflist_mouse_move_buffer (const char *key, struct t_gui_buffer *buffer,
     if (number2 < 0)
     {
         /*
-         * if number is now known (end of gesture outside buflist),
-         * then set it according to mouse gesture
+         * If number is now known (end of gesture outside buflist),
+         * then set it according to mouse gesture.
          */
         number2 = 1;
         if (weechat_string_match (key, "*gesture-right*", 1)
@@ -250,7 +250,7 @@ buflist_mouse_move_current_buffer (const char *item_name, int direction)
 
     gui_buffers = weechat_hdata_get_list (buflist_hdata_buffer, "gui_buffers");
 
-    /* search previous/next buffer with a different number */
+    /* Search previous/next buffer with a different number. */
     index2 = index_current;
     while (1)
     {
@@ -280,7 +280,7 @@ buflist_mouse_move_current_buffer (const char *item_name, int direction)
             break;
     }
 
-    /* search first buffer with the number found */
+    /* Search first buffer with the number found. */
     for (i = 0; i < size; i++)
     {
         ptr_buffer = (struct t_gui_buffer *)weechat_arraylist_get (
@@ -294,7 +294,7 @@ buflist_mouse_move_current_buffer (const char *item_name, int direction)
     if (i >= size)
         return;
 
-    /* switch to the buffer found */
+    /* Switch to the buffer found. */
     snprintf (str_command, sizeof (str_command),
               "/buffer %s",
               weechat_buffer_get_string (ptr_buffer, "full_name"));
@@ -316,7 +316,7 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
     unsigned long value;
     int rc, current_buffer_number, number, number2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -348,7 +348,7 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
 
     if (strcmp (ptr_key, "button1") == 0)
     {
-        /* left mouse button */
+        /* Left mouse button */
         if (number == number2)
         {
             if (weechat_config_boolean (
@@ -366,7 +366,7 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
         }
         else
         {
-            /* move buffer */
+            /* Move buffer */
             buflist_mouse_move_buffer (ptr_key, ptr_buffer, number2);
         }
     }
@@ -385,7 +385,7 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
         {
             buflist_mouse_move_current_buffer (
                 (const char *)weechat_hashtable_get (hashtable, "_bar_item_name"),
-                -1);  /* previous buffer */
+                -1);  /* Previous buffer */
         }
     }
     else if (weechat_string_match (ptr_key, "*wheeldown", 1))
@@ -394,12 +394,12 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
         {
             buflist_mouse_move_current_buffer (
                 (const char *)weechat_hashtable_get (hashtable, "_bar_item_name"),
-                +1);  /* next buffer */
+                +1);  /* Next buffer */
         }
     }
     else
     {
-        /* move buffer */
+        /* Move buffer */
         buflist_mouse_move_buffer (ptr_key, ptr_buffer, number2);
     }
 

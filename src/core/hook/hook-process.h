@@ -13,7 +13,7 @@ struct t_hashtable;
 
 #define HOOK_PROCESS(hook, var) (((struct t_hook_process *)hook->hook_data)->var)
 
-/* constants for hook process */
+/* Constants for hook process */
 #define HOOK_PROCESS_STDIN       0
 #define HOOK_PROCESS_STDOUT      1
 #define HOOK_PROCESS_STDERR      2

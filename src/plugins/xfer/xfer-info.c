@@ -25,7 +25,7 @@ xfer_info_infolist_xfer_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_xfer *ptr_xfer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -40,7 +40,7 @@ xfer_info_infolist_xfer_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one xfer */
+        /* Build list with only one xfer. */
         if (!xfer_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
@@ -50,7 +50,7 @@ xfer_info_infolist_xfer_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all xfers */
+        /* Build list with all xfers. */
         for (ptr_xfer = xfer_list; ptr_xfer;
              ptr_xfer = ptr_xfer->next_xfer)
         {

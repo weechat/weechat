@@ -200,7 +200,7 @@ hook_hsignal_hdata_hook_hsignal_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

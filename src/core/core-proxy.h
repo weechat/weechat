@@ -48,7 +48,7 @@ struct t_proxy
     struct t_proxy *next_proxy;         /* link to next bar                 */
 };
 
-/* variables */
+/* Variables */
 
 extern char *proxy_option_string[];
 extern char *proxy_type_string[];
@@ -58,7 +58,7 @@ extern struct t_proxy *last_weechat_proxy;
 extern struct t_proxy *weechat_temp_proxies;
 extern struct t_proxy *last_weechat_temp_proxy;
 
-/* functions */
+/* Functions */
 
 extern int proxy_search_option (const char *option_name);
 extern int proxy_search_type (const char *type);

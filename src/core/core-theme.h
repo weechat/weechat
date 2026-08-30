@@ -63,7 +63,7 @@ extern char *theme_user_file_path (const char *name);
 extern struct t_theme *theme_file_parse (const char *path);
 extern void theme_free (struct t_theme *theme);
 
-/* lifecycle: drop all contributions owned by a plugin or script */
+/* Lifecycle: drop all contributions owned by a plugin or script. */
 extern void theme_unregister_plugin (struct t_weechat_plugin *plugin);
 extern void theme_unregister_script (struct t_weechat_plugin *plugin,
                                      const void *script);
@@ -71,7 +71,7 @@ extern void theme_unregister_script (struct t_weechat_plugin *plugin,
 extern void theme_init (void);
 extern void theme_end (void);
 
-/* implemented in core-theme-builtin.c */
+/* Implemented in core-theme-builtin.c */
 extern void theme_builtin_init (void);
 
 #endif /* WEECHAT_THEME_H */

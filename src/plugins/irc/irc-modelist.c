@@ -44,7 +44,7 @@ irc_modelist_valid (struct t_irc_channel *channel,
             return 1;
     }
 
-    /* modelist not found */
+    /* Modelist not found */
     return 0;
 }
 
@@ -82,7 +82,7 @@ irc_modelist_new (struct t_irc_channel *channel, char type)
 {
     struct t_irc_modelist *new_modelist;
 
-    /* alloc memory for new modelist */
+    /* Allocate memory for new modelist. */
     if ((new_modelist = malloc (sizeof (*new_modelist))) == NULL)
     {
         weechat_printf (NULL,
@@ -91,13 +91,13 @@ irc_modelist_new (struct t_irc_channel *channel, char type)
         return NULL;
     }
 
-    /* initialize new modelist */
+    /* Initialize new modelist. */
     new_modelist->type = type;
     new_modelist->state = IRC_MODELIST_STATE_EMPTY;
     new_modelist->items = NULL;
     new_modelist->last_item = NULL;
 
-    /* add new modelist to channel */
+    /* Add new modelist to channel. */
     new_modelist->prev_modelist = channel->last_modelist;
     new_modelist->next_modelist = NULL;
     if (channel->modelists)
@@ -106,7 +106,7 @@ irc_modelist_new (struct t_irc_channel *channel, char type)
         channel->modelists = new_modelist;
     channel->last_modelist = new_modelist;
 
-    /* all is OK, return address of new modelist */
+    /* All is OK, return address of new modelist. */
     return new_modelist;
 }
 
@@ -123,7 +123,7 @@ irc_modelist_free (struct t_irc_channel *channel,
     if (!channel || !modelist)
         return;
 
-    /* remove modelist from channel modelists */
+    /* Remove modelist from channel modelists. */
     if (channel->last_modelist == modelist)
         channel->last_modelist = modelist->prev_modelist;
     if (modelist->prev_modelist)
@@ -137,7 +137,7 @@ irc_modelist_free (struct t_irc_channel *channel,
     if (modelist->next_modelist)
         (modelist->next_modelist)->prev_modelist = modelist->prev_modelist;
 
-    /* free linked lists */
+    /* Free linked lists. */
     irc_modelist_item_free_all (modelist);
 
     free (modelist);
@@ -182,7 +182,7 @@ irc_modelist_item_valid (struct t_irc_modelist *modelist,
             return 1;
     }
 
-    /* item not found */
+    /* Item not found */
     return 0;
 }
 
@@ -247,7 +247,7 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
     if (!mask)
         return NULL;
 
-    /* alloc memory for new item */
+    /* Allocate memory for new item. */
     if ((new_item = malloc (sizeof (*new_item))) == NULL)
     {
         weechat_printf (NULL,
@@ -256,14 +256,14 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
         return NULL;
     }
 
-    /* initialize new item */
+    /* Initialize new item. */
     new_item->number = (modelist->last_item) ?
         modelist->last_item->number + 1 : 0;
     new_item->mask = strdup (mask);
     new_item->setter = (setter) ? strdup (setter) : NULL;
     new_item->datetime = datetime;
 
-    /* add new item to modelist */
+    /* Add new item to modelist. */
     new_item->prev_item = modelist->last_item;
     new_item->next_item = NULL;
     if (modelist->items)
@@ -278,7 +278,7 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
         modelist->state = IRC_MODELIST_STATE_MODIFIED;
     }
 
-    /* all is OK, return address of new item */
+    /* All is OK, return address of new item. */
     return new_item;
 }
 
@@ -295,7 +295,7 @@ irc_modelist_item_free (struct t_irc_modelist *modelist,
     if (!modelist || !item)
         return;
 
-    /* remove item from modelist list */
+    /* Remove item from modelist list. */
     if (modelist->last_item == item)
         modelist->last_item = item->prev_item;
     if (item->prev_item)
@@ -309,7 +309,7 @@ irc_modelist_item_free (struct t_irc_modelist *modelist,
     if (item->next_item)
         (item->next_item)->prev_item = item->prev_item;
 
-    /* free item data */
+    /* Free item data. */
     free (item->mask);
     free (item->setter);
     free (item);
@@ -344,7 +344,7 @@ irc_modelist_hdata_item_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -371,7 +371,7 @@ irc_modelist_hdata_modelist_cb (const void *pointer, void *data, const char *hda
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

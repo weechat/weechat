@@ -12,7 +12,7 @@
 # CPPUTEST_LIBRARIES    = Link options to compile with CppUTest
 
 if(CPPUTEST_FOUND)
-  # Already in cache, be silent
+  # Already in cache, be silent.
   set(CPPUTEST_FIND_QUIETLY TRUE)
 endif()
 

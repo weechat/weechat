@@ -51,26 +51,26 @@ struct t_plugin_script *tcl_registered_script = NULL;
 const char *tcl_current_script_filename = NULL;
 
 /*
- * string used to execute action "install":
+ * String used to execute action "install":
  * when signal "tcl_script_install" is received, name of string
  * is added to this string, to be installed later by a timer (when nothing is
- * running in script)
+ * running in script).
  */
 char *tcl_action_install_list = NULL;
 
 /*
- * string used to execute action "remove":
+ * String used to execute action "remove":
  * when signal "tcl_script_remove" is received, name of string
  * is added to this string, to be removed later by a timer (when nothing is
- * running in script)
+ * running in script).
  */
 char *tcl_action_remove_list = NULL;
 
 /*
- * string used to execute action "autoload":
+ * String used to execute action "autoload":
  * when signal "tcl_script_autoload" is received, name of string
  * is added to this string, to autoload or disable autoload later by a timer
- * (when nothing is running in script)
+ * (when nothing is running in script).
  */
 char *tcl_action_autoload_list = NULL;
 
@@ -91,7 +91,7 @@ weechat_tcl_hashtable_map_cb (void *data,
     Tcl_Interp *interp;
     Tcl_Obj *dict;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     data_array = (void **)data;
@@ -215,15 +215,15 @@ weechat_tcl_exec (struct t_plugin_script *script,
         {
             switch (format[i])
             {
-                case 's': /* string */
+                case 's': /* String */
                     Tcl_ListObjAppendElement (interp, cmdlist,
                                               Tcl_NewStringObj (argv[i], -1));
                     break;
-                case 'i': /* integer */
+                case 'i': /* Integer */
                     Tcl_ListObjAppendElement (interp, cmdlist,
                                               Tcl_NewIntObj (*((int *)argv[i])));
                     break;
-                case 'h': /* hash */
+                case 'h': /* Hash */
                     Tcl_ListObjAppendElement (interp, cmdlist,
                                               weechat_tcl_hashtable_to_dict (interp, argv[i]));
                     break;
@@ -313,7 +313,7 @@ weechat_tcl_load (const char *filename, const char *code)
     Tcl_Interp *interp;
     struct stat buf;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     /* TODO: implement load of code in TCL */
     (void) code;
 
@@ -354,7 +354,7 @@ weechat_tcl_load (const char *filename, const char *code)
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename,
                         Tcl_GetString (Tcl_GetObjResult (interp)));
 
-        /* if script was registered, remove it from list */
+        /* If script was registered, remove it from list. */
         if (tcl_current_script)
         {
             plugin_script_remove (weechat_tcl_plugin,
@@ -378,8 +378,8 @@ weechat_tcl_load (const char *filename, const char *code)
     tcl_current_script = tcl_registered_script;
 
     /*
-     * set input/close callbacks for buffers created by this script
-     * (to restore callbacks after upgrade)
+     * Set input/close callbacks for buffers created by this script
+     * (to restore callbacks after upgrade).
      */
     plugin_script_set_buffer_callbacks (weechat_tcl_plugin,
                                         tcl_scripts,
@@ -403,7 +403,7 @@ weechat_tcl_load_cb (void *data, const char *filename)
 {
     const char *pos_dot;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     pos_dot = strrchr (filename, '.');
@@ -563,7 +563,7 @@ weechat_tcl_command_cb (const void *pointer, void *data,
     char *ptr_name, *ptr_code, *path_script;
     int i, send_to_buffer_as_input, exec_commands, old_tcl_quiet;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -633,7 +633,7 @@ weechat_tcl_command_cb (const void *pointer, void *data,
             }
             if (weechat_strcmp (argv[1], "load") == 0)
             {
-                /* load tcl script */
+                /* Load tcl script. */
                 path_script = plugin_script_search_path (weechat_tcl_plugin,
                                                          ptr_name, 1);
                 weechat_tcl_load ((path_script) ? path_script : ptr_name,
@@ -642,12 +642,12 @@ weechat_tcl_command_cb (const void *pointer, void *data,
             }
             else if (weechat_strcmp (argv[1], "reload") == 0)
             {
-                /* reload one tcl script */
+                /* Reload one tcl script. */
                 weechat_tcl_reload_name (ptr_name);
             }
             else if (weechat_strcmp (argv[1], "unload") == 0)
             {
-                /* unload tcl script */
+                /* Unload tcl script. */
                 weechat_tcl_unload_name (ptr_name);
             }
             tcl_quiet = old_tcl_quiet;
@@ -707,7 +707,7 @@ weechat_tcl_completion_cb (const void *pointer, void *data,
                             struct t_gui_buffer *buffer,
                             struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -726,7 +726,7 @@ struct t_hdata *
 weechat_tcl_hdata_cb (const void *pointer, void *data,
                       const char *hdata_name)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -746,7 +746,7 @@ weechat_tcl_info_eval_cb (const void *pointer, void *data,
 {
     const char *not_implemented = "not yet implemented";
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -764,7 +764,7 @@ weechat_tcl_infolist_cb (const void *pointer, void *data,
                          const char *infolist_name,
                          void *obj_pointer, const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -790,7 +790,7 @@ weechat_tcl_signal_debug_dump_cb (const void *pointer, void *data,
                                   const char *signal,
                                   const char *type_data, void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -812,7 +812,7 @@ int
 weechat_tcl_timer_action_cb (const void *pointer, void *data,
                              int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -856,7 +856,7 @@ weechat_tcl_signal_script_action_cb (const void *pointer, void *data,
                                      const char *type_data,
                                      void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -900,7 +900,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int old_tcl_quiet;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -911,7 +911,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     tcl_eval_send_input = 0;
     tcl_eval_exec_commands = 0;
 
-    /* set interpreter name and version */
+    /* Set interpreter name and version. */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
 #ifdef TCL_VERSION
@@ -946,7 +946,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     plugin_script_display_short_list (weechat_tcl_plugin,
                                       tcl_scripts);
 
-    /* init OK */
+    /* Initialization OK */
     return WEECHAT_RC_OK;
 }
 
@@ -970,7 +970,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     plugin_script_end (plugin, &tcl_data);
     tcl_quiet = old_tcl_quiet;
 
-    /* free some data */
+    /* Free some data. */
     if (tcl_action_install_list)
     {
         free (tcl_action_install_list);

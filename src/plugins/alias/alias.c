@@ -56,7 +56,7 @@ alias_valid (struct t_alias *alias)
             return 1;
     }
 
-    /* alias not found */
+    /* Alias not found */
     return 0;
 }
 
@@ -176,7 +176,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
             {
                 if (pos[1] == '*')
                 {
-                    /* replace with all arguments */
+                    /* Replace with all arguments. */
                     offset = 2;
                     if (pos > start)
                         alias_string_add_word_range (result, start, pos);
@@ -184,7 +184,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
                 }
                 else if (pos[1] == '&')
                 {
-                    /* replace with all arguments, auto-escaping double quotes */
+                    /* Replace with all arguments, auto-escaping double quotes. */
                     offset = 2;
                     if (pos > start)
                         alias_string_add_word_range (result, start, pos);
@@ -197,7 +197,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
                 }
                 else if (pos[1] == '~')
                 {
-                    /* replace with last argument */
+                    /* Replace with last argument. */
                     offset = 2;
                     if (pos > start)
                         alias_string_add_word_range (result, start, pos);
@@ -206,7 +206,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
                 }
                 else if ((pos[1] == '-') && ALIAS_IS_ARG_NUMBER(pos[2]))
                 {
-                    /* replace with arguments 1 to m */
+                    /* Replace with arguments 1 to m. */
                     offset = 3;
                     if (pos > start)
                         alias_string_add_word_range (result, start, pos);
@@ -223,7 +223,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
                         alias_string_add_word_range (result, start, pos);
                     if (pos[2] != '-')
                     {
-                        /* replace with argument n */
+                        /* Replace with argument n. */
                         offset = 2;
                         if (n < argc)
                             weechat_string_dyn_concat (result, argv[n], -1);
@@ -232,7 +232,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
                     {
                         if (ALIAS_IS_ARG_NUMBER(pos[3]))
                         {
-                            /* replace with arguments n to m */
+                            /* Replace with arguments n to m. */
                             offset = 4;
                             if (pos[3] - '1' < argc)
                                 m = pos[3] - '1';
@@ -241,7 +241,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
                         }
                         else
                         {
-                            /* replace with arguments n to last */
+                            /* Replace with arguments n to last. */
                             offset = 3;
                             m = argc - 1;
                         }
@@ -279,21 +279,21 @@ alias_run_command (struct t_gui_buffer **buffer, const char *command)
     char *string;
     struct t_gui_buffer *old_current_buffer, *new_current_buffer;
 
-    /* save current buffer pointer */
+    /* Save current buffer pointer. */
     old_current_buffer = weechat_current_buffer ();
 
-    /* execute command */
+    /* Execute command. */
     string = weechat_buffer_string_replace_local_var (*buffer, command);
     weechat_command (*buffer,
                      (string) ? string : command);
     free (string);
 
-    /* get new current buffer */
+    /* Get new current buffer. */
     new_current_buffer = weechat_current_buffer ();
 
     /*
-     * if current buffer was changed by command, then we'll use this one for
-     * next commands in alias
+     * If current buffer was changed by command, then we'll use this one for
+     * next commands in alias.
      */
     if (old_current_buffer != new_current_buffer)
         *buffer = new_current_buffer;
@@ -313,7 +313,7 @@ alias_cb (const void *pointer, void *data,
     char *args_replaced, **alias_command;
     int some_args_replaced;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) argv;
 
@@ -330,7 +330,7 @@ alias_cb (const void *pointer, void *data,
     }
     else
     {
-        /* an alias can contain many commands separated by ';' */
+        /* An alias can contain many commands separated by ';'. */
         commands = weechat_string_split_command (ptr_alias->command, ';');
         if (commands)
         {
@@ -347,9 +347,9 @@ alias_cb (const void *pointer, void *data,
                     some_args_replaced = 1;
 
                 /*
-                 * if alias has arguments, they are now
+                 * If alias has arguments, they are now
                  * arguments of the last command in the list (if no $1,$2,..$*)
-                 * was found
+                 * was found.
                  */
                 if ((*ptr_next_cmd == NULL) && argv_eol[1] && !some_args_replaced)
                 {
@@ -414,16 +414,16 @@ alias_hook_command (struct t_alias *alias)
     }
 
     /*
-     * build string with priority and name: the alias priority is 2000, which
+     * Build string with priority and name: the alias priority is 2000, which
      * is greater than default one (1000), so the alias is executed before a
-     * command (if a command with same name exists in core or in another plugin)
+     * command (if a command with same name exists in core or in another plugin).
      */
     weechat_asprintf (&str_priority_name, "2000|%s", alias->name);
 
     /*
-     * if alias has no custom completion, then default is to complete with
+     * If alias has no custom completion, then default is to complete with
      * completion template of target command, for example if alias is
-     * "/alias add test /buffer", then str_completion will be "%%buffer"
+     * "/alias add test /buffer", then str_completion will be "%%buffer".
      */
     str_completion = NULL;
     if (!alias->completion)
@@ -461,7 +461,7 @@ alias_find_pos (const char *name)
             return ptr_alias;
     }
 
-    /* position not found (we will add to the end of list) */
+    /* Position not found (we will add to the end of list) */
     return NULL;
 }
 
@@ -479,7 +479,7 @@ alias_insert (struct t_alias *alias)
         pos_alias = alias_find_pos (alias->name);
         if (pos_alias)
         {
-            /* insert alias into the list (before alias found) */
+            /* Insert alias into the list (before alias found). */
             alias->prev_alias = pos_alias->prev_alias;
             alias->next_alias = pos_alias;
             if (pos_alias->prev_alias)
@@ -490,7 +490,7 @@ alias_insert (struct t_alias *alias)
         }
         else
         {
-            /* add alias to end of list */
+            /* Add alias to end of list. */
             alias->prev_alias = last_alias;
             alias->next_alias = NULL;
             last_alias->next_alias = alias;
@@ -539,7 +539,7 @@ alias_rename (struct t_alias *alias, const char *new_name)
     if (!alias || !new_name || !new_name[0] || alias_search (new_name))
         return 0;
 
-    /* rename options */
+    /* Rename options. */
     ptr_option = weechat_config_search_option (
         alias_config_file,
         alias_config_section_cmd,
@@ -553,14 +553,14 @@ alias_rename (struct t_alias *alias, const char *new_name)
     if (ptr_option)
         weechat_config_option_rename (ptr_option, new_name);
 
-    /* rename alias */
+    /* Rename alias. */
     free (alias->name);
     alias->name = strdup (new_name);
 
-    /* hook command again */
+    /* Hook command again. */
     alias_hook_command (alias);
 
-    /* move alias in list (to keep list sorted) */
+    /* Move alias in list (to keep list sorted). */
     alias_remove_from_list (alias);
     alias_insert (alias);
 
@@ -579,7 +579,7 @@ alias_free (struct t_alias *alias)
 
     alias_remove_from_list (alias);
 
-    /* free data */
+    /* Free data. */
     weechat_unhook (alias->hook);
     free (alias->name);
     free (alias->command);
@@ -608,11 +608,11 @@ alias_free_all (void)
 void
 alias_update_completion (struct t_alias *alias, const char *completion)
 {
-    /* update completion in alias */
+    /* Update completion in alias. */
     free (alias->completion);
     alias->completion = (completion) ? strdup (completion) : NULL;
 
-    /* hook command again, with new completion */
+    /* Hook command again, with new completion. */
     alias_hook_command (alias);
 }
 
@@ -630,15 +630,15 @@ alias_name_valid (const char *name)
     if (!name || !name[0])
         return 0;
 
-    /* no spaces allowed */
+    /* No spaces allowed */
     if (strchr (name, ' '))
         return 0;
 
-    /* no slashes allowed */
+    /* No slashes allowed */
     if (strchr (name, '/'))
         return 0;
 
-    /* name is valid */
+    /* Name is valid */
     return 1;
 }
 
@@ -740,7 +740,7 @@ alias_add_to_infolist (struct t_infolist *infolist, struct t_alias *alias)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -767,7 +767,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     alias_config_write ();

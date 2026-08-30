@@ -24,11 +24,11 @@ TEST_GROUP(ScriptRepo)
 
 TEST(ScriptRepo, ScriptNameValid)
 {
-    /* invalid script name */
+    /* Invalid script name */
     LONGS_EQUAL(0, script_repo_script_name_valid (NULL));
     LONGS_EQUAL(0, script_repo_script_name_valid (""));
 
-    /* directory separator */
+    /* Directory separator */
     LONGS_EQUAL(0, script_repo_script_name_valid ("/"));
     LONGS_EQUAL(0, script_repo_script_name_valid ("/etc/passwd"));
     LONGS_EQUAL(0, script_repo_script_name_valid ("../test"));
@@ -51,12 +51,12 @@ TEST(ScriptRepo, ScriptNameValid)
     /*
      * "." and ".." are accepted: they are single path components and the
      * script extension is always appended to the name, so they can not be
-     * used to escape the scripts directory
+     * used to escape the scripts directory.
      */
     LONGS_EQUAL(1, script_repo_script_name_valid ("."));
     LONGS_EQUAL(1, script_repo_script_name_valid (".."));
 
-    /* valid script name */
+    /* Valid script name */
     LONGS_EQUAL(1, script_repo_script_name_valid ("a"));
     LONGS_EQUAL(1, script_repo_script_name_valid ("go"));
     LONGS_EQUAL(1, script_repo_script_name_valid ("iset"));

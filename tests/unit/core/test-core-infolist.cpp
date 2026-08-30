@@ -34,7 +34,7 @@ TEST_GROUP(CoreInfolist)
         struct t_infolist_item *ptr_item;
         static const char buffer[4] = { 'a', 'b', 'c', 0 };
 
-        /* make C++ compiler happy */
+        /* Make C++ compiler happy. */
         (void) pointer;
         (void) data;
         (void) infolist_name;
@@ -113,35 +113,35 @@ TEST(CoreInfolist, New)
     struct t_infolist_var *var_long, *var_longlong;
     const char buffer[3] = { 12, 34, 56 };
 
-    /* create a new infolist */
+    /* Create a new infolist. */
     infolist = infolist_new(NULL);
     CHECK(infolist);
 
-    /* check initial infolist values */
+    /* Check initial infolist values. */
     POINTERS_EQUAL(NULL, infolist->plugin);
     POINTERS_EQUAL(NULL, infolist->items);
     POINTERS_EQUAL(NULL, infolist->last_item);
     POINTERS_EQUAL(NULL, infolist->ptr_item);
 
-    /* check that the infolist is the last one in list */
+    /* Check that the infolist is the last one in list. */
     POINTERS_EQUAL(last_weechat_infolist, infolist);
 
-    /* create a new item in infolist */
+    /* Create a new item in infolist. */
     item = infolist_new_item (infolist);
     CHECK(item);
 
-    /* check initial item values */
+    /* Check initial item values. */
     POINTERS_EQUAL(NULL, item->vars);
     POINTERS_EQUAL(NULL, item->last_var);
     STRCMP_EQUAL(NULL, item->fields);
     POINTERS_EQUAL(NULL, item->prev_item);
     POINTERS_EQUAL(NULL, item->next_item);
 
-    /* check that item is in infolist */
+    /* Check that item is in infolist. */
     POINTERS_EQUAL(item, infolist->items);
     POINTERS_EQUAL(item, infolist->last_item);
 
-    /* test integer variable */
+    /* Test integer variable. */
     var_int = infolist_new_var_integer (item, "test_integer", 123456);
     CHECK(var_int);
     STRCMP_EQUAL("test_integer", var_int->name);
@@ -153,7 +153,7 @@ TEST(CoreInfolist, New)
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_int, item->last_var);
 
-    /* test string variable */
+    /* Test string variable. */
     var_str = infolist_new_var_string (item, "test_string", "abc");
     CHECK(var_str);
     STRCMP_EQUAL("test_string", var_str->name);
@@ -165,7 +165,7 @@ TEST(CoreInfolist, New)
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_str, item->last_var);
 
-    /* test pointer variable */
+    /* Test pointer variable. */
     var_ptr = infolist_new_var_pointer (item, "test_pointer",
                                         (void *)0x123abc);
     CHECK(var_ptr);
@@ -178,7 +178,7 @@ TEST(CoreInfolist, New)
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_ptr, item->last_var);
 
-    /* test buffer variable */
+    /* Test buffer variable. */
     var_buf = infolist_new_var_buffer (item, "test_buffer", (void *)buffer, 3);
     CHECK(var_buf);
     STRCMP_EQUAL("test_buffer", var_buf->name);
@@ -192,7 +192,7 @@ TEST(CoreInfolist, New)
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_buf, item->last_var);
 
-    /* test time variable */
+    /* Test time variable. */
     var_time = infolist_new_var_time (item, "test_time", 1234567890);
     CHECK(var_time);
     STRCMP_EQUAL("test_time", var_time->name);
@@ -204,7 +204,7 @@ TEST(CoreInfolist, New)
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_time, item->last_var);
 
-    /* test long variable */
+    /* Test long variable. */
     var_long = infolist_new_var_long (item, "test_long", 2123456789);
     CHECK(var_long);
     STRCMP_EQUAL("test_long", var_long->name);
@@ -216,7 +216,7 @@ TEST(CoreInfolist, New)
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_long, item->last_var);
 
-    /* test long long variable */
+    /* Test long long variable. */
     var_longlong = infolist_new_var_longlong (item, "test_longlong", 9123456789123456789);
     CHECK(var_longlong);
     STRCMP_EQUAL("test_longlong", var_longlong->name);
@@ -252,10 +252,10 @@ TEST(CoreInfolist, NewVarTakeOwnership)
     CHECK(item);
 
     /*
-     * error cases: with invalid arguments the functions must return NULL and
+     * Error cases: with invalid arguments the functions must return NULL and
      * free the name (and, for string/buffer, the value/pointer) they were
      * given (checked by ASAN/valgrind); heap-allocated name and value are
-     * passed on purpose to exercise those frees
+     * passed on purpose to exercise those frees.
      */
     POINTERS_EQUAL(NULL, infolist_new_var_integer_take_name_ownership (
                              NULL, strdup ("test"), 123));
@@ -282,24 +282,24 @@ TEST(CoreInfolist, NewVarTakeOwnership)
     POINTERS_EQUAL(NULL, infolist_new_var_time_take_name_ownership (
                              item, strdup (""), 456));
 
-    /* add an integer variable, taking ownership of the name */
+    /* Add an integer variable, taking ownership of the name. */
     int_name = strdup ("test_integer");
     var_int = infolist_new_var_integer_take_name_ownership (item, int_name,
                                                             123);
     CHECK(var_int);
-    /* the name pointer is stored as-is, not copied */
+    /* The name pointer is stored as-is, not copied. */
     POINTERS_EQUAL(int_name, var_int->name);
     STRCMP_EQUAL("test_integer", var_int->name);
     LONGS_EQUAL(INFOLIST_INTEGER, var_int->type);
     LONGS_EQUAL(123, *((int *)var_int->value));
 
-    /* add a string variable, taking ownership of the name and the value */
+    /* Add a string variable, taking ownership of the name and the value. */
     str_name = strdup ("test_string");
     str_value = strdup ("test ownership");
     var_str = infolist_new_var_string_take_ownership (item, str_name,
                                                       str_value);
     CHECK(var_str);
-    /* the name and value pointers are stored as-is, not copied */
+    /* The name and value pointers are stored as-is, not copied. */
     POINTERS_EQUAL(str_name, var_str->name);
     STRCMP_EQUAL("test_string", var_str->name);
     LONGS_EQUAL(INFOLIST_STRING, var_str->type);
@@ -307,7 +307,7 @@ TEST(CoreInfolist, NewVarTakeOwnership)
     STRCMP_EQUAL("test ownership", (const char *)var_str->value);
     LONGS_EQUAL(0, var_str->size);
 
-    /* add a buffer variable, taking ownership of the name and the pointer */
+    /* Add a buffer variable, taking ownership of the name and the pointer. */
     buf_name = strdup ("test_buffer");
     buf_value = (char *)malloc (3);
     buf_value[0] = 12;
@@ -316,7 +316,7 @@ TEST(CoreInfolist, NewVarTakeOwnership)
     var_buf = infolist_new_var_buffer_take_ownership (item, buf_name,
                                                       buf_value, 3);
     CHECK(var_buf);
-    /* the name and pointer are stored as-is, not copied */
+    /* The name and pointer are stored as-is, not copied. */
     POINTERS_EQUAL(buf_name, var_buf->name);
     STRCMP_EQUAL("test_buffer", var_buf->name);
     LONGS_EQUAL(INFOLIST_BUFFER, var_buf->type);
@@ -326,22 +326,22 @@ TEST(CoreInfolist, NewVarTakeOwnership)
     LONGS_EQUAL(56, ((char *)var_buf->value)[2]);
     LONGS_EQUAL(3, var_buf->size);
 
-    /* add a time variable, taking ownership of the name */
+    /* Add a time variable, taking ownership of the name. */
     time_name = strdup ("test_time");
     var_time = infolist_new_var_time_take_name_ownership (item, time_name,
                                                           1234567890);
     CHECK(var_time);
-    /* the name pointer is stored as-is, not copied */
+    /* The name pointer is stored as-is, not copied. */
     POINTERS_EQUAL(time_name, var_time->name);
     STRCMP_EQUAL("test_time", var_time->name);
     LONGS_EQUAL(INFOLIST_TIME, var_time->type);
     LONGS_EQUAL(1234567890, *((time_t *)var_time->value));
 
-    /* check that variables are chained in the item, first to last */
+    /* Check that variables are chained in the item, first to last. */
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_time, item->last_var);
 
-    /* infolist_free frees the owned names and the string/buffer values */
+    /* Infolist_free frees the owned names and the string/buffer values. */
     infolist_free (infolist);
 }
 
@@ -365,7 +365,7 @@ TEST(CoreInfolist, Valid)
 
     LONGS_EQUAL(0, infolist_valid (infolist));
 
-    /* test free of NULL infolist */
+    /* Test free of NULL infolist. */
     infolist_free (NULL);
 }
 
@@ -382,31 +382,31 @@ TEST(CoreInfolist, Search)
 
     infolist = hook_infolist_get (NULL, "infolist_test", NULL, "test2");
 
-    /* move to first item in infolist */
+    /* Move to first item in infolist. */
     ptr_item = infolist->items;
     POINTERS_EQUAL(ptr_item, infolist_next (infolist));
 
-    /* search the first variable */
+    /* Search the first variable. */
     ptr_var = infolist_search_var (infolist, "integer");
     POINTERS_EQUAL(ptr_item->vars, ptr_var);
 
-    /* search the second variable */
+    /* Search the second variable. */
     ptr_var = infolist_search_var (infolist, "string");
     POINTERS_EQUAL(ptr_item->vars->next_var, ptr_var);
 
-    /* search an unknown variable */
+    /* Search an unknown variable. */
     ptr_var = infolist_search_var (infolist, "string2");
     POINTERS_EQUAL(NULL, ptr_var);
 
-    /* move to second item in infolist */
+    /* Move to second item in infolist. */
     ptr_item = ptr_item->next_item;
     POINTERS_EQUAL(ptr_item, infolist_next (infolist));
 
-    /* search the first variable */
+    /* Search the first variable. */
     ptr_var = infolist_search_var (infolist, "string2");
     POINTERS_EQUAL(ptr_item->vars, ptr_var);
 
-    /* search an unknown variable */
+    /* Search an unknown variable. */
     ptr_var = infolist_search_var (infolist, "string3");
     POINTERS_EQUAL(NULL, ptr_var);
 
@@ -432,29 +432,29 @@ TEST(CoreInfolist, Move)
     infolist_prev (NULL);
     infolist_reset_item_cursor (NULL);
 
-    /* move to first item in infolist */
+    /* Move to first item in infolist. */
     POINTERS_EQUAL(infolist->items, infolist_next (infolist));
     POINTERS_EQUAL(infolist->items, infolist->ptr_item);
 
-    /* reset item cursor */
+    /* Reset item cursor. */
     infolist_reset_item_cursor (infolist);
     POINTERS_EQUAL(NULL, infolist->ptr_item);
 
     infolist_next (infolist);
 
-    /* move to second item in infolist */
+    /* Move to second item in infolist. */
     POINTERS_EQUAL(infolist->items->next_item, infolist_next (infolist));
     POINTERS_EQUAL(infolist->items->next_item, infolist->ptr_item);
 
-    /* move back to first item in infolist */
+    /* Move back to first item in infolist. */
     POINTERS_EQUAL(infolist->items, infolist_prev (infolist));
     POINTERS_EQUAL(infolist->items, infolist->ptr_item);
 
-    /* move before first item in infolist */
+    /* Move before first item in infolist. */
     POINTERS_EQUAL(NULL, infolist_prev (infolist));
     POINTERS_EQUAL(NULL, infolist->ptr_item);
 
-    /* move after second item in infolist */
+    /* Move after second item in infolist. */
     infolist_next (infolist);
     infolist_next (infolist);
     POINTERS_EQUAL(NULL, infolist_next (infolist));
@@ -473,26 +473,26 @@ TEST(CoreInfolist, Get)
     struct t_infolist *infolist;
     struct t_infolist_var *ptr_var;
 
-    /* get an infolist with one item */
+    /* Get an infolist with one item. */
     infolist = hook_infolist_get (NULL, "infolist_test", NULL, NULL);
     CHECK(infolist);
 
-    /* check that there is only one item */
+    /* Check that there is only one item. */
     CHECK(infolist->items);
     POINTERS_EQUAL(NULL, infolist->items->next_item);
 
     infolist_free (infolist);
 
-    /* get an infolist with two items */
+    /* Get an infolist with two items. */
     infolist = hook_infolist_get (NULL, "infolist_test", NULL, "test2");
     CHECK(infolist);
 
-    /* check that there are exactly two items */
+    /* Check that there are exactly two items. */
     CHECK(infolist->items);
     CHECK(infolist->items->next_item);
     POINTERS_EQUAL(NULL, infolist->items->next_item->next_item);
 
-    /* check variables in first item */
+    /* Check variables in first item. */
     ptr_var = infolist->items->vars;
     STRCMP_EQUAL("integer", ptr_var->name);
     ptr_var = ptr_var->next_var;
@@ -509,7 +509,7 @@ TEST(CoreInfolist, Get)
     STRCMP_EQUAL("longlong", ptr_var->name);
     LONGS_EQUAL(NULL, ptr_var->next_var);
 
-    /* check variables in second item */
+    /* Check variables in second item. */
     ptr_var = infolist->items->next_item->vars;
     STRCMP_EQUAL("string2", ptr_var->name);
     LONGS_EQUAL(NULL, ptr_var->next_var);
@@ -565,13 +565,13 @@ TEST(CoreInfolist, Fields)
     infolist = hook_infolist_get (NULL, "infolist_test", NULL, "test2");
     CHECK(infolist);
 
-    /* check fields in first item */
+    /* Check fields in first item. */
     infolist_next (infolist);
     LONGS_EQUAL(NULL, infolist->items->fields);
     STRCMP_EQUAL(fields1, infolist_fields (infolist));
     STRCMP_EQUAL(fields1, infolist->items->fields);
 
-    /* check fields in second item */
+    /* Check fields in second item. */
     infolist_next (infolist);
     LONGS_EQUAL(NULL, infolist->items->next_item->fields);
     STRCMP_EQUAL(fields2, infolist_fields (infolist));

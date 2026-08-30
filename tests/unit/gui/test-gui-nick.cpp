@@ -188,9 +188,9 @@ TEST(GuiNick, HashSum32)
 
 TEST(GuiNick, HashColor)
 {
-    /* hash without salt */
+    /* Hash without salt. */
 
-    /* test hash: djb2 */
+    /* Test hash: djb2. */
     config_file_option_set (config_look_nick_color_hash, "djb2", 1);
 
     UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color (NULL, 256));
@@ -209,7 +209,7 @@ TEST(GuiNick, HashColor)
                                                              "abcdefghijklmnopqrstuvwxyz", 256));
     UNSIGNED_LONGS_EQUAL(UINT64_C(94), gui_nick_hash_color ("zzzzzz", 256));
 
-    /* test hash: sum */
+    /* Test hash: sum. */
     config_file_option_set (config_look_nick_color_hash, "sum", 1);
 
     UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color (NULL, 256));
@@ -224,7 +224,7 @@ TEST(GuiNick, HashColor)
                                                             "abcdefghijklmnopqrstuvwxyz", 256));
     UNSIGNED_LONGS_EQUAL(UINT64_C(220), gui_nick_hash_color ("zzzzzz", 256));
 
-    /* test hash: djb2_32 */
+    /* Test hash: djb2_32. */
     config_file_option_set (config_look_nick_color_hash, "djb2_32", 1);
 
     UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color (NULL, 256));
@@ -243,7 +243,7 @@ TEST(GuiNick, HashColor)
                                                              "abcdefghijklmnopqrstuvwxyz", 256));
     UNSIGNED_LONGS_EQUAL(UINT64_C(94), gui_nick_hash_color ("zzzzzz", 256));
 
-    /* test hash: sum_32 */
+    /* Test hash: sum_32. */
     config_file_option_set (config_look_nick_color_hash, "sum_32", 1);
 
     UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color (NULL, 256));
@@ -262,26 +262,26 @@ TEST(GuiNick, HashColor)
                                                             "abcdefghijklmnopqrstuvwxyz", 256));
     UNSIGNED_LONGS_EQUAL(UINT64_C(220), gui_nick_hash_color ("zzzzzz", 256));
 
-    /* hash with salt */
+    /* Hash with salt. */
 
     config_file_option_set (config_look_nick_color_hash_salt, "abc", 1);
 
-    /* test hash: djb2 */
+    /* Test hash: djb2. */
     config_file_option_set (config_look_nick_color_hash, "djb2", 1);
     UNSIGNED_LONGS_EQUAL(UINT64_C(146), gui_nick_hash_color ("def", 256));
     UNSIGNED_LONGS_EQUAL(UINT64_C(199603970247853410), gui_nick_hash_color ("abcdef", -1));
 
-    /* test hash: sum */
+    /* Test hash: sum. */
     config_file_option_set (config_look_nick_color_hash, "sum", 1);
     UNSIGNED_LONGS_EQUAL(UINT64_C(85), gui_nick_hash_color ("def", 256));
     UNSIGNED_LONGS_EQUAL(UINT64_C(891), gui_nick_hash_color ("abcdef", -1));
 
-    /* test hash: djb2_32 */
+    /* Test hash: djb2_32. */
     config_file_option_set (config_look_nick_color_hash, "djb2_32", 1);
     UNSIGNED_LONGS_EQUAL(UINT64_C(146), gui_nick_hash_color ("def", 256));
     UNSIGNED_LONGS_EQUAL(UINT64_C(2988541282), gui_nick_hash_color ("abcdef", -1));
 
-    /* test hash: sum_32 */
+    /* Test hash: sum_32. */
     config_file_option_set (config_look_nick_color_hash, "sum_32", 1);
     UNSIGNED_LONGS_EQUAL(UINT64_C(85), gui_nick_hash_color ("def", 256));
     UNSIGNED_LONGS_EQUAL(UINT64_C(891), gui_nick_hash_color ("abcdef", -1));
@@ -348,32 +348,32 @@ TEST(GuiNick, FindColor)
     WEE_FIND_COLOR("212", "abcdef", -1, NULL);
     WEE_FIND_COLOR("92", "abcdefghi", -1, NULL);
 
-    /* with forced color */
+    /* With forced color */
     config_file_option_set (config_look_nick_color_force,
                             "abcdef:green;abcdefghi:125", 1);
     WEE_FIND_COLOR("green", "abcdef", -1, NULL);
     WEE_FIND_COLOR("125", "abcdefghi", -1, NULL);
     config_file_option_reset (config_look_nick_color_force, 1);
 
-    /* with custom colors */
+    /* With custom colors */
     WEE_FIND_COLOR("214", "abcdef", -1, "red,blue,214,magenta");
     WEE_FIND_COLOR("blue", "abcdefghi", -1, "red,blue,214,magenta");
 
-    /* with forced color and custom colors (forced color is ignored) */
+    /* With forced color and custom colors (forced color is ignored) */
     config_file_option_set (config_look_nick_color_force,
                             "abcdef:green;abcdefghi:125", 1);
     WEE_FIND_COLOR("214", "abcdef", -1, "red,blue,214,magenta");
     WEE_FIND_COLOR("blue", "abcdefghi", -1, "red,blue,214,magenta");
     config_file_option_reset (config_look_nick_color_force, 1);
 
-    /* with case range */
+    /* With case range */
     WEE_FIND_COLOR("176", "ABCDEF]^", -1, NULL);
     WEE_FIND_COLOR("186", "ABCDEF]^", 0, NULL);
     WEE_FIND_COLOR("174", "ABCDEF]^", 30, NULL);
     WEE_FIND_COLOR("148", "ABCDEF]^", 29, NULL);
     WEE_FIND_COLOR("186", "ABCDEF]^", 26, NULL);
 
-    /* with case range and custom colors */
+    /* With case range and custom colors */
     WEE_FIND_COLOR("214", "ABCDEF]^", -1, "red,blue,214,magenta,yellow");
     WEE_FIND_COLOR("yellow", "ABCDEF]^", 0, "red,blue,214,magenta,yellow");
     WEE_FIND_COLOR("blue", "ABCDEF]^", 30, "red,blue,214,magenta,yellow");

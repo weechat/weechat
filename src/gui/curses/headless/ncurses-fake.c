@@ -9,7 +9,7 @@
 #include "ncurses-fake.h"
 
 
-/* simulate 80x25 terminal */
+/* Simulate 80x25 terminal. */
 WINDOW _stdscr = { 0, 0, 24, 79, 0, 0 };
 WINDOW *stdscr = &_stdscr;
 chtype acs_map[256];
@@ -265,7 +265,7 @@ wclear (WINDOW *win)
 bool
 can_change_color (void)
 {
-    /* not supported in WeeChat anyway */
+    /* Not supported in WeeChat anyway */
     return FALSE;
 }
 

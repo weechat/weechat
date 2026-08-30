@@ -22,7 +22,7 @@
 struct t_irc_redirect_pattern *irc_redirect_patterns = NULL;
 struct t_irc_redirect_pattern *last_irc_redirect_pattern = NULL;
 
-/* default redirect patterns */
+/* Default redirect patterns */
 struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
 {
     { "ison", 0, 0,
@@ -258,7 +258,7 @@ irc_redirect_pattern_search (const char *name)
             return ptr_redirect_pattern;
     }
 
-    /* redirect pattern not found */
+    /* Redirect pattern not found */
     return NULL;
 }
 
@@ -287,7 +287,7 @@ irc_redirect_pattern_new (const char *name, int temp_pattern, int timeout,
         return NULL;
     }
 
-    /* check if redirect pattern already exists */
+    /* Check if redirect pattern already exists. */
     ptr_redirect_pattern = irc_redirect_pattern_search (name);
     if (ptr_redirect_pattern)
     {
@@ -302,7 +302,7 @@ irc_redirect_pattern_new (const char *name, int temp_pattern, int timeout,
     if (!new_redirect_pattern)
         return NULL;
 
-    /* initialize new redirect */
+    /* Initialize new redirect. */
     new_redirect_pattern->name = strdup (name);
     new_redirect_pattern->temp_pattern = temp_pattern;
     new_redirect_pattern->timeout = (timeout > 0) ? timeout : IRC_REDIRECT_TIMEOUT_DEFAULT;
@@ -310,7 +310,7 @@ irc_redirect_pattern_new (const char *name, int temp_pattern, int timeout,
     new_redirect_pattern->cmd_stop = strdup (cmd_stop);
     new_redirect_pattern->cmd_extra = (cmd_extra) ? strdup (cmd_extra) : NULL;
 
-    /* add redirect pattern to end of list */
+    /* Add redirect pattern to end of list. */
     new_redirect_pattern->prev_redirect = last_irc_redirect_pattern;
     if (last_irc_redirect_pattern)
         last_irc_redirect_pattern->next_redirect = new_redirect_pattern;
@@ -334,7 +334,7 @@ irc_redirect_pattern_free (struct t_irc_redirect_pattern *redirect_pattern)
     if (!redirect_pattern)
         return;
 
-    /* remove redirect */
+    /* Remove redirect. */
     if (last_irc_redirect_pattern == redirect_pattern)
         last_irc_redirect_pattern = redirect_pattern->prev_redirect;
     if (redirect_pattern->prev_redirect)
@@ -348,7 +348,7 @@ irc_redirect_pattern_free (struct t_irc_redirect_pattern *redirect_pattern)
     if (redirect_pattern->next_redirect)
         (redirect_pattern->next_redirect)->prev_redirect = redirect_pattern->prev_redirect;
 
-    /* free data */
+    /* Free data. */
     free (redirect_pattern->name);
     free (redirect_pattern->cmd_start);
     free (redirect_pattern->cmd_stop);
@@ -397,7 +397,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
     if (!new_redirect)
         return NULL;
 
-    /* create hashtables with commands */
+    /* Create hashtables with commands. */
     for (i = 0; i < 4; i++)
     {
         hash_cmd[i] = NULL;
@@ -463,7 +463,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
         }
     }
 
-    /* initialize new redirect */
+    /* Initialize new redirect. */
     new_redirect->server = server;
     new_redirect->pattern = strdup (pattern);
     new_redirect->signal = strdup (signal);
@@ -483,7 +483,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
     new_redirect->output = NULL;
     new_redirect->output_size = 0;
 
-    /* add redirect to end of list */
+    /* Add redirect to end of list. */
     new_redirect->prev_redirect = server->last_redirect;
     if (server->last_redirect)
         (server->last_redirect)->next_redirect = new_redirect;
@@ -556,8 +556,8 @@ irc_redirect_new (struct t_irc_server *server,
         cmd_filter);
 
     /*
-     * remove redirect pattern if it is temporary (created by external
-     * plugin/script)
+     * Remove redirect pattern if it is temporary (created by external
+     * plugin/script).
      */
     if (new_redirect && ptr_redirect_pattern->temp_pattern)
         irc_redirect_pattern_free (ptr_redirect_pattern);
@@ -586,7 +586,7 @@ irc_redirect_search_available (struct t_irc_server *server)
             return ptr_redirect;
     }
 
-    /* no redirect available */
+    /* No redirect available */
     return NULL;
 }
 
@@ -651,8 +651,8 @@ irc_redirect_message_match_hash (struct t_irc_redirect *redirect,
         return 0;
 
     /*
-     * if string is in redirect and that this command requires string to
-     * be in message, then search for this string
+     * If string is in redirect and that this command requires string to
+     * be in message, then search for this string.
      */
     if (redirect->string && redirect->string[0] && (*value >= 0))
     {
@@ -677,14 +677,14 @@ irc_redirect_message_add (struct t_irc_redirect *redirect, const char *message,
     char *output2;
 
     /*
-     * if command is not for output, then don't add message
-     * (it is silently ignored)
+     * If command is not for output, then don't add message
+     * (it is silently ignored).
      */
     if (redirect->cmd_filter
         && !weechat_hashtable_has_key (redirect->cmd_filter, command))
         return;
 
-    /* add message to output */
+    /* Add message to output. */
     if (redirect->output)
     {
         redirect->output_size += strlen ("\n") + strlen (message);
@@ -725,17 +725,14 @@ irc_redirect_stop (struct t_irc_redirect *redirect, const char *error)
 
     if (error || (redirect->current_count > redirect->count))
     {
-        /*
-         * error or max count reached, then we run callback and remove
-         * redirect
-         */
+        /* Error or max count reached, then we run callback and remove redirect. */
         hashtable = weechat_hashtable_new (32,
                                            WEECHAT_HASHTABLE_STRING,
                                            WEECHAT_HASHTABLE_STRING,
                                            NULL, NULL);
         if (hashtable)
         {
-            /* set error and output (main fields) */
+            /* Set error and output (main fields). */
             weechat_hashtable_set (hashtable, "error",
                                    (error) ? (char *)error : "");
             weechat_hashtable_set (hashtable, "output",
@@ -743,7 +740,7 @@ irc_redirect_stop (struct t_irc_redirect *redirect, const char *error)
             snprintf (str_int, sizeof (str_int), "%d", redirect->output_size);
             weechat_hashtable_set (hashtable, "output_size", str_int);
 
-            /* set some other fields with values from redirect */
+            /* Set some other fields with values from redirect. */
             weechat_hashtable_set (hashtable, "server", redirect->server->name);
             weechat_hashtable_set (hashtable, "pattern", redirect->pattern);
             weechat_hashtable_set (hashtable, "signal", redirect->signal);
@@ -761,8 +758,8 @@ irc_redirect_stop (struct t_irc_redirect *redirect, const char *error)
     else
     {
         /*
-         * max count not yet reached, then we prepare redirect to continue
-         * redirection
+         * Max count not yet reached, then we prepare redirect to continue
+         * redirection.
          */
         redirect->cmd_start_received = 0;
         redirect->cmd_stop_received = 0;
@@ -833,7 +830,7 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
             }
             else
             {
-                /* message matches a start command? */
+                /* Message matches a start command? */
                 if (ptr_redirect->cmd_start
                     && !ptr_redirect->cmd_start_received
                     && irc_redirect_message_match_hash (ptr_redirect,
@@ -843,9 +840,9 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
                                                         ptr_redirect->cmd_start))
                 {
                     /*
-                     * message is a start command for redirection, then add
+                     * Message is a start command for redirection, then add
                      * message to output for redirection and mark start
-                     * command as "received" for this redirect
+                     * command as "received" for this redirect.
                      */
                     irc_redirect_message_add (ptr_redirect, message, command);
                     ptr_redirect->cmd_start_received = 1;
@@ -853,9 +850,9 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
                     goto end;
                 }
                 /*
-                 * if matching stop command, or start command received, we are
+                 * If matching stop command, or start command received, we are
                  * in redirection: add message to output and close redirection
-                 * if matching stop command
+                 * if matching stop command.
                  */
                 match_stop = irc_redirect_message_match_hash (ptr_redirect,
                                                               command,
@@ -865,8 +862,8 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
                 if (match_stop || ptr_redirect->cmd_start_received)
                 {
                     /*
-                     * add message to output if matching stop or if command
-                     * is numeric
+                     * Add message to output if matching stop or if command
+                     * is numeric.
                      */
                     irc_redirect_message_add (ptr_redirect, message, command);
                     if (match_stop)
@@ -881,18 +878,15 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
                                                                  ptr_redirect->cmd_extra))
                             {
                                 /*
-                                 * this command is a stop and extra command,
-                                 * then remove redirect
+                                 * This command is a stop and extra command,
+                                 * then remove redirect.
                                  */
                                 irc_redirect_stop (ptr_redirect, NULL);
                             }
                         }
                         else
                         {
-                            /*
-                             * no extra command after stop, then remove
-                             * redirect
-                             */
+                            /* No extra command after stop, then remove redirect. */
                             irc_redirect_stop (ptr_redirect, NULL);
                         }
                     }
@@ -927,7 +921,7 @@ irc_redirect_free (struct t_irc_redirect *redirect)
 
     server = redirect->server;
 
-    /* remove redirect */
+    /* Remove redirect. */
     if (server->last_redirect == redirect)
         server->last_redirect = redirect->prev_redirect;
     if (redirect->prev_redirect)
@@ -941,7 +935,7 @@ irc_redirect_free (struct t_irc_redirect *redirect)
     if (redirect->next_redirect)
         (redirect->next_redirect)->prev_redirect = redirect->prev_redirect;
 
-    /* remove any pointer to this redirect */
+    /* Remove any pointer to this redirect. */
     for (priority = 0; priority < IRC_SERVER_NUM_OUTQUEUES_PRIO; priority++)
     {
         for (ptr_outqueue = server->outqueue[priority]; ptr_outqueue;
@@ -952,7 +946,7 @@ irc_redirect_free (struct t_irc_redirect *redirect)
         }
     }
 
-    /* free data */
+    /* Free data. */
     free (redirect->pattern);
     free (redirect->signal);
     free (redirect->string);
@@ -991,7 +985,7 @@ irc_redirect_hdata_redirect_pattern_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1023,7 +1017,7 @@ irc_redirect_hdata_redirect_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1241,7 +1235,7 @@ irc_redirect_pattern_hsignal_cb (const void *pointer, void *data,
     const char *pattern, *str_timeout, *cmd_start, *cmd_stop, *cmd_extra;
     int number, timeout;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -1281,8 +1275,8 @@ irc_redirect_pattern_hsignal_cb (const void *pointer, void *data,
     }
 
     /*
-     * create a temporary redirect pattern (it will be removed when a
-     * redirect will use it)
+     * Create a temporary redirect pattern (it will be removed when a
+     * redirect will use it).
      */
     irc_redirect_pattern_new (pattern, 1, timeout,
                               cmd_start, cmd_stop, cmd_extra);
@@ -1307,7 +1301,7 @@ irc_redirect_command_hsignal_cb (const void *pointer, void *data,
     struct t_irc_server *ptr_server;
     int number, count, timeout;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;

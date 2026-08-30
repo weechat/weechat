@@ -15,13 +15,13 @@ struct t_relay_server;
 struct t_relay_http_request;
 
 /*
- * maximum length of the partial text message accumulated while reading from
+ * Maximum length of the partial text message accumulated while reading from
  * a client: extra data is ignored once this limit is reached, to protect
- * against a client sending a huge amount of data without an end-of-line
+ * against a client sending a huge amount of data without an end-of-line.
  */
 #define RELAY_CLIENT_PARTIAL_MESSAGE_MAX_LENGTH (8 * 1024 * 1024)
 
-/* type of data exchanged with client */
+/* Type of data exchanged with client */
 
 enum t_relay_client_data_type
 {
@@ -33,7 +33,7 @@ enum t_relay_client_data_type
     RELAY_NUM_CLIENT_DATA_TYPES,
 };
 
-/* websocket status */
+/* Websocket status */
 
 enum t_relay_client_websocket_status
 {
@@ -44,12 +44,12 @@ enum t_relay_client_websocket_status
     RELAY_NUM_CLIENT_WEBSOCKET_STATUS,
 };
 
-/* fake send function (for tests) */
+/* Fake send function (for tests) */
 
 typedef void (t_relay_fake_send_func)(void *client,
                                       const char *data, int data_size);
 
-/* output queue of messages to client */
+/* Output queue of messages to client */
 
 struct t_relay_client_outqueue
 {
@@ -63,7 +63,7 @@ struct t_relay_client_outqueue
     struct t_relay_client_outqueue *prev_outqueue; /* prev msg in queue     */
 };
 
-/* relay client */
+/* Relay client */
 
 struct t_relay_client
 {

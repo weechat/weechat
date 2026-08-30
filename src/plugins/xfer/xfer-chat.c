@@ -101,7 +101,7 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
     int num_read, length, ctcp_action;
     size_t length_partial, length_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) fd;
 
@@ -119,10 +119,10 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
             length_partial = strlen (xfer->unterminated_message);
             length_buffer = strlen (buffer);
             /*
-             * limit the size of the partial message: discard it as well
+             * Limit the size of the partial message: discard it as well
              * as the data received (protection against a remote host sending
              * a huge amount of data without any end-of-line and dribbling it,
-             * which would consume all the memory)
+             * which would consume all the memory).
              */
             if ((length_partial >= XFER_CHAT_PARTIAL_MESSAGE_MAX_LENGTH)
                 || (length_buffer > (XFER_CHAT_PARTIAL_MESSAGE_MAX_LENGTH
@@ -269,7 +269,7 @@ xfer_chat_buffer_input_cb (const void *pointer, void *data,
     struct t_xfer *ptr_xfer;
     char *input_data_color, str_tags[256], *str_color;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -317,7 +317,7 @@ xfer_chat_buffer_close_cb (const void *pointer, void *data,
 {
     struct t_xfer *ptr_xfer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -348,7 +348,7 @@ xfer_chat_apply_props (void *data,
                        const void *key,
                        const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     weechat_buffer_set ((struct t_gui_buffer *)data,

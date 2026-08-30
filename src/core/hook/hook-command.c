@@ -63,7 +63,7 @@ hook_command_search (struct t_weechat_plugin *plugin, const char *command)
             return ptr_hook;
     }
 
-    /* command hook not found for plugin */
+    /* Command hook not found for plugin */
     return NULL;
 }
 
@@ -85,7 +85,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
     if (!completion)
         return;
 
-    /* split templates using "||" as separator */
+    /* Split templates using "||" as separator. */
     hook_command->cplt_num_templates = 1;
     pos_completion = completion;
     while ((pos_double_pipe = strstr (pos_completion, "||")) != NULL)
@@ -133,7 +133,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
             pos_completion = pos_double_pipe + 2;
     }
 
-    /* for each template, split/count args */
+    /* For each template, split/count args. */
     hook_command->cplt_templates_static = malloc (hook_command->cplt_num_templates *
                                                   sizeof (*hook_command->cplt_templates_static));
     hook_command->cplt_template_num_args = malloc (hook_command->cplt_num_templates *
@@ -144,8 +144,8 @@ hook_command_build_completion (struct t_hook_command *hook_command)
     for (i = 0; i < hook_command->cplt_num_templates; i++)
     {
         /*
-         * build static part of template: it's first argument(s) which does not
-         * contain "%"
+         * Build static part of template: it's first argument(s) which does not
+         * contain "%".
          */
         last_space = NULL;
         ptr_template = hook_command->cplt_templates[i];
@@ -179,7 +179,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
         else
             hook_command->cplt_templates_static[i] = strdup (hook_command->cplt_templates[i]);
 
-        /* build arguments for each template */
+        /* Build arguments for each template. */
         hook_command->cplt_template_args[i] = string_split (
             hook_command->cplt_templates[i],
             " ",
@@ -194,9 +194,9 @@ hook_command_build_completion (struct t_hook_command *hook_command)
     }
 
     /*
-     * build strings with concatenation of items from different templates
+     * Build strings with concatenation of items from different templates
      * for each argument: these strings will be used when completing argument
-     * if we can't find which template to use (for example for first argument)
+     * if we can't find which template to use (for example for first argument).
      */
     if (hook_command->cplt_template_num_args_concat == 0)
         hook_command->cplt_template_args_concat = NULL;
@@ -207,18 +207,18 @@ hook_command_build_completion (struct t_hook_command *hook_command)
         list = weelist_new ();
         for (i = 0; i < hook_command->cplt_template_num_args_concat; i++)
         {
-            /* first compute length */
+            /* First compute length. */
             length = 1;
             for (j = 0; j < hook_command->cplt_num_templates; j++)
             {
                 if (i < hook_command->cplt_template_num_args[j])
                     length += strlen (hook_command->cplt_template_args[j][i]) + 1;
             }
-            /* alloc memory */
+            /* Alloc memory. */
             hook_command->cplt_template_args_concat[i] = malloc (length);
             if (hook_command->cplt_template_args_concat[i])
             {
-                /* concatenate items with "|" as separator */
+                /* Concatenate items with "|" as separator. */
                 weelist_remove_all (list);
                 hook_command->cplt_template_args_concat[i][0] = '\0';
                 for (j = 0; j < hook_command->cplt_num_templates; j++)
@@ -310,7 +310,7 @@ void
 hook_command_arraylist_arg_desc_free (void *data, struct t_arraylist *arraylist,
                                       void *pointer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -338,7 +338,7 @@ hook_command_format_args_description (const char *args_description)
     if (!args_description[0])
         return strdup (args_description);
 
-    /* if args description is not formatted, translate the whole string */
+    /* If args description is not formatted, translate the whole string. */
     if (strncmp (args_description,
                  WEECHAT_HOOK_COMMAND_STR_FORMATTED "\n",
                  strlen (WEECHAT_HOOK_COMMAND_STR_FORMATTED) + 1) != 0)
@@ -346,7 +346,7 @@ hook_command_format_args_description (const char *args_description)
         return strdup (_(args_description));
     }
 
-    /* translate line by line and indent properly arguments */
+    /* Translate line by line and indent properly arguments. */
     result = NULL;
     lines = NULL;
     args = NULL;
@@ -371,7 +371,7 @@ hook_command_format_args_description (const char *args_description)
     if (!args)
         goto error;
 
-    /* store description of arguments and find longest argument name on screen */
+    /* Store description of arguments and find longest argument name on screen. */
     line_after_args = -1;
     max_length_arg = 0;
     for (i = 0; i < num_lines; i++)
@@ -403,7 +403,7 @@ hook_command_format_args_description (const char *args_description)
         }
     }
 
-    /* add arguments with their description */
+    /* Add arguments with their description. */
     lines_added = 0;
     size = arraylist_size (args);
     for (i = 0; i < size; i++)
@@ -415,7 +415,7 @@ hook_command_format_args_description (const char *args_description)
             string_dyn_concat (result, "\n", -1);
         if (strncmp (ptr_line, "> ", 2) == 0)
         {
-            /* indented line: after the argument name */
+            /* Indented line: after the argument name */
             for (j = 0; j < max_length_arg + 2; j++)
             {
                 string_dyn_concat (result, " ", -1);
@@ -424,7 +424,7 @@ hook_command_format_args_description (const char *args_description)
         }
         else if (strncmp (ptr_line, ">> ", 3) == 0)
         {
-            /* indented line: after the argument name (+ 2 spaces) */
+            /* Indented line: after the argument name (+ 2 spaces) */
             for (j = 0; j < max_length_arg + 4; j++)
             {
                 string_dyn_concat (result, " ", -1);
@@ -452,7 +452,7 @@ hook_command_format_args_description (const char *args_description)
         lines_added++;
     }
 
-    /* add additional description (after arguments) */
+    /* Add additional description (after arguments). */
     if (line_after_args >= 0)
     {
         for (i = line_after_args; i < num_lines; i++)
@@ -543,7 +543,7 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
                                                  args_description : "");
     new_hook_command->completion = strdup ((completion) ? completion : "");
 
-    /* build completion variables for command */
+    /* Build completion variables for command. */
     new_hook_command->cplt_num_templates = 0;
     new_hook_command->cplt_templates = NULL;
     new_hook_command->cplt_templates_static = NULL;
@@ -658,7 +658,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
             && (hook_other_plugin->priority == hook_other_plugin2->priority))
         {
             /*
-             * ambiguous: no command for current plugin, but more than one
+             * Ambiguous: no command for current plugin, but more than one
              * command was found for other plugins with the same priority
              * => we don't know which one to run!
              */
@@ -669,10 +669,10 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
             if (hook_plugin && hook_other_plugin)
             {
                 /*
-                 * if we have a command in current plugin and another plugin,
+                 * If we have a command in current plugin and another plugin,
                  * choose the command with the higher priority (if priority
                  * is the same, always choose the command for the current
-                 * plugin)
+                 * plugin).
                  */
                 ptr_hook = (hook_other_plugin->priority > hook_plugin->priority) ?
                     hook_other_plugin : hook_plugin;
@@ -680,8 +680,8 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
             else
             {
                 /*
-                 * choose the command for current plugin, if found, otherwise
-                 * use command found in another plugin
+                 * Choose the command for current plugin, if found, otherwise
+                 * use command found in another plugin.
                  */
                 ptr_hook = (hook_plugin) ? hook_plugin : hook_other_plugin;
             }
@@ -695,17 +695,17 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
             rc = HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE;
     }
 
-    /* execute the command for the hook found */
+    /* Execute the command for the hook found. */
     if (ptr_hook)
     {
         if (ptr_hook->running >= HOOK_COMMAND_MAX_CALLS)
         {
-            /* loop in execution of command => do NOT execute again */
+            /* Loop in execution of command => do NOT execute again. */
             rc = HOOK_COMMAND_EXEC_RUNNING;
         }
         else
         {
-            /* split arguments */
+            /* Split arguments. */
             argv = string_split (string, " ", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
@@ -724,7 +724,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                 flags |= WEECHAT_STRING_SPLIT_STRIP_RIGHT;
             argv_eol = string_split (string, " ", NULL, flags, 0, NULL);
 
-            /* execute the command! */
+            /* Execute the command. */
             hook_callback_start (ptr_hook, &hook_exec_cb);
             rc = (int) (HOOK_COMMAND(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
@@ -769,26 +769,26 @@ hook_command_similar_get_relevance (const char *cmd1, int length_cmd1,
     const char *pos;
     int relevance;
 
-    /* perfect match if commands are the same (different case) */
+    /* Perfect match if commands are the same (different case). */
     if (strcmp (cmd1, cmd2) == 0)
         return HOOK_COMMAND_SIMILAR_DIFF_CASE_ONLY;
 
-    /* init relevance with Levenshtein distance (lower is better) */
+    /* Init relevance with Levenshtein distance (lower is better). */
     relevance = string_levenshtein (cmd1, cmd2, 1);
 
-    /* bonus if one command includes the other */
+    /* Bonus if one command includes the other. */
     pos = (length_cmd1 < length_cmd2) ?
         strstr (cmd2, cmd1) : strstr (cmd1, cmd2);
     if (pos)
     {
         relevance /= 4;
-        /* extra bonus if match is at beginning */
+        /* Extra bonus if match is at beginning. */
         if ((pos == cmd1) || (pos == cmd2))
             relevance -= 2;
     }
     else
     {
-        /* down-rank if no chars in common between two words */
+        /* Down-rank if no chars in common between two words. */
         if (string_get_common_bytes_count (cmd1, cmd2) == 0)
             relevance *= 2;
     }
@@ -807,7 +807,7 @@ hook_command_similar_cmp_cb (void *data, struct t_arraylist *arraylist,
 {
     struct t_hook_command_similar *ptr_cmd1, *ptr_cmd2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -831,7 +831,7 @@ void
 hook_command_similar_free_cb (void *data, struct t_arraylist *arraylist,
                               void *pointer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -1043,7 +1043,7 @@ hook_command_hdata_hook_command_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

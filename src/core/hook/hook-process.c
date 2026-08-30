@@ -202,7 +202,7 @@ hook_process_child (struct t_hook *hook_process)
     int rc, i, num_args;
     FILE *f;
 
-    /* read stdin from parent, if a pipe was defined */
+    /* Read stdin from parent, if a pipe was defined. */
     if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDIN]) >= 0)
     {
         if (dup2 (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDIN]),
@@ -213,14 +213,14 @@ hook_process_child (struct t_hook *hook_process)
     }
     else
     {
-        /* no stdin pipe from parent, use "/dev/null" for stdin stream */
+        /* No stdin pipe from parent, use "/dev/null" for stdin stream. */
         f = freopen ("/dev/null", "r", stdin);
         (void) f;
     }
     if (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDIN]) >= 0)
         close (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDIN]));
 
-    /* redirect stdout/stderr to pipe (so that parent process can read them) */
+    /* Redirect stdout/stderr to pipe (so that parent process can read them). */
     if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]) >= 0)
     {
         close (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]));
@@ -232,7 +232,7 @@ hook_process_child (struct t_hook *hook_process)
     }
     else
     {
-        /* detached mode: write stdout in /dev/null */
+        /* Detached mode: write stdout in /dev/null. */
         f = freopen ("/dev/null", "w", stdout);
         (void) f;
     }
@@ -247,7 +247,7 @@ hook_process_child (struct t_hook *hook_process)
     }
     else
     {
-        /* detached mode: write stderr in /dev/null */
+        /* Detached mode: write stderr in /dev/null. */
         f = freopen ("/dev/null", "w", stderr);
         (void) f;
     }
@@ -256,7 +256,7 @@ hook_process_child (struct t_hook *hook_process)
 
     if (strncmp (HOOK_PROCESS(hook_process, command), "url:", 4) == 0)
     {
-        /* get URL output (on stdout or file, depending on options) */
+        /* Get URL output (on stdout or file, depending on options). */
         ptr_url = HOOK_PROCESS(hook_process, command) + 4;
         while (ptr_url[0] == ' ')
         {
@@ -270,7 +270,7 @@ hook_process_child (struct t_hook *hook_process)
     }
     else if (strncmp (HOOK_PROCESS(hook_process, command), "func:", 5) == 0)
     {
-        /* run a function (via the hook callback) */
+        /* Run a function (via the hook callback). */
         rc = (int) (HOOK_PROCESS(hook_process, callback))
             (hook_process->callback_pointer,
              hook_process->callback_data,
@@ -280,12 +280,12 @@ hook_process_child (struct t_hook *hook_process)
     }
     else
     {
-        /* launch command */
+        /* Launch command. */
         num_args = 0;
         if (HOOK_PROCESS(hook_process, options))
         {
             /*
-             * count number of arguments given in the hashtable options,
+             * Count number of arguments given in the hashtable options,
              * keys are: "arg1", "arg2", ...
              */
             while (1)
@@ -301,9 +301,9 @@ hook_process_child (struct t_hook *hook_process)
         if (num_args > 0)
         {
             /*
-             * if at least one argument was found in hashtable option, the
+             * If at least one argument was found in hashtable option, the
              * "command" contains only path to binary (without arguments), and
-             * the arguments are in hashtable
+             * the arguments are in hashtable.
              */
             exec_args = malloc ((num_args + 2) * sizeof (exec_args[0]));
             if (exec_args)
@@ -322,8 +322,8 @@ hook_process_child (struct t_hook *hook_process)
         else
         {
             /*
-             * if no arguments were found in hashtable, make an automatic split
-             * of command, like the shell does
+             * If no arguments were found in hashtable, make an automatic split
+             * of command, like the shell does.
              */
             exec_args = string_split_shell (HOOK_PROCESS(hook_process, command),
                                             NULL);
@@ -350,7 +350,7 @@ hook_process_child (struct t_hook *hook_process)
             execvp (exec_args[0], exec_args);
         }
 
-        /* should not be executed if execvp was OK */
+        /* Should not be executed if execvp was OK. */
         string_free_split (exec_args);
         fprintf (stderr, "Error with command '%s'\n",
                  HOOK_PROCESS(hook_process, command));
@@ -371,7 +371,7 @@ hook_process_send_buffers (struct t_hook *hook_process, int callback_rc)
 {
     int size;
 
-    /* add '\0' at end of stdout and stderr */
+    /* Add '\0' at end of stdout and stderr. */
     size = HOOK_PROCESS(hook_process, buffer_size[HOOK_PROCESS_STDOUT]);
     if (size > 0)
         HOOK_PROCESS(hook_process, buffer[HOOK_PROCESS_STDOUT])[size] = '\0';
@@ -379,7 +379,7 @@ hook_process_send_buffers (struct t_hook *hook_process, int callback_rc)
     if (size > 0)
         HOOK_PROCESS(hook_process, buffer[HOOK_PROCESS_STDERR])[size] = '\0';
 
-    /* send buffers to callback */
+    /* Send buffers to callback. */
     (void) (HOOK_PROCESS(hook_process, callback))
         (hook_process->callback_pointer,
          hook_process->callback_data,
@@ -390,7 +390,7 @@ hook_process_send_buffers (struct t_hook *hook_process, int callback_rc)
          (HOOK_PROCESS(hook_process, buffer_size[HOOK_PROCESS_STDERR]) > 0) ?
          HOOK_PROCESS(hook_process, buffer[HOOK_PROCESS_STDERR]) : NULL);
 
-    /* reset size for stdout and stderr */
+    /* Reset size for stdout and stderr. */
     HOOK_PROCESS(hook_process, buffer_size[HOOK_PROCESS_STDOUT]) = 0;
     HOOK_PROCESS(hook_process, buffer_size[HOOK_PROCESS_STDERR]) = 0;
 }
@@ -454,7 +454,7 @@ hook_process_child_read_stdout_cb (const void *pointer, void *data, int fd)
 {
     struct t_hook *hook_process;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     hook_process = (struct t_hook *)pointer;
@@ -473,7 +473,7 @@ hook_process_child_read_stderr_cb (const void *pointer, void *data, int fd)
 {
     struct t_hook *hook_process;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     hook_process = (struct t_hook *)pointer;
@@ -498,8 +498,8 @@ hook_process_child_read_until_eof (struct t_hook *hook_process)
     fd_stderr = HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]);
 
     /*
-     * use a counter to prevent any infinite loop
-     * (if child's output is very very long...)
+     * Use a counter to prevent any infinite loop
+     * (if child's output is very very long...).
      */
     count = 0;
     while (count < 1024)
@@ -569,7 +569,7 @@ hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
     struct t_hook *hook_process;
     int status, rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -598,7 +598,7 @@ hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
         {
             if (WIFEXITED(status))
             {
-                /* child terminated normally */
+                /* Child terminated normally */
                 rc = WEXITSTATUS(status);
                 hook_process_child_read_until_eof (hook_process);
                 hook_process_send_buffers (hook_process, rc);
@@ -606,7 +606,7 @@ hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
             }
             else if (WIFSIGNALED(status))
             {
-                /* child terminated by a signal */
+                /* Child terminated by a signal */
                 hook_process_child_read_until_eof (hook_process);
                 hook_process_send_buffers (hook_process,
                                            WEECHAT_HOOK_PROCESS_ERROR);
@@ -636,7 +636,7 @@ hook_process_run (struct t_hook *hook_process)
         pipes[i][1] = -1;
     }
 
-    /* create pipe for stdin (only if stdin was given in options) */
+    /* Create pipe for stdin (only if stdin was given in options). */
     if (HOOK_PROCESS(hook_process, options)
         && hashtable_has_key (HOOK_PROCESS(hook_process, options), "stdin"))
     {
@@ -644,7 +644,7 @@ hook_process_run (struct t_hook *hook_process)
             goto error;
     }
 
-    /* create pipes for stdout/err (if not running in detached mode) */
+    /* Create pipes for stdout/err (if not running in detached mode). */
     if (!HOOK_PROCESS(hook_process, detached))
     {
         if (pipe (pipes[HOOK_PROCESS_STDOUT]) < 0)
@@ -653,21 +653,21 @@ hook_process_run (struct t_hook *hook_process)
             goto error;
     }
 
-    /* assign pipes to variables in hook */
+    /* Assign pipes to variables in hook. */
     for (i = 0; i < 3; i++)
     {
         HOOK_PROCESS(hook_process, child_read[i]) = pipes[i][0];
         HOOK_PROCESS(hook_process, child_write[i]) = pipes[i][1];
     }
 
-    /* flush stdout and stderr before forking */
+    /* Flush stdout and stderr before forking. */
     fflush (stdout);
     fflush (stderr);
 
-    /* fork */
+    /* Fork. */
     switch (pid = fork ())
     {
-        /* fork failed */
+        /* Fork failed */
         case -1:
             snprintf (str_error, sizeof (str_error),
                       "fork error: %s",
@@ -680,17 +680,17 @@ hook_process_run (struct t_hook *hook_process)
                  NULL, str_error);
             unhook (hook_process);
             return;
-        /* child process */
+        /* Child process */
         case 0:
             rc = setuid (getuid ());
             (void) rc;
             hook_process_child (hook_process);
-            /* never executed */
+            /* Never executed */
             _exit (EXIT_SUCCESS);
             break;
     }
 
-    /* parent process */
+    /* Parent process */
     HOOK_PROCESS(hook_process, child_pid) = pid;
     if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDIN]) >= 0)
     {
@@ -910,7 +910,7 @@ hook_process_hdata_hook_process_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

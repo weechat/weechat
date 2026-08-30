@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-/* relay contribution to built-in themes. */
+/* Relay contribution to built-in themes */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -18,7 +18,7 @@
 
 
 /*
- * relay contribution to the "light" theme: option values tuned for a
+ * Relay contribution to the "light" theme: option values tuned for a
  * light-background terminal. Each row is { option_full_name, value };
  * the table is NULL-terminated.
  */

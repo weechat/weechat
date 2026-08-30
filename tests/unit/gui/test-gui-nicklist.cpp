@@ -92,7 +92,7 @@ TEST(GuiNicklist, AddGroup)
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    /* invalid: NULL buffer */
+    /* Invalid: NULL buffer */
     POINTERS_EQUAL(NULL, gui_nicklist_add_group (NULL, NULL, "group1", "blue", 1));
 
     group1 = gui_nicklist_add_group (buffer, NULL, "group1", "blue", 1);
@@ -224,7 +224,7 @@ TEST(GuiNicklist, AddGroup)
     POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, str_search_id));
     POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, group2, str_search_id));
 
-    /* test remove of NULL buffer/group */
+    /* Test remove of NULL buffer/group. */
     gui_nicklist_remove_group (NULL, NULL);
     gui_nicklist_remove_group (buffer, NULL);
     gui_nicklist_remove_group (NULL, group1);
@@ -276,7 +276,7 @@ TEST(GuiNicklist, AddNick)
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    /* invalid: NULL buffer */
+    /* Invalid: NULL buffer */
     POINTERS_EQUAL(NULL, gui_nicklist_add_nick (NULL, NULL,
                                                 "nick_root", "green",
                                                 "@", "lightgreen", 1));
@@ -385,7 +385,7 @@ TEST(GuiNicklist, AddNick)
     POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, str_search_id));
     POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, group2, str_search_id));
 
-    /* test remove of NULL buffer/group */
+    /* Test remove of NULL buffer/group. */
     gui_nicklist_remove_nick (NULL, NULL);
     gui_nicklist_remove_nick (buffer, NULL);
     gui_nicklist_remove_nick (NULL, nick_root);
@@ -441,7 +441,7 @@ TEST(GuiNicklist, GetNextItem)
     ptr_group = NULL;
     ptr_nick = NULL;
 
-    /* invalid: NULL buffer */
+    /* Invalid: NULL buffer */
     gui_nicklist_get_next_item (NULL, &ptr_group, &ptr_nick);
     POINTERS_EQUAL(NULL, ptr_group);
     POINTERS_EQUAL(NULL, ptr_nick);

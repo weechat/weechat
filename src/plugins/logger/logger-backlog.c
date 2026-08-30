@@ -6,7 +6,7 @@
 
 /* Display backlog of messages */
 
-/* this define is needed for strptime() (not on OpenBSD/Sun) */
+/* This define is needed for strptime() (not on OpenBSD/Sun). */
 #if !defined(__OpenBSD__) && !defined(__sun)
 #define _XOPEN_SOURCE 700
 #endif
@@ -58,9 +58,9 @@ logger_backlog_display_line (struct t_gui_buffer *buffer, const char *line)
     if (pos_message)
     {
         /*
-         * we get current time to initialize daylight saving time in
+         * We get current time to initialize daylight saving time in
          * structure tm_line, otherwise printed time will be shifted
-         * and will not use DST used on machine
+         * and will not use DST used on machine.
          */
         time_now = time (NULL);
         localtime_r (&time_now, &tm_line);
@@ -129,7 +129,7 @@ logger_backlog_msg_cmp_cb (void *data,
                            void *pointer1,
                            void *pointer2)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -144,7 +144,7 @@ void
 logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
                             void *pointer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -226,7 +226,7 @@ logger_backlog_group_messages (struct t_arraylist *lines)
         }
         if (time_found)
         {
-            /* add message (will be freed when arraylist is destroyed) */
+            /* Add message (will be freed when arraylist is destroyed). */
             weechat_arraylist_insert (messages, 0, message);
             message = NULL;
         }
@@ -234,7 +234,7 @@ logger_backlog_group_messages (struct t_arraylist *lines)
 
     if (message)
     {
-        /* add message (will be freed when arraylist is destroyed) */
+        /* Add message (will be freed when arraylist is destroyed). */
         weechat_arraylist_insert (messages, 0, message);
     }
 
@@ -270,10 +270,10 @@ logger_backlog_file (struct t_gui_buffer *buffer, const char *filename,
 
     weechat_arraylist_free (last_lines);
 
-    /* disable any print hook during display of backlog */
+    /* Disable any print hook during display of backlog. */
     weechat_buffer_set (buffer, "print_hooks_enabled", "0");
 
-    /* temporary enable multiline support so we can display multiline msgs */
+    /* Temporary enable multiline support so we can display multiline msgs. */
     old_input_multiline = weechat_buffer_get_integer (buffer, "input_multiline");
     weechat_buffer_set (buffer, "input_multiline", "1");
 
@@ -314,7 +314,7 @@ logger_backlog_signal_cb (const void *pointer, void *data,
     struct t_logger_buffer *ptr_logger_buffer;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;

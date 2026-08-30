@@ -67,7 +67,7 @@ relay_client_valid (struct t_relay_client *client)
             return 1;
     }
 
-    /* client not found */
+    /* Client not found */
     return 0;
 }
 
@@ -92,7 +92,7 @@ relay_client_search_by_number (int number)
         i++;
     }
 
-    /* client not found */
+    /* Client not found */
     return NULL;
 }
 
@@ -114,7 +114,7 @@ relay_client_search_by_id (int id)
             return ptr_client;
     }
 
-    /* client not found */
+    /* Client not found */
     return NULL;
 }
 
@@ -195,7 +195,7 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
     struct t_relay_client *client;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     client = (struct t_relay_client *)pointer;
@@ -204,7 +204,7 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
 
     if (rc == GNUTLS_E_SUCCESS)
     {
-        /* handshake OK, set status to "connected" */
+        /* Handshake OK, set status to "connected". */
         weechat_unhook (client->hook_timer_handshake);
         client->hook_timer_handshake = NULL;
         client->gnutls_handshake_ok = 1;
@@ -235,7 +235,7 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
 
     if (gnutls_error_is_fatal (rc))
     {
-        /* handshake error, disconnect client */
+        /* Handshake error, disconnect client. */
         weechat_printf_date_tags (
             NULL, 0, "relay_client,tls",
             _("%s%s: TLS handshake failed for client %s%s%s: error %d %s"),
@@ -254,7 +254,7 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
 
     if (remaining_calls == 0)
     {
-        /* handshake timeout, disconnect client */
+        /* Handshake timeout, disconnect client. */
         weechat_printf_date_tags (
             NULL, 0, "relay_client,tls",
             _("%s%s: TLS handshake timeout for client %s%s%s"),
@@ -269,7 +269,7 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* handshake in progress, we will try again on next call to timer */
+    /* Handshake in progress, we will try again on next call to timer. */
     return WEECHAT_RC_OK;
 }
 
@@ -291,7 +291,7 @@ relay_client_recv_text_single_line (struct t_relay_client *client)
     if (!pos)
         return;
 
-    /* print message in raw buffer */
+    /* Print message in raw buffer. */
     raw_msg = weechat_strndup (client->partial_message,
                                pos - client->partial_message + 1);
     if (raw_msg)
@@ -313,15 +313,12 @@ relay_client_recv_text_single_line (struct t_relay_client *client)
     {
         for (i = 0; i < num_lines; i++)
         {
-            /* remove final '\r' */
+            /* Remove final '\r'. */
             length = strlen (lines[i]);
             if ((length > 0) && (lines[i][length - 1] == '\r'))
                 lines[i][length - 1] = '\0';
 
-            /*
-             * interpret text from client, according to the relay
-             * protocol used
-             */
+            /* Interpret text from client, according to the relay protocol used. */
             switch (client->protocol)
             {
                 case RELAY_PROTOCOL_WEECHAT:
@@ -362,23 +359,20 @@ relay_client_recv_text_multi_line (struct t_relay_client *client)
     if (!client->partial_message)
         return;
 
-    /* print message in raw buffer */
+    /* Print message in raw buffer. */
     relay_raw_print_client (client, RELAY_MSG_STANDARD,
                             RELAY_RAW_FLAG_RECV,
                             client->partial_message,
                             strlen (client->partial_message) + 1);
 
-    /*
-     * interpret text from client, according to the relay
-     * protocol used
-     */
+    /* Interpret text from client, according to the relay protocol used. */
     switch (client->protocol)
     {
         case RELAY_PROTOCOL_WEECHAT:
-            /* weechat is single line only */
+            /* Relay "weechat" is single line only. */
             break;
         case RELAY_PROTOCOL_IRC:
-            /* irc is single line only */
+            /* Relay "irc" is single line only. */
             break;
         case RELAY_PROTOCOL_API:
 #ifdef HAVE_CJSON
@@ -409,9 +403,9 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
     length_data = strlen (data);
 
     /*
-     * limit the size of the partial message: ignore extra data (protection
+     * Limit the size of the partial message: ignore extra data (protection
      * against a client sending a huge amount of data without any end-of-line
-     * and dribbling it, which would consume all the memory)
+     * and dribbling it, which would consume all the memory).
      */
     if ((length_partial >= RELAY_CLIENT_PARTIAL_MESSAGE_MAX_LENGTH)
         || (length_data > (RELAY_CLIENT_PARTIAL_MESSAGE_MAX_LENGTH
@@ -457,20 +451,20 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
         msg_type = RELAY_MSG_STANDARD;
 
         /*
-         * in case of websocket, we can receive PING from client:
-         * trace this PING in raw buffer and answer with a PONG
+         * In case of websocket, we can receive PING from client:
+         * trace this PING in raw buffer and answer with a PONG.
          */
         if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
         {
             msg_type = (unsigned char)buffer[index];
             if (msg_type == RELAY_MSG_PING)
             {
-                /* print message in raw buffer */
+                /* Print message in raw buffer. */
                 relay_raw_print_client (client, RELAY_MSG_PING,
                                         RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
                                         buffer + index + 1,
                                         strlen (buffer + index + 1));
-                /* answer with a PONG */
+                /* Answer with a PONG. */
                 relay_client_send (client,
                                    RELAY_MSG_PONG,
                                    buffer + index + 1,
@@ -479,20 +473,20 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
             }
             else if (msg_type == RELAY_MSG_CLOSE)
             {
-                /* print message in raw buffer */
+                /* Print message in raw buffer. */
                 relay_raw_print_client (client, RELAY_MSG_CLOSE,
                                         RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
                                         buffer + index + 1,
                                         strlen (buffer + index + 1));
-                /* answer with a CLOSE */
+                /* Answer with a CLOSE. */
                 relay_client_send (client,
                                    RELAY_MSG_CLOSE,
                                    buffer + index + 1,
                                    strlen (buffer + index + 1),
                                    NULL);
-                /* close the connection */
+                /* Close the connection. */
                 relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
-                /* ignore any other message after the close */
+                /* Ignore any other message after the close. */
                 return;
             }
             index++;
@@ -548,12 +542,12 @@ relay_client_read_websocket_frames (struct t_relay_client *client,
         switch (frames[i].opcode)
         {
             case RELAY_MSG_PING:
-                /* print message in raw buffer */
+                /* Print message in raw buffer. */
                 relay_raw_print_client (client, RELAY_MSG_PING,
                                         RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
                                         frames[i].payload,
                                         frames[i].payload_size);
-                /* answer with a PONG */
+                /* Answer with a PONG. */
                 relay_client_send (client,
                                    RELAY_MSG_PONG,
                                    frames[i].payload,
@@ -561,20 +555,20 @@ relay_client_read_websocket_frames (struct t_relay_client *client,
                                    NULL);
                 break;
             case RELAY_MSG_CLOSE:
-                /* print message in raw buffer */
+                /* Print message in raw buffer. */
                 relay_raw_print_client (client, RELAY_MSG_CLOSE,
                                         RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
                                         frames[i].payload,
                                         frames[i].payload_size);
-                /* answer with a CLOSE */
+                /* Answer with a CLOSE. */
                 relay_client_send (client,
                                    RELAY_MSG_CLOSE,
                                    frames[i].payload,
                                    frames[i].payload_size,
                                    NULL);
-                /* close the connection */
+                /* Close the connection. */
                 relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
-                /* ignore any other message after the close */
+                /* Ignore any other message after the close. */
                 return;
             default:
                 if (frames[i].payload)
@@ -608,17 +602,17 @@ relay_client_recv_buffer (struct t_relay_client *client,
     int rc, i, buffer2_size, num_frames;
 
     /*
-     * if we are receiving the first message from client, check if it looks
-     * like a websocket
+     * If we are receiving the first message from client, check if it looks
+     * like a websocket.
      */
     if (client->bytes_recv == 0)
     {
         if (relay_websocket_is_valid_http_get (client->protocol, buffer))
         {
             /*
-             * web socket is just initializing for now, it's not accepted
+             * Web socket is just initializing for now, it's not accepted
              * (we will check later with "http_headers" if web socket is
-             * valid or not)
+             * valid or not).
              */
             client->websocket = RELAY_CLIENT_WEBSOCKET_INITIALIZING;
         }
@@ -628,7 +622,7 @@ relay_client_recv_buffer (struct t_relay_client *client,
 
     if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
     {
-        /* websocket used, decode message */
+        /* Websocket used, decode message. */
         buffer2 = NULL;
         buffer2_size = 0;
         if (client->partial_ws_frame)
@@ -662,7 +656,7 @@ relay_client_recv_buffer (struct t_relay_client *client,
         free (buffer2);
         if (!rc)
         {
-            /* fatal error when decoding frame: close connection */
+            /* Fatal error when decoding frame: close connection. */
             if (frames)
             {
                 for (i = 0; i < num_frames; i++)
@@ -716,7 +710,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
     static char buffer[4096];
     int num_read;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) fd;
 
@@ -726,8 +720,8 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
         return WEECHAT_RC_OK;
 
     /*
-     * data can be received only during authentication
-     * or if connected (authentication was OK)
+     * Data can be received only during authentication
+     * or if connected (authentication was OK).
      */
     if ((client->status != RELAY_STATUS_AUTHENTICATING)
         && (client->status != RELAY_STATUS_CONNECTED))
@@ -810,7 +804,7 @@ relay_client_outqueue_free (struct t_relay_client *client,
     if (!client || !outqueue)
         return;
 
-    /* remove outqueue message */
+    /* Remove outqueue message. */
     if (client->last_outqueue == outqueue)
         client->last_outqueue = outqueue->prev_outqueue;
     if (outqueue->prev_outqueue)
@@ -824,13 +818,13 @@ relay_client_outqueue_free (struct t_relay_client *client,
     if (outqueue->next_outqueue)
         (outqueue->next_outqueue)->prev_outqueue = outqueue->prev_outqueue;
 
-    /* free data */
+    /* Free data. */
     free (outqueue->data);
     free (outqueue->raw_message[0]);
     free (outqueue->raw_message[1]);
     free (outqueue);
 
-    /* set new head */
+    /* Set new head. */
     client->outqueue = new_outqueue;
 }
 
@@ -893,9 +887,9 @@ relay_client_send_outqueue (struct t_relay_client *client)
                 if (client->outqueue->raw_message[i])
                 {
                     /*
-                     * print raw message and remove it from outqueue
+                     * Print raw message and remove it from outqueue
                      * (so that it is displayed only one time, even if
-                     * message is sent in many chunks)
+                     * message is sent in many chunks).
                      */
                     relay_raw_print_client (
                         client,
@@ -916,14 +910,14 @@ relay_client_send_outqueue (struct t_relay_client *client)
             }
             if (num_sent == client->outqueue->data_size)
             {
-                /* whole data sent, remove outqueue */
+                /* Whole data sent, remove outqueue. */
                 relay_client_outqueue_free (client, client->outqueue);
             }
             else
             {
                 /*
-                 * some data was not sent, update outqueue and stop
-                 * sending data from outqueue
+                 * Some data was not sent, update outqueue and stop
+                 * sending data from outqueue.
                  */
                 if (num_sent > 0)
                 {
@@ -948,7 +942,7 @@ relay_client_send_outqueue (struct t_relay_client *client)
                 if ((num_sent == GNUTLS_E_AGAIN)
                     || (num_sent == GNUTLS_E_INTERRUPTED))
                 {
-                    /* we will retry later this client's queue */
+                    /* We will retry later this client's queue. */
                     break;
                 }
                 else
@@ -971,7 +965,7 @@ relay_client_send_outqueue (struct t_relay_client *client)
             {
                 if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
                 {
-                    /* we will retry later this client's queue */
+                    /* We will retry later this client's queue. */
                     break;
                 }
                 else
@@ -1013,7 +1007,7 @@ relay_client_timer_send_cb (const void *pointer, void *data,
 {
     struct t_relay_client *ptr_client;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -1118,7 +1112,7 @@ relay_client_send (struct t_relay_client *client,
     if (client->fake_send_func)
         (void) (*client->fake_send_func) (client, ptr_data, data_size);
 
-    /* set raw messages */
+    /* Set raw messages. */
     for (i = 0; i < 2; i++)
     {
         raw_msg_type[i] = msg_type;
@@ -1159,20 +1153,20 @@ relay_client_send (struct t_relay_client *client,
                 && (client->send_data_type == RELAY_CLIENT_DATA_BINARY)))
         {
             /*
-             * set binary flag if we send binary to client
+             * Set binary flag if we send binary to client
              * (except if websocket is initializing and then we are sending
-             * HTTP data, as text)
+             * HTTP data, as text).
              */
             raw_flags[0] |= RELAY_RAW_FLAG_BINARY;
         }
         else
         {
-            /* count the final '\0' in size */
+            /* Count the final '\0' in size. */
             raw_size[0]++;
         }
     }
 
-    /* if websocket is initialized, encode data in a websocket frame */
+    /* If websocket is initialized, encode data in a websocket frame. */
     if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
     {
         switch (msg_type)
@@ -1204,8 +1198,8 @@ relay_client_send (struct t_relay_client *client,
     num_sent = -1;
 
     /*
-     * if outqueue is not empty, add to outqueue
-     * (because message must be sent *after* messages already in outqueue)
+     * If outqueue is not empty, add to outqueue
+     * (because message must be sent *after* messages already in outqueue).
      */
     if (client->outqueue)
     {
@@ -1233,7 +1227,7 @@ relay_client_send (struct t_relay_client *client,
             }
             if (num_sent < data_size)
             {
-                /* some data was not sent, add it to outqueue */
+                /* Some data was not sent, add it to outqueue. */
                 relay_client_outqueue_add (client,
                                            ptr_data + num_sent,
                                            data_size - num_sent,
@@ -1247,7 +1241,7 @@ relay_client_send (struct t_relay_client *client,
                 if ((num_sent == GNUTLS_E_AGAIN)
                     || (num_sent == GNUTLS_E_INTERRUPTED))
                 {
-                    /* add message to queue (will be sent later) */
+                    /* Add message to queue (will be sent later). */
                     relay_client_outqueue_add (client,
                                                ptr_data, data_size,
                                                raw_msg_type, raw_flags,
@@ -1272,7 +1266,7 @@ relay_client_send (struct t_relay_client *client,
             {
                 if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
                 {
-                    /* add message to queue (will be sent later) */
+                    /* Add message to queue (will be sent later). */
                     relay_client_outqueue_add (client, ptr_data, data_size,
                                                raw_msg_type, raw_flags,
                                                raw_msg, raw_size);
@@ -1332,10 +1326,10 @@ relay_client_timer (void)
         }
         else
         {
-            /* send messages in outqueue */
+            /* Send messages in outqueue. */
             relay_client_send_outqueue (ptr_client);
 
-            /* disconnect clients not authenticated */
+            /* Disconnect clients not authenticated. */
             if ((auth_timeout > 0)
                 && (ptr_client->status == RELAY_STATUS_AUTHENTICATING))
             {
@@ -1440,8 +1434,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
             }
             new_client->status = RELAY_STATUS_CONNECTING;
             /*
-             * set Diffie-Hellman parameters on first TLS connection from a
-             * client (done only one time)
+             * Set Diffie-Hellman parameters on first TLS connection from a
+             * client (done only one time).
              */
             if (!relay_gnutls_dh_params)
             {
@@ -1762,7 +1756,7 @@ relay_client_set_status (struct t_relay_client *client,
      * IMPORTANT: if changes are made in this function or sub-functions called,
      * please also update the function relay_client_add_to_infolist:
      * when the flag force_disconnected_state is set to 1 we simulate
-     * a disconnected state for client in infolist (used on /upgrade -save)
+     * a disconnected state for client in infolist (used on /upgrade -save).
      */
 
     old_status = client->status;
@@ -1786,8 +1780,8 @@ relay_client_set_status (struct t_relay_client *client,
         if (old_status == RELAY_STATUS_CONNECTED)
         {
             /*
-             * set the last client disconnect time
-             * (only if the client was connected)
+             * Set the last client disconnect time
+             * (only if the client was connected).
              */
             ptr_server = relay_server_search (client->protocol_string);
             if (ptr_server)
@@ -1884,7 +1878,7 @@ relay_client_free (struct t_relay_client *client)
     if (!client)
         return;
 
-    /* remove client from list */
+    /* Remove client from list. */
     if (last_relay_client == client)
         last_relay_client = client->prev_client;
     if (client->prev_client)
@@ -1897,7 +1891,7 @@ relay_client_free (struct t_relay_client *client)
     if (client->next_client)
         (client->next_client)->prev_client = client->prev_client;
 
-    /* free data */
+    /* Free data. */
     free (client->desc);
     free (client->address);
     free (client->real_ip);
@@ -2081,7 +2075,7 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (client->ws_deflate->strm_deflate || client->ws_deflate->strm_inflate)
     {
-        /* save the deflate/inflate dictionary, as it's required after /upgrade */
+        /* Save the deflate/inflate dictionary, as it's required after /upgrade. */
         dict = malloc (32768);
         if (dict)
         {

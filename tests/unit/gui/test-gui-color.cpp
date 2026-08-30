@@ -179,7 +179,7 @@ TEST(GuiColor, GetCustom)
               GUI_COLOR_BAR_BG_CHAR);
     STRCMP_EQUAL(string, gui_color_get_custom ("bar_bg"));
 
-    /* only delimiter (no-op) */
+    /* Only delimiter (no-op) */
     STRCMP_EQUAL("", gui_color_get_custom (","));
     STRCMP_EQUAL("", gui_color_get_custom (":"));
 
@@ -273,7 +273,7 @@ TEST(GuiColor, CodeSize)
     LONGS_EQUAL(0, gui_color_code_size (NULL));
     LONGS_EQUAL(0, gui_color_code_size (""));
 
-    /* no color code */
+    /* No color code */
     LONGS_EQUAL(0, gui_color_code_size ("test"));
 
     /* reset */
@@ -374,7 +374,7 @@ TEST(GuiColor, Decode)
     WEE_CHECK_DECODE("", "", "");
     WEE_CHECK_DECODE("", "", "?");
 
-    /* no color codes */
+    /* No color codes */
     WEE_CHECK_DECODE("test string", "test string", NULL);
     WEE_CHECK_DECODE("test string", "test string", "");
     WEE_CHECK_DECODE("test string", "test string", "?");
@@ -561,11 +561,11 @@ TEST(GuiColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("", "", 0);
     WEE_CHECK_DECODE_ANSI("", "", 1);
 
-    /* no color codes */
+    /* No color codes */
     WEE_CHECK_DECODE_ANSI("test string", "test string", 0);
     WEE_CHECK_DECODE_ANSI("test string", "test string", 1);
 
-    /* invalid ANSI color */
+    /* Invalid ANSI color */
     WEE_CHECK_DECODE_ANSI("test_invalid", "test_" "\x1B[12z" "invalid", 0);
     WEE_CHECK_DECODE_ANSI("test_invalid", "test_\x1B[12z" "invalid", 1);
 
@@ -632,56 +632,56 @@ TEST(GuiColor, DecodeAnsi)
               gui_color_get_custom ("-underline"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[4m" "underline" "\x1B[24m" "_end", 1);
 
-    /* default text color */
+    /* Default text color */
     WEE_CHECK_DECODE_ANSI("test_default", "test_" "\x1B[39m" "default", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "default",
               gui_color_get_custom ("default"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[39m" "default", 1);
 
-    /* default text color */
+    /* Default text color */
     WEE_CHECK_DECODE_ANSI("test_bg_default", "test_" "\x1B[49m" "bg_default", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "bg_default",
               gui_color_get_custom (",default"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[49m" "bg_default", 1);
 
-    /* text color */
+    /* Text color */
     WEE_CHECK_DECODE_ANSI("test_blue", "test_" "\x1B[34m" "blue", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "blue",
               gui_color_get_custom ("|blue"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[34m" "blue", 1);
 
-    /* bright text color */
+    /* Bright text color */
     WEE_CHECK_DECODE_ANSI("test_lightgreen", "test_" "\x1B[92m" "lightgreen", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "lightgreen",
               gui_color_get_custom ("|lightgreen"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[92m" "lightgreen", 1);
 
-    /* text terminal color */
+    /* Text terminal color */
     WEE_CHECK_DECODE_ANSI("test_214", "test_" "\x1B[38;5;214m" "214", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "214",
               gui_color_get_custom ("|214"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[38;5;214m" "214", 1);
 
-    /* text RGB color */
+    /* Text RGB color */
     WEE_CHECK_DECODE_ANSI("test_13", "test_" "\x1B[38;2;255;0;255m" "13", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "13",
               gui_color_get_custom ("|13"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[38;2;255;0;255m" "13", 1);
 
-    /* background color */
+    /* Background color */
     WEE_CHECK_DECODE_ANSI("test_bg_red", "test_" "\x1B[41m" "bg_red", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "bg_red",
               gui_color_get_custom ("|,red"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[41m" "bg_red", 1);
 
-    /* bright background color */
+    /* Bright background color */
     WEE_CHECK_DECODE_ANSI("test_bg_lightgreen",
                           "test_" "\x1B[102m" "bg_lightgreen", 0);
     snprintf (string, sizeof (string),
@@ -689,21 +689,21 @@ TEST(GuiColor, DecodeAnsi)
               gui_color_get_custom ("|,lightgreen"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[102m" "bg_lightgreen", 1);
 
-    /* background terminal color */
+    /* Background terminal color */
     WEE_CHECK_DECODE_ANSI("test_bg_240", "test_" "\x1B[48;5;214m" "bg_240", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "bg_240",
               gui_color_get_custom ("|,240"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[48;5;240m" "bg_240", 1);
 
-    /* background RGB color */
+    /* Background RGB color */
     WEE_CHECK_DECODE_ANSI("test_bg_13", "test_" "\x1B[48;2;255;0;255m" "bg_13", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "bg_13",
               gui_color_get_custom ("|,13"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[48;2;255;0;255m" "bg_13", 1);
 
-    /* text RGB + background RGB color */
+    /* Text RGB + background RGB color */
     WEE_CHECK_DECODE_ANSI(
         "test_fg_13_bg_04",
         "test_" "\x1B[38;2;255;0;255m" "\x1B[48;2;0;0;128m" "fg_13_bg_04",
@@ -778,67 +778,67 @@ TEST(GuiColor, EncodeAnsi)
               gui_color_get_custom ("-underline"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[4m" "underline" "\x1B[24m" "_end", string);
 
-    /* text color: WeeChat: "default" -> ANSI: 39 (default fg color) */
+    /* Text color: WeeChat: "default" -> ANSI: 39 (default fg color) */
     snprintf (string, sizeof (string),
               "test_" "%s" "default",
               gui_color_get_custom ("default"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[39m" "default", string);
 
-    /* text color: bar foreground -> ANSI: 39 (default fg color) */
+    /* Text color: bar foreground -> ANSI: 39 (default fg color) */
     snprintf (string, sizeof (string),
               "test_" "%s" "bar_fg",
               gui_color_get_custom ("bar_fg"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[39m" "bar_fg", string);
 
-    /* text color: bar background -> ANSI: 49 (default bg color) */
+    /* Text color: bar background -> ANSI: 49 (default bg color) */
     snprintf (string, sizeof (string),
               "test_" "%s" "bar_bg",
               gui_color_get_custom ("bar_bg"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[49m" "bar_bg", string);
 
-    /* text color: bar delimiter -> color in option weechat.color.chat_delimiters */
+    /* Text color: bar delimiter -> color in option weechat.color.chat_delimiters */
     snprintf (string, sizeof (string),
               "test_" "%s" "bar_delim",
               gui_color_get_custom ("bar_delim"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[48;5;22m" "bar_delim", string);
 
-    /* text color */
+    /* Text color */
     snprintf (string, sizeof (string),
               "test_" "%s" "blue",
               gui_color_get_custom ("blue"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[34m" "blue", string);
 
-    /* bright text color */
+    /* Bright text color */
     snprintf (string, sizeof (string),
               "test_" "%s" "lightgreen",
               gui_color_get_custom ("lightgreen"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[92m" "lightgreen", string);
 
-    /* text terminal color */
+    /* Text terminal color */
     snprintf (string, sizeof (string),
               "test_" "%s" "214",
               gui_color_get_custom ("214"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[38;5;214m" "214", string);
 
-    /* background color: WeeChat: "default" -> ANSI: 49 (default bg color) */
+    /* Background color: WeeChat: "default" -> ANSI: 49 (default bg color) */
     snprintf (string, sizeof (string),
               "test_" "%s" "bg_default",
               gui_color_get_custom (",default"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[49m" "bg_default", string);
 
-    /* background color */
+    /* Background color */
     snprintf (string, sizeof (string),
               "test_" "%s" "bg_red",
               gui_color_get_custom (",red"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[41m" "bg_red", string);
 
-    /* bright background color */
+    /* Bright background color */
     snprintf (string, sizeof (string),
               "test_" "%s" "bg_lightgreen",
               gui_color_get_custom (",lightgreen"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[102m" "bg_lightgreen", string);
 
-    /* background terminal color */
+    /* Background terminal color */
     snprintf (string, sizeof (string),
               "test_" "%s" "bg_240",
               gui_color_get_custom (",240"));
@@ -873,7 +873,7 @@ TEST(GuiColor, EncodeAnsi)
         string);
     config_file_option_reset (config_color_chat_host, 1);
 
-    /* multiple colors/attributes */
+    /* Multiple colors/attributes */
     snprintf (string, sizeof (string),
               "%s" "hello, " "%s" "this is" "%s %s" "blink" "%s %s" "dim"
               "%s a test %s" "blue %s" "reset %s" "yellow,red here!",
@@ -909,7 +909,7 @@ TEST(GuiColor, Emphasize)
     STRCMP_EQUAL(NULL, gui_color_emphasize ("test", NULL, 0, NULL));
     STRCMP_EQUAL(NULL, gui_color_emphasize (NULL, "test", 0, NULL));
 
-    /* build strings for tests */
+    /* Build strings for tests. */
     snprintf (string1, sizeof (string1),
               "%s" "hello, %s" "this is" "%s a test here!",
               gui_color_get_custom (",blue"),
@@ -923,19 +923,19 @@ TEST(GuiColor, Emphasize)
               gui_color_get_custom ("bold"),
               gui_color_get_custom ("emphasis"));
 
-    /* search string (found) */
+    /* Search string (found). */
     WEE_CHECK_EMPHASIZE(string2, string1, "this is a test", 0, NULL);
     WEE_CHECK_EMPHASIZE(string2, string1, "this IS A TesT", 0, NULL);
 
-    /* search string (not found) */
+    /* Search string (not found). */
     WEE_CHECK_EMPHASIZE(string1, string1, "this IS A TesT", 1, NULL);
 
-    /* search regex (found) */
+    /* Search regex (found). */
     string_regcomp (&regex, "this.*test", 0);
     WEE_CHECK_EMPHASIZE(string2, string1, NULL, 0, &regex);
     regfree (&regex);
 
-    /* search regex (not found) */
+    /* Search regex (not found). */
     string_regcomp (&regex, "this.*failed", 0);
     WEE_CHECK_EMPHASIZE(string1, string1, NULL, 0, &regex);
     regfree (&regex);

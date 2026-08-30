@@ -30,7 +30,7 @@
 
 struct t_config_file *irc_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *irc_config_section_look = NULL;
 struct t_config_section *irc_config_section_color = NULL;
@@ -244,7 +244,7 @@ irc_config_compute_nick_colors (void)
         }
     }
 
-    /* if colors are displayed for nicks in nicklist, refresh them */
+    /* If colors are displayed for nicks in nicklist, refresh them. */
     if (weechat_config_boolean (irc_config_look_color_nicks_in_nicklist))
         irc_nick_nicklist_set_color_all ();
 }
@@ -284,7 +284,7 @@ irc_config_display_channel_modes_arguments (const char *modes)
         ptr_mode++;
     }
 
-    /* arguments are displayed by default */
+    /* Arguments are displayed by default. */
     return 1;
 }
 
@@ -296,7 +296,7 @@ int
 irc_config_change_nick_colors_cb (const void *pointer, void *data,
                                   const char *option, const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -316,7 +316,7 @@ irc_config_change_look_color_nicks_in_nicklist (const void *pointer,
                                                 void *data,
                                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -332,7 +332,7 @@ void
 irc_config_change_look_display_away (const void *pointer, void *data,
                                      struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -361,7 +361,7 @@ irc_config_change_look_display_join_message (const void *pointer, void *data,
     char **items;
     int num_items, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -408,12 +408,12 @@ irc_config_change_look_server_buffer (const void *pointer, void *data,
     struct t_irc_server *ptr_server;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
 
-    /* first unmerge all IRC server buffers */
+    /* First unmerge all IRC server buffers. */
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -421,7 +421,7 @@ irc_config_change_look_server_buffer (const void *pointer, void *data,
             weechat_buffer_unmerge (ptr_server->buffer, -1);
     }
 
-    /* merge IRC server buffers with core buffer or another buffer */
+    /* Merge IRC server buffers with core buffer or another buffer. */
     if ((weechat_config_enum (irc_config_look_server_buffer) ==
          IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE)
         || (weechat_config_enum (irc_config_look_server_buffer) ==
@@ -456,12 +456,12 @@ irc_config_change_look_pv_buffer (const void *pointer, void *data,
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
 
-    /* first unmerge all IRC private buffers */
+    /* First unmerge all IRC private buffers. */
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -476,7 +476,7 @@ irc_config_change_look_pv_buffer (const void *pointer, void *data,
         }
     }
 
-    /* merge IRC private buffers */
+    /* Merge IRC private buffers. */
     if ((weechat_config_enum (irc_config_look_pv_buffer) == IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER)
         || (weechat_config_enum (irc_config_look_pv_buffer) == IRC_CONFIG_LOOK_PV_BUFFER_MERGE_ALL))
     {
@@ -493,11 +493,11 @@ irc_config_change_look_pv_buffer (const void *pointer, void *data,
                     switch (weechat_config_enum (irc_config_look_pv_buffer))
                     {
                         case IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER:
-                            /* merge private buffers by server */
+                            /* Merge private buffers by server. */
                             ptr_buffer = irc_buffer_search_private_lowest_number (ptr_server);
                             break;
                         case IRC_CONFIG_LOOK_PV_BUFFER_MERGE_ALL:
-                            /* merge *ALL* private buffers */
+                            /* Merge *ALL* private buffers. */
                             ptr_buffer = irc_buffer_search_private_lowest_number (NULL);
                             break;
                     }
@@ -521,7 +521,7 @@ irc_config_change_buffer_modes (const void *pointer,
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -549,7 +549,7 @@ irc_config_change_look_highlight_tags_restrict (const void *pointer, void *data,
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -584,7 +584,7 @@ void
 irc_config_change_look_item_display_server (const void *pointer, void *data,
                                             struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -604,7 +604,7 @@ irc_config_change_look_nicks_hide_password (const void *pointer, void *data,
 {
     const char *nicks_hide_password;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -691,7 +691,7 @@ irc_config_change_look_topic_strip_colors (const void *pointer, void *data,
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -718,7 +718,7 @@ irc_config_change_buffer_input_prompt (const void *pointer, void *data,
 {
     struct t_irc_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -740,7 +740,7 @@ void
 irc_config_change_color_item_lag (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -756,7 +756,7 @@ void
 irc_config_change_color_item_nick_modes (const void *pointer, void *data,
                                          struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -773,7 +773,7 @@ void
 irc_config_change_color_item_tls_version (const void *pointer, void *data,
                                           struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -791,7 +791,7 @@ irc_config_change_color_list_buffer (const void *pointer, void *data,
 {
     struct t_irc_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -815,7 +815,7 @@ irc_config_change_color_mirc_remap (const void *pointer, void *data,
     char **items, *pos;
     int num_items, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -868,7 +868,7 @@ irc_config_change_color_nick_prefixes (const void *pointer, void *data,
     char **items, *pos;
     int num_items, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -925,7 +925,7 @@ irc_config_change_color_term_remap (const void *pointer, void *data,
     char **items, *pos;
     int num_items, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -978,7 +978,7 @@ irc_config_change_network_lag_check (const void *pointer, void *data,
     time_t time_next_check;
     struct t_irc_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1002,7 +1002,7 @@ void
 irc_config_change_network_lag_min_show (const void *pointer, void *data,
                                         struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1018,7 +1018,7 @@ void
 irc_config_change_network_notify_check_ison (const void *pointer, void *data,
                                              struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1034,7 +1034,7 @@ void
 irc_config_change_network_notify_check_whois (const void *pointer, void *data,
                                               struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1055,7 +1055,7 @@ irc_config_change_network_send_unknown_commands (const void *pointer,
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1100,7 +1100,7 @@ irc_config_server_default_change_cb (const void *pointer, void *data,
     int index_option;
     struct t_irc_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     index_option = irc_server_search_option (pointer);
@@ -1110,9 +1110,9 @@ irc_config_server_default_change_cb (const void *pointer, void *data,
              ptr_server = ptr_server->next_server)
         {
             /*
-             * when default value for a server option is changed, we apply it
+             * When default value for a server option is changed, we apply it
              * on all servers where value is "null" (inherited from default
-             * value)
+             * value).
              */
             if (weechat_config_option_is_null (ptr_server->options[index_option]))
             {
@@ -1220,12 +1220,12 @@ irc_config_check_autojoin (const char *autojoin)
     if (!autojoin || !autojoin[0])
         return 1;
 
-    /* ignore spaces at beginning/end of string */
+    /* Ignore spaces at beginning/end of string. */
     string = weechat_string_strip (autojoin, 1, 1, " ");
     if (!string)
         goto end;
 
-    /* no space allowed before or after a comma */
+    /* No space allowed before or after a comma. */
     if (strstr (string, ", ") || strstr (string, " ,"))
         goto end;
 
@@ -1250,7 +1250,7 @@ irc_config_check_autojoin (const char *autojoin)
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                      0, &num_keys);
 
-    /* error if there are more keys than channels to join */
+    /* Error if there are more keys than channels to join. */
     if (num_keys > num_channels)
         goto end;
 
@@ -1278,7 +1278,7 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
     const char *pos_error, *proxy_name;
     struct t_infolist *infolist;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) option;
 
@@ -1351,8 +1351,8 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
                 if (!weechat_util_parse_int (value, 10, &number))
                 {
                     /*
-                     * not a valid number, but we return 1 (OK) to let WeeChat
-                     * display the appropriate error
+                     * Not a valid number, but we return 1 (OK) to let WeeChat
+                     * display the appropriate error.
                      */
                     return 1;
                 }
@@ -1400,7 +1400,7 @@ irc_config_server_change_cb (const void *pointer, void *data,
     char *name;
     struct t_irc_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     index_option = irc_server_search_option (pointer);
@@ -1475,7 +1475,7 @@ irc_config_server_default_check_notify (const void *pointer, void *data,
                                         struct t_config_option *option,
                                         const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1497,7 +1497,7 @@ irc_config_reload (const void *pointer, void *data,
     int rc;
     struct t_irc_server *ptr_server, *next_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1520,9 +1520,9 @@ irc_config_reload (const void *pointer, void *data,
         next_server = ptr_server->next_server;
 
         /*
-         * if server existed before reload, but was not read in irc.conf:
+         * If server existed before reload, but was not read in irc.conf:
          * - if connected to server: display a warning, keep server in memory
-         * - if not connected: delete server
+         * - if not connected: delete server.
          */
         if (ptr_server->reloading_from_config
             && !ptr_server->reloaded_from_config)
@@ -1562,7 +1562,7 @@ irc_config_msgbuffer_create_option_cb (const void *pointer, void *data,
     char *name_lower;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1643,7 +1643,7 @@ irc_config_ctcp_write_default_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1678,7 +1678,7 @@ irc_config_ctcp_create_option_cb (const void *pointer, void *data,
     char *name_lower;
     static char empty_value[1] = { '\0' };
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1778,7 +1778,7 @@ irc_config_ignore_read_cb (const void *pointer, void *data,
     char **argv, **argv_eol;
     int argc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -1830,7 +1830,7 @@ irc_config_ignore_write_cb (const void *pointer, void *data,
 {
     struct t_irc_ignore *ptr_ignore;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2797,7 +2797,7 @@ irc_config_server_read_cb (const void *pointer, void *data,
     const char *pos_option;
     char *server_name;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -2865,7 +2865,7 @@ irc_config_server_write_cb (const void *pointer, void *data,
     struct t_irc_server *ptr_server;
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2929,12 +2929,12 @@ irc_config_update_cb (const void *pointer, void *data,
     char *new_option, *pos_new_option, *new_value;
     int changes, length;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
 
-    /* nothing to do if the config file is already up-to-date */
+    /* Nothing to do if the config file is already up-to-date. */
     if (version_read >= IRC_CONFIG_VERSION)
         return NULL;
 
@@ -2943,8 +2943,8 @@ irc_config_update_cb (const void *pointer, void *data,
     if (version_read < 2)
     {
         /*
-         * changes in v2 (WeeChat 4.0.0):
-         *   - options "ssl*" renamed to "tls*"
+         * Changes in v2 (WeeChat 4.0.0):
+         *   - options "ssl*" renamed to "tls*".
          */
         ptr_section = weechat_hashtable_get (data_read, "section");
         ptr_option = weechat_hashtable_get (data_read, "option");
@@ -2954,7 +2954,7 @@ irc_config_update_cb (const void *pointer, void *data,
         {
             if (strncmp (ptr_option, "ssl", 3) == 0)
             {
-                /* convert server_default options starting with "ssl" */
+                /* Convert server_default options starting with "ssl". */
                 new_option = strdup (ptr_option);
                 if (new_option)
                 {
@@ -2974,7 +2974,7 @@ irc_config_update_cb (const void *pointer, void *data,
                  && ptr_option
                  && (strcmp (ptr_section, "server") == 0))
         {
-            /* convert server options starting with "ssl" */
+            /* Convert server options starting with "ssl". */
             pos_option = strrchr (ptr_option, '.');
             if (pos_option && (strncmp (pos_option + 1, "ssl", 3) == 0))
             {
@@ -3003,9 +3003,9 @@ irc_config_update_cb (const void *pointer, void *data,
     if (version_read < 3)
     {
         /*
-         * changes in v3 (WeeChat 4.1.0):
+         * Changes in v3 (WeeChat 4.1.0):
          *   - options "irc.ctcp.*" are now evaluated
-         *     (eg: "$version" -> "${version"})
+         *     (eg: "$version" -> "${version"}).
          */
         ptr_section = weechat_hashtable_get (data_read, "section");
         ptr_option = weechat_hashtable_get (data_read, "option");
@@ -3035,11 +3035,11 @@ irc_config_update_cb (const void *pointer, void *data,
     if (version_read < 4)
     {
         /*
-         * changes in v4 (WeeChat 4.3.0):
+         * Changes in v4 (WeeChat 4.3.0):
          *   - server option "command_delay" is renamed to "autojoin_delay"
          *     ("command_delay" is a new option that sets the delay before
          *     the command, while "autojoin_delay" sets the delay before the
-         *     autojoin)
+         *     autojoin).
          */
         ptr_section = weechat_hashtable_get (data_read, "section");
         ptr_option = weechat_hashtable_get (data_read, "option");
@@ -3086,11 +3086,11 @@ irc_config_update_cb (const void *pointer, void *data,
     if (version_read < 5)
     {
         /*
-         * changes in v5 (WeeChat 4.4.0):
+         * Changes in v5 (WeeChat 4.4.0):
          *   - server option "ipv6" is converted from boolean to enum:
          *       - "on"  -> "auto"
          *       - "off" -> "disable"
-         *     (new possible value "force" is not set by this function)
+         *     (new possible value "force" is not set by this function).
          */
         ptr_config = weechat_hashtable_get (data_read, "config");
         ptr_section = weechat_hashtable_get (data_read, "section");
@@ -3202,7 +3202,7 @@ irc_config_init (void)
         return 0;
     }
 
-    /* look */
+    /* Look */
     irc_config_section_look = weechat_config_new_section (
         irc_config_file, "look",
         0, 0,
@@ -3825,7 +3825,7 @@ irc_config_init (void)
             NULL, NULL, NULL);
     }
 
-    /* color */
+    /* Color */
     irc_config_section_color = weechat_config_new_section (
         irc_config_file, "color",
         0, 0,
@@ -4032,7 +4032,7 @@ irc_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* network */
+    /* Network */
     irc_config_section_network = weechat_config_new_section (
         irc_config_file, "network",
         0, 0,
@@ -4167,7 +4167,7 @@ irc_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* msgbuffer */
+    /* Msgbuffer */
     irc_config_section_msgbuffer = weechat_config_new_section (
         irc_config_file, "msgbuffer",
         1, 1,
@@ -4187,7 +4187,7 @@ irc_config_init (void)
         &irc_config_ctcp_create_option_cb, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* ignore */
+    /* Ignore */
     irc_config_section_ignore = weechat_config_new_section (
         irc_config_file, "ignore",
         0, 0,
@@ -4197,7 +4197,7 @@ irc_config_init (void)
         NULL, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* server_default */
+    /* Server default */
     irc_config_section_server_default = weechat_config_new_section (
         irc_config_file, "server_default",
         0, 0,
@@ -4209,7 +4209,7 @@ irc_config_init (void)
 
     irc_config_server_create_default_options (irc_config_section_server_default);
 
-    /* server */
+    /* Server */
     irc_config_section_server = weechat_config_new_section (
         irc_config_file, "server",
         0, 0,

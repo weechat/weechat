@@ -22,7 +22,7 @@ fifo_command_fifo (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -45,21 +45,21 @@ fifo_command_fifo (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* enable pipe */
+    /* Enable pipe. */
     if (weechat_strcmp (argv[1], "enable") == 0)
     {
         weechat_config_option_set (fifo_config_file_enabled, "on", 1);
         return WEECHAT_RC_OK;
     }
 
-    /* disable pipe */
+    /* Disable pipe. */
     if (weechat_strcmp (argv[1], "disable") == 0)
     {
         weechat_config_option_set (fifo_config_file_enabled, "off", 1);
         return WEECHAT_RC_OK;
     }
 
-    /* toggle pipe */
+    /* Toggle pipe. */
     if (weechat_strcmp (argv[1], "toggle") == 0)
     {
         weechat_config_option_set (

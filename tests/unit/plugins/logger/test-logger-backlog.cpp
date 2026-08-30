@@ -45,7 +45,7 @@ TEST(LoggerBacklog, DisplayLine)
     logger_backlog_display_line (gui_buffers, NULL);
     POINTERS_EQUAL(ptr_line, gui_buffers->own_lines->last_line);
 
-    /* empty string */
+    /* Empty string */
     logger_backlog_display_line (gui_buffers, "");
     ptr_data = gui_buffers->own_lines->last_line->data;
     CHECK(ptr_data->date != 1645288340);
@@ -62,7 +62,7 @@ TEST(LoggerBacklog, DisplayLine)
                       CONFIG_COLOR(logger_config_color_backlog_line))));
     STRCMP_EQUAL(string, ptr_data->message);
 
-    /* invalid date */
+    /* Invalid date */
     snprintf (str_line, sizeof (str_line),
               "invalid date\tnick\tthe message");
     logger_backlog_display_line (gui_buffers, str_line);
@@ -86,7 +86,7 @@ TEST(LoggerBacklog, DisplayLine)
                       CONFIG_COLOR(logger_config_color_backlog_line))));
     STRCMP_EQUAL(string, ptr_data->message);
 
-    /* valid line */
+    /* Valid line */
     snprintf (str_line, sizeof (str_line),
               "2022-02-19 16:32:20.123456Z\tnick\tthe message");
     logger_backlog_display_line (gui_buffers, str_line);
@@ -110,7 +110,7 @@ TEST(LoggerBacklog, DisplayLine)
                       CONFIG_COLOR(logger_config_color_backlog_line))));
     STRCMP_EQUAL(string, ptr_data->message);
 
-    /* valid line with Tab in message */
+    /* Valid line with Tab in message */
     snprintf (str_line, sizeof (str_line),
               "2022-02-19 16:32:21.123456Z\tnick\tthe message\twith tab");
     logger_backlog_display_line (gui_buffers, str_line);
@@ -145,7 +145,7 @@ test_logger_backlog_msg_cmp_cb (void *data,
                                 void *pointer1,
                                 void *pointer2)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -160,7 +160,7 @@ void
 test_logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
                                  void *pointer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 

@@ -7,7 +7,7 @@
 
 /* UTF-8 string functions */
 
-/* for wcwidth in wchar.h */
+/* For wcwidth in wchar.h */
 #define _XOPEN_SOURCE
 
 #ifdef HAVE_CONFIG_H
@@ -82,7 +82,7 @@ utf8_is_valid (const char *string, int length, char **error)
     {
         /*
          * UTF-8, 2 bytes, should be: 110vvvvv 10vvvvvv
-         * and in range: U+0080 - U+07FF
+         * and in range: U+0080 - U+07FF.
          */
         if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
         {
@@ -97,7 +97,7 @@ utf8_is_valid (const char *string, int length, char **error)
          * UTF-8, 3 bytes, should be: 1110vvvv 10vvvvvv 10vvvvvv
          * and in range: U+0800 - U+FFFF
          * (note: high and low surrogate halves used by UTF-16 (U+D800 through
-         * U+DFFF) are not legal Unicode values)
+         * U+DFFF) are not legal Unicode values).
          */
         else if (((unsigned char)(string[0]) & 0xF0) == 0xE0)
         {
@@ -118,7 +118,7 @@ utf8_is_valid (const char *string, int length, char **error)
         }
         /*
          * UTF-8, 4 bytes, should be: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv
-         * and in range: U+10000 - U+1FFFFF
+         * and in range: U+10000 - U+1FFFFF.
          */
         else if (((unsigned char)(string[0]) & 0xF8) == 0xF0)
         {
@@ -515,8 +515,8 @@ utf8_char_size_screen (const char *string)
         return CONFIG_INTEGER(config_look_tab_width);
 
     /*
-     * chars < 32 are displayed with a letter/symbol and reverse video,
-     * so exactly one column
+     * Chars < 32 are displayed with a letter/symbol and reverse video,
+     * so exactly one column.
      */
     if (((unsigned char)string[0]) < 32)
         return 1;
@@ -524,9 +524,9 @@ utf8_char_size_screen (const char *string)
     codepoint = (wchar_t)utf8_char_int (string);
 
     /*
-     * special chars not displayed (because not handled by WeeChat):
+     * Special chars not displayed (because not handled by WeeChat):
      *   U+00AD: soft hyphen      (wcwidth == 1)
-     *   U+200B: zero width space (wcwidth == 0)
+     *   U+200B: zero width space (wcwidth == 0).
      */
     if ((codepoint == 0x00AD) || (codepoint == 0x200B))
     {
@@ -559,7 +559,7 @@ utf8_strlen_screen (const char *string)
     while (ptr_string && ptr_string[0])
     {
         size_screen_char = utf8_char_size_screen (ptr_string);
-        /* count only chars that use at least one column */
+        /* Count only chars that use at least one column. */
         if (size_screen_char > 0)
             size_screen += size_screen_char;
         ptr_string = utf8_next_char (ptr_string);

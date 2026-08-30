@@ -104,18 +104,18 @@ TEST(RelayAuth, GenerateNonce)
 
 TEST(RelayAuth, PasswordEquals)
 {
-    /* invalid arguments */
+    /* Invalid arguments */
     LONGS_EQUAL(0, relay_auth_password_equals (NULL, NULL));
     LONGS_EQUAL(0, relay_auth_password_equals ("abcd", NULL));
     LONGS_EQUAL(0, relay_auth_password_equals (NULL, "abcd"));
 
-    /* different passwords */
+    /* Different passwords */
     LONGS_EQUAL(0, relay_auth_password_equals ("test", "password"));
     LONGS_EQUAL(0, relay_auth_password_equals ("Password", "password"));
     LONGS_EQUAL(0, relay_auth_password_equals ("", "password"));
     LONGS_EQUAL(0, relay_auth_password_equals ("password", ""));
 
-    /* equal passwords */
+    /* Equal passwords */
     LONGS_EQUAL(1, relay_auth_password_equals ("", ""));
     LONGS_EQUAL(1, relay_auth_password_equals ("password", "password"));
     LONGS_EQUAL(1, relay_auth_password_equals ("a really long password with spaces",
@@ -135,20 +135,20 @@ TEST(RelayAuth, CheckPasswordPlain)
     CHECK(client);
     client->protocol = RELAY_PROTOCOL_API;
 
-    /* invalid arguments */
+    /* Invalid arguments */
     LONGS_EQUAL(-2, relay_auth_check_password_plain (client, NULL, NULL));
     LONGS_EQUAL(-2, relay_auth_check_password_plain (client, "abcd", NULL));
     LONGS_EQUAL(-2, relay_auth_check_password_plain (client, NULL, "password"));
 
-    /* wrong password */
+    /* Wrong password */
     LONGS_EQUAL(-2, relay_auth_check_password_plain (client, "test", "password"));
     LONGS_EQUAL(-2, relay_auth_check_password_plain (client, "Password", "password"));
 
-    /* good password */
+    /* Good password */
     LONGS_EQUAL(0, relay_auth_check_password_plain (client, "", ""));
     LONGS_EQUAL(0, relay_auth_check_password_plain (client, "password", "password"));
 
-    /* test with "plain" disabled */
+    /* Test with "plain" disabled */
     config_file_option_set (relay_config_network_password_hash_algo, "*,!plain", 1);
     LONGS_EQUAL(-1, relay_auth_check_password_plain (client, "password", "password"));
     config_file_option_reset (relay_config_network_password_hash_algo, 1);
@@ -172,21 +172,21 @@ TEST(RelayAuth, ParseSha)
     LONGS_EQUAL(0, salt_size);
     STRCMP_EQUAL(NULL, hash_sha);
 
-    /* not enough parameters: 0 (expected: 2) */
+    /* Not enough parameters: 0 (expected: 2) */
     WEE_CHECK_PARSE_SHA("");
     STRCMP_EQUAL(NULL, salt_hexa);
     STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
     STRCMP_EQUAL(NULL, hash_sha);
 
-    /* not enough parameters: 1 (expected: 2) */
+    /* Not enough parameters: 1 (expected: 2) */
     WEE_CHECK_PARSE_SHA("41424344");
     STRCMP_EQUAL(NULL, salt_hexa);
     STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
     STRCMP_EQUAL(NULL, hash_sha);
 
-    /* good parameters */
+    /* Good parameters */
     WEE_CHECK_PARSE_SHA("41424344:5e884898da28047151d0e56f8dc6292773603d0d6aa"
                         "bbdd62a11ef721d1542d8");
     STRCMP_EQUAL("41424344", salt_hexa);
@@ -199,7 +199,7 @@ TEST(RelayAuth, ParseSha)
     free (salt);
     free (hash_sha);
 
-    /* wrong salt */
+    /* Wrong salt */
     WEE_CHECK_PARSE_SHA("Z:5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a"
                         "11ef721d1542d8");
     STRCMP_EQUAL(NULL, salt_hexa);
@@ -230,7 +230,7 @@ TEST(RelayAuth, ParsePbkdf2)
     LONGS_EQUAL(0, iterations);
     STRCMP_EQUAL(NULL, hash_pbkdf2);
 
-    /* not enough parameters: 0 (expected: 3) */
+    /* Not enough parameters: 0 (expected: 3) */
     WEE_CHECK_PARSE_PBKDF2("");
     STRCMP_EQUAL(NULL, salt_hexa);
     STRCMP_EQUAL(NULL, salt);
@@ -238,7 +238,7 @@ TEST(RelayAuth, ParsePbkdf2)
     LONGS_EQUAL(0, iterations);
     STRCMP_EQUAL(NULL, hash_pbkdf2);
 
-    /* not enough parameters: 1 (expected: 3) */
+    /* Not enough parameters: 1 (expected: 3) */
     WEE_CHECK_PARSE_PBKDF2("41424344");
     STRCMP_EQUAL(NULL, salt_hexa);
     STRCMP_EQUAL(NULL, salt);
@@ -246,7 +246,7 @@ TEST(RelayAuth, ParsePbkdf2)
     LONGS_EQUAL(0, iterations);
     STRCMP_EQUAL(NULL, hash_pbkdf2);
 
-    /* not enough parameters: 2 (expected: 3) */
+    /* Not enough parameters: 2 (expected: 3) */
     WEE_CHECK_PARSE_PBKDF2("41424344:1000");
     STRCMP_EQUAL(NULL, salt_hexa);
     STRCMP_EQUAL(NULL, salt);
@@ -254,7 +254,7 @@ TEST(RelayAuth, ParsePbkdf2)
     LONGS_EQUAL(0, iterations);
     STRCMP_EQUAL(NULL, hash_pbkdf2);
 
-    /* good parameters */
+    /* Good parameters */
     WEE_CHECK_PARSE_PBKDF2("41424344:1000:8765936466387f2cfcc47d2617423386684"
                            "a218d64a57f8213e42b0fe60d8849");
     STRCMP_EQUAL("41424344", salt_hexa);
@@ -268,7 +268,7 @@ TEST(RelayAuth, ParsePbkdf2)
     free (salt);
     free (hash_pbkdf2);
 
-    /* wrong salt */
+    /* Wrong salt */
     WEE_CHECK_PARSE_PBKDF2("Z:1000:8765936466387f2cfcc47d2617423386684a218d64"
                            "a57f8213e42b0fe60d8849");
     STRCMP_EQUAL(NULL, salt_hexa);
@@ -280,7 +280,7 @@ TEST(RelayAuth, ParsePbkdf2)
                  hash_pbkdf2);
     free (hash_pbkdf2);
 
-    /* wrong iterations */
+    /* Wrong iterations */
     WEE_CHECK_PARSE_PBKDF2("41424344:abcd:8765936466387f2cfcc47d2617423386684"
                            "a218d64a57f8213e42b0fe60d8849");
     STRCMP_EQUAL("41424344", salt_hexa);
@@ -508,44 +508,44 @@ TEST(RelayAuth, PasswordHash)
     CHECK(client);
     client->protocol = RELAY_PROTOCOL_API;
 
-    /* invalid arguments */
+    /* Invalid arguments */
     LONGS_EQUAL(-4, relay_auth_password_hash (client, NULL, NULL));
     LONGS_EQUAL(-4, relay_auth_password_hash (client, "sha256:abcd", NULL));
     LONGS_EQUAL(-4, relay_auth_password_hash (client, NULL, "password"));
 
-    /* missing separator between algo and hash */
+    /* Missing separator between algo and hash */
     LONGS_EQUAL(-4, relay_auth_password_hash (client, "", "password"));
     LONGS_EQUAL(-4, relay_auth_password_hash (client, "sha256", "password"));
 
-    /* unknown hash algorithm */
+    /* Unknown hash algorithm */
     LONGS_EQUAL(-1, relay_auth_password_hash (client, ":abcd", "password"));
     LONGS_EQUAL(-1, relay_auth_password_hash (client, "zzz:abcd", "password"));
 
     /*
-     * algo "plain" must always be rejected in a hashed password: it is
+     * Algo "plain" must always be rejected in a hashed password: it is
      * checked by relay_auth_check_password_plain, and accepting it here
-     * would authenticate the client without any password check
+     * would authenticate the client without any password check.
      */
     LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:", "password"));
     LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:test", "password"));
     LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:password",
                                               "password"));
 
-    /* same test with protocol "weechat", after "plain" was negotiated */
+    /* Same test with protocol "weechat", after "plain" was negotiated */
     client->protocol = RELAY_PROTOCOL_WEECHAT;
     client->password_hash_algo = RELAY_AUTH_PASSWORD_HASH_PLAIN;
     LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:", "password"));
     LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:password",
                                               "password"));
 
-    /* no authentication supported with protocol "weechat" */
+    /* No authentication supported with protocol "weechat" */
     client->password_hash_algo = -1;
     LONGS_EQUAL(-1, relay_auth_password_hash (client, "sha256:abcd",
                                               "password"));
 
     /*
-     * nominal case: authentication OK with protocol "api", where the salt is
-     * the current time (as unix timestamp)
+     * Nominal case: authentication OK with protocol "api", where the salt is
+     * the current time (as unix timestamp).
      */
     client->protocol = RELAY_PROTOCOL_API;
 
@@ -558,7 +558,7 @@ TEST(RelayAuth, PasswordHash)
     snprintf (hashed_password, sizeof (hashed_password),
               "sha256:%ld:%s", time_now, hash_hexa);
     LONGS_EQUAL(0, relay_auth_password_hash (client, hashed_password, password));
-    /* wrong password with the same (valid) form: invalid password (hash) */
+    /* Wrong password with the same (valid) form: invalid password (hash) */
     LONGS_EQUAL(-4, relay_auth_password_hash (client, hashed_password, "wrong"));
 
     /* SHA512 */
@@ -584,14 +584,14 @@ TEST(RelayAuth, PasswordHash)
     LONGS_EQUAL(0, relay_auth_password_hash (client, hashed_password, password));
 
     /*
-     * nominal case: authentication OK with protocol "weechat", where the salt
-     * is the server nonce followed by a client nonce, both in hexadecimal
+     * Nominal case: authentication OK with protocol "weechat", where the salt
+     * is the server nonce followed by a client nonce, both in hexadecimal.
      */
     client->protocol = RELAY_PROTOCOL_WEECHAT;
     client->password_hash_algo = RELAY_AUTH_PASSWORD_HASH_SHA256;
     client->nonce = strdup ("abcd");
 
-    /* salt = server nonce ("abcd") + client nonce ("1234") */
+    /* Salt = server nonce ("abcd") + client nonce ("1234") */
     salt_size = string_base_decode ("16", "abcd1234", salt);
     memcpy (salt_pass, salt, salt_size);
     memcpy (salt_pass + salt_size, password, strlen (password));

@@ -12,8 +12,8 @@
 #include <zlib.h>
 
 /*
- * globally unique identifier that is concatenated to HTTP header
- * "Sec-WebSocket-Key"
+ * Globally unique identifier that is concatenated to HTTP header
+ * "Sec-WebSocket-Key".
  */
 #define WEBSOCKET_GUID "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
@@ -27,17 +27,17 @@
 #define WEBSOCKET_SUB_PROTOCOL_API_WEECHAT "api.weechat"
 
 /*
- * maximum length of a websocket frame received from a client (or a remote
+ * Maximum length of a websocket frame received from a client (or a remote
  * WeeChat): used as an upper bound on the announced frame payload length, to
  * prevent a client from forcing an unbounded allocation by announcing a huge
- * frame and dribbling its payload
+ * frame and dribbling its payload.
  */
 #define WEBSOCKET_FRAME_MAX_LENGTH (8 * 1024 * 1024)
 
 /*
- * maximum size of a decompressed websocket frame (with "permessage-deflate"):
+ * Maximum size of a decompressed websocket frame (with "permessage-deflate"):
  * used as an upper bound when inflating, to prevent a small compressed frame
- * from decompressing to an unbounded amount of data ("deflate bomb")
+ * from decompressing to an unbounded amount of data ("deflate bomb").
  */
 #define WEBSOCKET_INFLATE_MAX_SIZE (64 * 1024 * 1024)
 

@@ -13,7 +13,7 @@
 #  GETTEXT_FOUND = is gettext usable on system?
 
 if(GETTEXT_FOUND)
-  # Already in cache, be silent
+  # Already in cache, be silent.
   set(GETTEXT_FIND_QUIETLY TRUE)
 endif()
 

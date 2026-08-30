@@ -32,26 +32,26 @@ irc_typing_signal_typing_self_cb (const void *pointer, void *data,
     struct t_irc_channel *ptr_channel;
     int new_state;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
 
-    /* sending self typing status is allowed? */
+    /* Sending self typing status is allowed? */
     if (!weechat_config_boolean (irc_config_look_typing_status_self))
         return WEECHAT_RC_OK;
 
-    /* search server/channel with buffer */
+    /* Search server/channel with buffer. */
     irc_buffer_get_server_and_channel (signal_data, &ptr_server, &ptr_channel);
     if (!ptr_server || !ptr_channel)
         return WEECHAT_RC_OK;
 
-    /* typing not allowed on server? */
+    /* Typing not allowed on server? */
     if (!ptr_server->typing_allowed)
         return WEECHAT_RC_OK;
 
-    /* typing works only if capability "message-tags" is enabled */
+    /* Typing works only if capability "message-tags" is enabled. */
     if (!weechat_hashtable_has_key (ptr_server->cap_list, "message-tags"))
         return WEECHAT_RC_OK;
 

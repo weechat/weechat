@@ -30,7 +30,7 @@
 
 struct t_config_file *relay_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *relay_config_section_look = NULL;
 struct t_config_section *relay_config_section_color = NULL;
@@ -41,14 +41,14 @@ struct t_config_section *relay_config_section_port = NULL;
 struct t_config_section *relay_config_section_path = NULL;
 struct t_config_section *relay_config_section_remote = NULL;
 
-/* relay config, look section */
+/* Relay config, look section */
 
 struct t_config_option *relay_config_look_auto_open_buffer = NULL;
 struct t_config_option *relay_config_look_display_clients = NULL;
 struct t_config_option *relay_config_look_raw_messages = NULL;
 struct t_config_option *relay_config_look_raw_messages_max_length = NULL;
 
-/* relay config, color section */
+/* Relay config, color section */
 
 struct t_config_option *relay_config_color_client = NULL;
 struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS] = {
@@ -58,7 +58,7 @@ struct t_config_option *relay_config_color_text = NULL;
 struct t_config_option *relay_config_color_text_bg = NULL;
 struct t_config_option *relay_config_color_text_selected = NULL;
 
-/* relay config, network section */
+/* Relay config, network section */
 
 struct t_config_option *relay_config_network_allow_empty_password = NULL;
 struct t_config_option *relay_config_network_allowed_ips = NULL;
@@ -82,7 +82,7 @@ struct t_config_option *relay_config_network_unix_socket_permissions = NULL;
 struct t_config_option *relay_config_network_websocket_allowed_origins = NULL;
 struct t_config_option *relay_config_network_websocket_permessage_deflate = NULL;
 
-/* relay config, irc section */
+/* Relay config, irc section */
 
 struct t_config_option *relay_config_irc_backlog_max_minutes = NULL;
 struct t_config_option *relay_config_irc_backlog_max_number = NULL;
@@ -91,7 +91,7 @@ struct t_config_option *relay_config_irc_backlog_since_last_message = NULL;
 struct t_config_option *relay_config_irc_backlog_tags = NULL;
 struct t_config_option *relay_config_irc_backlog_time_format = NULL;
 
-/* relay config, api section */
+/* Relay config, api section */
 
 struct t_config_option *relay_config_api_remote_autoreconnect_delay_growing = NULL;
 struct t_config_option *relay_config_api_remote_autoreconnect_delay_max = NULL;
@@ -99,7 +99,7 @@ struct t_config_option *relay_config_api_remote_get_lines = NULL;
 struct t_config_option *relay_config_api_remote_input_cmd_local = NULL;
 struct t_config_option *relay_config_api_remote_input_cmd_remote = NULL;
 
-/* other */
+/* Other */
 
 int relay_config_auto_open_buffer[RELAY_NUM_PROTOCOLS];
 int relay_config_display_clients[RELAY_NUM_PROTOCOLS];
@@ -122,14 +122,14 @@ relay_config_change_auto_open_buffer_cb (const void *pointer, void *data,
     char **items;
     int i, num_items, protocol;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
 
     auto_open_buffer = weechat_config_string (relay_config_look_auto_open_buffer);
 
-    /* old option was a boolean, use these values for compatibility */
+    /* Old option was a boolean, use these values for compatibility. */
     if (strcmp (auto_open_buffer, "on") == 0)
         auto_open_buffer = value_on;
     else if (strcmp (auto_open_buffer, "off") == 0)
@@ -169,7 +169,7 @@ relay_config_change_display_clients_cb (const void *pointer, void *data,
     char **items;
     int i, num_items, protocol;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -206,7 +206,7 @@ void
 relay_config_refresh_cb (const void *pointer, void *data,
                          struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -225,7 +225,7 @@ relay_config_change_network_allowed_ips (const void *pointer, void *data,
 {
     const char *allowed_ips;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -263,7 +263,7 @@ relay_config_change_network_password_hash_algo (const void *pointer,
                                                 void *data,
                                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -295,7 +295,7 @@ relay_config_change_network_bind_address_cb (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -318,7 +318,7 @@ relay_config_change_network_ipv6_cb (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -342,7 +342,7 @@ void
 relay_config_change_network_tls_cert_key (const void *pointer, void *data,
                                           struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -367,7 +367,7 @@ relay_config_check_network_totp_secret (const void *pointer, void *data,
     char *totp_secret, *secret;
     int rc, length;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -421,7 +421,7 @@ relay_config_check_network_tls_priorities (const void *pointer, void *data,
     const char *pos_error;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -455,7 +455,7 @@ void
 relay_config_change_network_tls_priorities (const void *pointer, void *data,
                                             struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -480,7 +480,7 @@ relay_config_check_network_unix_socket_permissions (const void *pointer, void *d
                                                     struct t_config_option *option,
                                                     const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -498,7 +498,7 @@ relay_config_change_network_websocket_allowed_origins (const void *pointer, void
 {
     const char *allowed_origins;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -543,18 +543,18 @@ relay_config_check_irc_backlog_tags (const void *pointer, void *data,
     char **tags;
     int num_tags, i, rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
 
     rc = 1;
 
-    /* "*" means all tags */
+    /* "*" means all tags. */
     if (strcmp (value, "*") == 0)
         return rc;
 
-    /* split tags and check them */
+    /* Split tags and check them. */
     tags = weechat_string_split (value, ",", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
@@ -587,7 +587,7 @@ relay_config_change_irc_backlog_tags (const void *pointer, void *data,
     char **items;
     int num_items, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -641,33 +641,33 @@ relay_config_check_port_cb (const void *pointer, void *data,
     int number, port;
     long long new_port;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
     if (strncmp (value, "++", 2) == 0)
     {
-        /* relative value: add to the current port */
+        /* Relative value: add to the current port. */
         if (!weechat_util_parse_int (value + 2, 10, &number))
             return 1;
         new_port = (long long)weechat_config_integer (option) + number;
     }
     else if (strncmp (value, "--", 2) == 0)
     {
-        /* relative value: subtract from the current port */
+        /* Relative value: subtract from the current port. */
         if (!weechat_util_parse_int (value + 2, 10, &number))
             return 1;
         new_port = (long long)weechat_config_integer (option) - number;
     }
     else
     {
-        /* let WeeChat display the error if value is not a valid integer */
+        /* Let WeeChat display the error if value is not a valid integer. */
         if (!weechat_util_parse_int (value, 10, &port))
             return 1;
         new_port = port;
     }
 
-    /* if port is out of range, let WeeChat validate and display the error */
+    /* If port is out of range, let WeeChat validate and display the error. */
     if ((new_port < 0) || (new_port > 65535))
         return 1;
 
@@ -740,7 +740,7 @@ relay_config_check_path_available (const char *path)
     if ((rc == 0) && S_ISSOCK(buf.st_mode))
         return 0;
 
-    /* error if an existing file is NOT a socket */
+    /* Error if an existing file is NOT a socket. */
     if (rc == 0)
         return -1;
 
@@ -748,7 +748,7 @@ relay_config_check_path_available (const char *path)
     if (errno == ENOENT)
         return 0;
 
-    /* on any other error, the path it considered as not available */
+    /* On any other error, the path it considered as not available. */
     return -2;
 }
 
@@ -765,7 +765,7 @@ relay_config_check_path_cb (const void *pointer, void *data,
                             struct t_config_option *option,
                             const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -793,7 +793,7 @@ relay_config_change_path_cb (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -815,7 +815,7 @@ relay_config_delete_path_cb (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -833,7 +833,7 @@ relay_config_change_port_cb (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -855,7 +855,7 @@ relay_config_delete_port_cb (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -878,7 +878,7 @@ relay_config_create_option_port_path (const void *pointer, void *data,
     char *protocol, *protocol_args;
     struct t_relay_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -962,7 +962,7 @@ relay_config_create_option_port_path (const void *pointer, void *data,
         if (relay_server_new (option_name, protocol_number, protocol_args,
                               port, value, ipv4, ipv6, tls, unix_socket))
         {
-            /* create configuration option */
+            /* Create configuration option. */
             if (unix_socket)
             {
                 weechat_config_new_option (
@@ -1038,7 +1038,7 @@ relay_config_remote_url_check_value_cb (const void *pointer, void *data,
                                         struct t_config_option *option,
                                         const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1057,7 +1057,7 @@ relay_config_remote_url_change_cb (const void *pointer, void *data,
     struct t_relay_remote *ptr_remote;
     char *name;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1230,7 +1230,7 @@ relay_config_use_temp_remotes (void)
         }
     }
 
-    /* free all temporary remotes */
+    /* Free all temporary remotes. */
     while (relay_remotes_temp)
     {
         next_temp_remote = relay_remotes_temp->next_remote;
@@ -1258,7 +1258,7 @@ relay_config_remote_read_cb (const void *pointer, void *data,
     struct t_relay_remote *ptr_temp_remote;
     int index_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -1277,7 +1277,7 @@ relay_config_remote_read_cb (const void *pointer, void *data,
 
     pos_option++;
 
-    /* search temporary remote */
+    /* Search temporary remote. */
     for (ptr_temp_remote = relay_remotes_temp; ptr_temp_remote;
          ptr_temp_remote = ptr_temp_remote->next_remote)
     {
@@ -1286,7 +1286,7 @@ relay_config_remote_read_cb (const void *pointer, void *data,
     }
     if (!ptr_temp_remote)
     {
-        /* create new temporary remote */
+        /* Create new temporary remote. */
         ptr_temp_remote = relay_remote_alloc (remote_name);
         if (ptr_temp_remote)
             relay_remote_add (ptr_temp_remote, &relay_remotes_temp, &last_relay_remote_temp);
@@ -1324,7 +1324,7 @@ int
 relay_config_reload (const void *pointer, void *data,
                      struct t_config_file *config_file)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1348,12 +1348,12 @@ relay_config_update_cb (const void *pointer, void *data,
     char *new_option, *pos;
     int changes;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
 
-    /* nothing to do if the config file is already up-to-date */
+    /* Nothing to do if the config file is already up-to-date. */
     if (version_read >= RELAY_CONFIG_VERSION)
         return NULL;
 
@@ -1362,9 +1362,9 @@ relay_config_update_cb (const void *pointer, void *data,
     if (version_read < 2)
     {
         /*
-         * changes in v2 (WeeChat 4.0.0):
+         * Changes in v2 (WeeChat 4.0.0):
          *   - options "ssl*" renamed to "tls*"
-         *   - protocol "ssl" renamed to "tls" in port/path sections
+         *   - protocol "ssl" renamed to "tls" in port/path sections.
          */
         ptr_section = weechat_hashtable_get (data_read, "section");
         ptr_option = weechat_hashtable_get (data_read, "option");
@@ -1463,7 +1463,7 @@ relay_config_init (void)
         return 0;
     }
 
-    /* section look */
+    /* Look */
     relay_config_section_look = weechat_config_new_section (
         relay_config_file, "look",
         0, 0,
@@ -1511,7 +1511,7 @@ relay_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* section color */
+    /* Color */
     relay_config_section_color = weechat_config_new_section (
         relay_config_file, "color",
         0, 0,
@@ -1594,7 +1594,7 @@ relay_config_init (void)
             NULL, NULL, NULL);
     }
 
-    /* section network */
+    /* Network */
     relay_config_section_network = weechat_config_new_section (
         relay_config_file, "network",
         0, 0,
@@ -1825,7 +1825,7 @@ relay_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* section irc */
+    /* IRC */
     relay_config_section_irc = weechat_config_new_section (
         relay_config_file, "irc",
         0, 0,
@@ -1885,7 +1885,7 @@ relay_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* section api */
+    /* API */
     relay_config_section_api = weechat_config_new_section (
         relay_config_file, "api",
         0, 0,
@@ -1935,7 +1935,7 @@ relay_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* section port */
+    /* Port */
     relay_config_section_port = weechat_config_new_section (
         relay_config_file, "port",
         1, 1,
@@ -1945,7 +1945,7 @@ relay_config_init (void)
         &relay_config_create_option_port_path, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* section path */
+    /* Path */
     relay_config_section_path = weechat_config_new_section (
         relay_config_file, "path",
         1, 1,
@@ -1955,7 +1955,7 @@ relay_config_init (void)
         &relay_config_create_option_port_path, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* remote */
+    /* Remote */
     relay_config_section_remote = weechat_config_new_section (
         relay_config_file,
         RELAY_CONFIG_SECTION_REMOTE,

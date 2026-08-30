@@ -59,7 +59,7 @@ fifo_create (void)
 
     if (!fifo_filename)
     {
-        /* evaluate path */
+        /* Evaluate path. */
         options = weechat_hashtable_new (
             32,
             WEECHAT_HASHTABLE_STRING,
@@ -82,20 +82,20 @@ fifo_create (void)
         return;
     }
 
-    /* remove a pipe with same name (if exists) */
+    /* Remove a pipe with same name (if exists). */
     if (stat (fifo_filename, &st) == 0)
     {
-        /* if the file is a FIFO pipe, delete it */
+        /* If the file is a FIFO pipe, delete it. */
         if (S_ISFIFO(st.st_mode))
             unlink (fifo_filename);
     }
 
     fifo_fd = -1;
 
-    /* create FIFO pipe, writable for user only */
+    /* Create FIFO pipe, writable for user only. */
     if (mkfifo (fifo_filename, 0600) == 0)
     {
-        /* open FIFO pipe in non-blocking mode */
+        /* Open FIFO pipe in non-blocking mode. */
         if ((fifo_fd = open (fifo_filename,
                              O_RDWR | O_NONBLOCK)) != -1)
         {
@@ -139,25 +139,25 @@ fifo_remove (void)
 
     fifo_found = (fifo_fd != -1);
 
-    /* remove fd hook */
+    /* Remove fd hook. */
     if (fifo_fd_hook)
     {
         weechat_unhook (fifo_fd_hook);
         fifo_fd_hook = NULL;
     }
 
-    /* close FIFO pipe */
+    /* Close FIFO pipe. */
     if (fifo_fd != -1)
     {
         close (fifo_fd);
         fifo_fd = -1;
     }
 
-    /* remove any unterminated message */
+    /* Remove any unterminated message. */
     free (fifo_unterminated);
     fifo_unterminated = NULL;
 
-    /* remove FIFO from disk */
+    /* Remove FIFO from disk. */
     if (fifo_filename)
     {
         unlink (fifo_filename);
@@ -194,8 +194,8 @@ fifo_exec (const char *text)
     ptr_buffer = NULL;
 
     /*
-     * look for plugin + buffer name at beginning of text
-     * text may be: "plugin.buffer *text" or "*text"
+     * Look for plugin + buffer name at beginning of text
+     * text may be: "plugin.buffer *text" or "*text".
      */
     if (text2[0] == '*' || text2[0] == '\\')
     {
@@ -257,7 +257,7 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
     int num_read, check_error;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) fd;
@@ -336,7 +336,7 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -369,7 +369,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     fifo_remove ();

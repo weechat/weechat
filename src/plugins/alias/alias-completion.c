@@ -26,7 +26,7 @@ alias_completion_alias_cb (const void *pointer, void *data,
 {
     struct t_alias *ptr_alias;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -57,7 +57,7 @@ alias_completion_alias_value_cb (const void *pointer, void *data,
     int argc;
     struct t_alias *ptr_alias;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;

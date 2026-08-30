@@ -48,7 +48,7 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
     const char **ptr_string_values;
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;

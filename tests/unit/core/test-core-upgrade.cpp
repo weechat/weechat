@@ -139,7 +139,7 @@ TEST(CoreUpgrade, ReadBufferLineOldFormat)
     test_read_lines (buffer, infolist);
     infolist_free (infolist);
 
-    /* the id is rebuilt from the date of print */
+    /* The id is rebuilt from the date of print. */
     ptr_line = buffer->own_lines->last_line;
     CHECK(ptr_line);
     CHECK(ptr_line->data->id == TEST_ID_FROM_DATE_PRINTED);
@@ -168,9 +168,9 @@ TEST(CoreUpgrade, ReadBufferLineOldFormatSameDatePrinted)
     CHECK(infolist);
 
     /*
-     * all the lines displayed by a single call to
+     * All the lines displayed by a single call to
      * gui_chat_printf_datetime_tags() share the same date of print, so the
-     * ids must be forced to stay unique and strictly increasing
+     * ids must be forced to stay unique and strictly increasing.
      */
     test_infolist_add_line_old_format (infolist, 0,
                                        TEST_DATE_PRINTED,
@@ -231,7 +231,7 @@ TEST(CoreUpgrade, ReadBufferLineNewFormat)
     test_read_lines (buffer, infolist);
     infolist_free (infolist);
 
-    /* the id is read as-is */
+    /* The id is read as-is. */
     ptr_line = buffer->own_lines->first_line;
     CHECK(ptr_line);
     CHECK(ptr_line->data->id == 1786886000000000LL);
@@ -280,7 +280,7 @@ TEST(CoreUpgrade, ReadBufferLineFreeContent)
     test_read_lines (buffer, infolist);
     infolist_free (infolist);
 
-    /* on buffers with free content, the id of a line is its number ("y") */
+    /* On buffers with free content, the id of a line is its number ("y"). */
     ptr_line = buffer->own_lines->last_line;
     CHECK(ptr_line);
     LONGS_EQUAL(2, ptr_line->data->y);

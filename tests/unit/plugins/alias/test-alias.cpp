@@ -81,7 +81,7 @@ TEST(Alias, ReplaceArgs)
     WEE_TEST_STR("/test", alias_replace_args ("/test", ""));
     WEE_TEST_STR("/test $1", alias_replace_args ("/test \\$1", "abc def"));
 
-    /* arguments by index: $n */
+    /* Arguments by index: $n */
     WEE_TEST_STR("/test $0", alias_replace_args ("/test $0", ""));
     WEE_TEST_STR("/test $0", alias_replace_args ("/test $0", "abc def"));
     WEE_TEST_STR("/test ", alias_replace_args ("/test $1", ""));
@@ -90,7 +90,7 @@ TEST(Alias, ReplaceArgs)
     WEE_TEST_STR("/test def abc", alias_replace_args ("/test $2 $1", "abc def"));
     WEE_TEST_STR("/test def abc", alias_replace_args ("/test $2 $1", "abc def"));
 
-    /* arguments from 1 to m: $-m */
+    /* Arguments from 1 to m: $-m */
     WEE_TEST_STR("/test $-0", alias_replace_args ("/test $-0", ""));
     WEE_TEST_STR("/test $-0", alias_replace_args ("/test $-0", "abc def"));
     WEE_TEST_STR("/test ", alias_replace_args ("/test $-1", ""));
@@ -99,7 +99,7 @@ TEST(Alias, ReplaceArgs)
     WEE_TEST_STR("/test abc def", alias_replace_args ("/test $-3", "abc def"));
     WEE_TEST_STR("/test abc def", alias_replace_args ("/test $-9", "abc def"));
 
-    /* arguments from n to last: $n- */
+    /* Arguments from n to last: $n- */
     WEE_TEST_STR("/test $0-", alias_replace_args ("/test $0-", ""));
     WEE_TEST_STR("/test $0-", alias_replace_args ("/test $0-", "abc def"));
     WEE_TEST_STR("/test ", alias_replace_args ("/test $1-", ""));
@@ -108,7 +108,7 @@ TEST(Alias, ReplaceArgs)
     WEE_TEST_STR("/test ", alias_replace_args ("/test $3-", "abc def"));
     WEE_TEST_STR("/test ", alias_replace_args ("/test $9-", "abc def"));
 
-    /* arguments from n to m: $n-m */
+    /* Arguments from n to m: $n-m */
     WEE_TEST_STR("/test $0-0", alias_replace_args ("/test $0-0", ""));
     WEE_TEST_STR("/test $0-0", alias_replace_args ("/test $0-0", "abc def"));
     WEE_TEST_STR("/test $0-1", alias_replace_args ("/test $0-1", ""));
@@ -120,20 +120,20 @@ TEST(Alias, ReplaceArgs)
     WEE_TEST_STR("/test def", alias_replace_args ("/test $2-3", "abc def"));
     WEE_TEST_STR("/test def", alias_replace_args ("/test $2-9", "abc def"));
 
-    /* all arguments: $* */
+    /* All arguments: $* */
     WEE_TEST_STR("/test ", alias_replace_args ("/test $*", ""));
     WEE_TEST_STR("/test abc \"def\"", alias_replace_args ("/test $*", "abc \"def\""));
 
-    /* all arguments with double quotes escaped: $& */
+    /* All arguments with double quotes escaped: $& */
     WEE_TEST_STR("/test ", alias_replace_args ("/test $&", ""));
     WEE_TEST_STR("/test abc \\\"def\\\"", alias_replace_args ("/test $&", "abc \"def\""));
 
-    /* last argument: $~ */
+    /* Last argument: $~ */
     WEE_TEST_STR("/test ", alias_replace_args ("/test $~", ""));
     WEE_TEST_STR("/test abc", alias_replace_args ("/test $~", "abc"));
     WEE_TEST_STR("/test def", alias_replace_args ("/test $~", "abc def"));
 
-    /* multiple arguments */
+    /* Multiple arguments */
     WEE_TEST_STR("/test def abc 'ghi jkl'",
                  alias_replace_args("/test $2 $1 '$3-'", "abc def ghi jkl"));
 }
@@ -215,7 +215,7 @@ TEST(Alias, Rename)
 
 TEST(Alias, Free)
 {
-    /* test free of NULL alias */
+    /* Test free of NULL alias. */
     alias_free (NULL);
 }
 

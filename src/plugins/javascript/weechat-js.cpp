@@ -52,26 +52,26 @@ const char *js_current_script_filename = NULL;
 WeechatJsV8 *js_current_interpreter = NULL;
 
 /*
- * string used to execute action "install":
+ * String used to execute action "install":
  * when signal "js_script_install" is received, name of string
  * is added to this string, to be installed later by a timer (when nothing is
- * running in script)
+ * running in script).
  */
 char *js_action_install_list = NULL;
 
 /*
- * string used to execute action "remove":
+ * String used to execute action "remove":
  * when signal "js_script_remove" is received, name of string
  * is added to this string, to be removed later by a timer (when nothing is
- * running in script)
+ * running in script).
  */
 char *js_action_remove_list = NULL;
 
 /*
- * string used to execute action "autoload":
+ * String used to execute action "autoload":
  * when signal "js_script_autoload" is received, name of string
  * is added to this string, to autoload or disable autoload later by a timer
- * (when nothing is running in script)
+ * (when nothing is running in script).
  */
 char *js_action_autoload_list = NULL;
 
@@ -86,7 +86,7 @@ weechat_js_hashtable_map_cb (void *data,
                              const char *key,
                              const char *value)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) hashtable;
 
     v8::Handle<v8::Object> *obj = (v8::Handle<v8::Object> *)data;
@@ -192,16 +192,16 @@ weechat_js_exec (struct t_plugin_script *script,
         {
             switch (format[i])
             {
-                case 's': /* string or null */
+                case 's': /* String or null */
                     if (argv[i])
                         argv2[i] = v8::String::New((const char *)argv[i]);
                     else
                         argv2[i] = v8::Null();
                     break;
-                case 'i': /* integer */
+                case 'i': /* Integer */
                     argv2[i] = v8::Integer::New(*((int *)argv[i]));
                     break;
-                case 'h': /* hash */
+                case 'h': /* Hash */
                     argv2[i] = weechat_js_hashtable_to_object (
                         (struct t_hashtable *)argv[i]);
                     break;
@@ -290,7 +290,7 @@ weechat_js_load (const char *filename, const char *code)
 {
     char *source;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     /* TODO: implement load of code in JavaScript */
     (void) code;
 
@@ -325,7 +325,7 @@ weechat_js_load (const char *filename, const char *code)
         return NULL;
     }
 
-    /* load libs */
+    /* Load libs. */
     js_current_interpreter->loadLibs();
 
     js_current_script_filename = filename;
@@ -338,7 +338,7 @@ weechat_js_load (const char *filename, const char *code)
         delete js_current_interpreter;
         free (source);
 
-        /* if script was registered, remove it from list */
+        /* If script was registered, remove it from list. */
         if (js_current_script)
         {
             plugin_script_remove (weechat_js_plugin,
@@ -360,7 +360,7 @@ weechat_js_load (const char *filename, const char *code)
                         weechat_prefix ("error"), JS_PLUGIN_NAME, filename);
         delete js_current_interpreter;
 
-        /* if script was registered, remove it from list */
+        /* If script was registered, remove it from list. */
         if (js_current_script)
         {
             plugin_script_remove (weechat_js_plugin,
@@ -384,8 +384,8 @@ weechat_js_load (const char *filename, const char *code)
     js_current_script = js_registered_script;
 
     /*
-     * set input/close callbacks for buffers created by this script
-     * (to restore callbacks after upgrade)
+     * Set input/close callbacks for buffers created by this script
+     * (to restore callbacks after upgrade).
      */
     plugin_script_set_buffer_callbacks (weechat_js_plugin,
                                         js_scripts,
@@ -409,7 +409,7 @@ weechat_js_load_cb (void *data, const char *filename)
 {
     const char *pos_dot;
 
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) data;
 
     pos_dot = strrchr (filename, '.');
@@ -571,7 +571,7 @@ weechat_js_command_cb (const void *pointer, void *data,
     char *ptr_name, *ptr_code, *path_script;
     int i, send_to_buffer_as_input, exec_commands, old_js_quiet;
 
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -641,7 +641,7 @@ weechat_js_command_cb (const void *pointer, void *data,
             }
             if (weechat_strcmp (argv[1], "load") == 0)
             {
-                /* load javascript script */
+                /* Load javascript script. */
                 path_script = plugin_script_search_path (weechat_js_plugin,
                                                          ptr_name, 1);
                 weechat_js_load ((path_script) ? path_script : ptr_name,
@@ -650,12 +650,12 @@ weechat_js_command_cb (const void *pointer, void *data,
             }
             else if (weechat_strcmp (argv[1], "reload") == 0)
             {
-                /* reload one javascript script */
+                /* Reload one javascript script. */
                 weechat_js_reload_name (ptr_name);
             }
             else if (weechat_strcmp (argv[1], "unload") == 0)
             {
-                /* unload javascript script */
+                /* Unload javascript script. */
                 weechat_js_unload_name (ptr_name);
             }
             js_quiet = old_js_quiet;
@@ -715,7 +715,7 @@ weechat_js_completion_cb (const void *pointer, void *data,
                           struct t_gui_buffer *buffer,
                           struct t_gui_completion *completion)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -734,7 +734,7 @@ struct t_hdata *
 weechat_js_hdata_cb (const void *pointer, void *data,
                      const char *hdata_name)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -754,7 +754,7 @@ weechat_js_info_eval_cb (const void *pointer, void *data,
 {
     const char *not_implemented = "not yet implemented";
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -772,7 +772,7 @@ weechat_js_infolist_cb (const void *pointer, void *data,
                         const char *infolist_name,
                         void *obj_pointer, const char *arguments)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -798,7 +798,7 @@ weechat_js_signal_debug_dump_cb (const void *pointer, void *data,
                                  const char *signal,
                                  const char *type_data, void *signal_data)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -820,7 +820,7 @@ int
 weechat_js_timer_action_cb (const void *pointer, void *data,
                             int remaining_calls)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -865,7 +865,7 @@ weechat_js_signal_script_action_cb (const void *pointer, void *data,
                                     const char *type_data,
                                     void *signal_data)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -910,7 +910,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     char str_interpreter[64];
     int old_js_quiet;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -921,7 +921,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     js_eval_send_input = 0;
     js_eval_exec_commands = 0;
 
-    /* set interpreter name and version */
+    /* Set interpreter name and version. */
     snprintf (str_interpreter, sizeof (str_interpreter),
               "%s (v8)", plugin->name);
     weechat_hashtable_set (plugin->variables, "interpreter_name",
@@ -974,7 +974,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     plugin_script_end (plugin, &js_data);
     js_quiet = old_js_quiet;
 
-    /* free some data */
+    /* Free some data. */
     if (js_action_install_list)
     {
         free (js_action_install_list);

@@ -35,14 +35,14 @@ struct t_gui_bar_item_custom
     struct t_gui_bar_item_custom *next_item; /* link to next bar item      */
 };
 
-/* variables */
+/* Variables */
 
 extern struct t_gui_bar_item_custom *gui_custom_bar_items;
 extern struct t_gui_bar_item_custom *last_gui_custom_bar_item;
 extern struct t_gui_bar_item_custom *gui_temp_custom_bar_items;
 extern struct t_gui_bar_item_custom *last_gui_temp_custom_bar_item;
 
-/* functions */
+/* Functions */
 
 extern int gui_bar_item_custom_search_option (const char *option_name);
 extern struct t_gui_bar_item_custom *gui_bar_item_custom_search (const char *item_name);

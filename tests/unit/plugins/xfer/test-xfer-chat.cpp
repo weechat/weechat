@@ -39,7 +39,7 @@ TEST_GROUP(XferChat)
         LONGS_EQUAL(0, socketpair (AF_UNIX, SOCK_STREAM, 0, sock));
         xfer.sock = sock[1];
 
-        /* messages are displayed on core buffer (xfer.buffer is NULL) */
+        /* Messages are displayed on core buffer (xfer.buffer is NULL). */
         record_start ();
     }
 
@@ -114,20 +114,20 @@ TEST_GROUP(XferChat)
 
 TEST(XferChat, RecvCb)
 {
-    /* data without any end-of-line is kept as partial message */
+    /* Data without any end-of-line is kept as partial message. */
     recv_data ("hello");
     STRCMP_EQUAL("hello", xfer.unterminated_message);
 
-    /* data without any end-of-line is appended to the partial message */
+    /* Data without any end-of-line is appended to the partial message. */
     recv_data (" world");
     STRCMP_EQUAL("hello world", xfer.unterminated_message);
 
-    /* data ending with end-of-line: the message is displayed, nothing kept */
+    /* Data ending with end-of-line: the message is displayed, nothing kept. */
     recv_data ("!\r\n");
     POINTERS_EQUAL(NULL, xfer.unterminated_message);
     CHECK(record_search ("core.weechat", "alice", "hello world!", NULL));
 
-    /* complete line then partial data: the remaining data is kept */
+    /* Complete line then partial data: the remaining data is kept. */
     recv_data ("line1\nline2\npartial");
     STRCMP_EQUAL("partial", xfer.unterminated_message);
     CHECK(record_search ("core.weechat", "alice", "line1", NULL));
@@ -145,37 +145,37 @@ TEST(XferChat, RecvCb)
 
 TEST(XferChat, RecvCbLimit)
 {
-    /* 100 bytes are missing to reach the limit: 50 bytes are accumulated */
+    /* 100 bytes are missing to reach the limit: 50 bytes are accumulated. */
     set_partial_message (XFER_CHAT_PARTIAL_MESSAGE_MAX_LENGTH - 100);
     recv_bytes (50);
     LONGS_EQUAL(XFER_CHAT_PARTIAL_MESSAGE_MAX_LENGTH - 50,
                 partial_message_length ());
 
-    /* the next 50 bytes fit exactly in the limit */
+    /* The next 50 bytes fit exactly in the limit. */
     recv_bytes (50);
     LONGS_EQUAL(XFER_CHAT_PARTIAL_MESSAGE_MAX_LENGTH,
                 partial_message_length ());
 
-    /* the partial message is full: it is discarded with the data received */
+    /* The partial message is full: it is discarded with the data received. */
     recv_bytes (1);
     POINTERS_EQUAL(NULL, xfer.unterminated_message);
 
-    /* the chat must still be open */
+    /* The chat must still be open. */
     LONGS_EQUAL(XFER_STATUS_ACTIVE, xfer.status);
     CHECK(xfer.sock >= 0);
 
-    /* data received after the limit is accumulated again */
+    /* Data received after the limit is accumulated again. */
     recv_data ("hello");
     STRCMP_EQUAL("hello", xfer.unterminated_message);
 
-    /* data not fitting in the partial message is discarded with it */
+    /* Data not fitting in the partial message is discarded with it. */
     set_partial_message (XFER_CHAT_PARTIAL_MESSAGE_MAX_LENGTH - 10);
     recv_bytes (20);
     POINTERS_EQUAL(NULL, xfer.unterminated_message);
     LONGS_EQUAL(XFER_STATUS_ACTIVE, xfer.status);
     CHECK(xfer.sock >= 0);
 
-    /* the chat is still usable: a complete message is displayed */
+    /* The chat is still usable: a complete message is displayed. */
     recv_data ("hello world\n");
     POINTERS_EQUAL(NULL, xfer.unterminated_message);
     CHECK(record_search ("core.weechat", "alice", "hello world", NULL));

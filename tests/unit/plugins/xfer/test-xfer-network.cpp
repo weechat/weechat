@@ -36,7 +36,7 @@ TEST(XferNetwork, ConvertIntegerToIpv4)
     STRCMP_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("0"));
     STRCMP_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("-1"));
 
-    /* too big: UINT32_MAX + 1 = 4294967296 */
+    /* Too big: UINT32_MAX + 1 = 4294967296 */
     STRCMP_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("4294967296"));
 
     WEE_TEST_STR("0.0.0.1", xfer_network_convert_integer_to_ipv4 ("1"));

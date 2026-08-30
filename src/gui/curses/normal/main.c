@@ -25,7 +25,7 @@
 int
 main (int argc, char *argv[])
 {
-    /* init, main loop and end */
+    /* Initialize, run main loop and terminate. */
     weechat_init_gettext ();
     weechat_init (argc, argv, &gui_main_init);
     gui_main_loop ();

@@ -207,7 +207,7 @@ TEST(CoreDir, FileGetContentCopy)
     int length, i;
     FILE *f;
 
-    /* file not found */
+    /* File not found */
     LONGS_EQUAL(0, dir_file_copy (NULL, NULL));
     LONGS_EQUAL(0, dir_file_copy ("", ""));
     LONGS_EQUAL(0, dir_file_copy ("/tmp/does/not/exist.xyz", "/tmp/test.txt"));
@@ -217,7 +217,7 @@ TEST(CoreDir, FileGetContentCopy)
     path2 = string_eval_path_home ("${weechat_data_dir}/test_content_file2.txt",
                                    NULL, NULL, NULL);
 
-    /* small file */
+    /* Small file */
     length = strlen (content_small);
     f = fopen (path1, "wb");
     fwrite (content_small, 1, length, f);
@@ -232,7 +232,7 @@ TEST(CoreDir, FileGetContentCopy)
     unlink (path1);
     unlink (path2);
 
-    /* bigger file: 26 lines of 5000 bytes */
+    /* Bigger file: 26 lines of 5000 bytes */
     length = 26 * 5001;
     content = (char *)malloc (length + 1);
     CHECK(content);
@@ -299,7 +299,7 @@ TEST(CoreDir, FileCompare)
     int length, i;
     FILE *f;
 
-    /* file not found */
+    /* File not found */
     LONGS_EQUAL(2, dir_file_compare (NULL, NULL));
     LONGS_EQUAL(2, dir_file_compare ("", ""));
     LONGS_EQUAL(2, dir_file_compare ("/tmp/does/not/exist1.xyz", "/tmp/does/not/exist2.xyz"));
@@ -309,7 +309,7 @@ TEST(CoreDir, FileCompare)
     path2 = string_eval_path_home ("${weechat_data_dir}/test_compare_file2.txt",
                                    NULL, NULL, NULL);
 
-    /* small file */
+    /* Small file */
     length = strlen (content_small);
     f = fopen (path1, "wb");
     fwrite (content_small, 1, length, f);
@@ -326,7 +326,7 @@ TEST(CoreDir, FileCompare)
     fclose (f);
     LONGS_EQUAL(1, dir_file_compare (path1, path2));
 
-    /* bigger file: 26 lines of 5000 bytes + 1 byte */
+    /* Bigger file: 26 lines of 5000 bytes + 1 byte */
     length = 26 * 5001;
     content = (char *)malloc (length + 1);
     CHECK(content);

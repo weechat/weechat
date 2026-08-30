@@ -86,7 +86,7 @@ string_asprintf (char **result, const char *fmt, ...)
     if (!fmt)
         return -1;
 
-    /* determine required size */
+    /* Determine required size. */
     va_start (argptr, fmt);
     num_bytes = vsnprintf (NULL, 0, fmt, argptr);
     va_end (argptr);
@@ -169,7 +169,7 @@ string_cut (const char *string, int length, int count_suffix, int screen,
 
     if (!ptr_string || !ptr_string[0])
     {
-        /* no cut */
+        /* No cut */
         return strdup (string);
     }
 
@@ -190,7 +190,7 @@ string_cut (const char *string, int length, int count_suffix, int screen,
                 ptr_string = gui_chat_string_add_offset (string, length);
             if (!ptr_string || !ptr_string[0])
             {
-                /* no cut */
+                /* No cut */
                 return strdup (string);
             }
         }
@@ -292,7 +292,7 @@ string_reverse_screen (const char *string)
         color_size = ptr_next - ptr_string;
         if (color_size > 0)
         {
-            /* add the color code as-is */
+            /* Add the color code as-is. */
             ptr_result -= color_size;
             memcpy (ptr_result, ptr_string, color_size);
             ptr_string += color_size;
@@ -377,8 +377,8 @@ string_tolower (const char *string)
         if (!((unsigned char)(string[0]) & 0x80))
         {
             /*
-             * optimization for single-byte char: only letters A-Z must be
-             * converted to lowercase; this is faster than calling `towlower`
+             * Optimization for single-byte char: only letters A-Z must be
+             * converted to lowercase; this is faster than calling `towlower`.
              */
             if ((string[0] >= 'A') && (string[0] <= 'Z'))
                 utf_char[0] = string[0] + ('a' - 'A');
@@ -390,7 +390,7 @@ string_tolower (const char *string)
         }
         else
         {
-            /* char ≥ 2 bytes, use `towlower` */
+            /* Char ≥ 2 bytes, use `towlower`. */
             utf8_int_string (towlower (utf8_char_int (string)), utf_char);
             string_dyn_concat (result, utf_char, -1);
             string = (char *)utf8_next_char (string);
@@ -420,8 +420,8 @@ string_toupper (const char *string)
         if (!((unsigned char)(string[0]) & 0x80))
         {
             /*
-             * optimization for single-byte char: only letters a-z must be
-             * converted to uppercase; this is faster than calling `towupper`
+             * Optimization for single-byte char: only letters a-z must be
+             * converted to uppercase; this is faster than calling `towupper`.
              */
             if ((string[0] >= 'a') && (string[0] <= 'z'))
                 utf_char[0] = string[0] - ('a' - 'A');
@@ -433,7 +433,7 @@ string_toupper (const char *string)
         }
         else
         {
-            /* char ≥ 2 bytes, use `towupper` */
+            /* Char ≥ 2 bytes, use `towupper`. */
             utf8_int_string (towupper (utf8_char_int (string)), utf_char);
             string_dyn_concat (result, utf_char, -1);
             string = (char *)utf8_next_char (string);
@@ -539,8 +539,8 @@ string_charcasecmp (const char *string1, const char *string2)
     wint_t wchar1, wchar2;
 
     /*
-     * optimization for single-byte chars: only letters A-Z must be converted
-     * to lowercase; this is faster than calling `towlower`
+     * Optimization for single-byte chars: only letters A-Z must be converted
+     * to lowercase; this is faster than calling `towlower`.
      */
     if (string1 && !((unsigned char)(string1[0]) & 0x80)
         && string2 && !((unsigned char)(string2[0]) & 0x80))
@@ -865,7 +865,7 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
 
     while (string1 && string1[0] && string2 && string2[0])
     {
-        /* skip ignored chars */
+        /* Skip ignored chars. */
         while (string1 && string1[0] && strchr (chars_ignored, string1[0]))
         {
             string1 = utf8_next_char (string1);
@@ -875,7 +875,7 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
             string2 = utf8_next_char (string2);
         }
 
-        /* end of one (or both) string(s) ? */
+        /* End of one (or both) string(s)? */
         if (!string1 || !string1[0] || !string2 || !string2[0])
         {
             return (case_sensitive) ?
@@ -883,7 +883,7 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
                 string_charcasecmp (string1, string2);
         }
 
-        /* look at diff */
+        /* Look at diff. */
         diff = (case_sensitive) ?
             string_charcmp (string1, string2) :
             string_charcasecmp (string1, string2);
@@ -893,7 +893,7 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
 
-        /* skip ignored chars */
+        /* Skip ignored chars. */
         while (string1 && string1[0] && strchr (chars_ignored, string1[0]))
         {
             string1 = utf8_next_char (string1);
@@ -1000,7 +1000,7 @@ string_match (const char *string, const char *mask, int case_sensitive)
     {
         wildcard = 0;
 
-        /* if we are on a wildcard, set the wildcard flag and skip it */
+        /* If we are on a wildcard, set the wildcard flag and skip it. */
         if (ptr_mask[0] == '*')
         {
             wildcard = 1;
@@ -1013,14 +1013,14 @@ string_match (const char *string, const char *mask, int case_sensitive)
                 return 1;
         }
 
-        /* no match if some mask without string */
+        /* No match if some mask without string. */
         if (!string[0])
             return 0;
 
-        /* search the next wildcard (after the word) */
+        /* Search the next wildcard (after the word). */
         pos_end = strchr (ptr_mask, '*');
 
-        /* extract the word before the wildcard (or the end of mask) */
+        /* Extract the word before the wildcard (or the end of mask). */
         if (pos_end)
         {
             length_word = pos_end - ptr_mask;
@@ -1034,12 +1034,12 @@ string_match (const char *string, const char *mask, int case_sensitive)
         if (!word)
             return 0;
 
-        /* check if the word is matching */
+        /* Check if the word is matching. */
         if (wildcard)
         {
             /*
-             * search the word anywhere in the string (from current position),
-             * multiple times if needed
+             * Search the word anywhere in the string (from current position),
+             * multiple times if needed.
              */
             pos_word = (case_sensitive) ?
                 strstr (ptr_string, word) : string_strcasestr (ptr_string, word);
@@ -1076,7 +1076,7 @@ string_match (const char *string, const char *mask, int case_sensitive)
         }
         else
         {
-            /* check if word is at beginning of string */
+            /* Check if word is at beginning of string. */
             if ((case_sensitive
                  && (strncmp (ptr_string, word, length_word) != 0))
                 || (!case_sensitive
@@ -1094,11 +1094,11 @@ string_match (const char *string, const char *mask, int case_sensitive)
         ptr_mask = pos_end;
     }
 
-    /* match if no more string/mask */
+    /* Match if no more string/mask */
     if (!ptr_string[0] && !ptr_mask[0])
         return 1;
 
-    /* no match in other cases */
+    /* No match in other cases */
     return 0;
 }
 
@@ -1203,8 +1203,8 @@ string_eval_path_home (const char *path,
     path3 = NULL;
 
     /*
-     * replace "%h" by WeeChat home
-     * (deprecated: "%h" should not be used anymore with WeeChat ≥ 3.2)
+     * Replace "%h" by WeeChat home
+     * (deprecated: "%h" should not be used anymore with WeeChat ≥ 3.2).
      */
     if (strncmp (path, "%h", 2) == 0)
     {
@@ -1232,12 +1232,12 @@ string_eval_path_home (const char *path,
     if (!path1)
         goto end;
 
-    /* replace "~" by user home */
+    /* Replace "~" by user home. */
     path2 = string_expand_home (path1);
     if (!path2)
         goto end;
 
-    /* evaluate content of path */
+    /* Evaluate content of path. */
     path3 = eval_expression (path2, pointers, extra_vars, options);
 
 end:
@@ -1366,7 +1366,7 @@ string_convert_escaped_chars (const char *string)
     if (!string)
         return NULL;
 
-    /* the output length is always <= to string length */
+    /* The output length is always <= to string length. */
     output = malloc (strlen (string) + 1);
     if (!output)
         return NULL;
@@ -1380,47 +1380,47 @@ string_convert_escaped_chars (const char *string)
             ptr_string++;
             switch (ptr_string[0])
             {
-                case '"':  /* double quote */
+                case '"':  /* Double quote */
                     output[pos_output++] = '"';
                     ptr_string++;
                     break;
-                case '\\':  /* backslash */
+                case '\\':  /* Backslash */
                     output[pos_output++] = '\\';
                     ptr_string++;
                     break;
-                case 'a':  /* alert */
+                case 'a':  /* Alert */
                     output[pos_output++] = 7;
                     ptr_string++;
                     break;
-                case 'b':  /* backspace */
+                case 'b':  /* Backspace */
                     output[pos_output++] = 8;
                     ptr_string++;
                     break;
-                case 'e':  /* escape */
+                case 'e':  /* Escape */
                     output[pos_output++] = 27;
                     ptr_string++;
                     break;
-                case 'f':  /* form feed */
+                case 'f':  /* Form feed */
                     output[pos_output++] = 12;
                     ptr_string++;
                     break;
-                case 'n':  /* new line */
+                case 'n':  /* New line */
                     output[pos_output++] = 10;
                     ptr_string++;
                     break;
-                case 'r':  /* carriage return */
+                case 'r':  /* Carriage return */
                     output[pos_output++] = 13;
                     ptr_string++;
                     break;
-                case 't':  /* horizontal tab */
+                case 't':  /* Horizontal tab */
                     output[pos_output++] = 9;
                     ptr_string++;
                     break;
-                case 'v':  /* vertical tab */
+                case 'v':  /* Vertical tab */
                     output[pos_output++] = 11;
                     ptr_string++;
                     break;
-                case '0':  /* char as octal value (0 to 3 digits) */
+                case '0':  /* Char as octal value (0 to 3 digits) */
                     value = 0;
                     for (i = 0; (i < 3) && IS_OCTAL_DIGIT(ptr_string[i + 1]); i++)
                     {
@@ -1429,7 +1429,7 @@ string_convert_escaped_chars (const char *string)
                     output[pos_output++] = value;
                     ptr_string += 1 + i;
                     break;
-                case 'x':  /* char as hexadecimal value (1 to 2 digits) */
+                case 'x':  /* Char as hexadecimal value (1 to 2 digits) */
                 case 'X':
                     if (isxdigit (ptr_string[1]))
                     {
@@ -1447,8 +1447,8 @@ string_convert_escaped_chars (const char *string)
                         ptr_string++;
                     }
                     break;
-                case 'u':  /* unicode char as hexadecimal (1 to 4 digits) */
-                case 'U':  /* unicode char as hexadecimal (1 to 8 digits) */
+                case 'u':  /* Unicode char as hexadecimal (1 to 4 digits) */
+                case 'U':  /* Unicode char as hexadecimal (1 to 8 digits) */
                     if (isxdigit (ptr_string[1]))
                     {
                         value = 0;
@@ -1558,7 +1558,7 @@ string_is_word_char (const char *string,
             return (word_chars[i].exclude) ? 0 : 1;
     }
 
-    /* not a word char */
+    /* Not a word char */
     return 0;
 }
 
@@ -1627,26 +1627,26 @@ string_mask_to_regex (const char *mask)
     ptr_mask = mask;
     while (ptr_mask[0])
     {
-        /* '*' in string ? then replace by '.*' */
+        /* '*' In string ? then replace by '.*'. */
         if (ptr_mask[0] == '*')
         {
             result[index_result++] = '.';
             result[index_result++] = '*';
         }
-        /* special regex char in string ? escape it with '\' */
+        /* Special regex char in string ? Escape it with '\'. */
         else if (strchr (regex_special_char, ptr_mask[0]))
         {
             result[index_result++] = '\\';
             result[index_result++] = ptr_mask[0];
         }
-        /* standard char, just copy it */
+        /* Standard char, just copy it. */
         else
             result[index_result++] = ptr_mask[0];
 
         ptr_mask++;
     }
 
-    /* add final '\0' */
+    /* Add final '\0'. */
     result[index_result] = '\0';
 
     return result;
@@ -1796,7 +1796,7 @@ string_has_highlight (const char *string, const char *highlight_words)
             pos_end = strchr (pos, '\0');
             end = 1;
         }
-        /* error parsing string! */
+        /* Error parsing string! */
         if (!pos_end)
         {
             free (msg);
@@ -1841,7 +1841,7 @@ string_has_highlight (const char *string, const char *highlight_words)
                     (wildcard_start && endswith) ||
                     (wildcard_end && startswith))
                 {
-                    /* highlight found! */
+                    /* Highlight found! */
                     free (msg);
                     free (highlight);
                     return 1;
@@ -1857,7 +1857,7 @@ string_has_highlight (const char *string, const char *highlight_words)
     free (msg);
     free (highlight);
 
-    /* no highlight found */
+    /* No highlight found */
     return 0;
 }
 
@@ -1881,9 +1881,9 @@ string_has_highlight_regex_compiled (const char *string, regex_t *regex)
         rc = regexec (regex, string,  1, &regex_match, 0);
 
         /*
-         * no match found: exit the loop (if rm_eo == 0, it is an empty match
+         * No match found: exit the loop (if rm_eo == 0, it is an empty match
          * at beginning of string: we consider there is no match, to prevent an
-         * infinite loop)
+         * infinite loop).
          */
         if ((rc != 0) || (regex_match.rm_so < 0) || (regex_match.rm_eo <= 0))
             break;
@@ -1906,7 +1906,7 @@ string_has_highlight_regex_compiled (const char *string, regex_t *regex)
         string += regex_match.rm_eo;
     }
 
-    /* no highlight found */
+    /* No highlight found */
     return 0;
 }
 
@@ -1956,7 +1956,7 @@ string_replace (const char *string, const char *search, const char *replace)
     length1 = strlen (search);
     length2 = strlen (replace);
 
-    /* count number of strings to replace */
+    /* Count number of strings to replace. */
     count = 0;
     pos = string;
     while (pos && pos[0] && (pos = strstr (pos, search)))
@@ -1965,19 +1965,19 @@ string_replace (const char *string, const char *search, const char *replace)
         pos += length1;
     }
 
-    /* easy: no string to replace! */
+    /* Easy: no string to replace! */
     if (count == 0)
         return strdup (string);
 
-    /* compute needed memory for new string */
+    /* Compute needed memory for new string. */
     length_new = strlen (string) - (count * length1) + (count * length2) + 1;
 
-    /* allocate new string */
+    /* Allocate new string. */
     new_string = malloc (length_new);
     if (!new_string)
         return strdup (string);
 
-    /* replace all occurrences */
+    /* Replace all occurrences. */
     new_string[0] = '\0';
     while (string && string[0])
     {
@@ -2013,7 +2013,7 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
     const char *ptr_replace, *ptr_add;
     char *result, *result2, *modified_replace, *temp, char_replace;
 
-    /* default length is length*2, it will grow later if needed */
+    /* Default length is length*2, it will grow later if needed. */
     length = (strlen (string) * 2);
     result = malloc (length + 1);
     if (!result)
@@ -2030,7 +2030,7 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
 
         if ((ptr_replace[0] == '\\') && (ptr_replace[1] == reference_char))
         {
-            /* escaped reference char */
+            /* Escaped reference char */
             ptr_add = ptr_replace + 1;
             length_add = 1;
             ptr_replace += 2;
@@ -2041,13 +2041,13 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
             {
                 if (ptr_replace[1] == '+')
                 {
-                    /* reference to last match */
+                    /* Reference to last match */
                     match = last_match;
                     ptr_replace += 2;
                 }
                 else
                 {
-                    /* reference to match 0 .. 99 */
+                    /* Reference to match 0 .. 99 */
                     if (isdigit ((unsigned char)ptr_replace[2]))
                     {
                         match = ((ptr_replace[1] - '0') * 10) + (ptr_replace[2] - '0');
@@ -2090,13 +2090,13 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
                 char_replace = ptr_replace[2];
                 if (ptr_replace[3] == '+')
                 {
-                    /* reference to last match */
+                    /* Reference to last match */
                     match = last_match;
                     ptr_replace += 4;
                 }
                 else
                 {
-                    /* reference to match 0 .. 99 */
+                    /* Reference to match 0 .. 99 */
                     if (isdigit ((unsigned char)ptr_replace[4]))
                     {
                         match = ((ptr_replace[3] - '0') * 10) + (ptr_replace[4] - '0');
@@ -2128,7 +2128,7 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
             }
             else
             {
-                /* just ignore the reference char */
+                /* Just ignore the reference char. */
                 ptr_replace++;
             }
         }
@@ -2220,9 +2220,9 @@ string_replace_regex (const char *string, void *regex, const char *replace,
         rc = regexec ((regex_t *)regex, result + start_offset, 100, regex_match,
                       0);
         /*
-         * no match found: exit the loop (if rm_eo == 0, it is an empty match
+         * No match found: exit the loop (if rm_eo == 0, it is an empty match
          * at beginning of string: we consider there is no match, to prevent an
-         * infinite loop)
+         * infinite loop).
          */
         if ((rc != 0)
             || (regex_match[0].rm_so < 0) || (regex_match[0].rm_eo <= 0))
@@ -2230,7 +2230,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
             break;
         }
 
-        /* adjust the start/end offsets */
+        /* Adjust the start/end offsets. */
         last_match = 0;
         for (i = 0; i < 100; i++)
         {
@@ -2242,7 +2242,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
             }
         }
 
-        /* check if the regex matched the end of string */
+        /* Check if the regex matched the end of string. */
         end = !result[regex_match[0].rm_eo];
 
         str_replace = string_replace_regex_get_replace (result,
@@ -2464,7 +2464,7 @@ string_split_internal (const char *string, const char *separators,
         return NULL;
     }
 
-    /* calculate number of items */
+    /* Calculate number of items. */
     ptr = string2;
     i = 1;
     while ((ptr = strpbrk (ptr, separators)))
@@ -2506,13 +2506,13 @@ string_split_internal (const char *string, const char *separators,
     {
         if (flags & WEECHAT_STRING_SPLIT_COLLAPSE_SEPS)
         {
-            /* skip separators to find the beginning of item */
+            /* Skip separators to find the beginning of item. */
             while (ptr1[0] && strchr (separators, ptr1[0]))
             {
                 ptr1++;
             }
         }
-        /* search the end of item */
+        /* Search the end of item. */
         if (i == (count_items - 1))
         {
             ptr2 = strpbrk (ptr1, separators);
@@ -2697,8 +2697,8 @@ string_split_shell (const char *string, int *num_items)
         return NULL;
 
     /*
-     * prepare "args" with one pointer to NULL, the "args" will be reallocated
-     * later, each time a new argument is added
+     * Prepare "args" with one pointer to NULL, the "args" will be reallocated
+     * later, each time a new argument is added.
      */
     num_args = 0;
     args = malloc ((num_args + 1) * sizeof (args[0]));
@@ -2709,7 +2709,7 @@ string_split_shell (const char *string, int *num_items)
     }
     args[0] = NULL;
 
-    /* prepare a temp string for working (adding chars one by one) */
+    /* Prepare a temp string for working (adding chars one by one). */
     temp = malloc ((2 * strlen (string)) + 1);
     if (!temp)
     {
@@ -2997,7 +2997,7 @@ string_split_command (const char *command, char separator)
             buffer[str_idx] = '\0';
             str_idx = -1;
             p = buffer;
-            /* strip white spaces at the beginning of the line */
+            /* Strip white spaces at the beginning of the line. */
             while (p[0] == ' ') p++;
             if (p[0])
                 array[arr_idx++] = strdup (p);
@@ -3222,7 +3222,7 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
     else
         outbuf = strdup (string);
 #else
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) from_utf8;
     (void) from_code;
     (void) to_code;
@@ -3251,8 +3251,8 @@ string_iconv_to_internal (const char *charset, const char *string)
         return NULL;
 
     /*
-     * optimized for UTF-8: if charset is NULL => we use term charset => if
-     * this charset is already UTF-8, then no iconv is needed
+     * Optimized for UTF-8: if charset is NULL => we use term charset => if
+     * this charset is already UTF-8, then no iconv is needed.
      */
     if (local_utf8 && (!charset || !charset[0]))
         return input;
@@ -3291,13 +3291,13 @@ string_iconv_from_internal (const char *charset, const char *string)
     if (!input)
         return NULL;
 
-    /* if the locale is wrong, we keep UTF-8 */
+    /* If the locale is wrong, we keep UTF-8. */
     if (!weechat_locale_ok)
         return input;
 
     /*
-     * optimized for UTF-8: if charset is NULL => we use term charset => if
-     * this charset is already UTF-8, then no iconv is needed
+     * Optimized for UTF-8: if charset is NULL => we use term charset => if
+     * this charset is already UTF-8, then no iconv is needed.
      */
     if (local_utf8 && (!charset || !charset[0]))
         return input;
@@ -3541,7 +3541,7 @@ string_base16_decode (const char *from, char *to)
     length = strlen (from);
     if (length % 2 != 0)
     {
-        /* truncated base16 string: a char is missing at the end */
+        /* Truncated base16 string: a char is missing at the end. */
         to[0] = '\0';
         return -1;
     }
@@ -3560,7 +3560,7 @@ string_base16_decode (const char *from, char *to)
             value |= (from[pos] - 'A' + 10) << 4;
         else
         {
-            /* invalid base16 char */
+            /* Invalid base16 char */
             to[0] = '\0';
             return -1;
         }
@@ -3574,7 +3574,7 @@ string_base16_decode (const char *from, char *to)
             value |= from[pos] - 'A' + 10;
         else
         {
-            /* invalid base16 char */
+            /* Invalid base16 char */
             to[0] = '\0';
             return -1;
         }
@@ -3729,12 +3729,12 @@ string_base32_decode (const char *from, char *to)
         }
         else if (c == '=')
         {
-            /* padding */
+            /* Padding */
             break;
         }
         else
         {
-            /* invalid base32 char */
+            /* Invalid base32 char */
             to[0] = '\0';
             return -1;
         }
@@ -3750,7 +3750,7 @@ string_base32_decode (const char *from, char *to)
 
     if (bits_left >= 5)
     {
-        /* truncated base32 string: at least one char is missing */
+        /* Truncated base32 string: at least one char is missing */
         to[0] = '\0';
         return -1;
     }
@@ -3928,7 +3928,7 @@ string_base64_decode (int url, const char *from, char *to)
             c = ((c < 43) || (c > 122)) ? 0 : base64_table[c - 43];
             if (!c || (c == '$'))
             {
-                /* invalid base64 char */
+                /* Invalid base64 char */
                 goto error;
             }
             length++;
@@ -3936,7 +3936,7 @@ string_base64_decode (int url, const char *from, char *to)
         }
         if (length == 1)
         {
-            /* truncated group of chars: only 6 bits */
+            /* Truncated group of chars: only 6 bits */
             goto error;
         }
         if (length > 0)
@@ -3952,8 +3952,8 @@ string_base64_decode (int url, const char *from, char *to)
         if (ptr_from[0] == '=')
         {
             /*
-             * padding: it must complete the group of 4 chars and be at the
-             * end of string
+             * Padding: it must complete the group of 4 chars and be at the
+             * end of string.
              */
             if ((length < 2) || (length > 3))
                 goto error;
@@ -4193,18 +4193,18 @@ string_input_for_buffer (const char *string)
     if (!string)
         return NULL;
 
-    /* "/ " is not a command */
+    /* "/ " Is not a command. */
     if (strncmp (string, "/ ", 2) == 0)
         return string;
 
-    /* special case for C comments pasted in input line */
+    /* Special case for C comments pasted in input line */
     if (strncmp (string, "/*", 2) == 0)
         return string;
 
     /*
-     * special case if string starts with '/': to allow to paste a path line
+     * Special case if string starts with '/': to allow to paste a path line
      * "/path/to/file.txt", we check if next '/' is after a space/newline
-     * or not
+     * or not.
      */
     if (string[0] == '/')
     {
@@ -4213,8 +4213,8 @@ string_input_for_buffer (const char *string)
         pos_newline = strchr (string + 1, '\n');
 
         /*
-         * if there are no other '/' or if '/' is after first space/newline,
-         * then it is a command, and return NULL
+         * If there are no other '/' or if '/' is after first space/newline,
+         * then it is a command, and return NULL.
          */
         if (!pos_slash
             || (pos_space && (pos_slash > pos_space))
@@ -4224,7 +4224,7 @@ string_input_for_buffer (const char *string)
         return (string[1] == '/') ? string + 1 : string;
     }
 
-    /* if string does not start with a command char, then it's not command */
+    /* If string does not start with a command char, then it's not command. */
     if (!string_is_command_char (string))
         return string;
 
@@ -4232,15 +4232,15 @@ string_input_for_buffer (const char *string)
     if (!next_char)
         return NULL;
 
-    /* next char is a space, then it's not a command */
+    /* Next char is a space, then it's not a command. */
     if (next_char[0] == ' ')
         return string;
 
-    /* check if first char is doubled: if yes, then it's not a command */
+    /* Check if first char is doubled: if yes, then it's not a command. */
     if (string_charcmp (string, next_char) == 0)
         return next_char;
 
-    /* string is a command */
+    /* String is a command. */
     return NULL;
 }
 
@@ -4566,7 +4566,7 @@ unsigned long long
 string_shared_hash_key (struct t_hashtable *hashtable,
                         const void *key)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     return hashtable_hash_key_djb2 (((const char *)key) + sizeof (string_shared_count_t));
@@ -4586,7 +4586,7 @@ int
 string_shared_keycmp (struct t_hashtable *hashtable,
                       const void *key1, const void *key2)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     return strcmp (((const char *)key1) + sizeof (string_shared_count_t),
@@ -4600,7 +4600,7 @@ string_shared_keycmp (struct t_hashtable *hashtable,
 void
 string_shared_free_key (struct t_hashtable *hashtable, void *key)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     free (key);
@@ -4638,13 +4638,13 @@ string_shared_get (const char *string)
     if (!string_hashtable_shared)
     {
         /*
-         * use large htable inside hashtable to prevent too many collisions,
+         * Use large htable inside hashtable to prevent too many collisions,
          * which would slow down search of a string in the hashtable
          * this is only an initial size: hashtable_new()/hashtable_set()
          * grow the internal array automatically as items are added, so a
          * modest starting size is enough even for buffers with a large
          * number of unique shared strings (eg: many distinct tag
-         * combinations restored from an upgrade file)
+         * combinations restored from an upgrade file).
          */
         string_hashtable_shared = hashtable_new (1024,
                                                  WEECHAT_HASHTABLE_POINTER,
@@ -4668,15 +4668,15 @@ string_shared_get (const char *string)
     if (ptr_item)
     {
         /*
-         * the string already exists in the hashtable, then just increase the
-         * reference count on the string
+         * The string already exists in the hashtable, then just increase the
+         * reference count on the string.
          */
         (*((string_shared_count_t *)(ptr_item->key)))++;
         free (key);
     }
     else
     {
-        /* add the shared string in the hashtable */
+        /* Add the shared string in the hashtable. */
         ptr_item = hashtable_set (string_hashtable_shared, key, NULL);
         if (!ptr_item)
             free (key);
@@ -4785,7 +4785,7 @@ string_dyn_copy (char **string, const char *new_string)
 
     if (length_new + 1 > ptr_string_dyn->size_alloc)
     {
-        /* compute new size_alloc for the string + add */
+        /* Compute new size_alloc for the string + add. */
         new_size_alloc = (ptr_string_dyn->size_alloc < 2) ?
             2 : ptr_string_dyn->size_alloc + (ptr_string_dyn->size_alloc / 2);
         if (new_size_alloc < length_new + 1)
@@ -4797,7 +4797,7 @@ string_dyn_copy (char **string, const char *new_string)
         ptr_string_dyn->size_alloc = new_size_alloc;
     }
 
-    /* copy "new_string" in "string" */
+    /* Copy "new_string" in "string". */
     if (new_string)
         memmove (ptr_string_dyn->string, new_string, length_new + 1);
     else
@@ -4848,7 +4848,7 @@ string_dyn_concat (char **string, const char *add, int bytes)
 
     if (new_size > ptr_string_dyn->size_alloc)
     {
-        /* compute new size_alloc for the string + add */
+        /* Compute new size_alloc for the string + add. */
         new_size_alloc = (ptr_string_dyn->size_alloc < 2) ?
             2 : ptr_string_dyn->size_alloc + (ptr_string_dyn->size_alloc / 2);
         if (new_size_alloc < new_size)
@@ -4860,7 +4860,7 @@ string_dyn_concat (char **string, const char *add, int bytes)
         ptr_string_dyn->size_alloc = new_size_alloc;
     }
 
-    /* concatenate "add" after "string" */
+    /* Concatenate "add" after "string". */
     memmove (ptr_string_dyn->string + ptr_string_dyn->size - 1,
              add,
              length_add);
@@ -4906,7 +4906,7 @@ string_dyn_free (char **string, int free_string)
     }
     else
     {
-        /* if needed, realloc the string to its exact size */
+        /* If needed, realloc the string to its exact size. */
         if (ptr_string_dyn->size_alloc > ptr_string_dyn->size)
         {
             string_realloc = realloc (ptr_string_dyn->string,

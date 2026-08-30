@@ -226,14 +226,14 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 struct t_weechat_plugin *weechat_plugin = NULL;
 
 
-/* callback per il comando "/double" */
+/* Callback per il comando "/double". */
 
 int
 command_double_cb (const void *pointer, void *data,
                    struct t_gui_buffer *buffer,
                    int argc, char **argv, char **argv_eol)
 {
-    /* fa felice il compilatore C */
+    /* Fa felice il compilatore C. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -269,7 +269,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin,
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* fa felice il compilatore C */
+    /* Fa felice il compilatore C. */
     (void) plugin;
 
     return WEECHAT_RC_OK;
@@ -309,7 +309,7 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def register(name: str, author: str, version: str, license: str, description: str, shutdown_function: str, charset: str) -> int: ...
 ----
 
@@ -352,10 +352,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def plugin_get_name(plugin: str) -> str: ...
 
-# esempio
+# Esempio
 plugin = weechat.buffer_get_pointer(weechat.current_buffer(), "plugin")
 name = weechat.plugin_get_name(plugin)
 ----
@@ -395,10 +395,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def charset_set(charset: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.charset_set("iso-8859-1")
 ----
 
@@ -437,10 +437,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def iconv_to_internal(charset: str, string: str) -> str: ...
 
-# esempio
+# Esempio
 str = weechat.iconv_to_internal("iso-8859-1", "iso string: é à")
 ----
 
@@ -479,10 +479,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def iconv_from_internal(charset: str, string: str) -> str: ...
 
-# esempio
+# Esempio
 str = weechat.iconv_from_internal("iso-8859-1", "utf-8 string: é à")
 ----
 
@@ -517,10 +517,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def gettext(string: str) -> str: ...
 
-# esempio
+# Esempio
 str = weechat.gettext("hello")
 ----
 
@@ -561,10 +561,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def ngettext(string: str, plural: str, count: int) -> str: ...
 
-# esempio
+# Esempio
 num_files = 2
 str = weechat.ngettext("file", "files", num_files)
 ----
@@ -616,7 +616,7 @@ if (weechat_asprintf (&str, "%s, %d", "test", 42) >= 0)
 }
 else
 {
-    /* error: *str == NULL */
+    /* Error: *str == NULL */
 }
 ----
 
@@ -650,7 +650,7 @@ Esempio in C:
 
 [source,c]
 ----
-char *str = weechat_strndup ("abcdef", 3);  /* result: "abc" */
+char *str = weechat_strndup ("abcdef", 3);  /* Result: "abc" */
 /* ... */
 free (str);
 ----
@@ -689,7 +689,7 @@ Esempio in C:
 
 [source,c]
 ----
-char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
+char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* Result: "this…" */
 /* ... */
 free (str);
 ----
@@ -731,7 +731,7 @@ Esempio in C:
 
 [source,c]
 ----
-char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_é" */
+char *str = weechat_string_tolower ("ABCD_É");  /* Result: "abcd_é" */
 /* ... */
 free (str);
 ----
@@ -773,7 +773,7 @@ Esempio in C:
 
 [source,c]
 ----
-char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_É" */
+char *str = weechat_string_toupper ("abcd_é");  /* Result: "ABCD_É" */
 /* ... */
 free (str);
 ----
@@ -1229,7 +1229,7 @@ Esempio in C:
 
 [source,c]
 ----
-const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* risultato: puntatore a "DeF" */
+const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* Risultato: puntatore a "DeF" */
 ----
 
 [NOTE]
@@ -1274,10 +1274,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def strlen_screen(string: str) -> int: ...
 
-# esempio
+# Esempio
 length = weechat.strlen_screen("é")  # 1
 ----
 
@@ -1334,10 +1334,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_match(string: str, mask: str, case_sensitive: int) -> int: ...
 
-# esempio
+# Esempio
 match1 = weechat.string_match("abcdef", "abc*", 0)   # == 1
 match2 = weechat.string_match("abcdef", "*dd*", 0)   # == 0
 match3 = weechat.string_match("abcdef", "*def", 0)   # == 1
@@ -1397,10 +1397,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_match_list(string: str, masks: str, case_sensitive: int) -> int: ...
 
-# esempio
+# Esempio
 match1 = weechat.string_match("abc", "*,!abc*", 0)     # == 0
 match2 = weechat.string_match("abcdef", "*,!abc*", 0)  # == 0
 match3 = weechat.string_match("def", "*,!abc*", 0)     # == 1
@@ -1434,7 +1434,7 @@ Esempio in C:
 [source,c]
 ----
 char *str = weechat_string_expand_home ("~/file.txt");
-/* result: "/home/user/file.txt" */
+/* Result: "/home/user/file.txt" */
 /* ... */
 free (str);
 ----
@@ -1491,7 +1491,7 @@ Esempio in C:
 [source,c]
 ----
 char *str = weechat_string_eval_path_home ("${weechat_config_dir}/test.conf", NULL, NULL, NULL);
-/* result: "/home/user/.config/weechat/test.conf" */
+/* Result: "/home/user/.config/weechat/test.conf" */
 /* ... */
 free (str);
 ----
@@ -1500,10 +1500,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_eval_path_home(path: str, pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str]) -> str: ...
 
-# esempio
+# Esempio
 path = weechat.string_eval_path_home("${weechat_config_dir}/test.conf", {}, {}, {})
 # path == "/home/user/.config/weechat/test.conf"
 ----
@@ -1535,7 +1535,7 @@ Esempio in C:
 [source,c]
 ----
 char *str = weechat_string_remove_quotes (string, " 'Non posso' ", "'");
-/* risultato: "Non posso" */
+/* Risultato: "Non posso" */
 /* ... */
 free (str);
 ----
@@ -1570,7 +1570,7 @@ Esempio in C:
 
 [source,c]
 ----
-char *str = weechat_string_strip (".abc -", 0, 1, "- .");  /* risultato: ".abc" */
+char *str = weechat_string_strip (".abc -", 0, 1, "- .");  /* Risultato: ".abc" */
 /* ... */
 free (str);
 ----
@@ -1657,7 +1657,7 @@ Esempio in C:
 [source,c]
 ----
 char *str_regex = weechat_string_mask_to_regex ("test*mask");
-/* result: "test.*mask" */
+/* Result: "test.*mask" */
 /* ... */
 free (str_regex);
 ----
@@ -1666,10 +1666,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_mask_to_regex(mask: str) -> str: ...
 
-# esempio
+# Esempio
 regex = weechat.string_mask_to_regex("test*mask")  # "test.*mask"
 ----
 
@@ -1782,7 +1782,7 @@ if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) == 0)
 }
 else
 {
-    /* error */
+    /* Error */
     /* ... */
 }
 ----
@@ -1823,10 +1823,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_has_highlight(string: str, highlight_words: str) -> int: ...
 
-# esempio
+# Esempio
 highlight = weechat.string_has_highlight("my test string", "test,word2")  # 1
 ----
 
@@ -1868,10 +1868,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_has_highlight_regex(string: str, regex: str) -> int: ...
 
-# esempio
+# Esempio
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2")  # 1
 ----
 
@@ -1902,7 +1902,7 @@ Esempio in C:
 
 [source,c]
 ----
-char *str = weechat_string_replace ("test", "s", "x");  /* result: "text" */
+char *str = weechat_string_replace ("test", "s", "x");  /* Result: "text" */
 /* ... */
 free (str);
 ----
@@ -2082,14 +2082,15 @@ char **argv;
 int argc;
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL, 0, 0, &argc);
-/* result: argv[0] == "abc"
-           argv[1] == "de"
-           argv[2] = ""
-           argv[3] == "fghi"
-           argv[4] = ""
-           argv[5] == NULL
-           argc == 5
-*/
+/*
+ * Result: argv[0] == "abc"
+ *         argv[1] == "de"
+ *         argv[2] = ""
+ *         argv[3] == "fghi"
+ *         argv[4] = ""
+ *         argv[5] == NULL
+ *         argc == 5
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL,
@@ -2097,12 +2098,13 @@ argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                              0, &argc);
-/* result: argv[0] == "abc"
-           argv[1] == "de"
-           argv[2] == "fghi"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc"
+ *         argv[1] == "de"
+ *         argv[2] == "fghi"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL,
@@ -2111,12 +2113,13 @@ argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                              | WEECHAT_STRING_SPLIT_KEEP_EOL,
                              0, &argc);
-/* result: argv[0] == "abc de  fghi"
-           argv[1] == "de  fghi"
-           argv[2] == "fghi"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc de  fghi"
+ *         argv[1] == "de  fghi"
+ *         argv[2] == "fghi"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL,
@@ -2124,12 +2127,13 @@ argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                              | WEECHAT_STRING_SPLIT_KEEP_EOL,
                              0, &argc);
-/* result: argv[0] == "abc de  fghi "
-           argv[1] == "de  fghi "
-           argv[2] == "fghi "
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc de  fghi "
+ *         argv[1] == "de  fghi "
+ *         argv[2] == "fghi "
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split (" abc, de,, fghi ", ",", " ",
@@ -2137,12 +2141,13 @@ argv = weechat_string_split (" abc, de,, fghi ", ",", " ",
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                              0, &argc);
-/* result: argv[0] == "abc"
-           argv[1] == "de"
-           argv[2] == "fghi"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc"
+ *         argv[1] == "de"
+ *         argv[2] == "fghi"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 ----
 
@@ -2185,12 +2190,13 @@ Esempio in C:
 char **argv;
 int argc;
 argv = weechat_string_split_shell ("test 'first arg'  \"second arg\"", &argc);
-/* result: argv[0] == "test"
-           argv[1] == "first arg"
-           argv[2] == "second arg"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "test"
+ *         argv[1] == "first arg"
+ *         argv[2] == "second arg"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 ----
 
@@ -2304,10 +2310,11 @@ Esempio in C:
 [source,c]
 ----
 char **argv = weechat_string_split_command ("/command1 arg;/command2", ';');
-/* result: argv[0] == "/command1 arg"
-           argv[1] == "/command2"
-           argv[2] == NULL
-*/
+/*
+ * Result: argv[0] == "/command1 arg"
+ *         argv[1] == "/command2"
+ *         argv[2] == NULL
+ */
 weechat_free_split_command (argv);
 ----
 
@@ -2365,7 +2372,7 @@ Esempi in C:
 
 [source,c]
 ----
-/* esempi in lingua inglese */
+/* Esempi in lingua inglese */
 
 char *str = weechat_string_format_size (0);  /* str == "0 bytes" */
 /* ... */
@@ -2392,10 +2399,10 @@ Script (Python), _WeeChat ≥ 2.2_:
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_format_size(size: int) -> str: ...
 
-# esempio
+# Esempio
 str = weechat.string_format_size(15200)  # == "15.2 KB"
 ----
 
@@ -2438,10 +2445,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_parse_size(size: str) -> int: ...
 
-# esempio
+# Esempio
 size = weechat.string_parse_size("1.34m")  # 1340000
 ----
 
@@ -2487,10 +2494,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_color_code_size(string: str) -> int: ...
 
-# esempio
+# Esempio
 size = weechat.string_color_code_size("test")  # size == 0
 size = weechat.string_color_code_size(weechat.color("bold"))  # size == 2
 size = weechat.string_color_code_size(weechat.color("yellow,red"))  # size == 7
@@ -2526,12 +2533,12 @@ Esempi:
 
 [source,c]
 ----
-/* rimuove i codici colore */
+/* Rimuove i codici colore. */
 char *str = weechat_string_remove_color (my_string1, NULL);
 /* ... */
 free (str);
 
-/* sostituisce i codici colore con "?" */
+/* Sostituisce i codici colore con "?". */
 char *str = weechat_string_remove_color (my_string2, "[color]");
 /* ... */
 free (str);
@@ -2541,10 +2548,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_remove_color(string: str, replacement: str) -> str: ...
 
-# esempio
+# Esempio
 str = weechat.string_remove_color(my_string, "[color]")
 ----
 
@@ -2683,8 +2690,10 @@ Esempio in C:
 ----
 char *string = "abc def-ghi";
 char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
-/* dump == " >> 61 62 63 20 64 65 66 2D   a b c   d e f - \n"
-           " >> 67 68 69                  g h i           "  */
+/*
+ * dump == " >> 61 62 63 20 64 65 66 2D   a b c   d e f - \n"
+ *         " >> 67 68 69                  g h i           "
+ */
 ----
 
 [NOTE]
@@ -2725,10 +2734,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_is_command_char(string: str) -> int: ...
 
-# esempi
+# Esempi
 command_char1 = weechat.string_is_command_char("/test")  # == 1
 command_char2 = weechat.string_is_command_char("test")   # == 0
 ----
@@ -2768,10 +2777,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_input_for_buffer(string: str) -> str: ...
 
-# esempi
+# Esempi
 str1 = weechat.string_input_for_buffer("test")    # "test"
 str2 = weechat.string_input_for_buffer("/test")   # ""
 str3 = weechat.string_input_for_buffer("//test")  # "/test"
@@ -2842,7 +2851,7 @@ Esempi in C:
 
 [source,c]
 ----
-/* conditions */
+/* Conditions */
 struct t_hashtable *options1 = weechat_hashtable_new (8,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       WEECHAT_HASHTABLE_STRING,
@@ -2852,21 +2861,21 @@ weechat_hashtable_set (options1, "type", "condition");
 char *str1 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options1);  /* "1" */
 char *str2 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options1);                 /* "0" */
 
-/* simple expression */
+/* Simple expression */
 char *str3 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);  /* "core.weechat" */
 
-/* replace with regex */
+/* Replace with regex. */
 struct t_hashtable *options2 = weechat_hashtable_new (8,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       NULL,
                                                       NULL);
-/* add brackets around URLs */
+/* Add brackets around URLs. */
 weechat_hashtable_set (options2, "regex", "[a-zA-Z0-9_]+://[^ ]+");
 weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
 char *str4 = weechat_string_eval_expression ("test: https://weechat.org", NULL, NULL, NULL);  /* "test: [ https://weechat.org ]" */
 
-/* hide passwords */
+/* Hide passwords. */
 weechat_hashtable_set (options2, "regex", "(password=)([^ ]+)");
 weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
 char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
@@ -2876,26 +2885,26 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def string_eval_expression(expr: str, pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str]) -> str: ...
 
-# esempi
+# Esempi
 
-# conditions
+# Conditions
 str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
 str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
 
-# simple expression
+# Simple expression
 str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
 
-# replace with regex: add brackets around URLs
+# Replace with regex: add brackets around URLs.
 options = {
     "regex": "[a-zA-Z0-9_]+://[^ ]+",
     "regex_replace": "[ ${re:0} ]",
 }
 str4 = weechat.string_eval_expression("test: https://weechat.org", {}, {}, options)  # "test: [ https://weechat.org ]"
 
-# replace with regex: hide passwords
+# Replace with regex: hide passwords.
 options = {
     "regex": "(password=)([^ ]+)",
     "regex_replace": "${re:1}${hide:*,${re:2}}",
@@ -3623,7 +3632,7 @@ if (weechat_string_dyn_copy (string, "test"))
 }
 else
 {
-    /* error */
+    /* Error */
 }
 ----
 
@@ -3720,7 +3729,7 @@ if (weechat_string_dyn_concat (string, "test"))
 }
 else
 {
-    /* error */
+    /* Error */
 }
 /* ... */
 weechat_string_dyn_free (string, 1);
@@ -3765,10 +3774,10 @@ Esempio in C:
 // TRANSLATION MISSING
 [source,c]
 ----
-const char *result = weechat_string_concat (" / ", "abc", "def", "ghi", NULL);  /* result == "abc / def / ghi" */
+const char *result = weechat_string_concat (" / ", "abc", "def", "ghi", NULL);  /* Result == "abc / def / ghi" */
 
-/* with macro */
-const char *result = WEECHAT_STR_CONCAT(" / ", "abc", "def", "ghi");  /* result == "abc / def / ghi" */
+/* With macro */
+const char *result = WEECHAT_STR_CONCAT(" / ", "abc", "def", "ghi");  /* Result == "abc / def / ghi" */
 ----
 
 [NOTE]
@@ -4184,7 +4193,7 @@ Esempio in C:
 [source,c]
 ----
 const char *str = "chêne";
-const char *str2 = weechat_utf8_add_offset (str, 3);  /* points to "ne" */
+const char *str2 = weechat_utf8_add_offset (str, 3);  /* Points to "ne" */
 ----
 
 [NOTE]
@@ -4274,7 +4283,7 @@ Esempio in C:
 
 [source,c]
 ----
-char *string = weechat_utf8_strndup ("chêne", 3);  /* restituisce "chê" */
+char *string = weechat_utf8_strndup ("chêne", 3);  /* Restituisce "chê" */
 /* ... */
 free (string);
 ----
@@ -4310,7 +4319,7 @@ Esempio in C:
 ----
 char dest[256];
 
-weechat_utf8_strncpy (dest, "chêne", 3);  /* copies "chê" to dest */
+weechat_utf8_strncpy (dest, "chêne", 3);  /* Copies "chê" to dest. */
 ----
 
 [NOTE]
@@ -4388,8 +4397,10 @@ const char *data = "abcdefghijklmnopqrstuvwxyz";
 char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hash (data, strlen (data), "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 and hash is a buffer with:
-   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
+/*
+ * rc == 1, hash_size == 32 and hash is a buffer with:
+ * 71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73
+ */
 ----
 
 [NOTE]
@@ -4432,8 +4443,10 @@ Esempio in C:
 char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hash_file ("/path/to/file", "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 and hash is a buffer with:
-   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
+/*
+ * rc == 1, hash_size == 32 and hash is a buffer with:
+ * 71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73
+ */
 ----
 
 [NOTE]
@@ -4487,8 +4500,10 @@ char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hash_pbkdf2 (data, strlen (data), "sha256", salt, strlen (salt), 100000,
                                  hash, &hash_size);
-/* rc == 1, hash_size == 32 and hash is a buffer with:
-   99 b3 5e 42 53 d1 a7 a8 49 c1 dc 2c e2 53 c2 b6 6d a1 8b dc 6e 78 a7 06 e0 ef 34 db 0a 7a a2 bb */
+/*
+ * rc == 1, hash_size == 32 and hash is a buffer with:
+ * 99 b3 5e 42 53 d1 a7 a8 49 c1 dc 2c e2 53 c2 b6 6d a1 8b dc 6e 78 a7 06 e0 ef 34 db 0a 7a a2 bb
+ */
 ----
 
 [NOTE]
@@ -4541,8 +4556,10 @@ const char *message = "the message";
 char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hmac (key, strlen (key), message, strlen (message), "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 and hash is a buffer with:
-   47 36 67 02 fc bc b1 97 a4 25 e6 7a b9 52 92 bd 15 9a 66 91 9c fb 94 b0 b4 9a 39 cb c0 24 2d 7b */
+/*
+ * rc == 1, hash_size == 32 and hash is a buffer with:
+ * 47 36 67 02 fc bc b1 97 a4 25 e6 7a b9 52 92 bd 15 9a 66 91 9c fb 94 b0 b4 9a 39 cb c0 24 2d 7b
+ */
 ----
 
 [NOTE]
@@ -4584,7 +4601,7 @@ Esempio in C:
 ----
 if (!weechat_mkdir_home ("${weechat_cache_dir}/temp", 0755))
 {
-    /* errore */
+    /* Errore */
 }
 ----
 
@@ -4592,10 +4609,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def mkdir_home(directory: str, mode: int) -> int: ...
 
-# esempio
+# Esempio
 weechat.mkdir_home("${weechat_cache_dir}/temp", 0755)
 ----
 
@@ -4625,7 +4642,7 @@ Esempio in C:
 ----
 if (!weechat_mkdir ("/tmp/mydir", 0755))
 {
-    /* errore */
+    /* Errore */
 }
 ----
 
@@ -4633,10 +4650,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def mkdir(directory: str, mode: int) -> int: ...
 
-# esempio
+# Esempio
 weechat.mkdir("/tmp/mydir", 0755)
 ----
 
@@ -4666,7 +4683,7 @@ Esempio in C:
 ----
 if (!weechat_mkdir_parents ("/tmp/my/dir", 0755))
 {
-    /* errore */
+    /* Errore */
 }
 ----
 
@@ -4674,10 +4691,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def mkdir_parents(directory: str, mode: int) -> int: ...
 
-# esempio
+# Esempio
 weechat.mkdir_parents("/tmp/my/dir", 0755)
 ----
 
@@ -4872,7 +4889,7 @@ Esempio in C:
 ----
 if (weechat_file_compare ("/tmp/test.txt", "/tmp/test2.txt") == 0)
 {
-    /* same content */
+    /* Same content */
 }
 ----
 
@@ -4929,7 +4946,7 @@ if (weechat_util_parse_int ("1234", 10, &number))
 }
 if (!weechat_util_parse_int ("abc", 10, &number))
 {
-    /* parsing error, number is unchanged */
+    /* Parsing error, number is unchanged. */
 }
 ----
 
@@ -4981,7 +4998,7 @@ if (weechat_util_parse_long ("1234", 10, &number))
 }
 if (!weechat_util_parse_long ("abc", 10, &number))
 {
-    /* parsing error, number is unchanged */
+    /* Parsing error, number is unchanged. */
 }
 ----
 
@@ -5033,7 +5050,7 @@ if (weechat_util_parse_longlong ("1234", 10, &number))
 }
 if (!weechat_util_parse_longlong ("abc", 10, &number))
 {
-    /* parsing error, number is unchanged */
+    /* Parsing error, number is unchanged. */
 }
 ----
 
@@ -5143,7 +5160,7 @@ Esempio in C:
 
 [source,c]
 ----
-weechat_util_timeval_add (&tv, 2000000);  /* aggiunge 2 secondi */
+weechat_util_timeval_add (&tv, 2000000);  /* Aggiunge 2 secondi. */
 ----
 
 [NOTE]
@@ -5225,7 +5242,7 @@ char time[256];
 struct timeval tv;
 gettimeofday (&tv, NULL);
 weechat_util_strftimeval (time, sizeof (time), "%@%FT%T.%fZ", &tv);
-/* result: 2023-12-26T18:10:04.460509Z */
+/* Result: 2023-12-26T18:10:04.460509Z */
 ----
 
 [NOTE]
@@ -5340,13 +5357,13 @@ C examples:
 struct timeval tv;
 
 weechat_util_parse_time ("2025-08-30T19:04:55.123456Z", &tv);  /* == 1 */
-/* result: tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
+/* Result: tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
 
 weechat_util_parse_time ("2025-08-30 21:04:55.123456 +02:00", &tv);  /* == 1 */
-/* same result */
+/* Same result */
 
 weechat_util_parse_time ("21:04:55.123456", &tv);  /* == 1 */
-/* same result */
+/* Same result */
 ----
 
 [NOTE]
@@ -5418,10 +5435,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_new() -> str: ...
 
-# esempio
+# Esempio
 list = weechat.list_new()
 ----
 
@@ -5465,10 +5482,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_add(list: str, data: str, where: str, user_data: str) -> str: ...
 
-# esempio
+# Esempio
 item = weechat.list_add(list, "my data", weechat.WEECHAT_LIST_POS_SORT, "")
 ----
 
@@ -5504,10 +5521,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_search(list: str, data: str) -> str: ...
 
-# esempio
+# Esempio
 item = weechat.list_search(list, "my data")
 ----
 
@@ -5545,10 +5562,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_search_pos(list: str, data: str) -> int: ...
 
-# esempio
+# Esempio
 pos_item = weechat.list_search_pos(list, "my data")
 ----
 
@@ -5585,10 +5602,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_casesearch(list: str, data: str) -> str: ...
 
-# esempio
+# Esempio
 item = weechat.list_casesearch(list, "my data")
 ----
 
@@ -5626,10 +5643,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_casesearch_pos(list: str, data: str) -> int: ...
 
-# esempio
+# Esempio
 pos_item = weechat.list_casesearch_pos(list, "my data")
 ----
 
@@ -5658,17 +5675,17 @@ Esempio in C:
 
 [source,c]
 ----
-struct t_weelist_item *item = weechat_list_get (list, 0);  /* primo elemento */
+struct t_weelist_item *item = weechat_list_get (list, 0);  /* Primo elemento */
 ----
 
 Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_get(list: str, position: int) -> str: ...
 
-# esempio
+# Esempio
 item = weechat.list_get(list, 0)
 ----
 
@@ -5699,10 +5716,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_set(item: str, value: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.list_set(item, "nuovi dati")
 ----
 
@@ -5737,10 +5754,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_next(item: str) -> str: ...
 
-# esempio
+# Esempio
 item = weechat.list_next(item)
 ----
 
@@ -5775,10 +5792,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_prev(item: str) -> str: ...
 
-# esempio
+# Esempio
 item = weechat.list_prev(item)
 ----
 
@@ -5812,10 +5829,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_string(item: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "valore dell'elemento: %s" % weechat.list_string(item))
 ----
 
@@ -5883,10 +5900,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_size(list: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "dimensione della lista: %d" % weechat.list_size(list))
 ----
 
@@ -5918,10 +5935,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_remove(list: str, item: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.list_remove(list, item)
 ----
 
@@ -5951,10 +5968,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_remove_all(list: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.list_remove_all(list)
 ----
 
@@ -5984,10 +6001,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def list_free(list: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.list_free(list)
 ----
 
@@ -6139,7 +6156,7 @@ Esempio in C:
 
 [source,c]
 ----
-void *pointer = weechat_arraylist_get (arraylist, 0);  /* first item */
+void *pointer = weechat_arraylist_get (arraylist, 0);  /* First item */
 ----
 
 [NOTE]
@@ -6218,7 +6235,7 @@ Esempio in C:
 
 [source,c]
 ----
-int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* insert at the end if not sorted */
+int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* Insert at the end if not sorted. */
 ----
 
 [NOTE]
@@ -6579,7 +6596,7 @@ Esempio in C:
 ----
 if (weechat_hashtable_has_key (hashtable, "my_key"))
 {
-    /* la chiave è nella tabella hash */
+    /* La chiave è nella tabella hash. */
     /* ... */
 }
 ----
@@ -6621,7 +6638,7 @@ void
 map_cb (void *data, struct t_hashtable *hashtable,
         const void *key, const void *value)
 {
-    /* display key and value (they are both strings here) */
+    /* Display key and value (they are both strings here). */
     weechat_printf (NULL, "key: '%s', value: '%s'",
                     (const char *)key,
                     (const char *)value);
@@ -6671,7 +6688,7 @@ void
 map_cb (void *data, struct t_hashtable *hashtable,
         const char *key, const char *value)
 {
-    /* display key and value */
+    /* Display key and value. */
     weechat_printf (NULL, "key: '%s', value: '%s'",
                     key, value);
 }
@@ -6891,15 +6908,16 @@ Esempio in C:
 ----
 weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 
-/* se la tabella hash contiene:
-     "key1" => "value 1"
-     "key2" => "value 2"
-   allora le seguenti variabili verranno aggiunti all'elemento  della lista info:
-     "testhash_name_00000"  = "key1"
-     "testhash_value_00000" = "value 1"
-     "testhash_name_00001"  = "key2"
-     "testhash_value_00001" = "value 2"
-*/
+/*
+ * Se la tabella hash contiene:
+ *   "key1" => "value 1"
+ *   "key2" => "value 2"
+ * allora le seguenti variabili verranno aggiunti all'elemento  della lista info:
+ *   "testhash_name_00000"  = "key1"
+ *   "testhash_value_00000" = "value 1"
+ *   "testhash_name_00001"  = "key2"
+ *   "testhash_value_00001" = "value 2"
+ */
 ----
 
 [NOTE]
@@ -6939,15 +6957,16 @@ Esempio in C:
 ----
 weechat_hashtable_add_from_infolist (hashtable, infolist, "testhash");
 
-/* if infolist contains:
-     "testhash_name_00000"  = "key1"
-     "testhash_value_00000" = "value 1"
-     "testhash_name_00001"  = "key2"
-     "testhash_value_00001" = "value 2"
-   then following variables will be added to hashtable:
-     "key1" => "value 1"
-     "key2" => "value 2"
-*/
+/*
+ * If infolist contains:
+ *   "testhash_name_00000"  = "key1"
+ *   "testhash_value_00000" = "value 1"
+ *   "testhash_name_00001"  = "key2"
+ *   "testhash_value_00001" = "value 2"
+ * then following variables will be added to hashtable:
+ *   "key1" => "value 1"
+ *   "key2" => "value 2"
+ */
 ----
 
 [NOTE]
@@ -7134,10 +7153,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_new(name: str, callback_reload: str, callback_reload_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_config_reload_cb(data: str, config_file: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -7226,46 +7245,46 @@ my_config_update_cb (const void *pointer, void *data,
 {
     const char *ptr_section, *ptr_option;
 
-    /* return now if version is already up-to-date */
+    /* Return now if version is already up-to-date. */
     if (version_read >= 2)
         return NULL;
 
     ptr_section = hashtable_get (data_read, "section");
     ptr_option = hashtable_get (data_read, "option");
 
-    /* rename section "abc" to "def" */
+    /* Rename section "abc" to "def". */
     if (ptr_section && !ptr_option && (strcmp (ptr_section, "abc") == 0))
     {
         hashtable_set (data_read, "section", "def");
         return data_read;
     }
 
-    /* limit other changes to section "test" */
+    /* Limit other changes to section "test". */
     if (!ptr_section || !ptr_option || (strcmp (ptr_section, "test") != 0))
         return NULL;
 
-    /* rename option "test1" to "test2" */
+    /* Rename option "test1" to "test2". */
     if (strcmp (ptr_option, "test1") == 0)
     {
         hashtable_set (data_read, "option", "test2");
         return data_read;
     }
 
-    /* set value to "xxx" for option "test" */
+    /* Set value to "xxx" for option "test". */
     if (strcmp (ptr_option, "test") == 0)
     {
         hashtable_set (data_read, "value", "xxx");
         return data_read;
     }
 
-    /* set value to NULL for option "test_null" */
+    /* Set value to NULL for option "test_null". */
     if (strcmp (ptr_option, "test_null") == 0)
     {
         hashtable_set (data_read, "value_null", "1");
         return data_read;
     }
 
-    /* no changes */
+    /* No changes */
     return NULL;
 }
 
@@ -7278,43 +7297,43 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_set_version(config_file: str, version: int, callback_update: str, callback_update_data: str) -> int: ...
 
-# esempio
+# Esempio
 def my_config_update_cb(data: str, config_file: str, version_read: int, data_read: Dict[str, str]) -> Dict[str, str]:
-    # return now if version is already up-to-date
+    # Return now if version is already up-to-date.
     if version_read >= 2:
         return {}
 
     section = data_read.get("section")
     option = data_read.get("option")
 
-    # rename section "abc" to "def"
+    # Rename section "abc" to "def".
     if section and not option and section == "abc":
         data_read["section"] = "def"
         return data_read
 
-    # limit other changes to section "test"
+    # Limit other changes to section "test".
     if not section or not option or section != "test":
         return {}
 
-    # rename option "test1" to "test2"
+    # Rename option "test1" to "test2".
     if option == "test1":
         data_read["option"] = "test2"
         return data_read
 
-    # set value to "xxx" for option "test"
+    # Set value to "xxx" for option "test".
     if option == "test":
         data_read["value"] = "xxx"
         return data_read
 
-    # set value to NULL for option "test_null"
+    # Set value to NULL for option "test_null".
     if option == "test_null":
         data_read["value_null"] = "1"
         return data_read
 
-    # no changes
+    # No changes
     return {}
 
 config_file = weechat.config_new("test", "", "")
@@ -7552,7 +7571,7 @@ my_section_delete_option_cb (const void *pointer, void *data,
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
 
-/* sezione standard, l'utente non può aggiungere/rimuovere opzioni */
+/* Sezione standard, l'utente non può aggiungere/rimuovere opzioni. */
 struct t_config_section *new_section1 =
     weechat_config_new_section (config_file, "section1", 0, 0,
                                 NULL, NULL, NULL,
@@ -7561,8 +7580,10 @@ struct t_config_section *new_section1 =
                                 NULL, NULL, NULL,
                                 NULL, NULL, NULL);
 
-/* sezione speciale, l'utente può aggiungere/eliminare opzioni, e le
-   opzioni necessitano di un callback per essere lette/scritte */
+/*
+ * Sezione speciale, l'utente può aggiungere/eliminare opzioni, e le
+ * opzioni necessitano di un callback per essere lette/scritte.
+ */
 struct t_config_section *new_section2 =
     weechat_config_new_section (config_file, "section2", 1, 1,
                                 &my_section_read_cb, NULL, NULL,
@@ -7576,7 +7597,7 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_new_section(config_file: str, name: str,
                        user_can_add_options: int, user_can_delete_options: int,
                        callback_read: str, callback_read_data: str,
@@ -7585,7 +7606,7 @@ def config_new_section(config_file: str, name: str,
                        callback_create_option: str, callback_create_option_data: str,
                        callback_delete_option: str, callback_delete_option_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
@@ -7661,10 +7682,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_search_section(config_file: str, section_name: str) -> str: ...
 
-# esempio
+# Esempio
 section = weechat.config_search_section(config_file, "section")
 ----
 
@@ -7784,7 +7805,7 @@ Esempio in C:
 
 [source,c]
 ----
-/* booleano */
+/* Booleano */
 struct t_config_option *option_bool =
     weechat_config_new_option (config_file, section, "option_bool", "boolean",
                                "My option, type boolean",
@@ -7797,7 +7818,7 @@ struct t_config_option *option_bool =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* intero */
+/* Intero */
 struct t_config_option *option_int =
     weechat_config_new_option (config_file, section, "option_int", "integer",
                                "My option, type integer",
@@ -7810,7 +7831,7 @@ struct t_config_option *option_int =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* stringa */
+/* Stringa */
 struct t_config_option *option_str =
     weechat_config_new_option (config_file, section, "option_str", "string|themable",
                                "My option, type string",
@@ -7823,7 +7844,7 @@ struct t_config_option *option_str =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* colore */
+/* Colore */
 struct t_config_option *option_col =
     weechat_config_new_option (config_file, section, "option_col", "color",
                                "My option, type color",
@@ -7836,7 +7857,7 @@ struct t_config_option *option_col =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* enum */
+/* Enum */
 struct t_config_option *option_enum =
     weechat_config_new_option (config_file, section, "option_enum", "enum",
                                "My option, type enum",
@@ -7854,7 +7875,7 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_new_option(config_file: str, section: str, name: str, type: str, description: str,
                       string_values: str, min: int, max: int,
                       default_value: Union[str, None], value: Union[str, None], null_value_allowed: int,
@@ -7862,7 +7883,7 @@ def config_new_option(config_file: str, section: str, name: str, type: str, desc
                       callback_change: str, callback_change_data: str,
                       callback_delete: str, callback_delete_data: str) -> str: ...
 
-# esempio
+# Esempio
 def option_str_check_value_cb(data: str, option: str, value: str) -> int:
     # ...
     return 1
@@ -7954,10 +7975,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_search_option(config_file: str, section: str, option_name: str) -> str: ...
 
-# esempio
+# Esempio
 option = weechat.config_search_option(config_file, section, "option")
 ----
 
@@ -8000,11 +8021,11 @@ weechat_config_search_section_option(config_file,
                                      &ptr_option);
 if (ptr_option)
 {
-    /* opzione trovata */
+    /* Opzione trovata */
 }
 else
 {
-    /* opzione non trovata */
+    /* Opzione non trovata */
 }
 ----
 
@@ -8056,11 +8077,11 @@ weechat_config_search_with_string ("file.section.option",
                                    &option_name);
 if (ptr_option)
 {
-    /* opzione trovata */
+    /* Opzione trovata */
 }
 else
 {
-    /* opzione non trovata */
+    /* Opzione non trovata */
 }
 ----
 
@@ -8093,11 +8114,11 @@ Esempio in C:
 ----
 if (weechat_config_string_to_boolean (option_value))
 {
-    /* il valore è "true" */
+    /* Il valore è "true". */
 }
 else
 {
-    /* il valore è "false" */
+    /* Il valore è "false". */
 }
 ----
 
@@ -8105,10 +8126,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_string_to_boolean(text: str) -> int: ...
 
-# esempio
+# Esempio
 if weechat.config_string_to_boolean(text):
     # ...
 ----
@@ -8161,10 +8182,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_option_reset(option: str, run_callback: int) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.config_option_reset(option, 1)
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -8234,10 +8255,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_option_set(option: str, value: str, run_callback: int) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.config_option_set(option, "new_value", 1)
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -8298,10 +8319,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_option_set_null(option: str, run_callback: int) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.config_option_set_null(option, 1)
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -8360,10 +8381,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_option_unset(option: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.config_option_unset(option)
 if rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
     # ...
@@ -8403,10 +8424,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_option_rename(option: str, new_name: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.config_option_rename(option, "new_name")
 ----
 
@@ -8528,11 +8549,11 @@ Esempio in C:
 ----
 if (weechat_config_option_is_null (option))
 {
-    /* il valore è "null" */
+    /* Il valore è "null". */
 }
 else
 {
-    /* il valore non è "null" */
+    /* Il valore non è "null". */
 }
 ----
 
@@ -8540,10 +8561,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_option_is_null(option: str) -> int: ...
 
-# esempio
+# Esempio
 if weechat.config_option_is_null(option):
     # ...
 ----
@@ -8574,11 +8595,11 @@ Esempio in C:
 ----
 if (weechat_config_option_default_is_null (option))
 {
-    /* il valore predefinito è "null" */
+    /* Il valore predefinito è "null". */
 }
 else
 {
-    /* il valore predefinito non è "null" */
+    /* Il valore predefinito non è "null". */
 }
 ----
 
@@ -8586,10 +8607,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_option_default_is_null(option: str) -> int: ...
 
-# esempio
+# Esempio
 if weechat.config_option_default_is_null(option):
     # ...
 ----
@@ -8625,11 +8646,11 @@ Esempio in C:
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean (option))
 {
-    /* il valore è "true" */
+    /* Il valore è "true". */
 }
 else
 {
-    /* il valore è "false" */
+    /* Il valore è "false". */
 }
 ----
 
@@ -8637,10 +8658,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_boolean(option: str) -> int: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("plugin.section.option")
 if weechat.config_boolean(option):
     # ...
@@ -8677,11 +8698,11 @@ Esempio in C:
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean_default (option))
 {
-    /* il valore è "true" */
+    /* Il valore è "true". */
 }
 else
 {
-    /* il valore è "false" */
+    /* Il valore è "false". */
 }
 ----
 
@@ -8689,10 +8710,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_boolean_default(option: str) -> int: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("plugin.section.option")
 if weechat.config_boolean_default(option):
     # ...
@@ -8734,10 +8755,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_boolean_inherited(option: str) -> int: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("irc.server.libera.autoconnect")
 autoconnect = weechat.config_boolean_inherited(option)
 ----
@@ -8778,10 +8799,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_integer(option: str) -> int: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer(option)
 ----
@@ -8822,10 +8843,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_integer_default(option: str) -> int: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer_default(option)
 ----
@@ -8866,10 +8887,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_integer_inherited(option: str) -> int: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("irc.server.libera.autojoin_delay")
 delay = weechat.config_integer_inherited(option)
 ----
@@ -8910,10 +8931,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_string(option: str) -> str: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_string(option)
 ----
@@ -8954,10 +8975,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_string_default(option: str) -> str: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_string_default(option)
 ----
@@ -8998,10 +9019,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_string_inherited(option: str) -> str: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("irc.server.libera.msg_quit")
 msg_quit = weechat.config_string_inherited(option)
 ----
@@ -9042,10 +9063,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_color(option: str) -> str: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("plugin.section.option")
 color = weechat.config_color(option)
 ----
@@ -9086,10 +9107,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_color_default(option: str) -> str: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("plugin.section.option")
 color = weechat.config_color_default(option)
 ----
@@ -9130,10 +9151,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_color_inherited(option: str) -> str: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("plugin.section.option")
 color = weechat.config_color_inherited(option)
 ----
@@ -9176,10 +9197,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototype
+# Prototype
 def config_enum(option: str) -> int: ...
 
-# example
+# Example
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum(option)
 ----
@@ -9222,10 +9243,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototype
+# Prototype
 def config_enum_default(option: str) -> int: ...
 
-# example
+# Example
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum_default(option)
 ----
@@ -9266,10 +9287,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_enum_inherited(option: str) -> int: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("irc.server.libera.sasl_fail")
 sasl_fail = weechat.config_enum_inherited(option)
 ----
@@ -9314,10 +9335,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_write_option(config_file: str, option: str) -> int: ...
 
-# esempio
+# Esempio
 def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     weechat.config_write_line(config_file, "my_section", "")
     weechat.config_write_option(config_file, option)
@@ -9368,10 +9389,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_write_line(config_file: str, option_name: str, value: str) -> int: ...
 
-# esempio
+# Esempio
 def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     weechat.config_write_line(config_file, "my_section", "")
     weechat.config_write_line(config_file, "option", "value")
@@ -9421,10 +9442,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_write(config_file: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.config_write(config_file)
 if rc == weechat.WEECHAT_CONFIG_WRITE_OK:
     # ...
@@ -9477,10 +9498,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_read(config_file: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.config_read(config_file)
 if rc == weechat.WEECHAT_CONFIG_READ_OK:
     # ...
@@ -9533,10 +9554,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_reload(config_file: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.config_reload(config_file)
 if rc == weechat.WEECHAT_CONFIG_READ_OK:
     # ...
@@ -9572,10 +9593,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_option_free(option: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.config_option_free(option)
 ----
 
@@ -9605,10 +9626,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_section_free_options(section: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.config_section_free_options(section)
 ----
 
@@ -9638,10 +9659,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_section_free(section: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.config_section_free(section)
 ----
 
@@ -9671,10 +9692,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_free(config_file: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.config_free(config_file)
 ----
 
@@ -9708,10 +9729,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_get(option_name: str) -> str: ...
 
-# esempio
+# Esempio
 option = weechat.config_get("weechat.look.item_time_format")
 ----
 
@@ -9739,8 +9760,10 @@ Esempio in C:
 
 [source,c]
 ----
-/* se il plugin corrente è "test", allora cerca il valore
-   dell'opzione "plugins.var.test.option" nel file plugins.conf */
+/*
+ * Se il plugin corrente è "test", allora cerca il valore
+ * dell'opzione "plugins.var.test.option" nel file plugins.conf.
+ */
 char *value = weechat_config_get_plugin ("option");
 ----
 
@@ -9748,10 +9771,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_get_plugin(option_name: str) -> str: ...
 
-# esempio
+# Esempio
 value = weechat.config_get_plugin("option")
 ----
 
@@ -9782,11 +9805,11 @@ Esempio in C:
 ----
 if (weechat_config_is_set_plugin ("option"))
 {
-    /* l'opzione è impostata */
+    /* L'opzione è impostata. */
 }
 else
 {
-    /* l'opzione non esiste */
+    /* L'opzione non esiste. */
 }
 ----
 
@@ -9794,15 +9817,15 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_is_set_plugin(option_name: str) -> int: ...
 
-# esempio
+# Esempio
 if weechat.config_is_set_plugin("option"):
-    # l'opzione è impostata
+    # L'opzione è impostata.
     # ...
 else:
-    # l'opzione non esiste
+    # L'opzione non esiste.
     # ...
 ----
 
@@ -9855,10 +9878,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_set_plugin(option_name: str, value: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.config_set_plugin("option", "test_value")
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -9906,10 +9929,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_set_desc_plugin(option_name: str, description: str) -> int: ...
 
-# esempio
+# Esempio
 version = weechat.info_get("version_number", "") or 0
 if int(version) >= 0x00030500:
     weechat.config_set_desc_plugin("option", "description of option")
@@ -9965,10 +9988,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def config_unset_plugin(option_name: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.config_unset_plugin("option")
 if rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
     # ...
@@ -10043,10 +10066,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototype
+# Prototype
 def theme_register(name: str, overrides: Dict[str, str]) -> str: ...
 
-# example
+# Example
 weechat.theme_register("light", {
     "irc.color.input_nick": "cyan",
     "irc.color.topic_old": "darkgray",
@@ -10129,10 +10152,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def key_bind(context: str, keys: Dict[str, str]) -> int: ...
 
-# esempio
+# Esempio
 keys = {"@chat(python.test):button1": "hsignal:test_mouse",
         "@chat(python.test):wheelup": "/mycommand up",
         "@chat(python.test):wheeldown": "/mycommand down"}
@@ -10172,10 +10195,10 @@ Esempio in C:
 
 [source,c]
 ----
-/* rimuove un singolo tasto */
+/* Rimuove un singolo tasto. */
 weechat_key_unbind ("mouse", "@chat(plugin.buffer):button1");
 
-/* rimuove tutti i tasti con la zona "chat(plugin.buffer)" */
+/* Rimuove tutti i tasti con la zona "chat(plugin.buffer)". */
 weechat_key_unbind ("mouse", "area:chat(plugin.buffer)");
 ----
 
@@ -10183,15 +10206,15 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def key_unbind(context: str, key: str) -> int: ...
 
-# esempi
+# Esempi
 
-# rimuove un singolo tasto
+# Rimuove un singolo tasto.
 weechat.key_unbind("mouse", "@chat(plugin.buffer):button1")
 
-# rimuove tutti i tasti con la zona "chat(python.test)"
+# Rimuove tutti i tasti con la zona "chat(python.test)".
 weechat.key_unbind("mouse", "area:chat(python.test)")
 ----
 
@@ -10248,10 +10271,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def prefix(prefix: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "%sQuesto è un errore..." % weechat.prefix("error"))
 ----
 
@@ -10345,10 +10368,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def color(color_name: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
     % (weechat.color("blue"), weechat.color("chat"), weechat.color("yellow,red")))
 ----
@@ -10402,7 +10425,7 @@ weechat_printf (buffer, "Benvenuto su questo buffer");
 weechat_printf (buffer, "%sQuesto è un errore!", weechat_prefix ("error"));
 weechat_printf (buffer, " \tMessaggio senza prefisso ma con \t alcune \t tabulazioni");
 weechat_printf (buffer, "\t\tMessage without time/alignment");
-weechat_printf (buffer, "\t\t");  /* empty line (without time) */
+weechat_printf (buffer, "\t\t");  /* Empty line (without time) */
 ----
 
 Script (Python):
@@ -10410,10 +10433,10 @@ Script (Python):
 // TRANSLATION MISSING
 [source,python]
 ----
-# prototipo
+# Prototipo
 def prnt(buffer: str, message: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "Benvenuto sul buffer di WeeChat")
 weechat.prnt(buffer, "Benvenuto su questo buffer")
 weechat.prnt(buffer, "%sQuesto è un errore!" % weechat.prefix("error"))
@@ -10472,10 +10495,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def prnt_date_tags(buffer: str, date: int, tags: str, message: str) -> int: ...
 
-# esempio
+# Esempio
 time = int(time.time())
 weechat.prnt_date_tags("", time - 120, "notify_message",
     "Messaggio 2 minuti fa, con tag 'notify_message'")
@@ -10531,10 +10554,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def prnt_datetime_tags(buffer: str, date: int, date_usec: int, tags: str, message: str) -> int: ...
 
-# esempio
+# Esempio
 now = time.time()
 time_sec = int(now)
 time_usec = int((now * 1000000) % 1000000)
@@ -10587,10 +10610,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def prnt_y(buffer: str, y: int, message: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt_y("", 2, "Mio messaggio sulla terza riga")
 ----
 
@@ -10647,10 +10670,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def prnt_y_date_tags(buffer: str, y: int, date: int, tags: str, message: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt_y_date_tags("", 2, 0, "my_tag", "My message on third line with a tag")
 ----
 
@@ -10699,10 +10722,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def prnt_y_datetime_tags(buffer: str, y: int, date: int, date_usec: int, tags: str, message: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt_y_datetime_tags("", 2, 0, 0, "my_tag", "My message on third line with a tag")
 ----
 
@@ -10735,10 +10758,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def log_print(message: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.log_print("Mio messaggio nel file di log")
 ----
 
@@ -10774,16 +10797,16 @@ C examples:
 // TRANSLATION MISSING
 [source,c]
 ----
-/* hook per il modificatore con priorità = 2000 */
-/* high priority: called before other modifier callbacks */
+/* Hook per il modificatore con priorità = 2000. */
+/* High priority: called before other modifier callbacks. */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 
-/* hook two signals with priority = 3000 */
-/* high priority: called before other signal callbacks */
+/* Hook two signals with priority = 3000. */
+/* High priority: called before other signal callbacks. */
 weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 
-/* hook lines printed in formatted buffers with priority = 500 */
-/* low priority: called after other line callbacks */
+/* Hook lines printed in formatted buffers with priority = 500. */
+/* Low priority: called after other line callbacks. */
 weechat_hook_line ("500|formatted", "*", NULL, &line_cb, NULL, NULL);
 ----
 
@@ -10885,7 +10908,7 @@ my_command_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_OK;
 }
 
-/* questo esempio si ispira al comando /filter */
+/* Questo esempio si ispira al comando /filter. */
 struct t_hook *my_command_hook =
     weechat_hook_command ("myfilter",
                           "description of myfilter",
@@ -10922,11 +10945,11 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_command(command: str, description: str, args: str, args_description: str,
                  completion: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_command_cb(data: str, buffer: str, args: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -11032,10 +11055,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_completion(completion_item: str, description: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
     weechat.completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
     weechat.completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
@@ -11125,10 +11148,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_command_run(command: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_command_run_cb(data: str, buffer: str, command: str) -> int:
     weechat.prnt("", "Sto mangiando il completamento!")
     return weechat.WEECHAT_RC_OK_EAT
@@ -11196,7 +11219,7 @@ my_timer_cb (const void *pointer, void *data, int remaining_calls)
     return WEECHAT_RC_OK;
 }
 
-/* timer chiamato ogni 20 secondi */
+/* Timer chiamato ogni 20 secondi. */
 struct t_hook *my_timer_hook =
     weechat_hook_timer (20 * 1000, 0, 0, &my_timer_cb, NULL, NULL);
 ----
@@ -11205,15 +11228,15 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_timer(interval: int, align_second: int, max_calls: int, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_timer_cb(data: str, remaining_calls: int) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
-# timer chiamato ogni 20 secondi
+# Timer chiamato ogni 20 secondi
 hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 ----
 
@@ -11284,7 +11307,7 @@ my_fd_cb (const void *pointer, void *data, int fd)
 }
 
 int sock = socket (AF_INET, SOCK_STREAM, 0);
-/* imposta le opzioni del socket */
+/* Imposta le opzioni del socket. */
 /* ... */
 struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL, NULL);
 ----
@@ -11293,10 +11316,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_fd(fd: int, flag_read: int, flag_write: int, flag_exception: int, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_fd_cb(data: str, fd: int) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -11421,7 +11444,7 @@ Esempio in C:
 
 [source,c]
 ----
-/* example with an external command */
+/* Example with an external command */
 int
 my_process_cb (const void *pointer, void *data, const char *command,
                int return_code, const char *out, const char *err)
@@ -11453,20 +11476,20 @@ my_process_cb (const void *pointer, void *data, const char *command,
 struct t_hook *my_process_hook = weechat_hook_process ("ls", 5000,
                                                        &my_process_cb, NULL, NULL);
 
-/* example with the callback called in the child process */
+/* Example with the callback called in the child process */
 int
 my_process_func_cb (const void *pointer, void *data, const char *command,
                     int return_code, const char *out, const char *err)
 {
     if (return_code == WEECHAT_HOOK_PROCESS_CHILD)
     {
-        /* do something blocking... */
+        /* Do something blocking... */
         /* ... */
 
-        /* the stdout will be sent as "out" in the parent callback */
+        /* The stdout will be sent as "out" in the parent callback. */
         printf ("this is the result");
 
-        /* return code of the process */
+        /* Return code of the process */
         return 0;
     }
     else
@@ -11504,10 +11527,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_process(command: str, timeout: int, callback: str, callback_data: str) -> str: ...
 
-# example with an external command
+# Example with an external command
 def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Error with command '%s'" % command)
@@ -11522,9 +11545,9 @@ def my_process_cb(data: str, command: str, return_code: int, out: str, err: str)
 
 hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 
-# example with a script function
+# Example with a script function
 def get_status(data: str) -> str:
-    # do something blocking...
+    # Do something blocking...
     # ...
     return "this is the result"
 
@@ -11645,7 +11668,7 @@ my_process_cb (const void *pointer, void *data, const char *command,
     return WEECHAT_RC_OK;
 }
 
-/* example 1: download URL */
+/* Example 1: download URL */
 struct t_hashtable *options_url1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11661,7 +11684,7 @@ if (options_url1)
     weechat_hashtable_free (options_url1);
 }
 
-/* example 2: open URL with custom HTTP headers */
+/* Example 2: open URL with custom HTTP headers */
 struct t_hashtable *options_url2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11679,7 +11702,7 @@ if (options_url2)
     weechat_hashtable_free (options_url2);
 }
 
-/* example 3: execute a notify program with a message from someone */
+/* Example 3: execute a notify program with a message from someone */
 struct t_hashtable *options_cmd1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11690,7 +11713,7 @@ if (options_cmd1)
     weechat_hashtable_set (options_cmd1, "arg1", "-from");
     weechat_hashtable_set (options_cmd1, "arg2", nick);
     weechat_hashtable_set (options_cmd1, "arg3", "-msg");
-    weechat_hashtable_set (options_cmd1, "arg4", message);  /* unsafe argument */
+    weechat_hashtable_set (options_cmd1, "arg4", message);  /* Unsafe argument */
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("my-notify-command",
                                                                      options_cmd1,
                                                                      20000,
@@ -11698,7 +11721,7 @@ if (options_cmd1)
     weechat_hashtable_free (options_cmd1);
 }
 
-/* example 4: call shell to execute a command (command must be SAFE) */
+/* Example 4: call shell to execute a command (command must be SAFE) */
 struct t_hashtable *options_cmd2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11720,10 +11743,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_process_hashtable(command: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Error with command '%s'" % command)
@@ -11736,12 +11759,12 @@ def my_process_cb(data: str, command: str, return_code: int, out: str, err: str)
         weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
-# example 1: download URL
+# Example 1: download URL
 hook1 = weechat.hook_process_hashtable("url:https://weechat.org/",
                                        {"file_out": "/tmp/weechat.org.html"},
                                        20000, "my_process_cb", "")
 
-# example 2: open URL with custom HTTP headers
+# Example 2: open URL with custom HTTP headers
 options = {
     "httpheader": "\n".join([
         "Header1: value1",
@@ -11752,7 +11775,7 @@ hook2 = weechat.hook_process_hashtable("url:http://localhost:8080/",
                                        options,
                                        20000, "my_process_cb", "")
 
-# example 3: execute a notify program with a message from someone
+# Example 3: execute a notify program with a message from someone
 hook3 = weechat.hook_process_hashtable("my-notify-command",
                                        {"arg1": "-from",
                                         "arg2": nick,
@@ -11760,7 +11783,7 @@ hook3 = weechat.hook_process_hashtable("my-notify-command",
                                         "arg4": message},  # unsafe argument
                                        20000, "my_process_cb", "")
 
-# example 4: call shell to execute a command (command must be SAFE)
+# Example 4: call shell to execute a command (command must be SAFE)
 hook4 = weechat.hook_process_hashtable("sh",
                                        {"arg1": "-c",
                                         "arg2": "ls -l /tmp | grep something"},
@@ -11873,7 +11896,7 @@ my_url_cb (const void *pointer, void *data, const char *url,
     return WEECHAT_RC_OK;
 }
 
-/* example 1: output to a file */
+/* Example 1: output to a file */
 struct t_hashtable *options_url1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11889,7 +11912,7 @@ if (options_url1)
     weechat_hashtable_free (options_url1);
 }
 
-/* example 2: custom HTTP headers, output sent to callback */
+/* Example 2: custom HTTP headers, output sent to callback */
 struct t_hashtable *options_url2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11912,20 +11935,20 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_url(url: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, str]) -> int:
     weechat.prnt("", "output: %s" % output)
     return weechat.WEECHAT_RC_OK
 
-# example 1: output to a file
+# Example 1: output to a file
 hook1 = weechat.hook_url("https://weechat.org/",
                          {"file_out": "/tmp/weechat.org.html"},
                          20000, "my_url_cb", "")
 
-# example 2: custom HTTP headers, output sent to callback
+# Example 2: custom HTTP headers, output sent to callback
 options = {
     "httpheader": "\n".join([
         "Header1: value1",
@@ -12102,11 +12125,11 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_connect(proxy: str, address: str, port: int, ipv6: int, retry: int, local_hostname: str,
                  callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_connect_cb(data: str, status: int, gnutls_rc: int, sock: int, error: str, ip_address: str) -> int:
     if status == weechat.WEECHAT_HOOK_CONNECT_OK:
         # ...
@@ -12393,12 +12416,12 @@ my_line_cb (const void *pointer, void *data, struct t_hashtable *line)
                                        WEECHAT_HASHTABLE_STRING,
                                        NULL,
                                        NULL);
-    /* force a highlight on the line */
+    /* Force a highlight on the line. */
     weechat_hashtable_set (hashtable, "highlight", "1");
     return hashtable;
 }
 
-/* catch lines with tag "irc_join" */
+/* Catch lines with tag "irc_join". */
 struct t_hook *my_line_hook =
     weechat_hook_line ("", "", "irc_join", &my_line_cb, NULL, NULL);
 ----
@@ -12407,15 +12430,15 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_line(buffer_type: str, buffer_name: str, tags: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_line_cb(data: str, line: Dict[str, str]) -> Dict[str, str]:
-    # force a highlight on the line
+    # Force a highlight on the line.
     return {"highlight": "1"}
 
-# catch lines with tag "irc_join"
+# Catch lines with tag "irc_join".
 hook = weechat.hook_line("", "", "irc_join", "my_line_cb", "")
 ----
 
@@ -12520,7 +12543,7 @@ my_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_OK;
 }
 
-/* cattura tutti i messaggi, su tutti i buffer, senza colore */
+/* Cattura tutti i messaggi, su tutti i buffer, senza colore. */
 struct t_hook *my_print_hook =
     weechat_hook_print (NULL, NULL, NULL, 1, &my_print_cb, NULL, NULL);
 ----
@@ -12529,16 +12552,16 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_print(buffer: str, tags: str, message: str, strip_colors: int, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_print_cb(data: str, buffer: str, date: str, tags: str, displayed: int, highlight: int, prefix: str, message: str) -> int:
     if highlight:
         # ...
     return weechat.WEECHAT_RC_OK
 
-# cattura tutti i messaggi, su tutti i buffer, senza colore
+# Cattura tutti i messaggi, su tutti i buffer, senza colore.
 hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 ----
 
@@ -13394,7 +13417,7 @@ my_signal_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* catch signals "quit" and "upgrade" */
+/* Catch signals "quit" and "upgrade". */
 struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
                                                      &my_signal_cb, NULL, NULL);
 ----
@@ -13404,15 +13427,15 @@ Script (Python):
 // TRANLSATION MISSING
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_signal(signal: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_signal_cb(data: str, signal: str, signal_data: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
-# catch signals "quit" and "upgrade"
+# Catch signals "quit" and "upgrade".
 hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ----
 
@@ -13472,10 +13495,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 rc2 = weechat.hook_signal_send("[flags:stop_on_error,ignore_eat]my_signal2",
                                weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
@@ -13577,7 +13600,7 @@ Esempio in C:
 
 [source,c]
 ----
-/* scarica e rimuove gli script test.py e script.py */
+/* Scarica e rimuove gli script test.py e script.py. */
 weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
                           "test.py,script.py");
 ----
@@ -13586,7 +13609,7 @@ Script (Python):
 
 [source,python]
 ----
-# scarica e rimuove gli script test.py e script.py
+# Scarica e rimuove gli script test.py e script.py.
 weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
                          "test.py,script.py")
 ----
@@ -13623,11 +13646,11 @@ Esempi in C:
 
 [source,c]
 ----
-/* dice "Hello!" sul server libera, canale #weechat */
+/* Dice "Hello!" sul server libera, canale #weechat. */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
                           "libera;#weechat;priority_high,user_message;;Hello!");
 
-/* invia il comando "/whois FlashCode" sul server libera, con priorità minore */
+/* Invia il comando "/whois FlashCode" sul server libera, con priorità minore. */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
                           "libera;;priority_low;;/whois FlashCode");
 ----
@@ -13636,11 +13659,11 @@ Script (Python):
 
 [source,python]
 ----
-# dice "Hello!" sul server libera server, canale #weechat
+# Dice "Hello!" sul server libera server, canale #weechat.
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "libera;#weechat;priority_high,user_message;;Hello!")
 
-# invia il comando "/whois FlashCode" sul server libera, con priorità minore
+# Invia il comando "/whois FlashCode" sul server libera, con priorità minore.
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "libera;;priority_low;;/whois FlashCode")
 ----
@@ -13772,10 +13795,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_hsignal(signal: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_hsignal_cb(data: str, signal: str, hashtable: Dict[str, str]) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -13837,10 +13860,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_hsignal_send(signal: str, hashtable: Dict[str, str]) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.hook_hsignal_send("my_hsignal", {"key": "value"})
 rc2 = weechat.hook_hsignal_send("[flags:stop_on_error,ignore_eat]my_hsignal2", {"key": "value"})
 ----
@@ -14003,8 +14026,8 @@ if (hashtable)
     weechat_hashtable_set (hashtable, "cmd_extra", "318:1");
     weechat_hook_hsignal_send ("irc_redirect_pattern", hashtable);
     /*
-     * now redirect irc whois command with hsignal irc_redirect_command,
-     * using pattern "my_whois"
+     * Now redirect irc whois command with hsignal irc_redirect_command,
+     * using pattern "my_whois".
      */
     /* ... */
     weechat_hashtable_free (hashtable);
@@ -14020,8 +14043,8 @@ weechat.hook_hsignal_send("irc_redirect_pattern",
                            "cmd_start": "311:1",
                            "cmd_stop": "318:1,401:1,402:1,431:1,461",
                            "cmd_extra": "318:1"})
-# now redirect irc whois command with hsignal irc_redirect_command
-# using pattern "my_whois"
+# Now redirect irc whois command with hsignal irc_redirect_command,
+# using pattern "my_whois".
 # ...
 ----
 
@@ -14082,7 +14105,7 @@ my_config_cb (const void *pointer, void *data, const char *option,
     return WEECHAT_RC_OK;
 }
 
-/* cattura le modifiche dell'opzione "weechat.look.item_time_format" */
+/* Cattura le modifiche dell'opzione "weechat.look.item_time_format". */
 struct t_hook *my_config_hook = weechat_hook_config ("weechat.look.item_time_format",
                                                      &my_config_cb, NULL, NULL);
 ----
@@ -14091,15 +14114,15 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_config(option: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_config_cb(data: str, option: str, value: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
-# cattura le modifiche dell'opzione "weechat.look.item_time_format"
+# Cattura le modifiche dell'opzione "weechat.look.item_time_format".
 hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 ----
 
@@ -14285,7 +14308,7 @@ my_modifier_cb (const void *pointer, void *data, const char *modifier,
     result = malloc (length);
     if (result)
     {
-        /* aggiunge "xxx" ad ogni messaggio stampato */
+        /* Aggiunge "xxx" ad ogni messaggio stampato. */
         snprintf (result, length, "%s xxx", string);
     }
 
@@ -14300,10 +14323,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_modifier(modifier: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_modifier_cb(data: str, modifier: str, modifier_data: str, string: str) -> str:
     return "%s xxx" % string
 
@@ -14434,10 +14457,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_modifier_exec(modifier: str, modifier_data: str, string: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 ----
 
@@ -14504,7 +14527,7 @@ my_info_cb (const void *pointer, void *data, const char *info_name,
     return strdup ("some_info");
 }
 
-/* aggiunge informazione "my_info" */
+/* Aggiunge informazione "my_info". */
 struct t_hook *my_info_hook = weechat_hook_info ("my_info",
                                                  "Some info",
                                                  "Info about arguments",
@@ -14515,11 +14538,11 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_info(info_name: str, description: str, args_description: str,
               callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_info_cb(data: str, info_name: str, arguments: str) -> str:
     return "some_info"
 
@@ -14589,7 +14612,7 @@ my_info_hashtable_cb (const void *pointer, void *data, const char *info_name,
     return pointer_to_new_hashtable;
 }
 
-/* add info "my_info_hashtable" */
+/* Add info "my_info_hashtable". */
 struct t_hook *my_info_hook = weechat_hook_info_hashtable ("my_info_hashtable",
                                                            "Some info",
                                                            "Info about input hashtable",
@@ -14601,11 +14624,11 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_info_hashtable(info_name: str, description: str, args_description: str,
                         output_description: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_info_hashtable_cb(data: str, info_name: str, hashtable: Dict[str, str]) -> Dict[str, str]:
     return {"test_key": "test_value"}
 
@@ -14677,13 +14700,13 @@ my_infolist_cb (const void *pointer, void *data, const char *infolist_name,
 {
     struct t_infolist *my_infolist;
 
-    /* compila lista info */
+    /* Compila lista info. */
     /* ... */
 
     return my_infolist;
 }
 
-/* aggiunge lista info "my_infolist" */
+/* Aggiunge lista info "my_infolist". */
 struct t_hook *my_infolist = weechat_hook_infolist ("my_infolist",
                                                     "Infolist with some data",
                                                     "Info about pointer",
@@ -14695,13 +14718,13 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_infolist(infolist_name: str, description: str, pointer_description: str,
                   args_description: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_infolist_cb(data: str, infolist_name: str, pointer: str, arguments: str) -> str:
-    # build infolist
+    # Build infolist.
     # ...
     return my_infolist
 
@@ -14760,13 +14783,13 @@ my_hdata_cb (const void *pointer, void *data, const char *hdata_name)
 {
     struct t_hdata *my_hdata;
 
-    /* build hdata */
+    /* Build hdata. */
     /* ... */
 
     return my_hdata;
 }
 
-/* add hdata "my_hdata" */
+/* Add hdata "my_hdata". */
 struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
                                               "Hdata for my structure",
                                               &my_hdata_cb, NULL, NULL);
@@ -14995,13 +15018,13 @@ Esempio in C:
 struct t_hashtable *
 my_focus_nicklist_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
-    /* add strings in hashtable */
+    /* Add strings in hashtable. */
     /* ... */
 
     return info;
 }
 
-/* add focus on nicklist */
+/* Add focus on nicklist. */
 struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
                                               &my_focus_nicklist_cb, NULL, NULL);
 ----
@@ -15010,12 +15033,12 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_focus(area: str, callback: str, callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_focus_nicklist_cb(data: str, info: Dict[str, str]) -> Dict[str, str]:
-    # build dict
+    # Build dict.
     # ...
     return my_dict
 
@@ -15099,10 +15122,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hook_set(hook: str, property: str, value: str) -> int: ...
 
-# esempio
+# Esempio
 def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -15141,10 +15164,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def unhook(hook: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.unhook(my_hook)
 ----
 
@@ -15180,10 +15203,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def unhook_all() -> int: ...
 
-# esempio
+# Esempio
 weechat.unhook_all()
 ----
 
@@ -15290,11 +15313,11 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_new(name: str, input_callback: str, input_callback_data: str,
                close_callback: str, close_callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_input_cb(data: str, buffer: str, input_data: str) -> int:
     weechat.prnt(buffer, "Testo: %s" % input_data)
     return weechat.WEECHAT_RC_OK
@@ -15398,11 +15421,11 @@ struct t_hashtable *properties = weechat_hashtable_new (8,
                                                         WEECHAT_HASHTABLE_STRING,
                                                         NULL,
                                                         NULL);
-/* buffer with free content */
+/* Buffer with free content */
 weechat_hashtable_set (properties, "type", "free");
-/* no logging on this buffer */
+/* No logging on this buffer */
 weechat_hashtable_set (properties, "localvar_set_no_log", "1");
-/* bind key alt-c on this buffer */
+/* Bind key alt-c on this buffer. */
 weechat_hashtable_set (properties, "key_bind_meta-c", "/my_command");
 
 struct t_gui_buffer *my_buffer = weechat_buffer_new_props ("my_buffer",
@@ -15416,12 +15439,12 @@ Script (Python):
 // TRANSLATION MISSING
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_new_props(name: str, properties: Dict[str, str],
                      input_callback: str, input_callback_data: str,
                      close_callback: str, close_callback_data: str) -> str: ...
 
-# esempio
+# Esempio
 def my_input_cb(data: str, buffer: str, input_data: str) -> int:
     weechat.prnt(buffer, "Testo: %s" % input_data)
     return weechat.WEECHAT_RC_OK
@@ -15465,10 +15488,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def current_buffer() -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt(weechat.current_buffer(), "Testo sul buffer corrente")
 ----
 
@@ -15519,10 +15542,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_search(plugin: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 buffer = weechat.buffer_search("my_plugin", "my_buffer")
 ----
 
@@ -15553,10 +15576,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_search_main() -> str: ...
 
-# esempio
+# Esempio
 buffer = weechat.buffer_search_main()
 ----
 
@@ -15591,10 +15614,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_clear(buffer: str) -> int: ...
 
-# esempio
+# Esempio
 buffer = weechat.buffer_search("my_plugin", "my_buffer")
 if buffer:
     weechat.buffer_clear(buffer)
@@ -15630,10 +15653,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_close(buffer: str) -> int: ...
 
-# esempio
+# Esempio
 buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
 # ...
 weechat.buffer_close(buffer)
@@ -15662,7 +15685,7 @@ Esempio in C:
 
 [source,c]
 ----
-/* merge current buffer with weechat "core" buffer */
+/* Merge current buffer with weechat "core" buffer. */
 weechat_buffer_merge (weechat_current_buffer (),
                       weechat_buffer_search_main ());
 ----
@@ -15671,11 +15694,11 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_merge(buffer: str, target_buffer: str) -> int: ...
 
-# esempio
-# merge current buffer with WeeChat "core" buffer
+# Esempio
+# Merge current buffer with WeeChat "core" buffer.
 weechat.buffer_merge(weechat.current_buffer(), weechat.buffer_search_main())
 ----
 
@@ -15709,10 +15732,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_unmerge(buffer: str, number: int) -> int: ...
 
-# esempio
+# Esempio
 weechat.buffer_unmerge(weechat.current_buffer(), 1)
 ----
 
@@ -15834,10 +15857,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_get_integer(buffer: str, property: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "my buffer number is: %d" % weechat.buffer_get_integer(my_buffer, "number"))
 ----
 
@@ -15883,10 +15906,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_get_longlong(buffer: str, property: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "my buffer id is: %d" % weechat.buffer_get_longlong(my_buffer, "id"))
 ----
 
@@ -15954,10 +15977,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_get_string(buffer: str, property: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "name / short name of buffer are: %s / %s"
     % (weechat.buffer_get_string(my_buffer, "name"),
     weechat.buffer_get_string(my_buffer, "short_name")))
@@ -16003,10 +16026,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_get_pointer(buffer: str, property: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "plugin pointer of my buffer: %s" % weechat.buffer_get_pointer(my_buffer, "plugin"))
 ----
 
@@ -16244,19 +16267,19 @@ Esempio in C:
 
 [source,c]
 ----
-/* disabilita hotlist (per tutti i buffer) */
+/* Disabilita hotlist (per tutti i buffer). */
 weechat_buffer_set (NULL, "hotlist", "-");
 
-/* abilita nuovamente hotlist */
+/* Abilita nuovamente hotlist. */
 weechat_buffer_set (NULL, "hotlist", "+");
 
-/* cambia il nome buffer */
+/* Cambia il nome buffer. */
 weechat_buffer_set (my_buffer, "name", "my_new_name");
 
-/* aggiunge una nuova variabile locale "tizio" con il valore "abc" */
+/* Aggiunge una nuova variabile locale "tizio" con il valore "abc". */
 weechat_buffer_set (my_buffer, "localvar_set_tizio", "abc");
 
-/* rimuove la variabile locale "tizio" */
+/* Rimuove la variabile locale "tizio". */
 weechat_buffer_set (my_buffer, "localvar_del_tizio", "");
 ----
 
@@ -16264,24 +16287,24 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_set(buffer: str, property: str, value: str) -> int: ...
 
-# esempi
+# Esempi
 
-# disabilita hotlist (per tutti i buffer)
+# Disabilita hotlist (per tutti i buffer).
 weechat.buffer_set("", "hotlist", "-")
 
-# abilita nuovamente hotlist
+# Abilita nuovamente hotlist.
 weechat.buffer_set("", "hotlist", "+")
 
-# cambia il nome buffer
+# Cambia il nome buffer.
 weechat.buffer_set(my_buffer, "name", "my_new_name")
 
-# aggiunge una nuova variabile locale "tizio" con il valore "abc"
+# Aggiunge una nuova variabile locale "tizio" con il valore "abc".
 weechat.buffer_set(my_buffer, "localvar_set_tizio", "abc")
 
-# rimuove la variabile locale "tizio"
+# Rimuove la variabile locale "tizio".
 weechat.buffer_set(my_buffer, "localvar_del_tizio", "")
 ----
 
@@ -16384,10 +16407,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_string_replace_local_var(buffer: str, string: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
 str = weechat.buffer_string_replace_local_var(my_buffer, "test with $toto")
 # str contains "test with abc"
@@ -16442,10 +16465,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def buffer_match_list(buffer: str, string: str) -> int: ...
 
-# esempio
+# Esempio
 buffer = weechat.buffer_search("irc", "libera.#weechat")
 if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
@@ -16500,10 +16523,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def line_search_by_id(buffer: str, line_id: int) -> str: ...
 
-# esempio
+# Esempio
 line = weechat.line_search_by_id(buffer, 1786886000000000)
 ----
 
@@ -16538,10 +16561,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def current_window() -> str: ...
 
-# esempio
+# Esempio
 current_window = weechat.current_window()
 ----
 
@@ -16580,10 +16603,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def window_search_with_buffer(buffer: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "window displaying core buffer: %s"
     % weechat.window_search_with_buffer(weechat.buffer_search_main()))
 ----
@@ -16643,10 +16666,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def window_get_integer(window: str, property: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "current window is at position (x,y): (%d,%d)"
     % (weechat.window_get_integer(weechat.current_window(), "win_x"),
     weechat.window_get_integer(weechat.current_window(), "win_y")))
@@ -16680,7 +16703,7 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def window_get_string(window: str, property: str) -> str: ...
 ----
 
@@ -16720,10 +16743,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def window_get_pointer(window: str, property: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "buffer displayed in current window: %s"
     % weechat.window_get_pointer(weechat.current_window(), "buffer"))
 ----
@@ -16757,10 +16780,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def window_set_title(title: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.window_set_title("nuovo titolo qui")
 ----
 
@@ -16827,10 +16850,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_add_group(buffer: str, parent_group: str, name: str, color: str, visible: int) -> str: ...
 
-# esempio
+# Esempio
 group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
     "weechat.color.nicklist_group", 1)
 ----
@@ -16879,10 +16902,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_search_group(buffer: str, from_group: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 group1 = weechat.nicklist_search_group(my_buffer, "", "test_group")
 group2 = weechat.nicklist_search_group(my_buffer, "", "==id:1714382231198764")
 ----
@@ -16948,10 +16971,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_add_nick(buffer: str, group: str, name: str, color: str, prefix: str, prefix_color: str, visible: int) -> str: ...
 
-# esempio
+# Esempio
 if nick_away:
     color = "weechat.color.nicklist_away"
 else:
@@ -17003,10 +17026,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_search_nick(buffer: str, from_group: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 nick1 = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
 nick2 = weechat.nicklist_search_nick(my_buffer, "", "==id:1714382252187496")
 ----
@@ -17040,10 +17063,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_remove_group(buffer: str, group: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.nicklist_remove_group(my_buffer, my_group)
 ----
 
@@ -17075,10 +17098,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_remove_nick(buffer: str, nick: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.nicklist_remove_nick(my_buffer, my_nick)
 ----
 
@@ -17108,10 +17131,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_remove_all(buffer: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.nicklist_remove_all(my_buffer)
 ----
 
@@ -17151,12 +17174,12 @@ while (ptr_group || ptr_nick)
 {
     if (ptr_nick)
     {
-        /* nick */
+        /* Nick */
         /* ... */
     }
     else
     {
-        /* gruppo */
+        /* Gruppo */
         /* ... */
     }
     weechat_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
@@ -17204,10 +17227,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_group_get_integer(buffer: str, group: str, property: str) -> int: ...
 
-# esempio
+# Esempio
 visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
 ----
 
@@ -17251,10 +17274,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_group_get_string(buffer: str, group: str, property: str) -> str: ...
 
-# esempio
+# Esempio
 color = weechat.nicklist_group_get_string(buffer, group, "color")
 ----
 
@@ -17295,10 +17318,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_group_get_pointer(buffer: str, group: str, property: str) -> str: ...
 
-# esempio
+# Esempio
 parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
 ----
 
@@ -17353,13 +17376,13 @@ Esempio in C:
 
 [source,c]
 ----
-/* cambia colore del gruppo a "bar_fg" */
+/* Cambia colore del gruppo a "bar_fg". */
 weechat_nicklist_group_set (buffer, group, "color", "bar_fg");
 
-/* cambia il colore del gruppo a giallo */
+/* Cambia il colore del gruppo a giallo. */
 weechat_nicklist_group_set (buffer, group, "color", "yellow");
 
-/* nasconde gruppo nella lista nick */
+/* Nasconde gruppo nella lista nick. */
 weechat_nicklist_group_set (buffer, group, "visible", "0");
 ----
 
@@ -17367,18 +17390,18 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_group_set(buffer: str, group: str, property: str, value: str) -> int: ...
 
-# esempi
+# Esempi
 
-# cambia colore del gruppo a "bar_fg"
+# Cambia colore del gruppo a "bar_fg".
 weechat.nicklist_group_set(buffer, group, "color", "bar_fg")
 
-# cambia colore del gruppo a giallo
+# Cambia colore del gruppo a giallo.
 weechat.nicklist_group_set(buffer, group, "color", "yellow")
 
-# nasconde gruppo nella lista nick
+# Nasconde gruppo nella lista nick.
 weechat.nicklist_group_set(buffer, group, "visible", "0")
 ----
 
@@ -17419,10 +17442,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_nick_get_integer(buffer: str, nick: str, property: str) -> int: ...
 
-# esempio
+# Esempio
 visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
 ----
 
@@ -17468,10 +17491,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_nick_get_string(buffer: str, nick: str, property: str) -> str: ...
 
-# esempio
+# Esempio
 color = weechat.nicklist_nick_get_string(buffer, nick, "color")
 ----
 
@@ -17512,10 +17535,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_nick_get_pointer(buffer: str, nick: str, property: str) -> str: ...
 
-# esempio
+# Esempio
 group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
 ----
 
@@ -17577,16 +17600,16 @@ Esempi in C:
 
 [source,c]
 ----
-/* cambia colore del nick in azzurro */
+/* Cambia colore del nick in azzurro. */
 weechat_nicklist_nick_set (buffer, nick, "color", "cyan");
 
-/* cambia prefisso in "+" */
+/* Cambia prefisso in "+". */
 weechat_nicklist_nick_set (buffer, nick, "prefix", "+");
 
-/* cambia colore del prefisso in giallo */
+/* Cambia colore del prefisso in giallo. */
 weechat_nicklist_nick_set (buffer, nick, "prefix_color", "yellow");
 
-/* nascondi nick nella lista nick */
+/* Nascondi nick nella lista nick. */
 weechat_nicklist_nick_set (buffer, nick, "visible", "0");
 ----
 
@@ -17594,21 +17617,21 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def nicklist_nick_set(buffer: str, nick: str, property: str, value: str) -> int: ...
 
-# esempi
+# Esempi
 
-# cambia colore del nick in azzurro
+# Cambia colore del nick in azzurro.
 weechat.nicklist_nick_set(buffer, nick, "color", "cyan")
 
-# cambia prefisso in "+"
+# Cambia prefisso in "+".
 weechat.nicklist_nick_set(buffer, nick, "prefix", "+")
 
-# cambia colore del prefisso in giallo
+# Cambia colore del prefisso in giallo.
 weechat.nicklist_nick_set(buffer, nick, "prefix_color", "yellow")
 
-# nascondi nick nella lista nick
+# Nascondi nick nella lista nick.
 weechat.nicklist_nick_set(buffer, nick, "visible", "0")
 ----
 
@@ -17647,10 +17670,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def bar_item_search(name: str) -> str: ...
 
-# esempio
+# Esempio
 bar_item = weechat.bar_item_search("myitem")
 ----
 
@@ -17737,16 +17760,16 @@ see example below (supported only in WeeChat ≥ 0.4.2).
 // TRANSLATION MISSING
 [source,python]
 ----
-# prototipo
+# Prototipo
 def bar_item_new(name: str, build_callback: str, build_callback_data: str) -> str: ...
 
-# esempio (callback without "buffer" and "extra_info")
+# Esempio (callback without "buffer" and "extra_info")
 def my_build_callback(data: str, item: str, window: str) -> str:
     return "my content"
 
 bar_item = weechat.bar_item_new("myitem", "my_build_callback", "")
 
-# example (callback with all arguments, for WeeChat ≥ 0.4.2)
+# Example (callback with all arguments, for WeeChat ≥ 0.4.2)
 def my_build_callback2(data: str, item: str, window: str, buffer: str, extra_info: Dict[str, str]) -> str:
     return "my content"
 
@@ -17780,10 +17803,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def bar_item_update(name: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.bar_item_update("myitem")
 ----
 
@@ -17813,10 +17836,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def bar_item_remove(item: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.bar_item_remove(myitem)
 ----
 
@@ -17850,10 +17873,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def bar_search(name: str) -> str: ...
 
-# esempio
+# Esempio
 bar = weechat.bar_search("mybar")
 ----
 
@@ -17961,13 +17984,13 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def bar_new(name: str, hidden: str, priority: str, type: str, condition: str, position: str,
             filling_top_bottom: str, filling_left_right: str, size: str, size_max: str,
             color_fg: str, color_delim: str, color_bg: str, color_bg_inactive: str,
             separator: str, items: str) -> str: ...
 
-# esempio
+# Esempio
 bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", "vertical",
     "0", "5", "default", "cyan", "blue", "darkgray", "off", "time,buffer_number+buffer_name")
 ----
@@ -18015,10 +18038,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def bar_set(bar: str, property: str, value: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.bar_set(my_bar, "position", "bottom")
 ----
 
@@ -18048,10 +18071,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def bar_update(name: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.bar_update("mybar")
 ----
 
@@ -18081,10 +18104,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def bar_remove(bar: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.bar_remove(my_bar)
 ----
 
@@ -18138,10 +18161,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def command(buffer: str, command: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois FlashCode")
 ----
 
@@ -18190,7 +18213,7 @@ Esempio in C:
 // TRANSLATION MISSING
 [source,c]
 ----
-/* allow any command except /exec, run command in 2 seconds */
+/* Allow any command except /exec, run command in 2 seconds. */
 int rc;
 struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
@@ -18207,10 +18230,10 @@ Script (Python):
 // TRANSLATION MISSING
 [source,python]
 ----
-# prototipo
+# Prototipo
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
-# example: allow any command except /exec
+# Example: allow any command except /exec
 rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec", "delay": "2000"})
 ----
 
@@ -18253,10 +18276,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def completion_new(buffer: str) -> str: ...
 
-# esempio
+# Esempio
 completion = weechat.completion_new(weechat.buffer_search_main())
 ----
 
@@ -18303,10 +18326,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def completion_search(completion: str, data: str, position: int, direction: int) -> int: ...
 
-# esempio
+# Esempio
 completion = weechat.completion_new(weechat.buffer_search_main())
 if weechat.completion_search(completion, "/help filt", 10, 1):
     # ...
@@ -18343,10 +18366,10 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
-    /* ottiene l'argomento del comando */
+    /* Ottiene l'argomento del comando. */
     const char *args = weechat_completion_get_string (completion, "args");
 
-    /* completamento che dipende dagli argomenti */
+    /* Completamento che dipende dagli argomenti. */
     /* ... */
 
     return WEECHAT_RC_OK;
@@ -18357,14 +18380,14 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def completion_get_string(completion: str, property: str) -> str: ...
 
-# esempio
+# Esempio
 def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
-    # ottiene l'argomento del comando
+    # Ottiene l'argomento del comando.
     args = weechat.completion_get_string(completion, "args")
-    # completamento che dipende dagli argomenti
+    # Completamento che dipende dagli argomenti
     # ...
     return weechat.WEECHAT_RC_OK
 ----
@@ -18416,7 +18439,7 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
-    /* do not add space after completion */
+    /* Do not add space after completion. */
     weechat_completion_set (completion, "add_space", "0");
 
     /* ... */
@@ -18429,12 +18452,12 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def completion_set(completion: str, property: str, value: str) -> int: ...
 
-# esempio
+# Esempio
 def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
-    # do not add space after completion
+    # Do not add space after completion.
     weechat.completion_set(completion, "add_space", "0")
     # ...
     return weechat.WEECHAT_RC_OK
@@ -18473,10 +18496,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def completion_list_add(completion: str, word: str, nick_completion: int, where: str) -> int: ...
 
-# esempio: consultare function hook_completion
+# Esempio: consultare function hook_completion
 ----
 
 // TRANSLATION MISSING
@@ -18508,10 +18531,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def completion_free(completion: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.completion_free(completion)
 ----
 
@@ -18561,7 +18584,7 @@ if (weechat_network_pass_proxy ("my_proxy", sock, "irc.libera.chat", 6667))
 }
 else
 {
-    /* errore */
+    /* Errore */
 }
 ----
 
@@ -18611,7 +18634,7 @@ struct sockaddr *addr;
 socklen_t length;
 int sock;
 
-/* allocate/set address and port in 'addr', set 'length' */
+/* Allocate/set address and port in 'addr', set 'length'. */
 /* ... */
 
 sock = weechat_network_connect_to (NULL, addr, length);
@@ -18621,7 +18644,7 @@ if (sock >= 0)
 }
 else
 {
-    /* errore */
+    /* Errore */
 }
 ----
 
@@ -18692,10 +18715,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def info_get(info_name: str, arguments: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "Current WeeChat version is: %s (compiled on %s)"
     % (weechat.info_get("version", ""), weechat.info_get("date", ""))
 weechat.prnt("", "WeeChat config directory is: %s" % weechat.info_get("weechat_config_dir"))
@@ -18753,7 +18776,7 @@ if (hashtable_in)
     hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                 hashtable_in);
     /*
-     * now hashtable_out has following keys/values:
+     * Now hashtable_out has following keys/values:
      *   "tags"                : "time=2015-06-27T16:40:35.000Z;tag2=value\\sspace"
      *   "tag_time"            : "2015-06-27T16:40:35.000Z"
      *   "tag_tag2"            : "value space"
@@ -18787,10 +18810,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def info_get_hashtable(info_name: str, dict_in: Dict[str, str]) -> Dict[str, str]: ...
 
-# esempio
+# Esempio
 dict_in = {"message": ":nick!user@host PRIVMSG #weechat :message here"}
 weechat.prnt("", "message parsed: %s"
              % weechat.info_get_hashtable("irc_message_parse", dict_in))
@@ -18840,10 +18863,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_new() -> str: ...
 
-# esempio
+# Esempio
 infolist = weechat.infolist_new()
 ----
 
@@ -18877,10 +18900,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_new_item(infolist: str) -> str: ...
 
-# esempio
+# Esempio
 item = weechat.infolist_new_item(infolist)
 ----
 
@@ -18921,10 +18944,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_new_var_integer(item: str, name: str, value: int) -> str: ...
 
-# esempio
+# Esempio
 var = weechat.infolist_new_var_integer(item, "my_integer", 123)
 ----
 
@@ -18965,10 +18988,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_new_var_string(item: str, name: str, value: str) -> str: ...
 
-# esempio
+# Esempio
 var = weechat.infolist_new_var_string(item, "my_string", "value")
 ----
 
@@ -19009,10 +19032,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_new_var_pointer(item: str, name: str, pointer: str) -> str: ...
 
-# esempio
+# Esempio
 var = weechat.infolist_new_var_pointer(item, "my_pointer", pointer)
 ----
 
@@ -19092,10 +19115,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_new_var_time(item: str, name: str, time: int) -> str: ...
 
-# esempio
+# Esempio
 var = weechat.infolist_new_var_time(item, "my_time", int(time.time()))
 ----
 
@@ -19139,10 +19162,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_new_var_long(item: str, name: str, value: int) -> str: ...
 
-# esempio
+# Esempio
 var = weechat.infolist_new_var_long(item, "my_long", 2123456789)
 ----
 
@@ -19186,10 +19209,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_new_var_longlong(item: str, name: str, value: int) -> str: ...
 
-# esempio
+# Esempio
 var = weechat.infolist_new_var_longlong(item, "my_longlong", 9123456789123456789)
 ----
 
@@ -19243,10 +19266,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_get(infolist_name: str, pointer: str, arguments: str) -> str: ...
 
-# esempio
+# Esempio
 infolist = weechat.infolist_get("irc_server", "", "")
 ----
 
@@ -19278,11 +19301,11 @@ Esempio in C:
 ----
 if (weechat_infolist_next (infolist))
 {
-    /* legge variabili nell'elemento... */
+    /* Legge variabili nell'elemento... */
 }
 else
 {
-    /* nessun altro elemento disponibile */
+    /* Nessun altro elemento disponibile. */
 }
 ----
 
@@ -19290,15 +19313,15 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_next(infolist: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.infolist_next(infolist)
 if rc:
-    # legge variabili nell'elemento...
+    # Legge variabili nell'elemento...
 else:
-    # nessun altro elemento disponibile
+    # Nessun altro elemento disponibile
 ----
 
 ==== infolist_prev
@@ -19329,11 +19352,11 @@ Esempio in C:
 ----
 if (weechat_infolist_prev (infolist))
 {
-    /* legge variabili nell'elemento... */
+    /* Legge variabili nell'elemento... */
 }
 else
 {
-    /* nessun altro elemento disponibile */
+    /* Nessun altro elemento disponibile. */
 }
 ----
 
@@ -19341,15 +19364,15 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_prev(infolist: str) -> int: ...
 
-# esempio
+# Esempio
 rc = weechat.infolist_prev(infolist)
 if rc:
-    # read variables in item...
+    # Read variables in item...
 else:
-    # no more item available
+    # No more item available
 ----
 
 ==== infolist_reset_item_cursor
@@ -19378,10 +19401,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_reset_item_cursor(infolist: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.infolist_reset_item_cursor(infolist)
 ----
 
@@ -19417,7 +19440,7 @@ Esempio in C:
 ----
 if (weechat_infolist_search_var (infolist, "name"))
 {
-    /* variable "name" exists */
+    /* Variable "name" exists. */
     /* ... */
 }
 ----
@@ -19427,12 +19450,12 @@ Script (Python):
 // TRANSLATION MISSING
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_search_var(infolist: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 if weechat.infolist_search_var(infolist, "name"):
-    # variable "name" exists
+    # Variable "name" exists
     # ...
 ----
 
@@ -19464,18 +19487,20 @@ Esempio in C:
 [source,c]
 ----
 const char *fields = weechat_infolist_fields (infolist);
-/* i campi contengono qualcosa come:
-   "i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time" */
+/*
+ * I campi contengono qualcosa come:
+ * "i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time".
+ */
 ----
 
 Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_fields(infolist: str) -> str: ...
 
-# esempio
+# Esempio
 fields = weechat.infolist_fields(infolist)
 # i campi contengono qualcosa come:
 # "i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time"
@@ -19514,10 +19539,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_integer(infolist: str, var: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "integer = %d" % weechat.infolist_integer(infolist, "my_integer"))
 ----
 
@@ -19554,10 +19579,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_string(infolist: str, var: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "string = %s" % weechat.infolist_string(infolist, "my_string"))
 ----
 
@@ -19593,10 +19618,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_pointer(infolist: str, var: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "pointer = 0x%s" % weechat.infolist_pointer(infolist, "my_pointer"))
 ----
 
@@ -19669,10 +19694,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_time(infolist: str, var: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "time = %d" % weechat.infolist_time(infolist, "my_time"))
 ----
 
@@ -19712,10 +19737,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_long(infolist: str, var: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "value = %d" % weechat.infolist_long(infolist, "my_long"))
 ----
 
@@ -19755,10 +19780,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_longlong(infolist: str, var: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "value = %d" % weechat.infolist_longlong(infolist, "my_longlong"))
 ----
 
@@ -19788,10 +19813,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def infolist_free(infolist: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.infolist_free(infolist)
 ----
 
@@ -20105,10 +20130,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_get(hdata_name: str) -> str: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("irc_server")
 ----
 
@@ -20145,10 +20170,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_get_var_offset(hdata: str, name: str) -> int: ...
 
-# esempio
+# Esempio
 offset = weechat.hdata_get_var_offset(hdata, "name")
 ----
 
@@ -20212,7 +20237,7 @@ switch (type)
         /* ... */
         break;
     default:
-        /* variable not found */
+        /* Variable not found */
         break;
 }
 ----
@@ -20254,10 +20279,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_get_var_type_string(hdata: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string(hdata, "name"))
 ----
 
@@ -20297,10 +20322,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_get_var_array_size(hdata: str, pointer: str, name: str) -> int: ...
 
-# esempio
+# Esempio
 array_size = weechat.hdata_get_var_array_size(hdata, pointer, "name")
 ----
 
@@ -20342,10 +20367,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_get_var_array_size_string(hdata: str, pointer: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, "name")
 ----
 
@@ -20382,10 +20407,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_get_var_hdata(hdata: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
 ----
 
@@ -20494,10 +20519,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_get_list(hdata: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("buffer")
 buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 ----
@@ -20534,17 +20559,17 @@ Esempio in C:
 
 [source,c]
 ----
-/* check if a buffer pointer is valid */
+/* Check if a buffer pointer is valid. */
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 if (weechat_hdata_check_pointer (hdata,
                                  weechat_hdata_get_list (hdata, "gui_buffers"),
                                  ptr_buffer))
 {
-    /* valid pointer */
+    /* Valid pointer */
 }
 else
 {
-    /* invalid pointer */
+    /* Invalid pointer */
 }
 ----
 
@@ -20552,16 +20577,16 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_check_pointer(hdata: str, list: str, pointer: str) -> int: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("buffer")
 if weechat.hdata_check_pointer(hdata, weechat.hdata_get_list(hdata, "gui_buffers"), ptr_buffer):
-    # valid pointer
+    # Valid pointer
     # ...
 else:
-    # invalid pointer
+    # Invalid pointer
     # ...
 ----
 
@@ -20598,10 +20623,10 @@ Esempio in C:
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
 
-/* passa al buffer successivo, 2 volte */
+/* Passa al buffer successivo, 2 volte. */
 buffer = weechat_hdata_move (hdata, buffer, 2);
 
-/* passa al buffer precedente */
+/* Passa al buffer precedente. */
 if (buffer)
     buffer = weechat_hdata_move (hdata, buffer, -1);
 ----
@@ -20610,17 +20635,17 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_move(hdata: str, pointer: str, count: int) -> str: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 
-# passa al buffer successivo, 2 volte
+# Passa al buffer successivo, 2 volte.
 buffer = weechat.hdata_move(hdata, buffer, 2)
 
-# passa al buffer precedente
+# Passa al buffer precedente.
 if buffer:
     buffer = weechat.hdata_move(hdata, buffer, -1)
 ----
@@ -20688,7 +20713,7 @@ struct t_hashtable *extra_vars = weechat_hashtable_new (8,
                                                         NULL,
                                                         NULL);
 
-/* search irc server with name "libera" */
+/* Search irc server with name "libera". */
 weechat_hashtable_set (extra_vars, "server_name", "libera");
 void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == ${server_name}",
                                      NULL, extra_vars, NULL, 1);
@@ -20704,16 +20729,16 @@ Script (Python):
 // TRANSLATION MISSING
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_search(hdata: str, pointer: str, search: str,
                  pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str],
                  count: int) -> str: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("irc_server")
 servers = weechat.hdata_get_list(hdata, "irc_servers")
 
-# search irc server with name "libera"
+# Search irc server with name "libera".
 server = weechat.hdata_search(hdata, servers, "${irc_server.name} == ${server_name}",
                               {}, {"server_name": "libera"}, {}, 1)
 if server:
@@ -20757,10 +20782,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_char(hdata: str, pointer: str, name: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
 ----
 
@@ -20803,10 +20828,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_integer(hdata: str, pointer: str, name: str) -> int: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
@@ -20849,10 +20874,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_long(hdata: str, pointer: str, name: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "longvar = %d" % weechat.hdata_long(hdata, pointer, "longvar"))
 ----
 
@@ -20895,10 +20920,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_longlong(hdata: str, pointer: str, name: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "longlongvar = %d" % weechat.hdata_longlong(hdata, pointer, "longlongvar"))
 ----
 
@@ -20941,10 +20966,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_string(hdata: str, pointer: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 weechat.prnt("", "name = %s" % weechat.hdata_string(hdata, buffer, "name"))
@@ -20989,10 +21014,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_pointer(hdata: str, pointer: str, name: str) -> str: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 weechat.prnt("", "lines = %x" % weechat.hdata_pointer(hdata, buffer, "lines"))
@@ -21053,10 +21078,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_time(hdata: str, pointer: str, name: str) -> int: ...
 
-# esempio
+# Esempio
 buf = weechat.buffer_search_main()
 ptr = weechat.hdata_pointer(weechat.hdata_get("buffer"), buf, "lines")
 if ptr:
@@ -21110,10 +21135,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_hashtable(hdata: str, pointer: str, name: str) -> Dict[str, str]: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 hash = weechat.hdata_hashtable(hdata, buffer, "local_variables")
@@ -21170,10 +21195,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sensitive: int) -> int: ...
 
-# esempio
+# Esempio
 hdata = weechat.hdata_get("buffer")
 buffer1 = weechat.buffer_search("irc", "libera.#weechat")
 buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
@@ -21261,7 +21286,7 @@ Esempio in C:
 
 [source,c]
 ----
-/* subtract one hour on last message displayed in current buffer */
+/* Subtract one hour on last message displayed in current buffer. */
 
 struct t_gui_lines *own_lines;
 struct t_gui_line *line;
@@ -21298,10 +21323,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_update(hdata: str, pointer: str, hashtable: Dict[str, str]) -> int: ...
 
-# example: subtract one hour on last message displayed in current buffer
+# Example: subtract one hour on last message displayed in current buffer
 own_lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), weechat.current_buffer(), "own_lines")
 if own_lines:
     line = weechat.hdata_pointer(weechat.hdata_get("lines"), own_lines, "last_line")
@@ -21361,10 +21386,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def hdata_get_string(hdata: str, property: str) -> str: ...
 
-# esempio
+# Esempio
 weechat.prnt("", "variables in hdata: %s" % weechat.hdata_get_string(hdata, "var_keys"))
 weechat.prnt("", "lists in hdata: %s" % weechat.hdata_get_string(hdata, "list_keys"))
 ----
@@ -21432,10 +21457,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def upgrade_new(filename: str, callback_read: str, callback_read_data: str) -> str: ...
 
-# esempio
+# Esempio
 upgrade_file = weechat.upgrade_new("my_file", "", "")
 ----
 
@@ -21468,11 +21493,11 @@ Esempio in C:
 ----
 if (weechat_upgrade_write_object (upgrade_file, 1, &infolist))
 {
-    /* ok */
+    /* OK */
 }
 else
 {
-    /* errore */
+    /* Errore */
 }
 ----
 
@@ -21480,10 +21505,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def upgrade_write_object(upgrade_file: str, object_id: int, infolist: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.upgrade_write_object(upgrade_file, 1, infolist)
 ----
 
@@ -21520,10 +21545,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def upgrade_read(upgrade_file: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.upgrade_read(upgrade_file)
 ----
 
@@ -21553,9 +21578,9 @@ Script (Python):
 
 [source,python]
 ----
-# prototipo
+# Prototipo
 def upgrade_close(upgrade_file: str) -> int: ...
 
-# esempio
+# Esempio
 weechat.upgrade_close(upgrade_file)
 ----

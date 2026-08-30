@@ -62,7 +62,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
     long long buffer_id, *ptr_buffer_id;
     int nicks;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) type_data;
 
@@ -93,8 +93,8 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         if (strcmp (signal, "buffer_closed") == 0)
         {
             /*
-             * when a buffer is closed, we send the buffer id
-             * with body type "buffer" and empty body
+             * When a buffer is closed, we send the buffer id
+             * with body type "buffer" and empty body.
              */
             buffer_id = -1;
             ptr_buffer_id = weechat_hashtable_get (
@@ -114,9 +114,9 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         if (strcmp (signal, "buffer_closing") == 0)
         {
             /*
-             * when a buffer is closing, we save its id in the hashtable
+             * When a buffer is closing, we save its id in the hashtable
              * "buffers_closing", it will be used when sending the event
-             * "buffer_closed"
+             * "buffer_closed".
              */
             buffer_id = weechat_buffer_get_longlong (ptr_buffer, "id");
             weechat_hashtable_set (RELAY_API_DATA(ptr_client, buffers_closing),
@@ -124,7 +124,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
                                    &buffer_id);
         }
 
-        /* we get all lines and nicks when a buffer is opened, otherwise none */
+        /* We get all lines and nicks when a buffer is opened, otherwise none. */
         if (strcmp (signal, "buffer_opened") == 0)
         {
             lines = LONG_MAX;
@@ -138,12 +138,12 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
             nicks = 0;
         }
 
-        /* build body with buffer info */
+        /* Build body with buffer info. */
         json = relay_api_msg_buffer_to_json (
             ptr_buffer, lines, lines_free, nicks,
             RELAY_API_DATA(ptr_client, sync_colors));
 
-        /* send to client */
+        /* Send to client. */
         if (json)
         {
             relay_api_msg_send_event (
@@ -228,7 +228,7 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
     cJSON *json;
     long long buffer_id;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     ptr_client = (struct t_relay_client *)pointer;
@@ -240,7 +240,7 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
     ptr_group = weechat_hashtable_get (hashtable, "group");
     ptr_nick = weechat_hashtable_get (hashtable, "nick");
 
-    /* if there is no parent group (for example "root" group), ignore the signal */
+    /* If there is no parent group (for example "root" group), ignore the signal. */
     if (!ptr_parent_group)
         return WEECHAT_RC_OK;
 
@@ -295,7 +295,7 @@ relay_api_protocol_signal_input_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer;
     cJSON *json;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) type_data;
 
@@ -337,7 +337,7 @@ relay_api_protocol_signal_upgrade_cb (const void *pointer, void *data,
 {
     struct t_relay_client *ptr_client;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) type_data;
     (void) signal_data;
@@ -843,7 +843,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
-    /* get buffer either by name or by id */
+    /* Get buffer either by name or by id. */
     ptr_buffer = NULL;
     json_buffer_name = cJSON_GetObjectItem (json_body, "buffer_name");
     if (json_buffer_name)
@@ -929,15 +929,14 @@ RELAY_API_PROTOCOL_CALLBACK(input)
         weechat_hashtable_set (options, "commands", ptr_commands);
 
     /*
-     * delay the execution of command after we go back in the WeeChat
-     * main loop (some commands like /upgrade executed now can cause
-     * a crash)
+     * Delay the execution of command after we go back in the WeeChat
+     * main loop (some commands like /upgrade executed now can cause a crash).
      */
     snprintf (str_delay, sizeof (str_delay),
               "%d", relay_api_protocol_command_delay);
     weechat_hashtable_set (options, "delay", str_delay);
 
-    /* execute the command, with the delay */
+    /* Execute the command, with the delay. */
     weechat_command_options (ptr_buffer, ptr_command, options);
 
     weechat_hashtable_free (options);
@@ -975,7 +974,7 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
-    /* get buffer either by name or by id */
+    /* Get buffer either by name or by id. */
     ptr_buffer = NULL;
     json_buffer_name = cJSON_GetObjectItem (json_body, "buffer_name");
     if (json_buffer_name)
@@ -1027,7 +1026,7 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
-    /* get command and position (optional) from input json object */
+    /* Get command and position (optional) from input json object. */
     json_command = cJSON_GetObjectItem (json_body, "command");
     if (json_command && cJSON_IsString (json_command))
     {
@@ -1056,7 +1055,7 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
         position = strlen (ptr_command);
     }
 
-    /* perform completion */
+    /* Perform completion. */
     ptr_completion = weechat_completion_new (ptr_buffer);
     if (!ptr_completion)
     {
@@ -1065,12 +1064,12 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
     }
 
     /*
-     * ignore the return code, as 0 may indicate that completion "null" was used
-     * (that means no completion context found)
+     * Ignore the return code, as 0 may indicate that completion "null" was used
+     * (that means no completion context found).
      */
     (void) weechat_completion_search (ptr_completion, ptr_command, position, 1);
 
-    /* create response */
+    /* Create response. */
     json_response = relay_api_msg_completion_to_json (ptr_completion);
     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "completion",
                              json_response);
@@ -1361,7 +1360,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
     if (!client->http_req || RELAY_STATUS_HAS_ENDED(client->status))
         return;
 
-    /* display debug message */
+    /* Display debug message. */
     if (weechat_relay_plugin->debug >= 2)
     {
         weechat_printf (NULL,

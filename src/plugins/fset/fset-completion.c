@@ -28,7 +28,7 @@ fset_completion_option_cb (const void *pointer, void *data,
     char **words;
     int config_section_added, num_words, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;

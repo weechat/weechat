@@ -17,18 +17,18 @@
 
 struct t_config_file *trigger_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *trigger_config_section_look = NULL;
 struct t_config_section *trigger_config_section_color = NULL;
 struct t_config_section *trigger_config_section_trigger = NULL;
 
-/* trigger config, look section */
+/* Trigger config, look section */
 
 struct t_config_option *trigger_config_look_enabled = NULL;
 struct t_config_option *trigger_config_look_monitor_strip_colors = NULL;
 
-/* trigger config, color section */
+/* Trigger config, color section */
 
 struct t_config_option *trigger_config_color_flag_command = NULL;
 struct t_config_option *trigger_config_color_flag_conditions = NULL;
@@ -44,7 +44,7 @@ struct t_config_option *trigger_config_color_trigger_disabled = NULL;
 char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
 {
     /*
-     * beep on highlight/private message, on following conditions:
+     * Beep on highlight/private message, on following conditions:
      *   - message is displayed (not filtered)
      *     AND:
      *   - message does not have tag "notify_none"
@@ -53,7 +53,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
      *         OR:
      *       - message is a message in a private buffer
      *     AND:
-     *   - buffer notify is NOT "none"
+     *   - buffer notify is NOT "none".
      */
     { "beep", "on",
       "print",
@@ -67,7 +67,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "ok",
       "" },
     /*
-     * hide passwords in commands:
+     * Hide passwords in commands:
      *   - /msg [-server <name>] nickserv id <password>
      *   - /msg [-server <name>] nickserv identify <password>
      *   - /msg [-server <name>] nickserv ghost <nick> <password>
@@ -106,7 +106,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "" },
     /*
-     * hide passwords in commands:
+     * Hide passwords in commands:
      *   - /msg [-server <name>] nickserv register <password> <email>
      */
     { "cmd_pass_register", "on",
@@ -120,7 +120,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "" },
     /*
-     * hide password in IRC auth message displayed (message received from
+     * Hide password in IRC auth message displayed (message received from
      * server after the user issued the command):
      *   - id <password>
      *   - identify <password>
@@ -150,7 +150,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "" },
     /*
-     * hide server password in commands:
+     * Hide server password in commands:
      *   - /server add <name> <address> -password=<password>
      *   - /server add <name> <address> -sasl_password=<password>
      *   - /connect <address> -password=<password>
@@ -177,7 +177,7 @@ void
 trigger_config_change_enabled (const void *pointer, void *data,
                                struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -194,7 +194,7 @@ trigger_config_change_trigger_enabled (const void *pointer, void *data,
 {
     struct t_trigger *ptr_trigger;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -218,7 +218,7 @@ trigger_config_change_trigger_hook (const void *pointer, void *data,
 {
     struct t_trigger *ptr_trigger;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -240,7 +240,7 @@ trigger_config_change_trigger_arguments (const void *pointer, void *data,
 {
     struct t_trigger *ptr_trigger;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -262,7 +262,7 @@ trigger_config_change_trigger_regex (const void *pointer, void *data,
 {
     struct t_trigger *ptr_trigger;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -276,21 +276,21 @@ trigger_config_change_trigger_regex (const void *pointer, void *data,
     {
         case 0: /* OK */
             break;
-        case -1: /* format error */
+        case -1: /* Format error */
             weechat_printf (NULL,
                             _("%s%s: invalid format for option \"regex\", "
                               "see /help trigger.trigger.%s.regex"),
                             weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
                             ptr_trigger->name);
             break;
-        case -2: /* regex compilation error */
+        case -2: /* Regex compilation error */
             weechat_printf (NULL,
                             _("%s%s: invalid regular expression in option "
                               "\"regex\", see /help trigger.trigger.%s.regex"),
                             weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
                             ptr_trigger->name);
             break;
-        case -3: /* memory error */
+        case -3: /* Memory error */
             weechat_printf (NULL,
                             _("%s%s: not enough memory"),
                             weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
@@ -308,7 +308,7 @@ trigger_config_change_trigger_command (const void *pointer, void *data,
 {
     struct t_trigger *ptr_trigger;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -512,7 +512,7 @@ trigger_config_use_temp_triggers (void)
         }
     }
 
-    /* free all temporary triggers */
+    /* Free all temporary triggers. */
     while (triggers_temp)
     {
         next_temp_trigger = triggers_temp->next_trigger;
@@ -540,7 +540,7 @@ trigger_config_trigger_read_cb (const void *pointer, void *data,
     struct t_trigger *ptr_temp_trigger;
     int index_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -559,7 +559,7 @@ trigger_config_trigger_read_cb (const void *pointer, void *data,
 
     pos_option++;
 
-    /* search temporary trigger */
+    /* Search temporary trigger. */
     for (ptr_temp_trigger = triggers_temp; ptr_temp_trigger;
          ptr_temp_trigger = ptr_temp_trigger->next_trigger)
     {
@@ -568,7 +568,7 @@ trigger_config_trigger_read_cb (const void *pointer, void *data,
     }
     if (!ptr_temp_trigger)
     {
-        /* create new temporary trigger */
+        /* Create new temporary trigger. */
         ptr_temp_trigger = trigger_alloc (trigger_name);
         if (ptr_temp_trigger)
             trigger_add (ptr_temp_trigger, &triggers_temp, &last_trigger_temp);
@@ -610,7 +610,7 @@ trigger_config_trigger_write_default_cb (const void *pointer, void *data,
     int i, j, quotes;
     char option_name[512];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -650,7 +650,7 @@ trigger_config_reload_cb (const void *pointer, void *data,
 {
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -680,7 +680,7 @@ trigger_config_init (void)
     if (!trigger_config_file)
         return 0;
 
-    /* look */
+    /* Look */
     trigger_config_section_look = weechat_config_new_section (
         trigger_config_file, "look",
         0, 0,
@@ -707,7 +707,7 @@ trigger_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* color */
+    /* Color */
     trigger_config_section_color = weechat_config_new_section (
         trigger_config_file, "color",
         0, 0,
@@ -768,7 +768,7 @@ trigger_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* trigger */
+    /* Trigger */
     trigger_config_section_trigger = weechat_config_new_section (
         trigger_config_file,
         TRIGGER_CONFIG_SECTION_TRIGGER,

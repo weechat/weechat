@@ -227,7 +227,7 @@ TEST(IrcBatch, FreeAll)
 
 TEST(IrcBatch, ProcessMessages)
 {
-    /* tested in test-irc-protocol.cpp */
+    /* Tested in test-irc-protocol.cpp. */
 }
 
 /*
@@ -237,7 +237,7 @@ TEST(IrcBatch, ProcessMessages)
 
 TEST(IrcBatch, EndBatch)
 {
-    /* tested in test-irc-protocol.cpp */
+    /* Tested in test-irc-protocol.cpp. */
 }
 
 /*
@@ -247,7 +247,7 @@ TEST(IrcBatch, EndBatch)
 
 TEST(IrcBatch, ProcessMultiline)
 {
-    /* tested in test-irc-protocol.cpp */
+    /* Tested in test-irc-protocol.cpp. */
 }
 
 /*

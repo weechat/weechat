@@ -29,7 +29,7 @@ xfer_command_me (const void *pointer, void *data,
 {
     struct t_xfer *ptr_xfer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) argc;
@@ -143,7 +143,7 @@ xfer_command_xfer_list (int full)
 
             if (full)
             {
-                /* second line of xfer info */
+                /* Second line of xfer info */
                 if (XFER_IS_FILE(ptr_xfer->type))
                 {
                     weechat_printf (NULL,
@@ -189,7 +189,7 @@ xfer_command_xfer (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;

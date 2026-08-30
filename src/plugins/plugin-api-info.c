@@ -59,7 +59,7 @@ plugin_api_info_version_cb (const void *pointer, void *data,
 {
     const char *version;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -80,7 +80,7 @@ plugin_api_info_version_number_cb (const void *pointer, void *data,
 {
     char version_number[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -104,7 +104,7 @@ plugin_api_info_version_git_cb (const void *pointer, void *data,
 {
     const char *version;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -125,7 +125,7 @@ plugin_api_info_date_cb (const void *pointer, void *data,
 {
     const char *compilation_date;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -146,7 +146,7 @@ plugin_api_info_pid_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -165,7 +165,7 @@ plugin_api_info_dir_separator_cb (const void *pointer, void *data,
                                   const char *info_name,
                                   const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -199,7 +199,7 @@ plugin_api_info_weechat_config_dir_cb (const void *pointer, void *data,
                                        const char *info_name,
                                        const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -217,7 +217,7 @@ plugin_api_info_weechat_data_dir_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -235,7 +235,7 @@ plugin_api_info_weechat_state_dir_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -253,7 +253,7 @@ plugin_api_info_weechat_cache_dir_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -271,7 +271,7 @@ plugin_api_info_weechat_runtime_dir_cb (const void *pointer, void *data,
                                         const char *info_name,
                                         const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -289,7 +289,7 @@ plugin_api_info_weechat_libdir_cb (const void *pointer, void *data,
                                    const char *info_name,
                                    const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -307,7 +307,7 @@ plugin_api_info_weechat_sharedir_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -325,7 +325,7 @@ plugin_api_info_weechat_localedir_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -343,7 +343,7 @@ plugin_api_info_weechat_site_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -361,7 +361,7 @@ plugin_api_info_weechat_site_download_cb (const void *pointer, void *data,
                                           const char *info_name,
                                           const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -381,7 +381,7 @@ plugin_api_info_weechat_upgrading_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -402,7 +402,7 @@ plugin_api_info_weechat_headless_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -423,7 +423,7 @@ plugin_api_info_weechat_daemon_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -444,7 +444,7 @@ plugin_api_info_auto_connect_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -465,7 +465,7 @@ plugin_api_info_auto_load_scripts_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -487,7 +487,7 @@ plugin_api_info_buffer_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer;
     char value[64];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -512,7 +512,7 @@ plugin_api_info_charset_terminal_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -530,7 +530,7 @@ plugin_api_info_charset_internal_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -550,7 +550,7 @@ plugin_api_info_locale_cb (const void *pointer, void *data,
 {
     char *locale;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -572,7 +572,7 @@ plugin_api_info_inactivity_cb (const void *pointer, void *data,
     time_t inactivity;
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -599,7 +599,7 @@ plugin_api_info_filters_enabled_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -620,7 +620,7 @@ plugin_api_info_cursor_mode_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -641,7 +641,7 @@ plugin_api_info_mouse_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -662,7 +662,7 @@ plugin_api_info_term_width_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -683,7 +683,7 @@ plugin_api_info_term_height_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -704,7 +704,7 @@ plugin_api_info_term_colors_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -725,7 +725,7 @@ plugin_api_info_term_color_pairs_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -744,7 +744,7 @@ plugin_api_info_color_ansi_regex_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -764,7 +764,7 @@ plugin_api_info_color_term2rgb_cb (const void *pointer, void *data,
 {
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -791,7 +791,7 @@ plugin_api_info_color_rgb2term_cb (const void *pointer, void *data,
     char value[32], *color;
     int rgb, limit;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -834,7 +834,7 @@ plugin_api_info_nick_color_cb (const void *pointer, void *data,
     char **items, *result;
     int num_items;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -863,7 +863,7 @@ plugin_api_info_nick_color_name_cb (const void *pointer, void *data,
     char **items, *result;
     int num_items;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -892,7 +892,7 @@ plugin_api_info_nick_color_ignore_case_cb (const void *pointer, void *data,
     char **items, *result;
     int num_items, case_range, number;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -928,7 +928,7 @@ plugin_api_info_nick_color_name_ignore_case_cb (const void *pointer, void *data,
     char **items, *result;
     int num_items, case_range, number;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -965,7 +965,7 @@ plugin_api_info_build_uptime (time_t start_time, const char *arguments)
 
     if (!arguments || !arguments[0])
     {
-        /* return uptime with format: "days:hh:mm:ss" */
+        /* Return uptime with format: "days:hh:mm:ss". */
         util_get_time_diff (start_time, time (NULL),
                             NULL, &days, &hours, &minutes, &seconds);
         snprintf (value, sizeof (value), "%d:%02d:%02d:%02d",
@@ -975,7 +975,7 @@ plugin_api_info_build_uptime (time_t start_time, const char *arguments)
 
     if (strcmp (arguments, "days") == 0)
     {
-        /* return the number of days */
+        /* Return the number of days. */
         util_get_time_diff (start_time, time (NULL),
                             NULL, &days, NULL, NULL, NULL);
         snprintf (value, sizeof (value), "%d", days);
@@ -984,7 +984,7 @@ plugin_api_info_build_uptime (time_t start_time, const char *arguments)
 
     if (strcmp (arguments, "seconds") == 0)
     {
-        /* return the number of seconds */
+        /* Return the number of seconds. */
         util_get_time_diff (start_time, time (NULL),
                             &total_seconds, NULL, NULL, NULL, NULL);
         snprintf (value, sizeof (value), "%lld", (long long)total_seconds);
@@ -1003,7 +1003,7 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
                            const char *info_name,
                            const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -1021,7 +1021,7 @@ plugin_api_info_uptime_current_cb (const void *pointer, void *data,
                                    const char *info_name,
                                    const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -1048,7 +1048,7 @@ plugin_api_info_totp_generate_cb (const void *pointer, void *data,
     long long number_longlong;
     time_t totp_time;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -1115,7 +1115,7 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
     long long number_longlong;
     time_t totp_time;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -1175,7 +1175,7 @@ plugin_api_info_plugin_loaded_cb (const void *pointer, void *data,
 {
     struct t_weechat_plugin *ptr_plugin;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -1188,12 +1188,12 @@ plugin_api_info_plugin_loaded_cb (const void *pointer, void *data,
     {
         if (strcmp (ptr_plugin->name, arguments) == 0)
         {
-            /* plugin loaded */
+            /* Plugin is loaded. */
             return strdup ("1");
         }
     }
 
-    /* plugin not loaded */
+    /* Plugin is not loaded. */
     return NULL;
 }
 
@@ -1210,7 +1210,7 @@ plugin_api_info_window_cb (const void *pointer, void *data,
     int number;
     char value[64];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -1238,7 +1238,7 @@ plugin_api_info_hashtable_secured_data_cb (const void *pointer, void *data,
                                            const char *info_name,
                                            struct t_hashtable *hashtable)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -1261,12 +1261,12 @@ plugin_api_infolist_bar_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_gui_bar *ptr_bar;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    /* invalid bar pointer ? */
+    /* Invalid bar pointer ? */
     if (obj_pointer && (!gui_bar_valid (obj_pointer)))
         return NULL;
 
@@ -1276,7 +1276,7 @@ plugin_api_infolist_bar_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one bar */
+        /* Build list with only one bar. */
         if (!gui_bar_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
@@ -1286,7 +1286,7 @@ plugin_api_infolist_bar_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all bars matching arguments */
+        /* Build list with all bars matching arguments. */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
             if (!arguments || !arguments[0]
@@ -1319,12 +1319,12 @@ plugin_api_infolist_bar_item_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_gui_bar_item *ptr_bar_item;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    /* invalid bar item pointer ? */
+    /* Invalid bar item pointer ? */
     if (obj_pointer && (!gui_bar_item_valid (obj_pointer)))
         return NULL;
 
@@ -1334,7 +1334,7 @@ plugin_api_infolist_bar_item_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one bar item */
+        /* Build list with only one bar item. */
         if (!gui_bar_item_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
@@ -1344,7 +1344,7 @@ plugin_api_infolist_bar_item_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all bar items matching arguments */
+        /* Build list with all bar items matching arguments. */
         for (ptr_bar_item = gui_bar_items; ptr_bar_item;
              ptr_bar_item = ptr_bar_item->next_item)
         {
@@ -1380,13 +1380,13 @@ plugin_api_infolist_bar_window_cb (const void *pointer, void *data,
     struct t_gui_bar_window *ptr_bar_window;
     struct t_gui_window *ptr_window;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
-    /* invalid bar window pointer ? */
+    /* Invalid bar window pointer ? */
     if (obj_pointer && (!gui_bar_window_valid (obj_pointer)))
         return NULL;
 
@@ -1396,7 +1396,7 @@ plugin_api_infolist_bar_window_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one bar window */
+        /* Build list with only one bar window. */
         if (!gui_bar_window_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
@@ -1406,7 +1406,7 @@ plugin_api_infolist_bar_window_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all bar windows (from root and window bars) */
+        /* Build list with all bar windows (from root and window bars). */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
             if (ptr_bar->bar_window)
@@ -1452,12 +1452,12 @@ plugin_api_infolist_buffer_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    /* invalid buffer pointer ? */
+    /* Invalid buffer pointer ? */
     if (obj_pointer && (!gui_buffer_valid (obj_pointer)))
         return NULL;
 
@@ -1467,7 +1467,7 @@ plugin_api_infolist_buffer_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one buffer */
+        /* Build list with only one buffer. */
         if (!gui_buffer_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
@@ -1477,7 +1477,7 @@ plugin_api_infolist_buffer_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all buffers matching arguments */
+        /* Build list with all buffers matching arguments. */
         for (ptr_buffer = gui_buffers; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
@@ -1511,7 +1511,7 @@ plugin_api_infolist_buffer_lines_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_gui_line *ptr_line;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -1521,7 +1521,7 @@ plugin_api_infolist_buffer_lines_cb (const void *pointer, void *data,
         obj_pointer = gui_buffers;
     else
     {
-        /* invalid buffer pointer ? */
+        /* Invalid buffer pointer ? */
         if (!gui_buffer_valid (obj_pointer))
             return NULL;
     }
@@ -1558,7 +1558,7 @@ plugin_api_infolist_filter_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_gui_filter *ptr_filter;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -1598,13 +1598,13 @@ plugin_api_infolist_history_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_gui_history *ptr_history;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
-    /* invalid buffer pointer ? */
+    /* Invalid buffer pointer ? */
     if (obj_pointer && (!gui_buffer_valid (obj_pointer)))
         return NULL;
 
@@ -1638,12 +1638,12 @@ plugin_api_infolist_hook_cb (const void *pointer, void *data,
 {
     struct t_infolist *ptr_infolist;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    /* invalid hook pointer ? */
+    /* Invalid hook pointer ? */
     if (obj_pointer && !hook_valid (obj_pointer))
         return NULL;
 
@@ -1673,7 +1673,7 @@ plugin_api_infolist_hotlist_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_gui_hotlist *ptr_hotlist;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -1711,7 +1711,7 @@ plugin_api_infolist_key_cb (const void *pointer, void *data,
     struct t_gui_key *ptr_key;
     int context;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -1754,7 +1754,7 @@ plugin_api_infolist_layout_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_gui_layout *ptr_layout;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -1790,12 +1790,12 @@ plugin_api_infolist_nicklist_cb (const void *pointer, void *data,
 {
     struct t_infolist *ptr_infolist;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    /* invalid buffer pointer ? */
+    /* Invalid buffer pointer ? */
     if (!obj_pointer || (!gui_buffer_valid (obj_pointer)))
         return NULL;
 
@@ -1824,7 +1824,7 @@ plugin_api_infolist_option_cb (const void *pointer, void *data,
 {
     struct t_infolist *ptr_infolist;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -1856,12 +1856,12 @@ plugin_api_infolist_plugin_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_weechat_plugin *ptr_plugin;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    /* invalid plugin pointer ? */
+    /* Invalid plugin pointer ? */
     if (obj_pointer && (!plugin_valid (obj_pointer)))
         return NULL;
 
@@ -1871,7 +1871,7 @@ plugin_api_infolist_plugin_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one plugin */
+        /* Build list with only one plugin. */
         if (!plugin_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
@@ -1881,7 +1881,7 @@ plugin_api_infolist_plugin_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all plugins matching arguments */
+        /* Build list with all plugins matching arguments. */
         for (ptr_plugin = weechat_plugins; ptr_plugin;
              ptr_plugin = ptr_plugin->next_plugin)
         {
@@ -1915,12 +1915,12 @@ plugin_api_infolist_proxy_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_proxy *ptr_proxy;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    /* invalid proxy pointer ? */
+    /* Invalid proxy pointer ? */
     if (obj_pointer && (!proxy_valid (obj_pointer)))
         return NULL;
 
@@ -1930,7 +1930,7 @@ plugin_api_infolist_proxy_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one proxy */
+        /* Build list with only one proxy. */
         if (!proxy_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
@@ -1940,7 +1940,7 @@ plugin_api_infolist_proxy_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all proxies matching arguments */
+        /* Build list with all proxies matching arguments. */
         for (ptr_proxy = weechat_proxies; ptr_proxy;
              ptr_proxy = ptr_proxy->next_proxy)
         {
@@ -1974,7 +1974,7 @@ plugin_api_infolist_url_options_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -2011,12 +2011,12 @@ plugin_api_infolist_window_cb (const void *pointer, void *data,
     struct t_gui_window *ptr_window;
     int number;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    /* invalid window pointer ? */
+    /* Invalid window pointer ? */
     if (obj_pointer && (!gui_window_valid (obj_pointer)))
         return NULL;
 
@@ -2026,7 +2026,7 @@ plugin_api_infolist_window_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one window */
+        /* Build list with only one window. */
         if (!gui_window_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
@@ -2052,7 +2052,7 @@ plugin_api_infolist_window_cb (const void *pointer, void *data,
                 }
                 return NULL;
             }
-            /* check if argument is a window number */
+            /* Check if argument is a window number. */
             if (util_parse_int (arguments, 10, &number))
             {
                 ptr_window = gui_window_search_by_number (number);
@@ -2071,7 +2071,7 @@ plugin_api_infolist_window_cb (const void *pointer, void *data,
         }
         else
         {
-            /* build list with all windows */
+            /* Build list with all windows. */
             for (ptr_window = gui_windows; ptr_window;
                  ptr_window = ptr_window->next_window)
             {
@@ -2303,7 +2303,7 @@ plugin_api_info_init (void)
            "\"y\": y coordinate (string with integer >= 0)"),
         N_("see function \"hook_focus\" in Plugin API reference"),
         &gui_focus_info_hashtable_gui_focus_info_cb, NULL, NULL);
-    /* info (hashtable) with the secured data */
+    /* Info (hashtable) with the secured data */
     hook_info_hashtable (
         NULL,
         "secured_data",

@@ -341,7 +341,7 @@ sys_waitpid (int number_processes)
     if (number_processes < 1)
         return;
 
-    /* acknowledge the end of up to 42 forked processes */
+    /* Acknowledge the end of up to 42 forked processes. */
     i = 0;
     while ((i < number_processes) && (waitpid (-1, NULL, WNOHANG) > 0))
     {

@@ -112,7 +112,7 @@ API_FUNC(register)
 
     if (js_registered_script)
     {
-        /* script already registered */
+        /* Script already registered. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" already "
                                          "registered (register ignored)"),
@@ -134,7 +134,7 @@ API_FUNC(register)
 
     if (plugin_script_search (js_scripts, *name))
     {
-        /* another script already exists with same name */
+        /* Another script already exists with same name. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
@@ -143,7 +143,7 @@ API_FUNC(register)
         API_RETURN_ERROR;
     }
 
-    /* register script */
+    /* Register script. */
     js_current_script = plugin_script_add (weechat_js_plugin,
                                            &js_data,
                                            (js_current_script_filename) ?
@@ -2131,7 +2131,7 @@ weechat_js_api_hook_command_cb (const void *pointer, void *data,
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) argv;
 
     script = (struct t_plugin_script *)pointer;
@@ -2757,10 +2757,10 @@ API_FUNC(hook_connect)
             port,
             ipv6,
             retry,
-            NULL, /* gnutls session */
-            NULL, /* gnutls callback */
-            0,    /* gnutls DH key size */
-            NULL, /* gnutls priorities */
+            NULL, /* GnuTLS session */
+            NULL, /* GnuTLS callback */
+            0,    /* GnuTLS DH key size */
+            NULL, /* GnuTLS priorities */
             *local_hostname,
             &weechat_js_api_hook_connect_cb,
             *function,
@@ -2840,7 +2840,7 @@ weechat_js_api_hook_print_cb (const void *pointer, void *data,
     static char timebuffer[64];
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) date_usec;
     (void) tags_count;
 
@@ -4244,7 +4244,7 @@ weechat_js_api_bar_item_build_cb (const void *pointer, void *data,
     {
         if (strncmp (ptr_function, "(extra)", 7) == 0)
         {
-            /* new callback: data, item, window, buffer, extra_info */
+            /* New callback: data, item, window, buffer, extra_info */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -4258,7 +4258,7 @@ weechat_js_api_bar_item_build_cb (const void *pointer, void *data,
         }
         else
         {
-            /* old callback: data, item, window */
+            /* Old callback: data, item, window */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -5462,7 +5462,7 @@ WeechatJsV8::loadLibs()
 
     v8::Local<v8::ObjectTemplate> weechat_obj = v8::ObjectTemplate::New();
 
-    /* interface constants */
+    /* Interface constants */
     for (i = 0; weechat_script_constants[i].name; i++)
     {
         if (weechat_script_constants[i].value_string)
@@ -5479,7 +5479,7 @@ WeechatJsV8::loadLibs()
         }
     }
 
-    /* interface functions */
+    /* Interface functions */
     API_DEF_FUNC(register);
     API_DEF_FUNC(plugin_get_name);
     API_DEF_FUNC(charset_set);

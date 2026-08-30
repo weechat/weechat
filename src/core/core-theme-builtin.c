@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-/* Built-in theme registrations (core contribution only). */
+/* Built-in theme registrations (core contribution only) */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

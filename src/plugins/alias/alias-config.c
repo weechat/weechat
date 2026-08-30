@@ -66,7 +66,7 @@ alias_config_cmd_change_cb (const void *pointer, void *data,
 {
     struct t_config_option *ptr_option_completion;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -91,7 +91,7 @@ alias_config_cmd_delete_cb (const void *pointer, void *data,
     struct t_config_option *ptr_option_completion;
     struct t_alias *ptr_alias;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -115,7 +115,7 @@ alias_config_completion_change_cb (const void *pointer, void *data,
 {
     struct t_alias *ptr_alias;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -137,7 +137,7 @@ alias_config_completion_delete_cb (const void *pointer, void *data,
 {
     struct t_alias *ptr_alias;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -156,7 +156,7 @@ int
 alias_config_reload (const void *pointer, void *data,
                      struct t_config_file *config_file)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -178,7 +178,7 @@ alias_config_cmd_write_default_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -224,16 +224,16 @@ alias_config_cmd_create_option_cb (const void *pointer, void *data,
     struct t_alias *ptr_alias;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
     (void) section;
 
-    /* create configuration option */
+    /* Create configuration option. */
     alias_config_cmd_new_option (option_name, value);
 
-    /* create alias */
+    /* Create alias. */
     ptr_alias = alias_search (option_name);
     alias_free (ptr_alias);
     if (value && value[0])
@@ -264,7 +264,7 @@ alias_config_completion_write_default_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -314,7 +314,7 @@ alias_config_completion_create_option_cb (const void *pointer, void *data,
 {
     struct t_alias *ptr_alias;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -331,10 +331,10 @@ alias_config_completion_create_option_cb (const void *pointer, void *data,
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
 
-    /* create configuration option */
+    /* Create configuration option. */
     alias_config_completion_new_option (option_name, value);
 
-    /* create/update completion in alias */
+    /* Create/update completion in alias. */
     alias_update_completion (ptr_alias, value);
 
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -354,12 +354,12 @@ alias_config_update_cb (const void *pointer, void *data,
     char *new_option;
     int changes;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
 
-    /* nothing to do if the config file is already up-to-date */
+    /* Nothing to do if the config file is already up-to-date. */
     if (version_read >= ALIAS_CONFIG_VERSION)
         return NULL;
 
@@ -368,10 +368,10 @@ alias_config_update_cb (const void *pointer, void *data,
     if (version_read < 2)
     {
         /*
-         * changes in v2 (WeeChat 4.0.0):
+         * Changes in v2 (WeeChat 4.0.0):
          *   - aliases are in lower case by default
          *     (default aliases and those created by users are automatically
-         *     converted to lower case)
+         *     converted to lower case).
          */
         ptr_section = weechat_hashtable_get (data_read, "section");
         ptr_option = weechat_hashtable_get (data_read, "option");
@@ -380,7 +380,7 @@ alias_config_update_cb (const void *pointer, void *data,
             && ((strcmp (ptr_section, "cmd") == 0)
                 || (strcmp (ptr_section, "completion") == 0)))
         {
-            /* convert alias name to lower case */
+            /* Convert alias name to lower case. */
             new_option = weechat_string_tolower (ptr_option);
             if (new_option)
             {
@@ -388,7 +388,7 @@ alias_config_update_cb (const void *pointer, void *data,
                 {
                     if (strcmp (ptr_section, "cmd") == 0)
                     {
-                        /* display message only for alias, not for completion */
+                        /* Display message only for alias, not for completion. */
                         weechat_printf (
                             NULL,
                             _("Alias converted to lower case: \"%s\" => \"%s\""),
@@ -429,7 +429,7 @@ alias_config_init (void)
         return 0;
     }
 
-    /* cmd */
+    /* Cmd */
     alias_config_section_cmd = weechat_config_new_section (
         alias_config_file, "cmd",
         1, 1,
@@ -439,7 +439,7 @@ alias_config_init (void)
         &alias_config_cmd_create_option_cb, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* completion */
+    /* Completion */
     alias_config_section_completion = weechat_config_new_section (
         alias_config_file, "completion",
         1, 1,

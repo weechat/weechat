@@ -596,7 +596,7 @@ if (weechat_asprintf (&str, "%s, %d", "test", 42) >= 0)
 }
 else
 {
-    /* error: *str == NULL */
+    /* Error: *str == NULL */
 }
 ----
 
@@ -629,7 +629,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-char *str = weechat_strndup ("abcdef", 3);  /* result: "abc" */
+char *str = weechat_strndup ("abcdef", 3);  /* Result: "abc" */
 /* ... */
 free (str);
 ----
@@ -668,7 +668,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
+char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* Result: "this…" */
 /* ... */
 free (str);
 ----
@@ -709,7 +709,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-char *str = weechat_string_tolower ("ABCD_É");  /* result: "abcd_é" */
+char *str = weechat_string_tolower ("ABCD_É");  /* Result: "abcd_é" */
 /* ... */
 free (str);
 ----
@@ -750,7 +750,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-char *str = weechat_string_toupper ("abcd_é");  /* result: "ABCD_É" */
+char *str = weechat_string_toupper ("abcd_é");  /* Result: "ABCD_É" */
 /* ... */
 free (str);
 ----
@@ -1194,7 +1194,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* result: pointer to "DeF" */
+const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* Result: pointer to "DeF" */
 ----
 
 [NOTE]
@@ -1394,7 +1394,7 @@ C 言語での使用例:
 [source,c]
 ----
 char *str = weechat_string_expand_home ("~/file.txt");
-/* result: "/home/user/file.txt" */
+/* Result: "/home/user/file.txt" */
 /* ... */
 free (str);
 ----
@@ -1452,7 +1452,7 @@ C 言語での使用例:
 [source,c]
 ----
 char *str = weechat_string_eval_path_home ("${weechat_config_dir}/test.conf", NULL, NULL, NULL);
-/* result: "/home/user/.config/weechat/test.conf" */
+/* Result: "/home/user/.config/weechat/test.conf" */
 /* ... */
 free (str);
 ----
@@ -1496,7 +1496,7 @@ C 言語での使用例:
 [source,c]
 ----
 char *str = weechat_string_remove_quotes (string, " 'I can't' ", "'");
-/* result: "I can't" */
+/* Result: "I can't" */
 /* ... */
 free (str);
 ----
@@ -1531,7 +1531,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-char *str = weechat_string_strip (".abc -", 0, 1, "- .");  /* result: ".abc" */
+char *str = weechat_string_strip (".abc -", 0, 1, "- .");  /* Result: ".abc" */
 /* ... */
 free (str);
 ----
@@ -1614,7 +1614,7 @@ C 言語での使用例:
 [source,c]
 ----
 char *str_regex = weechat_string_mask_to_regex ("test*mask");
-/* result: "test.*mask" */
+/* Result: "test.*mask" */
 /* ... */
 free (str_regex);
 ----
@@ -1729,7 +1729,7 @@ if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) == 0)
 }
 else
 {
-    /* error */
+    /* Error */
     /* ... */
 }
 ----
@@ -1846,7 +1846,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-char *str = weechat_string_replace ("test", "s", "x");  /* result: "text" */
+char *str = weechat_string_replace ("test", "s", "x");  /* Result: "text" */
 /* ... */
 free (str);
 ----
@@ -2018,14 +2018,15 @@ char **argv;
 int argc;
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL, 0, 0, &argc);
-/* result: argv[0] == "abc"
-           argv[1] == "de"
-           argv[2] == ""
-           argv[3] == "fghi"
-           argv[4] == ""
-           argv[5] == NULL
-           argc == 5
-*/
+/*
+ * Result: argv[0] == "abc"
+ *         argv[1] == "de"
+ *         argv[2] == ""
+ *         argv[3] == "fghi"
+ *         argv[4] == ""
+ *         argv[5] == NULL
+ *         argc == 5
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL,
@@ -2033,12 +2034,13 @@ argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                              0, &argc);
-/* result: argv[0] == "abc"
-           argv[1] == "de"
-           argv[2] == "fghi"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc"
+ *         argv[1] == "de"
+ *         argv[2] == "fghi"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL,
@@ -2047,12 +2049,13 @@ argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                              | WEECHAT_STRING_SPLIT_KEEP_EOL,
                              0, &argc);
-/* result: argv[0] == "abc de  fghi"
-           argv[1] == "de  fghi"
-           argv[2] == "fghi"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc de  fghi"
+ *         argv[1] == "de  fghi"
+ *         argv[2] == "fghi"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL,
@@ -2060,12 +2063,13 @@ argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                              | WEECHAT_STRING_SPLIT_KEEP_EOL,
                              0, &argc);
-/* result: argv[0] == "abc de  fghi "
-           argv[1] == "de  fghi "
-           argv[2] == "fghi "
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc de  fghi "
+ *         argv[1] == "de  fghi "
+ *         argv[2] == "fghi "
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split (" abc, de,, fghi ", ",", " ",
@@ -2073,12 +2077,13 @@ argv = weechat_string_split (" abc, de,, fghi ", ",", " ",
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                              0, &argc);
-/* result: argv[0] == "abc"
-           argv[1] == "de"
-           argv[2] == "fghi"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc"
+ *         argv[1] == "de"
+ *         argv[2] == "fghi"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 ----
 
@@ -2120,12 +2125,13 @@ C 言語での使用例:
 char **argv;
 int argc;
 argv = weechat_string_split_shell ("test 'first arg'  \"second arg\"", &argc);
-/* result: argv[0] == "test"
-           argv[1] == "first arg"
-           argv[2] == "second arg"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "test"
+ *         argv[1] == "first arg"
+ *         argv[2] == "second arg"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 ----
 
@@ -2239,10 +2245,11 @@ C 言語での使用例:
 [source,c]
 ----
 char **argv = weechat_string_split_command ("/command1 arg;/command2", ';');
-/* result: argv[0] == "/command1 arg"
-           argv[1] == "/command2"
-           argv[2] == NULL
-*/
+/*
+ * Result: argv[0] == "/command1 arg"
+ *         argv[1] == "/command2"
+ *         argv[2] == NULL
+ */
 weechat_free_split_command (argv);
 ----
 
@@ -2300,7 +2307,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* examples with English locale */
+/* Examples with English locale */
 
 char *str = weechat_string_format_size (0);  /* str == "0 bytes" */
 /* ... */
@@ -2460,12 +2467,12 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* remove color codes */
+/* Remove color codes. */
 char *str = weechat_string_remove_color (my_string1, NULL);
 /* ... */
 free (str);
 
-/* replace color codes by "?" */
+/* Replace color codes by "?". */
 char *str = weechat_string_remove_color (my_string2, "[color]");
 /* ... */
 free (str);
@@ -2610,8 +2617,10 @@ C 言語での使用例:
 ----
 char *string = "abc def-ghi";
 char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
-/* dump == " >> 61 62 63 20 64 65 66 2D   a b c   d e f - \n"
-           " >> 67 68 69                  g h i           "  */
+/*
+ * dump == " >> 61 62 63 20 64 65 66 2D   a b c   d e f - \n"
+ *         " >> 67 68 69                  g h i           "
+ */
 ----
 
 [NOTE]
@@ -3712,10 +3721,10 @@ C 言語での使用例:
 // TRANSLATION MISSING
 [source,c]
 ----
-const char *result = weechat_string_concat (" / ", "abc", "def", "ghi", NULL);  /* result == "abc / def / ghi" */
+const char *result = weechat_string_concat (" / ", "abc", "def", "ghi", NULL);  /* Result == "abc / def / ghi" */
 
-/* with macro */
-const char *result = WEECHAT_STR_CONCAT(" / ", "abc", "def", "ghi");  /* result == "abc / def / ghi" */
+/* With macro */
+const char *result = WEECHAT_STR_CONCAT(" / ", "abc", "def", "ghi");  /* Result == "abc / def / ghi" */
 ----
 
 [NOTE]
@@ -4114,7 +4123,7 @@ C 言語での使用例:
 [source,c]
 ----
 const char *str = "chêne";
-const char *str2 = weechat_utf8_add_offset (str, 3);  /* points to "ne" */
+const char *str2 = weechat_utf8_add_offset (str, 3);  /* Points to "ne" */
 ----
 
 [NOTE]
@@ -4204,7 +4213,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-char *string = weechat_utf8_strndup ("chêne", 3);  /* returns "chê" */
+char *string = weechat_utf8_strndup ("chêne", 3);  /* Returns "chê". */
 /* ... */
 free (string);
 ----
@@ -4240,7 +4249,7 @@ C 言語での使用例:
 ----
 char dest[256];
 
-weechat_utf8_strncpy (dest, "chêne", 3);  /* copies "chê" to dest */
+weechat_utf8_strncpy (dest, "chêne", 3);  /* Copies "chê" to dest. */
 ----
 
 [NOTE]
@@ -4318,8 +4327,10 @@ const char *data = "abcdefghijklmnopqrstuvwxyz";
 char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hash (data, strlen (data), "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 and hash is a buffer with:
-   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
+/*
+ * rc == 1, hash_size == 32 and hash is a buffer with:
+ * 71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73
+ */
 ----
 
 [NOTE]
@@ -4362,8 +4373,10 @@ C 言語での使用例:
 char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hash_file ("/path/to/file", "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 and hash is a buffer with:
-   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
+/*
+ * rc == 1, hash_size == 32 and hash is a buffer with:
+ * 71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73
+ */
 ----
 
 [NOTE]
@@ -4416,8 +4429,10 @@ char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hash_pbkdf2 (data, strlen (data), "sha256", salt, strlen (salt), 100000,
                                  hash, &hash_size);
-/* rc == 1, hash_size == 32 and hash is a buffer with:
-   99 b3 5e 42 53 d1 a7 a8 49 c1 dc 2c e2 53 c2 b6 6d a1 8b dc 6e 78 a7 06 e0 ef 34 db 0a 7a a2 bb */
+/*
+ * rc == 1, hash_size == 32 and hash is a buffer with:
+ * 99 b3 5e 42 53 d1 a7 a8 49 c1 dc 2c e2 53 c2 b6 6d a1 8b dc 6e 78 a7 06 e0 ef 34 db 0a 7a a2 bb
+ */
 ----
 
 [NOTE]
@@ -4465,8 +4480,10 @@ const char *message = "the message";
 char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hmac (key, strlen (key), message, strlen (message), "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 and hash is a buffer with:
-   47 36 67 02 fc bc b1 97 a4 25 e6 7a b9 52 92 bd 15 9a 66 91 9c fb 94 b0 b4 9a 39 cb c0 24 2d 7b */
+/*
+ * rc == 1, hash_size == 32 and hash is a buffer with:
+ * 47 36 67 02 fc bc b1 97 a4 25 e6 7a b9 52 92 bd 15 9a 66 91 9c fb 94 b0 b4 9a 39 cb c0 24 2d 7b
+ */
 ----
 
 [NOTE]
@@ -4512,7 +4529,7 @@ C 言語での使用例:
 ----
 if (!weechat_mkdir_home ("${weechat_cache_dir}/temp", 0755))
 {
-    /* error */
+    /* Error */
 }
 ----
 
@@ -4553,7 +4570,7 @@ C 言語での使用例:
 ----
 if (!weechat_mkdir ("/tmp/mydir", 0755))
 {
-    /* error */
+    /* Error */
 }
 ----
 
@@ -4594,7 +4611,7 @@ C 言語での使用例:
 ----
 if (!weechat_mkdir_parents ("/tmp/my/dir", 0755))
 {
-    /* error */
+    /* Error */
 }
 ----
 
@@ -4797,7 +4814,7 @@ C 言語での使用例:
 ----
 if (weechat_file_compare ("/tmp/test.txt", "/tmp/test2.txt") == 0)
 {
-    /* same content */
+    /* Same content */
 }
 ----
 
@@ -4854,7 +4871,7 @@ if (weechat_util_parse_int ("1234", 10, &number))
 }
 if (!weechat_util_parse_int ("abc", 10, &number))
 {
-    /* parsing error, number is unchanged */
+    /* Parsing error, number is unchanged. */
 }
 ----
 
@@ -4906,7 +4923,7 @@ if (weechat_util_parse_long ("1234", 10, &number))
 }
 if (!weechat_util_parse_long ("abc", 10, &number))
 {
-    /* parsing error, number is unchanged */
+    /* Parsing error, number is unchanged. */
 }
 ----
 
@@ -4958,7 +4975,7 @@ if (weechat_util_parse_longlong ("1234", 10, &number))
 }
 if (!weechat_util_parse_longlong ("abc", 10, &number))
 {
-    /* parsing error, number is unchanged */
+    /* Parsing error, number is unchanged. */
 }
 ----
 
@@ -5060,7 +5077,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-weechat_util_timeval_add (&tv, 2000000);  /* add 2 seconds */
+weechat_util_timeval_add (&tv, 2000000);  /* Add 2 seconds. */
 ----
 
 [NOTE]
@@ -5139,7 +5156,7 @@ char time[256];
 struct timeval tv;
 gettimeofday (&tv, NULL);
 weechat_util_strftimeval (time, sizeof (time), "%@%FT%T.%fZ", &tv);
-/* result: 2023-12-26T18:10:04.460509Z */
+/* Result: 2023-12-26T18:10:04.460509Z */
 ----
 
 [NOTE]
@@ -5254,13 +5271,13 @@ C examples:
 struct timeval tv;
 
 weechat_util_parse_time ("2025-08-30T19:04:55.123456Z", &tv);  /* == 1 */
-/* result: tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
+/* Result: tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
 
 weechat_util_parse_time ("2025-08-30 21:04:55.123456 +02:00", &tv);  /* == 1 */
-/* same result */
+/* Same result */
 
 weechat_util_parse_time ("21:04:55.123456", &tv);  /* == 1 */
-/* same result */
+/* Same result */
 ----
 
 [NOTE]
@@ -5569,7 +5586,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-struct t_weelist_item *item = weechat_list_get (list, 0);  /* first item */
+struct t_weelist_item *item = weechat_list_get (list, 0);  /* First item */
 ----
 
 スクリプト (Python) での使用例:
@@ -6038,7 +6055,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-void *pointer = weechat_arraylist_get (arraylist, 0);  /* first item */
+void *pointer = weechat_arraylist_get (arraylist, 0);  /* First item */
 ----
 
 [NOTE]
@@ -6455,7 +6472,7 @@ C 言語での使用例:
 ----
 if (weechat_hashtable_has_key (hashtable, "my_key"))
 {
-    /* key is in hashtable */
+    /* Key is in hashtable. */
     /* ... */
 }
 ----
@@ -6497,7 +6514,7 @@ void
 map_cb (void *data, struct t_hashtable *hashtable,
         const void *key, const void *value)
 {
-    /* display key and value (they are both strings here) */
+    /* Display key and value (they are both strings here). */
     weechat_printf (NULL, "key: '%s', value: '%s'",
                     (const char *)key,
                     (const char *)value);
@@ -6547,7 +6564,7 @@ void
 map_cb (void *data, struct t_hashtable *hashtable,
         const char *key, const char *value)
 {
-    /* display key and value */
+    /* Display key and value. */
     weechat_printf (NULL, "key: '%s', value: '%s'",
                     key, value);
 }
@@ -6762,15 +6779,16 @@ C 言語での使用例:
 ----
 weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 
-/* ハッシュテーブルが以下の内容を保つ場合:
-     "key1" => "value 1"
-     "key2" => "value 2"
-   以下の変数がインフォリスト要素に追加されます:
-     "testhash_name_00000"  = "key1"
-     "testhash_value_00000" = "value 1"
-     "testhash_name_00001"  = "key2"
-     "testhash_value_00001" = "value 2"
-*/
+/*
+ * ハッシュテーブルが以下の内容を保つ場合:
+ *   "key1" => "value 1"
+ *   "key2" => "value 2"
+ * 以下の変数がインフォリスト要素に追加されます:
+ *   "testhash_name_00000"  = "key1"
+ *   "testhash_value_00000" = "value 1"
+ *   "testhash_name_00001"  = "key2"
+ *   "testhash_value_00001" = "value 2"
+ */
 ----
 
 [NOTE]
@@ -7043,46 +7061,46 @@ my_config_update_cb (const void *pointer, void *data,
 {
     const char *ptr_section, *ptr_option;
 
-    /* return now if version is already up-to-date */
+    /* Return now if version is already up-to-date. */
     if (version_read >= 2)
         return NULL;
 
     ptr_section = hashtable_get (data_read, "section");
     ptr_option = hashtable_get (data_read, "option");
 
-    /* rename section "abc" to "def" */
+    /* Rename section "abc" to "def". */
     if (ptr_section && !ptr_option && (strcmp (ptr_section, "abc") == 0))
     {
         hashtable_set (data_read, "section", "def");
         return data_read;
     }
 
-    /* limit other changes to section "test" */
+    /* Limit other changes to section "test". */
     if (!ptr_section || !ptr_option || (strcmp (ptr_section, "test") != 0))
         return NULL;
 
-    /* rename option "test1" to "test2" */
+    /* Rename option "test1" to "test2". */
     if (strcmp (ptr_option, "test1") == 0)
     {
         hashtable_set (data_read, "option", "test2");
         return data_read;
     }
 
-    /* set value to "xxx" for option "test" */
+    /* Set value to "xxx" for option "test". */
     if (strcmp (ptr_option, "test") == 0)
     {
         hashtable_set (data_read, "value", "xxx");
         return data_read;
     }
 
-    /* set value to NULL for option "test_null" */
+    /* Set value to NULL for option "test_null". */
     if (strcmp (ptr_option, "test_null") == 0)
     {
         hashtable_set (data_read, "value_null", "1");
         return data_read;
     }
 
-    /* no changes */
+    /* No changes */
     return NULL;
 }
 
@@ -7100,38 +7118,38 @@ def config_set_version(config_file: str, version: int, callback_update: str, cal
 
 # 例
 def my_config_update_cb(data: str, config_file: str, version_read: int, data_read: Dict[str, str]) -> Dict[str, str]:
-    # return now if version is already up-to-date
+    # Return now if version is already up-to-date.
     if version_read >= 2:
         return {}
 
     section = data_read.get("section")
     option = data_read.get("option")
 
-    # rename section "abc" to "def"
+    # Rename section "abc" to "def".
     if section and not option and section == "abc":
         data_read["section"] = "def"
         return data_read
 
-    # limit other changes to section "test"
+    # Limit other changes to section "test".
     if not section or not option or section != "test":
         return {}
 
-    # rename option "test1" to "test2"
+    # Rename option "test1" to "test2".
     if option == "test1":
         data_read["option"] = "test2"
         return data_read
 
-    # set value to "xxx" for option "test"
+    # Set value to "xxx" for option "test".
     if option == "test":
         data_read["value"] = "xxx"
         return data_read
 
-    # set value to NULL for option "test_null"
+    # Set value to NULL for option "test_null".
     if option == "test_null":
         data_read["value_null"] = "1"
         return data_read
 
-    # no changes
+    # No changes
     return {}
 
 config_file = weechat.config_new("test", "", "")
@@ -7363,7 +7381,7 @@ my_section_delete_option_cb (const void *pointer, void *data,
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
 
-/* standard section, user cannot add/delete options */
+/* Standard section, user cannot add/delete options. */
 struct t_config_section *new_section1 =
     weechat_config_new_section (config_file, "section1", 0, 0,
                                 NULL, NULL, NULL,
@@ -7372,8 +7390,10 @@ struct t_config_section *new_section1 =
                                 NULL, NULL, NULL,
                                 NULL, NULL, NULL);
 
-/* special section, user can add/delete options, and options need
-   callback to be read/written */
+/*
+ * Special section, user can add/delete options, and options need
+ * callback to be read/written.
+ */
 struct t_config_section *new_section2 =
     weechat_config_new_section (config_file, "section2", 1, 1,
                                 &my_section_read_cb, NULL, NULL,
@@ -7591,7 +7611,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* boolean */
+/* Boolean */
 struct t_config_option *option_bool =
     weechat_config_new_option (config_file, section, "option_bool", "boolean",
                                "My option, type boolean",
@@ -7604,7 +7624,7 @@ struct t_config_option *option_bool =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* integer */
+/* Integer */
 struct t_config_option *option_int =
     weechat_config_new_option (config_file, section, "option_int", "integer",
                                "My option, type integer",
@@ -7617,7 +7637,7 @@ struct t_config_option *option_int =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* string */
+/* String */
 struct t_config_option *option_str =
     weechat_config_new_option (config_file, section, "option_str", "string|themable",
                                "My option, type string",
@@ -7630,7 +7650,7 @@ struct t_config_option *option_str =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* color */
+/* Color */
 struct t_config_option *option_col =
     weechat_config_new_option (config_file, section, "option_col", "color",
                                "My option, type color",
@@ -7643,7 +7663,7 @@ struct t_config_option *option_col =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* enum */
+/* Enum */
 struct t_config_option *option_enum =
     weechat_config_new_option (config_file, section, "option_enum", "enum",
                                "My option, type enum",
@@ -7806,11 +7826,11 @@ weechat_config_search_section_option(config_file,
                                      &ptr_option);
 if (ptr_option)
 {
-    /* option found */
+    /* Option found */
 }
 else
 {
-    /* option not found */
+    /* Option not found */
 }
 ----
 
@@ -7860,11 +7880,11 @@ weechat_config_search_with_string ("file.section.option",
                                    &option_name);
 if (ptr_option)
 {
-    /* option found */
+    /* Option found */
 }
 else
 {
-    /* option not found */
+    /* Option not found */
 }
 ----
 
@@ -7897,11 +7917,11 @@ C 言語での使用例:
 ----
 if (weechat_config_string_to_boolean (option_value))
 {
-    /* value is "true" */
+    /* Value is "true" */
 }
 else
 {
-    /* value is "false" */
+    /* Value is "false" */
 }
 ----
 
@@ -8317,11 +8337,11 @@ C 言語での使用例:
 ----
 if (weechat_config_option_is_null (option))
 {
-    /* value is "null" */
+    /* Value is "null" */
 }
 else
 {
-    /* value is not "null" */
+    /* Value is not "null" */
 }
 ----
 
@@ -8363,11 +8383,11 @@ C 言語での使用例:
 ----
 if (weechat_config_option_default_is_null (option))
 {
-    /* default value is "null" */
+    /* Default value is "null". */
 }
 else
 {
-    /* default value is not "null" */
+    /* Default value is not "null". */
 }
 ----
 
@@ -8413,11 +8433,11 @@ C 言語での使用例:
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean (option))
 {
-    /* value is "true" */
+    /* Value is "true". */
 }
 else
 {
-    /* value is "false" */
+    /* Value is "false". */
 }
 ----
 
@@ -8464,11 +8484,11 @@ C 言語での使用例:
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean_default (option))
 {
-    /* value is "true" */
+    /* Value is "true". */
 }
 else
 {
-    /* value is "false" */
+    /* Value is "false". */
 }
 ----
 
@@ -8961,10 +8981,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototype
+# Prototype
 def config_enum(option: str) -> int: ...
 
-# example
+# Example
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum(option)
 ----
@@ -9007,10 +9027,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototype
+# Prototype
 def config_enum_default(option: str) -> int: ...
 
-# example
+# Example
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum_default(option)
 ----
@@ -9522,8 +9542,10 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* if current plugin is "test", then look for value of option
-   "plugins.var.test.option" in file plugins.conf */
+/*
+ * If current plugin is "test", then look for value of option
+ * "plugins.var.test.option" in file plugins.conf.
+ */
 char *value = weechat_config_get_plugin ("option");
 ----
 
@@ -9564,11 +9586,11 @@ C 言語での使用例:
 ----
 if (weechat_config_is_set_plugin ("option"))
 {
-    /* option is set */
+    /* Option is set. */
 }
 else
 {
-    /* option does not exist */
+    /* Option does not exist. */
 }
 ----
 
@@ -9581,10 +9603,10 @@ def config_is_set_plugin(option_name: str) -> int: ...
 
 # 例
 if weechat.config_is_set_plugin("option"):
-    # option is set
+    # Option is set.
     # ...
 else:
-    # option does not exist
+    # Option does not exist.
     # ...
 ----
 
@@ -9822,10 +9844,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototype
+# Prototype
 def theme_register(name: str, overrides: Dict[str, str]) -> str: ...
 
-# example
+# Example
 weechat.theme_register("light", {
     "irc.color.input_nick": "cyan",
     "irc.color.topic_old": "darkgray",
@@ -9948,10 +9970,10 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* remove a single key */
+/* Remove a single key. */
 weechat_key_unbind ("mouse", "@chat(plugin.buffer):button1");
 
-/* remove all keys with area "chat(plugin.buffer)" */
+/* Remove all keys with area "chat(plugin.buffer)". */
 weechat_key_unbind ("mouse", "area:chat(plugin.buffer)");
 ----
 
@@ -9964,10 +9986,10 @@ def key_unbind(context: str, key: str) -> int: ...
 
 # 例
 
-# remove a single key
+# Remove a single key.
 weechat.key_unbind("mouse", "@chat(plugin.buffer):button1")
 
-# remove all keys with area "chat(python.test)"
+# Remove all keys with area "chat(python.test)".
 weechat.key_unbind("mouse", "area:chat(python.test)")
 ----
 
@@ -10169,7 +10191,7 @@ weechat_printf (buffer, "Hello on this buffer");
 weechat_printf (buffer, "%sThis is an error!", weechat_prefix ("error"));
 weechat_printf (buffer, " \tMessage without prefix but with \t some \t tabs");
 weechat_printf (buffer, "\t\tMessage without time/alignment");
-weechat_printf (buffer, "\t\t");  /* empty line (without time) */
+weechat_printf (buffer, "\t\t");  /* Empty line (without time) */
 ----
 
 スクリプト (Python) での使用例:
@@ -10523,16 +10545,16 @@ C examples:
 // TRANSLATION MISSING
 [source,c]
 ----
-/* hook modifier with priority = 2000 */
-/* high priority: called before other modifier callbacks */
+/* Hook modifier with priority = 2000. */
+/* High priority: called before other modifier callbacks. */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 
-/* hook two signals with priority = 3000 */
-/* high priority: called before other signal callbacks */
+/* Hook two signals with priority = 3000. */
+/* High priority: called before other signal callbacks. */
 weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 
-/* hook lines printed in formatted buffers with priority = 500 */
-/* low priority: called after other line callbacks */
+/* Hook lines printed in formatted buffers with priority = 500. */
+/* Low priority: called after other line callbacks. */
 weechat_hook_line ("500|formatted", "*", NULL, &line_cb, NULL, NULL);
 ----
 
@@ -10648,7 +10670,7 @@ my_command_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_OK;
 }
 
-/* this example is inspired by command /filter */
+/* This example is inspired by command /filter. */
 struct t_hook *my_command_hook =
     weechat_hook_command ("myfilter",
                           "description of myfilter",
@@ -10949,7 +10971,7 @@ my_timer_cb (const void *pointer, void *data, int remaining_calls)
     return WEECHAT_RC_OK;
 }
 
-/* timer called each 20 seconds */
+/* Timer called each 20 seconds */
 struct t_hook *my_timer_hook =
     weechat_hook_timer (20 * 1000, 0, 0, &my_timer_cb, NULL, NULL);
 ----
@@ -10966,7 +10988,7 @@ def my_timer_cb(data: str, remaining_calls: int) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
-# timer called each 20 seconds
+# Timer called each 20 seconds
 hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 ----
 
@@ -11033,7 +11055,7 @@ my_fd_cb (const void *pointer, void *data, int fd)
 }
 
 int sock = socket (AF_INET, SOCK_STREAM, 0);
-/* set socket options */
+/* Set socket options. */
 /* ... */
 struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL, NULL);
 ----
@@ -11424,7 +11446,7 @@ if (options_cmd1)
     weechat_hashtable_set (options_cmd1, "arg1", "-from");
     weechat_hashtable_set (options_cmd1, "arg2", nick);
     weechat_hashtable_set (options_cmd1, "arg3", "-msg");
-    weechat_hashtable_set (options_cmd1, "arg4", message);  /* untrusted argument */
+    weechat_hashtable_set (options_cmd1, "arg4", message);  /* Untrusted argument */
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("my-notify-command",
                                                                      options_cmd1,
                                                                      20000,
@@ -11605,7 +11627,7 @@ my_url_cb (const void *pointer, void *data, const char *url,
     return WEECHAT_RC_OK;
 }
 
-/* example 1: output to a file */
+/* Example 1: output to a file */
 struct t_hashtable *options_url1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11621,7 +11643,7 @@ if (options_url1)
     weechat_hashtable_free (options_url1);
 }
 
-/* example 2: custom HTTP headers, output sent to callback */
+/* Example 2: custom HTTP headers, output sent to callback */
 struct t_hashtable *options_url2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11652,12 +11674,12 @@ def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, st
     weechat.prnt("", "output: %s" % output)
     return weechat.WEECHAT_RC_OK
 
-# example 1: output to a file
+# Example 1: output to a file
 hook1 = weechat.hook_url("https://weechat.org/",
                          {"file_out": "/tmp/weechat.org.html"},
                          20000, "my_url_cb", "")
 
-# example 2: custom HTTP headers, output sent to callback
+# Example 2: custom HTTP headers, output sent to callback
 options = {
     "httpheader": "\n".join([
         "Header1: value1",
@@ -12241,7 +12263,7 @@ my_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_OK;
 }
 
-/* catch all messages, on all buffers, without color */
+/* Catch all messages, on all buffers, without color. */
 struct t_hook *my_print_hook =
     weechat_hook_print (NULL, NULL, NULL, 1, &my_print_cb, NULL, NULL);
 ----
@@ -12259,7 +12281,7 @@ def my_print_cb(data: str, buffer: str, date: str, tags: str, displayed: int, hi
         # ...
     return weechat.WEECHAT_RC_OK
 
-# catch all messages, on all buffers, without color
+# Catch all messages, on all buffers, without color.
 hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 ----
 
@@ -13026,7 +13048,7 @@ my_signal_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* catch signals "quit" and "upgrade" */
+/* Catch signals "quit" and "upgrade". */
 struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
                                                      &my_signal_cb, NULL, NULL);
 ----
@@ -13043,7 +13065,7 @@ def my_signal_cb(data: str, signal: str, signal_data: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
-# catch signals "quit" and "upgrade"
+# Catch signals "quit" and "upgrade".
 hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ----
 
@@ -13198,7 +13220,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* unload and remove scripts test.py and script.py */
+/* Unload and remove scripts test.py and script.py. */
 weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
                           "test.py,script.py");
 ----
@@ -13207,7 +13229,7 @@ weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
 
 [source,python]
 ----
-# unload and remove scripts test.py and script.py
+# Unload and remove scripts test.py and script.py.
 weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
                          "test.py,script.py")
 ----
@@ -13241,11 +13263,11 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* say "Hello!" on libera server, #weechat channel */
+/* Say "Hello!" on libera server, #weechat channel. */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
                           "libera;#weechat;priority_high,user_message;;Hello!");
 
-/* send command "/whois FlashCode" on libera server, with low priority */
+/* Send command "/whois FlashCode" on libera server, with low priority. */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
                           "libera;;priority_low;;/whois FlashCode");
 ----
@@ -13254,11 +13276,11 @@ weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
 
 [source,python]
 ----
-# say "Hello!" on libera server, #weechat channel
+# Say "Hello!" on libera server, #weechat channel.
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "libera;#weechat;priority_high,user_message;;Hello!")
 
-# send command "/whois FlashCode" on libera server, with low priority
+# Send command "/whois FlashCode" on libera server, with low priority.
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "libera;;priority_low;;/whois FlashCode")
 ----
@@ -13605,8 +13627,8 @@ if (hashtable)
     weechat_hashtable_set (hashtable, "cmd_extra", "318:1");
     weechat_hook_hsignal_send ("irc_redirect_pattern", hashtable);
     /*
-     * now redirect irc whois command with hsignal irc_redirect_command,
-     * using pattern "my_whois"
+     * Now redirect irc whois command with hsignal irc_redirect_command,
+     * using pattern "my_whois".
      */
     /* ... */
     weechat_hashtable_free (hashtable);
@@ -13622,8 +13644,8 @@ weechat.hook_hsignal_send("irc_redirect_pattern",
                            "cmd_start": "311:1",
                            "cmd_stop": "318:1,401:1,402:1,431:1,461",
                            "cmd_extra": "318:1"})
-# now redirect irc whois command with hsignal irc_redirect_command
-# using pattern "my_whois"
+# Now redirect irc whois command with hsignal irc_redirect_command,
+# using pattern "my_whois".
 # ...
 ----
 
@@ -13682,7 +13704,7 @@ my_config_cb (const void *pointer, void *data, const char *option,
     return WEECHAT_RC_OK;
 }
 
-/* catch changes to option "weechat.look.item_time_format" */
+/* Catch changes to option "weechat.look.item_time_format". */
 struct t_hook *my_config_hook = weechat_hook_config ("weechat.look.item_time_format",
                                                      &my_config_cb, NULL, NULL);
 ----
@@ -13699,7 +13721,7 @@ def my_config_cb(data: str, option: str, value: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
-# catch changes to option "weechat.look.item_time_format"
+# Catch changes to option "weechat.look.item_time_format".
 hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 ----
 
@@ -13881,7 +13903,7 @@ my_modifier_cb (const void *pointer, void *data, const char *modifier,
     result = malloc (length);
     if (result)
     {
-        /* add "xxx" to any message printed */
+        /* Add "xxx" to any message printed. */
         snprintf (result, length, "%s xxx", string);
     }
 
@@ -14089,7 +14111,7 @@ my_info_cb (const void *pointer, void *data, const char *info_name,
     return strdup ("some_info");
 }
 
-/* add info "my_info" */
+/* Add info "my_info". */
 struct t_hook *my_info_hook = weechat_hook_info ("my_info",
                                                  "Some info",
                                                  "Info about arguments",
@@ -14170,7 +14192,7 @@ my_info_hashtable_cb (const void *pointer, void *data, const char *info_name,
     return pointer_to_new_hashtable;
 }
 
-/* add info "my_info_hashtable" */
+/* Add info "my_info_hashtable". */
 struct t_hook *my_info_hook = weechat_hook_info_hashtable ("my_info_hashtable",
                                                            "Some info",
                                                            "Info about input hashtable",
@@ -14279,7 +14301,7 @@ def hook_infolist(infolist_name: str, description: str, pointer_description: str
 
 # 例
 def my_infolist_cb(data: str, infolist_name: str, pointer: str, arguments: str) -> str:
-    # build infolist
+    # Build infolist.
     # ...
     return my_infolist
 
@@ -14337,13 +14359,13 @@ my_hdata_cb (const void *pointer, void *data, const char *hdata_name)
 {
     struct t_hdata *my_hdata;
 
-    /* build hdata */
+    /* Build hdata. */
     /* ... */
 
     return my_hdata;
 }
 
-/* add hdata "my_hdata" */
+/* Add hdata "my_hdata". */
 struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
                                               "Hdata for my structure",
                                               &my_hdata_cb, NULL, NULL);
@@ -14568,13 +14590,13 @@ C 言語での使用例:
 struct t_hashtable *
 my_focus_nicklist_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
-    /* add strings in hashtable */
+    /* Add strings in hashtable. */
     /* ... */
 
     return info;
 }
 
-/* add focus on nicklist */
+/* Add focus on nicklist. */
 struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
                                               &my_focus_nicklist_cb, NULL, NULL);
 ----
@@ -14588,7 +14610,7 @@ def hook_focus(area: str, callback: str, callback_data: str) -> str: ...
 
 # 例
 def my_focus_nicklist_cb(data: str, info: Dict[str, str]) -> Dict[str, str]:
-    # build dict
+    # Build dict.
     # ...
     return my_dict
 
@@ -14948,11 +14970,11 @@ struct t_hashtable *properties = weechat_hashtable_new (8,
                                                         WEECHAT_HASHTABLE_STRING,
                                                         NULL,
                                                         NULL);
-/* buffer with free content */
+/* Buffer with free content. */
 weechat_hashtable_set (properties, "type", "free");
-/* no logging on this buffer */
+/* No logging on this buffer */
 weechat_hashtable_set (properties, "localvar_set_no_log", "1");
-/* bind key alt-c on this buffer */
+/* Bind key alt-c on this buffer. */
 weechat_hashtable_set (properties, "key_bind_meta-c", "/my_command");
 
 struct t_gui_buffer *my_buffer = weechat_buffer_new_props ("my_buffer",
@@ -15209,7 +15231,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* merge current buffer with weechat "core" buffer */
+/* Merge current buffer with weechat "core" buffer. */
 weechat_buffer_merge (weechat_current_buffer (),
                       weechat_buffer_search_main ());
 ----
@@ -15222,7 +15244,7 @@ weechat_buffer_merge (weechat_current_buffer (),
 def buffer_merge(buffer: str, target_buffer: str) -> int: ...
 
 # 例
-# merge current buffer with WeeChat "core" buffer
+# Merge current buffer with WeeChat "core" buffer.
 weechat.buffer_merge(weechat.current_buffer(), weechat.buffer_search_main())
 ----
 
@@ -15751,19 +15773,19 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* disable hotlist (for all buffers) */
+/* Disable hotlist (for all buffers). */
 weechat_buffer_set (NULL, "hotlist", "-");
 
-/* enable again hotlist */
+/* Enable again hotlist. */
 weechat_buffer_set (NULL, "hotlist", "+");
 
-/* change buffer name */
+/* Change buffer name. */
 weechat_buffer_set (my_buffer, "name", "my_new_name");
 
-/* add new local variable "toto" with value "abc" */
+/* Add new local variable "toto" with value "abc". */
 weechat_buffer_set (my_buffer, "localvar_set_toto", "abc");
 
-/* remove local variable "toto" */
+/* Remove local variable "toto". */
 weechat_buffer_set (my_buffer, "localvar_del_toto", "");
 ----
 
@@ -15776,19 +15798,19 @@ def buffer_set(buffer: str, property: str, value: str) -> int: ...
 
 # 例
 
-# disable hotlist (for all buffers)
+# Disable hotlist (for all buffers).
 weechat.buffer_set("", "hotlist", "-")
 
-# enable again hotlist
+# Enable again hotlist.
 weechat.buffer_set("", "hotlist", "+")
 
-# change buffer name
+# Change buffer name.
 weechat.buffer_set(my_buffer, "name", "my_new_name")
 
-# add new local variable "toto" with value "abc"
+# Add new local variable "toto" with value "abc".
 weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
 
-# remove local variable "toto"
+# Remove local variable "toto".
 weechat.buffer_set(my_buffer, "localvar_del_toto", "")
 ----
 
@@ -16643,12 +16665,12 @@ while (ptr_group || ptr_nick)
 {
     if (ptr_nick)
     {
-        /* nick */
+        /* Nick */
         /* ... */
     }
     else
     {
-        /* group */
+        /* Group */
         /* ... */
     }
     weechat_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
@@ -16842,13 +16864,13 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* change group color to "bar_fg" */
+/* Change group color to "bar_fg". */
 weechat_nicklist_group_set (buffer, group, "color", "bar_fg");
 
-/* change group color to yellow */
+/* Change group color to yellow. */
 weechat_nicklist_group_set (buffer, group, "color", "yellow");
 
-/* hide group in nicklist */
+/* Hide group in nicklist. */
 weechat_nicklist_group_set (buffer, group, "visible", "0");
 ----
 
@@ -16861,13 +16883,13 @@ def nicklist_group_set(buffer: str, group: str, property: str, value: str) -> in
 
 # 例
 
-# change group color to "bar_fg"
+# Change group color to "bar_fg".
 weechat.nicklist_group_set(buffer, group, "color", "bar_fg")
 
-# change group color to yellow
+# Change group color to yellow.
 weechat.nicklist_group_set(buffer, group, "color", "yellow")
 
-# hide group in nicklist
+# Hide group in nicklist.
 weechat.nicklist_group_set(buffer, group, "visible", "0")
 ----
 
@@ -17063,16 +17085,16 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* change nick color to cyan */
+/* Change nick color to cyan. */
 weechat_nicklist_nick_set (buffer, nick, "color", "cyan");
 
-/* change prefix to "+" */
+/* Change prefix to "+". */
 weechat_nicklist_nick_set (buffer, nick, "prefix", "+");
 
-/* change prefix color to yellow */
+/* Change prefix color to yellow. */
 weechat_nicklist_nick_set (buffer, nick, "prefix_color", "yellow");
 
-/* hide nick in nicklist */
+/* Hide nick in nicklist. */
 weechat_nicklist_nick_set (buffer, nick, "visible", "0");
 ----
 
@@ -17085,16 +17107,16 @@ def nicklist_nick_set(buffer: str, nick: str, property: str, value: str) -> int:
 
 # 例
 
-# change nick color to cyan
+# Change nick color to cyan.
 weechat.nicklist_nick_set(buffer, nick, "color", "cyan")
 
-# change prefix to "+"
+# Change prefix to "+".
 weechat.nicklist_nick_set(buffer, nick, "prefix", "+")
 
-# change prefix color to yellow
+# Change prefix color to yellow.
 weechat.nicklist_nick_set(buffer, nick, "prefix_color", "yellow")
 
-# hide nick in nicklist
+# Hide nick in nicklist.
 weechat.nicklist_nick_set(buffer, nick, "visible", "0")
 ----
 
@@ -17802,10 +17824,10 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
-    /* get arguments of command */
+    /* Get arguments of command. */
     const char *args = weechat_completion_get_string (completion, "args");
 
-    /* completion depending on args */
+    /* Completion depending on args */
     /* ... */
 
     return WEECHAT_RC_OK;
@@ -17821,9 +17843,9 @@ def completion_get_string(completion: str, property: str) -> str: ...
 
 # 例
 def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
-    # get arguments of command
+    # Get arguments of command.
     args = weechat.completion_get_string(completion, "args")
-    # completion depending on args
+    # Completion depending on args
     # ...
     return weechat.WEECHAT_RC_OK
 ----
@@ -17872,7 +17894,7 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
-    /* do not add space after completion */
+    /* Do not add space after completion. */
     weechat_completion_set (completion, "add_space", "0");
 
     /* ... */
@@ -17885,12 +17907,12 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
 
 [source,python]
 ----
-# prototype
+# Prototype
 def completion_set(completion: str, property: str, value: str) -> int: ...
 
-# example
+# Example
 def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
-    # do not add space after completion
+    # Do not add space after completion.
     weechat.completion_set(completion, "add_space", "0")
     # ...
     return weechat.WEECHAT_RC_OK
@@ -18015,7 +18037,7 @@ if (weechat_network_pass_proxy ("my_proxy", sock, "irc.libera.chat", 6667))
 }
 else
 {
-    /* error */
+    /* Error */
 }
 ----
 
@@ -18059,7 +18081,7 @@ struct sockaddr *addr;
 socklen_t length;
 int sock;
 
-/* allocate/set address and port in _addr_, set _length_ */
+/* Allocate/set address and port in _addr_, set _length_. */
 /* ... */
 
 sock = weechat_network_connect_to (NULL, addr, length);
@@ -18069,7 +18091,7 @@ if (sock >= 0)
 }
 else
 {
-    /* error */
+    /* Error */
 }
 ----
 
@@ -18195,7 +18217,7 @@ if (hashtable_in)
     hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                 hashtable_in);
     /*
-     * now hashtable_out has following keys/values:
+     * Now hashtable_out has following keys/values:
      *   "tags"                : "time=2015-06-27T16:40:35.000Z;tag2=value\\sspace"
      *   "tag_time"            : "2015-06-27T16:40:35.000Z"
      *   "tag_tag2"            : "value space"
@@ -18710,11 +18732,11 @@ C 言語での使用例:
 ----
 if (weechat_infolist_next (infolist))
 {
-    /* read variables in item... */
+    /* Read variables in item... */
 }
 else
 {
-    /* no more item available */
+    /* No more item available */
 }
 ----
 
@@ -18728,9 +18750,9 @@ def infolist_next(infolist: str) -> int: ...
 # 例
 rc = weechat.infolist_next(infolist)
 if rc:
-    # read variables in item...
+    # Read variables in item...
 else:
-    # no more item available
+    # No more item available
 ----
 
 ==== infolist_prev
@@ -18760,11 +18782,11 @@ C 言語での使用例:
 ----
 if (weechat_infolist_prev (infolist))
 {
-    /* read variables in item... */
+    /* Read variables in item... */
 }
 else
 {
-    /* no more item available */
+    /* No more item available */
 }
 ----
 
@@ -18778,9 +18800,9 @@ def infolist_prev(infolist: str) -> int: ...
 # 例
 rc = weechat.infolist_prev(infolist)
 if rc:
-    # read variables in item...
+    # Read variables in item...
 else:
-    # no more item available
+    # No more item available
 ----
 
 ==== infolist_reset_item_cursor
@@ -18889,8 +18911,10 @@ C 言語での使用例:
 [source,c]
 ----
 const char *fields = weechat_infolist_fields (infolist);
-/* fields contains something like:
-   "i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time" */
+/*
+ * Fields contains something like:
+ * "i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time".
+ */
 ----
 
 スクリプト (Python) での使用例:
@@ -19622,7 +19646,7 @@ switch (type)
         /* ... */
         break;
     default:
-        /* variable not found */
+        /* Variable not found */
         break;
 }
 ----
@@ -19937,17 +19961,17 @@ C 言語での使用例:
 
 [source,c]
 ----
-/* check if a buffer pointer is valid */
+/* Check if a buffer pointer is valid. */
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 if (weechat_hdata_check_pointer (hdata,
                                  weechat_hdata_get_list (hdata, "gui_buffers"),
                                  ptr_buffer))
 {
-    /* valid pointer */
+    /* Valid pointer */
 }
 else
 {
-    /* invalid pointer */
+    /* Invalid pointer */
 }
 ----
 
@@ -19961,10 +19985,10 @@ def hdata_check_pointer(hdata: str, list: str, pointer: str) -> int: ...
 # 例
 hdata = weechat.hdata_get("buffer")
 if weechat.hdata_check_pointer(hdata, weechat.hdata_get_list(hdata, "gui_buffers"), ptr_buffer):
-    # valid pointer
+    # Valid pointer
     # ...
 else:
-    # invalid pointer
+    # Invalid pointer
     # ...
 ----
 
@@ -20081,7 +20105,7 @@ struct t_hashtable *extra_vars = weechat_hashtable_new (8,
                                                         NULL,
                                                         NULL);
 
-/* search irc server with name "libera" */
+/* Search irc server with name "libera". */
 weechat_hashtable_set (extra_vars, "server_name", "libera");
 void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == ${server_name}",
                                      NULL, extra_vars, NULL, 1);
@@ -20105,7 +20129,7 @@ def hdata_search(hdata: str, pointer: str, search: str,
 hdata = weechat.hdata_get("irc_server")
 servers = weechat.hdata_get_list(hdata, "irc_servers")
 
-# search irc server with name "libera"
+# Search irc server with name "libera".
 server = weechat.hdata_search(hdata, servers, "${irc_server.name} == ${server_name}",
                               {}, {"server_name": "libera"}, {}, 1)
 if server:
@@ -20843,7 +20867,7 @@ if (weechat_upgrade_write_object (upgrade_file, 1, &infolist))
 }
 else
 {
-    /* error */
+    /* Error */
 }
 ----
 

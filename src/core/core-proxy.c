@@ -60,7 +60,7 @@ proxy_search_option (const char *option_name)
             return i;
     }
 
-    /* proxy option not found */
+    /* Proxy option not found */
     return -1;
 }
 
@@ -84,7 +84,7 @@ proxy_search_type (const char *type)
             return i;
     }
 
-    /* type not found */
+    /* Type not found */
     return -1;
 }
 
@@ -111,7 +111,7 @@ proxy_valid (struct t_proxy *proxy)
             return 1;
     }
 
-    /* proxy not found */
+    /* Proxy not found */
     return 0;
 }
 
@@ -136,7 +136,7 @@ proxy_search (const char *name)
             return ptr_proxy;
     }
 
-    /* proxy not found */
+    /* Proxy not found */
     return NULL;
 }
 
@@ -375,7 +375,7 @@ proxy_new_with_options (const char *name,
 {
     struct t_proxy *new_proxy;
 
-    /* add proxy */
+    /* Add proxy. */
     new_proxy = proxy_alloc (name);
     if (!new_proxy)
         return NULL;
@@ -387,7 +387,7 @@ proxy_new_with_options (const char *name,
     new_proxy->options[PROXY_OPTION_USERNAME] = username;
     new_proxy->options[PROXY_OPTION_PASSWORD] = password;
 
-    /* add proxy to proxies list */
+    /* Add proxy to proxies list. */
     new_proxy->prev_proxy = last_weechat_proxy;
     if (last_weechat_proxy)
         last_weechat_proxy->next_proxy = new_proxy;
@@ -417,11 +417,11 @@ proxy_new (const char *name, const char *type, const char *ipv6,
     if (!name || !name[0])
         return NULL;
 
-    /* it's not possible to add 2 proxies with same name */
+    /* It's not possible to add 2 proxies with same name. */
     if (proxy_search (name))
         return NULL;
 
-    /* look for type */
+    /* Look for type. */
     if (proxy_search_type (type) < 0)
         return NULL;
 
@@ -503,7 +503,7 @@ proxy_use_temp_proxies (void)
         }
     }
 
-    /* free all temp proxies */
+    /* Free all temp proxies. */
     while (weechat_temp_proxies)
     {
         next_temp_proxy = weechat_temp_proxies->next_proxy;
@@ -528,7 +528,7 @@ proxy_free (struct t_proxy *proxy)
     if (!proxy)
         return;
 
-    /* remove proxy from proxies list */
+    /* Remove proxy from proxies list. */
     if (proxy->prev_proxy)
         (proxy->prev_proxy)->next_proxy = proxy->next_proxy;
     if (proxy->next_proxy)
@@ -538,7 +538,7 @@ proxy_free (struct t_proxy *proxy)
     if (last_weechat_proxy == proxy)
         last_weechat_proxy = proxy->prev_proxy;
 
-    /* free data */
+    /* Free data. */
     free (proxy->name);
     for (i = 0; i < PROXY_NUM_OPTIONS; i++)
     {
@@ -571,7 +571,7 @@ proxy_hdata_proxy_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

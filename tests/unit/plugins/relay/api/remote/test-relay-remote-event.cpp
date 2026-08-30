@@ -61,16 +61,16 @@ TEST(RelayRemoteEvent, LineIsAlreadyRead)
                                   GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
 
-    /* invalid arguments */
+    /* Invalid arguments */
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (NULL, -1));
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (NULL, 123));
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, -1));
 
-    /* local variables not set on buffer */
+    /* Local variables not set on buffer */
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 0));
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
 
-    /* only "last_read_line_id" set on buffer */
+    /* Only "last_read_line_id" set on buffer */
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_last_read_line_id", "123");
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
@@ -78,7 +78,7 @@ TEST(RelayRemoteEvent, LineIsAlreadyRead)
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_first_line_not_read", "0");
 
-    /* invalid local variable */
+    /* Invalid local variable */
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_last_read_line_id", "");
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
@@ -89,7 +89,7 @@ TEST(RelayRemoteEvent, LineIsAlreadyRead)
                     "localvar_set_relay_remote_last_read_line_id", "123abc");
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
 
-    /* read marker before the first line: nothing read on the remote */
+    /* Read marker before the first line: nothing read on the remote. */
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_last_read_line_id", "-1");
     gui_buffer_set (buffer,
@@ -98,14 +98,14 @@ TEST(RelayRemoteEvent, LineIsAlreadyRead)
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, INT_MAX));
 
-    /* no read marker: all the lines have been read on the remote */
+    /* No read marker: all the lines have been read on the remote. */
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_first_line_not_read", "0");
     LONGS_EQUAL(1, relay_remote_event_line_is_already_read (buffer, 0));
     LONGS_EQUAL(1, relay_remote_event_line_is_already_read (buffer, 123));
     LONGS_EQUAL(1, relay_remote_event_line_is_already_read (buffer, INT_MAX));
 
-    /* lines up to id 123 read on the remote */
+    /* Lines up to id 123 read on the remote. */
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_last_read_line_id", "123");
     LONGS_EQUAL(1, relay_remote_event_line_is_already_read (buffer, 0));
@@ -117,8 +117,8 @@ TEST(RelayRemoteEvent, LineIsAlreadyRead)
     gui_buffer_close (buffer);
 
     /*
-     * buffer with free content: the identifier of a line is its number ("y"),
-     * so a line is never considered as read
+     * Buffer with free content: the identifier of a line is its number ("y"),
+     * so a line is never considered as read.
      */
     buffer = gui_buffer_new_user ("test_line_is_already_read_free",
                                   GUI_BUFFER_TYPE_FREE);
@@ -170,7 +170,7 @@ TEST(RelayRemoteEvent, BuildStringTags)
                                   GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
 
-    /* no buffer: the line can not be read on the remote */
+    /* No buffer: the line can not be read on the remote. */
     WEE_CHECK_TAGS("relay_remote_line_id_42", NULL, NULL, 42, 0);
     WEE_CHECK_TAGS("relay_remote_line_id_42", "[]", NULL, 42, 0);
     WEE_CHECK_TAGS("relay_remote_line_id_42", "{}", NULL, 42, 0);
@@ -181,15 +181,15 @@ TEST(RelayRemoteEvent, BuildStringTags)
     WEE_CHECK_TAGS("irc_privmsg,notify_message,relay_remote_line_id_42",
                    "[\"irc_privmsg\", \"notify_message\"]", NULL, 42, 0);
 
-    /* highlight: any "notify_xxx" tag is replaced by "notify_highlight" */
+    /* Highlight: any "notify_xxx" tag is replaced by "notify_highlight". */
     WEE_CHECK_TAGS("irc_privmsg,notify_highlight,relay_remote_line_id_42",
                    "[\"irc_privmsg\", \"notify_message\"]", NULL, 42, 1);
 
-    /* highlight without any "notify_xxx" tag: the tag is added */
+    /* Highlight without any "notify_xxx" tag: the tag is added. */
     WEE_CHECK_TAGS("irc_privmsg,notify_highlight,relay_remote_line_id_42",
                    "[\"irc_privmsg\"]", NULL, 42, 1);
 
-    /* buffer without the local variable: the line is not read */
+    /* Buffer without the local variable: the line is not read. */
     WEE_CHECK_TAGS("irc_privmsg,notify_message,relay_remote_line_id_42",
                    "[\"irc_privmsg\", \"notify_message\"]", buffer, 42, 0);
 
@@ -198,19 +198,19 @@ TEST(RelayRemoteEvent, BuildStringTags)
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_first_line_not_read", "0");
 
-    /* line not read yet on the remote (id greater than last read line id) */
+    /* Line not read yet on the remote (id greater than last read line id). */
     WEE_CHECK_TAGS("irc_privmsg,notify_message,relay_remote_line_id_101",
                    "[\"irc_privmsg\", \"notify_message\"]", buffer, 101, 0);
     WEE_CHECK_TAGS("irc_privmsg,notify_highlight,relay_remote_line_id_101",
                    "[\"irc_privmsg\", \"notify_message\"]", buffer, 101, 1);
 
-    /* negative line id: the line can not be read on the remote */
+    /* Negative line id: the line can not be read on the remote. */
     WEE_CHECK_TAGS("irc_privmsg,notify_message,relay_remote_line_id_-1",
                    "[\"irc_privmsg\", \"notify_message\"]", buffer, -1, 0);
 
     /*
-     * line already read on the remote: any "notify_xxx" tag is removed and
-     * the tag "notify_none" is added
+     * Line already read on the remote: any "notify_xxx" tag is removed and
+     * the tag "notify_none" is added.
      */
     WEE_CHECK_TAGS("notify_none,relay_remote_line_id_42", NULL, buffer, 42, 0);
     WEE_CHECK_TAGS("notify_none,relay_remote_line_id_42", "[]", buffer, 42, 0);
@@ -221,15 +221,15 @@ TEST(RelayRemoteEvent, BuildStringTags)
     WEE_CHECK_TAGS("irc_privmsg,notify_none,relay_remote_line_id_100",
                    "[\"irc_privmsg\", \"notify_message\"]", buffer, 100, 0);
 
-    /* the tag "notify_highlight" is not added when the line is already read */
+    /* The tag "notify_highlight" is not added when the line is already read. */
     WEE_CHECK_TAGS("irc_privmsg,notify_none,relay_remote_line_id_42",
                    "[\"irc_privmsg\", \"notify_message\"]", buffer, 42, 1);
     WEE_CHECK_TAGS("irc_privmsg,notify_none,relay_remote_line_id_42",
                    "[\"irc_privmsg\"]", buffer, 42, 1);
 
     /*
-     * non-regression tests: no empty tag must be left when a "notify_xxx" tag
-     * is removed, wherever it is in the list of tags
+     * Non-regression tests: no empty tag must be left when a "notify_xxx" tag
+     * is removed, wherever it is in the list of tags.
      */
     WEE_CHECK_TAGS("irc_privmsg,nick_alice,notify_none,"
                    "relay_remote_line_id_42",
@@ -248,15 +248,15 @@ TEST(RelayRemoteEvent, BuildStringTags)
                    buffer, 42, 0);
 
     /*
-     * no read marker on the remote and it is not before the first line: all
-     * the lines have been read
+     * No read marker on the remote and it is not before the first line: all
+     * the lines have been read.
      */
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_last_read_line_id", "-1");
     WEE_CHECK_TAGS("irc_privmsg,notify_none,relay_remote_line_id_42",
                    "[\"irc_privmsg\", \"notify_message\"]", buffer, 42, 0);
 
-    /* read marker before the first line on the remote: nothing has been read */
+    /* Read marker before the first line on the remote: nothing has been read. */
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_first_line_not_read", "1");
     WEE_CHECK_TAGS("irc_privmsg,notify_message,relay_remote_line_id_42",
@@ -265,8 +265,8 @@ TEST(RelayRemoteEvent, BuildStringTags)
     gui_buffer_close (buffer);
 
     /*
-     * buffer with free content: the identifier of a line is its number ("y"),
-     * so the tags are never changed, even with a local variable set
+     * Buffer with free content: the identifier of a line is its number ("y"),
+     * so the tags are never changed, even with a local variable set.
      */
     buffer = gui_buffer_new_user ("test_build_string_tags_free",
                                   GUI_BUFFER_TYPE_FREE);
@@ -594,7 +594,7 @@ TEST(RelayRemoteEvent, RecvBufferLinesAlreadyRead)
         gui_buffer_get_string (buffer,
                                "localvar_relay_remote_last_read_line_id"));
 
-    /* lines 4 and 5 have been read on the remote */
+    /* Lines 4 and 5 have been read on the remote. */
     line = relay_remote_event_search_line_by_id (buffer, 4);
     CHECK(line);
     LONGS_EQUAL(3, line->data->tags_count);
@@ -606,7 +606,7 @@ TEST(RelayRemoteEvent, RecvBufferLinesAlreadyRead)
     CHECK(line);
     LONGS_EQUAL(-1, line->data->notify_level);
 
-    /* line 6 has not been read on the remote */
+    /* Line 6 has not been read on the remote. */
     line = relay_remote_event_search_line_by_id (buffer, 6);
     CHECK(line);
     LONGS_EQUAL(3, line->data->tags_count);
@@ -638,7 +638,7 @@ TEST(RelayRemoteEvent, RecvBufferNoReadMarker)
     struct t_gui_buffer *buffer;
     struct t_gui_line *line;
 
-    /* no read marker: all the lines have been read on the remote */
+    /* No read marker: all the lines have been read on the remote. */
     remote = relay_remote_new ("testnomarker",
                                "https://localhost:9000",
                                NULL, NULL, NULL, NULL, NULL, NULL);
@@ -673,7 +673,7 @@ TEST(RelayRemoteEvent, RecvBufferNoReadMarker)
     gui_buffer_close (buffer);
     relay_remote_free (remote);
 
-    /* read marker before the first line: nothing has been read on the remote */
+    /* Read marker before the first line: nothing has been read on the remote. */
     remote = relay_remote_new ("testfirstnotread",
                                "https://localhost:9000",
                                NULL, NULL, NULL, NULL, NULL, NULL);

@@ -43,7 +43,7 @@ extern "C"
 
 #define WEECHAT_TESTS_HOME "./tmp_weechat_test"
 
-/* import tests from libs */
+/* Import tests from libs. */
 /* core */
 IMPORT_TEST_GROUP(CoreArraylist);
 IMPORT_TEST_GROUP(CoreCalc);
@@ -120,7 +120,7 @@ struct t_gui_buffer *ptr_core_buffer = NULL;
 void
 exec_on_files_cb (void *data, const char *filename)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) data;
 
     unlink (filename);
@@ -136,7 +136,7 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
                int displayed, int highlight,
                const char *prefix, const char *message)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -147,10 +147,10 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     (void) displayed;
     (void) highlight;
 
-    /* keep only messages displayed on core buffer */
+    /* Keep only messages displayed on core buffer. */
     if (strcmp (gui_buffer_get_string (buffer, "full_name"), "core.weechat") == 0)
     {
-        printf ("%s%s%s\n",  /* with color: "\33[34m%s%s%s\33[0m\n" */
+        printf ("%s%s%s\n",  /* With color: "\33[34m%s%s%s\33[0m\n" */
                 (prefix && prefix[0]) ? prefix : "",
                 (prefix && prefix[0] && message && message[0]) ? " " : "",
                 (message && message[0]) ? message : "");
@@ -219,11 +219,11 @@ main (int argc, char *argv[])
     const char *ptr_path;
     void *handle;
 
-    /* setup environment: English language, no specific timezone */
+    /* Setup environment: English language, no specific timezone. */
     setenv ("LC_ALL", LOCALE_TESTS, 1);
     setenv ("TZ", "", 1);
 
-    /* check if locale exists */
+    /* Check if locale exists. */
     if (!setlocale (LC_ALL, ""))
     {
         fprintf (stderr,
@@ -233,10 +233,10 @@ main (int argc, char *argv[])
         return 1;
     }
 
-    /* clean WeeChat home */
+    /* Clean WeeChat home. */
     dir_exec_on_files (WEECHAT_TESTS_HOME, 1, 1, &exec_on_files_cb, NULL);
 
-    /* build arguments for WeeChat */
+    /* Build arguments for WeeChat. */
     weechat_tests_args = getenv ("WEECHAT_TESTS_ARGS");
     length = strlen (argv[0]) +
         64 +  /* --dir ... */
@@ -257,7 +257,7 @@ main (int argc, char *argv[])
     weechat_argv = string_split_shell (args, &weechat_argc);
     printf ("WeeChat arguments: \"%s\"\n", args);
 
-    /* init WeeChat */
+    /* Initialize WeeChat. */
     weechat_init_gettext ();
     weechat_init (weechat_argc, weechat_argv, &test_gui_init);
     if (weechat_argv)
@@ -266,7 +266,7 @@ main (int argc, char *argv[])
 
     ptr_core_buffer = gui_buffer_search_main ();
 
-    /* auto-load plugins from WEECHAT_EXTRA_LIBDIR if no plugin were loaded */
+    /* Auto-load plugins from WEECHAT_EXTRA_LIBDIR if no plugin were loaded. */
     if (!weechat_plugins)
     {
         gui_chat_printf (NULL,
@@ -276,7 +276,7 @@ main (int argc, char *argv[])
         plugin_auto_load (NULL, 0, 1, 0, 0, NULL);
     }
 
-    /* load plugins tests */
+    /* Load plugins tests. */
     tests_plugins_lib = getenv ("WEECHAT_TESTS_PLUGINS_LIB");
     ptr_path = (tests_plugins_lib && tests_plugins_lib[0]) ?
         tests_plugins_lib : NULL;
@@ -296,16 +296,16 @@ main (int argc, char *argv[])
         return 1;
     }
 
-    /* display WeeChat version and directories */
+    /* Display WeeChat version and directories. */
     run_cmd ("/command core version");
     run_cmd ("/debug dirs");
     run_cmd ("/debug libs");
 
-    /* run all tests */
+    /* Run all tests. */
     printf ("\n");
     rc = CommandLineTestRunner::RunAllTests (argc, argv);
 
-    /* end WeeChat */
+    /* End WeeChat. */
     gui_chat_mute = GUI_CHAT_MUTE_ALL_BUFFERS;
     weechat_end (&gui_main_end);
 

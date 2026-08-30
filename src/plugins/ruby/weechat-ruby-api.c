@@ -83,7 +83,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (ruby_registered_script)
     {
-        /* script already registered */
+        /* Script is already registered. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" already "
                                          "registered (register ignored)"),
@@ -116,7 +116,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
 
     if (plugin_script_search (ruby_scripts, c_name))
     {
-        /* another script already exists with same name */
+        /* Another script already exists with same name. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
@@ -125,7 +125,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
         API_RETURN_ERROR;
     }
 
-    /* register script */
+    /* Register script. */
     ruby_current_script = plugin_script_add (weechat_ruby_plugin,
                                              &ruby_data,
                                              (ruby_current_script_filename) ?
@@ -1572,8 +1572,8 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     Check_Type (callbacks, T_ARRAY);
 
     /*
-     * due to a Ruby limitation (15 arguments max by function), we receive the
-     * callbacks in an array of 6 strings (3 callbacks + 3 data)
+     * Due to a Ruby limitation (15 arguments max by function), we receive the
+     * callbacks in an array of 6 strings (3 callbacks + 3 data).
      */
     if (RARRAY_LEN(callbacks) != 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -2804,7 +2804,7 @@ weechat_ruby_api_hook_command_cb (const void *pointer, void *data,
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argv;
 
     script = (struct t_plugin_script *)pointer;
@@ -3544,10 +3544,10 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
                                                          c_port,
                                                          c_ipv6,
                                                          c_retry,
-                                                         NULL, /* gnutls session */
-                                                         NULL, /* gnutls callback */
-                                                         0,    /* gnutls DH key size */
-                                                         NULL, /* gnutls priorities */
+                                                         NULL, /* GnuTLS session */
+                                                         NULL, /* GnuTLS callback */
+                                                         0,    /* GnuTLS DH key size */
+                                                         NULL, /* GnuTLS priorities */
                                                          c_local_hostname,
                                                          &weechat_ruby_api_hook_connect_cb,
                                                          c_function,
@@ -3634,7 +3634,7 @@ weechat_ruby_api_hook_print_cb (const void *pointer, void *data,
     static char timebuffer[64];
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) date_usec;
     (void) tags_count;
 
@@ -5437,7 +5437,7 @@ weechat_ruby_api_bar_item_build_cb (const void *pointer, void *data,
     {
         if (strncmp (ptr_function, "(extra)", 7) == 0)
         {
-            /* new callback: data, item, window, buffer, extra_info */
+            /* New callback: data, item, window, buffer, extra_info */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -5451,7 +5451,7 @@ weechat_ruby_api_bar_item_build_cb (const void *pointer, void *data,
         }
         else
         {
-            /* old callback: data, item, window */
+            /* Old callback: data, item, window */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -5589,8 +5589,8 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
     Check_Type (items, T_STRING);
 
     /*
-     * due to a Ruby limitation (15 arguments max by function), we receive the
-     * colors in an array of 4 strings (fg, delim, bg, bg_inactive)
+     * Due to a Ruby limitation (15 arguments max by function), we receive the
+     * colors in an array of 4 strings (fg, delim, bg, bg_inactive).
      */
     if (RARRAY_LEN(colors) != 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -7114,7 +7114,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
 {
     int i;
 
-    /* interface constants */
+    /* Interface constants */
     for (i = 0; weechat_script_constants[i].name; i++)
     {
         rb_define_const (
@@ -7125,7 +7125,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
             INT2NUM(weechat_script_constants[i].value_integer));
     }
 
-    /* interface functions */
+    /* Interface functions */
     API_DEF_FUNC(register, 7);
     API_DEF_FUNC(plugin_get_name, 1);
     API_DEF_FUNC(charset_set, 1);

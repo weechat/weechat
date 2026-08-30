@@ -128,7 +128,7 @@ char *gui_buffer_properties_set[] =
   NULL
 };
 
-/* possible partial buffer match types in the order of priority (preferred first) */
+/* Possible partial buffer match types in the order of priority (preferred first) */
 enum t_gui_buffer_match_type
 {
     GUI_BUFFER_MATCH_NAME_EXACT,
@@ -353,7 +353,7 @@ gui_buffer_notify_get (struct t_gui_buffer *buffer)
     if (ptr_option)
         return CONFIG_INTEGER(ptr_option);
 
-    /* notify level not found */
+    /* Notify level not found */
     return CONFIG_ENUM(config_look_buffer_notify_default);
 }
 
@@ -421,7 +421,7 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
     if (!buffer)
         return NULL;
 
-    /* if no number is asked by layout, position is undefined */
+    /* If no number is asked by layout, position is undefined. */
     if (buffer->layout_number < 1)
         return NULL;
 
@@ -433,7 +433,7 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
             || ((buffer->layout_number == ptr_buffer->layout_number)
                 && (buffer->layout_number_merge_order <= ptr_buffer->layout_number_merge_order)))
         {
-            /* not possible to insert a buffer between 2 merged buffers */
+            /* Not possible to insert a buffer between 2 merged buffers */
             if (!ptr_buffer->prev_buffer
                 || ((ptr_buffer->prev_buffer)->number != ptr_buffer->number))
             {
@@ -442,7 +442,7 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
         }
     }
 
-    /* position not found */
+    /* Position not found */
     return NULL;
 }
 
@@ -491,9 +491,9 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
     pos_buffer = gui_buffer_find_pos (buffer);
 
     /*
-     * if position was not forced by layout and that buffer position is set
+     * If position was not forced by layout and that buffer position is set
      * to "first gap", search for the first available number in the list
-     * (if there is not, buffer will be added to the end of list)
+     * (if there is not, buffer will be added to the end of list).
      */
     if (!pos_buffer
         && (buffer->layout_number == 0)
@@ -521,10 +521,10 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
     }
 
     /*
-     * if position is found in list and that buffer is in layout and must be
+     * If position is found in list and that buffer is in layout and must be
      * merged to another buffer (before/after), then force merge with buffer and
      * add buffer to the end (to be sure no other buffer number will be shifted
-     * before the merge)
+     * before the merge).
      */
     if (pos_buffer
         && (buffer->layout_number > 0)
@@ -539,7 +539,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
 
     if (pos_buffer)
     {
-        /* add buffer into the list (before position found) */
+        /* Add buffer into the list (before position found). */
         if (force_number > 0)
         {
             buffer->number = force_number;
@@ -572,7 +572,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
     }
     else
     {
-        /* add buffer to the end */
+        /* Add buffer to the end. */
         if (!CONFIG_BOOLEAN(config_look_buffer_auto_renumber)
             && (buffer->layout_number > 0)
             && (!last_gui_buffer
@@ -597,7 +597,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
         gui_buffer_merge (buffer, merge_buffer);
     else
     {
-        /* merge buffer with previous or next, if they have layout number */
+        /* Merge buffer with previous or next, if they have layout number. */
         if (buffer->layout_number > 0)
         {
             if (buffer->prev_buffer
@@ -633,8 +633,8 @@ gui_buffer_generate_id (void)
     id = ((long long)tv.tv_sec * 1000000LL) + (long long)(tv.tv_usec);
 
     /*
-     * ensure we never use the same id for two buffers and that the returned
-     * id is strictly greater than the last assigned one
+     * Ensure we never use the same id for two buffers and that the returned
+     * id is strictly greater than the last assigned one.
      */
     if (id <= gui_buffer_last_id_assigned)
         id = gui_buffer_last_id_assigned + 1;
@@ -693,7 +693,7 @@ gui_buffer_apply_properties_cb (void *data,
                                 struct t_hashtable *hashtable,
                                 const void *key, const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     gui_buffer_set ((struct t_gui_buffer *)data,
@@ -729,8 +729,8 @@ gui_buffer_apply_config_option_property (struct t_gui_buffer *buffer,
             || (strncmp (pos, "key_unbind_", 11) == 0))
         {
             /*
-             * no evaluation for local buffer key bindings: this allows to
-             * use command /eval without having to escape `${`
+             * No evaluation for local buffer key bindings: this allows to
+             * use command /eval without having to escape `${`.
              */
             gui_buffer_set (buffer, pos, CONFIG_STRING(option));
         }
@@ -830,7 +830,7 @@ gui_buffer_new_props_with_id (long long id,
         return NULL;
     }
 
-    /* create new buffer */
+    /* Create new buffer. */
     new_buffer = malloc (sizeof (*new_buffer));
     if (!new_buffer)
         return NULL;
@@ -845,7 +845,7 @@ gui_buffer_new_props_with_id (long long id,
     }
     hashtable_set (gui_buffer_by_id, &id, new_buffer);
 
-    /* init buffer */
+    /* Initialize buffer. */
     new_buffer->id = id;
     if (new_buffer->id > gui_buffer_last_id_assigned)
         gui_buffer_last_id_assigned = new_buffer->id;
@@ -853,7 +853,7 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->plugin = plugin;
     new_buffer->plugin_name_for_upgrade = NULL;
 
-    /* number will be set later (when inserting buffer in list) */
+    /* Number will be set later (when inserting buffer in list). */
     gui_layout_buffer_get_number (gui_layout_current,
                                   plugin_get_name (plugin),
                                   name,
@@ -875,19 +875,19 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->clear = 1;
     new_buffer->filter = 1;
 
-    /* close callback */
+    /* Close callback */
     new_buffer->close_callback = close_callback;
     new_buffer->close_callback_pointer = close_callback_pointer;
     new_buffer->close_callback_data = close_callback_data;
     new_buffer->closing = 0;
 
-    /* title */
+    /* Title */
     new_buffer->title = NULL;
 
-    /* modes */
+    /* Modes */
     new_buffer->modes = NULL;
 
-    /* chat content */
+    /* Chat content */
     new_buffer->own_lines = gui_line_lines_alloc ();
     new_buffer->mixed_lines = NULL;
     new_buffer->lines = new_buffer->own_lines;
@@ -895,7 +895,7 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->time_for_each_line = 1;
     new_buffer->chat_refresh_needed = 2;
 
-    /* nicklist */
+    /* Nicklist */
     new_buffer->nicklist = 0;
     new_buffer->nicklist_case_sensitive = 0;
     new_buffer->nicklist_root = NULL;
@@ -913,7 +913,7 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->nickcmp_callback_data = NULL;
     gui_nicklist_add_group_with_id (new_buffer, 0, NULL, "root", NULL, 0);
 
-    /* input */
+    /* Input */
     new_buffer->input = 1;
     new_buffer->input_callback = input_callback;
     new_buffer->input_callback_pointer = input_callback_pointer;
@@ -925,27 +925,27 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->input_prompt = NULL;
     gui_buffer_input_buffer_init (new_buffer);
 
-    /* undo for input */
+    /* Undo for input */
     new_buffer->input_undo_snap = malloc (sizeof (*(new_buffer->input_undo_snap)));
     (new_buffer->input_undo_snap)->data = NULL;
     (new_buffer->input_undo_snap)->pos = 0;
-    (new_buffer->input_undo_snap)->prev_undo = NULL; /* not used */
-    (new_buffer->input_undo_snap)->next_undo = NULL; /* not used */
+    (new_buffer->input_undo_snap)->prev_undo = NULL; /* Not used */
+    (new_buffer->input_undo_snap)->next_undo = NULL; /* Not used */
     new_buffer->input_undo = NULL;
     new_buffer->last_input_undo = NULL;
     new_buffer->ptr_input_undo = NULL;
     new_buffer->input_undo_count = 0;
 
-    /* init completion */
+    /* Completion */
     new_buffer->completion = gui_completion_new (NULL, new_buffer);
 
-    /* init history */
+    /* History */
     new_buffer->history = NULL;
     new_buffer->last_history = NULL;
     new_buffer->ptr_history = NULL;
     new_buffer->num_history = 0;
 
-    /* text search */
+    /* Text search */
     new_buffer->text_search = GUI_BUFFER_SEARCH_DISABLED;
     new_buffer->text_search_direction = GUI_BUFFER_SEARCH_DIR_BACKWARD;
     new_buffer->text_search_exact = 0;
@@ -957,7 +957,7 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->text_search_ptr_history = NULL;
     new_buffer->text_search_input = NULL;
 
-    /* highlight */
+    /* Highlight */
     new_buffer->highlight_words = NULL;
     new_buffer->highlight_disable_regex = NULL;
     new_buffer->highlight_disable_regex_compiled = NULL;
@@ -970,7 +970,7 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->highlight_tags_count = 0;
     new_buffer->highlight_tags_array = NULL;
 
-    /* hotlist */
+    /* Hotlist */
     new_buffer->hotlist = NULL;
     new_buffer->hotlist_removed = NULL;
     new_buffer->hotlist_max_level_nicks = hashtable_new (
@@ -979,12 +979,12 @@ gui_buffer_new_props_with_id (long long id,
         WEECHAT_HASHTABLE_INTEGER,
         NULL, NULL);
 
-    /* keys */
+    /* Keys */
     new_buffer->keys = NULL;
     new_buffer->last_key = NULL;
     new_buffer->keys_count = 0;
 
-    /* local variables */
+    /* Local variables */
     new_buffer->local_variables = hashtable_new (32,
                                                  WEECHAT_HASHTABLE_STRING,
                                                  WEECHAT_HASHTABLE_STRING,
@@ -993,23 +993,23 @@ gui_buffer_new_props_with_id (long long id,
                    "plugin", plugin_get_name (plugin));
     hashtable_set (new_buffer->local_variables, "name", name);
 
-    /* add buffer to buffers list */
+    /* Add buffer to buffers list. */
     first_buffer_creation = (gui_buffers == NULL);
     gui_buffer_insert (new_buffer);
 
     gui_buffers_count++;
 
-    /* set notify level */
+    /* Notify level. */
     new_buffer->notify = gui_buffer_notify_get (new_buffer);
 
-    /* assign this buffer to windows of layout */
+    /* Assign this buffer to windows of layout. */
     gui_layout_window_assign_buffer (new_buffer);
 
-    /* apply properties (from parameters) */
+    /* Apply properties (from parameters). */
     if (properties)
         hashtable_map (properties, &gui_buffer_apply_properties_cb, new_buffer);
 
-    /* apply properties (from options weechat.buffer.*) */
+    /* Apply properties (from options weechat.buffer.*). */
     gui_buffer_apply_config_properties (new_buffer);
 
     new_buffer->opening = 0;
@@ -1104,7 +1104,7 @@ gui_buffer_user_input_cb (const void *pointer, void *data,
     char str_signal[1024];
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1133,7 +1133,7 @@ gui_buffer_user_close_cb (const void *pointer, void *data,
 {
     char str_signal[1024];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1231,7 +1231,7 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
             return 1;
     }
 
-    /* buffer not found */
+    /* Buffer not found */
     return 0;
 }
 
@@ -1414,7 +1414,7 @@ gui_buffer_property_in_list (char *properties[], char *property)
             return 1;
     }
 
-    /* property not found in list */
+    /* Property not found in list */
     return 0;
 }
 
@@ -1692,8 +1692,8 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
         return;
 
     /*
-     * save the old full name so that hooks on signal "buffer_renamed"
-     * can read the old name
+     * Save the old full name so that hooks on signal "buffer_renamed"
+     * can read the old name.
      */
     free (buffer->old_full_name);
     buffer->old_full_name = strdup (buffer->full_name);
@@ -1715,7 +1715,7 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
         buffer->old_full_name = NULL;
     }
 
-    /* apply properties (from options weechat.buffer.*) */
+    /* Apply properties (from options weechat.buffer.*). */
     gui_buffer_apply_config_properties (buffer);
 }
 
@@ -2058,7 +2058,7 @@ gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
 
     for (i = 0; i < current_count; i++)
     {
-        /* search if word is to be removed or not */
+        /* Search if word is to be removed or not. */
         to_remove = 0;
         for (j = 0; j < remove_count; j++)
         {
@@ -2474,19 +2474,19 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
 
     if (!argument || !argument[0])
     {
-        /* set unread marker after last line */
+        /* Set unread marker after last line. */
         buffer->lines->last_read_line = buffer->lines->last_line;
         buffer->lines->first_line_not_read = (buffer->lines->last_read_line) ? 0 : 1;
     }
     else if (strcmp (argument, "0") == 0)
     {
-        /* remove unread marker */
+        /* Remove unread marker. */
         buffer->lines->last_read_line = NULL;
         buffer->lines->first_line_not_read = 0;
     }
     else if (argument[0] == '-')
     {
-        /* move the unread marker N lines towards the first line */
+        /* Move the unread marker N lines towards the first line. */
         if (util_parse_int (argument, 10, &number) && (number < 0))
         {
             for (i = 0; i > number; i--)
@@ -2512,7 +2512,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
     }
     else if (argument[0] == '+')
     {
-        /* move the unread marker N lines towards the last line */
+        /* Move the unread marker N lines towards the last line. */
         if (util_parse_int (argument, 10, &number) && (number > 0))
         {
             for (i = 0; i < number; i++)
@@ -2536,7 +2536,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
     }
     else
     {
-        /* move the unread marker N lines from the end towards the first line */
+        /* Move the unread marker N lines from the end towards the first line. */
         if (util_parse_int (argument, 10, &number) && (number > 0))
         {
             buffer->lines->last_read_line = buffer->lines->last_line;
@@ -2576,7 +2576,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     if (!property || !value)
         return;
 
-    /* properties with optional buffer */
+    /* Properties with optional buffer */
     if (strcmp (property, "hotlist") == 0)
     {
         if (strcmp (value, "-") == 0)
@@ -2610,7 +2610,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     if (!buffer)
         return;
 
-    /* properties that need a buffer */
+    /* Properties that need a buffer */
     if (strcmp (property, "hotlist_conditions") == 0)
     {
         if (util_parse_int (value, 10, &number))
@@ -2636,9 +2636,9 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (strcmp (property, "display") == 0)
     {
         /*
-         * if it is auto-switch to a buffer, then we don't set read marker,
+         * If it is auto-switch to a buffer, then we don't set read marker,
          * otherwise we reset it (if current buffer is not displayed) after
-         * switch
+         * switch.
          */
         gui_window_switch_to_buffer (
             gui_current_window,
@@ -2945,15 +2945,15 @@ gui_buffer_add_value_num_displayed (struct t_gui_buffer *buffer, int value)
 int
 gui_buffer_is_main (const char *plugin_name, const char *name)
 {
-    /* if plugin is set and is not "core", then it's NOT main buffer */
+    /* If plugin is set and is not "core", then it's NOT main buffer. */
     if (!plugin_name || (strcmp (plugin_name, plugin_get_name (NULL)) != 0))
         return 0;
 
-    /* if name is set and is not "weechat", then it's NOT main buffer */
+    /* If name is set and is not "weechat", then it's NOT main buffer. */
     if (!name || (strcmp (name, GUI_BUFFER_MAIN) != 0))
         return 0;
 
-    /* it's main buffer */
+    /* It's main buffer. */
     return 1;
 }
 
@@ -2975,7 +2975,7 @@ gui_buffer_search_main (void)
             return ptr_buffer;
     }
 
-    /* buffer not found (should never occur!) */
+    /* Buffer not found (should never occur!) */
     return NULL;
 }
 
@@ -3026,7 +3026,7 @@ gui_buffer_search_by_full_name (const char *full_name)
         }
     }
 
-    /* buffer not found */
+    /* Buffer not found */
     return NULL;
 }
 
@@ -3101,7 +3101,7 @@ gui_buffer_search (const char *plugin, const char *name)
         }
     }
 
-    /* buffer not found */
+    /* Buffer not found */
     return NULL;
 }
 
@@ -3179,13 +3179,13 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                     {
                         if (!pos[length_name])
                         {
-                            /* matches full name */
+                            /* Check if it matches full name. */
                             if (!buffer_match[GUI_BUFFER_MATCH_NAME_EXACT])
                                 buffer_match[GUI_BUFFER_MATCH_NAME_EXACT] = ptr_buffer;
                         }
                         else
                         {
-                            /* matches beginning of name */
+                            /* Check if it matches beginning of name. */
                             if (!buffer_match[GUI_BUFFER_MATCH_NAME_BEGIN])
                                 buffer_match[GUI_BUFFER_MATCH_NAME_BEGIN] = ptr_buffer;
                         }
@@ -3194,13 +3194,13 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                     {
                         if (pos[length_name])
                         {
-                            /* matches middle of buffer name */
+                            /* Check if it matches middle of buffer name. */
                             if (!buffer_match[GUI_BUFFER_MATCH_NAME_MIDDLE])
                                 buffer_match[GUI_BUFFER_MATCH_NAME_MIDDLE] = ptr_buffer;
                         }
                         else
                         {
-                            /* matches end of buffer name */
+                            /* Check if it matches end of buffer name. */
                             if (!buffer_match[GUI_BUFFER_MATCH_NAME_END])
                                 buffer_match[GUI_BUFFER_MATCH_NAME_END] = ptr_buffer;
                         }
@@ -3219,13 +3219,13 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                         {
                             if (!pos[length_name])
                             {
-                                /* matches full short name */
+                                /* Check if it matches full short name. */
                                 if (!buffer_match[GUI_BUFFER_MATCH_SHORT_EXACT])
                                     buffer_match[GUI_BUFFER_MATCH_SHORT_EXACT] = ptr_buffer;
                             }
                             else
                             {
-                                /* matches beginning of short name */
+                                /* Check if it matches beginning of short name. */
                                 if (!buffer_match[GUI_BUFFER_MATCH_SHORT_BEGIN])
                                     buffer_match[GUI_BUFFER_MATCH_SHORT_BEGIN] = ptr_buffer;
                             }
@@ -3234,13 +3234,13 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                         {
                             if (pos[length_name])
                             {
-                                /* matches middle of buffer short name */
+                                /* Check if it matches middle of buffer short name. */
                                 if (!buffer_match[GUI_BUFFER_MATCH_SHORT_MIDDLE])
                                     buffer_match[GUI_BUFFER_MATCH_SHORT_MIDDLE] = ptr_buffer;
                             }
                             else
                             {
-                                /* matches end of buffer short name */
+                                /* Check if it matches end of buffer short name. */
                                 if (!buffer_match[GUI_BUFFER_MATCH_SHORT_END])
                                     buffer_match[GUI_BUFFER_MATCH_SHORT_END] = ptr_buffer;
                             }
@@ -3256,14 +3256,14 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
             break;
     }
 
-    /* return most preferred match type available */
+    /* Return most preferred match type available. */
     for (i = 0; i < GUI_BUFFER_NUM_MATCH_TYPE; i++)
     {
         if (buffer_match[i])
             return buffer_match[i];
     }
 
-    /* no partial match of any type */
+    /* No partial match of any type */
     return NULL;
 }
 
@@ -3283,7 +3283,7 @@ gui_buffer_search_by_number (int number)
             return ptr_buffer;
     }
 
-    /* buffer not found */
+    /* Buffer not found */
     return NULL;
 }
 
@@ -3393,7 +3393,7 @@ gui_buffer_search_range (int number1, int number2,
 
         *ptr_last_buffer = ptr_buffer;
 
-        /* count the number of different numbers between number1 & 2 */
+        /* Count the number of different numbers between number1 & 2. */
         if (different_numbers && *ptr_first_buffer
             && (ptr_buffer->number != prev_number))
         {
@@ -3435,7 +3435,7 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
     if (!buffer)
         return;
 
-    /* remove all lines */
+    /* Remove all lines. */
     gui_line_free_all (buffer);
 
     gui_hotlist_remove_buffer (buffer, 0);
@@ -3481,7 +3481,7 @@ gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer,
     if (!buffer)
         return NULL;
 
-    /* search after buffer */
+    /* Search after buffer. */
     for (ptr_buffer = buffer->next_buffer; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -3491,7 +3491,7 @@ gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer,
             return ptr_buffer;
     }
 
-    /* search before buffer */
+    /* Search before buffer. */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -3524,7 +3524,7 @@ gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
     if (!buffer)
         return NULL;
 
-    /* search before buffer */
+    /* Search before buffer. */
     for (ptr_buffer = buffer->prev_buffer; ptr_buffer;
          ptr_buffer = ptr_buffer->prev_buffer)
     {
@@ -3534,7 +3534,7 @@ gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
             return ptr_buffer;
     }
 
-    /* search after buffer */
+    /* Search after buffer. */
     for (ptr_buffer = last_gui_buffer; ptr_buffer;
          ptr_buffer = ptr_buffer->prev_buffer)
     {
@@ -3605,7 +3605,7 @@ gui_buffer_visited_search (struct t_gui_buffer *buffer)
             return ptr_buffer_visited;
     }
 
-    /* visited buffer not found */
+    /* Visited buffer not found */
     return NULL;
 }
 
@@ -3631,7 +3631,7 @@ gui_buffer_visited_search_by_number (int number)
         i++;
     }
 
-    /* visited buffer not found (should never be reached) */
+    /* Visited buffer not found (should never be reached) */
     return NULL;
 }
 
@@ -3645,7 +3645,7 @@ gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited)
     if (!buffer_visited)
         return;
 
-    /* remove visited buffer from list */
+    /* Remove visited buffer from list. */
     if (buffer_visited->prev_buffer)
         (buffer_visited->prev_buffer)->next_buffer = buffer_visited->next_buffer;
     if (buffer_visited->next_buffer)
@@ -3710,7 +3710,7 @@ gui_buffer_visited_add (struct t_gui_buffer *buffer)
     if (new_buffer_visited)
         gui_buffer_visited_remove (new_buffer_visited);
 
-    /* remove old buffer(s) visited if list is too long */
+    /* Remove old buffer(s) visited if list is too long. */
     while (gui_buffers_visited_count > CONFIG_INTEGER(config_history_max_visited_buffers))
     {
         gui_buffer_visited_remove (gui_buffers_visited);
@@ -3766,7 +3766,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
 
     ptr_back_to_buffer = NULL;
 
-    /* first unmerge buffer if it is merged to at least one other buffer */
+    /* First unmerge buffer if it is merged to at least one other buffer. */
     if (gui_buffer_count_merged_buffers (buffer->number) > 1)
     {
         ptr_back_to_buffer = gui_buffer_get_next_active_buffer (buffer, 0);
@@ -3778,8 +3778,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     if (!weechat_quit)
     {
         /*
-         * find other buffer to display: previously visited buffer if current
-         * window is displaying buffer, or buffer # - 1
+         * Find other buffer to display: previously visited buffer if current
+         * window is displaying buffer, or buffer # - 1.
          */
         ptr_buffer_visited_buffer = NULL;
         if (CONFIG_BOOLEAN(config_look_jump_previous_buffer_when_closing)
@@ -3797,14 +3797,14 @@ gui_buffer_close (struct t_gui_buffer *buffer)
             }
         }
 
-        /* switch to another buffer in each window that displays buffer */
+        /* Switch to another buffer in each window that displays buffer. */
         for (ptr_window = gui_windows; ptr_window;
              ptr_window = ptr_window->next_window)
         {
             if ((buffer == ptr_window->buffer) &&
                 ((buffer->next_buffer) || (buffer->prev_buffer)))
             {
-                /* switch to previous buffer */
+                /* Switch to previous buffer. */
                 if (gui_buffers != last_gui_buffer)
                 {
                     if (ptr_back_to_buffer)
@@ -3845,7 +3845,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
 
     gui_buffer_visited_remove_by_buffer (buffer);
 
-    /* compute "number - 1" on next buffers if auto renumber is ON */
+    /* Compute "number - 1" on next buffers if auto renumber is ON. */
     if (CONFIG_BOOLEAN(config_look_buffer_auto_renumber))
     {
         for (ptr_buffer = buffer->next_buffer; ptr_buffer;
@@ -3855,14 +3855,14 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         }
     }
 
-    /* free all lines */
+    /* Free all lines. */
     gui_line_free_all (buffer);
     free (buffer->own_lines);
     buffer->own_lines = NULL;
     free (buffer->mixed_lines);
     buffer->mixed_lines = NULL;
 
-    /* free some data */
+    /* Free some data. */
     gui_buffer_undo_free_all (buffer);
     gui_history_buffer_free (buffer);
     gui_completion_free (buffer->completion);
@@ -3938,7 +3938,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     free (buffer->nickcmp_callback_data);
     buffer->nickcmp_callback_data = NULL;
 
-    /* remove buffer from buffers list */
+    /* Remove buffer from buffers list. */
     if (buffer->prev_buffer)
         (buffer->prev_buffer)->next_buffer = buffer->next_buffer;
     if (buffer->next_buffer)
@@ -3985,11 +3985,11 @@ gui_buffer_switch_by_number (struct t_gui_window *window, int number)
     if (!window || !window->buffer)
         return;
 
-    /* invalid buffer */
+    /* Invalid buffer */
     if ((number < 0) || (number == window->buffer->number))
         return;
 
-    /* search for buffer in the list */
+    /* Search for buffer in the list. */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
         if ((ptr_buffer != window->buffer) && (number == ptr_buffer->number)
@@ -4098,13 +4098,13 @@ gui_buffer_zoom (struct t_gui_buffer *buffer)
     struct t_gui_buffer *ptr_buffer;
     int buffer_was_zoomed;
 
-    /* do nothing if current buffer is not merged with another buffer */
+    /* Do nothing if current buffer is not merged with another buffer. */
     if (gui_buffer_count_merged_buffers (buffer->number) < 2)
         return;
 
     buffer_was_zoomed = (buffer->active == 2);
 
-    /* reset scroll in all windows displaying this buffer number */
+    /* Reset scroll in all windows displaying this buffer number. */
     for (ptr_window = gui_windows; ptr_window;
          ptr_window = ptr_window->next_window)
     {
@@ -4115,7 +4115,7 @@ gui_buffer_zoom (struct t_gui_buffer *buffer)
         }
     }
 
-    /* first make buffer active if it is not */
+    /* First make buffer active if it is not. */
     if (!buffer->active)
     {
         gui_buffer_set_active_buffer (buffer);
@@ -4125,8 +4125,8 @@ gui_buffer_zoom (struct t_gui_buffer *buffer)
     }
 
     /*
-     * toggle active flag between 1 and 2
-     * (1 = active with other merged buffers displayed, 2 = the only active)
+     * Toggle active flag between 1 and 2
+     * (1 = active with other merged buffers displayed, 2 = the only active).
      */
     if (buffer->active == 1)
     {
@@ -4139,7 +4139,7 @@ gui_buffer_zoom (struct t_gui_buffer *buffer)
         buffer->lines = buffer->mixed_lines;
     }
 
-    /* set "zoomed" in merged buffers */
+    /* Set "zoomed" in merged buffers. */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -4205,17 +4205,17 @@ gui_buffer_renumber (int number1, int number2, int start_number)
     struct t_gui_buffer *ptr_first_buffer, *ptr_last_buffer;
     int different_numbers, current_number, number;
 
-    /* if numbers are >= 1, from_number must be <= to_number */
+    /* If numbers are >= 1, from_number must be <= to_number. */
     if ((number1 >= 1) && (number2 >= 1) && (number1 > number2))
         return;
 
-    /* replace negative buffer numbers */
+    /* Replace negative buffer numbers. */
     if (number1 < 1)
         number1 = gui_buffers->number;
     if (number2 < 1)
         number2 = last_gui_buffer->number;
 
-    /* search for first and last buffers affected by renumbering */
+    /* Search for first and last buffers affected by renumbering. */
     gui_buffer_search_range (number1, number2,
                              &ptr_first_buffer, &ptr_last_buffer,
                              &different_numbers);
@@ -4227,7 +4227,7 @@ gui_buffer_renumber (int number1, int number2, int start_number)
     else if (start_number > GUI_BUFFER_NUMBER_MAX)
         start_number = GUI_BUFFER_NUMBER_MAX;
 
-    /* the start number must be greater than buffer before first buffer */
+    /* The start number must be greater than buffer before first buffer. */
     if (ptr_first_buffer->prev_buffer
         && (start_number <= ptr_first_buffer->prev_buffer->number))
     {
@@ -4235,8 +4235,8 @@ gui_buffer_renumber (int number1, int number2, int start_number)
     }
 
     /*
-     * start_number + different_numbers must be lower than buffer after
-     * last buffer
+     * Start_number + different_numbers must be lower than buffer after
+     * last buffer.
      */
     if (ptr_last_buffer->next_buffer
         && (start_number + different_numbers - 1 >= ptr_last_buffer->next_buffer->number))
@@ -4244,7 +4244,7 @@ gui_buffer_renumber (int number1, int number2, int start_number)
         return;
     }
 
-    /* let's go for the renumbering! */
+    /* Let's go for the renumbering! */
     current_number = start_number;
     ptr_buffer = ptr_first_buffer;
     while (ptr_buffer)
@@ -4289,7 +4289,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     if (!buffer)
         return;
 
-    /* nothing to do if auto renumber is ON and that there is only one buffer */
+    /* Nothing to do if auto renumber is ON and that there is only one buffer. */
     if (auto_renumber && (gui_buffers == last_gui_buffer))
         return;
 
@@ -4299,11 +4299,11 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     if (number > GUI_BUFFER_NUMBER_MAX)
         number = GUI_BUFFER_NUMBER_MAX;
 
-    /* buffer number is already OK ? */
+    /* Buffer number is already OK? */
     if (number == buffer->number)
         return;
 
-    /* search for first and last buffer to move */
+    /* Search for first and last buffer to move. */
     gui_buffer_search_range (buffer->number, buffer->number,
                              &ptr_first_buffer,
                              &ptr_last_buffer,
@@ -4312,8 +4312,8 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         return;
 
     /*
-     * if group of buffers found is all buffers, then we can't move buffers!
-     * (allowed only if auto renumber is OFF)
+     * If group of buffers found is all buffers, then we can't move buffers!
+     * (allowed only if auto renumber is OFF).
      */
     if (auto_renumber
         && (ptr_first_buffer == gui_buffers)
@@ -4323,8 +4323,8 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     }
 
     /*
-     * save old buffer numbers to send signal "buffer_moved" for each buffer
-     * really moved, after the move operation
+     * Save old buffer numbers to send signal "buffer_moved" for each buffer
+     * really moved, after the move operation.
      */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -4332,7 +4332,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         ptr_buffer->old_number = ptr_buffer->number;
     }
 
-    /* remove buffer(s) from list */
+    /* Remove buffer(s) from list. */
     if (ptr_first_buffer->prev_buffer)
         (ptr_first_buffer->prev_buffer)->next_buffer = ptr_last_buffer->next_buffer;
     if (ptr_last_buffer->next_buffer)
@@ -4342,7 +4342,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     if (last_gui_buffer == ptr_last_buffer)
         last_gui_buffer = ptr_first_buffer->prev_buffer;
 
-    /* compute "number - 1" on next buffers if auto renumber is ON */
+    /* Compute "number - 1" on next buffers if auto renumber is ON. */
     if (auto_renumber)
     {
         for (ptr_buffer = ptr_last_buffer->next_buffer; ptr_buffer;
@@ -4352,7 +4352,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         }
     }
 
-    /* search for new position in the list */
+    /* Search for new position in the list. */
     for (ptr_buffer_pos = gui_buffers; ptr_buffer_pos;
          ptr_buffer_pos = ptr_buffer_pos->next_buffer)
     {
@@ -4362,7 +4362,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
 
     if (ptr_buffer_pos)
     {
-        /* insert before buffer found */
+        /* Insert before buffer found. */
         for (ptr_buffer = ptr_first_buffer; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
@@ -4380,7 +4380,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
             (ptr_buffer_pos->prev_buffer)->next_buffer = ptr_first_buffer;
         ptr_buffer_pos->prev_buffer = ptr_last_buffer;
 
-        /* compute "number + 1" on next buffers */
+        /* Compute "number + 1" on next buffers. */
         if (ptr_last_buffer->next_buffer
             && (ptr_last_buffer->next_buffer->number == number))
         {
@@ -4391,7 +4391,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     }
     else
     {
-        /* number not found (too big)? => add to the end */
+        /* Number not found (too big)? => add to the end. */
         for (ptr_buffer = ptr_first_buffer; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
@@ -4431,11 +4431,11 @@ gui_buffer_swap (int number1, int number2)
     struct t_gui_buffer *ptr_buffer, *ptr_first_buffer[2], *ptr_last_buffer[2];
     int number;
 
-    /* swap buffer with itself? nothing to do! */
+    /* Swap buffer with itself? Nothing to do! */
     if (number1 == number2)
         return;
 
-    /* ensure we have number1 < number2: if not, exchange numbers */
+    /* Ensure we have number1 < number2: if not, exchange numbers. */
     if (number1 > number2)
     {
         number = number1;
@@ -4443,7 +4443,7 @@ gui_buffer_swap (int number1, int number2)
         number2 = number;
     }
 
-    /* search for first and last buffers, for each number */
+    /* Search for first and last buffers, for each number. */
     gui_buffer_search_range (number1, number1,
                              &ptr_first_buffer[0],
                              &ptr_last_buffer[0],
@@ -4457,20 +4457,20 @@ gui_buffer_swap (int number1, int number2)
     if (!ptr_first_buffer[1] || !ptr_last_buffer[1])
         return;
 
-    /* first set gui_buffers/last_gui_buffers if they are affected by the swap */
+    /* First set gui_buffers/last_gui_buffers if they are affected by the swap. */
     if (gui_buffers == ptr_first_buffer[0])
         gui_buffers = ptr_first_buffer[1];
     if (last_gui_buffer == ptr_last_buffer[1])
         last_gui_buffer = ptr_last_buffer[0];
 
-    /* swap the pointer outside elements in the linked list */
+    /* Swap the pointer outside elements in the linked list. */
     if (ptr_first_buffer[0]->prev_buffer)
         (ptr_first_buffer[0]->prev_buffer)->next_buffer = ptr_first_buffer[1];
     if (ptr_last_buffer[1]->next_buffer)
         (ptr_last_buffer[1]->next_buffer)->prev_buffer = ptr_last_buffer[0];
     if (ptr_last_buffer[0]->next_buffer == ptr_first_buffer[1])
     {
-        /* special case: adjacent buffers */
+        /* Special case: adjacent buffers */
         ptr_first_buffer[1]->prev_buffer = ptr_first_buffer[0]->prev_buffer;
         ptr_first_buffer[0]->prev_buffer = ptr_last_buffer[1];
         ptr_last_buffer[0]->next_buffer = ptr_last_buffer[1]->next_buffer;
@@ -4482,17 +4482,17 @@ gui_buffer_swap (int number1, int number2)
             (ptr_first_buffer[1]->prev_buffer)->next_buffer = ptr_first_buffer[0];
         if (ptr_last_buffer[0]->next_buffer)
             (ptr_last_buffer[0]->next_buffer)->prev_buffer = ptr_last_buffer[1];
-        /* swap first[0]->prev <-> first[1]->prev */
+        /* Swap first[0]->prev <-> first[1]->prev. */
         ptr_buffer = ptr_first_buffer[0]->prev_buffer;
         ptr_first_buffer[0]->prev_buffer = ptr_first_buffer[1]->prev_buffer;
         ptr_first_buffer[1]->prev_buffer = ptr_buffer;
-        /* swap last[0]->next <-> last[1]->next */
+        /* Swap last[0]->next <-> last[1]->next. */
         ptr_buffer = ptr_last_buffer[0]->next_buffer;
         ptr_last_buffer[0]->next_buffer = ptr_last_buffer[1]->next_buffer;
         ptr_last_buffer[1]->next_buffer = ptr_buffer;
     }
 
-    /* swap the numbers inside buffers */
+    /* Swap the numbers inside buffers. */
     for (ptr_buffer = ptr_first_buffer[0]; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -4508,7 +4508,7 @@ gui_buffer_swap (int number1, int number2)
             break;
     }
 
-    /* send signals */
+    /* Send signals. */
     (void) gui_buffer_send_signal (
         ptr_first_buffer[0],
         "buffer_moved",
@@ -4535,10 +4535,10 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
         return;
 
     /*
-     * nothing to do if:
+     * Nothing to do if:
      * - there is only one buffer
      * - buffer and target are the same
-     * - numbers of buffers are the same (already merged)
+     * - numbers of buffers are the same (already merged).
      */
     if ((gui_buffers == last_gui_buffer)
         || (buffer == target_buffer)
@@ -4547,7 +4547,7 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
         return;
     }
 
-    /* check if current buffer and target buffers have "formatted" content */
+    /* Check if current buffer and target buffers have "formatted" content. */
     if ((buffer->type != GUI_BUFFER_TYPE_FORMATTED)
         || (target_buffer->type != GUI_BUFFER_TYPE_FORMATTED))
     {
@@ -4558,7 +4558,7 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
         return;
     }
 
-    /* search for first and last buffer to merge */
+    /* Search for first and last buffer to merge. */
     gui_buffer_search_range (buffer->number, buffer->number,
                              &ptr_first_buffer[0],
                              &ptr_last_buffer[0],
@@ -4566,7 +4566,7 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
     if (!ptr_first_buffer[0] || !ptr_last_buffer[0])
         return;
 
-    /* search for first and last target buffer */
+    /* Search for first and last target buffer. */
     gui_buffer_search_range (target_buffer->number, target_buffer->number,
                              &ptr_first_buffer[1],
                              &ptr_last_buffer[1],
@@ -4575,8 +4575,8 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
         return;
 
     /*
-     * save old buffer numbers to send signal "buffer_moved" for each buffer
-     * really moved, after the merge operation
+     * Save old buffer numbers to send signal "buffer_moved" for each buffer
+     * really moved, after the merge operation.
      */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -4584,7 +4584,7 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
         ptr_buffer->old_number = ptr_buffer->number;
     }
 
-    /* remove buffer(s) to merge from list */
+    /* Remove buffer(s) to merge from list. */
     if (ptr_first_buffer[0]->prev_buffer)
         (ptr_first_buffer[0]->prev_buffer)->next_buffer = ptr_last_buffer[0]->next_buffer;
     if (ptr_last_buffer[0]->next_buffer)
@@ -4594,7 +4594,7 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
     if (last_gui_buffer == ptr_last_buffer[0])
         last_gui_buffer = ptr_first_buffer[0]->prev_buffer;
 
-    /* compute "number - 1" on next buffers if auto renumber is ON */
+    /* Compute "number - 1" on next buffers if auto renumber is ON. */
     if (CONFIG_BOOLEAN(config_look_buffer_auto_renumber))
     {
         for (ptr_buffer = ptr_last_buffer[0]->next_buffer; ptr_buffer;
@@ -4604,7 +4604,7 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
         }
     }
 
-    /* insert new merged buffers after target buffer */
+    /* Insert new merged buffers after target buffer. */
     if (ptr_last_buffer[1] == last_gui_buffer)
         last_gui_buffer = ptr_last_buffer[0];
     if (ptr_last_buffer[1]->next_buffer)
@@ -4613,7 +4613,7 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
     ptr_last_buffer[1]->next_buffer = ptr_first_buffer[0];
     ptr_first_buffer[0]->prev_buffer = ptr_last_buffer[1];
 
-    /* change number in new merged buffer(s) */
+    /* Change number in new merged buffer(s). */
     for (ptr_buffer = ptr_first_buffer[0]; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -4622,14 +4622,14 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
             break;
     }
 
-    /* mix lines */
+    /* Mix lines. */
     gui_line_mix_buffers (buffer);
 
     /*
-     * set buffer as active in merged buffers group, unless a window is
+     * Set buffer as active in merged buffers group, unless a window is
      * already displaying another buffer of the group: in this case the
      * displayed buffer must remain the active one, otherwise the window
-     * would display a buffer that is not the active one in the group
+     * would display a buffer that is not the active one in the group.
      */
     ptr_buffer_active = buffer;
     for (ptr_window = gui_windows; ptr_window;
@@ -4681,11 +4681,11 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     if (!buffer)
         return;
 
-    /* nothing to do if there is only one buffer */
+    /* Nothing to do if there is only one buffer. */
     if (gui_buffers == last_gui_buffer)
         return;
 
-    /* nothing to do if buffer is not merged with at least one buffer */
+    /* Nothing to do if buffer is not merged with at least one buffer. */
     num_merged = gui_buffer_count_merged_buffers (buffer->number);
     if (num_merged < 2)
         return;
@@ -4695,14 +4695,14 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     if (number > GUI_BUFFER_NUMBER_MAX)
         number = GUI_BUFFER_NUMBER_MAX;
 
-    /* by default, we move buffer to buffer->number + 1 */
+    /* By default, we move buffer to buffer->number + 1. */
     if ((number < 1)  || (number == buffer->number))
     {
         number = buffer->number + 1;
     }
     else
     {
-        /* if auto renumber is ON, max number is last buffer + 1 */
+        /* If auto renumber is ON, max number is last buffer + 1. */
         if (CONFIG_BOOLEAN(config_look_buffer_auto_renumber)
             && (number > last_gui_buffer->number + 1))
         {
@@ -4712,7 +4712,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 
     if (num_merged == 2)
     {
-        /* only one buffer will remain, so it will not be merged anymore */
+        /* Only one buffer will remain, so it will not be merged anymore. */
         gui_line_mixed_free_all (buffer);
         gui_line_lines_free (buffer->mixed_lines);
         for (ptr_buffer = gui_buffers; ptr_buffer;
@@ -4728,7 +4728,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     }
     else
     {
-        /* remove this buffer from mixed_lines, but keep other buffers merged */
+        /* Remove this buffer from mixed_lines, but keep other buffers merged. */
         ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer, 0);
         if (!ptr_new_active_buffer)
             ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer, 1);
@@ -4739,7 +4739,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
         buffer->lines = buffer->own_lines;
     }
 
-    /* remove buffer from list */
+    /* Remove buffer from list. */
     if (buffer->prev_buffer)
         (buffer->prev_buffer)->next_buffer = buffer->next_buffer;
     if (buffer->next_buffer)
@@ -4749,7 +4749,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     if (last_gui_buffer == buffer)
         last_gui_buffer = buffer->prev_buffer;
 
-    /* move buffer */
+    /* Move buffer. */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -4758,7 +4758,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     }
     if (ptr_buffer)
     {
-        /* insert buffer into the list (before buffer found) */
+        /* Insert buffer into the list (before buffer found). */
         buffer->prev_buffer = ptr_buffer->prev_buffer;
         buffer->next_buffer = ptr_buffer;
         if (ptr_buffer->prev_buffer)
@@ -4769,7 +4769,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     }
     else
     {
-        /* add buffer to the end */
+        /* Add buffer to the end. */
         buffer->prev_buffer = last_gui_buffer;
         buffer->next_buffer = NULL;
         last_gui_buffer->next_buffer = buffer;
@@ -4778,7 +4778,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     buffer->active = 1;
     buffer->number = number;
 
-    /* compute "number + 1" on next buffers */
+    /* Compute "number + 1" on next buffers. */
     if (buffer->next_buffer
         && (buffer->next_buffer->number == number))
     {
@@ -4822,7 +4822,7 @@ gui_buffer_unmerge_all (void)
             gui_buffer_unmerge (ptr_buffer, -1);
             ptr_buffer = ptr_next_buffer;
         }
-        /* go to the next number */
+        /* Go to the next number. */
         while (ptr_buffer && (ptr_buffer->number == number))
         {
             ptr_buffer = ptr_buffer->next_buffer;
@@ -4911,7 +4911,7 @@ gui_buffer_sort_by_layout_number (void)
     gui_buffers = NULL;
     last_gui_buffer = NULL;
 
-    /* list with buffers that are NOT in layout (layout_number == 0) */
+    /* List with buffers that are NOT in layout (layout_number == 0). */
     extra_buffers = NULL;
     last_extra_buffer = NULL;
 
@@ -4920,17 +4920,17 @@ gui_buffer_sort_by_layout_number (void)
         ptr_next_buffer = ptr_buffer->next_buffer;
 
         /*
-         * add buffer if it is in layout (if not, it's stored in a temporary
-         * list and will be added later)
+         * Add buffer if it is in layout (if not, it's stored in a temporary
+         * list and will be added later).
          */
         if (ptr_buffer->layout_number > 0)
         {
-            /* insert buffer now in the final list */
+            /* Insert buffer now in the final list. */
             gui_buffer_insert (ptr_buffer);
         }
         else
         {
-            /* move the buffer in a temporary list */
+            /* Move the buffer in a temporary list. */
             ptr_buffer->prev_buffer = last_extra_buffer;
             ptr_buffer->next_buffer = NULL;
             if (last_extra_buffer)
@@ -4943,7 +4943,7 @@ gui_buffer_sort_by_layout_number (void)
         ptr_buffer = ptr_next_buffer;
     }
 
-    /* add buffers that are NOT in layout */
+    /* Add buffers that are NOT in layout. */
     ptr_buffer = extra_buffers;
     while (ptr_buffer)
     {
@@ -5011,13 +5011,13 @@ gui_buffer_undo_add (struct t_gui_buffer *buffer)
     if (!buffer)
         return;
 
-    /* undo disabled by configuration */
+    /* Undo disabled by configuration. */
     if (CONFIG_INTEGER(config_look_input_undo_max) == 0)
         goto end;
 
     /*
-     * if nothing has changed since snapshot of input buffer, then do nothing
-     * (just discard snapshot)
+     * If nothing has changed since snapshot of input buffer, then do nothing
+     * (just discard snapshot).
      */
     if ((buffer->input_undo_snap)->data
         && (strcmp (buffer->input_buffer, (buffer->input_undo_snap)->data) == 0))
@@ -5025,15 +5025,15 @@ gui_buffer_undo_add (struct t_gui_buffer *buffer)
         goto end;
     }
 
-    /* max number of undo reached? */
+    /* Max number of undo reached? */
     if ((buffer->input_undo_count > 0)
         && (buffer->input_undo_count >= CONFIG_INTEGER(config_look_input_undo_max) + 1))
     {
-        /* remove older undo in buffer (first in list) */
+        /* Remove older undo in buffer (first in list). */
         gui_buffer_undo_free (buffer, buffer->input_undo);
     }
 
-    /* remove all undos after current undo */
+    /* Remove all undos after current undo. */
     if (buffer->ptr_input_undo)
     {
         while (buffer->ptr_input_undo->next_undo)
@@ -5042,7 +5042,7 @@ gui_buffer_undo_add (struct t_gui_buffer *buffer)
         }
     }
 
-    /* if input is the same as current undo, then do not add it */
+    /* If input is the same as current undo, then do not add it. */
     if (buffer->ptr_input_undo
         && (buffer->ptr_input_undo)->data
         && (buffer->input_undo_snap)->data
@@ -5067,7 +5067,7 @@ gui_buffer_undo_add (struct t_gui_buffer *buffer)
         new_undo->pos = buffer->input_buffer_pos;
     }
 
-    /* add undo to the list */
+    /* Add undo to the list. */
     new_undo->prev_undo = buffer->last_input_undo;
     new_undo->next_undo = NULL;
     if (buffer->last_input_undo)
@@ -5094,7 +5094,7 @@ gui_buffer_undo_free (struct t_gui_buffer *buffer,
     if (!buffer || !undo)
         return;
 
-    /* update current undo if needed */
+    /* Update current undo if needed. */
     if (buffer->ptr_input_undo == undo)
     {
         if ((buffer->ptr_input_undo)->next_undo)
@@ -5103,10 +5103,10 @@ gui_buffer_undo_free (struct t_gui_buffer *buffer,
             buffer->ptr_input_undo = (buffer->ptr_input_undo)->prev_undo;
     }
 
-    /* free data */
+    /* Free data. */
     free (undo->data);
 
-    /* remove undo from list */
+    /* Remove undo from list. */
     if (undo->prev_undo)
         (undo->prev_undo)->next_undo = undo->next_undo;
     if (undo->next_undo)
@@ -5150,10 +5150,10 @@ gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
     int is_command;
 
     /*
-     * move of input is allowed if:
+     * Move of input is allowed if:
      * - 2 buffers are different
      * - input_share is not set to "none"
-     * - input buffer in first buffer is not empty
+     * - input buffer in first buffer is not empty.
      */
     if (!from_buffer || !to_buffer || (from_buffer == to_buffer)
         || (CONFIG_ENUM(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_NONE)
@@ -5161,9 +5161,9 @@ gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
         return;
 
     /*
-     * if input is command and that only text is allowed,
+     * If input is command and that only text is allowed,
      * or if input is text and that only command is allowed,
-     * then do nothing
+     * then do nothing.
      */
     is_command = (string_input_for_buffer (from_buffer->input_buffer) == NULL) ? 1 : 0;
     if ((is_command && (CONFIG_ENUM(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_TEXT))
@@ -5171,14 +5171,14 @@ gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
         return;
 
     /*
-     * if overwrite is off and that input of target buffer is not empty,
-     * then do nothing
+     * If overwrite is off and that input of target buffer is not empty,
+     * then do nothing.
      */
     if ((!CONFIG_BOOLEAN(config_look_input_share_overwrite))
         && to_buffer->input_buffer && to_buffer->input_buffer[0])
         return;
 
-    /* move input_buffer */
+    /* Move input_buffer. */
     free (to_buffer->input_buffer);
     to_buffer->input_buffer = from_buffer->input_buffer;
     to_buffer->input_buffer_alloc = from_buffer->input_buffer_alloc;
@@ -5188,7 +5188,7 @@ gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
     to_buffer->input_buffer_1st_display = from_buffer->input_buffer_1st_display;
     gui_buffer_input_buffer_init (from_buffer);
 
-    /* move undo data */
+    /* Move undo data. */
     gui_buffer_undo_free_all (to_buffer);
     (to_buffer->input_undo_snap)->data = (from_buffer->input_undo_snap)->data;
     (to_buffer->input_undo_snap)->pos = (from_buffer->input_undo_snap)->pos;
@@ -5247,8 +5247,8 @@ gui_buffer_jump_smart (struct t_gui_window *window)
     }
 
     /*
-     * scroll to bottom if window was scrolled (except if scrolled
-     * beyond the end)
+     * Scroll to bottom if window was scrolled (except if scrolled
+     * beyond the end).
      */
     if (scroll_to_bottom
         && window->scroll
@@ -5272,7 +5272,7 @@ gui_buffer_jump_last_visible_number (struct t_gui_window *window)
     if (!window)
         return;
 
-    /* search last non-hidden buffer */
+    /* Search last non-hidden buffer. */
     for (ptr_buffer = last_gui_buffer; ptr_buffer;
          ptr_buffer = ptr_buffer->prev_buffer)
     {
@@ -5366,7 +5366,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -5494,7 +5494,7 @@ gui_buffer_hdata_input_undo_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -5520,7 +5520,7 @@ gui_buffer_hdata_buffer_visited_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -5746,7 +5746,7 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
     for (ptr_line = buffer->lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {
-        /* display line without colors */
+        /* Display line without colors. */
         prefix_without_colors = (ptr_line->data->prefix) ?
             gui_color_decode (ptr_line->data->prefix, NULL) : NULL;
         message_without_colors = (ptr_line->data->message) ?
@@ -5779,7 +5779,7 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
                     ptr_line->data->id, buf);
         log_printf ("  usec of date printed: %d", date_usec_printed);
 
-        /* display raw message for line */
+        /* Display raw message for line. */
         if (ptr_line->data->message)
         {
             log_printf ("");

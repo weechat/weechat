@@ -71,7 +71,7 @@ TEST(IrcServer, MsgqAddBufferLimit)
     memset (chunk, 'a', sizeof (chunk) - 1);
     chunk[sizeof (chunk) - 1] = '\0';
 
-    /* feed a lot of data with no end-of-line */
+    /* Feed a lot of data with no end-of-line. */
     for (i = 0; i < 100; i++)
     {
         irc_server_msgq_add_buffer (server, chunk);
@@ -79,10 +79,10 @@ TEST(IrcServer, MsgqAddBufferLimit)
     CHECK(server->unterminated_message);
     length1 = strlen (server->unterminated_message);
 
-    /* the buffer must be bounded (not ~400 KB) */
+    /* The buffer must be bounded (not ~400 KB). */
     CHECK(length1 <= IRC_SERVER_RECV_MSG_MAX_LENGTH + sizeof (chunk));
 
-    /* feeding more data must not grow the buffer any further */
+    /* Feeding more data must not grow the buffer any further. */
     for (i = 0; i < 100; i++)
     {
         irc_server_msgq_add_buffer (server, chunk);
@@ -311,35 +311,35 @@ TEST(IrcServer, EvalFingerprint)
 
     WEE_TEST_STR("", irc_server_eval_fingerprint (server));
 
-    /* invalid: evaluated to empty string */
+    /* Invalid: evaluated to empty string */
     config_file_option_set (server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT],
                             "${empty_value}", 1);
     STRCMP_EQUAL(NULL, irc_server_eval_fingerprint (server));
 
-    /* invalid fingerprint value */
+    /* Invalid fingerprint value */
     config_file_option_set (server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT],
                             "invalid", 1);
     STRCMP_EQUAL(NULL, irc_server_eval_fingerprint (server));
 
-    /* invalid fingerprint value (same length as SHA-1) */
+    /* Invalid fingerprint value (same length as SHA-1) */
     config_file_option_set (server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT],
                             "zzzz0aeb5ebce80ad5c201ebc358d616904czzzz", 1);
     STRCMP_EQUAL(NULL, irc_server_eval_fingerprint (server));
 
-    /* valid SHA-1 fingerprint */
+    /* Valid SHA-1 fingerprint */
     config_file_option_set (server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT],
                             "340b0aeb5ebce80ad5c201ebc358d616904ca84e", 1);
     WEE_TEST_STR("340b0aeb5ebce80ad5c201ebc358d616904ca84e",
                  irc_server_eval_fingerprint (server));
 
-    /* valid SHA-256 fingerprint */
+    /* Valid SHA-256 fingerprint */
     config_file_option_set (
         server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT],
         "6a52951b8c2541c82bf11c83534631447dbae36b6576fe79fa6a5d3467eb3af9", 1);
     WEE_TEST_STR("6a52951b8c2541c82bf11c83534631447dbae36b6576fe79fa6a5d3467eb3af9",
                  irc_server_eval_fingerprint (server));
 
-    /* valid SHA-256 fingerprint */
+    /* Valid SHA-256 fingerprint */
     config_file_option_set (
         server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT],
         "738c7bb821afe25b6be60386883bd8edb3e972bee442f7d75c01aa65155b5887"
@@ -349,7 +349,7 @@ TEST(IrcServer, EvalFingerprint)
         "c3512362e1008eb71cdd343449440b0ea0559b1e11743009ddf62ab1d3618ace",
         irc_server_eval_fingerprint (server));
 
-    /* valid SHA-1 + SHA-256 fingerprints */
+    /* Valid SHA-1 + SHA-256 fingerprints */
     config_file_option_set (
         server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT],
         "340b0aeb5ebce80ad5c201ebc358d616904ca84e,"
@@ -855,7 +855,7 @@ TEST(IrcServer, AllocWithUrl)
     POINTERS_EQUAL(NULL, irc_server_alloc_with_url ("test"));
     POINTERS_EQUAL(NULL, irc_server_alloc_with_url ("test://irc.example.org"));
 
-    /* address */
+    /* Address */
     server = irc_server_alloc_with_url ("irc://irc.example.org");
     CHECK(server);
     STRCMP_EQUAL(server->name, "irc.example.org");
@@ -868,7 +868,7 @@ TEST(IrcServer, AllocWithUrl)
     STRCMP_EQUAL(NULL, CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     irc_server_free (server);
 
-    /* address/port */
+    /* Address/port */
     server = irc_server_alloc_with_url ("irc://irc.example.org:7000");
     CHECK(server);
     STRCMP_EQUAL(server->name, "irc.example.org");
@@ -881,7 +881,7 @@ TEST(IrcServer, AllocWithUrl)
     STRCMP_EQUAL(NULL, CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     irc_server_free (server);
 
-    /* address/port, IPv6 */
+    /* Address/port, IPv6 */
     server = irc_server_alloc_with_url ("irc6://irc.example.org:7000");
     CHECK(server);
     STRCMP_EQUAL(server->name, "irc.example.org");
@@ -894,7 +894,7 @@ TEST(IrcServer, AllocWithUrl)
     STRCMP_EQUAL(NULL, CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     irc_server_free (server);
 
-    /* address, TLS */
+    /* Address, TLS */
     server = irc_server_alloc_with_url ("ircs://irc.example.org");
     CHECK(server);
     STRCMP_EQUAL(server->name, "irc.example.org");
@@ -907,7 +907,7 @@ TEST(IrcServer, AllocWithUrl)
     STRCMP_EQUAL(NULL, CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     irc_server_free (server);
 
-    /* address, IPv6, TLS */
+    /* Address, IPv6, TLS */
     server = irc_server_alloc_with_url ("irc6s://irc.example.org");
     CHECK(server);
     STRCMP_EQUAL(server->name, "irc.example.org");
@@ -920,7 +920,7 @@ TEST(IrcServer, AllocWithUrl)
     STRCMP_EQUAL(NULL, CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     irc_server_free (server);
 
-    /* address/port, TLS */
+    /* Address/port, TLS */
     server = irc_server_alloc_with_url ("ircs://irc.example.org:7000");
     CHECK(server);
     STRCMP_EQUAL(server->name, "irc.example.org");
@@ -933,7 +933,7 @@ TEST(IrcServer, AllocWithUrl)
     STRCMP_EQUAL(NULL, CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     irc_server_free (server);
 
-    /* address, nick */
+    /* Address, nick */
     server = irc_server_alloc_with_url ("irc://alice@irc.example.org");
     CHECK(server);
     STRCMP_EQUAL(server->name, "irc.example.org");
@@ -947,7 +947,7 @@ TEST(IrcServer, AllocWithUrl)
     STRCMP_EQUAL(NULL, CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     irc_server_free (server);
 
-    /* address, nick, password */
+    /* Address, nick, password */
     server = irc_server_alloc_with_url ("irc://alice:secret@irc.example.org");
     CHECK(server);
     STRCMP_EQUAL(server->name, "irc.example.org");
@@ -962,7 +962,7 @@ TEST(IrcServer, AllocWithUrl)
     STRCMP_EQUAL(NULL, CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     irc_server_free (server);
 
-    /* address, nick, password, channels */
+    /* Address, nick, password, channels */
     server = irc_server_alloc_with_url (
         "irc://alice:secret@irc.example.org/#test1,#test2");
     CHECK(server);
@@ -1638,20 +1638,20 @@ TEST_GROUP(IrcServerConnected)
 
     void setup ()
     {
-        /* create a fake server (no I/O) */
+        /* Create a fake server (no I/O). */
         run_cmd_quiet ("/mute /server add " IRC_FAKE_SERVER " fake:127.0.0.1 "
                        "-nicks=nick1,nick2,nick3");
 
-        /* connect to the fake server */
+        /* Connect to the fake server. */
         run_cmd_quiet ("/mute /connect " IRC_FAKE_SERVER);
 
-        /* get the server pointer */
+        /* Get the server pointer. */
         ptr_server = irc_server_search (IRC_FAKE_SERVER);
     }
 
     void teardown ()
     {
-        /* disconnect and delete the fake server */
+        /* Disconnect and delete the fake server. */
         run_cmd_quiet ("/mute /disconnect " IRC_FAKE_SERVER);
         run_cmd_quiet ("/mute /server del " IRC_FAKE_SERVER);
         ptr_server = NULL;
@@ -1671,63 +1671,63 @@ TEST(IrcServerConnected, BuildAutojoin)
 
     STRCMP_EQUAL(NULL, irc_server_build_autojoin (ptr_server));
 
-    /* join one channel */
+    /* Join one channel. */
     server_recv (":alice!user@host JOIN #test1");
     WEE_TEST_STR("#test1", irc_server_build_autojoin (ptr_server));
 
-    /* simulate a "parted" channel */
+    /* Simulate a "parted" channel. */
     ptr_server->channels->part = 1;
     STRCMP_EQUAL(NULL, irc_server_build_autojoin (ptr_server));
 
-    /* restore "part" flag */
+    /* Restore "part" flag. */
     ptr_server->channels->part = 0;
     WEE_TEST_STR("#test1", irc_server_build_autojoin (ptr_server));
 
-    /* add a key on channel */
+    /* Add a key on channel. */
     server_recv (":alice!user@host MODE #test1 +k key1");
     WEE_TEST_STR("#test1 key1",
                  irc_server_build_autojoin (ptr_server));
 
-    /* remove key */
+    /* Remove key. */
     server_recv (":alice!user@host MODE #test1 -k");
     WEE_TEST_STR("#test1",
                  irc_server_build_autojoin (ptr_server));
 
-    /* join a second channel */
+    /* Join a second channel. */
     server_recv (":alice!user@host JOIN #test2");
     WEE_TEST_STR("#test1,#test2", irc_server_build_autojoin (ptr_server));
 
-    /* join a third channel */
+    /* Join a third channel. */
     server_recv (":alice!user@host JOIN #test3");
     WEE_TEST_STR("#test1,#test2,#test3",
                  irc_server_build_autojoin (ptr_server));
 
-    /* add key on first channel */
+    /* Add key on first channel. */
     server_recv (":alice!user@host MODE #test1 +k key1");
     WEE_TEST_STR("#test1,#test2,#test3 key1",
                  irc_server_build_autojoin (ptr_server));
 
-    /* add key on second channel */
+    /* Add key on second channel. */
     server_recv (":alice!user@host MODE #test2 +k key2");
     WEE_TEST_STR("#test1,#test2,#test3 key1,key2",
                  irc_server_build_autojoin (ptr_server));
 
-    /* add key on third channel */
+    /* Add key on third channel. */
     server_recv (":alice!user@host MODE #test3 +k key3");
     WEE_TEST_STR("#test1,#test2,#test3 key1,key2,key3",
                  irc_server_build_autojoin (ptr_server));
 
-    /* remove key from first channel */
+    /* Remove key from first channel. */
     server_recv (":alice!user@host MODE #test1 -k");
     WEE_TEST_STR("#test2,#test3,#test1 key2,key3",
                  irc_server_build_autojoin (ptr_server));
 
-    /* remove key from second channel */
+    /* Remove key from second channel. */
     server_recv (":alice!user@host MODE #test2 -k");
     WEE_TEST_STR("#test3,#test1,#test2 key3",
                  irc_server_build_autojoin (ptr_server));
 
-    /* remove key from third channel */
+    /* Remove key from third channel. */
     server_recv (":alice!user@host MODE #test3 -k");
     WEE_TEST_STR("#test1,#test2,#test3",
                  irc_server_build_autojoin (ptr_server));

@@ -98,9 +98,9 @@ relay_server_get_protocol_args (const char *protocol_and_args,
     if ((opt_ipv4 == -1) && (opt_ipv6 == -1) && (opt_unix_socket == -1))
     {
         /*
-         * no IPv4/IPv6/UNIX specified, then use defaults:
+         * No IPv4/IPv6/UNIX specified, then use defaults:
          * - IPv4 enabled
-         * - IPv6 enabled if option relay.network.ipv6 is on
+         * - IPv6 enabled if option relay.network.ipv6 is on.
          */
         opt_ipv4 = 1;
         opt_ipv6 = weechat_config_boolean (relay_config_network_ipv6);
@@ -191,7 +191,7 @@ relay_server_search_port (int port)
             return ptr_server;
     }
 
-    /* server not found */
+    /* Server not found */
     return NULL;
 }
 
@@ -212,12 +212,12 @@ relay_server_search_path (const char *path)
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        /* only include UNIX socket relays, to allow for numerical paths */
+        /* Only include UNIX socket relays, to allow for numerical paths. */
         if (ptr_server->unix_socket && (strcmp (path, ptr_server->path) == 0))
             return ptr_server;
     }
 
-    /* server not found */
+    /* Server not found */
     return NULL;
 }
 /*
@@ -268,7 +268,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
     char unix_address[sizeof (client_addr_unix.sun_path)];
     char *ptr_ip_address, *relay_password, *relay_totp_secret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) fd;
 
@@ -320,7 +320,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         goto error;
     }
 
-    /* check if relay password is empty and if it is not allowed */
+    /* Check if relay password is empty and if it is not allowed. */
     relay_password = weechat_string_eval_expression (
         weechat_config_string (relay_config_network_password),
         NULL, NULL, NULL);
@@ -339,7 +339,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
     {
         /*
          * TOTP can be enabled only as second factor, in addition to the
-         * password (only for weechat protocol)
+         * password (only for weechat protocol).
          */
         relay_totp_secret = weechat_string_eval_expression (
             weechat_config_string (relay_config_network_totp_secret),
@@ -362,7 +362,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         }
     }
 
-    /* check if we have reached the max number of clients on this port */
+    /* Check if we have reached the max number of clients on this port. */
     max_clients = weechat_config_integer (relay_config_network_max_clients);
     if (max_clients > 0)
     {
@@ -382,7 +382,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         }
     }
 
-    /* get the IP address */
+    /* Get the IP address. */
     ptr_ip_address = NULL;
     if (server->ipv6)
     {
@@ -395,7 +395,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
 
             if (strncmp (ptr_ip_address, "::ffff:", 7) == 0)
             {
-                /* actually an IPv4-mapped IPv6 address, so skip "::ffff:" */
+                /* Actually an IPv4-mapped IPv6 address, so skip "::ffff:". */
                 ptr_ip_address += 7;
             }
         }
@@ -418,7 +418,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         ptr_ip_address = unix_address;
     }
 
-    /* check if IP is allowed, if not, just close socket */
+    /* Check if IP is allowed, if not, just close socket. */
     if (relay_config_regex_allowed_ips
         && (regexec (relay_config_regex_allowed_ips, ptr_ip_address, 0, NULL, 0) != 0))
     {
@@ -433,13 +433,13 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         goto error;
     }
 
-    /* set non-blocking mode for socket */
+    /* Set non-blocking mode for socket. */
     flags = fcntl (client_fd, F_GETFL);
     if (flags == -1)
         flags = 0;
     fcntl (client_fd, F_SETFL, flags | O_NONBLOCK);
 
-    /* set socket option SO_REUSEADDR (only for TCP socket) */
+    /* Set socket option SO_REUSEADDR (only for TCP socket). */
     if (!server->unix_socket)
     {
         set = 1;
@@ -455,7 +455,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         }
     }
 
-    /* add the client */
+    /* Add the client. */
     relay_client_new (client_fd, ptr_ip_address, server);
 
     goto end;
@@ -573,12 +573,12 @@ relay_server_create_socket (struct t_relay_server *server)
         }
         if (rc < 0)
             return 0;
-        /* just in case a socket already exists */
+        /* Just in case a socket already exists. */
         unlink (server->path);
     }
 
 
-    /* create socket */
+    /* Create socket. */
     server->sock = socket (domain, SOCK_STREAM, 0);
     if (server->sock < 0)
     {
@@ -596,7 +596,7 @@ relay_server_create_socket (struct t_relay_server *server)
     }
 
 #if defined(IPV6_V6ONLY) && !defined(__OpenBSD__)
-    /* set option IPV6_V6ONLY to 0 or 1 */
+    /* Set option IPV6_V6ONLY to 0 or 1. */
     if (server->ipv6)
     {
         set = (server->ipv4) ? 0 : 1;
@@ -615,7 +615,7 @@ relay_server_create_socket (struct t_relay_server *server)
     }
 #endif
 
-    /* set option SO_REUSEADDR to 1 (only for TCP socket) */
+    /* Set option SO_REUSEADDR to 1 (only for TCP socket). */
     if (!server->unix_socket)
     {
         set = 1;
@@ -633,7 +633,7 @@ relay_server_create_socket (struct t_relay_server *server)
         }
     }
 
-    /* set option SO_KEEPALIVE to 1 (only for TCP socket) */
+    /* Set option SO_KEEPALIVE to 1 (only for TCP socket). */
     if (!server->unix_socket)
     {
         set = 1;
@@ -651,7 +651,7 @@ relay_server_create_socket (struct t_relay_server *server)
         }
     }
 
-    /* bind */
+    /* Bind. */
     if (bind (server->sock, (struct sockaddr *)ptr_addr, addr_size) < 0)
     {
         if (server->unix_socket)
@@ -677,14 +677,14 @@ relay_server_create_socket (struct t_relay_server *server)
         return 0;
     }
 
-    /* change permissions on the unix socket */
+    /* Change permissions on the unix socket. */
     if (server->unix_socket)
     {
         if (!weechat_util_parse_long (
                 weechat_config_string (relay_config_network_unix_socket_permissions),
                 8, &unix_socket_perms))
         {
-            /* default: owner only (rwx------) */
+            /* Default: owner only (rwx------) */
             unix_socket_perms = 0700;
         }
         if (chmod (server->path, unix_socket_perms) < 0)
@@ -820,7 +820,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
     }
 #endif /* HAVE_CJSON */
 
-    /* look for duplicate ports/paths */
+    /* Look for duplicate ports/paths. */
     dup_server = (unix_socket) ?
         relay_server_search_path (path) : relay_server_search_port (port);
     if (dup_server)
@@ -953,7 +953,7 @@ relay_server_free (struct t_relay_server *server)
     if (!server)
         return;
 
-    /* remove server from list */
+    /* Remove server from list. */
     if (last_relay_server == server)
         last_relay_server = server->prev_server;
     if (server->prev_server)
@@ -966,7 +966,7 @@ relay_server_free (struct t_relay_server *server)
     if (server->next_server)
         (server->next_server)->prev_server = server->prev_server;
 
-    /* free data */
+    /* Free data. */
     relay_server_close_socket (server);
     free (server->protocol_string);
     free (server->protocol_args);

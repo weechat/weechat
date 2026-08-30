@@ -242,7 +242,7 @@ TEST(IrcJoin, SplitBuildString)
     free (autojoin);
     arraylist_free (arraylist);
 
-    /* server with casemapping RFC1459 */
+    /* Server with casemapping RFC1459 */
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
     server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
@@ -260,7 +260,7 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
     irc_server_free (server);
 
-    /* server with casemapping STRICT_RFC1459 */
+    /* Server with casemapping STRICT_RFC1459 */
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
     server->casemapping = IRC_SERVER_CASEMAPPING_STRICT_RFC1459;
@@ -280,7 +280,7 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
     irc_server_free (server);
 
-    /* server with casemapping RFC1459, sort channels alphabetically */
+    /* Server with casemapping RFC1459, sort channels alphabetically */
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
     server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
@@ -305,7 +305,7 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
     irc_server_free (server);
 
-    /* server with casemapping RFC1459, sort channels by buffer number */
+    /* Server with casemapping RFC1459, sort channels by buffer number */
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
     irc_server_create_buffer (server);
@@ -395,7 +395,7 @@ TEST(IrcJoin, AddChannel)
 
     WEE_CHECK_ADD_CHANNEL("#abc,#xyz,#def key_abc", "#xyz,#def", "#abc", "key_abc");
 
-    /* duplicated channel */
+    /* Duplicated channel */
     WEE_CHECK_ADD_CHANNEL("#abc,#def", "#abc,#def", "#abc", NULL);
     WEE_CHECK_ADD_CHANNEL("#ABC,#def", "#abc,#def", "#ABC", NULL);
     WEE_CHECK_ADD_CHANNEL("#abc,#def", "#abc,#def", "#def", NULL);
@@ -429,7 +429,7 @@ TEST(IrcJoin, AddChannels)
     WEE_CHECK_ADD_CHANNELS("#abc,#chan1,#chan2,#xyz,#chan3 key_abc,key1,key2",
                            "#abc,#xyz,#chan2 key_abc", "#chan1,#chan2,#chan3 key1,key2");
 
-    /* duplicated channel */
+    /* Duplicated channel */
     WEE_CHECK_ADD_CHANNELS("#abc,#def", "#abc,#def", "#abc");
     WEE_CHECK_ADD_CHANNELS("#ABC,#def", "#abc,#def", "#ABC");
     WEE_CHECK_ADD_CHANNELS("#abc,#def", "#abc,#def", "#def");
@@ -502,15 +502,15 @@ TEST(IrcJoin, RenameChannel)
     WEE_CHECK_RENAME_CHANNEL("#xyz,#def key_abc,key_def",
                              "#abc,#def key_abc,key_def", "#abc", "#xyz");
 
-    /* channel not found */
+    /* Channel not found */
     WEE_CHECK_RENAME_CHANNEL("#abc,#def key_abc,key_def",
                              "#abc,#def key_abc,key_def", "#xxx", "#yyy");
 
-    /* same name for the new channel */
+    /* Same name for the new channel */
     WEE_CHECK_RENAME_CHANNEL("#abc,#def key_abc,key_def",
                              "#abc,#def key_abc,key_def", "#abc", "#abc");
 
-    /* new name already exists */
+    /* New name already exists */
     WEE_CHECK_RENAME_CHANNEL("#def key_def",
                              "#abc,#def key_abc,key_def", "#abc", "#def");
 }
@@ -533,7 +533,7 @@ TEST(IrcJoin, SortChannels)
     WEE_CHECK_SORT_CHANNELS("#xyz,#zzz,#ABC,#def,#ghi key_xyz,key_zzz",
                             "#zzz,#xyz,#ghi,#def,#ABC key_zzz,key_xyz");
 
-    /* duplicated channel */
+    /* Duplicated channel */
     WEE_CHECK_SORT_CHANNELS("#abc,#def", "#abc,#def,#abc");
     WEE_CHECK_SORT_CHANNELS("#abc,#DEF", "#abc,#def,#abc,#def,#DEF");
 }
@@ -629,79 +629,79 @@ TEST(IrcJoin, AddRemoveChannelsAutojoin)
         "#abc,#xyz,#def,#ghi key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* duplicated channel */
+    /* Duplicated channel */
     irc_join_add_channels_to_autojoin (server, "#abc key_abc");
     STRCMP_EQUAL(
         "#abc,#xyz,#def,#ghi key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* duplicated channel */
+    /* Duplicated channel */
     irc_join_add_channels_to_autojoin (server, "#xyz key_xyz");
     STRCMP_EQUAL(
         "#abc,#xyz,#def,#ghi key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* duplicated channel */
+    /* Duplicated channel */
     irc_join_add_channels_to_autojoin (server, "#def");
     STRCMP_EQUAL(
         "#abc,#xyz,#def,#ghi key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* duplicated channel */
+    /* Duplicated channel */
     irc_join_add_channels_to_autojoin (server, "#DEF");
     STRCMP_EQUAL(
         "#abc,#xyz,#DEF,#ghi key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* duplicated channel */
+    /* Duplicated channel */
     irc_join_add_channels_to_autojoin (server, "#ghi");
     STRCMP_EQUAL(
         "#abc,#xyz,#DEF,#ghi key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* duplicated channel */
+    /* Duplicated channel */
     irc_join_add_channels_to_autojoin (server, "#GHI");
     STRCMP_EQUAL(
         "#abc,#xyz,#DEF,#GHI key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* rename channel (not found) */
+    /* Rename channel (not found). */
     irc_join_rename_channel_in_autojoin (server, "#yyy", "#zzz");
     STRCMP_EQUAL(
         "#abc,#xyz,#DEF,#GHI key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* rename channel */
+    /* Rename channel. */
     irc_join_rename_channel_in_autojoin (server, "#abc", "#aabbcc");
     STRCMP_EQUAL(
         "#aabbcc,#xyz,#DEF,#GHI key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* rename channel */
+    /* Rename channel. */
     irc_join_rename_channel_in_autojoin (server, "#aabbcc", "#abc");
     STRCMP_EQUAL(
         "#abc,#xyz,#DEF,#GHI key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* rename channel */
+    /* Rename channel. */
     irc_join_rename_channel_in_autojoin (server, "#DEF", "#def");
     STRCMP_EQUAL(
         "#abc,#xyz,#DEF,#GHI key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* rename channel (new channel already exists) */
+    /* Rename channel (new channel already exists). */
     irc_join_rename_channel_in_autojoin (server, "#GHI", "#jkl");
     STRCMP_EQUAL(
         "#abc,#xyz,#DEF,#jkl key_abc,key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* rename channel (new channel already exists) */
+    /* Rename channel (new channel already exists). */
     irc_join_rename_channel_in_autojoin (server, "#abc", "#def");
     STRCMP_EQUAL(
         "#xyz,#DEF,#jkl key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* use of secure data in autojoin option */
+    /* Use of secure data in autojoin option. */
     hashtable_set (secure_hashtable_data, "autojoin", "#abc");
     config_file_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
                             "${sec.data.autojoin}", 1);
@@ -755,7 +755,7 @@ TEST(IrcJoin, SaveChannelsToAutojoin)
         "#test2,#test1 key2",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* use of secure data in autojoin option */
+    /* Use of secure data in autojoin option. */
     hashtable_set (secure_hashtable_data, "autojoin", "#abc");
     config_file_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
                             "${sec.data.autojoin}", 1);
@@ -798,7 +798,7 @@ TEST(IrcJoin, SortAutojoinChannels)
     STRCMP_EQUAL("#xyz,#zzz,#ABC,#def,#ghi key_xyz,key_zzz",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    /* use of secure data in autojoin option */
+    /* Use of secure data in autojoin option. */
     hashtable_set (secure_hashtable_data,
                    "autojoin", "#zzz,#xyz,#ghi,#def,#ABC key_zzz,key_xyz");
     config_file_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],

@@ -8,10 +8,10 @@
 #define WEECHAT_PLUGIN_XFER_CHAT_H
 
 /*
- * maximum length of the partial message accumulated while reading from the
+ * Maximum length of the partial message accumulated while reading from the
  * remote host: once this limit is reached, the message is discarded as well
  * as the data received; this protects against a remote host sending a huge
- * amount of data without any end-of-line, which would consume all the memory
+ * amount of data without any end-of-line, which would consume all the memory.
  */
 #define XFER_CHAT_PARTIAL_MESSAGE_MAX_LENGTH (8 * 1024 * 1024)
 

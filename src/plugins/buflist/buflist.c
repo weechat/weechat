@@ -74,21 +74,21 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
     *irc_server = NULL;
     *irc_channel = NULL;
 
-    /* check if the buffer belongs to IRC plugin */
+    /* Check if the buffer belongs to IRC plugin. */
     if (strcmp (weechat_buffer_get_string (buffer, "plugin"), "irc") != 0)
         return;
 
-    /* get server name from buffer local variable */
+    /* Get server name from buffer local variable. */
     ptr_server_name = weechat_buffer_get_string (buffer, "localvar_server");
     if (!ptr_server_name || !ptr_server_name[0])
         return;
 
-    /* get hdata "irc_server" (can be NULL if irc plugin is not loaded) */
+    /* Get hdata "irc_server" (can be NULL if irc plugin is not loaded). */
     hdata_irc_server = weechat_hdata_get ("irc_server");
     if (!hdata_irc_server)
         return;
 
-    /* search the server by name in list of servers */
+    /* Search the server by name in list of servers. */
     *irc_server = weechat_hdata_get_list (hdata_irc_server, "irc_servers");
     while (*irc_server)
     {
@@ -100,18 +100,18 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
     if (!*irc_server)
         return;
 
-    /* get channel name from buffer local variable */
+    /* Get channel name from buffer local variable. */
     ptr_channel_name = weechat_buffer_get_string (buffer,
                                                   "localvar_channel");
     if (!ptr_channel_name || !ptr_channel_name[0])
         return;
 
-    /* get hdata "irc_channel" (can be NULL if irc plugin is not loaded) */
+    /* Get hdata "irc_channel" (can be NULL if irc plugin is not loaded). */
     hdata_irc_channel = weechat_hdata_get ("irc_channel");
     if (!hdata_irc_channel)
         return;
 
-    /* search the channel by name in list of channels on the server */
+    /* Search the channel by name in list of channels on the server. */
     *irc_channel = weechat_hdata_pointer (hdata_irc_server,
                                           *irc_server, "channels");
     while (*irc_channel)
@@ -220,7 +220,7 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
     struct t_hdata *hdata_irc_server, *hdata_irc_channel;
     struct t_gui_bar_item *ptr_item;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) arraylist;
 
     ptr_item = (struct t_gui_bar_item *)data;
@@ -364,13 +364,13 @@ buflist_script_loaded_cb (const void *pointer, void *data, const char *signal,
 {
     char *base_name, *base_name2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
 
-    /* display a warning only if buflist is enabled */
+    /* Display a warning only if buflist is enabled. */
     if (!weechat_config_boolean (buflist_config_look_enabled))
         return WEECHAT_RC_OK;
 
@@ -423,7 +423,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         { NULL, NULL },
     };
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -457,14 +457,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     buflist_mouse_init ();
 
-    /* default keys and mouse actions */
+    /* Default keys and mouse actions */
     keys = weechat_hashtable_new (32,
                                   WEECHAT_HASHTABLE_STRING,
                                   WEECHAT_HASHTABLE_STRING,
                                   NULL, NULL);
     if (keys)
     {
-        /* default keys */
+        /* Default keys */
         for (i = 0; default_keys[i][0]; i++)
         {
             weechat_hashtable_set (keys,
@@ -473,7 +473,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         weechat_hashtable_set (keys, "__quiet", "1");
         weechat_key_bind ("default", keys);
 
-        /* default mouse actions */
+        /* Default mouse actions */
         weechat_hashtable_remove_all (keys);
         for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
         {
@@ -514,7 +514,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     buflist_mouse_end ();

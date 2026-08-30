@@ -41,7 +41,7 @@ irc_list_compare_cb (void *data, struct t_arraylist *arraylist,
     const char *ptr_field;
     int i, reverse, case_sensitive, rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) arraylist;
 
     ptr_server = data;
@@ -82,7 +82,7 @@ irc_list_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 {
     struct t_irc_list_channel *ptr_channel;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -222,13 +222,13 @@ irc_list_channel_match_filter (struct t_irc_server *server,
     char *result;
     int match, number;
 
-    /* no filter? then any channel is matching */
+    /* No filter? Then any channel is matching. */
     if (!server->list->filter)
         return 1;
 
     if (strncmp (server->list->filter, "c:", 2) == 0)
     {
-        /* filter by evaluated condition */
+        /* Filter by evaluated condition. */
         weechat_hashtable_set (irc_list_filter_hashtable_pointers,
                                "irc_list_channel", channel);
         irc_list_add_channel_in_hashtable (irc_list_filter_hashtable_extra_vars,
@@ -245,7 +245,7 @@ irc_list_channel_match_filter (struct t_irc_server *server,
 
     if (strncmp (server->list->filter, "n:", 2) == 0)
     {
-        /* filter by channel name */
+        /* Filter by channel name. */
         if (channel->name
             && irc_list_string_match (channel->name, server->list->filter + 2))
         {
@@ -254,7 +254,7 @@ irc_list_channel_match_filter (struct t_irc_server *server,
     }
     else if (strncmp (server->list->filter, "t:", 2) == 0)
     {
-        /* filter by topic */
+        /* Filter by topic. */
         if (channel->topic
             && irc_list_string_match (channel->topic, server->list->filter + 2))
         {
@@ -263,21 +263,21 @@ irc_list_channel_match_filter (struct t_irc_server *server,
     }
     else if (strncmp (server->list->filter, "u:>", 3) == 0)
     {
-        /* filter by users (> N)*/
+        /* Filter by users (> N). */
         if (weechat_util_parse_int (server->list->filter + 3, 10, &number)
             && (channel->users > number))
             return 1;
     }
     else if (strncmp (server->list->filter, "u:<", 3) == 0)
     {
-        /* filter by users (< N)*/
+        /* Filter by users (< N). */
         if (weechat_util_parse_int (server->list->filter + 3, 10, &number)
             && (channel->users < number))
             return 1;
     }
     else if (strncmp (server->list->filter, "u:", 2) == 0)
     {
-        /* filter by users */
+        /* Filter by users. */
         if (weechat_util_parse_int (server->list->filter + 2, 10, &number)
             && (channel->users >= number))
             return 1;
@@ -493,7 +493,7 @@ irc_list_display_line (struct t_irc_server *server, int line)
         return;
     }
 
-    /* line color */
+    /* Line color */
     if (line == server->list->selected_line)
     {
         snprintf (color, sizeof (color),
@@ -507,7 +507,7 @@ irc_list_display_line (struct t_irc_server *server, int line)
         ptr_color = NULL;
     }
 
-    /* channel name */
+    /* Channel name */
     str_spaces[0] = '\0';
     num_spaces = server->list->name_max_length
         - weechat_utf8_strlen_screen (ptr_channel->name);
@@ -519,7 +519,7 @@ irc_list_display_line (struct t_irc_server *server, int line)
         str_spaces[num_spaces] = '\0';
     }
 
-    /* display the line */
+    /* Display the line. */
     weechat_printf_y (
         server->list->buffer,
         line,
@@ -675,13 +675,13 @@ irc_list_window_scrolled_cb (const void *pointer, void *data,
     struct t_irc_server *ptr_server;
     int start_line_y, chat_height, line, num_channels;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
 
-    /* search the /list buffer */
+    /* Search the /list buffer. */
     ptr_buffer = weechat_window_get_pointer (signal_data, "buffer");
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -839,7 +839,7 @@ irc_list_buffer_input_data (struct t_gui_buffer *buffer, const char *input_data)
         { NULL, NULL            },
     };
 
-    /* close buffer */
+    /* Close buffer. */
     if (strcmp (input_data, "q") == 0)
     {
         weechat_buffer_close (buffer);
@@ -854,21 +854,21 @@ irc_list_buffer_input_data (struct t_gui_buffer *buffer, const char *input_data)
     if (!ptr_server)
         return WEECHAT_RC_OK;
 
-    /* refresh buffer */
+    /* Refresh buffer. */
     if (strcmp (input_data, "$") == 0)
     {
         weechat_command (ptr_server->list->buffer, "/list");
         return WEECHAT_RC_OK;
     }
 
-    /* join channel */
+    /* Join channel. */
     if (strcmp (input_data, "j") == 0)
     {
         irc_list_join_channel (ptr_server);
         return WEECHAT_RC_OK;
     }
 
-    /* change sort of channels */
+    /* Change sort of channels. */
     if (strncmp (input_data, "s:", 2) == 0)
     {
         irc_list_set_sort (ptr_server, input_data + 2);
@@ -878,7 +878,7 @@ irc_list_buffer_input_data (struct t_gui_buffer *buffer, const char *input_data)
         return WEECHAT_RC_OK;
     }
 
-    /* execute action */
+    /* Execute action. */
     for (i = 0; actions[i][0]; i++)
     {
         if (strcmp (input_data, actions[i][0]) == 0)
@@ -888,7 +888,7 @@ irc_list_buffer_input_data (struct t_gui_buffer *buffer, const char *input_data)
         }
     }
 
-    /* filter channels with given text */
+    /* Filter channels with given text. */
     ptr_input = input_data;
     while (ptr_input[0] == ' ')
     {
@@ -931,9 +931,9 @@ irc_list_create_buffer (struct t_irc_server *server)
         weechat_hashtable_set (buffer_props, "localvar_set_server", server->name);
         weechat_hashtable_set (buffer_props, "localvar_set_channel", server->name);
         weechat_hashtable_set (buffer_props, "localvar_set_no_log", "1");
-        /* disable all highlights on this buffer */
+        /* Disable all highlights on this buffer. */
         weechat_hashtable_set (buffer_props, "highlight_words", "-");
-        /* set keys on buffer */
+        /* Set keys on buffer. */
         weechat_hashtable_set (buffer_props, "key_bind_up", "/list -up");
         weechat_hashtable_set (buffer_props, "key_bind_down", "/list -down");
         weechat_hashtable_set (buffer_props, "key_bind_meta-home", "/list -go 0");
@@ -964,16 +964,16 @@ irc_list_create_buffer (struct t_irc_server *server)
         switch (buffer_position)
         {
             case IRC_CONFIG_LOOK_BUFFER_POSITION_NONE:
-                /* do nothing */
+                /* Do nothing. */
                 break;
             case IRC_CONFIG_LOOK_BUFFER_POSITION_NEXT:
-                /* move buffer to current number + 1 */
+                /* Move buffer to current number + 1. */
                 snprintf (str_number, sizeof (str_number),
                           "%d", current_buffer_number + 1);
                 weechat_buffer_set (buffer, "number", str_number);
                 break;
             case IRC_CONFIG_LOOK_BUFFER_POSITION_NEAR_SERVER:
-                /* move buffer after last channel/pv of server */
+                /* Move buffer after last channel/pv of server. */
                 irc_buffer_move_near_server (
                     server,
                     1,  /* list_buffer */
@@ -999,7 +999,7 @@ irc_list_hsignal_redirect_list_cb (const void *pointer,
     struct t_irc_server *ptr_server;
     const char *ptr_error, *ptr_server_name, *ptr_output;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -1238,7 +1238,7 @@ irc_list_hdata_list_channel_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1262,7 +1262,7 @@ irc_list_hdata_list_cb (const void *pointer, void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1296,7 +1296,7 @@ irc_list_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     char str_command[1024];
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;

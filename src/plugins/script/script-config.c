@@ -22,13 +22,13 @@
 
 struct t_config_file *script_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *script_config_section_look = NULL;
 struct t_config_section *script_config_section_color = NULL;
 struct t_config_section *script_config_section_scripts = NULL;
 
-/* script config, look section */
+/* Script config, look section */
 
 struct t_config_option *script_config_look_columns = NULL;
 struct t_config_option *script_config_look_diff_color = NULL;
@@ -39,7 +39,7 @@ struct t_config_option *script_config_look_sort = NULL;
 struct t_config_option *script_config_look_translate_description = NULL;
 struct t_config_option *script_config_look_use_keys = NULL;
 
-/* script config, color section */
+/* Script config, color section */
 
 struct t_config_option *script_config_color_status_autoloaded = NULL;
 struct t_config_option *script_config_color_status_held = NULL;
@@ -68,7 +68,7 @@ struct t_config_option *script_config_color_text_version_loaded = NULL;
 struct t_config_option *script_config_color_text_version_loaded_selected = NULL;
 struct t_config_option *script_config_color_text_version_selected = NULL;
 
-/* script config, scripts section */
+/* Script config, scripts section */
 
 struct t_config_option *script_config_scripts_autoload = NULL;
 struct t_config_option *script_config_scripts_cache_expire = NULL;
@@ -207,7 +207,7 @@ void
 script_config_refresh_cb (const void *pointer, void *data,
                           struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -225,7 +225,7 @@ void
 script_config_reload_scripts_cb (const void *pointer, void *data,
                                  struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -246,7 +246,7 @@ void
 script_config_change_use_keys_cb (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -263,7 +263,7 @@ void
 script_config_change_hold_cb (const void *pointer, void *data,
                               struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -374,7 +374,7 @@ int
 script_config_reload (const void *pointer, void *data,
                       struct t_config_file *config_file)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -398,7 +398,7 @@ script_config_init (void)
     if (!script_config_file)
         return 0;
 
-    /* look */
+    /* Look */
     script_config_section_look = weechat_config_new_section (
         script_config_file, "look",
         0, 0,
@@ -487,7 +487,7 @@ script_config_init (void)
             NULL, NULL, NULL);
     }
 
-    /* color */
+    /* Color */
     script_config_section_color = weechat_config_new_section (
         script_config_file, "color",
         0, 0,
@@ -708,7 +708,7 @@ script_config_init (void)
             NULL, NULL, NULL);
     }
 
-    /* scripts */
+    /* Scripts */
     script_config_section_scripts = weechat_config_new_section (
         script_config_file, "scripts",
         0, 0,

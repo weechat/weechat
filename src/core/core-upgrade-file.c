@@ -222,7 +222,7 @@ upgrade_file_new (const char *filename,
     new_upgrade_file = malloc (sizeof (*new_upgrade_file));
     if (new_upgrade_file)
     {
-        /* build name of file */
+        /* Build name of file. */
         if (string_asprintf (&new_upgrade_file->filename,
                              "%s/%s.upgrade",
                              weechat_data_dir, filename) < 0)
@@ -234,7 +234,7 @@ upgrade_file_new (const char *filename,
         new_upgrade_file->callback_read_pointer = callback_read_pointer;
         new_upgrade_file->callback_read_data = callback_read_data;
 
-        /* open file in read or write mode */
+        /* Open file in read or write mode. */
         if (callback_read)
             new_upgrade_file->file = fopen (new_upgrade_file->filename, "rb");
         else
@@ -248,29 +248,29 @@ upgrade_file_new (const char *filename,
         }
 
         /*
-         * use a bigger stdio buffer than the default: upgrade files are
+         * Use a bigger stdio buffer than the default: upgrade files are
          * read/written as a huge number of small (per-field) fread/fwrite
          * calls, so a small buffer means many more underlying syscalls
          * than necessary; failure to set it is not fatal, default
-         * buffering is still correct, just slower
+         * buffering is still correct, just slower.
          */
         setvbuf (new_upgrade_file->file, NULL, _IOFBF, UPGRADE_FILE_BUFFER_SIZE);
 
-        /* change permissions if write mode */
+        /* Change permissions if write mode. */
         if (!callback_read)
         {
             chmod (new_upgrade_file->filename, 0600);
 
-            /* write signature */
+            /* Write signature. */
             upgrade_file_write_string (new_upgrade_file, UPGRADE_SIGNATURE);
         }
 
-        /* init positions */
+        /* Init positions. */
         new_upgrade_file->read_offset = 0;
         new_upgrade_file->last_read_pos = 0;
         new_upgrade_file->last_read_length = 0;
 
-        /* add upgrade file to list of upgrade files */
+        /* Add upgrade file to list of upgrade files. */
         new_upgrade_file->prev_upgrade = last_upgrade_file;
         new_upgrade_file->next_upgrade = NULL;
         if (last_upgrade_file)
@@ -300,11 +300,11 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
     const char *fields;
     void *buf;
 
-    /* write all infolist variables */
+    /* Write all infolist variables. */
     infolist_reset_item_cursor (infolist);
     while (infolist_next (infolist))
     {
-        /* write object start with id */
+        /* Write object start with id. */
         if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_START))
         {
             UPGRADE_ERROR(_("write - object type"), "object start");
@@ -330,7 +330,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                 {
                     switch (argv[i][0])
                     {
-                        case 'i': /* integer */
+                        case 'i': /* Integer */
                             if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
                             {
                                 UPGRADE_ERROR(_("write - object type"), "object var");
@@ -353,7 +353,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                                 return 0;
                             }
                             break;
-                        case 's': /* string */
+                        case 's': /* String */
                             if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
                             {
                                 UPGRADE_ERROR(_("write - object type"), "object var");
@@ -376,10 +376,10 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                                 return 0;
                             }
                             break;
-                        case 'p': /* pointer */
-                            /* pointer in not used in upgrade files, only buffer is */
+                        case 'p': /* Pointer */
+                            /* Pointer in not used in upgrade files, only buffer is. */
                             break;
-                        case 'b': /* buffer */
+                        case 'b': /* Buffer */
                             buf = infolist_buffer (infolist, argv[i] + 2, &length);
                             if (buf && (length > 0))
                             {
@@ -405,7 +405,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                                 }
                             }
                             break;
-                        case 't': /* time */
+                        case 't': /* Time */
                             if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
                             {
                                 UPGRADE_ERROR(_("write - object type"), "object var");
@@ -428,7 +428,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                                 return 0;
                             }
                             break;
-                        case 'l': /* long */
+                        case 'l': /* Long */
                             if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
                             {
                                 UPGRADE_ERROR(_("write - object type"), "object var");
@@ -451,7 +451,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                                 return 0;
                             }
                             break;
-                        case 'L': /* long long */
+                        case 'L': /* Long long */
                             if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
                             {
                                 UPGRADE_ERROR(_("write - object type"), "object var");
@@ -480,7 +480,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
             string_free_split (argv);
         }
 
-        /* write object end */
+        /* Write object end. */
         if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_END))
             return 0;
     }
@@ -788,7 +788,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
             }
 
             /*
-             * for every variable type below, "name" (and, for string/buffer,
+             * For every variable type below, "name" (and, for string/buffer,
              * the value too) is transferred to the infolist via a
              * "take ownership" constructor instead of being copied again:
              * "name" was just freshly allocated by upgrade_file_read_string()
@@ -798,7 +798,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
              * pointer(s) in all cases, freeing them itself on error, so we
              * just reset the local pointer(s) afterwards to prevent the
              * cleanup below and the next loop iteration from freeing memory
-             * that is no longer ours
+             * that is no longer ours.
              */
             switch (type_var)
             {
@@ -952,7 +952,7 @@ upgrade_file_close (struct t_upgrade_file *upgrade_file)
         fclose (upgrade_file->file);
     free (upgrade_file->callback_read_data);
 
-    /* remove upgrade file list */
+    /* Remove upgrade file list. */
     if (upgrade_file->prev_upgrade)
         (upgrade_file->prev_upgrade)->next_upgrade = upgrade_file->next_upgrade;
     if (upgrade_file->next_upgrade)

@@ -25,14 +25,14 @@ error ()
     exit 1
 }
 
-# check git repository
+# Check git repository.
 root_dir=$(git rev-parse --show-toplevel)
 if [ -z "${root_dir}" ] || [ ! -e "${root_dir}/.git" ]; then
     error "this script must be run from WeeChat git repository."
 fi
 cd "${root_dir}"
 
-# default values
+# Default values
 version="$("${root_dir}/version.sh" devel-full)"
 treeish="HEAD"
 outpath="$(pwd)"

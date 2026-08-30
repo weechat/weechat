@@ -17,20 +17,20 @@
 
 struct t_config_file *xfer_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *xfer_config_section_look = NULL;
 struct t_config_section *xfer_config_section_color = NULL;
 struct t_config_section *xfer_config_section_network = NULL;
 struct t_config_section *xfer_config_section_file = NULL;
 
-/* xfer config, look section */
+/* Xfer config, look section */
 
 struct t_config_option *xfer_config_look_auto_open_buffer = NULL;
 struct t_config_option *xfer_config_look_progress_bar_size = NULL;
 struct t_config_option *xfer_config_look_pv_tags = NULL;
 
-/* xfer config, color section */
+/* Xfer config, color section */
 
 struct t_config_option *xfer_config_color_status[XFER_NUM_STATUS] = {
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -39,7 +39,7 @@ struct t_config_option *xfer_config_color_text = NULL;
 struct t_config_option *xfer_config_color_text_bg = NULL;
 struct t_config_option *xfer_config_color_text_selected = NULL;
 
-/* xfer config, network section */
+/* Xfer config, network section */
 
 struct t_config_option *xfer_config_network_blocksize = NULL;
 struct t_config_option *xfer_config_network_fast_send = NULL;
@@ -50,7 +50,7 @@ struct t_config_option *xfer_config_network_speed_limit_recv = NULL;
 struct t_config_option *xfer_config_network_speed_limit_send = NULL;
 struct t_config_option *xfer_config_network_timeout = NULL;
 
-/* xfer config, file section */
+/* Xfer config, file section */
 
 struct t_config_option *xfer_config_file_auto_accept_chats = NULL;
 struct t_config_option *xfer_config_file_auto_accept_files = NULL;
@@ -73,7 +73,7 @@ void
 xfer_config_refresh_cb (const void *pointer, void *data,
                         struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -90,7 +90,7 @@ int
 xfer_config_reload (const void *pointer, void *data,
                     struct t_config_file *config_file)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

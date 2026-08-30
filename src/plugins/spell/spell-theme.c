@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-/* spell contribution to built-in themes. */
+/* Spell contribution to built-in themes */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -18,7 +18,7 @@
 
 
 /*
- * spell contribution to the "light" theme: option values tuned for a
+ * Spell contribution to the "light" theme: option values tuned for a
  * light-background terminal. Each row is { option_full_name, value };
  * the table is NULL-terminated.
  */

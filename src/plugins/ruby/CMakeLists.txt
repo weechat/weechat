@@ -10,9 +10,9 @@ add_library(ruby MODULE
 )
 set_target_properties(ruby PROPERTIES PREFIX "")
 
-# temporary fix: ignore all warnings on unused parameters due to warnings
-# caused by Ruby headers (with Ruby ≥ 3.1.0)
-# see: https://github.com/ruby/ruby/pull/7085
+# Temporary fix: ignore all warnings on unused parameters due to warnings
+# caused by Ruby headers (with Ruby ≥ 3.1.0).
+# See: https://github.com/ruby/ruby/pull/7085
 add_definitions(-Wno-unused-parameter)
 include_directories(${Ruby_INCLUDE_DIRS})
 target_link_libraries(ruby ${Ruby_LIBRARIES} weechat_plugins_scripts coverage_config)

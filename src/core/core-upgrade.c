@@ -116,7 +116,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        /* save buffer */
+        /* Save buffer. */
         ptr_infolist = infolist_new (NULL);
         if (!ptr_infolist)
             return 0;
@@ -132,7 +132,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
         if (!rc)
             return 0;
 
-        /* save nicklist */
+        /* Save nicklist. */
         if (ptr_buffer->nicklist)
         {
             ptr_infolist = infolist_new (NULL);
@@ -151,7 +151,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
                 return 0;
         }
 
-        /* save buffer lines */
+        /* Save buffer lines. */
         for (ptr_line = ptr_buffer->own_lines->first_line; ptr_line;
              ptr_line = ptr_line->next_line)
         {
@@ -173,7 +173,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
                 return 0;
         }
 
-        /* save command/text history of buffer */
+        /* Save command/text history of buffer. */
         if (ptr_buffer->history)
         {
             rc = upgrade_weechat_save_history (upgrade_file,
@@ -338,14 +338,14 @@ upgrade_weechat_save_layout_window (struct t_upgrade_file *upgrade_file)
 
     rc = 0;
 
-    /* get current layout for windows */
+    /* Get current layout for windows. */
     ptr_layout = gui_layout_alloc (GUI_LAYOUT_UPGRADE);
 
     if (ptr_layout)
     {
         gui_layout_window_store (ptr_layout);
 
-        /* save tree with layout of windows */
+        /* Save tree with layout of windows. */
         rc = upgrade_weechat_save_layout_window_tree (upgrade_file, ptr_layout->layout_windows);
 
         gui_layout_free (ptr_layout);
@@ -433,7 +433,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     main_buffer = gui_buffer_is_main (plugin_name, name);
     if (main_buffer)
     {
-        /* use WeeChat main buffer */
+        /* Use WeeChat main buffer. */
         upgrade_current_buffer = gui_buffers;
         hashtable_remove (gui_buffer_by_id, &(upgrade_current_buffer->id));
         upgrade_current_buffer->id = id;
@@ -441,7 +441,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     }
     else
     {
-        /* create buffer if it's not main buffer */
+        /* Create buffer if it's not main buffer. */
         upgrade_current_buffer = gui_buffer_new_props_with_id (
             id,
             NULL,  /* plugin */
@@ -461,28 +461,28 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     if (infolist_integer (infolist, "current_buffer"))
         upgrade_set_current_buffer = ptr_buffer;
 
-    /* name for upgrade */
+    /* Name for upgrade */
     free (ptr_buffer->plugin_name_for_upgrade);
     ptr_buffer->plugin_name_for_upgrade =
         strdup (infolist_string (infolist, "plugin_name"));
 
-    /* full name */
+    /* Full name */
     gui_buffer_build_full_name (ptr_buffer);
 
-    /* old full name */
+    /* Old full name */
     free (ptr_buffer->old_full_name);
     str = infolist_string (infolist, "old_full_name");
     ptr_buffer->old_full_name = (str) ? strdup (str) : NULL;
 
-    /* short name */
+    /* Short name */
     free (ptr_buffer->short_name);
     str = infolist_string (infolist, "short_name");
     ptr_buffer->short_name = strdup ((str) ? str : name);
 
-    /* buffer type */
+    /* Buffer type */
     ptr_buffer->type = infolist_integer (infolist, "type");
 
-    /* notify level */
+    /* Notify level */
     ptr_buffer->notify = infolist_integer (infolist, "notify");
 
     /* "hidden" is new in WeeChat 1.0 */
@@ -491,7 +491,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     else
         ptr_buffer->hidden = 0;
 
-    /* day change */
+    /* Day change */
     if (infolist_search_var (infolist, "day_change"))
         ptr_buffer->day_change = infolist_integer (infolist, "day_change");
     else
@@ -509,13 +509,13 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     else
         ptr_buffer->filter = 1;
 
-    /* nicklist */
+    /* Nicklist */
     ptr_buffer->nicklist_case_sensitive =
         infolist_integer (infolist, "nicklist_case_sensitive");
     ptr_buffer->nicklist_display_groups =
         infolist_integer (infolist, "nicklist_display_groups");
 
-    /* title (not for main buffer, because there's the latest version) */
+    /* Title (not for main buffer, because there's the latest version) */
     if (!main_buffer)
     {
         free (ptr_buffer->title);
@@ -523,23 +523,23 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         ptr_buffer->title = (str) ? strdup (str) : NULL;
     }
 
-    /* modes */
+    /* Modes */
     gui_buffer_set_modes (ptr_buffer, infolist_string (infolist, "modes"));
 
-    /* first line not read */
+    /* First line not read */
     ptr_buffer->lines->first_line_not_read =
         infolist_integer (infolist, "first_line_not_read");
 
     /*
-     * note: "lines_last_id_assigned" is not read: it is rebuilt as each line
-     * of the buffer is restored (see upgrade_weechat_read_buffer_line)
+     * Note: "lines_last_id_assigned" is not read: it is rebuilt as each line
+     * of the buffer is restored (see upgrade_weechat_read_buffer_line).
      */
 
-    /* time for each line */
+    /* Time for each line */
     ptr_buffer->time_for_each_line =
         infolist_integer (infolist, "time_for_each_line");
 
-    /* input */
+    /* Input */
     gui_buffer_set_input_prompt (
         ptr_buffer, infolist_string (infolist, "input_prompt"));
     ptr_buffer->input = infolist_integer (infolist, "input");
@@ -574,9 +574,9 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         }
     }
 
-    /* text search is disabled after upgrade */
+    /* Text search is disabled after upgrade. */
 
-    /* highlight options */
+    /* Highlight options */
     gui_buffer_set_highlight_words (
         ptr_buffer, infolist_string (infolist, "highlight_words"));
     gui_buffer_set_highlight_disable_regex (
@@ -599,11 +599,11 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
             ptr_buffer, infolist_string (infolist, "highlight_tags"));
     }
 
-    /* hotlist max level nicks */
+    /* Hotlist max level nicks */
     gui_buffer_set_hotlist_max_level_nicks (
         ptr_buffer, infolist_string (infolist, "hotlist_max_level_nicks"));
 
-    /* local keys */
+    /* Local keys */
     index = 0;
     while (1)
     {
@@ -622,7 +622,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         index++;
     }
 
-    /* local variables */
+    /* Local variables */
     index = 0;
     while (1)
     {
@@ -667,13 +667,13 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             const char *tags, *prefix, *message, *str_time;
 
             /*
-             * read the fields in the same order they were written by
+             * Read the fields in the same order they were written by
              * gui_line_add_to_infolist(), so that the infolist lookup
              * cursor (see infolist_item_search_var() in core-infolist.c)
              * can advance forward through the item's variables instead of
              * wrapping around to search backwards for every other field;
              * this also makes the read order deterministic, since C does
-             * not guarantee the evaluation order of function arguments
+             * not guarantee the evaluation order of function arguments.
              */
 
             /*
@@ -681,13 +681,13 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
              * print, with microseconds precision); before it was an integer
              * (a counter in the buffer) and the date of print was saved in
              * "date_printed"/"date_usec_printed": in this case the id is
-             * rebuilt from these two variables
+             * rebuilt from these two variables.
              *
-             * note: with old upgrade files, all the lines displayed by a
+             * Note: with old upgrade files, all the lines displayed by a
              * single call to gui_chat_printf_datetime_tags() share the same
              * date of print, so the conversion below can return the same id
              * for several lines; gui_line_new_with_id() increases the id when
-             * needed, to keep the ids unique and sorted in the buffer
+             * needed, to keep the ids unique and sorted in the buffer.
              */
             ptr_var_id = infolist_search_var (infolist, "id");
             old_format = (!ptr_var_id
@@ -710,7 +710,7 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             last_read_line = infolist_integer (infolist, "last_read_line");
 
             /*
-             * pass the saved highlight state directly (known_highlight)
+             * Pass the saved highlight state directly (known_highlight)
              * instead of letting gui_line_new_with_id() run its regex-based
              * highlight detection: the result would be overwritten by the
              * saved value right below anyway, so computing it would be
@@ -718,7 +718,7 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
              * for the wrong highlight state, since it was never
              * recomputed after the overwrite); for the same reason, pass
              * the saved time string directly (known_str_time) instead of
-             * letting gui_line_new_with_id() recompute/recolorize it
+             * letting gui_line_new_with_id() recompute/recolorize it.
              */
             new_line = gui_line_new_with_id (
                 upgrade_current_buffer,
@@ -741,14 +741,14 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             time_t date;
             const char *tags, *message;
 
-            /* read the fields in written order (see comment above) */
+            /* Read the fields in written order (see comment above). */
             y = infolist_integer (infolist, "y");
             date = infolist_time (infolist, "date");
             date_usec = infolist_integer (infolist, "date_usec");
             tags = infolist_string (infolist, "tags");
             message = infolist_string (infolist, "message");
 
-            /* the id of a line is its number ("y") on buffers with free content */
+            /* The id of a line is its number ("y") on buffers with free content. */
             new_line = gui_line_new (
                 upgrade_current_buffer,
                 y,
@@ -913,7 +913,7 @@ upgrade_weechat_read_cb (const void *pointer, void *data,
                          int object_id,
                          struct t_infolist *infolist)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) upgrade_file;
@@ -1035,7 +1035,7 @@ upgrade_weechat_load (void)
 void
 upgrade_weechat_remove_file_cb (void *data, const char *filename)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     if (string_match (filename, "*.upgrade", 1))
@@ -1056,12 +1056,12 @@ upgrade_weechat_end (void)
     struct timeval tv_now;
     long long time_diff;
 
-    /* remove .upgrade files */
+    /* Remove .upgrade files. */
     dir_exec_on_files (weechat_data_dir,
                        0, 0,
                        &upgrade_weechat_remove_file_cb, NULL);
 
-    /* display message for end of /upgrade with duration */
+    /* Display message for end of /upgrade with duration. */
     gettimeofday (&tv_now, NULL);
     time_diff = util_timeval_diff (&weechat_current_start_timeval, &tv_now);
     gui_chat_printf (NULL,
@@ -1069,9 +1069,9 @@ upgrade_weechat_end (void)
                      _("Upgrade done (%.02fs)"),
                      ((float)time_diff) / 1000000);
 
-    /* upgrading ended */
+    /* Upgrading has ended. */
     weechat_upgrading = 0;
 
-    /* send signal for end of /upgrade */
+    /* Send signal for end of /upgrade. */
     (void) hook_signal_send ("upgrade_ended", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }

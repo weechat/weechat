@@ -18,12 +18,12 @@
 
 struct t_config_file *buflist_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *buflist_config_section_look = NULL;
 struct t_config_section *buflist_config_section_format = NULL;
 
-/* buflist config, look section */
+/* Buflist config, look section */
 
 struct t_config_option *buflist_config_look_add_newline = NULL;
 struct t_config_option *buflist_config_look_auto_scroll = NULL;
@@ -38,7 +38,7 @@ struct t_config_option *buflist_config_look_signals_refresh = NULL;
 struct t_config_option *buflist_config_look_sort = NULL;
 struct t_config_option *buflist_config_look_use_items = NULL;
 
-/* buflist config, format section */
+/* Buflist config, format section */
 
 struct t_config_option *buflist_config_format_buffer = NULL;
 struct t_config_option *buflist_config_format_buffer_current = NULL;
@@ -76,7 +76,7 @@ buflist_config_reload (const void *pointer, void *data,
 {
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -123,7 +123,7 @@ int
 buflist_config_compare_signals (void *data, struct t_arraylist *arraylist,
                                 void *pointer1, void *pointer2)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -139,7 +139,7 @@ buflist_config_signal_buffer_cb (const void *pointer, void *data,
                                  const char *signal, const char *type_data,
                                  void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -236,7 +236,7 @@ void
 buflist_config_change_enabled (const void *pointer, void *data,
                                struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -245,14 +245,14 @@ buflist_config_change_enabled (const void *pointer, void *data,
 
     if (weechat_config_boolean (buflist_config_look_enabled))
     {
-        /* buflist enabled */
+        /* Buflist enabled */
         buflist_config_hook_signals_refresh ();
         weechat_command (NULL, "/mute /bar show buflist");
         buflist_bar_item_update (-1, 0);
     }
     else
     {
-        /* buflist disabled */
+        /* Buflist disabled */
         weechat_command (NULL, "/mute /bar hide buflist");
         buflist_bar_item_update (-1, 1);
     }
@@ -270,7 +270,7 @@ buflist_config_change_sort (const void *pointer, void *data,
     struct t_hashtable *hashtable_pointers;
     char *sort;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -331,7 +331,7 @@ void
 buflist_config_change_signals_refresh (const void *pointer, void *data,
                                        struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -348,7 +348,7 @@ void
 buflist_config_change_nick_prefix (const void *pointer, void *data,
                                    struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -365,7 +365,7 @@ void
 buflist_config_change_use_items (const void *pointer, void *data,
                                  struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -381,7 +381,7 @@ void
 buflist_config_change_buflist (const void *pointer, void *data,
                                struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -427,7 +427,7 @@ void
 buflist_config_change_format (const void *pointer, void *data,
                               struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -464,7 +464,7 @@ buflist_config_init (void)
     if (!buflist_config_file)
         return 0;
 
-    /* look */
+    /* Look */
     buflist_config_section_look = weechat_config_new_section (
         buflist_config_file, "look",
         0, 0,
@@ -617,7 +617,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
     }
 
-    /* format */
+    /* Format */
     buflist_config_section_format = weechat_config_new_section (
         buflist_config_file, "format",
         0, 0,

@@ -26,7 +26,7 @@ buflist_completion_items_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -54,7 +54,7 @@ buflist_completion_items_used_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;

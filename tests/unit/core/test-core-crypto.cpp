@@ -448,16 +448,16 @@ TEST(CoreCrypto, TotpGenerate)
 {
     char *totp;
 
-    /* invalid secret */
+    /* Invalid secret */
     WEE_CHECK_TOTP_GENERATE(NULL, NULL, 0, 6);
     WEE_CHECK_TOTP_GENERATE(NULL, "", 0, 6);
     WEE_CHECK_TOTP_GENERATE(NULL, "not_in_base32_0189", 0, 6);
 
-    /* invalid number of digits (must be between 4 and 10) */
+    /* Invalid number of digits (must be between 4 and 10) */
     WEE_CHECK_TOTP_GENERATE(NULL, TOTP_SECRET, 0, 3);
     WEE_CHECK_TOTP_GENERATE(NULL, TOTP_SECRET, 0, 11);
 
-    /* current time */
+    /* Current time */
     totp = weecrypto_totp_generate (TOTP_SECRET, 0, 6);
     CHECK(totp);
     CHECK(isdigit (totp[0]) && isdigit (totp[1]) && isdigit (totp[2])
@@ -488,31 +488,31 @@ TEST(CoreCrypto, TotpGenerate)
 
 TEST(CoreCrypto, TotpValidate)
 {
-    /* invalid secret */
+    /* Invalid secret */
     WEE_CHECK_TOTP_VALIDATE(0, NULL, 0, 0, "123456");
     WEE_CHECK_TOTP_VALIDATE(0, "", 0, 0, "123456");
     WEE_CHECK_TOTP_VALIDATE(0, "not_in_base32_0189", 0, 0, "123456");
 
-    /* invalid window (must be ≥ 0) */
+    /* Invalid window (must be ≥ 0) */
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 0, -1, "123456");
 
-    /* invalid OTP */
+    /* Invalid OTP */
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 0, 0, NULL);
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 0, 0, "");
 
-    /* not enough digits in OTP (min is 4) */
+    /* Not enough digits in OTP (min is 4) */
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "1");
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "12");
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "123");
 
-    /* too many digits (max is 10) */
+    /* Too many digits (max is 10) */
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "12345678901");
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "123456789012");
 
-    /* current time */
+    /* Current time */
     weecrypto_totp_validate (TOTP_SECRET, 0, 0, "123456");
 
-    /* validation error (wrong OTP) */
+    /* Validation error (wrong OTP) */
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1540624110, 0, "065486");
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1540624110, 1, "065486");
 

@@ -30,7 +30,7 @@ spell_bar_item_dict (const void *pointer, void *data,
 {
     const char *dict_list;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -60,7 +60,7 @@ spell_bar_item_suggest (const void *pointer, void *data,
     char **suggestions, **suggestions2, **str_suggest;
     int i, j, num_suggestions, num_suggestions2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;

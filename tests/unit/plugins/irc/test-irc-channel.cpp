@@ -38,35 +38,35 @@ TEST(IrcChannel, IsChannel)
 {
     struct t_irc_server *server;
 
-    /* no server, default chantypes = "#&+!" */
+    /* No server, default chantypes = "#&+!" */
 
-    /* empty channel */
+    /* Empty channel */
     LONGS_EQUAL(0, irc_channel_is_channel (NULL, NULL));
     LONGS_EQUAL(0, irc_channel_is_channel (NULL, ""));
 
-    /* not a channel */
+    /* Not a channel */
     LONGS_EQUAL(0, irc_channel_is_channel (NULL, "abc"));
     LONGS_EQUAL(0, irc_channel_is_channel (NULL, "/abc"));
     LONGS_EQUAL(0, irc_channel_is_channel (NULL, ":abc"));
 
-    /* valid channel */
+    /* Valid channel */
     LONGS_EQUAL(1, irc_channel_is_channel (NULL, "#abc"));
     LONGS_EQUAL(1, irc_channel_is_channel (NULL, "##abc"));
     LONGS_EQUAL(1, irc_channel_is_channel (NULL, "&abc"));
     LONGS_EQUAL(1, irc_channel_is_channel (NULL, "&&abc"));
 
-    /* server with chantypes = "#" */
+    /* Server with chantypes = "#" */
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
     if (server->chantypes)
         free (server->chantypes);
     server->chantypes = strdup ("#");
 
-    /* empty channel */
+    /* Empty channel */
     LONGS_EQUAL(0, irc_channel_is_channel (server, NULL));
     LONGS_EQUAL(0, irc_channel_is_channel (server, ""));
 
-    /* not a channel */
+    /* Not a channel */
     LONGS_EQUAL(0, irc_channel_is_channel (server, "abc"));
     LONGS_EQUAL(0, irc_channel_is_channel (server, "/abc"));
     LONGS_EQUAL(0, irc_channel_is_channel (server, ":abc"));
@@ -74,7 +74,7 @@ TEST(IrcChannel, IsChannel)
     LONGS_EQUAL(0, irc_channel_is_channel (server, "+abc"));
     LONGS_EQUAL(0, irc_channel_is_channel (server, "!abc"));
 
-    /* valid channel */
+    /* Valid channel */
     LONGS_EQUAL(1, irc_channel_is_channel (server, "#abc"));
     LONGS_EQUAL(1, irc_channel_is_channel (server, "##abc"));
 

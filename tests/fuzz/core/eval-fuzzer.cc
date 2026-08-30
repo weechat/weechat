@@ -24,7 +24,7 @@ extern "C"
 extern "C" int
 LLVMFuzzerInitialize (int *argc, char ***argv)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) argc;
     (void) argv;
 

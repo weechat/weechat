@@ -107,7 +107,7 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
         }
     }
 
-    /* not resumable */
+    /* Not resumable */
     return 0;
 }
 
@@ -134,7 +134,7 @@ xfer_file_check_suffix (struct t_xfer *xfer, int suffix)
         xfer_config_file_download_temporary_suffix);
     length_suffix = (ptr_suffix) ? strlen (ptr_suffix) : 0;
 
-    /* build filename with suffix */
+    /* Build filename with suffix. */
     if (suffix == 0)
         new_filename = strdup (xfer->local_filename);
     else
@@ -142,7 +142,7 @@ xfer_file_check_suffix (struct t_xfer *xfer, int suffix)
     if (!new_filename)
         goto error;
 
-    /* build temp filename with suffix */
+    /* Build temp filename with suffix. */
     if (weechat_asprintf (&new_temp_filename,
                           "%s%s",
                           new_filename,
@@ -155,15 +155,15 @@ xfer_file_check_suffix (struct t_xfer *xfer, int suffix)
     temp_filename_exists = (access (new_temp_filename, F_OK) == 0);
     same_files = (length_suffix == 0);
 
-    /* if both filenames don't exist, we can use this prefix */
+    /* If both filenames don't exist, we can use this prefix. */
     if (!filename_exists && !temp_filename_exists)
         goto use_prefix;
 
     /*
-     * we try to resume if one of this condition is true:
+     * We try to resume if one of this condition is true:
      *   - filename == temp filename and it exists
      *   - filename != temp filename and only the temp filename exists
-     * in any other case, we skip this suffix index
+     * in any other case, we skip this suffix index.
      */
 
     if ((same_files && filename_exists)
@@ -173,7 +173,7 @@ xfer_file_check_suffix (struct t_xfer *xfer, int suffix)
             goto use_prefix;
     }
 
-    /* we skip this suffix index */
+    /* We skip this suffix index. */
     goto end;
 
 use_prefix:
@@ -184,8 +184,8 @@ use_prefix:
 
 error:
     /*
-     * in case of error, we remove the local filename and return 1 to stop the
-     * infinite loop used to find a suffix index
+     * In case of error, we remove the local filename and return 1 to stop the
+     * infinite loop used to find a suffix index.
      */
     free (xfer->local_filename);
     xfer->local_filename = NULL;
@@ -211,7 +211,7 @@ xfer_file_find_suffix (struct t_xfer *xfer)
     if (xfer_file_check_suffix (xfer, 0))
         return;
 
-    /* if auto rename is not set, then abort xfer */
+    /* If auto rename is not set, then abort xfer. */
     if (!weechat_config_boolean (xfer_config_file_auto_rename))
     {
         xfer_close (xfer, XFER_STATUS_FAILED);
@@ -219,7 +219,7 @@ xfer_file_find_suffix (struct t_xfer *xfer)
         return;
     }
 
-    /* loop until we find a suffix we can use, starting with suffix == 1 */
+    /* Loop until we find a suffix we can use, starting with suffix == 1. */
     xfer->filename_suffix = 0;
     while (!xfer_file_check_suffix (xfer, ++xfer->filename_suffix))
     {
@@ -258,9 +258,9 @@ xfer_file_find_filename (struct t_xfer *xfer)
         return;
 
     /*
-     * keep only the filename component: a received filename can contain
+     * Keep only the filename component: a received filename can contain
      * either slash, and both forms can be interpreted as directory
-     * separators by file APIs on some platforms
+     * separators by file APIs on some platforms.
      */
     ptr_filename = xfer->filename;
     pos_separator = strrchr (ptr_filename, '/');
@@ -289,9 +289,9 @@ xfer_file_find_filename (struct t_xfer *xfer)
     if (weechat_config_boolean (xfer_config_file_use_nick_in_filename))
     {
         /*
-         * the remote nick comes from the server and can contain a directory
+         * The remote nick comes from the server and can contain a directory
          * separator: replace it so the nick cannot make the file be written
-         * outside the download directory
+         * outside the download directory.
          */
         nick = (dir_separator) ?
             weechat_string_replace (xfer->remote_nick, dir_separator, "_") : NULL;
@@ -323,7 +323,7 @@ xfer_file_calculate_speed (struct t_xfer *xfer, int ended)
     {
         if (ended)
         {
-            /* calculate bytes per second (global) */
+            /* Calculate bytes per second (global). */
             elapsed_usec = weechat_util_timeval_diff (&xfer->start_transfer, &local_time);
             if (elapsed_usec == 0)
                 elapsed_usec = 1;
@@ -332,7 +332,7 @@ xfer_file_calculate_speed (struct t_xfer *xfer, int ended)
         }
         else
         {
-            /* calculate ETA */
+            /* Calculate ETA. */
             elapsed_usec = weechat_util_timeval_diff (&xfer->start_transfer, &local_time);
             if (elapsed_usec == 0)
             {
@@ -347,7 +347,7 @@ xfer_file_calculate_speed (struct t_xfer *xfer, int ended)
                     xfer->eta = (xfer->size - xfer->pos) / bytes_per_usec_total / 1000000.0;
             }
 
-            /* calculate bytes per second (since last check time) */
+            /* Calculate bytes per second (since last check time). */
             elapsed_usec = weechat_util_timeval_diff (&xfer->last_check_time, &local_time);
             if (elapsed_usec == 0)
                 elapsed_usec = 1;

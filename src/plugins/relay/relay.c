@@ -85,7 +85,7 @@ relay_protocol_search (const char *name)
             return i;
     }
 
-    /* protocol not found */
+    /* Protocol not found */
     return -1;
 }
 
@@ -109,7 +109,7 @@ relay_status_search (const char *name)
             return i;
     }
 
-    /* status not found */
+    /* Status not found */
     return -1;
 }
 
@@ -126,17 +126,17 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
     struct t_relay_client *ptr_client;
     int quit, tls_disconnected;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
     (void) signal_data;
 
-    /* only save session and continue? */
+    /* Only save session and continue? */
     if (signal_data && (strcmp (signal_data, "save") == 0))
     {
-        /* save session with a disconnected state in clients */
+        /* Save session with a disconnected state in clients. */
         if (!relay_upgrade_save (1))
         {
             weechat_printf (
@@ -148,7 +148,7 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* close socket for relay servers */
+    /* Close socket for relay servers. */
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -164,7 +164,7 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
         /*
          * FIXME: it's not possible to upgrade with TLS clients connected (GnuTLS
          * lib can't reload data after upgrade), so we close connection for
-         * all TLS clients currently connected
+         * all TLS clients currently connected.
          */
         if ((ptr_client->sock >= 0) && (ptr_client->tls || quit))
         {
@@ -215,7 +215,7 @@ relay_debug_dump_cb (const void *pointer, void *data,
                      const char *signal, const char *type_data,
                      void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -258,7 +258,7 @@ relay_modifier_input_text_display_cb (const void *pointer,
     char *text, *new_input;
     int rc, input_get_any_user_data;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
@@ -293,7 +293,7 @@ relay_modifier_input_text_display_cb (const void *pointer,
     ptr_input = weechat_string_input_for_buffer (
         weechat_buffer_get_string (ptr_buffer, "input"));
 
-    /* if input is not a command, we don't change the input */
+    /* If input is not a command, we don't change the input. */
     if (ptr_input)
         return NULL;
 
@@ -319,7 +319,7 @@ relay_modifier_input_text_display_cb (const void *pointer,
 int
 relay_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -340,7 +340,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     int auto_connect;
     char *info_auto_connect;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -368,7 +368,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     relay_command_init ();
 
-    /* hook completions */
+    /* Hook completions. */
     relay_completion_init ();
 
     relay_bar_item_init ();
@@ -379,9 +379,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     relay_info_init ();
 
     /*
-     * callback for adding local/remote command status (buffer api remote),
+     * Callback for adding local/remote command status (buffer api remote),
      * we use a low priority here, so that other modifiers "input_text_display"
-     * (from other plugins) will be called before this one
+     * (from other plugins) will be called before this one.
      */
     weechat_hook_modifier ("100|input_text_display",
                            &relay_modifier_input_text_display_cb, NULL, NULL);
@@ -389,7 +389,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (weechat_relay_plugin->upgrading)
         relay_upgrade_load ();
 
-    /* check if auto-connect is enabled */
+    /* Check if auto-connect is enabled. */
     info_auto_connect = weechat_info_get ("auto_connect", NULL);
     auto_connect = (info_auto_connect && (strcmp (info_auto_connect, "1") == 0)) ?
         1 : 0;
@@ -411,7 +411,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (relay_hook_timer)

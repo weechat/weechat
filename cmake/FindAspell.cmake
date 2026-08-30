@@ -12,7 +12,7 @@
 #  ASPELL_LIBRARY = path to where libaspell.so* can be found
 
 if(ASPELL_FOUND)
-  # Already in cache, be silent
+  # Already in cache, be silent.
   SET(ASPELL_FIND_QUIETLY TRUE)
 endif()
 
@@ -29,7 +29,7 @@ find_library(ASPELL_LIBRARY
 if(ASPELL_INCLUDE_PATH AND ASPELL_LIBRARY)
   set(ASPELL_FOUND TRUE)
 
-  # check if function aspell_version_string() exists
+  # Check if function aspell_version_string() exists.
   set(CMAKE_REQUIRED_INCLUDES ${ASPELL_INCLUDE_PATH})
   set(CMAKE_REQUIRED_LIBRARIES ${ASPELL_LIBRARY})
   check_symbol_exists(aspell_version_string "aspell.h" HAVE_ASPELL_VERSION_STRING)

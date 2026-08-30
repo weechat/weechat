@@ -11,7 +11,7 @@
 
 struct t_weechat_plugin;
 
-/* list structures */
+/* List structures */
 
 enum t_infolist_type
 {
@@ -60,13 +60,13 @@ struct t_infolist
     struct t_infolist *next_infolist;  /* link to next list                 */
 };
 
-/* list variables */
+/* List variables */
 
 extern struct t_infolist *weechat_infolists;
 extern struct t_infolist *last_weechat_infolist;
 extern char infolist_type_char_string[];
 
-/* list functions */
+/* List functions */
 
 extern struct t_infolist *infolist_new (struct t_weechat_plugin *plugin);
 extern int infolist_valid (struct t_infolist *infolist);

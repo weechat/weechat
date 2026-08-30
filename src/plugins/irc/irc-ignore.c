@@ -44,7 +44,7 @@ irc_ignore_valid (struct t_irc_ignore *ignore)
             return 1;
     }
 
-    /* ignore not found */
+    /* Ignore not found */
     return 0;
 }
 
@@ -79,7 +79,7 @@ irc_ignore_search (const char *mask, const char *server, const char *channel)
         }
     }
 
-    /* ignore not found */
+    /* Ignore not found */
     return NULL;
 }
 
@@ -101,7 +101,7 @@ irc_ignore_search_by_number (int number)
             return ptr_ignore;
     }
 
-    /* ignore not found */
+    /* Ignore not found */
     return NULL;
 }
 
@@ -140,7 +140,7 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
         new_ignore->server = (server) ? strdup (server) : strdup ("*");
         new_ignore->channel = (channel) ? strdup (channel) : strdup ("*");
 
-        /* add ignore to ignore list */
+        /* Add ignore to ignore list. */
         new_ignore->prev_ignore = last_irc_ignore;
         if (last_irc_ignore)
             last_irc_ignore->next_ignore = new_ignore;
@@ -250,8 +250,8 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
         return 0;
 
     /*
-     * if nick is the same as server, then we will not ignore
-     * (it is possible when connected to an irc proxy)
+     * If nick is the same as server, then we will not ignore
+     * (it is possible when connected to an irc proxy).
      */
     if (nick && server->nick
         && (irc_server_strcasecmp (server, server->nick, nick) == 0))
@@ -288,14 +288,14 @@ irc_ignore_free (struct t_irc_ignore *ignore)
     (void) weechat_hook_signal_send ("irc_ignore_removing",
                                      WEECHAT_HOOK_SIGNAL_POINTER, ignore);
 
-    /* decrement number for all ignore after this one */
+    /* Decrement number for all ignore after this one. */
     for (ptr_ignore = ignore->next_ignore; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
         ptr_ignore->number--;
     }
 
-    /* free data */
+    /* Free data. */
     free (ignore->mask);
     if (ignore->regex_mask)
     {
@@ -305,7 +305,7 @@ irc_ignore_free (struct t_irc_ignore *ignore)
     free (ignore->server);
     free (ignore->channel);
 
-    /* remove ignore from list */
+    /* Remove ignore from list. */
     if (ignore->prev_ignore)
         (ignore->prev_ignore)->next_ignore = ignore->next_ignore;
     if (ignore->next_ignore)
@@ -344,7 +344,7 @@ irc_ignore_hdata_ignore_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

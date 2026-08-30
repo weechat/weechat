@@ -226,10 +226,10 @@ gui_window_save_style (WINDOW *window)
     attr_t *ptr_attrs;
     short *ptr_pair;
 
-    /* get pointer on saved style */
+    /* Get pointer on saved style. */
     ptr_saved_style = &gui_window_saved_style[gui_window_saved_style_index];
 
-    /* save current style */
+    /* Save current style. */
     ptr_saved_style->style_fg = gui_window_current_style_fg;
     ptr_saved_style->style_bg = gui_window_current_style_bg;
     ptr_saved_style->color_attr = gui_window_current_color_attr;
@@ -238,7 +238,7 @@ gui_window_save_style (WINDOW *window)
     ptr_pair = &ptr_saved_style->pair;
     wattr_get (window, ptr_attrs, ptr_pair, NULL);
 
-    /* increment style index (circular list) */
+    /* Increment style index (circular list). */
     gui_window_saved_style_index++;
     if (gui_window_saved_style_index >= GUI_WINDOW_MAX_SAVED_STYLES)
         gui_window_saved_style_index = 0;
@@ -253,24 +253,24 @@ gui_window_restore_style (WINDOW *window)
 {
     struct t_gui_window_saved_style *ptr_saved_style;
 
-    /* decrement style index (circular list) */
+    /* Decrement style index (circular list). */
     gui_window_saved_style_index--;
     if (gui_window_saved_style_index < 0)
         gui_window_saved_style_index = GUI_WINDOW_MAX_SAVED_STYLES - 1;
 
-    /* get pointer on saved style */
+    /* Get pointer on saved style. */
     ptr_saved_style = &gui_window_saved_style[gui_window_saved_style_index];
 
-    /* restore style */
+    /* Restore style. */
     gui_window_current_style_fg = ptr_saved_style->style_fg;
     gui_window_current_style_bg = ptr_saved_style->style_bg;
     gui_window_current_color_attr = ptr_saved_style->color_attr;
     gui_window_current_emphasis = ptr_saved_style->emphasis;
     wattr_set (window, ptr_saved_style->attrs, ptr_saved_style->pair, NULL);
     /*
-     * for unknown reason, the wattr_set function sometimes
+     * For unknown reason, the wattr_set function sometimes
      * fails to set the color pair under FreeBSD, so we force
-     * it again with wcolor_set
+     * it again with wcolor_set.
      */
     wcolor_set (window, ptr_saved_style->pair, NULL);
 }
@@ -355,8 +355,8 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
         bg = gui_color[num_color]->background;
 
         /*
-         * if not real white, we use default terminal foreground instead of
-         * white if bold attribute is set
+         * If not real white, we use default terminal foreground instead of
+         * white if bold attribute is set.
          */
         if (((fg == COLOR_WHITE + 8)
              || ((fg == COLOR_WHITE) && (gui_color[num_color]->attributes & A_BOLD)))
@@ -426,8 +426,8 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
             fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
 
             /*
-             * if not real white, we use default terminal foreground instead of
-             * white if bold attribute is set
+             * If not real white, we use default terminal foreground instead of
+             * white if bold attribute is set.
              */
             if (((fg == COLOR_WHITE + 8)
                  || ((fg == COLOR_WHITE) && (attributes & A_BOLD)))
@@ -520,8 +520,8 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
             fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
 
             /*
-             * if not real white, we use default terminal foreground instead of
-             * white if bold attribute is set
+             * If not real white, we use default terminal foreground instead of
+             * white if bold attribute is set.
              */
             if (((fg == COLOR_WHITE + 8)
                  || ((fg == COLOR_WHITE) && (attributes & A_BOLD)))
@@ -584,14 +584,14 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
 
     if (config_emphasized_attributes == 0)
     {
-        /* use color for emphasis (from config) */
+        /* Use color for emphasis (from config). */
         mvwchgat (window, y, x, count,
                   gui_color[GUI_COLOR_EMPHASIS]->attributes,
                   gui_color_weechat_get_pair (GUI_COLOR_EMPHASIS), NULL);
     }
     else
     {
-        /* exclusive or (XOR) with attributes */
+        /* Exclusive or (XOR) with attributes */
         attrs = 0;
         pair = 0;
         ptr_attrs = &attrs;
@@ -612,7 +612,7 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
         mvwchgat (window, y, x, count, attrs, pair, NULL);
     }
 
-    /* move the cursor after the text (mvwchgat does not move cursor) */
+    /* Move the cursor after the text (mvwchgat does not move cursor). */
     wmove (window, y, x + count);
 }
 
@@ -807,9 +807,9 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
         }
     }
     /*
-     * note: the comma is an old separator not used anymore
+     * Note: the comma is an old separator not used anymore
      * (since WeeChat 2.6), but we still use it here so in case of /upgrade
-     * this will not break colors in old messages
+     * this will not break colors in old messages.
      */
     if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
     {
@@ -1050,10 +1050,10 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
     window->win_chat_cursor_x = window->win_x + add_left;
     window->win_chat_cursor_y = window->win_y + add_top;
 
-    /* chat area too small? (not enough space left) */
+    /* Chat area too small? (not enough space left) */
     if ((window->win_chat_width < 1) || (window->win_chat_height < 1))
     {
-        /* invalidate the chat area, it will not be displayed */
+        /* Invalidate the chat area, it will not be displayed. */
         window->win_chat_x = -1;
         window->win_chat_y = -1;
         window->win_chat_width = 0;
@@ -1128,7 +1128,7 @@ gui_window_draw_separators (struct t_gui_window *window)
     int horiz_overlap, x, width, height;
     struct t_gui_window_tree *ptr_tree, *ptr_child;
 
-    /* remove separators */
+    /* Remove separators. */
     if (GUI_WINDOW_OBJECTS(window)->win_separator_horiz)
     {
         delwin (GUI_WINDOW_OBJECTS(window)->win_separator_horiz);
@@ -1140,25 +1140,25 @@ gui_window_draw_separators (struct t_gui_window *window)
         GUI_WINDOW_OBJECTS(window)->win_separator_vertic = NULL;
     }
 
-    /* check if separators must be displayed */
+    /* Check if separators must be displayed. */
     separator_horizontal = (CONFIG_BOOLEAN(config_look_window_separator_horizontal)
                             && (window->win_y + window->win_height <
                                 gui_window_get_height () - gui_bar_root_get_size (NULL, GUI_BAR_POSITION_BOTTOM) - 1));
     separator_vertical = (CONFIG_BOOLEAN(config_look_window_separator_vertical)
                           && (window->win_x > gui_bar_root_get_size (NULL, GUI_BAR_POSITION_LEFT)));
 
-    /* check if horizontal separator must overlap in lower left corner */
+    /* Check if horizontal separator must overlap in lower left corner. */
     horiz_overlap = 0;
     ptr_child = window->ptr_tree;
     ptr_tree = ptr_child->parent_node;
     while (ptr_tree)
     {
-        /* is right/top child */
+        /* Is right/top child? */
         if (ptr_tree->child2 == ptr_child)
         {
             /*
-             * horizontal overlap is needed when window is right in vertical
-             * split; it is not needed when window is top in horizontal split
+             * Horizontal overlap is needed when window is right in vertical
+             * split; it is not needed when window is top in horizontal split.
              */
             horiz_overlap = !ptr_tree->split_horizontal;
             break;
@@ -1168,7 +1168,7 @@ gui_window_draw_separators (struct t_gui_window *window)
         ptr_tree = ptr_tree->parent_node;
     }
 
-    /* create/draw horizontal separator */
+    /* Create/draw horizontal separator. */
     if (separator_horizontal)
     {
         x = (separator_vertical && horiz_overlap) ?
@@ -1189,7 +1189,7 @@ gui_window_draw_separators (struct t_gui_window *window)
         wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator_horiz);
     }
 
-    /* create/draw vertical separator */
+    /* Create/draw vertical separator. */
     if (separator_vertical)
     {
         height = (separator_horizontal && !horiz_overlap) ?
@@ -1256,8 +1256,8 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         if (set_last_read)
         {
             /*
-             * if there is no line displayed after last read line,
-             * then remove the read marker
+             * If there is no line displayed after last read line,
+             * then remove the read marker.
              */
             if (buffer->lines->last_read_line
                 && !gui_line_get_next_displayed (buffer->lines->last_read_line))
@@ -1280,11 +1280,11 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         gui_hotlist_remove_buffer (buffer, 0);
     }
 
-    /* remove unused bars and add missing bars in window */
+    /* Remove unused bars and add missing bars in window. */
     gui_bar_window_remove_unused_bars (window);
     gui_bar_window_add_missing_bars (window);
 
-    /* create bar windows */
+    /* Create bar windows. */
     for (ptr_bar_window = window->bar_windows; ptr_bar_window;
          ptr_bar_window = ptr_bar_window->next_bar_window)
     {
@@ -1295,10 +1295,10 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
 
     gui_window_calculate_pos_size (window);
 
-    /* destroy Curses windows */
+    /* Destroy Curses windows. */
     gui_window_objects_free (window, 0);
 
-    /* create Curses windows */
+    /* Create Curses windows. */
     if (GUI_WINDOW_OBJECTS(window)->win_chat)
     {
         delwin (GUI_WINDOW_OBJECTS(window)->win_chat);
@@ -1361,7 +1361,7 @@ gui_window_switch (struct t_gui_window *window)
 
     gui_current_window = window;
 
-    /* remove unused bars and add missing bars in window */
+    /* Remove unused bars and add missing bars in window. */
     changes = gui_bar_window_remove_unused_bars (old_window)
         || gui_bar_window_add_missing_bars (old_window);
     if (changes)
@@ -1468,7 +1468,7 @@ gui_window_page_down (struct t_gui_window *window)
                                               &window->scroll->start_line_pos,
                                               num_lines);
 
-                /* check if we can display all lines in chat area */
+                /* Check if we can display all lines in chat area. */
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
@@ -1565,7 +1565,7 @@ gui_window_scroll_down (struct t_gui_window *window)
                                               &window->scroll->start_line_pos,
                                               CONFIG_INTEGER(config_look_scroll_amount));
 
-                /* check if we can display all lines in chat area */
+                /* Check if we can display all lines in chat area. */
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
@@ -1787,7 +1787,7 @@ gui_window_refresh_windows (void)
 
     old_current_window = gui_current_window;
 
-    /* remove unused bars and add missing root bars */
+    /* Remove unused bars and add missing root bars. */
     gui_bar_window_remove_unused_bars (NULL);
     gui_bar_window_add_missing_bars (NULL);
 
@@ -1818,7 +1818,7 @@ gui_window_refresh_windows (void)
             ptr_layout = gui_layout_search (GUI_LAYOUT_ZOOM);
             if (ptr_layout)
             {
-                /* remove zoom saved, to force a new zoom */
+                /* Remove zoom saved, to force a new zoom. */
                 gui_layout_remove (ptr_layout);
             }
             gui_window_zoom (gui_current_window);
@@ -1872,19 +1872,19 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
                                      100, percentage);
         if (new_window)
         {
-            /* reduce old window height (bottom window) */
+            /* Reduce old window height (bottom window). */
             window->win_y = new_window->win_y + new_window->win_height;
             window->win_height = height2;
             window->win_height_pct = 100 - percentage;
 
-            /* assign same buffer for new window (top window) */
+            /* Assign same buffer for new window (top window). */
             gui_buffer_add_value_num_displayed (new_window->buffer, 1);
 
             gui_window_ask_refresh (1);
 
             gui_window_switch (new_window);
 
-            /* create & draw separators */
+            /* Create & draw separators. */
             gui_window_draw_separators (gui_current_window);
         }
     }
@@ -1925,18 +1925,18 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
                                      percentage, 100);
         if (new_window)
         {
-            /* reduce old window height (left window) */
+            /* Reduce old window height (left window). */
             window->win_width = width1;
             window->win_width_pct = 100 - percentage;
 
-            /* assign same buffer for new window (right window) */
+            /* Assign same buffer for new window (right window). */
             gui_buffer_add_value_num_displayed (new_window->buffer, 1);
 
             gui_window_ask_refresh (1);
 
             gui_window_switch (new_window);
 
-            /* create & draw separators */
+            /* Create & draw separators. */
             gui_window_draw_separators (gui_current_window);
         }
     }
@@ -2050,14 +2050,14 @@ gui_window_merge (struct t_gui_window *window)
 
     if (window->win_y == sister->window->win_y)
     {
-        /* horizontal merge */
+        /* Horizontal merge. */
         separator = (CONFIG_BOOLEAN(config_look_window_separator_horizontal)) ? 1 : 0;
         window->win_width += sister->window->win_width + separator;
         window->win_width_pct += sister->window->win_width_pct;
     }
     else
     {
-        /* vertical merge */
+        /* Vertical merge. */
         separator = (CONFIG_BOOLEAN(config_look_window_separator_vertical)) ? 1 : 0;
         window->win_height += sister->window->win_height + separator;
         window->win_height_pct += sister->window->win_height_pct;
@@ -2395,7 +2395,7 @@ gui_window_swap (struct t_gui_window *window, int direction)
 
     if (direction == 0)
     {
-        /* search sister window */
+        /* Search sister window. */
         parent = window->ptr_tree->parent_node;
         if (parent)
         {
@@ -2407,7 +2407,7 @@ gui_window_swap (struct t_gui_window *window, int direction)
     }
     else
     {
-        /* search window using direction */
+        /* Search window using direction. */
         for (ptr_win = gui_windows; ptr_win;
              ptr_win = ptr_win->next_window)
         {
@@ -2420,7 +2420,7 @@ gui_window_swap (struct t_gui_window *window, int direction)
         }
     }
 
-    /* let's swap! */
+    /* Let's swap! */
     if (window2 && (window->buffer != window2->buffer))
     {
         buffer1 = window->buffer;
@@ -2460,7 +2460,7 @@ int
 gui_window_bare_display_timer_cb (const void *pointer, void *data,
                                   int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2486,7 +2486,7 @@ gui_window_bare_display_toggle (const char *delay)
 
     if (gui_window_bare_display)
     {
-        /* temporarily disable ncurses */
+        /* Temporarily disable ncurses. */
         endwin ();
         if (gui_mouse_enabled)
             gui_mouse_disable ();
@@ -2508,7 +2508,7 @@ gui_window_bare_display_toggle (const char *delay)
     }
     else
     {
-        /* come back to standard display (with ncurses) */
+        /* Come back to standard display (with ncurses). */
         refresh ();
         if (gui_window_bare_display_timer)
         {
@@ -2582,11 +2582,11 @@ gui_window_set_title (const char *title)
                 printf ("\033k%s\033\\", envterm);
             }
         }
-        /* trying to set the title of a backgrounded xterm like terminal */
+        /* Try to set the title of a backgrounded xterm like terminal. */
         printf ("\33]0;%s\7", new_title);
     }
     else
-    {    /* we suppose all other terminals support the xterm escape codes */
+    {    /* We suppose all other terminals support the xterm escape codes. */
         printf ("\33]0;%s\7", new_title);
     }
 

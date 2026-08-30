@@ -31,7 +31,7 @@ relay_info_info_relay_api_version_cb (const void *pointer, void *data,
     char version[128];
 #endif
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -58,7 +58,7 @@ relay_info_info_relay_api_version_number_cb (const void *pointer, void *data,
     char version_number[32];
 #endif
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -87,7 +87,7 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
     int count, protocol, status, num_items;
     struct t_relay_client *ptr_client;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -108,7 +108,7 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
 
     if (num_items == 1)
     {
-        /* one argument: try to guess if it's a protocol or a status */
+        /* One argument: try to guess if it's a protocol or a status. */
         if (strcmp (items[0], "*") != 0)
         {
             protocol = relay_protocol_search (items[0]);
@@ -122,7 +122,7 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
     }
     else if (num_items == 2)
     {
-        /* two arguments: protocol,status */
+        /* Two arguments: protocol,status */
         if (strcmp (items[0], "*") != 0)
         {
             protocol = relay_protocol_search (items[0]);
@@ -168,7 +168,7 @@ relay_info_infolist_relay_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_relay_client *ptr_client;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -183,7 +183,7 @@ relay_info_infolist_relay_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one relay */
+        /* Build list with only one relay. */
         if (!relay_client_add_to_infolist (ptr_infolist, obj_pointer, 0))
         {
             weechat_infolist_free (ptr_infolist);
@@ -193,7 +193,7 @@ relay_info_infolist_relay_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all relays */
+        /* Build list with all relays. */
         for (ptr_client = relay_clients; ptr_client;
              ptr_client = ptr_client->next_client)
         {
@@ -216,7 +216,7 @@ relay_info_infolist_relay_cb (const void *pointer, void *data,
 void
 relay_info_init (void)
 {
-    /* info hooks */
+    /* Info hooks */
     weechat_hook_info (
         "relay_api_version",
         N_("relay API version"),
@@ -235,7 +235,7 @@ relay_info_init (void)
            "means all; protocols: api, irc, weechat; statuses: connecting, "
            "waiting_auth, connected, auth_failed, disconnected)"),
         &relay_info_info_relay_client_count_cb, NULL, NULL);
-    /* infolist hooks */
+    /* Infolist hooks */
     weechat_hook_infolist (
         "relay", N_("list of relay clients"),
         N_("relay pointer (optional)"),

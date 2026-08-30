@@ -32,7 +32,7 @@ script_mouse_focus_chat_cb (const void *pointer, void *data,
     struct t_script_repo *ptr_script;
     struct tm *tm;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

@@ -9,7 +9,7 @@
 
 #include <time.h>
 
-/* channel types */
+/* Channel types */
 #define IRC_CHANNEL_TYPE_UNKNOWN  -1
 #define IRC_CHANNEL_TYPE_CHANNEL  0
 #define IRC_CHANNEL_TYPE_PRIVATE  1

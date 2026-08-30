@@ -31,7 +31,7 @@ script_info_info_script_info_cb (const void *pointer, void *data,
     struct t_hashtable *pointers;
     void *ptr_script;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -108,7 +108,7 @@ script_info_info_script_loaded_cb (const void *pointer, void *data,
     struct t_hdata *hdata;
     void *ptr_script;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -132,7 +132,7 @@ script_info_info_script_loaded_cb (const void *pointer, void *data,
                     && (arguments[length] == '.')
                     && (strcmp (arguments + length + 1, script_extension[i]) == 0))
                 {
-                    /* script loaded */
+                    /* Script loaded */
                     return strdup ("1");
                 }
             }
@@ -140,7 +140,7 @@ script_info_info_script_loaded_cb (const void *pointer, void *data,
         }
     }
 
-    /* script not loaded */
+    /* Script not loaded */
     return NULL;
 }
 
@@ -156,7 +156,7 @@ script_info_info_languages_cb (const void *pointer, void *data,
     char **output;
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -188,7 +188,7 @@ script_info_infolist_script_script_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_script_repo *ptr_script;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -202,7 +202,7 @@ script_info_infolist_script_script_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one script */
+        /* Build list with only one script. */
         if (!script_repo_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
@@ -212,7 +212,7 @@ script_info_infolist_script_script_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all scripts matching arguments */
+        /* Build list with all scripts matching arguments. */
         for (ptr_script = scripts_repo; ptr_script;
              ptr_script = ptr_script->next_script)
         {
@@ -240,7 +240,7 @@ script_info_infolist_script_script_cb (const void *pointer, void *data,
 void
 script_info_init (void)
 {
-    /* info hooks */
+    /* Info hooks */
     weechat_hook_info (
         "script_info",
         N_("info on a script"),
@@ -257,7 +257,7 @@ script_info_init (void)
         NULL,
         &script_info_info_languages_cb, NULL, NULL);
 
-    /* infolist hooks */
+    /* Infolist hooks */
     weechat_hook_infolist (
         "script_script",
         N_("list of scripts"),
@@ -266,7 +266,7 @@ script_info_init (void)
            "(wildcard \"*\" is allowed) (optional)"),
         &script_info_infolist_script_script_cb, NULL, NULL);
 
-    /* hdata hooks */
+    /* Hdata hooks */
     weechat_hook_hdata (
         "script_script", N_("scripts from repository"),
         &script_repo_hdata_script_cb, NULL, NULL);

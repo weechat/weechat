@@ -27,7 +27,7 @@
 #include "../relay-raw.h"
 
 
-/* strings for compression */
+/* Strings for compression */
 char *relay_weechat_compression_string[RELAY_WEECHAT_NUM_COMPRESSIONS] = {
     "off",
     "zlib",
@@ -58,7 +58,7 @@ relay_weechat_compression_search (const char *compression)
             return i;
     }
 
-    /* compression not found */
+    /* Compression not found */
     return -1;
 }
 
@@ -146,7 +146,7 @@ relay_weechat_close_connection (struct t_relay_client *client)
      * IMPORTANT: if changes are made in this function or sub-functions called,
      * please also update the function relay_weechat_add_to_infolist:
      * when the flag force_disconnected_state is set to 1 we simulate
-     * a disconnected state for client in infolist (used on /upgrade -save)
+     * a disconnected state for client in infolist (used on /upgrade -save).
      */
 
     relay_weechat_unhook_signals (client);
@@ -160,7 +160,7 @@ void
 relay_weechat_free_buffers_nicklist (struct t_hashtable *hashtable,
                                      const void *key, void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) key;
 
@@ -222,15 +222,15 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
     if (!client->protocol_data)
         return;
 
-    /* general stuff */
-    /* "handshake_done" is new in WeeChat 2.9 */
+    /* General stuff */
+    /* "handshake_done" is new in WeeChat 2.9. */
     if (weechat_infolist_search_var (infolist, "handshake_done"))
         RELAY_WEECHAT_DATA(client, handshake_done) = weechat_infolist_integer (infolist, "handshake_done");
     else
         RELAY_WEECHAT_DATA(client, handshake_done) = 0;
     RELAY_WEECHAT_DATA(client, password_ok) = weechat_infolist_integer (
         infolist, "password_ok");
-    /* "totp_ok" is new in WeeChat 2.4 */
+    /* "totp_ok" is new in WeeChat 2.4. */
     if (weechat_infolist_search_var (infolist, "totp_ok"))
         RELAY_WEECHAT_DATA(client, totp_ok) = weechat_infolist_integer (infolist, "totp_ok");
     else
@@ -240,7 +240,7 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
     RELAY_WEECHAT_DATA(client, escape_commands) = weechat_infolist_integer (
         infolist, "escape_commands");
 
-    /* sync of buffers */
+    /* Sync of buffers */
     RELAY_WEECHAT_DATA(client, buffers_sync) = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
@@ -286,7 +286,7 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
 enum t_relay_status
 relay_weechat_get_initial_status (struct t_relay_client *client)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) client;
 
     return RELAY_STATUS_AUTHENTICATING;
@@ -337,7 +337,7 @@ relay_weechat_add_to_infolist (struct t_infolist_item *item,
     if (!item || !client)
         return 0;
 
-    /* parameter not used today, it may be in future */
+    /* Parameter not used today, it may be in future. */
     (void) force_disconnected_state;
 
     if (!weechat_infolist_new_var_integer (item, "handshake_done", RELAY_WEECHAT_DATA(client, handshake_done)))

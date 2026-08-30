@@ -38,7 +38,7 @@ from pathlib import Path
 
 SRC_PATH = Path(__file__).resolve().parent.parent / "src" / "core" / "core-url.c"
 
-# NOTE: keep version in sync with CMakeLists.txt
+# NOTE: keep version in sync with CMakeLists.txt.
 CURL_MIN_VERSION_STR = "7.68.0"
 
 WEECHAT_CURL_MIN_VERSION_RE = (
@@ -174,7 +174,7 @@ def get_weechat_curl_symbols() -> tuple[list[WeechatCurlSymbol], int]:  # noqa: 
     with Path(SRC_PATH).open(encoding="utf-8") as src_file:
         for line in src_file:
             line_no += 1
-            # min Curl version
+            # Min Curl version
             match = re.match(min_version_pattern, line)
             if match:
                 hex_min_vers = match["hex_min_version"]
@@ -187,7 +187,7 @@ def get_weechat_curl_symbols() -> tuple[list[WeechatCurlSymbol], int]:  # noqa: 
                     )
                     errors += 1
                 continue
-            # max Curl version
+            # Max Curl version
             match = re.match(max_version_pattern, line)
             if match:
                 hex_max_vers = match["hex_max_version"]
@@ -200,7 +200,7 @@ def get_weechat_curl_symbols() -> tuple[list[WeechatCurlSymbol], int]:  # noqa: 
                     )
                     errors += 1
                 continue
-            # min + max Curl version
+            # Min + max Curl version
             match = re.match(min_max_version_pattern, line)
             if match:
                 hex_min_vers = match["hex_min_version"]
@@ -221,7 +221,7 @@ def get_weechat_curl_symbols() -> tuple[list[WeechatCurlSymbol], int]:  # noqa: 
                     )
                     errors += 1
                 continue
-            # end of min/max Curl version
+            # End of min/max Curl version.
             match = re.match(endif_pattern, line)
             if match:
                 v_min, v_max = 0, 0

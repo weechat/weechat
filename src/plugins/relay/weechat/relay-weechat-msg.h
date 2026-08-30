@@ -13,7 +13,7 @@ struct t_relay_weechat_nicklist;
 
 #define RELAY_WEECHAT_MSG_INITIAL_ALLOC 4096
 
-/* object ids in binary messages */
+/* Object ids in binary messages */
 #define RELAY_WEECHAT_MSG_OBJ_CHAR      "chr"
 #define RELAY_WEECHAT_MSG_OBJ_INT       "int"
 #define RELAY_WEECHAT_MSG_OBJ_LONG      "lon"

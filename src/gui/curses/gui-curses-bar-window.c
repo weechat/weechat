@@ -195,47 +195,47 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 string++;
                 switch (string[0])
                 {
-                    case GUI_COLOR_FG_CHAR: /* fg color */
+                    case GUI_COLOR_FG_CHAR: /* Fg color */
                         string++;
                         gui_window_string_apply_color_fg ((unsigned char **)&string,
                                                           GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
-                    case GUI_COLOR_BG_CHAR: /* bg color */
+                    case GUI_COLOR_BG_CHAR: /* Bg color */
                         string++;
                         gui_window_string_apply_color_bg ((unsigned char **)&string,
                                                           GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
-                    case GUI_COLOR_FG_BG_CHAR: /* fg + bg color */
+                    case GUI_COLOR_FG_BG_CHAR: /* Fg + bg color */
                         string++;
                         gui_window_string_apply_color_fg_bg ((unsigned char **)&string,
                                                              GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
-                    case GUI_COLOR_EXTENDED_CHAR: /* pair number */
+                    case GUI_COLOR_EXTENDED_CHAR: /* Pair number */
                         string++;
                         gui_window_string_apply_color_pair ((unsigned char **)&string,
                                                             GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
-                    case GUI_COLOR_EMPHASIS_CHAR: /* emphasis */
+                    case GUI_COLOR_EMPHASIS_CHAR: /* Emphasis */
                         string++;
                         gui_window_toggle_emphasis ();
                         break;
-                    case GUI_COLOR_BAR_CHAR: /* bar color */
+                    case GUI_COLOR_BAR_CHAR: /* Bar color */
                         switch (string[1])
                         {
                             case GUI_COLOR_BAR_FG_CHAR:
-                                /* bar foreground */
+                                /* Bar foreground */
                                 string += 2;
                                 gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                                 CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
                                 break;
                             case GUI_COLOR_BAR_DELIM_CHAR:
-                                /* bar delimiter */
+                                /* Bar delimiter */
                                 string += 2;
                                 gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                                 CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
                                 break;
                             case GUI_COLOR_BAR_BG_CHAR:
-                                /* bar background */
+                                /* Bar background */
                                 string += 2;
                                 gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                                 CONFIG_COLOR(bar_window->bar->options[color_bg]));
@@ -249,7 +249,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                 hidden = 1;
                                 break;
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
-                                /* move cursor to current position on screen */
+                                /* Move cursor to current position on screen. */
                                 string += 2;
                                 getyx (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                        bar_window->cursor_y,
@@ -299,7 +299,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                 break;
                         }
                         break;
-                    case GUI_COLOR_RESET_CHAR: /* reset color (keep attributes) */
+                    case GUI_COLOR_RESET_CHAR: /* Reset color (keep attributes). */
                         string++;
                         gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                            CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
@@ -337,21 +337,21 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 ptr_char = utf_char;
                 if (utf_char[0] == '\t')
                 {
-                    /* expand tabulation with spaces */
+                    /* Expand tabulation with spaces. */
                     ptr_char = (gui_chat_whitespace_mode) ?
                         config_tab_spaces_whitespace : config_tab_spaces;
                 }
                 else if ((utf_char[0] == ' ') && gui_chat_whitespace_mode)
                 {
-                    /* replace space in whitespace mode */
+                    /* Replace space in whitespace mode. */
                     snprintf (utf_char, sizeof (utf_char),
                               "%s", CONFIG_STRING(config_look_whitespace_char));
                 }
                 else if (((unsigned char)utf_char[0]) < 32)
                 {
                     /*
-                     * display chars < 32 with letter/symbol
-                     * and set reverse video (if not already enabled)
+                     * Display chars < 32 with letter/symbol
+                     * and set reverse video (if not already enabled).
                      */
                     snprintf (utf_char, sizeof (utf_char), "%c",
                               'A' + ((unsigned char)utf_char[0]) - 1);
@@ -368,7 +368,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         if (hide_chars_if_scrolling
                             && (x_with_hidden < bar_window->scroll_x))
                         {
-                            /* hidden char (before scroll_x value) */
+                            /* Hidden char (before scroll_x value) */
                             x_with_hidden++;
                         }
                         else if (!hidden)
@@ -574,13 +574,13 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     }
 
     /*
-     * these values will be overwritten later (by gui_bar_window_print_string)
-     * if cursor has to move somewhere in bar window
+     * These values will be overwritten later (by gui_bar_window_print_string)
+     * if cursor has to move somewhere in bar window.
      */
     bar_window->cursor_x = -1;
     bar_window->cursor_y = -1;
 
-    /* remove coords */
+    /* Remove coords. */
     gui_bar_window_coords_free (bar_window);
     index_item = -1;
     index_subitem = -1;
@@ -635,10 +635,10 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         }
         else
         {
-            /* bar with auto size ? then compute new size, according to content */
+            /* Bar with auto size ? Then compute new size, according to content. */
             if (bar_size == 0)
             {
-                /* search longer line and optimal number of lines */
+                /* Search longer line and optimal number of lines. */
                 max_length = 0;
                 optimal_number_of_lines = 0;
                 for (line = 0; line < items_count; line++)
@@ -709,8 +709,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     if (pos_cursor)
                     {
                         chars_available =
-                            ((bar_window->height - y - 1) * bar_window->width) + /* next lines */
-                            (bar_window->width - x - 1); /* chars on current line */
+                            ((bar_window->height - y - 1) * bar_window->width) + /* Next lines */
+                            (bar_window->width - x - 1); /* Chars on current line */
 
                         length_screen_before_cursor = -1;
                         length_screen_after_cursor = -1;
@@ -736,7 +736,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                                          - (diff % CONFIG_INTEGER(config_look_input_cursor_scroll)));
                             }
 
-                            /* compute new start for displaying input */
+                            /* Compute new start for displaying input. */
                             new_start_input = pos_after_start_input +
                                 gui_chat_string_real_pos (pos_after_start_input,
                                                           diff, 1);
@@ -746,7 +746,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             buf = malloc (strlen (items[line]) + length_start_input_hidden + 1);
                             if (buf)
                             {
-                                /* add string before start of input */
+                                /* Add string before start of input. */
                                 index = 0;
                                 if (pos_start_input > items[line])
                                 {
@@ -754,17 +754,17 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                                     memmove (buf, items[line], size);
                                     index += size;
                                 }
-                                /* add tag "start_input_hidden" */
+                                /* Add tag "start_input_hidden". */
                                 memmove (buf + index, str_start_input_hidden, length_start_input_hidden);
                                 index += length_start_input_hidden;
-                                /* add hidden part of input */
+                                /* Add hidden part of input. */
                                 size = new_start_input - pos_after_start_input;
                                 memmove (buf + index, pos_after_start_input, size);
                                 index += size;
-                                /* add tag "start_input" */
+                                /* Add tag "start_input". */
                                 memmove (buf + index, str_start_input, length_start_input);
                                 index += length_start_input;
-                                /* add input (will be displayed) */
+                                /* Add input (will be displayed). */
                                 size = strlen (new_start_input) + 1;
                                 memmove (buf + index, new_start_input, size);
 
@@ -884,8 +884,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     }
 
     /*
-     * move cursor if it was asked in an item content (input_text does that
-     * to move cursor in user input text)
+     * Move cursor if it was asked in an item content (input_text does that
+     * to move cursor in user input text).
      */
     if ((!window || (gui_current_window == window))
         && (bar_window->cursor_x >= 0) && (bar_window->cursor_y >= 0))

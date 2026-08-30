@@ -234,7 +234,7 @@ TEST(CoreCalc, Expression)
 {
     char *value;
 
-    /* invalid expressions */
+    /* Invalid expressions */
     WEE_CHECK_CALC("0", NULL);
     WEE_CHECK_CALC("0", "");
     WEE_CHECK_CALC("0", "(");
@@ -248,20 +248,20 @@ TEST(CoreCalc, Expression)
     WEE_CHECK_CALC("0", "0//0");
     WEE_CHECK_CALC("0", "0%0");
 
-    /* no operator */
+    /* No operator */
     WEE_CHECK_CALC("123", "123");
     WEE_CHECK_CALC("1.5", "1.5");
 
-    /* addition */
+    /* Addition */
     WEE_CHECK_CALC("-3", "-4+1");
     WEE_CHECK_CALC("3", "1+2");
     WEE_CHECK_CALC("4", " 1  +  3 ");
 
-    /* subtraction */
+    /* Subtraction */
     WEE_CHECK_CALC("5", "8-3");
     WEE_CHECK_CALC("-5", "3-8");
 
-    /* unary minus */
+    /* Unary minus */
     WEE_CHECK_CALC("0", "-0");
     WEE_CHECK_CALC("-0.001", "-0.001");
     WEE_CHECK_CALC("0", "(-0)");
@@ -280,25 +280,25 @@ TEST(CoreCalc, Expression)
     WEE_CHECK_CALC("15", "(-3)*-5");
     WEE_CHECK_CALC("9", "(-3)*(-4+1)");
 
-    /* multiplication */
+    /* Multiplication */
     WEE_CHECK_CALC("20", "10*2");
     WEE_CHECK_CALC("-8", "-2*4");
     WEE_CHECK_CALC("152415765279684", "12345678*12345678");
 
-    /* division */
+    /* Division */
     WEE_CHECK_CALC("2", "6/3");
     WEE_CHECK_CALC("2.5", "10/4");
 
-    /* floor division */
+    /* Floor division */
     WEE_CHECK_CALC("2", "10//4");
 
-    /* modulo */
+    /* Modulo */
     WEE_CHECK_CALC("4", "9%5");
     WEE_CHECK_CALC("0.2", "9.2%3");
     WEE_CHECK_CALC("-2", "-2%4");
     WEE_CHECK_CALC("0", "-2%2");
 
-    /* power */
+    /* Power */
     WEE_CHECK_CALC("1", "0**0");
     WEE_CHECK_CALC("0", "0**1");
     WEE_CHECK_CALC("1", "1**0");
@@ -310,13 +310,13 @@ TEST(CoreCalc, Expression)
     WEE_CHECK_CALC("0.5", "2**-1");
     WEE_CHECK_CALC("0.25", "2**-2");
 
-    /* multiple operators */
+    /* Multiple operators */
     WEE_CHECK_CALC("11", "5+2*3");
     WEE_CHECK_CALC("11", "2*3+5");
     WEE_CHECK_CALC("7", "5+2*3/3");
     WEE_CHECK_CALC("7", "2*3/3+5");
 
-    /* expressions with decimal numbers */
+    /* Expressions with decimal numbers */
     WEE_CHECK_CALC("12.5", "10.5+2");
     WEE_CHECK_CALC("3.3333333333", "10/3");
     WEE_CHECK_CALC("0.1428571429", "1/7");
@@ -331,14 +331,14 @@ TEST(CoreCalc, Expression)
     WEE_CHECK_CALC("0", "1/123456789012");
     WEE_CHECK_CALC("1.2222222222", "1+0.22222222222222222222222222222222222");
 
-    /* expressions with parentheses */
+    /* Expressions with parentheses */
     WEE_CHECK_CALC("6", "((6))");
     WEE_CHECK_CALC("-7.234", "((-7.234))");
     WEE_CHECK_CALC("21", "(5+2)*3");
     WEE_CHECK_CALC("3.15", "(1.5+2)*(1.8/2)");
     WEE_CHECK_CALC("-1.26", "(1.5+2)*(1.8/(2-7))");
 
-    /* with French locale: the result must always have "." instead of "," */
+    /* With French locale: the result must always have "." instead of ",". */
     setlocale (LC_ALL, "fr_FR.UTF-8");
     WEE_CHECK_CALC("12.5", "10.5+2");
     WEE_CHECK_CALC("-12.5", "-10.5-2");

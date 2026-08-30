@@ -159,7 +159,7 @@ TEST(GuiFilter, New)
     POINTERS_EQUAL(NULL, gui_filter_new (1, "test", "*", NULL, NULL));
     POINTERS_EQUAL(NULL, gui_filter_new (1, "test", "*", "tag_abc", NULL));
 
-    /* invalid regex */
+    /* Invalid regex */
     POINTERS_EQUAL(NULL, gui_filter_new (0, "abc", "*", "*", "prefix\\t*abc"));
     POINTERS_EQUAL(NULL, gui_filter_new (0, "abc", "*", "*", "*prefix\\tabc"));
 
@@ -183,7 +183,7 @@ TEST(GuiFilter, New)
     POINTERS_EQUAL(filter_abc, gui_filters);
     POINTERS_EQUAL(filter_abc, last_gui_filter);
 
-    /* filter already existing */
+    /* Filter already existing */
     POINTERS_EQUAL(NULL, gui_filter_new (1, "abc", "*", "tag2_abc", "regex2_abc"));
 
     filter_xyz = gui_filter_new (1, "xyz", "irc.test.#chan,irc.test.#chan2",

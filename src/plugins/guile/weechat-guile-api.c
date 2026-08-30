@@ -20,7 +20,7 @@
 #include "weechat-guile.h"
 
 
-/* max strings created by an API function */
+/* Max strings created by an API function */
 #define GUILE_MAX_STRINGS 64
 
 #define API_INIT_FUNC(__init, __name, __ret)                            \
@@ -107,9 +107,9 @@ weechat_guile_api_scm_to_string (SCM str,
         return NULL;
 
     /*
-     * if array is full, just return string without using length
+     * If array is full, just return string without using length
      * (this should never happen, the array should be large enough for any API
-     * function!)
+     * function!).
      */
     if (*guile_num_strings + 1 >= GUILE_MAX_STRINGS)
         return (char *)scm_i_string_chars (str);
@@ -148,7 +148,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
     API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (guile_registered_script)
     {
-        /* script already registered */
+        /* Script already registered */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" already "
                                          "registered (register ignored)"),
@@ -166,7 +166,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
 
     if (plugin_script_search (guile_scripts, API_SCM_TO_STRING(name)))
     {
-        /* another script already exists with same name */
+        /* Another script already exists with same name. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
@@ -175,7 +175,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
         API_RETURN_ERROR;
     }
 
-    /* register script */
+    /* Register script. */
     guile_current_script = plugin_script_add (weechat_guile_plugin,
                                               &guile_data,
                                               (guile_current_script_filename) ?
@@ -2222,7 +2222,7 @@ weechat_guile_api_hook_command_cb (const void *pointer, void *data,
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argv;
 
     script = (struct t_plugin_script *)pointer;
@@ -2829,10 +2829,10 @@ weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM ipv6,
                                                          scm_to_int (port),
                                                          scm_to_int (ipv6),
                                                          scm_to_int (retry),
-                                                         NULL, /* gnutls session */
-                                                         NULL, /* gnutls callback */
-                                                         0,    /* gnutls DH key size */
-                                                         NULL, /* gnutls priorities */
+                                                         NULL, /* GnuTLS session */
+                                                         NULL, /* GnuTLS callback */
+                                                         0,    /* GnuTLS DH key size */
+                                                         NULL, /* GnuTLS priorities */
                                                          API_SCM_TO_STRING(local_hostname),
                                                          &weechat_guile_api_hook_connect_cb,
                                                          API_SCM_TO_STRING(function),
@@ -2908,7 +2908,7 @@ weechat_guile_api_hook_print_cb (const void *pointer, void *data,
     static char timebuffer[64];
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) date_usec;
     (void) tags_count;
 
@@ -4304,7 +4304,7 @@ weechat_guile_api_bar_item_build_cb (const void *pointer, void *data,
     {
         if (strncmp (ptr_function, "(extra)", 7) == 0)
         {
-            /* new callback: data, item, window, buffer, extra_info */
+            /* New callback: data, item, window, buffer, extra_info */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -4318,7 +4318,7 @@ weechat_guile_api_bar_item_build_cb (const void *pointer, void *data,
         }
         else
         {
-            /* old callback: data, item, window */
+            /* Old callback: data, item, window */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -5540,10 +5540,10 @@ weechat_guile_api_module_init (void *data)
     scm_set_current_error_port (guile_port);
 #endif
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
-    /* interface functions */
+    /* Interface functions */
     API_DEF_FUNC(register, 7);
     API_DEF_FUNC(plugin_get_name, 1);
     API_DEF_FUNC(charset_set, 1);
@@ -5772,7 +5772,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(upgrade_read, 1);
     API_DEF_FUNC(upgrade_close, 1);
 
-    /* interface constants */
+    /* Interface constants */
     for (i = 0; weechat_script_constants[i].name; i++)
     {
         snprintf (str_const, sizeof (str_const),

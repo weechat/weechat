@@ -29,11 +29,11 @@ exec_buffer_input_cb (const void *pointer, void *data,
     char **argv, **argv_eol;
     int argc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
-    /* close buffer */
+    /* Close buffer. */
     if (strcmp (input_data, "q") == 0)
     {
         weechat_buffer_close (buffer);
@@ -72,11 +72,11 @@ exec_buffer_close_cb (const void *pointer, void *data,
     const char *full_name;
     struct t_exec_cmd *ptr_exec_cmd;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
-    /* kill any command whose output is on this buffer */
+    /* Kill any command whose output is on this buffer. */
     full_name = weechat_buffer_get_string (buffer, "full_name");
     for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
          ptr_exec_cmd = ptr_exec_cmd->next_cmd)
@@ -142,7 +142,7 @@ exec_buffer_new (const char *name, int free_content, int clear_buffer,
         if (((buffer_type == 0) && free_content)
             || ((buffer_type == 1) && !free_content))
         {
-            /* change the type of buffer */
+            /* Change the type of buffer. */
             weechat_buffer_set (new_buffer,
                                 "type",
                                 (free_content) ? "free" : "formatted");
@@ -175,7 +175,7 @@ exec_buffer_new (const char *name, int free_content, int clear_buffer,
 
     weechat_hashtable_free (buffer_props);
 
-    /* failed to create buffer ? then return */
+    /* Failed to create buffer ? Then return. */
     if (!new_buffer)
         return NULL;
 

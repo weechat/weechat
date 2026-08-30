@@ -49,7 +49,7 @@ int weechat_log_use_time = 1;      /* 0 to temporary disable time in log,   */
 int
 log_open (const char *filename, const char *mode)
 {
-    /* exit if log already opened */
+    /* Exit if log already opened. */
     if (weechat_log_file)
         return 0;
 
@@ -141,7 +141,7 @@ log_printf (const char *message, ...)
     weechat_va_format (message);
     if (vbuffer)
     {
-        /* keep only valid chars */
+        /* Keep only valid chars. */
         ptr_buffer = vbuffer;
         while (ptr_buffer[0])
         {
@@ -218,7 +218,7 @@ log_printf_hexa (const char *spaces, const char *string)
 void
 log_close (void)
 {
-    /* close log file */
+    /* Close log file. */
     if (weechat_log_file)
     {
 #ifdef HAVE_FLOCK
@@ -228,7 +228,7 @@ log_close (void)
         weechat_log_file = NULL;
     }
 
-    /* free filename */
+    /* Free filename. */
     if (weechat_log_filename)
     {
         free (weechat_log_filename);

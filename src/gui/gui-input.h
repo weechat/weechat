@@ -9,11 +9,11 @@
 
 struct t_gui_buffer;
 
-/* input variables */
+/* Input variables */
 
 extern char *gui_input_clipboard;
 
-/* input functions */
+/* Input functions */
 
 extern void gui_input_replace_input (struct t_gui_buffer *buffer,
                                      const char *new_input);

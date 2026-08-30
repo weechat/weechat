@@ -135,7 +135,7 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
 
             if (hook_matching)
             {
-                /* remove trailing spaces */
+                /* Remove trailing spaces. */
                 if (!HOOK_COMMAND_RUN(ptr_hook, keep_spaces_right))
                 {
                     i = strlen (command2) - 1;
@@ -145,7 +145,7 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
                         i--;
                     }
                 }
-                /* execute the command_run hook */
+                /* Execute the command_run hook. */
                 hook_callback_start (ptr_hook, &hook_exec_cb);
                 rc = (HOOK_COMMAND_RUN(ptr_hook, callback)) (
                     ptr_hook->callback_pointer,
@@ -199,7 +199,7 @@ hook_command_run_hdata_hook_command_run_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

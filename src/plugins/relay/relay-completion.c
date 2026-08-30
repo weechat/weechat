@@ -29,13 +29,13 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
     struct t_infolist *infolist;
     char protocol_name[1024];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
     (void) completion_item;
 
-    /* relay "irc" */
+    /* Relay "irc" */
     infolist = weechat_infolist_get ("irc_server", NULL, NULL);
     if (infolist)
     {
@@ -63,7 +63,7 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
         weechat_infolist_free (infolist);
     }
 
-    /* relay "api" */
+    /* Relay "api" */
     weechat_completion_list_add (completion, "api",
                                  0, WEECHAT_LIST_POS_SORT);
     weechat_completion_list_add (completion, "tls.api",
@@ -73,7 +73,7 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
     weechat_completion_list_add (completion, "unix.tls.api",
                                  0, WEECHAT_LIST_POS_SORT);
 
-    /* relay "weechat" */
+    /* Relay "weechat" */
     weechat_completion_list_add (completion, "weechat",
                                  0, WEECHAT_LIST_POS_SORT);
     weechat_completion_list_add (completion, "tls.weechat",
@@ -98,7 +98,7 @@ relay_completion_relays_cb (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -129,7 +129,7 @@ relay_completion_free_port_cb (const void *pointer, void *data,
     char str_port[16];
     int port_max;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -164,7 +164,7 @@ relay_completion_remotes_cb (const void *pointer, void *data,
 {
     struct t_relay_remote *ptr_remote;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;

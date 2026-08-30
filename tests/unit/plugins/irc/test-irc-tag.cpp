@@ -94,12 +94,12 @@ TEST(IrcTag, ModifierCallback)
 {
     char *result;
 
-    /* modifier "irc_tag_escape_value" */
+    /* Modifier "irc_tag_escape_value" */
     result = hook_modifier_exec (NULL, "irc_tag_escape_value", NULL, "test");
     STRCMP_EQUAL("test", result);
     free (result);
 
-    /* modifier "irc_tag_unescape_value" */
+    /* Modifier "irc_tag_unescape_value" */
     result = hook_modifier_exec (NULL, "irc_tag_unescape_value", NULL, "test");
     STRCMP_EQUAL("test", result);
     free (result);

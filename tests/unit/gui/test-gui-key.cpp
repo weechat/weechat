@@ -149,7 +149,7 @@ TEST(GuiKey, LegacyInternalCode)
     WEE_TEST_STR("\001[[A", gui_key_legacy_internal_code ("meta2-A"));
     WEE_TEST_STR("\001[[a", gui_key_legacy_internal_code ("meta2-a"));
 
-    /* ctrl-letter keys are forced to lower case */
+    /* Ctrl-letter keys are forced to lower case */
     WEE_TEST_STR("\001a", gui_key_legacy_internal_code ("ctrl-A"));
     WEE_TEST_STR("\001a", gui_key_legacy_internal_code ("ctrl-a"));
 
@@ -168,13 +168,13 @@ TEST(GuiKey, Expand)
     /* NULL key */
     WEE_CHECK_EXP_KEY(0, NULL, NULL, NULL);
 
-    /* empty key */
+    /* Empty key */
     WEE_CHECK_EXP_KEY(1, "", "", "");
 
     /* NULL key names */
     LONGS_EQUAL(1, gui_key_expand ("a", NULL, NULL));
 
-    /* invalid keys: incomplete */
+    /* Invalid keys: incomplete */
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[O");
@@ -189,11 +189,11 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[15;1");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[[");
 
-    /* focus/unfocus terminal (xterm) */
+    /* Focus/unfocus terminal (xterm) */
     WEE_CHECK_EXP_KEY(1, "meta-[I", "meta-[I", "\001[[I");
     WEE_CHECK_EXP_KEY(1, "meta-[O", "meta-[O", "\001[[O");
 
-    /* unknown sequence: kept as-is */
+    /* Unknown sequence: kept as-is */
     WEE_CHECK_EXP_KEY(1, "meta-[x", "meta-[x", "\001[[x");
     WEE_CHECK_EXP_KEY(1, "meta-[é", "meta-[é", "\001[[é");
 
@@ -202,7 +202,7 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "space", "space", " ");
     WEE_CHECK_EXP_KEY(1, "comma", "comma", ",");
 
-    /* ctrl + key */
+    /* Ctrl + key */
     WEE_CHECK_EXP_KEY(1, "ctrl-a", "ctrl-a", "\001a");
     WEE_CHECK_EXP_KEY(1, "ctrl-h", "backspace", "\001h");
     WEE_CHECK_EXP_KEY(1, "ctrl-?", "backspace", "\001?");
@@ -212,7 +212,7 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "ctrl-z", "ctrl-z", "\001z");
     WEE_CHECK_EXP_KEY(1, "ctrl-_", "ctrl-_", "\001_");
 
-    /* ctrl + key with upper case letter (auto-converted to lower case) */
+    /* Ctrl + key with upper case letter (auto-converted to lower case) */
     WEE_CHECK_EXP_KEY(1, "ctrl-a", "ctrl-a", "\001A");
     WEE_CHECK_EXP_KEY(1, "ctrl-h", "backspace", "\001H");
     WEE_CHECK_EXP_KEY(1, "ctrl-i", "tab", "\001I");
@@ -220,11 +220,11 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "ctrl-m", "return", "\001M");
     WEE_CHECK_EXP_KEY(1, "ctrl-z", "ctrl-z", "\001Z");
 
-    /* ctrl + key then other letter */
+    /* Ctrl + key then other letter */
     WEE_CHECK_EXP_KEY(1, "ctrl-c,b", "ctrl-c,b", "\001cb");
     WEE_CHECK_EXP_KEY(1, "ctrl-c,_", "ctrl-c,_", "\001c_");
 
-    /* alt + ctrl + key */
+    /* Alt + ctrl + key */
     WEE_CHECK_EXP_KEY(1, "meta-ctrl-a", "meta-ctrl-a", "\001[\001a");
     WEE_CHECK_EXP_KEY(1, "meta-ctrl-h", "meta-backspace", "\001[\001h");
     WEE_CHECK_EXP_KEY(1, "meta-ctrl-?", "meta-backspace", "\001[\001?");
@@ -234,7 +234,7 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "meta-ctrl-z", "meta-ctrl-z", "\001[\001z");
     WEE_CHECK_EXP_KEY(1, "meta-ctrl-_", "meta-ctrl-_", "\001[\001_");
 
-    /* alt + key */
+    /* Alt + key */
     WEE_CHECK_EXP_KEY(1, "meta-A", "meta-A", "\001[A");
     WEE_CHECK_EXP_KEY(1, "meta-a", "meta-a", "\001[a");
     WEE_CHECK_EXP_KEY(1, "meta-É", "meta-É", "\001[É");
@@ -261,22 +261,22 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "meta-meta-meta-z", "meta-meta-meta-z", "\001[\001[\001[z");
     WEE_CHECK_EXP_KEY(1, "meta-meta-meta-_", "meta-meta-meta-_", "\001[\001[\001[_");
 
-    /* shift-tab */
+    /* Shift-tab */
     WEE_CHECK_EXP_KEY(1, "meta-[Z", "shift-tab", "\001[[Z");
 
-    /* arrows */
+    /* Arrows */
     WEE_CHECK_EXP_KEY(1, "meta-[A", "up", "\001[[A");
     WEE_CHECK_EXP_KEY(1, "meta-[B", "down", "\001[[B");
     WEE_CHECK_EXP_KEY(1, "meta-[C", "right", "\001[[C");
     WEE_CHECK_EXP_KEY(1, "meta-[D", "left", "\001[[D");
 
-    /* shift + arrows, modifier = 2: 1 + 1=shift */
+    /* Shift + arrows, modifier = 2: 1 + 1=shift */
     WEE_CHECK_EXP_KEY(1, "meta-[1;2A", "shift-up", "\001[[1;2A");
     WEE_CHECK_EXP_KEY(1, "meta-[1;2B", "shift-down", "\001[[1;2B");
     WEE_CHECK_EXP_KEY(1, "meta-[1;2C", "shift-right", "\001[[1;2C");
     WEE_CHECK_EXP_KEY(1, "meta-[1;2D", "shift-left", "\001[[1;2D");
 
-    /* alt + arrows, modifier = 3: 1 + 2=alt */
+    /* Alt + arrows, modifier = 3: 1 + 2=alt */
     WEE_CHECK_EXP_KEY(1, "meta-[1;3A", "meta-up", "\001[[1;3A");
     WEE_CHECK_EXP_KEY(1, "meta-meta-[A", "meta-up", "\001[\001[[A");
     WEE_CHECK_EXP_KEY(1, "meta-[1;3B", "meta-down", "\001[[1;3B");
@@ -306,13 +306,13 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "meta-meta-meta-[1;3D", "meta-meta-meta-left", "\001[\001[\001[[1;3D");
     WEE_CHECK_EXP_KEY(1, "meta-meta-meta-meta-[D", "meta-meta-meta-left", "\001[\001[\001[\001[[D");
 
-    /* alt + shift + arrows, modifier = 4: 1 + 1=shift + 2=alt */
+    /* Alt + shift + arrows, modifier = 4: 1 + 1=shift + 2=alt */
     WEE_CHECK_EXP_KEY(1, "meta-[1;4A", "meta-shift-up", "\001[[1;4A");
     WEE_CHECK_EXP_KEY(1, "meta-[1;4B", "meta-shift-down", "\001[[1;4B");
     WEE_CHECK_EXP_KEY(1, "meta-[1;4C", "meta-shift-right", "\001[[1;4C");
     WEE_CHECK_EXP_KEY(1, "meta-[1;4D", "meta-shift-left", "\001[[1;4D");
 
-    /* ctrl + arrows, modifier = 5: 1 + 4=ctrl */
+    /* Ctrl + arrows, modifier = 5: 1 + 4=ctrl */
     WEE_CHECK_EXP_KEY(1, "meta-[1;5A", "ctrl-up", "\001[[1;5A");
     WEE_CHECK_EXP_KEY(1, "meta-Oa", "ctrl-up", "\001[Oa");  /* urxvt */
     WEE_CHECK_EXP_KEY(1, "meta-[1;5B", "ctrl-down", "\001[[1;5B");
@@ -322,19 +322,19 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "meta-[1;5D", "ctrl-left", "\001[[1;5D");
     WEE_CHECK_EXP_KEY(1, "meta-Od", "ctrl-left", "\001[Od");  /* urxvt */
 
-    /* ctrl + shift + arrows, modifier = 6: 1 + 1=shift + 4=ctrl */
+    /* Ctrl + shift + arrows, modifier = 6: 1 + 1=shift + 4=ctrl */
     WEE_CHECK_EXP_KEY(1, "meta-[1;6A", "ctrl-shift-up", "\001[[1;6A");
     WEE_CHECK_EXP_KEY(1, "meta-[1;6B", "ctrl-shift-down", "\001[[1;6B");
     WEE_CHECK_EXP_KEY(1, "meta-[1;6C", "ctrl-shift-right", "\001[[1;6C");
     WEE_CHECK_EXP_KEY(1, "meta-[1;6D", "ctrl-shift-left", "\001[[1;6D");
 
-    /* ctrl + alt + arrows, modifier = 7: 1 + 2=alt + 4=ctrl */
+    /* Ctrl + alt + arrows, modifier = 7: 1 + 2=alt + 4=ctrl */
     WEE_CHECK_EXP_KEY(1, "meta-[1;7A", "meta-ctrl-up", "\001[[1;7A");
     WEE_CHECK_EXP_KEY(1, "meta-[1;7B", "meta-ctrl-down", "\001[[1;7B");
     WEE_CHECK_EXP_KEY(1, "meta-[1;7C", "meta-ctrl-right", "\001[[1;7C");
     WEE_CHECK_EXP_KEY(1, "meta-[1;7D", "meta-ctrl-left", "\001[[1;7D");
 
-    /* ctrl + alt + arrows, modifier = 8: 1 + 1=shift + 2=alt + 4=ctrl */
+    /* Ctrl + alt + arrows, modifier = 8: 1 + 1=shift + 2=alt + 4=ctrl */
     WEE_CHECK_EXP_KEY(1, "meta-[1;8A", "meta-ctrl-shift-up", "\001[[1;8A");
     WEE_CHECK_EXP_KEY(1, "meta-[1;8B", "meta-ctrl-shift-down", "\001[[1;8B");
     WEE_CHECK_EXP_KEY(1, "meta-[1;8C", "meta-ctrl-shift-right", "\001[[1;8C");
@@ -844,7 +844,7 @@ TEST(GuiKey, Fix)
 
     WEE_TEST_STR(NULL, gui_key_fix (NULL));
 
-    /* no changes */
+    /* No changes */
     WEE_TEST_STR("", gui_key_fix (""));
     WEE_TEST_STR("a", gui_key_fix ("a"));
     WEE_TEST_STR("@chat:button1", gui_key_fix ("@chat:button1"));
@@ -856,7 +856,7 @@ TEST(GuiKey, Fix)
     WEE_TEST_STR("@chat:ctrl-wheelup", gui_key_fix ("@chat:ctrl-wheelup"));
     WEE_TEST_STR("@chat:alt-ctrl-wheelup", gui_key_fix ("@chat:alt-ctrl-wheelup"));
 
-    /* changes */
+    /* Changes */
     WEE_TEST_STR("ctrl-a", gui_key_fix ("ctrl-A"));
     WEE_TEST_STR("ctrl-c,b", gui_key_fix ("ctrl-C,b"));
     WEE_TEST_STR("ctrl-c,ctrl-b,A", gui_key_fix ("ctrl-C,ctrl-B,A"));
@@ -965,7 +965,7 @@ TEST(GuiKey, IsSafe)
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Tab"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Return"));
 
-    /* safe keys */
+    /* Safe keys */
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "ctrl-a"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "meta-a"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "meta-A"));
@@ -1005,7 +1005,7 @@ TEST(GuiKey, IsSafe)
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "tab"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "return"));
 
-    /* safe keys: "@" in cursor/mouse context */
+    /* Safe keys: "@" in cursor/mouse context */
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_CURSOR, "@"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_MOUSE, "@"));
 }
@@ -1018,14 +1018,14 @@ TEST(GuiKey, IsSafe)
 
 TEST(GuiKey, SeemsValid)
 {
-    /* invalid: NULL or empty string */
+    /* Invalid: NULL or empty string */
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, NULL));
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, ""));
 
-    /* raw codes: considered not valid */
+    /* Raw codes: considered not valid */
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-[A"));
 
-    /* invalid keys: missing comma */
+    /* Invalid keys: missing comma */
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "ab"));
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "@a"));
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "homeZ"));
@@ -1036,7 +1036,7 @@ TEST(GuiKey, SeemsValid)
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "ctrl-test"));
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "shift-test"));
 
-    /* valid keys */
+    /* Valid keys */
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "a"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "A"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "é"));
@@ -1293,7 +1293,7 @@ TEST(GuiKey, SearchPart)
     char **chunks1, **chunks2;
     int chunks1_count, chunks2_count, exact_match;
 
-    /* keys meta-a and meta-w */
+    /* Keys meta-a and meta-w */
     chunks1 = string_split ("meta-a", ",", NULL, 0, 0, &chunks1_count);
     chunks2 = string_split ("meta-w", ",", NULL, 0, 0, &chunks2_count);
 
@@ -1353,7 +1353,7 @@ TEST(GuiKey, SearchPart)
     string_free_split (chunks1);
     string_free_split (chunks2);
 
-    /* keys ctrl-h and backspace */
+    /* Keys ctrl-h and backspace */
     chunks1 = string_split ("ctrl-h", ",", NULL, 0, 0, &chunks1_count);
     chunks2 = string_split ("backspace", ",", NULL, 0, 0, &chunks2_count);
 

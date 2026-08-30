@@ -42,7 +42,7 @@ TEST_GROUP(CoreTheme)
 {
     void setup ()
     {
-        /* start every test with a clean registry */
+        /* Start every test with a clean registry. */
         theme_end ();
         theme_init ();
     }
@@ -79,7 +79,7 @@ TEST(CoreTheme, Search)
 {
     struct t_hashtable *overrides;
 
-    /* empty registry */
+    /* Empty registry */
     POINTERS_EQUAL(NULL, theme_search ("dark"));
     POINTERS_EQUAL(NULL, theme_search (NULL));
 
@@ -87,11 +87,11 @@ TEST(CoreTheme, Search)
     theme_register (NULL, NULL, "dark", overrides);
     hashtable_free (overrides);
 
-    /* registered name found */
+    /* Registered name found */
     CHECK(theme_search ("dark") != NULL);
     STRCMP_EQUAL("dark", theme_search ("dark")->name);
 
-    /* unknown / case mismatch / NULL */
+    /* Unknown / case mismatch / NULL */
     POINTERS_EQUAL(NULL, theme_search ("light"));
     POINTERS_EQUAL(NULL, theme_search ("Dark"));
     POINTERS_EQUAL(NULL, theme_search (NULL));
@@ -111,7 +111,7 @@ TEST(CoreTheme, FormatNow)
     CHECK(str != NULL);
     LONGS_EQUAL(19, (long)strlen (str));
 
-    /* format: YYYY-MM-DD HH:MM:SS */
+    /* Format: YYYY-MM-DD HH:MM:SS */
     for (i = 0; i < 4; i++)
         CHECK(isdigit ((unsigned char)str[i]));
     CHECK(str[4] == '-');
@@ -191,7 +191,7 @@ TEST(CoreTheme, Register)
     POINTERS_EQUAL(NULL, theme_register (NULL, NULL, NULL, NULL));
     POINTERS_EQUAL(NULL, theme_register (NULL, NULL, "", NULL));
 
-    /* register a new theme */
+    /* Register a new theme. */
     o1 = make_overrides ("weechat.color.chat", "default",
                          "weechat.color.separator", "blue");
     t1 = theme_register (NULL, NULL, "dark", o1);
@@ -204,21 +204,21 @@ TEST(CoreTheme, Register)
     STRCMP_EQUAL("blue", theme_get_override (t1,
                                                       "weechat.color.separator"));
 
-    /* second call with same name merges into the existing theme */
+    /* Second call with same name merges into the existing theme. */
     o2 = make_overrides ("irc.color.input_nick", "lightcyan",
                          "weechat.color.separator", "darkgray");
     t2 = theme_register (NULL, NULL, "dark", o2);
     hashtable_free (o2);
-    POINTERS_EQUAL(t1, t2);  /* same struct, merged into */
+    POINTERS_EQUAL(t1, t2);  /* Same struct, merged into */
     LONGS_EQUAL(3, theme_overrides_count (t1));
-    /* new key added */
+    /* New key added */
     STRCMP_EQUAL("lightcyan", theme_get_override (t1,
                                                            "irc.color.input_nick"));
-    /* duplicate key overridden */
+    /* Duplicate key overridden */
     STRCMP_EQUAL("darkgray", theme_get_override (t1,
                                                           "weechat.color.separator"));
 
-    /* registering with NULL overrides only creates the theme */
+    /* Registering with NULL overrides only creates the theme. */
     t2 = theme_register (NULL, NULL, "empty", NULL);
     CHECK(t2 != NULL);
     LONGS_EQUAL(0, theme_overrides_count (t2));
@@ -234,13 +234,13 @@ TEST(CoreTheme, List)
 {
     struct t_arraylist *list;
 
-    /* empty list when nothing registered */
+    /* Empty list when nothing registered */
     list = theme_list ();
     CHECK(list != NULL);
     LONGS_EQUAL(0, arraylist_size (list));
     arraylist_free (list);
 
-    /* register three themes in non-alphabetical order */
+    /* Register three themes in non-alphabetical order. */
     theme_register (NULL, NULL, "solarized", NULL);
     theme_register (NULL, NULL, "dark", NULL);
     theme_register (NULL, NULL, "nord", NULL);
@@ -249,7 +249,7 @@ TEST(CoreTheme, List)
     CHECK(list != NULL);
     LONGS_EQUAL(3, arraylist_size (list));
 
-    /* sorted by name */
+    /* Sorted by name */
     STRCMP_EQUAL("dark",
                  ((struct t_theme *)arraylist_get (list, 0))->name);
     STRCMP_EQUAL("nord",
@@ -296,7 +296,7 @@ TEST(CoreTheme, MakeBackupName)
     name = theme_make_backup_name ();
     CHECK(name != NULL);
 
-    /* format: "backup-YYYYMMDD-HHMMSS-uuuuuu" (29 chars) */
+    /* Format: "backup-YYYYMMDD-HHMMSS-uuuuuu" (29 chars) */
     LONGS_EQUAL(29, (long)strlen (name));
     STRNCMP_EQUAL("backup-", name, 7);
 
@@ -328,12 +328,14 @@ TEST(CoreTheme, WriteFile)
     int saw_options_section, saw_an_option, full_options;
     int saw_color_code, saw_string_option, string_option_quoted;
 
-    /* refuse empty/NULL */
+    /* Refuse empty/NULL. */
     POINTERS_EQUAL(NULL, theme_write_file (NULL, NULL));
     POINTERS_EQUAL(NULL, theme_write_file ("", NULL));
 
-    /* full snapshot: every themable option is written; the returned
-       path matches the expected theme file path */
+    /*
+     * Full snapshot: every themable option is written; the returned
+     * path matches the expected theme file path.
+     */
     expected_path = theme_user_file_path ("test_wrt");
     CHECK(expected_path != NULL);
 
@@ -372,12 +374,12 @@ TEST(CoreTheme, WriteFile)
             saw_an_option = 1;
             full_options++;
             /*
-             * values must be stored verbatim: no WeeChat color code
-             * (byte 0x19) may leak into the file
+             * Values must be stored verbatim: no WeeChat color code
+             * (byte 0x19) may leak into the file.
              */
             if (strchr (line, 0x19) != NULL)
                 saw_color_code = 1;
-            /* a string option value must be wrapped in double quotes */
+            /* A string option value must be wrapped in double quotes. */
             if (strncmp (line, "weechat.look.prefix_error = ", 28) == 0)
             {
                 saw_string_option = 1;
@@ -394,12 +396,12 @@ TEST(CoreTheme, WriteFile)
     LONGS_EQUAL(1, saw_weechat);
     LONGS_EQUAL(1, saw_options_section);
     LONGS_EQUAL(1, saw_an_option);
-    /* no color codes leaked into option values */
+    /* No color codes leaked into option values. */
     LONGS_EQUAL(0, saw_color_code);
-    /* the string option was found and its value is quoted */
+    /* The string option was found and its value is quoted. */
     LONGS_EQUAL(1, saw_string_option);
     LONGS_EQUAL(1, string_option_quoted);
-    CHECK(full_options > 10);  /* core has many themable options */
+    CHECK(full_options > 10);  /* Core has many themable options. */
 
     unlink (path);
     free (path);
@@ -420,7 +422,7 @@ TEST(CoreTheme, MakeBackup)
     STRNCMP_EQUAL("backup-", name, 7);
     LONGS_EQUAL(29, (long)strlen (name));
 
-    /* the backup file must exist on disk */
+    /* The backup file must exist on disk. */
     path = theme_user_file_path (name);
     CHECK(path != NULL);
     LONGS_EQUAL(0, stat (path, &st));
@@ -449,7 +451,7 @@ TEST(CoreTheme, Apply)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply (""));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply ("does_not_exist"));
 
-    /* snapshot the option we will mutate + supporting state */
+    /* Snapshot the option we will mutate + supporting state. */
     opt_prefix_error = NULL;
     config_file_search_with_string ("weechat.look.prefix_error",
                                     NULL, NULL, &opt_prefix_error, NULL);
@@ -458,10 +460,10 @@ TEST(CoreTheme, Apply)
     saved_theme_label = strdup (CONFIG_STRING(config_look_theme));
     saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
 
-    /* disable backup so the test does not touch the filesystem */
+    /* Disable backup so the test does not touch the filesystem. */
     config_file_option_set (config_look_theme_backup, "off", 1);
 
-    /* register a theme that flips one themable option, then apply */
+    /* Register a theme that flips one themable option, then apply. */
     overrides = make_overrides ("weechat.look.prefix_error", "TEST!",
                                 NULL, NULL);
     theme_register (NULL, NULL, "apply_test", overrides);
@@ -469,12 +471,12 @@ TEST(CoreTheme, Apply)
 
     LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("apply_test"));
 
-    /* override took effect */
+    /* Override took effect. */
     STRCMP_EQUAL("TEST!", CONFIG_STRING(opt_prefix_error));
-    /* active label persisted */
+    /* Active label persisted. */
     STRCMP_EQUAL("apply_test", CONFIG_STRING(config_look_theme));
 
-    /* restore previous state */
+    /* Restore previous state. */
     config_file_option_set (opt_prefix_error, saved_prefix_error, 1);
     config_file_option_set (config_look_theme, saved_theme_label, 1);
     config_file_option_set (config_look_theme_backup,
@@ -496,22 +498,24 @@ TEST(CoreTheme, ApplyBackupRecursionGuard)
     char *path;
     struct stat st;
 
-    /* enable backup so the guard's effect is observable */
+    /* Enable backup so the guard's effect is observable. */
     saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
     config_file_option_set (config_look_theme_backup, "on", 1);
 
-    /* register a theme whose name begins with "backup-" */
+    /* Register a theme whose name begins with "backup-". */
     overrides = make_overrides ("weechat.color.separator", "default",
                                 NULL, NULL);
     theme_register (NULL, NULL, "backup-recursion-test", overrides);
     hashtable_free (overrides);
 
-    /* before apply: count *.theme files in the themes directory */
-    /* (we just verify no NEW backup-2* file appears for this apply) */
+    /* Before apply: count *.theme files in the themes directory */
+    /* (we just verify no NEW backup-2* file appears for this apply). */
     LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("backup-recursion-test"));
 
-    /* the only file that should exist is the one we are restoring;
-       no fresh backup of state-before-apply should have been made */
+    /*
+     * The only file that should exist is the one we are restoring;
+     * no fresh backup of state-before-apply should have been made.
+     */
     path = NULL;
     string_asprintf (&path, "%s/themes", weechat_config_dir);
     if (path)
@@ -523,8 +527,10 @@ TEST(CoreTheme, ApplyBackupRecursionGuard)
         {
             while ((ent = readdir (d)))
             {
-                /* count entries that look like fresh backups
-                   (any backup-* file other than our test theme) */
+                /*
+                 * Count entries that look like fresh backups
+                 * (any backup-* file other than our test theme).
+                 */
                 if ((strncmp (ent->d_name, "backup-", 7) == 0)
                     && (strcmp (ent->d_name,
                                 "backup-recursion-test.theme") != 0)
@@ -539,15 +545,17 @@ TEST(CoreTheme, ApplyBackupRecursionGuard)
         free (path);
     }
 
-    /* clean up the test theme file if it was written by the recursion
-       guard test (which only happens if test_themes/<name>.theme was
-       created earlier in this run) */
+    /*
+     * Clean up the test theme file if it was written by the recursion
+     * guard test (which only happens if test_themes/<name>.theme was
+     * created earlier in this run).
+     */
     path = theme_user_file_path ("backup-recursion-test");
     if (path && stat (path, &st) == 0)
         unlink (path);
     free (path);
 
-    /* restore option */
+    /* Restore option. */
     config_file_option_set (config_look_theme_backup,
                             (saved_backup) ? "on" : "off", 1);
 }
@@ -565,7 +573,7 @@ TEST(CoreTheme, ApplyFileShadowsBuiltin)
     int saved_backup;
     FILE *f;
 
-    /* snapshot mutable state */
+    /* Snapshot mutable state. */
     opt_prefix_error = NULL;
     config_file_search_with_string ("weechat.look.prefix_error",
                                     NULL, NULL, &opt_prefix_error, NULL);
@@ -575,14 +583,14 @@ TEST(CoreTheme, ApplyFileShadowsBuiltin)
     saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
     config_file_option_set (config_look_theme_backup, "off", 1);
 
-    /* register an in-memory theme "shadow_test" with one value */
+    /* Register an in-memory theme "shadow_test" with one value. */
     overrides = make_overrides ("weechat.look.prefix_error", "FROM_REG",
                                 NULL, NULL);
     theme_register (NULL, NULL, "shadow_test", overrides);
     hashtable_free (overrides);
 
-    /* drop a same-named user file with a DIFFERENT value */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("user_throwaway"));  /* ensures themes dir exists */
+    /* Drop a same-named user file with a DIFFERENT value. */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("user_throwaway"));  /* Ensure themes dir exists. */
     path = theme_user_file_path ("shadow_test");
     CHECK(path != NULL);
     f = fopen (path, "w");
@@ -592,11 +600,11 @@ TEST(CoreTheme, ApplyFileShadowsBuiltin)
              "[options]\nweechat.look.prefix_error = \"FROM_FILE\"\n");
     fclose (f);
 
-    /* apply: the file value must win over the registry value */
+    /* Apply: the file value must win over the registry value. */
     LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("shadow_test"));
     STRCMP_EQUAL("FROM_FILE", CONFIG_STRING(opt_prefix_error));
 
-    /* clean up */
+    /* Clean up. */
     unlink (path);
     free (path);
     path = theme_user_file_path ("user_throwaway");
@@ -633,20 +641,20 @@ TEST(CoreTheme, ApplyMergeAcrossContributions)
     saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
     config_file_option_set (config_look_theme_backup, "off", 1);
 
-    /* plugin A contributes first */
+    /* Plugin A contributes first. */
     o1 = make_overrides ("weechat.look.prefix_error", "FROM_A",
                          NULL, NULL);
     theme_register (&fake_plugin_a, NULL, "merge_test", o1);
     hashtable_free (o1);
 
-    /* plugin B contributes after */
+    /* Plugin B contributes after. */
     o2 = make_overrides ("weechat.look.prefix_error", "FROM_B",
                          NULL, NULL);
     theme_register (&fake_plugin_b, NULL, "merge_test", o2);
     hashtable_free (o2);
 
     LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("merge_test"));
-    /* later contribution wins */
+    /* Later contribution wins. */
     STRCMP_EQUAL("FROM_B", CONFIG_STRING(opt));
 
     config_file_option_set (opt, saved_value, 1);
@@ -678,8 +686,10 @@ TEST(CoreTheme, Reset)
 
     config_file_option_set (config_look_theme_backup, "off", 1);
 
-    /* set up a non-default state: apply a theme that flips one option
-       and sets weechat.look.theme as a side effect */
+    /*
+     * Set up a non-default state: apply a theme that flips one option
+     * and sets weechat.look.theme as a side effect.
+     */
     overrides = make_overrides ("weechat.look.prefix_error", "RESET_ME!",
                                 NULL, NULL);
     theme_register (NULL, NULL, "reset_test", overrides);
@@ -688,13 +698,13 @@ TEST(CoreTheme, Reset)
     STRCMP_EQUAL("RESET_ME!", CONFIG_STRING(opt_prefix_error));
     STRCMP_EQUAL("reset_test", CONFIG_STRING(config_look_theme));
 
-    /* reset: themable option goes back to its default, label is cleared */
+    /* Reset: themable option goes back to its default, label is cleared. */
     LONGS_EQUAL(WEECHAT_RC_OK, theme_reset ());
     STRCMP_EQUAL(default_prefix_error, CONFIG_STRING(opt_prefix_error));
     STRCMP_EQUAL(CONFIG_STRING_DEFAULT(config_look_theme),
                  CONFIG_STRING(config_look_theme));
 
-    /* restore */
+    /* Restore. */
     config_file_option_set (opt_prefix_error, saved_prefix_error, 1);
     config_file_option_set (config_look_theme, saved_theme_label, 1);
     config_file_option_set (config_look_theme_backup,
@@ -717,7 +727,7 @@ TEST(CoreTheme, FileStripQuotes)
     /* NULL passes through */
     POINTERS_EQUAL(NULL, theme_file_strip_quotes (NULL));
 
-    /* len < 2: too short to be a matched quote pair */
+    /* Len < 2: too short to be a matched quote pair. */
     strcpy (buf, "");
     STRCMP_EQUAL("", theme_file_strip_quotes (buf));
     strcpy (buf, "a");
@@ -725,29 +735,29 @@ TEST(CoreTheme, FileStripQuotes)
     strcpy (buf, "\"");
     STRCMP_EQUAL("\"", theme_file_strip_quotes (buf));
 
-    /* no quotes: returned as-is */
+    /* No quotes: returned as-is. */
     strcpy (buf, "hello");
     STRCMP_EQUAL("hello", theme_file_strip_quotes (buf));
 
-    /* matched double quotes are stripped */
+    /* Matched double quotes are stripped. */
     strcpy (buf, "\"hello\"");
     STRCMP_EQUAL("hello", theme_file_strip_quotes (buf));
 
-    /* matched single quotes are stripped */
+    /* Matched single quotes are stripped. */
     strcpy (buf, "'world'");
     STRCMP_EQUAL("world", theme_file_strip_quotes (buf));
 
-    /* mismatched: unchanged */
+    /* Mismatched: unchanged */
     strcpy (buf, "\"unmatched'");
     STRCMP_EQUAL("\"unmatched'", theme_file_strip_quotes (buf));
     strcpy (buf, "'unmatched\"");
     STRCMP_EQUAL("'unmatched\"", theme_file_strip_quotes (buf));
 
-    /* exactly two quotes => empty string after stripping */
+    /* Exactly two quotes => empty string after stripping. */
     strcpy (buf, "\"\"");
     STRCMP_EQUAL("", theme_file_strip_quotes (buf));
 
-    /* internal quotes only on one side: unchanged */
+    /* Internal quotes only on one side: unchanged. */
     strcpy (buf, "no\"quote");
     STRCMP_EQUAL("no\"quote", theme_file_strip_quotes (buf));
 }
@@ -765,11 +775,13 @@ TEST(CoreTheme, FileParse)
 
     /* NULL and missing file => NULL */
     POINTERS_EQUAL(NULL, theme_file_parse (NULL));
-    unlink (path);  /* belt-and-suspenders */
+    unlink (path);  /* Belt-and-suspenders */
     POINTERS_EQUAL(NULL, theme_file_parse (path));
 
-    /* write a well-formed file: [info] + [options], mixed quoting,
-       blanks and comments scattered around */
+    /*
+     * Write a well-formed file: [info] + [options], mixed quoting,
+     * blanks and comments scattered around.
+     */
     file = fopen (path, "w");
     CHECK(file != NULL);
     fprintf (file, "# leading comment\n");
@@ -782,9 +794,9 @@ TEST(CoreTheme, FileParse)
     fprintf (file, "unknown_info_key = \"ignored\"\n");
     fprintf (file, "\n");
     fprintf (file, "[options]\n");
-    fprintf (file, "weechat.color.chat = default\n");                 /* unquoted */
-    fprintf (file, "  weechat.color.separator   =   \"blue\"\n");     /* whitespace + quotes */
-    fprintf (file, "irc.color.input_nick = 'lightcyan'\n");           /* single quotes */
+    fprintf (file, "weechat.color.chat = default\n");              /* Unquoted */
+    fprintf (file, "  weechat.color.separator   =   \"blue\"\n");  /* Whitespace + quotes */
+    fprintf (file, "irc.color.input_nick = 'lightcyan'\n");        /* Single quotes */
     fclose (file);
 
     theme = theme_file_parse (path);
@@ -796,8 +808,10 @@ TEST(CoreTheme, FileParse)
     STRCMP_EQUAL("2026-05-26 09:42:10", theme->date);
     STRCMP_EQUAL("4.10.0-dev", theme->weechat_version);
 
-    /* [options] entries: three known keys, "unknown_info_key" must NOT
-       leak in (it lives under [info]) */
+    /*
+     * [options] entries: three known keys, "unknown_info_key" must NOT
+     * leak in (it lives under [info]).
+     */
     LONGS_EQUAL(3, theme_overrides_count (theme));
     STRCMP_EQUAL("default",
                  theme_get_override (theme,
@@ -813,8 +827,10 @@ TEST(CoreTheme, FileParse)
     theme_free (theme);
     unlink (path);
 
-    /* parse a file that has only [info]: overrides hashtable empty,
-       missing [info] keys default to empty string */
+    /*
+     * Parse a file that has only [info]: overrides hashtable empty,
+     * missing [info] keys default to empty string.
+     */
     file = fopen (path, "w");
     CHECK(file != NULL);
     fprintf (file, "[info]\n");
@@ -831,8 +847,10 @@ TEST(CoreTheme, FileParse)
     theme_free (theme);
     unlink (path);
 
-    /* malformed lines must not crash; a missing-'=' line and a stray
-       section header are tolerated, the rest of the file still parses */
+    /*
+     * Malformed lines must not crash; a missing-'=' line and a stray
+     * section header are tolerated, the rest of the file still parses.
+     */
     file = fopen (path, "w");
     CHECK(file != NULL);
     fprintf (file, "[info]\n");
@@ -870,14 +888,14 @@ TEST(CoreTheme, Save)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save (NULL));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save (""));
 
-    /* reserved "backup-" prefix => error */
+    /* Reserved "backup-" prefix => error. */
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("backup-anything"));
 
-    /* name colliding with a built-in is refused */
+    /* Name colliding with a built-in is refused. */
     theme_register (NULL, NULL, "dark", NULL);
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("dark"));
 
-    /* happy path: full snapshot => file exists, with options written */
+    /* Happy path: full snapshot => file exists, with options written. */
     LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("save_test"));
     path = theme_user_file_path ("save_test");
     CHECK(path != NULL);
@@ -901,15 +919,17 @@ TEST(CoreTheme, Delete)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete (NULL));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete (""));
 
-    /* refuses to delete a built-in (no file to delete) */
+    /* Refuse to delete a built-in (no file to delete). */
     theme_register (NULL, NULL, "dark", NULL);
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete ("dark"));
 
-    /* missing file => error */
+    /* Missing file => error */
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete ("does_not_exist"));
 
-    /* happy path: write a file via theme_save (also ensures the themes
-       directory exists), delete it, confirm it is gone */
+    /*
+     * Happy path: write a file via theme_save (also ensures the themes
+     * directory exists), delete it, confirm it is gone.
+     */
     LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("del_test"));
     path = theme_user_file_path ("del_test");
     CHECK(path != NULL);
@@ -939,27 +959,27 @@ TEST(CoreTheme, Rename)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("", "dst"));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("src", ""));
 
-    /* refuses to rename a built-in (no file to rename) */
+    /* Refuse to rename a built-in (no file to rename). */
     theme_register (NULL, NULL, "dark", NULL);
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("dark", "renamed"));
 
-    /* refuses target == reserved "backup-" prefix */
+    /* Refuse target == reserved "backup-" prefix. */
     LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_src"));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "backup-foo"));
 
-    /* refuses target == built-in name */
+    /* Refuse target == built-in name. */
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "dark"));
 
-    /* refuses same name */
+    /* Refuse same name. */
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "rn_src"));
 
-    /* source missing => error */
+    /* Source missing => error */
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("does_not_exist", "rn_dst"));
 
-    /* refuses target that already exists */
+    /* Refuse target that already exists. */
     LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_dst"));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "rn_dst"));
-    /* the refused rename must not have clobbered the existing target */
+    /* The refused rename must not have clobbered the existing target. */
     dst_path = theme_user_file_path ("rn_dst");
     CHECK(dst_path != NULL);
     file = fopen (dst_path, "r");
@@ -972,7 +992,7 @@ TEST(CoreTheme, Rename)
     dst_path = NULL;
     LONGS_EQUAL(WEECHAT_RC_OK, theme_delete ("rn_dst"));
 
-    /* happy path: rename moves the file and rewrites the [info] name */
+    /* Happy path: rename moves the file and rewrites the [info] name. */
     src_path = theme_user_file_path ("rn_src");
     dst_path = theme_user_file_path ("rn_dst");
     CHECK(src_path != NULL);
@@ -980,11 +1000,11 @@ TEST(CoreTheme, Rename)
 
     LONGS_EQUAL(WEECHAT_RC_OK, theme_rename ("rn_src", "rn_dst"));
 
-    /* old file gone, new file exists */
+    /* Old file gone, new file exists. */
     LONGS_EQUAL(-1, stat (src_path, &st));
     LONGS_EQUAL(0, stat (dst_path, &st));
 
-    /* [info] name field inside the renamed file is updated */
+    /* [info] name field inside the renamed file is updated. */
     file = fopen (dst_path, "r");
     CHECK(file != NULL);
     len = fread (buf, 1, sizeof (buf) - 1, file);
@@ -993,13 +1013,13 @@ TEST(CoreTheme, Rename)
     CHECK(strstr (buf, "name = \"rn_dst\"") != NULL);
     CHECK(strstr (buf, "name = \"rn_src\"") == NULL);
 
-    /* if weechat.look.theme pointed at the old name, the label moves too */
+    /* If weechat.look.theme pointed at the old name, the label moves too. */
     LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_active"));
     config_file_option_set (config_look_theme, "rn_active", 1);
     LONGS_EQUAL(WEECHAT_RC_OK, theme_rename ("rn_active", "rn_moved"));
     STRCMP_EQUAL("rn_moved", CONFIG_STRING(config_look_theme));
 
-    /* cleanup */
+    /* Cleanup */
     config_file_option_reset (config_look_theme, 1);
     theme_delete ("rn_dst");
     theme_delete ("rn_moved");
@@ -1047,9 +1067,11 @@ TEST(CoreTheme, UnregisterByOwner)
     struct t_hashtable *o1, *o2, *o3, *o4;
     struct t_theme *theme;
 
-    /* four contributors register against the same theme:
-       core (NULL, NULL), plugin_a (no script), plugin_b (no script),
-       and an individual script under plugin_a */
+    /*
+     * Four contributors register against the same theme:
+     * core (NULL, NULL), plugin_a (no script), plugin_b (no script),
+     * and an individual script under plugin_a.
+     */
     o1 = make_overrides ("weechat.color.chat",      "default", NULL, NULL);
     o2 = make_overrides ("irc.color.input_nick",    "cyan",    NULL, NULL);
     o3 = make_overrides ("fset.color.title_filter", "18",      NULL, NULL);
@@ -1069,8 +1091,10 @@ TEST(CoreTheme, UnregisterByOwner)
     CHECK(theme != NULL);
     LONGS_EQUAL(4, theme_overrides_count (theme));
 
-    /* dropping plugin_a's plugin-level contribution leaves core,
-       plugin_b, and plugin_a's script contributions intact */
+    /*
+     * Dropping plugin_a's plugin-level contribution leaves core,
+     * plugin_b, and plugin_a's script contributions intact.
+     */
     theme_unregister_plugin (&fake_plugin_a);
     LONGS_EQUAL(3, theme_overrides_count (theme));
     STRCMP_EQUAL("default",
@@ -1082,15 +1106,15 @@ TEST(CoreTheme, UnregisterByOwner)
     STRCMP_EQUAL("251",
                  theme_get_override (theme, "weechat.color.separator"));
 
-    /* dropping the script contribution leaves only core and plugin_b */
+    /* Dropping the script contribution leaves only core and plugin_b. */
     theme_unregister_script (&fake_plugin_a, &script_a);
     LONGS_EQUAL(2, theme_overrides_count (theme));
     POINTERS_EQUAL(NULL,
                    theme_get_override (theme, "weechat.color.separator"));
 
-    /* unrelated owners are no-ops */
-    theme_unregister_plugin (&fake_plugin_a);   /* already gone */
-    theme_unregister_script (&fake_plugin_b, &script_b);  /* never registered */
+    /* Unrelated owners are no-ops. */
+    theme_unregister_plugin (&fake_plugin_a);   /* Already gone */
+    theme_unregister_script (&fake_plugin_b, &script_b);  /* Never registered */
     LONGS_EQUAL(2, theme_overrides_count (theme));
 }
 
@@ -1100,8 +1124,10 @@ TEST(CoreTheme, RegisterMergesPerContributor)
     struct t_hashtable *a, *b;
     struct t_theme *theme;
 
-    /* two successive registrations from the same (plugin, script)
-       merge into a single contribution */
+    /*
+     * Two successive registrations from the same (plugin, script)
+     * merge into a single contribution.
+     */
     a = make_overrides ("k1", "v1", "k2", "v2");
     b = make_overrides ("k2", "newv2", "k3", "v3");
 
@@ -1111,7 +1137,7 @@ TEST(CoreTheme, RegisterMergesPerContributor)
     hashtable_free (b);
 
     CHECK(theme != NULL);
-    /* one contribution, 3 keys (k1, k2, k3) */
+    /* One contribution, 3 keys (k1, k2, k3) */
     CHECK(theme->contributions != NULL);
     POINTERS_EQUAL(NULL, theme->contributions->next_contribution);
     LONGS_EQUAL(3, theme->contributions->overrides->items_count);
@@ -1130,35 +1156,37 @@ TEST(CoreTheme, BuiltinInit)
 {
     struct t_theme *theme;
 
-    /* registry is empty after setup() */
+    /* Registry is empty after setup(). */
     POINTERS_EQUAL(NULL, theme_search ("light"));
 
     theme_builtin_init ();
 
-    /* the "light" theme is registered */
+    /* The "light" theme is registered. */
     theme = theme_search ("light");
     CHECK(theme != NULL);
 
-    /* the built-in "light" theme carries a description */
+    /* The built-in "light" theme carries a description. */
     CHECK(theme->description != NULL);
     CHECK(theme->description[0] != '\0');
 
-    /* sanity check: many core color overrides (>= 30) */
+    /* Sanity check: many core color overrides (>= 30). */
     CHECK(theme_overrides_count (theme) >= 30);
 
-    /* spot-check a few known entries from the core light table */
+    /* Spot-check a few known entries from the core light table. */
     STRCMP_EQUAL("cyan",
                  theme_get_override (theme,
-                                              "weechat.color.chat_nick"));
+                                     "weechat.color.chat_nick"));
     STRCMP_EQUAL("251",
                  theme_get_override (theme,
-                                              "weechat.color.separator"));
+                                     "weechat.color.separator"));
     STRCMP_EQUAL("254",
                  theme_get_override (theme,
-                                              "weechat.bar.status.color_bg"));
+                                     "weechat.bar.status.color_bg"));
 
-    /* idempotency: a second call merges (no duplicate themes, count
-       stays the same because the same keys are re-inserted) */
+    /*
+     * Idempotency: a second call merges (no duplicate themes, count
+     * stays the same because the same keys are re-inserted).
+     */
     int count_before = theme_overrides_count (theme);
     theme_builtin_init ();
     theme = theme_search ("light");

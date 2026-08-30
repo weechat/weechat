@@ -18,22 +18,22 @@
 #include "fset-config.h"
 
 
-/* options */
+/* Options */
 struct t_arraylist *fset_options = NULL;
 int fset_option_count_marked = 0;
 struct t_fset_option_max_length *fset_option_max_length = NULL;
 
-/* filters */
+/* Filters */
 char *fset_option_filter = NULL;
 struct t_hashtable *fset_option_filter_hashtable_pointers = NULL;
 struct t_hashtable *fset_option_filter_hashtable_extra_vars = NULL;
 struct t_hashtable *fset_option_filter_hashtable_options = NULL;
 
-/* refresh */
+/* Refresh */
 struct t_hashtable *fset_option_timer_options_changed = NULL;
 struct t_hook *fset_option_timer_hook = NULL;
 
-/* types */
+/* Types */
 char *fset_option_type_string[FSET_OPTION_NUM_TYPES] =
 { N_("boolean"), N_("integer"), N_("string"), N_("color"), N_("enum") };
 char *fset_option_type_string_short[FSET_OPTION_NUM_TYPES] =
@@ -67,7 +67,7 @@ fset_option_valid (struct t_fset_option *fset_option)
             return 1;
     }
 
-    /* fset option not found */
+    /* Fset option not found */
     return 0;
 }
 
@@ -104,7 +104,7 @@ fset_option_search_by_name (const char *name, int *line)
         }
     }
 
-    /* fset option not found */
+    /* Fset option not found */
     return NULL;
 }
 
@@ -297,7 +297,7 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
 
     if (strncmp (filter, "c:", 2) == 0)
     {
-        /* filter by evaluated condition */
+        /* Filter by evaluated condition. */
         weechat_hashtable_set (fset_option_filter_hashtable_pointers,
                                "fset_option", fset_option);
         fset_option_add_option_in_hashtable (
@@ -314,17 +314,17 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     }
     else if (strncmp (filter, "f:", 2) == 0)
     {
-        /* filter by config name */
+        /* Filter by config name. */
         return (weechat_strcasecmp (fset_option->file,
                                     filter + 2) == 0) ? 1 : 0;
     }
     else if (strncmp (filter, "t:", 2) == 0)
     {
-        /* virtual cross-type value: match themable flag (any option type) */
+        /* Virtual cross-type value: match themable flag (any option type). */
         if (weechat_strcasecmp (filter + 2, "themable") == 0)
             return (fset_option->themable) ? 1 : 0;
 
-        /* filter by type */
+        /* Filter by type. */
         return (
             (weechat_strcasecmp (
                 fset_option_type_string_short[fset_option->type],
@@ -336,7 +336,7 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     }
     else if (strncmp (filter, "d==", 3) == 0)
     {
-        /* filter by modified values (on exact value) */
+        /* Filter by modified values (on exact value). */
         if (!fset_option_value_is_changed (fset_option))
             return 0;
         return (weechat_strcasecmp (
@@ -345,7 +345,7 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     }
     else if (strncmp (filter, "d=", 2) == 0)
     {
-        /* filter by modified values (on value) */
+        /* Filter by modified values (on value). */
         if (!fset_option_value_is_changed (fset_option))
             return 0;
         return (fset_option_string_match (
@@ -354,7 +354,7 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     }
     else if (strncmp (filter, "d:", 2) == 0)
     {
-        /* filter by modified values (on name) */
+        /* Filter by modified values (on name). */
         if (!fset_option_value_is_changed (fset_option))
             return 0;
         return fset_option_string_match (fset_option->name,
@@ -362,12 +362,12 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     }
     else if (strcmp (filter, "d") == 0)
     {
-        /* filter by modified values */
+        /* Filter by modified values. */
         return (fset_option_value_is_changed (fset_option)) ? 1 : 0;
     }
     else if (strncmp (filter, "h=", 2) == 0)
     {
-        /* filter by help text (translated) */
+        /* Filter by help text (translated). */
         return (fset_option_string_match (
                     (fset_option->description && fset_option->description[0]) ?
                     _(fset_option->description) : "",
@@ -375,7 +375,7 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     }
     else if (strncmp (filter, "he=", 3) == 0)
     {
-        /* filter by help text (in English) */
+        /* Filter by help text (in English). */
         return (fset_option_string_match (
                     (fset_option->description && fset_option->description[0]) ?
                     fset_option->description : "",
@@ -383,21 +383,21 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     }
     else if (strncmp (filter, "==", 2) == 0)
     {
-        /* filter by exact value */
+        /* Filter by exact value. */
         return (weechat_strcasecmp (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
                     filter + 2) == 0) ? 1 : 0;
     }
     else if (filter[0] == '=')
     {
-        /* filter by value */
+        /* Filter by value. */
         return (fset_option_string_match (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
                     filter + 1)) ? 1 : 0;
     }
     else
     {
-        /* filter by option name */
+        /* Filter by option name. */
         return (fset_option_string_match (fset_option->name, filter)) ? 1 : 0;
     }
 }
@@ -742,10 +742,10 @@ fset_option_set_max_length_fields_all (void)
     int i, num_options;
     struct t_fset_option *ptr_fset_option;
 
-    /* first clear all max lengths */
+    /* First clear all max lengths. */
     fset_option_init_max_length (fset_option_max_length);
 
-    /* set max length for fields, for all options */
+    /* Set max length for fields, for all options. */
     num_options = weechat_arraylist_size (fset_options);
     for (i = 0; i < num_options; i++)
     {
@@ -817,7 +817,7 @@ fset_option_add (struct t_config_option *option)
         return NULL;
     }
 
-    /* check if option match filters (if not, ignore it) */
+    /* Check if option match filters (if not, ignore it). */
     if (!fset_option_match_filter (new_fset_option, fset_option_filter))
     {
         fset_option_free (new_fset_option);
@@ -840,7 +840,7 @@ fset_option_compare_options_cb (void *data, struct t_arraylist *arraylist,
     int i, reverse, case_sensitive, rc;
     const char *ptr_field;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -908,7 +908,7 @@ fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 {
     struct t_fset_option *fset_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -959,7 +959,7 @@ fset_option_get_options (void)
     struct t_hashtable *marked_options;
     int i, num_options;
 
-    /* save marked options in a hashtable */
+    /* Save marked options in a hashtable. */
     if (!weechat_config_boolean (fset_config_look_auto_unmark))
     {
         marked_options = weechat_hashtable_new (256,
@@ -979,12 +979,12 @@ fset_option_get_options (void)
         marked_options = NULL;
     }
 
-    /* clear options */
+    /* Clear options. */
     weechat_arraylist_clear (fset_options);
     fset_option_count_marked = 0;
     fset_option_init_max_length (fset_option_max_length);
 
-    /* get options */
+    /* Get options. */
     ptr_config = weechat_hdata_get_list (fset_hdata_config_file,
                                          "config_files");
     while (ptr_config)
@@ -1019,13 +1019,13 @@ fset_option_get_options (void)
             ptr_fset_option->index = i;
     }
 
-    /* check selected line */
+    /* Check selected line. */
     if (num_options == 0)
         fset_buffer_selected_line = 0;
     else if (fset_buffer_selected_line >= num_options)
         fset_buffer_selected_line = num_options - 1;
 
-    /* restore marked options */
+    /* Restore marked options. */
     if (marked_options)
     {
         for (i = 0; i < num_options; i++)
@@ -1120,7 +1120,7 @@ void
 fset_option_reset_value (struct t_fset_option *fset_option,
                          struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) fset_option;
 
     if (!option)
@@ -1137,7 +1137,7 @@ void
 fset_option_unset_value (struct t_fset_option *fset_option,
                          struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) fset_option;
 
     if (!option)
@@ -1165,7 +1165,7 @@ fset_option_set (struct t_fset_option *fset_option,
     char *ptr_value, *str_input, str_pos[32];
     char empty_value[1] = { '\0' };
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) option;
 
     if (!fset_option)
@@ -1210,7 +1210,7 @@ void
 fset_option_toggle_mark (struct t_fset_option *fset_option,
                          struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) option;
 
     if (!fset_option)
@@ -1422,13 +1422,13 @@ fset_option_import (const char *filename)
         ptr_line = fgets (line, sizeof (line) - 1, file);
         if (!ptr_line)
             continue;
-        /* ignore comments */
+        /* Ignore comments. */
         if (ptr_line[0] == '#')
             continue;
-        /* execute command (if it's a valid command) */
+        /* Execute command (if it's a valid command). */
         if (!weechat_string_input_for_buffer (ptr_line))
         {
-            /* remove trailing '\r' and '\n' */
+            /* Remove trailing '\r' and '\n'. */
             length = strlen (line) - 1;
             while ((length >= 0)
                    && ((line[length] == '\n')
@@ -1489,7 +1489,7 @@ fset_option_config_changed (const char *option_name)
         }
         else
         {
-            /* option removed: get options and refresh the whole buffer */
+            /* Option removed: get options and refresh the whole buffer. */
             option_removed = 1;
             if (ptr_fset_option->index < fset_buffer_selected_line)
                 fset_buffer_selected_line--;
@@ -1500,7 +1500,7 @@ fset_option_config_changed (const char *option_name)
         new_fset_option = fset_option_alloc (ptr_option);
         if (fset_option_match_filter (new_fset_option, fset_option_filter))
         {
-            /* option added: get options and refresh the whole buffer */
+            /* Option added: get options and refresh the whole buffer. */
             option_added = 1;
         }
         fset_option_free (new_fset_option);
@@ -1510,8 +1510,8 @@ fset_option_config_changed (const char *option_name)
     {
         fset_option_get_options ();
         /*
-         * in case of option added, we move to the next one if is was the
-         * selected one
+         * In case of option added, we move to the next one if is was the
+         * selected one.
          */
         if (option_added && old_name_selected)
         {
@@ -1559,7 +1559,7 @@ fset_option_timer_option_changed_cb (void *data,
                                      const void *key,
                                      const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) hashtable;
     (void) value;
@@ -1576,7 +1576,7 @@ fset_option_config_timer_cb (const void *pointer,
                              void *data,
                              int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -1614,22 +1614,22 @@ fset_option_config_cb (const void *pointer,
 {
     char *info;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) value;
 
-    /* do nothing if fset buffer is not opened */
+    /* Do nothing if fset buffer is not opened. */
     if (!fset_buffer)
         return WEECHAT_RC_OK;
 
-    /* do nothing if auto-refresh is disabled for this option */
+    /* Do nothing if auto-refresh is disabled for this option. */
     if (!weechat_string_match_list (option,
                                     (const char **)fset_config_auto_refresh,
                                     0))
         return WEECHAT_RC_OK;
 
-    /* do nothing if WeeChat is upgrading */
+    /* Do nothing if WeeChat is upgrading. */
     info = weechat_info_get ("weechat_upgrading", NULL);
     if (info && (strcmp (info, "1") == 0))
     {
@@ -1639,9 +1639,9 @@ fset_option_config_cb (const void *pointer,
     free (info);
 
     /*
-     * we limit the number of options to display with the timer; for example
+     * We limit the number of options to display with the timer; for example
      * on /reload, many options are changed, so we'll get all options and
-     * display them, instead of change them one by one, which is very slow
+     * display them, instead of change them one by one, which is very slow.
      */
     if (weechat_hashtable_get_integer (
             fset_option_timer_options_changed,
@@ -1671,7 +1671,7 @@ fset_option_hdata_option_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

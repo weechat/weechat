@@ -189,14 +189,14 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 struct t_weechat_plugin *weechat_plugin = NULL;
 
 
-/* функција повратног позива за команду "/double" */
+/* Функција повратног позива за команду "/double" */
 
 int
 command_double_cb (const void *pointer, void *data,
                    struct t_gui_buffer *buffer,
                    int argc, char **argv, char **argv_eol)
 {
-    /* усрећите C компајлер */
+    /* Усрећите C компајлер */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -232,7 +232,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin,
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* усрећите C компајлер */
+    /* Усрећите C компајлер */
     (void) plugin;
 
     return WEECHAT_RC_OK;
@@ -268,7 +268,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def register(name: str, author: str, version: str, license: str, description: str, shutdown_function: str, charset: str) -> int: ...
 ----
 
@@ -310,10 +310,10 @@ const char *name = weechat_plugin_get_name (plugin);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def plugin_get_name(plugin: str) -> str: ...
 
-# пример
+# Пример
 plugin = weechat.buffer_get_pointer(weechat.current_buffer(), "plugin")
 name = weechat.plugin_get_name(plugin)
 ----
@@ -349,10 +349,10 @@ weechat_charset_set ("iso-8859-1");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def charset_set(charset: str) -> int: ...
 
-# пример
+# Пример
 weechat.charset_set("iso-8859-1")
 ----
 
@@ -389,10 +389,10 @@ free (str);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def iconv_to_internal(charset: str, string: str) -> str: ...
 
-# пример
+# Пример
 str = weechat.iconv_to_internal("iso-8859-1", "iso string: é à")
 ----
 
@@ -429,10 +429,10 @@ free (str);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def iconv_from_internal(charset: str, string: str) -> str: ...
 
-# пример
+# Пример
 str = weechat.iconv_from_internal("iso-8859-1", "utf-8 string: é à")
 ----
 
@@ -466,10 +466,10 @@ char *str = weechat_gettext ("hello");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def gettext(string: str) -> str: ...
 
-# пример
+# Пример
 str = weechat.gettext("hello")
 ----
 
@@ -506,10 +506,10 @@ char *str = weechat_ngettext ("file", "files", num_files);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def ngettext(string: str, plural: str, count: int) -> str: ...
 
-# пример
+# Пример
 num_files = 2
 str = weechat.ngettext("file", "files", num_files)
 ----
@@ -556,7 +556,7 @@ if (weechat_asprintf (&str, "%s, %d", "test", 42) >= 0)
 }
 else
 {
-    /* error: *str == NULL */
+    /* Error: *str == NULL */
 }
 ----
 
@@ -587,7 +587,7 @@ C пример:
 
 [source,c]
 ----
-char *str = weechat_strndup ("abcdef", 3);  /* резултат: „abc” */
+char *str = weechat_strndup ("abcdef", 3);  /* Резултат: „abc” */
 /* ... */
 free (str);
 ----
@@ -625,7 +625,7 @@ C пример:
 
 [source,c]
 ----
-char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* result: "this…" */
+char *str = weechat_string_cut ("this is a test", 5, 1, 1, "…");  /* Result: "this…" */
 /* ... */
 free (str);
 ----
@@ -664,7 +664,7 @@ C пример:
 
 [source,c]
 ----
-char *str = weechat_string_tolower ("ABCD_É");  /* result: „abcd_é” */
+char *str = weechat_string_tolower ("ABCD_É");  /* Result: „abcd_é” */
 /* ... */
 free (str);
 ----
@@ -703,7 +703,7 @@ C пример:
 
 [source,c]
 ----
-char *str = weechat_string_toupper ("abcd_é");  /* result: „ABCD_É” */
+char *str = weechat_string_toupper ("abcd_é");  /* Result: „ABCD_É” */
 /* ... */
 free (str);
 ----
@@ -1117,7 +1117,7 @@ C пример:
 
 [source,c]
 ----
-const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* резултат: показивач на "DeF" */
+const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* Резултат: показивач на "DeF" */
 ----
 
 [NOTE]
@@ -1158,10 +1158,10 @@ int length_on_screen = weechat_strlen_screen ("é");  /* == 1 */
 
 [source,python]
 ----
-# прототип
+# Прототип
 def strlen_screen(string: str) -> int: ...
 
-# пример
+# Пример
 length = weechat.strlen_screen("é")  # 1
 ----
 
@@ -1212,10 +1212,10 @@ int match5 = weechat_string_match ("abcdef", "*b*d*", 0);  /* == 1 */
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_match(string: str, mask: str, case_sensitive: int) -> int: ...
 
-# примери
+# Примери
 match1 = weechat.string_match("abcdef", "abc*", 0)   # == 1
 match2 = weechat.string_match("abcdef", "*dd*", 0)   # == 0
 match3 = weechat.string_match("abcdef", "*def", 0)   # == 1
@@ -1266,10 +1266,10 @@ int match3 = weechat_string_match_list ("def", masks, 0);     /* == 1 */
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_match_list(string: str, masks: str, case_sensitive: int) -> int: ...
 
-# примери
+# Примери
 match1 = weechat.string_match("abc", "*,!abc*", 0)     # == 0
 match2 = weechat.string_match("abcdef", "*,!abc*", 0)  # == 0
 match3 = weechat.string_match("def", "*,!abc*", 0)     # == 1
@@ -1301,7 +1301,7 @@ C пример:
 [source,c]
 ----
 char *str = weechat_string_expand_home ("~/file.txt");
-/* резултат: "/home/user/file.txt" */
+/* Резултат: "/home/user/file.txt" */
 /* ... */
 free (str);
 ----
@@ -1350,7 +1350,7 @@ C пример:
 [source,c]
 ----
 char *str = weechat_string_eval_path_home ("${weechat_config_dir}/test.conf", NULL, NULL, NULL);
-/* резултат: "/home/user/.config/weechat/test.conf" */
+/* Резултат: "/home/user/.config/weechat/test.conf" */
 /* ... */
 free (str);
 ----
@@ -1359,10 +1359,10 @@ free (str);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_eval_path_home(path: str, pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str]) -> str: ...
 
-# пример
+# Пример
 path = weechat.string_eval_path_home("${weechat_config_dir}/test.conf", {}, {}, {})
 # path == "/home/user/.config/weechat/test.conf"
 ----
@@ -1392,7 +1392,7 @@ C пример:
 [source,c]
 ----
 char *str = weechat_string_remove_quotes (string, " 'I can't' ", "'");
-/* result: "I can't" */
+/* Result: "I can't" */
 /* ... */
 free (str);
 ----
@@ -1427,7 +1427,7 @@ C пример:
 
 [source,c]
 ----
-char *str = weechat_string_strip (".abc -", 0, 1, "- .");  /* result: ".abc" */
+char *str = weechat_string_strip (".abc -", 0, 1, "- .");  /* Result: ".abc" */
 /* ... */
 free (str);
 ----
@@ -1508,7 +1508,7 @@ C пример:
 [source,c]
 ----
 char *str_regex = weechat_string_mask_to_regex ("test*mask");
-/* резултат: "test.*mask" */
+/* Резултат: "test.*mask" */
 /* ... */
 free (str_regex);
 ----
@@ -1517,10 +1517,10 @@ free (str_regex);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_mask_to_regex(mask: str) -> str: ...
 
-# пример
+# Пример
 regex = weechat.string_mask_to_regex("test*mask")  # "test.*mask"
 ----
 
@@ -1616,7 +1616,7 @@ if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) == 0)
 }
 else
 {
-    /* грешка */
+    /* Грешка */
     /* ... */
 }
 ----
@@ -1656,10 +1656,10 @@ int hl = weechat_string_has_highlight ("мој тест стринг", "тест
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_has_highlight(string: str, highlight_words: str) -> int: ...
 
-# пример
+# Пример
 highlight = weechat.string_has_highlight("my test string", "test,word2")  # 1
 ----
 
@@ -1697,10 +1697,10 @@ int hl = weechat_string_has_highlight_regex ("мој тест стринг", "т
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_has_highlight_regex(string: str, regex: str) -> int: ...
 
-# пример
+# Пример
 highlight = weechat.string_has_highlight_regex("мој тест стринг", "тест|реч2")  # 1
 ----
 
@@ -1730,7 +1730,7 @@ C пример:
 
 [source,c]
 ----
-char *str = weechat_string_replace ("test", "s", "x");  /* резултат: "text" */
+char *str = weechat_string_replace ("test", "s", "x");  /* Резултат: "text" */
 /* ... */
 free (str);
 ----
@@ -1882,14 +1882,15 @@ char **argv;
 int argc;
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL, 0, 0, &argc);
-/* result: argv[0] == "abc"
-           argv[1] == "de"
-           argv[2] == ""
-           argv[3] == "fghi"
-           argv[4] = ""
-           argv[5] == NULL
-           argc == 5
-*/
+/*
+ * Result: argv[0] == "abc"
+ *         argv[1] == "de"
+ *         argv[2] == ""
+ *         argv[3] == "fghi"
+ *         argv[4] = ""
+ *         argv[5] == NULL
+ *         argc == 5
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL,
@@ -1897,12 +1898,13 @@ argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                              0, &argc);
-/* result: argv[0] == "abc"
-           argv[1] == "de"
-           argv[2] == "fghi"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc"
+ *         argv[1] == "de"
+ *         argv[2] == "fghi"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL,
@@ -1911,12 +1913,13 @@ argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                              | WEECHAT_STRING_SPLIT_KEEP_EOL,
                              0, &argc);
-/* result: argv[0] == "abc de  fghi"
-           argv[1] == "de  fghi"
-           argv[2] == "fghi"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc de  fghi"
+ *         argv[1] == "de  fghi"
+ *         argv[2] == "fghi"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split ("abc de  fghi ", " ", NULL,
@@ -1924,12 +1927,13 @@ argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                              | WEECHAT_STRING_SPLIT_KEEP_EOL,
                              0, &argc);
-/* result: argv[0] == "abc de  fghi "
-           argv[1] == "de  fghi "
-           argv[2] == "fghi "
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc de  fghi "
+ *         argv[1] == "de  fghi "
+ *         argv[2] == "fghi "
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 
 argv = weechat_string_split (" abc, de,, fghi ", ",", " ",
@@ -1937,12 +1941,13 @@ argv = weechat_string_split (" abc, de,, fghi ", ",", " ",
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                              0, &argc);
-/* result: argv[0] == "abc"
-           argv[1] == "de"
-           argv[2] == "fghi"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "abc"
+ *         argv[1] == "de"
+ *         argv[2] == "fghi"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 ----
 
@@ -1982,12 +1987,13 @@ C пример:
 char **argv;
 int argc;
 argv = weechat_string_split_shell ("test 'first arg'  \"second arg\"", &argc);
-/* result: argv[0] == "test"
-           argv[1] == "first arg"
-           argv[2] == "second arg"
-           argv[3] == NULL
-           argc == 3
-*/
+/*
+ * Result: argv[0] == "test"
+ *         argv[1] == "first arg"
+ *         argv[2] == "second arg"
+ *         argv[3] == NULL
+ *         argc == 3
+ */
 weechat_string_free_split (argv);
 ----
 
@@ -2093,10 +2099,11 @@ C пример:
 [source,c]
 ----
 char **argv = weechat_string_split_command ("/command1 arg;/command2", ';');
-/* result: argv[0] == "/command1 arg"
-           argv[1] == "/command2"
-           argv[2] == NULL
-*/
+/*
+ * Result: argv[0] == "/command1 arg"
+ *         argv[1] == "/command2"
+ *         argv[2] == NULL
+ */
 weechat_free_split_command (argv);
 ----
 
@@ -2153,7 +2160,7 @@ C примери:
 
 [source,c]
 ----
-/* примери са енглеским локал подешавањем */
+/* Примери са енглеским локал подешавањем */
 
 char *str = weechat_string_format_size (0);  /* str == "0 bytes" */
 /* ... */
@@ -2180,10 +2187,10 @@ free (str);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_format_size(size: int) -> str: ...
 
-# пример
+# Пример
 str = weechat.string_format_size(15200)  # == "15.2 KB"
 ----
 
@@ -2225,10 +2232,10 @@ unsigned long long size = weechat_parse_size ("1.34m");  /* size == 1340000 */
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_parse_size(size: str) -> int: ...
 
-# пример
+# Пример
 size = weechat.string_parse_size("1.34m")  # 1340000
 ----
 
@@ -2268,10 +2275,10 @@ size = weechat_string_color_code_size (weechat_color ("yellow,red"));  /* size =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_color_code_size(string: str) -> int: ...
 
-# примери
+# Примери
 size = weechat.string_color_code_size("test")  # size == 0
 size = weechat.string_color_code_size(weechat.color("bold"))  # size == 2
 size = weechat.string_color_code_size(weechat.color("yellow,red"))  # size == 7
@@ -2303,12 +2310,12 @@ C примери:
 
 [source,c]
 ----
-/* уклони кодове боје */
+/* Уклони кодове боје */
 char *str = weechat_string_remove_color (my_string1, NULL);
 /* ... */
 free (str);
 
-/* замени кодове боје са „?” */
+/* Замени кодове боје са „?” */
 char *str = weechat_string_remove_color (my_string2, "[color]");
 /* ... */
 free (str);
@@ -2318,10 +2325,10 @@ free (str);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_remove_color(string: str, replacement: str) -> str: ...
 
-# пример
+# Пример
 str = weechat.string_remove_color(my_string, "[color]")
 ----
 
@@ -2445,8 +2452,10 @@ C пример:
 ----
 char *string = "abc def-ghi";
 char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
-/* dump == " >> 61 62 63 20 64 65 66 2D   a b c   d e f - \n"
-           " >> 67 68 69                  g h i           "  */
+/*
+ * dump == " >> 61 62 63 20 64 65 66 2D   a b c   d e f - \n"
+ *         " >> 67 68 69                  g h i           "
+ */
 ----
 
 [NOTE]
@@ -2485,10 +2494,10 @@ int command_char2 = weechat_string_is_command_char ("test");   /* == 0 */
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_is_command_char(string: str) -> int: ...
 
-# примери
+# Примери
 command_char1 = weechat.string_is_command_char("/test")  # == 1
 command_char2 = weechat.string_is_command_char("test")   # == 0
 ----
@@ -2527,10 +2536,10 @@ const char *str3 = weechat_string_input_for_buffer ("//test");  /* "/test" */
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_input_for_buffer(string: str) -> str: ...
 
-# примери
+# Примери
 str1 = weechat.string_input_for_buffer("test")    # "test"
 str2 = weechat.string_input_for_buffer("/test")   # ""
 str3 = weechat.string_input_for_buffer("//test")  # "/test"
@@ -2582,7 +2591,7 @@ C примери:
 
 [source,c]
 ----
-/* услови */
+/* Услови */
 struct t_hashtable *options1 = weechat_hashtable_new (8,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       WEECHAT_HASHTABLE_STRING,
@@ -2592,21 +2601,21 @@ weechat_hashtable_set (options1, "type", "condition");
 char *str1 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options1);  /* "1" */
 char *str2 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options1);                 /* "0" */
 
-/* прост израз */
+/* Прост израз */
 char *str3 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);  /* "core.weechat" */
 
-/* замена регуларним изразом */
+/* Замена регуларним изразом */
 struct t_hashtable *options2 = weechat_hashtable_new (8,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       NULL,
                                                       NULL);
-/* додавање заграда око URL адреса */
+/* Додавање заграда око URL адреса */
 weechat_hashtable_set (options2, "regex", "[a-zA-Z0-9_]+://[^ ]+");
 weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
 char *str4 = weechat_string_eval_expression ("test: https://weechat.org", NULL, NULL, NULL);  /* "test: [ https://weechat.org ]" */
 
-/* скривање лозинки */
+/* Скривање лозинки */
 weechat_hashtable_set (options2, "regex", "(password=)([^ ]+)");
 weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
 char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
@@ -2616,26 +2625,26 @@ char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, 
 
 [source,python]
 ----
-# прототип
+# Прототип
 def string_eval_expression(expr: str, pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str]) -> str: ...
 
-# примери
+# Примери
 
-# услови
+# Услови
 str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
 str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
 
-# прост израз
+# Прост израз
 str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
 
-# замена регуларним изразом: додавање заграда око URL адреса
+# Замена регуларним изразом: додавање заграда око URL адреса
 options = {
     "regex": "[a-zA-Z0-9_]+://[^ ]+",
     "regex_replace": "[ ${re:0} ]",
 }
 str4 = weechat.string_eval_expression("test: https://weechat.org", {}, {}, options)  # "test: [ https://weechat.org ]"
 
-# замена са регуларним изразом: скривање лозинки
+# Замена са регуларним изразом: скривање лозинки
 options = {
     "regex": "(password=)([^ ]+)",
     "regex_replace": "${re:1}${hide:*,${re:2}}",
@@ -3348,7 +3357,7 @@ if (weechat_string_dyn_copy (string, "test"))
 }
 else
 {
-    /* грешка */
+    /* Грешка */
 }
 ----
 
@@ -3433,7 +3442,7 @@ if (weechat_string_dyn_concat (string, "test"))
 }
 else
 {
-    /* грешка */
+    /* Грешка */
 }
 /* ... */
 weechat_string_dyn_free (string, 1);
@@ -3473,10 +3482,10 @@ C пример:
 
 [source,c]
 ----
-const char *result = weechat_string_concat (" / ", "абв", "гдђ", "ежз", NULL);  /* резултат == "абв / гдђ / ежз" */
+const char *result = weechat_string_concat (" / ", "абв", "гдђ", "ежз", NULL);  /* Резултат == "абв / гдђ / ежз" */
 
-/* са макроом */
-const char *result = WEECHAT_STR_CONCAT(" / ", "абв", "гдђ", "ежз");  /* резултат == "абв / гдђ / ежз" */
+/* Са макроом */
+const char *result = WEECHAT_STR_CONCAT(" / ", "абв", "гдђ", "ежз");  /* Резултат == "абв / гдђ / ежз" */
 ----
 
 [NOTE]
@@ -3865,7 +3874,7 @@ C пример:
 [source,c]
 ----
 const char *str = "chêne";
-const char *str2 = weechat_utf8_add_offset (str, 3);  /* показује на "ne" */
+const char *str2 = weechat_utf8_add_offset (str, 3);  /* Показује на "ne" */
 ----
 
 [NOTE]
@@ -3955,7 +3964,7 @@ C пример:
 
 [source,c]
 ----
-char *string = weechat_utf8_strndup ("chêne", 3);  /* враћа "chê" */
+char *string = weechat_utf8_strndup ("chêne", 3);  /* Враћа "chê" */
 /* ... */
 free (string);
 ----
@@ -3988,7 +3997,7 @@ C пример:
 ----
 char dest[256];
 
-weechat_utf8_strncpy (dest, "chêne", 3);  /* copies "chê" to dest */
+weechat_utf8_strncpy (dest, "chêne", 3);  /* Copies "chê" to dest. */
 ----
 
 [NOTE]
@@ -4062,8 +4071,10 @@ const char *data = "abcdefghijklmnopqrstuvwxyz";
 char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hash (data, strlen (data), "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 и хеш је бафер са:
-   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
+/*
+ * rc == 1, hash_size == 32 и хеш је бафер са:
+ * 71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73
+ */
 ----
 
 [NOTE]
@@ -4104,8 +4115,10 @@ C пример:
 char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hash_file ("/path/to/file", "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 и хеш је бафер са:
-   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
+/*
+ * rc == 1, hash_size == 32 и хеш је бафер са:
+ * 71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73
+ */
 ----
 
 [NOTE]
@@ -4153,8 +4166,10 @@ char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hash_pbkdf2 (data, strlen (data), "sha256", salt, strlen (salt), 100000,
                                  hash, &hash_size);
-/* rc == 1, hash_size == 32 и хеш је бафер са:
-   99 b3 5e 42 53 d1 a7 a8 49 c1 dc 2c e2 53 c2 b6 6d a1 8b dc 6e 78 a7 06 e0 ef 34 db 0a 7a a2 bb */
+/*
+ * rc == 1, hash_size == 32 и хеш је бафер са:
+ * 99 b3 5e 42 53 d1 a7 a8 49 c1 dc 2c e2 53 c2 b6 6d a1 8b dc 6e 78 a7 06 e0 ef 34 db 0a 7a a2 bb
+ */
 ----
 
 [NOTE]
@@ -4197,8 +4212,10 @@ const char *message = "the message";
 char hash[256 / 8];
 int rc, hash_size;
 rc = weechat_crypto_hmac (key, strlen (key), message, strlen (message), "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 и хеш је бафер са:
-   47 36 67 02 fc bc b1 97 a4 25 e6 7a b9 52 92 bd 15 9a 66 91 9c fb 94 b0 b4 9a 39 cb c0 24 2d 7b */
+/*
+ * rc == 1, hash_size == 32 и хеш је бафер са:
+ * 47 36 67 02 fc bc b1 97 a4 25 e6 7a b9 52 92 bd 15 9a 66 91 9c fb 94 b0 b4 9a 39 cb c0 24 2d 7b
+ */
 ----
 
 [NOTE]
@@ -4242,7 +4259,7 @@ C пример:
 ----
 if (!weechat_mkdir_home ("${weechat_cache_dir}/temp", 0755))
 {
-    /* грешка */
+    /* Грешка */
 }
 ----
 
@@ -4250,10 +4267,10 @@ if (!weechat_mkdir_home ("${weechat_cache_dir}/temp", 0755))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def mkdir_home(directory: str, mode: int) -> int: ...
 
-# пример
+# Пример
 weechat.mkdir_home("${weechat_cache_dir}/temp", 0755)
 ----
 
@@ -4283,7 +4300,7 @@ C пример:
 ----
 if (!weechat_mkdir ("/tmp/mydir", 0755))
 {
-    /* грешка */
+    /* Грешка */
 }
 ----
 
@@ -4291,10 +4308,10 @@ if (!weechat_mkdir ("/tmp/mydir", 0755))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def mkdir(directory: str, mode: int) -> int: ...
 
-# пример
+# Пример
 weechat.mkdir("/tmp/mydir", 0755)
 ----
 
@@ -4324,7 +4341,7 @@ C пример:
 ----
 if (!weechat_mkdir_parents ("/tmp/my/dir", 0755))
 {
-    /* грешка */
+    /* Грешка */
 }
 ----
 
@@ -4332,10 +4349,10 @@ if (!weechat_mkdir_parents ("/tmp/my/dir", 0755))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def mkdir_parents(directory: str, mode: int) -> int: ...
 
-# пример
+# Пример
 weechat.mkdir_parents("/tmp/my/dir", 0755)
 ----
 
@@ -4524,7 +4541,7 @@ C пример:
 ----
 if (weechat_file_compare ("/tmp/test.txt", "/tmp/test2.txt") == 0)
 {
-    /* исти садржај */
+    /* Исти садржај */
 }
 ----
 
@@ -4580,7 +4597,7 @@ if (weechat_util_parse_int ("1234", 10, &number))
 }
 if (!weechat_util_parse_int ("abc", 10, &number))
 {
-    /* грешка парсирања, број није измењен */
+    /* Грешка парсирања, број није измењен */
 }
 ----
 
@@ -4631,7 +4648,7 @@ if (weechat_util_parse_long ("1234", 10, &number))
 }
 if (!weechat_util_parse_long ("abc", 10, &number))
 {
-    /* грешка парсирања, број није измењен */
+    /* Грешка парсирања, број није измењен */
 }
 ----
 
@@ -4682,7 +4699,7 @@ if (weechat_util_parse_longlong ("1234", 10, &number))
 }
 if (!weechat_util_parse_longlong ("abc", 10, &number))
 {
-    /* грешка парсирања, број није измењен */
+    /* Грешка парсирања, број није измењен */
 }
 ----
 
@@ -4784,7 +4801,7 @@ C пример:
 
 [source,c]
 ----
-weechat_util_timeval_add (&tv, 2000000);  /* додаје 2 секунде */
+weechat_util_timeval_add (&tv, 2000000);  /* Додаје 2 секунде */
 ----
 
 [NOTE]
@@ -4861,7 +4878,7 @@ char time[256];
 struct timeval tv;
 gettimeofday (&tv, NULL);
 weechat_util_strftimeval (time, sizeof (time), "%@%FT%T.%fZ", &tv);
-/* резултат: 2023-12-26T18:10:04.460509Z */
+/* Резултат: 2023-12-26T18:10:04.460509Z */
 ----
 
 [NOTE]
@@ -4975,13 +4992,13 @@ C примери:
 struct timeval tv;
 
 weechat_util_parse_time ("2025-08-30T19:04:55.123456Z", &tv);  /* == 1 */
-/* резултат: tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
+/* Резултат: tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
 
 weechat_util_parse_time ("2025-08-30 21:04:55.123456 +02:00", &tv);  /* == 1 */
-/* исти резултат */
+/* Исти резултат */
 
 weechat_util_parse_time ("21:04:55.123456", &tv);  /* == 1 */
-/* исти резултат */
+/* Исти резултат */
 ----
 
 [NOTE]
@@ -5050,10 +5067,10 @@ struct t_weelist *list = weechat_list_new ();
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_new() -> str: ...
 
-# пример
+# Пример
 list = weechat.list_new()
 ----
 
@@ -5097,10 +5114,10 @@ struct t_weelist_item *my_item =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_add(list: str, data: str, where: str, user_data: str) -> str: ...
 
-# пример
+# Пример
 item = weechat.list_add(list, "my data", weechat.WEECHAT_LIST_POS_SORT, "")
 ----
 
@@ -5136,10 +5153,10 @@ struct t_weelist_item *item = weechat_list_search (list, "my data");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_search(list: str, data: str) -> str: ...
 
-# пример
+# Пример
 item = weechat.list_search(list, "my data")
 ----
 
@@ -5177,10 +5194,10 @@ int pos_item = weechat_list_search_pos (list, "my data");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_search_pos(list: str, data: str) -> int: ...
 
-# пример
+# Пример
 pos_item = weechat.list_search_pos(list, "my data")
 ----
 
@@ -5216,10 +5233,10 @@ struct t_weelist_item *item = weechat_list_casesearch (list, "my data");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_casesearch(list: str, data: str) -> str: ...
 
-# пример
+# Пример
 item = weechat.list_casesearch(list, "my data")
 ----
 
@@ -5257,10 +5274,10 @@ int pos_item = weechat_list_casesearch_pos (list, "my data");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_casesearch_pos(list: str, data: str) -> int: ...
 
-# пример
+# Пример
 pos_item = weechat.list_casesearch_pos(list, "my data")
 ----
 
@@ -5289,17 +5306,17 @@ C пример:
 
 [source,c]
 ----
-struct t_weelist_item *item = weechat_list_get (list, 0);  /* прва ставка */
+struct t_weelist_item *item = weechat_list_get (list, 0);  /* Прва ставка */
 ----
 
 Скрипта (Python):
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_get(list: str, position: int) -> str: ...
 
-# пример
+# Пример
 item = weechat.list_get(list, 0)
 ----
 
@@ -5330,10 +5347,10 @@ weechat_list_set (item, "new data");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_set(item: str, value: str) -> int: ...
 
-# пример
+# Пример
 weechat.list_set(item, "new data")
 ----
 
@@ -5367,10 +5384,10 @@ struct t_weelist_item *next_item = weechat_list_next (item);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_next(item: str) -> str: ...
 
-# пример
+# Пример
 item = weechat.list_next(item)
 ----
 
@@ -5404,10 +5421,10 @@ struct t_weelist_item *prev_item = weechat_list_prev (item);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_prev(item: str) -> str: ...
 
-# пример
+# Пример
 item = weechat.list_prev(item)
 ----
 
@@ -5441,10 +5458,10 @@ weechat_printf (NULL, "вредност ставке: %s", weechat_list_string (
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_string(item: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "вредност ставке: %s" % weechat.list_string(item))
 ----
 
@@ -5509,10 +5526,10 @@ weechat_printf (NULL, "величина листе: %d", weechat_list_size (list
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_size(list: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "величина листе: %d" % weechat.list_size(list))
 ----
 
@@ -5544,10 +5561,10 @@ weechat_list_remove (list, item);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_remove(list: str, item: str) -> int: ...
 
-# пример
+# Пример
 weechat.list_remove(list, item)
 ----
 
@@ -5577,10 +5594,10 @@ weechat_list_remove_all (list);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_remove_all(list: str) -> int: ...
 
-# пример
+# Пример
 weechat.list_remove_all(list)
 ----
 
@@ -5610,10 +5627,10 @@ weechat_list_free (list);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def list_free(list: str) -> int: ...
 
-# пример
+# Пример
 weechat.list_free(list)
 ----
 
@@ -5753,7 +5770,7 @@ C пример:
 
 [source,c]
 ----
-void *pointer = weechat_arraylist_get (arraylist, 0);  /* прва ставка */
+void *pointer = weechat_arraylist_get (arraylist, 0);  /* Прва ставка */
 ----
 
 [NOTE]
@@ -5822,7 +5839,7 @@ C пример:
 
 [source,c]
 ----
-int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* умеће на крај ако низ није сортиран */
+int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* Умеће на крај ако низ није сортиран */
 ----
 
 [NOTE]
@@ -6158,7 +6175,7 @@ C пример:
 ----
 if (weechat_hashtable_has_key (hashtable, "my_key"))
 {
-    /* кључ се налази у хеш табели */
+    /* Кључ се налази у хеш табели */
     /* ... */
 }
 ----
@@ -6199,7 +6216,7 @@ void
 map_cb (void *data, struct t_hashtable *hashtable,
         const void *key, const void *value)
 {
-    /* приказује кључ и вредност (овде су оба стрингови) */
+    /* Приказује кључ и вредност (овде су оба стрингови) */
     weechat_printf (NULL, "кључ: '%s', вредност: '%s'",
                     (const char *)key,
                     (const char *)value);
@@ -6247,7 +6264,7 @@ void
 map_cb (void *data, struct t_hashtable *hashtable,
         const char *key, const char *value)
 {
-    /* приказ кључа и вредности */
+    /* Приказ кључа и вредности */
     weechat_printf (NULL, "кључ: '%s', вредност: '%s'",
                     key, value);
 }
@@ -6456,15 +6473,16 @@ C пример:
 ----
 weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 
-/* ако хеш табела садржи:
-     "кључ1" => "вредност 1"
-     "кључ2" => "вредност 2"
-   онда ће се у ставку инфо листе додати следеће променљиве:
-     "testhash_name_00000"  = "кључ1"
-     "testhash_value_00000" = "вредност 1"
-     "testhash_name_00001"  = "кључ2"
-     "testhash_value_00001" = "вредност 2"
-*/
+/*
+ * Ако хеш табела садржи:
+ *   "кључ1" => "вредност 1"
+ *   "кључ2" => "вредност 2"
+ * онда ће се у ставку инфо листе додати следеће променљиве:
+ *   "testhash_name_00000"  = "кључ1"
+ *   "testhash_value_00000" = "вредност 1"
+ *   "testhash_name_00001"  = "кључ2"
+ *   "testhash_value_00001" = "вредност 2"
+ */
 ----
 
 [NOTE]
@@ -6501,15 +6519,16 @@ C пример:
 ----
 weechat_hashtable_add_from_infolist (hashtable, infolist, "testhash");
 
-/* ако инфо листа садржи:
-     "testhash_name_00000"  = "кључ1"
-     "testhash_value_00000" = "вредност 1"
-     "testhash_name_00001"  = "кључ2"
-     "testhash_value_00001" = "вредност 2"
-   онда ће се у хеш табелу додати следеће променљиве:
-     "кључ1" => "вредност 1"
-     "кључ2" => "вредност 2"
-*/
+/*
+ * Ако инфо листа садржи:
+ *   "testhash_name_00000"  = "кључ1"
+ *   "testhash_value_00000" = "вредност 1"
+ *   "testhash_name_00001"  = "кључ2"
+ *   "testhash_value_00001" = "вредност 2"
+ * онда ће се у хеш табелу додати следеће променљиве:
+ *   "кључ1" => "вредност 1"
+ *   "кључ2" => "вредност 2"
+ */
 ----
 
 [NOTE]
@@ -6677,10 +6696,10 @@ struct t_config_file *config_file = weechat_config_new ("test",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_new(name: str, callback_reload: str, callback_reload_data: str) -> str: ...
 
-# пример
+# Пример
 def my_config_reload_cb(data: str, config_file: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -6768,46 +6787,46 @@ my_config_update_cb (const void *pointer, void *data,
 {
     const char *ptr_section, *ptr_option;
 
-    /* врати се сад ако је верзија већ ажурна */
+    /* Врати се сад ако је верзија већ ажурна */
     if (version_read >= 2)
         return NULL;
 
     ptr_section = hashtable_get (data_read, "section");
     ptr_option = hashtable_get (data_read, "option");
 
-    /* промени име одељка „abc” на „def” */
+    /* Промени име одељка „abc” на „def” */
     if (ptr_section && !ptr_option && (strcmp (ptr_section, "abc") == 0))
     {
         hashtable_set (data_read, "section", "def");
         return data_read;
     }
 
-    /* ограничи остале измене на одељак „test” */
+    /* Ограничи остале измене на одељак „test” */
     if (!ptr_section || !ptr_option || (strcmp (ptr_section, "test") != 0))
         return NULL;
 
-    /* промени име опције „test1” на „test2” */
+    /* Промени име опције „test1” на „test2” */
     if (strcmp (ptr_option, "test1") == 0)
     {
         hashtable_set (data_read, "option", "test2");
         return data_read;
     }
 
-    /* постави вредност опције „test” на „xxx” */
+    /* Постави вредност опције „test” на „xxx” */
     if (strcmp (ptr_option, "test") == 0)
     {
         hashtable_set (data_read, "value", "xxx");
         return data_read;
     }
 
-    /* постави вредност опције „test_null” на NULL */
+    /* Постави вредност опције „test_null” на NULL */
     if (strcmp (ptr_option, "test_null") == 0)
     {
         hashtable_set (data_read, "value_null", "1");
         return data_read;
     }
 
-    /* нема измена */
+    /* Нема измена */
     return NULL;
 }
 
@@ -6820,43 +6839,43 @@ weechat_config_read (config_file);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_set_version(config_file: str, version: int, callback_update: str, callback_update_data: str) -> int: ...
 
-# пример
+# Пример
 def my_config_update_cb(data: str, config_file: str, version_read: int, data_read: Dict[str, str]) -> Dict[str, str]:
-    # врати се сад ако је верзија већ ажурна
+    # Врати се сад ако је верзија већ ажурна
     if version_read >= 2:
         return {}
 
     section = data_read.get("section")
     option = data_read.get("option")
 
-    # промени име одељка „abc” на „def”
+    # Промени име одељка „abc” на „def”
     if section and not option and section == "abc":
         data_read["section"] = "def"
         return data_read
 
-    # ограничи остале измене на одељак „test”
+    # Ограничи остале измене на одељак „test”
     if not section or not option or section != "test":
         return {}
 
-    # промени име опције „test1” на „test2” */
+    # Промени име опције „test1” на „test2” */
     if option == "test1":
         data_read["option"] = "test2"
         return data_read
 
-    # set value to "xxx" for option "test"
+    # Set value to "xxx" for option "test".
     if option == "test":
         data_read["value"] = "xxx"
         return data_read
 
-    # постави вредност опције „test_null” на NULL
+    # Постави вредност опције „test_null” на NULL
     if option == "test_null":
         data_read["value_null"] = "1"
         return data_read
 
-    # no changes
+    # No changes
     return {}
 
 config_file = weechat.config_new("test", "", "")
@@ -7063,7 +7082,7 @@ my_section_delete_option_cb (const void *pointer, void *data,
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
 
-/* стандардни одељак, корисник не може да додаје/брише опције */
+/* Стандардни одељак, корисник не може да додаје/брише опције */
 struct t_config_section *new_section1 =
     weechat_config_new_section (config_file, "section1", 0, 0,
                                 NULL, NULL, NULL,
@@ -7072,8 +7091,10 @@ struct t_config_section *new_section1 =
                                 NULL, NULL, NULL,
                                 NULL, NULL, NULL);
 
-/* специјални одељак, корисник може да додаје/брише опције и за упис/читање
-   опција је потребна функција повратног позива */
+/*
+ * Специјални одељак, корисник може да додаје/брише опције и за упис/читање
+ * опција је потребна функција повратног позива
+ */
 struct t_config_section *new_section2 =
     weechat_config_new_section (config_file, "section2", 1, 1,
                                 &my_section_read_cb, NULL, NULL,
@@ -7087,7 +7108,7 @@ struct t_config_section *new_section2 =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_new_section(config_file: str, name: str,
                        user_can_add_options: int, user_can_delete_options: int,
                        callback_read: str, callback_read_data: str,
@@ -7096,7 +7117,7 @@ def config_new_section(config_file: str, name: str,
                        callback_create_option: str, callback_create_option_data: str,
                        callback_delete_option: str, callback_delete_option_data: str) -> str: ...
 
-# пример
+# Пример
 def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
@@ -7172,10 +7193,10 @@ struct t_config_section *section = weechat_config_search_section (config_file,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_search_section(config_file: str, section_name: str) -> str: ...
 
-# пример
+# Пример
 section = weechat.config_search_section(config_file, "section")
 ----
 
@@ -7272,7 +7293,7 @@ C пример:
 
 [source,c]
 ----
-/* логичка */
+/* Логичка */
 struct t_config_option *option_bool =
     weechat_config_new_option (config_file, section, "option_bool", "boolean",
                                "My option, type boolean",
@@ -7285,7 +7306,7 @@ struct t_config_option *option_bool =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* целобројна */
+/* Целобројна */
 struct t_config_option *option_int =
     weechat_config_new_option (config_file, section, "option_int", "integer",
                                "My option, type integer",
@@ -7298,7 +7319,7 @@ struct t_config_option *option_int =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* стринг */
+/* Стринг */
 struct t_config_option *option_str =
     weechat_config_new_option (config_file, section, "option_str", "string|themable",
                                "My option, type string",
@@ -7311,7 +7332,7 @@ struct t_config_option *option_str =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* боја */
+/* Боја */
 struct t_config_option *option_col =
     weechat_config_new_option (config_file, section, "option_col", "color",
                                "My option, type color",
@@ -7324,7 +7345,7 @@ struct t_config_option *option_col =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* целобројна (са стринг вредностима) */
+/* Целобројна (са стринг вредностима) */
 struct t_config_option *option_enum =
     weechat_config_new_option (config_file, section, "option_enum", "enum",
                                "My option, type enum",
@@ -7342,7 +7363,7 @@ struct t_config_option *option_enum =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_new_option(config_file: str, section: str, name: str, type: str, description: str,
                       string_values: str, min: int, max: int,
                       default_value: Union[str, None], value: Union[str, None], null_value_allowed: int,
@@ -7350,7 +7371,7 @@ def config_new_option(config_file: str, section: str, name: str, type: str, desc
                       callback_change: str, callback_change_data: str,
                       callback_delete: str, callback_delete_data: str) -> str: ...
 
-# пример
+# Пример
 def option_str_check_value_cb(data: str, option: str, value: str) -> int:
     # ...
     return 1
@@ -7438,10 +7459,10 @@ struct t_config_option *option =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_search_option(config_file: str, section: str, option_name: str) -> str: ...
 
-# пример
+# Пример
 option = weechat.config_search_option(config_file, section, "option")
 ----
 
@@ -7482,11 +7503,11 @@ weechat_config_search_section_option(config_file,
                                      &ptr_option);
 if (ptr_option)
 {
-    /* опција је пронађена */
+    /* Опција је пронађена */
 }
 else
 {
-    /* опција није пронађена */
+    /* Опција није пронађена */
 }
 ----
 
@@ -7532,11 +7553,11 @@ weechat_config_search_with_string ("file.section.option",
                                    &option_name);
 if (ptr_option)
 {
-    /* опција је пронађена */
+    /* Опција је пронађена */
 }
 else
 {
-    /* опција није пронађена */
+    /* Опција није пронађена */
 }
 ----
 
@@ -7569,11 +7590,11 @@ C пример:
 ----
 if (weechat_config_string_to_boolean (option_value))
 {
-    /* вредност је "true" */
+    /* Вредност је "true" */
 }
 else
 {
-    /* вредност је "false" */
+    /* Вредност је "false" */
 }
 ----
 
@@ -7581,10 +7602,10 @@ else
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_string_to_boolean(text: str) -> int: ...
 
-# пример
+# Пример
 if weechat.config_string_to_boolean(text):
     # ...
 ----
@@ -7634,10 +7655,10 @@ switch (weechat_config_option_reset (option, 1))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_option_reset(option: str, run_callback: int) -> int: ...
 
-# пример
+# Пример
 rc = weechat.config_option_reset(option, 1)
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -7698,10 +7719,10 @@ switch (weechat_config_option_set (option, "new_value", 1))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_option_set(option: str, value: str, run_callback: int) -> int: ...
 
-# пример
+# Пример
 rc = weechat.config_option_set(option, "new_value", 1)
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -7759,10 +7780,10 @@ switch (weechat_config_option_set_null (option, 1))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_option_set_null(option: str, run_callback: int) -> int: ...
 
-# пример
+# Пример
 rc = weechat.config_option_set_null(option, 1)
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -7819,10 +7840,10 @@ switch (weechat_config_option_unset (option))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_option_unset(option: str) -> int: ...
 
-# пример
+# Пример
 rc = weechat.config_option_unset(option)
 if rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
     # ...
@@ -7862,10 +7883,10 @@ weechat_config_option_rename (option, "new_name");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_option_rename(option: str, new_name: str) -> int: ...
 
-# пример
+# Пример
 weechat.config_option_rename(option, "new_name")
 ----
 
@@ -7983,11 +8004,11 @@ C пример:
 ----
 if (weechat_config_option_is_null (option))
 {
-    /* вредност је "null" */
+    /* Вредност је "null" */
 }
 else
 {
-    /* вредност није "null" */
+    /* Вредност није "null" */
 }
 ----
 
@@ -7995,11 +8016,11 @@ else
 
 [source,python]
 ----
-# пример
+# Пример
 def config_option_is_null(option: str) -> int: ...
     # ...
 
-# пример
+# Пример
 if weechat.config_option_is_null(option):
     # ...
 ----
@@ -8030,11 +8051,11 @@ C пример:
 ----
 if (weechat_config_option_default_is_null (option))
 {
-    /* подразумевана вредност је "null" */
+    /* Подразумевана вредност је "null" */
 }
 else
 {
-    /* подразумевана вредност није "null" */
+    /* Подразумевана вредност није "null" */
 }
 ----
 
@@ -8042,10 +8063,10 @@ else
 
 [source,python]
 ----
-# пример
+# Пример
 def config_option_default_is_null(option: str) -> int: ...
 
-# пример
+# Пример
 if weechat.config_option_default_is_null(option):
     # ...
 ----
@@ -8080,11 +8101,11 @@ C пример:
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean (option))
 {
-    /* вредност је "true" */
+    /* Вредност је "true" */
 }
 else
 {
-    /* вредност је "false" */
+    /* Вредност је "false" */
 }
 ----
 
@@ -8092,10 +8113,10 @@ else
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_boolean(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 if weechat.config_boolean(option):
     # ...
@@ -8131,11 +8152,11 @@ C пример:
 struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean_default (option))
 {
-    /* вредност је "true" */
+    /* Вредност је "true" */
 }
 else
 {
-    /* вредност је "false" */
+    /* Вредност је "false" */
 }
 ----
 
@@ -8143,10 +8164,10 @@ else
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_boolean_default(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 if weechat.config_boolean_default(option):
     # ...
@@ -8187,10 +8208,10 @@ int autoconnect = weechat_config_boolean_inherited (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_boolean_inherited(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("irc.server.libera.autoconnect")
 autoconnect = weechat.config_boolean_inherited(option)
 ----
@@ -8230,10 +8251,10 @@ int value = weechat_config_integer (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_integer(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer(option)
 ----
@@ -8273,10 +8294,10 @@ int value = weechat_config_integer (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_integer(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer(option)
 ----
@@ -8316,10 +8337,10 @@ int value = weechat_config_integer_default (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_integer_default(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer_default(option)
 ----
@@ -8359,10 +8380,10 @@ int delay = weechat_config_integer_inherited (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_integer_inherited(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("irc.server.libera.autojoin_delay")
 delay = weechat.config_integer_inherited(option)
 ----
@@ -8402,10 +8423,10 @@ const char *value = weechat_config_string (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_string(option: str) -> str: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_string(option)
 ----
@@ -8445,10 +8466,10 @@ const char *value = weechat_config_string_default (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_string_default(option: str) -> str: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_string_default(option)
 ----
@@ -8488,10 +8509,10 @@ const char *msg_quit = weechat_config_string_inherited (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_string_inherited(option: str) -> str: ...
 
-# пример
+# Пример
 option = weechat.config_get("irc.server.libera.msg_quit")
 msg_quit = weechat.config_string_inherited(option)
 ----
@@ -8531,10 +8552,10 @@ const char *color = weechat_config_color (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_color(option: str) -> str: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 color = weechat.config_color(option)
 ----
@@ -8574,10 +8595,10 @@ const char *color = weechat_config_color_default (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_color_default(option: str) -> str: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 color = weechat.config_color_default(option)
 ----
@@ -8617,10 +8638,10 @@ const char *color = weechat_config_color_inherited (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_color_inherited(option: str) -> str: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 color = weechat.config_color_inherited(option)
 ----
@@ -8662,10 +8683,10 @@ int value = weechat_config_enum (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_enum(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum(option)
 ----
@@ -8707,10 +8728,10 @@ int value = weechat_config_enum_default (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_enum_default(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum_default(option)
 ----
@@ -8750,10 +8771,10 @@ int sasl_fail = weechat_config_enum_inherited (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_enum_inherited(option: str) -> int: ...
 
-# пример
+# Пример
 option = weechat.config_get("irc.server.libera.sasl_fail")
 sasl_fail = weechat.config_enum_inherited(option)
 ----
@@ -8796,10 +8817,10 @@ my_section_write_cb (const void *pointer, void *data,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_write_option(config_file: str, option: str) -> int: ...
 
-# пример
+# Пример
 def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     weechat.config_write_line(config_file, "my_section", "")
     weechat.config_write_option(config_file, option)
@@ -8847,10 +8868,10 @@ my_section_write_cb (const void *pointer, void *data,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_write_line(config_file: str, option_name: str, value: str) -> int: ...
 
-# пример
+# Пример
 def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
     weechat.config_write_line(config_file, "my_section", "")
     weechat.config_write_line(config_file, "option", "value")
@@ -8900,10 +8921,10 @@ switch (weechat_config_write (config_file))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_write(config_file: str) -> int: ...
 
-# пример
+# Пример
 rc = weechat.config_write(config_file)
 if rc == weechat.WEECHAT_CONFIG_WRITE_OK:
     # ...
@@ -8956,10 +8977,10 @@ switch (weechat_config_read (config_file))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_read(config_file: str) -> int: ...
 
-# пример
+# Пример
 rc = weechat.config_read(config_file)
 if rc == weechat.WEECHAT_CONFIG_READ_OK:
     # ...
@@ -9012,10 +9033,10 @@ switch (weechat_config_reload (config_file))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_reload(config_file: str) -> int: ...
 
-# пример
+# Пример
 rc = weechat.config_reload(config_file)
 if rc == weechat.WEECHAT_CONFIG_READ_OK:
     # ...
@@ -9051,10 +9072,10 @@ weechat_config_option_free (option);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_option_free(option: str) -> int: ...
 
-# пример
+# Пример
 weechat.config_option_free(option)
 ----
 
@@ -9084,10 +9105,10 @@ weechat_config_section_free_options (section);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_section_free_options(section: str) -> int: ...
 
-# пример
+# Пример
 weechat.config_section_free_options(section)
 ----
 
@@ -9117,10 +9138,10 @@ weechat_config_section_free (section);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_section_free(section: str) -> int: ...
 
-# пример
+# Пример
 weechat.config_section_free(section)
 ----
 
@@ -9150,10 +9171,10 @@ weechat_config_free (config_file);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_free(config_file: str) -> int: ...
 
-# пример
+# Пример
 weechat.config_free(config_file)
 ----
 
@@ -9187,10 +9208,10 @@ struct t_config_option *option = weechat_config_get ("weechat.look.item_time_for
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_get(option_name: str) -> str: ...
 
-# пример
+# Пример
 option = weechat.config_get("weechat.look.item_time_format")
 ----
 
@@ -9217,8 +9238,10 @@ C пример:
 
 [source,c]
 ----
-/* ако је текући додатак „test”, онда се у фајлу plugins.conf
-   тражи вредност опције „plugins.var.test.option” */
+/*
+ * Ако је текући додатак „test”, онда се у фајлу plugins.conf
+ * тражи вредност опције „plugins.var.test.option”
+ */
 char *value = weechat_config_get_plugin ("option");
 ----
 
@@ -9226,10 +9249,10 @@ char *value = weechat_config_get_plugin ("option");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_get_plugin(option_name: str) -> str: ...
 
-# пример
+# Пример
 value = weechat.config_get_plugin("option")
 ----
 
@@ -9258,11 +9281,11 @@ C пример:
 ----
 if (weechat_config_is_set_plugin ("option"))
 {
-    /* опција је постављена */
+    /* Опција је постављена */
 }
 else
 {
-    /* опција не постоји */
+    /* Опција не постоји */
 }
 ----
 
@@ -9270,15 +9293,15 @@ else
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_is_set_plugin(option_name: str) -> int: ...
 
-# пример
+# Пример
 if weechat.config_is_set_plugin("option"):
-    # опција је постављена
+    # Опција је постављена
     # ...
 else:
-    # опција не постоји
+    # Опција не постоји
     # ...
 ----
 
@@ -9330,10 +9353,10 @@ switch (weechat_config_set_plugin ("option", "test_value"))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_set_plugin(option_name: str, value: str) -> int: ...
 
-# пример
+# Пример
 rc = weechat.config_set_plugin("option", "test_value")
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -9378,10 +9401,10 @@ weechat_config_set_desc_plugin ("option", "description of option");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_set_desc_plugin(option_name: str, description: str) -> int: ...
 
-# пример
+# Пример
 version = weechat.info_get("version_number", "") or 0
 if int(version) >= 0x00030500:
     weechat.config_set_desc_plugin("option", "description of option")
@@ -9434,10 +9457,10 @@ switch (weechat_config_unset_plugin ("option"))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def config_unset_plugin(option_name: str) -> int: ...
 
-# пример
+# Пример
 rc = weechat.config_unset_plugin("option")
 if rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
     # ...
@@ -9512,10 +9535,10 @@ Script (Python):
 
 [source,python]
 ----
-# prototype
+# Prototype
 def theme_register(name: str, overrides: Dict[str, str]) -> str: ...
 
-# example
+# Example
 weechat.theme_register("light", {
     "irc.color.input_nick": "cyan",
     "irc.color.topic_old": "darkgray",
@@ -9593,10 +9616,10 @@ if (keys)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def key_bind(context: str, keys: Dict[str, str]) -> int: ...
 
-# пример
+# Пример
 keys = {"@chat(python.test):button1": "hsignal:test_mouse",
         "@chat(python.test):wheelup": "/mycommand up",
         "@chat(python.test):wheeldown": "/mycommand down"}
@@ -9632,10 +9655,10 @@ C примери:
 
 [source,c]
 ----
-/* уклања једну тастерску пречицу */
+/* Уклања једну тастерску пречицу */
 weechat_key_unbind ("mouse", "@chat(plugin.buffer):button1");
 
-/* уклања све тастере са делом "chat(plugin.buffer)" */
+/* Уклања све тастере са делом "chat(plugin.buffer)" */
 weechat_key_unbind ("mouse", "area:chat(plugin.buffer)");
 ----
 
@@ -9643,15 +9666,15 @@ weechat_key_unbind ("mouse", "area:chat(plugin.buffer)");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def key_unbind(context: str, key: str) -> int: ...
 
-# примери
+# Примери
 
-# уклања једну тастерску пречицу
+# Уклања једну тастерску пречицу
 weechat.key_unbind("mouse", "@chat(plugin.buffer):button1")
 
-# уклања све тастере са делом "chat(python.test)"
+# Уклања све тастере са делом "chat(python.test)"
 weechat.key_unbind("mouse", "area:chat(python.test)")
 ----
 
@@ -9705,10 +9728,10 @@ weechat_printf (NULL, "%sОво је грешка...", weechat_prefix ("error"))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def prefix(prefix: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "%sОво је грешка..." % weechat.prefix("error"))
 ----
 
@@ -9787,10 +9810,10 @@ weechat_printf (NULL, "Color: %sblue %sdefault color %syellow on red",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def color(color_name: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
     % (weechat.color("blue"), weechat.color("chat"), weechat.color("yellow,red")))
 ----
@@ -9836,17 +9859,17 @@ weechat_printf (buffer, "Hello on this buffer");
 weechat_printf (buffer, "%sThis is an error!", weechat_prefix ("error"));
 weechat_printf (buffer, " \tMessage without prefix but with \t some \t tabs");
 weechat_printf (buffer, "\t\tMessage without time/alignment");
-weechat_printf (buffer, "\t\t");  /* empty line (without time) */
+weechat_printf (buffer, "\t\t");  /* Empty line (without time) */
 ----
 
 Скрипта (Python):
 
 [source,python]
 ----
-# прототип
+# Прототип
 def prnt(buffer: str, message: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "Здраво на WeeChat баферу")
 weechat.prnt(buffer, "Здраво на овом баферу")
 weechat.prnt(buffer, "%sОво је грешка!" % weechat.prefix("error"))
@@ -9900,10 +9923,10 @@ weechat_printf_date_tags (NULL, time (NULL) - 120, "notify_message",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def prnt_date_tags(buffer: str, date: int, tags: str, message: str) -> int: ...
 
-# пример
+# Пример
 time = int(time.time())
 weechat.prnt_date_tags("", time - 120, "notify_message",
     "Message 2 minutes ago, with a tag 'notify_message'")
@@ -9953,10 +9976,10 @@ weechat_printf_datetime_tags (NULL, tv_now.tv_sec - 120, tv_now.tv_usec,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def prnt_datetime_tags(buffer: str, date: int, date_usec: int, tags: str, message: str) -> int: ...
 
-# пример
+# Пример
 now = time.time()
 time_sec = int(now)
 time_usec = int((now * 1000000) % 1000000)
@@ -10004,10 +10027,10 @@ weechat_printf_y (buffer, 2, "Моја порука на трећој линиј
 
 [source,python]
 ----
-# прототип
+# Прототип
 def prnt_y(buffer: str, y: int, message: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt_y("", 2, "Моја порука на трећој линији")
 ----
 
@@ -10057,10 +10080,10 @@ weechat_printf_y_date_tags (buffer, 2, 0, "my_tag", "My message on third line wi
 
 [source,python]
 ----
-# прототип
+# Прототип
 def prnt_y_date_tags(buffer: str, y: int, date: int, tags: str, message: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt_y_date_tags("", 2, 0, "my_tag", "My message on third line with a tag")
 ----
 
@@ -10102,10 +10125,10 @@ weechat_printf_y_datetime_tags (buffer, 2, 0, 0, "my_tag", "My message on third 
 
 [source,python]
 ----
-# прототип
+# Прототип
 def prnt_y_datetime_tags(buffer: str, y: int, date: int, date_usec: int, tags: str, message: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt_y_datetime_tags("", 2, 0, 0, "my_tag", "My message on third line with a tag")
 ----
 
@@ -10138,10 +10161,10 @@ weechat_log_printf ("Моја порука у лог фајлу");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def log_print(message: str) -> int: ...
 
-# пример
+# Пример
 weechat.log_print("Моја порука у лог фајлу")
 ----
 
@@ -10168,16 +10191,16 @@ C примери:
 
 [source,c]
 ----
-/* модификатор кука са приоритетом = 2000 */
-/* високи приоритет: позива се пре осталих функција повратног позива модификатора */
+/* Модификатор кука са приоритетом = 2000 */
+/* Високи приоритет: позива се пре осталих функција повратног позива модификатора */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 
-/* качи се на два сигнала са приоритетом = 3000 */
-/* високи приоритет: позива се пре осталих функција повратног позива сигнала */
+/* Качи се на два сигнала са приоритетом = 3000 */
+/* Високи приоритет: позива се пре осталих функција повратног позива сигнала */
 weechat_hook_signal ("3000|quit;upgrade", &signal_cb, NULL, NULL);
 
-/* качи се на линије које се исписују у форматираним баферима са приоритетом = 500 */
-/* низак приоритет: позива се након осталих функција повратног позива линија */
+/* Качи се на линије које се исписују у форматираним баферима са приоритетом = 500 */
+/* Низак приоритет: позива се након осталих функција повратног позива линија */
 weechat_hook_line ("500|formatted", "*", NULL, &line_cb, NULL, NULL);
 ----
 
@@ -10284,7 +10307,7 @@ my_command_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_OK;
 }
 
-/* овај пример је инспирисан командом /filter */
+/* Овај пример је инспирисан командом /filter */
 struct t_hook *my_command_hook =
     weechat_hook_command ("мојфилтер",
                           "опис за myfilter",
@@ -10320,11 +10343,11 @@ struct t_hook *my_command_hook =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_command(command: str, description: str, args: str, args_description: str,
                  completion: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_command_cb(data: str, buffer: str, args: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -10412,10 +10435,10 @@ struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_ставк�
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_completion(completion_item: str, description: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
     weechat.completion_list_add(completion, "реч1", 0, weechat.WEECHAT_LIST_POS_SORT)
     weechat.completion_list_add(completion, "тест_реч2", 0, weechat.WEECHAT_LIST_POS_SORT)
@@ -10496,10 +10519,10 @@ struct t_hook *my_command_run_hook =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_command_run(command: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_command_run_cb(data: str, buffer: str, command: str) -> int:
     weechat.prnt("", "Трошим довршавање!")
     return weechat.WEECHAT_RC_OK_EAT
@@ -10557,7 +10580,7 @@ my_timer_cb (const void *pointer, void *data, int remaining_calls)
     return WEECHAT_RC_OK;
 }
 
-/* тајмер се позива сваких 20 секунди */
+/* Тајмер се позива сваких 20 секунди */
 struct t_hook *my_timer_hook =
     weechat_hook_timer (20 * 1000, 0, 0, &my_timer_cb, NULL, NULL);
 ----
@@ -10566,15 +10589,15 @@ struct t_hook *my_timer_hook =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_timer(interval: int, align_second: int, max_calls: int, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_timer_cb(data: str, remaining_calls: int) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
-# тајмер се позива сваких 20 секунди
+# Тајмер се позива сваких 20 секунди
 hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 ----
 
@@ -10635,7 +10658,7 @@ my_fd_cb (const void *pointer, void *data, int fd)
 }
 
 int sock = socket (AF_INET, SOCK_STREAM, 0);
-/* set socket options */
+/* Set socket options. */
 /* ... */
 struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL, NULL);
 ----
@@ -10644,10 +10667,10 @@ struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL, NUL
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_fd(fd: int, flag_read: int, flag_write: int, flag_exception: int, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_fd_cb(data: str, fd: int) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -10738,7 +10761,7 @@ C пример:
 
 [source,c]
 ----
-/* пример са спољном командом */
+/* Пример са спољном командом */
 int
 my_process_cb (const void *pointer, void *data, const char *command,
                int return_code, const char *out, const char *err)
@@ -10770,20 +10793,20 @@ my_process_cb (const void *pointer, void *data, const char *command,
 struct t_hook *my_process_hook = weechat_hook_process ("ls", 5000,
                                                        &my_process_cb, NULL, NULL);
 
-/* пример са функцијом повратног позива која се зове у дете процесу */
+/* Пример са функцијом повратног позива која се зове у дете процесу */
 int
 my_process_func_cb (const void *pointer, void *data, const char *command,
                     int return_code, const char *out, const char *err)
 {
     if (return_code == WEECHAT_HOOK_PROCESS_CHILD)
     {
-        /* одради нешто блокирајуће... */
+        /* Одради нешто блокирајуће... */
         /* ... */
 
         /* stdout ће се послати као "out" и функцији повратног позива родитеља */
         printf ("ово је резултат");
 
-        /* повратни кôд процеса */
+        /* Повратни кôд процеса */
         return 0;
     }
     else
@@ -10821,10 +10844,10 @@ struct t_hook *my_process_hook = weechat_hook_process ("func:get_status", 5000,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_process(command: str, timeout: int, callback: str, callback_data: str) -> str: ...
 
-# пример са спољном командом
+# Пример са спољном командом
 def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Грешка у команди ’%s’" % command)
@@ -10839,9 +10862,9 @@ def my_process_cb(data: str, command: str, return_code: int, out: str, err: str)
 
 hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 
-# пример са скрипт функцијом
+# Пример са скрипт функцијом
 def get_status(data: str) -> str:
-    # одради нешто блокирајуће...
+    # Одради нешто блокирајуће...
     # ...
     return "ово је резултат"
 
@@ -10950,7 +10973,7 @@ my_process_cb (const void *pointer, void *data, const char *command,
     return WEECHAT_RC_OK;
 }
 
-/* пример 1: преузимање URL */
+/* Пример 1: преузимање URL */
 struct t_hashtable *options_url1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -10966,7 +10989,7 @@ if (options_url1)
     weechat_hashtable_free (options_url1);
 }
 
-/* пример 2: отварање URL са прилагођеним HTTP заглављима */
+/* Пример 2: отварање URL са прилагођеним HTTP заглављима */
 struct t_hashtable *options_url2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -10984,7 +11007,7 @@ if (options_url2)
     weechat_hashtable_free (options_url2);
 }
 
-/* пример 3: извршавање обавештавања програма са поруком која је пристигла од некога */
+/* Пример 3: извршавање обавештавања програма са поруком која је пристигла од некога */
 struct t_hashtable *options_cmd1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -10995,7 +11018,7 @@ if (options_cmd1)
     weechat_hashtable_set (options_cmd1, "arg1", "-from");
     weechat_hashtable_set (options_cmd1, "arg2", nick);
     weechat_hashtable_set (options_cmd1, "arg3", "-msg");
-    weechat_hashtable_set (options_cmd1, "arg4", message);  /* аргумент којем се не верује */
+    weechat_hashtable_set (options_cmd1, "arg4", message);  /* Аргумент којем се не верује */
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("my-notify-command",
                                                                      options_cmd1,
                                                                      20000,
@@ -11003,7 +11026,7 @@ if (options_cmd1)
     weechat_hashtable_free (options_cmd1);
 }
 
-/* пример 4: позив командног окружења да изврши команду (команда мора бити БЕЗБЕДНА) */
+/* Пример 4: позив командног окружења да изврши команду (команда мора бити БЕЗБЕДНА) */
 struct t_hashtable *options_cmd2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11025,10 +11048,10 @@ if (options_cmd2)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_process_hashtable(command: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Грешка у команди ’%s’" % command)
@@ -11041,12 +11064,12 @@ def my_process_cb(data: str, command: str, return_code: int, out: str, err: str)
         weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
-# пример 1: преузимање URL
+# Пример 1: преузимање URL
 hook1 = weechat.hook_process_hashtable("url:https://weechat.org/",
                                        {"file_out": "/tmp/weechat.org.html"},
                                        20000, "my_process_cb", "")
 
-# пример 2: отварање URL са прилагођеним HTTP заглављима
+# Пример 2: отварање URL са прилагођеним HTTP заглављима
 options = {
     "httpheader": "\n".join([
         "Header1: value1",
@@ -11057,7 +11080,7 @@ hook2 = weechat.hook_process_hashtable("url:http://localhost:8080/",
                                        options,
                                        20000, "my_process_cb", "")
 
-# пример 3: извршавање обавештавања програма са поруком која је пристигла од некога
+# Пример 3: извршавање обавештавања програма са поруком која је пристигла од некога
 hook3 = weechat.hook_process_hashtable("my-notify-command",
                                        {"arg1": "-from",
                                         "arg2": nick,
@@ -11065,7 +11088,7 @@ hook3 = weechat.hook_process_hashtable("my-notify-command",
                                         "arg4": message},  # аргумент којем се не верује
                                        20000, "my_process_cb", "")
 
-# пример 4: позив командног окружења да изврши команду (команда мора бити БЕЗБЕДНА)
+# Пример 4: позив командног окружења да изврши команду (команда мора бити БЕЗБЕДНА)
 hook4 = weechat.hook_process_hashtable("sh",
                                        {"arg1": "-c",
                                         "arg2": "ls -l /tmp | grep something"},
@@ -11170,7 +11193,7 @@ my_url_cb (const void *pointer, void *data, const char *url,
     return WEECHAT_RC_OK;
 }
 
-/* example 1: output to a file */
+/* Example 1: output to a file */
 struct t_hashtable *options_url1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11186,7 +11209,7 @@ if (options_url1)
     weechat_hashtable_free (options_url1);
 }
 
-/* example 2: custom HTTP headers, output sent to callback */
+/* Example 2: custom HTTP headers, output sent to callback */
 struct t_hashtable *options_url2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11209,20 +11232,20 @@ if (options_url2)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_url(url: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, str]) -> int:
     weechat.prnt("", "output: %s" % output)
     return weechat.WEECHAT_RC_OK
 
-# пример 1: излаз у фајл
+# Пример 1: излаз у фајл
 hook1 = weechat.hook_url("https://weechat.org/",
                          {"file_out": "/tmp/weechat.org.html"},
                          20000, "my_url_cb", "")
 
-# пример 2: произвољна HTTP заглавља, излаз се шаље функцији повратног позива
+# Пример 2: произвољна HTTP заглавља, излаз се шаље функцији повратног позива
 options = {
     "httpheader": "\n".join([
         "Header1: value1",
@@ -11380,11 +11403,11 @@ struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_connect(proxy: str, address: str, port: int, ipv6: int, retry: int, local_hostname: str,
                  callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_connect_cb(data: str, status: int, gnutls_rc: int, sock: int, error: str, ip_address: str) -> int:
     if status == weechat.WEECHAT_HOOK_CONNECT_OK:
         # ...
@@ -11655,12 +11678,12 @@ my_line_cb (const void *pointer, void *data, struct t_hashtable *line)
                                        WEECHAT_HASHTABLE_STRING,
                                        NULL,
                                        NULL);
-    /* force a highlight on the line */
+    /* Force a highlight on the line. */
     weechat_hashtable_set (hashtable, "highlight", "1");
     return hashtable;
 }
 
-/* хвата линије са ознаком „irc_join” */
+/* Хвата линије са ознаком „irc_join” */
 struct t_hook *my_line_hook =
     weechat_hook_line ("", "", "irc_join", &my_line_cb, NULL, NULL);
 ----
@@ -11669,15 +11692,15 @@ struct t_hook *my_line_hook =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_line(buffer_type: str, buffer_name: str, tags: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_line_cb(data: str, line: Dict[str, str]) -> Dict[str, str]:
-    # force a highlight on the line
+    # Force a highlight on the line.
     return {"highlight": "1"}
 
-# хвата линије са ознаком „irc_join”
+# Хвата линије са ознаком „irc_join”
 hook = weechat.hook_line("", "", "irc_join", "my_line_cb", "")
 ----
 
@@ -11760,7 +11783,7 @@ my_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_OK;
 }
 
-/* хвата све поруке у свим баферима, без боје */
+/* Хвата све поруке у свим баферима, без боје */
 struct t_hook *my_print_hook =
     weechat_hook_print (NULL, NULL, NULL, 1, &my_print_cb, NULL, NULL);
 ----
@@ -11769,16 +11792,16 @@ struct t_hook *my_print_hook =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_print(buffer: str, tags: str, message: str, strip_colors: int, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_print_cb(data: str, buffer: str, date: str, tags: str, displayed: int, highlight: int, prefix: str, message: str) -> int:
     if highlight:
         # ...
     return weechat.WEECHAT_RC_OK
 
-# хвата све поруке у свим баферима, без боје
+# Хвата све поруке у свим баферима, без боје
 hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 ----
 
@@ -12517,7 +12540,7 @@ my_signal_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* хвата сигнале „quit” и „upgrade” */
+/* Хвата сигнале „quit” и „upgrade” */
 struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
                                                      &my_signal_cb, NULL, NULL);
 ----
@@ -12526,15 +12549,15 @@ struct t_hook *my_signal_hook = weechat_hook_signal ("quit;upgrade",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_signal(signal: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_signal_cb(data: str, signal: str, signal_data: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
-# хвата сигнале „quit” и „upgrade”
+# Хвата сигнале „quit” и „upgrade”
 hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ----
 
@@ -12588,10 +12611,10 @@ int rc2 = weechat_hook_signal_send ("[flags:stop_on_error,ignore_eat]my_signal2"
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int: ...
 
-# примери
+# Примери
 rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 rc2 = weechat.hook_signal_send("[flags:stop_on_error,ignore_eat]my_signal2",
                                weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
@@ -12681,7 +12704,7 @@ C пример:
 
 [source,c]
 ----
-/* уклањање из меморије и брисање скрипти test.py и script.py */
+/* Уклањање из меморије и брисање скрипти test.py и script.py */
 weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
                           "test.py,script.py");
 ----
@@ -12690,7 +12713,7 @@ weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
 
 [source,python]
 ----
-# уклањање из меморије и брисање скрипти test.py и script.py
+# Уклањање из меморије и брисање скрипти test.py и script.py
 weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
                          "test.py,script.py")
 ----
@@ -12721,11 +12744,11 @@ C примери:
 
 [source,c]
 ----
-/* реци "Здраво!" на libera серверу, #weechat каналу */
+/* Реци "Здраво!" на libera серверу, #weechat каналу */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
                           "libera;#weechat;priority_high,user_message;;Здраво!");
 
-/* шаље команду "/whois FlashCode" на libera сервер, са ниским приоритетом */
+/* Шаље команду "/whois FlashCode" на libera сервер, са ниским приоритетом */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
                           "libera;;priority_low;;/whois FlashCode");
 ----
@@ -12734,11 +12757,11 @@ weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
 
 [source,python]
 ----
-# реци "Здраво!" на libera серверу, #weechat каналу
+# Реци "Здраво!" на libera серверу, #weechat каналу
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "libera;#weechat;priority_high,user_message;;Здраво!")
 
-# шаље команду "/whois FlashCode" на libera сервер, са ниским приоритетом
+# Шаље команду "/whois FlashCode" на libera сервер, са ниским приоритетом
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "libera;;priority_low;;/whois FlashCode")
 ----
@@ -12854,10 +12877,10 @@ struct t_hook *my_hsignal_hook = weechat_hook_hsignal ("test",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_hsignal(signal: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_hsignal_cb(data: str, signal: str, hashtable: Dict[str, str]) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -12914,10 +12937,10 @@ if (hashtable)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_hsignal_send(signal: str, hashtable: Dict[str, str]) -> int: ...
 
-# примери
+# Примери
 rc = weechat.hook_hsignal_send("my_hsignal", {"key": "value"})
 rc2 = weechat.hook_hsignal_send("[flags:stop_on_error,ignore_eat]my_hsignal2", {"key": "value"})
 ----
@@ -13063,8 +13086,8 @@ if (hashtable)
     weechat_hashtable_set (hashtable, "cmd_extra", "318:1");
     weechat_hook_hsignal_send ("irc_redirect_pattern", hashtable);
     /*
-     * now redirect irc whois command with hsignal irc_redirect_command,
-     * using pattern "my_whois"
+     * Now redirect irc whois command with hsignal irc_redirect_command,
+     * using pattern "my_whois".
      */
     /* ... */
     weechat_hashtable_free (hashtable);
@@ -13080,8 +13103,8 @@ weechat.hook_hsignal_send("irc_redirect_pattern",
                            "cmd_start": "311:1",
                            "cmd_stop": "318:1,401:1,402:1,431:1,461",
                            "cmd_extra": "318:1"})
-# сада преусмерите irc whois команду са hsignal irc_redirect_command
-# користећи шаблон "my_whois"
+# Сада преусмерите irc whois команду са hsignal irc_redirect_command
+# Користећи шаблон "my_whois"
 # ...
 ----
 
@@ -13134,7 +13157,7 @@ my_config_cb (const void *pointer, void *data, const char *option,
     return WEECHAT_RC_OK;
 }
 
-/* хвата измене опције „weechat.look.item_time_format” */
+/* Хвата измене опције „weechat.look.item_time_format” */
 struct t_hook *my_config_hook = weechat_hook_config ("weechat.look.item_time_format",
                                                      &my_config_cb, NULL, NULL);
 ----
@@ -13143,15 +13166,15 @@ struct t_hook *my_config_hook = weechat_hook_config ("weechat.look.item_time_for
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_config(option: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_config_cb(data: str, option: str, value: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
 
-# хвата измене опције „weechat.look.item_time_format”
+# Хвата измене опције „weechat.look.item_time_format”
 hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 ----
 
@@ -13314,7 +13337,7 @@ my_modifier_cb (const void *pointer, void *data, const char *modifier,
     result = malloc (length);
     if (result)
     {
-        /* додаје „xxx” у било коју поруку која се исписује */
+        /* Додаје „xxx” у било коју поруку која се исписује */
         snprintf (result, length, "%s xxx", string);
     }
 
@@ -13329,10 +13352,10 @@ struct t_hook *my_modifier_hook = weechat_hook_modifier ("weechat_print",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_modifier(modifier: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_modifier_cb(data: str, modifier: str, modifier_data: str, string: str) -> str:
     return "%s xxx" % string
 
@@ -13450,10 +13473,10 @@ char *new_string = weechat_hook_modifier_exec ("my_modifier",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_modifier_exec(modifier: str, modifier_data: str, string: str) -> str: ...
 
-# пример
+# Пример
 weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 ----
 
@@ -13511,7 +13534,7 @@ my_info_cb (const void *pointer, void *data, const char *info_name,
     return strdup ("some_info");
 }
 
-/* додаје инфо „my_info” */
+/* Додаје инфо „my_info” */
 struct t_hook *my_info_hook = weechat_hook_info ("my_info",
                                                  "Нека инфо",
                                                  "Инфо о аргументима",
@@ -13522,11 +13545,11 @@ struct t_hook *my_info_hook = weechat_hook_info ("my_info",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_info(info_name: str, description: str, args_description: str,
               callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_info_cb(data: str, info_name: str, arguments: str) -> str:
     return „some_info”
 
@@ -13587,7 +13610,7 @@ my_info_hashtable_cb (const void *pointer, void *data, const char *info_name,
     return pointer_to_new_hashtable;
 }
 
-/* додаје инфо "my_info_hashtable" */
+/* Додаје инфо "my_info_hashtable" */
 struct t_hook *my_info_hook = weechat_hook_info_hashtable ("my_info_hashtable",
                                                            "Нека инфо",
                                                            "Инфо о улазној хеш табели",
@@ -13599,11 +13622,11 @@ struct t_hook *my_info_hook = weechat_hook_info_hashtable ("my_info_hashtable",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_info_hashtable(info_name: str, description: str, args_description: str,
                         output_description: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_info_hashtable_cb(data: str, info_name: str, hashtable: Dict[str, str]) -> Dict[str, str]:
     return {"test_key": "test_value"}
 
@@ -13666,13 +13689,13 @@ my_infolist_cb (const void *pointer, void *data, const char *infolist_name,
 {
     struct t_infolist *my_infolist;
 
-    /* изградња инфолисте */
+    /* Изградња инфолисте */
     /* ... */
 
     return my_infolist;
 }
 
-/* додаје инфолисту "my_infolist" */
+/* Додаје инфолисту "my_infolist" */
 struct t_hook *my_infolist = weechat_hook_infolist ("my_infolist",
                                                     "Инфолиста са неким подацима",
                                                     "Инфо о показивачу",
@@ -13684,13 +13707,13 @@ struct t_hook *my_infolist = weechat_hook_infolist ("my_infolist",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_infolist(infolist_name: str, description: str, pointer_description: str,
                   args_description: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_infolist_cb(data: str, infolist_name: str, pointer: str, arguments: str) -> str:
-    # изградња инфолисте
+    # Изградња инфолисте
     # ...
     return my_infolist
 
@@ -13743,13 +13766,13 @@ my_hdata_cb (const void *pointer, void *data, const char *hdata_name)
 {
     struct t_hdata *my_hdata;
 
-    /* изградња hdata */
+    /* Изградња hdata */
     /* ... */
 
     return my_hdata;
 }
 
-/* додаје hdata "my_hdata" */
+/* Додаје hdata "my_hdata" */
 struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
                                               "Hdata за моју структуру",
                                               &my_hdata_cb, NULL, NULL);
@@ -13948,13 +13971,13 @@ C пример:
 struct t_hashtable *
 my_focus_nicklist_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
-    /* додавање стрингова у хеш табелу */
+    /* Додавање стрингова у хеш табелу */
     /* ... */
 
     return info;
 }
 
-/* додаје фокус на nicklist */
+/* Додаје фокус на nicklist */
 struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
                                               &my_focus_nicklist_cb, NULL, NULL);
 ----
@@ -13963,12 +13986,12 @@ struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_focus(area: str, callback: str, callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_focus_nicklist_cb(data: str, info: Dict[str, str]) -> Dict[str, str]:
-    # изградња dict
+    # Изградња dict
     # ...
     return my_dict
 
@@ -14037,10 +14060,10 @@ weechat_hook_set (my_command_hook, "subplugin", "test");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hook_set(hook: str, property: str, value: str) -> int: ...
 
-# пример
+# Пример
 def my_process_cb(data: str, command: str, return_code: int, out: str, err: str) -> int:
     # ...
     return weechat.WEECHAT_RC_OK
@@ -14079,10 +14102,10 @@ weechat_unhook (my_hook);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def unhook(hook: str) -> int: ...
 
-# пример
+# Пример
 weechat.unhook(my_hook)
 ----
 
@@ -14114,10 +14137,10 @@ weechat_unhook_all (NULL);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def unhook_all() -> int: ...
 
-# пример
+# Пример
 weechat.unhook_all()
 ----
 
@@ -14212,11 +14235,11 @@ struct t_gui_buffer *my_buffer = weechat_buffer_new ("my_buffer",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_new(name: str, input_callback: str, input_callback_data: str,
                close_callback: str, close_callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_input_cb(data: str, buffer: str, input_data: str) -> int:
     weechat.prnt(buffer, "Текст: %s" % input_data)
     return weechat.WEECHAT_RC_OK
@@ -14307,11 +14330,11 @@ struct t_hashtable *properties = weechat_hashtable_new (8,
                                                         WEECHAT_HASHTABLE_STRING,
                                                         NULL,
                                                         NULL);
-/* бафер са произвољним садржајем */
+/* Бафер са произвољним садржајем */
 weechat_hashtable_set (properties, "type", "free");
-/* овај бафер се не логује */
+/* Овај бафер се не логује */
 weechat_hashtable_set (properties, "localvar_set_no_log", "1");
-/* везивање пречице alt-c за овај бафер */
+/* Везивање пречице alt-c за овај бафер */
 weechat_hashtable_set (properties, "key_bind_meta-c", "/my_command");
 
 struct t_gui_buffer *my_buffer = weechat_buffer_new_props ("my_buffer",
@@ -14324,12 +14347,12 @@ struct t_gui_buffer *my_buffer = weechat_buffer_new_props ("my_buffer",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_new_props(name: str, properties: Dict[str, str],
                      input_callback: str, input_callback_data: str,
                      close_callback: str, close_callback_data: str) -> str: ...
 
-# пример
+# Пример
 def my_input_cb(data: str, buffer: str, input_data: str) -> int:
     weechat.prnt(buffer, "Текст: %s" % input_data)
     return weechat.WEECHAT_RC_OK
@@ -14372,10 +14395,10 @@ weechat_printf (weechat_current_buffer (), "Текст у текућем баф�
 
 [source,python]
 ----
-# прототип
+# Прототип
 def current_buffer() -> str: ...
 
-# пример
+# Пример
 weechat.prnt(weechat.current_buffer(), "Текст у текућем баферу")
 ----
 
@@ -14417,10 +14440,10 @@ struct t_gui_buffer *buffer3 = weechat_buffer_search ("==id", "1709797810942688"
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_search(plugin: str, name: str) -> str: ...
 
-# пример
+# Пример
 buffer = weechat.buffer_search("my_plugin", "my_buffer")
 ----
 
@@ -14450,10 +14473,10 @@ struct t_gui_buffer *weechat_buffer = weechat_buffer_search_main ();
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_search_main() -> str: ...
 
-# пример
+# Пример
 buffer = weechat.buffer_search_main()
 ----
 
@@ -14488,10 +14511,10 @@ if (my_buffer)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_clear(buffer: str) -> int: ...
 
-# пример
+# Пример
 buffer = weechat.buffer_search("my_plugin", "my_buffer")
 if buffer:
     weechat.buffer_clear(buffer)
@@ -14527,10 +14550,10 @@ weechat_buffer_close (my_buffer);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_close(buffer: str) -> int: ...
 
-# пример
+# Пример
 buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
 # ...
 weechat.buffer_close(buffer)
@@ -14557,7 +14580,7 @@ C пример:
 
 [source,c]
 ----
-/* merge current buffer with weechat "core" buffer */
+/* Merge current buffer with weechat "core" buffer. */
 weechat_buffer_merge (weechat_current_buffer (),
                       weechat_buffer_search_main ());
 ----
@@ -14566,11 +14589,11 @@ weechat_buffer_merge (weechat_current_buffer (),
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_merge(buffer: str, target_buffer: str) -> int: ...
 
-# пример
-# спаја текући бафер са WeeChat „core” бафером
+# Пример
+# Спаја текући бафер са WeeChat „core” бафером
 weechat.buffer_merge(weechat.current_buffer(), weechat.buffer_search_main())
 ----
 
@@ -14602,10 +14625,10 @@ weechat_buffer_unmerge (weechat_current_buffer (), 1);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_unmerge(buffer: str, number: int) -> int: ...
 
-# пример
+# Пример
 weechat.buffer_unmerge(weechat.current_buffer(), 1)
 ----
 
@@ -14699,10 +14722,10 @@ weechat_printf (NULL, "број мог бафера је: %d",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_get_integer(buffer: str, property: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "број мог бафера је: %d" % weechat.buffer_get_integer(my_buffer, "number"))
 ----
 
@@ -14748,10 +14771,10 @@ weechat_printf (NULL, "my buffer id is: %lld",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_get_longlong(buffer: str, property: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "my buffer id is: %d" % weechat.buffer_get_longlong(my_buffer, "id"))
 ----
 
@@ -14809,10 +14832,10 @@ weechat_printf (NULL, "име / кратко име бафера су: %s / %s",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_get_string(buffer: str, property: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "име / кратко име бафера су: %s / %s"
     % (weechat.buffer_get_string(my_buffer, "name"),
     weechat.buffer_get_string(my_buffer, "short_name")))
@@ -14856,10 +14879,10 @@ weechat_printf (NULL, "показивач на додатак мог бафер�
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_get_pointer(buffer: str, property: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "показивач на додатак мог бафера: %s" % weechat.buffer_get_pointer(my_buffer, "plugin"))
 ----
 
@@ -15064,19 +15087,19 @@ C пример:
 
 [source,c]
 ----
-/* искључивање вруће листе (за све бафере) */
+/* Искључивање вруће листе (за све бафере) */
 weechat_buffer_set (NULL, "hotlist", "-");
 
-/* поновно укључивање вруће листе */
+/* Поновно укључивање вруће листе */
 weechat_buffer_set (NULL, "hotlist", "+");
 
-/* промена имена бафера
+/* Промена имена бафера
 weechat_buffer_set (my_buffer, "name", "my_new_name");
 
-/* додавање нове локалне променљиве „toto” са вредности „abc” */
+/* Додавање нове локалне променљиве „toto” са вредности „abc” */
 weechat_buffer_set (my_buffer, "localvar_set_toto", "abc");
 
-/* уклањање локалне променљиве „toto” */
+/* Уклањање локалне променљиве „toto” */
 weechat_buffer_set (my_buffer, "localvar_del_toto", "");
 ----
 
@@ -15084,24 +15107,24 @@ weechat_buffer_set (my_buffer, "localvar_del_toto", "");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_set(buffer: str, property: str, value: str) -> int: ...
 
-# примери
+# Примери
 
-# искључује врућу листу (за све бафере)
+# Искључује врућу листу (за све бафере)
 weechat.buffer_set("", "hotlist", "-")
 
-# поново укључује врућу листу
+# Поново укључује врућу листу
 weechat.buffer_set("", "hotlist", "+")
 
-# промена имена бафера
+# Промена имена бафера
 weechat.buffer_set(my_buffer, "name", "my_new_name")
 
-# додаје нову локалну променљиву „toto” са вредношћу „abc”
+# Додаје нову локалну променљиву „toto” са вредношћу „abc”
 weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
 
-# уклања локалну променљиву „toto”
+# Уклања локалну променљиву „toto”
 weechat.buffer_set(my_buffer, "localvar_del_toto", "")
 ----
 
@@ -15197,10 +15220,10 @@ char *str = weechat_buffer_string_replace_local_var (my_buffer,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_string_replace_local_var(buffer: str, string: str) -> str: ...
 
-# пример
+# Пример
 weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
 str = weechat.buffer_string_replace_local_var(my_buffer, "тест са $toto")
 # str садржи „тест са abc”
@@ -15252,10 +15275,10 @@ if (buffer)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def buffer_match_list(buffer: str, string: str) -> int: ...
 
-# пример
+# Пример
 buffer = weechat.buffer_search("irc", "libera.#weechat")
 if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
@@ -15306,10 +15329,10 @@ struct t_gui_line *line = weechat_line_search_by_id (buffer, 1786886000000000);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def line_search_by_id(buffer: str, line_id: int) -> str: ...
 
-# пример
+# Пример
 line = weechat.line_search_by_id(buffer, 1786886000000000)
 ----
 
@@ -15344,10 +15367,10 @@ struct t_gui_window *current_window = weechat_current_window ();
 
 [source,python]
 ----
-# прототип
+# Прототип
 def current_window() -> str: ...
 
-# пример
+# Пример
 current_window = weechat.current_window()
 ----
 
@@ -15385,10 +15408,10 @@ weechat_printf (NULL,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def window_search_with_buffer(buffer: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "прозор који приказује core бафер: %s"
     % weechat.window_search_with_buffer(weechat.buffer_search_main()))
 ----
@@ -15441,10 +15464,10 @@ weechat_printf (NULL, "current window is at position (x,y): (%d,%d)",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def window_get_integer(window: str, property: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "текући прозор је на позицији (x,y): (%d,%d)"
     % (weechat.window_get_integer(weechat.current_window(), "win_x"),
     weechat.window_get_integer(weechat.current_window(), "win_y")))
@@ -15478,7 +15501,7 @@ const char *weechat_window_get_string (struct t_gui_window *window,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def window_get_string(window: str, property: str) -> str: ...
 ----
 
@@ -15518,10 +15541,10 @@ weechat_printf (NULL,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def window_get_pointer(window: str, property: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "бафер који се приказује у текућем прозору: %s"
     % weechat.window_get_pointer(weechat.current_window(), "buffer"))
 ----
@@ -15554,10 +15577,10 @@ weechat_window_set_title ("овде иде нови наслов");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def window_set_title(title: str) -> int: ...
 
-# пример
+# Пример
 weechat.window_set_title("овде иде нови наслов")
 ----
 
@@ -15620,10 +15643,10 @@ struct t_gui_nick_group *my_group =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_add_group(buffer: str, parent_group: str, name: str, color: str, visible: int) -> str: ...
 
-# пример
+# Пример
 group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
     "weechat.color.nicklist_group", 1)
 ----
@@ -15668,10 +15691,10 @@ struct t_gui_nick_group *ptr_group2 = weechat_nicklist_search_group (my_buffer,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_search_group(buffer: str, from_group: str, name: str) -> str: ...
 
-# пример
+# Пример
 group1 = weechat.nicklist_search_group(my_buffer, "", "test_group")
 group2 = weechat.nicklist_search_group(my_buffer, "", "==id:1714382231198764")
 ----
@@ -15737,10 +15760,10 @@ struct t_gui_nick *my_nick =
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_add_nick(buffer: str, group: str, name: str, color: str, prefix: str, prefix_color: str, visible: int) -> str: ...
 
-# пример
+# Пример
 if nick_away:
     color = "weechat.color.nicklist_away"
 else:
@@ -15788,10 +15811,10 @@ struct t_gui_nick *ptr_nick2 = weechat_nicklist_search_nick (my_buffer,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_search_nick(buffer: str, from_group: str, name: str) -> str: ...
 
-# пример
+# Пример
 nick1 = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
 nick2 = weechat.nicklist_search_nick(my_buffer, "", "==id:1714382252187496")
 ----
@@ -15824,10 +15847,10 @@ weechat_nicklist_remove_group (my_buffer, my_group);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_remove_group(buffer: str, group: str) -> int: ...
 
-# пример
+# Пример
 weechat.nicklist_remove_group(my_buffer, my_group)
 ----
 
@@ -15859,10 +15882,10 @@ weechat_nicklist_remove_nick (my_buffer, my_nick);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_remove_nick(buffer: str, nick: str) -> int: ...
 
-# пример
+# Пример
 weechat.nicklist_remove_nick(my_buffer, my_nick)
 ----
 
@@ -15892,10 +15915,10 @@ weechat_nicklist_remove_all (my_buffer);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_remove_all(buffer: str) -> int: ...
 
-# пример
+# Пример
 weechat.nicklist_remove_all(my_buffer)
 ----
 
@@ -15934,12 +15957,12 @@ while (ptr_group || ptr_nick)
 {
     if (ptr_nick)
     {
-        /* надимак */
+        /* Надимак */
         /* ... */
     }
     else
     {
-        /* група */
+        /* Група */
         /* ... */
     }
     weechat_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
@@ -15987,10 +16010,10 @@ int visible = weechat_nicklist_group_get_integer (buffer, group, "visible");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_group_get_integer(buffer: str, group: str, property: str) -> int: ...
 
-# пример
+# Пример
 visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
 ----
 
@@ -16033,10 +16056,10 @@ const char *color = weechat_nicklist_group_get_string (buffer, group, "color");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_group_get_string(buffer: str, group: str, property: str) -> str: ...
 
-# пример
+# Пример
 color = weechat.nicklist_group_get_string(buffer, group, "color")
 ----
 
@@ -16077,10 +16100,10 @@ struct t_gui_nick_group *parent = weechat_nicklist_group_get_pointer (buffer, gr
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_group_get_pointer(buffer: str, group: str, property: str) -> str: ...
 
-# пример
+# Пример
 parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
 ----
 
@@ -16128,13 +16151,13 @@ C примери:
 
 [source,c]
 ----
-/* мења боју групе на "bar_fg" */
+/* Мења боју групе на "bar_fg" */
 weechat_nicklist_group_set (buffer, group, "color", "bar_fg");
 
-/* мења боју групе на жуту */
+/* Мења боју групе на жуту */
 weechat_nicklist_group_set (buffer, group, "color", "yellow");
 
-/* скрива групу у листи надимака */
+/* Скрива групу у листи надимака */
 weechat_nicklist_group_set (buffer, group, "visible", "0");
 ----
 
@@ -16142,18 +16165,18 @@ weechat_nicklist_group_set (buffer, group, "visible", "0");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_group_set(buffer: str, group: str, property: str, value: str) -> int: ...
 
-# примери
+# Примери
 
-# мења боју групе на "bar_fg"
+# Мења боју групе на "bar_fg"
 weechat.nicklist_group_set(buffer, group, "color", "bar_fg")
 
-# мења боју групе на жуту
+# Мења боју групе на жуту
 weechat.nicklist_group_set(buffer, group, "color", "yellow")
 
-# скрива групу у листи надимака
+# Скрива групу у листи надимака
 weechat.nicklist_group_set(buffer, group, "visible", "0")
 ----
 
@@ -16194,10 +16217,10 @@ int visible = weechat_nicklist_nick_get_integer (buffer, nick, "visible");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_nick_get_integer(buffer: str, nick: str, property: str) -> int: ...
 
-# пример
+# Пример
 visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
 ----
 
@@ -16242,10 +16265,10 @@ const char *color = weechat_nicklist_nick_get_string (buffer, nick, "color");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_nick_get_string(buffer: str, nick: str, property: str) -> str: ...
 
-# пример
+# Пример
 color = weechat.nicklist_nick_get_string(buffer, nick, "color")
 ----
 
@@ -16286,10 +16309,10 @@ struct t_gui_nick_group *group = weechat_nicklist_nick_get_pointer (buffer, nick
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_nick_get_pointer(buffer: str, nick: str, property: str) -> str: ...
 
-# пример
+# Пример
 group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
 ----
 
@@ -16343,16 +16366,16 @@ C примери:
 
 [source,c]
 ----
-/* мења боју надимка у цијан */
+/* Мења боју надимка у цијан */
 weechat_nicklist_nick_set (buffer, nick, "color", "cyan");
 
-/* мења префикс на „+” */
+/* Мења префикс на „+” */
 weechat_nicklist_nick_set (buffer, nick, "prefix", "+");
 
-/* мења боју префикса у жуту */
+/* Мења боју префикса у жуту */
 weechat_nicklist_nick_set (buffer, nick, "prefix_color", "yellow");
 
-/* скрива надимак у листи надимака */
+/* Скрива надимак у листи надимака */
 weechat_nicklist_nick_set (buffer, nick, "visible", "0");
 ----
 
@@ -16360,21 +16383,21 @@ weechat_nicklist_nick_set (buffer, nick, "visible", "0");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def nicklist_nick_set(buffer: str, nick: str, property: str, value: str) -> int: ...
 
-# примери
+# Примери
 
-# мења боју надимка у цијан
+# Мења боју надимка у цијан
 weechat.nicklist_nick_set(buffer, nick, "color", "cyan")
 
-# мења префикс у „+”
+# Мења префикс у „+”
 weechat.nicklist_nick_set(buffer, nick, "prefix", "+")
 
-# мења боју префикса у жуту
+# Мења боју префикса у жуту
 weechat.nicklist_nick_set(buffer, nick, "prefix_color", "yellow")
 
-# скрива надимак у листи надимака
+# Скрива надимак у листи надимака
 weechat.nicklist_nick_set(buffer, nick, "visible", "0")
 ----
 
@@ -16413,10 +16436,10 @@ struct t_gui_bar_item *bar_item = weechat_bar_item_search ("myitem");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def bar_item_search(name: str) -> str: ...
 
-# пример
+# Пример
 bar_item = weechat.bar_item_search("myitem")
 ----
 
@@ -16486,16 +16509,16 @@ struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def bar_item_new(name: str, build_callback: str, build_callback_data: str) -> str: ...
 
-# пример (функција повратног позива без „buffer” и „extra_info”)
+# Пример (функција повратног позива без „buffer” и „extra_info”)
 def my_build_callback(data: str, item: str, window: str) -> str:
     return "my content"
 
 bar_item = weechat.bar_item_new("myitem", "my_build_callback", "")
 
-# пример (функција повратног позива са свим аргументима, за WeeChat ≥ 0.4.2)
+# Пример (функција повратног позива са свим аргументима, за WeeChat ≥ 0.4.2)
 def my_build_callback2(data: str, item: str, window: str, buffer: str, extra_info: Dict[str, str]) -> str:
     return "my content"
 
@@ -16528,10 +16551,10 @@ weechat_bar_item_update ("myitem");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def bar_item_update(name: str) -> int: ...
 
-# пример
+# Пример
 weechat.bar_item_update("myitem")
 ----
 
@@ -16561,10 +16584,10 @@ weechat_bar_item_remove (&my_item);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def bar_item_remove(item: str) -> int: ...
 
-# пример
+# Пример
 weechat.bar_item_remove(myitem)
 ----
 
@@ -16598,10 +16621,10 @@ struct t_gui_bar *bar = weechat_bar_search ("mybar");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def bar_search(name: str) -> str: ...
 
-# пример
+# Пример
 bar = weechat.bar_search("mybar")
 ----
 
@@ -16692,13 +16715,13 @@ struct t_gui_bar *my_bar = weechat_bar_new (
 
 [source,python]
 ----
-# прототип
+# Прототип
 def bar_new(name: str, hidden: str, priority: str, type: str, condition: str, position: str,
             filling_top_bottom: str, filling_left_right: str, size: str, size_max: str,
             color_fg: str, color_delim: str, color_bg: str, color_bg_inactive: str,
             separator: str, items: str) -> str: ...
 
-# пример
+# Пример
 bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", "vertical",
     "0", "5", "default", "cyan", "blue", "darkgray", "off", "time,buffer_number+buffer_name")
 ----
@@ -16739,10 +16762,10 @@ weechat_bar_set (mybar, "position", "bottom");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def bar_set(bar: str, property: str, value: str) -> int: ...
 
-# пример
+# Пример
 weechat.bar_set(my_bar, "position", "bottom")
 ----
 
@@ -16772,10 +16795,10 @@ weechat_bar_update ("mybar");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def bar_update(name: str) -> int: ...
 
-# пример
+# Пример
 weechat.bar_update("mybar")
 ----
 
@@ -16805,10 +16828,10 @@ weechat_bar_remove (mybar);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def bar_remove(bar: str) -> int: ...
 
-# пример
+# Пример
 weechat.bar_remove(my_bar)
 ----
 
@@ -16857,10 +16880,10 @@ rc = weechat_command (weechat_buffer_search ("irc", "libera.#weechat"),
 
 [source,python]
 ----
-# прототип
+# Прототип
 def command(buffer: str, command: str) -> int: ...
 
-# пример
+# Пример
 rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois FlashCode")
 ----
 
@@ -16899,7 +16922,7 @@ C пример:
 
 [source,c]
 ----
-/* дозвољава се било која команда одим /exec, команда се извршава у року од 2 секунде */
+/* Дозвољава се било која команда одим /exec, команда се извршава у року од 2 секунде */
 int rc;
 struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
@@ -16915,10 +16938,10 @@ rc = weechat_command_options (NULL, "/some_command arguments", options);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
-# пример: дозвољава се било која команда осим /exec
+# Пример: дозвољава се било која команда осим /exec
 rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec", "delay": "2000"})
 ----
 
@@ -16959,10 +16982,10 @@ struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_sea
 
 [source,python]
 ----
-# прототип
+# Прототип
 def completion_new(buffer: str) -> str: ...
 
-# пример
+# Пример
 completion = weechat.completion_new(weechat.buffer_search_main())
 ----
 
@@ -17006,10 +17029,10 @@ if (weechat_completion_search (completion, "/help filt", 10, 1))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def completion_search(completion: str, data: str, position: int, direction: int) -> int: ...
 
-# пример
+# Пример
 completion = weechat.completion_new(weechat.buffer_search_main())
 if weechat.completion_search(completion, "/help filt", 10, 1):
     # ...
@@ -17046,10 +17069,10 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
-    /* добијање аргумената команде */
+    /* Добијање аргумената команде */
     const char *args = weechat_completion_get_string (completion, "args");
 
-    /* довршавање које зависи од args */
+    /* Довршавање које зависи од args */
     /* ... */
 
     return WEECHAT_RC_OK;
@@ -17060,14 +17083,14 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def completion_get_string(completion: str, property: str) -> str: ...
 
-# пример
+# Пример
 def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
-    # добавља аргументе команде
+    # Добавља аргументе команде
     args = weechat.completion_get_string(completion, "args")
-    # довршавање у зависности од args
+    # Довршавање у зависности од args
     # ...
     return weechat.WEECHAT_RC_OK
 ----
@@ -17113,7 +17136,7 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
-    /* не додај размак након довршавања */
+    /* Не додај размак након довршавања */
     weechat_completion_set (completion, "add_space", "0");
 
     /* ... */
@@ -17126,12 +17149,12 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def completion_set(completion: str, property: str, value: str) -> int: ...
 
-# пример
+# Пример
 def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
-    # не додај размак након довршавања
+    # Не додај размак након довршавања
     weechat.completion_set(completion, "add_space", "0")
     # ...
     return weechat.WEECHAT_RC_OK
@@ -17169,10 +17192,10 @@ C пример: погледајте <<_hook_completion,hook_completion>>.
 
 [source,python]
 ----
-# прототип
+# Прототип
 def completion_list_add(completion: str, word: str, nick_completion: int, where: str) -> int: ...
 
-# пример: погледајте функцију hook_completion
+# Пример: погледајте функцију hook_completion
 ----
 
 ==== completion_free
@@ -17203,10 +17226,10 @@ weechat_completion_free (completion);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def completion_free(completion: str) -> int: ...
 
-# пример
+# Пример
 weechat.completion_free(completion)
 ----
 
@@ -17253,7 +17276,7 @@ if (weechat_network_pass_proxy ("my_proxy", sock, "irc.libera.chat", 6667))
 }
 else
 {
-    /* грешка */
+    /* Грешка */
 }
 ----
 
@@ -17296,7 +17319,7 @@ struct sockaddr *addr;
 socklen_t length;
 int sock;
 
-/* алоцирање/постављање адресе и порта у _addr_, постављање _length_ */
+/* Алоцирање/постављање адресе и порта у _addr_, постављање _length_ */
 /* ... */
 
 sock = weechat_network_connect_to (NULL, addr, length);
@@ -17306,7 +17329,7 @@ if (sock >= 0)
 }
 else
 {
-    /* грешка */
+    /* Грешка */
 }
 ----
 
@@ -17370,10 +17393,10 @@ if (weechat_config_dir)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def info_get(info_name: str, arguments: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "Текућа WeeChat везија је: %s (компајлирана %s)"
     % (weechat.info_get("version", ""), weechat.info_get("date", ""))
 weechat.prnt("", "WeeChat конфиг директоријум је: %s" % weechat.info_get("weechat_config_dir", ""))
@@ -17427,7 +17450,7 @@ if (hashtable_in)
     hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                 hashtable_in);
     /*
-     * сада hashtable_out има следеће кључеве/вредности:
+     * Сада hashtable_out има следеће кључеве/вредности:
      *   "tags"                : "time=2015-06-27T16:40:35.000Z;tag2=value\\sspace"
      *   "tag_time"            : "2015-06-27T16:40:35.000Z"
      *   "tag_tag2"            : "value space"
@@ -17459,10 +17482,10 @@ if (hashtable_in)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def info_get_hashtable(info_name: str, dict_in: Dict[str, str]) -> Dict[str, str]: ...
 
-# пример
+# Пример
 dict_in = {"message": ":nick!user@host PRIVMSG #weechat :message here"}
 weechat.prnt("", "message parsed: %s"
              % weechat.info_get_hashtable("irc_message_parse", dict_in))
@@ -17509,10 +17532,10 @@ struct t_infolist *infolist = weechat_infolist_new ();
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_new() -> str: ...
 
-# пример
+# Пример
 infolist = weechat.infolist_new()
 ----
 
@@ -17546,10 +17569,10 @@ struct t_infolist_item *item = weechat_infolist_new_item (infolist);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_new_item(infolist: str) -> str: ...
 
-# пример
+# Пример
 item = weechat.infolist_new_item(infolist)
 ----
 
@@ -17589,10 +17612,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_integer (item,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_new_var_integer(item: str, name: str, value: int) -> str: ...
 
-# пример
+# Пример
 var = weechat.infolist_new_var_integer(item, "my_integer", 123)
 ----
 
@@ -17632,10 +17655,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_string (item,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_new_var_string(item: str, name: str, value: str) -> str: ...
 
-# пример
+# Пример
 var = weechat.infolist_new_var_string(item, "my_string", "value")
 ----
 
@@ -17675,10 +17698,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_pointer (item,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_new_var_pointer(item: str, name: str, pointer: str) -> str: ...
 
-# пример
+# Пример
 var = weechat.infolist_new_var_pointer(item, "my_pointer", pointer)
 ----
 
@@ -17758,10 +17781,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_time (item,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_new_var_time(item: str, name: str, time: int) -> str: ...
 
-# пример
+# Пример
 var = weechat.infolist_new_var_time(item, "my_time", int(time.time()))
 ----
 
@@ -17805,10 +17828,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_long (item,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_new_var_long(item: str, name: str, value: int) -> str: ...
 
-# пример
+# Пример
 var = weechat.infolist_new_var_long(item, "my_long", 2123456789)
 ----
 
@@ -17852,10 +17875,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_longlong (item,
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_new_var_longlong(item: str, name: str, value: int) -> str: ...
 
-# пример
+# Пример
 var = weechat.infolist_new_var_longlong(item, "my_longlong", 9123456789123456789)
 ----
 
@@ -17901,10 +17924,10 @@ struct t_infolist *infolist = weechat_infolist_get ("irc_server", NULL, NULL);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_get(infolist_name: str, pointer: str, arguments: str) -> str: ...
 
-# пример
+# Пример
 infolist = weechat.infolist_get("irc_server", "", "")
 ----
 
@@ -17933,11 +17956,11 @@ C пример:
 ----
 if (weechat_infolist_next (infolist))
 {
-    /* читање променљивих из ставке... */
+    /* Читање променљивих из ставке... */
 }
 else
 {
-    /* нема више ниједне ставке */
+    /* Нема више ниједне ставке */
 }
 ----
 
@@ -17945,15 +17968,15 @@ else
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_next(infolist: str) -> int: ...
 
-# пример
+# Пример
 rc = weechat.infolist_next(infolist)
 if rc:
-    # читање променљивих из ставке...
+    # Читање променљивих из ставке...
 else:
-    # нема више ниједне ставке
+    # Нема више ниједне ставке
 ----
 
 ==== infolist_prev
@@ -17981,11 +18004,11 @@ C пример:
 ----
 if (weechat_infolist_prev (infolist))
 {
-    /* читање променљивих у ставки... */
+    /* Читање променљивих у ставки... */
 }
 else
 {
-    /* нема више ниједне ставке */
+    /* Нема више ниједне ставке */
 }
 ----
 
@@ -17993,15 +18016,15 @@ else
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_prev(infolist: str) -> int: ...
 
-# пример
+# Пример
 rc = weechat.infolist_prev(infolist)
 if rc:
-    # читање променљивих из ставке...
+    # Читање променљивих из ставке...
 else:
-    # нема више ниједне ставке
+    # Нема више ниједне ставке
 ----
 
 ==== infolist_reset_item_cursor
@@ -18030,10 +18053,10 @@ weechat_infolist_reset_item_cursor (infolist);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_reset_item_cursor(infolist: str) -> int: ...
 
-# пример
+# Пример
 weechat.infolist_reset_item_cursor(infolist)
 ----
 
@@ -18066,7 +18089,7 @@ C пример:
 ----
 if (weechat_infolist_search_var (infolist, "name"))
 {
-    /* променљива „name” постоји */
+    /* Променљива „name” постоји */
     /* ... */
 }
 ----
@@ -18075,12 +18098,12 @@ if (weechat_infolist_search_var (infolist, "name"))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_search_var(infolist: str, name: str) -> str: ...
 
-# пример
+# Пример
 if weechat.infolist_search_var(infolist, "name"):
-    # променљива „name” постоји
+    # Променљива „name” постоји
     # ...
 ----
 
@@ -18108,20 +18131,22 @@ C пример:
 [source,c]
 ----
 const char *fields = weechat_infolist_fields (infolist);
-/* поља садрже нешто слично овоме:
-   „i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time” */
+/*
+ * Поља садрже нешто слично овоме:
+ * „i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time”
+ */
 ----
 
 Скрипта (Python):
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_fields(infolist: str) -> str: ...
 
-# пример
+# Пример
 fields = weechat.infolist_fields(infolist)
-# поља садрже нешто слично овоме:
+# Поља садрже нешто слично овоме:
 # „i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time”
 ----
 
@@ -18157,10 +18182,10 @@ weechat_printf (NULL, "integer = %d",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_integer(infolist: str, var: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "integer = %d" % weechat.infolist_integer(infolist, "my_integer"))
 ----
 
@@ -18196,10 +18221,10 @@ weechat_printf (NULL, "string = %s",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_string(infolist: str, var: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "string = %s" % weechat.infolist_string(infolist, "my_string"))
 ----
 
@@ -18234,10 +18259,10 @@ weechat_printf (NULL, "pointer = %p", weechat_infolist_pointer (infolist, "my_po
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_pointer(infolist: str, var: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "pointer = 0x%s" % weechat.infolist_pointer(infolist, "my_pointer"))
 ----
 
@@ -18307,10 +18332,10 @@ weechat_printf (NULL, "time = %ld",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_time(infolist: str, var: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "time = %d" % weechat.infolist_time(infolist, "my_time"))
 ----
 
@@ -18350,10 +18375,10 @@ weechat_printf (NULL, "value = %ld",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_long(infolist: str, var: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "value = %d" % weechat.infolist_long(infolist, "my_long"))
 ----
 
@@ -18392,10 +18417,10 @@ weechat_printf (NULL, "value = %lld",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_longlong(infolist: str, var: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "value = %d" % weechat.infolist_longlong(infolist, "my_longlong"))
 ----
 
@@ -18425,10 +18450,10 @@ weechat_infolist_free (infolist);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def infolist_free(infolist: str) -> int: ...
 
-# пример
+# Пример
 weechat.infolist_free(infolist)
 ----
 
@@ -18710,10 +18735,10 @@ struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_get(hdata_name: str) -> str: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("irc_server")
 ----
 
@@ -18750,10 +18775,10 @@ int offset = weechat_hdata_get_var_offset (hdata, "name");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_get_var_offset(hdata: str, name: str) -> int: ...
 
-# пример
+# Пример
 offset = weechat.hdata_get_var_offset(hdata, "name")
 ----
 
@@ -18817,7 +18842,7 @@ switch (type)
         /* ... */
         break;
     default:
-        /* променљива није пронађена */
+        /* Променљива није пронађена */
         break;
 }
 ----
@@ -18858,10 +18883,10 @@ weechat_printf (NULL, "type = %s", weechat_hdata_get_var_type_string (hdata, "na
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_get_var_type_string(hdata: str, name: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string("name"))
 ----
 
@@ -18899,10 +18924,10 @@ int array_size = weechat_hdata_get_var_array_size (hdata, pointer, "name");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_get_var_array_size(hdata: str, pointer: str, name: str) -> int: ...
 
-# пример
+# Пример
 array_size = weechat.hdata_get_var_array_size(hdata, pointer, "name")
 ----
 
@@ -18941,10 +18966,10 @@ const char *array_size = weechat_hdata_get_var_array_size_string (hdata, pointer
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_get_var_array_size_string(hdata: str, pointer: str, name: str) -> str: ...
 
-# пример
+# Пример
 array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, "name")
 ----
 
@@ -18981,10 +19006,10 @@ weechat_printf (NULL, "hdata = %s", weechat_hdata_get_var_hdata (hdata, "name"))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_get_var_hdata(hdata: str, name: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
 ----
 
@@ -19093,10 +19118,10 @@ struct t_gui_buffer *buffers = weechat_hdata_get_list (hdata, "gui_buffers");
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_get_list(hdata: str, name: str) -> str: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("buffer")
 buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 ----
@@ -19128,17 +19153,17 @@ C пример:
 
 [source,c]
 ----
-/* check if a buffer pointer is valid */
+/* Check if a buffer pointer is valid. */
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 if (weechat_hdata_check_pointer (hdata,
                                  weechat_hdata_get_list (hdata, "gui_buffers"),
                                  ptr_buffer))
 {
-    /* важећи показивач */
+    /* Важећи показивач */
 }
 else
 {
-    /* неважећи показивач */
+    /* Неважећи показивач */
 }
 ----
 
@@ -19146,16 +19171,16 @@ else
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_check_pointer(hdata: str, list: str, pointer: str) -> int: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("buffer")
 if weechat.hdata_check_pointer(hdata, weechat.hdata_get_list(hdata, "gui_buffers"), ptr_buffer):
-    # важећи показивач
+    # Важећи показивач
     # ...
 else:
-    # неважећи показивач
+    # Неважећи показивач
     # ...
 ----
 
@@ -19189,10 +19214,10 @@ C пример:
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
 
-/* помера се на наредни бафер, 2 пута */
+/* Помера се на наредни бафер, 2 пута */
 buffer = weechat_hdata_move (hdata, buffer, 2);
 
-/* помера се на претходни бафер */
+/* Помера се на претходни бафер */
 if (buffer)
     buffer = weechat_hdata_move (hdata, buffer, -1);
 ----
@@ -19201,17 +19226,17 @@ if (buffer)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_move(hdata: str, pointer: str, count: int) -> str: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 
-# помера се на наредни бафер, 2 пута
+# Помера се на наредни бафер, 2 пута
 buffer = weechat.hdata_move(hdata, buffer, 2)
 
-# помера се на претходни бафер
+# Помера се на претходни бафер
 if buffer:
     buffer = weechat.hdata_move(hdata, buffer, -1)
 ----
@@ -19262,7 +19287,7 @@ struct t_hashtable *extra_vars = weechat_hashtable_new (8,
                                                         NULL,
                                                         NULL);
 
-/* тражи irc сервер под именом „libera” */
+/* Тражи irc сервер под именом „libera” */
 weechat_hashtable_set (extra_vars, "server_name", "libera");
 void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == ${server_name}",
                                      NULL, extra_vars, NULL, 1);
@@ -19277,16 +19302,16 @@ weechat_hashtable_free (extra_vars);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_search(hdata: str, pointer: str, search: str,
                  pointers: Dict[str, str], extra_vars: Dict[str, str], options: Dict[str, str],
                  count: int) -> str: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("irc_server")
 servers = weechat.hdata_get_list(hdata, "irc_servers")
 
-# тражи irc сервер под именом „libera”
+# Тражи irc сервер под именом „libera”
 server = weechat.hdata_search(hdata, servers, "${irc_server.name} == ${server_name}",
                               {}, {"server_name": "libera"}, {}, 1)
 if server:
@@ -19327,10 +19352,10 @@ weechat_printf (NULL, "letter = %c", weechat_hdata_char (hdata, pointer, "letter
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_char(hdata: str, pointer: str, name: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
 ----
 
@@ -19370,10 +19395,10 @@ weechat_printf (NULL, "number = %d", weechat_hdata_integer (hdata, buffer, "numb
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_integer(hdata: str, pointer: str, name: str) -> int: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
@@ -19413,10 +19438,10 @@ weechat_printf (NULL, "longvar = %ld", weechat_hdata_long (hdata, pointer, "long
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_long(hdata: str, pointer: str, name: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "longvar = %d" % weechat.hdata_long(hdata, pointer, "longvar"))
 ----
 
@@ -19454,10 +19479,10 @@ weechat_printf (NULL, "longlongvar = %lld", weechat_hdata_longlong (hdata, point
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_longlong(hdata: str, pointer: str, name: str) -> int: ...
 
-# пример
+# Пример
 weechat.prnt("", "longlongvar = %d" % weechat.hdata_longlong(hdata, pointer, "longlongvar"))
 ----
 
@@ -19497,10 +19522,10 @@ weechat_printf (NULL, "name = %s", weechat_hdata_string (hdata, buffer, "name"))
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_string(hdata: str, pointer: str, name: str) -> str: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 weechat.prnt("", "name = %s" % weechat.hdata_string(hdata, buffer, "name"))
@@ -19542,10 +19567,10 @@ weechat_printf (NULL, "lines = %p", weechat_hdata_pointer (hdata, buffer, "lines
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_pointer(hdata: str, pointer: str, name: str) -> str: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 weechat.prnt("", "lines = %x" % weechat.hdata_pointer(hdata, buffer, "lines"))
@@ -19603,10 +19628,10 @@ if (ptr)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_time(hdata: str, pointer: str, name: str) -> int: ...
 
-# пример
+# Пример
 buf = weechat.buffer_search_main()
 ptr = weechat.hdata_pointer(weechat.hdata_get("buffer"), buf, "lines")
 if ptr:
@@ -19656,10 +19681,10 @@ weechat_printf (NULL, "%d local variables in core buffer",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_hashtable(hdata: str, pointer: str, name: str) -> Dict[str, str]: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 hash = weechat.hdata_hashtable(hdata, buffer, "local_variables")
@@ -19715,10 +19740,10 @@ weechat_printf (NULL, "comparison of local variable = %d",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sensitive: int) -> int: ...
 
-# пример
+# Пример
 hdata = weechat.hdata_get("buffer")
 buffer1 = weechat.buffer_search("irc", "libera.#weechat")
 buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
@@ -19795,7 +19820,7 @@ C пример:
 
 [source,c]
 ----
-/* одузима један сад од последње приказане поруке у текућем баферу */
+/* Одузима један сад од последње приказане поруке у текућем баферу */
 
 struct t_gui_lines *own_lines;
 struct t_gui_line *line;
@@ -19832,10 +19857,10 @@ if (own_lines)
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_update(hdata: str, pointer: str, hashtable: Dict[str, str]) -> int: ...
 
-# пример: одузима један сад од последње приказане поруке у текућем баферу
+# Пример: одузима један сад од последње приказане поруке у текућем баферу
 own_lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), weechat.current_buffer(), "own_lines")
 if own_lines:
     line = weechat.hdata_pointer(weechat.hdata_get("lines"), own_lines, "last_line")
@@ -19887,10 +19912,10 @@ weechat_printf (NULL, "листе у hdata: %s", weechat_hdata_get_string (hdata
 
 [source,python]
 ----
-# прототип
+# Прототип
 def hdata_get_string(hdata: str, property: str) -> str: ...
 
-# пример
+# Пример
 weechat.prnt("", "променљиве у hdata: %s" % weechat.hdata_get_string(hdata, "var_keys"))
 weechat.prnt("", "листе у hdata: %s" % weechat.hdata_get_string(hdata, "list_keys"))
 ----
@@ -19951,10 +19976,10 @@ struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file",
 
 [source,python]
 ----
-# прототип
+# Прототип
 def upgrade_new(filename: str, callback_read: str, callback_read_data: str) -> str: ...
 
-# пример
+# Пример
 upgrade_file = weechat.upgrade_new("my_file", "", "")
 ----
 
@@ -19991,7 +20016,7 @@ if (weechat_upgrade_write_object (upgrade_file, 1, &infolist))
 }
 else
 {
-    /* грешка */
+    /* Грешка */
 }
 ----
 
@@ -19999,10 +20024,10 @@ else
 
 [source,python]
 ----
-# прототип
+# Прототип
 def upgrade_write_object(upgrade_file: str, object_id: int, infolist: str) -> int: ...
 
-# пример
+# Пример
 weechat.upgrade_write_object(upgrade_file, 1, infolist)
 ----
 
@@ -20038,10 +20063,10 @@ weechat_upgrade_read (upgrade_file);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def upgrade_read(upgrade_file: str) -> int: ...
 
-# пример
+# Пример
 weechat.upgrade_read(upgrade_file)
 ----
 
@@ -20071,9 +20096,9 @@ weechat_upgrade_close (upgrade_file);
 
 [source,python]
 ----
-# прототип
+# Прототип
 def upgrade_close(upgrade_file: str) -> int: ...
 
-# пример
+# Пример
 weechat.upgrade_close(upgrade_file)
 ----

@@ -94,7 +94,7 @@ enum t_xfer_hash_status
 #define XFER_BLOCKSIZE_MIN    1024     /* min block size                    */
 #define XFER_BLOCKSIZE_MAX  102400     /* max block size                    */
 
-/* separator in filenames */
+/* Separator in filenames */
 
 #ifdef _WIN32
     #define DIR_SEPARATOR       "\\"
@@ -104,7 +104,7 @@ enum t_xfer_hash_status
     #define DIR_SEPARATOR_CHAR  '/'
 #endif /* _WIN32 */
 
-/* macros for type/status */
+/* Macros for type/status */
 
 #define XFER_IS_FILE(type) ((type == XFER_TYPE_FILE_RECV_ACTIVE) ||  \
                             (type == XFER_TYPE_FILE_RECV_PASSIVE) || \

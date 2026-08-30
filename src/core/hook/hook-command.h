@@ -13,10 +13,10 @@ struct t_gui_buffer;
 
 #define HOOK_COMMAND(hook, var) (((struct t_hook_command *)hook->hook_data)->var)
 
-/* max calls that can be done for a command (recursive calls) */
+/* Max calls that can be done for a command (recursive calls) */
 #define HOOK_COMMAND_MAX_CALLS  5
 
-/* return code when a command is executed */
+/* Return code when a command is executed */
 #define HOOK_COMMAND_EXEC_OK                    1
 #define HOOK_COMMAND_EXEC_ERROR                 0
 #define HOOK_COMMAND_EXEC_NOT_FOUND            -1
@@ -24,7 +24,7 @@ struct t_gui_buffer;
 #define HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE -3
 #define HOOK_COMMAND_EXEC_RUNNING              -4
 
-/* same command found with a different case */
+/* Same command found with a different case */
 #define HOOK_COMMAND_SIMILAR_DIFF_CASE_ONLY -99
 
 typedef int (t_hook_callback_command)(const void *pointer, void *data,

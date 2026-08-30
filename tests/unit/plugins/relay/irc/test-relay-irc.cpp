@@ -176,7 +176,7 @@ TEST_GROUP(RelayIrcWithClient)
                                             const char *modifier_data,
                                             const char *string)
     {
-        /* make C++ compiler happy */
+        /* Make C++ compiler happy. */
         (void) data;
         (void) modifier;
         (void) modifier_data;
@@ -192,7 +192,7 @@ TEST_GROUP(RelayIrcWithClient)
                                          const char *type_data,
                                          void *signal_data)
     {
-        /* make C++ compiler happy */
+        /* Make C++ compiler happy. */
         (void) data;
         (void) signal;
         (void) type_data;
@@ -209,7 +209,7 @@ TEST_GROUP(RelayIrcWithClient)
     static int sent_msg_cmp_cb (void *data, struct t_arraylist *arraylist,
                                 void *pointer1, void *pointer2)
     {
-        /* make C++ compiler happy */
+        /* Make C++ compiler happy. */
         (void) data;
         (void) arraylist;
 
@@ -219,7 +219,7 @@ TEST_GROUP(RelayIrcWithClient)
     static void sent_msg_free_cb (void *data, struct t_arraylist *arraylist,
                                   void *pointer)
     {
-        /* make C++ compiler happy */
+        /* Make C++ compiler happy. */
         (void) data;
         (void) arraylist;
 
@@ -242,7 +242,7 @@ TEST_GROUP(RelayIrcWithClient)
 
     void setup ()
     {
-        /* initialize list of messages sent to the relay client */
+        /* Initialize list of messages sent to the relay client. */
         if (sent_messages_client)
         {
             arraylist_clear (sent_messages_client);
@@ -254,7 +254,7 @@ TEST_GROUP(RelayIrcWithClient)
                                                   &sent_msg_free_cb, NULL);
         }
 
-        /* initialize list of messages sent to the IRC server */
+        /* Initialize list of messages sent to the IRC server. */
         if (sent_messages_irc)
         {
             arraylist_clear (sent_messages_irc);
@@ -266,10 +266,10 @@ TEST_GROUP(RelayIrcWithClient)
                                                &sent_msg_free_cb, NULL);
         }
 
-        /* disable auto-open of relay buffer */
+        /* Disable auto-open of relay buffer. */
         config_file_option_set (relay_config_look_auto_open_buffer, "off", 1);
 
-        /* set relay password */
+        /* Set relay password. */
         config_file_option_set (relay_config_network_password, "secret", 1);
 
         if (!hook_modifier_relay_irc_out)
@@ -288,22 +288,22 @@ TEST_GROUP(RelayIrcWithClient)
                 &signal_irc_input_send_cb, sent_messages_irc, NULL);
         }
 
-        /* create a fake server (no I/O) */
+        /* Create a fake server (no I/O). */
         run_cmd_quiet ("/mute /server add test fake:127.0.0.1 "
                        "-nicks=nick1,nick2,nick3");
 
-        /* get the server pointer */
+        /* Get the server pointer. */
         ptr_server = irc_server_search ("test");
 
-        /* connect to the fake server */
+        /* Connect to the fake server. */
         run_cmd_quiet ("/connect test");
 
-        /* simulate connection OK to server */
+        /* Simulate connection OK to server. */
         run_cmd_quiet ("/command -buffer irc.server.test irc "
                        "/server fakerecv "
                        "\":server 001 alice :Welcome on this server, nick1!\"");
 
-        /* create a relay server */
+        /* Create a relay server. */
         ptr_relay_server = relay_server_new (
             "irc.test",
             RELAY_PROTOCOL_IRC,
@@ -315,7 +315,7 @@ TEST_GROUP(RelayIrcWithClient)
             0,  /* tls */
             0);  /* unix_socket */
 
-        /* create a fake relay client (no I/O) */
+        /* Create a fake relay client (no I/O). */
         ptr_relay_client = relay_client_new (-1, "test", ptr_relay_server);
     }
 
@@ -327,15 +327,15 @@ TEST_GROUP(RelayIrcWithClient)
         relay_server_free (ptr_relay_server);
         ptr_relay_server = NULL;
 
-        /* disconnect and delete the fake server */
+        /* Disconnect and delete the fake server. */
         run_cmd_quiet ("/mute /disconnect test");
         run_cmd_quiet ("/mute /server del test");
         ptr_server = NULL;
 
-        /* restore auto-open of relay buffer */
+        /* Restore auto-open of relay buffer. */
         config_file_option_reset (relay_config_look_auto_open_buffer, 1);
 
-        /* restore relay password */
+        /* Restore relay password. */
         config_file_option_reset (relay_config_network_password, 1);
     }
 };
@@ -709,7 +709,7 @@ TEST(RelayIrc, RelayGetListCaps)
     size = arraylist_size (list_caps);
     LONGS_EQUAL(RELAY_IRC_NUM_CAPAB, size);
 
-    /* check that it's properly sorted */
+    /* Check that it's properly sorted. */
     for (i = 1; i < size; i++)
     {
         CHECK(strcmp ((const char *)arraylist_get (list_caps, i - 1),
@@ -732,16 +732,16 @@ TEST(RelayIrcWithClient, RecvCommandCapab)
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
-    /* not enough parameters */
+    /* Not enough parameters */
     CLIENT_RECV(":alice!user@host CAP");
 
-    /* list supported capabilities */
+    /* List supported capabilities. */
     CLIENT_RECV(":alice!user@host CAP LS");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick LS :server-time");
     LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
-    /* enable "echo-message" in IRC server and list supported capabilities */
+    /* Enable "echo-message" in IRC server and list supported capabilities. */
     hashtable_set (ptr_server->cap_list, "echo-message", NULL);
     CLIENT_RECV(":alice!user@host CAP LS");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick LS :echo-message server-time");
@@ -749,13 +749,13 @@ TEST(RelayIrcWithClient, RecvCommandCapab)
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
     hashtable_remove (ptr_server->cap_list, "echo-message");
 
-    /* request unknown capability: reject */
+    /* Request unknown capability: reject. */
     CLIENT_RECV(":alice!user@host CAP REQ unknown");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick NAK :unknown");
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
-    /* request 1 supported capability: accept */
+    /* Request 1 supported capability: accept. */
     CLIENT_RECV(":alice!user@host CAP REQ server-time");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick ACK :server-time");
     CHECK(RELAY_IRC_DATA(ptr_relay_client, server_capabilities)
@@ -763,7 +763,7 @@ TEST(RelayIrcWithClient, RecvCommandCapab)
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
     RELAY_IRC_DATA(ptr_relay_client, server_capabilities) = 0;
 
-    /* request 2 supported capabilities: accept */
+    /* Request 2 supported capabilities: accept. */
     hashtable_set (ptr_server->cap_list, "echo-message", NULL);
     CLIENT_RECV(":alice!user@host CAP REQ :server-time echo-message");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick ACK :server-time echo-message");
@@ -774,20 +774,20 @@ TEST(RelayIrcWithClient, RecvCommandCapab)
     RELAY_IRC_DATA(ptr_relay_client, server_capabilities) = 0;
     hashtable_remove (ptr_server->cap_list, "echo-message");
 
-    /* request unknown + supported capabilities: reject both */
+    /* Request unknown + supported capabilities: reject both. */
     CLIENT_RECV(":alice!user@host CAP REQ :server-time unknown");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick NAK :server-time unknown");
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
-    /* request with empty list: end of capability negotiation */
+    /* Request with empty list: end of capability negotiation. */
     CLIENT_RECV(":alice!user@host CAP REQ :");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick NAK :");
     LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
     RELAY_IRC_DATA(ptr_relay_client, cap_end_received) = 0;
 
-    /* end capability negotiation */
+    /* End capability negotiation. */
     CLIENT_RECV(":alice!user@host CAP END");
     LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 }

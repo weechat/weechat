@@ -46,17 +46,17 @@ daemonize (void)
 
     if (pid > 0)
     {
-        /* parent process */
+        /* Parent process */
         printf ("%s\n", _("OK"));
         exit (EXIT_SUCCESS);
     }
 
-    /* child process */
+    /* Child process */
 
-    /* obtain a new process group */
+    /* Obtain a new process group. */
     setsid ();
 
-    /* close all file descriptors */
+    /* Close all file descriptors. */
     for (i = sysconf (_SC_OPEN_MAX); i >= 0; --i)
     {
         close (i);
@@ -82,14 +82,14 @@ main (int argc, char *argv[])
      * Enable a special "headless" mode, where some things are slightly
      * different, for example:
      * - no read of stdin (keyboard/mouse)
-     * - don't catch any terminal related signal
+     * - don't catch any terminal related signal.
      */
     weechat_headless = 1;
 
     /*
      * Parse extra options for headless mode:
      * - "--daemon": daemonize the process
-     * - "--stdout": log messages to stdout (instead of log file)
+     * - "--stdout": log messages to stdout (instead of log file).
      */
     weechat_daemon = 0;
     for (i = 1; i < argc; i++)
@@ -109,7 +109,7 @@ main (int argc, char *argv[])
         daemonize ();
     }
 
-    /* init, main loop and end */
+    /* Initialize, run main loop and terminate. */
     weechat_init (argc, argv, &gui_main_init);
     gui_main_loop ();
     weechat_end (&gui_main_end);

@@ -71,7 +71,7 @@ TEST(IrcSasl, MechanismScram)
 
     server = irc_server_alloc ("my_ircd");
 
-    /* decoded returned value is like: n,,n=user,r=rOprNGfwEbeRWgbNEkqO */
+    /* Decoded returned value is like: "n,,n=user,r=rOprNGfwEbeRWgbNEkqO". */
     error = NULL;
     str = irc_sasl_mechanism_scram (server, "sha256", "+",
                                     "user1", "secret", &error);
@@ -99,7 +99,7 @@ TEST(IrcSasl, GetKeyContent)
     char *path, *content, *error, str_error[4096];
     FILE *file;
 
-    /* no key: no content and no error */
+    /* No key: no content and no error */
     error = NULL;
     POINTERS_EQUAL(NULL, irc_sasl_get_key_content (NULL, &error));
     STRCMP_EQUAL(NULL, error);
@@ -112,16 +112,16 @@ TEST(IrcSasl, GetKeyContent)
     snprintf (str_error, sizeof (str_error),
               "unable to read private key in file \"%s\"", path);
 
-    /* missing file: the error mentions the evaluated path */
+    /* Missing file: the error mentions the evaluated path. */
     error = NULL;
     POINTERS_EQUAL(NULL, irc_sasl_get_key_content (sasl_key, &error));
     STRCMP_EQUAL(str_error, error);
     free (error);
 
-    /* no crash if sasl_error is NULL */
+    /* No crash if sasl_error is NULL. */
     POINTERS_EQUAL(NULL, irc_sasl_get_key_content (sasl_key, NULL));
 
-    /* empty file: read as an error */
+    /* Empty file: read as an error. */
     file = fopen (path, "w");
     CHECK(file);
     fclose (file);
@@ -130,7 +130,7 @@ TEST(IrcSasl, GetKeyContent)
     STRCMP_EQUAL(str_error, error);
     free (error);
 
-    /* existing file: content is returned and no error is set */
+    /* Existing file: content is returned and no error is set. */
     file = fopen (path, "w");
     CHECK(file);
     fwrite (key, 1, strlen (key), file);
@@ -141,7 +141,7 @@ TEST(IrcSasl, GetKeyContent)
     STRCMP_EQUAL(key, content);
     free (content);
 
-    /* same file, reached with the deprecated "%h" prefix */
+    /* Same file, reached with the deprecated "%h" prefix. */
     error = NULL;
     content = irc_sasl_get_key_content ("%h/test_sasl_key.pem", &error);
     STRCMP_EQUAL(NULL, error);
@@ -164,7 +164,7 @@ TEST(IrcSasl, MechanismEcdsaNist256pChallenge)
 
     server = irc_server_alloc ("test_ecdsa");
 
-    /* first answer: "alice\0alice" */
+    /* First answer: "alice\0alice" */
     error = NULL;
     str = irc_sasl_mechanism_ecdsa_nist256p_challenge (
         server, "+", "alice", "/does/not/exist.pem", &error);
@@ -172,7 +172,7 @@ TEST(IrcSasl, MechanismEcdsaNist256pChallenge)
     STRCMP_EQUAL("YWxpY2UAYWxpY2U=", str);
     free (str);
 
-    /* empty challenge */
+    /* Empty challenge */
     error = NULL;
     str = irc_sasl_mechanism_ecdsa_nist256p_challenge (
         server, "", "alice", "/does/not/exist.pem", &error);
@@ -180,7 +180,7 @@ TEST(IrcSasl, MechanismEcdsaNist256pChallenge)
     STRCMP_EQUAL("base64 decode error", error);
     free (error);
 
-    /* challenge with an invalid base64 char */
+    /* Challenge with an invalid base64 char */
     error = NULL;
     str = irc_sasl_mechanism_ecdsa_nist256p_challenge (
         server, "abcd!efgh", "alice", "/does/not/exist.pem", &error);
@@ -188,7 +188,7 @@ TEST(IrcSasl, MechanismEcdsaNist256pChallenge)
     STRCMP_EQUAL("base64 decode error", error);
     free (error);
 
-    /* challenge with a truncated group of base64 chars */
+    /* Challenge with a truncated group of base64 chars */
     error = NULL;
     str = irc_sasl_mechanism_ecdsa_nist256p_challenge (
         server, "abcde", "alice", "/does/not/exist.pem", &error);
@@ -196,7 +196,7 @@ TEST(IrcSasl, MechanismEcdsaNist256pChallenge)
     STRCMP_EQUAL("base64 decode error", error);
     free (error);
 
-    /* valid challenge, but the private key can not be read */
+    /* Valid challenge, but the private key can not be read */
     error = NULL;
     str = irc_sasl_mechanism_ecdsa_nist256p_challenge (
         server, "YWJjZA==", "alice", "/does/not/exist.pem", &error);

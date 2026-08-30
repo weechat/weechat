@@ -83,7 +83,7 @@ extern enum t_gui_chat_pipe_color gui_chat_pipe_color;
 
 extern int gui_chat_display_tags;
 
-/* chat functions */
+/* Chat functions */
 
 extern void gui_chat_init (void);
 extern void gui_chat_prefix_build (void);
@@ -123,7 +123,7 @@ extern int gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
                                            struct t_hashtable *hashtable);
 extern void gui_chat_end (void);
 
-/* chat functions (GUI dependent) */
+/* Chat functions (GUI dependent) */
 
 extern const char *gui_chat_string_next_char (struct t_gui_window *window,
                                               struct t_gui_line *line,

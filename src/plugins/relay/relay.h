@@ -24,7 +24,7 @@ extern struct t_hdata *relay_hdata_completion;
 extern struct t_hdata *relay_hdata_completion_word;
 extern struct t_hdata *relay_hdata_hotlist;
 
-/* relay protocol */
+/* Relay protocol */
 
 enum t_relay_protocol
 {
@@ -35,7 +35,7 @@ enum t_relay_protocol
     RELAY_NUM_PROTOCOLS,
 };
 
-/* client/remote status */
+/* Client/remote status */
 
 enum t_relay_status
 {
@@ -48,7 +48,7 @@ enum t_relay_status
     RELAY_NUM_STATUS,
 };
 
-/* type of message exchanged with the peer (client/remote) */
+/* Type of message exchanged with the peer (client/remote) */
 
 enum t_relay_msg_type
 {

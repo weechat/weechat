@@ -39,7 +39,7 @@ struct t_gui_nick
     struct t_gui_nick *next_nick;      /* link to next nick                 */
 };
 
-/* nicklist functions */
+/* Nicklist functions */
 
 extern struct t_gui_nick_group *gui_nicklist_search_group (struct t_gui_buffer *buffer,
                                                            struct t_gui_nick_group *from_group,

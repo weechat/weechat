@@ -7,14 +7,14 @@
 #ifndef WEECHAT_GUI_CURSOR_H
 #define WEECHAT_GUI_CURSOR_H
 
-/* cursor variables */
+/* Cursor variables */
 
 extern int gui_cursor_mode;
 extern int gui_cursor_debug;
 extern int gui_cursor_x;
 extern int gui_cursor_y;
 
-/* cursor functions */
+/* Cursor functions */
 
 extern void gui_cursor_mode_toggle (void);
 extern void gui_cursor_mode_stop (void);

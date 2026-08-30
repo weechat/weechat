@@ -21,7 +21,7 @@ int gui_mouse_enabled = 0;             /* 1 if mouse support is enabled     */
 int gui_mouse_debug = 0;               /* debug mode for mouse (0-2)        */
 int gui_mouse_grab = 0;                /* 1 if grab mode enabled            */
 
-/* mouse event */
+/* Mouse event */
 int gui_mouse_event_pending = 0;       /* 1 if mouse event has started      */
 int gui_mouse_event_index = 0;         /* index for x/y in array (0 or 1)   */
 int gui_mouse_event_x[2] = { 0, 0 };   /* position of latest mouse event:   */

@@ -26,7 +26,7 @@ alias_command_add (const char *alias_name, const char *command,
 {
     struct t_config_option *ptr_option;
 
-    /* define new alias */
+    /* Define new alias. */
     if (!alias_new (alias_name, command, completion))
     {
         weechat_printf (NULL,
@@ -37,14 +37,14 @@ alias_command_add (const char *alias_name, const char *command,
         return;
     }
 
-    /* create configuration option for command */
+    /* Create configuration option for command. */
     ptr_option = weechat_config_search_option (alias_config_file,
                                                alias_config_section_cmd,
                                                alias_name);
     weechat_config_option_free (ptr_option);
     alias_config_cmd_new_option (alias_name, command);
 
-    /* create configuration option for completion */
+    /* Create configuration option for completion. */
     ptr_option = weechat_config_search_option (alias_config_file,
                                                alias_config_section_completion,
                                                alias_name);
@@ -52,7 +52,7 @@ alias_command_add (const char *alias_name, const char *command,
     if (completion)
         alias_config_completion_new_option (alias_name, completion);
 
-    /* display message */
+    /* Display message. */
     weechat_printf (NULL,
                     (update) ?
                     _("Alias updated: \"%s\" => \"%s\"") :
@@ -74,7 +74,7 @@ alias_command_cb (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     int alias_found, i, update;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -84,7 +84,7 @@ alias_command_cb (const void *pointer, void *data,
     {
         if (alias_list)
         {
-            /* get pointer to alias name */
+            /* Get pointer to alias name. */
             ptr_alias_name = NULL;
             if (argc > 1)
             {
@@ -92,7 +92,7 @@ alias_command_cb (const void *pointer, void *data,
                     (char *)weechat_utf8_next_char (argv[2]) : argv[2];
             }
 
-            /* display list of aliases */
+            /* Display list of aliases. */
             alias_found = 0;
             for (ptr_alias = alias_list; ptr_alias;
                  ptr_alias = ptr_alias->next_alias)
@@ -290,7 +290,7 @@ alias_command_cb (const void *pointer, void *data,
         }
         else
         {
-            /* check if target name already exists */
+            /* Check if target name already exists. */
             ptr_alias2 = alias_search (ptr_alias_name2);
             if (ptr_alias2)
             {
@@ -300,7 +300,7 @@ alias_command_cb (const void *pointer, void *data,
             }
             else
             {
-                /* rename alias */
+                /* Rename alias. */
                 if (alias_rename (ptr_alias, ptr_alias_name2))
                 {
                     weechat_printf (

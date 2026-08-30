@@ -239,7 +239,7 @@ TEST(GuiBarItemCustom, Callback)
         "${buffer.number} >> ${buffer.full_name}");
     CHECK(new_item);
 
-    /* custom bar item is NULL => no content */
+    /* Custom bar item is NULL => no content. */
     POINTERS_EQUAL(
         NULL,
         gui_bar_item_custom_callback (NULL, NULL, new_item->bar_item,
@@ -250,7 +250,7 @@ TEST(GuiBarItemCustom, Callback)
     STRCMP_EQUAL("1 >> core.weechat", content);
     free (content);
 
-    /* change conditions so that it becomes false on first buffer */
+    /* Change conditions so that it becomes false on first buffer. */
     config_file_option_set (new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS],
                             "${buffer.number} == 2", 1);
     STRCMP_EQUAL(NULL,
@@ -286,7 +286,7 @@ TEST(GuiBarItemCustom, Alloc)
 
     gui_bar_item_custom_create_bar_item (new_item);
 
-    /* do it again to free the bar item then reallocate it */
+    /* Do it again to free the bar item then reallocate it. */
     gui_bar_item_custom_create_bar_item (new_item);
 
     CHECK(new_item->bar_item);
@@ -311,7 +311,7 @@ TEST(GuiBarItemCustom, New)
 {
     struct t_gui_bar_item_custom *new_item, *new_item2;
 
-    /* invalid name: contains a space */
+    /* Invalid name: contains a space. */
     POINTERS_EQUAL(NULL,
                    gui_bar_item_custom_new ("test item",
                                             "${buffer.number} == 1",
@@ -338,12 +338,12 @@ TEST(GuiBarItemCustom, New)
     POINTERS_EQUAL(NULL, new_item->prev_item);
     POINTERS_EQUAL(NULL, new_item->next_item);
 
-    /* invalid name: already exists */
+    /* Invalid name: already exists. */
     POINTERS_EQUAL(NULL, gui_bar_item_custom_new ("test",
                                                   "${buffer.number} == 1",
                                                   "some content"));
 
-    /* add another item */
+    /* Add another item. */
     new_item2 = gui_bar_item_custom_new ("test2", "${buffer.number} == 2",
                                          "some content 2");
     CHECK(new_item2);
@@ -429,13 +429,13 @@ TEST(GuiBarItemCustom, Rename)
     CHECK(new_item2->bar_item);
     STRCMP_EQUAL("test2", new_item2->bar_item->name);
 
-    /* invalid name: contains a space */
+    /* Invalid name: contains a space. */
     LONGS_EQUAL (0, gui_bar_item_custom_rename (new_item, "second test"));
 
-    /* invalid name: custom bar item already exists */
+    /* Invalid name: custom bar item already exists. */
     LONGS_EQUAL(0, gui_bar_item_custom_rename (new_item, "test2"));
 
-    /* rename OK */
+    /* Rename OK. */
     LONGS_EQUAL(1, gui_bar_item_custom_rename (new_item, "test3"));
 
     STRCMP_EQUAL("test3", new_item->name);
@@ -494,7 +494,7 @@ TEST(GuiBarItemCustom, Free)
     POINTERS_EQUAL(NULL, gui_custom_bar_items);
     POINTERS_EQUAL(NULL, last_gui_custom_bar_item);
 
-    /* remove items in reverse order */
+    /* Remove items in reverse order. */
     new_item = gui_bar_item_custom_new ("test", "${buffer.number} == 1",
                                         "some content");
     new_item2 = gui_bar_item_custom_new ("test2", "${buffer.number} == 2",

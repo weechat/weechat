@@ -324,24 +324,18 @@ struct t_url_constant url_websocket[] =
 
 struct t_url_option url_options[] =
 {
-    /*
-     * behavior options
-     */
+    /* Behavior options */
     URL_DEF_OPTION(VERBOSE, LONG, NULL),
     URL_DEF_OPTION(HEADER, LONG, NULL),
     URL_DEF_OPTION(NOPROGRESS, LONG, NULL),
     URL_DEF_OPTION(NOSIGNAL, LONG, NULL),
     URL_DEF_OPTION(WILDCARDMATCH, LONG, NULL),
 
-    /*
-     * error options
-     */
+    /* Error options */
     URL_DEF_OPTION(FAILONERROR, LONG, NULL),
     URL_DEF_OPTION(KEEP_SENDING_ON_ERROR, LONG, NULL),
 
-    /*
-     * network options
-     */
+    /* Network options */
     URL_DEF_OPTION(PROXY, STRING, NULL),
     URL_DEF_OPTION(PROXYPORT, LONG, NULL),
     URL_DEF_OPTION(PORT, LONG, NULL),
@@ -383,9 +377,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(REDIR_PROTOCOLS_STR, STRING, NULL),
 #endif
 
-    /*
-     * names and password options (authentication)
-     */
+    /* Names and password options (authentication) */
     URL_DEF_OPTION(NETRC, LONG, url_netrc),
     URL_DEF_OPTION(USERPWD, STRING, NULL),
     URL_DEF_OPTION(PROXYUSERPWD, STRING, NULL),
@@ -408,9 +400,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(LOGIN_OPTIONS, STRING, NULL),
     URL_DEF_OPTION(DISALLOW_USERNAME_IN_URL, LONG, NULL),
 
-    /*
-     * HTTP options
-     */
+    /* HTTP options */
     URL_DEF_OPTION(AUTOREFERER, LONG, NULL),
     URL_DEF_OPTION(FOLLOWLOCATION, LONG, NULL),
     URL_DEF_OPTION(POST, LONG, NULL),
@@ -449,9 +439,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(HSTS_CTRL, MASK, url_hsts),
 #endif
 
-    /*
-     * SMTP options
-     */
+    /* SMTP options */
     URL_DEF_OPTION(MAIL_FROM, STRING, NULL),
     URL_DEF_OPTION(MAIL_RCPT, LIST, NULL),
     URL_DEF_OPTION(MAIL_AUTH, STRING, NULL),
@@ -462,15 +450,11 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(MAIL_RCPT_ALLOWFAILS, LONG, NULL),
 #endif
 
-    /*
-     * TFTP options
-     */
+    /* TFTP options */
     URL_DEF_OPTION(TFTP_BLKSIZE, LONG, NULL),
     URL_DEF_OPTION(TFTP_NO_OPTIONS, LONG, NULL),
 
-    /*
-     * FTP options
-     */
+    /* FTP options */
     URL_DEF_OPTION(FTPPORT, STRING, NULL),
     URL_DEF_OPTION(QUOTE, LIST, NULL),
     URL_DEF_OPTION(POSTQUOTE, LIST, NULL),
@@ -491,9 +475,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(APPEND, LONG, NULL),
     URL_DEF_OPTION(FTP_USE_PRET, LONG, NULL),
 
-    /*
-     * RTSP options
-     */
+    /* RTSP options */
     URL_DEF_OPTION(RTSP_REQUEST, LONG, url_rtsp_request),
     URL_DEF_OPTION(RTSP_SESSION_ID, STRING, NULL),
     URL_DEF_OPTION(RTSP_STREAM_URI, STRING, NULL),
@@ -504,9 +486,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(AWS_SIGV4, STRING, NULL),
 #endif
 
-    /*
-     * protocol options
-     */
+    /* Protocol options */
     URL_DEF_OPTION(CRLF, LONG, NULL),
     URL_DEF_OPTION(RANGE, STRING, NULL),
     URL_DEF_OPTION(RESUME_FROM, LONG, NULL),
@@ -529,9 +509,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(MIME_OPTIONS, MASK, url_mime),
 #endif
 
-    /*
-     * connection options
-     */
+    /* Connection options */
     URL_DEF_OPTION(TIMEOUT, LONG, NULL),
     URL_DEF_OPTION(LOW_SPEED_LIMIT, LONG, NULL),
     URL_DEF_OPTION(LOW_SPEED_TIME, LONG, NULL),
@@ -561,9 +539,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(MAXLIFETIME_CONN, LONG, NULL),
 #endif
 
-    /*
-     * SSL and security options
-     */
+    /* SSL and security options */
     URL_DEF_OPTION(SSLCERT, STRING, NULL),
     URL_DEF_OPTION(SSLVERSION, LONG, url_ssl_version),
     URL_DEF_OPTION(SSL_VERIFYPEER, LONG, NULL),
@@ -637,9 +613,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(CA_CACHE_TIMEOUT, LONG, NULL),
 #endif
 
-    /*
-     * SSH options
-     */
+    /* SSH options */
     URL_DEF_OPTION(SSH_AUTH_TYPES, MASK, url_gssapi_delegation),
     URL_DEF_OPTION(SSH_PUBLIC_KEYFILE, STRING, NULL),
     URL_DEF_OPTION(SSH_PRIVATE_KEYFILE, STRING, NULL),
@@ -650,21 +624,15 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(SSH_HOST_PUBLIC_KEY_SHA256, STRING, NULL),
 #endif
 
-    /*
-     * telnet options
-     */
+    /* Telnet options */
     URL_DEF_OPTION(TELNETOPTIONS, LIST, NULL),
 
-    /*
-     * websocket options
-     */
+    /* Websocket options */
 #if LIBCURL_VERSION_NUM >= 0x075600 /* 7.86.0 */
     URL_DEF_OPTION(WS_OPTIONS, MASK, url_websocket),
 #endif
 
-    /*
-     * other options
-     */
+    /* Other options */
     URL_DEF_OPTION(NEW_FILE_PERMS, LONG, NULL),
     URL_DEF_OPTION(NEW_DIRECTORY_PERMS, LONG, NULL),
 #if LIBCURL_VERSION_NUM >= 0x075700 /* 7.87.0 */
@@ -697,7 +665,7 @@ weeurl_search_constant (struct t_url_constant *constants, const char *name)
         }
     }
 
-    /* constant not found */
+    /* Constant not found */
     return -1;
 }
 
@@ -766,7 +734,7 @@ weeurl_search_option (const char *name)
         }
     }
 
-    /* option not found */
+    /* Option not found */
     return -1;
 }
 
@@ -822,7 +790,7 @@ weeurl_option_map_cb (void *data,
     struct curl_slist *slist;
     char **items;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     curl = (CURL *)data;
@@ -922,7 +890,7 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
     if (!proxy)
         return;
 
-    /* set proxy type */
+    /* Set proxy type. */
     switch (CONFIG_ENUM(proxy->options[PROXY_OPTION_TYPE]))
     {
         case PROXY_TYPE_HTTP:
@@ -937,15 +905,15 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
             break;
     }
 
-    /* set proxy address */
+    /* Set proxy address. */
     curl_easy_setopt (curl, CURLOPT_PROXY,
                       CONFIG_STRING(proxy->options[PROXY_OPTION_ADDRESS]));
 
-    /* set proxy port */
+    /* Set proxy port. */
     curl_easy_setopt (curl, CURLOPT_PROXYPORT,
                       (long)(CONFIG_INTEGER(proxy->options[PROXY_OPTION_PORT])));
 
-    /* set username/password */
+    /* Set username/password. */
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
         && CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])[0])
     {
@@ -1043,11 +1011,11 @@ weeurl_download (const char *url, struct t_hashtable *options,
         goto end;
     }
 
-    /* set default options */
+    /* Set default options. */
     curl_easy_setopt (curl, CURLOPT_URL, url);
     curl_easy_setopt (curl, CURLOPT_FOLLOWLOCATION, 1L);
 
-    /* set proxy (if option weechat.network.proxy_curl is set) */
+    /* Set proxy (if option weechat.network.proxy_curl is set). */
     if (CONFIG_STRING(config_network_proxy_curl)
         && CONFIG_STRING(config_network_proxy_curl)[0])
     {
@@ -1056,7 +1024,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
             weeurl_set_proxy (curl, ptr_proxy);
     }
 
-    /* set callback to retrieve HTTP headers */
+    /* Set callback to retrieve HTTP headers. */
     if (output)
     {
         string_headers = string_dyn_alloc (1024);
@@ -1067,7 +1035,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
         }
     }
 
-    /* set file in/out from options in hashtable */
+    /* Set file in/out from options in hashtable. */
     output_to_file = 0;
     if (options)
     {
@@ -1095,7 +1063,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
         }
     }
 
-    /* redirect stdout if no filename was given (via key "file_out") */
+    /* Redirect stdout if no filename was given (via key "file_out"). */
     if (output && !output_to_file)
     {
         string_output = string_dyn_alloc (1024);
@@ -1106,13 +1074,13 @@ weeurl_download (const char *url, struct t_hashtable *options,
         }
     }
 
-    /* set other options in hashtable */
+    /* Set other options in hashtable. */
     hashtable_map (options, &weeurl_option_map_cb, curl);
 
-    /* set error buffer */
+    /* Set error buffer. */
     curl_easy_setopt (curl, CURLOPT_ERRORBUFFER, url_error);
 
-    /* compute end time for transfer, according to the timeout */
+    /* Compute end time for transfer, according to the timeout. */
     if (timeout > 0)
     {
         gettimeofday (&tv_end, NULL);
@@ -1124,7 +1092,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
         tv_end.tv_usec = 0;
     }
 
-    /* start the transfer */
+    /* Start the transfer. */
     multi = curl_multi_init ();
     curl_multi_add_handle (multi, curl);
     while (1)
@@ -1149,7 +1117,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
             {
                 /*
                  * URL transfer done in a forked process: display error on stderr,
-                 * which will be sent to the hook_process callback
+                 * which will be sent to the hook_process callback.
                  */
                 fprintf (stderr,
                          _("curl error %d (%s) (URL: \"%s\")\n"),
@@ -1160,7 +1128,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
         }
         if (!still_running)
         {
-            /* transfer OK */
+            /* Transfer OK */
             if (output)
             {
                 curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &response_code);
@@ -1172,7 +1140,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
         }
         if (stop_transfer && *stop_transfer)
         {
-            /* transfer stopped by the caller */
+            /* Transfer stopped by the caller */
             if (output)
             {
                 if (!url_error[0])
@@ -1182,7 +1150,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
             {
                 /*
                  * URL transfer done in a forked process: display error on stderr,
-                 * which will be sent to the hook_process callback
+                 * which will be sent to the hook_process callback.
                  */
                 fprintf (stderr,
                          _("transfer stopped (URL: \"%s\")\n"),
@@ -1193,7 +1161,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
         }
         if (tv_end.tv_sec > 0)
         {
-            /* timeout reached? */
+            /* Timeout reached? */
             gettimeofday (&tv_now, NULL);
             if (util_timeval_cmp (&tv_now, &tv_end) >= 0)
             {
@@ -1210,7 +1178,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
                 {
                     /*
                      * URL transfer done in a forked process: display error on stderr,
-                     * which will be sent to the hook_process callback
+                     * which will be sent to the hook_process callback.
                      */
                     fprintf (stderr,
                              _("transfer timeout reached (%.3fs) (URL: \"%s\")\n"),
@@ -1222,7 +1190,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
         }
     }
 
-    /* cleanup */
+    /* Cleanup */
     curl_multi_remove_handle (multi, curl);
     curl_easy_cleanup (curl);
     curl_multi_cleanup (multi);

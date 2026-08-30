@@ -6,7 +6,7 @@
 
 /* Debug functions */
 
-/* for wcwidth in wchar.h */
+/* For wcwidth in wchar.h */
 #define _XOPEN_SOURCE
 
 #ifdef HAVE_CONFIG_H
@@ -82,7 +82,7 @@ long long debug_long_callbacks = 0;    /* callbacks taking more than        */
 void
 debug_build_info (void)
 {
-    /* display version and compilation date/time */
+    /* Display version and compilation date/time. */
     string_fprintf (
         stdout,
         /* TRANSLATORS: "%s %s" after "compiled on" is date and time. */
@@ -91,7 +91,7 @@ debug_build_info (void)
         version_get_compilation_date (),
         version_get_compilation_time ());
 
-    /* display build options */
+    /* Display build options. */
     string_fprintf (stdout, _("Build options:\n"));
     DEBUG_DISPLAY_BUILD_OPTION_STR(CMAKE_BUILD_TYPE);
     DEBUG_DISPLAY_BUILD_OPTION_STR(CMAKE_INSTALL_PREFIX);
@@ -140,7 +140,7 @@ debug_build_info (void)
 void
 debug_dump (int crash)
 {
-    /* prevent reentrancy */
+    /* Prevent reentrancy. */
     if (debug_dump_active)
         exit (EXIT_FAILURE);
 
@@ -196,7 +196,7 @@ debug_dump_cb (const void *pointer, void *data,
                const char *signal, const char *type_data,
                void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -217,7 +217,7 @@ debug_dump_cb (const void *pointer, void *data,
 void
 debug_sigsegv_cb (int signo)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) signo;
 
     debug_dump (1);
@@ -251,7 +251,7 @@ debug_sigsegv_cb (int signo)
 
     weechat_backtrace ();
 
-    /* shutdown with error code */
+    /* Shutdown with error code. */
     weechat_shutdown (EXIT_FAILURE, 1);
 }
 
@@ -268,7 +268,7 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
     {
         if (tree->window)
         {
-            /* leaf */
+            /* Leaf */
             snprintf (format,
                       sizeof (format),
                       "%%-%dsleaf: "
@@ -296,7 +296,7 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
         }
         else
         {
-            /* node */
+            /* Node */
             snprintf (format,
                       sizeof (format),
                       "%%-%dsnode: "
@@ -400,7 +400,7 @@ debug_hdata_hash_var_map_cb (void *data,
     struct t_hdata_var *var;
     char str_offset[16];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     list = (struct t_weelist *)data;
@@ -419,7 +419,7 @@ debug_hdata_hash_list_map_cb (void *data,
                               struct t_hashtable *hashtable,
                               const void *key, const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) hashtable;
 
@@ -443,7 +443,7 @@ debug_hdata_map_cb (void *data,
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) hashtable;
 
@@ -456,10 +456,10 @@ debug_hdata_map_cb (void *data,
                      ptr_hdata->hash_var->items_count,
                      ptr_hdata->hash_list->items_count);
 
-    /* display lists */
+    /* Display lists. */
     hashtable_map (ptr_hdata->hash_list, &debug_hdata_hash_list_map_cb, NULL);
 
-    /* display vars */
+    /* Display vars. */
     list = weelist_new ();
     hashtable_map (ptr_hdata->hash_var, &debug_hdata_hash_var_map_cb, list);
     for (ptr_item = list->items; ptr_item;
@@ -756,7 +756,7 @@ debug_libs_cb (const void *pointer, void *data,
     const char *version_libcurl = LIBCURL_VERSION;
     const char *version_zlib = ZLIB_VERSION;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -765,30 +765,30 @@ debug_libs_cb (const void *pointer, void *data,
 
     gui_chat_printf (NULL, "  core:");
 
-    /* display ncurses version */
+    /* Display ncurses version. */
     gui_main_debug_libs ();
 
-    /* display gcrypt version */
+    /* Display gcrypt version. */
     gui_chat_printf (NULL, "    gcrypt: %s%s%s%s",
                      version_gcrypt,
                      (weechat_no_gcrypt) ? " (" : "",
                      (weechat_no_gcrypt) ? _("not initialized") : "",
                      (weechat_no_gcrypt) ? ")" : "");
 
-    /* display gnutls version */
+    /* Display gnutls version. */
     gui_chat_printf (NULL, "    gnutls: %s%s%s%s",
                      version_gnutls,
                      (weechat_no_gnutls) ? " (" : "",
                      (weechat_no_gnutls) ? _("not initialized") : "",
                      (weechat_no_gnutls) ? ")" : "");
 
-    /* display curl version */
+    /* Display curl version. */
     gui_chat_printf (NULL, "    curl: %s", version_libcurl);
 
-    /* display zlib version */
+    /* Display zlib version. */
     gui_chat_printf (NULL, "    zlib: %s", version_zlib);
 
-    /* display zstd version */
+    /* Display zstd version. */
 #ifdef HAVE_ZSTD
     gui_chat_printf (NULL, "    zstd: %d.%d.%d",
                     ZSTD_VERSION_MAJOR,
@@ -798,7 +798,7 @@ debug_libs_cb (const void *pointer, void *data,
     gui_chat_printf (NULL, "    zstd: %s", _("not available"));
 #endif /* HAVE_ZSTD */
 
-    /* display cJSON version */
+    /* Display cJSON version. */
 #ifdef HAVE_CJSON
     gui_chat_printf (NULL, "    cJSON: %d.%d.%d",
                      CJSON_VERSION_MAJOR,
@@ -986,7 +986,7 @@ debug_unicode (const char *string)
     if (!string || !string[0])
         return;
 
-    /* info about string */
+    /* Info about string */
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL,
                      _("Unicode: \"string\": "
@@ -1000,7 +1000,7 @@ debug_unicode (const char *string)
                      GUI_COLOR(GUI_COLOR_CHAT));
     debug_unicode_string (string);
 
-    /* info about chars in string */
+    /* Info about chars in string */
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL,
                      _("Unicode: \"char\" "
@@ -1029,9 +1029,9 @@ void
 debug_init (void)
 {
     /*
-     * hook signals with high priority, to be sure they will be used before
+     * Hook signals with high priority, to be sure they will be used before
      * plugins (they should anyway because this function is called before load
-     * of plugins)
+     * of plugins).
      */
     hook_signal (NULL, "2000|debug_dump", &debug_dump_cb, NULL, NULL);
     hook_signal (NULL, "2000|debug_libs", &debug_libs_cb, NULL, NULL);

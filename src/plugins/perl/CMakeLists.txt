@@ -11,13 +11,13 @@ add_library(perl MODULE
 set_target_properties(perl PROPERTIES PREFIX "")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  # remove "-arch xxx" on macOS
+  # Remove "-arch xxx" on macOS.
   string(REGEX REPLACE "-arch ppc|-arch i386|-arch x86_64" "" PERL_CFLAGS "${PERL_CFLAGS}")
   string(REGEX REPLACE "-arch ppc|-arch i386|-arch x86_64" "" PERL_LFLAGS "${PERL_LFLAGS}")
 endif()
 add_definitions(${PERL_CFLAGS})
 include_directories(${PERL_INCLUDE_PATH})
-# ugly hack to force linking against Dynaloader.a
+# Ugly hack to force linking against Dynaloader.a
 string(REGEX MATCH "/[^ $]*/DynaLoader.a" PERL_DYNALOADER "${PERL_LFLAGS}")
 if(PERL_DYNALOADER)
   string(REPLACE "${PERL_DYNALOADER}" "" PERL_LFLAGS "${PERL_LFLAGS}")

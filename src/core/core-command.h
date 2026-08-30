@@ -38,8 +38,8 @@ struct t_gui_buffer;
     }
 
 /*
- * macro to return error in case of missing arguments in callback of
- * hook_command
+ * Macro to return error in case of missing arguments in callback of
+ * hook_command.
  */
 #define COMMAND_MIN_ARGS(__min_args, __option)                          \
     if (argc < __min_args)                                              \
@@ -56,7 +56,7 @@ struct t_gui_buffer;
         return WEECHAT_RC_ERROR;                                        \
     }
 
-/* macro to return error in callback of hook_command */
+/* Macro to return error in callback of hook_command. */
 #define COMMAND_ERROR                                                   \
     {                                                                   \
         gui_chat_printf_date_tags (                                     \

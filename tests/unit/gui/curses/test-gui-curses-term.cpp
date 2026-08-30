@@ -40,17 +40,17 @@ TEST(GuiCursesTerm, ThemeIsLight)
     const char *saved_colorfgbg;
     char *colorfgbg;
 
-    /* save COLORFGBG to restore it at the end of the test */
+    /* Save COLORFGBG to restore it at the end of the test. */
     saved_colorfgbg = getenv ("COLORFGBG");
     colorfgbg = (saved_colorfgbg) ? strdup (saved_colorfgbg) : NULL;
 
-    /* dark background ("fg;bg"): indices 0-6 and 8 */
+    /* Dark background ("fg;bg"): indices 0-6 and 8 */
     WEE_CHECK_THEME(0, "15;0");
     WEE_CHECK_THEME(0, "15;1");
     WEE_CHECK_THEME(0, "15;6");
     WEE_CHECK_THEME(0, "15;8");
 
-    /* light background ("fg;bg"): index 7 and 9-15 */
+    /* Light background ("fg;bg"): index 7 and 9-15 */
     WEE_CHECK_THEME(1, "0;7");
     WEE_CHECK_THEME(1, "0;9");
     WEE_CHECK_THEME(1, "0;15");
@@ -59,7 +59,7 @@ TEST(GuiCursesTerm, ThemeIsLight)
     WEE_CHECK_THEME(0, "0;default;0");
     WEE_CHECK_THEME(1, "0;default;15");
 
-    /* restore COLORFGBG */
+    /* Restore COLORFGBG. */
     if (colorfgbg)
     {
         setenv ("COLORFGBG", colorfgbg, 1);

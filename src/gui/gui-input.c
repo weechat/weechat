@@ -89,13 +89,13 @@ gui_input_replace_input (struct t_gui_buffer *buffer, const char *new_input)
         size = strlen (input_utf8);
         length = utf8_strlen (input_utf8);
 
-        /* compute new buffer size */
+        /* Compute new buffer size. */
         if (gui_input_optimize_size (buffer, size, length))
         {
-            /* copy new string to input */
+            /* Copy new string to input. */
             strcpy (buffer->input_buffer, input_utf8);
 
-            /* move cursor to the end of new input if it is now after the end */
+            /* Move cursor to the end of new input if it is now after the end. */
             if (buffer->input_buffer_pos > buffer->input_buffer_length)
                 buffer->input_buffer_pos = buffer->input_buffer_length;
         }
@@ -143,7 +143,7 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
         if (save_undo)
             gui_buffer_undo_add (buffer);
 
-        /* send modifier, and change input if needed */
+        /* Send modifier, and change input if needed. */
         snprintf (str_buffer, sizeof (str_buffer),
                   "0x%lx", (unsigned long)buffer);
         new_input = hook_modifier_exec (NULL,
@@ -156,7 +156,7 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
             if (!buffer->input_buffer
                 || strcmp (new_input, buffer->input_buffer) != 0)
             {
-                /* input has been changed by modifier, use it */
+                /* Input has been changed by modifier, use it. */
                 gui_input_replace_input (buffer, new_input);
             }
             free (new_input);
@@ -166,7 +166,7 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
     if (stop_completion && !gui_completion_freeze)
         gui_completion_stop (buffer->completion);
 
-    /* send signal */
+    /* Send signal. */
     (void) hook_signal_send ("input_text_changed",
                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
@@ -248,11 +248,11 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string)
     {
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
 
-        /* move end of string to the right */
+        /* Move end of string to the right. */
         ptr_start = (char *)utf8_add_offset (buffer->input_buffer, buffer->input_buffer_pos);
         memmove (ptr_start + size, ptr_start, strlen (ptr_start));
 
-        /* insert new string */
+        /* Insert new string. */
         memcpy (ptr_start, string_utf8, size);
 
         buffer->input_buffer_pos += length;
@@ -402,14 +402,14 @@ gui_input_complete (struct t_gui_buffer *buffer)
         return;
 
     /*
-     * in case the word found is empty, we keep the word in input as-is
+     * In case the word found is empty, we keep the word in input as-is
      * (this can happen with partial completion when the common prefix found
-     * is empty)
+     * is empty).
      */
     if (!buffer->completion->word_found[0])
         return;
 
-    /* replace word with new completed word into input buffer */
+    /* Replace word with new completed word into input buffer. */
     if (buffer->completion->diff_size > 0)
     {
         if (gui_input_optimize_size (
@@ -454,14 +454,14 @@ gui_input_complete (struct t_gui_buffer *buffer)
         utf8_strlen (buffer->completion->word_found);
 
     /*
-     * position is < 0 this means only one word was found to complete,
-     * so reinit to stop completion
+     * Position is < 0 this means only one word was found to complete,
+     * so reinit to stop completion.
      */
     if (buffer->completion->position >= 0)
         buffer->completion->position = utf8_real_pos (buffer->input_buffer,
                                                       buffer->input_buffer_pos);
 
-    /* add space if needed after completion */
+    /* Add space if needed after completion. */
     if (buffer->completion->add_space)
     {
         if (buffer->input_buffer[utf8_real_pos (buffer->input_buffer,
@@ -585,7 +585,7 @@ gui_input_search_compile_regex (struct t_gui_buffer *buffer)
 {
     int flags;
 
-    /* remove the compiled regex */
+    /* Remove the compiled regex. */
     if (buffer->text_search_regex_compiled)
     {
         regfree (buffer->text_search_regex_compiled);
@@ -593,7 +593,7 @@ gui_input_search_compile_regex (struct t_gui_buffer *buffer)
         buffer->text_search_regex_compiled = NULL;
     }
 
-    /* compile regex */
+    /* Compile regex. */
     if (buffer->text_search_regex)
     {
         buffer->text_search_regex_compiled = malloc (sizeof (*buffer->text_search_regex_compiled));
@@ -667,7 +667,7 @@ gui_input_search_switch_where (struct t_gui_buffer *buffer)
         case GUI_BUFFER_SEARCH_DISABLED:
             break;
         case GUI_BUFFER_SEARCH_LINES:
-            /* it's not possible to change that in a buffer not "formatted" */
+            /* It's not possible to change that in a buffer not "formatted". */
             if (window->buffer->type != GUI_BUFFER_TYPE_FORMATTED)
                 return;
             if (window->buffer->text_search_where == GUI_BUFFER_SEARCH_IN_MESSAGE)
@@ -928,12 +928,12 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
     start = (char *)utf8_add_offset (buffer->input_buffer,
                                      buffer->input_buffer_pos - 1);
     string = start;
-    /* move to the left until we reach a word char */
+    /* Move to the left until we reach a word char. */
     while (string && !string_is_word_char_input (string))
     {
         string = (char *)utf8_prev_char (buffer->input_buffer, string);
     }
-    /* move to the left to skip the whole word */
+    /* Move to the left to skip the whole word. */
     if (string)
     {
         while (string && string_is_word_char_input (string))
@@ -967,12 +967,12 @@ gui_input_delete_previous_word_whitespace (struct t_gui_buffer *buffer)
     start = (char *)utf8_add_offset (buffer->input_buffer,
                                      buffer->input_buffer_pos - 1);
     string = start;
-    /* move to the left, skipping whitespace */
+    /* Move to the left, skipping whitespace. */
     while (string && string_is_whitespace_char (string))
     {
         string = (char *)utf8_prev_char (buffer->input_buffer, string);
     }
-    /* move to the left until we reach a char which is not whitespace */
+    /* Move to the left until we reach a char which is not whitespace. */
     if (string)
     {
         while (string && !string_is_whitespace_char (string))
@@ -1008,13 +1008,13 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
                                      buffer->input_buffer_pos);
     string = start;
     length_deleted = 0;
-    /* move to the right until we reach a word char */
+    /* Move to the right until we reach a word char. */
     while (string && string[0] && !string_is_word_char_input (string))
     {
         string = (char *)utf8_next_char (string);
         length_deleted++;
     }
-    /* move to the right to skip the whole word */
+    /* Move to the right to skip the whole word. */
     while (string && string[0] && string_is_word_char_input (string))
     {
         string = (char *)utf8_next_char (string);
@@ -1647,12 +1647,12 @@ gui_input_history_previous (struct t_gui_window *window,
     if (!(*ptr_history))
         return;
 
-    /* bash/readline like use of history */
+    /* Bash/readline like use of history */
     if (window->buffer->input_buffer_size > 0)
     {
         if ((*ptr_history)->prev_history)
         {
-            /* replace text in history with current input */
+            /* Replace text in history with current input. */
             window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
             free ((*ptr_history)->prev_history->text);
             (*ptr_history)->prev_history->text =
@@ -1660,7 +1660,7 @@ gui_input_history_previous (struct t_gui_window *window,
         }
         else
         {
-            /* add current input in history */
+            /* Add current input in history. */
             window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
             gui_history_add (window->buffer,
                              window->buffer->input_buffer);
@@ -1691,7 +1691,7 @@ gui_input_history_next (struct t_gui_window *window,
 {
     int input_changed, rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) history;
 
     input_changed = 0;
@@ -1701,7 +1701,7 @@ gui_input_history_next (struct t_gui_window *window,
 
     if (*ptr_history)
     {
-        /* replace text in history with current input */
+        /* Replace text in history with current input. */
         window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
         free ((*ptr_history)->text);
         (*ptr_history)->text = strdup (window->buffer->input_buffer);
@@ -1733,7 +1733,7 @@ gui_input_history_next (struct t_gui_window *window,
     }
     else
     {
-        /* add line to history then clear input */
+        /* Add line to history then clear input. */
         if (window->buffer->input_buffer_size > 0)
         {
             window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
@@ -1950,9 +1950,9 @@ gui_input_undo (struct t_gui_buffer *buffer)
         return;
 
     /*
-     * if we are doing undo and that undo pointer is to the end of list
+     * If we are doing undo and that undo pointer is to the end of list
      * (for example first time undo is used), then save current input
-     * content in undo list
+     * content in undo list.
      */
     if ((buffer->ptr_input_undo == buffer->last_input_undo)
         && (buffer->ptr_input_undo)->data

@@ -18,7 +18,7 @@
 
 struct t_config_file *logger_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *logger_config_section_look = NULL;
 struct t_config_section *logger_config_section_color = NULL;
@@ -28,17 +28,17 @@ struct t_config_section *logger_config_section_mask = NULL;
 
 int logger_config_loading = 0;
 
-/* logger config, look section */
+/* Logger config, look section */
 
 struct t_config_option *logger_config_look_backlog = NULL;
 struct t_config_option *logger_config_look_backlog_conditions = NULL;
 
-/* logger config, color section */
+/* Logger config, color section */
 
 struct t_config_option *logger_config_color_backlog_end = NULL;
 struct t_config_option *logger_config_color_backlog_line = NULL;
 
-/* logger config, file section */
+/* Logger config, file section */
 
 struct t_config_option *logger_config_file_auto_log = NULL;
 struct t_config_option *logger_config_file_color_lines = NULL;
@@ -57,7 +57,7 @@ struct t_config_option *logger_config_file_rotation_compression_type = NULL;
 struct t_config_option *logger_config_file_rotation_size_max = NULL;
 struct t_config_option *logger_config_file_time_format = NULL;
 
-/* other */
+/* Other */
 
 unsigned long long logger_config_rotation_size_max = 0;
 
@@ -70,7 +70,7 @@ void
 logger_config_change_file_option_restart_log (const void *pointer, void *data,
                                               struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -88,7 +88,7 @@ logger_config_change_file_rotation_comp_type (const void *pointer,
                                               void *data,
                                               struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -113,7 +113,7 @@ void
 logger_config_color_lines_change (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -136,7 +136,7 @@ void
 logger_config_flush_delay_change (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -189,7 +189,7 @@ logger_config_rotation_size_max_check (const void *pointer, void *data,
 {
     unsigned long long size;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -217,7 +217,7 @@ void
 logger_config_rotation_size_max_change (const void *pointer, void *data,
                                         struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -234,7 +234,7 @@ void
 logger_config_level_change (const void *pointer, void *data,
                             struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -253,7 +253,7 @@ logger_config_level_delete_option (const void *pointer, void *data,
                                    struct t_config_section *section,
                                    struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -280,7 +280,7 @@ logger_config_level_create_option (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -361,7 +361,7 @@ void
 logger_config_mask_change (const void *pointer, void *data,
                            struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -380,7 +380,7 @@ logger_config_mask_delete_option (const void *pointer, void *data,
                                   struct t_config_section *section,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -407,7 +407,7 @@ logger_config_mask_create_option (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -482,7 +482,7 @@ logger_config_init (void)
     if (!logger_config_file)
         return 0;
 
-    /* look */
+    /* Look */
     logger_config_section_look = weechat_config_new_section (
         logger_config_file, "look",
         0, 0,
@@ -512,7 +512,7 @@ logger_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* color */
+    /* Color */
     logger_config_section_color = weechat_config_new_section (
         logger_config_file, "color",
         0, 0,
@@ -538,7 +538,7 @@ logger_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* file */
+    /* File */
     logger_config_section_file = weechat_config_new_section (
         logger_config_file, "file",
         0, 0,
@@ -706,7 +706,7 @@ logger_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* level */
+    /* Level */
     logger_config_section_level = weechat_config_new_section (
         logger_config_file, "level",
         1, 1,
@@ -716,7 +716,7 @@ logger_config_init (void)
         &logger_config_level_create_option, NULL, NULL,
         &logger_config_level_delete_option, NULL, NULL);
 
-    /* mask */
+    /* Mask */
     logger_config_section_mask = weechat_config_new_section (
         logger_config_file, "mask",
         1, 1,

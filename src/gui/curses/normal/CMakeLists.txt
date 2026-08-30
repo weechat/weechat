@@ -61,6 +61,6 @@ add_custom_command(
 )
 list(APPEND CMAKE_INSTALL_MANIFEST_FILES "${CMAKE_INSTALL_PREFIX}/bin/weechat-curses${CMAKE_EXECUTABLE_SUFFIX}")
 
-# Install executable and symbolic link
+# Install executable and symbolic link.
 install(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE}-curses${CMAKE_EXECUTABLE_SUFFIX}" DESTINATION bin)

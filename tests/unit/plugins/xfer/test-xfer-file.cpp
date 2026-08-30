@@ -72,7 +72,7 @@ TEST(XferFile, SearchCrc32)
     STRCMP_EQUAL(NULL, xfer_file_search_crc32 ("123456781234abcd"));
     STRCMP_EQUAL(NULL, xfer_file_search_crc32 ("test_filename"));
 
-    /* valid CRC32 */
+    /* Valid CRC32 */
     STRCMP_EQUAL("1234abcd", xfer_file_search_crc32 ("test_1234abcd"));
     STRCMP_EQUAL("1234aBCd", xfer_file_search_crc32 ("test_1234aBCd"));
     STRCMP_EQUAL("1234abcd_test", xfer_file_search_crc32 ("1234abcd_test"));
@@ -121,29 +121,29 @@ TEST(XferFile, FindFilename)
 
     config_file_option_set (xfer_config_file_download_path, "/tmp/weechat_test_xfer", 1);
 
-    /* remote nick without directory separator: used as-is */
+    /* Remote nick without directory separator: used as-is. */
     basename = test_find_filename_basename ("alice", "test.txt");
     STRCMP_EQUAL("alice.test.txt", basename);
     free (basename);
 
     /*
-     * remote nick with a directory separator: the separator is replaced by
+     * Remote nick with a directory separator: the separator is replaced by
      * "_" so the nick cannot make the file be written outside the download
-     * directory
+     * directory.
      */
     basename = test_find_filename_basename ("../foo", "test.txt");
     STRCMP_EQUAL(".._foo.test.txt", basename);
     free (basename);
 
-    /* all directory separators in the nick are replaced */
+    /* All directory separators in the nick are replaced. */
     basename = test_find_filename_basename ("a/b/c", "test.txt");
     STRCMP_EQUAL("a_b_c.test.txt", basename);
     free (basename);
 
     /*
-     * the filename comes from the remote peer: only the filename component is
+     * The filename comes from the remote peer: only the filename component is
      * kept, so the filename cannot make the file be written outside the
-     * download directory
+     * download directory.
      */
     basename = test_find_filename_basename ("alice", "dir/test.txt");
     STRCMP_EQUAL("alice.test.txt", basename);
@@ -153,7 +153,7 @@ TEST(XferFile, FindFilename)
     STRCMP_EQUAL("alice.passwd", basename);
     free (basename);
 
-    /* both directory separators are removed, on any platform */
+    /* Both directory separators are removed, on any platform. */
     basename = test_find_filename_basename ("alice", "dir\\test.txt");
     STRCMP_EQUAL("alice.test.txt", basename);
     free (basename);
@@ -162,7 +162,7 @@ TEST(XferFile, FindFilename)
     STRCMP_EQUAL("alice.passwd", basename);
     free (basename);
 
-    /* filename with a mix of both directory separators */
+    /* Filename with a mix of both directory separators. */
     basename = test_find_filename_basename ("alice", "a\\b/c\\test.txt");
     STRCMP_EQUAL("alice.test.txt", basename);
     free (basename);

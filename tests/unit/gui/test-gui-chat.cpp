@@ -88,13 +88,13 @@ TEST(GuiChat, Strlen)
     LONGS_EQUAL(0, gui_chat_strlen (NULL));
     LONGS_EQUAL(0, gui_chat_strlen (""));
 
-    /* soft hyphen */
+    /* Soft hyphen */
     LONGS_EQUAL(1, gui_chat_strlen ("\u00ad"));
 
-    /* zero width space */
+    /* Zero width space */
     LONGS_EQUAL(1, gui_chat_strlen ("\u200b"));
 
-    /* next line (non printable char */
+    /* Next line (non printable char) */
     LONGS_EQUAL(1, gui_chat_strlen ("\u0085"));
 
     LONGS_EQUAL(3, gui_chat_strlen ("abc"));
@@ -124,13 +124,13 @@ TEST(GuiChat, StrlenScreen)
     LONGS_EQUAL(0, gui_chat_strlen_screen (NULL));
     LONGS_EQUAL(0, gui_chat_strlen_screen (""));
 
-    /* soft hyphen */
+    /* Soft hyphen */
     LONGS_EQUAL(0, gui_chat_strlen_screen ("\u00ad"));
 
-    /* zero width space */
+    /* Zero width space */
     LONGS_EQUAL(0, gui_chat_strlen_screen ("\u200b"));
 
-    /* next line (non printable char) */
+    /* Next line (non printable char) */
     LONGS_EQUAL(0, gui_chat_strlen_screen ("\u0085"));
 
     LONGS_EQUAL(3, gui_chat_strlen_screen ("abc"));
@@ -281,12 +281,12 @@ TEST(GuiChat, StringRealPos)
     LONGS_EQUAL(0, gui_chat_string_real_pos ("\xe2\xbb\xa9", 1, 1));
     LONGS_EQUAL(3, gui_chat_string_real_pos ("\xe2\xbb\xa9", 2, 1));
 
-    /* soft hyphen */
+    /* Soft hyphen */
     LONGS_EQUAL(0, gui_chat_string_real_pos ("A" "\u00ad" "Z", 0, 0));
     LONGS_EQUAL(3, gui_chat_string_real_pos ("A" "\u00ad" "Z", 1, 0));
     LONGS_EQUAL(4, gui_chat_string_real_pos ("A" "\u00ad" "Z", 2, 0));
 
-    /* zero width space */
+    /* Zero width space */
     LONGS_EQUAL(0, gui_chat_string_real_pos ("A" "\u200b" "Z", 0, 1));
     LONGS_EQUAL(4, gui_chat_string_real_pos ("A" "\u200b" "Z", 1, 1));
     LONGS_EQUAL(5, gui_chat_string_real_pos ("A" "\u200b" "Z", 2, 1));
@@ -319,12 +319,12 @@ TEST(GuiChat, StringPos)
     LONGS_EQUAL(1, gui_chat_string_pos ("\xe2\xbb\xa9", 1));
     LONGS_EQUAL(1, gui_chat_string_pos ("\xe2\xbb\xa9", 2));
 
-    /* soft hyphen */
+    /* Soft hyphen */
     LONGS_EQUAL(0, gui_chat_string_pos ("A" "\u00ad" "Z", 0));
     LONGS_EQUAL(1, gui_chat_string_pos ("A" "\u00ad" "Z", 1));
     LONGS_EQUAL(2, gui_chat_string_pos ("A" "\u00ad" "Z", 2));
 
-    /* zero width space */
+    /* Zero width space */
     LONGS_EQUAL(0, gui_chat_string_pos ("A" "\u200b" "Z", 0));
     LONGS_EQUAL(1, gui_chat_string_pos ("A" "\u200b" "Z", 1));
     LONGS_EQUAL(2, gui_chat_string_pos ("A" "\u200b" "Z", 2));
@@ -380,7 +380,7 @@ TEST(GuiChat, GetTimeString)
     char *str, format_alt[128];
     int i;
 
-    /* empty format => NULL */
+    /* Empty format => NULL */
     config_file_option_set (config_look_buffer_time_format, "", 1);
     POINTERS_EQUAL(NULL, gui_chat_get_time_string (1645288340, 0, 0));
 
@@ -393,9 +393,9 @@ TEST(GuiChat, GetTimeString)
     free (str);
 
     /*
-     * a format alternating digits and non-digits makes the color switch on
+     * A format alternating digits and non-digits makes the color switch on
      * every char, so each char emits a color code (3 bytes) plus itself; with
-     * a near-full text_time buffer this overflows an undersized text_time2
+     * a near-full text_time buffer this overflows an undersized text_time2.
      */
     for (i = 0; i < 126; i++)
         format_alt[i] = (i % 2 == 0) ? '1' : 'a';
@@ -542,7 +542,7 @@ TEST(GuiChat, PrintDatetimeTags)
     struct t_gui_line *ptr_last_line;
     struct t_gui_line_data *ptr_data;
 
-    /* invalid buffer */
+    /* Invalid buffer */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags ((struct t_gui_buffer *)0x1, 0, 0, NULL, "test");
     POINTERS_EQUAL(ptr_last_line, gui_buffers->own_lines->last_line);
@@ -552,7 +552,7 @@ TEST(GuiChat, PrintDatetimeTags)
     gui_chat_printf_datetime_tags (gui_buffers, 0, 0, NULL, NULL);
     POINTERS_EQUAL(ptr_last_line, gui_buffers->own_lines->last_line);
 
-    /* empty message */
+    /* Empty message */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags (gui_buffers, 0, 0, NULL, "");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
@@ -574,7 +574,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("", ptr_data->message);
 
-    /* message (no prefix) */
+    /* Message (no prefix) */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags (gui_buffers, 0, 0, NULL, "this is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
@@ -596,7 +596,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test", ptr_data->message);
 
-    /* message with prefix */
+    /* Message with prefix */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags (gui_buffers, 0, 0, NULL, "nick\tthis is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
@@ -618,7 +618,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(4, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test", ptr_data->message);
 
-    /* message with prefix */
+    /* Message with prefix */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags (gui_buffers, 0, 0, NULL, "nick\tthis is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
@@ -640,7 +640,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(4, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test", ptr_data->message);
 
-    /* message with ignored prefix (space + tab) */
+    /* Message with ignored prefix (space + tab) */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags (gui_buffers, 0, 0, NULL, " \tthis is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
@@ -662,7 +662,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test", ptr_data->message);
 
-    /* message with no time displayed (two tabs) */
+    /* Message with no time displayed (two tabs) */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags (gui_buffers, 0, 0, NULL, "\t\tthis is a test");
     CHECK(ptr_last_line != gui_buffers->own_lines->last_line);
@@ -684,7 +684,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test", ptr_data->message);
 
-    /* message with past date */
+    /* Message with past date */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags (gui_buffers, 946681200, 123456, NULL,
                                    "nick\tthis is a test");
@@ -707,7 +707,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(4, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test", ptr_data->message);
 
-    /* message with empty tags */
+    /* Message with empty tags */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags (gui_buffers, 0, 0, "",
                                    "nick\tthis is a test");
@@ -730,7 +730,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(4, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test", ptr_data->message);
 
-    /* message with 3 tags */
+    /* Message with 3 tags */
     ptr_last_line = gui_buffers->own_lines->last_line;
     gui_chat_printf_datetime_tags (gui_buffers, 0, 0, "tag1,tag2,tag3",
                                    "nick\tthis is a test");
@@ -771,12 +771,12 @@ TEST(GuiChat, PrintYDatetimeTags)
     CHECK(buffer);
     gui_buffer_set (buffer, "type", "free");
 
-    /* invalid buffer pointer */
+    /* Invalid buffer pointer */
     gui_chat_printf_y_datetime_tags ((struct t_gui_buffer *)0x1, 0, 0, 0, NULL,
                                      "test");
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
 
-    /* invalid buffer: not with free content */
+    /* Invalid buffer: not with free content */
     gui_chat_printf_y_datetime_tags (gui_buffers, 0, 0, 0, NULL, "test");
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
 
@@ -784,11 +784,11 @@ TEST(GuiChat, PrintYDatetimeTags)
     gui_chat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL, NULL);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
 
-    /* empty message */
+    /* Empty message */
     gui_chat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL, "");
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
 
-    /* message on first line */
+    /* Message on first line */
     gui_chat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL,
                                      "this is a test on line 1");
     CHECK(buffer->own_lines->last_line);
@@ -810,7 +810,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 1", ptr_data->message);
 
-    /* message on first line with past date */
+    /* Message on first line with past date */
     gui_chat_printf_y_datetime_tags (buffer, 0, 946681200, 123456, NULL,
                                      "this is a test on line 1");
     CHECK(buffer->own_lines->last_line);
@@ -832,7 +832,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 1", ptr_data->message);
 
-    /* message on first line with empty tags */
+    /* Message on first line with empty tags */
     gui_chat_printf_y_datetime_tags (buffer, 0, 0, 0, "",
                                      "this is a test on line 1");
     CHECK(buffer->own_lines->last_line);
@@ -854,7 +854,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 1", ptr_data->message);
 
-    /* message on first line with 3 tags */
+    /* Message on first line with 3 tags */
     gui_chat_printf_y_datetime_tags (buffer, 0, 0, 0, "tag1,tag2,tag3",
                                      "this is a test on line 1");
     CHECK(buffer->own_lines->last_line);
@@ -879,7 +879,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 1", ptr_data->message);
 
-    /* message on third line */
+    /* Message on third line */
     gui_chat_printf_y_datetime_tags (buffer, 2, 0, 0, NULL,
                                      "this is a test on line 3");
     CHECK(buffer->own_lines->last_line);
@@ -901,7 +901,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 3", ptr_data->message);
 
-    /* delete first line */
+    /* Delete first line. */
     gui_chat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL, "");
     ptr_data = buffer->own_lines->first_line->data;
     CHECK(ptr_data);
@@ -921,13 +921,13 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("", ptr_data->message);
 
-    /* delete third line */
+    /* Delete third line. */
     gui_chat_printf_y_datetime_tags (buffer, 2, 0, 0, NULL, "");
     CHECK(buffer->own_lines->first_line);
     CHECK(buffer->own_lines->first_line->next_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->first_line->next_line->next_line);
 
-    /* delete second line */
+    /* Delete second line. */
     gui_chat_printf_y_datetime_tags (buffer, 1, 0, 0, NULL, "");
     CHECK(buffer->own_lines->first_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->first_line->next_line);

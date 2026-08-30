@@ -123,7 +123,7 @@ plugin_config_desc_changed_cb (const void *pointer, void *data,
 {
     struct t_config_option *ptr_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -201,15 +201,15 @@ int
 plugin_config_reload (const void *pointer, void *data,
                       struct t_config_file *config_file)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
-    /* remove all plugin options and descriptions */
+    /* Remove all plugin options and descriptions. */
     config_file_section_free_options (plugin_config_section_var);
     config_file_section_free_options (plugin_config_section_desc);
 
-    /* reload plugins configuration file */
+    /* Reload plugins configuration file. */
     return config_file_reload (config_file);
 }
 
@@ -225,7 +225,7 @@ plugin_config_create_option (const void *pointer, void *data,
 {
     struct t_config_option *ptr_option_desc, *ptr_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -256,7 +256,7 @@ plugin_config_create_desc (const void *pointer, void *data,
 {
     struct t_config_option *ptr_option_var, *ptr_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -298,7 +298,7 @@ plugin_config_delete_desc (const void *pointer, void *data,
 {
     struct t_config_option *ptr_option_var;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) section;
@@ -375,7 +375,7 @@ plugin_config_write (void)
 void
 plugin_config_end (void)
 {
-    /* free all plugin configuration options and descriptions */
+    /* Free all plugin configuration options and descriptions. */
     config_file_section_free_options (plugin_config_section_var);
     config_file_section_free_options (plugin_config_section_desc);
 }

@@ -47,13 +47,13 @@ TEST(IrcBuffer, BuildName)
     WEE_TEST_STR("", irc_buffer_build_name (NULL, NULL));
     WEE_TEST_STR(".", irc_buffer_build_name ("", ""));
 
-    /* only server */
+    /* Only server */
     WEE_TEST_STR("server.libera", irc_buffer_build_name ("libera", NULL));
 
-    /* only channel */
+    /* Only channel */
     WEE_TEST_STR("#chan1", irc_buffer_build_name (NULL, "#chan1"));
 
-    /* server and channel */
+    /* Server and channel */
     WEE_TEST_STR("libera.#chan1", irc_buffer_build_name ("libera", "#chan1"));
     WEE_TEST_STR("libera." CHANNEL_300,
                  irc_buffer_build_name ("libera", CHANNEL_300));

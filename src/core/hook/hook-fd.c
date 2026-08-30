@@ -115,7 +115,7 @@ hook_fd_realloc_pollfd (void)
 void
 hook_fd_add_cb (struct t_hook *hook)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hook;
 
     hook_fd_realloc_pollfd ();
@@ -128,7 +128,7 @@ hook_fd_add_cb (struct t_hook *hook)
 void
 hook_fd_remove_cb (struct t_hook *hook)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hook;
 
     hook_fd_realloc_pollfd ();
@@ -199,14 +199,14 @@ hook_fd_exec (void)
     if (!weechat_hooks[HOOK_TYPE_FD])
         return;
 
-    /* build an array of "struct pollfd" for poll() */
+    /* Build an array of "struct pollfd" for poll(). */
     num_fd = 0;
     for (ptr_hook = weechat_hooks[HOOK_TYPE_FD]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
         if (!ptr_hook->deleted)
         {
-            /* skip invalid file descriptors */
+            /* Skip invalid file descriptors. */
             if ((fcntl (HOOK_FD(ptr_hook,fd), F_GETFD) == -1)
                 && (errno == EBADF))
             {
@@ -238,7 +238,7 @@ hook_fd_exec (void)
         }
     }
 
-    /* perform the poll() */
+    /* Perform the poll(). */
     timeout = hook_timer_get_time_to_next ();
     if (hook_process_pending)
         timeout = 0;
@@ -246,7 +246,7 @@ hook_fd_exec (void)
     if (ready <= 0)
         return;
 
-    /* execute callbacks for file descriptors with activity */
+    /* Execute callbacks for file descriptors with activity. */
     hook_exec_start ();
 
     ptr_hook = weechat_hooks[HOOK_TYPE_FD];
@@ -307,7 +307,7 @@ hook_fd_hdata_hook_fd_cb (const void *pointer, void *data, const char *hdata_nam
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

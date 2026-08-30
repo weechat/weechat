@@ -14,7 +14,7 @@
 #  ICONV_FOUND = is iconv usable on system?
 
 if(ICONV_FOUND)
-  # Already in cache, be silent
+  # Already in cache, be silent.
   set(ICONV_FIND_QUIETLY TRUE)
 endif()
 

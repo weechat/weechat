@@ -18,12 +18,12 @@
 
 set -o errexit
 
-# display commands
+# Display commands.
 set -x
 
 build_dir="build-tmp-$$"
 
-# create build directory
+# Create build directory.
 mkdir "${build_dir}"
 cd "${build_dir}"
 

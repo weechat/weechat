@@ -33,12 +33,12 @@ TEST(IrcMode, GetArguments)
 {
     char *str, string[1024], expected[1024];
 
-    /* invalid arguments */
+    /* Invalid arguments */
     WEE_CHECK_GET_ARGS("", NULL);
     WEE_CHECK_GET_ARGS("", "");
     WEE_CHECK_GET_ARGS("", " ");
 
-    /* simple arguments */
+    /* Simple arguments */
     snprintf (string, sizeof (string), "abc%c02_blue", IRC_COLOR_COLOR_CHAR);
     snprintf (expected, sizeof (expected),
               "abc%s_blue%s",
@@ -71,7 +71,7 @@ TEST(IrcMode, GetArguments)
               gui_color_get_custom ("reset"));
     WEE_CHECK_GET_ARGS(expected, string);
 
-    /* some arguments starting with a colon */
+    /* Some arguments starting with a colon */
     snprintf (string, sizeof (string), ":abc%c02_blue", IRC_COLOR_COLOR_CHAR);
     snprintf (expected, sizeof (expected),
               "abc%s_blue%s",

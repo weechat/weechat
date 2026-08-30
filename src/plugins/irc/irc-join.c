@@ -57,7 +57,7 @@ irc_join_compare_cb (void *data, struct t_arraylist *arraylist,
     struct t_irc_join_channel *ptr_join_chan1, *ptr_join_chan2;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) arraylist;
 
     server = (struct t_irc_server *)data;
@@ -66,15 +66,15 @@ irc_join_compare_cb (void *data, struct t_arraylist *arraylist,
     ptr_join_chan2 = (struct t_irc_join_channel *)pointer2;
 
     /*
-     * if channel is the same, always consider it's the same, even if the key
-     * is different
+     * If channel is the same, always consider it's the same, even if the key
+     * is different.
      */
     rc = irc_server_strcasecmp (server, ptr_join_chan1->name,
                                 ptr_join_chan2->name);
     if (rc == 0)
         return 0;
 
-    /* channels with a key are first in list */
+    /* Channels with a key are first in list. */
     if (ptr_join_chan1->key && !ptr_join_chan2->key)
         return -1;
     if (!ptr_join_chan1->key && ptr_join_chan2->key)
@@ -95,7 +95,7 @@ irc_join_compare_sort_alpha_cb (void *data, struct t_arraylist *arraylist,
     struct t_irc_join_channel *ptr_join_chan1, *ptr_join_chan2;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) arraylist;
 
     server = (struct t_irc_server *)data;
@@ -104,15 +104,15 @@ irc_join_compare_sort_alpha_cb (void *data, struct t_arraylist *arraylist,
     ptr_join_chan2 = (struct t_irc_join_channel *)pointer2;
 
     /*
-     * if channel is the same, always consider it's the same, even if the key
-     * is different
+     * If channel is the same, always consider it's the same, even if the key
+     * is different.
      */
     rc = irc_server_strcasecmp (server, ptr_join_chan1->name,
                                 ptr_join_chan2->name);
     if (rc == 0)
         return 0;
 
-    /* channels with a key are first in list */
+    /* Channels with a key are first in list. */
     if (ptr_join_chan1->key && !ptr_join_chan2->key)
         return -1;
     if (!ptr_join_chan1->key && ptr_join_chan2->key)
@@ -134,7 +134,7 @@ irc_join_compare_sort_buffer_cb (void *data, struct t_arraylist *arraylist,
     struct t_irc_join_channel *ptr_join_chan1, *ptr_join_chan2;
     int rc, buffer_num1, buffer_num2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) arraylist;
 
     server = (struct t_irc_server *)data;
@@ -143,21 +143,21 @@ irc_join_compare_sort_buffer_cb (void *data, struct t_arraylist *arraylist,
     ptr_join_chan2 = (struct t_irc_join_channel *)pointer2;
 
     /*
-     * if channel is the same, always consider it's the same, even if the key
-     * is different
+     * If channel is the same, always consider it's the same, even if the key
+     * is different.
      */
     rc = irc_server_strcasecmp (server, ptr_join_chan1->name,
                                 ptr_join_chan2->name);
     if (rc == 0)
         return 0;
 
-    /* channels with a key are first in list */
+    /* Channels with a key are first in list. */
     if (ptr_join_chan1->key && !ptr_join_chan2->key)
         return -1;
     if (!ptr_join_chan1->key && ptr_join_chan2->key)
         return 1;
 
-    /* search buffer number for each channel */
+    /* Search buffer number for each channel. */
     ptr_channel1 = irc_channel_search (server, ptr_join_chan1->name);
     buffer_num1 = (ptr_channel1 && ptr_channel1->buffer) ?
         weechat_buffer_get_integer (ptr_channel1->buffer, "number") : INT_MAX;
@@ -169,7 +169,7 @@ irc_join_compare_sort_buffer_cb (void *data, struct t_arraylist *arraylist,
     if (buffer_num1 > buffer_num2)
         return 1;
 
-    /* same buffer number: fallback on alphabetic sort */
+    /* Same buffer number: fallback on alphabetic sort. */
     return rc;
 }
 
@@ -195,7 +195,7 @@ irc_join_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 {
     struct t_irc_join_channel *ptr_join_chan;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -778,7 +778,7 @@ irc_join_rename_channel (struct t_irc_server *server,
     if (!arraylist)
         return NULL;
 
-    /* check if new channel name is already in the list */
+    /* Check if new channel name is already in the list. */
     to_remove = 0;
     for (i = 0; i < weechat_arraylist_size (arraylist); i++)
     {

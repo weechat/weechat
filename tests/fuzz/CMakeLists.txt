@@ -29,7 +29,7 @@ list(APPEND FUZZ_TARGET_LINK
   -rdynamic
 )
 
-# fuzz targets
+# Fuzz targets
 set(FUZZ_CORE_TARGETS calc eval crypto secure string utf8 util)
 
 foreach(fuzz_target ${FUZZ_CORE_TARGETS})

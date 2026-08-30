@@ -193,12 +193,12 @@ TEST(TriggerConfig, DefaultTriggerCmdPass)
     WEE_CHECK_MODIFIER_INPUT("/secure set name ******",
                              "/secure set name secret");
 
-    /* modifier "history_add" */
+    /* Modifier "history_add" */
     WEE_CHECK_MODIFIER("/msg nickserv identify ************",
                        "history_add",
                        "/msg nickserv identify alice secret");
 
-    /* modifier "irc_command_auth" */
+    /* Modifier "irc_command_auth" */
     WEE_CHECK_MODIFIER("/msg nickserv identify ************",
                        "irc_command_auth",
                        "/msg nickserv identify alice secret");
@@ -248,12 +248,12 @@ TEST(TriggerConfig, DefaultTriggerCmdPassRegister)
     WEE_CHECK_MODIFIER_INPUT("/quote -server libera nickserv register ****** test@example.com",
                              "/quote -server libera nickserv register secret test@example.com");
 
-    /* modifier "history_add" */
+    /* Modifier "history_add" */
     WEE_CHECK_MODIFIER("/msg nickserv register ****** test@example.com",
                        "history_add",
                        "/msg nickserv register secret test@example.com");
 
-    /* modifier "irc_command_auth" */
+    /* Modifier "irc_command_auth" */
     WEE_CHECK_MODIFIER("/msg nickserv register ****** test@example.com",
                        "irc_command_auth",
                        "/msg nickserv register secret test@example.com");

@@ -7,8 +7,8 @@
 /* Download and read repository file (plugins.xml.gz) */
 
 /*
- * this define is needed for strptime()
- * but is not used for OpenBSD, it causes bug with gcrypt (see bug #37373)
+ * This define is needed for strptime()
+ * but is not used for OpenBSD, it causes bug with gcrypt (see bug #37373).
  */
 #if !defined(__OpenBSD__) && !defined(__sun)
 #define _XOPEN_SOURCE 700
@@ -86,7 +86,7 @@ script_repo_script_valid (struct t_script_repo *script)
             return 1;
     }
 
-    /* script not found */
+    /* Script not found */
     return 0;
 }
 
@@ -117,7 +117,7 @@ script_repo_search_displayed_by_number (int number)
         }
     }
 
-    /* script not found */
+    /* Script not found */
     return NULL;
 }
 
@@ -142,7 +142,7 @@ script_repo_search_by_name (const char *name)
             return ptr_script;
     }
 
-    /* script not found */
+    /* Script not found */
     return NULL;
 }
 
@@ -167,7 +167,7 @@ script_repo_search_by_name_ext (const char *name_with_extension)
             return ptr_script;
     }
 
-    /* script not found */
+    /* Script not found */
     return NULL;
 }
 
@@ -443,13 +443,13 @@ script_repo_compare_scripts (struct t_script_repo *script1,
         cmp = 0;
         switch (ptr_sort[0])
         {
-            case '-': /* reverse order */
+            case '-': /* Reverse order */
                 reverse = -1;
                 break;
-            case 'a': /* author */
+            case 'a': /* Author */
                 cmp = strcmp (script1->author, script2->author);
                 break;
-            case 'A': /* status autoloaded */
+            case 'A': /* Status autoloaded */
                 if ((script1->status & SCRIPT_STATUS_AUTOLOADED)
                     && !(script2->status & SCRIPT_STATUS_AUTOLOADED))
                     cmp = -1;
@@ -457,17 +457,17 @@ script_repo_compare_scripts (struct t_script_repo *script1,
                          && (script2->status & SCRIPT_STATUS_AUTOLOADED))
                     cmp = 1;
                 break;
-            case 'd': /* date added */
+            case 'd': /* Date added */
                 if (script1->date_added > script2->date_added)
                     cmp = -1;
                 else if (script1->date_added < script2->date_added)
                     cmp = 1;
                 break;
-            case 'e': /* extension */
+            case 'e': /* Extension */
                 cmp = strcmp (script_extension[script1->language],
                               script_extension[script2->language]);
                 break;
-            case 'i': /* status "installed" */
+            case 'i': /* Status "installed" */
                 if ((script1->status & SCRIPT_STATUS_INSTALLED)
                     && !(script2->status & SCRIPT_STATUS_INSTALLED))
                     cmp = -1;
@@ -475,14 +475,14 @@ script_repo_compare_scripts (struct t_script_repo *script1,
                          && (script2->status & SCRIPT_STATUS_INSTALLED))
                     cmp = 1;
                 break;
-            case 'l': /* language */
+            case 'l': /* Language */
                 cmp = strcmp (script_language[script1->language],
                               script_language[script2->language]);
                 break;
-            case 'n': /* name */
+            case 'n': /* Name */
                 cmp = strcmp (script1->name, script2->name);
                 break;
-            case 'o': /* status "new version" (script obsolete) */
+            case 'o': /* Status "new version" (script obsolete) */
                 if ((script1->status & SCRIPT_STATUS_NEW_VERSION)
                     && !(script2->status & SCRIPT_STATUS_NEW_VERSION))
                     cmp = -1;
@@ -490,13 +490,13 @@ script_repo_compare_scripts (struct t_script_repo *script1,
                          && (script2->status & SCRIPT_STATUS_NEW_VERSION))
                     cmp = 1;
                 break;
-            case 'p': /* popularity */
+            case 'p': /* Popularity */
                 if (script1->popularity > script2->popularity)
                     cmp = -1;
                 else if (script1->popularity < script2->popularity)
                     cmp = 1;
                 break;
-            case 'r': /* status "running" */
+            case 'r': /* Status "running" */
                 if ((script1->status & SCRIPT_STATUS_RUNNING)
                     && !(script2->status & SCRIPT_STATUS_RUNNING))
                     cmp = -1;
@@ -504,7 +504,7 @@ script_repo_compare_scripts (struct t_script_repo *script1,
                          && (script2->status & SCRIPT_STATUS_RUNNING))
                     cmp = 1;
                 break;
-            case 'u': /* date updated */
+            case 'u': /* Date updated */
                 if (script1->date_updated > script2->date_updated)
                     cmp = -1;
                 else if (script1->date_updated < script2->date_updated)
@@ -538,7 +538,7 @@ script_repo_find_pos (struct t_script_repo *script)
             return ptr_script;
     }
 
-    /* position not found, add to the end */
+    /* Position not found, add to the end. */
     return NULL;
 }
 
@@ -568,7 +568,7 @@ script_repo_add (struct t_script_repo *script)
     ptr_script = script_repo_find_pos (script);
     if (ptr_script)
     {
-        /* insert script before script found */
+        /* Insert script before script found. */
         script->prev_script = ptr_script->prev_script;
         script->next_script = ptr_script;
         if (ptr_script->prev_script)
@@ -579,7 +579,7 @@ script_repo_add (struct t_script_repo *script)
     }
     else
     {
-        /* add script to the end */
+        /* Add script to the end. */
         script->prev_script = last_script_repo;
         script->next_script = NULL;
         if (last_script_repo)
@@ -589,7 +589,7 @@ script_repo_add (struct t_script_repo *script)
         last_script_repo = script;
     }
 
-    /* set max length for fields */
+    /* Set max length for fields. */
     if (script->name)
         script_repo_set_max_length_field ("N", weechat_utf8_strlen_screen (script->name));
     if (script->name_with_extension)
@@ -660,11 +660,11 @@ script_repo_remove (struct t_script_repo *script)
 {
     struct t_script_repo *new_scripts_repo;
 
-    /* unlink script from buffer (if it is used) */
+    /* Unlink script from buffer (if it is used). */
     if (script_buffer_detail_script == script)
         script_buffer_detail_script = NULL;
 
-    /* remove script from list */
+    /* Remove script from list. */
     if (last_script_repo == script)
         last_script_repo = script->prev_script;
     if (script->prev_script)
@@ -677,7 +677,7 @@ script_repo_remove (struct t_script_repo *script)
     if (script->next_script)
         (script->next_script)->prev_script = script->prev_script;
 
-    /* free data */
+    /* Free data. */
     if (script->displayed)
         script_repo_count_displayed--;
     script_repo_free (script);
@@ -733,13 +733,13 @@ script_repo_script_is_held (struct t_script_repo *script)
         if (((pos == hold) || (*(pos - 1) == ','))
             && ((pos[length] == ',') || !pos[length]))
         {
-            /* script held */
+            /* Script held */
             return 1;
         }
         pos = strstr (pos + 1, script->name_with_extension);
     }
 
-    /* script not held */
+    /* Script not held */
     return 0;
 }
 
@@ -782,7 +782,7 @@ script_repo_update_status (struct t_script_repo *script)
     script->status = 0;
     sha512sum = NULL;
 
-    /* check if script is installed (file found on disk) */
+    /* Check if script is installed (file found on disk). */
     weechat_data_dir = weechat_info_get ("weechat_data_dir", NULL);
     length = strlen (weechat_data_dir) + strlen (script->name_with_extension) + 64;
     filename = malloc (length);
@@ -815,11 +815,11 @@ script_repo_update_status (struct t_script_repo *script)
 
     free (weechat_data_dir);
 
-    /* check if script is held */
+    /* Check if script is held. */
     if (script_repo_script_is_held (script))
         script->status |= SCRIPT_STATUS_HELD;
 
-    /* check if script is running (loaded) */
+    /* Check if script is running (loaded). */
     version = weechat_hashtable_get (script_loaded, script->name_with_extension);
     if (version)
     {
@@ -836,14 +836,14 @@ script_repo_update_status (struct t_script_repo *script)
         }
     }
 
-    /* check if script has new version (script is obsolete) */
+    /* Check if script has new version (script is obsolete). */
     if (sha512sum && script->sha512sum
         && (strcmp (script->sha512sum, sha512sum) != 0))
     {
         script->status |= SCRIPT_STATUS_NEW_VERSION;
     }
 
-    /* recompute max length for version loaded (for display) */
+    /* Recompute max length for version loaded (for display). */
     if (script_repo_max_length_field)
     {
         length = 0;
@@ -1054,31 +1054,31 @@ script_repo_file_is_uptodate (void)
 
     cache_expire = weechat_config_integer (script_config_scripts_cache_expire);
 
-    /* cache always expires? => NOT up-to-date */
+    /* Cache always expires? => NOT up-to-date. */
     if (cache_expire == 0)
         return 0;
 
     filename = script_config_get_xml_filename ();
 
-    /* filename not found? => NOT up-to-date */
+    /* Filename not found? => NOT up-to-date */
     if (!filename)
         return 0;
 
-    /* file does not exist? => NOT up-to-date */
+    /* File does not exist? => NOT up-to-date. */
     if (stat (filename, &st) == -1)
     {
         free (filename);
         return 0;
     }
 
-    /* file is empty? => NOT up-to-date */
+    /* File is empty? => NOT up-to-date. */
     if (st.st_size == 0)
     {
         free (filename);
         return 0;
     }
 
-    /* cache never expires? => OK, up-to-date! */
+    /* Cache never expires? => OK, up-to-date!. */
     if (cache_expire < 0)
     {
         free (filename);
@@ -1087,7 +1087,7 @@ script_repo_file_is_uptodate (void)
 
     current_time = time (NULL);
 
-    /* cache has expired? => NOT up-to-date */
+    /* Cache has expired? => NOT up-to-date. */
     if (current_time > st.st_mtime + (cache_expire * 60))
     {
         free (filename);
@@ -1162,10 +1162,10 @@ script_repo_file_read (int quiet)
     }
 
     /*
-     * get locale and locale_languages
+     * Get locale and locale_languages
      * example: if LANG=fr_FR.UTF-8, result is:
      *   locale          = "fr_FR"
-     *   locale_language = "fr"
+     *   locale_language = "fr".
      */
     locale = NULL;
     locale_language = NULL;
@@ -1193,7 +1193,7 @@ script_repo_file_read (int quiet)
                                           WEECHAT_HASHTABLE_STRING,
                                           NULL, NULL);
 
-    /* read plugins.xml.gz */
+    /* Read file "plugins.xml.gz". */
     while (!gzeof (file))
     {
         ptr_line = gzgets (file, line, sizeof (line) - 1);
@@ -1229,19 +1229,19 @@ script_repo_file_read (int quiet)
                             ptr_desc = NULL;
                             if (weechat_config_boolean (script_config_look_translate_description))
                             {
-                                /* try translated description (format "fr_FR") */
+                                /* Try translated description (format "fr_FR"). */
                                 ptr_desc = weechat_hashtable_get (descriptions,
                                                                   locale);
                                 if (!ptr_desc)
                                 {
-                                    /* try translated description (format "fr") */
+                                    /* Try translated description (format "fr"). */
                                     ptr_desc = weechat_hashtable_get (descriptions,
                                                                       locale_language);
                                 }
                             }
                             if (!ptr_desc)
                             {
-                                /* default description (English) */
+                                /* Default description (English). */
                                 ptr_desc = weechat_hashtable_get (descriptions,
                                                                   "en");
                             }
@@ -1299,9 +1299,9 @@ script_repo_file_read (int quiet)
                                 else if (strncmp (name, "desc_", 5) == 0)
                                 {
                                     /*
-                                     * store translated description in hashtable
+                                     * Store translated description in hashtable
                                      * (will be used later, by choosing
-                                     * appropriate language according to locale)
+                                     * appropriate language according to locale).
                                      */
                                     weechat_hashtable_set (descriptions,
                                                            name + 5,
@@ -1327,8 +1327,8 @@ script_repo_file_read (int quiet)
                                 else if (strcmp (name, "added") == 0)
                                 {
                                     /*
-                                     * initialize structure, because strptime
-                                     * does not do it
+                                     * Initialize structure, because strptime
+                                     * does not do it.
                                      */
                                     memset (&tm_script, 0, sizeof (tm_script));
                                     error = strptime (value,
@@ -1340,8 +1340,8 @@ script_repo_file_read (int quiet)
                                 else if (strcmp (name, "updated") == 0)
                                 {
                                     /*
-                                     * initialize structure, because strptime
-                                     * does not do it
+                                     * Initialize structure, because strptime
+                                     * does not do it.
                                      */
                                     memset (&tm_script, 0, sizeof (tm_script));
                                     error = strptime (value,
@@ -1405,7 +1405,7 @@ script_repo_file_update_url_cb (const void *pointer, void *data,
     const char *ptr_error;
     int quiet;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) url;
     (void) options;
@@ -1497,7 +1497,7 @@ script_repo_hdata_script_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

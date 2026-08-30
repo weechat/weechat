@@ -110,7 +110,7 @@ xfer_upgrade_read_cb (const void *pointer, void *data,
                       int object_id,
                       struct t_infolist *infolist)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) upgrade_file;

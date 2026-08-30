@@ -26,7 +26,7 @@ irc_debug_signal_debug_dump_cb (const void *pointer, void *data,
                                 const char *signal,
                                 const char *type_data, void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;

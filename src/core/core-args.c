@@ -23,7 +23,7 @@
 #include "../gui/gui-color.h"
 #include "../plugins/plugin.h"
 
-/* some command line options */
+/* Some command line options */
 #define OPTION_DOCGEN     1000
 #define OPTION_NO_DLCLOSE 1001
 #define OPTION_NO_GNUTLS  1002
@@ -220,7 +220,7 @@ args_display_help (void)
     args_display_list_args (weechat_args_common);
     string_fprintf (stdout, "\n");
 
-    /* extra options in headless mode */
+    /* Extra options in headless mode */
     if (weechat_headless)
     {
         string_fprintf (stdout, "%s\n",
@@ -229,7 +229,7 @@ args_display_help (void)
         string_fprintf (stdout, "\n");
     }
 
-    /* debug options */
+    /* Debug options */
     string_fprintf (stdout, "%s\n",
                     _("Debug options (for tools like valgrind, "
                       "DO NOT USE IN PRODUCTION):"));
@@ -248,7 +248,7 @@ args_parse (int argc, char *argv[])
 {
     int opt;
     struct option long_options[] = {
-        /* standard options */
+        /* Standard options */
         { "no-connect",  no_argument,       NULL, 'a'               },
         { "colors",      no_argument,       NULL, 'c'               },
         { "dir",         required_argument, NULL, 'd'               },
@@ -263,7 +263,7 @@ args_parse (int argc, char *argv[])
         { "upgrade",     no_argument,       NULL, 'u'               },
         { "doc-gen",     required_argument, NULL, OPTION_DOCGEN     },
         { "version",     no_argument,       NULL, 'v'               },
-        /* debug options */
+        /* Debug options */
         { "no-dlclose",  no_argument,       NULL, OPTION_NO_DLCLOSE },
         { "no-gnutls",   no_argument,       NULL, OPTION_NO_GNUTLS  },
         { "no-gcrypt",   no_argument,       NULL, OPTION_NO_GCRYPT  },
@@ -290,7 +290,7 @@ args_parse (int argc, char *argv[])
         switch (opt)
         {
             case 'a': /* -a / --no-connect */
-                /* option ignored, it will be used by plugins/scripts */
+                /* Option ignored, it will be used by plugins/scripts. */
                 break;
             case 'c': /* -c / --colors */
                 gui_color_display_terminal_colors ();
@@ -338,7 +338,7 @@ args_parse (int argc, char *argv[])
                              WEECHAT_LIST_POS_END, NULL);
                 break;
             case 's': /* -s / --no-script */
-                /* option ignored, it will be used by the scripting plugins */
+                /* Option ignored, it will be used by the scripting plugins. */
                 break;
             case 'u': /* --upgrade */
                 weechat_upgrading = 1;
@@ -391,10 +391,10 @@ args_parse (int argc, char *argv[])
                 weechat_shutdown (EXIT_FAILURE, 0);
                 break;
             case '?':
-                /* ignore any unknown option; plugins can use them */
+                /* Ignore any unknown option; plugins can use them. */
                 break;
             default:
-                /* ignore any other error */
+                /* Ignore any other error. */
                 break;
         }
     }

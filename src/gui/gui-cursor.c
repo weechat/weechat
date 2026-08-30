@@ -53,7 +53,7 @@ gui_cursor_mode_toggle (void)
     }
     else
     {
-        /* restore input (and move cursor in input) */
+        /* Restore input (and move cursor in input). */
         if (gui_cursor_debug)
             gui_input_delete_line (gui_current_window->buffer);
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,

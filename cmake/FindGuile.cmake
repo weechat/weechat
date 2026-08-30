@@ -12,7 +12,7 @@
 # GUILE_LIBRARIES    = Link options to compile Guile
 
 if(GUILE_FOUND)
-  # Already in cache, be silent
+  # Already in cache, be silent.
   set(GUILE_FIND_QUIETLY TRUE)
 endif()
 
@@ -20,7 +20,7 @@ find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
   pkg_search_module(GUILE guile-3.0 guile-2.2 guile-2.0)
   if(GUILE_FOUND)
-    # check if variable "scm_install_gmp_memory_functions" exists
+    # Check if variable "scm_install_gmp_memory_functions" exists.
     set(CMAKE_REQUIRED_INCLUDES ${GUILE_INCLUDE_DIRS})
     set(CMAKE_REQUIRED_LIBRARIES ${GUILE_LDFLAGS})
     check_symbol_exists(scm_install_gmp_memory_functions "libguile.h" HAVE_GUILE_GMP_MEMORY_FUNCTIONS)

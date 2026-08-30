@@ -43,12 +43,12 @@ TEST_GROUP(CoreEval)
 
 TEST(CoreEval, IsTrue)
 {
-    /* false */
+    /* False */
     LONGS_EQUAL(0, eval_is_true (NULL));
     LONGS_EQUAL(0, eval_is_true (""));
     LONGS_EQUAL(0, eval_is_true ("0"));
 
-    /* true */
+    /* True */
     LONGS_EQUAL(1, eval_is_true ("00"));
     LONGS_EQUAL(1, eval_is_true ("1"));
     LONGS_EQUAL(1, eval_is_true ("A"));
@@ -87,7 +87,7 @@ TEST(CoreEval, EvalCondition)
 
     STRCMP_EQUAL(NULL, eval_expression (NULL, NULL, NULL, options));
 
-    /* conditions evaluated as false */
+    /* Conditions evaluated as false */
     WEE_CHECK_EVAL("0", "");
     WEE_CHECK_EVAL("0", "0");
     WEE_CHECK_EVAL("0", "1 == 2");
@@ -169,7 +169,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "${var_does_not_exist}");
     WEE_CHECK_EVAL("0", "${var_abc} == def");
 
-    /* conditions evaluated as true */
+    /* Conditions evaluated as true */
     WEE_CHECK_EVAL("1", "1");
     WEE_CHECK_EVAL("1", "123");
     WEE_CHECK_EVAL("1", "abc");
@@ -264,12 +264,12 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "${var_cond_false} == zzz");
     WEE_CHECK_EVAL("1", "${var_cond_false} != zzz");
 
-    /* evaluation of extra_vars */
+    /* Evaluation of extra_vars */
     hashtable_set (options, "extra", "eval");
     hashtable_set (extra_vars, "test", "${buffer.number}");
     WEE_CHECK_EVAL("1", "${test} == 1");
 
-    /* test with another prefix/suffix */
+    /* Test with another prefix/suffix. */
     hashtable_set (options, "prefix", "%(");
     WEE_CHECK_EVAL("0", "${buffer.number} == 1");
     WEE_CHECK_EVAL("1", "%(buffer.number} == 1");
@@ -279,7 +279,7 @@ TEST(CoreEval, EvalCondition)
     hashtable_remove (options, "prefix");
     hashtable_remove (options, "suffix");
 
-    /* test with debug level 1 */
+    /* Test with debug level 1. */
     hashtable_set (options, "debug", "1");
     WEE_CHECK_EVAL("1", "abc < def");
     ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
@@ -301,7 +301,7 @@ TEST(CoreEval, EvalCondition)
     hashtable_remove (options, "debug");
     hashtable_remove (options, "debug_output");
 
-    /* test with debug level 2 */
+    /* Test with debug level 2. */
     hashtable_set (options, "debug", "2");
     WEE_CHECK_EVAL("1", "abc < def");
     ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
@@ -472,7 +472,7 @@ TEST(CoreEval, EvalExpression)
 
     STRCMP_EQUAL(NULL, eval_expression (NULL, NULL, NULL, NULL));
 
-    /* test with simple strings */
+    /* Test with simple strings. */
     WEE_CHECK_EVAL("", "");
     WEE_CHECK_EVAL("a b c", "a b c");
     WEE_CHECK_EVAL("$", "$");
@@ -481,7 +481,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${}");
     WEE_CHECK_EVAL("", "${xyz}");
 
-    /* test raw string with syntax highlighting */
+    /* Test raw string with syntax highlighting. */
     WEE_CHECK_EVAL("", "${raw_hl:}");
     WEE_CHECK_EVAL("test", "${raw_hl:test}");
     WEE_CHECK_EVAL("\\${", "${raw_hl:\\${");
@@ -541,7 +541,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL(str_value,
                    "test_${raw_hl:${a:${b:${c:${d:${e:${f:${g:${h:${i:}}}}}}}}}}_end");
 
-    /* test raw string */
+    /* Test raw string. */
     WEE_CHECK_EVAL("", "${raw:}");
     WEE_CHECK_EVAL("test", "${raw:test}");
     WEE_CHECK_EVAL("\\${", "${raw:\\${");
@@ -550,7 +550,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("no", "${if:${raw:test?}==${raw:test}?yes:no}");
     WEE_CHECK_EVAL("16", "${length:${raw:${buffer.number}}}");
 
-    /* test string with syntax highlighting */
+    /* Test string with syntax highlighting. */
     WEE_CHECK_EVAL("", "${hl:}");
     WEE_CHECK_EVAL("test", "${hl:test}");
     snprintf (str_value, sizeof (str_value),
@@ -564,10 +564,10 @@ TEST(CoreEval, EvalExpression)
               gui_color_get_custom ("reset"));
     WEE_CHECK_EVAL(str_value, "test_${hl:${raw:${buffer.name}}}_end");
 
-    /* test eval of substring */
+    /* Test eval of substring. */
     WEE_CHECK_EVAL("\t", "${eval:${\\t}}");
 
-    /* test eval of condition */
+    /* Test eval of condition. */
     WEE_CHECK_EVAL("0", "${eval_cond:}");
     WEE_CHECK_EVAL("0", "${eval_cond:${buffer.number} == 2}");
     WEE_CHECK_EVAL("1", "${eval_cond:${buffer.number} == 1}");
@@ -578,14 +578,14 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("1", "${eval_cond:${var_cond_true}}");
     WEE_CHECK_EVAL("0", "${eval_cond:${var_cond_false}}");
 
-    /* test value from extra_vars */
+    /* Test value from extra_vars. */
     WEE_CHECK_EVAL("value", "${test}");
 
-    /* test escaped chars */
+    /* Test escaped chars. */
     WEE_CHECK_EVAL("\t", "${\\t}");
     WEE_CHECK_EVAL("\t", "${esc:\t}");
 
-    /* test range of chars */
+    /* Test range of chars. */
     WEE_CHECK_EVAL("0123456789", "${chars:digit}");
     WEE_CHECK_EVAL("0123456789abcdefABCDEF", "${chars:xdigit}");
     WEE_CHECK_EVAL("abcdefghijklmnopqrstuvwxyz", "${chars:lower}");
@@ -602,26 +602,26 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("àáâãäåæçèé", "${chars:à-é}");
     WEE_CHECK_EVAL("←↑→↓", "${chars:←-↓}");  /* U+2190 - U+2193 */
     WEE_CHECK_EVAL("▁▂▃▄▅▆▇█▉▊▋▌▍▎▏", "${chars:▁-▏}");  /* U+2581 - U+258F */
-    WEE_CHECK_EVAL("", "${chars:Z-A}");  /* invalid (reverse) */
+    WEE_CHECK_EVAL("", "${chars:Z-A}");  /* Invalid (reverse) */
 
-    /* test case conversion: to lower case */
+    /* Test case conversion: to lower case. */
     WEE_CHECK_EVAL("", "${lower:}");
     WEE_CHECK_EVAL("this is a test", "${lower:This is a TEST}");
     WEE_CHECK_EVAL("testé testé", "${lower:TESTÉ Testé}");
 
-    /* test case conversion: to upper case */
+    /* Test case conversion: to upper case. */
     WEE_CHECK_EVAL("", "${upper:}");
     WEE_CHECK_EVAL("THIS IS A TEST", "${upper:This is a TEST}");
     WEE_CHECK_EVAL("TESTÉ TESTÉ", "${upper:TESTÉ Testé}");
 
-    /* test hidden chars */
+    /* Test hidden chars. */
     WEE_CHECK_EVAL("", "${hide:invalid}");
     WEE_CHECK_EVAL("********", "${hide:*,password}");
     WEE_CHECK_EVAL("\u2603\u2603\u2603", "${hide:${esc:\u2603},abc}");
 
     /*
-     * hidden chars: the product (hide char length * number of chars) must not
-     * overflow the size of the allocated output (would corrupt the heap)
+     * Hidden chars: the product (hide char length * number of chars) must not
+     * overflow the size of the allocated output (would corrupt the heap).
      */
     big_size = 65536;
     big_expr = (char *)malloc ((big_size * 2) + 16);
@@ -638,7 +638,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", big_expr);
     free (big_expr);
 
-    /* test cut of chars (invalid values) */
+    /* Test cut of chars (invalid values). */
     WEE_CHECK_EVAL("", "${cut:}");
     WEE_CHECK_EVAL("", "${cut:0,}");
     WEE_CHECK_EVAL("", "${cut:a,,}");
@@ -646,7 +646,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${cutscr:0,}");
     WEE_CHECK_EVAL("", "${cutscr:a,,}");
 
-    /* test cut of chars */
+    /* Test cut of chars. */
     WEE_CHECK_EVAL("", "${cut:0,,}");
     WEE_CHECK_EVAL("", "${cutscr:0,,}");
 
@@ -725,7 +725,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("a+", "${cut:1,+,a${\\u0308}}");
     WEE_CHECK_EVAL("a\u0308", "${cutscr:1,+,a${\\u0308}}");
 
-    /* test reverse of string */
+    /* Test reverse of string. */
     WEE_CHECK_EVAL("!dlrow ,olleH", "${rev:Hello, world!}");
     WEE_CHECK_EVAL("界世はちにんこ", "${rev:こんにちは世界}");
     WEE_CHECK_EVAL("!dlrow30F\x19 ,olleH",
@@ -733,7 +733,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("Hello, \x19" "F03world!",
                    "${rev:${rev:Hello, ${color:red}world!}}");
 
-    /* test reverse of string (for screen) */
+    /* Test reverse of string (for screen). */
     WEE_CHECK_EVAL("!dlrow ,olleH", "${revscr:Hello, world!}");
     WEE_CHECK_EVAL("界世はちにんこ", "${revscr:こんにちは世界}");
     WEE_CHECK_EVAL("!dlrow\x19" "F03 ,olleH",
@@ -741,12 +741,12 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("Hello, \x19" "F03world!",
                    "${revscr:${revscr:Hello, ${color:red}world!}}");
 
-    /* test repeat of string (invalid values) */
+    /* Test repeat of string (invalid values). */
     WEE_CHECK_EVAL("", "${repeat:}");
     WEE_CHECK_EVAL("", "${repeat:0}");
     WEE_CHECK_EVAL("", "${repeat:a,x}");
 
-    /* test repeat of string */
+    /* Test repeat of string. */
     WEE_CHECK_EVAL("", "${repeat:-1,x}");
     WEE_CHECK_EVAL("", "${repeat:0,x}");
     WEE_CHECK_EVAL("x", "${repeat:1,x}");
@@ -754,7 +754,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("cbacbacba", "${repeat:3,${rev:abc}}");
     WEE_CHECK_EVAL("cbacba", "${repeat:${rev:20},${rev:abc}}");
 
-    /* test length of string */
+    /* Test length of string. */
     WEE_CHECK_EVAL("0", "${length:}");
     WEE_CHECK_EVAL("4", "${length:test}");
     WEE_CHECK_EVAL("7", "${length:こんにちは世界}");
@@ -765,7 +765,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("14", "${lengthscr:こんにちは世界}");
     WEE_CHECK_EVAL("14", "${lengthscr:${color:green}こんにちは世界}");
 
-    /* test split of string */
+    /* Test split of string. */
     WEE_CHECK_EVAL("", "${split:}");
     WEE_CHECK_EVAL("", "${split:1}");
     WEE_CHECK_EVAL("", "${split:1,}");
@@ -827,7 +827,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("def", "${split:2,,max_items=2,abc,def,ghi}");
     WEE_CHECK_EVAL("", "${split:2,,max_items=1,abc,def,ghi}");
 
-    /* test split of shell arguments */
+    /* Test split of shell arguments. */
     WEE_CHECK_EVAL("", "${split_shell:}");
     WEE_CHECK_EVAL("", "${split_shell:1}");
     WEE_CHECK_EVAL("", "${split_shell:1,}");
@@ -844,7 +844,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("first arg", "${split_shell:-2,\"first arg\" arg2}");
     WEE_CHECK_EVAL("", "${split_shell:-3,\"first arg\" arg2}");
 
-    /* test color */
+    /* Test color. */
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");
     WEE_CHECK_EVAL(gui_color_get_custom ("*214"), "${color:*214}");
     snprintf (str_value, sizeof (str_value),
@@ -862,12 +862,12 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL(str_value, "${color:weechat.color.chat_host}-test-");
     WEE_CHECK_EVAL("test", "${option.not.found}test");
 
-    /* test modifier (invalid values) */
+    /* Test modifier (invalid values). */
     WEE_CHECK_EVAL("test_", "test_${modifier:}");
     WEE_CHECK_EVAL("test_", "test_${modifier:xxx}");
     WEE_CHECK_EVAL("test_", "test_${modifier:xxx,data}");
 
-    /* test modifier */
+    /* Test modifier. */
     WEE_CHECK_EVAL("test_string", "test_${modifier:xxx,data,string}");
     WEE_CHECK_EVAL("test_no_color",
                    "${modifier:color_decode_ansi,0,test_\x1B[92mno_color}");
@@ -881,10 +881,10 @@ TEST(CoreEval, EvalExpression)
               gui_color_get_custom ("lightgreen"));
     WEE_CHECK_EVAL("test_\x1B[92mlightgreen", str_value);
 
-    /* test info */
+    /* Test info. */
     WEE_CHECK_EVAL(version_get_version (), "${info:version}");
 
-    /* test base_encode */
+    /* Test base_encode. */
     WEE_CHECK_EVAL("", "${base_encode:}");
     WEE_CHECK_EVAL("", "${base_encode:0,xxx}");
     WEE_CHECK_EVAL("", "${base_encode:100,test string}");
@@ -892,7 +892,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("ORSXG5BAON2HE2LOM4======", "${base_encode:32,test string}");
     WEE_CHECK_EVAL("dGVzdCBzdHJpbmc=", "${base_encode:64,test string}");
 
-    /* test base_decode */
+    /* Test base_decode. */
     WEE_CHECK_EVAL("", "${base_decode:}");
     WEE_CHECK_EVAL("", "${base_decode:0,xxx}");
     WEE_CHECK_EVAL("", "${base_decode:100,test string}");
@@ -900,7 +900,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("test string", "${base_decode:32,ORSXG5BAON2HE2LOM4======}");
     WEE_CHECK_EVAL("test string", "${base_decode:64,dGVzdCBzdHJpbmc=}");
 
-    /* test date */
+    /* Test date. */
     WEE_CHECK_EVAL("", "${date:}");
     value = eval_expression ("${date}", pointers, extra_vars, options);
     LONGS_EQUAL(19, strlen (value));
@@ -917,7 +917,7 @@ TEST(CoreEval, EvalExpression)
     time_now = time (NULL);
     CHECK((number >= time_now - 10) && (number <= time_now + 10));
 
-    /* test ternary operator */
+    /* Test ternary operator. */
     WEE_CHECK_EVAL("1", "${if:5>2}");
     WEE_CHECK_EVAL("0", "${if:1>7}");
     WEE_CHECK_EVAL("yes", "${if:5>2?yes:no}");
@@ -948,7 +948,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("0", "${if:${var_cond_false} == zzz}");
     WEE_CHECK_EVAL("1", "${if:${var_cond_false} != zzz}");
 
-    /* test calc */
+    /* Test calc. */
     WEE_CHECK_EVAL("0", "${calc:}");
     WEE_CHECK_EVAL("123", "${calc:123}");
     WEE_CHECK_EVAL("4", "${calc:1+3}");
@@ -956,7 +956,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("18", "${calc:(5+1)*3}");
     WEE_CHECK_EVAL("123129", "${calc:${repeat:2,123}+2*3}");
 
-    /* test random */
+    /* Test random. */
     WEE_CHECK_EVAL("0", "${random:}");
     WEE_CHECK_EVAL("0", "${random:1}");
     WEE_CHECK_EVAL("0", "${random:1,}");
@@ -975,11 +975,11 @@ TEST(CoreEval, EvalExpression)
               (long)RAND_MAX);
     WEE_CHECK_EVAL(str_value, str_expr);
 
-    /* test translation */
+    /* Test translation. */
     WEE_CHECK_EVAL("", "${translate:}");
     WEE_CHECK_EVAL("abcdef", "${translate:abcdef}");
 
-    /* test user variables */
+    /* Test user variables. */
     WEE_CHECK_EVAL("", "${define:}");
     WEE_CHECK_EVAL("", "${define:test}");
     WEE_CHECK_EVAL("", "${define:test,value}");
@@ -987,7 +987,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("8", "${define:test,${calc:5+3}}${test}");
     WEE_CHECK_EVAL("value", "${define:buffer,value}${buffer}");
 
-    /* test option */
+    /* Test option. */
     hashtable_set (secure_hashtable_data, "sec_option", "sec_value");
     WEE_CHECK_EVAL("sec_value", "${sec.data.sec_option}");
     hashtable_remove (secure_hashtable_data, "sec_option");
@@ -1000,11 +1000,11 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("=!=", "${weechat.look.prefix_error}");
     WEE_CHECK_EVAL("lightcyan", "${weechat.color.chat_nick}");
 
-    /* test buffer local variable */
+    /* Test buffer local variable. */
     WEE_CHECK_EVAL("core", "${plugin}");
     WEE_CHECK_EVAL("weechat", "${name}");
 
-    /* test hdata count */
+    /* Test hdata count. */
     WEE_CHECK_EVAL("0", "${hdata_count:}");
     WEE_CHECK_EVAL("0", "${hdata_count:xxx}");
     WEE_CHECK_EVAL("0", "${hdata_count:buffer[xxx]}");
@@ -1027,7 +1027,7 @@ TEST(CoreEval, EvalExpression)
     gui_buffer_close (test_buffer);
     WEE_CHECK_EVAL("0", "${hdata_count:layout[gui_layouts]}");
 
-    /* test hdata */
+    /* Test hdata. */
     hashtable_set (pointers, "my_null_pointer", (const void *)0x0);
     hashtable_set (pointers, "my_buffer_pointer", gui_buffers);
     hashtable_set (pointers, "my_other_pointer", (const void *)0x1234abcd);
@@ -1082,7 +1082,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${window.buffer.local_variables.()}");
     hashtable_remove_all (pointers);
 
-    /* test with another prefix/suffix */
+    /* Test with another prefix/suffix. */
     hashtable_set (options, "prefix", "<<<");
     WEE_CHECK_EVAL("${info:version}", "${info:version}");
     WEE_CHECK_EVAL("<info:version}", "<info:version}");
@@ -1097,7 +1097,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("1", "<<<buffer.number>>>");
     hashtable_remove_all (options);
 
-    /* test with debug level 1 */
+    /* Test with debug level 1. */
     hashtable_set (options, "debug", "1");
     WEE_CHECK_EVAL("fedcba", "${rev:abcdef}");
     ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
@@ -1110,7 +1110,7 @@ TEST(CoreEval, EvalExpression)
                  ptr_debug_output);
     hashtable_remove_all (options);
 
-    /* test with debug level 2 */
+    /* Test with debug level 2. */
     hashtable_set (options, "debug", "2");
     WEE_CHECK_EVAL("fedcba", "${rev:abcdef}");
     ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
@@ -1158,44 +1158,44 @@ TEST(CoreEval, EvalReplaceRegex)
                              NULL, NULL);
     CHECK(options);
 
-    /* replace regex by empty string (on empty string) */
+    /* Replace regex by empty string (on empty string). */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", ".*");
     hashtable_set (options, "regex_replace", "");
     WEE_CHECK_EVAL("", "");
 
-    /* replace regex (on empty string) */
+    /* Replace regex (on empty string). */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", ".*");
     hashtable_set (options, "regex_replace", "test");
     WEE_CHECK_EVAL("test", "");
 
-    /* replace regex by empty string */
+    /* Replace regex by empty string. */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", ".*");
     hashtable_set (options, "regex_replace", "");
     WEE_CHECK_EVAL("", "test");
 
-    /* replace empty regex */
+    /* Replace empty regex. */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", "");
     hashtable_set (options, "regex_replace", "abc");
     WEE_CHECK_EVAL("test", "test");
 
-    /* replace empty regex by empty string */
+    /* Replace empty regex by empty string. */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", "");
     hashtable_set (options, "regex_replace", "");
     WEE_CHECK_EVAL("test", "test");
 
-    /* add brackets around URLs (regex as string) */
+    /* Add brackets around URLs (regex as string). */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", "[a-zA-Z0-9_]+://[^ ]+");
     hashtable_set (options, "regex_replace", "[ ${re:0} ]");
     WEE_CHECK_EVAL("test: [ https://weechat.org/ ]",
                    "test: https://weechat.org/");
 
-    /* add brackets around URLs (compiled regex) */
+    /* Add brackets around URLs (compiled regex). */
     LONGS_EQUAL(0, string_regcomp (&regex, "[a-zA-Z0-9_]+://[^ ]+",
                                    REG_EXTENDED | REG_ICASE));
     hashtable_set (pointers, "regex", &regex);
@@ -1205,14 +1205,14 @@ TEST(CoreEval, EvalReplaceRegex)
                    "test: https://weechat.org/");
     regfree (&regex);
 
-    /* hide passwords (regex as string) */
+    /* Hide passwords (regex as string). */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", "(password=)([^ ]+)");
     hashtable_set (options, "regex_replace", "${re:1}${hide:*,${re:2}}");
     WEE_CHECK_EVAL("password=*** password=***",
                    "password=abc password=def");
 
-    /* hide passwords (compiled regex) */
+    /* Hide passwords (compiled regex). */
     LONGS_EQUAL(0, string_regcomp (&regex, "(password=)([^ ]+)",
                                    REG_EXTENDED | REG_ICASE));
     hashtable_set (pointers, "regex", &regex);
@@ -1222,26 +1222,26 @@ TEST(CoreEval, EvalReplaceRegex)
                    "password=abc password=def");
     regfree (&regex);
 
-    /* regex groups */
+    /* Regex groups */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", "([a-z]+) ([a-z]+) ([a-z]+) ([a-z]+)");
     hashtable_set (options, "regex_replace",
                    "${re:0} -- ${re:1} ${re:+} (${re:#})");
     WEE_CHECK_EVAL("abc def ghi jkl -- abc jkl (4)", "abc def ghi jkl");
 
-    /* invalid regex group */
+    /* Invalid regex group */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", "abc");
     hashtable_set (options, "regex_replace", "${re:z}");
     WEE_CHECK_EVAL("", "abc");
 
-    /* use replace index: add number before each item */
+    /* Use replace index: add number before each item. */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", "[^,]+");
     hashtable_set (options, "regex_replace", "${re:repl_index}.${re:0}");
     WEE_CHECK_EVAL("1.item1,2.item2,3.item3", "item1,item2,item3");
 
-    /* use replace index: replace each letter by its position */
+    /* Use replace index: replace each letter by its position. */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", ".");
     hashtable_set (options, "regex_replace", "${re:repl_index}");

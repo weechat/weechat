@@ -138,7 +138,7 @@ hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session)
     ptr_hook = weechat_hooks[HOOK_TYPE_CONNECT];
     while (ptr_hook)
     {
-        /* looking for the right hook using to the gnutls session pointer */
+        /* Looking for the right hook using to the gnutls session pointer. */
         if (!ptr_hook->deleted
             && HOOK_CONNECT(ptr_hook, gnutls_sess)
             && (*(HOOK_CONNECT(ptr_hook, gnutls_sess)) == tls_session))
@@ -175,7 +175,7 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
     ptr_hook = weechat_hooks[HOOK_TYPE_CONNECT];
     while (ptr_hook)
     {
-        /* looking for the right hook using to the gnutls session pointer */
+        /* Looking for the right hook using to the gnutls session pointer. */
         if (!ptr_hook->deleted
             && HOOK_CONNECT(ptr_hook, gnutls_sess)
             && (*(HOOK_CONNECT(ptr_hook, gnutls_sess)) == tls_session))
@@ -308,7 +308,7 @@ hook_connect_hdata_hook_connect_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

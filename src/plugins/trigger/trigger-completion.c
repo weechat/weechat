@@ -27,7 +27,7 @@ trigger_completion_triggers_cb (const void *pointer, void *data,
 {
     struct t_trigger *ptr_trigger;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -56,7 +56,7 @@ trigger_completion_triggers_default_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -84,7 +84,7 @@ trigger_completion_triggers_disabled_cb (const void *pointer, void *data,
 {
     struct t_trigger *ptr_trigger;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -115,7 +115,7 @@ trigger_completion_triggers_enabled_cb (const void *pointer, void *data,
 {
     struct t_trigger *ptr_trigger;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -146,7 +146,7 @@ trigger_completion_options_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -177,7 +177,7 @@ trigger_completion_option_value_cb (const void *pointer, void *data,
     int argc, index_option;
     struct t_trigger *ptr_trigger;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -239,7 +239,7 @@ trigger_completion_hooks_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -268,7 +268,7 @@ trigger_completion_hooks_filter_cb (const void *pointer, void *data,
     int i;
     char str_hook[128];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -376,7 +376,7 @@ trigger_completion_hook_arguments_cb (const void *pointer, void *data,
                                       struct t_gui_buffer *buffer,
                                       struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -400,7 +400,7 @@ trigger_completion_hook_conditions_cb (const void *pointer, void *data,
                                        struct t_gui_buffer *buffer,
                                        struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -425,7 +425,7 @@ trigger_completion_hook_regex_cb (const void *pointer, void *data,
                                   struct t_gui_buffer *buffer,
                                   struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -450,7 +450,7 @@ trigger_completion_hook_command_cb (const void *pointer, void *data,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -475,7 +475,7 @@ trigger_completion_hook_rc_cb (const void *pointer, void *data,
                                struct t_gui_buffer *buffer,
                                struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -500,7 +500,7 @@ trigger_completion_post_action_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;

@@ -96,7 +96,7 @@ TEST(CoreNetwork, End)
 
 TEST(CoreNetwork, IsIpAddress)
 {
-    /* invalid address */
+    /* Invalid address */
     LONGS_EQUAL(0, network_is_ip_address (NULL));
     LONGS_EQUAL(0, network_is_ip_address (""));
     LONGS_EQUAL(0, network_is_ip_address ("abc"));
@@ -107,11 +107,11 @@ TEST(CoreNetwork, IsIpAddress)
     LONGS_EQUAL(0, network_is_ip_address ("1.2.3.4.5"));
     LONGS_EQUAL(0, network_is_ip_address ("001.002.003.004"));
 
-    /* valid IPv4 */
+    /* Valid IPv4 */
     LONGS_EQUAL(1, network_is_ip_address ("127.0.0.1"));
     LONGS_EQUAL(1, network_is_ip_address ("1.2.3.4"));
 
-    /* valid IPv6 */
+    /* Valid IPv6 */
     LONGS_EQUAL(1, network_is_ip_address ("::1"));
     LONGS_EQUAL(1, network_is_ip_address ("2001:0db8:0000:85a3:0000:0000:ac1f:8001"));
     LONGS_EQUAL(1, network_is_ip_address ("2001:db8:0:85a3:0:0:ac1f:8001"));

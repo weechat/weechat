@@ -149,7 +149,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
                                         HOOK_PRINT(ptr_hook, tags_count),
                                         HOOK_PRINT(ptr_hook, tags_array))))
         {
-            /* run callback */
+            /* Run callback. */
             hook_callback_start (ptr_hook, &hook_exec_cb);
             (void) (HOOK_PRINT(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
@@ -209,7 +209,7 @@ hook_print_hdata_hook_print_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

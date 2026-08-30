@@ -6,7 +6,7 @@
 # This module finds if asciidoctor (version 1.5.4 or newer) is installed.
 
 if(ASCIIDOCTOR_FOUND)
-  # Already in cache, be silent
+  # Already in cache, be silent.
   set(ASCIIDOCTOR_FIND_QUIETLY TRUE)
 endif()
 

@@ -105,7 +105,7 @@ irc_ctcp_get_default_reply (const char *ctcp)
             return irc_ctcp_default_reply[i].reply;
     }
 
-    /* unknown CTCP */
+    /* Unknown CTCP */
     return NULL;
 }
 
@@ -126,7 +126,7 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
     snprintf (option_name, sizeof (option_name),
               "%s.%s", server->name, ctcp_lower);
 
-    /* search for CTCP in configuration file, for server */
+    /* Search for CTCP in configuration file, for server. */
     ptr_option = weechat_config_search_option (irc_config_file,
                                                irc_config_section_ctcp,
                                                option_name);
@@ -136,7 +136,7 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
         return weechat_config_string (ptr_option);
     }
 
-    /* search for CTCP in configuration file */
+    /* Search for CTCP in configuration file. */
     ptr_option = weechat_config_search_option (irc_config_file,
                                                irc_config_section_ctcp,
                                                ctcp_lower);
@@ -149,8 +149,8 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
     free (ctcp_lower);
 
     /*
-     * no CTCP reply found in config, then return default reply, or NULL
-     * for unknown CTCP
+     * No CTCP reply found in config, then return default reply, or NULL
+     * for unknown CTCP.
      */
     return irc_ctcp_get_default_reply (ctcp);
 }
@@ -421,8 +421,8 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
     list_messages = NULL;
 
     /*
-     * replace any "\001" by a space to prevent any firewall attack via
-     * nf_conntrack_irc (CVE-2022-2663)
+     * Replace any "\001" by a space to prevent any firewall attack via
+     * nf_conntrack_irc (CVE-2022-2663).
      */
     dup_ctcp = weechat_string_replace (ctcp, "\001", " ");
     if (!dup_ctcp)
@@ -435,8 +435,8 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
     if (arguments)
     {
         /*
-         * replace any "\001" by a space to prevent any firewall attack via
-         * nf_conntrack_irc (CVE-2022-2663)
+         * Replace any "\001" by a space to prevent any firewall attack via
+         * nf_conntrack_irc (CVE-2022-2663).
          */
         dup_args = weechat_string_replace (arguments, "\001", " ");
         if (!dup_args)
@@ -465,7 +465,7 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
             ptr_message = (const char *)weechat_arraylist_get (list_messages, i);
             if (!ptr_message)
                 break;
-            /* build arguments: '\001' + CTCP + ' ' + message + '\001' */
+            /* Build arguments: '\001' + CTCP + ' ' + message + '\001'. */
             if (weechat_asprintf (&message,
                                   "\001%s %s\001",
                                   dup_ctcp_upper,
@@ -492,7 +492,7 @@ int
 irc_ctcp_list_ctcp_cmp_cb (void *data, struct t_arraylist *arraylist,
                            void *pointer1, void *pointer2)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -507,7 +507,7 @@ void
 irc_ctcp_list_ctcp_free_cb (void *data, struct t_arraylist *arraylist,
                             void *pointer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -544,7 +544,7 @@ irc_ctcp_get_supported_ctcp (struct t_irc_server *server)
     if (!list_ctcp)
         return NULL;
 
-    /* add default CTCPs */
+    /* Add default CTCPs. */
     for (i = 0; irc_ctcp_default_reply[i].name; i++)
     {
         reply = irc_ctcp_get_reply (server, irc_ctcp_default_reply[i].name);
@@ -555,7 +555,7 @@ irc_ctcp_get_supported_ctcp (struct t_irc_server *server)
         }
     }
 
-    /* add customized CTCPs */
+    /* Add customized CTCPs. */
     hdata_config_section = weechat_hdata_get ("config_section");
     hdata_config_option = weechat_hdata_get ("config_option");
     ptr_option = weechat_hdata_pointer (hdata_config_section,
@@ -573,7 +573,7 @@ irc_ctcp_get_supported_ctcp (struct t_irc_server *server)
         ptr_option = weechat_hdata_move (hdata_config_option, ptr_option, 1);
     }
 
-    /* add other CTCPs */
+    /* Add other CTCPs. */
     weechat_arraylist_add (list_ctcp, strdup ("action"));
     weechat_arraylist_add (list_ctcp, strdup ("dcc"));
     weechat_arraylist_add (list_ctcp, strdup ("ping"));
@@ -838,8 +838,8 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
         if (pos_file[0] == '"')
         {
             /*
-             * the file name is wrapped in double-quotes; find the terminating
-             * double-quote
+             * The file name is wrapped in double-quotes; find the terminating
+             * double-quote.
              */
             pos = strrchr (pos_file, '"');
             if (!pos || (pos == pos_file) || !pos[1])
@@ -942,10 +942,10 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
             pos_token = NULL;
         }
 
-        /* remove double quotes around filename */
+        /* Remove double quotes around filename. */
         filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
 
-        /* add DCC file via xfer plugin */
+        /* Add DCC file via xfer plugin. */
         infolist = weechat_infolist_new ();
         if (infolist)
         {
@@ -1013,8 +1013,8 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
         if (pos_file[0] == '"')
         {
             /*
-             * the file name is wrapped in double-quotes; find the terminating
-             * double-quote
+             * The file name is wrapped in double-quotes; find the terminating
+             * double-quote.
              */
             pos = strrchr (pos_file, '"');
             if (!pos || (pos == pos_file) || !pos[1])
@@ -1095,10 +1095,10 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
             pos_token = NULL;
         }
 
-        /* remove double quotes around filename */
+        /* Remove double quotes around filename. */
         filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
 
-        /* accept resume via xfer plugin */
+        /* Accept resume via xfer plugin. */
         infolist = weechat_infolist_new ();
         if (infolist)
         {
@@ -1157,8 +1157,8 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
         if (pos_file[0] == '"')
         {
             /*
-             * the file name is wrapped in double-quotes; find the terminating
-             * double-quote
+             * The file name is wrapped in double-quotes; find the terminating
+             * double-quote.
              */
             pos = strrchr (pos_file, '"');
             if (!pos || (pos == pos_file) || !pos[1])
@@ -1239,10 +1239,10 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
             pos_token = NULL;
         }
 
-        /* remove double quotes around filename */
+        /* Remove double quotes around filename. */
         filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
 
-        /* resume file via xfer plugin */
+        /* Resume file via xfer plugin. */
         infolist = weechat_infolist_new ();
         if (infolist)
         {
@@ -1314,7 +1314,7 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
             pos_addr++;
         }
 
-        /* look for DCC port */
+        /* Look for DCC port. */
         pos_port = strchr (pos_addr, ' ');
         if (!pos_port)
         {
@@ -1347,7 +1347,7 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
             return;
         }
 
-        /* add DCC chat via xfer plugin */
+        /* Add DCC chat via xfer plugin. */
         infolist = weechat_infolist_new ();
         if (infolist)
         {
@@ -1471,7 +1471,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                 }
                 else
                 {
-                    /* standard action */
+                    /* Standard action */
                     weechat_printf_datetime_tags (
                         channel->buffer,
                         ctxt->date,
@@ -1567,7 +1567,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
         {
             irc_ctcp_recv_dcc (ctxt, pos_args);
         }
-        /* other CTCP */
+        /* Other CTCP */
         else
         {
             reply = irc_ctcp_get_reply (ctxt->server, ptr_args + 1);

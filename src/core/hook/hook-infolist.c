@@ -98,7 +98,7 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
     struct t_hook_exec_cb hook_exec_cb;
     struct t_infolist *value;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (!infolist_name || !infolist_name[0])
@@ -133,7 +133,7 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
 
     hook_exec_end ();
 
-    /* infolist not found */
+    /* Infolist not found */
     return NULL;
 }
 
@@ -182,7 +182,7 @@ hook_infolist_hdata_hook_infolist_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

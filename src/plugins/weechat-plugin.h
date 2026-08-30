@@ -19,7 +19,7 @@ extern "C" {
 #include <sys/types.h>
 #include <sys/socket.h>
 
-/* some systems like GNU/Hurd do not define PATH_MAX */
+/* Some systems like GNU/Hurd do not define PATH_MAX. */
 #ifndef PATH_MAX
     #define PATH_MAX 4096
 #endif /* PATH_MAX */
@@ -64,7 +64,7 @@ struct t_weelist_item;
  */
 #define WEECHAT_PLUGIN_API_VERSION "20260816-04"
 
-/* macros for defining plugin infos */
+/* Macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
     char weechat_plugin_name[] = __name;                                \
     char weechat_plugin_api_version[] = WEECHAT_PLUGIN_API_VERSION;
@@ -79,48 +79,48 @@ struct t_weelist_item;
 #define WEECHAT_PLUGIN_PRIORITY(__priority)     \
     int weechat_plugin_priority = __priority;
 
-/* return codes for plugin functions */
+/* Return codes for plugin functions */
 #define WEECHAT_RC_OK                               0
 #define WEECHAT_RC_OK_EAT                           1
 #define WEECHAT_RC_ERROR                           -1
 
-/* flags for string_split function */
+/* Flags for string_split function */
 #define WEECHAT_STRING_SPLIT_STRIP_LEFT            (1 << 0)
 #define WEECHAT_STRING_SPLIT_STRIP_RIGHT           (1 << 1)
 #define WEECHAT_STRING_SPLIT_COLLAPSE_SEPS         (1 << 2)
 #define WEECHAT_STRING_SPLIT_KEEP_EOL              (1 << 3)
 
-/* return codes for config read functions/callbacks */
+/* Return codes for config read functions/callbacks */
 #define WEECHAT_CONFIG_READ_OK                      0
 #define WEECHAT_CONFIG_READ_MEMORY_ERROR           -1
 #define WEECHAT_CONFIG_READ_FILE_NOT_FOUND         -2
 
-/* return codes for config write functions/callbacks */
+/* Return codes for config write functions/callbacks */
 #define WEECHAT_CONFIG_WRITE_OK                     0
 #define WEECHAT_CONFIG_WRITE_ERROR                 -1
 #define WEECHAT_CONFIG_WRITE_MEMORY_ERROR          -2
 
-/* null value for option */
+/* Null value for option */
 #define WEECHAT_CONFIG_OPTION_NULL                 "null"
 
-/* return codes for config option set */
+/* Return codes for config option set */
 #define WEECHAT_CONFIG_OPTION_SET_OK_CHANGED        2
 #define WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE     1
 #define WEECHAT_CONFIG_OPTION_SET_ERROR             0
 #define WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND -1
 
-/* return codes for config option unset */
+/* Return codes for config option unset */
 #define WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET     0
 #define WEECHAT_CONFIG_OPTION_UNSET_OK_RESET        1
 #define WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED      2
 #define WEECHAT_CONFIG_OPTION_UNSET_ERROR          -1
 
-/* list management (order of elements) */
+/* List management (order of elements) */
 #define WEECHAT_LIST_POS_SORT                       "sort"
 #define WEECHAT_LIST_POS_BEGINNING                  "beginning"
 #define WEECHAT_LIST_POS_END                        "end"
 
-/* type for keys and values in hashtable */
+/* Type for keys and values in hashtable */
 #define WEECHAT_HASHTABLE_INTEGER                   "integer"
 #define WEECHAT_HASHTABLE_STRING                    "string"
 #define WEECHAT_HASHTABLE_POINTER                   "pointer"
@@ -128,7 +128,7 @@ struct t_weelist_item;
 #define WEECHAT_HASHTABLE_TIME                      "time"
 #define WEECHAT_HASHTABLE_LONGLONG                  "longlong"
 
-/* types for hdata */
+/* Types for hdata */
 enum t_weechat_hdata
 {
     WEECHAT_HDATA_OTHER = 0,
@@ -145,23 +145,23 @@ enum t_weechat_hdata
     WEECHAT_NUM_HDATA_TYPES,
 };
 
-/* flags for hdata lists */
+/* Flags for hdata lists */
 #define WEECHAT_HDATA_LIST_CHECK_POINTERS           1
 
-/* buffer hotlist */
+/* Buffer hotlist */
 #define WEECHAT_HOTLIST_LOW                         "0"
 #define WEECHAT_HOTLIST_MESSAGE                     "1"
 #define WEECHAT_HOTLIST_PRIVATE                     "2"
 #define WEECHAT_HOTLIST_HIGHLIGHT                   "3"
 
 /*
- * process return code (for callback):
+ * Process return code (for callback):
  *   if >= 0, the process ended and it's return code of command
  *   if -1, the process is still running
  *   if -2, the process ended with an error
  *   if -3, the callback is called in the child process (exec of function)
  *          (note: the return code -3 is NEVER sent to script plugins,
- *           it can be used only in C API)
+ *           it can be used only in C API).
  */
 #define WEECHAT_HOOK_PROCESS_RUNNING                -1
 #define WEECHAT_HOOK_PROCESS_ERROR                  -2
@@ -172,7 +172,7 @@ enum t_weechat_hdata
 #define WEECHAT_HOOK_CONNECT_IPV6_AUTO              1
 #define WEECHAT_HOOK_CONNECT_IPV6_FORCE             2
 
-/* connect status for connection hooked */
+/* Connect status for connection hooked */
 #define WEECHAT_HOOK_CONNECT_OK                     0
 #define WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND      1
 #define WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND   2
@@ -185,16 +185,16 @@ enum t_weechat_hdata
 #define WEECHAT_HOOK_CONNECT_TIMEOUT                9
 #define WEECHAT_HOOK_CONNECT_SOCKET_ERROR           10
 
-/* action for gnutls callback: verify or set certificate */
+/* Action for gnutls callback: verify or set certificate */
 #define WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT  0
 #define WEECHAT_HOOK_CONNECT_GNUTLS_CB_SET_CERT     1
 
-/* type of data for signal hooked */
+/* Type of data for signal hooked */
 #define WEECHAT_HOOK_SIGNAL_STRING                  "string"
 #define WEECHAT_HOOK_SIGNAL_INT                     "int"
 #define WEECHAT_HOOK_SIGNAL_POINTER                 "pointer"
 
-/* macro to format string with variable args, using dynamic buffer size */
+/* Macro to format string with variable args, using dynamic buffer size */
 #define weechat_va_format(__format)                                     \
     va_list __argptr;                                                   \
     int __num_bytes;                                                    \
@@ -225,17 +225,17 @@ enum t_weechat_hdata
         }                                                               \
     }
 
-/* macro to concatenate strings */
+/* Macro to concatenate strings */
 #define WEECHAT_STR_CONCAT(separator, argz...)                          \
     weechat_string_concat (separator, ##argz, NULL)
 
 /*
- * string used at beginning of arguments description to format the help text
- * and translate it line by line
+ * String used at beginning of arguments description to format the help text
+ * and translate it line by line.
  */
 #define WEECHAT_HOOK_COMMAND_STR_FORMATTED "[fmt]"
 
-/* macro to concatenate strings for description of command arguments */
+/* Macro to concatenate strings for description of command arguments */
 #define WEECHAT_CMD_ARGS_DESC(args...)                                  \
     WEECHAT_STR_CONCAT(                                                 \
         "\n",                                                           \
@@ -243,8 +243,8 @@ enum t_weechat_hdata
         ##args)
 
 /*
- * macro to return error in case of missing arguments in callback of
- * hook_command
+ * Macro to return error in case of missing arguments in callback of
+ * hook_command.
  */
 #define WEECHAT_COMMAND_MIN_ARGS(__min_args, __option)                  \
     if (argc < __min_args)                                              \
@@ -261,7 +261,7 @@ enum t_weechat_hdata
         return WEECHAT_RC_ERROR;                                        \
     }
 
-/* macro to return error in callback of hook_command */
+/* Macro to return error in callback of hook_command */
 #define WEECHAT_COMMAND_ERROR                                           \
     {                                                                   \
         weechat_printf_datetime_tags (                                  \
@@ -274,7 +274,7 @@ enum t_weechat_hdata
         return WEECHAT_RC_ERROR;                                        \
     }
 
-/* macro to convert integer to string */
+/* Macro to convert integer to string */
 #define TO_STR_HELPER(x) #x
 #define TO_STR(x) TO_STR_HELPER(x)
 
@@ -302,9 +302,10 @@ struct t_weechat_plugin
     struct t_weechat_plugin *next_plugin; /* link to next plugin            */
 
     /*
-     * plugin functions (API)
+     * Plugin functions (API).
+     *
      * WeeChat developers: if you add functions in API, update value of
-     * constant WEECHAT_PLUGIN_API_VERSION
+     * constant WEECHAT_PLUGIN_API_VERSION.
      */
 
     /* plugins */
@@ -1292,7 +1293,7 @@ extern int weechat_plugin_init (struct t_weechat_plugin *plugin,
                                 int argc, char *argv[]);
 extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
-/* macros for easy call to plugin API */
+/* Macros for easy call to plugin API */
 
 /* plugins */
 #define weechat_plugin_get_name(__plugin)                               \

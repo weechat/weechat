@@ -44,7 +44,7 @@ irc_nick_valid (struct t_irc_channel *channel, struct t_irc_nick *nick)
             return 1;
     }
 
-    /* nick not found */
+    /* Nick not found */
     return 0;
 }
 
@@ -70,27 +70,27 @@ irc_nick_is_nick (struct t_irc_server *server, const char *string)
         server->prefix_chars : irc_server_prefix_chars_default;
     ptr_chantypes = irc_server_get_chantypes (server);
 
-    /* check length of nick in bytes (if we have a limit in the server) */
+    /* Check length of nick in bytes (if we have a limit in the server). */
     if (server && (server->nick_max_length > 0)
         && (int)strlen (string) > server->nick_max_length)
     {
-        /* nick is too long */
+        /* Nick is too long. */
         return 0;
     }
 
-    /* check if nick is UTF-8 valid */
+    /* Check if nick is UTF-8 valid. */
     if ((utf8mapping == IRC_SERVER_UTF8MAPPING_RFC8265)
         && !weechat_utf8_is_valid (string, -1, NULL))
     {
-        /* invalid UTF-8 */
+        /* Invalid UTF-8 */
         return 0;
     }
 
-    /* check the first char in the nick */
+    /* Check the first char in the nick. */
     if ((utf8mapping == IRC_SERVER_UTF8MAPPING_NONE)
         && strchr ("0123456789-", string[0]))
     {
-        /* first char is invalid */
+        /* First char is invalid. */
         return 0;
     }
     if (strchr (ptr_prefix_chars, string[0])
@@ -99,7 +99,7 @@ irc_nick_is_nick (struct t_irc_server *server, const char *string)
         return 0;
     }
 
-    /* check if there are forbidden chars in nick */
+    /* Check if there are forbidden chars in nick. */
     ptr_string = string;
     while (ptr_string && ptr_string[0])
     {
@@ -203,10 +203,10 @@ irc_nick_set_prefixes (struct t_irc_server *server, struct t_irc_nick *nick,
     if (!nick)
         return;
 
-    /* reset all prefixes in nick */
+    /* Reset all prefixes in nick. */
     memset (nick->prefixes, ' ', strlen (nick->prefixes));
 
-    /* add prefixes in nick */
+    /* Add prefixes in nick. */
     if (prefixes)
     {
         for (ptr_prefixes = prefixes; ptr_prefixes[0]; ptr_prefixes++)
@@ -215,7 +215,7 @@ irc_nick_set_prefixes (struct t_irc_server *server, struct t_irc_nick *nick,
         }
     }
 
-    /* set current prefix */
+    /* Set current prefix. */
     irc_nick_set_current_prefix (nick);
 }
 
@@ -229,14 +229,14 @@ irc_nick_set_host (struct t_irc_nick *nick, const char *host)
     if (!nick)
         return;
 
-    /* if host is the same, just return */
+    /* If host is the same, just return. */
     if ((!nick->host && !host)
         || (nick->host && host && strcmp (nick->host, host) == 0))
     {
         return;
     }
 
-    /* update the host in nick */
+    /* Update the host in nick. */
     free (nick->host);
     nick->host = (host) ? strdup (host) : NULL;
 }
@@ -350,7 +350,7 @@ irc_nick_get_prefix_color_name (struct t_irc_server *server, char prefix)
                 return color;
         }
 
-        /* fallback to "*" if no color is found with mode */
+        /* Fallback to "*" if no color is found with mode. */
         mode[0] = '*';
         color = weechat_hashtable_get (irc_config_hashtable_nick_prefixes,
                                        mode);
@@ -358,7 +358,7 @@ irc_nick_get_prefix_color_name (struct t_irc_server *server, char prefix)
             return color;
     }
 
-    /* no color by default */
+    /* No color by default */
     return default_color;
 }
 
@@ -524,11 +524,11 @@ irc_nick_new_in_channel (struct t_irc_server *server,
     struct t_irc_nick *new_nick;
     int length;
 
-    /* alloc memory for new nick */
+    /* Allocate memory for new nick. */
     if ((new_nick = malloc (sizeof (*new_nick))) == NULL)
         return NULL;
 
-    /* initialize new nick */
+    /* Initialize new nick. */
     new_nick->name = strdup (nickname);
     new_nick->host = (host) ? strdup (host) : NULL;
     new_nick->account = (account) ? strdup (account) : NULL;
@@ -558,7 +558,7 @@ irc_nick_new_in_channel (struct t_irc_server *server,
     else
         new_nick->color = irc_nick_find_color (new_nick->name);
 
-    /* add nick to end of list */
+    /* Add nick to end of list. */
     new_nick->prev_nick = channel->last_nick;
     if (channel->last_nick)
         channel->last_nick->next_nick = new_nick;
@@ -593,17 +593,17 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     if (!channel->nicks)
         irc_channel_add_nicklist_groups (server, channel);
 
-    /* nick already exists on this channel? */
+    /* Nick already exists on this channel? */
     ptr_nick = irc_nick_search (server, channel, nickname);
     if (ptr_nick)
     {
-        /* remove old nick from nicklist */
+        /* Remove old nick from nicklist. */
         irc_nick_nicklist_remove (server, channel, ptr_nick);
 
-        /* update nick prefixes */
+        /* Update nick prefixes. */
         irc_nick_set_prefixes (server, ptr_nick, prefixes);
 
-        /* add new nick in nicklist */
+        /* Add new nick in nicklist. */
         irc_nick_nicklist_add (server, channel, ptr_nick);
 
         return ptr_nick;
@@ -614,10 +614,10 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     if (!new_nick)
         return NULL;
 
-    /* add nick to buffer nicklist */
+    /* Add nick to buffer nicklist. */
     irc_nick_nicklist_add (server, channel, new_nick);
 
-    /* all is OK, return address of new nick */
+    /* All is OK, return address of new nick. */
     return new_nick;
 }
 
@@ -631,15 +631,15 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
 {
     int nick_is_me;
 
-    /* remove nick from nicklist */
+    /* Remove nick from nicklist. */
     irc_nick_nicklist_remove (server, channel, nick);
 
-    /* update nicks speaking */
+    /* Update nicks speaking. */
     nick_is_me = (irc_server_strcasecmp (server, new_nick, server->nick) == 0) ? 1 : 0;
     if (!nick_is_me)
         irc_channel_nick_speaking_rename (channel, nick->name, new_nick);
 
-    /* change nickname */
+    /* Change nickname. */
     free (nick->name);
     nick->name = strdup (new_nick);
     free (nick->color);
@@ -648,7 +648,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     else
         nick->color = irc_nick_find_color (nick->name);
 
-    /* add nick in nicklist */
+    /* Add nick in nicklist. */
     irc_nick_nicklist_add (server, channel, nick);
 }
 
@@ -667,14 +667,14 @@ irc_nick_set_mode (struct t_irc_server *server, struct t_irc_channel *channel,
     if (index < 0)
         return;
 
-    /* remove nick from nicklist */
+    /* Remove nick from nicklist. */
     irc_nick_nicklist_remove (server, channel, nick);
 
-    /* set flag */
+    /* Set flag. */
     prefix_chars = irc_server_get_prefix_chars (server);
     irc_nick_set_prefix (server, nick, set, prefix_chars[index]);
 
-    /* add nick in nicklist */
+    /* Add nick in nicklist. */
     irc_nick_nicklist_add (server, channel, nick);
 
     if (irc_server_strcasecmp (server, nick->name, server->nick) == 0)
@@ -745,10 +745,10 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
     if (!channel || !nick)
         return;
 
-    /* remove nick from nicklist */
+    /* Remove nick from nicklist. */
     irc_nick_nicklist_remove (server, channel, nick);
 
-    /* remove nick */
+    /* Remove nick. */
     if (channel->last_nick == nick)
         channel->last_nick = nick->prev_nick;
     if (nick->prev_nick)
@@ -764,7 +764,7 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
 
     channel->nicks_count--;
 
-    /* free data */
+    /* Free data. */
     free (nick->name);
     free (nick->host);
     free (nick->prefixes);
@@ -789,16 +789,16 @@ irc_nick_free_all (struct t_irc_server *server, struct t_irc_channel *channel)
     if (!channel)
         return;
 
-    /* remove all nicks for the channel */
+    /* Remove all nicks for the channel. */
     while (channel->nicks)
     {
         irc_nick_free (server, channel, channel->nicks);
     }
 
-    /* remove all groups in nicklist */
+    /* Remove all groups in nicklist. */
     weechat_nicklist_remove_all (channel->buffer);
 
-    /* should be zero, but prevent any bug :D */
+    /* Should be zero, but prevent any bug :D */
     channel->nicks_count = 0;
 
     irc_channel_set_buffer_modes (server, channel);
@@ -827,7 +827,7 @@ irc_nick_search (struct t_irc_server *server, struct t_irc_channel *channel,
             return ptr_nick;
     }
 
-    /* nick not found */
+    /* Nick not found */
     return NULL;
 }
 
@@ -886,7 +886,7 @@ irc_nick_count (struct t_irc_server *server, struct t_irc_channel *channel,
         }
         if (!mode_found)
         {
-            /* regular user */
+            /* Regular user */
             nicks_by_mode[*size - 1]++;
         }
     }
@@ -1085,27 +1085,27 @@ irc_nick_default_ban_mask (struct t_irc_nick *nick)
     strcpy (ident, (user[0] != '~') ? user : "*");
     pos_hostname++;
 
-    /* replace nick */
+    /* Replace nick. */
     temp = weechat_string_replace (ptr_ban_mask, "$nick", nick->name);
     if (!temp)
         return NULL;
     res = temp;
 
-    /* replace user */
+    /* Replace user. */
     temp = weechat_string_replace (res, "$user", user);
     free (res);
     if (!temp)
         return NULL;
     res = temp;
 
-    /* replace ident */
+    /* Replace ident. */
     temp = weechat_string_replace (res, "$ident", ident);
     free (res);
     if (!temp)
         return NULL;
     res = temp;
 
-    /* replace hostname */
+    /* Replace hostname. */
     temp = weechat_string_replace (res, "$host", pos_hostname);
     free (res);
     if (!temp)
@@ -1125,7 +1125,7 @@ irc_nick_hdata_nick_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

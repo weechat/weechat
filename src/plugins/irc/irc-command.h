@@ -43,7 +43,7 @@ struct t_irc_channel;
 #define IRC_COMMAND_KEEP_SPACES weechat_hook_set (ptr_hook, "keep_spaces_right", "1")
 
 /*
- * list of supported capabilities
+ * List of supported capabilities
  * (enabled if supported by the server + completion in command /cap)
  */
 #define IRC_COMMAND_CAP_SUPPORTED                                       \
@@ -51,7 +51,7 @@ struct t_irc_channel;
     "draft/multiline|echo-message|extended-join|invite-notify|"         \
     "message-tags|multi-prefix|server-time|setname|userhost-in-names"
 
-/* list of supported CTCPs (for completion in command /ctcp) */
+/* List of supported CTCPs (for completion in command /ctcp) */
 #define IRC_COMMAND_CTCP_SUPPORTED_COMPLETION \
     "action|clientinfo|ping|source|time|version"
 

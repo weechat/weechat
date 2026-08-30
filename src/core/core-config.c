@@ -56,10 +56,10 @@
 #include "../plugins/plugin.h"
 
 
-/* weechat config */
+/* WeeChat config */
 struct t_config_file *weechat_config_file = NULL;
 
-/* sections */
+/* Sections */
 struct t_config_section *weechat_config_section_debug = NULL;
 struct t_config_section *weechat_config_section_startup = NULL;
 struct t_config_section *weechat_config_section_look = NULL;
@@ -81,7 +81,7 @@ struct t_config_section *weechat_config_section_key[GUI_KEY_NUM_CONTEXTS] = {
     NULL, NULL, NULL, NULL, NULL,
 };
 
-/* config, startup section */
+/* Config, startup section */
 
 struct t_config_option *config_startup_command_after_plugins = NULL;
 struct t_config_option *config_startup_command_before_plugins = NULL;
@@ -89,7 +89,7 @@ struct t_config_option *config_startup_display_logo = NULL;
 struct t_config_option *config_startup_display_version = NULL;
 struct t_config_option *config_startup_sys_rlimit = NULL;
 
-/* config, look & feel section */
+/* Config, look & feel section */
 
 struct t_config_option *config_look_align_end_of_lines = NULL;
 struct t_config_option *config_look_align_multiline_words = NULL;
@@ -219,7 +219,7 @@ struct t_config_option *config_look_window_title = NULL;
 struct t_config_option *config_look_word_chars_highlight = NULL;
 struct t_config_option *config_look_word_chars_input = NULL;
 
-/* config, colors section */
+/* Config, colors section */
 
 struct t_config_option *config_color_bar_more = NULL;
 struct t_config_option *config_color_chat = NULL;
@@ -289,7 +289,7 @@ struct t_config_option *config_color_status_nicklist_count = NULL;
 struct t_config_option *config_color_status_number = NULL;
 struct t_config_option *config_color_status_time = NULL;
 
-/* config, completion section */
+/* Config, completion section */
 
 struct t_config_option *config_completion_base_word_until_cursor = NULL;
 struct t_config_option *config_completion_case_sensitive = NULL;
@@ -310,7 +310,7 @@ struct t_config_option *config_completion_partial_completion_count = NULL;
 struct t_config_option *config_completion_partial_completion_other = NULL;
 struct t_config_option *config_completion_partial_completion_templates = NULL;
 
-/* config, history section */
+/* Config, history section */
 
 struct t_config_option *config_history_display_default = NULL;
 struct t_config_option *config_history_max_buffer_lines_minutes = NULL;
@@ -318,7 +318,7 @@ struct t_config_option *config_history_max_buffer_lines_number = NULL;
 struct t_config_option *config_history_max_commands = NULL;
 struct t_config_option *config_history_max_visited_buffers = NULL;
 
-/* config, network section */
+/* Config, network section */
 
 struct t_config_option *config_network_connection_timeout = NULL;
 struct t_config_option *config_network_gnutls_ca_system = NULL;
@@ -326,14 +326,14 @@ struct t_config_option *config_network_gnutls_ca_user = NULL;
 struct t_config_option *config_network_gnutls_handshake_timeout = NULL;
 struct t_config_option *config_network_proxy_curl = NULL;
 
-/* config, plugin section */
+/* Config, plugin section */
 
 struct t_config_option *config_plugin_autoload = NULL;
 struct t_config_option *config_plugin_extension = NULL;
 struct t_config_option *config_plugin_path = NULL;
 struct t_config_option *config_plugin_save_config_on_unload = NULL;
 
-/* config, signal section */
+/* Config, signal section */
 
 struct t_config_option *config_signal_sighup = NULL;
 struct t_config_option *config_signal_sigquit = NULL;
@@ -341,7 +341,7 @@ struct t_config_option *config_signal_sigterm = NULL;
 struct t_config_option *config_signal_sigusr1 = NULL;
 struct t_config_option *config_signal_sigusr2 = NULL;
 
-/* other */
+/* Other */
 
 int config_loading = 0;
 int config_length_nick_prefix_suffix = 0;
@@ -383,7 +383,7 @@ void
 config_change_sys_rlimit (const void *pointer, void *data,
                           struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -403,7 +403,7 @@ config_check_config_permissions (const void *pointer, void *data,
 {
     const char *ptr_perm;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -446,7 +446,7 @@ void
 config_change_save_config_on_exit (const void *pointer, void *data,
                                    struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -470,7 +470,7 @@ void
 config_change_save_layout_on_exit (const void *pointer, void *data,
                                    struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -486,7 +486,7 @@ void
 config_change_window_title (const void *pointer, void *data,
                             struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -537,7 +537,7 @@ config_set_word_chars (const char *str_word_chars,
 
     for (i = 0; i < *word_chars_count; i++)
     {
-        /* init structure */
+        /* Init structure. */
         (*word_chars)[i].exclude = 0;
         (*word_chars)[i].wc_class = (wctype_t)0;
         (*word_chars)[i].char1 = 0;
@@ -555,7 +555,7 @@ config_set_word_chars (const char *str_word_chars,
             pos = strchr (ptr_item, '-');
             if (pos && (pos > ptr_item) && pos[1])
             {
-                /* range: char1 -> char2 */
+                /* Range: char1 -> char2 */
                 /* char1 */
                 item = string_strndup (ptr_item, pos - ptr_item);
                 item2 = string_convert_escaped_chars (item);
@@ -571,7 +571,7 @@ config_set_word_chars (const char *str_word_chars,
             }
             else
             {
-                /* one char or wide character class */
+                /* One char or wide character class */
                 (*word_chars)[i].wc_class = wctype (ptr_item);
                 if ((*word_chars)[i].wc_class == (wctype_t)0)
                 {
@@ -595,7 +595,7 @@ void
 config_change_word_chars_highlight (const void *pointer, void *data,
                                     struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -613,7 +613,7 @@ void
 config_change_word_chars_input (const void *pointer, void *data,
                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -631,7 +631,7 @@ void
 config_change_buffers (const void *pointer, void *data,
                        struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -647,7 +647,7 @@ void
 config_change_buffer_content (const void *pointer, void *data,
                               struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -664,7 +664,7 @@ void
 config_change_mouse (const void *pointer, void *data,
                      struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -686,7 +686,7 @@ void
 config_change_buffer_auto_renumber (const void *pointer, void *data,
                                     struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -703,7 +703,7 @@ void
 config_change_buffer_notify_default (const void *pointer, void *data,
                                      struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -719,7 +719,7 @@ void
 config_change_buffer_time_format (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -738,7 +738,7 @@ void
 config_change_buffer_time_same (const void *pointer, void *data,
                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -804,7 +804,7 @@ config_change_look_nick_color_force (const void *pointer, void *data,
     char **items, *pos;
     int num_items, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -880,7 +880,7 @@ void
 config_change_nick_prefix_suffix (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -901,7 +901,7 @@ void
 config_change_prefix_same_nick (const void *pointer, void *data,
                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -921,7 +921,7 @@ void
 config_change_prefix_same_nick_middle (const void *pointer, void *data,
                                        struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -941,7 +941,7 @@ void
 config_change_eat_newline_glitch (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -971,7 +971,7 @@ config_change_emphasized_attributes (const void *pointer, void *data,
 {
     const char *ptr_attributes, *ptr_attr;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -998,7 +998,7 @@ void
 config_change_highlight_disable_regex (const void *pointer, void *data,
                                        struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1035,7 +1035,7 @@ void
 config_change_highlight_regex (const void *pointer, void *data,
                                struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1072,7 +1072,7 @@ void
 config_change_highlight_tags (const void *pointer, void *data,
                               struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1101,7 +1101,7 @@ void
 config_change_hotlist_sort (const void *pointer, void *data,
                             struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1135,7 +1135,7 @@ void
 config_change_item_away (const void *pointer, void *data,
                          struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1151,7 +1151,7 @@ void
 config_change_item_time_format (const void *pointer, void *data,
                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1194,7 +1194,7 @@ void
 config_change_paste_bracketed (const void *pointer, void *data,
                                struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1211,7 +1211,7 @@ void
 config_change_read_marker (const void *pointer, void *data,
                            struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1227,7 +1227,7 @@ void
 config_change_prefix (const void *pointer, void *data,
                       struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1243,7 +1243,7 @@ void
 config_change_prefix_align_min (const void *pointer, void *data,
                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1261,7 +1261,7 @@ config_check_prefix_align_more (const void *pointer, void *data,
                                 struct t_config_option *option,
                                 const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1278,7 +1278,7 @@ config_check_prefix_buffer_align_more (const void *pointer, void *data,
                                        struct t_config_option *option,
                                        const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1295,7 +1295,7 @@ config_check_separator (const void *pointer, void *data,
                         struct t_config_option *option,
                         const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1313,7 +1313,7 @@ config_check_whitespace_char (const void *pointer, void *data,
                               struct t_config_option *option,
                               const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1332,18 +1332,18 @@ config_change_tab (const void *pointer, void *data,
 {
     int tab_width, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
 
     tab_width = CONFIG_INTEGER(config_look_tab_width);
 
-    /* build a string with spaces that replace Tab char */
+    /* Build a string with spaces that replace Tab char. */
     memset (config_tab_spaces, ' ', tab_width);
     config_tab_spaces[tab_width] = '\0';
 
-    /* replaces spaces in whitespace mode */
+    /* Replace spaces in whitespace mode. */
     config_tab_spaces_whitespace[0] = '\0';
     strcat (config_tab_spaces_whitespace,
             CONFIG_STRING(config_look_tab_whitespace_char));
@@ -1364,7 +1364,7 @@ void
 config_change_color (const void *pointer, void *data,
                      struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1384,7 +1384,7 @@ void
 config_change_nick_colors (const void *pointer, void *data,
                            struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1401,7 +1401,7 @@ void
 config_change_eval_syntax_colors (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1422,7 +1422,7 @@ config_change_completion_nick_ignore_words (const void *pointer,
     char **words;
     int num_words, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1472,7 +1472,7 @@ config_change_completion_partial_completion_templates (const void *pointer,
     char **items;
     int num_items, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1519,7 +1519,7 @@ void
 config_change_network_gnutls_ca (const void *pointer, void *data,
                                  struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1537,7 +1537,7 @@ config_check_proxy_curl (const void *pointer, void *data,
                          struct t_config_option *option,
                          const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1561,7 +1561,7 @@ void
 config_change_plugin_extension (const void *pointer, void *data,
                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1604,7 +1604,7 @@ config_day_change_timer_cb (const void *pointer, void *data,
     int new_mday;
     char str_time[256];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -1620,13 +1620,13 @@ config_day_change_timer_cb (const void *pointer, void *data,
         if (CONFIG_BOOLEAN(config_look_day_change))
         {
             /*
-             * refresh all windows so that the message with new day will be
-             * displayed
+             * Refresh all windows so that the message with new day will be
+             * displayed.
              */
             gui_window_ask_refresh (1);
         }
 
-        /* send signal "day_changed" */
+        /* Send signal "day_changed". */
         if (strftime (str_time, sizeof (str_time), "%Y-%m-%d", local_time) == 0)
             str_time[0] = '\0';
         (void) hook_signal_send ("day_changed",
@@ -1657,27 +1657,27 @@ config_weechat_init_after_read (void)
     if (gui_bars)
     {
         /*
-         * at least one bar defined => just ensure that at least one bar is
-         * using item "input_text"
+         * At least one bar defined => just ensure that at least one bar is
+         * using item "input_text".
          */
         gui_bar_create_default_input ();
     }
     else
     {
-        /* no bar defined => create default bars */
+        /* No bar defined => create default bars. */
         gui_bar_create_default ();
     }
 
     gui_bar_item_custom_use_temp_items ();
 
-    /* if no key was found configuration file, then we use default bindings */
+    /* If no key was found configuration file, then we use default bindings. */
     for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
         if (!gui_keys[context])
             gui_key_default_bindings (context, 1);
     }
 
-    /* apply filters on all buffers */
+    /* Apply filters on all buffers. */
     gui_filter_all_buffers (NULL);
 
     config_set_nick_colors ();
@@ -1699,7 +1699,7 @@ config_weechat_update_cb (const void *pointer, void *data,
 {
     const char *ptr_config, *ptr_section, *ptr_option, *ptr_value, *pos_option;
     char *new_commands[][2] = {
-        /* old command, new command */
+        /* Old command, new command */
         { "/input jump_smart", "/buffer jump smart" },
         { "/input jump_last_buffer", "/buffer +" },
         { "/window ${_window_number};/input jump_last_buffer", "/window ${_window_number};/buffer +" },
@@ -1718,7 +1718,7 @@ config_weechat_update_cb (const void *pointer, void *data,
         { NULL, NULL },
     };
     char *new_hotlist_sort[][2] = {
-        /* old hotlist sort (enum), new sort with fields */
+        /* Old hotlist sort (enum), new sort with fields. */
         { "group_time_asc", "-priority,time,time_usec" },
         { "group_time_desc", "-priority,-time,-time_usec" },
         { "group_number_asc", "-priority,buffer.number" },
@@ -1730,12 +1730,12 @@ config_weechat_update_cb (const void *pointer, void *data,
     char *new_option, *new_value;
     int changes, i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
 
-    /* nothing to do if the config file is already up-to-date */
+    /* Nothing to do if the config file is already up-to-date. */
     if (version_read >= WEECHAT_CONFIG_VERSION)
         return NULL;
 
@@ -1744,10 +1744,10 @@ config_weechat_update_cb (const void *pointer, void *data,
     if (version_read < 2)
     {
         /*
-         * changes in v2 (WeeChat 4.0.0):
+         * Changes in v2 (WeeChat 4.0.0):
          *   - new format for keys (eg: meta2-1;3D -> meta-left)
          *   - keys removed: "meta2-200~" and "meta2-201~"
-         *   - arguments changed in /input command
+         *   - arguments changed in /input command.
          */
         ptr_section = hashtable_get (data_read, "section");
         ptr_option = hashtable_get (data_read, "option");
@@ -1760,11 +1760,11 @@ config_weechat_update_cb (const void *pointer, void *data,
                 || (strcmp (ptr_section, "key_mouse") == 0)))
         {
             /*
-             * remove some obsolete keys:
+             * Remove some obsolete keys:
              *   - "meta2-200~": start paste
              *   - "meta2-201~": end paste
              *   - "meta2-G": page down (only if bound to "/window page_down")
-             *   - "meta2-I": page up (only if bound to "/window page_up")
+             *   - "meta2-I": page up (only if bound to "/window page_up").
              */
             if ((strcmp (ptr_option, "meta2-200~") == 0)
                 || (strcmp (ptr_option, "meta2-201~") == 0)
@@ -1784,9 +1784,9 @@ config_weechat_update_cb (const void *pointer, void *data,
             else
             {
                 /*
-                 * if backspace or ctrl-backspace was manually bound to a
+                 * If backspace or ctrl-backspace was manually bound to a
                  * different command, keep the key as-is (in lower case) ;
-                 * in all other cases, convert the key to the new name
+                 * in all other cases, convert the key to the new name.
                  */
                 if (ptr_section
                     && (strcmp (ptr_section, "key") == 0)
@@ -1848,8 +1848,8 @@ config_weechat_update_cb (const void *pointer, void *data,
     if (version_read < 3)
     {
         /*
-         * changes in v3 (WeeChat 4.3.0):
-         *   - new format for option "weechat.look.hotlist_sort"
+         * Changes in v3 (WeeChat 4.3.0):
+         *   - new format for option "weechat.look.hotlist_sort".
          */
         ptr_config = hashtable_get (data_read, "config");
         ptr_section = hashtable_get (data_read, "section");
@@ -1884,11 +1884,11 @@ config_weechat_update_cb (const void *pointer, void *data,
     if (version_read < 4)
     {
         /*
-         * changes in v4 (WeeChat 4.4.0):
+         * Changes in v4 (WeeChat 4.4.0):
          *   - proxy option "ipv6" is converted from boolean to enum:
          *       - "on"  -> "auto"
          *       - "off" -> "disable"
-         *     (new possible value "force" is not set by this function)
+         *     (new possible value "force" is not set by this function).
          */
         ptr_config = hashtable_get (data_read, "config");
         ptr_section = hashtable_get (data_read, "section");
@@ -1940,11 +1940,11 @@ config_weechat_reload_cb (const void *pointer, void *data,
 {
     int context, rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
-    /* remove all keys */
+    /* Remove all keys. */
     for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
         gui_key_free_all (context,
@@ -1954,21 +1954,21 @@ config_weechat_reload_cb (const void *pointer, void *data,
                           1);
     }
 
-    /* remove all proxies */
+    /* Remove all proxies. */
     proxy_free_all ();
 
-    /* remove all bars */
+    /* Remove all bars. */
     gui_bar_free_all ();
 
-    /* remove layouts and reset layout stuff in buffers/windows */
+    /* Remove layouts and reset layout stuff in buffers/windows. */
     gui_layout_remove_all ();
     gui_layout_buffer_reset ();
     gui_layout_window_reset ();
 
-    /* remove all notify levels */
+    /* Remove all notify levels. */
     config_file_section_free_options (weechat_config_section_notify);
 
-    /* remove all filters */
+    /* Remove all filters. */
     gui_filter_free_all ();
 
     config_loading = 1;
@@ -2002,11 +2002,11 @@ config_weechat_debug_set_all (void)
     struct t_config_option *ptr_option;
     struct t_weechat_plugin *ptr_plugin;
 
-    /* set debug for core */
+    /* Set debug for core. */
     ptr_option = config_weechat_debug_get (PLUGIN_CORE);
     weechat_debug_core = (ptr_option) ? CONFIG_INTEGER(ptr_option) : 0;
 
-    /* set debug for plugins */
+    /* Set debug for plugins. */
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
@@ -2023,7 +2023,7 @@ void
 config_weechat_debug_change_cb (const void *pointer, void *data,
                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -2045,7 +2045,7 @@ config_weechat_debug_create_option_cb (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2085,7 +2085,7 @@ config_weechat_debug_create_option_cb (const void *pointer, void *data,
         }
     }
 
-    /* set debug level for "core" and all plugins */
+    /* Set debug level for "core" and all plugins. */
     config_weechat_debug_set_all ();
 
     return rc;
@@ -2101,7 +2101,7 @@ config_weechat_debug_delete_option_cb (const void *pointer, void *data,
                                        struct t_config_section *section,
                                        struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -2138,7 +2138,7 @@ config_weechat_palette_change_cb (const void *pointer, void *data,
 {
     int number;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2160,7 +2160,7 @@ config_weechat_palette_create_option_cb (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     int rc, number;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2226,7 +2226,7 @@ config_weechat_palette_delete_option_cb (const void *pointer, void *data,
 {
     int number;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -2255,7 +2255,7 @@ config_weechat_proxy_read_cb (const void *pointer, void *data,
     struct t_proxy *ptr_temp_proxy;
     int index_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -2273,7 +2273,7 @@ config_weechat_proxy_read_cb (const void *pointer, void *data,
 
     pos_option++;
 
-    /* search temporary proxy */
+    /* Search temporary proxy. */
     for (ptr_temp_proxy = weechat_temp_proxies; ptr_temp_proxy;
          ptr_temp_proxy = ptr_temp_proxy->next_proxy)
     {
@@ -2282,11 +2282,11 @@ config_weechat_proxy_read_cb (const void *pointer, void *data,
     }
     if (!ptr_temp_proxy)
     {
-        /* create new temporary proxy */
+        /* Create new temporary proxy. */
         ptr_temp_proxy = proxy_alloc (proxy_name);
         if (ptr_temp_proxy)
         {
-            /* add new proxy at the end */
+            /* Add new proxy at the end. */
             ptr_temp_proxy->prev_proxy = last_weechat_temp_proxy;
             ptr_temp_proxy->next_proxy = NULL;
             if (last_weechat_temp_proxy)
@@ -2335,7 +2335,7 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
     struct t_gui_bar *ptr_temp_bar;
     int index_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -2354,7 +2354,7 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
 
     pos_option++;
 
-    /* search temporary bar */
+    /* Search temporary bar. */
     for (ptr_temp_bar = gui_temp_bars; ptr_temp_bar;
          ptr_temp_bar = ptr_temp_bar->next_bar)
     {
@@ -2363,11 +2363,11 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
     }
     if (!ptr_temp_bar)
     {
-        /* create new temporary bar */
+        /* Create new temporary bar. */
         ptr_temp_bar = gui_bar_alloc (bar_name);
         if (ptr_temp_bar)
         {
-            /* add new bar at the end */
+            /* Add new bar at the end. */
             ptr_temp_bar->prev_bar = last_gui_temp_bar;
             ptr_temp_bar->next_bar = NULL;
             if (last_gui_temp_bar)
@@ -2416,7 +2416,7 @@ config_weechat_custom_bar_item_read_cb (const void *pointer, void *data,
     struct t_gui_bar_item_custom *ptr_temp_item;
     int index_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -2435,7 +2435,7 @@ config_weechat_custom_bar_item_read_cb (const void *pointer, void *data,
 
     pos_option++;
 
-    /* search temporary custom bar item */
+    /* Search temporary custom bar item. */
     for (ptr_temp_item = gui_temp_custom_bar_items; ptr_temp_item;
          ptr_temp_item = ptr_temp_item->next_item)
     {
@@ -2444,13 +2444,13 @@ config_weechat_custom_bar_item_read_cb (const void *pointer, void *data,
     }
     if (!ptr_temp_item)
     {
-        /* create new temporary custom bar item */
+        /* Create new temporary custom bar item. */
         if (gui_bar_item_search_default (item_name) < 0)
         {
             ptr_temp_item = gui_bar_item_custom_alloc (item_name);
             if (ptr_temp_item)
             {
-                /* add new custom bar item at the end */
+                /* Add new custom bar item at the end. */
                 ptr_temp_item->prev_item = last_gui_temp_custom_bar_item;
                 ptr_temp_item->next_item = NULL;
                 if (last_gui_temp_custom_bar_item)
@@ -2509,7 +2509,7 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
     struct t_gui_layout *ptr_layout;
     struct t_gui_layout_window *parent;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -2529,8 +2529,8 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
     else
     {
         /*
-         * old config file (WeeChat <= 0.4.0): no "." in name, use default
-         * layout name
+         * Old config file (WeeChat <= 0.4.0): no "." in name, use default
+         * layout name.
          */
         layout_name = strdup (GUI_LAYOUT_DEFAULT_NAME);
         ptr_option_name = option_name;
@@ -2671,7 +2671,7 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
     struct t_gui_layout_buffer *ptr_layout_buffer;
     char option_name[1024];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2681,7 +2681,7 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
     for (ptr_layout = gui_layouts; ptr_layout;
          ptr_layout = ptr_layout->next_layout)
     {
-        /* write layout for buffers */
+        /* Write layout for buffers. */
         for (ptr_layout_buffer = ptr_layout->layout_buffers; ptr_layout_buffer;
              ptr_layout_buffer = ptr_layout_buffer->next_layout)
         {
@@ -2695,7 +2695,7 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
                 return WEECHAT_CONFIG_WRITE_ERROR;
         }
 
-        /* write layout for windows */
+        /* Write layout for windows. */
         if (ptr_layout->layout_windows)
         {
             snprintf (option_name, sizeof (option_name),
@@ -2705,7 +2705,7 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
                 return WEECHAT_CONFIG_WRITE_ERROR;
         }
 
-        /* write "current = on" if it is current layout */
+        /* Write "current = on" if it is current layout. */
         if (ptr_layout == gui_layout_current)
         {
             snprintf (option_name, sizeof (option_name),
@@ -2762,7 +2762,7 @@ void
 config_weechat_buffer_change_cb (const void *pointer, void *data,
                                  struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2785,7 +2785,7 @@ config_weechat_buffer_create_option_cb (const void *pointer, void *data,
     char *buffer_mask, description[4096];
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2863,7 +2863,7 @@ config_weechat_buffer_set (struct t_gui_buffer *buffer,
               buffer->full_name,
               property);
 
-    /* create/update option */
+    /* Create/update option. */
     rc = config_weechat_buffer_create_option_cb (
         NULL, NULL,
         weechat_config_file,
@@ -2891,7 +2891,7 @@ void
 config_weechat_notify_change_cb (const void *pointer, void *data,
                                  struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -2913,7 +2913,7 @@ config_weechat_notify_create_option_cb (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     int rc, notify;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2980,7 +2980,7 @@ config_weechat_notify_delete_option_cb (const void *pointer, void *data,
                                         struct t_config_section *section,
                                         struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -3012,7 +3012,7 @@ config_weechat_notify_set (struct t_gui_buffer *buffer, const char *notify)
     if (!buffer || !notify)
         return 0;
 
-    /* create/update option */
+    /* Create/update option. */
     rc = config_weechat_notify_create_option_cb (
         NULL, NULL,
         weechat_config_file,
@@ -3036,7 +3036,7 @@ config_weechat_filter_read_cb (const void *pointer, void *data,
     char **argv, **argv_eol;
     int argc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -3078,7 +3078,7 @@ config_weechat_filter_write_cb (const void *pointer, void *data,
 {
     struct t_gui_filter *ptr_filter;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -3118,7 +3118,7 @@ config_weechat_get_key_context (struct t_config_section *section)
             return context;
     }
 
-    /* this should never happen */
+    /* This should never happen. */
     return -1;
 }
 
@@ -3139,7 +3139,7 @@ config_weechat_key_create_option_cb (const void *pointer, void *data,
 {
     int context;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -3151,12 +3151,12 @@ config_weechat_key_create_option_cb (const void *pointer, void *data,
 
     if (config_loading)
     {
-        /* don't check key when loading config */
+        /* Don't check key when loading config. */
         (void) gui_key_bind (NULL, context, option_name, value, 0);
     }
     else
     {
-        /* enable verbose and check key if option is manually created */
+        /* Enable verbose and check key if option is manually created. */
         gui_key_verbose = 1;
         (void) gui_key_bind (NULL, context, option_name, value, 1);
         gui_key_verbose = 0;
@@ -3181,7 +3181,7 @@ config_weechat_key_delete_option_cb (const void *pointer, void *data,
 {
     int context;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -3219,7 +3219,7 @@ config_weechat_init_options (void)
         return 0;
     }
 
-    /* debug */
+    /* Debug */
     weechat_config_section_debug = config_file_new_section (
         weechat_config_file, "debug",
         1, 1,
@@ -3229,7 +3229,7 @@ config_weechat_init_options (void)
         &config_weechat_debug_create_option_cb, NULL, NULL,
         &config_weechat_debug_delete_option_cb, NULL, NULL);
 
-    /* startup */
+    /* Startup */
     weechat_config_section_startup = config_file_new_section (
         weechat_config_file, "startup",
         0, 0,
@@ -3283,7 +3283,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL);
     }
 
-    /* look */
+    /* Look */
     weechat_config_section_look = config_file_new_section (
         weechat_config_file, "look",
         0, 0,
@@ -4521,7 +4521,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL);
     }
 
-    /* palette */
+    /* Palette */
     weechat_config_section_palette = config_file_new_section (
         weechat_config_file, "palette",
         1, 1,
@@ -4531,7 +4531,7 @@ config_weechat_init_options (void)
         &config_weechat_palette_create_option_cb, NULL, NULL,
         &config_weechat_palette_delete_option_cb, NULL, NULL);
 
-    /* colors */
+    /* Colors */
     weechat_config_section_color = config_file_new_section (
         weechat_config_file, "color",
         0, 0,
@@ -4542,7 +4542,7 @@ config_weechat_init_options (void)
         NULL, NULL, NULL);
     if (weechat_config_section_color)
     {
-        /* bar colors */
+        /* Bar colors */
         config_color_bar_more = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "bar_more", "color",
@@ -4551,7 +4551,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
-        /* chat area */
+        /* Chat area */
         config_color_chat = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "chat", "color",
@@ -4901,7 +4901,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
-        /* emphasis (chat/bars) */
+        /* Emphasis (chat/bars) */
         config_color_emphasized = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "emphasized", "color",
@@ -4923,7 +4923,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
-        /* eval syntax highlighting colors (for "${raw_hl:xxx}" and "${hl:xxx}") */
+        /* Eval syntax highlighting colors (for "${raw_hl:xxx}" and "${hl:xxx}") */
         config_color_eval_syntax_colors = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "eval_syntax_colors", "string|themable",
@@ -4938,7 +4938,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_eval_syntax_colors, NULL, NULL,
             NULL, NULL, NULL);
-        /* input bar */
+        /* Input bar */
         config_color_input_actions = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "input_actions", "color",
@@ -4955,7 +4955,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
-        /* items */
+        /* Items */
         config_color_item_away = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "item_away", "color",
@@ -4964,7 +4964,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_item_away, NULL, NULL,
             NULL, NULL, NULL);
-        /* nicklist bar */
+        /* Nicklist bar */
         config_color_nicklist_away = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "nicklist_away", "color",
@@ -4981,7 +4981,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
-        /* separator */
+        /* Separator */
         config_color_separator = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "separator", "color",
@@ -4991,7 +4991,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
-        /* status bar */
+        /* Status bar */
         config_color_status_count_highlight = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "status_count_highlight", "color",
@@ -5143,7 +5143,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL);
     }
 
-    /* completion */
+    /* Completion */
     weechat_config_section_completion = config_file_new_section (
         weechat_config_file, "completion",
         0, 0,
@@ -5291,7 +5291,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL);
     }
 
-    /* history */
+    /* History */
     weechat_config_section_history = config_file_new_section (
         weechat_config_file, "history",
         0, 0,
@@ -5341,7 +5341,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* proxies */
+    /* Proxies */
     weechat_config_section_proxy = config_file_new_section (
         weechat_config_file, "proxy",
         0, 0,
@@ -5351,7 +5351,7 @@ config_weechat_init_options (void)
         NULL, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* network */
+    /* Network */
     weechat_config_section_network = config_file_new_section (
         weechat_config_file, "network",
         0, 0,
@@ -5408,7 +5408,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL);
     }
 
-    /* plugin */
+    /* Plugin */
     weechat_config_section_plugin = config_file_new_section (
         weechat_config_file, "plugin",
         0, 0,
@@ -5453,7 +5453,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* signal */
+    /* Signal */
     weechat_config_section_signal = config_file_new_section (
         weechat_config_file, "signal",
         0, 0,
@@ -5507,7 +5507,7 @@ config_weechat_init_options (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* bars */
+    /* Bars */
     weechat_config_section_bar = config_file_new_section (
         weechat_config_file, "bar",
         0, 0,
@@ -5517,7 +5517,7 @@ config_weechat_init_options (void)
         NULL, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* custom bar items */
+    /* Custom bar items */
     weechat_config_section_custom_bar_item = config_file_new_section (
         weechat_config_file, "custom_bar_item",
         0, 0,
@@ -5527,7 +5527,7 @@ config_weechat_init_options (void)
         NULL, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* layout */
+    /* Layout */
     weechat_config_section_layout = config_file_new_section (
         weechat_config_file, "layout",
         0, 0,
@@ -5537,7 +5537,7 @@ config_weechat_init_options (void)
         NULL, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* buffer */
+    /* Buffer */
     weechat_config_section_buffer = config_file_new_section (
         weechat_config_file, "buffer",
         1, 1,
@@ -5547,7 +5547,7 @@ config_weechat_init_options (void)
         &config_weechat_buffer_create_option_cb, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* notify */
+    /* Notify */
     weechat_config_section_notify = config_file_new_section (
         weechat_config_file, "notify",
         1, 1,
@@ -5557,7 +5557,7 @@ config_weechat_init_options (void)
         &config_weechat_notify_create_option_cb, NULL, NULL,
         &config_weechat_notify_delete_option_cb, NULL, NULL);
 
-    /* filters */
+    /* Filters */
     weechat_config_section_filter = config_file_new_section (
         weechat_config_file, "filter",
         0, 0,
@@ -5567,7 +5567,7 @@ config_weechat_init_options (void)
         NULL, NULL, NULL,
         NULL, NULL, NULL);
 
-    /* keys */
+    /* Keys */
     for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
         snprintf (
@@ -5619,14 +5619,14 @@ config_weechat_init (void)
 
     if (!config_day_change_timer)
     {
-        /* create timer to check if day has changed */
+        /* Create timer to check if day has changed. */
         gettimeofday (&tv_time, NULL);
         seconds = tv_time.tv_sec;
         local_time = localtime (&seconds);
         config_day_change_old_day = local_time->tm_mday;
         config_day_change_timer = hook_timer (NULL,
-                                              60 * 1000, /* each minute */
-                                              60, /* when second is 00 */
+                                              60 * 1000, /* Each minute */
+                                              60, /* When second is 00 */
                                               0,
                                               &config_day_change_timer_cb,
                                               NULL, NULL);

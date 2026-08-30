@@ -45,11 +45,11 @@ int
 charset_config_reload (const void *pointer, void *data,
                        struct t_config_file *config_file)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
-    /* free all decode/encode charsets */
+    /* Free all decode/encode charsets. */
     weechat_config_section_free_options (charset_config_section_decode);
     weechat_config_section_free_options (charset_config_section_encode);
 
@@ -96,7 +96,7 @@ charset_check_charset_decode_cb (const void *pointer, void *data,
                                  struct t_config_option *option,
                                  const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -117,7 +117,7 @@ charset_config_create_option (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -353,12 +353,12 @@ charset_get (struct t_config_section *section, const char *name,
             return weechat_config_string (ptr_option);
     }
 
-    /* nothing found => return default decode/encode charset (if set) */
+    /* Nothing found => return default decode/encode charset (if set). */
     if (weechat_config_string (default_charset)
         && weechat_config_string (default_charset)[0])
         return weechat_config_string (default_charset);
 
-    /* no default charset set */
+    /* No default charset set */
     return NULL;
 }
 
@@ -373,7 +373,7 @@ charset_decode_cb (const void *pointer, void *data,
 {
     const char *charset;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
@@ -404,7 +404,7 @@ charset_encode_cb (const void *pointer, void *data,
 {
     const char *charset;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
@@ -472,7 +472,7 @@ charset_command_cb (const void *pointer, void *data,
     char *ptr_charset, *option_name;
     const char *plugin_name, *name, *charset_modifier;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -567,17 +567,17 @@ charset_command_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
     weechat_plugin = plugin;
 
-    /* get terminal & internal charsets */
+    /* Get terminal & internal charsets. */
     charset_terminal = weechat_info_get ("charset_terminal", "");
     charset_internal = weechat_info_get ("charset_internal", "");
 
-    /* display message */
+    /* Display message. */
     if (weechat_charset_plugin->debug >= 1)
         charset_display_charsets ();
 
@@ -601,7 +601,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         "decode|encode|reset",
         &charset_command_cb, NULL, NULL);
 
-    /* modifiers hooks */
+    /* Modifiers hooks */
     weechat_hook_modifier ("charset_decode", &charset_decode_cb, NULL, NULL);
     weechat_hook_modifier ("charset_encode", &charset_encode_cb, NULL, NULL);
 
@@ -615,7 +615,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     charset_config_write ();

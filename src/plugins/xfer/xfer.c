@@ -108,7 +108,7 @@ xfer_signal_upgrade_cb (const void *pointer, void *data,
                         const char *signal, const char *type_data,
                         void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -130,8 +130,9 @@ xfer_signal_upgrade_cb (const void *pointer, void *data,
 
     /*
      * TODO: do not disconnect here in case of upgrade when the save of xfers
-     * in upgrade file will be implemented
-     * (see function xfer_upgrade_save_xfers in xfer-upgrade.c)
+     * in upgrade file will be implemented.
+     *
+     * See function xfer_upgrade_save_xfers in xfer-upgrade.c
      */
     /*if (signal_data && (strcmp (signal_data, "quit") == 0))*/
     xfer_disconnect_all ();
@@ -167,7 +168,7 @@ xfer_create_directories (void)
     if (options)
         weechat_hashtable_set (options, "directory", "data");
 
-    /* create download directory */
+    /* Create download directory. */
     path = weechat_string_eval_path_home (
         weechat_config_string (xfer_config_file_download_path),
         NULL, NULL, options);
@@ -177,7 +178,7 @@ xfer_create_directories (void)
         free (path);
     }
 
-    /* create upload directory */
+    /* Create upload directory. */
     path = weechat_string_eval_path_home (
         weechat_config_string (xfer_config_file_upload_path),
         NULL, NULL, options);
@@ -371,7 +372,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
         }
     }
 
-    /* remove empty file if received file failed and nothing was transferred */
+    /* Remove empty file if received file failed and nothing was transferred. */
     if (((xfer->status == XFER_STATUS_FAILED)
          || (xfer->status == XFER_STATUS_ABORTED))
         && XFER_IS_FILE(xfer->type)
@@ -379,7 +380,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
         && xfer->temp_local_filename
         && xfer->pos == 0)
     {
-        /* erase file only if really empty on disk */
+        /* Erase file only if really empty on disk. */
         if (stat (xfer->temp_local_filename, &st) != -1)
         {
             if ((unsigned long long) st.st_size == 0)
@@ -387,7 +388,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
         }
     }
 
-    /* rename received file if it has a suffix */
+    /* Rename received file if it has a suffix. */
     if ((xfer->status == XFER_STATUS_DONE)
         && XFER_IS_FILE(xfer->type)
         && XFER_IS_RECV(xfer->type)
@@ -458,14 +459,14 @@ xfer_port_in_use (int port)
 {
     struct t_xfer *ptr_xfer;
 
-    /* skip any currently used ports */
+    /* Skip any currently used ports. */
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
         if ((ptr_xfer->port == port) && (!XFER_HAS_ENDED(ptr_xfer->status)))
             return 1;
     }
 
-    /* port not in use */
+    /* Port not in use */
     return 0;
 }
 
@@ -503,7 +504,7 @@ xfer_alloc (void)
     struct t_xfer *new_xfer;
     time_t time_now;
 
-    /* create new xfer struct */
+    /* Create new xfer struct. */
     if ((new_xfer = malloc (sizeof (*new_xfer))) == NULL)
         return NULL;
 
@@ -662,7 +663,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         xfer_buffer_open ();
     }
 
-    /* initialize new xfer */
+    /* Initialize new xfer. */
     new_xfer->plugin_name = strdup (plugin_name);
     new_xfer->plugin_id = strdup (plugin_id);
     new_xfer->type = type;
@@ -757,7 +758,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         }
     }
 
-    /* write info message on core buffer */
+    /* Write info message on core buffer. */
     switch (type)
     {
         case XFER_TYPE_FILE_RECV_ACTIVE:
@@ -834,7 +835,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
 
-    /* connect if needed and display again xfer buffer */
+    /* Connect if needed and display again xfer buffer. */
     if (XFER_IS_SEND(type))
     {
         if (!xfer_network_connect (new_xfer))
@@ -846,8 +847,8 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     }
 
     /*
-     * auto-accept file/chat if nick is auto-accepted, or if file/chat is
-     * auto-accepted
+     * Auto-accept file/chat if nick is auto-accepted, or if file/chat is
+     * auto-accepted.
      */
     if ((XFER_IS_RECV(type)
          && xfer_nick_auto_accepted (new_xfer->plugin_id, new_xfer->remote_nick))
@@ -913,7 +914,7 @@ xfer_free (struct t_xfer *xfer)
     if (!xfer)
         return;
 
-    /* remove xfer from list */
+    /* Remove xfer from list. */
     if (last_xfer == xfer)
         last_xfer = xfer->prev_xfer;
     if (xfer->prev_xfer)
@@ -926,7 +927,7 @@ xfer_free (struct t_xfer *xfer)
     if (xfer->next_xfer)
         (xfer->next_xfer)->prev_xfer = xfer->prev_xfer;
 
-    /* free data */
+    /* Free data. */
     free (xfer->plugin_id);
     free (xfer->plugin_name);
     free (xfer->remote_nick);
@@ -998,7 +999,7 @@ xfer_add_cb (const void *pointer, void *data,
     struct t_xfer *ptr_xfer;
     struct t_hashtable *options;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -1090,7 +1091,7 @@ xfer_add_cb (const void *pointer, void *data,
 
     if (type == XFER_TYPE_FILE_SEND_PASSIVE)
     {
-        /* add home if filename not beginning with '/' or '~' (not for Win32) */
+        /* Add home if filename not beginning with '/' or '~' (not for Win32). */
 #ifdef _WIN32
         filename2 = strdup (filename);
 #else
@@ -1144,7 +1145,7 @@ xfer_add_cb (const void *pointer, void *data,
                             "xfer_add, filename2");
             goto error;
         }
-        /* check if file exists */
+        /* Check if file exists. */
         if (stat (filename2, &st) == -1)
         {
             weechat_printf (NULL,
@@ -1157,7 +1158,7 @@ xfer_add_cb (const void *pointer, void *data,
     }
     port = weechat_infolist_integer (infolist, "port");
 
-    /* resolve address */
+    /* Resolve address. */
     if ((type == XFER_TYPE_CHAT_RECV) || (type == XFER_TYPE_FILE_RECV_ACTIVE))
     {
         str_address = weechat_infolist_string (infolist, "remote_address");
@@ -1186,11 +1187,11 @@ xfer_add_cb (const void *pointer, void *data,
     {
         memset (&bind_addr, 0, sizeof (bind_addr));
 
-        /* determine bind_addr family from either own_ip or default */
+        /* Determine bind_addr family from either own_ip or default. */
         if (weechat_config_string (xfer_config_network_own_ip)
             && weechat_config_string (xfer_config_network_own_ip)[0])
         {
-            /* resolve own_ip to a numeric address */
+            /* Resolve own_ip to a numeric address. */
             eval_own_ip = weechat_string_eval_expression (
                 weechat_config_string (xfer_config_network_own_ip),
                 NULL, NULL, NULL);
@@ -1205,16 +1206,16 @@ xfer_add_cb (const void *pointer, void *data,
             if (!rc)
                 goto error;
 
-            /* set the advertised address to own_ip */
+            /* Set the advertised address to own_ip. */
             local_addr = (struct sockaddr*)&own_ip_addr;
 
-            /* bind_addr's family should be the advertised family */
+            /* Bind_addr's family should be the advertised family. */
             bind_addr.ss_family = own_ip_addr.ss_family;
         }
         else
         {
-            /* no own_ip, so bind_addr's family comes from irc connection  */
-            /* use the local interface, from the server socket */
+            /* No own_ip, so bind_addr's family comes from irc connection. */
+            /* Use the local interface, from the server socket. */
             server_sock = weechat_infolist_integer (infolist, "socket");
             if (getsockname (server_sock, (struct sockaddr *)&local_addr_storage, &local_addr_length))
             {
@@ -1223,7 +1224,7 @@ xfer_add_cb (const void *pointer, void *data,
             bind_addr.ss_family = local_addr_storage.ss_family;
         }
 
-        /* determine bind wildcard address */
+        /* Determine bind wildcard address. */
         if (bind_addr.ss_family == AF_INET)
         {
             ((struct sockaddr_in*)&bind_addr)->sin_addr.s_addr = INADDR_ANY;
@@ -1236,7 +1237,7 @@ xfer_add_cb (const void *pointer, void *data,
             bind_addr_len = sizeof (struct sockaddr_in6);
         }
 
-        /* open socket for xfer */
+        /* Open socket for xfer. */
         sock = socket (bind_addr.ss_family, SOCK_STREAM, 0);
         if (sock < 0)
         {
@@ -1247,13 +1248,13 @@ xfer_add_cb (const void *pointer, void *data,
             goto error;
         }
 
-        /* look for port */
+        /* Look for port. */
         port = 0;
 
         if (weechat_config_string (xfer_config_network_port_range)
             && weechat_config_string (xfer_config_network_port_range)[0])
         {
-            /* find a free port in the specified range */
+            /* Find a free port in the specified range. */
             args = sscanf (weechat_config_string (xfer_config_network_port_range),
                            "%d-%d", &port_start, &port_end);
             if (args > 0)
@@ -1262,12 +1263,12 @@ xfer_add_cb (const void *pointer, void *data,
                 if (args == 1)
                     port_end = port_start;
 
-                /* loop through the entire allowed port range */
+                /* Loop through the entire allowed port range. */
                 while (port <= port_end)
                 {
                     if (!xfer_port_in_use (port))
                     {
-                        /* attempt to bind to the free port */
+                        /* Attempt to bind to the free port. */
                         if (bind_addr.ss_family == AF_INET)
                             ((struct sockaddr_in *)&bind_addr)->sin_port = htons (port);
                         else
@@ -1285,7 +1286,7 @@ xfer_add_cb (const void *pointer, void *data,
 
         if (port == 0)
         {
-            /* find port automatically */
+            /* Find port automatically. */
             if (bind (sock, (struct sockaddr *)&bind_addr, bind_addr_len) == 0)
             {
                 getsockname (sock, (struct sockaddr *)&bind_addr, &bind_addr_len);
@@ -1311,14 +1312,14 @@ xfer_add_cb (const void *pointer, void *data,
 
     if (XFER_IS_FILE(type) && filename2)
     {
-        /* extract short filename (without path) */
+        /* Extract short filename (without path). */
         pos = strrchr (filename2, DIR_SEPARATOR_CHAR);
         if (pos)
             short_filename = strdup (pos + 1);
         else
             short_filename = strdup (filename2);
 
-        /* convert spaces to underscore if asked and needed */
+        /* Convert spaces to underscore if asked and needed. */
         pos = short_filename;
         while (pos[0])
         {
@@ -1341,7 +1342,7 @@ xfer_add_cb (const void *pointer, void *data,
         }
     }
 
-    /* add xfer entry and listen to socket if type is file or chat "send" */
+    /* Add xfer entry and listen to socket if type is file or chat "send". */
     if (XFER_IS_FILE(type))
     {
         ptr_xfer = xfer_new (plugin_name, plugin_id, type, protocol,
@@ -1370,7 +1371,7 @@ xfer_add_cb (const void *pointer, void *data,
         goto error;
     }
 
-    /* send signal if type is file or chat "send" */
+    /* Send signal if type is file or chat "send". */
     if (XFER_IS_SEND(ptr_xfer->type) && !XFER_HAS_ENDED(ptr_xfer->status))
         xfer_send_signal (ptr_xfer, "xfer_send_ready");
 
@@ -1401,7 +1402,7 @@ xfer_start_resume_cb (const void *pointer, void *data,
     int port;
     unsigned long long start_resume;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -1489,7 +1490,7 @@ xfer_accept_resume_cb (const void *pointer, void *data,
     int port;
     unsigned long long start_resume;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -1785,7 +1786,7 @@ xfer_debug_dump_cb (const void *pointer, void *data,
                     const char *signal, const char *type_data,
                     void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -1814,7 +1815,7 @@ xfer_debug_dump_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -1831,7 +1832,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     xfer_command_init ();
 
-    /* hook some signals */
+    /* Hook some signals. */
     weechat_hook_signal ("upgrade",
                          &xfer_signal_upgrade_cb, NULL, NULL);
     weechat_hook_signal ("xfer_add",
@@ -1843,7 +1844,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("debug_dump",
                          &xfer_debug_dump_cb, NULL, NULL);
 
-    /* hook completions */
+    /* Hook completions. */
     xfer_completion_init ();
 
     xfer_info_init ();
@@ -1861,7 +1862,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (xfer_buffer)

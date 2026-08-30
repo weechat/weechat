@@ -13,7 +13,7 @@
 
 struct t_irc_server;
 
-/* template for redirections (IRC plugin creates some templates at startup) */
+/* Template for redirections (IRC plugin creates some templates at startup) */
 
 struct t_irc_redirect_pattern
 {
@@ -30,7 +30,7 @@ struct t_irc_redirect_pattern
     struct t_irc_redirect_pattern *next_redirect; /* link to next redir.     */
 };
 
-/* command redirection (created when a command is redirected) */
+/* Command redirection (created when a command is redirected) */
 
 struct t_irc_redirect
 {

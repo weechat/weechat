@@ -34,7 +34,7 @@ char *gui_bar_item_custom_option_default[GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS] =
 struct t_gui_bar_item_custom *gui_custom_bar_items = NULL;
 struct t_gui_bar_item_custom *last_gui_custom_bar_item = NULL;
 
-/* custom bar items used when reading config */
+/* Custom bar items used when reading config */
 struct t_gui_bar_item_custom *gui_temp_custom_bar_items = NULL;
 struct t_gui_bar_item_custom *last_gui_temp_custom_bar_item = NULL;
 
@@ -54,15 +54,15 @@ gui_bar_item_custom_name_valid (const char *name)
     if (!name || !name[0])
         return 0;
 
-    /* no spaces allowed */
+    /* No spaces allowed */
     if (strchr (name, ' '))
         return 0;
 
-    /* no periods allowed */
+    /* No periods allowed */
     if (strchr (name, '.'))
         return 0;
 
-    /* name is valid */
+    /* Name is valid. */
     return 1;
 }
 
@@ -87,7 +87,7 @@ gui_bar_item_custom_search_option (const char *option_name)
             return i;
     }
 
-    /* custom bar item option not found */
+    /* Custom bar item option not found */
     return -1;
 }
 
@@ -110,7 +110,7 @@ gui_bar_item_custom_search (const char *item_name)
             return ptr_item;
     }
 
-    /* custom bar item not found */
+    /* Custom bar item not found */
     return NULL;
 }
 
@@ -161,7 +161,7 @@ gui_bar_item_custom_config_change (const void *pointer, void *data,
 {
     struct t_gui_bar_item_custom *ptr_item;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -266,7 +266,7 @@ gui_bar_item_custom_callback (const void *pointer,
     char *result;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) item;
     (void) extra_info;
@@ -296,7 +296,7 @@ gui_bar_item_custom_callback (const void *pointer,
     if (options)
         hashtable_set (options, "type", "condition");
 
-    /* check conditions */
+    /* Check conditions. */
     ptr_conditions = CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]);
     if (ptr_conditions && ptr_conditions[0])
     {
@@ -313,7 +313,7 @@ gui_bar_item_custom_callback (const void *pointer,
             goto end;
     }
 
-    /* evaluate content */
+    /* Evaluate content. */
     result = eval_expression (
         CONFIG_STRING(ptr_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]),
         pointers, NULL, NULL);
@@ -382,7 +382,7 @@ gui_bar_item_custom_new_with_options (const char *name,
 {
     struct t_gui_bar_item_custom *new_bar_item_custom;
 
-    /* create custom bar item */
+    /* Create custom bar item. */
     new_bar_item_custom = gui_bar_item_custom_alloc (name);
     if (!new_bar_item_custom)
         return NULL;
@@ -391,7 +391,7 @@ gui_bar_item_custom_new_with_options (const char *name,
     new_bar_item_custom->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT] = content;
     new_bar_item_custom->bar_item = NULL;
 
-    /* add custom bar item to custom bar items queue */
+    /* Add custom bar item to custom bar items queue. */
     new_bar_item_custom->prev_item = last_gui_custom_bar_item;
     if (last_gui_custom_bar_item)
         last_gui_custom_bar_item->next_item = new_bar_item_custom;
@@ -512,10 +512,10 @@ gui_bar_item_custom_use_temp_items (void)
         ptr_temp_item = ptr_next_temp_item;
     }
 
-    /* remove any existing custom bar item */
+    /* Remove any existing custom bar item. */
     gui_bar_item_custom_free_all ();
 
-    /* replace custom bar items list by the temporary list */
+    /* Replace custom bar items list by the temporary list. */
     gui_custom_bar_items = gui_temp_custom_bar_items;
     last_gui_custom_bar_item = last_gui_temp_custom_bar_item;
 
@@ -613,10 +613,10 @@ gui_bar_item_custom_free (struct t_gui_bar_item_custom *item)
 
     name = strdup (item->name);
 
-    /* remove bar item */
+    /* Remove bar item. */
     gui_bar_item_free (item->bar_item);
 
-    /* remove custom bar item from custom bar items list */
+    /* Remove custom bar item from custom bar items list. */
     if (item->prev_item)
         (item->prev_item)->next_item = item->next_item;
     if (item->next_item)
@@ -626,7 +626,7 @@ gui_bar_item_custom_free (struct t_gui_bar_item_custom *item)
     if (last_gui_custom_bar_item == item)
         last_gui_custom_bar_item = item->prev_item;
 
-    /* free data */
+    /* Free data. */
     gui_bar_item_custom_free_data (item);
 
     free (item);

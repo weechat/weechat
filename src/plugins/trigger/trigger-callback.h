@@ -87,7 +87,7 @@ struct t_trigger_context
             trigger_free (trigger);                             \
             break;                                              \
         default:                                                \
-            /* do nothing in the other cases */                 \
+            /* Do nothing in the other cases. */                \
             break;                                              \
     }                                                           \
     return __rc;

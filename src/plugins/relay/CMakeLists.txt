@@ -20,9 +20,9 @@ set(RELAY_SRC
   relay-theme.c relay-theme.h
   relay-upgrade.c relay-upgrade.h
   relay-websocket.c relay-websocket.h
-  # irc relay
+  # IRC relay
   irc/relay-irc.c irc/relay-irc.h
-  # weechat relay
+  # WeeChat relay
   weechat/relay-weechat.c weechat/relay-weechat.h
   weechat/relay-weechat-msg.c weechat/relay-weechat-msg.h
   weechat/relay-weechat-nicklist.c weechat/relay-weechat-nicklist.h

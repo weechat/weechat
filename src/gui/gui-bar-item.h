@@ -68,13 +68,13 @@ struct t_gui_bar_item_hook
     struct t_gui_bar_item_hook *next_hook; /* next hook                     */
 };
 
-/* variables */
+/* Variables */
 
 extern struct t_gui_bar_item *gui_bar_items;
 extern struct t_gui_bar_item *last_gui_bar_item;
 extern char *gui_bar_item_names[];
 
-/* functions */
+/* Functions */
 
 extern int gui_bar_item_valid (struct t_gui_bar_item *bar_item);
 extern int gui_bar_item_search_default (const char *item_name);

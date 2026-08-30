@@ -74,7 +74,7 @@ TEST(RelayWebsocket, DeflateAllocFree)
 
     relay_websocket_deflate_free (ws_deflate);
 
-    /* test free of NULL websocket deflate */
+    /* Test free of NULL websocket deflate. */
     relay_websocket_deflate_free (NULL);
 }
 
@@ -300,7 +300,7 @@ TEST(RelayWebsocket, ParseExtensions)
     POINTERS_EQUAL(NULL, ws_deflate.strm_deflate);
     POINTERS_EQUAL(NULL, ws_deflate.strm_inflate);
 
-    /* client_max_window_bits < 8 (min value) */
+    /* Client_max_window_bits < 8 (min value) */
     memset (&ws_deflate, 0, sizeof (ws_deflate));
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=4",
@@ -314,7 +314,7 @@ TEST(RelayWebsocket, ParseExtensions)
     POINTERS_EQUAL(NULL, ws_deflate.strm_deflate);
     POINTERS_EQUAL(NULL, ws_deflate.strm_inflate);
 
-    /* client_max_window_bits > 15 (max value) */
+    /* Client_max_window_bits > 15 (max value) */
     memset (&ws_deflate, 0, sizeof (ws_deflate));
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=30",
@@ -328,7 +328,7 @@ TEST(RelayWebsocket, ParseExtensions)
     POINTERS_EQUAL(NULL, ws_deflate.strm_deflate);
     POINTERS_EQUAL(NULL, ws_deflate.strm_inflate);
 
-    /* invalid value for client_max_window_bits */
+    /* Invalid value for client_max_window_bits */
     memset (&ws_deflate, 0, sizeof (ws_deflate));
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=test",
@@ -453,9 +453,9 @@ TEST(RelayWebsocket, Inflate)
     relay_websocket_deflate_free (ws_deflate);
 
     /*
-     * protection against "deflate bomb": a small compressed frame that
+     * Protection against "deflate bomb": a small compressed frame that
      * decompresses to more than WEBSOCKET_INFLATE_MAX_SIZE must be rejected
-     * (relay_websocket_inflate returns NULL)
+     * (relay_websocket_inflate returns NULL).
      */
     ws_deflate = relay_websocket_deflate_alloc ();
     CHECK(ws_deflate);
@@ -468,7 +468,7 @@ TEST(RelayWebsocket, Inflate)
     CHECK(ws_deflate->strm_inflate);
     LONGS_EQUAL(1, relay_websocket_deflate_init_stream_inflate (ws_deflate));
 
-    /* highly compressible payload that decompresses past the maximum size */
+    /* Highly compressible payload that decompresses past the maximum size */
     size_t bomb_size = WEBSOCKET_INFLATE_MAX_SIZE + (1024 * 1024);
     char *bomb = (char *)calloc (1, bomb_size);
     CHECK(bomb);
@@ -498,14 +498,14 @@ TEST(RelayWebsocket, DecodeFrame)
     struct t_relay_websocket_frame *frames;
     char *partial_ws_frame;
     int num_frames, partial_ws_frame_size;
-    /* small unmasked binary frame with payload "hello" */
+    /* Small unmasked binary frame with payload "hello" */
     unsigned char frame_ok[7] = { 0x82, 0x05, 'h', 'e', 'l', 'l', 'o' };
-    /* masked frame announcing a 1 GB payload (64-bit length field) */
+    /* Masked frame announcing a 1 GB payload (64-bit length field) */
     unsigned char frame_too_big[10] = {
         0x82, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00,
     };
 
-    /* a valid small frame is decoded */
+    /* A valid small frame is decoded. */
     frames = NULL;
     num_frames = 0;
     partial_ws_frame = NULL;
@@ -522,7 +522,7 @@ TEST(RelayWebsocket, DecodeFrame)
     free (frames);
     free (partial_ws_frame);
 
-    /* a frame announcing an oversized payload is rejected (return 0) */
+    /* A frame announcing an oversized payload is rejected (return 0). */
     frames = NULL;
     num_frames = 0;
     partial_ws_frame = NULL;

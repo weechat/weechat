@@ -54,7 +54,7 @@ logger_buffer_valid (struct t_logger_buffer *logger_buffer)
             return 1;
     }
 
-    /* logger_buffer not found */
+    /* Logger_buffer not found */
     return 0;
 }
 
@@ -123,7 +123,7 @@ logger_buffer_search_buffer (struct t_gui_buffer *buffer)
             return ptr_logger_buffer;
     }
 
-    /* logger buffer not found */
+    /* Logger buffer not found */
     return NULL;
 }
 
@@ -151,7 +151,7 @@ logger_buffer_search_log_filename (const char *log_filename)
         }
     }
 
-    /* logger buffer not found */
+    /* Logger buffer not found */
     return NULL;
 }
 
@@ -166,7 +166,7 @@ logger_buffer_set_log_filename (struct t_logger_buffer *logger_buffer)
     char *dir_separator;
     struct t_logger_buffer *ptr_logger_buffer;
 
-    /* get log filename for buffer */
+    /* Get log filename for buffer. */
     log_filename = logger_get_filename (logger_buffer->buffer);
     if (!log_filename)
     {
@@ -177,7 +177,7 @@ logger_buffer_set_log_filename (struct t_logger_buffer *logger_buffer)
         return;
     }
 
-    /* log file is already used by another buffer? */
+    /* Log file is already used by another buffer? */
     ptr_logger_buffer = logger_buffer_search_log_filename (log_filename);
     if (ptr_logger_buffer)
     {
@@ -194,7 +194,7 @@ logger_buffer_set_log_filename (struct t_logger_buffer *logger_buffer)
         return;
     }
 
-    /* create directory for path in "log_filename" */
+    /* Create directory for path in "log_filename". */
     dir_separator = weechat_info_get ("dir_separator", "");
     if (dir_separator)
     {
@@ -208,7 +208,7 @@ logger_buffer_set_log_filename (struct t_logger_buffer *logger_buffer)
         free (dir_separator);
     }
 
-    /* set log filename */
+    /* Set log filename. */
     logger_buffer->log_filename = log_filename;
 }
 
@@ -231,13 +231,13 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
     if (logger_buffer->log_file)
     {
         /*
-         * check that the inode has not changed, otherwise that means the file
-         * was deleted, and we must reopen it
+         * Check that the inode has not changed, otherwise that means the file
+         * was deleted, and we must reopen it.
          */
         rc = stat (logger_buffer->log_filename, &statbuf);
         if ((rc == 0) && (statbuf.st_ino == logger_buffer->log_file_inode))
         {
-            /* inode has not changed, we can write in this file */
+            /* The inode has not changed, we can write in this file. */
             return 1;
         }
         fclose (logger_buffer->log_file);
@@ -245,12 +245,12 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
         logger_buffer->log_file_inode = 0;
     }
 
-    /* get log level */
+    /* Get log level. */
     log_level = logger_get_level_for_buffer (logger_buffer->buffer);
     if (log_level == 0)
         return 0;
 
-    /* create directory */
+    /* Create directory. */
     if (!logger_create_directory ())
         return 0;
     if (!logger_buffer->log_filename)
@@ -258,7 +258,7 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
     if (!logger_buffer->log_filename)
         return 0;
 
-    /* create or append to log file */
+    /* Create or append to log file. */
     logger_buffer->log_file =
         fopen (logger_buffer->log_filename, "a");
     if (!logger_buffer->log_file)
@@ -271,7 +271,7 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
         return 0;
     }
 
-    /* get file inode */
+    /* Get file inode. */
     rc = stat (logger_buffer->log_filename, &statbuf);
     if (rc != 0)
     {
@@ -287,7 +287,7 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
     }
     logger_buffer->log_file_inode = statbuf.st_ino;
 
-    /* write info line */
+    /* Write info line. */
     if (weechat_config_boolean (logger_config_file_info_lines)
         && logger_buffer->write_start_info_line)
     {
@@ -375,7 +375,7 @@ logger_buffer_compress_cb (const void *pointer, void *data,
 {
     struct t_logger_buffer *logger_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) command;
     (void) return_code;
@@ -430,15 +430,15 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
     const char *ptr_extension;
     struct stat st;
 
-    /* do not rotate if compression of log file is running */
+    /* Do not rotate if compression of log file is running. */
     if (logger_buffer->compressing)
         return;
 
-    /* do not rotate if rotation is disabled */
+    /* Do not rotate if rotation is disabled. */
     if (logger_config_rotation_size_max == 0)
         return;
 
-    /* do not rotate if max size is not reached */
+    /* Do not rotate if max size is not reached. */
     if (fstat (fileno (logger_buffer->log_file), &st) != 0)
         return;
     if (st.st_size <= (long int)logger_config_rotation_size_max)
@@ -460,7 +460,7 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
 
     ptr_extension = logger_buffer_compression_extension[compression_type];
 
-    /* find the highest existing extension index */
+    /* Find the highest existing extension index. */
     extension_index = 1;
     while (1)
     {
@@ -468,7 +468,7 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
         found_not_comp = 0;
         if (ptr_extension[0])
         {
-            /* try compressed file */
+            /* Try compressed file. */
             snprintf (filename, sizeof (filename),
                       "%s.%d%s",
                       logger_buffer->log_filename,
@@ -478,7 +478,7 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
         }
         if (!found_comp)
         {
-            /* try non-compressed file */
+            /* Try non-compressed file. */
             snprintf (filename, sizeof (filename),
                       "%s.%d",
                       logger_buffer->log_filename,
@@ -492,25 +492,25 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
     }
     extension_index--;
 
-    /* close current log file */
+    /* Close current log file. */
     fclose (logger_buffer->log_file);
     logger_buffer->log_file = NULL;
     logger_buffer->log_file_inode = 0;
 
     /*
-     * rename all files with an extension, starting with the higher one
+     * Rename all files with an extension, starting with the higher one.
      *
-     * example with no compression enabled:
+     * Example with no compression enabled:
      *   .2" -> ".3" then ".1" -> ".2" then "" -> ".1"
      *
-     * example with gzip compression:
+     * Example with gzip compression:
      *   ".2.gz" -> ".3.gz" then ".1.gz" -> ".2.gz" then "" -> ".1"
      */
     for (i = extension_index; i >= 0; i--)
     {
         if (i == 0)
         {
-            /* rename current log file to ".1" (no compression for now) */
+            /* Rename current log file to ".1" (no compression for now). */
             snprintf (filename, sizeof (filename),
                       "%s",
                       logger_buffer->log_filename);
@@ -521,12 +521,12 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
         }
         else
         {
-            /* rename ".N" to ".N+1" */
+            /* Rename ".N" to ".N+1". */
             filename[0] = '\0';
 
             if (ptr_extension[0])
             {
-                /* try compressed file */
+                /* Try compressed file. */
                 snprintf (filename, sizeof (filename),
                           "%s.%d%s",
                           logger_buffer->log_filename,
@@ -534,7 +534,7 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
                           ptr_extension);
                 if (access (filename, F_OK) == 0)
                 {
-                    /* compressed file found, go on */
+                    /* Compressed file found, go on. */
                     snprintf (new_filename, sizeof (new_filename),
                               "%s.%d%s",
                               logger_buffer->log_filename,
@@ -548,7 +548,7 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
             }
             if (!filename[0])
             {
-                /* non-compressed file */
+                /* Non-compressed file */
                 snprintf (filename, sizeof (filename),
                           "%s.%d",
                           logger_buffer->log_filename,
@@ -571,7 +571,7 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
 
     if (compression_type != LOGGER_BUFFER_COMPRESSION_NONE)
     {
-        /* compress rotated log file */
+        /* Compress rotated log file. */
         if (weechat_logger_plugin->debug)
         {
             weechat_log_printf ("logger: compressing \"%s.1\" => \"%s.1%s\"",
@@ -693,16 +693,16 @@ logger_buffer_start (struct t_gui_buffer *buffer, int write_info_line)
 
     ptr_logger_buffer = logger_buffer_search_buffer (buffer);
 
-    /* logging is disabled for buffer */
+    /* Logging is disabled for buffer. */
     if (!log_enabled)
     {
-        /* stop logger if it is active */
+        /* Stop logger if it is active. */
         if (ptr_logger_buffer)
             logger_buffer_stop (ptr_logger_buffer, 1);
     }
     else
     {
-        /* logging is enabled for buffer */
+        /* Logging is enabled for buffer. */
         if (ptr_logger_buffer)
             ptr_logger_buffer->log_level = log_level;
         else
@@ -809,8 +809,8 @@ logger_buffer_adjust_log_filenames (void)
                     if (strcmp (log_filename, ptr_logger_buffer->log_filename) != 0)
                     {
                         /*
-                         * log filename has changed (probably due to day
-                         * change),then we'll use new filename
+                         * Log filename has changed (probably due to day
+                         * change), then we'll use new filename.
                          */
                         logger_buffer_stop (ptr_logger_buffer, 1);
                         logger_buffer_start (ptr_buffer, 1);
@@ -838,7 +838,7 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
 
     ptr_buffer = logger_buffer->buffer;
 
-    /* remove logger buffer */
+    /* Remove logger buffer. */
     if (last_logger_buffer == logger_buffer)
         last_logger_buffer = logger_buffer->prev_buffer;
     if (logger_buffer->prev_buffer)
@@ -852,7 +852,7 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
     if (logger_buffer->next_buffer)
         (logger_buffer->next_buffer)->prev_buffer = logger_buffer->prev_buffer;
 
-    /* free data */
+    /* Free data. */
     free (logger_buffer->log_filename);
     if (logger_buffer->log_file)
         fclose (logger_buffer->log_file);

@@ -24,19 +24,19 @@
 #include "core-string.h"
 #include "../plugins/plugin.h"
 
-/* the passphrase used to encrypt/decrypt data */
+/* The passphrase used to encrypt/decrypt data */
 char *secure_passphrase = NULL;
 
-/* decrypted data */
+/* Decrypted data */
 struct t_hashtable *secure_hashtable_data = NULL;
 
-/* data still encrypted (if passphrase not set) */
+/* Data still encrypted (if passphrase not set) */
 struct t_hashtable *secure_hashtable_data_encrypted = NULL;
 
 char *secure_decrypt_error[] = { "memory", "buffer", "key", "cipher", "setkey",
                                  "decrypt", "hash", "hash mismatch" };
 
-/* used only when reading sec.conf: 1 if flag __passphrase__ is enabled */
+/* Used only when reading sec.conf: 1 if flag __passphrase__ is enabled */
 int secure_data_encrypted = 0;
 
 
@@ -65,18 +65,18 @@ secure_derive_key (const char *salt, const char *passphrase,
     if (!buffer)
         return 0;
 
-    /* build a buffer with salt + passphrase */
+    /* Build a buffer with salt + passphrase. */
     memcpy (buffer, salt, SECURE_SALT_SIZE);
     memcpy (buffer + SECURE_SALT_SIZE, passphrase, strlen (passphrase));
 
-    /* compute hash of buffer */
+    /* Compute hash of buffer. */
     if (!weecrypto_hash (buffer, length, GCRY_MD_SHA512, hash, &length_hash))
     {
         free (buffer);
         return 0;
     }
 
-    /* copy beginning of hash (or full hash) in the key */
+    /* Copy beginning of hash (or full hash) in the key. */
     memcpy (key, hash,
             (length_hash > length_key) ? length_key : length_hash);
 
@@ -150,7 +150,7 @@ secure_encrypt_data (const char *data, int length_data,
         return -1;
     }
 
-    /* derive a key from the passphrase */
+    /* Derive a key from the passphrase. */
     length_key = gcry_cipher_get_algo_keylen (cipher);
     key = malloc (length_key);
     if (!key)
@@ -172,7 +172,7 @@ secure_encrypt_data (const char *data, int length_data,
         goto encrypt_end;
     }
 
-    /* compute hash of data */
+    /* Compute hash of data. */
     if (gcry_md_open (hd_md, hash_algo, 0) != 0)
     {
         rc = -3;
@@ -188,7 +188,7 @@ secure_encrypt_data (const char *data, int length_data,
         goto encrypt_end;
     }
 
-    /* build a buffer with hash + data */
+    /* Build a buffer with hash + data. */
     length_hash_data = length_hash + length_data;
     hash_and_data = malloc (length_hash_data);
     if (!hash_and_data)
@@ -196,7 +196,7 @@ secure_encrypt_data (const char *data, int length_data,
     memcpy (hash_and_data, ptr_hash, length_hash);
     memcpy (hash_and_data + length_hash, data, length_data);
 
-    /* encrypt hash + data */
+    /* Encrypt hash + data. */
     if (gcry_cipher_open (hd_cipher, cipher, GCRY_CIPHER_MODE_CFB, 0) != 0)
     {
         rc = -4;
@@ -215,7 +215,7 @@ secure_encrypt_data (const char *data, int length_data,
         goto encrypt_end;
     }
 
-    /* create buffer and copy salt + encrypted hash/data into this buffer*/
+    /* Create buffer and copy salt + encrypted hash/data into this buffer. */
     *length_encrypted = SECURE_SALT_SIZE + length_hash_data;
     *encrypted = malloc (*length_encrypted);
     if (!*encrypted)
@@ -286,7 +286,7 @@ secure_decrypt_data (const char *buffer, int length_buffer,
 
     rc = -1;
 
-    /* check length of buffer */
+    /* Check length of buffer. */
     length_hash = gcry_md_get_algo_dlen (hash_algo);
     if (length_buffer <= SECURE_SALT_SIZE + length_hash)
         return -2;
@@ -308,7 +308,7 @@ secure_decrypt_data (const char *buffer, int length_buffer,
         return rc;
     }
 
-    /* derive a key from the passphrase */
+    /* Derive a key from the passphrase. */
     length_key = gcry_cipher_get_algo_keylen (cipher);
     key = malloc (length_key);
     if (!key)
@@ -319,7 +319,7 @@ secure_decrypt_data (const char *buffer, int length_buffer,
         goto decrypt_end;
     }
 
-    /* decrypt hash + data */
+    /* Decrypt hash + data. */
     decrypted_hash_data = malloc (length_buffer - SECURE_SALT_SIZE);
     if (!decrypted_hash_data)
         goto decrypt_end;
@@ -344,7 +344,7 @@ secure_decrypt_data (const char *buffer, int length_buffer,
         goto decrypt_end;
     }
 
-    /* check if hash is OK for decrypted data */
+    /* Check if hash is OK for decrypted data. */
     if (gcry_md_open (hd_md, hash_algo, 0) != 0)
     {
         rc = -7;
@@ -365,7 +365,7 @@ secure_decrypt_data (const char *buffer, int length_buffer,
         goto decrypt_end;
     }
 
-    /* return the decrypted data */
+    /* Return the decrypted data. */
     *length_decrypted = length_buffer - SECURE_SALT_SIZE - length_hash;
     *decrypted = malloc (*length_decrypted);
     if (!*decrypted)
@@ -413,7 +413,7 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
     int num_ok, num_keys, i, hash_algo, cipher, rc;
     int length_buffer, length_decrypted;
 
-    /* we need a passphrase to decrypt data! */
+    /* We need a passphrase to decrypt data! */
     if (!passphrase || !passphrase[0])
         return -1;
 
@@ -491,7 +491,7 @@ secure_init (void)
 {
     char *ptr_phrase;
 
-    /* try to read passphrase (if not set) from env var "WEECHAT_PASSPHRASE" */
+    /* Try to read passphrase (if not set) from env var "WEECHAT_PASSPHRASE". */
     if (!secure_passphrase)
     {
         ptr_phrase = getenv (SECURE_ENV_PASSPHRASE);

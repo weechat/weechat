@@ -38,7 +38,7 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
         snprintf (option_name, sizeof (option_name),
                   "%s.%s", server->name, message);
 
-        /* search for msgbuffer in configuration file, for server */
+        /* Search for msgbuffer in configuration file, for server. */
         ptr_option = weechat_config_search_option (irc_config_file,
                                                    irc_config_section_msgbuffer,
                                                    option_name);
@@ -46,14 +46,14 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
             return ptr_option;
     }
 
-    /* search for msgbuffer in configuration file */
+    /* Search for msgbuffer in configuration file. */
     ptr_option = weechat_config_search_option (irc_config_file,
                                                irc_config_section_msgbuffer,
                                                message);
     if (ptr_option)
         return ptr_option;
 
-    /* no msgbuffer found in configuration */
+    /* No msgbuffer found in configuration */
     return NULL;
 }
 

@@ -50,27 +50,27 @@ char *gui_bar_position_string[GUI_BAR_NUM_POSITIONS] =
 char *gui_bar_filling_string[GUI_BAR_NUM_FILLING] =
 { "horizontal", "vertical", "columns_horizontal", "columns_vertical" };
 
-/* default bars */
+/* Default bars */
 char *gui_bar_default_name[GUI_BAR_NUM_DEFAULT_BARS] =
 { "input", "title", "status", "nicklist" };
 char *gui_bar_default_values[GUI_BAR_NUM_DEFAULT_BARS][GUI_BAR_NUM_OPTIONS] =
 {
-    /* input */
+    /* Bar "input" */
     { "off", "1000", "window", "", "bottom", "horizontal", "vertical",
       "0", "0", "default", "cyan", "default", "default", "off",
       "[input_prompt]+(away),[input_search],[input_paste],input_text" },
-    /* title */
+    /* Bar "title" */
     { "off", "500", "window", "", "top", "horizontal", "vertical",
       "1", "0", "default", "cyan", "234", "232", "off",
       "buffer_title" },
-    /* status */
+    /* Bar "status" */
     { "off", "500", "window", "", "bottom", "horizontal", "vertical",
       "1", "0", "default", "cyan", "234", "232", "off",
       "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+"
       "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
       "buffer_filter,mouse_status,scroll,[lag],[hotlist],[typing],"
       "completion" },
-    /* nicklist */
+    /* Bar "nicklist" */
     { "off", "200", "window", "${nicklist}", "right",
       "columns_vertical", "vertical",
       "0", "0", "default", "cyan", "default", "default", "on",
@@ -110,7 +110,7 @@ gui_bar_valid (struct t_gui_bar *bar)
             return 1;
     }
 
-    /* bar not found */
+    /* Bar not found */
     return 0;
 }
 
@@ -134,7 +134,7 @@ gui_bar_search_default_bar (const char *bar_name)
             return i;
     }
 
-    /* default bar not found */
+    /* Default bar not found */
     return -1;
 }
 
@@ -158,7 +158,7 @@ gui_bar_search_option (const char *option_name)
             return i;
     }
 
-    /* bar option not found */
+    /* Bar option not found */
     return -1;
 }
 
@@ -182,7 +182,7 @@ gui_bar_search_type (const char *type)
             return i;
     }
 
-    /* type not found */
+    /* Type not found */
     return -1;
 }
 
@@ -206,7 +206,7 @@ gui_bar_search_position (const char *position)
             return i;
     }
 
-    /* position not found */
+    /* Position not found */
     return -1;
 }
 
@@ -253,7 +253,7 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
         }
     }
 
-    /* new size OK */
+    /* New size OK */
     return 1;
 }
 
@@ -286,7 +286,7 @@ gui_bar_find_pos (struct t_gui_bar *bar)
             return ptr_bar;
     }
 
-    /* bar not found, add to end of list */
+    /* Bar not found, add to end of list. */
     return NULL;
 }
 
@@ -304,7 +304,7 @@ gui_bar_insert (struct t_gui_bar *bar)
         pos_bar = gui_bar_find_pos (bar);
         if (pos_bar)
         {
-            /* insert bar into the list (before position found) */
+            /* Insert bar into the list (before position found). */
             bar->prev_bar = pos_bar->prev_bar;
             bar->next_bar = pos_bar;
             if (pos_bar->prev_bar)
@@ -315,7 +315,7 @@ gui_bar_insert (struct t_gui_bar *bar)
         }
         else
         {
-            /* add bar to the end */
+            /* Add bar to the end. */
             bar->prev_bar = last_gui_bar;
             bar->next_bar = NULL;
             last_gui_bar->next_bar = bar;
@@ -353,7 +353,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
     if (!window)
         window = gui_current_window;
 
-    /* check bar condition(s) */
+    /* Check bar condition(s). */
     conditions = CONFIG_STRING(bar->options[GUI_BAR_OPTION_CONDITIONS]);
     if (string_strcmp (conditions, "active") == 0)
     {
@@ -414,10 +414,10 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
     }
 
     /*
-     * call a modifier that will tell us if bar is displayed or not,
+     * Call a modifier that will tell us if bar is displayed or not,
      * for example it can be used to display nicklist on some buffers
      * only, using a script that implements this modifier and return "1"
-     * to display bar, "0" to hide it
+     * to display bar, "0" to hide it.
      */
     snprintf (str_modifier, sizeof (str_modifier),
               "bar_condition_%s", bar->name);
@@ -487,7 +487,7 @@ gui_bar_search (const char *name)
             return ptr_bar;
     }
 
-    /* bar not found */
+    /* Bar not found */
     return NULL;
 }
 
@@ -604,12 +604,12 @@ gui_bar_draw (struct t_gui_bar *bar)
     {
         if (bar->bar_window)
         {
-            /* root bar */
+            /* Root bar */
             gui_bar_window_draw (bar->bar_window, NULL);
         }
         else
         {
-            /* bar on each window */
+            /* Window bar (displayed on each window) */
             for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
             {
                 for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
@@ -800,7 +800,7 @@ gui_bar_config_check_type (const void *pointer, void *data,
                            struct t_config_option *option,
                            const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -826,7 +826,7 @@ gui_bar_config_change_hidden (const void *pointer, void *data,
     struct t_gui_bar_window *ptr_bar_win, *next_bar_win;
     int bar_window_exists;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -888,14 +888,14 @@ gui_bar_config_change_priority (const void *pointer, void *data,
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *bar_windows, *ptr_bar_win, *next_bar_win;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
-        /* remove bar from list */
+        /* Remove bar from list. */
         if (ptr_bar == gui_bars)
         {
             gui_bars = ptr_bar->next_bar;
@@ -941,7 +941,7 @@ void
 gui_bar_config_change_conditions (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -959,7 +959,7 @@ gui_bar_config_change_position (const void *pointer, void *data,
 {
     struct t_gui_bar *ptr_bar;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -980,7 +980,7 @@ gui_bar_config_change_filling (const void *pointer, void *data,
 {
     struct t_gui_bar *ptr_bar;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1007,7 +1007,7 @@ gui_bar_config_check_size (const void *pointer, void *data,
     struct t_gui_bar *ptr_bar;
     int new_value, current_size, number;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1069,7 +1069,7 @@ gui_bar_config_change_size (const void *pointer, void *data,
 {
     struct t_gui_bar *ptr_bar;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1092,7 +1092,7 @@ gui_bar_config_change_size_max (const void *pointer, void *data,
     struct t_gui_bar *ptr_bar;
     char value[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -1122,7 +1122,7 @@ gui_bar_config_change_color (const void *pointer, void *data,
 {
     struct t_gui_bar *ptr_bar;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1141,7 +1141,7 @@ gui_bar_config_change_separator (const void *pointer, void *data,
 {
     struct t_gui_bar *ptr_bar;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1160,7 +1160,7 @@ gui_bar_config_change_items (const void *pointer, void *data,
 {
     struct t_gui_bar *ptr_bar;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1606,7 +1606,7 @@ gui_bar_new_with_options (const char *name,
     struct t_gui_bar *new_bar;
     struct t_gui_window *ptr_win;
 
-    /* create bar */
+    /* Create bar. */
     new_bar = gui_bar_alloc (name);
     if (!new_bar)
         return NULL;
@@ -1637,19 +1637,19 @@ gui_bar_new_with_options (const char *name,
     new_bar->bar_window = NULL;
     new_bar->bar_refresh_needed = 1;
 
-    /* add bar to bars list */
+    /* Add bar to bars list. */
     gui_bar_insert (new_bar);
 
-    /* add window bar */
+    /* Add window bar. */
     if (CONFIG_ENUM(new_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
-        /* create only one window for bar */
+        /* Create only one window for bar. */
         gui_bar_window_new (new_bar, NULL);
         gui_window_ask_refresh (1);
     }
     else
     {
-        /* create bar window for all opened windows */
+        /* Create bar window for all opened windows. */
         for (ptr_win = gui_windows; ptr_win;
              ptr_win = ptr_win->next_window)
         {
@@ -1687,18 +1687,18 @@ gui_bar_new (const char *name, const char *hidden, const char *priority,
     if (!name || !name[0])
         return NULL;
 
-    /* look for type */
+    /* Look for type. */
     if (gui_bar_search_type (type) < 0)
         return NULL;
 
-    /* look for position */
+    /* Look for position. */
     if (gui_bar_search_position (position) < 0)
         return NULL;
 
     ptr_bar = gui_bar_search (name);
     if (ptr_bar)
     {
-        /* bar already exists: just update default value of options */
+        /* Bar already exists: just update default value of options. */
         gui_bar_set_default_value (ptr_bar, GUI_BAR_OPTION_HIDDEN, hidden);
         gui_bar_set_default_value (ptr_bar, GUI_BAR_OPTION_PRIORITY, priority);
         gui_bar_set_default_value (ptr_bar, GUI_BAR_OPTION_TYPE, type);
@@ -1717,7 +1717,7 @@ gui_bar_new (const char *name, const char *hidden, const char *priority,
     }
     else
     {
-        /* create bar options */
+        /* Create bar options. */
         option_hidden = gui_bar_create_option (
             name, GUI_BAR_OPTION_HIDDEN, hidden);
         option_priority = gui_bar_create_option (
@@ -1750,7 +1750,7 @@ gui_bar_new (const char *name, const char *hidden, const char *priority,
         option_items = gui_bar_create_option (
             name, GUI_BAR_OPTION_ITEMS, items);
 
-        /* add bar */
+        /* Add bar. */
         ptr_bar = gui_bar_new_with_options (
             name, option_hidden,
             option_priority, option_type,
@@ -1872,7 +1872,7 @@ gui_bar_use_temp_bars (void)
         }
     }
 
-    /* free all temporary bars */
+    /* Free all temporary bars. */
     while (gui_temp_bars)
     {
         next_temp_bar = gui_temp_bars->next_bar;
@@ -1895,14 +1895,14 @@ gui_bar_create_default_input (void)
     struct t_gui_bar *ptr_bar;
     char *buf;
 
-    /* search an input_text item */
+    /* Search an input_text item. */
     if (!gui_bar_item_used_in_at_least_one_bar (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
                                                 1, 0))
     {
         ptr_bar = gui_bar_search (gui_bar_default_name[GUI_BAR_DEFAULT_INPUT]);
         if (ptr_bar)
         {
-            /* add item "input_text" to input bar */
+            /* Add item "input_text" to input bar. */
             if (string_asprintf (
                     &buf,
                     "%s,%s",
@@ -1919,7 +1919,7 @@ gui_bar_create_default_input (void)
         }
         else
         {
-            /* create input bar */
+            /* Create input bar. */
             if (gui_bar_new_default (GUI_BAR_DEFAULT_INPUT))
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -1938,11 +1938,11 @@ gui_bar_create_default_title (void)
 {
     struct t_gui_bar *ptr_bar;
 
-    /* search title bar */
+    /* Search title bar. */
     ptr_bar = gui_bar_search (gui_bar_default_name[GUI_BAR_DEFAULT_TITLE]);
     if (!ptr_bar)
     {
-        /* create title bar */
+        /* Create title bar. */
         if (gui_bar_new_default (GUI_BAR_DEFAULT_TITLE))
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -1960,11 +1960,11 @@ gui_bar_create_default_status (void)
 {
     struct t_gui_bar *ptr_bar;
 
-    /* search status bar */
+    /* Search status bar. */
     ptr_bar = gui_bar_search (gui_bar_default_name[GUI_BAR_DEFAULT_STATUS]);
     if (!ptr_bar)
     {
-        /* create status bar */
+        /* Create status bar. */
         if (gui_bar_new_default (GUI_BAR_DEFAULT_STATUS))
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -1982,11 +1982,11 @@ gui_bar_create_default_nicklist (void)
 {
     struct t_gui_bar *ptr_bar;
 
-    /* search nicklist bar */
+    /* Search nicklist bar. */
     ptr_bar = gui_bar_search (gui_bar_default_name[GUI_BAR_DEFAULT_NICKLIST]);
     if (!ptr_bar)
     {
-        /* create nicklist bar */
+        /* Create nicklist bar. */
         if (gui_bar_new_default (GUI_BAR_DEFAULT_NICKLIST))
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -2071,7 +2071,7 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
     }
     else
     {
-        /* auto-detect if we scroll X/Y, according to filling */
+        /* Auto-detect if we scroll X/Y, according to filling. */
         if (gui_bar_get_filling (bar) == GUI_BAR_FILLING_HORIZONTAL)
             add_x = 1;
     }
@@ -2156,7 +2156,7 @@ gui_bar_free (struct t_gui_bar *bar)
     if (!bar)
         return;
 
-    /* remove bar window(s) */
+    /* Remove bar window(s). */
     if (bar->bar_window)
     {
         gui_bar_window_free (bar->bar_window, NULL);
@@ -2165,7 +2165,7 @@ gui_bar_free (struct t_gui_bar *bar)
     else
         gui_bar_free_bar_windows (bar);
 
-    /* remove bar from bars list */
+    /* Remove bar from bars list. */
     if (bar->prev_bar)
         (bar->prev_bar)->next_bar = bar->next_bar;
     if (bar->next_bar)
@@ -2175,7 +2175,7 @@ gui_bar_free (struct t_gui_bar *bar)
     if (last_gui_bar == bar)
         last_gui_bar = bar->prev_bar;
 
-    /* free data */
+    /* Free data. */
     free (bar->name);
     for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
@@ -2240,7 +2240,7 @@ gui_bar_hdata_bar_cb (const void *pointer, void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

@@ -22,34 +22,35 @@ root_dir=$1
 version=$2
 header_file=$3
 
-# debug:
+# Debug:
 #echo "pwd=$PWD, rootdir=${root_dir}, version=${version}, headerfile=${header_file}"
 
-# read git version if we are in a devel/rc version and if we are in a repository
+# Read git version if we are in a devel/rc version and if we are in a
+# repository.
 git_version=""
 case ${version} in
 *-*)
-    # devel/rc version (like 0.4.0-dev or 0.4.0-rc1)
+    # Devel/rc version (like 0.4.0-dev or 0.4.0-rc1)
     if [ -e "${root_dir}/.git" ]; then
         git_version=$(cd "${root_dir}" && git describe 2>/dev/null)
     fi
     ;;
 *)
-    # stable version => no git version
+    # Stable version => no git version
     ;;
 esac
 
-# check if git version has changed
+# Check if git version has changed.
 if [ ! -f "${header_file}" ]; then
-    # header does not exist => create it
+    # Header does not exist => create it.
     echo "Creating file ${header_file} with git version: \"${git_version}\""
     echo "#define PACKAGE_VERSION_GIT \"${git_version}\"" >"${header_file}"
 else
     if grep -q "#define PACKAGE_VERSION_GIT \"${git_version}\"" "${header_file}"; then
-        # git version matches the file => NO update
+        # Git version matches the file => NO update.
         echo "File ${header_file} is up-to-date (git version: \"${git_version}\")"
     else
-        # git version not found in file => update file with this git version
+        # Git version not found in file => update file with this git version.
         echo "Updating file ${header_file} with git version: \"${git_version}\""
         sed "s/#define PACKAGE_VERSION_GIT \".*\"/#define PACKAGE_VERSION_GIT \"${git_version}\"/" "${header_file}" >"${header_file}.tmp"
         mv -f "${header_file}.tmp" "${header_file}"

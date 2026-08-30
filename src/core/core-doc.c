@@ -190,7 +190,7 @@ doc_gen_hook_command_cmp_cb (void *data, struct t_arraylist *arraylist,
     struct t_hook *ptr_hook1, *ptr_hook2;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -390,7 +390,7 @@ doc_gen_option_cmp_cb (void *data, struct t_arraylist *arraylist,
     struct t_config_option *ptr_option1, *ptr_option2;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -679,7 +679,7 @@ doc_gen_hook_info_cmp_cb (void *data, struct t_arraylist *arraylist,
     struct t_hook *ptr_hook1, *ptr_hook2;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -768,7 +768,7 @@ doc_gen_hook_info_hashtable_cmp_cb (void *data, struct t_arraylist *arraylist,
     struct t_hook *ptr_hook1, *ptr_hook2;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -859,7 +859,7 @@ doc_gen_hook_infolist_cmp_cb (void *data, struct t_arraylist *arraylist,
     struct t_hook *ptr_hook1, *ptr_hook2;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -950,7 +950,7 @@ doc_gen_hook_hdata_cmp_cb (void *data, struct t_arraylist *arraylist,
     struct t_hook *ptr_hook1, *ptr_hook2;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -974,7 +974,7 @@ int
 doc_gen_hdata_list_cmp_cb (void *data, struct t_arraylist *arraylist,
                            void *pointer1, void *pointer2)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -1003,7 +1003,7 @@ doc_gen_hdata_key_cmp_cb (void *data, struct t_arraylist *arraylist,
 {
     int offset1, offset2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) arraylist;
 
     offset1 = hdata_get_var_offset ((struct t_hdata *)data,
@@ -1245,7 +1245,7 @@ doc_gen_hook_completion_cmp_cb (void *data, struct t_arraylist *arraylist,
     struct t_hook *ptr_hook1, *ptr_hook2;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -1391,7 +1391,7 @@ doc_gen_plugin_cmp_cb (void *data, struct t_arraylist *arraylist,
 {
     struct t_weechat_plugin *ptr_plugin1, *ptr_plugin2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -1477,7 +1477,7 @@ doc_gen_config_cmp_cb (void *data, struct t_arraylist *arraylist,
 {
     struct t_config_file *ptr_config1, *ptr_config2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -1716,9 +1716,9 @@ doc_generate (const char *path)
     }
 
     /*
-     * set a specific localedir to find .mo files
+     * Set a specific localedir to find .mo files
      * (this is used to generate documentation without installing WeeChat,
-     * that means no need to run `make install`)
+     * that means no need to run `make install`).
      */
 #if ENABLE_NLS == 1
     localedir = getenv ("WEECHAT_DOCGEN_LOCALEDIR");
@@ -1731,13 +1731,13 @@ doc_generate (const char *path)
         setenv ("LANGUAGE", locales[i], 1);
         if (!setlocale (LC_ALL, locales[i]))
         {
-            /* warning on missing locale */
+            /* Display a warning on missing locale. */
             string_fprintf (
                 stderr,
                 "doc generator: WARNING: failed to set locale \"%s\", "
                 "docs will include auto-generated English content\n",
                 locales[i]);
-            /* fallback to English */
+            /* Fallback to English */
             setlocale (LC_ALL, "C");
         }
         memcpy (lang, locales[i], 2);

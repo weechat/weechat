@@ -108,7 +108,7 @@ API_FUNC(register)
     API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (lua_registered_script)
     {
-        /* script already registered */
+        /* Script is already registered. */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" already "
                                          "registered (register ignored)"),
@@ -131,7 +131,7 @@ API_FUNC(register)
 
     if (plugin_script_search (lua_scripts, name))
     {
-        /* another script already exists with same name */
+        /* Another script already exists with same name */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
@@ -140,7 +140,7 @@ API_FUNC(register)
         API_RETURN_ERROR;
     }
 
-    /* register script */
+    /* Register script. */
     lua_current_script = plugin_script_add (weechat_lua_plugin,
                                             &lua_data,
                                             (lua_current_script_filename) ?
@@ -2343,7 +2343,7 @@ weechat_lua_api_hook_command_cb (const void *pointer, void *data,
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argv;
 
     script = (struct t_plugin_script *)pointer;
@@ -2979,10 +2979,10 @@ API_FUNC(hook_connect)
                                                          port,
                                                          ipv6,
                                                          retry,
-                                                         NULL, /* gnutls session */
-                                                         NULL, /* gnutls callback */
-                                                         0,    /* gnutls DH key size */
-                                                         NULL, /* gnutls priorities */
+                                                         NULL, /* GnuTLS session */
+                                                         NULL, /* GnuTLS callback */
+                                                         0,    /* GnuTLS DH key size */
+                                                         NULL, /* GnuTLS priorities */
                                                          local_hostname,
                                                          &weechat_lua_api_hook_connect_cb,
                                                          function,
@@ -3060,7 +3060,7 @@ weechat_lua_api_hook_print_cb (const void *pointer, void *data,
     static char timebuffer[64];
     int *rc, ret;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) date_usec;
     (void) tags_count;
 
@@ -4556,7 +4556,7 @@ weechat_lua_api_bar_item_build_cb (const void *pointer, void *data,
     {
         if (strncmp (ptr_function, "(extra)", 7) == 0)
         {
-            /* new callback: data, item, window, buffer, extra_info */
+            /* New callback: data, item, window, buffer, extra_info */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -4570,7 +4570,7 @@ weechat_lua_api_bar_item_build_cb (const void *pointer, void *data,
         }
         else
         {
-            /* old callback: data, item, window */
+            /* Old callback: data, item, window */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = (char *)API_PTR2STR(item);
             func_argv[2] = (char *)API_PTR2STR(window);
@@ -5869,7 +5869,7 @@ API_FUNC(upgrade_close)
 }
 
 /*
- * Lua functions.
+ * Lua functions
  */
 
 const struct luaL_Reg weechat_lua_api_funcs[] = {

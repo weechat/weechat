@@ -175,12 +175,12 @@ gui_mouse_grab_end (const char *mouse_key)
 {
     char mouse_key_input[256];
 
-    /* insert mouse key in input */
+    /* Insert mouse key in input. */
     if (gui_current_window->buffer->input)
     {
         if (gui_mouse_grab == 2)
         {
-            /* mouse key with area */
+            /* Mouse key with area */
             snprintf (mouse_key_input, sizeof (mouse_key_input),
                       "%s:%s",
                       gui_mouse_grab_event2input (),
@@ -188,14 +188,14 @@ gui_mouse_grab_end (const char *mouse_key)
         }
         else
         {
-            /* mouse key without area */
+            /* Mouse key without area */
             snprintf (mouse_key_input, sizeof (mouse_key_input),
                       "%s", mouse_key);
         }
         gui_input_insert_string (gui_current_window->buffer, mouse_key_input);
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
-                                                    1, /* save undo */
-                                                    1); /* stop completion */
+                                                    1, /* Save undo */
+                                                    1); /* Stop completion */
     }
 
     gui_mouse_grab = 0;
@@ -221,7 +221,7 @@ gui_mouse_event_size (const char *key)
     {
         /*
          * SGR event: digits separated by ';', ending by 'M' (pressed)
-         * or 'm' (released), example: "0;71;21M"
+         * or 'm' (released), example: "0;71;21M".
          */
         for (ptr_key = key + 4; ptr_key[0]; ptr_key++)
         {
@@ -246,7 +246,7 @@ gui_mouse_event_size (const char *key)
         return ptr_key - key;
     }
 
-    /* invalid mouse event, or not supported */
+    /* Invalid mouse event, or not supported */
     return -1;
 }
 
@@ -373,11 +373,11 @@ gui_mouse_event_name_sgr (const char *key)
         goto error;
     y = (y >= 1) ? y - 1 : 0;
 
-    /* set data in "gui_mouse_event_xxx" */
+    /* Set data in "gui_mouse_event_xxx". */
     gui_mouse_event_x[gui_mouse_event_index] = x;
     gui_mouse_event_y[gui_mouse_event_index] = y;
 
-    /* keep same coordinates if it's release code received as first event */
+    /* Keep same coordinates if it's release code received as first event. */
     if ((gui_mouse_event_index == 0) && is_release)
     {
         gui_mouse_event_index = 1;
@@ -401,7 +401,7 @@ gui_mouse_event_name_sgr (const char *key)
             strcat (mouse_key, "wheelup");
         else if ((button & 3) == 1)
             strcat (mouse_key, "wheeldown");
-        /* not yet supported: wheel left/right */
+        /* Not yet supported: wheel left/right */
         /*
         else if ((button & 3) == 2)
             strcat (mouse_key, "wheelleft");
@@ -478,18 +478,18 @@ gui_mouse_event_name_utf8 (const char *key)
     mouse_key[0] = '\0';
 
     /*
-     * key must have at least:
-     *   one code (for event) + X + Y == 3 bytes or 3 UTF-8 chars
+     * Key must have at least:
+     *   one code (for event) + X + Y == 3 bytes or 3 UTF-8 chars.
      */
     key_valid_utf8 = utf8_is_valid (key, -1, NULL);
     length = (key_valid_utf8) ? utf8_strlen (key) : (int)strlen (key);
     if (length < 3)
         return NULL;
 
-    /* get coordinates and button */
+    /* Get coordinates and button. */
     if (key_valid_utf8)
     {
-        /* get coordinates using UTF-8 chars in key */
+        /* Get coordinates using UTF-8 chars in key. */
         x = utf8_char_int (key + 1) - 33;
         ptr_key = (char *)utf8_next_char (key + 1);
         if (!ptr_key)
@@ -498,7 +498,7 @@ gui_mouse_event_name_utf8 (const char *key)
     }
     else
     {
-        /* get coordinates using ISO chars in key */
+        /* Get coordinates using ISO chars in key. */
         x = ((unsigned char)key[1]) - 33;
         y = ((unsigned char)key[2]) - 33;
     }
@@ -507,14 +507,14 @@ gui_mouse_event_name_utf8 (const char *key)
     if (y < 0)
         y = 0;
 
-    /* ignore key if it's motion/end code received as first event */
+    /* Ignore key if it's motion/end code received as first event. */
     if ((gui_mouse_event_index == 0)
         && (MOUSE_CODE_UTF8_MOTION(key[0]) || MOUSE_CODE_UTF8_END(key[0])))
     {
         return NULL;
     }
 
-    /* set data in "gui_mouse_event_xxx" */
+    /* Set data in "gui_mouse_event_xxx". */
     gui_mouse_event_x[gui_mouse_event_index] = x;
     gui_mouse_event_y[gui_mouse_event_index] = y;
     if (gui_mouse_event_index == 0)
@@ -523,9 +523,7 @@ gui_mouse_event_name_utf8 (const char *key)
     if (gui_mouse_event_index == 0)
         gui_mouse_event_index = 1;
 
-    /*
-     * browse wheel codes, if one code is found, return event name immediately
-     */
+    /* Browse wheel codes, if one code is found, return event name immediately. */
     for (i = 0; gui_mouse_wheel_utf8_codes[i][0]; i++)
     {
         if (key[0] == gui_mouse_wheel_utf8_codes[i][0][0])
@@ -537,7 +535,7 @@ gui_mouse_event_name_utf8 (const char *key)
         }
     }
 
-    /* add name of button event */
+    /* Add name of button event. */
     for (i = 0; gui_mouse_button_utf8_codes[i][0]; i++)
     {
         if (gui_mouse_event_button == gui_mouse_button_utf8_codes[i][0][0])
@@ -547,7 +545,7 @@ gui_mouse_event_name_utf8 (const char *key)
         }
     }
 
-    /* nothing found, reset now or mouse will be stuck */
+    /* Nothing found, reset now or mouse will be stuck. */
     if (!mouse_key[0])
     {
         gui_mouse_event_reset ();
@@ -584,7 +582,7 @@ gui_mouse_event_process (const char *key)
     const char *mouse_key;
     int bare_event;
 
-    /* get mouse event name */
+    /* Get mouse event name. */
     mouse_key = NULL;
     if (strncmp (key, "\x01[[<", 4) == 0)
         mouse_key = gui_mouse_event_name_sgr (key + 4);
@@ -601,7 +599,7 @@ gui_mouse_event_process (const char *key)
         }
         else if (!gui_key_debug)
         {
-            /* execute command (if found) */
+            /* Execute command (if found). */
             (void) gui_key_focus (mouse_key, GUI_KEY_CONTEXT_MOUSE);
         }
         if (!bare_event)

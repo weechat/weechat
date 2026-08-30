@@ -176,13 +176,13 @@ TEST_GROUP(RelayApiProtocolWithClient)
     {
         int i;
 
-        /* disable auto-open of relay buffer */
+        /* Disable auto-open of relay buffer. */
         config_file_option_set (relay_config_look_auto_open_buffer, "off", 1);
 
-        /* set relay password */
+        /* Set relay password. */
         config_file_option_set (relay_config_network_password, "secret", 1);
 
-        /* create a relay server */
+        /* Create a relay server. */
         ptr_relay_server = relay_server_new (
             "api",
             RELAY_PROTOCOL_API,
@@ -194,7 +194,7 @@ TEST_GROUP(RelayApiProtocolWithClient)
             0,  /* tls */
             0);  /* unix_socket */
 
-        /* create a relay client */
+        /* Create a relay client. */
         ptr_relay_client = relay_client_new (-1, "test", ptr_relay_server);
         ptr_relay_client->fake_send_func = &fake_send_func;
 
@@ -216,10 +216,10 @@ TEST_GROUP(RelayApiProtocolWithClient)
 
         free_data_sent ();
 
-        /* restore auto-open of relay buffer */
+        /* Restore auto-open of relay buffer. */
         config_file_option_reset (relay_config_look_auto_open_buffer, 1);
 
-        /* restore relay password */
+        /* Restore relay password. */
         config_file_option_reset (relay_config_network_password, 1);
     }
 };
@@ -281,7 +281,7 @@ TEST(RelayApiProtocolWithClient, CbOptions)
 
 TEST(RelayApiProtocolWithClient, CbHandshake)
 {
-    /* no body */
+    /* No body */
     test_client_recv_http ("POST /api/handshake", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -293,7 +293,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  "\"totp\":false}",
                  data_sent[0]);
 
-    /* empty body */
+    /* Empty body */
     test_client_recv_http ("POST /api/handshake", NULL, "{}");
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -305,7 +305,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  "\"totp\":false}",
                  data_sent[0]);
 
-    /* unknown password hash algorithm */
+    /* Unknown password hash algorithm */
     test_client_recv_http ("POST /api/handshake", NULL,
                            "{\"password_hash_algo\": [\"invalid\"]}");
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
@@ -316,7 +316,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  "{\"error\":\"Hash algorithm \\\"invalid\\\" not found\"}",
                  data_sent[0]);
 
-    /* invalid password hash algorithm */
+    /* Invalid password hash algorithm */
     test_client_recv_http ("POST /api/handshake", NULL,
                            "{\"password_hash_algo\": [{}]}");
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
@@ -327,7 +327,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  "{\"error\":\"Invalid hash algorithm\"}",
                  data_sent[0]);
 
-    /* two supported hash algorithms */
+    /* Two supported hash algorithms */
     test_client_recv_http (
         "POST /api/handshake",
         NULL,
@@ -373,7 +373,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     cJSON *json, *json_obj, *json_var, *json_groups;
     char str_http[256];
 
-    /* error: invalid buffer name */
+    /* Error: invalid buffer name */
     test_client_recv_http ("GET /api/buffers/invalid", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -383,7 +383,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
                  data_sent[0]);
 
-    /* error: invalid buffer id */
+    /* Error: invalid buffer id */
     test_client_recv_http ("GET /api/buffers/123", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -393,7 +393,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "{\"error\":\"Buffer \\\"123\\\" not found\"}",
                  data_sent[0]);
 
-    /* error: invalid sub-resource */
+    /* Error: invalid sub-resource */
     test_client_recv_http ("GET /api/buffers/core.weechat/invalid", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -403,7 +403,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "{\"error\":\"Sub-resource of buffers not found: \\\"invalid\\\"\"}",
                  data_sent[0]);
 
-    /* error: too many parameters in path */
+    /* Error: too many parameters in path */
     test_client_recv_http ("GET /api/buffers/core.weechat/too/many/parameters",
                            NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
@@ -414,7 +414,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "{\"error\":\"Bad request: too many path parameters (max: 3)\"}",
                  data_sent[0]);
 
-    /* get all buffers */
+    /* Get all buffers. */
     test_client_recv_http ("GET /api/buffers", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
@@ -439,7 +439,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("core", json_var, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
 
-    /* get one buffer by name */
+    /* Get one buffer by name. */
     gui_buffer_set (gui_buffers, "input_prompt", "test_prompt");
     gui_buffer_set (gui_buffers, "input", "test");
     gui_buffer_set (gui_buffers, "input_pos", "4");
@@ -469,7 +469,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     gui_buffer_set (gui_buffers, "input", "");
     gui_buffer_set (gui_buffers, "input_multiline", "0");
 
-    /* get one buffer by id */
+    /* Get one buffer by id. */
     snprintf (str_http, sizeof (str_http),
               "GET /api/buffers/%lld", gui_buffers->id);
     test_client_recv_http (str_http, NULL, NULL);
@@ -494,7 +494,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("core", json_var, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
 
-    /* get the 2 last lines of core buffer */
+    /* Get the 2 last lines of core buffer. */
     gui_chat_printf (NULL, "test line 1");
     gui_chat_printf (NULL, "test line 2");
     test_client_recv_http ("GET /api/buffers/core.weechat/lines?lines=-2", NULL, NULL);
@@ -522,7 +522,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("", json, "prefix");
     WEE_CHECK_OBJ_STR("test line 2", json, "message");
 
-    /* get nicks */
+    /* Get nicks. */
     test_client_recv_http ("GET /api/buffers/core.weechat/nicks", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
@@ -545,7 +545,7 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
 {
     cJSON *json, *json_obj, *json_count;
 
-    /* get hotlist (empty) */
+    /* Get hotlist (empty). */
     test_client_recv_http ("GET /api/hotlist", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
@@ -563,7 +563,7 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
     gui_hotlist_add (gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
     gui_hotlist_add (gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
 
-    /* get hotlist (one buffer) */
+    /* Get hotlist (one buffer). */
     test_client_recv_http ("GET /api/hotlist", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
@@ -610,14 +610,14 @@ TEST(RelayApiProtocolWithClient, CbScripts)
     char *test_scripts_dir, str_command[(PATH_MAX * 2) + 128];
     const char *ptr_test_scripts_dir;
 
-    /* get scripts (no scripts loaded) */
+    /* Get scripts (no scripts loaded). */
     test_client_recv_http ("GET /api/scripts", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
     CHECK(cJSON_IsArray (json_body_sent[0]));
     LONGS_EQUAL(0, cJSON_GetArraySize (json_body_sent[0]));
 
-    /* load a python script for this test */
+    /* Load a python script for this test. */
     ptr_test_scripts_dir = getenv ("WEECHAT_TESTS_SCRIPTS_DIR");
     test_scripts_dir = strdup (
         (ptr_test_scripts_dir) ?
@@ -636,7 +636,7 @@ TEST(RelayApiProtocolWithClient, CbScripts)
               "/script load %s", path_testapigen);
     run_cmd (str_command);
 
-    /* get scripts (one loaded) */
+    /* Get scripts (one loaded). */
     test_client_recv_http ("GET /api/scripts", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
@@ -651,7 +651,7 @@ TEST(RelayApiProtocolWithClient, CbScripts)
     WEE_CHECK_OBJ_STR("Sébastien Helleu <flashcode@flashtux.org>", json, "author");
     WEE_CHECK_OBJ_STR("GPL3", json, "license");
 
-    /* unload script */
+    /* Unload script. */
     snprintf (str_command, sizeof (str_command),
               "/script unload -q weechat_testapi.py");
     run_cmd (str_command);
@@ -666,7 +666,7 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
 {
     cJSON *json, *json_obj, *json_array;
 
-    /* error: no body */
+    /* Error: no body */
     test_client_recv_http ("POST /api/completion", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -676,7 +676,7 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
                  "{\"error\":\"Bad request\"}",
                  data_sent[0]);
 
-    /* error: invalid buffer name */
+    /* Error: invalid buffer name */
     test_client_recv_http ("POST /api/completion",
                            NULL,
                            "{\"buffer_name\": \"invalid\", "
@@ -689,11 +689,9 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
                  "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
                  data_sent[0]);
 
-    /* on core buffer, with buffer name. examples from relay protocol examples:
-     * https://weechat.org/files/doc/weechat/stable/weechat_relay_weechat.en.html#command_completion
-     */
+    /* On core buffer, with buffer name */
 
-    /* completion core.weechat -1 /help fi */
+    /* Completion core.weechat -1 /help fi */
     test_client_recv_http ("POST /api/completion",
                            NULL,
                            "{\"buffer_name\": \"core.weechat\", "
@@ -715,7 +713,7 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
     STRCMP_EQUAL("fifo.file.path", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 2)));
     STRCMP_EQUAL("filter", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 3)));
 
-    /* completion core.weechat 5 /quernick */
+    /* Completion core.weechat 5 /quernick */
     test_client_recv_http ("POST /api/completion",
                            NULL,
                            "{\"buffer_name\": \"core.weechat\", "
@@ -746,7 +744,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
     char str_body[1024];
     int old_delay;
 
-    /* error: no body */
+    /* Error: no body */
     test_client_recv_http ("POST /api/input", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -756,7 +754,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
                  "{\"error\":\"Bad request\"}",
                  data_sent[0]);
 
-    /* error: invalid buffer name */
+    /* Error: invalid buffer name */
     test_client_recv_http ("POST /api/input",
                            NULL,
                            "{\"buffer_name\": \"invalid\", "
@@ -769,7 +767,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
                  "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
                  data_sent[0]);
 
-    /* on core buffer, without buffer name */
+    /* On core buffer, without buffer name */
     record_start ();
     old_delay = relay_api_protocol_command_delay;
     relay_api_protocol_command_delay = 0;
@@ -781,7 +779,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
     WEE_CHECK_HTTP_CODE(204, "No Content");
     CHECK(record_search ("core.weechat", "", "test from relay 1", NULL));
 
-    /* on core buffer, with buffer name */
+    /* On core buffer, with buffer name */
     record_start ();
     old_delay = relay_api_protocol_command_delay;
     relay_api_protocol_command_delay = 0;
@@ -794,7 +792,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
     WEE_CHECK_HTTP_CODE(204, "No Content");
     CHECK(record_search ("core.weechat", "", "test from relay 2", NULL));
 
-    /* on core buffer, with buffer id */
+    /* On core buffer, with buffer id */
     record_start ();
     old_delay = relay_api_protocol_command_delay;
     relay_api_protocol_command_delay = 0;
@@ -818,7 +816,7 @@ TEST(RelayApiProtocolWithClient, CbPing)
 {
     cJSON *json, *json_obj;
 
-    /* ping without body */
+    /* Ping without body */
     test_client_recv_http ("POST /api/ping", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 204 No Content\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -827,7 +825,7 @@ TEST(RelayApiProtocolWithClient, CbPing)
                  "\r\n",
                  data_sent[0]);
 
-    /* ping with a body */
+    /* Ping with a body */
     test_client_recv_http ("POST /api/ping", NULL, "{\"data\": \"abcdef\"}");
     WEE_CHECK_HTTP_CODE(200, "OK");
     json = json_body_sent[0];
@@ -939,36 +937,36 @@ TEST(RelayApiProtocolWithClient, RecvJson)
                  "\r\n",
                  data_sent[0]);
 
-    /* error: empty string */
+    /* Error: empty string */
     test_client_recv_text ("");
     WEE_CHECK_TEXT(400, "Bad Request", "", "null", "{\"error\":\"Bad request: invalid JSON\"}");
 
-    /* error: empty body */
+    /* Error: empty body */
     test_client_recv_text ("{}");
     WEE_CHECK_TEXT(400, "Bad Request", "", "null", "{\"error\":\"Bad request\"}");
 
-    /* error: empty request */
+    /* Error: empty request */
     test_client_recv_text ("{\"request\": \"\"}");
     WEE_CHECK_TEXT(400, "Bad Request", "", "null", "{\"error\":\"Bad request\"}");
 
-    /* error: invalid request (number) */
+    /* Error: invalid request (number) */
     test_client_recv_text ("{\"request\": 123}");
     WEE_CHECK_TEXT(400, "Bad Request", "", "null", "{\"error\":\"Bad request\"}");
 
-    /* error: invalid request (string, not a valid request) */
+    /* Error: invalid request (string, not a valid request) */
     test_client_recv_text ("{\"request\": \"abc\"}");
     WEE_CHECK_TEXT(400, "Bad Request", "", "null", "{\"error\":\"Bad request\"}");
 
-    /* error: invalid request (string, resource not found) */
+    /* Error: invalid request (string, resource not found) */
     test_client_recv_text ("{\"request\": \"GET /api/unknown\"}");
     WEE_CHECK_TEXT(404, "Not Found", "GET /api/unknown", "null", "{\"error\":\"Resource not found\"}");
 
-    /* error: invalid request (string, resource not found) */
+    /* Error: invalid request (string, resource not found) */
     test_client_recv_text ("{\"request\": \"GET /api/unknown\", \"body\": {\"test\": 123}}");
     WEE_CHECK_TEXT(404, "Not Found", "GET /api/unknown", "{\"test\":123}",
                    "{\"error\":\"Resource not found\"}");
 
-    /* ping */
+    /* Ping */
     test_client_recv_text ("{\"request\": \"POST /api/ping\", \"request_id\": \"ping\"}");
     STRCMP_EQUAL("{\"code\":204,"
                  "\"message\":\"No Content\","
@@ -1016,7 +1014,7 @@ TEST(RelayApiProtocolWithClient, RecvJson)
 
 TEST(RelayApiProtocolWithClient, RecvHttp404)
 {
-    /* resource not found: error 404 */
+    /* Resource not found: error 404 */
     test_client_recv_http ("GET /", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -1026,7 +1024,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  "{\"error\":\"Resource not found\"}",
                  data_sent[0]);
 
-    /* resource not found: error 404 */
+    /* Resource not found: error 404 */
     test_client_recv_http ("GET /unknown", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -1036,7 +1034,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  "{\"error\":\"Resource not found\"}",
                  data_sent[0]);
 
-    /* resource not found: error 404 */
+    /* Resource not found: error 404 */
     test_client_recv_http ("GET /unknown/abc", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -1046,7 +1044,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  "{\"error\":\"Resource not found\"}",
                  data_sent[0]);
 
-    /* resource not found: error 404 */
+    /* Resource not found: error 404 */
     test_client_recv_http ("GET /api", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -1056,7 +1054,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  "{\"error\":\"Resource not found\"}",
                  data_sent[0]);
 
-    /* resource not found: error 404 */
+    /* Resource not found: error 404 */
     test_client_recv_http ("GET /api/unknown", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -1074,7 +1072,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
 
 TEST(RelayApiProtocolWithClient, RecvHttpMissingPassword)
 {
-    /* unauthorized: missing password */
+    /* Unauthorized: missing password */
     test_client_recv_http_raw ("GET /api/version\r\n"
                                "\r\n");
     STRCMP_EQUAL("HTTP/1.1 401 Unauthorized\r\n"
@@ -1093,7 +1091,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpMissingPassword)
 
 TEST(RelayApiProtocolWithClient, RecvHttpInvalidPassword)
 {
-    /* unauthorized: invalid password: "plain:invalid" */
+    /* Unauthorized: invalid password: "plain:invalid" */
     test_client_recv_http_raw ("GET /api/version\r\n"
                                "Authorization: Basic cGxhaW46aW52YWxpZA==\r\n"
                                "\r\n");
@@ -1113,7 +1111,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpInvalidPassword)
 
 TEST(RelayApiProtocolWithClient, RecvHttpMethodNotAllowed)
 {
-    /* method not allowed (PATCH) with existing resource (/api/ping) */
+    /* Method not allowed (PATCH) with existing resource (/api/ping) */
     test_client_recv_http ("PATCH /api/ping", NULL, "{\"data\": \"abcdef\"}");
     STRCMP_EQUAL("HTTP/1.1 405 Method Not Allowed\r\n"
                  "Allow: GET, POST, PUT, DELETE\r\n"
@@ -1124,7 +1122,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpMethodNotAllowed)
                  "{\"error\":\"Method Not Allowed\"}",
                  data_sent[0]);
 
-    /* method not allowed (PATCH) with unknown resource (/api/unknown) */
+    /* Method not allowed (PATCH) with unknown resource (/api/unknown) */
     test_client_recv_http ("PATCH /api/unknown", NULL, "{\"data\": \"abcdef\"}");
     STRCMP_EQUAL("HTTP/1.1 405 Method Not Allowed\r\n"
                  "Allow: GET, POST, PUT, DELETE\r\n"
@@ -1135,7 +1133,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpMethodNotAllowed)
                  "{\"error\":\"Method Not Allowed\"}",
                  data_sent[0]);
 
-    /* method not allowed (PATCH) with unknown resource (/unknown) */
+    /* Method not allowed (PATCH) with unknown resource (/unknown). */
     test_client_recv_http ("PATCH /unknown", NULL, "{\"data\": \"abcdef\"}");
     STRCMP_EQUAL("HTTP/1.1 405 Method Not Allowed\r\n"
                  "Allow: GET, POST, PUT, DELETE\r\n"

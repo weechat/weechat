@@ -119,26 +119,26 @@ gui_nick_hash_color (const char *nickname, int num_colors)
     switch (CONFIG_ENUM(config_look_nick_color_hash))
     {
         case CONFIG_LOOK_NICK_COLOR_HASH_DJB2:
-            /* variant of djb2 hash, using 64-bit integer */
+            /* Variant of djb2 hash, using 64-bit integer */
             color_64 = 5381;
             gui_nick_hash_djb2_64 (ptr_salt, &color_64);
             gui_nick_hash_djb2_64 (nickname, &color_64);
             break;
         case CONFIG_LOOK_NICK_COLOR_HASH_SUM:
-            /* sum of letters, using 64-bit integer  */
+            /* Sum of letters, using 64-bit integer */
             color_64 = 0;
             gui_nick_hash_sum_64 (ptr_salt, &color_64);
             gui_nick_hash_sum_64 (nickname, &color_64);
             break;
         case CONFIG_LOOK_NICK_COLOR_HASH_DJB2_32:
-            /* variant of djb2 hash, using 32-bit integer */
+            /* Variant of djb2 hash, using 32-bit integer */
             color_32 = 5381;
             gui_nick_hash_djb2_32 (ptr_salt, &color_32);
             gui_nick_hash_djb2_32 (nickname, &color_32);
             color_64 = color_32;
             break;
         case CONFIG_LOOK_NICK_COLOR_HASH_SUM_32:
-            /* sum of letters, using 32-bit integer */
+            /* Sum of letters, using 32-bit integer */
             color_32 = 0;
             gui_nick_hash_sum_32 (ptr_salt, &color_32);
             gui_nick_hash_sum_32 (nickname, &color_32);
@@ -279,14 +279,14 @@ gui_nick_find_color_name (const char *nickname, int case_range,
 
     if (!list_colors)
     {
-        /* look if color is forced for the nick */
+        /* Look if color is forced for the nick. */
         forced_color = gui_nick_get_forced_color (nickname2);
         if (forced_color)
         {
             ptr_result = forced_color;
             goto end;
         }
-        /* ensure nick colors are properly set */
+        /* Ensure nick colors are properly set. */
         if (!config_nick_colors)
             config_set_nick_colors ();
         if (config_num_nick_colors == 0)
@@ -302,7 +302,7 @@ gui_nick_find_color_name (const char *nickname, int case_range,
     if (!nickname3)
         goto end;
 
-    /* hash nickname to get color */
+    /* Hash nickname to get color. */
     color = gui_nick_hash_color (
         nickname3,
         (list_colors) ? num_colors : config_num_nick_colors);

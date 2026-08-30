@@ -15,7 +15,7 @@ struct t_infolist_item;
 
 #define HOOK_CONNECT(hook, var) (((struct t_hook_connect *)hook->hook_data)->var)
 
-/* used if socketpair() function is NOT available */
+/* Used if socketpair() function is NOT available. */
 #define HOOK_CONNECT_MAX_SOCKETS 4
 
 typedef int (t_hook_callback_connect)(const void *pointer, void *data,

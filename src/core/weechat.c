@@ -172,7 +172,7 @@ weechat_startup_message (int term_theme_light)
 
     if (weechat_first_start)
     {
-        /* message on first run (when weechat.conf is created) */
+        /* Display message on first run (when weechat.conf is created). */
         gui_chat_printf (NULL, _("Welcome to WeeChat!"));
         gui_chat_printf (
             NULL,
@@ -232,7 +232,7 @@ weechat_term_check (void)
 
     if (is_screen || is_tmux)
     {
-        /* check if $TERM is OK (according to screen/tmux) */
+        /* Check if $TERM is OK (according to screen/tmux). */
         is_term_ok = 0;
         ptr_terms = NULL;
         if (is_screen)
@@ -248,7 +248,7 @@ weechat_term_check (void)
             ptr_terms = tmux_terms;
         }
 
-        /* display a warning if $TERM is NOT OK */
+        /* Display a warning if $TERM is NOT OK. */
         if (!is_term_ok)
         {
             gui_chat_printf_date_tags (
@@ -310,7 +310,7 @@ weechat_shutdown (int return_code, int crash)
 
     if (!crash && weechat_home_delete_on_exit)
     {
-        /* remove temporary home (only if not crashing) */
+        /* Remove temporary home (only if not crashing). */
         dir_remove_home_dirs ();
     }
 
@@ -341,7 +341,7 @@ weechat_shutdown (int return_code, int crash)
 void
 weechat_init_gettext (void)
 {
-    weechat_locale_ok = (setlocale (LC_ALL, "") != NULL);   /* init gettext */
+    weechat_locale_ok = (setlocale (LC_ALL, "") != NULL);   /* Init gettext. */
 #if ENABLE_NLS == 1
     bindtextdomain (PACKAGE, LOCALEDIR);
     bind_textdomain_codeset (PACKAGE, "UTF-8");
@@ -365,68 +365,68 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
 {
     int term_theme_light;               /* 1 if a light terminal detected   */
 
-    weechat_first_start_time = time (NULL); /* initialize start time        */
+    weechat_first_start_time = time (NULL); /* Initialize start time.       */
     gettimeofday (&weechat_current_start_timeval, NULL);
 
-    /* set the seed for the pseudo-random integer generator */
+    /* Set the seed for the pseudo-random integer generator. */
     srand ((weechat_current_start_timeval.tv_sec
             * weechat_current_start_timeval.tv_usec)
            ^ getpid ());
 
-    /* detect the terminal theme, before initializing the GUI */
+    /* Detect the terminal theme, before initializing the GUI. */
     term_theme_light = gui_term_theme_is_light ();
 
-    weeurl_init ();                     /* initialize URL                   */
-    string_init ();                     /* initialize string                */
-    signal_init ();                     /* initialize signals               */
-    hdata_init ();                      /* initialize hdata                 */
-    hook_init ();                       /* initialize hooks                 */
-    debug_init ();                      /* hook signals for debug           */
-    gui_color_init ();                  /* initialize colors                */
-    gui_chat_init ();                   /* initialize chat                  */
-    command_init ();                    /* initialize WeeChat commands      */
-    completion_init ();                 /* add core completion hooks        */
-    gui_key_init ();                    /* init keys                        */
-    network_init_gcrypt ();             /* init gcrypt                      */
-    if (!secure_init ())                /* init secured data                */
+    weeurl_init ();                     /* Initialize URL.                  */
+    string_init ();                     /* Initialize string.               */
+    signal_init ();                     /* Initialize signals.              */
+    hdata_init ();                      /* Initialize hdata.                */
+    hook_init ();                       /* Initialize hooks.                */
+    debug_init ();                      /* Hook signals for debug.          */
+    gui_color_init ();                  /* Initialize colors.               */
+    gui_chat_init ();                   /* Initialize chat.                 */
+    command_init ();                    /* Initialize WeeChat commands.     */
+    completion_init ();                 /* Add core completion hooks.       */
+    gui_key_init ();                    /* Initialize keys.                 */
+    network_init_gcrypt ();             /* Initialize gcrypt.               */
+    if (!secure_init ())                /* Initialize secured data.         */
         weechat_shutdown (EXIT_FAILURE, 0);
-    if (!secure_config_init ())         /* init secured data options (sec.*)*/
+    if (!secure_config_init ())         /* Init secured data options: sec.* */
         weechat_shutdown (EXIT_FAILURE, 0);
-    theme_init ();                      /* initialize theme registry        */
-    theme_builtin_init ();              /* register built-in themes         */
-    if (!config_weechat_init ())        /* init WeeChat options (weechat.*) */
+    theme_init ();                      /* Initialize theme registry.       */
+    theme_builtin_init ();              /* Register built-in themes.        */
+    if (!config_weechat_init ())        /* Init WeeChat options: weechat.*  */
         weechat_shutdown (EXIT_FAILURE, 0);
-    args_parse (argc, argv);            /* parse command line args          */
-    dir_create_home_dirs ();            /* create WeeChat home directories  */
-    log_init ();                        /* init log file                    */
-    plugin_api_init ();                 /* create some hooks (info,hdata,..)*/
-    secure_config_read ();              /* read secured data options        */
-    config_weechat_read ();             /* read WeeChat options             */
-    network_init_gnutls ();             /* init GnuTLS                      */
+    args_parse (argc, argv);            /* Parse command line args.         */
+    dir_create_home_dirs ();            /* Create WeeChat home directories. */
+    log_init ();                        /* Initialize log file.             */
+    plugin_api_init ();                 /* Create some hooks.               */
+    secure_config_read ();              /* Read secured data options.       */
+    config_weechat_read ();             /* Read WeeChat options.            */
+    network_init_gnutls ();             /* Initialize GnuTLS.               */
 
     if (gui_init_cb)
-        (*gui_init_cb) ();              /* init WeeChat interface           */
+        (*gui_init_cb) ();              /* Initialize WeeChat interface.    */
 
     if (weechat_upgrading)
     {
-        if (upgrade_weechat_load ())    /* upgrade with session file        */
-            weechat_upgrade_count++;    /* increase /upgrade count          */
+        if (upgrade_weechat_load ())    /* Upgrade with session file.       */
+            weechat_upgrade_count++;    /* Increase /upgrade count.         */
         else
             weechat_upgrading = 0;
     }
     if (!weechat_doc_gen)
-        weechat_startup_message (term_theme_light); /* startup message       */
-    gui_chat_print_lines_waiting_buffer (NULL); /* display lines waiting    */
-    weechat_term_check ();              /* warning about wrong $TERM        */
-    weechat_locale_check ();            /* warning about wrong locale       */
-    command_startup (0);                /* command executed before plugins  */
-    plugin_init (weechat_force_plugin_autoload, /* init plugin interface(s) */
+        weechat_startup_message (term_theme_light); /* Display startup msg. */
+    gui_chat_print_lines_waiting_buffer (NULL); /* Display lines waiting.   */
+    weechat_term_check ();              /* Display warning if wrong $TERM.  */
+    weechat_locale_check ();            /* Display warning if wrong locale. */
+    command_startup (0);                /* Execute commands before plugins. */
+    plugin_init (weechat_force_plugin_autoload, /* Initialize plugins.      */
                  argc, argv);
-    command_startup (1);                /* commands executed after plugins  */
+    command_startup (1);                /* Execute commands after plugins.  */
     if (!weechat_upgrading)
         gui_layout_window_apply (gui_layout_current, -1);
     if (weechat_upgrading)
-        upgrade_weechat_end ();         /* remove .upgrade files + signal   */
+        upgrade_weechat_end ();         /* Remove .upgrade files + signal.  */
 
     if (weechat_doc_gen)
     {
@@ -436,7 +436,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
 
     if (weechat_first_start && isatty (STDOUT_FILENO) && !weechat_headless && !weechat_doc_gen)
     {
-        /* switch to "light" theme if terminal background was detected as "light" */
+        /* Switch to "light" theme if terminal background was detected as "light". */
         if (term_theme_light)
             theme_apply ("light");
     }
@@ -449,25 +449,25 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
 void
 weechat_end (void (*gui_end_cb)(int clean_exit))
 {
-    gui_layout_store_on_exit ();        /* store layout                     */
-    plugin_end ();                      /* end plugin interface(s)          */
+    gui_layout_store_on_exit ();        /* Store layout.                    */
+    plugin_end ();                      /* End plugins.                     */
     if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
-        (void) config_weechat_write (); /* save WeeChat config file         */
-    (void) secure_config_write ();      /* save secured data                */
+        (void) config_weechat_write (); /* Save WeeChat config file.        */
+    (void) secure_config_write ();      /* Save secured data.               */
 
     if (gui_end_cb)
-        (*gui_end_cb) (1);              /* shut down WeeChat GUI            */
+        (*gui_end_cb) (1);              /* Shutdown WeeChat UI.             */
 
-    proxy_free_all ();                  /* free all proxies                 */
-    config_weechat_free ();             /* free WeeChat options             */
-    secure_config_free ();              /* free secured data options        */
-    config_file_free_all ();            /* free all configuration files     */
-    gui_key_end ();                     /* remove all keys                  */
-    unhook_all ();                      /* remove all hooks                 */
-    hdata_end ();                       /* end hdata                        */
-    secure_end ();                      /* end secured data                 */
-    theme_end ();                       /* end theme registry               */
-    string_end ();                      /* end string                       */
+    proxy_free_all ();                  /* Free all proxies.                */
+    config_weechat_free ();             /* Free WeeChat options.            */
+    secure_config_free ();              /* Free secured data options.       */
+    config_file_free_all ();            /* Free all configuration files.    */
+    gui_key_end ();                     /* Remove all keys.                 */
+    unhook_all ();                      /* Remove all hooks.                */
+    hdata_end ();                       /* End hdata.                       */
+    secure_end ();                      /* End secured data.                */
+    theme_end ();                       /* End theme registry.              */
+    string_end ();                      /* End string.                      */
     weeurl_end ();
-    weechat_shutdown (-1, 0);           /* end other things                 */
+    weechat_shutdown (-1, 0);           /* End everything else.             */
 }

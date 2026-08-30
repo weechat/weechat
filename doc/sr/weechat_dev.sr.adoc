@@ -676,7 +676,13 @@ WeeChat „језгро” се налази у следећим директо�
 
 * За увлачење користите 4 размака (без табулатора).
 * Покушајте да не прекорачите 80 карактера по линији, осим ако је то неопходно за читљивост.
-* Користите коментаре `+/* коментар */+` (а не коментаре у C99 стилу као што је `+// коментар+`).
+* Користите коментаре `+/* коментар */+` (а не коментаре у C99 стилу као што је `+// коментар+`):
+// TRANSLATION MISSING
+** Comment must start with a capital letter except for identifiers.
+// TRANSLATION MISSING
+** A complete sentence must end with a period.
+// TRANSLATION MISSING
+** Comments describing fields of a struct can be lower case only.
 * Испред сваке функције додајте коментар који објашњава шта она ради (увек користите вишелинијски коментар, чак и ако је опис кратак).
 
 Пример:
@@ -696,12 +702,12 @@ foo ()
 {
     int i;
 
-    /* one line comment */
+    /* This is a one line comment. */
     i = 1;
 
     /*
-     * multi-line comment: this is a very long description about next block
-     * of code
+     * This is a multi-line comment: this is a very long description about
+     * next block of code.
      */
     i = 2;
     printf ("%d\n", i);
@@ -731,7 +737,7 @@ foo ()
 ----
 if (nicks_count == 1)
 {
-    /* нешто */
+    /* Нешто */
 }
 ----
 
@@ -748,7 +754,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
 {
     /* ... */
 
-    /* send signal with command that will be sent to server */
+    /* Send signal with command that will be sent to server. */
     irc_server_send_signal (server, "irc_out",
                             server->outqueue[priority]->command,
                             server->outqueue[priority]->message_after_mod,
@@ -761,12 +767,12 @@ irc_server_outqueue_send (struct t_irc_server *server)
     if (tags_to_send)
         free (tags_to_send);
 
-    /* send command */
+    /* Send command. */
     irc_server_send (server, server->outqueue[priority]->message_after_mod,
                      strlen (server->outqueue[priority]->message_after_mod));
     server->last_user_message = time_now;
 
-    /* start redirection if redirect is set */
+    /* Start redirection if redirect is set. */
     if (server->outqueue[priority]->redirect)
     {
         irc_redirect_init_command (server->outqueue[priority]->redirect,
@@ -783,21 +789,21 @@ irc_server_outqueue_send (struct t_irc_server *server)
 ----
 if (нешто)
 {
-    /* нешто */
+    /* Нешто */
 }
 else
 {
-    /* нешто друго */
+    /* Нешто друго */
 }
 
 if (my_boolean1 && my_boolean2 && (i == 10)
     && ((buffer1 != buffer2) || (window1 != window2)))
 {
-    /* нешто */
+    /* Нешто */
 }
 else
 {
-    /* нешто друго */
+    /* Нешто друго */
 }
 ----
 
@@ -807,13 +813,13 @@ else
 ----
 switch (string[0])
 {
-    case 'A':  /* first case */
+    case 'A':  /* First case */
         foo ("abc", "def");
         break;
-    case 'B':  /* second case */
+    case 'B':  /* Second case */
         bar (1, 2, 3);
         break;
-    default:  /* other cases */
+    default:  /* Other cases */
         baz ();
         break;
 }

@@ -30,7 +30,7 @@ TEST(IrcConfig, NoticeNickNotify)
     LONGS_EQUAL(1, irc_config_notice_nick_notify ("test"));
     LONGS_EQUAL(1, irc_config_notice_nick_notify ("memoserv"));
 
-    /* default list of nicks preventing notification */
+    /* Default list of nicks preventing notification */
     LONGS_EQUAL(0, irc_config_notice_nick_notify ("chanserv"));
     LONGS_EQUAL(0, irc_config_notice_nick_notify ("ChanServ"));
     LONGS_EQUAL(0, irc_config_notice_nick_notify ("nickserv"));
@@ -48,10 +48,10 @@ TEST(IrcConfig, CheckAutojoin)
     LONGS_EQUAL(1, irc_config_check_autojoin (NULL));
     LONGS_EQUAL(1, irc_config_check_autojoin (""));
 
-    /* wrong delimiter: space instead of comma */
+    /* Wrong delimiter: space instead of comma */
     LONGS_EQUAL(0, irc_config_check_autojoin ("#chan1 #chan2 #chan3"));
 
-    /* no spaces allowed around comma */
+    /* No spaces allowed around comma */
     LONGS_EQUAL(0, irc_config_check_autojoin ("#chan1, #chan2"));
     LONGS_EQUAL(0, irc_config_check_autojoin ("#chan1 ,#chan2"));
     LONGS_EQUAL(0, irc_config_check_autojoin ("#chan1 , #chan2"));
@@ -62,10 +62,10 @@ TEST(IrcConfig, CheckAutojoin)
     LONGS_EQUAL(0, irc_config_check_autojoin ("#chan1,#chan2 key1 ,key2"));
     LONGS_EQUAL(0, irc_config_check_autojoin ("#chan1,#chan2 key1 , key2"));
 
-    /* too many keys */
+    /* Too many keys */
     LONGS_EQUAL(0, irc_config_check_autojoin ("#chan1,#chan2 key1,key2,key3"));
 
-    /* correct values */
+    /* Correct values */
     LONGS_EQUAL(1, irc_config_check_autojoin ("#chan1"));
     LONGS_EQUAL(1, irc_config_check_autojoin ("#chan1 "));
     LONGS_EQUAL(1, irc_config_check_autojoin ("#chan1  "));

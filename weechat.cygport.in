@@ -34,7 +34,7 @@ HOMEPAGE="https://weechat.org/"
 LICENSE="GPL-3.0-or-later"
 SRC_URI="weechat-${VERSION}.tar.xz"
 
-# Build dependencies only
+# Build dependencies only.
 BUILD_REQUIRES="cmake gettext gettext-devel libgnutls-devel libaspell-devel \
 libcurl-devel libgcrypt-devel libncurses-devel lua perl pkg-config \
 python3-devel ruby tcl-devel libguile3.0-devel php-devel libzstd-devel \
@@ -74,7 +74,7 @@ PKG_HINTS="setup python perl ruby lua tcl guile php devel doc"
 
 #
 # Package "weechat": binary, all plugins except scripting languages,
-# translations, icon, man pages
+# translations, icon, man pages.
 #
 weechat_SUMMARY="Fast, light and extensible chat client"
 weechat_DESCRIPTION="WeeChat (Wee Enhanced Environment for Chat) is a fast, \

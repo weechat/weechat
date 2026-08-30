@@ -84,7 +84,7 @@ gui_bar_item_valid (struct t_gui_bar_item *bar_item)
             return 1;
     }
 
-    /* bar item not found */
+    /* Bar item not found */
     return 0;
 }
 
@@ -108,7 +108,7 @@ gui_bar_item_search_default (const char *item_name)
             return i;
     }
 
-    /* default bar item not found */
+    /* Default bar item not found */
     return -1;
 }
 
@@ -130,7 +130,7 @@ gui_bar_item_search (const char *item_name)
             return ptr_item;
     }
 
-    /* bar item not found */
+    /* Bar item not found */
     return NULL;
 }
 
@@ -219,7 +219,7 @@ gui_bar_item_used_in_bar (struct t_gui_bar *bar, const char *item_name,
         }
     }
 
-    /* item not used in the bar */
+    /* Item not used in the bar */
     return 0;
 }
 
@@ -247,7 +247,7 @@ gui_bar_item_used_in_at_least_one_bar (const char *item_name, int partial_name,
 
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        /* if bar is hidden and that hidden bars are ignored, just skip it */
+        /* If bar is hidden and that hidden bars are ignored, just skip it. */
         if (ignore_hidden_bars
             && CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         {
@@ -274,7 +274,7 @@ gui_bar_item_used_in_at_least_one_bar (const char *item_name, int partial_name,
         }
     }
 
-    /* item not used in any bar */
+    /* Item not used in any bar */
     return 0;
 }
 
@@ -454,7 +454,7 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
     if (bar->items_prefix[item][subitem]
         || bar->items_suffix[item][subitem])
     {
-        /* color for text in bar */
+        /* Color for text in bar */
         gui_color_attr_build_string (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]),
                                      str_attr);
         if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_FLAG)
@@ -477,7 +477,7 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
                       CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK);
         }
 
-        /* color for bar delimiters */
+        /* Color for bar delimiters */
         gui_color_attr_build_string (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]),
                                      str_attr);
         if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_FLAG)
@@ -568,11 +568,11 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
     if (!name || !name[0])
         return NULL;
 
-    /* it's not possible to create 2 bar items with same name for same plugin */
+    /* It's not possible to create 2 bar items with same name for same plugin. */
     if (gui_bar_item_search_with_plugin (plugin, 1, name))
         return NULL;
 
-    /* create bar item */
+    /* Create bar item. */
     new_bar_item =  malloc (sizeof (*new_bar_item));
     if (new_bar_item)
     {
@@ -582,7 +582,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
         new_bar_item->build_callback_pointer = build_callback_pointer;
         new_bar_item->build_callback_data = build_callback_data;
 
-        /* add bar item to bar items queue */
+        /* Add bar item to bar items queue. */
         new_bar_item->prev_item = last_gui_bar_item;
         if (last_gui_bar_item)
             last_gui_bar_item->next_item = new_bar_item;
@@ -594,7 +594,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
         return new_bar_item;
     }
 
-    /* failed to create bar item */
+    /* Failed to create bar item */
     return NULL;
 }
 
@@ -656,8 +656,8 @@ gui_bar_item_update (const char *item_name)
         }
 
         /*
-         * evaluate bar conditions (if needed) to check if bar must be toggled
-         * (hidden if shown, or shown if hidden)
+         * Evaluate bar conditions (if needed) to check if bar must be toggled
+         * (hidden if shown, or shown if hidden).
          */
         if (check_bar_conditions)
         {
@@ -700,10 +700,10 @@ gui_bar_item_free (struct t_gui_bar_item *item)
     if (!item)
         return;
 
-    /* force refresh of bars displaying this bar item */
+    /* Force refresh of bars displaying this bar item. */
     gui_bar_item_update (item->name);
 
-    /* remove bar item from bar items list */
+    /* Remove bar item from bar items list. */
     if (item->prev_item)
         (item->prev_item)->next_item = item->next_item;
     if (item->next_item)
@@ -713,7 +713,7 @@ gui_bar_item_free (struct t_gui_bar_item *item)
     if (last_gui_bar_item == item)
         last_gui_bar_item = item->prev_item;
 
-    /* free data */
+    /* Free data. */
     free (item->name);
     free (item->build_callback_data);
 
@@ -768,7 +768,7 @@ gui_bar_item_input_paste_cb (const void *pointer, void *data,
     char str_paste[1024];
     int lines;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -802,7 +802,7 @@ gui_bar_item_input_prompt_cb (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
                               struct t_hashtable *extra_info)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -829,7 +829,7 @@ gui_bar_item_input_search_cb (const void *pointer, void *data,
     char str_search[1024], str_where[256];
     int text_found;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -903,7 +903,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
     int length, length_cursor;
     int buf_pos, is_multiline;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -932,10 +932,10 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         return strdup (str_key_debug);
     }
 
-    /* for modifiers */
+    /* For modifiers */
     snprintf (str_buffer, sizeof (str_buffer), "0x%lx", (unsigned long)buffer);
 
-    /* execute modifier with basic string (without cursor tag) */
+    /* Execute modifier with basic string (without cursor tag). */
     ptr_input = NULL;
     if (!gui_cursor_mode)
     {
@@ -951,7 +951,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
             strdup (buffer->input_buffer) : NULL;
     }
 
-    /* insert "move cursor" id in string */
+    /* Insert "move cursor" id in string. */
     if (ptr_input)
     {
         pos_cursor = gui_chat_string_add_offset (ptr_input,
@@ -965,16 +965,16 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
             if (!pos_cursor)
                 pos_cursor = ptr_input;
 
-            /* add beginning of buffer */
+            /* Add beginning of buffer. */
             if (pos_cursor != ptr_input)
             {
                 memmove (buf + buf_pos, ptr_input, pos_cursor - ptr_input);
                 buf_pos += (pos_cursor - ptr_input);
             }
-            /* add "move cursor here" identifier in string */
+            /* Add "move cursor here" identifier in string. */
             snprintf (buf + buf_pos, length - buf_pos, "%s",
                       str_cursor);
-            /* add end of buffer */
+            /* Add end of buffer. */
             strcat (buf, pos_cursor);
 
             free (ptr_input);
@@ -986,7 +986,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         ptr_input = strdup (str_cursor);
     }
 
-    /* execute modifier with cursor in string */
+    /* Execute modifier with cursor in string. */
     if (!gui_cursor_mode)
     {
         ptr_input2 = hook_modifier_exec (NULL,
@@ -997,7 +997,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         ptr_input = ptr_input2;
     }
 
-    /* add matching text found in history (in history search mode) */
+    /* Add matching text found in history (in history search mode). */
     if ((buffer->text_search == GUI_BUFFER_SEARCH_HISTORY)
         && buffer->text_search_ptr_history)
     {
@@ -1013,8 +1013,8 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
     }
 
     /*
-     * transform '\n' to '\r' so the newlines are displayed as real new lines
-     * instead of spaces
+     * Transform '\n' to '\r' so the newlines are displayed as real new lines
+     * instead of spaces.
      */
     is_multiline = 0;
     ptr_input2 = ptr_input;
@@ -1031,7 +1031,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
     str_lead_linebreak = (is_multiline &&
         CONFIG_BOOLEAN(config_look_input_multiline_lead_linebreak)) ? "\r" : "";
 
-    /* insert "start input" at beginning of string */
+    /* Insert "start input" at beginning of string. */
     if (ptr_input)
     {
         if (string_asprintf (&buf,
@@ -1065,7 +1065,7 @@ gui_bar_item_time_cb (const void *pointer, void *data,
 {
     char text_time[128], text_time2[256];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1097,7 +1097,7 @@ gui_bar_item_buffer_count_cb (const void *pointer, void *data,
 {
     char buf[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1123,7 +1123,7 @@ gui_bar_item_buffer_last_number_cb (const void *pointer, void *data,
 {
     char buf[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1150,7 +1150,7 @@ gui_bar_item_buffer_plugin_cb (const void *pointer, void *data,
 {
     const char *plugin_name;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1178,7 +1178,7 @@ gui_bar_item_buffer_number_cb (const void *pointer, void *data,
 {
     char str_number[64];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1208,7 +1208,7 @@ gui_bar_item_buffer_name_cb (const void *pointer, void *data,
 {
     char str_name[256];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1239,7 +1239,7 @@ gui_bar_item_buffer_short_name_cb (const void *pointer, void *data,
 {
     char str_short_name[256];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1273,7 +1273,7 @@ gui_bar_item_buffer_modes_cb (const void *pointer, void *data,
 {
     char *modes;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1304,7 +1304,7 @@ gui_bar_item_buffer_filter_cb (const void *pointer, void *data,
 {
     char str_filter[512];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1341,7 +1341,7 @@ gui_bar_item_buffer_nicklist_count_cb (const void *pointer, void *data,
 {
     char str_count[64];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1372,7 +1372,7 @@ gui_bar_item_buffer_nicklist_count_groups_cb (const void *pointer, void *data,
 {
     char str_count[64];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1403,7 +1403,7 @@ gui_bar_item_buffer_nicklist_count_all_cb (const void *pointer, void *data,
 {
     char str_count[64];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1435,7 +1435,7 @@ gui_bar_item_buffer_zoom_cb (const void *pointer, void *data,
 {
     char buf[512];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1445,7 +1445,7 @@ gui_bar_item_buffer_zoom_cb (const void *pointer, void *data,
     if (!buffer)
         return NULL;
 
-    /* don't display item if current buffer is not merged + zoomed */
+    /* Don't display item if current buffer is not merged + zoomed. */
     if (buffer->active != 2)
         return NULL;
 
@@ -1468,7 +1468,7 @@ gui_bar_item_scroll_cb (const void *pointer, void *data,
 {
     char str_scroll[512];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1505,7 +1505,7 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
     int numbers_count, names_count, display_name, count_max;
     int priority, priority_min, priority_min_displayed, private;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1586,8 +1586,8 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
                     break;
                 case GUI_HOTLIST_NUM_PRIORITIES:
                     /*
-                     * this constant is used to count hotlist priorities only,
-                     * it is never used as priority
+                     * This constant is used to count hotlist priorities only,
+                     * it is never used as priority.
                      */
                     break;
             }
@@ -1628,7 +1628,7 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
                     buffer_without_name_displayed[ptr_hotlist->buffer->number - 1] = 1;
             }
 
-            /* display messages count by priority */
+            /* Display messages count by priority. */
             if (CONFIG_INTEGER(config_look_hotlist_count_max) > 0)
             {
                 private = (ptr_hotlist->count[GUI_HOTLIST_PRIVATE] > 0) ? 1 : 0;
@@ -1690,8 +1690,8 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
                                 break;
                             case GUI_HOTLIST_NUM_PRIORITIES:
                                 /*
-                                 * this constant is used to count hotlist priorities only,
-                                 * it is never used as priority
+                                 * This constant is used to count hotlist priorities only,
+                                 * it is never used as priority.
                                  */
                                 break;
                         }
@@ -1736,7 +1736,7 @@ gui_bar_item_completion_cb (const void *pointer, void *data,
     char *buf, str_number[64];
     struct t_gui_completion_word *ptr_completion_word;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1795,7 +1795,7 @@ gui_bar_item_buffer_title_cb (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
                               struct t_hashtable *extra_info)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1825,7 +1825,7 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
     char **nicklist;
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1971,7 +1971,7 @@ gui_bar_item_window_number_cb (const void *pointer, void *data,
 {
     char str_number[64];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -1999,7 +1999,7 @@ gui_bar_item_mouse_status_cb (const void *pointer, void *data,
 {
     char str_mouse[512];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -2031,7 +2031,7 @@ gui_bar_item_lag_cb (const void *pointer, void *data,
     const char *lag;
     char str_lag[1024];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -2063,7 +2063,7 @@ gui_bar_item_away_cb (const void *pointer, void *data,
     const char *away;
     char *buf, *message;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -2106,7 +2106,7 @@ gui_bar_item_spacer_cb (const void *pointer, void *data,
 {
     char str_spacer[16];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) item;
@@ -2139,7 +2139,7 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
     struct t_gui_window *window;
     struct t_gui_buffer *buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -2149,7 +2149,7 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
     if (!util_parse_int (str_bar_item_line, 10, &bar_item_line))
         return NULL;
 
-    /* get window */
+    /* Get window. */
     str_window = hashtable_get (info, "_window");
     if (str_window && str_window[0])
     {
@@ -2160,13 +2160,13 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
     }
     else
     {
-        /* no window, is it a root bar? then use current window */
+        /* No window, is it a root bar? Then use current window. */
         window = gui_current_window;
     }
     if (!window)
         return NULL;
 
-    /* get buffer */
+    /* Get buffer. */
     buffer = window->buffer;
     str_buffer = hashtable_get (info, "_buffer");
     if (str_buffer && str_buffer[0])
@@ -2224,16 +2224,16 @@ gui_bar_item_timer_cb (const void *pointer, void *data, int remaining_calls)
     static char item_time_text[128] = { '\0' };
     char new_item_time_text[128];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
     config_get_item_time (new_item_time_text, sizeof (new_item_time_text));
 
     /*
-     * we update item only if it changed since last time
+     * We update item only if it changed since last time
      * for example if time is only hours:minutes, we'll update
-     * only when minute changed
+     * only when minute changed.
      */
     if (strcmp (new_item_time_text, item_time_text) != 0)
     {
@@ -2253,7 +2253,7 @@ int
 gui_bar_item_timer_hotlist_resort_cb (const void *pointer, void *data,
                                       int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -2275,7 +2275,7 @@ gui_bar_item_signal_cb (const void *pointer, void *data,
 {
     const char *item;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) signal;
     (void) type_data;
@@ -2330,14 +2330,14 @@ gui_bar_item_init (void)
 {
     char name[128];
 
-    /* input paste */
+    /* Input paste */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE],
                       &gui_bar_item_input_paste_cb, NULL, NULL);
     gui_bar_item_hook_signal ("input_paste_pending",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE]);
 
-    /* input prompt */
+    /* Input prompt */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
                       &gui_bar_item_input_prompt_cb, NULL, NULL);
@@ -2345,7 +2345,7 @@ gui_bar_item_init (void)
                               "buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
 
-    /* input search */
+    /* Input search */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH],
                       &gui_bar_item_input_search_cb, NULL, NULL);
@@ -2353,7 +2353,7 @@ gui_bar_item_init (void)
                               "input_text_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH]);
 
-    /* input text */
+    /* Input text */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
                       &gui_bar_item_input_text_cb, NULL, NULL);
@@ -2361,7 +2361,7 @@ gui_bar_item_init (void)
                               "input_text_*",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
 
-    /* time */
+    /* Time */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_TIME],
                       &gui_bar_item_time_cb, NULL, NULL);
@@ -2370,14 +2370,14 @@ gui_bar_item_init (void)
                                      gui_bar_item_names[GUI_BAR_ITEM_TIME],
                                      NULL);
 
-    /* buffer count */
+    /* Buffer count */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
                       &gui_bar_item_buffer_count_cb, NULL, NULL);
     gui_bar_item_hook_signal ("buffer_opened;buffer_closed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
 
-    /* last buffer number */
+    /* Last buffer number */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER],
                       &gui_bar_item_buffer_last_number_cb, NULL, NULL);
@@ -2385,14 +2385,14 @@ gui_bar_item_init (void)
                               "buffer_merged;buffer_unmerged",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER]);
 
-    /* buffer plugin */
+    /* Buffer plugin */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
                       &gui_bar_item_buffer_plugin_cb, NULL, NULL);
     gui_bar_item_hook_signal ("window_switch;buffer_switch;buffer_renamed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
 
-    /* buffer number */
+    /* Buffer number */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER],
                       &gui_bar_item_buffer_number_cb, NULL, NULL);
@@ -2400,7 +2400,7 @@ gui_bar_item_init (void)
                               "buffer_merged;buffer_unmerged;buffer_closed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
 
-    /* buffer name */
+    /* Buffer name */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
                       &gui_bar_item_buffer_name_cb, NULL, NULL);
@@ -2408,7 +2408,7 @@ gui_bar_item_init (void)
                               "buffer_moved",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
 
-    /* buffer short name */
+    /* Buffer short name */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_SHORT_NAME],
                       &gui_bar_item_buffer_short_name_cb, NULL, NULL);
@@ -2416,14 +2416,14 @@ gui_bar_item_init (void)
                               "buffer_moved",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_SHORT_NAME]);
 
-    /* buffer modes */
+    /* Buffer modes */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES],
                       &gui_bar_item_buffer_modes_cb, NULL, NULL);
     gui_bar_item_hook_signal ("window_switch;buffer_switch;buffer_modes_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES]);
 
-    /* buffer filter */
+    /* Buffer filter */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
                       &gui_bar_item_buffer_filter_cb, NULL, NULL);
@@ -2431,42 +2431,42 @@ gui_bar_item_init (void)
                               "filters_*",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
 
-    /* buffer zoom */
+    /* Buffer zoom */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM],
                       &gui_bar_item_buffer_zoom_cb, NULL, NULL);
     gui_bar_item_hook_signal ("buffer_zoomed;buffer_unzoomed;buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM]);
 
-    /* buffer nicklist count: nicks displayed */
+    /* Buffer nicklist count: nicks displayed */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
                       &gui_bar_item_buffer_nicklist_count_cb, NULL, NULL);
     gui_bar_item_hook_signal ("window_switch;buffer_switch;nicklist_*",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
 
-    /* buffer nicklist count: groups displayed */
+    /* Buffer nicklist count: groups displayed */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_GROUPS],
                       &gui_bar_item_buffer_nicklist_count_groups_cb, NULL, NULL);
     gui_bar_item_hook_signal ("window_switch;buffer_switch;nicklist_*",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_GROUPS]);
 
-    /* buffer nicklist count: groups + nicks displayed */
+    /* Buffer nicklist count: groups + nicks displayed */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_ALL],
                       &gui_bar_item_buffer_nicklist_count_all_cb, NULL, NULL);
     gui_bar_item_hook_signal ("window_switch;buffer_switch;nicklist_*",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_ALL]);
 
-    /* scroll indicator */
+    /* Scroll indicator */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL],
                       &gui_bar_item_scroll_cb, NULL, NULL);
     gui_bar_item_hook_signal ("window_switch;buffer_switch;window_scrolled",
                               gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
 
-    /* hotlist */
+    /* Hotlist */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
                       &gui_bar_item_hotlist_cb, NULL, NULL);
@@ -2474,21 +2474,21 @@ gui_bar_item_init (void)
                               "buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
 
-    /* completion (possible words when a partial completion occurs) */
+    /* Completion (possible words when a partial completion occurs) */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_COMPLETION],
                       &gui_bar_item_completion_cb, NULL, NULL);
     gui_bar_item_hook_signal ("partial_completion",
                               gui_bar_item_names[GUI_BAR_ITEM_COMPLETION]);
 
-    /* buffer title */
+    /* Buffer title */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE],
                       &gui_bar_item_buffer_title_cb, NULL, NULL);
     gui_bar_item_hook_signal ("window_switch;buffer_switch;buffer_title_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
 
-    /* buffer nicklist */
+    /* Buffer nicklist */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST],
                       &gui_bar_item_buffer_nicklist_cb, NULL, NULL);
@@ -2499,35 +2499,35 @@ gui_bar_item_init (void)
     hook_focus (NULL, name,
                 &gui_bar_item_focus_buffer_nicklist_cb, NULL, NULL);
 
-    /* window number */
+    /* Window number */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER],
                       &gui_bar_item_window_number_cb, NULL, NULL);
     gui_bar_item_hook_signal ("window_switch;window_closed",
                               gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER]);
 
-    /* mouse status */
+    /* Mouse status */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_MOUSE_STATUS],
                       &gui_bar_item_mouse_status_cb, NULL, NULL);
     gui_bar_item_hook_signal ("mouse_enabled;mouse_disabled",
                               gui_bar_item_names[GUI_BAR_ITEM_MOUSE_STATUS]);
 
-    /* lag */
+    /* Lag */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_LAG],
                       &gui_bar_item_lag_cb, NULL, NULL);
     gui_bar_item_hook_signal ("window_switch;buffer_switch;buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_LAG]);
 
-    /* away message */
+    /* Away message */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_AWAY],
                       &gui_bar_item_away_cb, NULL, NULL);
     gui_bar_item_hook_signal ("buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_AWAY]);
 
-    /* spacer */
+    /* Spacer */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_SPACER],
                       &gui_bar_item_spacer_cb, NULL, NULL);
@@ -2542,7 +2542,7 @@ gui_bar_item_end (void)
 {
     struct t_gui_bar_item_hook *next_bar_item_hook;
 
-    /* remove hooks */
+    /* Remove hooks */
     while (gui_bar_item_hooks)
     {
         next_bar_item_hook = gui_bar_item_hooks->next_hook;
@@ -2553,7 +2553,7 @@ gui_bar_item_end (void)
         gui_bar_item_hooks = next_bar_item_hook;
     }
 
-    /* remove bar items */
+    /* Remove bar items */
     gui_bar_item_free_all ();
 }
 
@@ -2567,7 +2567,7 @@ gui_bar_item_hdata_bar_item_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

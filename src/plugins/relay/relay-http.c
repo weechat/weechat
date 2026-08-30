@@ -255,7 +255,7 @@ relay_http_parse_path (const char *path,
     }
 
     /*
-     * decode path items (until '?' or end of string):
+     * Decode path items (until '?' or end of string):
      *   "/path/to/irc.libera.%23weechat"
      *   => ["path", "to", "irc.libera.#weechat"]
      */
@@ -283,7 +283,7 @@ relay_http_parse_path (const char *path,
     }
 
     /*
-     * decode parameters (starting after '?'):
+     * Decode parameters (starting after '?'):
      *   "/path/to/irc.libera.%23weechat?option=2&bool=off&fields=a,b,c"
      *   => {"option": "2", "bool": "off", "fields": "a,b,c"}
      */
@@ -401,7 +401,7 @@ relay_http_parse_header (struct t_relay_http_request *request,
     weechat_string_dyn_concat (request->raw, header, -1);
     weechat_string_dyn_concat (request->raw, "\n", -1);
 
-    /* empty line => end of headers */
+    /* Empty line => end of headers */
     if (!header || !header[0])
     {
         request->status = (request->content_length > 0) ?
@@ -411,11 +411,11 @@ relay_http_parse_header (struct t_relay_http_request *request,
 
     pos = strchr (header, ':');
 
-    /* not a valid header */
+    /* Not a valid header */
     if (!pos || (pos == header))
         return 0;
 
-    /* get header name, which is case-insensitive */
+    /* Get header name, which is case-insensitive. */
     name = weechat_strndup (header, pos - header);
     if (!name)
         return 0;
@@ -426,7 +426,7 @@ relay_http_parse_header (struct t_relay_http_request *request,
         return 0;
     }
 
-    /* get pointer on header value */
+    /* Get pointer on header value. */
     ptr_value = pos + 1;
     while (ptr_value[0] == ' ')
     {
@@ -437,10 +437,10 @@ relay_http_parse_header (struct t_relay_http_request *request,
     if (existing_value)
         ptr_value = WEECHAT_STR_CONCAT(", ", existing_value, ptr_value);
 
-    /* add header in the hashtable */
+    /* Add header in the hashtable. */
     weechat_hashtable_set (request->headers, name_lower, ptr_value);
 
-    /* if header is "Accept-Encoding", save the allowed encoding */
+    /* If header is "Accept-Encoding", save the allowed encoding. */
     if (strcmp (name_lower, "accept-encoding") == 0)
     {
         items = weechat_string_split (ptr_value, ",", " ", 0, 0, &num_items);
@@ -454,7 +454,7 @@ relay_http_parse_header (struct t_relay_http_request *request,
         }
     }
 
-    /* if header is "Content-Length", save the length */
+    /* If header is "Content-Length", save the length. */
     if (strcmp (name_lower, "content-length") == 0)
     {
         if (weechat_util_parse_int (ptr_value, 10, &number))
@@ -462,8 +462,8 @@ relay_http_parse_header (struct t_relay_http_request *request,
     }
 
     /*
-     * if header is "Sec-WebSocket-Extensions", save supported websocket
-     * extensions
+     * If header is "Sec-WebSocket-Extensions", save supported websocket
+     * extensions.
      */
     if (strcmp (name_lower, "sec-websocket-extensions") == 0)
     {
@@ -495,9 +495,9 @@ relay_http_add_to_body (struct t_relay_http_request *request,
         return;
 
     /*
-     * reject the body if its announced length is too big: this prevents a
+     * Reject the body if its announced length is too big: this prevents a
      * client from forcing an unbounded allocation by announcing a huge
-     * "Content-Length"
+     * "Content-Length".
      */
     if (request->content_length > RELAY_HTTP_BODY_MAX_LENGTH)
     {
@@ -597,7 +597,7 @@ relay_http_get_auth_status (struct t_relay_client *client)
     user_pass = NULL;
     use_base64url = 0;
 
-    /* check TOTP */
+    /* Check TOTP. */
     client_totp = weechat_hashtable_get (client->http_req->headers, "x-weechat-totp");
     if (client_totp)
     {
@@ -623,12 +623,12 @@ relay_http_get_auth_status (struct t_relay_client *client)
             rc = -3;
             goto end;
         }
-        /* validate the TOTP received from the client */
+        /* Validate the TOTP received from the client. */
         if (weechat_asprintf (
                 &info_totp_args,
                 "%s,%s,0,%d",
-                totp_secret,  /* the shared secret */
-                client_totp,  /* the TOTP from client */
+                totp_secret,  /* The shared secret */
+                client_totp,  /* The TOTP from client */
                 weechat_config_integer (relay_config_network_totp_window)) >= 0)
         {
             info_totp = weechat_info_get ("totp_validate", info_totp_args);
@@ -645,7 +645,7 @@ relay_http_get_auth_status (struct t_relay_client *client)
     }
     else
     {
-        /* error if TOTP received without TOTP configuration */
+        /* Error if TOTP received without TOTP configuration */
         if (client_totp && client_totp[0])
         {
             rc = -4;
@@ -653,7 +653,7 @@ relay_http_get_auth_status (struct t_relay_client *client)
         }
     }
 
-    /* check password */
+    /* Check password. */
     relay_password = weechat_string_eval_expression (
         weechat_config_string (relay_config_network_password),
         NULL, NULL, NULL);
@@ -735,12 +735,12 @@ relay_http_get_auth_status (struct t_relay_client *client)
                                                      user_pass + 6,
                                                      relay_password))
             {
-                case 0: /* password OK */
+                case 0: /* Password OK */
                     break;
-                case -1: /* "plain" is not allowed */
+                case -1: /* "plain" not allowed */
                     rc = -5;
                     goto end;
-                case -2: /* invalid password */
+                case -2: /* Invalid password */
                 default:
                     rc = -2;
                     goto end;
@@ -751,18 +751,18 @@ relay_http_get_auth_status (struct t_relay_client *client)
             switch (relay_auth_password_hash (client, user_pass + 5,
                                               relay_password))
             {
-                case 0: /* password OK */
+                case 0: /* Password OK */
                     break;
-                case -1: /* invalid hash algorithm */
+                case -1: /* Invalid hash algorithm */
                     rc = -5;
                     goto end;
-                case -2: /* invalid timestamp */
+                case -2: /* Invalid timestamp */
                     rc = -6;
                     goto end;
-                case -3: /* invalid iterations */
+                case -3: /* Invalid iterations */
                     rc = -7;
                     goto end;
-                case -4: /* invalid password */
+                case -4: /* Invalid password */
                 default:
                     rc = -2;
                     goto end;
@@ -799,44 +799,44 @@ relay_http_check_auth (struct t_relay_client *client)
     rc = relay_http_get_auth_status (client);
     switch (rc)
     {
-        case 0: /* authentication OK */
+        case 0: /* Authentication OK */
             break;
-        case -1: /* missing password */
+        case -1: /* Missing password */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
                                         RELAY_HTTP_ERROR_MISSING_PASSWORD);
             break;
-        case -2: /* invalid password */
+        case -2: /* Invalid password */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
                                         RELAY_HTTP_ERROR_INVALID_PASSWORD);
             break;
-        case -3: /* missing TOTP */
+        case -3: /* Missing TOTP */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
                                         RELAY_HTTP_ERROR_MISSING_TOTP);
             break;
-        case -4: /* invalid TOTP */
+        case -4: /* Invalid TOTP */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
                                         RELAY_HTTP_ERROR_INVALID_TOTP);
             break;
-        case -5: /* invalid hash algorithm */
+        case -5: /* Invalid hash algorithm */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
                                         RELAY_HTTP_ERROR_INVALID_HASH_ALGO);
             break;
-        case -6: /* invalid timestamp */
+        case -6: /* Invalid timestamp */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
                                         RELAY_HTTP_ERROR_INVALID_TIMESTAMP);
             break;
-        case -7: /* invalid iterations */
+        case -7: /* Invalid iterations */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
                                         RELAY_HTTP_ERROR_INVALID_ITERATIONS);
             break;
-        case -8: /* out of memory */
+        case -8: /* Out of memory */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
                                         RELAY_HTTP_ERROR_OUT_OF_MEMORY);
@@ -892,7 +892,7 @@ relay_http_process_websocket (struct t_relay_client *client)
         return;
     }
 
-    /* handshake from client is valid, auth is mandatory for "api" protocol */
+    /* Handshake from client is valid, auth is mandatory for "api" protocol. */
     if (client->protocol == RELAY_PROTOCOL_API)
     {
         if (relay_http_check_auth (client))
@@ -919,7 +919,7 @@ relay_http_process_websocket (struct t_relay_client *client)
                 sizeof (*(client->ws_deflate)));
         if (client->protocol == RELAY_PROTOCOL_API)
         {
-            /* "api" protocol uses JSON in input/output (multi-line text) */
+            /* "api" protocol uses JSON in input/output (multi-line text). */
             client->recv_data_type = RELAY_CLIENT_DATA_TEXT_MULTILINE;
             client->send_data_type = RELAY_CLIENT_DATA_TEXT_MULTILINE;
         }
@@ -959,7 +959,7 @@ relay_http_process_request (struct t_relay_client *client)
                                 strlen (*(client->http_req->raw)) + 1);
     }
 
-    /* if websocket is initializing */
+    /* If websocket is initializing. */
     if (client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
     {
         relay_http_process_websocket (client);
@@ -989,10 +989,10 @@ relay_http_recv (struct t_relay_client *client, const char *data, int size)
     if (client->partial_message)
     {
         /*
-         * limit the size of the partial message: once the maximum is reached,
+         * Limit the size of the partial message: once the maximum is reached,
          * ignore the extra data (protection against a client sending a huge
          * amount of data without any end-of-line and dribbling it, which would
-         * consume all the memory)
+         * consume all the memory).
          */
         if (strlen (client->partial_message) >= RELAY_HTTP_PARTIAL_MESSAGE_MAX_LENGTH)
             return;
@@ -1058,9 +1058,9 @@ relay_http_recv (struct t_relay_client *client, const char *data, int size)
         }
 
         /*
-         * process the request if it's ready to be processed (all parsed)
-         * or if we received a NULL char in the HTTP message (forbidden)
-         * */
+         * Process the request if it's ready to be processed (all parsed)
+         * or if we received a NULL char in the HTTP message (forbidden).
+         */
         if ((client->http_req->status == RELAY_HTTP_END) || null_char)
         {
             relay_http_process_request (client);
@@ -1068,8 +1068,8 @@ relay_http_recv (struct t_relay_client *client, const char *data, int size)
         }
 
         /*
-         * we continue to process HTTP requests only if websocket is
-         * initializing or for "api" relay
+         * We continue to process HTTP requests only if websocket is
+         * initializing or for "api" relay.
          */
         if ((client->websocket != RELAY_CLIENT_WEBSOCKET_INITIALIZING)
             && (client->protocol != RELAY_PROTOCOL_API))
@@ -1131,10 +1131,10 @@ relay_http_compress (struct t_relay_http_request *request,
         return NULL;
 
     /*
-     * compression used by priority if allowed:
+     * Compression used by priority if allowed:
      *   1. zstd
      *   2. deflate
-     *   3. gzip
+     *   3. gzip.
      */
     comp_deflate = weechat_hashtable_has_key (request->accept_encoding, "deflate");
     comp_gzip = weechat_hashtable_has_key (request->accept_encoding, "gzip");
@@ -1154,10 +1154,10 @@ relay_http_compress (struct t_relay_http_request *request,
     dest_size = 0;
 
 #ifdef HAVE_ZSTD
-    /* compress with zstd */
+    /* Compress with zstd. */
     if (!dest && comp_zstd)
     {
-        /* convert % to zstd compression level (1-19) */
+        /* Convert % to zstd compression level (1-19). */
         compression_level = (((compression - 1) * 19) / 100) + 1;
         dest_size = ZSTD_compressBound (data_size);
         dest = malloc (dest_size);
@@ -1183,10 +1183,10 @@ relay_http_compress (struct t_relay_http_request *request,
     }
 #endif /* HAVE_ZSTD */
 
-    /* compress with deflate (zlib) or gzip */
+    /* Compress with deflate (zlib) or gzip. */
     if (!dest && (comp_deflate || comp_gzip))
     {
-        /* convert % to zlib compression level (1-9) */
+        /* Convert % to zlib compression level (1-9). */
         compression_level = (((compression - 1) * 9) / 100) + 1;
         dest_size = compressBound (data_size);
         dest = malloc (dest_size);
@@ -1548,7 +1548,7 @@ relay_http_parse_response_header (struct t_relay_http_response *response,
     const char *pos, *ptr_value;
     int number;
 
-    /* empty line => end of headers */
+    /* Empty line => end of headers */
     if (!header || !header[0])
     {
         response->status = (response->content_length > 0) ?
@@ -1558,11 +1558,11 @@ relay_http_parse_response_header (struct t_relay_http_response *response,
 
     pos = strchr (header, ':');
 
-    /* not a valid header */
+    /* Not a valid header */
     if (!pos || (pos == header))
         return 0;
 
-    /* get header name, which is case-insensitive */
+    /* Get header name, which is case-insensitive. */
     name = weechat_strndup (header, pos - header);
     if (!name)
         return 0;
@@ -1573,17 +1573,17 @@ relay_http_parse_response_header (struct t_relay_http_response *response,
         return 0;
     }
 
-    /* get pointer on header value */
+    /* Get pointer on header value. */
     ptr_value = pos + 1;
     while (ptr_value[0] == ' ')
     {
         ptr_value++;
     }
 
-    /* add header in the hashtable */
+    /* Add header in the hashtable. */
     weechat_hashtable_set (response->headers, name_lower, ptr_value);
 
-    /* if header is "Content-Length", save the length */
+    /* If header is "Content-Length", save the length. */
     if (strcmp (name_lower, "content-length") == 0)
     {
         if (weechat_util_parse_int (ptr_value, 10, &number))

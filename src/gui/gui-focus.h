@@ -7,7 +7,7 @@
 #ifndef WEECHAT_GUI_FOCUS_H
 #define WEECHAT_GUI_FOCUS_H
 
-/* focus structures */
+/* Focus structures */
 
 struct t_gui_focus_info
 {
@@ -29,7 +29,7 @@ struct t_gui_focus_info
     int bar_item_col;                  /* column in bar item                */
 };
 
-/* focus functions */
+/* Focus functions */
 
 extern struct t_gui_focus_info *gui_focus_get_info (int x, int y);
 extern void gui_focus_free_info (struct t_gui_focus_info *focus_info);

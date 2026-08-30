@@ -34,7 +34,7 @@ script_command_action (struct t_gui_buffer *buffer,
 
     if (arguments)
     {
-        /* action with arguments on command line */
+        /* Action with arguments on command line */
         quiet = 0;
         if (strncmp (arguments, "-q ", 3) == 0)
         {
@@ -72,12 +72,12 @@ script_command_action (struct t_gui_buffer *buffer,
     }
     else if (script_buffer && (buffer == script_buffer))
     {
-        /* action on current line of script buffer */
+        /* Action on current line of script buffer */
         if (script_buffer_detail_script
             && ((weechat_strcmp (action, "show") == 0)
                 || (weechat_strcmp (action, "showdiff") == 0)))
         {
-            /* if detail on script is displayed, back to list */
+            /* If detail on script is displayed, come back to the list. */
             snprintf (str_action, sizeof (str_action),
                       "-q %s",
                       action);
@@ -86,7 +86,7 @@ script_command_action (struct t_gui_buffer *buffer,
         }
         else
         {
-            /* if list is displayed, execute action on script */
+            /* If the list is displayed, execute action on script. */
             if (!script_buffer_detail_script)
             {
                 ptr_script = script_repo_search_displayed_by_number (script_buffer_selected_line);
@@ -116,7 +116,7 @@ script_command_script (const void *pointer, void *data,
     char command[128];
     int line, value;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

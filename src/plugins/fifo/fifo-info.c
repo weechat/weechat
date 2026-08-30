@@ -22,7 +22,7 @@ fifo_info_info_fifo_filename_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;

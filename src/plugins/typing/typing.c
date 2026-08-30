@@ -68,7 +68,7 @@ typing_buffer_closing_signal_cb (const void *pointer, void *data,
                                  const char *signal,
                                  const char *type_data, void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -94,7 +94,7 @@ typing_input_text_changed_signal_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer;
     struct t_typing_status *ptr_typing_status;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -107,7 +107,7 @@ typing_input_text_changed_signal_cb (const void *pointer, void *data,
     if (!ptr_buffer)
         return WEECHAT_RC_OK;
 
-    /* ignore any change in input if the user is searching text in the buffer */
+    /* Ignore any change in input if the user is searching text in the buffer. */
     text_search = weechat_buffer_get_integer (ptr_buffer, "text_search");
     if (text_search != 0)
         return WEECHAT_RC_OK;
@@ -118,7 +118,7 @@ typing_input_text_changed_signal_cb (const void *pointer, void *data,
 
     if (input_valid)
     {
-        /* input is a command? ignore it */
+        /* Input is a command? Ignore it. */
         ptr_input_for_buffer = weechat_string_input_for_buffer (ptr_input);
         if (!ptr_input_for_buffer)
             return WEECHAT_RC_OK;
@@ -138,16 +138,16 @@ typing_input_text_changed_signal_cb (const void *pointer, void *data,
     }
     else
     {
-        /* user was typing something? */
+        /* User was typing something? */
         ptr_typing_status = typing_status_self_search (ptr_buffer);
         if (ptr_typing_status
             && ((ptr_typing_status->state == TYPING_STATUS_STATE_TYPING)
                 || (ptr_typing_status->state == TYPING_STATUS_STATE_PAUSED)))
         {
             /*
-             * input cleared: maybe something was sent, not sure, so we just
+             * Input cleared: maybe something was sent, not sure, so we just
              * set the state to "cleared", a signal can be sent later
-             * in timer
+             * in timer.
              */
             ptr_typing_status->state = TYPING_STATUS_STATE_CLEARED;
         }
@@ -173,7 +173,7 @@ typing_input_text_for_buffer_modifier_cb (const void *pointer,
     struct t_gui_buffer *ptr_buffer;
     struct t_typing_status *ptr_typing_status;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
@@ -184,12 +184,12 @@ typing_input_text_for_buffer_modifier_cb (const void *pointer,
         return NULL;
     ptr_buffer = (struct t_gui_buffer *)value;
 
-    /* ignore any change in input if the user is searching text in the buffer */
+    /* Ignore any change in input if the user is searching text in the buffer. */
     text_search = weechat_buffer_get_integer (ptr_buffer, "text_search");
     if (text_search != 0)
         return WEECHAT_RC_OK;
 
-    /* string is a command? ignore it */
+    /* String is a command? Ignore it. */
     ptr_input_for_buffer = weechat_string_input_for_buffer (string);
     if (!ptr_input_for_buffer)
         return NULL;
@@ -240,7 +240,7 @@ typing_status_self_status_map_cb (void *data,
         ptr_input_for_buffer = weechat_string_input_for_buffer (ptr_input);
         if (ptr_input_for_buffer)
         {
-            /* check if typing is paused */
+            /* Check if typing is paused. */
             delay_pause = weechat_config_integer (typing_config_look_delay_set_paused);
             if (ptr_typing_status->last_typed < current_time - delay_pause)
             {
@@ -325,7 +325,7 @@ typing_status_nicks_hash_map_cb (void *data,
                            &typing_status_nicks_status_map_cb,
                            data);
 
-    /* no more nicks for the buffer? then remove the buffer */
+    /* No more nicks for the buffer? Then remove the buffer. */
     if (weechat_hashtable_get_integer (ptr_nicks, "items_count") == 0)
         weechat_hashtable_remove (hashtable, key);
 }
@@ -339,7 +339,7 @@ typing_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     time_t current_time;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -373,7 +373,7 @@ typing_typing_set_nick_signal_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer;
     struct t_typing_status *ptr_typing_status;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -444,7 +444,7 @@ typing_typing_reset_buffer_signal_cb (const void *pointer, void *data,
     int items_count;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -612,7 +612,7 @@ typing_remove_hooks (void)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -637,7 +637,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     typing_remove_hooks ();

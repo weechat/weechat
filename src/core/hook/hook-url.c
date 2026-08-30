@@ -58,7 +58,7 @@ void
 hook_url_hashtable_map_cb (void *data, struct t_hashtable *hashtable,
                            const void *key, const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) hashtable;
 
@@ -149,7 +149,7 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
     const char *ptr_error;
     char str_error[1024];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -215,7 +215,7 @@ hook_url_transfer (struct t_hook *hook)
 
     HOOK_URL(hook, thread_running) = 1;
 
-    /* create thread */
+    /* Create thread. */
     rc = pthread_create (&(HOOK_URL(hook, thread_id)), NULL,
                          &hook_url_transfer_thread, hook);
     if (rc != 0)
@@ -242,7 +242,7 @@ hook_url_transfer (struct t_hook *hook)
         return;
     }
 
-    /* main thread */
+    /* Main thread */
     HOOK_URL(hook, thread_created) = 1;
     timeout = HOOK_URL(hook, timeout);
     interval = 100;
@@ -354,7 +354,7 @@ hook_url_free_data (struct t_hook *hook)
     if (!hook || !hook->hook_data)
         return;
 
-    /* stop transfer if it's still active */
+    /* Stop transfer if it's still active. */
     if (HOOK_URL(hook, thread_created) && HOOK_URL(hook, thread_running))
     {
         HOOK_URL(hook, stop_transfer) = 1;
@@ -416,7 +416,7 @@ hook_url_hdata_hook_url_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

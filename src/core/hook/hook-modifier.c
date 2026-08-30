@@ -92,7 +92,7 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
     struct t_hook_exec_cb hook_exec_cb;
     char *new_msg, *message_modified;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (!modifier || !modifier[0] || !string)
@@ -124,7 +124,7 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
                  message_modified);
             hook_callback_end (ptr_hook, &hook_exec_cb);
 
-            /* empty string returned => message dropped */
+            /* Empty string returned => message dropped. */
             if (new_msg && !new_msg[0])
             {
                 free (message_modified);
@@ -132,7 +132,7 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
                 return new_msg;
             }
 
-            /* new message => keep it as base for next modifier */
+            /* New message => keep it as base for next modifier. */
             if (new_msg)
             {
                 free (message_modified);
@@ -178,7 +178,7 @@ hook_modifier_hdata_hook_modifier_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

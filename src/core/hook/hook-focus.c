@@ -91,7 +91,7 @@ hook_focus_hashtable_map_cb (void *data,
 {
     struct t_hashtable *hashtable1;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     hashtable1 = (struct t_hashtable *)data;
@@ -112,7 +112,7 @@ hook_focus_hashtable_map2_cb (void *data,
     struct t_hashtable *hashtable1;
     char *key2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     hashtable1 = (struct t_hashtable *)data;
@@ -171,7 +171,7 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
                 || (focus1_bar_item_name && focus1_bar_item_name[0]
                     && (strcmp (HOOK_FOCUS(ptr_hook, area), focus1_bar_item_name) == 0))))
         {
-            /* run callback for focus #1 */
+            /* Run callback for focus #1. */
             hook_callback_start (ptr_hook, &hook_exec_cb);
             hashtable_ret = (HOOK_FOCUS(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
@@ -182,10 +182,7 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
             {
                 if (hashtable_ret != hashtable1)
                 {
-                    /*
-                     * add keys of hashtable_ret into hashtable1
-                     * and destroy it
-                     */
+                    /* Add keys of hashtable_ret into hashtable1 and destroy it. */
                     hashtable_map (hashtable_ret,
                                    &hook_focus_hashtable_map_cb,
                                    hashtable1);
@@ -193,7 +190,7 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
                 }
             }
 
-            /* run callback for focus #2 */
+            /* Run callback for focus #2. */
             if (hashtable2)
             {
                 hook_callback_start (ptr_hook, &hook_exec_cb);
@@ -207,8 +204,8 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
                     if (hashtable_ret != hashtable2)
                     {
                         /*
-                         * add keys of hashtable_ret into hashtable2
-                         * and destroy it
+                         * Add keys of hashtable_ret into hashtable2
+                         * and destroy it.
                          */
                         hashtable_map (hashtable_ret,
                                        &hook_focus_hashtable_map_cb,
@@ -290,7 +287,7 @@ hook_focus_hdata_hook_focus_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

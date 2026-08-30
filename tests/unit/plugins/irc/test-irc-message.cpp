@@ -249,7 +249,7 @@ TEST(IrcMessage, ParseParams)
     LONGS_EQUAL(0, num_params);
     POINTERS_EQUAL(NULL, params);
 
-    /* empty string */
+    /* Empty string */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("", &params, &num_params);
@@ -259,7 +259,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[1]);
     string_free_split (params);
 
-    /* empty trailing parameter */
+    /* Empty trailing parameter */
     params = NULL;
     num_params = -1;
     irc_message_parse_params (":", &params, &num_params);
@@ -269,7 +269,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[1]);
     string_free_split (params);
 
-    /* single parameter */
+    /* Single parameter */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("param1", &params, &num_params);
@@ -279,7 +279,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[1]);
     string_free_split (params);
 
-    /* single parameter with trailing space */
+    /* Single parameter with trailing space */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("param1 ", &params, &num_params);
@@ -289,7 +289,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[1]);
     string_free_split (params);
 
-    /* two parameters */
+    /* Two parameters */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("param1 param2", &params, &num_params);
@@ -300,7 +300,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
-    /* trailing spaces */
+    /* Trailing spaces */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("param1 param2  ", &params, &num_params);
@@ -311,7 +311,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
-    /* leading and trailing spaces */
+    /* Leading and trailing spaces */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("  param1 param2  ", &params, &num_params);
@@ -322,7 +322,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
-    /* empty trailing parameter */
+    /* Empty trailing parameter */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("param1 :", &params, &num_params);
@@ -333,7 +333,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
-    /* trailing parameter */
+    /* Trailing parameter */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("param1 :trailing  params ", &params, &num_params);
@@ -344,7 +344,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
-    /* trailing parameter with colon inside */
+    /* Trailing parameter with colon inside */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("param1 param2 param3  :trailing  params :here ",
@@ -358,7 +358,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL(NULL, params[4]);
     string_free_split (params);
 
-    /* with params set to NULL */
+    /* With params set to NULL */
     params = (char **)0x1;
     num_params = -1;
     irc_message_parse_params ("param1 param2 param3  :trailing  params :here ",
@@ -366,7 +366,7 @@ TEST(IrcMessage, ParseParams)
     LONGS_EQUAL(4, num_params);
     POINTERS_EQUAL(0x1, params);
 
-    /* with num_params set to NULL */
+    /* With num_params set to NULL */
     params = NULL;
     num_params = -1;
     irc_message_parse_params ("param1 param2 param3  :trailing  params :here ",
@@ -662,7 +662,7 @@ TEST(IrcMessage, Parse)
                     NULL,
                     ":irc.example.com 301 mynick nick :away message for nick");
 
-    /* error */
+    /* Error */
     WEE_CHECK_PARSE(NULL,
                     "404 nick #channel :Cannot send to channel",
                     "nick", NULL, NULL, "404", "#channel",
@@ -851,7 +851,7 @@ convert_irc_charset_cb (const void *pointer, void *data,
     char *new_string;
     int length;
 
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
@@ -1014,7 +1014,7 @@ TEST(IrcMessage, ReplaceVars)
     WEE_TEST_STR("", irc_message_replace_vars (NULL, "#test", ""));
     WEE_TEST_STR("", irc_message_replace_vars (server, "#test", ""));
 
-    /* empty nick, empty channel, empty server */
+    /* Empty nick, empty channel, empty server */
     WEE_TEST_STR("nick '', channel '', server ''",
                  irc_message_replace_vars (
                      NULL, NULL,
@@ -1022,19 +1022,19 @@ TEST(IrcMessage, ReplaceVars)
 
     irc_server_set_nick (server, "my_nick");
 
-    /* nick, empty channel, server */
+    /* Nick, empty channel, server */
     WEE_TEST_STR("nick 'my_nick', channel '', server 'my_ircd'",
                  irc_message_replace_vars (
                      server, NULL,
                      "nick '$nick', channel '$channel', server '$server'"));
 
-    /* nick, channel, server */
+    /* Nick, channel, server */
     WEE_TEST_STR("nick 'my_nick', channel '#test', server 'my_ircd'",
                  irc_message_replace_vars (
                      server, "#test",
                      "nick '$nick', channel '$channel', server '$server'"));
 
-    /* nick, channel, server (2 vars for each) */
+    /* Nick, channel, server (2 vars for each) */
     WEE_TEST_STR("nick 'my_nick', channel '#test', server 'my_ircd', "
                  "nick 'my_nick', channel '#test', server 'my_ircd'",
                  irc_message_replace_vars (
@@ -1082,7 +1082,7 @@ TEST(IrcMessage, Split)
                  (const char *)hashtable_get (hashtable, "count"));
     hashtable_free (hashtable);
 
-    /* empty message: no split */
+    /* Empty message: no split */
     hashtable = irc_message_split (server, "");
     CHECK(hashtable);
     LONGS_EQUAL(2, hashtable->items_count);
@@ -1379,7 +1379,7 @@ TEST(IrcMessage, Split)
      * JOIN with a list of channels and keys larger than 16384 bytes: the
      * message is split into multiple parts; this used to trigger a stack
      * buffer overflow when concatenating the keys to the message, due to
-     * the use of fixed-size internal buffers (regression test)
+     * the use of fixed-size internal buffers (regression test).
      */
     {
         char **input, **exp_channels, **exp_keys, **got_channels, **got_keys;
@@ -1414,13 +1414,13 @@ TEST(IrcMessage, Split)
             string_dyn_concat (exp_keys, (i == 0) ? "" : ",", -1);
             string_dyn_concat (exp_keys, key, -1);
         }
-        /* force a max length greater than the old 16384 bytes buffers */
+        /* Force a max length greater than the old 16384 bytes buffers. */
         old_msg_max_length = server->msg_max_length;
         server->msg_max_length = 20000;
         hashtable = irc_message_split (server, *input);
         server->msg_max_length = old_msg_max_length;
         CHECK(hashtable);
-        /* rebuild the channels and keys from all the split messages */
+        /* Rebuild the channels and keys from all the split messages. */
         i = 1;
         while (1)
         {
@@ -1440,7 +1440,7 @@ TEST(IrcMessage, Split)
             string_dyn_concat (got_keys, pos_space + 1, -1);
             i++;
         }
-        /* the message must have been split into at least two parts */
+        /* The message must have been split into at least two parts. */
         CHECK(i > 2);
         STRCMP_EQUAL(*exp_channels, *got_channels);
         STRCMP_EQUAL(*exp_keys, *got_keys);

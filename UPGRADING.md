@@ -394,11 +394,11 @@ For example nick color of "alice" and "ALICE" is now always guaranteed to be the
 same:
 
 ```python
-# with server name (recommended)
+# With server name (recommended)
 weechat.info_get("irc_nick_color", "libera,alice") == weechat.info_get("irc_nick_color", "libera,ALICE")
 weechat.info_get("irc_nick_color_name", "libera,alice") == weechat.info_get("irc_nick_color_name", "libera,ALICE")
 
-# without server name (allowed but not recommended, kept for compatibility)
+# Without server name (allowed but not recommended, kept for compatibility)
 weechat.info_get("irc_nick_color", "alice") == weechat.info_get("irc_nick_color", "ALICE")
 weechat.info_get("irc_nick_color_name", "alice") == weechat.info_get("irc_nick_color_name", "ALICE")
 ```

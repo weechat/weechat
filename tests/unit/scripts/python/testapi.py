@@ -235,12 +235,12 @@ def option_delete_cb(data, option):
 
 def test_config():
     """Test config functions."""
-    # config
+    # Config
     ptr_config = weechat.config_new("test_config_" + "{SCRIPT_LANGUAGE}", "config_reload_cb", "config_reload_data")
     check(ptr_config != "")
-    # set version
+    # Set version.
     weechat.config_set_version(ptr_config, 2, "config_update_cb", "config_update_data")
-    # section
+    # Section
     ptr_section = weechat.config_new_section(
         ptr_config,
         "section1",
@@ -258,10 +258,10 @@ def test_config():
         "",
     )
     check(ptr_section != "")
-    # search section
+    # Search section.
     ptr_section2 = weechat.config_search_section(ptr_config, "section1")
     check(ptr_section2 == ptr_section)
-    # boolean option
+    # Boolean option
     ptr_opt_bool = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -290,7 +290,7 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_bool, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_bool, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_boolean(ptr_opt_bool) == 1)
-    # boolean option with parent option
+    # Boolean option with parent option
     ptr_opt_bool_child = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -313,7 +313,7 @@ def test_config():
     check(ptr_opt_bool_child != "")
     check(weechat.config_boolean(ptr_opt_bool_child) == 0)
     check(weechat.config_boolean_inherited(ptr_opt_bool_child) == 1)
-    # integer option
+    # Integer option
     ptr_opt_int = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -342,7 +342,7 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_int, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_int, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_integer(ptr_opt_int) == 2)
-    # integer option with parent option
+    # Integer option with parent option
     ptr_opt_int_child = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -365,7 +365,7 @@ def test_config():
     check(ptr_opt_int_child != "")
     check(weechat.config_integer(ptr_opt_int_child) == 0)
     check(weechat.config_integer_inherited(ptr_opt_int_child) == 2)
-    # integer option (with string values: enum with WeeChat >= 4.1.0)
+    # Integer option (with string values: enum with WeeChat >= 4.1.0)
     ptr_opt_int_str = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -398,7 +398,7 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_int_str, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_integer(ptr_opt_int_str) == 1)
     check(weechat.config_string(ptr_opt_int_str) == "val2")
-    # integer option with parent option (with string values: enum with WeeChat >= 4.1.0)
+    # Integer option with parent option (with string values: enum with WeeChat >= 4.1.0)
     ptr_opt_int_str_child = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -421,7 +421,7 @@ def test_config():
     check(ptr_opt_int_str_child != "")
     check(weechat.config_integer(ptr_opt_int_str_child) == 0)
     check(weechat.config_integer_inherited(ptr_opt_int_str_child) == 1)
-    # string option
+    # String option
     ptr_opt_str = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -459,7 +459,7 @@ def test_config():
     check(weechat.config_option_unset(ptr_opt_str) == 0)  # UNSET_OK_NO_RESET
     check(weechat.config_string(ptr_opt_str) == "value")
     check(weechat.config_option_default_is_null(ptr_opt_str) == 0)
-    # string option with parent option
+    # String option with parent option
     ptr_opt_str_child = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -482,7 +482,7 @@ def test_config():
     check(ptr_opt_str_child != "")
     check(weechat.config_string(ptr_opt_str_child) == "")
     check(weechat.config_string_inherited(ptr_opt_str_child) == "value")
-    # color option
+    # Color option
     ptr_opt_col = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -511,7 +511,7 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_col, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_col, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_color(ptr_opt_col) == "lightgreen")
-    # color option with parent option
+    # Color option with parent option
     ptr_opt_col_child = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -534,7 +534,7 @@ def test_config():
     check(ptr_opt_col_child != "")
     check(weechat.config_color(ptr_opt_col_child) == "")
     check(weechat.config_color_inherited(ptr_opt_col_child) == "lightgreen")
-    # enum option
+    # Enum option
     ptr_opt_enum = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -571,7 +571,7 @@ def test_config():
     check(weechat.config_enum(ptr_opt_enum) == 1)
     check(weechat.config_integer(ptr_opt_enum) == 1)
     check(weechat.config_string(ptr_opt_enum) == "val2")
-    # enum option with parent option
+    # Enum option with parent option
     ptr_opt_enum_child = weechat.config_new_option(
         ptr_config,
         ptr_section,
@@ -594,42 +594,42 @@ def test_config():
     check(ptr_opt_enum_child != "")
     check(weechat.config_enum(ptr_opt_enum_child) == 0)
     check(weechat.config_enum_inherited(ptr_opt_enum_child) == 1)
-    # search option
+    # Search option.
     ptr_opt_bool2 = weechat.config_search_option(ptr_config, ptr_section, "option_bool")
     check(ptr_opt_bool2 == ptr_opt_bool)
-    # string to boolean
+    # String to boolean
     check(weechat.config_string_to_boolean("") == 0)
     check(weechat.config_string_to_boolean("off") == 0)
     check(weechat.config_string_to_boolean("0") == 0)
     check(weechat.config_string_to_boolean("on") == 1)
     check(weechat.config_string_to_boolean("1") == 1)
-    # rename option
+    # Rename option.
     weechat.config_option_rename(ptr_opt_bool, "option_bool_renamed")
-    # get string property of option
+    # Get string property of option.
     check(weechat.config_option_get_string(ptr_opt_bool, "type") == "boolean")
     check(weechat.config_option_get_string(ptr_opt_bool, "name") == "option_bool_renamed")
-    # get pointer property of option
+    # Get pointer property of option.
     check(weechat.config_option_get_pointer(ptr_opt_bool, "config_file") == ptr_config)
     check(weechat.config_option_get_pointer(ptr_opt_bool, "section") == ptr_section)
-    # read config (create it because it does not exist yet)
+    # Read config (create it because it does not exist yet).
     check(weechat.config_read(ptr_config) == 0)  # CONFIG_READ_OK
-    # write config
+    # Write config.
     check(weechat.config_write(ptr_config) == 0)  # CONFIG_WRITE_OK
-    # reload config
+    # Reload config.
     check(weechat.config_reload(ptr_config) == 0)  # CONFIG_READ_OK
-    # free option
+    # Free option.
     weechat.config_option_free(ptr_opt_bool)
-    # free options in section
+    # Free options in section.
     weechat.config_section_free_options(ptr_section)
-    # free section
+    # Free section.
     weechat.config_section_free(ptr_section)
-    # free config
+    # Free config.
     weechat.config_free(ptr_config)
-    # config_get
+    # Get config option.
     ptr_option = weechat.config_get("weechat.look.item_time_format")
     check(ptr_option != "")
     check(weechat.config_string(ptr_option) == "%H:%M")
-    # config plugin
+    # Get config plugin option.
     check(weechat.config_get_plugin("option") == "")
     check(weechat.config_is_set_plugin("option") == 0)
     check(weechat.config_set_plugin("option", "value") == 1)  # SET_OK_SAME_VALUE
@@ -920,7 +920,7 @@ def test_infolist():
 def test_hdata():
     """Test hdata functions."""
     buffer = weechat.buffer_search_main()
-    # get hdata
+    # Get hdata.
     hdata_buffer = weechat.hdata_get("buffer")
     check(hdata_buffer != "")
     hdata_lines = weechat.hdata_get("lines")
@@ -935,7 +935,7 @@ def test_hdata():
     check(hdata_hotlist != "")
     hdata_irc_server = weechat.hdata_get("irc_server")
     check(hdata_irc_server != "")
-    # create a test buffer with 3 messages
+    # Create a test buffer with 3 messages.
     buffer2 = weechat.buffer_new("test", "buffer_input_cb", "", "buffer_close_cb", "")
     weechat.prnt_date_tags(buffer2, 2146383600, "tag1,tag2", "prefix1\t## msg1")
     weechat.prnt_date_tags(buffer2, 2146383601, "tag3,tag4", "prefix2\t## msg2")
@@ -1026,7 +1026,7 @@ def test_hdata():
     # hdata_get_string
     check(weechat.hdata_get_string(hdata_line, "var_prev") == "prev_line")
     check(weechat.hdata_get_string(hdata_line, "var_next") == "next_line")
-    # destroy test buffer
+    # Destroy test buffer.
     weechat.buffer_close(buffer2)
 
 

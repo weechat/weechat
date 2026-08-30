@@ -57,7 +57,7 @@ exec_search_color (const char *color)
             return i;
     }
 
-    /* color not found */
+    /* Color not found */
     return -1;
 }
 
@@ -82,16 +82,16 @@ exec_search_by_id (const char *id)
     for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
          ptr_exec_cmd = ptr_exec_cmd->next_cmd)
     {
-        /* check if number is matching */
+        /* Check if number is matching. */
         if ((number >= 0) && (ptr_exec_cmd->number == number))
             return ptr_exec_cmd;
 
-        /* check if name is matching */
+        /* Check if name is matching. */
         if (ptr_exec_cmd->name && (strcmp (ptr_exec_cmd->name, id) == 0))
             return ptr_exec_cmd;
     }
 
-    /* executed command not found */
+    /* Executed command not found */
     return NULL;
 }
 
@@ -133,7 +133,7 @@ exec_add (void)
     new_exec_cmd->pipe_command = NULL;
     new_exec_cmd->hsignal = NULL;
 
-    /* add exec to list */
+    /* Add exec to list. */
     new_exec_cmd->prev_cmd = last_exec_cmd;
     new_exec_cmd->next_cmd = NULL;
     if (last_exec_cmd)
@@ -156,7 +156,7 @@ exec_timer_delete_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_exec_cmd *exec_cmd, *ptr_exec_cmd;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -234,20 +234,20 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
         return;
 
     /*
-     * if output is sent to the buffer, the buffer must exist
-     * (we don't send output by default to core buffer)
+     * If output is sent to the buffer, the buffer must exist
+     * (we don't send output by default to core buffer).
      */
     if (exec_cmd->output_to_buffer && !exec_cmd->pipe_command && !buffer)
         return;
 
-    /* if output is sent to the buffer, we send stderr only if it was asked */
+    /* If output is sent to the buffer, we send stderr only if it was asked. */
     if (exec_cmd->output_to_buffer && (out == EXEC_STDERR)
         && !exec_cmd->output_to_buffer_stderr)
     {
         return;
     }
 
-    /* decode colors */
+    /* Decode colors. */
     line_color = exec_decode_color (exec_cmd, line);
     if (!line_color)
         return;
@@ -265,7 +265,7 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
     {
         if (strstr (exec_cmd->pipe_command, "$line"))
         {
-            /* replace $line by line content */
+            /* Replace $line by line content. */
             line2 = weechat_string_replace (exec_cmd->pipe_command,
                                             "$line", line_color);
             if (line2)
@@ -276,7 +276,7 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
         }
         else
         {
-            /* add line at the end of command, after a space */
+            /* Add line at the end of command, after a space. */
             if (weechat_asprintf (&line2,
                                   "%s %s",
                                   exec_cmd->pipe_command,
@@ -357,8 +357,8 @@ exec_concat_output (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
     ptr_text = text;
 
     /*
-     * if output is not sent as hsignal, display lines
-     * (ending with "\r\n" or "\n")
+     * If output is not sent as hsignal, display lines
+     * (ending with "\r\n" or "\n").
      */
     if (!exec_cmd->hsignal)
     {
@@ -397,7 +397,7 @@ exec_concat_output (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
         }
     }
 
-    /* concatenate ptr_text to output buffer */
+    /* Concatenate ptr_text to output buffer. */
     length = strlen (ptr_text);
     if (length > 0)
     {
@@ -453,15 +453,15 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     {
         ptr_buffer = weechat_buffer_search ("==", exec_cmd->buffer_full_name);
 
-        /* display the last line of output (if not ending with '\n') */
+        /* Display the last line of output (if not ending with '\n'). */
         exec_display_line (exec_cmd, ptr_buffer, EXEC_STDOUT,
                            exec_cmd->output[EXEC_STDOUT]);
         exec_display_line (exec_cmd, ptr_buffer, EXEC_STDERR,
                            exec_cmd->output[EXEC_STDERR]);
 
         /*
-         * display return code (only if command is not detached, if output is
-         * NOT sent to buffer, and if command is not piped)
+         * Display return code (only if command is not detached, if output is
+         * NOT sent to buffer, and if command is not piped).
          */
         if (exec_cmd->display_rc
             && !exec_cmd->detached && !exec_cmd->output_to_buffer
@@ -513,7 +513,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
         }
     }
 
-    /* (re)set some variables after the end of command */
+    /* (Re)set some variables after the end of command. */
     exec_cmd->hook = NULL;
     exec_cmd->pid = 0;
     exec_cmd->end_time = time (NULL);
@@ -525,7 +525,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
         exec_cmd->output_size[i] = 0;
     }
 
-    /* schedule a timer to remove the executed command */
+    /* Schedule a timer to remove the executed command. */
     if (weechat_config_integer (exec_config_command_purge_delay) >= 0)
     {
         weechat_hook_timer (1 + (1000 * weechat_config_integer (exec_config_command_purge_delay)),
@@ -545,7 +545,7 @@ exec_process_cb (const void *pointer, void *data, const char *command,
     struct t_exec_cmd *ptr_exec_cmd;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) command;
 
@@ -595,7 +595,7 @@ exec_free (struct t_exec_cmd *exec_cmd)
     if (!exec_cmd)
         return;
 
-    /* remove command from commands list */
+    /* Remove command from commands list. */
     if (exec_cmd->prev_cmd)
         (exec_cmd->prev_cmd)->next_cmd = exec_cmd->next_cmd;
     if (exec_cmd->next_cmd)
@@ -605,7 +605,7 @@ exec_free (struct t_exec_cmd *exec_cmd)
     if (last_exec_cmd == exec_cmd)
         last_exec_cmd = exec_cmd->prev_cmd;
 
-    /* free data */
+    /* Free data. */
     weechat_unhook (exec_cmd->hook);
     free (exec_cmd->name);
     free (exec_cmd->command);
@@ -685,7 +685,7 @@ exec_debug_dump_cb (const void *pointer, void *data,
                     const char *signal, const char *type_data,
                     void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -714,7 +714,7 @@ exec_debug_dump_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -729,10 +729,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     exec_theme_init ();
 
-    /* hook some signals */
+    /* Hook some signals. */
     weechat_hook_signal ("debug_dump", &exec_debug_dump_cb, NULL, NULL);
 
-    /* hook completions */
+    /* Hook completions. */
     exec_completion_init ();
 
     if (weechat_exec_plugin->upgrading)
@@ -748,7 +748,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     exec_config_write ();

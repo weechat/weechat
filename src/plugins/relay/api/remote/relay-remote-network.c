@@ -285,7 +285,7 @@ relay_remote_network_send (struct t_relay_remote *remote,
 
     if (remote->status == RELAY_STATUS_CONNECTED)
     {
-        /* encapsulate data in a websocket frame */
+        /* Encapsulate data in a websocket frame. */
         switch (msg_type)
         {
             case RELAY_MSG_PING:
@@ -424,31 +424,31 @@ relay_remote_network_read_websocket_frames (struct t_relay_remote *remote,
         switch (frames[i].opcode)
         {
             case RELAY_MSG_PING:
-                /* print message in raw buffer */
+                /* Print message in raw buffer. */
                 relay_raw_print_remote (remote, RELAY_MSG_PING,
                                         RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
                                         frames[i].payload,
                                         frames[i].payload_size);
-                /* answer with a PONG */
+                /* Answer with a PONG. */
                 relay_remote_network_send (remote,
                                            RELAY_MSG_PONG,
                                            frames[i].payload,
                                            frames[i].payload_size);
                 break;
             case RELAY_MSG_CLOSE:
-                /* print message in raw buffer */
+                /* Print message in raw buffer. */
                 relay_raw_print_remote (remote, RELAY_MSG_CLOSE,
                                         RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
                                         frames[i].payload,
                                         frames[i].payload_size);
-                /* answer with a CLOSE */
+                /* Answer with a CLOSE. */
                 relay_remote_network_send (remote,
                                            RELAY_MSG_CLOSE,
                                            frames[i].payload,
                                            frames[i].payload_size);
-                /* close the connection */
+                /* Close the connection. */
                 relay_remote_network_disconnect (remote);
-                /* ignore any other message after the close */
+                /* Ignore any other message after the close. */
                 return;
             default:
                 if (frames[i].payload)
@@ -474,7 +474,7 @@ relay_remote_network_recv_buffer (struct t_relay_remote *remote,
     int rc, i, buffer2_size, num_frames;
     char *buffer2;
 
-    /* if authenticating is in progress, check if it was successful */
+    /* If authenticating is in progress, check if it was successful. */
     if (remote->status == RELAY_STATUS_AUTHENTICATING)
     {
         relay_remote_network_recv_text (remote, buffer, buffer_size);
@@ -515,7 +515,7 @@ relay_remote_network_recv_buffer (struct t_relay_remote *remote,
         free (buffer2);
         if (!rc)
         {
-            /* fatal error when decoding frame: close connection */
+            /* Fatal error when decoding frame: close connection. */
             if (frames)
             {
                 for (i = 0; i < num_frames; i++)
@@ -552,7 +552,7 @@ relay_remote_network_recv_cb (const void *pointer, void *data, int fd)
     static char buffer[4096 + 2];
     int num_read, end_recv;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) fd;
 
@@ -586,10 +586,7 @@ relay_remote_network_recv_cb (const void *pointer, void *data, int fd)
             if (remote->tls
                 && (gnutls_record_check_pending (remote->gnutls_sess) > 0))
             {
-                /*
-                 * if there are unread data in the gnutls buffers,
-                 * go on with recv
-                 */
+                /* If there are unread data in the gnutls buffers, go on with recv. */
                 end_recv = 0;
             }
             relay_remote_network_recv_buffer (remote, buffer, num_read);
@@ -727,7 +724,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
         goto end;
     }
 
-    /* generate random websocket key (16 bytes) */
+    /* Generate random websocket key (16 bytes). */
     gcry_create_nonce (ws_key, sizeof (ws_key));
     weechat_string_base_encode ("64", ws_key, sizeof (ws_key), ws_key_base64);
     free (remote->websocket_key);
@@ -738,7 +735,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
 
     if (totp_secret && totp_secret[0])
     {
-        /* generate the TOTP with the secret */
+        /* Generate the TOTP with the secret. */
         totp = weechat_info_get ("totp_generate", totp_secret);
         if (totp)
         {
@@ -749,7 +746,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
         }
     }
 
-    /* add supported extensions */
+    /* Add supported extensions. */
     if (weechat_config_boolean (relay_config_network_websocket_permessage_deflate))
     {
         snprintf (str_extensions, sizeof (str_extensions),
@@ -797,7 +794,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
 {
     struct t_relay_remote *remote;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) gnutls_rc;
 
@@ -817,7 +814,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
             remote->hook_fd = weechat_hook_fd (remote->sock, 1, 0, 0,
                                                &relay_remote_network_recv_cb,
                                                remote, NULL);
-            /* authenticate with remote relay */
+            /* Authenticate with remote relay. */
             relay_remote_network_connect_ws_auth (remote);
             break;
         case WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
@@ -975,7 +972,7 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
     gnutls_datum_t cinfo;
     int rinfo;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) req_ca;
     (void) nreq;
@@ -995,7 +992,7 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
 
     if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT)
     {
-        /* initialize the certificate structure */
+        /* Initialize the certificate structure. */
         if (gnutls_x509_crt_init (&cert_temp) != GNUTLS_E_SUCCESS)
         {
             weechat_printf_date_tags (
@@ -1006,13 +1003,13 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
             goto end;
         }
 
-        /* flag to do the "deinit" (at the end of function) */
+        /* Flag to do the "deinit" (at the end of function). */
         cert_temp_init = 1;
 
-        /* set match options */
+        /* Set match options. */
         hostname_match = 0;
 
-        /* get the peer's raw certificate (chain) as sent by the peer */
+        /* Get the peer's raw certificate (chain) as sent by the peer. */
         cert_list = gnutls_certificate_get_peers (tls_session, &cert_list_len);
         if (cert_list)
         {
@@ -1038,17 +1035,17 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                     goto end;
                 }
 
-                /* checks on first certificate received */
+                /* Checks on first certificate received. */
                 if (i == 0)
                 {
-                    /* check if hostname matches in the first certificate */
+                    /* Check if hostname matches in the first certificate. */
                     if (gnutls_x509_crt_check_hostname (cert_temp,
                                                         remote->address) != 0)
                     {
                         hostname_match = 1;
                     }
                 }
-                /* display infos about certificate */
+                /* Display infos about certificate. */
                 rinfo = gnutls_x509_crt_print (cert_temp,
                                                GNUTLS_CRT_PRINT_ONELINE, &cinfo);
                 if (rinfo == 0)
@@ -1063,7 +1060,7 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                         remote->name, cinfo.data);
                     gnutls_free (cinfo.data);
                 }
-                /* check expiration date */
+                /* Check expiration date. */
                 cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
                 if (cert_time < time (NULL))
                 {
@@ -1073,7 +1070,7 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                         weechat_prefix ("error"), remote->name);
                     rc = -1;
                 }
-                /* check activation date */
+                /* Check activation date. */
                 cert_time = gnutls_x509_crt_get_activation_time (cert_temp);
                 if (cert_time > time (NULL))
                 {
@@ -1096,7 +1093,7 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
             }
         }
 
-        /* verify the peer’s certificate */
+        /* Verify the peer’s certificate. */
         if (gnutls_certificate_verify_peers2 (tls_session, &status) < 0)
         {
             weechat_printf_date_tags (
@@ -1107,7 +1104,7 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
             goto end;
         }
 
-        /* check if certificate is trusted */
+        /* Check if certificate is trusted. */
         if (status & GNUTLS_CERT_INVALID)
         {
             weechat_printf_date_tags (
@@ -1124,7 +1121,7 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                 remote->name);
         }
 
-        /* check if certificate issuer is known */
+        /* Check if certificate issuer is known. */
         if (status & GNUTLS_CERT_SIGNER_NOT_FOUND)
         {
             weechat_printf_date_tags (
@@ -1134,7 +1131,7 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
             rc = -1;
         }
 
-        /* check that certificate is not revoked */
+        /* Check that certificate is not revoked. */
         if (status & GNUTLS_CERT_REVOKED)
         {
             weechat_printf_date_tags (
@@ -1146,11 +1143,11 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
     }
     else if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_SET_CERT)
     {
-        /* nothing here */
+        /* Nothing here */
     }
 
 end:
-    /* an error should stop the handshake unless the user doesn't care */
+    /* An error should stop the handshake unless the user doesn't care. */
     if ((rc == -1)
         && !weechat_config_boolean (remote->options[RELAY_REMOTE_OPTION_TLS_VERIFY]))
     {
@@ -1182,7 +1179,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
     cJSON *json_body, *json_hash_algo, *json_hash_iterations, *json_totp;
     int length;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) url;
     (void) options;
@@ -1227,14 +1224,14 @@ relay_remote_network_url_handshake_cb (const void *pointer,
         json_body = cJSON_Parse (weechat_hashtable_get (output, "output"));
         if (json_body)
         {
-            /* hash algorithm */
+            /* Hash algorithm */
             json_hash_algo = cJSON_GetObjectItem (json_body, "password_hash_algo");
             if (json_hash_algo && cJSON_IsString (json_hash_algo))
             {
                 remote->password_hash_algo = relay_auth_password_hash_algo_search (
                     cJSON_GetStringValue (json_hash_algo));
             }
-            /* hash iterations */
+            /* Hash iterations */
             json_hash_iterations = cJSON_GetObjectItem (json_body, "password_hash_iterations");
             if (json_hash_iterations && cJSON_IsNumber (json_hash_iterations))
                 remote->password_hash_iterations = (int)cJSON_GetNumberValue (json_hash_iterations);
@@ -1398,7 +1395,7 @@ relay_remote_network_get_handshake_request (void)
         return NULL;
     }
 
-    /* all password hash algorithms are supported */
+    /* All password hash algorithms are supported. */
     for (i = 0; i < RELAY_NUM_PASSWORD_HASH_ALGOS; i++)
     {
         cJSON_AddItemToArray (

@@ -48,11 +48,11 @@ gui_focus_get_info (int x, int y)
     focus_info->x = x;
     focus_info->y = y;
 
-    /* search window */
+    /* Search window. */
     focus_info->window = gui_window_search_by_xy (x, y);
     focus_info->buffer = (focus_info->window) ? (focus_info->window)->buffer : NULL;
 
-    /* fill info about chat area */
+    /* Fill info about chat area. */
     gui_window_get_context_at_xy (focus_info->window,
                                   x, y,
                                   &focus_info->chat,
@@ -65,7 +65,7 @@ gui_focus_get_info (int x, int y)
                                   &focus_info->chat_bol,
                                   &focus_info->chat_eol);
 
-    /* search bar window, item, and line/col in item */
+    /* Search bar window, item, and line/col in item. */
     gui_bar_window_search_by_xy (focus_info->window,
                                  x, y,
                                  &focus_info->bar_window,
@@ -74,7 +74,7 @@ gui_focus_get_info (int x, int y)
                                  &focus_info->bar_item_col,
                                  &focus_info->buffer);
 
-    /* force current buffer if not buffer at all was found */
+    /* Force current buffer if not buffer at all was found. */
     if (!focus_info->buffer && gui_current_window)
         focus_info->buffer = gui_current_window->buffer;
 
@@ -113,7 +113,7 @@ gui_focus_buffer_localvar_map_cb (void *data,
     struct t_hashtable *hashtable_focus;
     char hash_key[512];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     hashtable_focus = (struct t_hashtable *)data;
@@ -150,7 +150,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     if (!hashtable)
         return NULL;
 
-    /* key (key from keyboard or mouse event) */
+    /* Key (key from keyboard or mouse event) */
     if (key)
         HASHTABLE_SET_STR("_key", key);
 
@@ -158,7 +158,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     HASHTABLE_SET_INT("_x", focus_info->x);
     HASHTABLE_SET_INT("_y", focus_info->y);
 
-    /* window */
+    /* Window */
     HASHTABLE_SET_POINTER("_window", focus_info->window);
     if (focus_info->window)
     {
@@ -169,7 +169,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         HASHTABLE_SET_STR("_window_number", "*");
     }
 
-    /* buffer */
+    /* Buffer */
     HASHTABLE_SET_POINTER("_buffer", focus_info->buffer);
     if (focus_info->buffer)
     {
@@ -189,7 +189,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         HASHTABLE_SET_STR("_buffer_full_name", "");
     }
 
-    /* chat area */
+    /* Chat area */
     HASHTABLE_SET_INT("_chat", focus_info->chat);
     str_time = NULL;
     str_prefix = NULL;
@@ -244,7 +244,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     HASHTABLE_SET_STR_NOT_NULL("_chat_bol", focus_info->chat_bol);
     HASHTABLE_SET_STR_NOT_NULL("_chat_eol", focus_info->chat_eol);
 
-    /* bar/item */
+    /* Bar/item */
     HASHTABLE_SET_POINTER("_bar_window", focus_info->bar_window);
     if (focus_info->bar_window)
     {
@@ -277,7 +277,7 @@ gui_focus_info_hashtable_gui_focus_info_cb (const void *pointer, void *data,
     const char *ptr_value;
     int x, y;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -285,7 +285,7 @@ gui_focus_info_hashtable_gui_focus_info_cb (const void *pointer, void *data,
     if (!hashtable)
         return NULL;
 
-    /* parse coordinates */
+    /* Parse coordinates. */
     ptr_value = hashtable_get (hashtable, "x");
     if (!ptr_value)
         return NULL;
@@ -298,19 +298,19 @@ gui_focus_info_hashtable_gui_focus_info_cb (const void *pointer, void *data,
     if (!util_parse_int (ptr_value, 10, &y))
         return NULL;
 
-    /* get focus info */
+    /* Get focus info. */
     focus_info = gui_focus_get_info (x, y);
     if (!focus_info)
         return NULL;
 
-    /* convert to hashtable */
-    focus_hashtable = gui_focus_to_hashtable (focus_info, NULL); /* no key */
+    /* Convert to hashtable. */
+    focus_hashtable = gui_focus_to_hashtable (focus_info, NULL); /* No key */
     gui_focus_free_info (focus_info);
     if (!focus_hashtable)
         return NULL;
 
-    /* run hook_focus callbacks that add extra data */
-    ret_hashtable = hook_focus_get_data (focus_hashtable, NULL); /* no gesture */
+    /* Run hook_focus callbacks that add extra data. */
+    ret_hashtable = hook_focus_get_data (focus_hashtable, NULL); /* No gesture */
 
     free (focus_hashtable);
 

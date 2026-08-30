@@ -19,7 +19,7 @@
 
 struct t_config_file *spell_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *spell_config_section_color = NULL;
 struct t_config_section *spell_config_section_check = NULL;
@@ -27,14 +27,14 @@ struct t_config_section *spell_config_section_dict = NULL;
 struct t_config_section *spell_config_section_look = NULL;
 struct t_config_section *spell_config_section_option = NULL;
 
-/* spell config, color section */
+/* Spell config, color section */
 
 struct t_config_option *spell_config_color_misspelled = NULL;
 struct t_config_option *spell_config_color_suggestion = NULL;
 struct t_config_option *spell_config_color_suggestion_delimiter_dict = NULL;
 struct t_config_option *spell_config_color_suggestion_delimiter_word = NULL;
 
-/* spell config, check section */
+/* Spell config, check section */
 
 struct t_config_option *spell_config_check_commands = NULL;
 struct t_config_option *spell_config_check_default_dict = NULL;
@@ -44,7 +44,7 @@ struct t_config_option *spell_config_check_real_time = NULL;
 struct t_config_option *spell_config_check_suggestions = NULL;
 struct t_config_option *spell_config_check_word_min_length = NULL;
 
-/* spell config, look section */
+/* Spell config, look section */
 
 struct t_config_option *spell_config_look_suggestion_delimiter_dict = NULL;
 struct t_config_option *spell_config_look_suggestion_delimiter_word = NULL;
@@ -67,7 +67,7 @@ spell_config_change_commands (const void *pointer, void *data,
     const char *value;
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -116,7 +116,7 @@ void
 spell_config_change_default_dict (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -134,13 +134,13 @@ void
 spell_config_change_enabled (const void *pointer, void *data,
                              struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
     spell_enabled = weechat_config_boolean (option);
 
-    /* refresh input and spell suggestions */
+    /* Refresh input and spell suggestions. */
     weechat_bar_item_update ("input_text");
     weechat_bar_item_update ("spell_suggest");
 }
@@ -153,7 +153,7 @@ void
 spell_config_change_suggestions (const void *pointer, void *data,
                                  struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -169,7 +169,7 @@ void
 spell_config_dict_change (const void *pointer, void *data,
                           struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -189,7 +189,7 @@ spell_config_dict_delete_option (const void *pointer, void *data,
                                  struct t_config_section *section,
                                  struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -218,7 +218,7 @@ spell_config_dict_create_option (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -288,7 +288,7 @@ void
 spell_config_option_change (const void *pointer, void *data,
                             struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -308,7 +308,7 @@ spell_config_option_delete_option (const void *pointer, void *data,
                                    struct t_config_section *section,
                                    struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) config_file;
@@ -337,7 +337,7 @@ spell_config_option_create_option (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -437,7 +437,7 @@ spell_config_init (void)
     if (!spell_config_file)
         return 0;
 
-    /* color */
+    /* Color */
     spell_config_section_color = weechat_config_new_section (
         spell_config_file, "color",
         0, 0,
@@ -477,7 +477,7 @@ spell_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* check */
+    /* Check */
     spell_config_section_check = weechat_config_new_section (
         spell_config_file, "check",
         0, 0,
@@ -550,7 +550,7 @@ spell_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    /* dict */
+    /* Dict */
     spell_config_section_dict = weechat_config_new_section (
         spell_config_file, "dict",
         1, 1,
@@ -560,7 +560,7 @@ spell_config_init (void)
         &spell_config_dict_create_option, NULL, NULL,
         &spell_config_dict_delete_option, NULL, NULL);
 
-    /* look */
+    /* Look */
     spell_config_section_look = weechat_config_new_section (
         spell_config_file, "look",
         0, 0,
@@ -591,7 +591,7 @@ spell_config_init (void)
             NULL, NULL, NULL);
     }
 
-    /* option */
+    /* Option */
     spell_config_section_option = weechat_config_new_section (
         spell_config_file, "option",
         1, 1,

@@ -25,7 +25,7 @@ enum t_relay_remote_option
     RELAY_REMOTE_NUM_OPTIONS,
 };
 
-/* relay remote */
+/* Relay remote */
 
 struct t_relay_remote
 {

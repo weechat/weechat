@@ -98,7 +98,7 @@ hook_info_get_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
     struct t_hook_exec_cb hook_exec_cb;
     struct t_hashtable *value;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (!info_name || !info_name[0])
@@ -132,7 +132,7 @@ hook_info_get_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
 
     hook_exec_end ();
 
-    /* info not found */
+    /* Info not found */
     return NULL;
 }
 
@@ -182,7 +182,7 @@ hook_info_hashtable_hdata_hook_info_hashtable_cb (const void *pointer,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

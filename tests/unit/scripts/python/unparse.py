@@ -140,7 +140,7 @@ class UnparsePython(Unparse):
 
     def _ast_alias(self, node: ast.AST) -> None:
         """Add an AST alias in output."""
-        # ignore alias
+        # Ignore alias.
         pass  # noqa: PIE790
 
     def _ast_arg(self, node: ast.AST) -> None:
@@ -242,12 +242,12 @@ class UnparsePython(Unparse):
 
     def _ast_index(self, node: ast.Index) -> None:
         """Add an AST Subscript in output."""
-        # note: deprecated since Python 3.9
+        # Note: deprecated since Python 3.9
         self.add(node.value)
 
     def _ast_import(self, node: ast.AST) -> None:
         """Add an AST Import in output."""
-        # ignore import
+        # Ignore import.
         pass  # noqa: PIE790
 
     def _ast_list(self, node: ast.AST) -> None:

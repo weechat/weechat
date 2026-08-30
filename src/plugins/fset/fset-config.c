@@ -19,13 +19,13 @@
 
 struct t_config_file *fset_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *fset_config_section_look = NULL;
 struct t_config_section *fset_config_section_format = NULL;
 struct t_config_section *fset_config_section_color = NULL;
 
-/* fset config, look section */
+/* Fset config, look section */
 
 struct t_config_option *fset_config_look_auto_refresh = NULL;
 struct t_config_option *fset_config_look_auto_unmark = NULL;
@@ -41,14 +41,14 @@ struct t_config_option *fset_config_look_use_color_value = NULL;
 struct t_config_option *fset_config_look_use_keys = NULL;
 struct t_config_option *fset_config_look_use_mute = NULL;
 
-/* fset config, format section */
+/* Fset config, format section */
 
 struct t_config_option *fset_config_format_export_help = NULL;
 struct t_config_option *fset_config_format_export_option = NULL;
 struct t_config_option *fset_config_format_export_option_null = NULL;
 struct t_config_option *fset_config_format_option[2] = { NULL, NULL };
 
-/* fset config, color section */
+/* Fset config, color section */
 
 struct t_config_option *fset_config_color_allowed_values[2] = { NULL, NULL };
 struct t_config_option *fset_config_color_color_name[2] = { NULL, NULL };
@@ -105,7 +105,7 @@ fset_config_reload (const void *pointer, void *data,
 {
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -124,7 +124,7 @@ void
 fset_config_change_auto_refresh_cb (const void *pointer, void *data,
                                     struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -149,7 +149,7 @@ void
 fset_config_change_format_number_cb (const void *pointer, void *data,
                                      struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -166,7 +166,7 @@ void
 fset_config_change_show_plugins_desc_cb (const void *pointer, void *data,
                                          struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -186,7 +186,7 @@ void
 fset_config_change_sort_cb (const void *pointer, void *data,
                             struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -217,7 +217,7 @@ void
 fset_config_change_use_color_value_cb (const void *pointer, void *data,
                                        struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -233,7 +233,7 @@ void
 fset_config_change_use_keys_cb (const void *pointer, void *data,
                                 struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -280,7 +280,7 @@ fset_config_change_format_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -303,7 +303,7 @@ void
 fset_config_change_help_color_cb (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -319,7 +319,7 @@ void
 fset_config_change_color_cb (const void *pointer, void *data,
                              struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -335,7 +335,7 @@ void
 fset_config_change_title_color_cb (const void *pointer, void *data,
                                    struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -359,7 +359,7 @@ fset_config_init (void)
     if (!fset_config_file)
         return 0;
 
-    /* look */
+    /* Look */
     fset_config_section_look = weechat_config_new_section (
         fset_config_file, "look",
         0, 0,
@@ -495,7 +495,7 @@ fset_config_init (void)
             NULL, NULL, NULL);
     }
 
-    /* format */
+    /* Format */
     fset_config_section_format = weechat_config_new_section (
         fset_config_file, "format",
         0, 0,
@@ -576,7 +576,7 @@ fset_config_init (void)
             NULL, NULL, NULL);
     }
 
-    /* color */
+    /* Color */
     fset_config_section_color = weechat_config_new_section (
         fset_config_file, "color",
         0, 0,

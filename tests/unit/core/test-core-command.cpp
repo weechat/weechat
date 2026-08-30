@@ -1475,7 +1475,7 @@ TEST(CoreCommand, Sys)
     WEE_CHECK_MSG_CORE("", "Resource usage (see \"man getrusage\" for help):");
 
     /* /sys suspend */
-    /* TODO: write tests */
+    /* TODO: write tests. */
 
     /* /sys malloc_trim */
 #ifdef HAVE_MALLOC_TRIM

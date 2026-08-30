@@ -49,7 +49,7 @@ gui_filter_check_line (struct t_gui_line_data *line_data)
     struct t_gui_filter *ptr_filter;
     int rc;
 
-    /* line is always displayed if filters are disabled (globally or in buffer) */
+    /* Line is always displayed if filters are disabled (globally or in buffer). */
     if (!gui_filters_enabled || !line_data->buffer->filter)
         return 1;
 
@@ -61,7 +61,7 @@ gui_filter_check_line (struct t_gui_line_data *line_data)
     {
         if (ptr_filter->enabled)
         {
-            /* check buffer */
+            /* Check buffer. */
             if (string_match_list (line_data->buffer->full_name,
                                    (const char **)ptr_filter->buffers,
                                    0))
@@ -71,7 +71,7 @@ gui_filter_check_line (struct t_gui_line_data *line_data)
                                              ptr_filter->tags_count,
                                              ptr_filter->tags_array)))
                 {
-                    /* check line with regex */
+                    /* Check line with regex. */
                     rc = 1;
                     if (!ptr_filter->regex_prefix && !ptr_filter->regex_message)
                         rc = 0;
@@ -90,7 +90,7 @@ gui_filter_check_line (struct t_gui_line_data *line_data)
         }
     }
 
-    /* no tag or regex matching, then line is displayed */
+    /* No tag or regex matching, then line is displayed. */
     return 1;
 }
 
@@ -149,13 +149,13 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
 
     if (lines_changed)
     {
-        /* force a full refresh of buffer */
+        /* Force a full refresh of buffer. */
         gui_buffer_ask_chat_refresh (buffer, 2);
 
         /*
-         * check that a scroll in a window displaying this buffer is not on a
+         * Check that a scroll in a window displaying this buffer is not on a
          * hidden line (if this happens, use the previous displayed line as
-         * scroll)
+         * scroll).
          */
         for (ptr_window = gui_windows; ptr_window;
              ptr_window = ptr_window->next_window)
@@ -249,7 +249,7 @@ gui_filter_search_by_name (const char *name)
             return ptr_filter;
     }
 
-    /* filter not found */
+    /* Filter not found */
     return NULL;
 }
 
@@ -284,7 +284,7 @@ gui_filter_find_pos (struct t_gui_filter *filter)
             return ptr_filter;
     }
 
-    /* position not found */
+    /* Position not found */
     return NULL;
 }
 
@@ -300,7 +300,7 @@ gui_filter_add_to_list (struct t_gui_filter *filter)
     pos_filter = gui_filter_find_pos (filter);
     if (pos_filter)
     {
-        /* add filter before "pos_filter" */
+        /* Add filter before "pos_filter". */
         filter->prev_filter = pos_filter->prev_filter;
         filter->next_filter = pos_filter;
         if (pos_filter->prev_filter)
@@ -311,7 +311,7 @@ gui_filter_add_to_list (struct t_gui_filter *filter)
     }
     else
     {
-        /* add filter to end of list */
+        /* Add filter to end of list. */
         filter->prev_filter = last_gui_filter;
         filter->next_filter = NULL;
         if (last_gui_filter)
@@ -447,11 +447,11 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         free (regex_prefix);
     }
 
-    /* create new filter */
+    /* Create new filter. */
     new_filter = malloc (sizeof (*new_filter));
     if (new_filter)
     {
-        /* init filter */
+        /* Initialize filter. */
         new_filter->enabled = enabled;
         new_filter->name = strdup (name);
         new_filter->buffer_name = strdup ((buffer_name) ? buffer_name : "*");
@@ -504,7 +504,7 @@ gui_filter_rename (struct t_gui_filter *filter, const char *new_name)
     free (filter->name);
     filter->name = strdup (new_name);
 
-    /* resort list of filters */
+    /* Resort list of filters. */
     gui_filter_remove_from_list (filter);
     gui_filter_add_to_list (filter);
 
@@ -524,7 +524,7 @@ gui_filter_free (struct t_gui_filter *filter)
     (void) hook_signal_send ("filter_removing",
                              WEECHAT_HOOK_SIGNAL_POINTER, filter);
 
-    /* free data */
+    /* Free data. */
     free (filter->name);
     free (filter->buffer_name);
     string_free_split (filter->buffers);
@@ -572,7 +572,7 @@ gui_filter_hdata_filter_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

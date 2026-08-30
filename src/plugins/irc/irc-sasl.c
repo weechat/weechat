@@ -23,8 +23,8 @@
 
 
 /*
- * these names are sent to the IRC server (as upper case), so they must be
- * valid values for the AUTHENTICATE command (example: "AUTHENTICATE PLAIN")
+ * These names are sent to the IRC server (as upper case), so they must be
+ * valid values for the AUTHENTICATE command (example: "AUTHENTICATE PLAIN").
  */
 char *irc_sasl_mechanism_string[IRC_NUM_SASL_MECHANISMS] =
 { "plain", "scram-sha-1", "scram-sha-256", "scram-sha-512",
@@ -132,7 +132,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
 
     if (strcmp (data_base64, "+") == 0)
     {
-        /* send username and nonce with form: "n,,n=username,r=nonce" */
+        /* Send username and nonce with form: "n,,n=username,r=nonce". */
         gcry_create_nonce (nonce_client, sizeof (nonce_client));
         length = weechat_string_base_encode (
             "64",
@@ -158,14 +158,14 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
     }
     else
     {
-        /* decode SCRAM attributes sent by the server */
+        /* Decode SCRAM attributes sent by the server. */
         data = malloc (strlen (data_base64) + 1);
         if (!data)
             goto memory_error;
         if (weechat_string_base_decode ("64", data_base64, data) <= 0)
             goto base64_decode_error;
 
-        /* split attributes */
+        /* Split attributes. */
         attrs = weechat_string_split (data, ",", NULL,
                                       WEECHAT_STRING_SPLIT_STRIP_LEFT
                                       | WEECHAT_STRING_SPLIT_STRIP_RIGHT
@@ -209,7 +209,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
         }
         else if (verifier_base64)
         {
-            /* last exchange: we verify the server signature */
+            /* Last exchange: we verify the server signature. */
             if (!server->sasl_scram_salted_pwd
                 || (server->sasl_scram_salted_pwd_size <= 0)
                 || !server->sasl_scram_auth_message)
@@ -268,7 +268,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             {
                 goto proto_error;
             }
-            /* decode salt */
+            /* Decode salt. */
             salt = malloc (strlen (salt_base64) + 1);
             if (!salt)
                 goto memory_error;
@@ -315,7 +315,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             auth_no_proof = malloc (length);
             if (!auth_no_proof)
                 goto memory_error;
-            /* "biws" is "n,," encoded to base64 */
+            /* "biws" is "n,," encoded to base64. */
             snprintf (auth_no_proof, length, "c=biws,r=%s",
                       nonce_server);
             length = strlen (server->sasl_scram_client_first) + 1
@@ -351,7 +351,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             if (weechat_string_base_encode ("64", client_proof, client_key_size,
                                             client_proof_base64) < 0)
                 goto base64_encode_error;
-            /* final message: auth_no_proof + "," + proof */
+            /* Final message: auth_no_proof + "," + proof */
             length = strlen (auth_no_proof) + 3 + strlen (client_proof_base64);
             if (weechat_asprintf (&string,
                                   "%s,p=%s",
@@ -508,7 +508,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
 
     if (strcmp (data_base64, "+") == 0)
     {
-        /* send "username" + '\0' + "username" */
+        /* Send "username" + '\0' + "username". */
         length_username = strlen (sasl_username);
         length = length_username + 1 + length_username;
         if (weechat_asprintf (&string,
@@ -521,9 +521,9 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
     }
     else
     {
-        /* sign the challenge with the private key and return the result */
+        /* Sign the challenge with the private key and return the result. */
 
-        /* decode the challenge */
+        /* Decode the challenge. */
         data = malloc (strlen (data_base64) + 1);
         if (!data)
             return NULL;
@@ -536,7 +536,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             return NULL;
         }
 
-        /* read file with private key */
+        /* Read file with private key. */
         str_privkey = irc_sasl_get_key_content (sasl_key, sasl_error);
         if (!str_privkey)
         {
@@ -544,7 +544,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             return NULL;
         }
 
-        /* import key */
+        /* Import key. */
         gnutls_x509_privkey_init (&x509_privkey);
         gnutls_privkey_init (&privkey);
         filedatum.data = (unsigned char *)str_privkey;
@@ -568,7 +568,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             return NULL;
         }
 
-        /* read raw values in key, to display public key */
+        /* Read raw values in key, to display public key. */
         ret = gnutls_x509_privkey_export_ecc_raw (x509_privkey,
                                                   &curve, &x, &y, &k);
         if (ret == GNUTLS_E_SUCCESS)
@@ -601,7 +601,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             gnutls_free (k.data);
         }
 
-        /* import private key in an abstract key structure */
+        /* Import private key in an abstract key structure. */
         ret = gnutls_privkey_import_x509 (privkey, x509_privkey, 0);
         if (ret != GNUTLS_E_SUCCESS)
         {

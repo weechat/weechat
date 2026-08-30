@@ -122,8 +122,8 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
     if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
     {
         /*
-         * with established websocket, we return JSON string instead of
-         * an HTTP response
+         * With established websocket, we return JSON string instead of
+         * an HTTP response.
          */
         json = cJSON_CreateObject ();
         if (json)
@@ -251,8 +251,8 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
     if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
     {
         /*
-         * with established websocket, we return JSON string instead of
-         * an HTTP response
+         * With established websocket, we return JSON string instead of
+         * an HTTP response.
          */
         num_bytes = relay_api_msg_send_json_internal (
             client,
@@ -311,7 +311,7 @@ relay_api_msg_buffer_add_local_vars_cb (void *data,
 {
     cJSON *json;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     json = (cJSON *)data;
@@ -374,7 +374,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     MSG_ADD_HDATA_VAR(Bool, "nicklist_display_groups", integer, "nicklist_display_groups");
     MSG_ADD_HDATA_VAR(Bool, "time_displayed", integer, "time_for_each_line");
 
-    /* local_variables */
+    /* Local variables */
     json_local_vars = cJSON_CreateObject ();
     if (json_local_vars)
     {
@@ -385,10 +385,10 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
         cJSON_AddItemToObject (json, "local_variables", json_local_vars);
     }
 
-    /* keys local to buffer */
+    /* Keys local to buffer */
     cJSON_AddItemToObject (json, "keys", relay_api_msg_keys_to_json (buffer));
 
-    /* lines */
+    /* Lines */
     if (lines != 0)
     {
         json_lines = relay_api_msg_lines_to_json (buffer, lines, colors);
@@ -399,7 +399,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
      * "last_read_line_id" is the id of the last line read, or -1 if there is no
      * read marker in the buffer; in this case, "first_line_not_read" tells if
      * the marker is before the first line (nothing read) or if it has been
-     * removed because all the lines have been read
+     * removed because all the lines have been read.
      */
     last_read_line_id = -1;
     first_line_not_read = 0;
@@ -427,7 +427,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
         json, "first_line_not_read",
         cJSON_CreateBool (first_line_not_read));
 
-    /* nicks */
+    /* Nicks */
     if (nicks)
     {
         json_nicklist_root = relay_api_msg_nick_group_to_json (
@@ -527,7 +527,7 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
     MSG_ADD_HDATA_STR_COLORS("prefix", "prefix");
     MSG_ADD_HDATA_STR_COLORS("message", "message");
 
-    /* tags */
+    /* Tags */
     json_tags = cJSON_CreateArray ();
     if (json_tags)
     {
@@ -573,7 +573,7 @@ relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
 
     if (lines < 0)
     {
-        /* search start line from the last line */
+        /* Search start line from the last line. */
         ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines, "last_line");
         if (ptr_line)
         {
@@ -760,7 +760,7 @@ relay_api_msg_completion_to_json (struct t_gui_completion *completion)
     if (!ptr_list)
         return json;
 
-    /* context */
+    /* Context */
     context = weechat_hdata_integer (relay_hdata_completion, completion, "context");
     switch (context)
     {

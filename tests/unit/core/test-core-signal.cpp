@@ -32,7 +32,7 @@ TEST(CoreSignal, SearchNumber)
 {
     int count, index;
 
-    /* make tests fail if the signal_list structure is changed */
+    /* Make tests fail if the signal_list structure is changed. */
     for (count = 0; signal_list[count].name; count++)
     {
     }

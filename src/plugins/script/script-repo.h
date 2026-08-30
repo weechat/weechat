@@ -9,7 +9,7 @@
 
 #include <time.h>
 
-/* status for script */
+/* Status for script */
 #define SCRIPT_STATUS_INSTALLED   (1 << 0)
 #define SCRIPT_STATUS_AUTOLOADED  (1 << 1)
 #define SCRIPT_STATUS_HELD        (1 << 2)

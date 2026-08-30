@@ -33,7 +33,7 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     char str_value[128];
     struct t_fset_option *ptr_fset_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -173,7 +173,7 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     int chat_line_x, chat_line_x2, y, y2, chat_line_y, chat_line_y2;
     int option_index, option_index2, index1, index2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -246,7 +246,7 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     {
         if (y == y2)
         {
-            /* toggle or set option */
+            /* Toggle or set option. */
             snprintf (
                 str_command, sizeof (str_command),
                 "/fset %s",
@@ -256,7 +256,7 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
         }
         else if ((option_index >= 0) || (option_index2 >= 0))
         {
-            /* mark/unmark multiple options */
+            /* Mark/unmark multiple options. */
             num_options = weechat_arraylist_size (fset_options);
             index1 = option_index;
             index2 = option_index2;

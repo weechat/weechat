@@ -108,7 +108,7 @@ input_exec_command (struct t_gui_buffer *buffer,
         input_commands_allowed = new_commands_allowed;
     }
 
-    /* extract command name */
+    /* Extract command name. */
     pos = strchr (command, ' ');
     command_name = (pos) ?
         string_strndup (command, pos - command) : strdup (command);
@@ -120,7 +120,7 @@ input_exec_command (struct t_gui_buffer *buffer,
 
     ptr_command_name = utf8_next_char (command_name);
 
-    /* check if command is allowed */
+    /* Check if command is allowed. */
     if (input_commands_allowed
         && !string_match_list (ptr_command_name,
                                (const char **)input_commands_allowed, 1))
@@ -139,21 +139,21 @@ input_exec_command (struct t_gui_buffer *buffer,
         goto end;
     }
 
-    /* execute command */
+    /* Execute command. */
     switch (hook_command_exec (buffer, any_plugin, plugin, command))
     {
         case HOOK_COMMAND_EXEC_OK:
-            /* command hooked, OK (executed) */
+            /* Command hooked, OK (executed) */
             break;
         case HOOK_COMMAND_EXEC_ERROR:
-            /* command hooked, error */
+            /* Command hooked, error */
             rc = WEECHAT_RC_ERROR;
             break;
         case HOOK_COMMAND_EXEC_NOT_FOUND:
             /*
-             * command not found: if unknown commands are accepted by this
+             * Command not found: if unknown commands are accepted by this
              * buffer, just send input text as data to buffer,
-             * otherwise display error
+             * otherwise display error.
              */
             if (buffer->input_get_unknown_commands)
             {
@@ -166,7 +166,7 @@ input_exec_command (struct t_gui_buffer *buffer,
             }
             break;
         case HOOK_COMMAND_EXEC_AMBIGUOUS_PLUGINS:
-            /* command is ambiguous (exists for other plugins) */
+            /* Command is ambiguous (exists for other plugins) */
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("%sAmbiguous command \"%s\": "
                                          "it exists in many plugins and not in "
@@ -178,8 +178,8 @@ input_exec_command (struct t_gui_buffer *buffer,
             break;
         case HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE:
             /*
-             * command is ambiguous (incomplete command and multiple commands
-             * start with this name)
+             * Command is ambiguous (incomplete command and multiple commands
+             * start with this name).
              */
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("%sIncomplete command \"%s\" "
@@ -190,7 +190,7 @@ input_exec_command (struct t_gui_buffer *buffer,
             rc = WEECHAT_RC_ERROR;
             break;
         case HOOK_COMMAND_EXEC_RUNNING:
-            /* command is running */
+            /* Command is running */
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("%sToo many calls to command "
                                          "\"%s\" (looping)"),
@@ -246,14 +246,14 @@ input_data (struct t_gui_buffer *buffer, const char *data,
         goto end;
     }
 
-    /* execute modifier "input_text_for_buffer" */
+    /* Execute modifier "input_text_for_buffer". */
     snprintf (str_buffer, sizeof (str_buffer), "0x%lx", (unsigned long)buffer);
     new_data = hook_modifier_exec (NULL,
                                    "input_text_for_buffer",
                                    str_buffer,
                                    data);
 
-    /* data was dropped? */
+    /* Data was dropped? */
     if (data[0] && new_data && !new_data[0])
         goto end;
 
@@ -267,8 +267,8 @@ input_data (struct t_gui_buffer *buffer, const char *data,
     while (ptr_data)
     {
         /*
-         * if the buffer pointer is not valid anymore (or if it's another
-         * buffer), use the current buffer for the next command
+         * If the buffer pointer is not valid anymore (or if it's another
+         * buffer), use the current buffer for the next command.
          */
         if (!first_command
             && (!gui_buffer_valid (buffer)
@@ -292,28 +292,28 @@ input_data (struct t_gui_buffer *buffer, const char *data,
         if (ptr_data_for_buffer)
         {
             /*
-             * input string is NOT a command, send it as-is to the buffer
-             * input callback
+             * Input string is NOT a command, send it as-is to the buffer
+             * input callback.
              */
             rc = input_exec_data (buffer, ptr_data);
         }
         else
         {
-            /* input string is a command */
+            /* Input string is a command. */
             if (user_data && buffer->input_get_any_user_data)
             {
                 /*
-                 * if data is sent from user and buffer catches any user data:
-                 * send it to callback
+                 * If data is sent from user and buffer catches any user data:
+                 * send it to callback.
                  */
                 rc = input_exec_data (buffer, ptr_data);
             }
             else
             {
                 /*
-                 * if commands_allowed has special value "-", send data as-is
+                 * If commands_allowed has special value "-", send data as-is
                  * to the buffer input callback, otherwise execute the command
-                 * on the buffer
+                 * on the buffer.
                  */
                 if (commands_allowed && (strcmp (commands_allowed, "-") == 0))
                 {
@@ -356,7 +356,7 @@ input_data_timer_cb (const void *pointer, void *data, int remaining_calls)
     int i;
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -438,7 +438,7 @@ input_data_delayed (struct t_gui_buffer *buffer, const char *data,
     timer_args[2] = new_commands_allowed;
     timer_args[3] = strdup ((split_newline) ? "1" : "0");
 
-    /* schedule command, execute it after "delay" milliseconds */
+    /* Schedule command, execute it after "delay" milliseconds. */
     hook_timer (NULL,
                 (delay >= 1) ? delay : 1,
                 0,

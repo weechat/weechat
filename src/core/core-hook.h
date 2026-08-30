@@ -39,7 +39,7 @@ struct t_hashtable;
 struct t_infolist;
 struct t_infolist_item;
 
-/* hook types */
+/* Hook types */
 
 enum t_hook_type
 {
@@ -67,8 +67,8 @@ enum t_hook_type
 };
 
 /*
- * default priority: higher value means higher priority, ie added at the
- * beginning of the hook list
+ * Default priority: higher value means higher priority, ie added at the
+ * beginning of the hook list.
  */
 #define HOOK_PRIORITY_DEFAULT   1000
 
@@ -105,7 +105,7 @@ struct t_hook_exec_cb
                                        /* long running callbacks)           */
 };
 
-/* hook variables */
+/* Hook variables */
 
 extern char *hook_type_string[];
 extern struct t_hook *weechat_hooks[];
@@ -115,7 +115,7 @@ extern int hooks_count_total;
 extern int hook_socketpair_ok;
 extern long long hook_debug_long_callbacks;
 
-/* hook functions */
+/* Hook functions */
 
 extern void hook_init (void);
 extern void hook_add_to_list (struct t_hook *new_hook);

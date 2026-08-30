@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-/* IRC plugin contribution to built-in themes. */
+/* IRC plugin contribution to built-in themes */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

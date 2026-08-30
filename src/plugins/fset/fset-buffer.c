@@ -122,19 +122,19 @@ fset_buffer_fills_field (char *field, char *field_spaces,
 
         if (fill_right)
         {
-            /* add spaces after the value */
+            /* Add spaces after the value. */
             memset (field + length, ' ', num_spaces);
         }
         else
         {
-            /* insert spaces before the value */
+            /* Insert spaces before the value. */
             memmove (field + num_spaces, field, length);
             memset (field, ' ', num_spaces);
         }
         field[length + num_spaces] = '\0';
     }
 
-    /* field with spaces */
+    /* Field with spaces */
     if (field_spaces)
     {
         memset (field_spaces, ' ', max_length);
@@ -191,7 +191,7 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
     value_undef = (fset_option->value == NULL) ? 1 : 0;
     value_changed = (fset_option_value_is_changed (fset_option)) ? 1 : 0;
 
-    /* set pointers */
+    /* Set pointers. */
     weechat_hashtable_set (fset_buffer_hashtable_pointers,
                            "fset_option", fset_option);
 
@@ -798,7 +798,7 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "empty_index", str_field2);
 
-    /* set other variables depending on the value */
+    /* Set other variables depending on the value. */
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "default_value_undef",
                            (default_value_undef) ? "1" : "0");
@@ -809,14 +809,14 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
                            "value_changed",
                            (value_changed) ? "1" : "0");
 
-    /* set other variables */
+    /* Set other variables. */
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "selected_line",
                            (selected_line) ? "1" : "0");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "newline", "\r\n");
 
-    /* build string for line */
+    /* Build string for line. */
     str_color_line[0] = '\0';
     format_number = weechat_config_integer (fset_config_look_format_number);
     if (selected_line)
@@ -834,7 +834,7 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
                       fset_config_color_line_marked_bg[format_number - 1]));
     }
 
-    /* evaluate line */
+    /* Evaluate line. */
     line = weechat_string_eval_expression (
         weechat_config_string (fset_config_format_option[format_number - 1]),
         fset_buffer_hashtable_pointers,
@@ -1145,7 +1145,7 @@ fset_buffer_refresh (int clear)
         }
     }
 
-    /* remove lines displayed after the last one just displayed */
+    /* Remove lines displayed after the last one just displayed. */
     last_y = fset_buffer_get_last_y (fset_buffer);
     for (y = last_y; y > y_max_displayed; y--)
     {
@@ -1270,13 +1270,13 @@ fset_buffer_window_scrolled_cb (const void *pointer, void *data,
     int start_line_y, chat_height, line, num_options;
     int format_number, lines_per_option;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
 
-    /* scrolled another window/buffer? then just ignore */
+    /* Scrolled another window/buffer? then just ignore. */
     if (weechat_window_get_pointer (signal_data, "buffer") != fset_buffer)
         return WEECHAT_RC_OK;
 
@@ -1335,18 +1335,18 @@ fset_buffer_input_cb (const void *pointer, void *data,
     const char *ptr_input;
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
-    /* close buffer */
+    /* Close buffer. */
     if (strcmp (input_data, "q") == 0)
     {
         weechat_buffer_close (buffer);
         return WEECHAT_RC_OK;
     }
 
-    /* refresh buffer */
+    /* Refresh buffer. */
     if (strcmp (input_data, "$") == 0)
     {
         fset_option_get_options ();
@@ -1354,7 +1354,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* unmark all options and refresh buffer */
+    /* Unmark all options and refresh buffer. */
     if (strcmp (input_data, "$$") == 0)
     {
         fset_option_unmark_all ();
@@ -1363,21 +1363,21 @@ fset_buffer_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* mark options matching filter */
+    /* Mark options matching filter. */
     if (strncmp (input_data, "m:", 2) == 0)
     {
         fset_option_mark_options_matching_filter (input_data + 2, 1);
         return WEECHAT_RC_OK;
     }
 
-    /* unmark options matching filter */
+    /* Unmark options matching filter. */
     if (strncmp (input_data, "u:", 2) == 0)
     {
         fset_option_mark_options_matching_filter (input_data + 2, 0);
         return WEECHAT_RC_OK;
     }
 
-    /* change sort of options */
+    /* Change sort of options. */
     if (strncmp (input_data, "s:", 2) == 0)
     {
         if (input_data[2])
@@ -1387,7 +1387,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* export options in a file */
+    /* Export options in a file. */
     if (strncmp (input_data, "w:", 2) == 0)
     {
         if (input_data[2])
@@ -1399,7 +1399,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* export options in a file (without help) */
+    /* Export options in a file (without help). */
     if (strncmp (input_data, "w-:", 3) == 0)
     {
         if (input_data[3])
@@ -1407,7 +1407,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* export options in a file (with help) */
+    /* Export options in a file (with help). */
     if (strncmp (input_data, "w+:", 3) == 0)
     {
         if (input_data[3])
@@ -1415,7 +1415,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* execute action */
+    /* Execute action. */
     for (i = 0; actions[i][0]; i++)
     {
         if (strcmp (input_data, actions[i][0]) == 0)
@@ -1425,7 +1425,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
         }
     }
 
-    /* filter options with given text */
+    /* Filter options with given text. */
     ptr_input = input_data;
     while (ptr_input[0] == ' ')
     {
@@ -1445,7 +1445,7 @@ int
 fset_buffer_close_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -1601,7 +1601,7 @@ fset_buffer_init (void)
 {
     fset_buffer_set_callbacks ();
 
-    /* create hashtables used by the bar item callback */
+    /* Create hashtables used by the bar item callback. */
     fset_buffer_hashtable_pointers = weechat_hashtable_new (
         8,
         WEECHAT_HASHTABLE_STRING,

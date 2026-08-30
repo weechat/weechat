@@ -82,7 +82,7 @@ relay_raw_open (int switch_to_buffer)
                                        "localvar_set_channel", RELAY_RAW_BUFFER_NAME);
                 weechat_hashtable_set (buffer_props,
                                        "localvar_set_no_log", "1");
-                /* disable all highlights on this buffer */
+                /* Disable all highlights on this buffer. */
                 weechat_hashtable_set (buffer_props, "highlight_words", "-");
             }
             relay_raw_buffer = weechat_buffer_new_props (
@@ -92,11 +92,11 @@ relay_raw_open (int switch_to_buffer)
                 &relay_buffer_close_cb, NULL, NULL);
             weechat_hashtable_free (buffer_props);
 
-            /* failed to create buffer ? then return */
+            /* Failed to create buffer ? Then return. */
             if (!relay_raw_buffer)
                 return;
 
-            /* print messages in list */
+            /* Print messages in list. */
             for (ptr_raw_message = relay_raw_messages; ptr_raw_message;
                  ptr_raw_message = ptr_raw_message->next_message)
             {
@@ -121,7 +121,7 @@ relay_raw_message_free (struct t_relay_raw_message *raw_message)
     if (!raw_message)
         return;
 
-    /* remove message from raw messages list */
+    /* Remove message from raw messages list. */
     if (last_relay_raw_message == raw_message)
         last_relay_raw_message = raw_message->prev_message;
     if (raw_message->prev_message)
@@ -135,7 +135,7 @@ relay_raw_message_free (struct t_relay_raw_message *raw_message)
     if (raw_message->next_message)
         (raw_message->next_message)->prev_message = raw_message->prev_message;
 
-    /* free data */
+    /* Free data. */
     free (raw_message->prefix);
     free (raw_message->message);
 
@@ -200,7 +200,7 @@ relay_raw_message_add_to_list (time_t date, int date_usec,
         new_raw_message->prefix = strdup (prefix);
         new_raw_message->message = strdup (message);
 
-        /* add message to list */
+        /* Add message to list. */
         new_raw_message->prev_message = last_relay_raw_message;
         new_raw_message->next_message = NULL;
         if (last_relay_raw_message)
@@ -307,7 +307,7 @@ relay_raw_message_add (enum t_relay_msg_type msg_type,
         || (msg_type == RELAY_MSG_PONG)
         || (msg_type == RELAY_MSG_CLOSE))
     {
-        /* build prefix with arrow */
+        /* Build prefix with arrow. */
         prefix_arrow[0] = '\0';
         switch (flags & (RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_SEND))
         {
@@ -377,7 +377,7 @@ relay_raw_print_client (struct t_relay_client *client,
 {
     char peer_id[256];
 
-    /* auto-open relay raw buffer if debug for irc plugin is >= 1 */
+    /* Auto-open relay raw buffer if debug for irc plugin is >= 1. */
     if (!relay_raw_buffer && (weechat_relay_plugin->debug >= 1))
         relay_raw_open (0);
 
@@ -413,7 +413,7 @@ relay_raw_print_remote (struct t_relay_remote *remote,
 {
     char peer_id[256];
 
-    /* auto-open relay raw buffer if debug for irc plugin is >= 1 */
+    /* Auto-open relay raw buffer if debug for irc plugin is >= 1. */
     if (!relay_raw_buffer && (weechat_relay_plugin->debug >= 1))
         relay_raw_open (0);
 

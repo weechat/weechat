@@ -50,7 +50,7 @@ TEST_GROUP(Scripts)
         char *error;
         int value;
 
-        /* make C++ compiler happy */
+        /* Make C++ compiler happy. */
         (void) pointer;
         (void) data;
         (void) buffer;
@@ -156,7 +156,7 @@ TEST(Scripts, API)
         (ptr_test_scripts_dir) ?
         ptr_test_scripts_dir : "./scripts/python");
 
-    /* build paths for scripting API tests */
+    /* Build paths for scripting API tests. */
     snprintf (path_testapigen, sizeof (path_testapigen),
               "%s%s%s",
               test_scripts_dir,
@@ -175,22 +175,22 @@ TEST(Scripts, API)
     api_tests_ok = 0;
     api_tests_errors = 0;
 
-    /* load generator script */
+    /* Load generator script. */
     snprintf (str_command, sizeof (str_command),
               "/script load %s", path_testapigen);
     run_cmd (str_command);
 
-    /* generate scripts to test API */
+    /* Generate scripts to test API. */
     snprintf (str_command, sizeof (str_command),
               "/testapigen %s %s",
               path_testapi,
               path_testapi_output_dir);
     run_cmd (str_command);
 
-    /* check that there was no errors in script generation */
+    /* Check that there was no errors in script generation. */
     LONGS_EQUAL(0, api_tests_errors);
 
-    /* unload generator script */
+    /* Unload generator script. */
     snprintf (str_command, sizeof (str_command),
               "/script unload testapigen.py");
     run_cmd (str_command);
@@ -198,16 +198,16 @@ TEST(Scripts, API)
     hdata = hook_hdata_get (NULL, "plugin");
     plugins = hdata_get_list (hdata, "weechat_plugins");
 
-    /* test the scripting API */
+    /* Test the scripting API. */
     for (i = 0; languages[i][0]; i++)
     {
-        /* test if the plugin is loaded */
+        /* Test if the plugin is loaded. */
         snprintf (str_condition, sizeof (str_condition),
                   "${plugin.name} == %s",
                   languages[i][0]);
         if (!hdata_search (hdata, plugins, str_condition, NULL, NULL, NULL, 1))
         {
-            /* plugin not loaded */
+            /* Plugin not loaded */
             snprintf (str_error, sizeof (str_error),
                       "Plugin \"%s\" is not loaded",
                       languages[i][0]);
@@ -216,7 +216,7 @@ TEST(Scripts, API)
 
         /*
          * TODO: fix memory leaks in javascript plugin
-         * and keep memory leak detection enabled
+         * and keep memory leak detection enabled.
          */
         turnoff_memleak = (strcmp (languages[i][0], "javascript") == 0);
 
@@ -229,27 +229,27 @@ TEST(Scripts, API)
         api_tests_end = 0;
         api_tests_other = 0;
 
-        /* load script (run tests) */
+        /* Load script (run tests). */
         snprintf (str_command, sizeof (str_command),
                   "/script load -q %s/weechat_testapi.%s",
                   path_testapi_output_dir,
                   languages[i][1]);
         run_cmd (str_command);
 
-        /* get date/time before running tests */
+        /* Get date/time before running tests. */
         gettimeofday (&time_start, NULL);
 
-        /* run tests */
+        /* Run tests. */
         snprintf (str_command, sizeof (str_command),
                   "/weechat_testapi.%s",
                   languages[i][1]);
         run_cmd (str_command);
 
-        /* compute elapsed time */
+        /* Compute elapsed time. */
         gettimeofday (&time_end, NULL);
         diff = util_timeval_diff (&time_start, &time_end);
 
-        /* display results */
+        /* Display results. */
         printf ("\n");
         printf (">>> Tests %s: %d tests, %d OK, %d errors, "
                 "%d unexpected messages, %lld ms\n",
@@ -261,28 +261,28 @@ TEST(Scripts, API)
                 diff / 1000);
         printf ("\n");
 
-        /* unload script */
+        /* Unload script. */
         snprintf (str_command, sizeof (str_command),
                   "/script unload -q weechat_testapi.%s",
                   languages[i][1]);
         run_cmd (str_command);
 
-        /* check that tests were found in script */
+        /* Check that tests were found in script. */
         CHECK(api_tests_count > 0);
 
-        /* check that all tests are OK */
+        /* Check that all tests are OK. */
         LONGS_EQUAL(api_tests_count, api_tests_ok);
 
-        /* check that there was no errors */
+        /* Check that there was no errors. */
         LONGS_EQUAL(0, api_tests_errors);
 
-        /* check that end of script was reached (no syntax error) */
+        /* Check that end of script was reached (no syntax error). */
         LONGS_EQUAL(1, api_tests_end);
 
         /*
-         * check that there was no warning/error from plugin
+         * Check that there was no warning/error from plugin
          * (if everything is OK, there are 2 messages when the script is loaded
-         * and 2 messages when it is unloaded, so total is 4)
+         * and 2 messages when it is unloaded, so total is 4).
          */
         LONGS_EQUAL(0, api_tests_other);
 

@@ -108,7 +108,7 @@ class WeechatScript:
         }
         tests_count = 0
         for node in ast.walk(self.tree):
-            # rename some API functions
+            # Rename some API functions.
             if (
                 self.language != "python"
                 and isinstance(node, ast.Call)
@@ -116,11 +116,11 @@ class WeechatScript:
                 and node.func.value.id == "weechat"
             ):
                 node.func.attr = functions.get(node.func.attr, node.func.attr)
-            # count number of tests
+            # Count number of tests.
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "check":
                 tests_count += 1
 
-        # replace script variables in string values
+        # Replace script variables in string values.
         variables = {
             "{SCRIPT_SOURCE}": self.source_script,
             "{SCRIPT_NAME}": self.script_name,
@@ -132,7 +132,7 @@ class WeechatScript:
             "{SCRIPT_LANGUAGE}": self.language,
             "{SCRIPT_TESTS}": str(tests_count),
         }
-        # replace variables
+        # Replace variables.
         for node in ast.walk(self.tree):
             if isinstance(node, ast.Constant) and node.value in variables:
                 node.value = variables[node.value]
@@ -314,13 +314,13 @@ def update_nodes(tree: ast.AST) -> None:
     """
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef) and node.name.startswith("test_"):
-            # add a print at the beginning of each test function
+            # Add a print at the beginning of each test function.
             node.body.insert(0, ast.parse(f'weechat.prnt("", "  > {node.name}");'))
         elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "check":
-            # add two arguments in the call to "check" function:
+            # Add two arguments in the call to "check" function:
             #   1. the string representation of the test
             #   2. the line number in source (as string)
-            # for example if this test is on line 50:
+            # For example if this test is on line 50:
             #   >>> check(weechat.test() == 123)
             # it becomes:
             #   >>> check(weechat.test() == 123, 'weechat.test() == 123', '50')

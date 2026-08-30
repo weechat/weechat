@@ -154,11 +154,11 @@ relay_network_init (void)
     relay_network_init_ok = 0;
     relay_network_init_tls_cert_key_ok = 0;
 
-    /* credentials */
+    /* Credentials */
     gnutls_certificate_allocate_credentials (&relay_gnutls_x509_cred);
     relay_network_set_tls_cert_key (0);
 
-    /* priority */
+    /* Priority */
     relay_gnutls_priority_cache = malloc (sizeof (*relay_gnutls_priority_cache));
     if (relay_gnutls_priority_cache)
         relay_network_set_priority ();

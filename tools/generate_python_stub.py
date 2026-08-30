@@ -38,7 +38,7 @@ CONSTANT_RE = r"WEECHAT_SCRIPT_CONST_(?P<type>(INT|STR))\((?P<constant>WEECHAT_[
 
 FUNCTION_RE = r"""\[source,python\]
 ----
-# prototype
+# Prototype
 def (?P<function>\w+)(?P<args>[^)]*)(?P<return>\) -> [^:]+:) \.\.\.(?P<example>.*?)
 ----"""
 

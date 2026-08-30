@@ -25,7 +25,7 @@ alias_info_infolist_alias_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_alias *ptr_alias;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;
@@ -40,7 +40,7 @@ alias_info_infolist_alias_cb (const void *pointer, void *data,
 
     if (obj_pointer)
     {
-        /* build list with only one alias */
+        /* Build list with only one alias. */
         if (!alias_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
@@ -50,7 +50,7 @@ alias_info_infolist_alias_cb (const void *pointer, void *data,
     }
     else
     {
-        /* build list with all aliases matching arguments */
+        /* Build list with all aliases matching arguments. */
         for (ptr_alias = alias_list; ptr_alias;
              ptr_alias = ptr_alias->next_alias)
         {
@@ -82,7 +82,7 @@ alias_info_infolist_alias_default_cb (const void *pointer, void *data,
     struct t_infolist_item *ptr_item;
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) infolist_name;

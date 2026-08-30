@@ -47,7 +47,7 @@ TEST_GROUP(GuiBuffer)
                                             const char *type_data,
                                             void *signal_data)
     {
-        /* make C++ compiler happy */
+        /* Make C++ compiler happy. */
         (void) pointer;
         (void) data;
         (void) signal;
@@ -68,7 +68,7 @@ TEST_GROUP(GuiBuffer)
                                                 const char *type_data,
                                                 void *signal_data)
     {
-        /* make C++ compiler happy */
+        /* Make C++ compiler happy. */
         (void) pointer;
         (void) data;
         (void) signal;
@@ -89,7 +89,7 @@ TEST_GROUP(GuiBuffer)
                                               const char *type_data,
                                               void *signal_data)
     {
-        /* make C++ compiler happy */
+        /* Make C++ compiler happy. */
         (void) pointer;
         (void) data;
         (void) signal;
@@ -412,7 +412,7 @@ int
 test_buffer_input_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer, const char *input_data)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -429,7 +429,7 @@ int
 test_buffer_close_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -646,7 +646,7 @@ TEST(GuiBuffer, NewUser)
                                       "buffer_user_closing_" TEST_BUFFER_NAME,
                                       &signal_buffer_user_closing_cb, NULL, NULL);
 
-        /* test creation of user buffer */
+        /* Test creation of user buffer. */
         buffer = gui_buffer_new_user (TEST_BUFFER_NAME,
                                       (enum t_gui_buffer_type)type);
         CHECK(buffer);
@@ -655,40 +655,40 @@ TEST(GuiBuffer, NewUser)
         POINTERS_EQUAL(&gui_buffer_user_input_cb, buffer->input_callback);
         POINTERS_EQUAL(&gui_buffer_user_close_cb, buffer->close_callback);
 
-        /* test signal "buffer_user_input_test" */
+        /* Test signal "buffer_user_input_test". */
         signal_buffer_user_input[0] = '\0';
         input_data (buffer, "something", NULL, 0, 0);
         STRCMP_EQUAL("something", signal_buffer_user_input);
 
-        /* test signal "buffer_user_closing_test" */
+        /* Test signal "buffer_user_closing_test". */
         signal_buffer_user_closing = 0;
         gui_buffer_close (buffer);
         LONGS_EQUAL(1, signal_buffer_user_closing);
 
-        /* create the buffer again */
+        /* Create the buffer again. */
         buffer = gui_buffer_new_user (TEST_BUFFER_NAME,
                                       (enum t_gui_buffer_type)type);
 
-        /* close the buffer by sending "q" */
+        /* Close the buffer by sending "q". */
         signal_buffer_user_input[0] = '\0';
         signal_buffer_user_closing = 0;
         input_data (buffer, "q", NULL, 0, 0);
         STRCMP_EQUAL("q", signal_buffer_user_input);
         LONGS_EQUAL(1, signal_buffer_user_closing);
 
-        /* create the buffer again */
+        /* Create the buffer again. */
         buffer = gui_buffer_new_user (TEST_BUFFER_NAME,
                                       (enum t_gui_buffer_type)type);
 
-        /* hook a signal that eats the input */
+        /* Hook a signal that eats the input. */
         unhook (signal_input);
         signal_input = hook_signal (NULL,
                                     "buffer_user_input_" TEST_BUFFER_NAME,
                                     &signal_buffer_user_input_eat_cb, NULL, NULL);
 
         /*
-         * try to close the buffer by sending "q": it should not close it
-         * because the input signal callback as returned WEECHAT_RC_OK_EAT
+         * Try to close the buffer by sending "q": it should not close it
+         * because the input signal callback as returned WEECHAT_RC_OK_EAT.
          */
         signal_buffer_user_input[0] = '\0';
         signal_buffer_user_closing = 0;
@@ -1080,7 +1080,7 @@ TEST(GuiBuffer, Set)
 
     /* short_name */
     STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->short_name);
-    gui_buffer_set (buffer, "short_name", "");  /* not allowed */
+    gui_buffer_set (buffer, "short_name", "");  /* Not allowed */
     STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->short_name);
     gui_buffer_set (buffer, "short_name", TEST_BUFFER_NAME2);
     STRCMP_EQUAL(TEST_BUFFER_NAME2, buffer->short_name);
@@ -1189,7 +1189,7 @@ TEST(GuiBuffer, Set)
 
     /* highlight_disable_regex */
     STRCMP_EQUAL(NULL, buffer->highlight_disable_regex);
-    gui_buffer_set (buffer, "highlight_disable_regex", "*");  /* invalid */
+    gui_buffer_set (buffer, "highlight_disable_regex", "*");  /* Invalid */
     STRCMP_EQUAL(NULL, buffer->highlight_disable_regex);
     gui_buffer_set (buffer, "highlight_disable_regex", "test");
     STRCMP_EQUAL("test", buffer->highlight_disable_regex);
@@ -1198,7 +1198,7 @@ TEST(GuiBuffer, Set)
 
     /* highlight_regex */
     STRCMP_EQUAL(NULL, buffer->highlight_regex);
-    gui_buffer_set (buffer, "highlight_regex", "*");  /* invalid */
+    gui_buffer_set (buffer, "highlight_regex", "*");  /* Invalid */
     STRCMP_EQUAL(NULL, buffer->highlight_regex);
     gui_buffer_set (buffer, "highlight_regex", "test");
     STRCMP_EQUAL("test", buffer->highlight_regex);
@@ -1560,7 +1560,7 @@ TEST(GuiBuffer, SearchByPartialName)
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    /* no name: the current buffer is returned */
+    /* No name: the current buffer is returned. */
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name (NULL, NULL));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name (NULL, ""));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name ("", NULL));
@@ -1568,7 +1568,7 @@ TEST(GuiBuffer, SearchByPartialName)
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name ("", "(?i)"));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name ("core", "(?i)"));
 
-    /* no buffer found */
+    /* No buffer found */
     POINTERS_EQUAL(NULL, gui_buffer_search_by_partial_name (NULL, "zzz"));
     POINTERS_EQUAL(NULL, gui_buffer_search_by_partial_name ("zzz", "weechat"));
 
@@ -1588,9 +1588,9 @@ TEST(GuiBuffer, SearchByPartialName)
     POINTERS_EQUAL(buffer, gui_buffer_search_by_partial_name ("(?i)CORE", TEST_BUFFER_NAME));
 
     /*
-     * create one buffer for each possible match type on "abc", from the
+     * Create one buffer for each possible match type on "abc", from the
      * lowest priority to the highest one: the expected buffer is always the
-     * last one added in the list of buffers
+     * last one added in the list of buffers.
      */
     short_middle = gui_buffer_new (NULL, "buffer_short_middle",
                                    NULL, NULL, NULL, NULL, NULL, NULL);
@@ -1621,46 +1621,46 @@ TEST(GuiBuffer, SearchByPartialName)
                                  NULL, NULL, NULL, NULL, NULL, NULL);
     CHECK(name_exact);
 
-    /* exact match on name */
+    /* Exact match on name */
     POINTERS_EQUAL(name_exact, gui_buffer_search_by_partial_name (NULL, "abc"));
     POINTERS_EQUAL(name_exact, gui_buffer_search_by_partial_name (NULL, "(?i)ABC"));
     POINTERS_EQUAL(NULL, gui_buffer_search_by_partial_name (NULL, "ABC"));
     gui_buffer_close (name_exact);
 
-    /* exact match on short name */
+    /* Exact match on short name */
     POINTERS_EQUAL(short_exact, gui_buffer_search_by_partial_name (NULL, "abc"));
     gui_buffer_close (short_exact);
 
-    /* match at the end of name */
+    /* Match at the end of name */
     POINTERS_EQUAL(name_end, gui_buffer_search_by_partial_name (NULL, "abc"));
     gui_buffer_close (name_end);
 
-    /* match at the end of short name */
+    /* Match at the end of short name */
     POINTERS_EQUAL(short_end, gui_buffer_search_by_partial_name (NULL, "abc"));
     gui_buffer_close (short_end);
 
-    /* match at the beginning of name */
+    /* Match at the beginning of name */
     POINTERS_EQUAL(name_begin, gui_buffer_search_by_partial_name (NULL, "abc"));
     gui_buffer_close (name_begin);
 
-    /* match at the beginning of short name */
+    /* Match at the beginning of short name */
     POINTERS_EQUAL(short_begin, gui_buffer_search_by_partial_name (NULL, "abc"));
     gui_buffer_close (short_begin);
 
-    /* match in the middle of name */
+    /* Match in the middle of name */
     POINTERS_EQUAL(name_middle, gui_buffer_search_by_partial_name (NULL, "abc"));
     gui_buffer_close (name_middle);
 
-    /* match in the middle of short name */
+    /* Match in the middle of short name */
     POINTERS_EQUAL(short_middle, gui_buffer_search_by_partial_name (NULL, "abc"));
     gui_buffer_close (short_middle);
 
     POINTERS_EQUAL(NULL, gui_buffer_search_by_partial_name (NULL, "abc"));
 
     /*
-     * with a private buffer "abcbot" and a channel "#abc": the match at the
+     * With a private buffer "abcbot" and a channel "#abc": the match at the
      * end of the channel name has priority over the match at the beginning
-     * of the private buffer short name
+     * of the private buffer short name.
      */
     buffer1 = gui_buffer_new (NULL, "libera.abcbot",
                               NULL, NULL, NULL, NULL, NULL, NULL);
@@ -1675,8 +1675,8 @@ TEST(GuiBuffer, SearchByPartialName)
     gui_buffer_close (buffer2);
 
     /*
-     * with two channels "##abc" and "#abc": the exact match on the short name
-     * "#abc" has priority over the match at the end of the short name "##abc"
+     * With two channels "##abc" and "#abc": the exact match on the short name
+     * "#abc" has priority over the match at the end of the short name "##abc".
      */
     buffer1 = gui_buffer_new (NULL, "libera.##abc",
                               NULL, NULL, NULL, NULL, NULL, NULL);
@@ -1692,8 +1692,8 @@ TEST(GuiBuffer, SearchByPartialName)
     gui_buffer_close (buffer2);
 
     /*
-     * with two buffers matching with the same type, the search starts at the
-     * buffer following the current one and wraps to the beginning of list
+     * With two buffers matching with the same type, the search starts at the
+     * buffer following the current one and wraps to the beginning of list.
      */
     buffer1 = gui_buffer_new (NULL, "abc1",
                               NULL, NULL, NULL, NULL, NULL, NULL);
@@ -1754,7 +1754,7 @@ TEST(GuiBuffer, SearchByIdNumberName)
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    /* buffer not found */
+    /* Buffer not found */
     POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name (NULL));
     POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name (""));
     POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("xxx"));
@@ -1762,17 +1762,17 @@ TEST(GuiBuffer, SearchByIdNumberName)
     POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("0"));
     POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("3"));
 
-    /* search by id */
+    /* Search by id. */
     snprintf (str_id, sizeof (str_id), "%lld", gui_buffers->id);
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id_number_name (str_id));
     snprintf (str_id, sizeof (str_id), "%lld", buffer->id);
     POINTERS_EQUAL(buffer, gui_buffer_search_by_id_number_name (str_id));
 
-    /* search by number */
+    /* Search by number. */
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id_number_name ("1"));
     POINTERS_EQUAL(buffer, gui_buffer_search_by_id_number_name ("2"));
 
-    /* search by name */
+    /* Search by name. */
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id_number_name ("weechat"));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id_number_name ("core.weechat"));
     POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("CORE.WEECHAT"));
@@ -2035,7 +2035,7 @@ TEST(GuiBuffer, Merge)
     LONGS_EQUAL(2, buffer1->number);
     LONGS_EQUAL(3, buffer2->number);
 
-    /* invalid arguments: nothing is merged */
+    /* Invalid arguments: nothing is merged. */
     gui_buffer_merge (NULL, NULL);
     gui_buffer_merge (buffer2, NULL);
     gui_buffer_merge (NULL, buffer1);
@@ -2043,8 +2043,8 @@ TEST(GuiBuffer, Merge)
     LONGS_EQUAL(3, buffer2->number);
 
     /*
-     * no window is displaying the target buffer: the merged buffer becomes
-     * the active one in the group
+     * No window is displaying the target buffer: the merged buffer becomes
+     * the active one in the group.
      */
     gui_window_switch_to_buffer (gui_current_window, gui_buffers, 1);
     gui_buffer_merge (buffer2, buffer1);
@@ -2055,8 +2055,8 @@ TEST(GuiBuffer, Merge)
     gui_buffer_unmerge (buffer2, -1);
 
     /*
-     * a window is displaying the buffer that is merged: it stays the active
-     * one in the group
+     * A window is displaying the buffer that is merged: it stays the active
+     * one in the group.
      */
     gui_window_switch_to_buffer (gui_current_window, buffer2, 1);
     gui_buffer_merge (buffer2, buffer1);
@@ -2066,9 +2066,9 @@ TEST(GuiBuffer, Merge)
     gui_buffer_unmerge (buffer2, -1);
 
     /*
-     * a window is displaying the target buffer: it must stay the active one
+     * A window is displaying the target buffer: it must stay the active one
      * in the group, otherwise the window would display a buffer that is not
-     * the active one
+     * the active one.
      */
     gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
     gui_buffer_merge (buffer2, buffer1);

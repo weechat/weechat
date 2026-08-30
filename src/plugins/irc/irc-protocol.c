@@ -8,7 +8,7 @@
 
 /* Implementation of IRC protocol */
 
-/* this define is needed for strptime() (not on OpenBSD/Sun) */
+/* This define is needed for strptime() (not on OpenBSD/Sun). */
 #if !defined(__OpenBSD__) && !defined(__sun)
 #define _XOPEN_SOURCE 700
 #endif
@@ -160,7 +160,7 @@ irc_protocol_tags_add_cb (void *data,
     const char *ptr_key, *ptr_value;
     char **str_tags, *str_temp;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     ptr_key = (const char *)key;
@@ -173,16 +173,16 @@ irc_protocol_tags_add_cb (void *data,
 
     weechat_string_dyn_concat (str_tags, "irc_tag_", -1);
 
-    /* key */
+    /* Key */
     str_temp = weechat_string_replace (ptr_key, ",", ";");
     weechat_string_dyn_concat (str_tags, str_temp, -1);
     free (str_temp);
 
-    /* separator between key and value */
+    /* Separator between key and value */
     if (ptr_value)
         weechat_string_dyn_concat (str_tags, "=", -1);
 
-    /* value */
+    /* Value */
     str_temp = weechat_string_replace (ptr_value, ",", ";");
     weechat_string_dyn_concat (str_tags, str_temp, -1);
     free (str_temp);
@@ -341,7 +341,7 @@ irc_protocol_nick_address (struct t_irc_server *server,
 
     if (nickname && address && address[0] && (strcmp (nickname, address) != 0))
     {
-        /* display nick and address if they are different */
+        /* Display nick and address if they are different. */
         snprintf (string, sizeof (string),
                   "%s%s %s(%s%s%s)%s",
                   irc_nick_color_for_msg (server, server_message, nick,
@@ -355,7 +355,7 @@ irc_protocol_nick_address (struct t_irc_server *server,
     }
     else if (nickname)
     {
-        /* display only nick if no address or if nick == address */
+        /* Display only nick if no address or if nick == address. */
         snprintf (string, sizeof (string),
                   "%s%s%s",
                   irc_nick_color_for_msg (server, server_message, nick,
@@ -670,13 +670,13 @@ IRC_PROTOCOL_CALLBACK(batch)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
 
-    /* do nothing (but ignore BATCH) if capability "batch" is not enabled */
+    /* Do nothing (but ignore BATCH) if capability "batch" is not enabled. */
     if (!weechat_hashtable_has_key (ctxt->server->cap_list, "batch"))
         return WEECHAT_RC_OK;
 
     if (ctxt->params[0][0] == '+')
     {
-        /* start batch */
+        /* Start batch. */
         if (ctxt->num_params < 2)
             return WEECHAT_RC_ERROR;
         str_params = (ctxt->num_params > 2) ?
@@ -692,7 +692,7 @@ IRC_PROTOCOL_CALLBACK(batch)
     }
     else if (ctxt->params[0][0] == '-')
     {
-        /* end batch */
+        /* End batch. */
         irc_batch_end_batch (ctxt->server, ctxt->params[0] + 1);
     }
 
@@ -710,7 +710,7 @@ irc_protocol_cap_print_cb (void *data,
 {
     char **str_caps;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     str_caps = (char **)data;
@@ -812,14 +812,14 @@ irc_protocol_cap_sync_req (struct t_irc_server *server,
                                                modifier_data,
                                                caps_req);
 
-    /* no changes in new caps requested */
+    /* No changes in new caps requested */
     if (new_caps_req && (strcmp (caps_req, new_caps_req) == 0))
     {
         free (new_caps_req);
         new_caps_req = NULL;
     }
 
-    /* caps not dropped? */
+    /* Caps not dropped? */
     if (!new_caps_req || new_caps_req[0])
     {
         ptr_caps_req = (new_caps_req) ? new_caps_req : caps_req;
@@ -921,7 +921,7 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl, int cap_new_receiv
 
                 if (weechat_config_boolean (irc_config_network_sasl_fail_unavailable))
                 {
-                    /* same handling as for sasl_end_fail */
+                    /* Same handling as for sasl_end_fail */
                     sasl_fail = IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_FAIL);
                     if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
                         || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
@@ -967,7 +967,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
     if (strcmp (ctxt->params[1], "LS") == 0)
     {
-        /* list of capabilities supported by the server */
+        /* List of capabilities supported by the server */
         if (ctxt->num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1050,13 +1050,13 @@ IRC_PROTOCOL_CALLBACK(cap)
             weechat_string_dyn_free (str_caps, 1);
         }
 
-        /* auto-enable capabilities only when connecting to server */
+        /* Auto-enable capabilities only when connecting to server. */
         if (last_reply && !ctxt->server->is_connected)
             irc_protocol_cap_sync (ctxt->server, 1, 0);
     }
     else if (strcmp (ctxt->params[1], "LIST") == 0)
     {
-        /* list of capabilities currently enabled */
+        /* List capabilities currently enabled. */
         if (ctxt->num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1141,7 +1141,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     }
     else if (strcmp (ctxt->params[1], "ACK") == 0)
     {
-        /* capabilities acknowledged */
+        /* Capabilities acknowledged */
         if (ctxt->num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1258,7 +1258,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     }
     else if (strcmp (ctxt->params[1], "NAK") == 0)
     {
-        /* capabilities rejected */
+        /* Capabilities rejected */
         if (ctxt->num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1276,7 +1276,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     }
     else if (strcmp (ctxt->params[1], "NEW") == 0)
     {
-        /* new capabilities available */
+        /* New capabilities available */
         if (ctxt->num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1324,14 +1324,14 @@ IRC_PROTOCOL_CALLBACK(cap)
             }
             weechat_string_free_split (caps_added);
         }
-        /* we can auth with SASL only if not already authenticaded */
+        /* We can auth with SASL only if not already authenticaded. */
         sasl = (ctxt->server->authentication_method == IRC_SERVER_AUTH_METHOD_SASL) ?
             0 : 1;
         irc_protocol_cap_sync (ctxt->server, sasl, 1);
     }
     else if (strcmp (ctxt->params[1], "DEL") == 0)
     {
-        /* capabilities no longer available */
+        /* Capabilities no longer available */
         if (ctxt->num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1538,10 +1538,10 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     str_target[0] = '\0';
 
     /*
-     * force display on server buffer for these messages:
+     * Force display on server buffer for these messages:
      *   - 432: erroneous nickname
      *   - 433: nickname already in use
-     *   - 437: nick/channel temporarily unavailable
+     *   - 437: nick/channel temporarily unavailable.
      */
     force_server_buffer = ((strcmp (ctxt->command, "432") == 0)
                            || (strcmp (ctxt->command, "433") == 0)
@@ -1669,7 +1669,7 @@ IRC_PROTOCOL_CALLBACK(invite)
     else
     {
         /* CAP invite-notify */
-        /* imitate numeric 341 output */
+        /* Imitate numeric 341 output. */
         weechat_printf_datetime_tags (
             irc_msgbuffer_get_target_buffer (ctxt->server, ctxt->nick, ctxt->command, NULL, NULL),
             ctxt->date,
@@ -1749,7 +1749,7 @@ IRC_PROTOCOL_CALLBACK(join)
     ptr_channel = irc_channel_search (ctxt->server, ctxt->params[0]);
     if (ptr_channel)
     {
-        /* ignore self join if the channel is already joined */
+        /* Ignore self join if the channel is already joined. */
         if (ctxt->nick_is_me && ptr_channel->nicks)
             return WEECHAT_RC_OK;
         ptr_channel->part = 0;
@@ -1757,8 +1757,8 @@ IRC_PROTOCOL_CALLBACK(join)
     else
     {
         /*
-         * if someone else joins and channel is not opened, then just
-         * ignore it (we should receive our self join first)
+         * If someone else joins and channel is not opened, then just
+         * ignore it (we should receive our self join first).
          */
         if (!ctxt->nick_is_me)
             return WEECHAT_RC_OK;
@@ -1776,14 +1776,14 @@ IRC_PROTOCOL_CALLBACK(join)
     }
 
     /*
-     * local join? clear nicklist to be sure it is empty (when using znc, after
+     * Local join? Clear nicklist to be sure it is empty (when using znc, after
      * reconnection to network, we receive a JOIN for channel with existing
-     * nicks in irc plugin, so we need to clear the nicklist now)
+     * nicks in irc plugin, so we need to clear the nicklist now).
      */
     if (ctxt->nick_is_me)
         irc_nick_free_all (ctxt->server, ptr_channel);
 
-    /* reset some variables if joining new channel */
+    /* Reset some variables if joining new channel. */
     if (!ptr_channel->nicks)
     {
         irc_channel_set_topic (ptr_channel, NULL);
@@ -1797,7 +1797,7 @@ IRC_PROTOCOL_CALLBACK(join)
         ptr_channel->checking_whox = 0;
     }
 
-    /* add nick in channel */
+    /* Add nick in channel. */
     ptr_nick = irc_nick_new (
         ctxt->server,
         ptr_channel,
@@ -1808,7 +1808,7 @@ IRC_PROTOCOL_CALLBACK(join)
         (pos_account) ? pos_account : NULL,
         (pos_realname) ? pos_realname : NULL);
 
-    /* rename the nick if it was in list with a different case */
+    /* Rename the nick if it was in list with a different case. */
     irc_channel_nick_speaking_rename_if_present (ctxt->server, ptr_channel, ctxt->nick);
 
     if (!ctxt->ignore_remove)
@@ -1821,15 +1821,15 @@ IRC_PROTOCOL_CALLBACK(join)
             weechat_config_boolean (irc_config_look_display_host_join);
 
         /*
-         * "smart" filter the join message if it's not a join from myself, if
-         * smart filtering is enabled, and if nick was not speaking in channel
+         * "Smart" filter the join message if it's not a join from myself, if
+         * smart filtering is enabled, and if nick was not speaking in channel.
          */
         smart_filter = (!ctxt->nick_is_me
                         && weechat_config_boolean (irc_config_look_smart_filter)
                         && weechat_config_boolean (irc_config_look_smart_filter_join)
                         && !ptr_nick_speaking);
 
-        /* display the join */
+        /* Display the join. */
         weechat_printf_datetime_tags (
             irc_msgbuffer_get_target_buffer (ctxt->server, NULL, ctxt->command, NULL,
                                              ptr_channel->buffer),
@@ -1855,9 +1855,9 @@ IRC_PROTOCOL_CALLBACK(join)
             IRC_COLOR_MESSAGE_JOIN);
 
         /*
-         * if join is smart filtered, save the nick in hashtable, and if nick
+         * If join is smart filtered, save the nick in hashtable, and if nick
          * is speaking shortly after the join, it will be unmasked
-         * (option irc.look.smart_filter_join_unmask)
+         * (option irc.look.smart_filter_join_unmask).
          */
         if (smart_filter)
         {
@@ -1865,7 +1865,7 @@ IRC_PROTOCOL_CALLBACK(join)
                                                  time (NULL));
         }
 
-        /* display message in private if private has flag "has_quit_server" */
+        /* Display message in private if private has flag "has_quit_server". */
         if (!ctxt->nick_is_me)
         {
             irc_channel_display_nick_back_in_pv (ctxt->server, ptr_nick, ctxt->nick);
@@ -1879,7 +1879,7 @@ IRC_PROTOCOL_CALLBACK(join)
         irc_server_set_host (ctxt->server, ctxt->address);
         irc_bar_item_update_channel ();
 
-        /* add channel to autojoin option (on manual join only) */
+        /* Add channel to autojoin option (on manual join only). */
         channel_name_lower = weechat_string_tolower (ctxt->params[0]);
         if (channel_name_lower)
         {
@@ -1969,21 +1969,18 @@ IRC_PROTOCOL_CALLBACK(kick)
 
     if (irc_server_strcasecmp (ctxt->server, ctxt->params[1], ctxt->server->nick) == 0)
     {
-        /*
-         * my nick was kicked => free all nicks, channel is not active any
-         * more
-         */
+        /* My nick was kicked => free all nicks, channel is not active any more. */
         irc_nick_free_all (ctxt->server, ptr_channel);
 
         irc_channel_modelist_set_state (ptr_channel,
                                         IRC_MODELIST_STATE_MODIFIED);
 
-        /* read option "autorejoin" in server */
+        /* Read option "autorejoin" in server. */
         rejoin = IRC_SERVER_OPTION_BOOLEAN(ctxt->server, IRC_SERVER_OPTION_AUTOREJOIN);
 
         /*
-         * if buffer has a local variable "autorejoin", use it
-         * (it has higher priority than server option
+         * If buffer has a local variable "autorejoin", use it
+         * (it has higher priority than server option.
          */
         ptr_autorejoin = weechat_buffer_get_string (ptr_channel->buffer,
                                                     "localvar_autorejoin");
@@ -1995,12 +1992,12 @@ IRC_PROTOCOL_CALLBACK(kick)
             if (IRC_SERVER_OPTION_INTEGER(ctxt->server,
                                           IRC_SERVER_OPTION_AUTOREJOIN_DELAY) == 0)
             {
-                /* immediately rejoin if delay is 0 */
+                /* Immediately rejoin if delay is 0. */
                 irc_channel_rejoin (ctxt->server, ptr_channel, 0, 1);
             }
             else
             {
-                /* rejoin channel later, according to delay */
+                /* Rejoin channel later, according to delay. */
                 ptr_channel->hook_autorejoin =
                     weechat_hook_timer (
                         IRC_SERVER_OPTION_INTEGER(ctxt->server,
@@ -2015,10 +2012,7 @@ IRC_PROTOCOL_CALLBACK(kick)
     }
     else
     {
-        /*
-         * someone was kicked from channel (but not me) => remove only this
-         * nick
-         */
+        /* Someone was kicked from channel (but not me) => remove only this nick. */
         if (ptr_nick_kicked)
             irc_nick_free (ctxt->server, ptr_channel, ptr_nick_kicked);
     }
@@ -2087,10 +2081,7 @@ IRC_PROTOCOL_CALLBACK(kill)
 
         if (irc_server_strcasecmp (ctxt->server, ctxt->params[0], ctxt->server->nick) == 0)
         {
-            /*
-             * my nick was killed => free all nicks, channel is not active any
-             * more
-             */
+            /* My nick was killed => free all nicks, channel is not active any more. */
             irc_nick_free_all (ctxt->server, ptr_channel);
 
             irc_channel_modelist_set_state (ptr_channel,
@@ -2100,10 +2091,7 @@ IRC_PROTOCOL_CALLBACK(kill)
         }
         else
         {
-            /*
-             * someone was killed on channel (but not me) => remove only this
-             * nick
-             */
+            /* Someone was killed on channel (but not me) => remove only this nick. */
             if (ptr_nick_killed)
                 irc_nick_free (ctxt->server, ptr_channel, ptr_nick_killed);
         }
@@ -2265,10 +2253,10 @@ IRC_PROTOCOL_CALLBACK(nick)
 
     ptr_nick_found = NULL;
 
-    /* first display message in server buffer if it's local nick */
+    /* First display message in server buffer if it's local nick. */
     if (ctxt->nick_is_me)
     {
-        /* temporary disable hotlist */
+        /* Temporary disable hotlist. */
         weechat_buffer_set (NULL, "hotlist", "-");
 
         snprintf (str_tags, sizeof (str_tags),
@@ -2286,7 +2274,7 @@ IRC_PROTOCOL_CALLBACK(nick)
             nick,
             IRC_COLOR_RESET);
 
-        /* enable hotlist */
+        /* Enable hotlist. */
         weechat_buffer_set (NULL, "hotlist", "+");
     }
 
@@ -2299,9 +2287,9 @@ IRC_PROTOCOL_CALLBACK(nick)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
                 /*
-                 * rename private buffer if this is with "old nick"
+                 * Rename private buffer if this is with "old nick"
                  * or if it's with "new nick" but different case
-                 * (only if another buffer for the nick doesn't exist)
+                 * (only if another buffer for the nick doesn't exist).
                  */
                 if ((!ptr_channel_new_nick
                      || (ptr_channel_new_nick == ptr_channel))
@@ -2311,10 +2299,10 @@ IRC_PROTOCOL_CALLBACK(nick)
                                                     ptr_channel->name, nick) == 0)
                             && (strcmp (ptr_channel->name, nick) != 0))))
                 {
-                    /* rename private buffer */
+                    /* Rename private buffer. */
                     irc_channel_pv_rename (ctxt->server, ptr_channel, nick);
 
-                    /* display message */
+                    /* Display message. */
                     if (weechat_config_boolean (irc_config_look_display_pv_nick_change))
                     {
                         if (weechat_config_boolean (irc_config_look_color_nicks_in_server_messages))
@@ -2358,21 +2346,21 @@ IRC_PROTOCOL_CALLBACK(nick)
                 }
                 break;
             case IRC_CHANNEL_TYPE_CHANNEL:
-                /* rename nick in nicklist if found */
+                /* Rename nick in nicklist if found. */
                 ptr_nick = irc_nick_search (ctxt->server, ptr_channel, ctxt->nick);
                 if (ptr_nick)
                 {
                     ptr_nick_found = ptr_nick;
 
-                    /* set host in nick if needed */
+                    /* Set host in nick if needed. */
                     irc_nick_set_host (ptr_nick, ctxt->address);
 
-                    /* change nick and display message on channel */
+                    /* Change nick and display message on channel. */
                     old_color = strdup (ptr_nick->color);
                     irc_nick_change (ctxt->server, ptr_channel, ptr_nick, nick);
                     if (ctxt->nick_is_me)
                     {
-                        /* temporary disable hotlist */
+                        /* Temporary disable hotlist. */
                         weechat_buffer_set (NULL, "hotlist", "-");
 
                         snprintf (str_tags, sizeof (str_tags),
@@ -2391,7 +2379,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                             nick,
                             IRC_COLOR_RESET);
 
-                        /* enable hotlist */
+                        /* Enable hotlist. */
                         weechat_buffer_set (NULL, "hotlist", "+");
 
                         irc_server_set_buffer_input_prompt (ctxt->server);
@@ -2595,12 +2583,12 @@ IRC_PROTOCOL_CALLBACK(notice)
         }
         if (is_channel)
         {
-            /* notice for channel */
+            /* Notice for channel */
             ptr_channel = irc_channel_search (ctxt->server, channel);
 
             /*
-             * unmask a smart filtered join if it is in hashtable
-             * "join_smart_filtered" of channel
+             * Unmask a smart filtered join if it is in hashtable
+             * "join_smart_filtered" of channel.
              */
             if (ptr_channel)
                 irc_channel_join_smart_filtered_unmask (ptr_channel, ctxt->nick);
@@ -2651,18 +2639,18 @@ IRC_PROTOCOL_CALLBACK(notice)
         }
         else
         {
-            /* notice for user */
+            /* Notice for user */
             notify_private = 0;
             if (ctxt->server->is_connected
                 && ctxt->nick
                 && irc_config_notice_nick_notify (ctxt->nick))
             {
                 /*
-                 * add tag "notify_private" only if:
+                 * Add tag "notify_private" only if:
                  *   - server is connected (message 001 already received)
                  * and:
                  *   - notice is from a non-empty nick not present in option
-                 *     irc.look.notice_nicks_disable_notify
+                 *     irc.look.notice_nicks_disable_notify.
                  */
                 notify_private = 1;
             }
@@ -2691,7 +2679,7 @@ IRC_PROTOCOL_CALLBACK(notice)
 
             if (ptr_channel)
             {
-                /* rename buffer if open with nick case not matching */
+                /* Rename buffer if open with nick case not matching. */
                 if (strcmp (ptr_channel->name, ctxt->nick) != 0)
                     irc_channel_pv_rename (ctxt->server, ptr_channel, ctxt->nick);
 
@@ -2727,8 +2715,8 @@ IRC_PROTOCOL_CALLBACK(notice)
                                                               ctxt->command, NULL,
                                                               NULL);
                 /*
-                 * if notice is sent from myself (for example another WeeChat
-                 * via relay), then display message of outgoing notice
+                 * If notice is sent from myself (for example another WeeChat
+                 * via relay), then display message of outgoing notice.
                  */
                 if (ctxt->nick && ctxt->nick_is_me)
                 {
@@ -2814,7 +2802,7 @@ IRC_PROTOCOL_CALLBACK(part)
 
     ptr_nick = irc_nick_search (ctxt->server, ptr_channel, ctxt->nick);
 
-    /* display part message */
+    /* Display part message. */
     if (!ctxt->ignore_remove)
     {
         ptr_nick_speaking = NULL;
@@ -2891,7 +2879,7 @@ IRC_PROTOCOL_CALLBACK(part)
         }
     }
 
-    /* part request was issued by local client ? */
+    /* Part request was issued by local client ? */
     if (ctxt->nick_is_me)
     {
         if (weechat_config_boolean (irc_config_look_typing_status_nicks))
@@ -2902,7 +2890,7 @@ IRC_PROTOCOL_CALLBACK(part)
         irc_channel_modelist_set_state (ptr_channel,
                                         IRC_MODELIST_STATE_MODIFIED);
 
-        /* cycling ? => rejoin channel immediately */
+        /* If cycling, rejoin channel immediately. */
         if (ptr_channel->cycle)
         {
             ptr_channel->cycle = 0;
@@ -2919,7 +2907,7 @@ IRC_PROTOCOL_CALLBACK(part)
     }
     else
     {
-        /* part from another user */
+        /* Part from another user */
         if (weechat_config_boolean (irc_config_look_typing_status_nicks))
         {
             irc_typing_channel_set_nick (ptr_channel, ctxt->nick,
@@ -2977,18 +2965,18 @@ IRC_PROTOCOL_CALLBACK(pong)
 
     if (ctxt->server->lag_check_time.tv_sec != 0)
     {
-        /* calculate lag (time diff with lag check) */
+        /* Calculate lag (time diff with lag check). */
         gettimeofday (&tv, NULL);
         ctxt->server->lag = (int)(weechat_util_timeval_diff (&(ctxt->server->lag_check_time),
                                                              &tv) / 1000);
 
-        /* schedule next lag check */
+        /* Schedule next lag check. */
         ctxt->server->lag_check_time.tv_sec = 0;
         ctxt->server->lag_check_time.tv_usec = 0;
         ctxt->server->lag_next_check = time (NULL) +
             weechat_config_integer (irc_config_network_lag_check);
 
-        /* refresh lag bar item if needed */
+        /* Refresh lag bar item if needed. */
         if (ctxt->server->lag != ctxt->server->lag_displayed)
         {
             ctxt->server->lag_displayed = ctxt->server->lag;
@@ -3102,15 +3090,15 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     cap_echo_message = weechat_hashtable_has_key (ctxt->server->cap_list,
                                                   "echo-message");
 
-    /* receiver is a channel ? */
+    /* Receiver is a channel ? */
     if (is_channel)
     {
         ptr_channel = irc_channel_search (ctxt->server, pos_target);
         if (ptr_channel)
         {
             /*
-             * unmask a smart filtered join if it is in hashtable
-             * "join_smart_filtered" of channel
+             * Unmask a smart filtered join if it is in hashtable
+             * "join_smart_filtered" of channel.
              */
             irc_channel_join_smart_filtered_unmask (ptr_channel, ctxt->nick);
 
@@ -3131,7 +3119,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 goto end;
             }
 
-            /* other message */
+            /* Other message */
             if (weechat_config_boolean (irc_config_look_typing_status_nicks))
             {
                 irc_typing_channel_set_nick (ptr_channel, ctxt->nick,
@@ -3145,7 +3133,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
 
             if (status_msg)
             {
-                /* message to channel ops/voiced (to "@#channel" or "+#channel") */
+                /* Message to channel ops/voiced (to "@#channel" or "+#channel") */
                 weechat_printf_datetime_tags (
                     ptr_channel->buffer,
                     ctxt->date,
@@ -3170,7 +3158,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             }
             else
             {
-                /* standard message (to "#channel") */
+                /* Standard message (to "#channel") */
                 if (ctxt->nick_is_me)
                 {
                     str_color = irc_color_for_tags (
@@ -3217,7 +3205,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     {
         remote_nick = (ctxt->nick_is_me) ? pos_target : ctxt->nick;
 
-        /* private message received => display it */
+        /* Private message received => display it. */
         ptr_channel = irc_channel_search (ctxt->server, remote_nick);
 
         /* CTCP to user */
@@ -3248,7 +3236,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
 
         if (ptr_channel)
         {
-            /* rename buffer if open with nick case not matching */
+            /* Rename buffer if open with nick case not matching. */
             if (strcmp (ptr_channel->name, remote_nick) != 0)
                 irc_channel_pv_rename (ctxt->server, ptr_channel, remote_nick);
         }
@@ -3408,7 +3396,7 @@ IRC_PROTOCOL_CALLBACK(quit)
         {
             if (!ctxt->ignore_remove)
             {
-                /* display quit message */
+                /* Display quit message. */
                 ptr_nick_speaking = NULL;
                 if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                 {
@@ -3642,7 +3630,7 @@ IRC_PROTOCOL_CALLBACK(tagmsg)
     if (!ctxt->tags)
         return WEECHAT_RC_OK;
 
-    /* ignore if coming from self nick (if echo-message is enabled) */
+    /* Ignore if coming from self nick (if echo-message is enabled). */
     if (ctxt->nick_is_me)
         return WEECHAT_RC_OK;
 
@@ -3691,7 +3679,7 @@ IRC_PROTOCOL_CALLBACK(server_mode_reason)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
 
-    /* skip nickname if at beginning of server message */
+    /* Skip nickname if at beginning of server message. */
     if (irc_server_strcasecmp (ctxt->server, ctxt->server->nick, ctxt->params[0]) == 0)
     {
         if (ctxt->num_params < 2)
@@ -3789,8 +3777,8 @@ IRC_PROTOCOL_CALLBACK(topic)
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : ctxt->server->buffer;
 
     /*
-     * unmask a smart filtered join if it is in hashtable
-     * "join_smart_filtered" of channel
+     * Unmask a smart filtered join if it is in hashtable
+     * "join_smart_filtered" of channel.
      */
     if (ptr_channel)
         irc_channel_join_smart_filtered_unmask (ptr_channel, ctxt->nick);
@@ -3976,7 +3964,7 @@ IRC_PROTOCOL_CALLBACK(001)
 
     irc_protocol_cb_numeric (ctxt);
 
-    /* connection to IRC server is OK! */
+    /* Connection to IRC server is OK! */
     ctxt->server->is_connected = 1;
     ctxt->server->reconnect_delay = 0;
     ctxt->server->monitor_time = time (NULL) + 5;
@@ -3991,7 +3979,7 @@ IRC_PROTOCOL_CALLBACK(001)
         weechat_config_integer (irc_config_network_lag_check);
     irc_server_set_buffer_title (ctxt->server);
 
-    /* set away message if user was away (before disconnection for example) */
+    /* Set away message if user was away (before disconnection for example). */
     if (ctxt->server->away_message && ctxt->server->away_message[0])
     {
         away_msg = strdup (ctxt->server->away_message);
@@ -4002,11 +3990,11 @@ IRC_PROTOCOL_CALLBACK(001)
         }
     }
 
-    /* send signal "irc_server_connected" with server name */
+    /* Send signal "irc_server_connected" with server name. */
     (void) weechat_hook_signal_send ("irc_server_connected",
                                      WEECHAT_HOOK_SIGNAL_STRING, ctxt->server->name);
 
-    /* set usermode when connected */
+    /* Set usermode when connected. */
     usermode = irc_server_eval_expression (
         ctxt->server,
         IRC_SERVER_OPTION_STRING(ctxt->server, IRC_SERVER_OPTION_USERMODE));
@@ -4019,13 +4007,13 @@ IRC_PROTOCOL_CALLBACK(001)
     }
     free (usermode);
 
-    /* execute command when connected */
+    /* Execute command when connected. */
     if (IRC_SERVER_OPTION_INTEGER(ctxt->server, IRC_SERVER_OPTION_COMMAND_DELAY) > 0)
         ctxt->server->command_time = time (NULL) + 1;
     else
         irc_server_execute_command (ctxt->server);
 
-    /* auto-join of channels */
+    /* Auto-join of channels. */
     if (IRC_SERVER_OPTION_INTEGER(ctxt->server, IRC_SERVER_OPTION_AUTOJOIN_DELAY) > 0)
         ctxt->server->autojoin_time = time (NULL) + 1;
     else
@@ -4059,78 +4047,78 @@ IRC_PROTOCOL_CALLBACK(005)
     {
         if (strncmp (ctxt->params[i], "PREFIX=", 7) == 0)
         {
-            /* save prefix */
+            /* Save prefix. */
             irc_server_set_prefix_modes_chars (ctxt->server, ctxt->params[i] + 7);
         }
         else if (strncmp (ctxt->params[i], "LINELEN=", 8) == 0)
         {
-            /* save max message length */
+            /* Save max message length. */
             if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
                 ctxt->server->msg_max_length = value;
         }
         else if (strncmp (ctxt->params[i], "NICKLEN=", 8) == 0)
         {
-            /* save max nick length */
+            /* Save max nick length. */
             if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
                 ctxt->server->nick_max_length = value;
         }
         else if (strncmp (ctxt->params[i], "USERLEN=", 8) == 0)
         {
-            /* save max user length */
+            /* Save max user length. */
             if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
                 ctxt->server->user_max_length = value;
         }
         else if (strncmp (ctxt->params[i], "HOSTLEN=", 8) == 0)
         {
-            /* save max host length */
+            /* Save max host length. */
             if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
                 ctxt->server->host_max_length = value;
         }
         else if (strncmp (ctxt->params[i], "CASEMAPPING=", 12) == 0)
         {
-            /* save casemapping */
+            /* Save casemapping. */
             casemapping = irc_server_search_casemapping (ctxt->params[i] + 12);
             if (casemapping >= 0)
                 ctxt->server->casemapping = casemapping;
         }
         else if (strncmp (ctxt->params[i], "UTF8MAPPING=", 12) == 0)
         {
-            /* save utf8mapping */
+            /* Save utf8mapping. */
             utf8mapping = irc_server_search_utf8mapping (ctxt->params[i] + 12);
             if (utf8mapping >= 0)
                 ctxt->server->utf8mapping = utf8mapping;
         }
         else if (strcmp (ctxt->params[i], "UTF8ONLY") == 0)
         {
-            /* save utf8only */
+            /* Save utf8only. */
             ctxt->server->utf8only = 1;
         }
         else if (strncmp (ctxt->params[i], "CHANTYPES=", 10) == 0)
         {
-            /* save chantypes */
+            /* Save chantypes. */
             free (ctxt->server->chantypes);
             ctxt->server->chantypes = strdup (ctxt->params[i] + 10);
         }
         else if (strncmp (ctxt->params[i], "CHANMODES=", 10) == 0)
         {
-            /* save chanmodes */
+            /* Save chanmodes. */
             free (ctxt->server->chanmodes);
             ctxt->server->chanmodes = strdup (ctxt->params[i] + 10);
         }
         else if (strncmp (ctxt->params[i], "MONITOR=", 8) == 0)
         {
-            /* save monitor (limit) */
+            /* Save monitor (limit). */
             if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
                 ctxt->server->monitor = value;
         }
         else if (strncmp (ctxt->params[i], "CLIENTTAGDENY=", 14) == 0)
         {
-            /* save client tag deny */
+            /* Save client tag deny. */
             irc_server_set_clienttagdeny (ctxt->server, ctxt->params[i] + 14);
         }
     }
 
-    /* save whole message (concatenate to existing isupport, if any) */
+    /* Save whole message (concatenate to existing isupport, if any). */
     str_info = irc_protocol_string_params (ctxt->params, 1, arg_last);
     if (str_info && str_info[0])
     {
@@ -4139,10 +4127,10 @@ IRC_PROTOCOL_CALLBACK(005)
         {
             length_isupport = strlen (ctxt->server->isupport);
             /*
-             * limit the size of the accumulated ISUPPORT data: once the
+             * Limit the size of the accumulated ISUPPORT data: once the
              * maximum is reached, ignore the extra data (protection against a
              * server flooding "005" messages, which would consume all the
-             * memory)
+             * memory).
              */
             if (length_isupport + 1 + length < IRC_SERVER_ISUPPORT_MAX_LENGTH)
             {
@@ -4264,7 +4252,7 @@ IRC_PROTOCOL_CALLBACK(301)
     if (!str_away_msg)
         return WEECHAT_RC_ERROR;
 
-    /* look for private buffer to display message */
+    /* Look for private buffer to display message. */
     ptr_channel = irc_channel_search (ctxt->server, ctxt->params[1]);
     if (!weechat_config_boolean (irc_config_look_display_pv_away_once)
         || !ptr_channel
@@ -4447,8 +4435,8 @@ IRC_PROTOCOL_CALLBACK(whois_nick_msg)
     else
     {
         /*
-         * not enough parameters: this should not be a whois command so we
-         * display the arguments as-is
+         * Not enough parameters: this should not be a whois command so we
+         * display the arguments as-is.
          */
         irc_protocol_cb_numeric (ctxt);
     }
@@ -4491,8 +4479,8 @@ IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
     else
     {
         /*
-         * not enough parameters: this should not be a whowas command so we
-         * display the arguments as-is
+         * Not enough parameters: this should not be a whowas command so we
+         * display the arguments as-is.
          */
         irc_protocol_cb_numeric (ctxt);
     }
@@ -5472,7 +5460,7 @@ IRC_PROTOCOL_CALLBACK(344)
 
     if (irc_channel_is_channel (ctxt->server, ctxt->params[1]))
     {
-        /* channel reop (IRCnet) */
+        /* Channel reop (IRCnet) */
         str_host = irc_protocol_string_params (ctxt->params, 2, ctxt->num_params - 1);
         weechat_printf_datetime_tags (
             irc_msgbuffer_get_target_buffer (ctxt->server, NULL, ctxt->command, "reop", NULL),
@@ -5490,7 +5478,7 @@ IRC_PROTOCOL_CALLBACK(344)
     }
     else
     {
-        /* whois, geo info (UnrealIRCd) */
+        /* Whois, geo info (UnrealIRCd) */
         irc_protocol_cb_whois_nick_msg (ctxt);
     }
 
@@ -5555,7 +5543,7 @@ IRC_PROTOCOL_CALLBACK(346)
 
     if (ptr_modelist)
     {
-        /* start receiving new list */
+        /* Start receiving new list. */
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
             irc_modelist_item_free_all (ptr_modelist);
@@ -5681,8 +5669,8 @@ IRC_PROTOCOL_CALLBACK(347)
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
             /*
-             * remove all items if no invite was received before
-             * the end of invite list
+             * Remove all items if no invite was received before
+             * the end of invite list.
              */
             irc_modelist_item_free_all (ptr_modelist);
         }
@@ -5734,7 +5722,7 @@ IRC_PROTOCOL_CALLBACK(348)
 
     if (ptr_modelist)
     {
-        /* start receiving new list */
+        /* Start receiving new list. */
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
             irc_modelist_item_free_all (ptr_modelist);
@@ -5862,8 +5850,8 @@ IRC_PROTOCOL_CALLBACK(349)
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
             /*
-             * remove all items if no exception was received before
-             * the end of exception list
+             * Remove all items if no exception was received before
+             * the end of exception list.
              */
             irc_modelist_item_free_all (ptr_modelist);
         }
@@ -5944,7 +5932,7 @@ IRC_PROTOCOL_CALLBACK(350)
     }
     else
     {
-        /* not enough parameters: display with the default whois callback */
+        /* Not enough parameters: display with the default whois callback. */
         irc_protocol_cb_whois_nick_msg (ctxt);
     }
 
@@ -6005,7 +5993,7 @@ IRC_PROTOCOL_CALLBACK(352)
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
-    /* silently ignore malformed 352 message (missing infos) */
+    /* Silently ignore malformed 352 message (missing infos). */
     if (ctxt->num_params < 6)
         return WEECHAT_RC_OK;
 
@@ -6035,7 +6023,7 @@ IRC_PROTOCOL_CALLBACK(352)
     ptr_nick = (ptr_channel) ?
         irc_nick_search (ctxt->server, ptr_channel, ctxt->params[5]) : NULL;
 
-    /* update host in nick */
+    /* Update host in nick. */
     if (ptr_nick)
     {
         if (weechat_asprintf (&str_host,
@@ -6048,21 +6036,21 @@ IRC_PROTOCOL_CALLBACK(352)
         }
     }
 
-    /* update away flag in nick */
+    /* Update away flag in nick. */
     if (ptr_channel && ptr_nick && (ctxt->num_params >= 7) && (ctxt->params[6][0] != '*'))
     {
         irc_nick_set_away (ctxt->server, ptr_channel, ptr_nick,
                            (ctxt->params[6][0] == 'G') ? 1 : 0);
     }
 
-    /* update realname in nick */
+    /* Update realname in nick. */
     if (ptr_channel && ptr_nick && str_realname)
     {
         free (ptr_nick->realname);
         ptr_nick->realname = strdup (str_realname);
     }
 
-    /* display output of who (manual who from user) */
+    /* Display output of who (manual who from user). */
     if (!ptr_channel || (ptr_channel->checking_whox <= 0))
     {
         weechat_printf_datetime_tags (
@@ -6145,14 +6133,14 @@ IRC_PROTOCOL_CALLBACK(353)
         &num_nicks);
 
     /*
-     * for a channel without buffer, prepare a string that will be built
-     * with nicks and colors
+     * For a channel without buffer, prepare a string that will be built
+     * with nicks and colors.
      */
     str_nicks = (ptr_channel) ? NULL : weechat_string_dyn_alloc (1024);
 
     for (i = 0; i < num_nicks; i++)
     {
-        /* skip and save prefix(es) */
+        /* Skip and save prefix(es). */
         pos_nick = nicks[i];
         while (pos_nick[0]
                && (irc_server_get_prefix_char_index (ctxt->server, pos_nick[0]) >= 0))
@@ -6162,7 +6150,7 @@ IRC_PROTOCOL_CALLBACK(353)
         prefixes = (pos_nick > nicks[i]) ?
             weechat_strndup (nicks[i], pos_nick - nicks[i]) : NULL;
 
-        /* extract nick from host */
+        /* Extract nick from host. */
         pos_host = strchr (pos_nick, '!');
         if (pos_host)
         {
@@ -6174,7 +6162,7 @@ IRC_PROTOCOL_CALLBACK(353)
             nickname = strdup (pos_nick);
         }
 
-        /* add or update nick on channel */
+        /* Add or update nick on channel. */
         if (nickname)
         {
             if (ptr_channel && ptr_channel->nicks)
@@ -6276,9 +6264,9 @@ IRC_PROTOCOL_CALLBACK(354)
     ptr_channel = irc_channel_search (ctxt->server, ctxt->params[1]);
 
     /*
-     * if there are less than 9 arguments, we are unable to parse the message,
+     * If there are less than 9 arguments, we are unable to parse the message,
      * some infos are missing but we don't know which ones; in this case we
-     * just display the message as-is
+     * just display the message as-is.
      */
     if (ctxt->num_params < 9)
     {
@@ -6308,7 +6296,7 @@ IRC_PROTOCOL_CALLBACK(354)
     ptr_nick = (ptr_channel) ?
         irc_nick_search (ctxt->server, ptr_channel, ctxt->params[5]) : NULL;
 
-    /* update host in nick */
+    /* Update host in nick. */
     if (ptr_nick)
     {
         if (weechat_asprintf (&str_host,
@@ -6321,14 +6309,14 @@ IRC_PROTOCOL_CALLBACK(354)
         }
     }
 
-    /* update away flag in nick */
+    /* Update away flag in nick. */
     if (ptr_channel && ptr_nick && (ctxt->params[6][0] != '*'))
     {
         irc_nick_set_away (ctxt->server, ptr_channel, ptr_nick,
                            (ctxt->params[6][0] == 'G') ? 1 : 0);
     }
 
-    /* update account in nick */
+    /* Update account in nick. */
     if (ptr_nick)
     {
         free (ptr_nick->account);
@@ -6343,7 +6331,7 @@ IRC_PROTOCOL_CALLBACK(354)
         }
     }
 
-    /* update realname in nick */
+    /* Update realname in nick. */
     if (ptr_nick)
     {
         free (ptr_nick->realname);
@@ -6351,7 +6339,7 @@ IRC_PROTOCOL_CALLBACK(354)
             strdup (ctxt->params[9]) : NULL;
     }
 
-    /* display output of who (manual who from user) */
+    /* Display output of who (manual who from user). */
     if (!ptr_channel || (ptr_channel->checking_whox <= 0))
     {
         weechat_printf_datetime_tags (
@@ -6414,8 +6402,8 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
     int index_mode, filter_ok;
 
     /*
-     * filter "#" means display only nicks count, so the list of nicks is not
-     * displayed at all
+     * Filter "#" means display only nicks count, so the list of nicks is not
+     * displayed at all.
      */
     if (filter && (filter[0] == '#'))
         return NULL;
@@ -6441,7 +6429,7 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
             index_mode = (prefix[0] && (prefix[0] != ' ')) ?
                 irc_server_get_prefix_char_index (server, prefix[0]) : -1;
 
-            /* check filter */
+            /* Check filter. */
             if (filter && ptr_prefix_modes)
             {
                 filter_ok = (((filter[0] == '*') && (index_mode < 0))
@@ -6586,7 +6574,7 @@ irc_protocol_get_string_channel_nicks_count (struct t_irc_server *server,
         }
         else
         {
-            /* other modes: "+x" */
+            /* Other modes: "+x" */
             snprintf (str_mode_name, sizeof (str_mode_name),
                       "+%c", ptr_prefix_modes[i]);
         }
@@ -6620,7 +6608,7 @@ IRC_PROTOCOL_CALLBACK(366)
 
     if (ptr_channel && ptr_channel->nicks)
     {
-        /* check if a filter was given to /names command */
+        /* Check if a filter was given to /names command. */
         ptr_filter = NULL;
         channel_name_lower = weechat_string_tolower (ptr_channel->name);
         if (channel_name_lower)
@@ -6629,7 +6617,7 @@ IRC_PROTOCOL_CALLBACK(366)
                                                 channel_name_lower);
         }
 
-        /* display the list of users on channel */
+        /* Display the list of users on channel. */
         if ((!ptr_filter || (ptr_filter[0] != '#'))
             && (weechat_hashtable_has_key (ptr_channel->join_msg_received, "353")
                 || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "353")))
@@ -6666,7 +6654,7 @@ IRC_PROTOCOL_CALLBACK(366)
             }
         }
 
-        /* display the number of nicks per mode on channel */
+        /* Display the number of nicks per mode on channel. */
         if (weechat_hashtable_has_key (ptr_channel->join_msg_received, "366")
             || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "366"))
         {
@@ -6698,7 +6686,7 @@ IRC_PROTOCOL_CALLBACK(366)
 
         if (channel_name_lower)
         {
-            /* remove filter */
+            /* Remove filter. */
             weechat_hashtable_remove (ctxt->server->names_channel_filter,
                                       channel_name_lower);
             free (channel_name_lower);
@@ -6766,7 +6754,7 @@ IRC_PROTOCOL_CALLBACK(367)
     str_number[0] = '\0';
     if (ptr_modelist)
     {
-        /* start receiving new list */
+        /* Start receiving new list. */
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
             irc_modelist_item_free_all (ptr_modelist);
@@ -6895,8 +6883,8 @@ IRC_PROTOCOL_CALLBACK(368)
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
             /*
-             * remove all items if no ban was received before
-             * the end of ban list
+             * Remove all items if no ban was received before
+             * the end of ban list.
              */
             irc_modelist_item_free_all (ptr_modelist);
         }
@@ -7182,10 +7170,7 @@ IRC_PROTOCOL_CALLBACK(470)
                 || (localvar_channel
                     && (strcmp (localvar_channel, short_name) == 0)))
             {
-                /*
-                 * update the short_name only if it was not changed by the
-                 * user
-                 */
+                /* Update the short_name only if it was not changed by the user. */
                 weechat_buffer_set (ptr_buffer, "short_name", ctxt->params[2]);
             }
             buffer_name = irc_buffer_build_name (ctxt->server->name, ctxt->params[2]);
@@ -7194,9 +7179,9 @@ IRC_PROTOCOL_CALLBACK(470)
             free (buffer_name);
 
             /*
-             * check if logger backlog should be displayed for the new channel
+             * Check if logger backlog should be displayed for the new channel
              * name: it is displayed only if the buffer is currently completely
-             * empty (no messages at all)
+             * empty (no messages at all).
              */
             lines_count = 0;
             own_lines = weechat_hdata_pointer (weechat_hdata_get ("buffer"),
@@ -7341,7 +7326,7 @@ IRC_PROTOCOL_CALLBACK(728)
     str_number[0] = '\0';
     if (ptr_modelist)
     {
-        /* start receiving new list */
+        /* Start receiving new list. */
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
             irc_modelist_item_free_all (ptr_modelist);
@@ -7360,7 +7345,7 @@ IRC_PROTOCOL_CALLBACK(728)
     {
         nick_address = irc_protocol_nick_address (
             ctxt->server,
-            1,  /* server_message */
+            1,  /* Server_message */
             NULL,  /* nick */
             irc_message_get_nick_from_host (ctxt->params[4]),
             irc_message_get_address_from_host (ctxt->params[4]));
@@ -7470,8 +7455,8 @@ IRC_PROTOCOL_CALLBACK(729)
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
             /*
-             * remove all items if no quiet was received before
-             * the end of quiet list
+             * Remove all items if no quiet was received before
+             * the end of quiet list.
              */
             irc_modelist_item_free_all (ptr_modelist);
         }
@@ -8100,7 +8085,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
 
     ptr_msg_after_tags = irc_message;
 
-    /* get tags as hashtable */
+    /* Get tags as hashtable. */
     if (irc_message && (irc_message[0] == '@'))
     {
         pos_space = strchr (irc_message, ' ');
@@ -8140,7 +8125,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
             ptr_msg_after_tags = NULL;
     }
 
-    /* if message is not BATCH but has a batch tag, just store it for later */
+    /* If message is not BATCH but has a batch tag, just store it for later. */
     if (!ignore_batch_tag
         && ctxt.tags
         && (weechat_strcasecmp (msg_command, "batch") != 0)
@@ -8154,7 +8139,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         }
     }
 
-    /* get nick/host/address from IRC message */
+    /* Get nick/host/address from IRC message. */
     nick1 = NULL;
     address1 = NULL;
     host1 = NULL;
@@ -8181,7 +8166,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
             weechat_config_boolean (irc_config_network_colors_receive)) :
         NULL;
 
-    /* check if message is ignored or not */
+    /* Check if message is ignored or not. */
     ptr_channel = NULL;
     if (msg_channel)
         ptr_channel = irc_channel_search (server, msg_channel);
@@ -8198,13 +8183,13 @@ irc_protocol_recv_command (struct t_irc_server *server,
             ctxt.ignore_remove = 1;
     }
 
-    /* send signal with received command, even if command is ignored */
+    /* Send signal with received command, even if command is ignored. */
     return_code = irc_server_send_signal (server, "irc_raw_in", msg_command,
                                           irc_message, NULL);
     if (return_code == WEECHAT_RC_OK_EAT)
         goto end;
 
-    /* send signal with received command, only if message is not ignored */
+    /* Send signal with received command, only if message is not ignored. */
     if (!ctxt.ignore_remove)
     {
         return_code = irc_server_send_signal (server, "irc_in", msg_command,
@@ -8213,7 +8198,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
             goto end;
     }
 
-    /* look for IRC command */
+    /* Look for IRC command. */
     cmd_found = -1;
     for (i = 0; irc_protocol_messages[i].name; i++)
     {
@@ -8225,10 +8210,10 @@ irc_protocol_recv_command (struct t_irc_server *server,
         }
     }
 
-    /* command not found */
+    /* Command not found */
     if (cmd_found < 0)
     {
-        /* for numeric commands, we use default recv function */
+        /* For numeric commands, we use default recv function. */
         if (irc_protocol_is_numeric_command (msg_command))
         {
             ctxt.command = (msg_command) ? strdup (msg_command) : NULL;
@@ -8282,7 +8267,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
                             ctxt.command, irc_message);
         }
 
-        /* send signal with received command (if message is not ignored) */
+        /* Send signal with received command (if message is not ignored). */
         if (!ctxt.ignore_remove)
         {
             (void) irc_server_send_signal (server, "irc_in2", msg_command,
@@ -8290,7 +8275,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         }
     }
 
-    /* send signal with received command, even if command is ignored */
+    /* Send signal with received command, even if command is ignored. */
     (void) irc_server_send_signal (server, "irc_raw_in2", msg_command,
                                    irc_message, NULL);
 

@@ -52,7 +52,7 @@ int
 test_cmp_cb (void *data, struct t_arraylist *arraylist,
              void *pointer1, void *pointer2)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -76,14 +76,14 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
     const char *item_xxx = "xxx";
     const char *item_zzz = "zzz";
 
-    /* create arraylist */
+    /* Create arraylist. */
     arraylist = arraylist_new (initial_size,
                                sorted,
                                allow_duplicates,
                                &test_cmp_cb, NULL,
                                NULL, NULL);
 
-    /* check values after creation */
+    /* Check values after creation. */
     CHECK(arraylist);
     LONGS_EQUAL(0, arraylist->size);
     LONGS_EQUAL(initial_size, arraylist->size_alloc);
@@ -103,10 +103,10 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
     LONGS_EQUAL(sorted, arraylist->sorted);
     LONGS_EQUAL(allow_duplicates, arraylist->allow_duplicates);
 
-    /* check size */
+    /* Check size. */
     LONGS_EQUAL(0, arraylist_size (arraylist));
 
-    /* get element (this should always fail, the list is empty!) */
+    /* Get element (this should always fail, the list is empty!). */
     POINTERS_EQUAL(NULL, arraylist_get (NULL, -1));
     POINTERS_EQUAL(NULL, arraylist_get (NULL, 0));
     POINTERS_EQUAL(NULL, arraylist_get (NULL, 1));
@@ -114,7 +114,7 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
     POINTERS_EQUAL(NULL, arraylist_get (arraylist, 0));
     POINTERS_EQUAL(NULL, arraylist_get (arraylist, 1));
 
-    /* search element (this should always fail, the list is empty!) */
+    /* Search element (this should always fail, the list is empty!). */
     POINTERS_EQUAL(NULL, arraylist_search (NULL, NULL, NULL, NULL));
     POINTERS_EQUAL(NULL, arraylist_search (arraylist, NULL, NULL, NULL));
     POINTERS_EQUAL(NULL,
@@ -122,10 +122,10 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
     POINTERS_EQUAL(NULL,
                    arraylist_search (arraylist, (void *)item_abc, NULL, NULL));
 
-    /* invalid add of element */
+    /* Invalid add of element. */
     LONGS_EQUAL(-1, arraylist_add (NULL, NULL));
 
-    /* add some elements */
+    /* Add some elements. */
     if (sorted)
     {
         TEST_ARRAYLIST_ADD(0, item_zzz);
@@ -148,7 +148,7 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
     }
 
     /*
-     * arraylist is now:
+     * Arraylist is now:
      *   sorted:
      *     dup   : [NULL, "abc", "DEF", "def", "Def", "xxx", "zzz"] + 2 NULL
      *     no dup: [NULL, "abc", "Def", "xxx", "zzz"] + 1 NULL
@@ -157,12 +157,12 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
      *     no dup: ["zzz", "xxx", NULL, "Def", "abc"] + 1 NULL
      */
 
-    /* check size after adds */
+    /* Check size after adds. */
     LONGS_EQUAL((allow_duplicates) ? 7 : 5, arraylist->size);
     LONGS_EQUAL((allow_duplicates) ? 7 : 5, arraylist_size (arraylist));
     LONGS_EQUAL((allow_duplicates) ? 9 : 6, arraylist->size_alloc);
 
-    /* check content after adds */
+    /* Check content after adds. */
     if (sorted)
     {
         if (allow_duplicates)
@@ -222,7 +222,7 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
         }
     }
 
-    /* search elements */
+    /* Search elements. */
     if (sorted)
     {
         if (allow_duplicates)
@@ -246,7 +246,7 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
             TEST_ARRAYLIST_SEARCH(item_zzz, 4, 5, item_zzz);
         }
 
-        /* search non-existing element */
+        /* Search non-existing element. */
         TEST_ARRAYLIST_SEARCH(NULL, -1, 1, item_aaa);
     }
     else
@@ -272,16 +272,16 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
             TEST_ARRAYLIST_SEARCH(item_abc, 4, -1, item_abc);
         }
 
-        /* search non-existing element */
+        /* Search non-existing element. */
         TEST_ARRAYLIST_SEARCH(NULL, -1, -1, item_aaa);
     }
 
-    /* invalid remove of elements */
+    /* Invalid remove of elements. */
     LONGS_EQUAL(-1, arraylist_remove (NULL, -1));
     LONGS_EQUAL(-1, arraylist_remove (arraylist, -1));
     LONGS_EQUAL(-1, arraylist_remove (NULL, 0));
 
-    /* remove the 3 first elements and check size after each remove */
+    /* Remove the 3 first elements and check size after each remove. */
     LONGS_EQUAL(0, arraylist_remove (arraylist, 0));
     LONGS_EQUAL((allow_duplicates) ? 6 : 4, arraylist->size);
     LONGS_EQUAL((allow_duplicates) ? 6 : 4, arraylist_size (arraylist));
@@ -296,7 +296,7 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
     LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist->size_alloc);
 
     /*
-     * arraylist is now:
+     * Arraylist is now:
      *   sorted:
      *     dup   : ["def", "Def", "xxx", "zzz"] + 1 NULL
      *     no dup: ["xxx", "zzz"] + 1 NULL
@@ -305,7 +305,7 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
      *     no dup: ["Def", "abc"] + 1 NULL
      */
 
-    /* check content after the 3 deletions */
+    /* Check content after the 3 deletions. */
     if (sorted)
     {
         if (allow_duplicates)
@@ -353,14 +353,14 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
         }
     }
 
-    /* invalid insert of element */
+    /* Invalid insert of element. */
     LONGS_EQUAL(-1, arraylist_insert (NULL, 0, NULL));
 
-    /* insert of one element */
+    /* Insert of one element. */
     LONGS_EQUAL(0, arraylist_insert (arraylist, 0, (void *)item_aaa));
 
     /*
-     * arraylist is now:
+     * Arraylist is now:
      *   sorted:
      *     dup   : ["aaa", "def", "Def", "xxx", "zzz"]
      *     no dup: ["aaa", "xxx", "zzz"]
@@ -369,12 +369,12 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
      *     no dup: ["aaa", "Def", "abc"]
      */
 
-    /* check size after insert */
+    /* Check size after insert. */
     LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist->size);
     LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist_size (arraylist));
     LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist->size_alloc);
 
-    /* check content after the insert */
+    /* Check content after the insert. */
     if (sorted)
     {
         if (allow_duplicates)
@@ -426,11 +426,11 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
         }
     }
 
-    /* clear arraylist */
+    /* Clear arraylist. */
     LONGS_EQUAL(0, arraylist_clear (NULL));
     LONGS_EQUAL(1, arraylist_clear (arraylist));
 
-    /* check size and data after clear */
+    /* Check size and data after clear. */
     LONGS_EQUAL(0, arraylist->size);
     LONGS_EQUAL(0, arraylist_size (arraylist));
     LONGS_EQUAL(initial_size, arraylist->size_alloc);
@@ -447,7 +447,7 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
         POINTERS_EQUAL(NULL, arraylist->data);
     }
 
-    /* free arraylist */
+    /* Free arraylist. */
     arraylist_free (arraylist);
 }
 
@@ -468,19 +468,19 @@ TEST(CoreArraylist, New)
 {
     int initial_size, sorted, allow_duplicates;
 
-    /* free arraylist with NULL pointer */
+    /* Free arraylist with NULL pointer. */
     arraylist_free (NULL);
 
     /*
-     * in order to create an arraylist, initial_size must be >= 0 and a
-     * comparison callback must be given
+     * In order to create an arraylist, initial_size must be >= 0 and a
+     * comparison callback must be given.
      */
     POINTERS_EQUAL(NULL,
                    arraylist_new (-1, 0, 0, NULL, NULL, NULL, NULL));
     POINTERS_EQUAL(NULL,
                    arraylist_new (-1, 0, 0, &test_cmp_cb, NULL, NULL, NULL));
 
-    /* tests on arraylists */
+    /* Tests on arraylists */
     for (initial_size = 0; initial_size < 2; initial_size++)
     {
         for (sorted = 0; sorted < 2; sorted++)

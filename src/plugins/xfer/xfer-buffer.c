@@ -101,7 +101,7 @@ xfer_buffer_refresh (const char *hotlist)
                           _(xfer_hash_status_string[ptr_xfer->hash_status]));
             }
 
-            /* display first line with remote nick, filename and plugin name/id */
+            /* Display first line with remote nick, filename and plugin name/id. */
             weechat_printf_y (xfer_buffer, (line * 2) + 2,
                               "%s%s%-24s %s%s%s%s (%s.%s)%s%s",
                               weechat_color (str_color),
@@ -131,7 +131,7 @@ xfer_buffer_refresh (const char *hotlist)
 
             if (XFER_IS_CHAT(ptr_xfer->type))
             {
-                /* display second line for chat with status and date */
+                /* Display second line for chat with status and date. */
                 date[0] = '\0';
                 date_tmp = localtime (&(ptr_xfer->start_time));
                 if (date_tmp)
@@ -155,7 +155,7 @@ xfer_buffer_refresh (const char *hotlist)
             }
             else
             {
-                /* build progress bar */
+                /* Build progress bar. */
                 pos = (ptr_xfer->pos <= ptr_xfer->size) ? ptr_xfer->pos : ptr_xfer->size;
                 progress_bar = NULL;
                 progress_bar_size = weechat_config_integer (xfer_config_look_progress_bar_size);
@@ -185,7 +185,7 @@ xfer_buffer_refresh (const char *hotlist)
                     strcat (progress_bar, "] ");
                 }
 
-                /* computes percentage */
+                /* Compute percentage. */
                 if (ptr_xfer->size == 0)
                 {
                     if (ptr_xfer->status == XFER_STATUS_DONE)
@@ -222,7 +222,7 @@ xfer_buffer_refresh (const char *hotlist)
                     }
                 }
 
-                /* display second line for file with status, progress bar and estimated time */
+                /* Display second line for file with status, progress bar and estimated time. */
                 weechat_printf_y (xfer_buffer, (line * 2) + 3,
                                   "%s%s%s %s%s%s%s%3llu%%   %s / %s  (%s%s/s)",
                                   weechat_color (str_color),
@@ -260,13 +260,13 @@ xfer_buffer_input_cb (const void *pointer, void *data,
     struct t_xfer *xfer, *ptr_xfer, *next_xfer;
     int refresh;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
     xfer = xfer_search_by_number (xfer_buffer_selected_line);
 
-    /* accept xfer */
+    /* Accept xfer. */
     if (weechat_strcmp (input_data, "a") == 0)
     {
         if (xfer && XFER_IS_RECV(xfer->type)
@@ -275,7 +275,7 @@ xfer_buffer_input_cb (const void *pointer, void *data,
             xfer_network_accept (xfer);
         }
     }
-    /* cancel xfer */
+    /* Cancel xfer. */
     else if (weechat_strcmp (input_data, "c") == 0)
     {
         if (xfer && !XFER_HAS_ENDED(xfer->status))
@@ -284,7 +284,7 @@ xfer_buffer_input_cb (const void *pointer, void *data,
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         }
     }
-    /* purge old xfer */
+    /* Purge old xfer. */
     else if (weechat_strcmp (input_data, "p") == 0)
     {
         refresh = 0;
@@ -302,12 +302,12 @@ xfer_buffer_input_cb (const void *pointer, void *data,
         if (refresh)
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
-    /* quit xfer buffer (close it) */
+    /* Quit xfer buffer (close it). */
     else if (weechat_strcmp (input_data, "q") == 0)
     {
         weechat_buffer_close (buffer);
     }
-    /* remove xfer */
+    /* Remove xfer. */
     else if (weechat_strcmp (input_data, "r") == 0)
     {
         if (xfer && XFER_HAS_ENDED(xfer->status))
@@ -328,7 +328,7 @@ int
 xfer_buffer_close_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;

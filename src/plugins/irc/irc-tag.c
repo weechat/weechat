@@ -181,7 +181,7 @@ irc_tag_modifier_cb (const void *pointer, void *data,
                      const char *modifier, const char *modifier_data,
                      const char *string)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier_data;
@@ -192,7 +192,7 @@ irc_tag_modifier_cb (const void *pointer, void *data,
     if (strcmp (modifier, "irc_tag_unescape_value") == 0)
         return irc_tag_unescape_value (string);
 
-    /* unknown modifier */
+    /* Unknown modifier */
     return NULL;
 }
 
@@ -238,7 +238,7 @@ irc_tag_parse (const char *tags,
             pos = strchr (items[i], '=');
             if (pos)
             {
-                /* format: "tag=value" */
+                /* Format: "tag=value" */
                 key = weechat_strndup (items[i], pos - items[i]);
                 if (key)
                 {
@@ -255,7 +255,7 @@ irc_tag_parse (const char *tags,
             }
             else
             {
-                /* format: "tag" */
+                /* Format: "tag" */
                 snprintf (str_key, sizeof (str_key),
                           "%s%s",
                           (prefix_key) ? prefix_key : "",
@@ -282,7 +282,7 @@ irc_tag_add_to_string_cb (void *data,
 {
     char **string, *escaped;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     string = (char **)data;
@@ -336,7 +336,7 @@ irc_tag_add_to_hashtable_cb (void *data,
                              const void *key,
                              const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     if (!weechat_hashtable_has_key ((struct t_hashtable *)data, key))

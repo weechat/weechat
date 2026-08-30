@@ -63,7 +63,7 @@ set(LIB_CORE_SRC
   hook/hook-url.c hook/hook-url.h
 )
 
-# Check for flock support
+# Check for flock support.
 include(CheckSymbolExists)
 check_symbol_exists(flock "sys/file.h" HAVE_FLOCK)
 

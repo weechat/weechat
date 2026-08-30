@@ -6,12 +6,12 @@
 
 /* Directory/file functions */
 
-/* for P_tmpdir in stdio.h */
+/* For P_tmpdir in stdio.h */
 #ifndef __USE_XOPEN
 #define __USE_XOPEN
 #endif
 
-/* for nftw() */
+/* For nftw() */
 #define _XOPEN_SOURCE 700
 #if defined(__APPLE__)
 #define _DARWIN_C_SOURCE
@@ -57,7 +57,7 @@ dir_get_temp_dir (void)
     struct stat buf;
     int rc;
 
-    /* get directory from $TMPDIR */
+    /* Get directory from $TMPDIR. */
     tmpdir = getenv ("TMPDIR");
     if (tmpdir && tmpdir[0])
     {
@@ -66,12 +66,12 @@ dir_get_temp_dir (void)
             return strdup (tmpdir);
     }
 
-    /* get directory from P_tmpdir */
+    /* Get directory from P_tmpdir. */
     rc = stat (P_tmpdir, &buf);
     if ((rc == 0) && S_ISDIR(buf.st_mode))
         return strdup (P_tmpdir);
 
-    /* get directory from $HOME */
+    /* Get directory from $HOME. */
     tmpdir = getenv ("HOME");
     if (tmpdir && tmpdir[0])
     {
@@ -80,7 +80,7 @@ dir_get_temp_dir (void)
             return strdup (tmpdir);
     }
 
-    /* fallback on current directory */
+    /* Fallback on current directory */
     return strdup (".");
 }
 
@@ -115,7 +115,7 @@ dir_mkdir_home (const char *directory, int mode)
     }
     else
     {
-        /* build directory in data dir by default */
+        /* Build directory in data dir by default. */
         if (string_asprintf (&dir, "%s/%s", weechat_data_dir, directory) < 0)
             goto end;
     }
@@ -140,7 +140,7 @@ dir_mkdir_home (const char *directory, int mode)
     if (!dir5)
         goto end;
 
-    /* build directory, adding WeeChat home */
+    /* Build directory, adding WeeChat home. */
     if (mkdir (dir5, mode) < 0)
     {
         if (errno != EEXIST)
@@ -219,7 +219,7 @@ dir_mkdir_parents (const char *directory, int mode)
         rc = stat (string, &buf);
         if ((rc < 0) || !S_ISDIR(buf.st_mode))
         {
-            /* try to create directory */
+            /* Try to create directory. */
             if (!dir_mkdir (string, mode))
             {
                 free (string);
@@ -253,7 +253,7 @@ int
 dir_unlink_cb (const char *fpath, const struct stat *sb, int typeflag,
                struct FTW *ftwbuf)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) sb;
     (void) typeflag;
     (void) ftwbuf;
@@ -322,10 +322,10 @@ dir_set_home_path (char *path)
     }
     else if (num_paths == 4)
     {
-        /* compatibility with versions between 3.2 and 4.2.x */
+        /* Compatibility with versions between 3.2 and 4.2.x */
         weechat_config_dir = string_expand_home (paths[0]);
         weechat_data_dir = string_expand_home (paths[1]);
-        /* state dir = data dir by default */
+        /* State dir = data dir by default */
         weechat_state_dir = string_expand_home (paths[1]);
         weechat_cache_dir = string_expand_home (paths[2]);
         weechat_runtime_dir = string_expand_home (paths[3]);
@@ -341,8 +341,8 @@ dir_set_home_path (char *path)
     else
     {
         /*
-         * value of 4 is not mentioned in the message because it's kept only
-         * for compatibility with old releases, it should not be used anymore
+         * Value of 4 is not mentioned in the message because it's kept only
+         * for compatibility with old releases, it should not be used anymore.
          */
         string_fprintf (stderr,
                         _("Error: wrong number of paths for home directories "
@@ -451,7 +451,7 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **state_dir,
     xdg_cache_home = getenv ("XDG_CACHE_HOME");
     xdg_runtime_dir = getenv ("XDG_RUNTIME_DIR");
 
-    /* set config dir: $XDG_CONFIG_HOME/weechat or $HOME/.config/weechat */
+    /* Set config dir: "$XDG_CONFIG_HOME/weechat" or "$HOME/.config/weechat". */
     if (xdg_config_home && xdg_config_home[0])
     {
         snprintf (path, sizeof (path),
@@ -468,7 +468,7 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **state_dir,
     if (!*config_dir)
         goto error_memory;
 
-    /* set data dir: $XDG_DATA_HOME/weechat or $HOME/.local/share/weechat */
+    /* Set data dir: "$XDG_DATA_HOME/weechat" or "$HOME/.local/share/weechat". */
     if (xdg_data_home && xdg_data_home[0])
     {
         snprintf (path, sizeof (path),
@@ -486,7 +486,7 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **state_dir,
     if (!*data_dir)
         goto error_memory;
 
-    /* set state dir: $XDG_STATE_HOME/weechat or $HOME/.local/state/weechat */
+    /* Set state dir: "$XDG_STATE_HOME/weechat" or "$HOME/.local/state/weechat". */
     if (xdg_state_home && xdg_state_home[0])
     {
         snprintf (path, sizeof (path),
@@ -504,7 +504,7 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **state_dir,
     if (!*state_dir)
         goto error_memory;
 
-    /* set cache dir: $XDG_CACHE_HOME/weechat or $HOME/.cache/weechat */
+    /* Set cache dir: "$XDG_CACHE_HOME/weechat" or "$HOME/.cache/weechat". */
     if (xdg_cache_home && xdg_cache_home[0])
     {
         snprintf (path, sizeof (path),
@@ -521,7 +521,7 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **state_dir,
     if (!*cache_dir)
         goto error_memory;
 
-    /* set runtime dir: $XDG_RUNTIME_DIR/weechat or same as cache dir */
+    /* Set runtime dir: "$XDG_RUNTIME_DIR/weechat" or same as cache dir. */
     if (xdg_runtime_dir && xdg_runtime_dir[0])
     {
         snprintf (path, sizeof (path),
@@ -592,20 +592,20 @@ dir_find_home_dirs (void)
     char *config_dir, *data_dir, *state_dir, *cache_dir, *runtime_dir;
     char path[PATH_MAX];
 
-    /* temporary WeeChat home */
+    /* Temporary WeeChat home */
     if (weechat_home_temp)
         return dir_create_home_temp_dir ();
 
-    /* use a forced home with -d/--dir */
+    /* Use a forced home with -d/--dir. */
     if (weechat_home_force)
         return dir_set_home_path (weechat_home_force);
 
-    /* use environment variable "WEECHAT_HOME" (if set) */
+    /* Use environment variable "WEECHAT_HOME" (if set). */
     ptr_weechat_home = getenv ("WEECHAT_HOME");
     if (ptr_weechat_home && ptr_weechat_home[0])
         return dir_set_home_path (ptr_weechat_home);
 
-    /* use the home forced at compilation time (if set) */
+    /* Use the home forced at compilation time (if set). */
     config_weechat_home = WEECHAT_HOME;
     if (config_weechat_home[0])
         return dir_set_home_path (config_weechat_home);
@@ -614,7 +614,7 @@ dir_find_home_dirs (void)
                             &runtime_dir))
         return 0;
 
-    /* check if {weechat_config_dir}/weechat.conf exists */
+    /* Check if {weechat_config_dir}/weechat.conf exists. */
     snprintf (path, sizeof (path),
               "%s%s%s",
               config_dir, DIR_SEPARATOR, "weechat.conf");
@@ -622,8 +622,8 @@ dir_find_home_dirs (void)
         goto use_xdg;
 
     /*
-     * check if $HOME/.weechat/weechat.conf exists
-     * (compatibility with old releases not supporting XDG directories)
+     * Check if $HOME/.weechat/weechat.conf exists
+     * (compatibility with old releases not supporting XDG directories).
      */
     ptr_home = getenv ("HOME");
     snprintf (path, sizeof (path),
@@ -647,7 +647,7 @@ dir_find_home_dirs (void)
         return 1;
     }
 
-    /* use XDG directories */
+    /* Use XDG directories. */
 use_xdg:
     weechat_config_dir = config_dir;
     weechat_data_dir = data_dir;
@@ -693,7 +693,7 @@ dir_create_home_dir (char *path)
 {
     struct stat statinfo;
 
-    /* if home already exists, it has to be a directory */
+    /* If home already exists, it has to be a directory. */
     if (stat (path, &statinfo) == 0)
     {
         if (!S_ISDIR (statinfo.st_mode))
@@ -705,7 +705,7 @@ dir_create_home_dir (char *path)
         }
     }
 
-    /* create home directory; error is fatal */
+    /* Create home directory; error is fatal. */
     if (!dir_mkdir_parents (path, 0700))
     {
         string_fprintf (stderr,
@@ -871,7 +871,7 @@ dir_search_full_lib_name_ext (const char *filename, const char *extension,
     if ((rc < 0) || (rc >= (int)sizeof (name_with_ext)))
         return NULL;
 
-    /* try libdir from environment variable WEECHAT_EXTRA_LIBDIR */
+    /* Try libdir from environment variable WEECHAT_EXTRA_LIBDIR. */
     extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
     if (extra_libdir && extra_libdir[0])
     {
@@ -888,7 +888,7 @@ dir_search_full_lib_name_ext (const char *filename, const char *extension,
             return strdup (final_name);
     }
 
-    /* try WeeChat user's dir */
+    /* Try WeeChat user's dir. */
     rc = snprintf (final_name, sizeof (final_name),
                    "%s%s%s%s%s",
                    weechat_data_dir,
@@ -901,7 +901,7 @@ dir_search_full_lib_name_ext (const char *filename, const char *extension,
     if ((stat (final_name, &st) == 0) && (st.st_size > 0))
         return strdup (final_name);
 
-    /* try WeeChat global lib dir */
+    /* Try WeeChat global lib dir. */
     rc = snprintf (final_name, sizeof (final_name),
                    "%s%s%s%s%s",
                    WEECHAT_LIBDIR,
@@ -931,12 +931,12 @@ dir_search_full_lib_name (const char *filename, const char *plugins_dir)
     char *filename2, *full_name;
     int i;
 
-    /* expand home in filename */
+    /* Expand home in filename. */
     filename2 = string_expand_home (filename);
     if (!filename2)
         return NULL;
 
-    /* if full path, return it */
+    /* If full path, return it. */
     if (strchr (filename2, '/') || strchr (filename2, '\\'))
         return filename2;
 
@@ -1300,7 +1300,7 @@ end:
 
     return rc;
 #else
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) from;
     (void) to;
     (void) compression_level;
@@ -1339,13 +1339,13 @@ dir_file_compress (const char *filename_input,
 
     if (strcmp (compressor, "gzip") == 0)
     {
-        /* convert percent to zlib compression level (1-9) */
+        /* Convert percent to zlib compression level (1-9). */
         level = (((compression_level - 1) * 9) / 100) + 1;
         return dir_file_compress_gzip (filename_input, filename_output, level);
     }
     else if (strcmp (compressor, "zstd") == 0)
     {
-        /* convert percent to zstd compression level (1-19) */
+        /* Convert percent to zstd compression level (1-19). */
         level = (((compression_level - 1) * 19) / 100) + 1;
         return dir_file_compress_zstd (filename_input, filename_output, level);
     }
@@ -1387,7 +1387,7 @@ dir_file_compare (const char *filename1, const char *filename2)
     f1 = NULL;
     f2 = NULL;
 
-    /* get size of first file */
+    /* Get size of first file. */
     if (access (filename1, R_OK) != 0)
     {
         rc = 2;
@@ -1400,7 +1400,7 @@ dir_file_compare (const char *filename1, const char *filename2)
     }
     size1 = st.st_size;
 
-    /* get size of second file */
+    /* Get size of second file. */
     if (access (filename2, R_OK) != 0)
     {
         rc = 2;
@@ -1415,7 +1415,7 @@ dir_file_compare (const char *filename1, const char *filename2)
 
     if (size1 != size2)
     {
-        /* different size, so different content */
+        /* Different size, so different content */
         rc = 1;
         goto end;
     }
@@ -1439,13 +1439,13 @@ dir_file_compare (const char *filename1, const char *filename2)
         eof2 = feof (f2);
         if ((eof1 && !eof2) || (!eof1 && eof2))
         {
-            /* different content */
+            /* Different content */
             rc = 1;
             goto end;
         }
         if (eof1 && eof2)
         {
-            /* same content */
+            /* Same content */
             rc = 0;
             goto end;
         }
@@ -1453,19 +1453,19 @@ dir_file_compare (const char *filename1, const char *filename2)
         count2 = fread (buffer2, sizeof (char), sizeof (buffer2), f2);
         if (count1 != count2)
         {
-            /* different content */
+            /* Different content */
             rc = 1;
             goto end;
         }
         if ((count1 == 0) || (count2 == 0))
         {
-            /* read error */
+            /* Read error */
             rc = 2;
             goto end;
         }
         if (memcmp (buffer1, buffer2, count1) != 0)
         {
-            /* different content */
+            /* Different content */
             rc = 1;
             goto end;
         }

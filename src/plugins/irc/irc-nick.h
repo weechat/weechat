@@ -11,7 +11,7 @@
     "JKLMNOPQRSTUVWXYZ0123456789-[]\\`_^{|}"
 #define IRC_NICK_INVALID_CHARS_RFC8265 " ,:\n\r*?.!@"
 
-/* nicklist group for nicks without prefix is "999|..." */
+/* Nicklist group for nicks without prefix is "999|..." */
 #define IRC_NICK_GROUP_OTHER_NUMBER 999
 #define IRC_NICK_GROUP_OTHER_NAME   "..."
 

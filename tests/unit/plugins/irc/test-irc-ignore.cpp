@@ -176,13 +176,13 @@ TEST(IrcIgnore, CheckHost)
     CHECK(ignore2);
     LONGS_EQUAL(2, ignore2->number);
 
-    /* check server */
+    /* Check server. */
     LONGS_EQUAL(0, irc_ignore_check_server (ignore1, "test"));
     LONGS_EQUAL(1, irc_ignore_check_server (ignore1, "libera"));
     LONGS_EQUAL(1, irc_ignore_check_server (ignore2, "test"));
     LONGS_EQUAL(1, irc_ignore_check_server (ignore2, "libera"));
 
-    /* check channel */
+    /* Check channel. */
     LONGS_EQUAL(0, irc_ignore_check_channel (ignore1, server, "#test", "nick"));
     LONGS_EQUAL(1, irc_ignore_check_channel (ignore1, server, "#weechat", "nick"));
     LONGS_EQUAL(0, irc_ignore_check_channel (ignore1, server, "test", "nick"));
@@ -190,7 +190,7 @@ TEST(IrcIgnore, CheckHost)
     LONGS_EQUAL(1, irc_ignore_check_channel (ignore2, server, "#test", "nick"));
     LONGS_EQUAL(1, irc_ignore_check_channel (ignore2, server, "#weechat", "nick"));
 
-    /* check host */
+    /* Check host. */
     LONGS_EQUAL(0, irc_ignore_check_host (ignore1, "nick1", "nick!aaa@bbb"));
     LONGS_EQUAL(0, irc_ignore_check_host (ignore1, "nick1", "test"));
     LONGS_EQUAL(1, irc_ignore_check_host (ignore1, "nick1", "user1@host"));

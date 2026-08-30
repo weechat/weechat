@@ -66,26 +66,26 @@ const char *php_current_script_filename = NULL;
 struct t_hashtable *weechat_php_func_map = NULL;
 
 /*
- * string used to execute action "install":
+ * String used to execute action "install":
  * when signal "php_script_install" is received, name of string
  * is added to this string, to be installed later by a timer (when nothing is
- * running in script)
+ * running in script).
  */
 char *php_action_install_list = NULL;
 
 /*
- * string used to execute action "remove":
+ * String used to execute action "remove":
  * when signal "php_script_remove" is received, name of string
  * is added to this string, to be removed later by a timer (when nothing is
- * running in script)
+ * running in script).
  */
 char *php_action_remove_list = NULL;
 
 /*
- * string used to execute action "autoload":
+ * String used to execute action "autoload":
  * when signal "php_script_autoload" is received, name of string
  * is added to this string, to autoload or disable autoload later by a timer
- * (when nothing is running in script)
+ * (when nothing is running in script).
  */
 char *php_action_autoload_list = NULL;
 
@@ -326,10 +326,10 @@ PHP_MINIT_FUNCTION(weechat)
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) type;
 
-    /* interface constants */
+    /* Interface constants */
     for (i = 0; weechat_script_constants[i].name; i++)
     {
         if (weechat_script_constants[i].value_string)
@@ -377,7 +377,7 @@ weechat_php_hashtable_to_array_cb (void *data,
                                    const char *key,
                                    const char *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     add_assoc_string ((zval*)data, key, (char*)value);
@@ -442,7 +442,7 @@ static void
 weechat_php_func_map_free_val (struct t_hashtable *hashtable,
                                const void *key, void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) key;
 
@@ -453,7 +453,7 @@ weechat_php_func_map_free_val (struct t_hashtable *hashtable,
 static void
 weechat_php_func_map_free_key (struct t_hashtable *hashtable, void *key)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     free ((char *)key);
@@ -531,16 +531,16 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
         {
             switch (format[i])
             {
-                case 's': /* string or null */
+                case 's': /* String or null */
                     if (argv[i])
                         ZVAL_STRING(&params[i], (char *)argv[i]);
                     else
                         ZVAL_NULL(&params[i]);
                     break;
-                case 'i': /* integer */
+                case 'i': /* Integer */
                     ZVAL_LONG(&params[i], *((int *)argv[i]));
                     break;
-                case 'h': /* hash */
+                case 'h': /* Hash */
                     weechat_php_hashtable_to_array ((struct t_hashtable *)argv[i],
                                                     &params[i]);
                     break;
@@ -650,7 +650,7 @@ weechat_php_load (const char *filename, const char *code)
 {
     zend_file_handle file_handle;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     /* TODO: implement load of code in PHP */
     (void) code;
 
@@ -711,7 +711,7 @@ weechat_php_load_cb (void *data, const char *filename)
 {
     const char *pos_dot;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
 
     pos_dot = strrchr (filename, '.');
@@ -867,7 +867,7 @@ weechat_php_command_cb (const void *pointer, void *data,
     char *ptr_name, *ptr_code, *path_script;
     int i, send_to_buffer_as_input, exec_commands, old_php_quiet;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -937,7 +937,7 @@ weechat_php_command_cb (const void *pointer, void *data,
             }
             if (weechat_strcmp (argv[1], "load") == 0)
             {
-                /* load PHP script */
+                /* Load PHP script. */
                 path_script = plugin_script_search_path (weechat_php_plugin,
                                                          ptr_name, 1);
                 weechat_php_load ((path_script) ? path_script : ptr_name,
@@ -946,12 +946,12 @@ weechat_php_command_cb (const void *pointer, void *data,
             }
             else if (weechat_strcmp (argv[1], "reload") == 0)
             {
-                /* reload one PHP script */
+                /* Reload one PHP script. */
                 weechat_php_reload_name (ptr_name);
             }
             else if (weechat_strcmp (argv[1], "unload") == 0)
             {
-                /* unload PHP script */
+                /* Unload PHP script. */
                 weechat_php_unload_name (ptr_name);
             }
             php_quiet = old_php_quiet;
@@ -1011,7 +1011,7 @@ weechat_php_completion_cb (const void *pointer, void *data,
                            struct t_gui_buffer *buffer,
                            struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1030,7 +1030,7 @@ struct t_hdata *
 weechat_php_hdata_cb (const void *pointer, void *data,
                       const char *hdata_name)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1050,7 +1050,7 @@ weechat_php_info_eval_cb (const void *pointer, void *data,
 {
     const char *not_implemented = "not yet implemented";
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -1068,7 +1068,7 @@ weechat_php_infolist_cb (const void *pointer, void *data,
                          const char *infolist_name,
                          void *obj_pointer, const char *arguments)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1094,7 +1094,7 @@ weechat_php_signal_debug_dump_cb (const void *pointer, void *data,
                                   const char *signal,
                                   const char *type_data, void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -1116,7 +1116,7 @@ int
 weechat_php_timer_action_cb (const void *pointer, void *data,
                              int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -1161,7 +1161,7 @@ weechat_php_signal_script_action_cb (const void *pointer, void *data,
                                      const char *type_data,
                                      void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -1216,7 +1216,7 @@ php_weechat_ub_write (const char *str, size_t str_length)
 void
 php_weechat_sapi_error (int type, const char *format, ...)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) type;
 
     weechat_va_format (format);
@@ -1232,7 +1232,7 @@ php_weechat_sapi_error (int type, const char *format, ...)
 void
 php_weechat_log_message (const char *message, int syslog_type_int)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) syslog_type_int;
 
     php_weechat_ub_write (message, strlen (message));
@@ -1242,7 +1242,7 @@ php_weechat_log_message (const char *message, int syslog_type_int)
 void
 php_weechat_log_message (char *message, int syslog_type_int)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) syslog_type_int;
 
     php_weechat_ub_write (message, strlen (message));
@@ -1265,7 +1265,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int old_php_quiet;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -1276,7 +1276,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     php_eval_send_input = 0;
     php_eval_exec_commands = 0;
 
-    /* set interpreter name and version */
+    /* Set interpreter name and version. */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
 #ifdef PHP_VERSION
@@ -1321,7 +1321,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     plugin_script_display_short_list (weechat_php_plugin,
                                       php_scripts);
 
-    /* init OK */
+    /* Initialization OK */
     return WEECHAT_RC_OK;
 }
 
@@ -1334,7 +1334,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     int old_php_quiet;
 
-    /* unload all scripts */
+    /* Unload all scripts. */
     old_php_quiet = php_quiet;
     php_quiet = 1;
     if (php_script_eval)

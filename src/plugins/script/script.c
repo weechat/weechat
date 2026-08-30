@@ -64,7 +64,7 @@ script_language_search (const char *language)
             return i;
     }
 
-    /* language not found */
+    /* Language not found */
     return -1;
 }
 
@@ -88,7 +88,7 @@ script_language_search_by_extension (const char *extension)
             return i;
     }
 
-    /* extension not found */
+    /* Extension not found */
     return -1;
 }
 
@@ -108,7 +108,7 @@ script_download_enabled (int display_error)
 
     if (display_error)
     {
-        /* download not enabled: display an error */
+        /* Download not enabled: display an error. */
         weechat_printf (NULL,
                         _("%s%s: download of scripts is disabled by default; "
                           "to enable it, type /script enable"),
@@ -205,7 +205,7 @@ script_debug_dump_cb (const void *pointer, void *data,
                       const char *signal, const char *type_data,
                       void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -234,7 +234,7 @@ script_debug_dump_cb (const void *pointer, void *data,
 int
 script_timer_refresh_cb (const void *pointer, void *data, int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -258,7 +258,7 @@ script_signal_plugin_cb (const void *pointer, void *data,
                          const char *signal, const char *type_data,
                          void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) type_data;
@@ -289,7 +289,7 @@ script_signal_script_cb (const void *pointer, void *data,
                          const char *signal, const char *type_data,
                          void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) type_data;
@@ -320,7 +320,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -373,7 +373,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (script_loaded)

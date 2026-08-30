@@ -93,9 +93,9 @@ irc_mode_get_chanmode_type (struct t_irc_server *server, char chanmode)
     const char *chanmodes, *ptr_chanmodes, *pos;
 
     /*
-     * assume it is type 'B' if mode is in prefix
+     * Assume it is type 'B' if mode is in prefix
      * (we first check that because some exotic servers like irc.webchat.org
-     * include the prefix chars in chanmodes as type 'A', which is wrong)
+     * include the prefix chars in chanmodes as type 'A', which is wrong).
      */
     if (irc_server_get_prefix_mode_index (server, chanmode) >= 0)
         return 'B';
@@ -117,7 +117,7 @@ irc_mode_get_chanmode_type (struct t_irc_server *server, char chanmode)
         return chanmode_type;
     }
 
-    /* unknown mode, type 'D' by default */
+    /* Unknown mode, type 'D' by default */
     return 'D';
 }
 
@@ -188,7 +188,7 @@ irc_mode_channel_update (struct t_irc_server *server,
         new_modes[0] = '\0';
         new_args[0] = '\0';
 
-        /* loop on current modes and build "new_modes" + "new_args" */
+        /* Loop on current modes and build "new_modes" + "new_args". */
         current_arg = 0;
         chanmode_found = 0;
         pos = str_modes;
@@ -205,13 +205,13 @@ irc_mode_channel_update (struct t_irc_server *server,
                 ptr_arg = NULL;
                 switch (irc_mode_get_chanmode_type (server, pos[0]))
                 {
-                    case 'A': /* always argument */
-                    case 'B': /* always argument */
-                    case 'C': /* argument if set */
+                    case 'A': /* Always argument */
+                    case 'B': /* Always argument */
+                    case 'C': /* Argument if set */
                         ptr_arg = (current_arg < argc) ?
                             argv[current_arg] : NULL;
                         break;
-                    case 'D': /* no argument */
+                    case 'D': /* No argument */
                         break;
                 }
                 if (ptr_arg)
@@ -253,14 +253,14 @@ irc_mode_channel_update (struct t_irc_server *server,
         if (!chanmode_found)
         {
             /*
-             * chanmode was not in channel modes: if set_flag is '+', add
-             * it to channel modes
+             * Chanmode was not in channel modes: if set_flag is '+', add
+             * it to channel modes.
              */
             if (set_flag == '+')
             {
                 if (argument)
                 {
-                    /* add mode with argument at the end of modes */
+                    /* Add mode with argument at the end of modes. */
                     str_mode[0] = chanmode;
                     str_mode[1] = '\0';
                     strcat (new_modes, str_mode);
@@ -270,7 +270,7 @@ irc_mode_channel_update (struct t_irc_server *server,
                 }
                 else
                 {
-                    /* add mode without argument at the beginning of modes */
+                    /* Add mode without argument at the beginning of modes. */
                     pos = new_modes;
                     while (pos[0] == '+')
                     {
@@ -324,28 +324,28 @@ irc_mode_smart_filtered (struct t_irc_server *server, char mode)
 
     ptr_modes = weechat_config_string (irc_config_look_smart_filter_mode);
 
-    /* if empty value, there's no smart filtering on mode messages */
+    /* If empty value, there's no smart filtering on mode messages. */
     if (!ptr_modes || !ptr_modes[0])
         return 0;
 
-    /* if var is "*", ALL modes are smart filtered */
+    /* If var is "*", ALL modes are smart filtered. */
     if (strcmp (ptr_modes, "*") == 0)
         return 1;
 
-    /* if var is "+", modes from server prefixes are filtered */
+    /* If var is "+", modes from server prefixes are filtered. */
     if (strcmp (ptr_modes, "+") == 0)
         return strchr (irc_server_get_prefix_modes (server), mode) ? 1 : 0;
 
     /*
-     * if var starts with "-", smart filter all modes except following modes
-     * example: "-kl": smart filter all modes but not k/l
+     * If var starts with "-", smart filter all modes except following modes
+     * example: "-kl": smart filter all modes but not k/l.
      */
     if (ptr_modes[0] == '-')
         return (strchr (ptr_modes + 1, mode)) ? 0 : 1;
 
     /*
-     * explicit list of modes to smart filter
-     * example: "ovh": smart filter modes o/v/h
+     * Explicit list of modes to smart filter
+     * example: "ovh": smart filter modes o/v/h.
      */
     return (strchr (ptr_modes, mode)) ? 1 : 0;
 }
@@ -419,20 +419,20 @@ irc_mode_channel_set (struct t_irc_server *server,
                 ptr_arg = NULL;
                 switch (chanmode_type)
                 {
-                    case 'A': /* always argument */
+                    case 'A': /* Always argument */
                         update_channel_modes = 0;
                         ptr_arg = (current_arg < argc) ?
                             argv[current_arg] : NULL;
                         break;
-                    case 'B': /* always argument */
+                    case 'B': /* Always argument */
                         ptr_arg = (current_arg < argc) ?
                             argv[current_arg] : NULL;
                         break;
-                    case 'C': /* argument if set */
+                    case 'C': /* Argument if set */
                         ptr_arg = ((set_flag == '+') && (current_arg < argc)) ?
                             argv[current_arg] : NULL;
                         break;
-                    case 'D': /* no argument */
+                    case 'D': /* No argument */
                         break;
                 }
                 if (ptr_arg)
@@ -450,7 +450,7 @@ irc_mode_channel_set (struct t_irc_server *server,
 
                 if (pos[0] == 'k')
                 {
-                    /* channel key */
+                    /* Channel key */
                     if (set_flag == '-')
                     {
                         if (channel->key)
@@ -462,14 +462,14 @@ irc_mode_channel_set (struct t_irc_server *server,
                     else if ((set_flag == '+')
                              && ptr_arg && (strcmp (ptr_arg, "*") != 0))
                     {
-                        /* replace key for +k, but ignore "*" as new key */
+                        /* Replace key for +k, but ignore "*" as new key. */
                         free (channel->key);
                         channel->key = strdup (ptr_arg);
                     }
                 }
                 else if (pos[0] == 'l')
                 {
-                    /* channel limit */
+                    /* Channel limit */
                     if (set_flag == '-')
                         channel->limit = 0;
                     if ((set_flag == '+') && ptr_arg)
@@ -481,7 +481,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                          && (irc_server_get_prefix_mode_index (server,
                                                                pos[0]) >= 0))
                 {
-                    /* mode for nick */
+                    /* Mode for nick */
                     update_channel_modes = 0;
                     if (ptr_arg)
                     {
@@ -492,8 +492,8 @@ irc_mode_channel_set (struct t_irc_server *server,
                             irc_nick_set_mode (server, channel, ptr_nick,
                                                (set_flag == '+'), pos[0]);
                             /*
-                             * disable smart filtering if mode is sent
-                             * to me, or based on the nick speaking time
+                             * Disable smart filtering if mode is sent
+                             * to me, or based on the nick speaking time.
                              */
                             if (smart_filter
                                 && ((irc_server_strcasecmp (server,
@@ -511,7 +511,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                 }
                 else if (chanmode_type == 'A')
                 {
-                    /* modelist modes */
+                    /* Modelist modes */
                     if (ptr_arg)
                     {
                         ptr_modelist = irc_modelist_search (channel, pos[0]);

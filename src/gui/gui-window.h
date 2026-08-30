@@ -11,7 +11,7 @@ struct t_infolist;
 struct t_gui_bar_window;
 struct t_gui_line_data;
 
-/* window structures */
+/* Window structures */
 
 struct t_gui_window_coords
 {
@@ -103,7 +103,7 @@ struct t_gui_window_tree
     struct t_gui_window *window;       /* pointer to window, NULL if a node */
 };
 
-/* window variables */
+/* Window variables */
 
 extern int gui_init_ok;
 extern int gui_window_refresh_needed;
@@ -116,7 +116,7 @@ extern int gui_window_cursor_y;
 extern int gui_window_bare_display;
 extern struct t_hook *gui_window_bare_display_timer;
 
-/* window functions */
+/* Window functions */
 
 extern struct t_gui_window *gui_window_search_by_number (int number);
 extern struct t_gui_window *gui_window_search_by_xy (int x, int y);
@@ -195,7 +195,7 @@ extern int gui_window_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_window *window);
 extern void gui_window_print_log (void);
 
-/* window functions (GUI dependent) */
+/* Window functions (GUI dependent) */
 
 extern int gui_window_get_width (void);
 extern int gui_window_get_height (void);

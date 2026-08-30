@@ -52,8 +52,8 @@ relay_weechat_nicklist_add_item (struct t_relay_weechat_nicklist *nicklist,
     int i;
 
     /*
-     * check if the last "parent_group" (with diff = '^') of items is the same
-     * as this one: if yes, don't add this parent group
+     * Check if the last "parent_group" (with diff = '^') of items is the same
+     * as this one: if yes, don't add this parent group.
      */
     if ((diff == RELAY_WEECHAT_NICKLIST_DIFF_PARENT)
         && (nicklist->items_count > 0))
@@ -130,7 +130,7 @@ relay_weechat_nicklist_free (struct t_relay_weechat_nicklist *nicklist)
     if (!nicklist)
         return;
 
-    /* free items */
+    /* Free items. */
     if (nicklist->items_count > 0)
     {
         for (i = 0; i < nicklist->items_count; i++)

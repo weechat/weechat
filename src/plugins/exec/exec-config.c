@@ -17,18 +17,18 @@
 
 struct t_config_file *exec_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *exec_config_section_command = NULL;
 struct t_config_section *exec_config_section_color = NULL;
 
-/* exec config, command section */
+/* Exec config, command section */
 
 struct t_config_option *exec_config_command_default_options = NULL;
 struct t_config_option *exec_config_command_purge_delay = NULL;
 struct t_config_option *exec_config_command_shell = NULL;
 
-/* exec config, color section */
+/* Exec config, color section */
 
 struct t_config_option *exec_config_color_flag_finished = NULL;
 struct t_config_option *exec_config_color_flag_running = NULL;
@@ -45,7 +45,7 @@ void
 exec_config_change_command_default_options (const void *pointer, void *data,
                                             struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -70,7 +70,7 @@ int
 exec_config_reload_cb (const void *pointer, void *data,
                        struct t_config_file *config_file)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -93,7 +93,7 @@ exec_config_init (void)
     if (!exec_config_file)
         return 0;
 
-    /* command */
+    /* Command */
     exec_config_section_command = weechat_config_new_section (
         exec_config_file, "command",
         0, 0,
@@ -135,7 +135,7 @@ exec_config_init (void)
             NULL, NULL, NULL);
     }
 
-    /* color */
+    /* Color */
     exec_config_section_color = weechat_config_new_section (
         exec_config_file, "color",
         0, 0,

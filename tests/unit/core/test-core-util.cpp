@@ -85,12 +85,12 @@ TEST(CoreUtil, ParseNumber)
     /* NULL string */
     WEE_PARSE_NUMBER(0, 0, NULL, 10);
 
-    /* invalid base */
+    /* Invalid base */
     WEE_PARSE_NUMBER(0, 0, "123", -1);
     WEE_PARSE_NUMBER(0, 0, "123", 1);
     WEE_PARSE_NUMBER(0, 0, "123", 37);
 
-    /* invalid number */
+    /* Invalid number */
     WEE_PARSE_NUMBER(0, 0, "", 10);
     WEE_PARSE_NUMBER(0, 0, " ", 10);
     WEE_PARSE_NUMBER(0, 0, "-", 10);
@@ -111,19 +111,19 @@ TEST(CoreUtil, ParseNumber)
     WEE_PARSE_NUMBER(0, 0, "18", 8);
     WEE_PARSE_NUMBER(0, 0, "1g", 16);
 
-    /* invalid int: outside range (INT_MIN, INT_MAX) */
+    /* Invalid int: outside range (INT_MIN, INT_MAX) */
     snprintf (str_number, sizeof (str_number), "%d1", INT_MIN);
     LONGS_EQUAL(0, util_parse_int (str_number, 10, &number_int));
     snprintf (str_number, sizeof (str_number), "%d1", INT_MAX);
     LONGS_EQUAL(0, util_parse_int (str_number, 10, &number_int));
 
-    /* invalid long: outside range (LONG_MIN, LONG_MAX) */
+    /* Invalid long: outside range (LONG_MIN, LONG_MAX) */
     snprintf (str_number, sizeof (str_number), "%ld1", LONG_MIN);
     LONGS_EQUAL(0, util_parse_long (str_number, 10, &number_long));
     snprintf (str_number, sizeof (str_number), "%ld1", LONG_MAX);
     LONGS_EQUAL(0, util_parse_long (str_number, 10, &number_long));
 
-    /* invalid long long: outside range (LLONG_MIN, LLONG_MAX) */
+    /* Invalid long long: outside range (LLONG_MIN, LLONG_MAX) */
     snprintf (str_number, sizeof (str_number), "%lld1", LLONG_MIN);
     LONGS_EQUAL(0, util_parse_longlong (str_number, 10, &number_longlong));
     snprintf (str_number, sizeof (str_number), "%lld1", LLONG_MAX);
@@ -179,7 +179,7 @@ TEST(CoreUtil, Timeval)
     struct timeval tv4 = { 1409288400, 0 };  /* 2014-08-29 05:00:00 GMT */
     struct timeval tv;
 
-    /* comparison */
+    /* Comparison */
     LONGS_EQUAL(0, util_timeval_cmp (NULL, NULL));
     LONGS_EQUAL(-1, util_timeval_cmp (NULL, &tv1));
     LONGS_EQUAL(1, util_timeval_cmp (&tv1, NULL));
@@ -189,7 +189,7 @@ TEST(CoreUtil, Timeval)
     LONGS_EQUAL(-1, util_timeval_cmp (&tv1, &tv3));
     LONGS_EQUAL(1, util_timeval_cmp (&tv3, &tv1));
 
-    /* difference */
+    /* Difference */
     LONGS_EQUAL(0, util_timeval_diff (NULL, NULL));
     LONGS_EQUAL(0, util_timeval_diff (NULL, &tv1));
     LONGS_EQUAL(0, util_timeval_diff (&tv1, NULL));
@@ -199,7 +199,7 @@ TEST(CoreUtil, Timeval)
     LONGS_EQUAL(-1003000, util_timeval_diff (&tv3, &tv1));
     CHECK(1409288400 * 1000000LL == util_timeval_diff (&tv_zero, &tv4));
 
-    /* add interval */
+    /* Add interval. */
     util_timeval_add (NULL, 0);
     tv.tv_sec = 123456;
     tv.tv_usec = 12000;
@@ -276,7 +276,7 @@ TEST(CoreUtil, Strftimeval)
     struct timeval tv;
     char str_time[256];
 
-    /* test date: 2023-12-25T10:29:09.456789Z */
+    /* Test date: 2023-12-25T10:29:09.456789Z */
     tv.tv_sec = 1703500149;
     tv.tv_usec = 456789;
 
@@ -349,7 +349,7 @@ TEST(CoreUtil, Strftimeval)
                                       "%Y-%m-%d %H:%M:%S.%f", &tv));
     STRCMP_EQUAL("2023-12-25 10:29:09.456789", str_time);
 
-    /* invalid microseconds digits (must be 1-6) */
+    /* Invalid microseconds digits (must be 1-6) */
     strcpy (str_time, "test");
     LONGS_EQUAL(20, util_strftimeval (str_time, sizeof (str_time),
                                       "%Y-%m-%d %H:%M:%S.%.0", &tv));
@@ -359,7 +359,7 @@ TEST(CoreUtil, Strftimeval)
                                       "%Y-%m-%d %H:%M:%S.%.7", &tv));
     STRCMP_EQUAL("2023-12-25 10:29:09.", str_time);
 
-    /* timestamp */
+    /* Timestamp */
     strcpy (str_time, "test");
     LONGS_EQUAL(10, util_strftimeval (str_time, sizeof (str_time), "%!", &tv));
     STRCMP_EQUAL("1703500149", str_time);
@@ -367,7 +367,7 @@ TEST(CoreUtil, Strftimeval)
     LONGS_EQUAL(17, util_strftimeval (str_time, sizeof (str_time), "%!.%f", &tv));
     STRCMP_EQUAL("1703500149.456789", str_time);
 
-    /* test date: 2023-12-25T10:29:09.000000Z (with microseconds < 0) */
+    /* Test date: 2023-12-25T10:29:09.000000Z (with microseconds < 0) */
     tv.tv_sec = 1703500149;
     tv.tv_usec = -1;
 
@@ -376,7 +376,7 @@ TEST(CoreUtil, Strftimeval)
                                       "%Y-%m-%d %H:%M:%S.%f", &tv));
     STRCMP_EQUAL("2023-12-25 10:29:09.000000", str_time);
 
-    /* test date: 2023-12-25T10:29:09.999999Z (with microseconds > 999999) */
+    /* Test date: 2023-12-25T10:29:09.999999Z (with microseconds > 999999) */
     tv.tv_sec = 1703500149;
     tv.tv_usec = 1000000;
 
@@ -398,7 +398,7 @@ TEST(CoreUtil, ParseTime)
     time_t date;
     char str_time[128];
 
-    /* test with UTC timezone */
+    /* Test with UTC timezone */
     setenv ("TZ", "UTC", 1);
     tzset ();
 
@@ -408,15 +408,13 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(0, 0, 0, "");
     WEE_PARSE_DATE(0, 0, 0, "invalid");
 
-    /* invalid: negative microseconds */
+    /* Invalid: negative microseconds */
     WEE_PARSE_DATE(0, 0, 0, "1703500149.-456789");
 
-    /*
-     * expected: 2023-12-25T00:00:00Z == 1703462400
-     */
+    /* Expected: 2023-12-25T00:00:00Z == 1703462400 */
     WEE_PARSE_DATE(1, 1703462400, 0, "2023-12-25");
 
-    /* expected: current date with specified local time */
+    /* Expected: current date with specified local time */
     date = time (NULL);
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%S", local_time);
@@ -431,7 +429,7 @@ TEST(CoreUtil, ParseTime)
     CHECK((tv.tv_sec >= date) && (tv.tv_sec <= date + 10));
     LONGS_EQUAL(456789, tv.tv_usec);
 
-    /* expected: current date with specified local time + timezone offset */
+    /* Expected: current date with specified local time + timezone offset */
     date = time (NULL);
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%S+0100", local_time);
@@ -474,7 +472,7 @@ TEST(CoreUtil, ParseTime)
     CHECK((tv.tv_sec >= date - 7200) && (tv.tv_sec <= date - 7200 + 10));
     LONGS_EQUAL(456789, tv.tv_usec);
 
-    /* expected: current date with specified UTC time */
+    /* Expected: current date with specified UTC time */
     date = time (NULL);
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%SZ", local_time);
@@ -490,7 +488,7 @@ TEST(CoreUtil, ParseTime)
     LONGS_EQUAL(456789, tv.tv_usec);
 
     /*
-     * expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
+     * Expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
      */
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25T10:29:09");
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25t10:29:09");
@@ -501,7 +499,7 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(1, 1703500149, 456789, "2023-12-25t10:29:09.456789z");
 
     /*
-     * expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
+     * Expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
      * with space instead of "T"
      */
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25 10:29:09");
@@ -510,8 +508,8 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(1, 1703500149, 456789, "2023-12-25 10:29:09.456789Z");
 
     /*
-     * expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
-     * with timezone offset
+     * Expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
+     * with timezone offset.
      */
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25T10:29:09+00");
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25T10:29:09+0000");
@@ -537,8 +535,8 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 456789, "2023-12-25T10:29:09.456789-01:30");
 
     /*
-     * expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
-     * with space instead of "T" and timezone offset
+     * Expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
+     * with space instead of "T" and timezone offset.
      */
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25 10:29:09+00");
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25 10:29:09+0000");
@@ -564,8 +562,8 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 456789, "2023-12-25 10:29:09.456789-01:30");
 
     /*
-     * expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
-     * with space instead of "T" and timezone offset after a space
+     * Expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
+     * with space instead of "T" and timezone offset after a space.
      */
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25 10:29:09 +00");
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25 10:29:09 +0000");
@@ -590,15 +588,15 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25 10:29:09 -01:30");
     WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 456789, "2023-12-25 10:29:09.456789 -01:30");
 
-    /* expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789 */
+    /* Expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789 */
     WEE_PARSE_DATE(1, 1703500149, 0, "1703500149");
     WEE_PARSE_DATE(1, 1703500149, 456000, "1703500149.456");
     WEE_PARSE_DATE(1, 1703500149, 456789, "1703500149.456789");
     WEE_PARSE_DATE(1, 1703500149, 456000, "1703500149,456");
     WEE_PARSE_DATE(1, 1703500149, 456789, "1703500149,456789");
 
-    /* expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789 */
-    /* with extra digits after microseconds */
+    /* Expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789 */
+    /* With extra digits after microseconds */
     WEE_PARSE_DATE(1, 1703500149, 456789, "1703500149.4567891");
     WEE_PARSE_DATE(1, 1703500149, 456789, "1703500149.456789123456789123456789123456789");
 
@@ -685,34 +683,34 @@ TEST(CoreUtil, ParseDelay)
     unsigned long long delay;
     char str_delay[128];
 
-    /* error: no delay */
+    /* Error: no delay */
     LONGS_EQUAL(0, util_parse_delay ("123", 1ULL, NULL));
 
-    /* error: no string */
+    /* Error: no string */
     WEE_PARSE_DELAY(0, 0ULL, NULL, 0ULL);
     WEE_PARSE_DELAY(0, 0ULL, NULL, 1ULL);
     WEE_PARSE_DELAY(0, 0ULL, "", 0ULL);
     WEE_PARSE_DELAY(0, 0ULL, "", 1ULL);
 
-    /* error: bad default_factor */
+    /* Error: bad default_factor */
     WEE_PARSE_DELAY(0, 0ULL, "abcd", 0ULL);
     WEE_PARSE_DELAY(0, 0ULL, "123", 0ULL);
 
-    /* error: bad unit */
+    /* Error: bad unit */
     WEE_PARSE_DELAY(0, 0ULL, "123a", 1ULL);
     WEE_PARSE_DELAY(0, 0ULL, "123ss", 1ULL);
     WEE_PARSE_DELAY(0, 0ULL, "123mss", 1ULL);
     WEE_PARSE_DELAY(0, 0ULL, "123uss", 1ULL);
 
-    /* error: bad number */
+    /* Error: bad number */
     WEE_PARSE_DELAY(0, 0ULL, "abcd", 1LL);
 
-    /* invalid unsigned long long: outside range (0, ULLONG_MAX) */
+    /* Invalid unsigned long long: outside range (0, ULLONG_MAX) */
     WEE_PARSE_DELAY(0, 0ULL, "-123", 1LL);
     snprintf (str_delay, sizeof (str_delay), "%llu1", ULLONG_MAX);
     LONGS_EQUAL(0, util_parse_delay (str_delay, 10, &delay));
 
-    /* tests with delay == 0 */
+    /* Tests with delay == 0 */
     WEE_PARSE_DELAY(1, 0ULL, "0", 1ULL);
     WEE_PARSE_DELAY(1, 0ULL, "0us", 1ULL);
     WEE_PARSE_DELAY(1, 0ULL, "0ms", 1ULL);
@@ -720,7 +718,7 @@ TEST(CoreUtil, ParseDelay)
     WEE_PARSE_DELAY(1, 0ULL, "0m", 1ULL);
     WEE_PARSE_DELAY(1, 0ULL, "0h", 1ULL);
 
-    /* tests with delay == 123, default_factor = 1 (1 microsecond) */
+    /* Tests with delay == 123, default_factor = 1 (1 microsecond) */
     WEE_PARSE_DELAY(1, 123ULL, "123", 1ULL);
     WEE_PARSE_DELAY(1, 123ULL, "123us", 1ULL);
     WEE_PARSE_DELAY(1, 123ULL * 1000ULL, "123ms", 1ULL);
@@ -728,7 +726,7 @@ TEST(CoreUtil, ParseDelay)
     WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL, "123m", 1ULL);
     WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL * 60ULL, "123h", 1ULL);
 
-    /* tests with delay == 123, default_factor = 1000 (1 millisecond) */
+    /* Tests with delay == 123, default_factor = 1000 (1 millisecond) */
     WEE_PARSE_DELAY(1, 123ULL * 1000ULL, "123", 1000ULL);
     WEE_PARSE_DELAY(1, 123ULL, "123us", 1000ULL);
     WEE_PARSE_DELAY(1, 123ULL * 1000ULL, "123ms", 1000ULL);
@@ -736,7 +734,7 @@ TEST(CoreUtil, ParseDelay)
     WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL, "123m", 1000ULL);
     WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL * 60ULL, "123h", 1000ULL);
 
-    /* tests with delay == 123, default_factor = 1000000 (1 second) */
+    /* Tests with delay == 123, default_factor = 1000000 (1 second) */
     WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL, "123", 1000000ULL);
     WEE_PARSE_DELAY(1, 123ULL, "123us", 1000000ULL);
     WEE_PARSE_DELAY(1, 123ULL * 1000ULL, "123ms", 1000000ULL);
@@ -758,7 +756,7 @@ TEST(CoreUtil, VersionNumber)
     CHECK(util_version_number ("") == 0);
     CHECK(util_version_number ("abc") == 0);
 
-    /* invalid unsigned long: outside range (0, ULONG_MAX) */
+    /* Invalid unsigned long: outside range (0, ULONG_MAX) */
     snprintf (str_version, sizeof (str_version), "0.0.%lu1", ULONG_MAX);
     CHECK(util_version_number (str_version) == 0);
 

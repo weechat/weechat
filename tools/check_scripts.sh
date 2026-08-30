@@ -10,22 +10,22 @@
 
 set -o errexit
 
-# check git repository
+# Check git repository.
 root_dir=$(git rev-parse --show-toplevel)
 cd "${root_dir}"
 
 shell_scripts=$(git ls-files "*.sh")
 python_scripts=$(git ls-files "*.py")
 
-# display commands
+# Display commands.
 set -x
 
-# check shell scripts
+# Check shell scripts.
 for script in ${shell_scripts}; do
     shellcheck "${root_dir}/$script"
 done
 
-# check Python scripts
+# Check Python scripts.
 for script in ${python_scripts}; do
     ruff check "${root_dir}/$script"
 done

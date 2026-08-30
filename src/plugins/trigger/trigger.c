@@ -94,7 +94,7 @@ trigger_search_option (const char *option_name)
             return i;
     }
 
-    /* trigger option not found */
+    /* Trigger option not found */
     return -1;
 }
 
@@ -118,7 +118,7 @@ trigger_search_hook_type (const char *type)
             return i;
     }
 
-    /* hook type not found */
+    /* Hook type not found */
     return -1;
 }
 
@@ -139,7 +139,7 @@ trigger_search_regex_command (char command)
             return i;
     }
 
-    /* regex command not found */
+    /* Regex command not found */
     return -1;
 }
 
@@ -163,7 +163,7 @@ trigger_search_return_code (const char *return_code)
             return i;
     }
 
-    /* return code not found */
+    /* Return code not found */
     return -1;
 }
 
@@ -187,7 +187,7 @@ trigger_search_post_action (const char *post_action)
             return i;
     }
 
-    /* post action not found */
+    /* Post action not found */
     return -1;
 }
 
@@ -212,7 +212,7 @@ trigger_search (const char *name)
             return ptr_trigger;
     }
 
-    /* trigger not found */
+    /* Trigger not found */
     return NULL;
 }
 
@@ -641,17 +641,17 @@ trigger_regex_split (const char *str_regex,
     if (!regex_count || !regex)
         goto end;
 
-    /* remove any existing regex */
+    /* Remove any existing regex. */
     trigger_regex_free (regex_count, regex);
 
     if (!str_regex || !str_regex[0])
         goto end;
 
-    /* min 3 chars, for example: "/a/" */
+    /* Min 3 chars, for example: "/a/" */
     if (strlen (str_regex) < 3)
         goto format_error;
 
-    /* parse regular expressions in the option */
+    /* Parse regular expressions in the option. */
     ptr_regex = str_regex;
     while (ptr_regex && ptr_regex[0])
     {
@@ -661,22 +661,22 @@ trigger_regex_split (const char *str_regex,
             delimiter = NULL;
         }
 
-        /* extract command */
+        /* Extract command. */
         if (isalpha ((unsigned char)ptr_regex[0]))
         {
             command = trigger_search_regex_command (ptr_regex[0]);
             if (command < 0)
                 goto format_error;
-            /* skip the command */
+            /* Skip the command. */
             ptr_regex = weechat_utf8_next_char (ptr_regex);
         }
         else
         {
-            /* default command is "s" (replace regex) */
+            /* Default command is "s" (replace regex). */
             command = TRIGGER_REGEX_COMMAND_REPLACE;
         }
 
-        /* search the delimiter (which can be more than one char) */
+        /* Search the delimiter (which can be more than one char). */
         pos = weechat_utf8_next_char (ptr_regex);
         while (pos && pos[0] && (weechat_string_charcmp (ptr_regex, pos) == 0))
         {
@@ -692,12 +692,12 @@ trigger_regex_split (const char *str_regex,
 
         ptr_regex = pos;
 
-        /* search the start of replacement string */
+        /* Search the start of replacement string. */
         pos_replace = strstr (ptr_regex, delimiter);
         if (!pos_replace)
             goto format_error;
 
-        /* search the end of replacement string */
+        /* Search the end of replacement string. */
         pos_replace_end = strstr (pos_replace + length_delimiter, delimiter);
 
         new_regex = realloc (*regex,
@@ -709,7 +709,7 @@ trigger_regex_split (const char *str_regex,
         (*regex_count)++;
         index = *regex_count - 1;
 
-        /* initialize new regex */
+        /* Initialize new regex. */
         (*regex)[index].command = command;
         (*regex)[index].variable = NULL;
         (*regex)[index].str_regex = NULL;
@@ -717,13 +717,13 @@ trigger_regex_split (const char *str_regex,
         (*regex)[index].replace = NULL;
         (*regex)[index].replace_escaped = NULL;
 
-        /* set string with regex */
+        /* Set string with regex. */
         (*regex)[index].str_regex = weechat_strndup (ptr_regex,
                                                      pos_replace - ptr_regex);
         if (!(*regex)[index].str_regex)
             goto memory_error;
 
-        /* set regex (command "s" only) */
+        /* Set regex (command "s" only). */
         if (command == TRIGGER_REGEX_COMMAND_REPLACE)
         {
             free (str_regex_escaped);
@@ -743,7 +743,7 @@ trigger_regex_split (const char *str_regex,
             }
         }
 
-        /* set replace */
+        /* Set replace. */
         (*regex)[index].replace = (pos_replace_end) ?
             weechat_strndup (pos_replace + length_delimiter,
                              pos_replace_end - pos_replace - length_delimiter) :
@@ -751,7 +751,7 @@ trigger_regex_split (const char *str_regex,
         if (!(*regex)[index].replace)
             goto memory_error;
 
-        /* set replace_escaped (command "s" only) */
+        /* Set replace_escaped (command "s" only). */
         if (command == TRIGGER_REGEX_COMMAND_REPLACE)
         {
             (*regex)[index].replace_escaped =
@@ -763,7 +763,7 @@ trigger_regex_split (const char *str_regex,
         if (!pos_replace_end)
             break;
 
-        /* set variable (optional) */
+        /* Set variable (optional). */
         ptr_regex = pos_replace_end + length_delimiter;
         if (!ptr_regex[0])
             break;
@@ -781,7 +781,7 @@ trigger_regex_split (const char *str_regex,
         if (!pos_next_regex)
             break;
 
-        /* skip spaces before next regex */
+        /* Skip spaces before next regex. */
         ptr_regex = pos_next_regex + 1;
         while (ptr_regex[0] == ' ')
         {
@@ -861,15 +861,15 @@ trigger_name_valid (const char *name)
     if (!name || !name[0] || (name[0] == '-'))
         return 0;
 
-    /* no spaces allowed */
+    /* No spaces are allowed. */
     if (strchr (name, ' '))
         return 0;
 
-    /* no periods allowed */
+    /* No periods are allowed. */
     if (strchr (name, '.'))
         return 0;
 
-    /* name is valid */
+    /* Name is valid. */
     return 1;
 }
 
@@ -932,7 +932,7 @@ trigger_find_pos (struct t_trigger *trigger, struct t_trigger *list_triggers)
             return ptr_trigger;
     }
 
-    /* position not found */
+    /* Position not found */
     return NULL;
 }
 
@@ -950,7 +950,7 @@ trigger_add (struct t_trigger *trigger,
     pos_trigger = trigger_find_pos (trigger, *list_triggers);
     if (pos_trigger)
     {
-        /* add trigger before "pos_trigger" */
+        /* Add trigger before "pos_trigger". */
         trigger->prev_trigger = pos_trigger->prev_trigger;
         trigger->next_trigger = pos_trigger;
         if (pos_trigger->prev_trigger)
@@ -961,7 +961,7 @@ trigger_add (struct t_trigger *trigger,
     }
     else
     {
-        /* add trigger to end of list */
+        /* Add trigger to end of list. */
         trigger->prev_trigger = *last_list_trigger;
         trigger->next_trigger = NULL;
         if (*last_list_trigger)
@@ -1032,18 +1032,18 @@ trigger_new (const char *name, const char *enabled, const char *hook,
     struct t_trigger *new_trigger;
     int i;
 
-    /* look for type */
+    /* Look for type. */
     if (trigger_search_hook_type (hook) < 0)
         return NULL;
 
-    /* look for return code */
+    /* Look for return code. */
     if (return_code && return_code[0]
         && (trigger_search_return_code (return_code) < 0))
     {
         return NULL;
     }
 
-    /* look for post action */
+    /* Look for post action. */
     if (post_action && post_action[0]
         && (trigger_search_post_action (post_action) < 0))
     {
@@ -1141,7 +1141,7 @@ trigger_rename (struct t_trigger *trigger, const char *name)
 
     free (option_name);
 
-    /* re-insert trigger in list (for sorting triggers by name) */
+    /* Re-insert trigger in list (for sorting triggers by name). */
     if (trigger->prev_trigger)
         (trigger->prev_trigger)->next_trigger = trigger->next_trigger;
     else
@@ -1194,7 +1194,7 @@ trigger_free (struct t_trigger *trigger)
     if (!trigger)
         return;
 
-    /* remove trigger from triggers list */
+    /* Remove trigger from triggers list. */
     if (trigger->prev_trigger)
         (trigger->prev_trigger)->next_trigger = trigger->next_trigger;
     if (trigger->next_trigger)
@@ -1204,7 +1204,7 @@ trigger_free (struct t_trigger *trigger)
     if (last_trigger == trigger)
         last_trigger = trigger->prev_trigger;
 
-    /* free data */
+    /* Free data. */
     trigger_unhook (trigger);
     trigger_regex_free (&trigger->regex_count, &trigger->regex);
     free (trigger->name);
@@ -1317,7 +1317,7 @@ trigger_debug_dump_cb (const void *pointer, void *data,
                        const char *signal, const char *type_data,
                        void *signal_data)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -1346,7 +1346,7 @@ trigger_debug_dump_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) argc;
     (void) argv;
 
@@ -1365,10 +1365,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     trigger_theme_init ();
 
-    /* hook some signals */
+    /* Hook some signals. */
     weechat_hook_signal ("debug_dump", &trigger_debug_dump_cb, NULL, NULL);
 
-    /* hook completions */
+    /* Hook completions. */
     trigger_completion_init ();
 
     if (weechat_trigger_plugin->upgrading)
@@ -1384,7 +1384,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     trigger_buffer_end ();

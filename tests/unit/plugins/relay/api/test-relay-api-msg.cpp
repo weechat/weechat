@@ -130,7 +130,7 @@ TEST(RelayApiMsg, BufferToJson)
     gui_buffer_set (gui_buffers, "key_bind_meta-y,1", "/test1");
     gui_buffer_set (gui_buffers, "key_bind_meta-y,2", "/test2 arg");
 
-    /* buffer without lines and nicks */
+    /* Buffer without lines and nicks */
     json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
@@ -184,7 +184,7 @@ TEST(RelayApiMsg, BufferToJson)
     gui_buffer_unhide (gui_buffers);
     gui_buffer_set_time_for_each_line (gui_buffers, 1);
 
-    /* buffer with 2 lines, without nicks */
+    /* Buffer with 2 lines, without nicks */
     json = relay_api_msg_buffer_to_json (gui_buffers, 2L, 0L, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
@@ -194,7 +194,7 @@ TEST(RelayApiMsg, BufferToJson)
     LONGS_EQUAL(2, cJSON_GetArraySize (json_lines));
     cJSON_Delete (json);
 
-    /* create a user buffer with 1 group / 4 nicks */
+    /* Create a user buffer with 1 group / 4 nicks. */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
     gui_buffer_set (buffer, "nicklist", "1");
@@ -207,7 +207,7 @@ TEST(RelayApiMsg, BufferToJson)
     CHECK(gui_nicklist_add_nick (buffer, group, "nick3", "yellow", NULL, NULL, 1));
     CHECK(gui_nicklist_add_nick (buffer, NULL, "root_nick_hidden", "cyan", "+", "yellow", 0));
 
-    /* buffer with no lines and 1 group / 4 nicks */
+    /* Buffer with no lines and 1 group / 4 nicks */
     json = relay_api_msg_buffer_to_json (buffer, 1L, 0L, 1, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
@@ -395,16 +395,16 @@ TEST(RelayApiMsg, LinesToJson)
               gui_color_get_custom ("green"));
     gui_chat_printf (NULL, "%s", str_msg2);
 
-    /* two lines with ANSI colors */
+    /* Two lines with ANSI colors */
     json = relay_api_msg_lines_to_json (gui_buffers, -2, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsArray (json));
     LONGS_EQUAL(2, cJSON_GetArraySize (json));
-    /* first line */
+    /* First line */
     json_line = cJSON_GetArrayItem (json, 0);
     CHECK(json_line);
     CHECK(cJSON_IsObject (json_line));
-    /* the line id is the date of print, with microseconds precision */
+    /* The line id is the date of print, with microseconds precision. */
     CHECK(gui_buffers->own_lines->last_line->prev_line->data->id
           > 1000000000000000LL);
     WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->prev_line->data->id,
@@ -435,7 +435,7 @@ TEST(RelayApiMsg, LinesToJson)
     CHECK(json_tag);
     CHECK(cJSON_IsString (json_tag));
     STRCMP_EQUAL("tag3", cJSON_GetStringValue (json_tag));
-    /* second line */
+    /* Second line */
     json_line = cJSON_GetArrayItem (json, 1);
     CHECK(json_line);
     CHECK(cJSON_IsObject (json_line));
@@ -460,7 +460,7 @@ TEST(RelayApiMsg, LinesToJson)
     LONGS_EQUAL(0, cJSON_GetArraySize (json_tags));
     cJSON_Delete (json);
 
-    /* with ANSI colors */
+    /* With ANSI colors */
     json = relay_api_msg_lines_to_json (gui_buffers, -1, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsArray (json));
@@ -476,7 +476,7 @@ TEST(RelayApiMsg, LinesToJson)
     free (str_msg_ansi);
     cJSON_Delete (json);
 
-    /* one line with WeeChat colors */
+    /* One line with WeeChat colors */
     json = relay_api_msg_lines_to_json (gui_buffers, -1, RELAY_API_COLORS_WEECHAT);
     CHECK(json);
     CHECK(cJSON_IsArray (json));
@@ -489,7 +489,7 @@ TEST(RelayApiMsg, LinesToJson)
     WEE_CHECK_OBJ_STR(str_msg2, json_line, "message");
     cJSON_Delete (json);
 
-    /* one line without colors */
+    /* One line without colors */
     json = relay_api_msg_lines_to_json (gui_buffers, -1, RELAY_API_COLORS_STRIP);
     CHECK(json);
     CHECK(cJSON_IsArray (json));
@@ -662,7 +662,7 @@ TEST(RelayApiMsg, ScriptToJson)
     CHECK(cJSON_IsObject (json));
     cJSON_Delete (json);
 
-    /* load a python script for this test */
+    /* Load a python script for this test. */
     ptr_test_scripts_dir = getenv ("WEECHAT_TESTS_SCRIPTS_DIR");
     test_scripts_dir = strdup (
         (ptr_test_scripts_dir) ?
@@ -693,7 +693,7 @@ TEST(RelayApiMsg, ScriptToJson)
     WEE_CHECK_OBJ_STR("GPL3", json, "license");
     cJSON_Delete (json);
 
-    /* unload script */
+    /* Unload script. */
     snprintf (str_command, sizeof (str_command),
               "/script unload -q weechat_testapi.py");
     run_cmd (str_command);

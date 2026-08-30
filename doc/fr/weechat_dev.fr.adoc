@@ -657,7 +657,10 @@ Quelques règles basiques que vous *devez* suivre quand vous écrivez du code C�
 * Essayez de ne pas dépasser 80 caractères par ligne, sauf si cela est
   nécessaire pour améliorer la lisibilité.
 * Utilisez les commentaires `+/* comment */+` (pas de style C99 comme
-  `+// comment+`).
+  `+// comment+`) :
+** Le commentaire doit démarrer par une lettre capitale sauf pour les identifiants.
+** Une phrase complète doit se terminer par un point.
+** Les commentaires décrivant les champs d'une structure peuvent être en minuscules seulement.
 * Ajoutez un commentaire avant chaque fonction, pour expliquer ce qu'elle fait
   (utilisez toujours un commentaire multi-lignes, même si la description est
   très courte).
@@ -679,12 +682,12 @@ foo ()
 {
     int i;
 
-    /* one line comment */
+    /* This is a one line comment. */
     i = 1;
 
     /*
-     * multi-line comment: this is a very long description about next block
-     * of code
+     * This is a multi-line comment: this is a very long description about
+     * next block of code.
      */
     i = 2;
     printf ("%d\n", i);
@@ -721,7 +724,7 @@ foo ()
 ----
 if (nicks_count == 1)
 {
-    /* something */
+    /* Do something. */
 }
 ----
 
@@ -739,7 +742,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
 {
     /* ... */
 
-    /* send signal with command that will be sent to server */
+    /* Send signal with command that will be sent to server. */
     irc_server_send_signal (server, "irc_out",
                             server->outqueue[priority]->command,
                             server->outqueue[priority]->message_after_mod,
@@ -752,12 +755,12 @@ irc_server_outqueue_send (struct t_irc_server *server)
     if (tags_to_send)
         free (tags_to_send);
 
-    /* send command */
+    /* Send command. */
     irc_server_send (server, server->outqueue[priority]->message_after_mod,
                      strlen (server->outqueue[priority]->message_after_mod));
     server->last_user_message = time_now;
 
-    /* start redirection if redirect is set */
+    /* Start redirection if redirect is set. */
     if (server->outqueue[priority]->redirect)
     {
         irc_redirect_init_command (server->outqueue[priority]->redirect,
@@ -776,21 +779,21 @@ irc_server_outqueue_send (struct t_irc_server *server)
 ----
 if (something)
 {
-    /* something */
+    /* Do something. */
 }
 else
 {
-    /* something else */
+    /* Do something else. */
 }
 
 if (my_boolean1 && my_boolean2 && (i == 10)
     && ((buffer1 != buffer2) || (window1 != window2)))
 {
-    /* something */
+    /* Do something. */
 }
 else
 {
-    /* something else */
+    /* Do something else. */
 }
 ----
 
@@ -800,13 +803,13 @@ else
 ----
 switch (string[0])
 {
-    case 'A':  /* first case */
+    case 'A':  /* First case */
         foo ("abc", "def");
         break;
-    case 'B':  /* second case */
+    case 'B':  /* Second case */
         bar (1, 2, 3);
         break;
-    default:  /* other cases */
+    default:  /* Other cases */
         baz ();
         break;
 }

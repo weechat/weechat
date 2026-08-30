@@ -37,10 +37,10 @@ TEST_GROUP(RelayRemoteNetworkWithRemote)
 {
     void setup ()
     {
-        /* disable auto-open of relay buffer */
+        /* Disable auto-open of relay buffer. */
         config_file_option_set (relay_config_look_auto_open_buffer, "off", 1);
 
-        /* create two relay remotes */
+        /* Create two relay remotes. */
         ptr_relay_remote = relay_remote_new ("remote",
                                              "http://localhost:9000",
                                              NULL, "off", NULL, "on",
@@ -56,7 +56,7 @@ TEST_GROUP(RelayRemoteNetworkWithRemote)
         relay_remote_free (ptr_relay_remote);
         ptr_relay_remote = NULL;
 
-        /* restore auto-open of relay buffer */
+        /* Restore auto-open of relay buffer. */
         config_file_option_reset (relay_config_look_auto_open_buffer, 1);
     }
 };

@@ -59,7 +59,7 @@ weelist_find_pos (struct t_weelist *weelist, const char *data)
         if (string_strcasecmp (data, ptr_item->data) < 0)
             return ptr_item;
     }
-    /* position not found, best position is at the end */
+    /* Position not found, best position is at the end. */
     return NULL;
 }
 
@@ -78,7 +78,7 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
 
     if (weelist->items)
     {
-        /* remove element if already in list */
+        /* Remove element if already in list. */
         pos_item = weelist_search (weelist, item->data);
         if (pos_item)
             weelist_remove (weelist, pos_item);
@@ -86,7 +86,7 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
 
     if (weelist->items)
     {
-        /* search position for new element, according to pos asked */
+        /* Search position for new element, according to pos asked. */
         pos_item = NULL;
         if (string_strcmp (where, WEECHAT_LIST_POS_BEGINNING) == 0)
             pos_item = weelist->items;
@@ -97,7 +97,7 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
 
         if (pos_item)
         {
-            /* insert data into the list (before position found) */
+            /* Insert data into the list (before position found). */
             item->prev_item = pos_item->prev_item;
             item->next_item = pos_item;
             if (pos_item->prev_item)
@@ -108,7 +108,7 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
         }
         else
         {
-            /* add data to the end */
+            /* Add data to the end. */
             item->prev_item = weelist->last_item;
             item->next_item = NULL;
             (weelist->last_item)->next_item = item;
@@ -170,7 +170,7 @@ weelist_search (struct t_weelist *weelist, const char *data)
         if (strcmp (data, ptr_item->data) == 0)
             return ptr_item;
     }
-    /* data not found in list */
+    /* Data not found in list */
     return NULL;
 }
 
@@ -197,7 +197,7 @@ weelist_search_pos (struct t_weelist *weelist, const char *data)
             return i;
         i++;
     }
-    /* data not found in list */
+    /* Data not found in list */
     return -1;
 }
 
@@ -221,7 +221,7 @@ weelist_casesearch (struct t_weelist *weelist, const char *data)
         if (string_strcasecmp (data, ptr_item->data) == 0)
             return ptr_item;
     }
-    /* data not found in list */
+    /* Data not found in list */
     return NULL;
 }
 
@@ -248,7 +248,7 @@ weelist_casesearch_pos (struct t_weelist *weelist, const char *data)
             return i;
         i++;
     }
-    /* data not found in list */
+    /* Data not found in list */
     return -1;
 }
 
@@ -274,7 +274,7 @@ weelist_get (struct t_weelist *weelist, int position)
         ptr_item = ptr_item->next_item;
         i++;
     }
-    /* item not found */
+    /* Item not found */
     return NULL;
 }
 
@@ -373,7 +373,7 @@ weelist_remove (struct t_weelist *weelist, struct t_weelist_item *item)
     if (!weelist || !item)
         return;
 
-    /* remove item from list */
+    /* Remove item from list. */
     if (weelist->last_item == item)
         weelist->last_item = item->prev_item;
     if (item->prev_item)
@@ -387,7 +387,7 @@ weelist_remove (struct t_weelist *weelist, struct t_weelist_item *item)
     if (item->next_item)
         (item->next_item)->prev_item = item->prev_item;
 
-    /* free data */
+    /* Free data. */
     free (item->data);
     free (item);
     weelist->items = new_items;

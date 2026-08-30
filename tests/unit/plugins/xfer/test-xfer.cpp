@@ -29,7 +29,7 @@ TEST_GROUP(Xfer)
      * Build a list with three xfers, used by the tests:
      *   - a file received, waiting for the manual acceptance by the user
      *   - a file received, accepted by the user
-     *   - a file sent
+     *   - a file sent.
      */
 
     void setup ()
@@ -81,7 +81,7 @@ TEST_GROUP(Xfer)
 
 TEST(Xfer, Search)
 {
-    /* invalid arguments */
+    /* Invalid arguments */
     POINTERS_EQUAL(
         NULL,
         xfer_search (NULL, NULL,
@@ -95,7 +95,7 @@ TEST(Xfer, Search)
         xfer_search ("irc", NULL,
                      XFER_TYPE_FILE_RECV_ACTIVE, XFER_STATUS_WAITING, 1234));
 
-    /* plugin name, plugin id, type and port are compared */
+    /* Plugin name, plugin id, type and port are compared. */
     POINTERS_EQUAL(
         NULL,
         xfer_search ("IRC", "libera",
@@ -113,7 +113,7 @@ TEST(Xfer, Search)
         xfer_search ("irc", "libera",
                      XFER_TYPE_FILE_RECV_ACTIVE, XFER_STATUS_WAITING, 4321));
 
-    /* xfer found */
+    /* fer found */
     POINTERS_EQUAL(
         &xfer_recv_waiting,
         xfer_search ("irc", "libera",
@@ -136,9 +136,9 @@ TEST(Xfer, Search)
 TEST(Xfer, SearchStatus)
 {
     /*
-     * the status must be compared: a transfer waiting for the manual
+     * The status must be compared: a transfer waiting for the manual
      * acceptance by the user must not be returned when a connecting transfer
-     * is searched
+     * is searched.
      */
     POINTERS_EQUAL(
         NULL,
@@ -153,7 +153,7 @@ TEST(Xfer, SearchStatus)
         xfer_search ("irc", "oftc",
                      XFER_TYPE_FILE_SEND_PASSIVE, XFER_STATUS_WAITING, 1234));
 
-    /* the status of xfers must not be changed by the search */
+    /* The status of xfers must not be changed by the search. */
     LONGS_EQUAL(XFER_STATUS_WAITING, xfer_recv_waiting.status);
     LONGS_EQUAL(XFER_STATUS_CONNECTING, xfer_recv_connecting.status);
     LONGS_EQUAL(XFER_STATUS_CONNECTING, xfer_send.status);

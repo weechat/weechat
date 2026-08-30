@@ -32,7 +32,7 @@ int
 arraylist_cmp_default_cb (void *data, struct t_arraylist *arraylist,
                           void *pointer1, void *pointer2)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -58,7 +58,7 @@ arraylist_new (int initial_size,
 {
     struct t_arraylist *new_arraylist;
 
-    /* check arguments */
+    /* Check arguments. */
     if (initial_size < 0)
         return NULL;
 
@@ -142,7 +142,7 @@ arraylist_grow (struct t_arraylist *arraylist)
     if (!arraylist)
         return 0;
 
-    /* if we have enough space allocated, do nothing */
+    /* If we have enough space allocated, do nothing. */
     if (arraylist->size + 1 <= arraylist->size_alloc)
         return 1;
 
@@ -182,14 +182,14 @@ arraylist_shrink (struct t_arraylist *arraylist)
     if (!arraylist)
         return 0;
 
-    /* we don't shrink if we are below the min allocated size */
+    /* We don't shrink if we are below the min allocated size. */
     if ((arraylist->size_alloc == 0)
         || (arraylist->size_alloc <= arraylist->size_alloc_min))
     {
         return 1;
     }
 
-    /* clear the arraylist if current allocated size is 1 */
+    /* Clear the arraylist if current allocated size is 1. */
     if (arraylist->size_alloc == 1)
     {
         free (arraylist->data);
@@ -244,9 +244,9 @@ arraylist_binary_search (struct t_arraylist *arraylist, void *pointer,
     end = arraylist->size - 1;
 
     /*
-     * statistically we often add at the end, or before first element, so
+     * Statistically we often add at the end, or before first element, so
      * first check these cases (for performance), before doing the binary
-     * search
+     * search.
      */
     rc = (arraylist->callback_cmp) (arraylist->callback_cmp_data,
                                     arraylist,
@@ -255,7 +255,7 @@ arraylist_binary_search (struct t_arraylist *arraylist, void *pointer,
     if (rc == 0)
     {
         ret_index = end;
-        /* by convention, add an element with same value after the last one */
+        /* By convention, add an element with same value after the last one. */
         ret_index_insert = end + 1;
         ret_pointer = arraylist->data[end];
         goto end;
@@ -304,7 +304,7 @@ arraylist_binary_search (struct t_arraylist *arraylist, void *pointer,
     start++;
     end--;
 
-    /* perform a binary search to find the index */
+    /* Perform a binary search to find the index. */
     while (start <= end)
     {
         middle = (start + end) / 2;
@@ -338,9 +338,9 @@ end:
     if ((ret_index >= 0) && arraylist->allow_duplicates)
     {
         /*
-         * in case of duplicates in table, the index of element found
+         * In case of duplicates in table, the index of element found
          * is the first element with the value, and the index for
-         * insert is the last element with the value + 1
+         * insert is the last element with the value + 1.
          */
         start = ret_index - 1;
         while (start >= 0)
@@ -502,8 +502,8 @@ arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer)
     else if (!arraylist->allow_duplicates)
     {
         /*
-         * arraylist is not sorted and does not allow duplicates, then we
-         * remove any element with the same value
+         * Arraylist is not sorted and does not allow duplicates, then we
+         * remove any element with the same value.
          */
         i = 0;
         while (i < arraylist->size)
@@ -519,14 +519,14 @@ arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer)
         }
     }
 
-    /* if index is negative or too big, add at the end */
+    /* If index is negative or too big, add at the end. */
     if ((index < 0) || (index > arraylist->size))
         index = arraylist->size;
 
     if (!arraylist_grow (arraylist))
         return -1;
 
-    /* shift next elements by one position */
+    /* Shift next elements by one position. */
     if (index < arraylist->size)
     {
         memmove (&arraylist->data[index + 1],
@@ -534,7 +534,7 @@ arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer)
                  (arraylist->size - index) * sizeof (*arraylist->data));
     }
 
-    /* set element */
+    /* Set element. */
     arraylist->data[index] = pointer;
 
     (arraylist->size)++;

@@ -175,7 +175,7 @@ TEST(GuiBarItem, Update)
 
 TEST(GuiBarItem, Free)
 {
-    /* test free of NULL bar item */
+    /* Test free of NULL bar item. */
     gui_bar_item_free (NULL);
 }
 

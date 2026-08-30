@@ -78,7 +78,7 @@ hashtable_get_type (const char *type)
             return i;
     }
 
-    /* type not found */
+    /* Type not found */
     return -1;
 }
 
@@ -158,7 +158,7 @@ hashtable_keycmp_default_cb (struct t_hashtable *hashtable,
 {
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     if (!key1 && !key2)
@@ -240,7 +240,7 @@ hashtable_new (int size,
     if (type_values_int < 0)
         return NULL;
 
-    /* the two callbacks are mandatory if type of keys is "buffer" */
+    /* The two callbacks are mandatory if type of keys is "buffer". */
     if ((type_keys_int == HASHTABLE_BUFFER) && (!callback_hash_key || !callback_keycmp))
         return NULL;
 
@@ -449,7 +449,7 @@ hashtable_rehash (struct t_hashtable *hashtable, int new_size)
 
             hash = hashtable->callback_hash_key (hashtable, ptr_item->key) % new_size;
 
-            /* find sorted position for item in its new bucket */
+            /* Find sorted position for item in its new bucket. */
             pos_item = NULL;
             for (ptr_bucket_item = new_htable[hash];
                  ptr_bucket_item
@@ -500,7 +500,7 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
         return NULL;
     }
 
-    /* search position for item in hashtable */
+    /* Search position for item in hashtable. */
     hash = hashtable->callback_hash_key (hashtable, key) % hashtable->size;
     pos_item = NULL;
     for (ptr_item = hashtable->htable[hash];
@@ -511,7 +511,7 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
         pos_item = ptr_item;
     }
 
-    /* replace value if item is already in hashtable */
+    /* Replace value if item is already in hashtable. */
     if (ptr_item && (hashtable->callback_keycmp (hashtable, key, ptr_item->key) == 0))
     {
         hashtable_free_value (hashtable, ptr_item);
@@ -521,12 +521,12 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
         return ptr_item;
     }
 
-    /* create new item */
+    /* Create new item. */
     new_item = malloc (sizeof (*new_item));
     if (!new_item)
         return NULL;
 
-    /* set key and value */
+    /* Set key and value. */
     hashtable_alloc_type (hashtable->type_keys,
                           key, key_size,
                           &new_item->key, &new_item->key_size);
@@ -534,10 +534,10 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
                           value, value_size,
                           &new_item->value, &new_item->value_size);
 
-    /* add item */
+    /* Add item. */
     if (pos_item)
     {
-        /* insert item after position found */
+        /* Insert item after position found. */
         new_item->prev_item = pos_item;
         new_item->next_item = pos_item->next_item;
         if (pos_item->next_item)
@@ -546,7 +546,7 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
     }
     else
     {
-        /* insert item at beginning of list */
+        /* Insert item at beginning of list. */
         new_item->prev_item = NULL;
         new_item->next_item = hashtable->htable[hash];
         if (hashtable->htable[hash])
@@ -554,7 +554,7 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
         hashtable->htable[hash] = new_item;
     }
 
-    /* keep items ordered by date of creation */
+    /* Keep items ordered by date of creation. */
     if (hashtable->newest_item)
         (hashtable->newest_item)->next_created_item = new_item;
     else
@@ -565,7 +565,7 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
 
     hashtable->items_count++;
 
-    /* grow the table if the average chain length is too high */
+    /* Grow the table if the average chain length is too high. */
     if (hashtable->items_count > hashtable->size * HASHTABLE_LOAD_FACTOR_MAX)
         hashtable_rehash (hashtable, hashtable->size * 2);
 
@@ -774,7 +774,7 @@ hashtable_duplicate_map_cb (void *data,
 {
     struct t_hashtable *hashtable2;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     hashtable2 = (struct t_hashtable *)data;
@@ -824,7 +824,7 @@ hashtable_get_list_keys_map_cb (void *data,
 {
     struct t_weelist *list;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) value;
 
@@ -884,7 +884,7 @@ hashtable_compute_length_keys_cb (void *data,
     const char *str_key;
     int *length;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) value;
 
     length = (int *)data;
@@ -907,7 +907,7 @@ hashtable_compute_length_values_cb (void *data,
     const char *str_value;
     int *length;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) key;
 
     length = (int *)data;
@@ -951,7 +951,7 @@ hashtable_build_string_keys_cb (void *data,
     const char *str_key;
     char *str;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) value;
 
     str = (char *)data;
@@ -977,7 +977,7 @@ hashtable_build_string_values_cb (void *data,
     const char *str_value;
     char *str;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) key;
 
     str = (char *)data;
@@ -1056,7 +1056,7 @@ hashtable_get_keys_values (struct t_hashtable *hashtable,
         hashtable->keys_values = NULL;
     }
 
-    /* first compute length of string */
+    /* First compute length of string. */
     length = 0;
     hashtable_map (hashtable,
                    (keys && values) ? &hashtable_compute_length_keys_values_cb :
@@ -1066,7 +1066,7 @@ hashtable_get_keys_values (struct t_hashtable *hashtable,
     if (length == 0)
         return hashtable->keys_values;
 
-    /* build string */
+    /* Build string. */
     hashtable->keys_values = malloc (length + 1);
     if (!hashtable->keys_values)
         return NULL;
@@ -1336,11 +1336,11 @@ hashtable_remove_item (struct t_hashtable *hashtable,
     if (!hashtable || !item)
         return;
 
-    /* free key and value */
+    /* Free key and value. */
     hashtable_free_value (hashtable, item);
     hashtable_free_key (hashtable, item);
 
-    /* remove item from ordered list (by date of creation) */
+    /* Remove item from ordered list (by date of creation). */
     if (item->prev_created_item)
         (item->prev_created_item)->next_created_item = item->next_created_item;
     if (item->next_created_item)
@@ -1350,7 +1350,7 @@ hashtable_remove_item (struct t_hashtable *hashtable,
     if (hashtable->newest_item == item)
         hashtable->newest_item = item->prev_created_item;
 
-    /* remove item from list */
+    /* Remove item from list. */
     if (item->prev_item)
         (item->prev_item)->next_item = item->next_item;
     if (item->next_item)
@@ -1385,7 +1385,7 @@ hashtable_remove (struct t_hashtable *hashtable, const void *key)
     {
         hashtable_remove_item (hashtable, ptr_item, hash);
 
-        /* shrink the table if the average chain length is too low */
+        /* Shrink the table if the average chain length is too low. */
         if ((hashtable->size > HASHTABLE_MIN_SIZE)
             && (hashtable->items_count * HASHTABLE_LOAD_FACTOR_MIN < hashtable->size))
         {

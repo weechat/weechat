@@ -45,7 +45,7 @@ int real_delete_pending = 0;           /* 1 if some hooks must be deleted   */
 
 int hook_socketpair_ok = 0;            /* 1 if socketpair() is OK           */
 
-/* hook callbacks */
+/* Hook callbacks */
 t_callback_hook *hook_callback_add[HOOK_NUM_TYPES] =
 { NULL, NULL, NULL, &hook_fd_add_cb, NULL, NULL, NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
@@ -151,7 +151,7 @@ hook_init (void)
 {
     int type, sock[2], rc;
 
-    /* initialize list of hooks and callbacks */
+    /* Initialize list of hooks and callbacks. */
     for (type = 0; type < HOOK_NUM_TYPES; type++)
     {
         weechat_hooks[type] = NULL;
@@ -182,7 +182,7 @@ hook_init (void)
     /*
      * Test if socketpair() function is working fine: this is NOT the case
      * on Windows with Ubuntu bash
-     * (errno == 94: ESOCKTNOSUPPORT: socket type not supported)
+     * (errno == 94: ESOCKTNOSUPPORT: socket type not supported).
      */
     rc = socketpair (AF_LOCAL, SOCK_DGRAM, 0, sock);
     if (rc < 0)
@@ -218,7 +218,7 @@ hook_search_type (const char *type)
             return i;
     }
 
-    /* type not found */
+    /* Type not found */
     return -1;
 }
 
@@ -237,7 +237,7 @@ hook_find_pos (struct t_hook *hook)
 
     if (hook->type == HOOK_TYPE_COMMAND)
     {
-        /* for command hook, sort on command name + priority */
+        /* For command hook, sort on command name + priority. */
         for (ptr_hook = weechat_hooks[hook->type]; ptr_hook;
              ptr_hook = ptr_hook->next_hook)
         {
@@ -254,7 +254,7 @@ hook_find_pos (struct t_hook *hook)
     }
     else
     {
-        /* for other types, sort on priority */
+        /* For other types, sort on priority. */
         for (ptr_hook = weechat_hooks[hook->type]; ptr_hook;
              ptr_hook = ptr_hook->next_hook)
         {
@@ -263,7 +263,7 @@ hook_find_pos (struct t_hook *hook)
         }
     }
 
-    /* position not found, add at the end */
+    /* Position not found, add at the end. */
     return NULL;
 }
 
@@ -281,7 +281,7 @@ hook_add_to_list (struct t_hook *new_hook)
         pos_hook = hook_find_pos (new_hook);
         if (pos_hook)
         {
-            /* add hook before "pos_hook" */
+            /* Add hook before "pos_hook". */
             new_hook->prev_hook = pos_hook->prev_hook;
             new_hook->next_hook = pos_hook;
             if (pos_hook->prev_hook)
@@ -292,7 +292,7 @@ hook_add_to_list (struct t_hook *new_hook)
         }
         else
         {
-            /* add hook to end of list */
+            /* Add hook to end of list. */
             new_hook->prev_hook = last_weechat_hook[new_hook->type];
             new_hook->next_hook = NULL;
             last_weechat_hook[new_hook->type]->next_hook = new_hook;
@@ -437,7 +437,7 @@ hook_valid (struct t_hook *hook)
         }
     }
 
-    /* hook not found */
+    /* Hook not found */
     return 0;
 }
 
@@ -547,7 +547,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
     ssize_t num_written;
     int rc, number;
 
-    /* invalid hook? */
+    /* Invalid hook? */
     if (!hook_valid (hook))
         return;
 
@@ -565,7 +565,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             && (hook->type == HOOK_TYPE_PROCESS)
             && (HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]) >= 0))
         {
-            /* send data on child's stdin */
+            /* Send data on child's stdin. */
             num_written = write (HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]),
                                  value, strlen (value));
             (void) num_written;
@@ -577,7 +577,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             && (hook->type == HOOK_TYPE_PROCESS)
             && (HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]) >= 0))
         {
-            /* close stdin pipe */
+            /* Close stdin pipe. */
             close (HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]));
             HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]) = -1;
         }
@@ -590,7 +590,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
         {
             if (!util_parse_int (value, 10, &number))
             {
-                /* not a number? look for signal by name */
+                /* Not a number? Look for signal by name. */
                 number = signal_search_name (value);
             }
             if (number >= 0)
@@ -640,7 +640,7 @@ int
 hook_timer_clean_process_cb (const void *pointer, void *data,
                              int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
@@ -659,7 +659,7 @@ hook_schedule_clean_process (pid_t pid)
 {
     pid_t *temp_pid;
 
-    /* temp_pid will be freed when the timer is removed */
+    /* temp_pid will be freed when the timer is removed. */
     temp_pid = malloc (sizeof (*temp_pid));
     if (temp_pid)
     {
@@ -676,11 +676,11 @@ hook_schedule_clean_process (pid_t pid)
 void
 unhook (struct t_hook *hook)
 {
-    /* invalid hook? */
+    /* Invalid hook? */
     if (!hook_valid (hook))
         return;
 
-    /* hook already deleted? */
+    /* Hook already deleted? */
     if (hook->deleted)
         return;
 
@@ -693,10 +693,10 @@ unhook (struct t_hook *hook)
                          plugin_get_name (hook->plugin));
     }
 
-    /* free data specific to the hook */
+    /* Free data specific to the hook. */
     (hook_callback_free_data[hook->type]) (hook);
 
-    /* free data common to all hooks */
+    /* Free data common to all hooks. */
     if (hook->subplugin)
     {
         free (hook->subplugin);
@@ -708,14 +708,14 @@ unhook (struct t_hook *hook)
         hook->callback_data = NULL;
     }
 
-    /* remove hook from list (if there's no hook exec pending) */
+    /* Remove hook from list (if there's no hook exec pending). */
     if (hook_exec_recursion == 0)
     {
         hook_remove_from_list (hook);
     }
     else
     {
-        /* there is one or more hook exec, then delete later */
+        /* There is one or more hook exec, then delete later. */
         hook->deleted = 1;
         real_delete_pending = 1;
     }
@@ -784,7 +784,7 @@ hook_hdata_hook_cb (const void *pointer, void *data, const char *hdata_name)
     int hook_type;
     char str_list[128];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -857,11 +857,11 @@ hook_add_to_infolist_pointer (struct t_infolist *infolist, struct t_hook *hook)
     if (!infolist_new_var_pointer (ptr_item, "callback_data", (void *)hook->callback_data))
         return 0;
 
-    /* hook deleted? return only hook info above */
+    /* Hook deleted? Return only hook info above. */
     if (hook->deleted)
         return 1;
 
-    /* hook not deleted: add extra hook info */
+    /* Hook not deleted: add extra hook info. */
     if (!(hook_callback_add_to_infolist[hook->type]) (ptr_item, hook))
         return 0;
 

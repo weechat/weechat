@@ -76,7 +76,7 @@ plugin_api_gettext (const char *string)
 const char *
 plugin_api_ngettext (const char *single, const char *plural, int count)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) single;
     (void) count;
 
@@ -252,7 +252,7 @@ plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
     if (ptr_option)
         return ptr_option->value;
 
-    /* option not found */
+    /* Option not found */
     return NULL;
 }
 
@@ -363,7 +363,7 @@ plugin_api_color (const char *color_name)
     if (!color_name)
         return GUI_NO_COLOR;
 
-    /* name is a weechat color option ? => then return this color */
+    /* Name is a weechat color option ? => then return this color. */
     str_color = gui_color_search_config (color_name);
     if (str_color)
         return str_color;
@@ -444,7 +444,7 @@ plugin_api_modifier_color_decode_cb (const void *pointer, void *data,
                                      const char *modifier_data,
                                      const char *string)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
@@ -463,7 +463,7 @@ plugin_api_modifier_color_decode_ansi_cb (const void *pointer, void *data,
                                           const char *modifier_data,
                                           const char *string)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
@@ -485,7 +485,7 @@ plugin_api_modifier_color_encode_ansi_cb (const void *pointer, void *data,
                                           const char *modifier_data,
                                           const char *string)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
@@ -508,7 +508,7 @@ plugin_api_modifier_eval_path_home_cb (const void *pointer, void *data,
     const char *ptr_directory;
     char *result;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;

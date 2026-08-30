@@ -588,30 +588,30 @@ Przykłady:
 
 [source,python]
 ----
-# wyświetl "witaj" w głównym buforze
+# Wyświetl "witaj" w głównym buforze.
 weechat.prnt("", "witaj")
 
-# wyświetl "witaj" w głównym buforze, ale nie zapisuj tego do pliku z logiem
-# (tylko wersje ≥ 0.3.3)
+# Wyświetl "witaj" w głównym buforze, ale nie zapisuj tego do pliku z logiem
+# (tylko wersje ≥ 0.3.3).
 weechat.prnt_date_tags("", 0, "no_log", "witaj")
 
-# wyświetl "==>" przed wiadomością "witaj" w obecnym buforze
-# (przedrostek i wiadomość muszą być oddzielone znakiem tabulacji)
+# Wyświetl "==>" przed wiadomością "witaj" w obecnym buforze
+# (przedrostek i wiadomość muszą być oddzielone znakiem tabulacji).
 weechat.prnt(weechat.current_buffer(), "==>\twitaj")
 
-# wyświetla wiadomość o błędzie w głównym buforze (z przedrostkiem błąd)
+# Wyświetla wiadomość o błędzie w głównym buforze (z przedrostkiem błąd).
 weechat.prnt("", "%szłe argumenty" % weechat.prefix("błąd"))
 
-# wyświetl wiadomość z kolorem w głównym buforze
+# Wyświetl wiadomość z kolorem w głównym buforze.
 weechat.prnt("", "text %sżółty na niebieskim" % weechat.color("yellow,blue"))
 
-# przeszuka bufor i wyświetli wiadomość
-# (pełna nazwa bufora to wtyczka.nazwa, na przykład: "irc.libera.#weechat")
+# Przeszuka bufor i wyświetli wiadomość
+# (pełna nazwa bufora to wtyczka.nazwa, na przykład: "irc.libera.#weechat").
 buffer = weechat.buffer_search("irc", "libera.#weechat")
 weechat.prnt(buffer, "wiadomość na kanale #weechat")
 
-# inne rozwiązanie na znalezienie bufora IRC (lepsze)
-# (zauważ, że serwer i kanał są oddzielone przecinkiem)
+# Inne rozwiązanie na znalezienie bufora IRC (lepsze)
+# (zauważ, że serwer i kanał są oddzielone przecinkiem).
 buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.prnt(buffer, "wiadomość na kanale #weechat")
 ----
@@ -629,10 +629,10 @@ Przykłady:
 
 [source,python]
 ----
-# wykona polecenie "/help" w obecnym buforze (wyświetli się w głównym buforze)
+# Wykona polecenie "/help" w obecnym buforze (wyświetli się w głównym buforze).
 weechat.command("", "/help")
 
-# wyśle "witaj" na kanał #weechat (użytkownicy na kanale zobaczą wiadomość)
+# Wyśle "witaj" na kanał #weechat (użytkownicy na kanale zobaczą wiadomość).
 buffer = weechat.info_get("irc_buffer", "libera,#weechat")
 weechat.command(buffer, "witaj")
 ----
@@ -650,23 +650,23 @@ Przykłady:
 
 [source,python]
 ----
-# callback dla danych otrzymanych na wejściu
+# Callback dla danych otrzymanych na wejściu
 def buffer_input_cb(data, buffer, input_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# callback wywoływany przy zamknięciu bufora
+# Callback wywoływany przy zamknięciu bufora
 def buffer_close_cb(data, buffer):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# tworzenie bufora
+# Tworzenie bufora.
 buffer = weechat.buffer_new("mybuffer", "buffer_input_cb", "", "buffer_close_cb", "")
 
-# ustawianie tytułu
+# Ustawianie tytułu.
 weechat.buffer_set(buffer, "title", "To jest tytuł mojego buforu.")
 
-# wyłącza logowanie, przez ustawienie zmiennej lokalnej "no_log" na "1"
+# Wyłącza logowanie, przez ustawienie zmiennej lokalnej "no_log" na "1".
 weechat.buffer_set(buffer, "localvar_set_no_log", "1")
 ----
 
@@ -690,13 +690,13 @@ Możliwe jest dodanie, odczytanie lub kasowanie lokalnych zmiennych dla buforów
 
 [source,python]
 ----
-# dodanie zmiennej lokalnej
+# Dodanie zmiennej lokalnej.
 weechat.buffer_set(buffer, "localvar_set_myvar", "my_value")
 
-# odczyt zmiennej lokalnej
+# Odczyt zmiennej lokalnej.
 myvar = weechat.buffer_get_string(buffer, "localvar_myvar")
 
-# kasowanie zmiennej lokalnej
+# Kasowanie zmiennej lokalnej.
 weechat.buffer_set(buffer, "localvar_del_myvar", "")
 ----
 
@@ -756,7 +756,7 @@ def timer_cb(data, remaining_calls):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# timer wywoływany co minutę, kiedy liczba sekund wynosi 00
+# Timer wywoływany co minutę, kiedy liczba sekund wynosi 00
 weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 ----
 
@@ -794,7 +794,7 @@ tóra robi coś blokującego:
 [source,python]
 ----
 def get_status(data):
-    # do something blocking...
+    # Do something blocking...
     # ...
     return "this is the result"
 
@@ -902,14 +902,14 @@ SCRIPT_NAME = "myscript"
 
 def config_cb(data, option, value):
     """Callback called when a script option is changed."""
-    # na przykład, odczyt wszystkich opcji skryptu...
+    # Na przykład, odczyt wszystkich opcji skryptu...
     # ...
     return weechat.WEECHAT_RC_OK
 
 # ...
 
 weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
-# dla innych języków, zmień "python" na swój język (perl/ruby/lua/tcl/guile/javascript)
+# Dla innych języków, zmień "python" na swój język (perl/ruby/lua/tcl/guile/javascript/php)
 ----
 
 [[config_options_weechat]]
@@ -921,19 +921,19 @@ należy wywołać `+config_string+`, `+config_boolean+`, `+config_integer+` lub
 
 [source,python]
 ----
-# string
+# String
 weechat.prnt("", "wartość opcji weechat.look.item_time_format to: %s"
                  % (weechat.config_string(weechat.config_get("weechat.look.item_time_format"))))
 
-# boolean
+# Boolean
 weechat.prnt("", "wartość opcji weechat.look.day_change to: %d"
                  % (weechat.config_boolean(weechat.config_get("weechat.look.day_change"))))
 
-# integer
+# Integer
 weechat.prnt("", "wartość opcji weechat.look.scroll_page_percent to: %d"
                  % (weechat.config_integer(weechat.config_get("weechat.look.scroll_page_percent"))))
 
-# color
+# Color
 weechat.prnt("", "wartość opcji weechat.color.chat_delimiters to: %s"
                  % (weechat.config_color(weechat.config_get("weechat.color.chat_delimiters"))))
 ----
@@ -962,7 +962,7 @@ xxx,irc_raw_in2_yyy::
 [source,python]
 ----
 def join_cb(data, sygnał, signal_data):
-    # sygnał to na przykład: "libera,irc_in2_join"
+    # Sygnał to na przykład: "libera,irc_in2_join".
     # signal_data to wiadomość IRC, na przykład: ":nick!user@host JOIN :#channel"
     server = signal.split(",")[0]
     msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
@@ -971,8 +971,8 @@ def join_cb(data, sygnał, signal_data):
         weechat.prnt(buffer, "%s (%s) has joined this channel!" % (msg["nick"], msg["host"]))
     return weechat.WEECHAT_RC_OK
 
-# przydatne jest użycie "*" jako serwera, aby złapać wiadomość JOIN na wszystkich
-# serwerach IRC
+# Przydatne jest użycie "*" jako serwera, aby złapać wiadomość JOIN na wszystkich
+# serwerach IRC.
 weechat.hook_signal("*,irc_in2_join", "join_cb", "")
 ----
 
@@ -994,8 +994,8 @@ irc_in2_xxx::
 [source,python]
 ----
 def modifier_cb(data, modifier, modifier_data, string):
-    # dodaje nazwę serwera do wszystkich otrzymanych wiadomości
-    # (nie jest to może bardzo przydatne, ale to tylko przykład!)
+    # Dodaje nazwę serwera do wszystkich otrzymanych wiadomości
+    # (nie jest to może bardzo przydatne, ale to tylko przykład!).
     return "%s %s" % (string, modifier_data)
 
 weechat.hook_modifier("irc_in2_privmsg", "modifier_cb", "")
@@ -1144,7 +1144,7 @@ Aby otrzymać ciąg z numerem wersji:
 
 [source,python]
 ----
-# wyświetli to na przykład "Version 0.3.2"
+# Wyświetli to na przykład "Version 0.3.2".
 weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 ----
 
@@ -1153,10 +1153,10 @@ weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
 
 [source,python]
 ----
-# katalog z konfiguracją WeeChat, na przykład: "/home/user/.config/weechat"
+# Katalog z konfiguracją WeeChat, na przykład: "/home/user/.config/weechat".
 weechat.prnt("", "Katalog z konfiguracją WeeChat: %s" % weechat.info_get("weechat_config_dir", ""))
 
-# nieaktywność klawiatury
+# Nieaktywność klawiatury.
 weechat.prnt("", "Nieaktywny od %s sekund" % weechat.info_get("inactivity", ""))
 ----
 
@@ -1172,7 +1172,7 @@ Przykład:
 
 [source,python]
 ----
-# odczyta infolistę "buffer", aby otrzymać listę buforów
+# Odczyta infolistę "buffer", aby otrzymać listę buforów.
 infolist = weechat.infolist_get("buffer", "", "")
 if infolist:
     while weechat.infolist_next(infolist):

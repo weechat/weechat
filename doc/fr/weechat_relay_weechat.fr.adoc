@@ -2663,10 +2663,10 @@ Exemple de hdata avec deux tampons (tampon "core" weechat et le serveur
 libera) et deux clés (_number_ et _full_name_) :
 
 ....
-# commande
+# Commande
 hdata buffer:gui_buffers(*) number,full_name
 
-# réponse
+# Réponse
 ┌────────┬──────────────────────────┬───╥─────────┬───┬──────────────╥─────────┬───┬───────────────────┐
 │ buffer │ number:int,full_name:str │ 2 ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │ irc.server.libera │
 └────────┴──────────────────────────┴───╨─────────┴───┴──────────────╨─────────┴───┴───────────────────┘
@@ -2677,10 +2677,10 @@ hdata buffer:gui_buffers(*) number,full_name
 Exemple de hdata avec les lignes du tampon "core" :
 
 ....
-# commande
+# Commande
 hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 
-# réponse
+# Réponse
 ┌─────────────────────────────┬─────┬────╥──
 │ buffer/lines/line/line_data │ ... │ 50 ║ ...
 └─────────────────────────────┴─────┴────╨──
@@ -2707,10 +2707,10 @@ hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 Exemple de hdata avec la liste des pseudos :
 
 ....
-# commande
+# Commande
 nicklist
 
-# réponse
+# Réponse
 ┌───────────────────┬──
 │ buffer/nick_group │ ...
 └───────────────────┴──
@@ -2751,10 +2751,10 @@ nicklist
 Exemple de hdata vide (la hotlist est vide dans WeeChat) :
 
 ....
-# commande
+# Commande
 hdata hotlist:gui_hotlist(*)
 
-# réponse
+# Réponse
 ┌────────┬────────┬───┐
 │ (NULL) │ (NULL) │ 0 │
 └────────┴────────┴───┘
@@ -2817,10 +2817,10 @@ Exemple d'infolist avec deux tampons (tampon "core" weechat et le serveur
 libera) :
 
 ....
-# commande
+# Commande
 infolist buffer
 
-# réponse
+# Réponse
 ┌────────┬───╥────┬─────────┬─────┬─────────┬─────╥────┬─────────┬─────┬─────────┬─────┐
 │ buffer │ 2 ║ 42 │ pointer │ ptr │ 0x12345 │ ... ║ 42 │ pointer │ ptr │ 0x6789a │ ... │
 └────────┴───╨────┴─────────┴─────┴─────────┴─────╨────┴─────────┴─────┴─────────┴─────┘

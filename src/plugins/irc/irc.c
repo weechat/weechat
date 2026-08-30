@@ -62,7 +62,7 @@ irc_signal_quit_cb (const void *pointer, void *data,
 {
     struct t_irc_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -95,18 +95,18 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
     struct t_irc_server *ptr_server;
     int quit, tls_disconnected;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
 
-    /* only save session and continue? */
+    /* Only save session and continue? */
     if (signal_data && (strcmp (signal_data, "save") == 0))
     {
         /*
-         * save session with a disconnected state in servers and a scheduled
-         * reconnection
+         * Save session with a disconnected state in servers and a scheduled
+         * reconnection.
          */
         if (!irc_upgrade_save (1))
         {
@@ -129,7 +129,7 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
         /*
          * FIXME: it's not possible to upgrade with TLS servers connected
          * (GnuTLS library can't reload data after upgrade), so we close
-         * connection for all TLS servers currently connected
+         * connection for all TLS servers currently connected.
          */
         if (ptr_server->is_connected && (ptr_server->tls_connected || quit))
         {
@@ -142,12 +142,12 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
                       "work for servers connected via TLS"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME);
             }
-            /* send QUIT to server, then disconnect */
+            /* Send QUIT to server, then disconnect. */
             irc_command_quit_server (ptr_server, NULL);
             irc_server_disconnect (ptr_server, 0, 0);
             /*
-             * schedule reconnection: WeeChat will reconnect to this server
-             * after restart
+             * Schedule reconnection: WeeChat will reconnect to this server
+             * after restart.
              */
             ptr_server->index_current_address = 0;
             ptr_server->reconnect_delay = IRC_SERVER_OPTION_INTEGER(
@@ -217,7 +217,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     irc_notify_init ();
 
-    /* hook some signals */
+    /* Hook some signals. */
     irc_debug_init ();
     weechat_hook_signal ("quit",
                          &irc_signal_quit_cb, NULL, NULL);
@@ -236,7 +236,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("window_scrolled",
                          &irc_list_window_scrolled_cb, NULL, NULL);
 
-    /* hook hsignals for redirection */
+    /* Hook hsignals for redirection. */
     weechat_hook_hsignal ("irc_redirect_pattern",
                           &irc_redirect_pattern_hsignal_cb, NULL, NULL);
     weechat_hook_hsignal ("irc_redirect_command",
@@ -244,7 +244,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_hsignal ("irc_redirection_server_*_list",
                           &irc_list_hsignal_redirect_list_cb, NULL, NULL);
 
-    /* modifiers */
+    /* Modifiers */
     weechat_hook_modifier ("irc_color_decode",
                            &irc_color_modifier_cb, NULL, NULL);
     weechat_hook_modifier ("irc_color_encode",
@@ -258,18 +258,18 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_modifier ("irc_batch",
                            &irc_batch_modifier_cb, NULL, NULL);
 
-    /* hook completions */
+    /* Hook completions */
     irc_completion_init ();
 
     irc_bar_item_init ();
 
-    /* check if auto-connect is enabled */
+    /* Check if auto-connect is enabled. */
     info_auto_connect = weechat_info_get ("auto_connect", NULL);
     auto_connect = (info_auto_connect && (strcmp (info_auto_connect, "1") == 0)) ?
         1 : 0;
     free (info_auto_connect);
 
-    /* look at arguments */
+    /* Look at arguments */
     for (i = 0; i < argc; i++)
     {
         if ((weechat_strncmp (argv[i], IRC_PLUGIN_NAME, 3) == 0))
@@ -316,7 +316,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) plugin;
 
     if (irc_hook_timer)

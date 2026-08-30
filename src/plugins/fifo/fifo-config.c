@@ -15,11 +15,11 @@
 
 struct t_config_file *fifo_config_file = NULL;
 
-/* sections */
+/* Sections */
 
 struct t_config_section *fifo_config_section_file = NULL;
 
-/* fifo config, file section */
+/* Fifo config, file section */
 
 struct t_config_option *fifo_config_file_enabled = NULL;
 struct t_config_option *fifo_config_file_path = NULL;
@@ -33,7 +33,7 @@ void
 fifo_config_change_file_enabled (const void *pointer, void *data,
                                  struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -52,7 +52,7 @@ void
 fifo_config_change_file_path (const void *pointer, void *data,
                               struct t_config_option *option)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) option;
@@ -81,7 +81,7 @@ fifo_config_init (void)
     if (!fifo_config_file)
         return 0;
 
-    /* file */
+    /* File */
     fifo_config_section_file = weechat_config_new_section (
         fifo_config_file, "file",
         0, 0,

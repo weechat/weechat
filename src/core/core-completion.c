@@ -85,7 +85,7 @@ completion_list_add_bars_names_cb (const void *pointer, void *data,
 {
     struct t_gui_bar *ptr_bar;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -112,7 +112,7 @@ completion_list_add_bars_items_cb (const void *pointer, void *data,
 {
     struct t_gui_bar_item *ptr_bar_item;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -140,7 +140,7 @@ completion_list_add_custom_bar_items_names_cb (const void *pointer, void *data,
 {
     struct t_gui_bar_item_custom *ptr_item;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -166,7 +166,7 @@ completion_list_add_custom_bar_item_conditions_cb (const void *pointer, void *da
                                                    struct t_gui_buffer *buffer,
                                                    struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -191,7 +191,7 @@ completion_list_add_custom_bar_item_contents_cb (const void *pointer, void *data
                                                  struct t_gui_buffer *buffer,
                                                  struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -286,7 +286,7 @@ completion_list_add_bars_options_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -313,7 +313,7 @@ completion_list_add_buffers_names_cb (const void *pointer, void *data,
 {
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -342,7 +342,7 @@ completion_list_add_buffers_numbers_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer;
     char str_number[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -371,7 +371,7 @@ completion_list_add_buffers_plugins_names_cb (const void *pointer, void *data,
 {
     struct t_gui_buffer *ptr_buffer;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -396,7 +396,7 @@ completion_list_map_buffer_local_variable_cb (void *data,
                                               struct t_hashtable *hashtable,
                                               const void *key, const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) value;
 
@@ -415,7 +415,7 @@ completion_list_add_buffer_local_variables_cb (const void *pointer, void *data,
                                                struct t_gui_buffer *buffer,
                                                struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -442,7 +442,7 @@ completion_list_add_buffer_local_variable_value_cb (const void *pointer, void *d
     int argc, arg_index;
     const char *ptr_value;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -490,7 +490,7 @@ completion_list_add_buffer_properties_set_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -518,7 +518,7 @@ completion_list_map_buffer_local_variable_setauto_cb (void *data,
 {
     char str_localvar[4096];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) value;
 
@@ -544,13 +544,13 @@ completion_list_add_buffer_properties_setauto_cb (const void *pointer, void *dat
     char str_key[1024];
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
 
-    /* add buffer properties */
+    /* Add buffer properties. */
     for (i = 0; gui_buffer_properties_set[i]; i++)
     {
         gui_completion_list_add (completion,
@@ -558,12 +558,12 @@ completion_list_add_buffer_properties_setauto_cb (const void *pointer, void *dat
                                  0, WEECHAT_LIST_POS_SORT);
     }
 
-    /* add buffer local variables */
+    /* Add buffer local variables. */
     hashtable_map (completion->buffer->local_variables,
                    &completion_list_map_buffer_local_variable_setauto_cb,
                    completion);
 
-    /* add buffer keys */
+    /* Add buffer keys. */
     for (ptr_key = completion->buffer->keys; ptr_key;
          ptr_key = ptr_key->next_key)
     {
@@ -588,7 +588,7 @@ completion_list_add_buffer_properties_get_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -629,7 +629,7 @@ completion_list_add_windows_numbers_cb (const void *pointer, void *data,
     struct t_gui_window *ptr_win;
     char str_number[32];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -660,7 +660,7 @@ completion_list_add_colors_cb (const void *pointer, void *data,
     int i, num_colors;
     struct t_gui_color_palette *color_palette;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -711,7 +711,7 @@ completion_list_map_add_palette_color_cb (void *data,
                                           struct t_hashtable *hashtable,
                                           const void *key, const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) value;
 
@@ -730,7 +730,7 @@ completion_list_add_palette_colors_cb (const void *pointer, void *data,
                                        struct t_gui_buffer *buffer,
                                        struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -755,7 +755,7 @@ completion_list_add_config_files_cb (const void *pointer, void *data,
 {
     struct t_config_file *ptr_config_file;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -790,7 +790,7 @@ completion_list_add_filename_cb (const void *pointer, void *data,
     struct dirent *entry;
     struct stat statbuf;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -875,20 +875,20 @@ completion_list_add_filename_cb (const void *pointer, void *data,
         if (strncmp (entry->d_name, path_base, length_path_base) != 0)
             continue;
 
-        /* skip "." and ".." */
+        /* Skip "." and "..". */
         if ((strcmp (entry->d_name, ".") == 0)
             || (strcmp (entry->d_name, "..") == 0))
         {
             continue;
         }
 
-        /* skip entry if not accessible */
+        /* Skip entry if not accessible. */
         snprintf (buf, sizeof (buf), "%s%s%s",
                   dir_name, DIR_SEPARATOR, entry->d_name);
         if (stat (buf, &statbuf) == -1)
             continue;
 
-        /* build full path name */
+        /* Build full path name. */
         snprintf (buf, sizeof (buf),
                   "%s%s%s%s%s%s",
                   prefix,
@@ -899,7 +899,7 @@ completion_list_add_filename_cb (const void *pointer, void *data,
                   entry->d_name,
                   S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "");
 
-        /* add path to list of completions */
+        /* Add path to list of completions. */
         gui_completion_list_add (completion, buf,
                                  0, WEECHAT_LIST_POS_SORT);
     }
@@ -926,7 +926,7 @@ completion_list_add_filters_cb (const void *pointer, void *data,
 {
     struct t_gui_filter *ptr_filter;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -954,7 +954,7 @@ completion_list_add_filters_disabled_cb (const void *pointer, void *data,
 {
     struct t_gui_filter *ptr_filter;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -985,7 +985,7 @@ completion_list_add_filters_enabled_cb (const void *pointer, void *data,
 {
     struct t_gui_filter *ptr_filter;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1016,7 +1016,7 @@ completion_list_add_hook_types_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1045,7 +1045,7 @@ completion_list_add_commands_cb (const void *pointer, void *data,
     char str_command[512];
     struct t_hook *ptr_hook;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -1094,7 +1094,7 @@ completion_list_add_infos_cb (const void *pointer, void *data,
 {
     struct t_hook *ptr_hook;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1126,7 +1126,7 @@ completion_list_add_infolists_cb (const void *pointer, void *data,
 {
     struct t_hook *ptr_hook;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1160,7 +1160,7 @@ completion_list_add_nicks_cb (const void *pointer, void *data,
     struct t_gui_nick *ptr_nick;
     int count_before;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1174,8 +1174,8 @@ completion_list_add_nicks_cb (const void *pointer, void *data,
     if (completion->list->size == count_before)
     {
         /*
-         * no plugin overrides nick completion => use default nick
-         * completion, with nicks of nicklist, in order of nicklist
+         * No plugin overrides nick completion => use default nick
+         * completion, with nicks of nicklist, in order of nicklist.
          */
         ptr_group = NULL;
         ptr_nick = NULL;
@@ -1212,7 +1212,7 @@ completion_list_add_config_options_cb (const void *pointer, void *data,
     struct t_config_option *ptr_option;
     char *option_full_name;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1257,7 +1257,7 @@ completion_list_add_plugins_cb (const void *pointer, void *data,
 {
     struct t_weechat_plugin *ptr_plugin;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1287,14 +1287,14 @@ completion_list_add_plugins_installed_exec_cb (void *data,
 
     completion = (struct t_gui_completion *)data;
 
-    /* start after last '/' (or '\') in path */
+    /* Start after last '/' (or '\') in path. */
     pos = strrchr (filename, DIR_SEPARATOR_CHAR);
     if (pos)
         pos++;
     else
         pos = filename;
 
-    /* truncate after the last '.' in name */
+    /* Truncate after the last '.' in name. */
     pos2 = strrchr (pos, '.');
     if (pos2)
         name = string_strndup (pos, pos2 - pos);
@@ -1321,13 +1321,13 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
     char *plugin_path, *dir_name, *extra_libdir;
     struct t_hashtable *options;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
 
-    /* plugins in WeeChat extra lib dir */
+    /* Search plugins in WeeChat extra lib dir. */
     extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
     if (extra_libdir && extra_libdir[0])
     {
@@ -1340,7 +1340,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
         }
     }
 
-    /* plugins in WeeChat home dir */
+    /* Search plugins in WeeChat home dir. */
     if (CONFIG_STRING(config_plugin_path)
         && CONFIG_STRING(config_plugin_path)[0])
     {
@@ -1363,7 +1363,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
         }
     }
 
-    /* plugins in WeeChat global lib dir */
+    /* Search plugins in WeeChat global lib dir. */
     if (string_asprintf (&dir_name, "%s/plugins", WEECHAT_LIBDIR) >= 0)
     {
         dir_exec_on_files (dir_name, 1, 0,
@@ -1393,7 +1393,7 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
     struct t_weechat_plugin *ptr_plugin;
     struct t_hook *ptr_hook;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -1423,8 +1423,8 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
         if (strcmp (argv[arg_index], PLUGIN_CORE) != 0)
         {
             /*
-             * plugin name is different from "core", then search it in
-             * plugin list
+             * Plugin name is different from "core", then search it in
+             * plugin list.
              */
             ptr_plugin = plugin_search (argv[arg_index]);
             if (!ptr_plugin)
@@ -1482,7 +1482,7 @@ completion_list_add_config_option_values_cb (const void *pointer, void *data,
     struct t_config_section *ptr_section, *section_found;
     struct t_config_option *option_found;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) completion_item;
     (void) buffer;
 
@@ -1693,7 +1693,7 @@ completion_list_add_weechat_commands_cb (const void *pointer, void *data,
     const char *pos;
     char str_command[512];
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -1743,7 +1743,7 @@ completion_list_add_proxies_names_cb (const void *pointer, void *data,
 {
     struct t_proxy *ptr_proxy;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1771,7 +1771,7 @@ completion_list_add_proxies_options_cb (const void *pointer, void *data,
 {
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1798,7 +1798,7 @@ completion_list_add_keys_contexts_cb (const void *pointer, void *data,
 {
     int context;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1826,7 +1826,7 @@ completion_list_add_keys_codes_cb (const void *pointer, void *data,
     int context;
     struct t_gui_key *ptr_key;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1858,7 +1858,7 @@ completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
     int context;
     struct t_gui_key *ptr_key, *ptr_default_key;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -1866,7 +1866,7 @@ completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
 
     for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
-        /* keys added or redefined */
+        /* Add keys added or redefined. */
         for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
         {
             ptr_default_key = gui_key_search (gui_default_keys[context],
@@ -1879,7 +1879,7 @@ completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
             }
         }
 
-        /* keys deleted */
+        /* Add keys deleted. */
         for (ptr_default_key = gui_default_keys[context]; ptr_default_key;
              ptr_default_key = ptr_default_key->next_key)
         {
@@ -1910,16 +1910,16 @@ completion_list_add_cursor_areas_cb (const void *pointer, void *data,
     struct t_gui_bar_window *ptr_bar_win;
     struct t_gui_bar *ptr_bar;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
 
-    /* add "chat" for chat area */
+    /* Add "chat" for chat area. */
     gui_completion_list_add (completion, "chat", 0, WEECHAT_LIST_POS_SORT);
 
-    /* add bar windows (of current window) */
+    /* Add bar windows (of current window). */
     for (ptr_bar_win = gui_current_window->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)
     {
@@ -1950,7 +1950,7 @@ completion_list_add_layouts_names_cb (const void *pointer, void *data,
 {
     struct t_gui_layout *ptr_layout;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -2013,7 +2013,7 @@ completion_list_add_theme_themes_all_cb (const void *pointer, void *data,
     struct t_completion_theme_dir ctx;
     char *dir;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -2052,7 +2052,7 @@ completion_list_add_theme_themes_user_cb (const void *pointer, void *data,
     struct t_completion_theme_dir ctx;
     char *dir;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -2086,7 +2086,7 @@ completion_list_add_theme_themes_files_cb (const void *pointer, void *data,
     struct t_completion_theme_dir ctx;
     char *dir;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -2114,7 +2114,7 @@ completion_list_map_add_secured_data_cb (void *data,
                                          struct t_hashtable *hashtable,
                                          const void *key, const void *value)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) value;
 
@@ -2133,7 +2133,7 @@ completion_list_add_secured_data_cb (const void *pointer, void *data,
                                      struct t_gui_buffer *buffer,
                                      struct t_gui_completion *completion)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -2158,7 +2158,7 @@ completion_list_add_env_vars_cb (const void *pointer, void *data,
 {
     char *pos, *name, **ptr_environ;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -2195,7 +2195,7 @@ completion_list_add_env_value_cb (const void *pointer, void *data,
     char **argv, *value;
     int argc, arg_index;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -2240,7 +2240,7 @@ completion_list_map_eval_buffer_local_variable_cb (void *data,
 {
     char *name;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
     (void) value;
 
@@ -2336,7 +2336,7 @@ completion_list_add_eval_variables_cb (const void *pointer, void *data,
     };
     int i;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) completion_item;

@@ -26,7 +26,7 @@ extern "C"
 #include "src/gui/gui-color.h"
 }
 
-/* recording of messages: to test if a message is actually displayed */
+/* Recording of messages: to test if a message is actually displayed. */
 int record_messages = 0;
 struct t_arraylist *recorded_messages = NULL;
 struct t_hook *record_hook_line = NULL;
@@ -40,7 +40,7 @@ int
 record_cmp_cb (void *data, struct t_arraylist *arraylist,
                void *pointer1, void *pointer2)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -55,7 +55,7 @@ record_cmp_cb (void *data, struct t_arraylist *arraylist,
 void
 record_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 {
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -73,7 +73,7 @@ record_hook_line_cb (const void *pointer, void *data, struct t_hashtable *line)
     struct t_hashtable *hashtable;
     const char *ptr_string;
 
-    /* make C++ compiler happy */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
 
@@ -208,7 +208,7 @@ record_search (const char *buffer, const char *prefix, const char *message,
         }
     }
 
-    /* message not displayed */
+    /* Message not displayed */
     return NULL;
 }
 
@@ -247,7 +247,7 @@ record_search_msg_regex (const char *buffer, const char *regex)
 
     regfree (&preg);
 
-    /* no message matching the regex */
+    /* No message matching the regex */
     return NULL;
 }
 

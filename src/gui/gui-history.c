@@ -91,7 +91,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
         buffer->history = new_history;
         buffer->num_history++;
 
-        /* remove one command if necessary */
+        /* Remove one command if necessary. */
         if ((CONFIG_INTEGER(config_history_max_commands) > 0)
             && (buffer->num_history > CONFIG_INTEGER(config_history_max_commands)))
         {
@@ -110,7 +110,7 @@ gui_history_global_remove_oldest (void)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_history *ptr_history;
 
-    /* ensure no buffer is using the last global history entry */
+    /* Ensure no buffer is using the last global history entry. */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -161,7 +161,7 @@ gui_history_global_add (const char *string)
         gui_history = new_history;
         num_gui_history++;
 
-        /* remove one command if necessary */
+        /* Remove one command if necessary. */
         if ((CONFIG_INTEGER(config_history_max_commands) > 0)
             && (num_gui_history > CONFIG_INTEGER(config_history_max_commands)))
         {
@@ -183,8 +183,8 @@ gui_history_add (struct t_gui_buffer *buffer, const char *string)
     string2 = hook_modifier_exec (NULL, "history_add", str_buffer, string);
 
     /*
-     * if message was NOT dropped by modifier, then we add it to buffer and
-     * global history
+     * If message was NOT dropped by modifier, then we add it to buffer and
+     * global history.
      */
     if (!string2 || string2[0])
     {
@@ -346,7 +346,7 @@ gui_history_hdata_history_update_cb (void *data,
     unsigned long value;
     int rc;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) hdata;
 
@@ -358,14 +358,14 @@ gui_history_hdata_history_update_cb (void *data,
 
     if (pointer)
     {
-        /* update history */
+        /* Update history. */
         ptr_history = (struct t_gui_history *)pointer;
         free (ptr_history->text);
         ptr_history->text = strdup (text);
     }
     else
     {
-        /* create new entry in history */
+        /* Create new entry in history. */
         ptr_buffer = NULL;
         if (hashtable_has_key (hashtable, "buffer"))
         {
@@ -396,7 +396,7 @@ gui_history_hdata_history_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

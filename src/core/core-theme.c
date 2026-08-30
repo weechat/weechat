@@ -166,7 +166,7 @@ theme_merge_overrides_cb (void *data,
 {
     struct t_hashtable *dst = (struct t_hashtable *)data;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) hashtable;
 
     hashtable_set (dst, (const char *)key, (const char *)value);
@@ -285,7 +285,7 @@ theme_register (struct t_weechat_plugin *plugin,
         {
             contribution = theme_contribution_new (theme, plugin, script);
             if (!contribution)
-                return theme;  /* theme exists but contribution failed */
+                return theme;  /* Theme exists but contribution failed. */
         }
         hashtable_map (overrides,
                        &theme_merge_overrides_cb,
@@ -442,7 +442,7 @@ int
 theme_list_cmp_cb (void *data, struct t_arraylist *arraylist,
                    void *pointer1, void *pointer2)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) arraylist;
 
@@ -651,7 +651,7 @@ theme_apply_set_option_cb (void *data,
 {
     struct t_config_option *option = NULL;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) hashtable;
 
@@ -737,8 +737,10 @@ theme_file_parse (const char *path)
         fclose (file);
         return NULL;
     }
-    /* file themes carry a single anonymous (plugin=NULL, script=NULL)
-       contribution holding everything in the [options] section */
+    /*
+     * File themes carry a single anonymous (plugin=NULL, script=NULL)
+     * contribution holding everything in the [options] section.
+     */
     contribution = theme_contribution_new (theme, NULL, NULL);
     if (!contribution)
     {
@@ -746,10 +748,10 @@ theme_file_parse (const char *path)
         fclose (file);
         return NULL;
     }
-    /* clear the placeholder name; the file should provide it */
+    /* Clear the placeholder name; the file should provide it. */
     free (theme->name);
     theme->name = NULL;
-    /* description/date/weechat_version come from the file too */
+    /* Description/date/weechat_version come from the file too. */
     free (theme->description);
     theme->description = NULL;
     free (theme->date);
@@ -763,7 +765,7 @@ theme_file_parse (const char *path)
     {
         line_number++;
 
-        /* trim trailing CR / LF */
+        /* Trim trailing CR / LF. */
         end = strchr (line, '\r');
         if (end)
             *end = '\0';
@@ -771,16 +773,16 @@ theme_file_parse (const char *path)
         if (end)
             *end = '\0';
 
-        /* skip leading whitespace */
+        /* Skip leading whitespace. */
         ptr = line;
         while ((ptr[0] == ' ') || (ptr[0] == '\t'))
             ptr++;
 
-        /* skip empty lines and comments */
+        /* Skip empty lines and comments. */
         if (!ptr[0] || (ptr[0] == '#'))
             continue;
 
-        /* section header */
+        /* Section header */
         if (ptr[0] == '[')
         {
             end = strchr (ptr, ']');
@@ -809,7 +811,7 @@ theme_file_parse (const char *path)
                     _("%s%s: line %d: ignoring unknown section \"%s\""),
                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                     path, line_number, ptr + 1);
-                in_options = -1;  /* skip lines until next known section */
+                in_options = -1;  /* Skip lines until next known section. */
             }
             continue;
         }
@@ -829,14 +831,14 @@ theme_file_parse (const char *path)
             continue;
         }
 
-        /* trim key */
+        /* Trim key. */
         key = ptr;
         end = eq - 1;
         while ((end > key) && ((end[0] == ' ') || (end[0] == '\t')))
             end--;
         end[1] = '\0';
 
-        /* trim value */
+        /* Trim value. */
         value = eq + 1;
         while ((value[0] == ' ') || (value[0] == '\t'))
             value++;
@@ -952,7 +954,7 @@ theme_apply (const char *name)
         }
     }
 
-    /* create a backup of current themable state, if enabled */
+    /* Create a backup of current themable state, if enabled. */
     if (CONFIG_BOOLEAN(config_look_theme_backup)
         && (strncmp (name, "backup-", 7) != 0))
     {
@@ -982,20 +984,20 @@ theme_apply (const char *name)
     }
     theme_applying = 0;
 
-    /* file_theme (if any) is transient: discard now */
+    /* file_theme (if any) is transient: discard now. */
     theme_free (file_theme);
 
-    /* single refresh at the end */
+    /* Single refresh at the end */
     if (gui_init_ok)
     {
         gui_color_init_weechat ();
         gui_window_ask_refresh (1);
     }
 
-    /* persist the active theme label */
+    /* Persist the active theme label. */
     config_file_option_set (config_look_theme, name, 1);
 
-    /* tell the user about the backup */
+    /* Tell the user about the backup. */
     if (backup_name)
     {
         gui_chat_printf (
@@ -1046,8 +1048,10 @@ theme_reset (void)
         }
     }
 
-    /* reset every themable option to its default value; per-option gui
-       refreshes are suppressed via theme_applying */
+    /*
+     * Reset every themable option to its default value; per-option gui
+     * refreshes are suppressed via theme_applying.
+     */
     theme_applying = 1;
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
@@ -1071,7 +1075,7 @@ theme_reset (void)
         gui_window_ask_refresh (1);
     }
 
-    /* clear active-theme label */
+    /* Clear active-theme label. */
     config_file_option_reset (config_look_theme, 1);
 
     if (backup_name)

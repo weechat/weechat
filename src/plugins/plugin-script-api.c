@@ -1254,7 +1254,7 @@ plugin_script_api_buffer_new_props (struct t_weechat_plugin *weechat_plugin,
 
     if (new_buffer)
     {
-        /* used when upgrading weechat, to set callbacks */
+        /* Used when upgrading weechat, to set callbacks. */
         weechat_buffer_set (new_buffer,
                             "localvar_set_script_name", script->name);
         weechat_buffer_set (new_buffer,

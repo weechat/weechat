@@ -49,7 +49,7 @@ char **gui_chat_lines_waiting_buffer = NULL;    /* lines waiting for core   */
                                                 /* buffer                   */
 int gui_chat_whitespace_mode = 0;               /* make whitespaces visible */
 
-/* command /pipe */
+/* Command /pipe */
 int gui_chat_pipe = 0;                          /* pipe enabled             */
 char *gui_chat_pipe_command = NULL;             /* piped command            */
 struct t_gui_buffer *gui_chat_pipe_buffer = NULL;  /* pipe msgs to a buffer */
@@ -82,14 +82,14 @@ gui_chat_init (void)
     char str_prefix[64];
     int i;
 
-    /* build default prefixes */
+    /* Build default prefixes. */
     for (i = 0; i < GUI_CHAT_NUM_PREFIXES; i++)
     {
         snprintf (str_prefix, sizeof (str_prefix), "%s\t", default_prefix[i]);
         gui_chat_prefix[i] = strdup (str_prefix);
     }
 
-    /* some hsignals */
+    /* Hook hsignals. */
     hook_hsignal (NULL,
                   "chat_quote_time_prefix_message;chat_quote_prefix_message;"
                   "chat_quote_message;chat_quote_focused_line",
@@ -398,8 +398,8 @@ char *
 gui_chat_get_time_string (time_t date, int date_usec, int highlight)
 {
     /*
-     * text_time2 receives, for each of the (max 127) chars in text_time, up to
-     * one color code (3 bytes) plus the char itself, so 4 bytes per char
+     * Text_time2 receives, for each of the (max 127) chars in text_time, up to
+     * one color code (3 bytes) plus the char itself, so 4 bytes per char.
      */
     char text_time[128], text_time2[(128*4)+16], text_time_char[2];
     char *text_with_color;
@@ -579,7 +579,7 @@ int
 gui_chat_buffer_valid (struct t_gui_buffer *buffer,
                        int buffer_type)
 {
-    /* check buffer pointer, closing and type */
+    /* Check buffer pointer, closing and type. */
     if (!buffer || !gui_buffer_valid (buffer)
         || buffer->closing
         || ((int)(buffer->type) != buffer_type))
@@ -587,7 +587,7 @@ gui_chat_buffer_valid (struct t_gui_buffer *buffer,
         return 0;
     }
 
-    /* check if mute is enabled */
+    /* Check if mute is enabled. */
     if ((buffer_type == GUI_BUFFER_TYPE_FORMATTED)
         && ((gui_chat_mute == GUI_CHAT_MUTE_ALL_BUFFERS)
             || ((gui_chat_mute == GUI_CHAT_MUTE_BUFFER)
@@ -619,7 +619,7 @@ gui_chat_pipe_search_color (const char *color)
             return i;
     }
 
-    /* color not found */
+    /* Color not found */
     return -1;
 }
 
@@ -701,7 +701,7 @@ gui_chat_pipe_send_buffer_input (struct t_gui_buffer *buffer, const char *data)
     buffer_saved = gui_chat_pipe_buffer;
     send_to_buffer_saved = gui_chat_pipe_send_to_buffer;
 
-    /* temporarily disable the pipe redirection, to prevent infinite loop */
+    /* Temporarily disable the pipe redirection, to prevent infinite loop. */
     gui_chat_pipe_buffer = NULL;
     gui_chat_pipe_send_to_buffer = 0;
 
@@ -712,7 +712,7 @@ gui_chat_pipe_send_buffer_input (struct t_gui_buffer *buffer, const char *data)
         0,  /* split_newline */
         0);  /* user_data */
 
-    /* restore pipe redirection */
+    /* Restore pipe redirection. */
     gui_chat_pipe_buffer = buffer_saved;
     gui_chat_pipe_send_to_buffer = send_to_buffer_saved;
 
@@ -745,8 +745,8 @@ gui_chat_pipe_handle_line (struct t_gui_line *line)
     if (gui_chat_pipe_concat_lines)
     {
         /*
-         * concatenate line with previous ones, it will be displayed, sent to
-         * buffer input or written to a file later
+         * Concatenate line with previous ones, it will be displayed, sent to
+         * buffer input or written to a file later.
          */
         data2 = (gui_chat_pipe_strip_chars) ?
             string_strip (data, 1, 1, gui_chat_pipe_strip_chars) : strdup (data);
@@ -761,7 +761,7 @@ gui_chat_pipe_handle_line (struct t_gui_line *line)
             string_dyn_concat (gui_chat_pipe_concat_lines, data2, -1);
         }
         free (data2);
-        /* concatenate tags */
+        /* Concatenate tags. */
         if (gui_chat_pipe_concat_tags)
         {
             tags = string_rebuild_split_string (
@@ -776,13 +776,13 @@ gui_chat_pipe_handle_line (struct t_gui_line *line)
     }
     else if (gui_chat_pipe_file)
     {
-        /* pipe to a file */
+        /* Pipe to a file. */
         fprintf (gui_chat_pipe_file, "%s\n", data);
         rc = 1;
     }
     else if (gui_chat_pipe_buffer && gui_chat_pipe_send_to_buffer)
     {
-        /* pipe to a buffer as input */
+        /* Pipe to a buffer as input. */
         gui_chat_pipe_send_buffer_input (gui_chat_pipe_buffer, data);
         rc = 1;
     }
@@ -905,14 +905,14 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
     pos_prefix = NULL;
     ptr_msg = message;
 
-    /* space followed by tab => prefix ignored */
+    /* Space followed by tab => prefix ignored. */
     if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
     {
         ptr_msg += 2;
     }
     else
     {
-        /* if two first chars are tab, then do not display time */
+        /* If two first chars are tab, then do not display time. */
         if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
         {
             display_time = 0;
@@ -920,7 +920,7 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
         }
         else
         {
-            /* if tab found, use prefix (before tab) */
+            /* If tab found, use prefix (before tab). */
             pos_tab = strchr (ptr_msg, '\t');
             if (pos_tab)
             {
@@ -947,7 +947,7 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
     if (!new_line->data->buffer)
         goto no_print;
 
-    /* call modifier for message printed ("weechat_print") */
+    /* Call modifier for message printed ("weechat_print"). */
     string_asprintf (&modifier_data,
                      "0x%lx;%s",
                      (unsigned long)buffer,
@@ -977,8 +977,8 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
         if (!new_string[0] && string[0])
         {
             /*
-             * modifier returned empty message, then we'll not
-             * print anything
+             * Modifier returned empty message, then we'll not
+             * print anything.
              */
             goto no_print;
         }
@@ -986,24 +986,24 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
         {
             if (!buffer->input_multiline)
             {
-                /* if input_multiline is not set, keep only first line */
+                /* If input_multiline is not set, keep only first line. */
                 pos_newline = strchr (new_string, '\n');
                 if (pos_newline)
                     pos_newline[0] = '\0';
             }
 
-            /* use new message if there are changes */
+            /* Use new message if there are changes. */
             display_time = 1;
             pos_prefix = NULL;
             ptr_msg = new_string;
-            /* space followed by tab => prefix ignored */
+            /* Space followed by tab => prefix ignored. */
             if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
             {
                 ptr_msg += 2;
             }
             else
             {
-                /* if two first chars are tab, then do not display time */
+                /* If two first chars are tab, then do not display time. */
                 if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
                 {
                     display_time = 0;
@@ -1012,7 +1012,7 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
                 }
                 else
                 {
-                    /* if tab found, use prefix (before tab) */
+                    /* If tab found, use prefix (before tab). */
                     pos_tab = strchr (ptr_msg, '\t');
                     if (pos_tab)
                     {
@@ -1047,7 +1047,7 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
 
     if (gui_chat_pipe_handle_line (new_line))
     {
-        /* line was handled with /pipe command, do NOT display it */
+        /* Line was handled with /pipe command, do NOT display it. */
         goto no_print;
     }
     else if (gui_chat_pipe_buffer)
@@ -1064,10 +1064,10 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
         new_line->data->message = message_color;
     }
 
-    /* add line in the buffer */
+    /* Add line in the buffer. */
     gui_line_add (new_line, 1);
 
-    /* run hook_print for the new line */
+    /* Run hook_print for the new line. */
     if (new_line->data->buffer && new_line->data->buffer->print_hooks_enabled)
         hook_print_exec (new_line->data->buffer, new_line);
 
@@ -1144,7 +1144,7 @@ gui_chat_print_lines_waiting_buffer (FILE *f)
         }
         /*
          * gui_chat_lines_waiting_buffer may be NULL after call to
-         * gui_chat_printf (if not enough memory)
+         * gui_chat_printf (if not enough memory).
          */
     }
     if (gui_chat_lines_waiting_buffer)
@@ -1203,7 +1203,7 @@ gui_chat_printf_datetime_tags (struct t_gui_buffer *buffer,
         pos_end = NULL;
         if (!buffer || !buffer->input_multiline)
         {
-            /* display until next end of line */
+            /* Display until next end of line. */
             pos_end = strchr (pos, '\n');
             if (pos_end)
                 pos_end[0] = '\0';
@@ -1257,7 +1257,7 @@ gui_chat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y,
     if (gui_init_ok && !gui_chat_buffer_valid (buffer, GUI_BUFFER_TYPE_FREE))
         return;
 
-    /* if y is negative, add a line -N lines after the last line */
+    /* If y is negative, add a line -N lines after the last line. */
     if (y < 0)
     {
         y = (buffer->own_lines && buffer->own_lines->last_line) ?
@@ -1301,7 +1301,7 @@ gui_chat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y,
     {
         if (gui_init_ok)
         {
-            /* compute the number of lines to add before y */
+            /* Compute the number of lines to add before y. */
             if (new_line->data->buffer->own_lines
                 && new_line->data->buffer->own_lines->last_line)
             {
@@ -1314,9 +1314,9 @@ gui_chat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y,
             if (num_lines_to_add > 0)
             {
                 /*
-                 * add empty line(s) before asked line, to ensure there is at
+                 * Add empty line(s) before asked line, to ensure there is at
                  * least "y" lines in buffer, and then be able to scroll
-                 * properly buffer page by page
+                 * properly buffer page by page.
                  */
                 for (i = y - num_lines_to_add; i < y; i++)
                 {
@@ -1340,7 +1340,7 @@ gui_chat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y,
     {
         if (gui_init_ok)
         {
-            /* delete line */
+            /* Delete line. */
             last_y = (new_line->data->buffer->own_lines->last_line) ?
                 new_line->data->buffer->own_lines->last_line->data->y : 0;
             if (y <= last_y)
@@ -1386,14 +1386,14 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
     int is_nick, rc;
     char str_time[128], *str;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
     if (!gui_current_window->buffer->input)
         return WEECHAT_RC_OK;
 
-    /* get time */
+    /* Get time. */
     str_time[0] = '\0';
     ptr_date = (strstr (signal, "time")) ?
         hashtable_get (hashtable, "_chat_line_date") : NULL;
@@ -1416,7 +1416,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
         }
     }
 
-    /* check if the prefix is a nick */
+    /* Check if the prefix is a nick. */
     is_nick = 0;
     line = hashtable_get (hashtable, "_chat_line");
     if (line && line[0])
@@ -1430,7 +1430,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
         }
     }
 
-    /* get prefix + message */
+    /* Get prefix + message. */
     prefix = (strstr (signal, "prefix")) ?
         hashtable_get (hashtable, "_chat_line_prefix") : NULL;
     ptr_prefix = prefix;
@@ -1478,7 +1478,7 @@ gui_chat_end (void)
 {
     int i;
 
-    /* free prefixes */
+    /* Free prefixes. */
     for (i = 0; i < GUI_CHAT_NUM_PREFIXES; i++)
     {
         if (gui_chat_prefix[i])
@@ -1488,7 +1488,7 @@ gui_chat_end (void)
         }
     }
 
-    /* free lines waiting for buffer (should always be NULL here) */
+    /* Free lines waiting for buffer (should always be NULL here). */
     if (gui_chat_lines_waiting_buffer)
     {
         string_dyn_free (gui_chat_lines_waiting_buffer, 1);

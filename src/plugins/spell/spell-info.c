@@ -28,7 +28,7 @@ spell_info_info_spell_dict_cb (const void *pointer, void *data,
     struct t_gui_buffer *buffer;
     const char *buffer_full_name, *ptr_dict;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
@@ -71,7 +71,7 @@ spell_info_info_spell_dict_cb (const void *pointer, void *data,
 void
 spell_info_init (void)
 {
-    /* info hooks */
+    /* Info hooks */
     weechat_hook_info (
         "spell_dict",
         N_("comma-separated list of dictionaries used in buffer"),

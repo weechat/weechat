@@ -43,7 +43,7 @@ irc_batch_search (struct t_irc_server *server, const char *reference)
             return ptr_batch;
     }
 
-    /* batch not found */
+    /* Batch not found */
     return NULL;
 }
 
@@ -104,7 +104,7 @@ irc_batch_start_batch (struct t_irc_server *server, const char *reference,
     if (!server || !reference || !type)
         return NULL;
 
-    /* check if reference already exists */
+    /* Check if reference already exists. */
     ptr_batch = irc_batch_search (server, reference);
     if (ptr_batch)
         return NULL;
@@ -175,7 +175,7 @@ irc_batch_free (struct t_irc_server *server, struct t_irc_batch *batch)
     weechat_hashtable_free (batch->tags);
     weechat_string_dyn_free (batch->messages, 1);
 
-    /* remove batch from list */
+    /* Remove batch from list. */
     if (batch->prev_batch)
         (batch->prev_batch)->next_batch = batch->next_batch;
     if (batch->next_batch)
@@ -225,14 +225,14 @@ irc_batch_process_messages (struct t_irc_server *server,
     new_messages = weechat_hook_modifier_exec ("irc_batch", modifier_data,
                                                *(batch->messages));
 
-    /* no changes in new messages */
+    /* No changes in new messages */
     if (new_messages && (strcmp (*(batch->messages), new_messages) == 0))
     {
         free (new_messages);
         new_messages = NULL;
     }
 
-    /* messages not dropped? */
+    /* Messages not dropped? */
     if (!new_messages || new_messages[0])
     {
         list_messages = weechat_string_split (
@@ -241,9 +241,9 @@ irc_batch_process_messages (struct t_irc_server *server,
         if (list_messages)
         {
             /*
-             * the batch can be freed while its messages are sent to the
+             * The batch can be freed while its messages are sent to the
              * callbacks (for example a message disconnecting the server),
-             * so the tags are copied before
+             * so the tags are copied before.
              */
             tags = (batch->tags) ? weechat_hashtable_dup (batch->tags) : NULL;
             for (i = 0; i < count_messages; i++)
@@ -274,10 +274,10 @@ irc_batch_process_messages (struct t_irc_server *server,
                                    NULL,   /* pos_channel */
                                    NULL);  /* pos_text */
 
-                /* add raw message */
+                /* Add raw message. */
                 irc_raw_print (server, IRC_RAW_FLAG_RECV, message2);
 
-                /* call receive callback, ignoring batch tags */
+                /* Call receive callback, ignoring batch tags. */
                 irc_protocol_recv_command (server, message2, command, channel, 1);
 
                 free (message);
@@ -313,9 +313,9 @@ irc_batch_end_batch (struct t_irc_server *server, const char *reference)
     ptr_batch->end_received = 1;
 
     /*
-     * process messages in all batches, if these conditions are met:
+     * Process messages in all batches, if these conditions are met:
      *   - end_received = 1
-     *   - no parent or the parent has messages_processed = 1
+     *   - no parent or the parent has messages_processed = 1.
      */
     while (1)
     {
@@ -329,10 +329,10 @@ irc_batch_end_batch (struct t_irc_server *server, const char *reference)
             if (!ptr_parent_batch || ptr_parent_batch->messages_processed)
             {
                 /*
-                 * the batched messages can free all batches (for example a
+                 * The batched messages can free all batches (for example a
                  * message disconnecting the server), so the batch is flagged
                  * before it is processed and the list is scanned again from
-                 * the beginning
+                 * the beginning.
                  */
                 ptr_batch->messages_processed = 1;
                 num_processed++;
@@ -344,7 +344,7 @@ irc_batch_end_batch (struct t_irc_server *server, const char *reference)
             break;
     }
 
-    /* remove all batches that are processed */
+    /* Remove all batches that are processed. */
     ptr_batch = server->batches;
     while (ptr_batch)
     {
@@ -474,7 +474,7 @@ irc_batch_modifier_cb (const void *pointer, void *data,
     char **items, *result;
     int num_items;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) modifier;
@@ -514,7 +514,7 @@ irc_batch_hdata_batch_cb (const void *pointer, void *data,
 {
     struct t_hdata *hdata;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 

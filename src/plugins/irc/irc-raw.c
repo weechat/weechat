@@ -74,7 +74,7 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
 
     if (strncmp (filter, "c:", 2) == 0)
     {
-        /* filter by evaluated condition */
+        /* Filter by evaluated condition. */
         hashtable = irc_message_parse_to_hashtable (raw_message->server,
                                                     raw_message->message);
         if (hashtable)
@@ -115,12 +115,12 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
     }
     else if (strncmp (filter, "s:", 2) == 0)
     {
-        /* filter by server name */
+        /* Filter by server name. */
         return (strcmp (raw_message->server->name, filter + 2) == 0) ? 1 : 0;
     }
     else if (strncmp (filter, "f:", 2) == 0)
     {
-        /* filter by message flag */
+        /* Filter by message flag. */
         if (strcmp (filter + 2, "recv") == 0)
         {
             return (raw_message->flags & IRC_RAW_FLAG_RECV) ? 1 : 0;
@@ -141,7 +141,7 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
     }
     else if (strncmp (filter, "m:", 2) == 0)
     {
-        /* filter by IRC command */
+        /* Filter by IRC command. */
         irc_message_parse (raw_message->server,
                            raw_message->message,
                            NULL,  /* tags */
@@ -166,7 +166,7 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
     }
     else
     {
-        /* filter by text in message */
+        /* Filter by text in message. */
         return (irc_raw_message_string_match (raw_message->message,
                                               filter)) ? 1 : 0;
     }
@@ -243,7 +243,7 @@ irc_raw_message_print (struct t_irc_raw_message *raw_message)
             buf2[pos_buf2] = '\0';
         }
 
-        /* build prefix with arrow */
+        /* Build prefix with arrow. */
         prefix_arrow[0] = '\0';
         switch (raw_message->flags & (IRC_RAW_FLAG_RECV
                                       | IRC_RAW_FLAG_SEND
@@ -344,7 +344,7 @@ irc_raw_refresh (int clear)
     if (clear)
         weechat_buffer_clear (irc_raw_buffer);
 
-    /* print messages in list */
+    /* Print messages in list. */
     for (ptr_raw_message = irc_raw_messages; ptr_raw_message;
          ptr_raw_message = ptr_raw_message->next_message)
     {
@@ -386,7 +386,7 @@ irc_raw_open (int switch_to_buffer)
                                        "localvar_set_channel", IRC_RAW_BUFFER_NAME);
                 weechat_hashtable_set (buffer_props,
                                        "localvar_set_no_log", "1");
-                /* disable all highlights on this buffer */
+                /* Disable all highlights on this buffer. */
                 weechat_hashtable_set (buffer_props, "highlight_words", "-");
             }
             irc_raw_buffer = weechat_buffer_new_props (
@@ -396,7 +396,7 @@ irc_raw_open (int switch_to_buffer)
                 &irc_buffer_close_cb, NULL, NULL);
             weechat_hashtable_free (buffer_props);
 
-            /* failed to create buffer ? then return */
+            /* Failed to create buffer ? Then return. */
             if (!irc_raw_buffer)
                 return;
 
@@ -447,7 +447,7 @@ irc_raw_message_free (struct t_irc_raw_message *raw_message)
     if (!raw_message)
         return;
 
-    /* remove message from raw messages list */
+    /* Remove message from raw messages list. */
     if (last_irc_raw_message == raw_message)
         last_irc_raw_message = raw_message->prev_message;
     if (raw_message->prev_message)
@@ -461,7 +461,7 @@ irc_raw_message_free (struct t_irc_raw_message *raw_message)
     if (raw_message->next_message)
         (raw_message->next_message)->prev_message = raw_message->prev_message;
 
-    /* free data */
+    /* Free data. */
     free (raw_message->message);
 
     free (raw_message);
@@ -527,7 +527,7 @@ irc_raw_message_add_to_list (time_t date, int date_usec,
         new_raw_message->flags = flags;
         new_raw_message->message = strdup (message);
 
-        /* add message to list */
+        /* Add message to list. */
         new_raw_message->prev_message = last_irc_raw_message;
         new_raw_message->next_message = NULL;
         if (last_irc_raw_message)
@@ -556,7 +556,7 @@ irc_raw_print (struct t_irc_server *server, int flags,
     if (!message)
         return;
 
-    /* auto-open IRC raw buffer if debug for irc plugin is >= 1 */
+    /* Auto-open IRC raw buffer if debug for irc plugin is >= 1. */
     if (!irc_raw_buffer && (weechat_irc_plugin->debug >= 1))
         irc_raw_open (0);
 

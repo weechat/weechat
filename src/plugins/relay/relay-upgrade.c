@@ -37,7 +37,7 @@ relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
     struct t_relay_raw_message *ptr_raw_message;
     int rc;
 
-    /* save servers */
+    /* Save servers. */
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -57,7 +57,7 @@ relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
             return 0;
     }
 
-    /* save clients */
+    /* Save clients. */
     for (ptr_client = last_relay_client; ptr_client;
          ptr_client = ptr_client->prev_client)
     {
@@ -78,7 +78,7 @@ relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
             return 0;
     }
 
-    /* save raw messages */
+    /* Save raw messages. */
     for (ptr_raw_message = relay_raw_messages; ptr_raw_message;
          ptr_raw_message = ptr_raw_message->next_message)
     {
@@ -176,7 +176,7 @@ relay_upgrade_read_cb (const void *pointer, void *data,
     const char *str;
     struct t_relay_server *ptr_server;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) upgrade_file;

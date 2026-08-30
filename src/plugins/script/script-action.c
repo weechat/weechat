@@ -188,7 +188,7 @@ script_action_run_load (const char *name, int quiet)
         return;
     }
 
-    /* check that plugin for this language is loaded */
+    /* Check that plugin for this language is loaded. */
     if (!script_plugin_loaded[language])
     {
         weechat_printf (NULL,
@@ -197,7 +197,7 @@ script_action_run_load (const char *name, int quiet)
         return;
     }
 
-    /* execute command (for example: "/python load go.py") */
+    /* Execute command (for example: "/python load go.py"). */
     snprintf (str_command, sizeof (str_command),
               "/%s load %s%s",
               script_language[language],
@@ -222,7 +222,7 @@ script_action_run_unload (const char *name, int quiet)
     pos = strrchr (name, '.');
     if (pos)
     {
-        /* unload script by using name + extension (example: "go.py") */
+        /* Unload script by using name + extension (example: "go.py"). */
         language = script_language_search_by_extension (pos + 1);
         if (language < 0)
         {
@@ -235,8 +235,8 @@ script_action_run_unload (const char *name, int quiet)
             return;
         }
         /*
-         * search registered name of script using name with extension,
-         * for example with "go.py" we should find "go"
+         * Search registered name of script using name with extension,
+         * for example with "go.py" we should find "go".
          */
         snprintf (hdata_name, sizeof (hdata_name),
                   "%s_script", script_language[language]);
@@ -277,7 +277,7 @@ script_action_run_unload (const char *name, int quiet)
     }
     else
     {
-        /* unload script by using name (example: "go") */
+        /* Unload script by using name (example: "go"). */
         for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
         {
             snprintf (hdata_name, sizeof (hdata_name),
@@ -327,7 +327,7 @@ script_action_run_reload (const char *name, int quiet)
     pos = strrchr (name, '.');
     if (pos)
     {
-        /* reload script by using name + extension (example: "go.py") */
+        /* Reload script by using name + extension (example: "go.py"). */
         language = script_language_search_by_extension (pos + 1);
         if (language < 0)
         {
@@ -340,8 +340,8 @@ script_action_run_reload (const char *name, int quiet)
             return;
         }
         /*
-         * search registered name of script using name with extension,
-         * for example with "go.py" we should find "go"
+         * Search registered name of script using name with extension,
+         * for example with "go.py" we should find "go".
          */
         snprintf (hdata_name, sizeof (hdata_name),
                   "%s_script", script_language[language]);
@@ -382,7 +382,7 @@ script_action_run_reload (const char *name, int quiet)
     }
     else
     {
-        /* reload script by using name (example: "go") */
+        /* Reload script by using name (example: "go"). */
         for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
         {
             snprintf (hdata_name, sizeof (hdata_name),
@@ -434,7 +434,7 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
     int language, script_found, script_autoloaded;
     struct stat st;
 
-    /* find script language */
+    /* Find script language. */
     language = -1;
     pos = strrchr (name, '.');
     if (pos)
@@ -450,7 +450,7 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
         return;
     }
 
-    /* check if script exists and if it's currently autoloaded */
+    /* Check if script exists and if it's currently autoloaded. */
     script_found = 0;
     script_autoloaded = 0;
     weechat_data_dir = weechat_info_get ("weechat_data_dir", NULL);
@@ -461,7 +461,7 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
                           script_language[language],
                           name) >= 0)
     {
-        /* check if script exists */
+        /* Check if script exists. */
         if (stat (filename, &st) == 0)
             script_found = 1;
 
@@ -473,7 +473,7 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
                               script_language[language],
                               name) >= 0)
         {
-            /* check if script is autoloaded */
+            /* Check if script is autoloaded. */
             if (stat (filename, &st) == 0)
                 script_autoloaded = 1;
             free (filename);
@@ -493,11 +493,11 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
         return;
     }
 
-    /* toggle autoload if value is -1 */
+    /* Toggle autoload if value is -1. */
     if (autoload < 0)
         autoload = (script_autoloaded) ? 0 : 1;
 
-    /* ask plugin to autoload (or not) script */
+    /* Ask plugin to autoload (or not) script. */
     if (weechat_asprintf (
             &filename,
             "%s%s%s",
@@ -536,7 +536,7 @@ int
 script_action_installnext_timer_cb (const void *pointer, void *data,
                                     int remaining_calls)
 {
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) remaining_calls;
 
@@ -560,7 +560,7 @@ script_action_install_url_cb (const void *pointer, void *data,
     int quiet, auto_load;
     struct t_script_repo *ptr_script;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) options;
 
@@ -584,7 +584,7 @@ script_action_install_url_cb (const void *pointer, void *data,
 
     if (!pos_name)
     {
-        /* silently ignore malformed URL (it should never happen) */
+        /* Silently ignore malformed URL (it should never happen). */
         return WEECHAT_RC_OK;
     }
 
@@ -621,7 +621,7 @@ script_action_install_url_cb (const void *pointer, void *data,
     free (filename);
     free (filename2);
 
-    /* schedule install of next script */
+    /* Schedule install of next script. */
     weechat_hook_timer (10, 0, 1,
                         &script_action_installnext_timer_cb,
                         (quiet) ? (void *)1 : (void *)0,
@@ -673,18 +673,18 @@ script_action_run_install (int quiet)
     {
         ptr_script_to_install = script_action_get_next_script_to_install ();
 
-        /* no more script to install? just exit function */
+        /* No more script to install? just exit function. */
         if (!ptr_script_to_install)
             return;
 
         /*
-         * script to install and plugin is loaded: exit loop and go on with
-         * install
+         * Script to install and plugin is loaded: exit loop and go on with
+         * install.
          */
         if (script_plugin_loaded[ptr_script_to_install->language])
             break;
 
-        /* plugin not loaded for language of script: display error */
+        /* Plugin not loaded for language of script: display error. */
         weechat_printf (NULL,
                         _("%s: script \"%s\" cannot be installed because "
                           "plugin \"%s\" is not loaded"),
@@ -753,7 +753,7 @@ script_action_run_remove (const char *name, int quiet)
         return;
     }
 
-    /* check that script is installed */
+    /* Check that script is installed. */
     if (!(ptr_script->status & SCRIPT_STATUS_INSTALLED))
     {
         if (!quiet)
@@ -765,7 +765,7 @@ script_action_run_remove (const char *name, int quiet)
         return;
     }
 
-    /* check that script is not held */
+    /* Check that script is not held. */
     if (ptr_script->status & SCRIPT_STATUS_HELD)
     {
         if (!quiet)
@@ -777,7 +777,7 @@ script_action_run_remove (const char *name, int quiet)
         return;
     }
 
-    /* check that plugin for this language is loaded */
+    /* Check that plugin for this language is loaded. */
     if (!script_plugin_loaded[ptr_script->language])
     {
         weechat_printf (NULL,
@@ -789,7 +789,7 @@ script_action_run_remove (const char *name, int quiet)
         return;
     }
 
-    /* ask plugin to remove script */
+    /* Ask plugin to remove script. */
     if (weechat_asprintf (
             &filename,
             "%s%s",
@@ -874,7 +874,7 @@ script_action_show_diff_process_cb (const void *pointer, void *data,
     const char *color;
     int num_lines, i, diff_color;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) data;
     (void) command;
 
@@ -951,7 +951,7 @@ script_action_show_diff_process_cb (const void *pointer, void *data,
 
     if ((return_code == WEECHAT_HOOK_PROCESS_ERROR) || (return_code >= 0))
     {
-        /* last call to this callback: delete temporary file */
+        /* Last call to this callback: delete temporary file. */
         filename = (char *)pointer;
         unlink (filename);
         free (filename);
@@ -977,7 +977,7 @@ script_action_show_source_url_cb (const void *pointer, void *data,
     FILE *file;
     int length, diff_made;
 
-    /* make C compiler happy */
+    /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) options;
@@ -1000,7 +1000,7 @@ script_action_show_source_url_cb (const void *pointer, void *data,
 
     if (!pos_name)
     {
-        /* silently ignore malformed URL (it should never happen) */
+        /* Silently ignore malformed URL (it should never happen). */
         return WEECHAT_RC_OK;
     }
 
@@ -1014,9 +1014,9 @@ script_action_show_source_url_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
 
     /*
-     * read file and display content on script buffer
+     * Read file and display content on script buffer
      * (only if script buffer is still displaying detail of
-     * this script)
+     * this script).
      */
     if (script_buffer && script_buffer_detail_script
         && (script_buffer_detail_script == ptr_script))
@@ -1029,7 +1029,7 @@ script_action_show_source_url_cb (const void *pointer, void *data,
                 ptr_line = fgets (line, sizeof (line) - 1, file);
                 if (ptr_line)
                 {
-                    /* remove trailing '\r' and '\n' */
+                    /* Remove trailing '\r' and '\n'. */
                     length = strlen (line) - 1;
                     while ((length >= 0)
                            && ((line[length] == '\n')
@@ -1063,9 +1063,8 @@ script_action_show_source_url_cb (const void *pointer, void *data,
         && (ptr_script->status & SCRIPT_STATUS_NEW_VERSION))
     {
         /*
-         * diff command set => get the diff with a new process,
-         * file will be deleted later (in callback of this new
-         * process)
+         * Diff command set => get the diff with a new process,
+         * file will be deleted later (in callback of this new process).
          */
         filename_loaded = script_repo_get_filename_loaded (ptr_script);
         if (filename_loaded)
@@ -1097,7 +1096,7 @@ script_action_show_source_url_cb (const void *pointer, void *data,
     }
     if (!diff_made)
     {
-        /* no diff made: delete temporary file now */
+        /* No diff made: delete temporary file now. */
         unlink (filename);
         free (filename);
     }
@@ -1198,7 +1197,7 @@ script_action_run_showdiff (void)
     if (script_buffer && script_buffer_detail_script
         && (script_buffer_detail_script_line_diff >= 0))
     {
-        /* check if we are already on diff */
+        /* Check if we are already on diff. */
         diff = 0;
         window = weechat_window_search_with_buffer (script_buffer);
         if (window)
@@ -1207,10 +1206,10 @@ script_action_run_showdiff (void)
             diff = (start_line_y == script_buffer_detail_script_line_diff);
         }
 
-        /* scroll to top of window */
+        /* Scroll to top of window. */
         weechat_command (script_buffer, "/window scroll_top");
 
-        /* if not currently on diff, jump to it */
+        /* If not currently on diff, jump to it. */
         if (!diff)
         {
             snprintf (str_command, sizeof (str_command),
@@ -1303,15 +1302,15 @@ script_action_run_all (void)
             if (ptr_action[0] == '-')
             {
                 /*
-                 * if action starts with options (like "-q"),
-                 * read and skip them
+                 * If action starts with options (like "-q"),
+                 * read and skip them.
                  */
                 ptr_action++;
                 while (ptr_action[0] && (ptr_action[0] != ' '))
                 {
                     switch (ptr_action[0])
                     {
-                        case 'q': /* quiet */
+                        case 'q': /* Quiet */
                             quiet = 1;
                             break;
                     }
@@ -1345,7 +1344,7 @@ script_action_run_all (void)
             {
                 if (weechat_strcmp (argv[0], "buffer") == 0)
                 {
-                    /* open buffer with list of scripts */
+                    /* Open buffer with the list of scripts. */
                     if (!script_buffer)
                     {
                         script_buffer_open ();
@@ -1353,7 +1352,7 @@ script_action_run_all (void)
                     }
                     if (script_buffer_detail_script)
                     {
-                        /* back to list of scripts */
+                        /* Come back to the list of scripts. */
                         script_buffer_show_detail_script (NULL);
                     }
                     weechat_buffer_set (script_buffer, "display", "1");
@@ -1527,8 +1526,8 @@ script_action_run_all (void)
                          ptr_script = ptr_script->next_script)
                     {
                         /*
-                         * if script is installed, with new version available,
-                         * and not held, then upgrade it
+                         * If script is installed, with new version available,
+                         * and not held, then upgrade it.
                          */
                         if ((ptr_script->status & SCRIPT_STATUS_INSTALLED)
                             && (ptr_script->status & SCRIPT_STATUS_NEW_VERSION)
@@ -1573,7 +1572,7 @@ script_action_schedule (struct t_gui_buffer *buffer,
                         int need_repository, int error_repository,
                         int quiet)
 {
-    /* create again "script" directory, just in case it has been removed */
+    /* Create again "script" directory, just in case it has been removed. */
     if (!weechat_mkdir_home ("${weechat_cache_dir}/" SCRIPT_PLUGIN_NAME, 0755))
         return;
 
@@ -1592,8 +1591,8 @@ script_action_schedule (struct t_gui_buffer *buffer,
             if (!error_repository && !script_download_enabled (0))
             {
                 /*
-                 * the action can be executed even without repository
-                 * (example: /script list)
+                 * The action can be executed even without repository
+                 * (example: /script list).
                  */
                 script_action_run_all ();
             }
