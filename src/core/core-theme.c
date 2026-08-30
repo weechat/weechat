@@ -971,10 +971,12 @@ theme_apply (const char *name)
         }
     }
 
-    /* Apply each contribution in order; per-option refreshes are
-       suppressed via the theme_applying flag (see config_change_color).
-       Later contributions naturally win for duplicate keys because
-       config_file_option_set is called for each in sequence. */
+    /*
+     * Apply each contribution in order; per-option refreshes are
+     * suppressed via the theme_applying flag (see config_change_color).
+     * Later contributions naturally win for duplicate keys because
+     * config_file_option_set is called for each in sequence.
+     */
     theme_applying = 1;
     for (ptr_contribution = theme->contributions; ptr_contribution;
          ptr_contribution = ptr_contribution->next_contribution)
