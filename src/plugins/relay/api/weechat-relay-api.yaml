@@ -1056,6 +1056,10 @@ components:
           type: boolean
           description: time is displayed on each line
           example: true
+        prefix_displayed:
+          type: boolean
+          description: prefix is displayed on each line
+          example: true
         local_variables:
           type: object
           description: the buffer local variables
@@ -1106,6 +1110,7 @@ components:
         - nicklist_case_sensitive
         - nicklist_display_groups
         - time_displayed
+        - prefix_displayed
         - local_variables
         - keys
     Key:

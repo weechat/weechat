@@ -178,7 +178,206 @@ TEST(GuiLine, GetPrefixForDisplay)
 
 TEST(GuiLine, GetAlign)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer, *buffer_free, *buffer2;
+    struct t_gui_line *line, *line_no_date, *line_no_prefix, *line_nick;
+    struct t_gui_line *line_free;
+    struct timeval date;
+
+    gettimeofday (&date, NULL);
+
+    /* The time displayed is "HH:MM:SS": 8 chars on screen. */
+    config_file_option_set (config_look_buffer_time_format, "%H:%M:%S", 1);
+    LONGS_EQUAL(8, gui_chat_time_length);
+
+    buffer = gui_buffer_new_user ("test_align", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    line = gui_line_new (buffer, -1, date.tv_sec, date.tv_usec,
+                         "notify_none", "prefix", "message", 0, NULL);
+    CHECK(line);
+    gui_line_add (line, 1);
+    LONGS_EQUAL(6, buffer->lines->prefix_max_length);
+
+    /*
+     * With default options: time (8) + space + prefix (6) + space
+     * + prefix suffix (1) + space; the first line and the end of lines are
+     * aligned the same way (option weechat.look.align_end_of_lines is
+     * "message" by default).
+     */
+    LONGS_EQUAL(18, gui_line_get_align (buffer, line, 1, 1));
+    LONGS_EQUAL(18, gui_line_get_align (buffer, line, 1, 0));
+
+    /* Same alignment, without the prefix suffix. */
+    LONGS_EQUAL(16, gui_line_get_align (buffer, line, 0, 1));
+    LONGS_EQUAL(16, gui_line_get_align (buffer, line, 0, 0));
+
+    /* No alignment at all in a buffer with free content. */
+    buffer_free = gui_buffer_new_user ("test_align_free", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer_free);
+    line_free = gui_line_new (buffer_free, 0, date.tv_sec, date.tv_usec,
+                              NULL, NULL, "message", 0, NULL);
+    CHECK(line_free);
+    gui_line_add_y (line_free);
+    LONGS_EQUAL(0, gui_line_get_align (buffer_free, line_free, 1, 1));
+    LONGS_EQUAL(0, gui_line_get_align (buffer_free, line_free, 1, 0));
+
+    /* No alignment on a line without date. */
+    line_no_date = gui_line_new (buffer, -1, 0, 0,
+                                 "notify_none", "prefix", "message", 0, NULL);
+    CHECK(line_no_date);
+    gui_line_add (line_no_date, 1);
+    LONGS_EQUAL(0, gui_line_get_align (buffer, line_no_date, 1, 1));
+    LONGS_EQUAL(0, gui_line_get_align (buffer, line_no_date, 1, 0));
+
+    /* Alignment "time": the end of lines is not aligned. */
+    config_file_option_set (config_look_align_end_of_lines, "time", 1);
+    LONGS_EQUAL(18, gui_line_get_align (buffer, line, 1, 1));
+    LONGS_EQUAL(0, gui_line_get_align (buffer, line, 1, 0));
+
+    /* Alignment "buffer": the end of lines is aligned on the time only. */
+    config_file_option_set (config_look_align_end_of_lines, "buffer", 1);
+    LONGS_EQUAL(18, gui_line_get_align (buffer, line, 1, 1));
+    LONGS_EQUAL(9, gui_line_get_align (buffer, line, 1, 0));
+
+    /*
+     * Alignment "prefix": the end of lines is aligned on the time and the
+     * buffer name (the buffer is not merged, so there's no buffer name).
+     */
+    config_file_option_set (config_look_align_end_of_lines, "prefix", 1);
+    LONGS_EQUAL(18, gui_line_get_align (buffer, line, 1, 1));
+    LONGS_EQUAL(9, gui_line_get_align (buffer, line, 1, 0));
+
+    config_file_option_reset (config_look_align_end_of_lines, 1);
+
+    /* The time is not displayed in the buffer. */
+    gui_buffer_set_time_for_each_line (buffer, 0);
+    LONGS_EQUAL(9, gui_line_get_align (buffer, line, 1, 1));
+    gui_buffer_set_time_for_each_line (buffer, 1);
+
+    /* Empty time format: the time takes no place on screen. */
+    config_file_option_set (config_look_buffer_time_format, "", 1);
+    LONGS_EQUAL(0, gui_chat_time_length);
+    LONGS_EQUAL(9, gui_line_get_align (buffer, line, 1, 1));
+    config_file_option_set (config_look_buffer_time_format, "%H:%M:%S", 1);
+
+    /* The prefix is not displayed in the buffer: alignment on the time. */
+    gui_buffer_set_prefix_for_each_line (buffer, 0);
+    LONGS_EQUAL(9, gui_line_get_align (buffer, line, 1, 1));
+    LONGS_EQUAL(9, gui_line_get_align (buffer, line, 0, 1));
+
+    /* Neither the time nor the prefix are displayed: no alignment. */
+    gui_buffer_set_time_for_each_line (buffer, 0);
+    LONGS_EQUAL(0, gui_line_get_align (buffer, line, 1, 1));
+    gui_buffer_set_time_for_each_line (buffer, 1);
+    gui_buffer_set_prefix_for_each_line (buffer, 1);
+
+    /* No prefix suffix. */
+    config_file_option_set (config_look_prefix_suffix, "", 1);
+    LONGS_EQUAL(16, gui_line_get_align (buffer, line, 1, 1));
+    config_file_option_reset (config_look_prefix_suffix, 1);
+
+    /* Max size for the prefix. */
+    config_file_option_set (config_look_prefix_align_max, "3", 1);
+    LONGS_EQUAL(15, gui_line_get_align (buffer, line, 1, 1));
+    config_file_option_set (config_look_prefix_align_max, "10", 1);
+    LONGS_EQUAL(18, gui_line_get_align (buffer, line, 1, 1));
+    config_file_option_reset (config_look_prefix_align_max, 1);
+
+    /*
+     * Prefix alignment "none": the length of the prefix in the line is used
+     * instead of the max length of prefixes in the buffer, and the prefix
+     * suffix is not displayed.
+     */
+    config_file_option_set (config_look_prefix_align, "none", 1);
+    LONGS_EQUAL(16, gui_line_get_align (buffer, line, 1, 1));
+
+    /* A line with an empty prefix is then aligned on the time only. */
+    line_no_prefix = gui_line_new (buffer, -1, date.tv_sec, date.tv_usec,
+                                   "notify_none", NULL, "message", 0, NULL);
+    CHECK(line_no_prefix);
+    gui_line_add (line_no_prefix, 1);
+    LONGS_EQUAL(9, gui_line_get_align (buffer, line_no_prefix, 1, 1));
+
+    /* The nick prefix/suffix are counted in the length of the prefix. */
+    line_nick = gui_line_new (buffer, -1, date.tv_sec, date.tv_usec,
+                              "notify_none,prefix_nick_red", "alice",
+                              "message", 0, NULL);
+    CHECK(line_nick);
+    gui_line_add (line_nick, 1);
+    LONGS_EQUAL(15, gui_line_get_align (buffer, line_nick, 1, 1));
+    config_file_option_set (config_look_nick_prefix, "<", 1);
+    config_file_option_set (config_look_nick_suffix, ">", 1);
+    LONGS_EQUAL(17, gui_line_get_align (buffer, line_nick, 1, 1));
+    config_file_option_reset (config_look_nick_prefix, 1);
+    config_file_option_reset (config_look_nick_suffix, 1);
+
+    config_file_option_reset (config_look_prefix_align, 1);
+
+    /* Merged buffers: the buffer name is displayed before the prefix. */
+    buffer2 = gui_buffer_new_user ("test_align_2", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer2);
+    gui_buffer_merge (buffer2, buffer);
+    CHECK(buffer->mixed_lines);
+    gui_buffer_set_active_buffer (buffer);
+    gui_line_compute_prefix_max_length (buffer->mixed_lines);
+    gui_line_compute_buffer_max_length (buffer, buffer->mixed_lines);
+    LONGS_EQUAL(6, buffer->mixed_lines->prefix_max_length);
+    LONGS_EQUAL(12, buffer->mixed_lines->buffer_max_length);
+
+    /* Buffer name (12) + space, added to the alignment. */
+    LONGS_EQUAL(31, gui_line_get_align (buffer, line, 1, 1));
+
+    /* Max size for the buffer name. */
+    config_file_option_set (config_look_prefix_buffer_align_max, "4", 1);
+    LONGS_EQUAL(23, gui_line_get_align (buffer, line, 1, 1));
+    config_file_option_set (config_look_prefix_buffer_align_max, "20", 1);
+    LONGS_EQUAL(31, gui_line_get_align (buffer, line, 1, 1));
+    config_file_option_reset (config_look_prefix_buffer_align_max, 1);
+
+    /*
+     * Buffer name alignment "none": the max length of buffer names is still
+     * used, as long as the prefix is aligned.
+     */
+    config_file_option_set (config_look_prefix_buffer_align, "none", 1);
+    LONGS_EQUAL(31, gui_line_get_align (buffer, line, 1, 1));
+
+    /*
+     * Neither the buffer name nor the prefix are aligned: the length of the
+     * buffer name in the line is used ("test_align": 10 chars).
+     */
+    config_file_option_set (config_look_prefix_align, "none", 1);
+    LONGS_EQUAL(27, gui_line_get_align (buffer, line, 1, 1));
+    config_file_option_reset (config_look_prefix_align, 1);
+    config_file_option_reset (config_look_prefix_buffer_align, 1);
+
+    /* Alignment "buffer": the end of lines is aligned on the time only. */
+    config_file_option_set (config_look_align_end_of_lines, "buffer", 1);
+    LONGS_EQUAL(9, gui_line_get_align (buffer, line, 1, 0));
+
+    /*
+     * Alignment "prefix": the end of lines is aligned on the time and the
+     * buffer name.
+     */
+    config_file_option_set (config_look_align_end_of_lines, "prefix", 1);
+    LONGS_EQUAL(22, gui_line_get_align (buffer, line, 1, 0));
+    config_file_option_reset (config_look_align_end_of_lines, 1);
+
+    /* The prefix is not displayed: alignment on the time and buffer name. */
+    gui_buffer_set_prefix_for_each_line (buffer, 0);
+    LONGS_EQUAL(22, gui_line_get_align (buffer, line, 1, 1));
+    gui_buffer_set_prefix_for_each_line (buffer, 1);
+
+    /* The buffer is zoomed: the buffer name is not displayed any more. */
+    buffer->active = 2;
+    LONGS_EQUAL(18, gui_line_get_align (buffer, line, 1, 1));
+    buffer->active = 1;
+
+    gui_buffer_unmerge (buffer2, -1);
+    gui_buffer_close (buffer2);
+    gui_buffer_close (buffer_free);
+    gui_buffer_close (buffer);
+
+    config_file_option_reset (config_look_buffer_time_format, 1);
 }
 
 /*

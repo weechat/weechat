@@ -12209,6 +12209,11 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Време приказа за сваку измењену линију.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_prefix_for_each_line_changed]] buffer_prefix_for_each_line_changed | 4.11.0
+| Pointer: buffer.
+| Display prefix for each line has been changed.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Показивач: бафер.
 | Промењен је тип бафера.
@@ -14623,6 +14628,8 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _lines_hidden_: 1 ако је у баферу скривена бар једна линија (филтрирана), или 0 ако се приказују све линије
 ** _prefix_max_length_: максимална дужина префикса у овом баферу
 ** _time_for_each_line_: 1 ако се време приказује са сваку линију у баферу (подразумевано), у супротном 0
+// TRANSLATION MISSING
+** _prefix_for_each_line_: 1 if prefix is displayed for each line in buffer (default), otherwise 0 _(WeeChat ≥ 4.11.0)_
 ** _nicklist_: 1 ако је укључена листа надимака, у супротном 0
 ** _nicklist_case_sensitive_: 1 ако се у надимцима прави разлика у величини слова, у супротном 0
 ** _nicklist_max_length_: максимална дужина надимка
@@ -14948,6 +14955,11 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | time_for_each_line | | "0" или "1"
 | "0" да се скрива време у свим линијама бафера, "1" да се приказује у свим
   линијама (подразумевано за нови бафер).
+
+// TRANSLATION MISSING
+| prefix_for_each_line | 4.11.0 | "0" or "1"
+| "0" to hide prefix for all lines in buffer, "1" to see prefix for all lines
+  (default for a new buffer).
 
 | nicklist | | "0" или "1"
 | "0" да се листа надимака уклони из бафера, "1" да се у бафер дода листа надимака.

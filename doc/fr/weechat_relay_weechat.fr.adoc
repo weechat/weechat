@@ -698,6 +698,7 @@ inl:
         lines_hidden: 0
         prefix_max_length: 0
         time_for_each_line: 1
+        prefix_for_each_line: 1
         nicklist_case_sensitive: 0
         nicklist_display_groups: 1
         nicklist_max_length: 0

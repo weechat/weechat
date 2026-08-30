@@ -528,6 +528,7 @@ gui_chat_display_prefix_suffix (struct t_gui_window *window,
                 && (CONFIG_ENUM(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
                 && CONFIG_STRING(config_look_prefix_suffix)
                 && CONFIG_STRING(config_look_prefix_suffix)[0]
+                && window->buffer->prefix_for_each_line
                 && line->data->date > 0)
             {
                 if (!simulate)
@@ -1050,6 +1051,9 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             }
         }
     }
+
+    if (!window->buffer->prefix_for_each_line)
+        return;
 
     /* Get prefix for display. */
     gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length,
@@ -2103,7 +2107,7 @@ gui_chat_get_bare_line (struct t_gui_line *line)
     message = NULL;
     str_line = NULL;
 
-    prefix = (line->data->prefix) ?
+    prefix = (line->data->buffer->prefix_for_each_line && line->data->prefix) ?
         gui_color_decode (line->data->prefix, NULL) : strdup ("");
     if (!prefix)
         goto end;

@@ -173,16 +173,19 @@ TEST(RelayApiMsg, BufferToJson)
 
     gui_buffer_hide (gui_buffers);
     gui_buffer_set_time_for_each_line (gui_buffers, 0);
+    gui_buffer_set_prefix_for_each_line (gui_buffers, 0);
 
     json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_BOOL(1, json, "hidden");
     WEE_CHECK_OBJ_BOOL(0, json, "time_displayed");
+    WEE_CHECK_OBJ_BOOL(0, json, "prefix_displayed");
     cJSON_Delete (json);
 
     gui_buffer_unhide (gui_buffers);
     gui_buffer_set_time_for_each_line (gui_buffers, 1);
+    gui_buffer_set_prefix_for_each_line (gui_buffers, 1);
 
     /* Buffer with 2 lines, without nicks */
     json = relay_api_msg_buffer_to_json (gui_buffers, 2L, 0L, 0, RELAY_API_COLORS_ANSI);

@@ -12835,6 +12835,10 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Pointeur : tampon.
 | Affichage de l'heure pour chaque ligne changé.
 
+| weechat | [[hook_signal_buffer_prefix_for_each_line_changed]] buffer_prefix_for_each_line_changed | 4.11.0
+| Pointeur : tampon.
+| Affichage du préfixe pour chaque ligne changé.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Pointeur : tampon.
 | Type de tampon changé.
@@ -15411,6 +15415,7 @@ Paramètres :
 ** _lines_hidden_ : 1 si au moins une ligne est cachée dans le tampon (filtrée), ou 0 si toutes les lignes sont affichées
 ** _prefix_max_length_ : longueur maximale du préfixe dans ce tampon
 ** _time_for_each_line_ : 1 si l'heure est affichée pour chaque ligne du tampon (par défaut), sinon 0
+** _prefix_for_each_line_ : 1 si le préfixe est affiché pour chaque ligne du tampon (par défaut), sinon 0 _(WeeChat ≥ 4.11.0)_
 ** _nicklist_ : 1 si la liste de pseudos est activée, sinon 0
 ** _nicklist_case_sensitive_ : 1 si les pseudos sont sensibles à la casse, sinon 0
 ** _nicklist_max_length_ : longueur maximale d'un pseudo
@@ -15736,6 +15741,10 @@ Propriétés :
 | time_for_each_line | | "0" ou "1"
 | "0" pour cacher l'heure sur toutes les lignes du tampon, "1" pour afficher
   l'heure sur toutes les lignes (par défaut pour un nouveau tampon).
+
+| prefix_for_each_line | 4.11.0 | "0" ou "1"
+| "0" pour cacher le préfixe sur toutes les lignes du tampon, "1" pour afficher
+  le préfixe sur toutes les lignes (par défaut pour un nouveau tampon).
 
 | nicklist | | "0" ou "1"
 | "0" pour supprimer la liste des pseudos du tampon, "1" pour ajouter la liste

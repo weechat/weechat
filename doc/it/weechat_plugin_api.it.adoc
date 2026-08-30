@@ -13087,7 +13087,12 @@ List of signals sent by WeeChat and plugins:
 // TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_time_for_each_line_changed]] buffer_time_for_each_line_changed | 4.4.0
 | Pointer: buffer.
-| Display time for each line changed.
+| Display time for each line has been changed.
+
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_prefix_for_each_line_changed]] buffer_prefix_for_each_line_changed | 4.11.0
+| Pointer: buffer.
+| Display prefix for each line has been changed.
 
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Puntatore: buffer.
@@ -15782,6 +15787,8 @@ Argomenti:
 ** _prefix_max_length_: lunghezza massima del prefisso in questo buffer
 // TRANSLATION MISSING
 ** _time_for_each_line_: 1 se l'ora è visualizzata per ogni riga nel buffer (predefinito), altrimenti 0
+// TRANSLATION MISSING
+** _prefix_for_each_line_: 1 if prefix is displayed for each line in buffer (default), otherwise 0 _(WeeChat ≥ 4.11.0)_
 ** _nicklist_: 1 se la lista nick è abilitata, altrimenti 0
 ** _nicklist_case_sensitive_: 1 se i nick sono sensibili alle maiuscole, altrimenti 0
 ** _nicklist_max_length_: lunghezza massima per un nick
@@ -16157,6 +16164,11 @@ Properties:
 | time_for_each_line | | "0" oppure "1"
 | "0" per nascondere l'orario in tutte le righe del buffer, "1" per
   visualizzarlo su tutte le righe (predefinito per un nuovo buffer).
+
+// TRANSLATION MISSING
+| prefix_for_each_line | 4.11.0 | "0" or "1"
+| "0" to hide prefix for all lines in buffer, "1" to see prefix for all lines
+  (default for a new buffer).
 
 | nicklist | | "0" oppure "1"
 | "0" per rimuovere la lista nick per il buffer, "1" per aggiungere

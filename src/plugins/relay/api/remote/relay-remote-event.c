@@ -44,9 +44,12 @@
     else                                                           \
         __var = NULL;
 
-#define JSON_GET_BOOL(__json, __var)                               \
+#define JSON_GET_BOOL(__json, __var, __default)                    \
     json_obj = cJSON_GetObjectItem (__json, #__var);               \
-    __var = cJSON_IsTrue (json_obj) ? 1 : 0;
+    if (json_obj && cJSON_IsBool (json_obj))                       \
+        __var = cJSON_IsTrue (json_obj) ? 1 : 0;                   \
+    else                                                           \
+        __var = __default;
 
 
 /*
@@ -277,7 +280,7 @@ relay_remote_event_line_add (struct t_relay_remote_event *event)
     JSON_GET_NUM(event->json, id, -1);
     JSON_GET_NUM(event->json, y, -1);
     JSON_GET_STR(event->json, date);
-    JSON_GET_BOOL(event->json, highlight);
+    JSON_GET_BOOL(event->json, highlight, 0);
     JSON_GET_STR(event->json, prefix);
     JSON_GET_STR(event->json, message);
 
@@ -403,7 +406,7 @@ relay_remote_event_line_update (struct t_relay_remote_event *event)
         return;
 
     JSON_GET_STR(event->json, date);
-    JSON_GET_BOOL(event->json, highlight);
+    JSON_GET_BOOL(event->json, highlight, 0);
     JSON_GET_STR(event->json, prefix);
     JSON_GET_STR(event->json, message);
 
@@ -483,7 +486,7 @@ relay_remote_event_handle_nick (struct t_gui_buffer *buffer, cJSON *json)
     JSON_GET_STR(json, color_name);
     JSON_GET_STR(json, prefix);
     JSON_GET_STR(json, prefix_color_name);
-    JSON_GET_BOOL(json, visible);
+    JSON_GET_BOOL(json, visible, 0);
 
     snprintf (str_id, sizeof (str_id), "==id:%lld", id);
     ptr_nick = weechat_nicklist_search_nick (buffer, NULL, str_id);
@@ -540,7 +543,7 @@ relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
     JSON_GET_NUM(json, parent_group_id, -1);
     JSON_GET_STR(json, name);
     JSON_GET_STR(json, color_name);
-    JSON_GET_BOOL(json, visible);
+    JSON_GET_BOOL(json, visible, 0);
 
     snprintf (str_id, sizeof (str_id), "==id:%lld", id);
     ptr_group = weechat_nicklist_search_group (buffer, NULL, str_id);
@@ -899,7 +902,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     long long id, last_read_line_id;
     int number, hidden, nicklist, nicklist_case_sensitive;
     int nicklist_display_groups, time_displayed, first_line_not_read;
-    int apply_props, input_position, input_multiline;
+    int prefix_displayed, apply_props, input_position, input_multiline;
+    int free_content;
 
     if (!event || !event->json)
         return WEECHAT_RC_OK;
@@ -909,19 +913,25 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     JSON_GET_STR(event->json, short_name);
     JSON_GET_NUM(event->json, number, -1);
     JSON_GET_STR(event->json, type);
-    JSON_GET_BOOL(event->json, hidden);
+    free_content = (weechat_strcmp (type, "free") == 0) ? 1 : 0;
+    JSON_GET_BOOL(event->json, hidden, 0);
     JSON_GET_STR(event->json, title);
     JSON_GET_STR(event->json, modes);
     JSON_GET_STR(event->json, input_prompt);
     JSON_GET_STR(event->json, input);
     JSON_GET_NUM(event->json, input_position, 0);
-    JSON_GET_BOOL(event->json, input_multiline);
-    JSON_GET_BOOL(event->json, nicklist);
-    JSON_GET_BOOL(event->json, nicklist_case_sensitive);
-    JSON_GET_BOOL(event->json, nicklist_display_groups);
-    JSON_GET_BOOL(event->json, time_displayed);
+    JSON_GET_BOOL(event->json, input_multiline, 0);
+    JSON_GET_BOOL(event->json, nicklist, 0);
+    JSON_GET_BOOL(event->json, nicklist_case_sensitive, 0);
+    JSON_GET_BOOL(event->json, nicklist_display_groups, 0);
+    /*
+     * If the fields are not received from the remote, the time and the prefix
+     * are displayed, except in buffers with free content.
+     */
+    JSON_GET_BOOL(event->json, time_displayed, (free_content) ? 0 : 1);
+    JSON_GET_BOOL(event->json, prefix_displayed, (free_content) ? 0 : 1);
     JSON_GET_NUM(event->json, last_read_line_id, -1);
-    JSON_GET_BOOL(event->json, first_line_not_read);
+    JSON_GET_BOOL(event->json, first_line_not_read, 0);
 
     buffer_props = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
@@ -947,6 +957,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
                            (nicklist_display_groups) ? "1" : "0");
     weechat_hashtable_set (buffer_props, "time_for_each_line",
                            (time_displayed) ? "1" : "0");
+    weechat_hashtable_set (buffer_props, "prefix_for_each_line",
+                           (prefix_displayed) ? "1" : "0");
 
     /* Extra properties for relay */
     weechat_hashtable_set (buffer_props,

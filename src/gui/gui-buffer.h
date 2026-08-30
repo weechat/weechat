@@ -144,7 +144,8 @@ struct t_gui_buffer
                                        /* "mixed_lines"                     */
     long long lines_last_id_assigned;  /* last id assigned for a line       */
                                        /* (used with formatted type only)   */
-    int time_for_each_line;            /* time is displayed for each line?  */
+    int time_for_each_line;            /* time displayed for each line?     */
+    int prefix_for_each_line;          /* prefix displayed for each line?   */
     int chat_refresh_needed;           /* refresh for chat is needed ?      */
                                        /* (1=refresh, 2=erase+refresh)      */
 
@@ -371,6 +372,8 @@ extern void gui_buffer_set_modes (struct t_gui_buffer *buffer,
                                   const char *new_modes);
 extern void gui_buffer_set_time_for_each_line (struct t_gui_buffer *buffer,
                                                int time_for_each_line);
+extern void gui_buffer_set_prefix_for_each_line (struct t_gui_buffer *buffer,
+                                                 int prefix_for_each_line);
 extern void gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
                                             const char *new_highlight_words);
 extern void gui_buffer_set_highlight_disable_regex (struct t_gui_buffer *buffer,

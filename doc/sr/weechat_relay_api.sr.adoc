@@ -539,6 +539,7 @@ HTTP/1.1 200 OK
         "nicklist_case_sensitive": false,
         "nicklist_display_groups": true,
         "time_displayed": true,
+        "prefix_displayed": true,
         "local_variables": {
             "plugin": "core",
             "name": "weechat"
@@ -564,6 +565,7 @@ HTTP/1.1 200 OK
         "nicklist_case_sensitive": false,
         "nicklist_display_groups": true,
         "time_displayed": true,
+        "prefix_displayed": true,
         "local_variables": {
             "plugin": "irc",
             "name": "server.libera",
@@ -596,6 +598,7 @@ HTTP/1.1 200 OK
         "nicklist_case_sensitive": false,
         "nicklist_display_groups": false,
         "time_displayed": true,
+        "prefix_displayed": true,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#weechat",
@@ -645,6 +648,7 @@ HTTP/1.1 200 OK
     "nicklist_case_sensitive": false,
     "nicklist_display_groups": true,
     "time_displayed": true,
+    "prefix_displayed": true,
     "local_variables": {
         "plugin": "core",
         "name": "weechat"
@@ -701,6 +705,7 @@ HTTP/1.1 200 OK
     "nicklist_case_sensitive": false,
     "nicklist_display_groups": false,
     "time_displayed": true,
+    "prefix_displayed": true,
     "local_variables": {
         "plugin": "irc",
         "name": "libera.#weechat",
@@ -812,6 +817,7 @@ HTTP/1.1 200 OK
     "nicklist_case_sensitive": false,
     "nicklist_display_groups": true,
     "time_displayed": true,
+    "prefix_displayed": true,
     "local_variables": {
         "plugin": "fset",
         "name": "fset",
@@ -1710,36 +1716,37 @@ WeeChat гура податке клијенту у било које време
 
 [width="100%",cols="5,3,3,5",options="header"]
 |===
-| Име догађаја                        | Id бафера | Тип тела      | Тело
-| `buffer_opened`                     | buffer id | `buffer`      | бафер са свим линијама и надимцима
-| `buffer_type_changed`               | buffer id | `buffer`      | бафер
-| `buffer_moved`                      | buffer id | `buffer`      | бафер
-| `buffer_merged`                     | buffer id | `buffer`      | бафер
-| `buffer_unmerged`                   | buffer id | `buffer`      | бафер
-| `buffer_hidden`                     | buffer id | `buffer`      | бафер
-| `buffer_unhidden`                   | buffer id | `buffer`      | бафер
-| `buffer_renamed`                    | buffer id | `buffer`      | бафер
-| `buffer_title_changed`              | buffer id | `buffer`      | бафер
-| `buffer_time_for_each_line_changed` | buffer id | `buffer`      | бафер
-| `buffer_localvar_added`             | buffer id | `buffer`      | бафер
-| `buffer_localvar_changed`           | buffer id | `buffer`      | бафер
-| `buffer_localvar_removed`           | buffer id | `buffer`      | бафер
-| `buffer_cleared`                    | buffer id | `buffer`      | бафер
-| `buffer_closing`                    | buffer id | `buffer`      | бафер
-| `buffer_closed`                     | buffer id | null          | null
-| `buffer_line_added`                 | buffer id | `line`        | бафер линија
-| `buffer_line_data_changed`          | buffer id | `line`        | бафер линија
-| `input_text_changed`                | buffer id | `buffer`      | бафер
-| `input_text_cursor_moved`           | buffer id | `buffer`      | бафер
-| `nicklist_group_changed`            | buffer id | `nick_group`  | група надимака
-| `nicklist_group_added`              | buffer id | `nick_group`  | група надимака
-| `nicklist_group_removing`           | buffer id | `nick_group`  | група надимака
-| `nicklist_nick_added`               | buffer id | `nick`        | надимак
-| `nicklist_nick_removing`            | buffer id | `nick`        | надимак
-| `nicklist_nick_changed`             | buffer id | `nick`        | надимак
-| `upgrade` ^(1)^                     | -1        | null          | null
-| `upgrade_ended` ^(1)^               | -1        | null          | null
-| `quit`                              | -1        | null          | null
+| Име догађаја                          | Id бафера | Тип тела      | Тело
+| `buffer_opened`                       | buffer id | `buffer`      | бафер са свим линијама и надимцима
+| `buffer_type_changed`                 | buffer id | `buffer`      | бафер
+| `buffer_moved`                        | buffer id | `buffer`      | бафер
+| `buffer_merged`                       | buffer id | `buffer`      | бафер
+| `buffer_unmerged`                     | buffer id | `buffer`      | бафер
+| `buffer_hidden`                       | buffer id | `buffer`      | бафер
+| `buffer_unhidden`                     | buffer id | `buffer`      | бафер
+| `buffer_renamed`                      | buffer id | `buffer`      | бафер
+| `buffer_title_changed`                | buffer id | `buffer`      | бафер
+| `buffer_time_for_each_line_changed`   | buffer id | `buffer`      | бафер
+| `buffer_prefix_for_each_line_changed` | buffer id | `buffer`      | бафер
+| `buffer_localvar_added`               | buffer id | `buffer`      | бафер
+| `buffer_localvar_changed`             | buffer id | `buffer`      | бафер
+| `buffer_localvar_removed`             | buffer id | `buffer`      | бафер
+| `buffer_cleared`                      | buffer id | `buffer`      | бафер
+| `buffer_closing`                      | buffer id | `buffer`      | бафер
+| `buffer_closed`                       | buffer id | null          | null
+| `buffer_line_added`                   | buffer id | `line`        | бафер линија
+| `buffer_line_data_changed`            | buffer id | `line`        | бафер линија
+| `input_text_changed`                  | buffer id | `buffer`      | бафер
+| `input_text_cursor_moved`             | buffer id | `buffer`      | бафер
+| `nicklist_group_changed`              | buffer id | `nick_group`  | група надимака
+| `nicklist_group_added`                | buffer id | `nick_group`  | група надимака
+| `nicklist_group_removing`             | buffer id | `nick_group`  | група надимака
+| `nicklist_nick_added`                 | buffer id | `nick`        | надимак
+| `nicklist_nick_removing`              | buffer id | `nick`        | надимак
+| `nicklist_nick_changed`               | buffer id | `nick`        | надимак
+| `upgrade` ^(1)^                       | -1        | null          | null
+| `upgrade_ended` ^(1)^                 | -1        | null          | null
+| `quit`                                | -1        | null          | null
 |===
 
 [NOTE]
@@ -1774,6 +1781,7 @@ WeeChat гура податке клијенту у било које време
         "nicklist_case_sensitive": false,
         "nicklist_display_groups": false,
         "time_displayed": true,
+        "prefix_displayed": true,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#test",

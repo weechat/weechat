@@ -337,6 +337,10 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
         return length_time + length_buffer;
     }
 
+    /* Return immediately if the prefix is not displayed in the buffer. */
+    if (!buffer->prefix_for_each_line)
+        return length_time + length_buffer;
+
     /* Length of prefix */
     gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL,
                                      &prefix_is_nick);

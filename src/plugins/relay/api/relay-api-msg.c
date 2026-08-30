@@ -373,6 +373,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     MSG_ADD_HDATA_VAR(Bool, "nicklist_case_sensitive", integer, "nicklist_case_sensitive");
     MSG_ADD_HDATA_VAR(Bool, "nicklist_display_groups", integer, "nicklist_display_groups");
     MSG_ADD_HDATA_VAR(Bool, "time_displayed", integer, "time_for_each_line");
+    MSG_ADD_HDATA_VAR(Bool, "prefix_displayed", integer, "prefix_for_each_line");
 
     /* Local variables */
     json_local_vars = cJSON_CreateObject ();

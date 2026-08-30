@@ -539,6 +539,18 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     ptr_buffer->time_for_each_line =
         infolist_integer (infolist, "time_for_each_line");
 
+    /* "prefix_for_each_line" is new in WeeChat 4.11.0 */
+    if (infolist_search_var (infolist, "prefix_for_each_line"))
+    {
+        ptr_buffer->prefix_for_each_line =
+            infolist_integer (infolist, "prefix_for_each_line");
+    }
+    else
+    {
+        ptr_buffer->prefix_for_each_line =
+            (ptr_buffer->type == GUI_BUFFER_TYPE_FREE) ? 0 : 1;
+    }
+
     /* Input */
     gui_buffer_set_input_prompt (
         ptr_buffer, infolist_string (infolist, "input_prompt"));

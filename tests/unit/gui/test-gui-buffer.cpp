@@ -489,6 +489,7 @@ TEST(GuiBuffer, NewProps)
     POINTERS_EQUAL(NULL, buffer->own_lines->last_read_line);
     CHECK(buffer->lines_last_id_assigned == -1LL);
     LONGS_EQUAL(0, buffer->time_for_each_line);
+    LONGS_EQUAL(0, buffer->prefix_for_each_line);
     LONGS_EQUAL(2, buffer->chat_refresh_needed);
     LONGS_EQUAL(0, buffer->nicklist);
     LONGS_EQUAL(0, buffer->nicklist_case_sensitive);
@@ -819,6 +820,7 @@ TEST(GuiBuffer, GetInteger)
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "lines_hidden"));
     LONGS_EQUAL(12, gui_buffer_get_integer (gui_buffers, "prefix_max_length"));
     LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "time_for_each_line"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "prefix_for_each_line"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_case_sensitive"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_max_length"));
@@ -942,6 +944,7 @@ TEST(GuiBuffer, AskChatRefresh)
  *   gui_buffer_set_title
  *   gui_buffer_set_modes
  *   gui_buffer_set_time_for_each_line
+ *   gui_buffer_set_prefix_for_each_line
  *   gui_buffer_set_nicklist
  *   gui_buffer_set_nicklist_case_sensitive
  *   gui_buffer_set_nicklist_display_groups
@@ -1091,8 +1094,12 @@ TEST(GuiBuffer, Set)
     LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, buffer->type);
     gui_buffer_set (buffer, "type", "free");
     LONGS_EQUAL(GUI_BUFFER_TYPE_FREE, buffer->type);
+    LONGS_EQUAL(0, buffer->time_for_each_line);
+    LONGS_EQUAL(0, buffer->prefix_for_each_line);
     gui_buffer_set (buffer, "type", "formatted");
     LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, buffer->type);
+    LONGS_EQUAL(1, buffer->time_for_each_line);
+    LONGS_EQUAL(1, buffer->prefix_for_each_line);
     gui_buffer_set (buffer, "type", "xxx");
     LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, buffer->type);
 
@@ -1138,6 +1145,16 @@ TEST(GuiBuffer, Set)
     gui_buffer_set (buffer, "time_for_each_line", "0");
     gui_buffer_set (buffer, "time_for_each_line", "2");
     LONGS_EQUAL(1, buffer->time_for_each_line);
+
+    /* prefix_for_each_line */
+    LONGS_EQUAL(1, buffer->prefix_for_each_line);
+    gui_buffer_set (buffer, "prefix_for_each_line", "0");
+    LONGS_EQUAL(0, buffer->prefix_for_each_line);
+    gui_buffer_set (buffer, "prefix_for_each_line", "1");
+    LONGS_EQUAL(1, buffer->prefix_for_each_line);
+    gui_buffer_set (buffer, "prefix_for_each_line", "0");
+    gui_buffer_set (buffer, "prefix_for_each_line", "2");
+    LONGS_EQUAL(1, buffer->prefix_for_each_line);
 
     /* nicklist */
     LONGS_EQUAL(0, buffer->nicklist);

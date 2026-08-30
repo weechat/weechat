@@ -12572,7 +12572,11 @@ List of signals sent by WeeChat and plugins:
 
 | weechat | [[hook_signal_buffer_time_for_each_line_changed]] buffer_time_for_each_line_changed | 4.4.0
 | Pointer: buffer.
-| Display time for each line changed.
+| Display time for each line has been changed.
+
+| weechat | [[hook_signal_buffer_prefix_for_each_line_changed]] buffer_prefix_for_each_line_changed | 4.11.0
+| Pointer: buffer.
+| Display prefix for each line has been changed.
 
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Pointer: buffer.
@@ -15083,6 +15087,7 @@ Arguments:
 ** _lines_hidden_: 1 if at least one line is hidden on buffer (filtered), or 0 if all lines are displayed
 ** _prefix_max_length_: max length for prefix in this buffer
 ** _time_for_each_line_: 1 if time is displayed for each line in buffer (default), otherwise 0
+** _prefix_for_each_line_: 1 if prefix is displayed for each line in buffer (default), otherwise 0 _(WeeChat ≥ 4.11.0)_
 ** _nicklist_: 1 if nicklist is enabled, otherwise 0
 ** _nicklist_case_sensitive_: 1 if nicks are case-sensitive, otherwise 0
 ** _nicklist_max_length_: max length for a nick
@@ -15403,6 +15408,10 @@ Properties:
 
 | time_for_each_line | | "0" or "1"
 | "0" to hide time for all lines in buffer, "1" to see time for all lines
+  (default for a new buffer).
+
+| prefix_for_each_line | 4.11.0 | "0" or "1"
+| "0" to hide prefix for all lines in buffer, "1" to see prefix for all lines
   (default for a new buffer).
 
 | nicklist | | "0" or "1"

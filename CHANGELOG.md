@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Added
 
+- core: add flag "prefix_for_each_line" in buffer
 - api: add focus key "_chat_line_id", deprecate keys "_chat_line_date_printed" and "_chat_line_date_usec_printed"
 - api: add function "buffer_get_longlong"
 - api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"
@@ -31,6 +32,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
 - **breaking:** relay: remove "date_printed" and "date_usec_printed" of lines in weechat protocol
 - **breaking:** relay: change type of line identifier from "int" to "lon" in weechat protocol
+- relay/api: add field "prefix_displayed" in buffers
 - relay/api: add field "first_line_not_read" in buffers
 - **breaking:** relay/api: remove field "date_printed" in lines
 - **breaking:** relay/api: bump API version to 0.7.0

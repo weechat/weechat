@@ -18,6 +18,7 @@ extern "C"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-hotlist.h"
+#include "src/gui/gui-key.h"
 #include "src/gui/gui-line.h"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-remote.h"
@@ -421,7 +422,150 @@ TEST(RelayRemoteEvent, InitialSyncBuffers)
 
 TEST(RelayRemoteEvent, CbBuffer)
 {
-    /* TODO: write tests */
+    struct t_relay_remote *remote;
+    struct t_gui_buffer *buffer;
+
+    remote = relay_remote_new ("testcbbuffer",
+                               "https://localhost:9000",
+                               NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(remote);
+
+    /* The buffer is created with the properties received from the remote. */
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 200, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 123, \"name\": \"irc.libera.#test\", "
+        "\"short_name\": \"#test\", "
+        "\"number\": 4, "
+        "\"type\": \"formatted\", "
+        "\"hidden\": false, "
+        "\"title\": \"the title\", "
+        "\"modes\": \"+nt\", "
+        "\"input_prompt\": \"alice\", "
+        "\"nicklist\": true, "
+        "\"nicklist_case_sensitive\": false, "
+        "\"nicklist_display_groups\": true, "
+        "\"time_displayed\": true, "
+        "\"prefix_displayed\": true, "
+        "\"last_read_line_id\": 5, "
+        "\"first_line_not_read\": false, "
+        "\"local_variables\": {\"plugin\": \"irc\", "
+        "\"name\": \"libera.#test\", \"channel\": \"#test\"}, "
+        "\"keys\": [{\"key\": \"meta-A\", \"command\": \"/test\"}]}}");
+
+    buffer = relay_remote_event_search_buffer (remote, 123);
+    CHECK(buffer);
+    STRCMP_EQUAL("remote.testcbbuffer.irc.libera.#test",
+                 gui_buffer_get_string (buffer, "name"));
+    STRCMP_EQUAL("#test", gui_buffer_get_string (buffer, "short_name"));
+    STRCMP_EQUAL("the title", gui_buffer_get_string (buffer, "title"));
+    STRCMP_EQUAL("+nt", gui_buffer_get_string (buffer, "modes"));
+    STRCMP_EQUAL("alice", gui_buffer_get_string (buffer, "input_prompt"));
+    LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, buffer->type);
+    LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "hidden"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "nicklist"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "nicklist_case_sensitive"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "nicklist_display_groups"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "time_for_each_line"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "prefix_for_each_line"));
+
+    /* Extra local variables set for the remote. */
+    STRCMP_EQUAL("testcbbuffer",
+                 gui_buffer_get_string (buffer, "localvar_relay_remote"));
+    STRCMP_EQUAL("123",
+                 gui_buffer_get_string (buffer, "localvar_relay_remote_id"));
+    STRCMP_EQUAL("4",
+                 gui_buffer_get_string (buffer,
+                                        "localvar_relay_remote_number"));
+    STRCMP_EQUAL("5",
+                 gui_buffer_get_string (
+                     buffer, "localvar_relay_remote_last_read_line_id"));
+    STRCMP_EQUAL("0",
+                 gui_buffer_get_string (
+                     buffer, "localvar_relay_remote_first_line_not_read"));
+
+    /*
+     * The local variables received are set in the buffer, except the reserved
+     * ones ("plugin" and "name"), which keep their local value.
+     */
+    STRCMP_EQUAL("#test", gui_buffer_get_string (buffer, "localvar_channel"));
+    STRCMP_EQUAL("relay", gui_buffer_get_string (buffer, "localvar_plugin"));
+    STRCMP_EQUAL("remote.testcbbuffer.irc.libera.#test",
+                 gui_buffer_get_string (buffer, "localvar_name"));
+
+    /* The keys received are added in the buffer. */
+    LONGS_EQUAL(1, buffer->keys_count);
+    CHECK(buffer->keys);
+    STRCMP_EQUAL("meta-A", buffer->keys->key);
+    STRCMP_EQUAL("/test", buffer->keys->command);
+
+    /* The same buffer is updated with the new properties received. */
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 200, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 123, \"name\": \"irc.libera.#test\", "
+        "\"short_name\": \"#test2\", "
+        "\"title\": \"new title\", "
+        "\"time_displayed\": false, "
+        "\"prefix_displayed\": false}}");
+
+    POINTERS_EQUAL(buffer, relay_remote_event_search_buffer (remote, 123));
+    STRCMP_EQUAL("#test2", gui_buffer_get_string (buffer, "short_name"));
+    STRCMP_EQUAL("new title", gui_buffer_get_string (buffer, "title"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "time_for_each_line"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "prefix_for_each_line"));
+
+    /*
+     * The time and the prefix are displayed when the fields "time_displayed"
+     * and "prefix_displayed" are not received from the remote.
+     */
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 200, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 123, \"name\": \"irc.libera.#test\"}}");
+
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "time_for_each_line"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "prefix_for_each_line"));
+
+    gui_buffer_close (buffer);
+
+    /* Buffer created without the fields "time_displayed"/"prefix_displayed". */
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 200, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 456, \"name\": \"irc.libera.#test2\", "
+        "\"type\": \"formatted\"}}");
+
+    buffer = relay_remote_event_search_buffer (remote, 456);
+    CHECK(buffer);
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "time_for_each_line"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "prefix_for_each_line"));
+
+    gui_buffer_close (buffer);
+
+    /*
+     * Buffer with free content created without the fields "time_displayed"
+     * and "prefix_displayed": neither the time nor the prefix are displayed.
+     */
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 200, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 789, \"name\": \"core.free\", "
+        "\"type\": \"free\"}}");
+
+    buffer = relay_remote_event_search_buffer (remote, 789);
+    CHECK(buffer);
+    LONGS_EQUAL(GUI_BUFFER_TYPE_FREE, buffer->type);
+    LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "time_for_each_line"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "prefix_for_each_line"));
+
+    gui_buffer_close (buffer);
+    relay_remote_free (remote);
 }
 
 /*
