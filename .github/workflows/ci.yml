@@ -116,7 +116,7 @@ jobs:
   checks:
 
     env:
-      POEXAM_VERSION: "0.1.0"
+      POEXAM_VERSION: "0.1.1"
 
     strategy:
       matrix:
@@ -135,16 +135,15 @@ jobs:
         sudo apt-get --yes --no-install-recommends install ${{ env.CHECK_DEPS_UBUNTU }}
         pipx install ruff
 
-    - name: Cache poexam
-      id: cache-poexam
-      uses: actions/cache@v6
-      with:
-        path: ~/.cargo/bin/poexam
-        key: poexam-${{ env.POEXAM_VERSION }}-${{ runner.os }}
-
     - name: Install poexam
-      if: steps.cache-poexam.outputs.cache-hit != 'true'
-      run: cargo install --version "$POEXAM_VERSION" poexam
+      run: |
+        cd "$RUNNER_TEMP"
+        curl --silent --show-error --fail --location --remote-name-all \
+          "https://github.com/poexam/poexam/releases/download/v$POEXAM_VERSION/poexam-linux-x86_64.tar.gz" \
+          "https://github.com/poexam/poexam/releases/download/v$POEXAM_VERSION/poexam-linux-x86_64.sha256"
+        sha256sum --check poexam-linux-x86_64.sha256
+        tar --extract --file poexam-linux-x86_64.tar.gz
+        sudo install -m 0755 poexam-linux-x86_64/poexam /usr/local/bin/poexam
 
     - name: Check gettext files
       run: poexam check --file-stats --rule-stats
