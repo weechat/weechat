@@ -504,6 +504,20 @@ TEST(RelayWebsocket, DecodeFrame)
     unsigned char frame_too_big[10] = {
         0x82, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00,
     };
+    /* Unmasked PING frame with payload "hi" */
+    unsigned char frame_ping[4] = { 0x89, 0x02, 'h', 'i' };
+    /* Same PING frame, fragmented (FIN not set) */
+    unsigned char frame_ping_frag[4] = { 0x09, 0x02, 'h', 'i' };
+    /* Same PING frame, compressed (RSV1 set) */
+    unsigned char frame_ping_comp[4] = { 0xC9, 0x02, 'h', 'i' };
+    /* PING frame announcing a payload of 126 bytes (16-bit length field) */
+    unsigned char frame_ping_too_big[4] = { 0x89, 0x7E, 0x00, 0x7E };
+    /* CLOSE frame with a payload of 125 bytes (the maximum allowed) */
+    unsigned char frame_close_max[2 + WEBSOCKET_CONTROL_FRAME_MAX_LENGTH] = {
+        0x88, WEBSOCKET_CONTROL_FRAME_MAX_LENGTH,
+    };
+    /* Binary frame with a payload of 126 bytes (16-bit length field) */
+    unsigned char frame_binary_126[4 + 126] = { 0x82, 0x7E, 0x00, 0x7E };
 
     /* A valid small frame is decoded. */
     frames = NULL;
@@ -531,6 +545,97 @@ TEST(RelayWebsocket, DecodeFrame)
                     frame_too_big, sizeof (frame_too_big), 1, NULL,
                     &frames, &num_frames, &partial_ws_frame,
                     &partial_ws_frame_size));
+    free (frames);
+    free (partial_ws_frame);
+
+    /* A valid control frame is decoded. */
+    frames = NULL;
+    num_frames = 0;
+    partial_ws_frame = NULL;
+    partial_ws_frame_size = 0;
+    LONGS_EQUAL(1, relay_websocket_decode_frame (
+                    frame_ping, sizeof (frame_ping), 0, NULL,
+                    &frames, &num_frames, &partial_ws_frame,
+                    &partial_ws_frame_size));
+    LONGS_EQUAL(1, num_frames);
+    CHECK(frames);
+    LONGS_EQUAL(RELAY_MSG_PING, frames[0].opcode);
+    LONGS_EQUAL(2, frames[0].payload_size);
+    MEMCMP_EQUAL("hi", frames[0].payload, 2);
+    free (frames[0].payload);
+    free (frames);
+    free (partial_ws_frame);
+
+    /* A fragmented control frame is rejected (return 0). */
+    frames = NULL;
+    num_frames = 0;
+    partial_ws_frame = NULL;
+    partial_ws_frame_size = 0;
+    LONGS_EQUAL(0, relay_websocket_decode_frame (
+                    frame_ping_frag, sizeof (frame_ping_frag), 0, NULL,
+                    &frames, &num_frames, &partial_ws_frame,
+                    &partial_ws_frame_size));
+    free (frames);
+    free (partial_ws_frame);
+
+    /* A compressed control frame is rejected (return 0). */
+    frames = NULL;
+    num_frames = 0;
+    partial_ws_frame = NULL;
+    partial_ws_frame_size = 0;
+    LONGS_EQUAL(0, relay_websocket_decode_frame (
+                    frame_ping_comp, sizeof (frame_ping_comp), 0, NULL,
+                    &frames, &num_frames, &partial_ws_frame,
+                    &partial_ws_frame_size));
+    free (frames);
+    free (partial_ws_frame);
+
+    /*
+     * A control frame announcing a payload larger than 125 bytes is rejected
+     * (return 0).
+     */
+    frames = NULL;
+    num_frames = 0;
+    partial_ws_frame = NULL;
+    partial_ws_frame_size = 0;
+    LONGS_EQUAL(0, relay_websocket_decode_frame (
+                    frame_ping_too_big, sizeof (frame_ping_too_big), 0, NULL,
+                    &frames, &num_frames, &partial_ws_frame,
+                    &partial_ws_frame_size));
+    free (frames);
+    free (partial_ws_frame);
+
+    /* A control frame with a payload of exactly 125 bytes is decoded. */
+    frames = NULL;
+    num_frames = 0;
+    partial_ws_frame = NULL;
+    partial_ws_frame_size = 0;
+    LONGS_EQUAL(1, relay_websocket_decode_frame (
+                    frame_close_max, sizeof (frame_close_max), 0, NULL,
+                    &frames, &num_frames, &partial_ws_frame,
+                    &partial_ws_frame_size));
+    LONGS_EQUAL(1, num_frames);
+    CHECK(frames);
+    LONGS_EQUAL(RELAY_MSG_CLOSE, frames[0].opcode);
+    LONGS_EQUAL(WEBSOCKET_CONTROL_FRAME_MAX_LENGTH, frames[0].payload_size);
+    free (frames[0].payload);
+    free (frames);
+    free (partial_ws_frame);
+
+    /* The control frame length limit does not apply to a data frame. */
+    frames = NULL;
+    num_frames = 0;
+    partial_ws_frame = NULL;
+    partial_ws_frame_size = 0;
+    LONGS_EQUAL(1, relay_websocket_decode_frame (
+                    frame_binary_126, sizeof (frame_binary_126), 0, NULL,
+                    &frames, &num_frames, &partial_ws_frame,
+                    &partial_ws_frame_size));
+    LONGS_EQUAL(1, num_frames);
+    CHECK(frames);
+    LONGS_EQUAL(RELAY_MSG_STANDARD, frames[0].opcode);
+    LONGS_EQUAL(126, frames[0].payload_size);
+    free (frames[0].payload);
     free (frames);
     free (partial_ws_frame);
 }
