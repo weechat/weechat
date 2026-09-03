@@ -696,6 +696,16 @@ relay_websocket_decode_frame (const unsigned char *buffer,
         if (length_frame > WEBSOCKET_FRAME_MAX_LENGTH)
             return 0;
 
+        /*
+         * Control frames must not be fragmented, compressed, or have a
+         * payload larger than 125 bytes (see RFC 6455).
+         */
+        if ((opcode & 8)
+            && (!(buffer[index_buffer_start_frame] & 128)
+                || compressed
+                || (length_frame > WEBSOCKET_CONTROL_FRAME_MAX_LENGTH)))
+            return 0;
+
         if (masked_frame)
         {
             /* Read mask (4 bytes). */

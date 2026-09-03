@@ -26,6 +26,8 @@
 
 #define WEBSOCKET_SUB_PROTOCOL_API_WEECHAT "api.weechat"
 
+#define WEBSOCKET_CONTROL_FRAME_MAX_LENGTH 125
+
 /*
  * Maximum length of a websocket frame received from a client (or a remote
  * WeeChat): used as an upper bound on the announced frame payload length, to
