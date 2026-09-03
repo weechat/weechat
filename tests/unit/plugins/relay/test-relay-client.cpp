@@ -23,6 +23,13 @@ extern "C"
 
 extern void relay_client_recv_text (struct t_relay_client *client,
                                     const char *data);
+extern int relay_client_outqueue_add (struct t_relay_client *client,
+                                     const char *data, int data_size,
+                                     enum t_relay_msg_type raw_msg_type[2],
+                                     int raw_flags[2],
+                                     const char *raw_message[2],
+                                     int raw_size[2]);
+extern void relay_client_outqueue_free_all (struct t_relay_client *client);
 }
 
 #define WEE_NEW_CHUNK(__size)                                           \
@@ -163,4 +170,116 @@ TEST(RelayClient, RecvTextLimitIgnoreData)
     WEE_NEW_CHUNK(chunk_size);
     relay_client_recv_text (client, chunk);
     LONGS_EQUAL(7 * 1024 * 1024, strlen (client->partial_message));
+}
+
+/*
+ * Test functions:
+ *   relay_client_outqueue_add
+ *   relay_client_outqueue_free_all
+ */
+
+TEST(RelayClient, OutqueueAdd)
+{
+    CHECK(server);
+    CHECK(client);
+
+    /* The out queue is empty on a new client. */
+    POINTERS_EQUAL(NULL, client->outqueue);
+    LONGS_EQUAL(0, client->outqueue_size);
+
+    /* Nothing is queued with invalid arguments. */
+    LONGS_EQUAL(0, relay_client_outqueue_add (NULL, "test", 4,
+                                              NULL, NULL, NULL, NULL));
+    LONGS_EQUAL(0, relay_client_outqueue_add (client, NULL, 4,
+                                              NULL, NULL, NULL, NULL));
+    LONGS_EQUAL(0, relay_client_outqueue_add (client, "test", 0,
+                                              NULL, NULL, NULL, NULL));
+    POINTERS_EQUAL(NULL, client->outqueue);
+    LONGS_EQUAL(0, client->outqueue_size);
+
+    /* The size of the messages queued is accumulated. */
+    LONGS_EQUAL(1, relay_client_outqueue_add (client, "test", 4,
+                                              NULL, NULL, NULL, NULL));
+    CHECK(client->outqueue);
+    LONGS_EQUAL(4, client->outqueue_size);
+    LONGS_EQUAL(1, relay_client_outqueue_add (client, "message", 7,
+                                              NULL, NULL, NULL, NULL));
+    LONGS_EQUAL(11, client->outqueue_size);
+
+    /* The size is back to 0 when the out queue is freed. */
+    relay_client_outqueue_free_all (client);
+    POINTERS_EQUAL(NULL, client->outqueue);
+    LONGS_EQUAL(0, client->outqueue_size);
+}
+
+/*
+ * Test functions:
+ *   relay_client_outqueue_add (the data queued is bounded)
+ *
+ * Check that a client which does not read data from the socket is
+ * disconnected once the data queued exceeds the limit.
+ */
+
+TEST(RelayClient, OutqueueAddLimit)
+{
+    int chunk_size, i;
+
+    CHECK(server);
+    CHECK(client);
+    CHECK(!RELAY_STATUS_HAS_ENDED(client->status));
+
+    chunk_size = 1024 * 1024;
+    WEE_NEW_CHUNK(chunk_size);
+
+    /* Queue 9 MB: the limit is not exceeded before the last message. */
+    for (i = 0; i < 9; i++)
+    {
+        LONGS_EQUAL(1, relay_client_outqueue_add (client, chunk, chunk_size,
+                                                  NULL, NULL, NULL, NULL));
+    }
+    LONGS_EQUAL(9 * 1024 * 1024, client->outqueue_size);
+    CHECK(!RELAY_STATUS_HAS_ENDED(client->status));
+
+    /*
+     * The data queued now exceeds the limit: the next message is not queued,
+     * the client is disconnected and its out queue is freed.
+     */
+    LONGS_EQUAL(0, relay_client_outqueue_add (client, "test", 4,
+                                              NULL, NULL, NULL, NULL));
+    LONGS_EQUAL(RELAY_STATUS_DISCONNECTED, client->status);
+    POINTERS_EQUAL(NULL, client->outqueue);
+    LONGS_EQUAL(0, client->outqueue_size);
+}
+
+/*
+ * Test functions:
+ *   relay_client_outqueue_add (a single large message is queued)
+ *
+ * Check that a message larger than the limit is queued, so that a client
+ * reading data from the socket is not disconnected because of a single large
+ * message.
+ */
+
+TEST(RelayClient, OutqueueAddLimitSingleMessage)
+{
+    int chunk_size;
+
+    CHECK(server);
+    CHECK(client);
+    CHECK(!RELAY_STATUS_HAS_ENDED(client->status));
+
+    chunk_size = 16 * 1024 * 1024;
+    WEE_NEW_CHUNK(chunk_size);
+
+    /* The message is queued although it is larger than the limit. */
+    LONGS_EQUAL(1, relay_client_outqueue_add (client, chunk, chunk_size,
+                                              NULL, NULL, NULL, NULL));
+    LONGS_EQUAL(16 * 1024 * 1024, client->outqueue_size);
+    CHECK(!RELAY_STATUS_HAS_ENDED(client->status));
+
+    /* The next message is not queued and the client is disconnected. */
+    LONGS_EQUAL(0, relay_client_outqueue_add (client, "test", 4,
+                                              NULL, NULL, NULL, NULL));
+    LONGS_EQUAL(RELAY_STATUS_DISCONNECTED, client->status);
+    LONGS_EQUAL(0, client->outqueue_size);
 }
