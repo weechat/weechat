@@ -819,6 +819,7 @@ relay_client_outqueue_free (struct t_relay_client *client,
         (outqueue->next_outqueue)->prev_outqueue = outqueue->prev_outqueue;
 
     /* Free data. */
+    client->outqueue_size -= outqueue->data_size;
     free (outqueue->data);
     free (outqueue->raw_message[0]);
     free (outqueue->raw_message[1]);
@@ -930,6 +931,7 @@ relay_client_send_outqueue (struct t_relay_client *client)
                         free (client->outqueue->data);
                         client->outqueue->data = buf;
                         client->outqueue->data_size = client->outqueue->data_size - num_sent;
+                        client->outqueue_size -= num_sent;
                     }
                 }
                 break;
@@ -1036,6 +1038,12 @@ relay_client_outqueue_add (struct t_relay_client *client,
     if (!client || !data || (data_size <= 0))
         return;
 
+    if ((client->outqueue_size + data_size) > RELAY_CLIENT_OUTQUEUE_MAX_SIZE)
+    {
+        relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+        return;
+    }
+
     new_outqueue = malloc (sizeof (*new_outqueue));
     if (!new_outqueue)
         return;
@@ -1076,6 +1084,7 @@ relay_client_outqueue_add (struct t_relay_client *client,
     else
         client->outqueue = new_outqueue;
     client->last_outqueue = new_outqueue;
+    client->outqueue_size += data_size;
 
     if (!client->hook_timer_send)
     {
@@ -1502,6 +1511,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 
         new_client->outqueue = NULL;
         new_client->last_outqueue = NULL;
+        new_client->outqueue_size = 0;
 
         new_client->prev_client = NULL;
         new_client->next_client = relay_clients;
@@ -1726,6 +1736,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
 
         new_client->outqueue = NULL;
         new_client->last_outqueue = NULL;
+        new_client->outqueue_size = 0;
 
         new_client->prev_client = NULL;
         new_client->next_client = relay_clients;

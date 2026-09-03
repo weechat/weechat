@@ -21,6 +21,12 @@ struct t_relay_http_request;
  */
 #define RELAY_CLIENT_PARTIAL_MESSAGE_MAX_LENGTH (8 * 1024 * 1024)
 
+/*
+ * Maximum size of data queued for sending to a client, to protect against a
+ * client which does not read data from the socket.
+ */
+#define RELAY_CLIENT_OUTQUEUE_MAX_SIZE (8 * 1024 * 1024)
+
 /* Type of data exchanged with client */
 
 enum t_relay_client_data_type
@@ -105,6 +111,7 @@ struct t_relay_client
     void *protocol_data;               /* data depending on protocol used   */
     struct t_relay_client_outqueue *outqueue; /* queue for outgoing msgs    */
     struct t_relay_client_outqueue *last_outqueue; /* last outgoing msg     */
+    unsigned long long outqueue_size;  /* size of data in outgoing queue    */
     struct t_relay_client *prev_client;/* link to previous client           */
     struct t_relay_client *next_client;/* link to next client               */
 };
