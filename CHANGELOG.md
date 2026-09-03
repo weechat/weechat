@@ -15,6 +15,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Security
 
+- relay: reject fragmented, compressed or oversized websocket control frames received from a client ([#2356](https://github.com/weechat/weechat/issues/2356))
 - relay: limit size of partial message received from a client to prevent memory exhaustion ([#2347](https://github.com/weechat/weechat/issues/2347))
 - script: reject script names containing path separators in the scripts repository file to prevent writing files outside the scripts directory ([#2351](https://github.com/weechat/weechat/issues/2351))
 - xfer: fix comparison of status in search of transfers, preventing a remote peer from starting a file transfer that was not accepted by the user ([#2352](https://github.com/weechat/weechat/issues/2352))
