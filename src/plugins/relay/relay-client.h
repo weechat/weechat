@@ -22,8 +22,12 @@ struct t_relay_http_request;
 #define RELAY_CLIENT_PARTIAL_MESSAGE_MAX_LENGTH (8 * 1024 * 1024)
 
 /*
- * Maximum size of data queued for sending to a client, to protect against a
+ * Maximum size of data queued for sending to a client: the client is
+ * disconnected once the queued data exceeds this limit, to protect against a
  * client which does not read data from the socket.
+ * The size of the message being queued is not counted, so a single message
+ * larger than this limit is accepted; the client is disconnected only if
+ * another message is queued before the queue is sent below the limit.
  */
 #define RELAY_CLIENT_OUTQUEUE_MAX_SIZE (8 * 1024 * 1024)
 
