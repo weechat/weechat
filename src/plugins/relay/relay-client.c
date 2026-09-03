@@ -1043,9 +1043,17 @@ relay_client_timer_send_cb (const void *pointer, void *data,
 
 /*
  * Add a message in out queue.
+ *
+ * Disconnect the client if the data already queued exceeds
+ * RELAY_CLIENT_OUTQUEUE_MAX_SIZE.
+ *
+ * Returns:
+ *   1: message added in out queue
+ *   0: message not added (invalid arguments, client disconnected because the
+ *      out queue is full, or not enough memory)
  */
 
-void
+int
 relay_client_outqueue_add (struct t_relay_client *client,
                            const char *data, int data_size,
                            enum t_relay_msg_type raw_msg_type[2],
@@ -1057,23 +1065,28 @@ relay_client_outqueue_add (struct t_relay_client *client,
     int i;
 
     if (!client || !data || (data_size <= 0))
-        return;
+        return 0;
 
-    if ((client->outqueue_size + data_size) > RELAY_CLIENT_OUTQUEUE_MAX_SIZE)
+    /*
+     * Disconnect the client if the data already queued exceeds the limit:
+     * the size of the message being added is deliberately not counted, so
+     * that a message larger than the limit is queued rather than rejected.
+     */
+    if (client->outqueue_size > RELAY_CLIENT_OUTQUEUE_MAX_SIZE)
     {
         relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
-        return;
+        return 0;
     }
 
     new_outqueue = malloc (sizeof (*new_outqueue));
     if (!new_outqueue)
-        return;
+        return 0;
 
     new_outqueue->data = malloc (data_size);
     if (!new_outqueue->data)
     {
         free (new_outqueue);
-        return;
+        return 0;
     }
 
     memcpy (new_outqueue->data, data, data_size);
@@ -1113,6 +1126,8 @@ relay_client_outqueue_add (struct t_relay_client *client,
             1, 0, 0,
             &relay_client_timer_send_cb, client, NULL);
     }
+
+    return 1;
 }
 
 /*
@@ -1258,10 +1273,13 @@ relay_client_send (struct t_relay_client *client,
             if (num_sent < data_size)
             {
                 /* some data was not sent, add it to outqueue */
-                relay_client_outqueue_add (client,
-                                           ptr_data + num_sent,
-                                           data_size - num_sent,
-                                           NULL, NULL, NULL, NULL);
+                if (!relay_client_outqueue_add (client,
+                                                ptr_data + num_sent,
+                                                data_size - num_sent,
+                                                NULL, NULL, NULL, NULL))
+                {
+                    num_sent = -1;
+                }
             }
         }
         else
@@ -2272,6 +2290,7 @@ relay_client_print_log (void)
         }
         weechat_log_printf ("  outqueue. . . . . . . . . : %p", ptr_client->outqueue);
         weechat_log_printf ("  last_outqueue . . . . . . : %p", ptr_client->last_outqueue);
+        weechat_log_printf ("  outqueue_size . . . . . . : %llu", ptr_client->outqueue_size);
         weechat_log_printf ("  prev_client . . . . . . . : %p", ptr_client->prev_client);
         weechat_log_printf ("  next_client . . . . . . . : %p", ptr_client->next_client);
     }
