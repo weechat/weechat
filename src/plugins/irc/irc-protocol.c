@@ -257,7 +257,7 @@ irc_protocol_tags_cmd (struct t_irc_protocol_ctxt *ctxt, const char *command,
         if (ctxt->server)
         {
             ptr_tag_batch = weechat_hashtable_get (ctxt->tags, "batch");
-            if (ptr_tag_batch && ptr_tag_batch)
+            if (ptr_tag_batch)
             {
                 ptr_batch = irc_batch_search (ctxt->server, ptr_tag_batch);
                 if (ptr_batch)
