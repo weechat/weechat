@@ -24,7 +24,7 @@
 - relay: reject fragmented, compressed or oversized websocket control frames received from a client ([#2356](https://github.com/weechat/weechat/issues/2356))
 - relay: limit size of partial message received from a client to prevent memory exhaustion ([#2347](https://github.com/weechat/weechat/issues/2347))
 - relay: fix use-after-free and double free on remote buffer ([GHSA-hx59-4hq9-6vmw](https://github.com/weechat/weechat/security/advisories/GHSA-hx59-4hq9-6vmw))
-- relay: fix authentication bypass with the "plain" password hash algorithm ([GHSA-68ff-gq39-pqjm](https://github.com/weechat/weechat/security/advisories/GHSA-68ff-gq39-pqjm))
+- relay: fix authentication bypass with the "plain" password hash algorithm ([GHSA-68ff-gq39-pqjm](https://github.com/weechat/weechat/security/advisories/GHSA-68ff-gq39-pqjm), [CVE-2026-86036](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-86036))
 - relay: fix read of uncompressed websocket frame ([#2331](https://github.com/weechat/weechat/issues/2331))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
