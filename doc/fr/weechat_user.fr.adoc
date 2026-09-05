@@ -1650,6 +1650,7 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]        | Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche). | `+/input return+`
+| kbd:[Ctrl+o]        | Exécuter la commande trouvée dans l'historique et insérer la suivante sur la ligne de commande. | `+/input history_use_get_next+`
 | kbd:[Alt+Enter]     | Insérer une nouvelle ligne. | `+/input insert \n+`
 | kbd:[Alt+d]         | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers interne). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande. | `+/input grab_key_command+`
