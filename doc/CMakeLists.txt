@@ -9,6 +9,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
   set(AUTOGEN_LANG de en fr it ja pl sr)
   set(MAN_LANG cs de en fr it ja pl ru sr)
   set(USER_LANG de en fr it ja pl sr)
+  set(CHEATSHEET_LANG de en fr it ja pl sr)
   set(PLUGIN_API_LANG en fr it ja sr)
   set(SCRIPTING_LANG de en fr it ja pl sr)
   set(FAQ_LANG de en es fr it ja pl sr)
@@ -66,6 +67,14 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a sectnums
       -a sectnumlevels=2
       -a docinfo1
+    )
+
+    # Asciidoctor arguments for cheat sheet
+    # (the default stylesheet is replaced by a dedicated one, which displays
+    # the keys in columns and is suited for printing)
+    set(ASCIIDOCTOR_CHEATSHEET_ARGS
+      -a stylesdir="${CMAKE_CURRENT_SOURCE_DIR}"
+      -a stylesheet=cheatsheet.css
     )
 
     # Asciidoctor arguments for plugin API reference
@@ -228,6 +237,22 @@ if(ENABLE_MAN OR ENABLE_DOC)
         )
         add_custom_target(doc-user-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.${lang}.html")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
+      endforeach()
+      # Cheat sheet
+      foreach(lang ${CHEATSHEET_LANG})
+        add_custom_command(
+          OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_cheatsheet.${lang}.html"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_CHEATSHEET_ARGS} -o "weechat_cheatsheet.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_cheatsheet.${lang}.adoc"
+          DEPENDS
+          "${CMAKE_CURRENT_SOURCE_DIR}/cheatsheet.css"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_cheatsheet.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/key_bindings.${lang}.adoc"
+          WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+          COMMENT "Building weechat_cheatsheet.${lang}.html"
+        )
+        add_custom_target(doc-cheatsheet-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_cheatsheet.${lang}.html")
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_cheatsheet.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
       # Plugin API reference
       foreach(lang ${PLUGIN_API_LANG})

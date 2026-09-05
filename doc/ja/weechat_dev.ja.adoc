@@ -751,9 +751,13 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |===
 | パス/ファイル名                               | 説明
 | doc/                                          | 文書
+// TRANSLATION MISSING
+|    cheatsheet.css                             | Asciidoctor style for the cheat sheet.
 |    docinfo.html                               | asciidoctor スタイル
 |    XX/                                        | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
 |       weechat.1.XX.adoc                       | man ページ (`man weechat`)
+// TRANSLATION MISSING
+|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.ja.html[Cheat sheet ^↗^^].
 |       weechat_dev.XX.adoc                     | link:weechat_dev.ja.html[開発者リファレンス ^↗^^] (この文書)
 |       weechat_faq.XX.adoc                     | link:weechat_faq.ja.html[FAQ ^↗^^]
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.ja.html[プラグイン API リファレンス ^↗^^]
@@ -768,6 +772,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       includes/                               | Files included in documentation.
 // TRANSLATION MISSING
 |          cmdline_options.XX.adoc              | Command-line options (file included in man pages and user's guide).
+// TRANSLATION MISSING
+|          key_bindings.XX.adoc                 | Key bindings (file included in user's guide and cheat sheet).
 // TRANSLATION MISSING
 |          man.XX.adoc                          | Part of man pages: plugin options, files and copyright.
 |===

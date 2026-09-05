@@ -1,0 +1,10 @@
+Document: weechat-cheatsheet-ja
+Title: WeeChat cheat sheet (Japanese)
+Author: Sébastien Helleu
+Abstract: This cheat sheet lists all default key bindings and mouse
+ actions of the WeeChat IRC client (Japanese version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-devel-doc/html/weechat_cheatsheet.ja.html
+Files: /usr/share/doc/weechat-devel-doc/html/weechat_cheatsheet.ja.html

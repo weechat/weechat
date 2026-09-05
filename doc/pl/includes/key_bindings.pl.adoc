@@ -10,8 +10,10 @@
 // user's guide).
 ifndef::kb-user-guide[:kb-user-guide:]
 
+// tag::intro[]
 WeeChat posiada wiele domyślnych skrótów opisanych w poniższych rozdziałach. +
 Można je zmienić oraz dodać nowe za pomocą komendy <<{kb-user-guide}#command_weechat_key,/key>>.
+// end::intro[]
 
 [[key_bindings_cmdline]]
 === Skróty dla linii poleceń

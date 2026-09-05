@@ -10,9 +10,11 @@
 // user's guide).
 ifndef::kb-user-guide[:kb-user-guide:]
 
+// tag::intro[]
 // TRANSLATION MISSING
 WeeChat provides a lot of default key bindings, listed in the following chapters. +
 They can be changed and new ones can be added with the <<{kb-user-guide}#command_weechat_key,/key>> command.
+// end::intro[]
 
 [[key_bindings_cmdline]]
 === コマンドライン用のキー

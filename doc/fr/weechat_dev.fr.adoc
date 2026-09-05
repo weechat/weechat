@@ -583,9 +583,11 @@ Fichiers de documentation :
 |===
 | Chemin/fichier                                | Description
 | doc/                                          | Documentation.
+|    cheatsheet.css                             | Style Asciidoctor pour l'aide-mémoire.
 |    docinfo.html                               | Style Asciidoctor.
 |    XX/                                        | Documentation pour la langue XX (langues : en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Page de manuel (`man weechat`).
+|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.fr.html[Aide-mémoire ^↗^^].
 |       weechat_dev.XX.adoc                     | link:weechat_dev.fr.html[Guide du développeur ^↗^^] (ce document).
 |       weechat_faq.XX.adoc                     | link:weechat_faq.fr.html[FAQ ^↗^^] (questions fréquemment posées).
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.fr.html[Référence API extension ^↗^^].
@@ -596,6 +598,7 @@ Fichiers de documentation :
 |       weechat_user.XX.adoc                    | link:weechat_user.fr.html[Guide utilisateur ^↗^^].
 |       includes/                               | Fichiers inclus dans la documentation.
 |          cmdline_options.XX.adoc              | Options de ligne de commande (fichier inclus dans les pages de manuel et le guide utilisateur).
+|          key_bindings.XX.adoc                 | Raccourcis clavier (fichier inclus dans le guide utilisateur et l'aide-mémoire).
 |          man.XX.adoc                          | Parties des pages de manuel : options d'extension, fichiers et copyright.
 |===
 

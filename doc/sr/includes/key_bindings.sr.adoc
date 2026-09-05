@@ -10,8 +10,10 @@
 // user's guide).
 ifndef::kb-user-guide[:kb-user-guide:]
 
+// tag::intro[]
 WeeChat нуди доста подразумеваних тастерских пречица, наведених у следећим поглављима. +
 Оне могу да се промене и нове могу да се дефинишу командом <<{kb-user-guide}#command_weechat_key,/key>>.
+// end::intro[]
 
 [[key_bindings_cmdline]]
 === Командна линија

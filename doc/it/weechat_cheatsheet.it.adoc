@@ -1,0 +1,16 @@
+// SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+// TRANSLATION MISSING
+= WeeChat cheat sheet
+:lang: it
+// links to the user's guide in the included file must point to the user's guide
+:kb-user-guide: weechat_user.it
+include::includes/attributes-it.adoc[]
+
+// TRANSLATION MISSING
+All keys and mouse actions can be customized with the <<{kb-user-guide}#command_weechat_key,/key>> command.
+
+// the introduction of the user's guide is replaced by the sentence above
+include::includes/key_bindings.it.adoc[tags=**;!intro,leveloffset=-1]

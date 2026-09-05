@@ -1,0 +1,14 @@
+// SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+= Aide-mémoire WeeChat
+:lang: fr
+// links to the user's guide in the included file must point to the user's guide
+:kb-user-guide: weechat_user.fr
+include::includes/attributes-fr.adoc[]
+
+Toutes les touches et actions souris peuvent être personnalisées avec la commande <<{kb-user-guide}#command_weechat_key,/key>>.
+
+// the introduction of the user's guide is replaced by the sentence above
+include::includes/key_bindings.fr.adoc[tags=**;!intro,leveloffset=-1]

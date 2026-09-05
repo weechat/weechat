@@ -10,8 +10,10 @@
 // user's guide).
 ifndef::kb-user-guide[:kb-user-guide:]
 
+// tag::intro[]
 WeeChat bietet viele Standardtastenzuordnungen, die in den folgenden Kapiteln aufgeführt sind. +
 Sie können mit dem Befehl <<{kb-user-guide}#command_weechat_key,/key>> geändert und neue hinzugefügt werden.
+// end::intro[]
 
 [[key_bindings_cmdline]]
 === Kommandozeile

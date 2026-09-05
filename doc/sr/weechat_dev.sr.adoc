@@ -605,9 +605,13 @@ WeeChat „језгро” се налази у следећим директо�
 |===
 | Путања/фајл                                   | Опис
 | doc/                                          | Документација.
+// TRANSLATION MISSING
+|    cheatsheet.css                             | Asciidoctor style for the cheat sheet.
 |    docinfo.html                               | Asciidoctor стил.
 |    XX/                                        | Документација за језик XX (језици: en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Man страница(`man weechat`).
+// TRANSLATION MISSING
+|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.sr.html[Cheat sheet ^↗^^].
 |       weechat_dev.XX.adoc                     | link:weechat_dev.sr.html[Водич за програмере ^↗^^] (овај документ).
 |       weechat_faq.XX.adoc                     | link:weechat_faq.sr.html[ЧПП ^↗^^].
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.sr.html[Референца за API додатака ^↗^^].
@@ -618,6 +622,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       weechat_user.XX.adoc                    | link:weechat_user.sr.html[Корисничко упутство ^↗^^].
 |       includes/                               | Фајлови укључени у документацију.
 |          cmdline_options.XX.adoc              | Опције командне линије (фајл се укључује у man странице и корисничко упутство).
+// TRANSLATION MISSING
+|          key_bindings.XX.adoc                 | Key bindings (file included in user's guide and cheat sheet).
 |          man.XX.adoc                          | Део man страница: опције додатака, фајлови и ауторска права.
 |===
 

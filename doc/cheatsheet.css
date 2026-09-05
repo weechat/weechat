@@ -1,0 +1,368 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Sébastien Helleu <flashcode@flashtux.org>
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Style for the WeeChat cheat sheet.
+ *
+ * This file replaces the default Asciidoctor stylesheet: it is embedded in the
+ * generated HTML with the attributes "stylesdir" and "stylesheet".
+ *
+ * Keys and mouse actions are displayed in columns, grouped by category.
+ * Printing the document (A4 landscape) gives a two pages cheat sheet.
+ */
+
+/* Themes/colors */
+
+:root {
+  color-scheme: light;
+  --body-bg-color: #fff;
+  --body-color: #353535;
+  --body-font: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans","DejaVu Sans",sans-serif;
+  --mono-font: "DejaVu Sans Mono","Liberation Mono","Lucida Console",monospace;
+  --link-color: #3d6baf;
+  --color-header1: #000;
+  --color-header2: #ba3925;
+  --header-details-color: #797979;
+  --border-color: #dddddf;
+  --row-border-color: #ececee;
+  --section-bg-color: #f3f3f4;
+  --thead-color: #6a6a6a;
+  --code-color: #5a5a5a;
+  --note-color: #6a6a6a;
+  --kbd-bg-color: #f7f7f7;
+  --kbd-border-color: #ccc;
+  --kbd-color: #222;
+}
+
+/* the printed cheat sheet is always light */
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --body-bg-color: #1a1a1a;
+    --body-color: #ddd;
+    --link-color: #7abeef;
+    --color-header1: #ddd;
+    --color-header2: #da8975;
+    --header-details-color: #aaa;
+    --border-color: #444;
+    --row-border-color: #2e2e2e;
+    --section-bg-color: #252525;
+    --thead-color: #999;
+    --code-color: #b5b5b5;
+    --note-color: #999;
+    --kbd-bg-color: #252525;
+    --kbd-border-color: #333;
+    --kbd-color: #ddd;
+  }
+}
+
+/* Base */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 1.5em 2em 1em;
+  background-color: var(--body-bg-color);
+  color: var(--body-color);
+  font-family: var(--body-font);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+p {
+  margin: 0 0 .6em;
+}
+
+a:link, a:visited {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+sup {
+  font-size: .75em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* Header: title only */
+
+#header {
+  margin-bottom: 1em;
+  padding-bottom: .4em;
+  border-bottom: 2px solid var(--color-header2);
+}
+
+#header h1 {
+  margin: 0;
+  color: var(--color-header1);
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+/* the version is displayed in the footer */
+#header .details {
+  display: none;
+}
+
+/* Content: keys and mouse actions in columns, grouped by category */
+
+#content {
+  column-width: 24em;
+  column-gap: 1.6em;
+}
+
+#preamble {
+  margin-bottom: 1em;
+  color: var(--header-details-color);
+}
+
+.sect1 {
+  margin-bottom: .6em;
+}
+
+/* keep a sub-category and its keys in the same column */
+.sect2 {
+  break-inside: avoid;
+  margin-bottom: .5em;
+}
+
+/* a sub-category with many keys is taller than the space usually left at the
+   bottom of a column: let it flow, otherwise the column ends with a big hole */
+.sect2:has(tbody tr:nth-child(15)) {
+  break-inside: auto;
+}
+
+h2, h3 {
+  break-after: avoid;
+  margin: 0 0 .3em;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+h2 {
+  padding: .2em .4em;
+  background-color: var(--section-bg-color);
+  border-left: 3px solid var(--color-header2);
+  color: var(--color-header2);
+  font-size: 1.05em;
+}
+
+h3 {
+  margin-top: .5em;
+  color: var(--color-header2);
+  font-size: .95em;
+}
+
+/* Tables of keys and mouse actions */
+
+table.tableblock {
+  width: 100%;
+  margin-bottom: .15em;
+  border-collapse: collapse;
+  font-size: .88em;
+}
+
+/* the "Command" column of the user's guide is always the last one: the cheat
+   sheet displays keys and descriptions only */
+table.tableblock col:last-child,
+table.tableblock th:last-child,
+table.tableblock td:last-child {
+  display: none;
+}
+
+/* the column widths set in the user's guide do not fit the narrow columns used
+   here; "!important" is required to override the inline styles */
+table.tableblock col {
+  width: auto !important;
+}
+
+/* the header is not repeated when a category flows to the next column: a lone
+   header would be more confusing than helpful */
+table.tableblock thead {
+  display: table-row-group;
+}
+
+/* with three columns, only the key and the description are left once the
+   command is hidden: such a table needs no header */
+table.tableblock:has(> colgroup > col:nth-child(3):last-child) > thead {
+  display: none;
+}
+
+table.tableblock th {
+  padding: 0 .4em .15em 0;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--thead-color);
+  font-size: .9em;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+table.tableblock tr {
+  break-inside: avoid;
+}
+
+table.tableblock td {
+  padding: .1em .4em .1em 0;
+  border-bottom: 1px solid var(--row-border-color);
+}
+
+table.tableblock tbody tr:last-child td {
+  border-bottom: none;
+}
+
+table.tableblock td:first-child {
+  white-space: nowrap;
+}
+
+table.tableblock th.halign-center, table.tableblock td.halign-center {
+  text-align: center;
+}
+
+table.tableblock th.halign-left, table.tableblock td.halign-left {
+  text-align: left;
+}
+
+table.tableblock th.halign-right, table.tableblock td.halign-right {
+  text-align: right;
+}
+
+table.tableblock td.valign-middle {
+  vertical-align: middle;
+}
+
+table.tableblock td.valign-top {
+  vertical-align: top;
+}
+
+p.tableblock {
+  margin: 0;
+}
+
+/* Keys and commands */
+
+kbd {
+  display: inline-block;
+  padding: 0 .35em;
+  background-color: var(--kbd-bg-color);
+  border: 1px solid var(--kbd-border-color);
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .15);
+  color: var(--kbd-color);
+  font-family: var(--body-font);
+  font-size: .85em;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.keyseq {
+  white-space: nowrap;
+}
+
+code {
+  color: var(--code-color);
+  font-family: var(--mono-font);
+  font-size: .85em;
+}
+
+/* Notes: legend of mouse buttons, actions typed on the command line */
+
+.admonitionblock {
+  margin: .3em 0 .6em;
+  color: var(--note-color);
+  font-size: .85em;
+}
+
+.admonitionblock table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admonitionblock td.icon {
+  display: none;
+}
+
+.admonitionblock td.content {
+  padding: .2em 0 .2em .6em;
+  border-left: 2px solid var(--border-color);
+}
+
+/* Footer */
+
+#footer {
+  margin-top: 1.5em;
+  padding-top: .4em;
+  border-top: 1px solid var(--border-color);
+  color: var(--header-details-color);
+  font-size: .8em;
+}
+
+/* Print: two A4 landscape pages */
+
+@page {
+  size: A4 landscape;
+  margin: 6mm;
+}
+
+@media print {
+  body {
+    padding: 0;
+    background-color: #fff;
+    color: #000;
+    font-size: 6pt;
+    line-height: 1.3;
+  }
+
+  #header {
+    margin-bottom: .5em;
+    padding-bottom: .15em;
+  }
+
+  #header h1 {
+    font-size: 1.6em;
+  }
+
+  #content {
+    column-count: 4;
+    column-width: auto;
+    column-gap: 4mm;
+  }
+
+  #preamble {
+    margin-bottom: .6em;
+  }
+
+  h2 {
+    padding: .1em .3em;
+  }
+
+  .sect1 {
+    margin-bottom: .45em;
+  }
+
+  .sect2 {
+    margin-bottom: .35em;
+  }
+
+  table.tableblock td {
+    padding: .06em .35em .06em 0;
+  }
+
+  #footer {
+    margin-top: .8em;
+    padding-top: .2em;
+  }
+
+  a:link, a:visited {
+    color: inherit;
+  }
+}
