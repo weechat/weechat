@@ -1623,6 +1623,7 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]        | führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche). | `+/input return+`
+| kbd:[Ctrl+o]        | führt den im Verlauf gefundenen Befehl aus und fügt den nächsten in die Befehlszeile ein. | `+/input history_use_get_next+`
 | kbd:[Alt+Enter]     | Zeilenvorschub einfügen. | `+/input insert \n+`
 | kbd:[Alt+d]         | löscht das Wort rechts vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein. | `+/input grab_key_command+`

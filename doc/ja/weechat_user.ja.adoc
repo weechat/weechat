@@ -1734,6 +1734,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]        | コマンドを実行するか、メッセージを送信する (検索モードの場合: 検索の終了) | `+/input return+`
 // TRANSLATION MISSING
+| kbd:[Ctrl+o]        | Execute the command found in history and insert the next one in the command line. | `+/input history_use_get_next+`
+// TRANSLATION MISSING
 | kbd:[Alt+Enter]     | Insert a newline. | `+/input insert \n+`
 | kbd:[Alt+d]         | コマンドラインで次の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `+/input delete_next_word+`
 | kbd:[Alt+k]         | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `+/input grab_key_command+`

@@ -1620,6 +1620,7 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]        | Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie). | `+/input return+`
+| kbd:[Ctrl+o]        | Wykonaj komende znaleziona w historii i wstaw kolejna do linii poleceń. | `+/input history_use_get_next+`
 | kbd:[Alt+Enter]     | Wstawia nową linię. | `+/input insert \n+`
 | kbd:[Alt+d]         | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń. | `+/input grab_key_command+`

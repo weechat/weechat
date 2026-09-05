@@ -1767,6 +1767,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]        | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca). | `+/input return+`
 // TRANSLATION MISSING
+| kbd:[Ctrl+o]        | Execute the command found in history and insert the next one in the command line. | `+/input history_use_get_next+`
+// TRANSLATION MISSING
 | kbd:[Alt+Enter]     | Insert a newline. | `+/input insert \n+`
 // TRANSLATION MISSING
 | kbd:[Alt+d]         | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
