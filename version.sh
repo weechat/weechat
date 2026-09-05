@@ -24,7 +24,7 @@
 #     devel-patch    the patch version of devel ("0-dev" for "4.1.0-dev")
 #     devel-number   the devel version as hex number ("0x04010000" for "4.1.0-dev")
 
-weechat_stable="4.10.0"
+weechat_stable="4.10.1"
 weechat_devel="4.11.0-dev"
 
 stable_major=$(echo "${weechat_stable}" | cut -d"." -f1)
