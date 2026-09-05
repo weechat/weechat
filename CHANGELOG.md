@@ -6,6 +6,8 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # Changelog
 
+_The file [UPGRADING.md](UPGRADING.md) contains important information about upgrades, for example manual actions to perform when upgrading from a version to another one (most changes are automated, but some of them cannot be)._
+
 ## [Unreleased]
 
 ### Added
@@ -57,8 +59,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - xfer: remove path from filename received in DCC file transfer to prevent writing the file outside the download directory ([#2348](https://github.com/weechat/weechat/issues/2348))
 
 ## [4.10.0] - 2026-08-02
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -230,8 +230,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [4.8.0] - 2025-11-30
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add option weechat.completion.cycle
@@ -293,8 +291,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [4.7.0] - 2025-07-19
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add support of specifier `%@` for UTC time in function util_strftimeval
@@ -335,8 +331,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [4.6.3] - 2025-05-11
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Security
 
 - core: fix integer overflow with decimal numbers in calculation of expression
@@ -364,8 +358,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
 
 ## [4.6.0] - 2025-03-23
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -631,8 +623,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [4.3.1] - 2024-05-31
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Fixed
 
 - irc: don't return pointer to irc server if the channel or nick is not found in info "irc_buffer"
@@ -648,8 +638,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - tests: fix compilation of tests on Rocky 9.4
 
 ## [4.3.0] - 2024-05-26
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -734,8 +722,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [4.2.2] - 2024-04-07
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Fixed
 
 - core: fix reset to initial scroll position after search of text in buffer ([#2093](https://github.com/weechat/weechat/issues/2093))
@@ -759,8 +745,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix random date displayed when a received message contains tags but no "time" ([#2064](https://github.com/weechat/weechat/issues/2064))
 
 ## [4.2.0] - 2024-01-21
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -852,8 +836,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [4.1.1] - 2023-10-26
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Changed
 
 - core: make libintl.h required if CMake option ENABLE_NLS is enabled ([#2031](https://github.com/weechat/weechat/issues/2031))
@@ -865,8 +847,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: revert compute of nick colors to case-sensitive way, deprecate again infos "irc_nick_color" and "irc_nick_color_name" ([#194](https://github.com/weechat/weechat/issues/194), [#2032](https://github.com/weechat/weechat/issues/2032))
 
 ## [4.1.0] - 2023-10-15
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -962,8 +942,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [4.0.6] - 2023-10-26
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Fixed
 
 - core: fix crash when a custom bar item name is already used by a default bar item ([#2034](https://github.com/weechat/weechat/issues/2034))
@@ -1045,8 +1023,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [4.0.1] - 2023-06-30
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Fixed
 
 - core: force key "return" to command "/input return" when migrating legacy keys
@@ -1058,8 +1034,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: sent "QUIT" message to servers connected with TLS on `/upgrade`
 
 ## [4.0.0] - 2023-06-24
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -1192,8 +1166,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [3.8] - 2023-01-08
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add option weechat.look.chat_space_right ([#1862](https://github.com/weechat/weechat/issues/1862))
@@ -1256,8 +1228,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - trigger: execute trigger command on appropriate buffer for hooks command, command_run, line, modifier and print ([#1841](https://github.com/weechat/weechat/issues/1841))
 
 ## [3.7] - 2022-10-09
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -1323,8 +1293,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [3.6] - 2022-07-10
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add command `/item` to create custom bar items ([#808](https://github.com/weechat/weechat/issues/808))
@@ -1353,8 +1321,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - trigger: fix memory leak in command `/trigger addinput`
 
 ## [3.5] - 2022-03-27
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -1403,8 +1369,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [3.4] - 2021-12-18
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add support of static arrays in hdata
@@ -1443,8 +1407,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix parsing of TAGMSG message when there is a colon before the channel
 
 ## [3.3] - 2021-09-19
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -1503,8 +1465,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [3.2] - 2021-06-13
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add option weechat.network.gnutls_ca_system, rename option weechat.network.gnutls_ca_file to weechat.network.gnutls_ca_user (now evaluated), delete and reload certificates when options are changed ([#972](https://github.com/weechat/weechat/issues/972))
@@ -1559,8 +1519,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [3.1] - 2021-03-07
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add options weechat.look.hotlist_update_on_buffer_switch and weechat.look.read_marker_update_on_buffer_switch ([#992](https://github.com/weechat/weechat/issues/992), [#993](https://github.com/weechat/weechat/issues/993))
@@ -1601,8 +1559,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [3.0] - 2020-11-11
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add tests on GUI line functions
@@ -1635,8 +1591,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - trigger: add `${tg_tags} !!- ,notify_none,` in conditions of default trigger "beep" ([#1529](https://github.com/weechat/weechat/issues/1529))
 
 ## [2.9] - 2020-07-18
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -1717,8 +1671,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [2.8] - 2020-03-29
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add variable "old_full_name" in buffer, set during buffer renaming ([#1428](https://github.com/weechat/weechat/issues/1428))
@@ -1766,8 +1718,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix crash when receiving a malformed message 324 (channel mode) ([CVE-2020-8955](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8955))
 
 ## [2.7] - 2019-12-08
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -1828,8 +1778,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [2.6] - 2019-09-08
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add support of 32767 color pairs ([#1343](https://github.com/weechat/weechat/issues/1343), [#1345](https://github.com/weechat/weechat/issues/1345))
@@ -1873,8 +1821,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - ruby: fix conversion of big integers on 32bit architecture ([#1395](https://github.com/weechat/weechat/issues/1395))
 
 ## [2.5] - 2019-06-06
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -1926,8 +1872,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - trigger: fix split of hook arguments ([#1322](https://github.com/weechat/weechat/issues/1322))
 
 ## [2.4] - 2019-02-17
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -1992,8 +1936,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [2.2] - 2018-07-14
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add reverse of string in evaluation of expressions with `rev:xxx` ([#1200](https://github.com/weechat/weechat/issues/1200))
@@ -2055,8 +1997,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [2.1] - 2018-03-18
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add binary weechat-headless to run WeeChat without interface, with optional daemon mode (command line option `--daemon`) ([#1120](https://github.com/weechat/weechat/issues/1120))
@@ -2093,8 +2033,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - python: fix argument fd in hook_fd callback
 
 ## [2.0] - 2017-12-03
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -2183,8 +2121,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [1.8] - 2017-05-13
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add option weechat.completion.nick_case_sensitive ([#981](https://github.com/weechat/weechat/issues/981))
@@ -2233,8 +2169,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [1.7] - 2017-01-15
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add option weechat.look.align_multiline_words ([#411](https://github.com/weechat/weechat/issues/411), [#802](https://github.com/weechat/weechat/issues/802))
@@ -2278,8 +2212,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [1.6] - 2016-10-02
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add optional argument `lowest`, `highest` or level mask in command `/input hotlist_clear`
@@ -2314,8 +2246,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - xfer: fix crash on DCC send if option xfer.file.auto_accept_nicks is set ([#781](https://github.com/weechat/weechat/issues/781))
 
 ## [1.5] - 2016-05-01
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -2357,8 +2287,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - relay: do not execute any command received in a PRIVMSG message from an irc relay client ([#699](https://github.com/weechat/weechat/issues/699))
 
 ## [1.4] - 2016-01-10
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -2410,8 +2338,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [1.3] - 2015-08-16
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add completion "colors" ([#481](https://github.com/weechat/weechat/issues/481))
@@ -2462,8 +2388,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - xfer: fix parsing of DCC chat messages (handle "\r\n" at the end of messages) ([#425](https://github.com/weechat/weechat/issues/425), [#426](https://github.com/weechat/weechat/issues/426))
 
 ## [1.2] - 2015-05-10
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -2536,8 +2460,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix crash in buffer close when server name is the same as a channel name ([#305](https://github.com/weechat/weechat/issues/305))
 
 ## [1.1] - 2015-01-11
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -2627,8 +2549,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - trigger: fix regex used in default triggers to hide passwords ("\S" is not supported on *BSD) ([#172](https://github.com/weechat/weechat/issues/172))
 
 ## [1.0] - 2014-08-15
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -2790,8 +2710,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.4.3] - 2014-02-09
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add signals "signal_sighup" and "signal_sigwinch" (terminal resized)
@@ -2891,8 +2809,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.4.2] - 2013-10-06
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: display day change message dynamically (do not store it as a line in buffer), split option weechat.look.day_change_time_format into two options weechat.look.day_change_message_{1date|2dates}, new option weechat.color.chat_day_change ([task #12775](https://savannah.nongnu.org/task/?12775))
@@ -2973,8 +2889,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - xfer: fix compilation on OpenBSD ([bug #39071](https://savannah.nongnu.org/bugs/?39071))
 
 ## [0.4.1] - 2013-05-20
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -3061,8 +2975,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - relay: fix uncontrolled format string in redirection of irc commands
 
 ## [0.4.0] - 2013-01-20
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -3165,8 +3077,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.3.9] - 2012-09-29
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add signals for plugins loaded/unloaded
@@ -3251,8 +3161,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.3.8] - 2012-06-03
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add option weechat.look.prefix_same_nick (hide or change prefix on messages whose nick is the same as previous message) ([task #11965](https://savannah.nongnu.org/task/?11965))
@@ -3315,8 +3223,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - perl: fix compilation on macOS ([bug #30701](https://savannah.nongnu.org/bugs/?30701))
 
 ## [0.3.7] - 2012-02-26
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -3394,8 +3300,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - ruby: fix crash when reloading ruby plugin ([bug #34474](https://savannah.nongnu.org/bugs/?34474))
 
 ## [0.3.6] - 2011-10-22
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -3488,8 +3392,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.3.5] - 2011-05-15
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add buffer to hotlist if away is set on buffer (even if buffer is displayed), new option weechat.look.hotlist_add_buffer_if_away ([task #10948](https://savannah.nongnu.org/task/?10948))
@@ -3570,8 +3472,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.3.4] - 2011-01-16
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add 256 colors support, new command `/color`, new section "palette" in weechat.conf ([task #6834](https://savannah.nongnu.org/task/?6834))
@@ -3639,8 +3539,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.3.3] - 2010-08-07
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - core: add keys for undo/redo changes on command line (default: `Ctrl`+`_` and `Alt`+`_`) ([task #9483](https://savannah.nongnu.org/task/?9483))
@@ -3685,8 +3583,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - xfer: fix bug with double quotes in DCC filenames ([bug #30471](https://savannah.nongnu.org/bugs/?30471))
 
 ## [0.3.2] - 2010-04-18
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -3754,8 +3650,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.3.1.1] - 2010-01-31
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Fixed
 
 - irc: fix crash with SSL connection if option ssl_cert is set ([bug #28752](https://savannah.nongnu.org/bugs/?28752))
@@ -3764,8 +3658,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - xfer: fix crash when purging old xfer chats ([bug #28764](https://savannah.nongnu.org/bugs/?28764))
 
 ## [0.3.1] - 2010-01-23
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -3821,8 +3713,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - gui: fix `/input history_global_next`: reset input content when last command in history is reached
 
 ## [0.3.0] - 2009-09-06
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -4042,8 +3932,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.2.2] - 2007-01-06
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - add anti-flood option (irc_anti_flood) ([task #5442](https://savannah.nongnu.org/task/?5442))
@@ -4118,8 +4006,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.2.0] - 2006-08-19
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - add "C"lear option on IRC raw buffer
@@ -4171,8 +4057,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.1.9] - 2006-05-25
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - add backtrace when WeeChat crashes, log file automatically renamed
@@ -4223,8 +4107,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.1.8] - 2006-03-18
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - add missing IRC command (487)
@@ -4271,8 +4153,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ## [0.1.7] - 2006-01-14
 
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
 ### Added
 
 - add color for window separators (when split)
@@ -4306,8 +4186,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix infinite loop when resizing term to small size
 
 ## [0.1.6] - 2005-11-11
-
-_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
