@@ -1697,7 +1697,7 @@ of actions you can perform in this mode.
 WeeChat provides a lot of default key bindings, listed in the following chapters. +
 They can be changed and new ones can be added with the <<command_weechat_key,/key>> command.
 
-[[key_bindings_command_line]]
+[[key_bindings_cmdline]]
 === Tasti per la riga di comando
 
 // TRANSLATION MISSING
