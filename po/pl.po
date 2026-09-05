@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-08-29 22:00+0200\n"
-"PO-Revision-Date: 2026-07-05 12:28+0200\n"
+"PO-Revision-Date: 2026-09-05 15:17+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
 "Language: pl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #. TRANSLATORS: command line option "-a", "--no-connect".
 msgid "disable auto-connect to servers at startup"
@@ -963,54 +963,47 @@ msgstr "Opcja utworzona: "
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%sFunkcja „%s” nie jest dostępna w tym systemie"
 
-#, fuzzy
-#| msgid "not available"
 msgid "No theme available"
-msgstr "niedostępne"
+msgstr "Brak dostępnych motywów"
 
 msgid "Themes:"
-msgstr ""
+msgstr "Motywy:"
 
 #, c-format
 msgid "  %s %s%s%s (file)"
-msgstr ""
+msgstr "  %s %s%s%s (plik)"
 
-#, fuzzy, c-format
-#| msgid "%sKey \"%s\" not found"
+#, c-format
 msgid "%sTheme \"%s\" not found"
-msgstr "%sKlawisz \"%s\" nie znaleziony"
+msgstr "%sMotyw „%s” nie został znaleziony"
 
-#, fuzzy, c-format
-#| msgid "Option \"%s%s%s\":"
+#, c-format
 msgid "Theme \"%s%s%s\":"
-msgstr "Opcja \"%s%s%s\":"
+msgstr "Motyw \"%s%s%s\":"
 
-#, fuzzy, c-format
-#| msgid "    file: %s"
+#, c-format
 msgid "  source: %s"
-msgstr "    plik: %s"
+msgstr "  źródło: %s"
 
 msgid "  source: built-in (in-memory)"
-msgstr ""
+msgstr "  źródłó: wbudowane (w pamięci)"
 
-#, fuzzy, c-format
-#| msgid "description"
+#, c-format
 msgid "  description: %s"
-msgstr "opis"
+msgstr "  opis: %s"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "    file: %s"
 msgid "  date: %s"
-msgstr "    plik: %s"
+msgstr "  data: %s"
 
-#, fuzzy, c-format
-#| msgid "WeeChat version"
+#, c-format
 msgid "  WeeChat version: %s"
-msgstr "Wersja WeeChat"
+msgstr "  Wersja WeeChat: %s"
 
 #, c-format
 msgid "  overrides: %d"
-msgstr ""
+msgstr "  nadpisuje: %d"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -1183,16 +1176,15 @@ msgid ""
 "By default the away status is displayed only locally by the irc plugin (see /"
 "help irc.look.display_away)."
 msgstr ""
+"Domyślnie status nieobecności jest wyświetlany tylko lokalnie przez wtyczkę "
+"IRC (zobacz /help irc.look.display_away)."
 
-#, fuzzy
-#| msgid ""
-#| "  - ${color:name}: the color (see \"Plugin API reference\", function "
-#| "\"color\")"
 msgid ""
 "This command can be caught by other plugins and scripts (see \"Plugin API "
 "reference\", function \"hook_command_run\")."
 msgstr ""
-"  - ${color:nazwa}: kolor (zobacz „Opis API wtyczek”, funkcja \"color\")"
+"To polecenie może zostać przechwycone przez inne wtyczki i skrypty (patrz "
+"„Opis API wtyczek”, funkcja „hook_command_run”)."
 
 msgid "manage bars"
 msgstr "zarządzaj paskami"
@@ -1294,10 +1286,6 @@ msgstr "maska: nazwa, gdzie wildcard „*” jest dozwolony"
 msgid "raw[set]: set a value for a bar property"
 msgstr "raw[set]: ustaw wartość dla właściwości paska"
 
-#, fuzzy
-#| msgid ""
-#| "option: option to change (for options list, look at /set weechat.bar."
-#| "<barname>.*)"
 msgid ""
 "option: option to change (for options list, look at /set weechat.bar."
 "<bar_name>.*)"
@@ -1839,15 +1827,11 @@ msgid "evaluate expression"
 msgstr "przetwórz wyrażenie"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
-#, fuzzy
-#| msgid ""
-#| "[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
-#| "<expression2>"
 msgid ""
 "[-n|-s] [-e] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
 msgstr ""
-"[-n|-s] [-d] <wyrażenie> || [-n] [-d [-d]] -c <wyrażenie1> <operator> "
+"[-n|-s] [-e] [-d] <wyrażenie> || [-n] [-d [-d]] -c <wyrażenie1> <operator> "
 "<wyrażenie2>"
 
 msgid "raw[-n]: display result without sending it to buffer (debug mode)"
@@ -1861,7 +1845,7 @@ msgstr ""
 "średnikami)"
 
 msgid "raw[-e]: evaluate all commands before executing them"
-msgstr ""
+msgstr "raw[-e]: sprawdza wszystkie polecenia przed ich wykonaniem"
 
 msgid ""
 "raw[-d]: display debug output after evaluation (with two -d: more verbose "
@@ -3519,16 +3503,12 @@ msgstr "raw[del]: usuń pośredników"
 msgid "raw[set]: set a value for a proxy property"
 msgstr "raw[set]: ustaw wartość dla właściwości pośrednika"
 
-#, fuzzy
-#| msgid ""
-#| "option: option to change (for options list, look at /set weechat.proxy."
-#| "<proxyname>.*)"
 msgid ""
 "option: option to change (for options list, look at /set weechat.proxy."
 "<proxy_name>.*)"
 msgstr ""
-"opcja: właściwość do zmiany (aby uzyskać listę dostępnych opcji spójrz na /"
-"set weechat.proxy.<nazwa_proxy>.*)"
+"opcja: opcja do zmiany (aby uzyskać listę dostępnych opcji spójrz na /set "
+"weechat.proxy.<nazwa_proxy>.*)"
 
 msgid "  add a http proxy, running on local host, port 8888:"
 msgstr "  dodaj pośrednika http, uruchomione na hoście lokalnym i porcie 8888:"
@@ -3908,76 +3888,78 @@ msgstr ""
 msgid "number: number of processes to clean"
 msgstr "numer: ilość procesów do wyczyszczenia"
 
-#, fuzzy
-#| msgid "manage custom bar items"
 msgid "manage color themes"
-msgstr "zarządza niestandardowymi elementami pasków"
+msgstr "zarządza kolorami motywów"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
 "<new> || del <name> || info <name>"
 msgstr ""
+"[list [-backups]] || apply <nazwa> || reset || save <nazwa> || rename "
+"<stary> <nowy> || del <nazwa> || info <nazwa>"
 
-#, fuzzy
-#| msgid ""
-#| "raw[list]: list remote relay servers (without argument, this list is "
-#| "displayed)"
 msgid ""
 "raw[list]: list registered themes and any *.theme files in the WeeChat "
 "configuration directory; the active theme (matching weechat.look.theme) is "
 "marked with \"->\""
 msgstr ""
-"raw[list]: wyświetl pośredników (bez podania argumentu wyświetlana jest ta "
-"lista)"
+"raw[list]: wyświetla listę zarejestrowanych motywów i wszystkich plików "
+"*.theme w katalogu konfiguracyjnym WeeChat; aktywny motyw (pasujący do "
+"weechat.look.theme) jest oznaczony znakiem \"->\""
 
-#, fuzzy
-#| msgid "raw[tags]: display tags for lines"
 msgid "raw[-backups]: display backup theme files"
-msgstr "raw[tags]: wyświetl tagi dla linii"
+msgstr "raw[-backups]: wyświetl pliki kopi zapasowych motywów"
 
 msgid ""
 "raw[apply]: apply a theme (set every themable option to the value from the "
 "theme); if a file named <name>.theme exists in directory \"themes\" it "
 "shadows any built-in theme of the same name"
 msgstr ""
+"raw[apply]: zastosuj motyw (ustaw wszystkie opcje motywu na wartość z "
+"motywu); jeśli plik o nazwie <nazwa>.theme istnieje w katalogu „themes”, "
+"przysłania on wszystkie wbudowane motywy o tej samej nazwie"
 
 msgid ""
 "raw[reset]: reset every themable option to its default value (restores the "
 "original look shipped with WeeChat)"
 msgstr ""
+"raw[reset]: resetuje każdą opcję motywu do wartości domyślnej (przywraca "
+"oryginalny wygląd dostarczony z WeeChat)"
 
 msgid ""
 "raw[save]: save current themable options to a file <name>.theme in directory "
 "\"themes\"; every themable option is written, so the file is self-contained; "
 "the name must not match a built-in theme or start with \"backup-\""
 msgstr ""
+"raw[save]: zapisuje bieżące opcje motywu do pliku <nazwa>.theme w katalogu "
+"\"themes\"; zapisana jest każda opcja motywu, więc plik jest autonomiczny; "
+"nazwa nie może być zgodna z wbudowanym motywem ani zaczynać się od „backup-”"
 
-#, fuzzy
-#| msgid "raw[rename]: rename a filter"
 msgid "raw[rename]: rename a user theme file"
-msgstr "raw[rename]: zmień nazwę filtra"
+msgstr "raw[rename]: zmień nazwę pliku motywu użytkownika"
 
-#, fuzzy
-#| msgid "raw[del]: delete a server"
 msgid "raw[del]: delete a user theme file"
-msgstr "raw[del]: usuń serwer"
+msgstr "raw[del]: usuń plik motywu użytkownika"
 
 msgid ""
 "raw[info]: display details on a theme (name, description, creation date, "
 "WeeChat version, number of option overrides)"
 msgstr ""
+"raw[info]: wyświetlanie szczegółów na temat motywu (nazwa, opis, data "
+"utworzenia, wersja WeeChat, liczba zmienionych opcji)"
 
-#, fuzzy
-#| msgid "name: name of trigger"
 msgid "name: name of a theme"
-msgstr "nazwa: nazwa triggera"
+msgstr "nazwa: nazwa motywu"
 
 msgid ""
 "Themes are named bundles of option overrides. Built-in themes are registered "
 "in memory by core/plugins/scripts; user themes are read from files in "
 "directory \"themes\" inside the WeeChat configuration directory."
 msgstr ""
+"Motywy to nazwane zestawy zmienionych opcji. Wbudowane motywy są "
+"rejestrowane w pamięci przez core/pluginy/skrypry; motywy użytkownika są "
+"odczytywane z plików w katalogu „themes” w katalogu konfiguracyjnym WeeChat."
 
 msgid ""
 "By default, `/theme apply` command creates a backup of current themable "
@@ -3986,6 +3968,11 @@ msgid ""
 "backup-<timestamp>`. This is controlled by the option "
 "weechat.look.theme_backup."
 msgstr ""
+"Domyślnie polecenie `/theme apply` tworzy kopię zapasową bieżących wartości "
+"motywu w katalogu „themes” przed zastosowaniem (nazwa pliku: „backup-"
+"<znacznik czasu>.theme”); poprzedni stan można przywrócić poleceniem: `/"
+"theme apply backup-<znacznik czasu>`. Kontroluje to opcja "
+"weechat.look.theme_backup."
 
 msgid "toggle value of a config option"
 msgstr "przełącza wartość opcji konfiguracyjnej"
@@ -4186,10 +4173,8 @@ msgstr ""
 msgid "With option \"-quit\", the process is:"
 msgstr "Z opcją „-quit”, proces to:"
 
-#, fuzzy
-#| msgid "  1. close *ALL* connections (irc, xfer, relay, ...)"
 msgid "  1. close *ALL* connections (irc, xfer, relay, etc.)"
-msgstr "  1. zamknięcie *WSZYSTKICH* połączeń (irc, xfer, relay, ...)"
+msgstr "  1. zamknięcie *WSZYSTKICH* połączeń (irc, xfer, relay, itp)"
 
 msgid "  2. save session into files (*.upgrade)"
 msgstr "  2. zapisz sesje do plików (*.upgrade)"
@@ -4611,13 +4596,15 @@ msgid "names of layouts"
 msgstr "nazwy układów"
 
 msgid "names of themes (built-ins + user files + backups)"
-msgstr ""
+msgstr "nazwy motywów (wbudowane + pliki użytkownika + kopie zapasowe)"
 
 msgid "names of user theme files (without built-ins and backups)"
-msgstr ""
+msgstr "nazwy plików motywu użytkownika (bez wbudowanych i kopii zapasowych)"
 
 msgid "names of theme files on disk (user files + backups, no built-ins)"
 msgstr ""
+"nazwy plików motywu na dysku (pliki użytkownika + kopie zapasowe, bez "
+"wbudowanych)"
 
 msgid "names of secured data (file sec.conf, section data)"
 msgstr "nazwy zabezpieczonych danych (plik sec.conf, sekcja data)"
@@ -5756,6 +5743,9 @@ msgid ""
 "not change manually); informational only, the theme is not re-applied at "
 "startup"
 msgstr ""
+"nazwa ostatniego motywu zastosowanego poleceniem /theme (ustawiana "
+"automatycznie, nie zmieniać ręcznie); wyłącznie informacyjna, motyw nie jest "
+"ponownie stosowany przy uruchomieniu"
 
 msgid ""
 "create a backup theme file with the current themable options before applying "
@@ -5764,6 +5754,12 @@ msgid ""
 "\"themes\" inside the WeeChat configuration directory and can be restored "
 "with the command: `/theme apply backup-<timestamp>`"
 msgstr ""
+"stwórz kopię pliku motywu z bieżącymi opcjami motywu przed zastosowaniem "
+"motywu za pomocą polecenia /theme; jeśli pliku kopii zapasowej nie można "
+"zapisać, procedura aplikowania zostanie przerwana (żadna opcja nie zostanie "
+"zmieniona). Plik kopii zapasowej zostanie zapisany w katalogu „themes” w "
+"katalogu konfiguracyjnym WeeChat i można go przywrócić za pomocą polecenia: "
+"`/theme apply backup-<znacznik czasu>`"
 
 msgid ""
 "time format for dates converted to strings and displayed in messages (see "
@@ -6814,115 +6810,104 @@ msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Zużycie zasobów (zobacz \"man getrusage\"):"
 
 msgid "WeeChat default theme for light-background terminals"
-msgstr ""
+msgstr "Domyślny motyw WeeChat dla terminali z jasnym tłem"
 
 msgid "Automatic backup"
-msgstr ""
+msgstr "Automatyczna kopia zapasowa"
 
-#, fuzzy, c-format
-#| msgid "%sKey \"%s\" not found"
+#, c-format
 msgid "%sTheme: option \"%s\" not found, skipped"
-msgstr "%sKlawisz \"%s\" nie znaleziony"
+msgstr "%sMotyw: nie znaleziono opcji „%s”, pominięto"
 
-#, fuzzy, c-format
-#| msgid "%s: script \"%s\" is not installed"
+#, c-format
 msgid "%sTheme: option \"%s\" is not themable, skipped"
-msgstr "%s: skrypt \"%s\" nie zainstalowany"
+msgstr "%sMotyw: opcja „%s” nie może być ustawiona przez motyw, pominięto"
 
 #, c-format
 msgid "%s%s: line %d: malformed section header"
-msgstr ""
+msgstr "%s%s: linia %d: błędnie sformatowany nagłówek sekcji"
 
-#, fuzzy, c-format
-#| msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+#, c-format
 msgid "%s%s: line %d: ignoring unknown section \"%s\""
-msgstr ""
-"%sOstrzeżenie: %s, linia %d: ignoruje nieznany identyfikator sekcji (\"%s\")"
+msgstr "%s%s: linia %d: ignoruję nieznaną sekcję „%s”"
 
 #, c-format
 msgid "%s%s: line %d: missing '=' separator"
-msgstr ""
+msgstr "%s%s: linia %d: brakujący separator '='"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
+#, c-format
 msgid "%s%s: line %d: ignoring unknown [info] key \"%s\""
-msgstr ""
-"%sOstrzeżenie: %s, linia %d: ignoruje nieznaną opcję dla sekcji \"%s\": %s"
+msgstr "%s%s: linia %d: ignoruję nieznany klucz [info] „%s”"
 
 #, c-format
 msgid ""
 "%sUnable to create theme backup; aborting apply (disable option "
 "weechat.look.theme_backup to force)"
 msgstr ""
+"%sNie można utworzyć kopii zapasowej motywu; przerwano aplikować (wyłącz "
+"opcję kopii zapasowej wechat.look.theme, aby wymusić)"
 
 #, c-format
 msgid "Previous state saved as theme \"%s\"; to restore: /theme apply %s"
 msgstr ""
+"Poprzedni stan zapisano jako motyw „%s”; aby przywrócić: /theme apply %s"
 
 #, c-format
 msgid ""
 "%sUnable to create theme backup; aborting reset (disable option "
 "weechat.look.theme_backup to force)"
 msgstr ""
+"%sNie można utworzyć kopii zapasowej motywu. Resetowanie zostanie przerwane "
+"(wyłącz opcję kopii zapasowej wechat.look.theme, aby wymusić)"
 
-#, fuzzy, c-format
-#| msgid "%sBuffer name \"%s\" is reserved for WeeChat"
+#, c-format
 msgid "%sName \"%s\" is reserved for automatic backups"
-msgstr "%sNazwa bufora \"%s\" jest zarezerwowana dla WeeChat"
+msgstr "%sNazwa „%s” jest zarezerwowana dla automatycznych kopi zapasowych"
 
-#, fuzzy, c-format
-#| msgid "%sBuffer name \"%s\" is reserved for WeeChat"
+#, c-format
 msgid "%sName \"%s\" is reserved for a built-in theme"
-msgstr "%sNazwa bufora \"%s\" jest zarezerwowana dla WeeChat"
+msgstr "%sNazwa „%s” jest zarezerwowana dla wbudowanego motywu"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: unable to parse file \"%s\""
 msgid "%sFailed to save theme \"%s\""
-msgstr "%s%s: nie można przetworzyć pliku \"%s\""
+msgstr "%sNie udało się zapisać motywu „%s”"
 
-#, fuzzy, c-format
-#| msgid "Option \"%s%s%s\":"
+#, c-format
 msgid "Theme saved to: %s"
-msgstr "Opcja \"%s%s%s\":"
+msgstr "Zapisano motyw do :%s"
 
-#, fuzzy, c-format
-#| msgid "%sCannot create file \"%s\""
+#, c-format
 msgid "%sCannot rename built-in theme \"%s\""
-msgstr "%sNie można utworzyć pliku \"%s\""
+msgstr "%sNie można zmienić nazwy wbudowanego motywu „%s”"
 
 #, c-format
 msgid "%sNew name is the same as old name"
-msgstr ""
+msgstr "%sNowy motyw ma taką samą nazwę jak stary"
 
-#, fuzzy, c-format
-#| msgid "%sBar \"%s\" already exists"
+#, c-format
 msgid "%sTheme \"%s\" already exists"
-msgstr "%sPasek \"%s\" już istnieje"
+msgstr "%sMotyw „%s” już istnieje"
 
-#, fuzzy, c-format
-#| msgid "%sUnable to rename filter \"%s\" to \"%s\""
+#, c-format
 msgid "%sFailed to rename theme \"%s\" to \"%s\""
-msgstr "%sNie można zmienić nazwy filtru z \"%s\" na \"%s\""
+msgstr "%sNie można zmienić nazwy motywu z „%s” na „%s”"
 
-#, fuzzy, c-format
-#| msgid "Trigger \"%s\" renamed to \"%s\""
+#, c-format
 msgid "Theme \"%s\" renamed to \"%s\""
-msgstr "Zmieniono nazwę triggera z \"%s\" na \"%s\""
+msgstr "Zmieniono nazwę motywu z „%s” na „%s”"
 
-#, fuzzy, c-format
-#| msgid "%sCannot create file \"%s\""
+#, c-format
 msgid "%sCannot delete built-in theme \"%s\""
-msgstr "%sNie można utworzyć pliku \"%s\""
+msgstr "%sNie można usunąć wbudowanego motywu „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to parse file \"%s\""
+#, c-format
 msgid "%sFailed to delete theme \"%s\""
-msgstr "%s%s: nie można przetworzyć pliku \"%s\""
+msgstr "%sNie udało się usunąć motywu „%s”"
 
 #, c-format
 msgid "Theme deleted: %s"
-msgstr ""
+msgstr "Usunięto motyw: %s"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -7084,35 +7069,44 @@ msgid "WeeChat is running in headless mode (ctrl-c to quit)."
 msgstr "WeeChat działa w trybie bez interfejsu (naciśnij ctrl-c żeby wyjść)."
 
 msgid "Welcome to WeeChat!"
-msgstr ""
+msgstr "Witaj w WeeChat!"
 
 msgid ""
 "If you are discovering WeeChat, it is recommended to read at least the "
 "quickstart guide, and the user's guide if you have some time; they explain "
 "main WeeChat concepts."
 msgstr ""
+"Jeśli dopiero zaczynasz przygodę z WeeChat, zalecamy przeczytanie "
+"przynajmniej szybkiego startu, a także podręcznika użytkownika, jeśli masz "
+"czas. Wyjaśniają one główne założenia WeeChat."
 
 #, c-format
 msgid "All WeeChat docs are available at: %s"
-msgstr ""
+msgstr "Cała dokumentacja dotycząca WeeChat jest dostępna pod %s"
 
 msgid ""
 "Moreover, there is inline help with /help on all commands and options (use "
 "Tab key to complete the name)."
 msgstr ""
+"Co więcej, dla wszystkich poleceń i opcji dostępna jest pomoc /help (nazwę "
+"można uzupełnić klawiszem Tab)."
 
 msgid "The command /fset can help to customize WeeChat."
-msgstr ""
+msgstr "Komenda /fset może pomóc w dostosowaniu WeeChat."
 
 msgid ""
 "You can add and connect to an IRC server with /server and /connect commands "
 "(see /help server)."
 msgstr ""
+"Możesz dodać serwer IRC i połączyć się z nim za pomocą poleceń /server i /"
+"connect (zobacz /help server)."
 
 msgid ""
 "The \"light\" theme will be automatically applied. Use /theme reset to "
 "switch back to the default dark theme."
 msgstr ""
+"Motyw „jasny” zostanie zastosowany automatycznie. Użyj komendy /theme reset, "
+"aby przywrócić domyślny, ciemny motyw."
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux".
 #, c-format
@@ -8851,17 +8845,15 @@ msgstr "> `xxx`: pokaż tylko opcje z „xxx” w nazwie"
 msgid "> `f:xxx`: show only configuration file \"xxx\""
 msgstr "> `f:xxx`: pokaż tylko plik konfiguracyjny „xxx”"
 
-#, fuzzy
-#| msgid ""
-#| "> `t:xxx`: show only type \"xxx\" (bool/int/str/col/enum or boolean/"
-#| "integer/string/color/enum)"
 msgid ""
 "> `t:xxx`: show only type \"xxx\" (bool/int/str/col/enum or boolean/integer/"
 "string/color/enum); the special value \"themable\" can be used to show all "
 "options that can be used in themes, regardless of type"
 msgstr ""
-"> `t:xxx`: pokaż tylko opcje typu „xxx” (bool/int/str/col/enum or boolean/"
-"integer/string/color/enum)"
+"> `t:xxx`: wyświetla tylko typ „xxx” (bool/int/str/col/enum lub boolean/"
+"integer/string/color/enum); specjalna wartość „themeable” może być używana "
+"do wyświetlania wszystkich opcji, które można używać w motywach, niezależnie "
+"od typu"
 
 msgid "> `d`: show only changed options"
 msgstr "> `d`: pokaż tylko zmienione opcje"
@@ -11960,15 +11952,11 @@ msgstr ""
 "automatycznie przełącz się na bufor kanału po automatycznym wejściu (opcja "
 "serwera \"autojoin\")"
 
-#, fuzzy
-#| msgid ""
-#| "auto switch to channel buffer when it is auto joined (with server option "
-#| "\"autojoin\")"
 msgid ""
 "auto switch to server buffer when it is opened on connection to the server"
 msgstr ""
-"automatycznie przełącz się na bufor kanału po automatycznym wejściu (opcja "
-"serwera \"autojoin\")"
+"automatycznie przełącz się na bufor serwera, kiedy zostanie on otwarty przy "
+"łączeniu z serwerem"
 
 msgid ""
 "auto switch to channel buffer when it is manually joined (with /join command)"
@@ -12191,7 +12179,6 @@ msgstr ""
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr "przewinięcie w lewo/prawo w buforze /list (procent szerokości)"
 
-#, fuzzy
 msgid ""
 "comma-separated list of fields to sort channels (see /help list for a list "
 "of fields); char \"-\" can be used before field to reverse order, char \"~\" "
@@ -12203,7 +12190,8 @@ msgstr ""
 "znaleźć w wyniku polecenia /help list); znak „-” użyty przed nazwą pola "
 "odwraca kolejność , znak „~” może zostać użyty do porównania bez "
 "uwzględniania wielkości znaków; na przykład: „-users,~name2” dla pokazania "
-"największych kanałów z nazwami bez uwzględnienia wielkości znaków"
+"największych kanałów z nazwami bez uwzględnienia wielkości znaków bez "
+"prefiksów"
 
 msgid "strip channel topic colors in /list buffer"
 msgstr "pozbaw koloru tematy kanałów w buforze /list"
@@ -12961,16 +12949,14 @@ msgstr "%s%s: nie jesteś połączony z serwerem"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: to nie jest bufor kanału!"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%d channels (total: %d) | Filter: %s | Sort: %s | Key(input): ctrl+j=join "
-#| "channel, ($)=refresh, (q)=close buffer"
+#, c-format
 msgid ""
 "%d channels (total: %d) | Filter: %s | Sort: %s | Keys: ctrl+j=join channel "
 "| Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, q=close buffer"
 msgstr ""
-"%d kanałów (łącznie: %d) | Filtr: %s | Sortowanie: %s | Key(input): "
-"ctrl+j=wejdź na kanał, ($)=odśwież, (q)=zamknij bufor"
+"%d kanałów (łącznie: %d) | Filtr: %s | Sortowanie: %s | Klawisze: "
+"ctrl+j=dołącz do kanału | Dane wejściowe: $=odśwież, s:x,y=sortuj, "
+"słowa=filtr, *=resetuj filtr, q=zamknij bufor"
 
 msgid "Empty list of channels, try \"$\" to refresh list"
 msgstr "Pusta lista kanałów, spróbuj „$” żeby odświeżyć listę"
@@ -14157,17 +14143,6 @@ msgstr ""
 "wtyczkę logger, skompresować pliki na nowo (lub rozpakować), następnie "
 "zmienić opcję w pliku logger.conf, następnie załadować wtyczkę logger"
 
-#, fuzzy
-#| msgid ""
-#| "when this size is reached, a rotation of log files is performed: the "
-#| "existing rotated log files are renamed (.1 becomes .2, .2 becomes .3, "
-#| "etc.) and the current file is renamed with extension .1; an integer "
-#| "number with a suffix is allowed: b = bytes (default if no unit given), k "
-#| "= kilobytes, m = megabytes, g = gigabytes, t = terabytes; example: \"2g\" "
-#| "causes a rotation if the file size is > 2,000,000,000 bytes; if set to "
-#| "\"0\", no rotation is performed (unlimited log size); WARNING: before "
-#| "changing this option, you should first set the compression type via "
-#| "option logger.file.rotation_compression_type"
 msgid ""
 "when this size is reached, a rotation of log files is performed: the "
 "existing rotated log files are renamed (.1 becomes .2, .2 becomes .3, etc.) "
@@ -14179,15 +14154,15 @@ msgid ""
 "should first set the compression type via option "
 "logger.file.rotation_compression_type"
 msgstr ""
-"kiedy plik osiągnie podany rozmiar, zostanie on zrotowany: nazwy "
-"istniejących plików zostaną zmienione (.1 stanie się .2, .2 stanie się .3, "
-"etc.) i obecny plik otrzyma rozszerzenie .1; liczba całkowita z sufiksem "
-"jest dozwolona: b = bajty (domyślnie jeśli nie podamy jednostki), k = "
-"kilobajty, m = megabajty, g = gigabajty, t = terabajty; przykład \"2g\" "
-"spowoduje rotację jeśli rozmiar pliku przekroczy 2 000 000 000 bajtów; jeśli "
-"ustawione na \"0\" pliki nie będą rotowane (nieograniczony rozmiar); UWAGA: "
-"przed zmianą tej opcji powinieneś najpierw ustawić typ kompresji za pomocą "
-"opcji logger.file.rotation_compression_type"
+"po osiągnięciu tego rozmiaru wykonywana jest rotacja plików dziennika: nazwy "
+"istniejących plików zostaną zmienione (.1 staje się .2, .2 staje się .3 "
+"itd.), obecny plik otrzyma rozszerzenie .1; dozwolona jest liczba całkowita "
+"z sufiksem: b = bajty (domyślnie, jeśli nie podano jednostki), k = "
+"kilobajty, m = megabajty, g = gigabajty, t = terabajty; przykład: „2g” "
+"powoduje rotację, jeśli rozmiar pliku jest większy niż 2 GB; jeśli ustawiono "
+"na „0”, rotacja nie jest wykonywana (nieograniczony rozmiar dziennika); "
+"OSTRZEŻENIE: przed zmianą tej opcji należy najpierw ustawić typ kompresji za "
+"pomocą opcji logger.file.rotation_compression_type"
 
 msgid ""
 "timestamp used in log files (see man strftime for date/time specifiers, "
@@ -15977,14 +15952,6 @@ msgstr ""
 "oznacza brak hasła, zobacz opcję relay.network.allow_empty_password) (uwaga: "
 "zawartość jest przetwarzana, zobacz /help eval)"
 
-#, fuzzy
-#| msgid ""
-#| "comma separated list of hash algorithms used for password authentication "
-#| "in weechat protocol, among these values: \"plain\" (password in plain "
-#| "text, not hashed), \"sha256\", \"sha512\", \"pbkdf2+sha256\", "
-#| "\"pbkdf2+sha512\"), \"*\" means all algorithms, a name beginning with \"!"
-#| "\" is a negative value to prevent an algorithm from being used, wildcard "
-#| "\"*\" is allowed in names (examples: \"*\", \"pbkdf2*\", \"*,!plain\")"
 msgid ""
 "comma separated list of hash algorithms used for password authentication in "
 "\"api\" and \"weechat\" protocols, among these values: \"plain\" (password "
@@ -15994,29 +15961,23 @@ msgid ""
 "is allowed in names (examples: \"*\", \"pbkdf2*\", \"*,!plain\")"
 msgstr ""
 "oddzielona przecinkami lista algorytmów hashujących używanych dla "
-"uwierzytelnienia hasłem w protokole weechat, dostępne wartości: \"plain\" "
-"(hasło w postaci jawnej, nie zahashowane), \"sha256\", \"sha512\", "
+"uwierzytelnienia hasłem w protokołach „api” i „weechat”, dostępne wartości: "
+"\"plain\" (hasło w postaci jawnej, nie zahashowane), \"sha256\", \"sha512\", "
 "\"pbkdf2+sha256\", \"pbkdf2+sha512\", \"*\" oznacza wszystkie algorytmy, "
 "nazwa zaczynająca się od \"!\" oznacza wartość negatywną w celu uniknięcia "
 "użycia algorytmu, znak \"*\" może zostać użyty w nazwie (przykłady: \"*\", "
 "\"pbkdf2*\", \"*,!plain\")"
 
-#, fuzzy
-#| msgid ""
-#| "number of iterations asked to the client in weechat protocol when a "
-#| "hashed password with algorithm PBKDF2 is used for authentication; more "
-#| "iterations is better in term of security but is slower to compute; this "
-#| "number should not be too high if your CPU is slow"
 msgid ""
 "number of iterations asked to the client in \"api\" and \"weechat\" "
 "protocols when a hashed password with algorithm PBKDF2 is used for "
 "authentication; more iterations is better in term of security but is slower "
 "to compute; this number should not be too high if your CPU is slow"
 msgstr ""
-"ilość iteracji zapytań klienta protokołu weechat w przypadku hashowania "
-"haseł algorytmem PBKDF2 podczas uwierzytelnienia; im więcej iteracji tym "
-"lepiej w kwestii bezpieczeństwa, jednak zwiększa to czas przetwarzania; ta "
-"liczba nie powinna być zbyt wysoka jeśli masz słabe CPU"
+"ilość iteracji zapytań klienta protokołów „api” i „ weechat” w przypadku "
+"hashowania haseł algorytmem PBKDF2 podczas uwierzytelnienia; im więcej "
+"iteracji tym lepiej w kwestii bezpieczeństwa, jednak zwiększa to czas "
+"przetwarzania; ta liczba nie powinna być zbyt wysoka jeśli masz słabe CPU"
 
 msgid ""
 "number of seconds to allow before and after the current time for the hash of "
@@ -16064,6 +16025,8 @@ msgid ""
 "permissions for the Unix socket, as octal value (see man chmod); it must be "
 "a number with 3 digits, each between 0 and 7"
 msgstr ""
+"uprawnienia dla gniazda Unix w postaci wartości ósemkowej (patrz man chmod); "
+"musi to być liczba składająca się z 3 cyfr, każda z przedziału od 0 do 7"
 
 msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case-"
@@ -16332,10 +16295,11 @@ msgstr "%s%s: nie można wykonać \"bind\" na ścieżce %s (%s): błąd %d %s"
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: nie można wykonać \"bind\" na porcie %d (%s): błąd %d %s"
 
-#, fuzzy, c-format
-#| msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
+#, c-format
 msgid "%s%s: warning: failed to set permissions on path %s (%s): error %d %s"
-msgstr "%s%s: nie można wykonać \"listen\" na ścieżce %s (%s): błąd %d %s"
+msgstr ""
+"%s%s: ostrzeżenie: nie udało się ustawić uprawnień dla ścieżki %s (%s): błąd "
+"%d %s"
 
 #, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
@@ -16610,22 +16574,18 @@ msgstr "(brak)"
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr "Alt+klawisz/wejście: v=wróć do listy d=skocz do diff"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%d/%d scripts (filter: %s) | Sort: %s | Alt+key/input: i=install, "
-#| "r=remove, l=load, L=reload, u=unload, A=autoload, h=(un)hold, v=view "
-#| "script | Input: q=close, $=refresh, s:x,y=sort, words=filter, *=reset "
-#| "filter | Mouse: left=select, right=install/remove"
+#, c-format
 msgid ""
 "%d/%d scripts | Filter: %s | Sort: %s | Alt+key/input: i=install, r=remove, "
 "l=load, L=reload, u=unload, A=autoload, h=(un)hold, v=view script | Input: "
 "$=refresh, s:x,y=sort, words=filter, *=reset filter, q=close buffer | Mouse: "
 "left=select, right=install/remove"
 msgstr ""
-"%d/%d skrypty (filtr: %s) | Sort: %s | Alt+klawisz/wejście: i=instaluj "
-"r=usuń l=załaduj L=przeładuj u=wyładuj A=ładuj automatycznie h=(un)hold "
-"v=pokaż skrypt | Wejście: q=zamknij $=odśwież s:x,y=sortuj słowa=filtr "
-"*=usuń filtr | Mysz: lewy=zaznacz prawy=instaluj/usuń"
+"%d/%d skryptów | Filtr: %s | Sortowanie: %s | Alt+klawisz/wprowadzanie: "
+"i=instalacja, r=usunięcie, l=załadowanie, L=przeładowanie, u=rozładowanie, "
+"A=automatyczne wczytywanie, h=(od)trzymanie, v=wyświetl skrypt | "
+"Wprowadzanie: $=odświeżanie, s:x,y=sortowanie, słowa=filtr, *=resetowanie "
+"filtra, q=zamknięcie bufora | Mysz: lewy=wybór, prawy=instalacja/usunięcie"
 
 msgid "Scripts"
 msgstr "Skrypty"
@@ -17007,10 +16967,9 @@ msgstr "1 jeśli skrypt jest załadowany"
 msgid "script name with extension"
 msgstr "nazwa skryptu z rozszerzeniem"
 
-#, fuzzy
-#| msgid "comma separated list of file name extensions for plugins"
 msgid "comma-separated list of plugin:extension with supported languages"
-msgstr "oddzielona przecinkami lista rozszerzeń nazw plików dla wtyczek"
+msgstr ""
+"oddzielona przecinkami lista wtyczka:rozszerzenie ze wspieranymi językami"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""
@@ -17648,13 +17607,12 @@ msgstr ""
 msgid "> type `command_run`: command(s) (required)"
 msgstr "> typ `command_run`: komenda(-y) (wymagane)"
 
-#, fuzzy
-#| msgid "> type `timer`: interval (required), align on second, max calls"
 msgid ""
 "> type `timer`: interval (required, in milliseconds), align on second, max "
 "calls"
 msgstr ""
-"> typ `timer`: interwał (wymagany), wyrównane do sekund, maksymalne wywołania"
+"> typ `timer`: interwał (wymagany, w milisekundach), wyrównane do sekund, "
+"maksymalne wywołania"
 
 msgid "> type `config`: name(s) of option (required)"
 msgstr "> typ `config`: nazwa(-y) opcji (wymagane)"
@@ -18059,6 +18017,9 @@ msgid ""
 "text to display before the nicks in the bar item \"typing\"; if set, it is "
 "used instead of the translated string \"Typing: \" which is used by default"
 msgstr ""
+"tekst wyświetlany przed nickami w elemencie paska „typing”; jeśli ustawiony, "
+"jest używany zamiast przetłumaczonego ciągu „Typing:”, który jest używany "
+"domyślnie"
 
 msgid "Typing status of users"
 msgstr "Status pisania użytkowników"
@@ -18192,17 +18153,14 @@ msgstr "rozmiar bloku dla wysyłanych pakietów, w bajtach"
 msgid "does not wait for ACK when sending file"
 msgstr "nie czeka na potwierdzenie podczas wysyłania pliku"
 
-#, fuzzy
-#| msgid ""
-#| "IP or DNS address used for sending and passively receiving files/chats "
-#| "(if empty, local interface IP is used)"
 msgid ""
 "IP or DNS address used for sending and passively receiving files/chats; if "
 "empty, local interface IP is used (note: content is evaluated, see /help "
 "eval)"
 msgstr ""
-"Adres IP lub DNS użyty do wysłania i pasywnego odbierania plików/rozmów "
-"(jeśli pusty zostanie użyty adres IP lokalnego interfejsu)"
+"Adres IP lub DNS użyty do wysłania i pasywnego odbierania plików/rozmów. "
+"Jeśli pusty zostanie użyty adres IP lokalnego interfejsu (uwaga: zawartość "
+"jest przetwarzana, zobacz /help eval)"
 
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
