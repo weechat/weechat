@@ -1566,7 +1566,7 @@ dostępnych w tym trybie.
 WeeChat posiada wiele domyślnych skrótów opisanych w poniższych rozdziałach. +
 Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/key>>.
 
-[[key_bindings_command_line]]
+[[key_bindings_cmdline]]
 === Skróty dla linii poleceń
 
 [[key_bindings_cmdline_cursor_movement]]
