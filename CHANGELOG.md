@@ -122,7 +122,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
 - logger: fix path traversal in log file name when a buffer local variable contains the char used internally to protect directory separators ([#2340](https://github.com/weechat/weechat/issues/2340))
 - relay: fix use-after-free and double free on remote buffer ([GHSA-hx59-4hq9-6vmw](https://github.com/weechat/weechat/security/advisories/GHSA-hx59-4hq9-6vmw))
-- relay: fix authentication bypass with the "plain" password hash algorithm ([GHSA-68ff-gq39-pqjm](https://github.com/weechat/weechat/security/advisories/GHSA-68ff-gq39-pqjm))
+- relay: fix authentication bypass with the "plain" password hash algorithm ([GHSA-68ff-gq39-pqjm](https://github.com/weechat/weechat/security/advisories/GHSA-68ff-gq39-pqjm), [CVE-2026-86036](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-86036))
 - relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3), [CVE-2026-53524](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53524))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: limit size of partial message received while reading an HTTP request to prevent memory exhaustion
@@ -162,7 +162,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 - core: fix integer overflow in size calculation when evaluating "${hide:...}" and "${base_encode:...}" ([#2335](https://github.com/weechat/weechat/issues/2335))
 - logger: fix path traversal in log file name when a buffer local variable contains the char used internally to protect directory separators ([#2340](https://github.com/weechat/weechat/issues/2340))
-- relay: fix authentication bypass with the "plain" password hash algorithm ([GHSA-68ff-gq39-pqjm](https://github.com/weechat/weechat/security/advisories/GHSA-68ff-gq39-pqjm))
+- relay: fix authentication bypass with the "plain" password hash algorithm ([GHSA-68ff-gq39-pqjm](https://github.com/weechat/weechat/security/advisories/GHSA-68ff-gq39-pqjm), [CVE-2026-86036](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-86036))
 
 ## [4.9.3] - 2026-07-05
 
