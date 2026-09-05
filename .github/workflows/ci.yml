@@ -126,36 +126,35 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - uses: actions/checkout@v7
 
-    - uses: actions/checkout@v7
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get --yes --no-install-recommends install ${{ env.CHECK_DEPS_UBUNTU }}
+          pipx install ruff
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.CHECK_DEPS_UBUNTU }}
-        pipx install ruff
+      - name: Install poexam
+        run: |
+          cd "$RUNNER_TEMP"
+          curl --silent --show-error --fail --location --remote-name-all \
+            "https://github.com/poexam/poexam/releases/download/v$POEXAM_VERSION/poexam-linux-x86_64.tar.gz" \
+            "https://github.com/poexam/poexam/releases/download/v$POEXAM_VERSION/poexam-linux-x86_64.sha256"
+          sha256sum --check poexam-linux-x86_64.sha256
+          tar --extract --file poexam-linux-x86_64.tar.gz
+          sudo install -m 0755 poexam-linux-x86_64/poexam /usr/local/bin/poexam
 
-    - name: Install poexam
-      run: |
-        cd "$RUNNER_TEMP"
-        curl --silent --show-error --fail --location --remote-name-all \
-          "https://github.com/poexam/poexam/releases/download/v$POEXAM_VERSION/poexam-linux-x86_64.tar.gz" \
-          "https://github.com/poexam/poexam/releases/download/v$POEXAM_VERSION/poexam-linux-x86_64.sha256"
-        sha256sum --check poexam-linux-x86_64.sha256
-        tar --extract --file poexam-linux-x86_64.tar.gz
-        sudo install -m 0755 poexam-linux-x86_64/poexam /usr/local/bin/poexam
+      - name: Check gettext files
+        run: poexam check --file-stats --rule-stats
 
-    - name: Check gettext files
-      run: poexam check --file-stats --rule-stats
+      - name: Check shell and Python scripts
+        run: ./tools/check_scripts.sh
 
-    - name: Check shell and Python scripts
-      run: ./tools/check_scripts.sh
+      - name: Check Python stub file
+        run: ./tools/generate_python_stub.py | diff src/plugins/python/weechat.pyi -
 
-    - name: Check Python stub file
-      run: ./tools/generate_python_stub.py | diff src/plugins/python/weechat.pyi -
-
-    - name: Check Curl symbols
-      run: curl --silent --show-error --fail --retry 10 https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/symbols-in-versions | ./tools/check_curl_symbols.py
+      - name: Check Curl symbols
+        run: curl --silent --show-error --fail --retry 10 https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/symbols-in-versions | ./tools/check_curl_symbols.py
 
   install:
 
@@ -207,61 +206,60 @@ jobs:
       PHP_INI_SCAN_DIR: /tmp/php-noscan  # Embed PHP loads no add-on extensions (see #2009).
 
     steps:
+      - uses: actions/checkout@v7
 
-    - uses: actions/checkout@v7
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
+          mkdir -p /tmp/php-noscan
+          pipx install schemathesis
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
-        mkdir -p /tmp/php-noscan
-        pipx install schemathesis
+      - name: Build and run tests
+        env:
+          CC: ${{ matrix.config.cc }}
+          CXX: ${{ matrix.config.cxx }}
+        run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
-    - name: Build and run tests
-      env:
-        CC: ${{ matrix.config.cc }}
-        CXX: ${{ matrix.config.cxx }}
-      run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
+      - name: Run WeeChat
+        env:
+          TERM: xterm-256color
+        run: |
+          weechat --help
+          weechat-curses --help
+          weechat --version
+          weechat --build-info
+          weechat --colors
+          weechat --license
+          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
-    - name: Run WeeChat
-      env:
-        TERM: xterm-256color
-      run: |
-        weechat --help
-        weechat-curses --help
-        weechat --version
-        weechat --build-info
-        weechat --colors
-        weechat --license
-        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+      - name: Test Relay OpenAPI
+        if: ${{ matrix.config.name == 'gcc' }}
+        env:
+          RELAY_PASSWORD: test
+        run: |
+          weechat-headless \
+            --dir /tmp/weechat-test-api \
+            --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
+            --run-command '/set relay.network.password_hash_iterations 100' \
+            --run-command '/set relay.network.max_clients 0' \
+            --run-command '/relay add api 9000' \
+            --daemon \
+          ;
+          sleep 5
+          schemathesis run --url http://localhost:9000/api ./src/plugins/relay/api/weechat-relay-api.yaml
+          echo '*/quit' >/tmp/weechat-test-api/weechat_fifo_*
 
-    - name: Test Relay OpenAPI
-      if: ${{ matrix.config.name == 'gcc' }}
-      env:
-        RELAY_PASSWORD: test
-      run: |
-        weechat-headless \
-          --dir /tmp/weechat-test-api \
-          --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
-          --run-command '/set relay.network.password_hash_iterations 100' \
-          --run-command '/set relay.network.max_clients 0' \
-          --run-command '/relay add api 9000' \
-          --daemon \
-        ;
-        sleep 5
-        schemathesis run --url http://localhost:9000/api ./src/plugins/relay/api/weechat-relay-api.yaml
-        echo '*/quit' >/tmp/weechat-test-api/weechat_fifo_*
-
-    - name: Code coverage
-      if: ${{ matrix.config.name == 'gcc_coverage' }}
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: |
-        cd build-tmp-*
-        lcov --directory . --capture --output-file coverage.info
-        lcov --remove coverage.info '/usr/*' --output-file coverage.info
-        lcov --list coverage.info
-        bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
+      - name: Code coverage
+        if: ${{ matrix.config.name == 'gcc_coverage' }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: |
+          cd build-tmp-*
+          lcov --directory . --capture --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info
+          lcov --list coverage.info
+          bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
 
   install_fedora:
 
@@ -285,29 +283,28 @@ jobs:
       image: fedora:43
 
     steps:
+      - uses: actions/checkout@v7
 
-    - uses: actions/checkout@v7
+      - name: Install dependencies
+        run: dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }}
 
-    - name: Install dependencies
-      run: dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }}
+      - name: Build and run tests
+        env:
+          CC: ${{ matrix.config.cc }}
+          CXX: ${{ matrix.config.cxx }}
+        run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
-    - name: Build and run tests
-      env:
-        CC: ${{ matrix.config.cc }}
-        CXX: ${{ matrix.config.cxx }}
-      run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
-
-    - name: Run WeeChat
-      env:
-        TERM: xterm-256color
-      run: |
-        weechat --help
-        weechat-curses --help
-        weechat --version
-        weechat --build-info
-        weechat --colors
-        weechat --license
-        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+      - name: Run WeeChat
+        env:
+          TERM: xterm-256color
+        run: |
+          weechat --help
+          weechat-curses --help
+          weechat --version
+          weechat --build-info
+          weechat --colors
+          weechat --license
+          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   install_rockylinux:
 
@@ -331,34 +328,33 @@ jobs:
       image: rockylinux:9
 
     steps:
+      - uses: actions/checkout@v7
 
-    - uses: actions/checkout@v7
+      - name: Install dependencies
+        run: |
+          dnf install -y epel-release dnf-plugins-core
+          dnf config-manager --set-enabled crb
+          # Pin a working ruby stream (ruby:4.0 has broken module metadata on Rocky 9.8).
+          dnf module enable -y ruby:3.3
+          dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }}
 
-    - name: Install dependencies
-      run: |
-        dnf install -y epel-release dnf-plugins-core
-        dnf config-manager --set-enabled crb
-        # Pin a working ruby stream (ruby:4.0 has broken module metadata on Rocky 9.8).
-        dnf module enable -y ruby:3.3
-        dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }}
+      - name: Build and run tests
+        env:
+          CC: ${{ matrix.config.cc }}
+          CXX: ${{ matrix.config.cxx }}
+        run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
-    - name: Build and run tests
-      env:
-        CC: ${{ matrix.config.cc }}
-        CXX: ${{ matrix.config.cxx }}
-      run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
-
-    - name: Run WeeChat
-      env:
-        TERM: xterm-256color
-      run: |
-        weechat --help
-        weechat-curses --help
-        weechat --version
-        weechat --build-info
-        weechat --colors
-        weechat --license
-        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+      - name: Run WeeChat
+        env:
+          TERM: xterm-256color
+        run: |
+          weechat --help
+          weechat-curses --help
+          weechat --version
+          weechat --build-info
+          weechat --colors
+          weechat --license
+          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   install_freebsd:
 
@@ -380,29 +376,28 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - uses: actions/checkout@v7
 
-    - uses: actions/checkout@v7
-
-    - name: Install dependencies, build and run tests, run WeeChat
-      uses: vmactions/freebsd-vm@v1
-      env:
-        CC: ${{ matrix.config.cc }}
-        CXX: ${{ matrix.config.cxx }}
-        TERM: xterm-256color
-      with:
-        envs: "CC CXX TERM"
-        usesh: true
-        cache-after-prepare: true
-        prepare: pkg install -y ${{ env.WEECHAT_DEPS_FREEBSD }}
-        run: |
-          ./tools/build_test.sh ${{ matrix.config.buildargs }}
-          weechat --help
-          weechat-curses --help
-          weechat --version
-          weechat --build-info
-          weechat --colors
-          weechat --license
-          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+      - name: Install dependencies, build and run tests, run WeeChat
+        uses: vmactions/freebsd-vm@v1
+        env:
+          CC: ${{ matrix.config.cc }}
+          CXX: ${{ matrix.config.cxx }}
+          TERM: xterm-256color
+        with:
+          envs: "CC CXX TERM"
+          usesh: true
+          cache-after-prepare: true
+          prepare: pkg install -y ${{ env.WEECHAT_DEPS_FREEBSD }}
+          run: |
+            ./tools/build_test.sh ${{ matrix.config.buildargs }}
+            weechat --help
+            weechat-curses --help
+            weechat --version
+            weechat --build-info
+            weechat --colors
+            weechat --license
+            weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   install_macos:
 
@@ -425,37 +420,36 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - name: Setup Homebrew
+        id: setup-homebrew
+        uses: Homebrew/actions/setup-homebrew@main
 
-    - name: Setup Homebrew
-      id: setup-homebrew
-      uses: Homebrew/actions/setup-homebrew@main
+      - name: Install dependencies
+        run: |
+          brew update
+          brew install ${{ env.WEECHAT_DEPS_MACOS }}
 
-    - name: Install dependencies
-      run: |
-        brew update
-        brew install ${{ env.WEECHAT_DEPS_MACOS }}
+      - uses: actions/checkout@v7
 
-    - uses: actions/checkout@v7
+      - name: Build
+        env:
+          CC: ${{ matrix.config.cc }}
+          CXX: ${{ matrix.config.cxx }}
+          RUN_TESTS: "0"
+          JOBS: "2"
+        run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
-    - name: Build
-      env:
-        CC: ${{ matrix.config.cc }}
-        CXX: ${{ matrix.config.cxx }}
-        RUN_TESTS: "0"
-        JOBS: "2"
-      run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
-
-    - name: Run WeeChat
-      env:
-        TERM: xterm-256color
-      run: |
-        weechat --help
-        weechat-curses --help
-        weechat --version
-        weechat --build-info
-        weechat --colors
-        weechat --license
-        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+      - name: Run WeeChat
+        env:
+          TERM: xterm-256color
+        run: |
+          weechat --help
+          weechat-curses --help
+          weechat --version
+          weechat --build-info
+          weechat --colors
+          weechat --license
+          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   build_debian:
 
@@ -467,32 +461,31 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - uses: actions/checkout@v7
 
-    - uses: actions/checkout@v7
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
+      - name: Test Debian patches
+        run: ./tools/build_debian.sh test-patches
 
-    - name: Test Debian patches
-      run: ./tools/build_debian.sh test-patches
+      - name: Build Debian packages
+        run: ./tools/build_debian.sh devel ubuntu/resolute
 
-    - name: Build Debian packages
-      run: ./tools/build_debian.sh devel ubuntu/resolute
+      - name: Install Debian packages
+        run: sudo dpkg -i ../weechat-devel*.deb
 
-    - name: Install Debian packages
-      run: sudo dpkg -i ../weechat-devel*.deb
-
-    - name: Run WeeChat
-      env:
-        TERM: xterm-256color
-      run: |
-        weechat --help
-        weechat-curses --help
-        weechat --version
-        weechat --build-info
-        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+      - name: Run WeeChat
+        env:
+          TERM: xterm-256color
+        run: |
+          weechat --help
+          weechat-curses --help
+          weechat --version
+          weechat --build-info
+          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   codeql_analysis:
 
@@ -509,24 +502,23 @@ jobs:
       security-events: write
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
-    - name: Checkout repository
-      uses: actions/checkout@v7
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: cpp
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: cpp
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:cpp"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:cpp"

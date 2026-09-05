@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-26.04
 
     steps:
-
       - uses: actions/checkout@v6
 
       - name: REUSE Compliance Check
