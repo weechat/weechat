@@ -1935,7 +1935,7 @@ Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wty
 | kbd:[F11]                | `pass:[<]`   | Przewiń poziomo w lewo. | `+/fset -left+`
 | kbd:[F12]                | `pass:[>]`   | Przewiń poziomo w prawo. | `+/fset -right+`
 | kbd:[Alt+Space]          | `t`          | Przełącz zmienną boolowską. | `+/fset -toggle+`
-| kbd:[Alt+-]              | `-`          | Odejmij 1 od wartości liczbowej/koloru/enum, ustaw wartość pozostałych typów. | `+/fset -del -1+`
+| kbd:[Alt+-]              | `-`          | Odejmij 1 od wartości liczbowej/koloru/enum, ustaw wartość pozostałych typów. | `+/fset -add -1+`
 | kbd:[Alt++]              | `+`          | Dodaj 1 do wartości liczbowej/koloru/enum, dodaj to wartości pozostałych typów. | `+/fset -add 1+`
 | kbd:[Alt+f], kbd:[Alt+r] | `r`          | Zresetuj wartość. | `+/fset -reset+`
 | kbd:[Alt+f], kbd:[Alt+u] | `u`          | Skasuj wartość. | `+/fset -unset+`

@@ -2057,7 +2057,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 | kbd:[▲]               | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script -up 5+`
 | kbd:[▼]               | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script -down 5+`
 | kbd:[■ □ □]           | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script -go ${_chat_line_y}+`
-| kbd:[□ □ ■]           | -            | チャット: スクリプトバッファ | スクリプトのインストール/削除 | `+/script -go ${_chat_line_y};/script installremove ${script_name_with_extension}+`
+| kbd:[□ □ ■]           | -            | チャット: スクリプトバッファ | スクリプトのインストール/削除 | `+/script -go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
 | kbd:[■ □ □]           | 上 / 左      | バッファリスト               | 指定したバッファを下の番号に移動 | `+buflist_mouse+` シグナル
 | kbd:[■ □ □]           | 下 / 右      | バッファリスト               | 指定したバッファを上の番号に移動 | `+buflist_mouse+` シグナル
 | kbd:[■ □ □]           | -            | バッファリスト               | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `+buflist_mouse+` シグナル
