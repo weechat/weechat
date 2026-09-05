@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: 2026 Sébastien Helleu <flashcode@flashtux.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+
+  release:
+
+    runs-on: ubuntu-26.04
+
+    permissions:
+      contents: write
+
+    env:
+      TAG: ${{ github.ref_name }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Extract the release notes from the changelog
+        run: tools/release_notes.sh "${TAG}" > "${RUNNER_TEMP}/release-notes.md"
+
+      - name: Create or update the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          notes=${RUNNER_TEMP}/release-notes.md
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+              gh release edit "${TAG}" --title "${TAG}" --notes-file "${notes}"
+          else
+              gh release create "${TAG}" --title "${TAG}" --notes-file "${notes}"
+          fi
