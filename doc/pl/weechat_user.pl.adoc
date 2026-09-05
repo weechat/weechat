@@ -2191,113 +2191,114 @@ Przykład pogrubienia z domyślnym kolorem terminala:
 /set weechat.color.status_time *99999
 ----
 
-// TRANSLATION MISSING
 [[themes]]
 === Motywy
 
-A theme is a named bundle of option overrides that can be applied with
-the <<command_weechat_theme,/theme>> command. WeeChat ships a built-in
-`"light"` theme tuned for light-background terminals and supports
-user-defined themes loaded transiently from files.
+Motyw to nazwany pakiet ustawień, które można zastosować za pomocą 
+polecenia <<command_weechat_theme,/theme>>. WeeChat zawiera wbudowany
+„jasny” motyw dostosowany do terminali z jasnym tłem i obsługuje
+motywy zdefiniowane przez użytkownika, ładowan z plików.
 
 [[themes_themable_options]]
-==== Themable options
+==== Ustawienia motywów
 
-Themes can only set options marked as _themable_. All `*.color.*`
-options are themable by default; a few string options that hold format
-expressions with `+${color:...}+` references (such as
-`+weechat.color.chat_nick_colors+`, `+weechat.look.prefix_error+` or the
-`+buflist.format.*+` formats) are explicitly opted in.
+Motywy mogą tylko ustawiać opcje oznaczone jako _themable_. Wszystkie opcje
+`*.color.*` domyślnie mogą być ustawiane przez motywy; kilka opcji, których 
+wartości są ciągami, mogących przechować wyrażenia formatujące z odwołaniami 
+`+${color:...}+` (jak `+weechat.color.chat_nick_colors+`, `+weechat.look.prefix_error+`
+lub format `+buflist.format.*+`) są również uwzględnione.
 
-You can list the full themable surface area from the
-<<command_fset_fset,/fset>> buffer with the `+t:themable+` filter.
+Możesz wyświetlić wszystkie opcjie, jakie mogą być ustawione przez motyw
+w buforze <<command_fset_fset,/fset>> używając filtru `+t:themable+`.
 
 [[themes_apply]]
-==== Applying a theme
+==== Wybieranie motywu
 
-To switch to the built-in light-background theme:
+W celu wybrania wbudowanego motywu o jasnym tle:
 
 ----
 /theme apply light
 ----
 
-The current state of every themable option is saved beforehand to a
-backup theme file named like `+backup-YYYYMMDD-HHMMSS-uuuuuu+` in
-directory `+themes+` inside the WeeChat configuration directory, so the
-previous look can be restored at any time with:
+Aktualny stan wszystkich opcji ustawanych przez motyw zostaną wcześniej
+zapisane do pliku z kopią zapasową motywu o nazwie jak `+backup-YYYYMMDD-HHMMSS-uuuuuu+`
+w katalogu `+themes+` wewnątrz katalogu z konfiguracją WeeChat, dzięki
+czemu wcześniejszy wygląd można zawsze przywrócić za pomocą:
 
 ----
 /theme apply backup-YYYYMMDD-HHMMSS-uuuuuu
 ----
 
-Backup creation can be disabled (not recommended):
+Tworzenie kopi zapasowej można wyłąćzyć (nie zalecane):
 
 ----
 /set weechat.look.theme_backup off
 ----
 
-If backup is enabled and the backup file cannot be written, the apply
-is aborted before any option is changed.
+Jeśli kopie zapasowe są włączone i nie mogą zostać zapisane, wczytywanie
+motywu jest przerywane zanim jakakolwiek opcja zostanie zmieniona.
 
-The name of the last applied theme is stored in
-`+weechat.look.theme+` (informational only; not re-applied at startup).
+Nazwa ostatnio użytego motywu jest przechowywana w `+weechat.look.theme+` 
+(wyłącznie informacyjnie; wartość nie ma wpływu na motyw ladowany podczas 
+uruchamiania).
 
 [[themes_reset]]
-==== Resetting to defaults
+==== Przywracanie wartości domyślnych
 
-To restore the look shipped with WeeChat, reset every themable option
-to its default value:
+W celu przywrócenia wyglądu dostaczanego z WeeChat należy przywrócić
+wartości domyślne opcji motywów:
 
 ----
 /theme reset
 ----
 
-A backup is written first (same gate as `+/theme apply+`); on backup
-failure the reset is aborted before any option is changed.
-`+weechat.look.theme+` is cleared too.
+Najpierw jest robione kopia zapasowa (tak samo jak przy `+/theme apply+`);
+w przypadku niepowodzenia operacja jest przerywana przed zmianą
+jakiejkolwiek wartości.
+Wartość `+weechat.look.theme+` jest również czyszczona.
 
 [[themes_save_delete]]
-==== Saving and deleting user themes
+==== Zapisywanie i kasowanie motywów użytkowników
 
-Save the current themable options as a new user theme file:
+Zapisanie obecnego wyglądu jako nowy motyw użytkownika:
 
 ----
 /theme save mytheme
 ----
 
-Every themable option is written, so the file is self-contained and
-applies the exact same look on any WeeChat, regardless of its current
-configuration.
+Każda opca motywu jest zapisywana, dzięki czemu każdy motyw jest
+kompletny i będzie wyglądać tak samo na każdym WeeChat, bez
+względu na obecną konfigurację.
 
-Reserved names (built-in theme names like `+light+` and any name
-starting with `+backup-+`) are refused. Files live at
-`+${weechat_config_dir}/themes/<name>.theme+`.
+Nazwy zarezerwowane (wbudowane motywy jak `+light+` i każdna
+nazwa zaczynająca się od `+backup-+`) zostaną odrzucone. Pliki
+są przechowywane w `+${weechat_config_dir}/themes/<name>.theme+`.
 
-Rename a user theme (typical use: keep a useful automatic backup
-under a meaningful name):
+Zmiana nazwy motywu użytkownika (zwykłe użycie: trzymaj przydatne
+kopie zapasowe z nazwami mającymi sens):
 
 ----
-/theme rename backup-20260525-094210-123456 mybackup
+/theme rename backup-20260525-094210-123456 mójmotyw
 ----
 
-Built-in themes have no file and cannot be renamed; the target name
-cannot match a built-in name or start with `+backup-+`, and the
-target file must not already exist. The `+[info]+` `+name+` field
-inside the file is rewritten so `/theme info` reports the new name
-consistently.
+Wbudowane motywy nie posiadają plików i nie można zmienić ich nazwy;
+nowa nazwa nie może być nazwą wbudowanego motywy ani zaczynać się
+od `+backup-+`, oraz plik z taką nazwą nie może już istnieć. Pole
+`+[info]+` `+nazwa+` wewnątrz pliku zostanie nadpisane dzięki czemu
+`/theme info` zwróci poprawną wartość.
 
-Delete a user theme:
+Usuwanie motywu użytkownika:
 
 ----
 /theme del mytheme
 ----
 
-This removes the file on disk; built-in themes cannot be deleted.
+Usuwa to plik na dysku; wbudowane motywy nie mogą zostać usunięte.
 
 [[themes_file_format]]
-==== Theme file format
+==== Format pliku motywu
 
-A theme file is INI-like with two sections:
+Plik z motywem ma format pliku podobny INI z dwoma sekcjami: 
 
 ----
 [info]
@@ -2313,29 +2314,32 @@ irc.color.input_nick = "magenta"
 buflist.format.number = "${color:28}${number}${if:${number_displayed}?.: }"
 ----
 
-`+[info]+` is informational metadata shown by `/theme info`. `+[options]+`
-holds the actual overrides; keys are the full option names that would
-appear in `/set`. String values can be enclosed in double or single
-quotes; quotes are stripped at parse time. Non-themable options listed
-in a theme file are refused at apply time and logged to the core
-buffer (so a `.theme` file imported from an untrusted source cannot
-overwrite passwords, autoload lists, or startup commands).
+`+[info]+` to metadane pokazywane przez `/theme info`. `+[options]+`
+przechowuje aktualne wartości; klucze to pełne nazwy opcji, które
+pojawiły by się w `/set`. Wartości ciągów mogą być ujęte w podwójnie lub
+pojedyncze cudzysłowy; cudzysłowy są pomijane podczas parsowania. Opcje
+nie wapierane przez motywy są pomijane podczas parsowania i wyświetlane
+w głównym buforze (dzięki czemu plik `.theme` zaimportowany z niezaufanego
+Źródła nie może nadpisać haseł, list automatycznego ładowania ani komend
+wykonywanych przy uruchomieniu).
 
-User theme files are never cached: on every `/theme apply <name>` the
-file is parsed, applied, and freed.
+Motywy użytkowników nie są przechowywane: przy każdym wykonaniu
+`/theme apply <nazwa>` plik jest parsowany, zmiany są stosowane i plik 
+jest zwalniany.
 
 [[themes_resolution]]
-==== Resolution order
+==== Kolejność wykonywania
 
-When `+/theme apply <name>+` is run:
+Kiedy polecenie `+/theme apply <nazwa>+` jest wykonywane:
 
-* If `+${weechat_config_dir}/themes/<name>.theme+` exists, the file
-  is parsed and used (it shadows any built-in with the same name).
-* Otherwise the built-in theme registry is consulted; built-ins are
-  registered programmatically by core, plugins and scripts (see the
-  plugin and scripting documentation for `+weechat_theme_register+`).
+* Jeśli plik `+${weechat_config_dir}/themes/<name>.theme+` istnieje,
+  jest on parsowany i używany (przysłania każdą wbudowany motyw o tej
+  samej nazwie).
+* W innym przypadku sprawdzany jest rejestr wbudowanych motywów; wbudowane
+  motywy są automatycznie rejestrowane przez WeeChat, wtyczki i skrypty
+  (zobacz dokumentacje wtyczek i skryptów na temat `+weechat_theme_register+`).
 
-If neither source provides the name, the apply is refused.
+Jeśli żadne ze źródeł nie dostarcza nazwy, motyw nie jest używany.
 
 [[charset]]
 === Charset
@@ -3071,7 +3075,7 @@ Lista opcji dla pasków:
 | Pasek z typem `root` jest wyświetlany dokładnie jeden raz na ekranie, poza
   wszystkimi oknami. Domyślny pasek _buflist_ ma typ `root`. +
   Pasek z typem `window` wyświetlany jest w każdym oknie, na przykład jeśli
-  podzielisz jednorazowo ekran (używając `/window splith` lun `/window splitv`)
+  podzielisz jednorazowo ekran (używając `/window splith` lub `/window splitv`)
   otrzymasz po jednym pasku w każdym oknie. Domyślnie paski _title_, _status_,
   _input_ i _nicklist_ mają typ `window`.
 
@@ -5644,8 +5648,7 @@ Callback "line" ustawia następujące zmienne w tablicy hashy:
 | buffer             | wskaźnik | Bufor.
 | buffer_name        | ciąg     | Nazwa bufora.
 | buffer_type        | ciąg     | Typ bufora ("formatted" lub "free").
-// TRANSLATION MISSING
-| id                 | ciąg     | Line identifier: date and time of print with microseconds precision (line number for a buffer with free content).
+| id                 | ciąg     | Identyfikator linii: data i czas wyświetlenia z dokładnością do milisekund (numer linii bufora z wolną zawartością).
 | y                  | ciąg     | Numer linii bufora z wolną zawartością (≥ 0), -1 dla bufora ze sformatowaną zawartością.
 | date               | ciąg     | Linia z datą (timestamp).
 | date_usec          | ciąg     | Mikrosekundy w linii z datą.
