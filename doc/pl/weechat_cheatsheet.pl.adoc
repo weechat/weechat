@@ -2,15 +2,13 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-// TRANSLATION MISSING
-= WeeChat cheat sheet
+= WeeChat ściągawka
 :lang: pl
 // links to the user's guide in the included file must point to the user's guide
 :kb-user-guide: weechat_user.pl
 include::includes/attributes-pl.adoc[]
 
-// TRANSLATION MISSING
-All keys and mouse actions can be customized with the <<{kb-user-guide}#command_weechat_key,/key>> command.
+Wszystkie skróty klawiszowe i akcje myszy można dostosować za pomocą polecenia <<{kb-user-guide}#command_weechat_key,/key>>.
 
 // the introduction of the user's guide is replaced by the sentence above
 include::includes/key_bindings.pl.adoc[tags=**;!intro,leveloffset=-1]
