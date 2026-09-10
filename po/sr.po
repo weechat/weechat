@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-08-29 22:00+0200\n"
-"PO-Revision-Date: 2026-07-05 12:29+0200\n"
+"PO-Revision-Date: 2026-09-09 12:21+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
 "Language: sr\n"
@@ -428,7 +428,7 @@ msgstr "Филтеру „%s” је промењено име на „%s”"
 
 #, c-format
 msgid "%sUnable to rename filter \"%s\" to \"%s\""
-msgstr "%sНије успела промена име филтера „%s” на „%s”"
+msgstr "%sНије успела промена имена филтера „%s” на „%s”"
 
 #, c-format
 msgid "Filter \"%s\" deleted"
@@ -959,54 +959,46 @@ msgstr "Креирана опција: "
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%sФункција „%s” није доступна на овом систему"
 
-#, fuzzy
-#| msgid "not available"
 msgid "No theme available"
-msgstr "није доступно"
+msgstr "Није доступна ниједна тема"
 
 msgid "Themes:"
-msgstr ""
+msgstr "Теме:"
 
 #, c-format
 msgid "  %s %s%s%s (file)"
-msgstr ""
+msgstr "  %s %s%s%s (фајл)"
 
-#, fuzzy, c-format
-#| msgid "%sKey \"%s\" not found"
+#, c-format
 msgid "%sTheme \"%s\" not found"
-msgstr "%sНије пронађен тастер „%s”"
+msgstr "%sНије пронађена тема „%s”"
 
-#, fuzzy, c-format
-#| msgid "Option \"%s%s%s\":"
+#, c-format
 msgid "Theme \"%s%s%s\":"
-msgstr "Опција „%s%s%s”:"
+msgstr "Тема „%s%s%s”:"
 
-#, fuzzy, c-format
-#| msgid "    file: %s"
+#, c-format
 msgid "  source: %s"
-msgstr "    фајл: %s"
+msgstr "  извор: %s"
 
 msgid "  source: built-in (in-memory)"
-msgstr ""
+msgstr "  извор: уграђена (у-меморији)"
 
-#, fuzzy, c-format
-#| msgid "description"
+#, c-format
 msgid "  description: %s"
-msgstr "опис"
+msgstr "  опис: %s"
 
-#, fuzzy, c-format
-#| msgid "    file: %s"
+#, c-format
 msgid "  date: %s"
-msgstr "    фајл: %s"
+msgstr "  датум: %s"
 
-#, fuzzy, c-format
-#| msgid "WeeChat version"
+#, c-format
 msgid "  WeeChat version: %s"
-msgstr "верзија програма WeeChat"
+msgstr "  WeeChat верзија: %s"
 
 #, c-format
 msgid "  overrides: %d"
-msgstr ""
+msgstr "  преиначава: %d"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -3885,76 +3877,80 @@ msgstr ""
 msgid "number: number of processes to clean"
 msgstr "број: број процеса који треба да се очисти"
 
-#, fuzzy
-#| msgid "manage custom bar items"
 msgid "manage color themes"
-msgstr "управљање прилагођеним ставкама траке"
+msgstr "управљање темама боја"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
 "<new> || del <name> || info <name>"
 msgstr ""
+"[list [-backups]] || apply <име> || reset || save <име> || rename <старо> "
+"<ново> || del <име> || info <име>"
 
-#, fuzzy
-#| msgid ""
-#| "raw[list]: list remote relay servers (without argument, this list is "
-#| "displayed)"
 msgid ""
 "raw[list]: list registered themes and any *.theme files in the WeeChat "
 "configuration directory; the active theme (matching weechat.look.theme) is "
 "marked with \"->\""
 msgstr ""
-"raw[list]: листа сервера релеја удаљених (без аргумента се приказује ова "
-"листа)"
+"raw[list]: листа регистрованих тема и било којих *.theme фајлова у WeeChat "
+"конфигурационом директоријуму; активна тема (која одговара  weechat.look."
+"theme) је означена са „->”"
 
-#, fuzzy
-#| msgid "raw[tags]: display tags for lines"
 msgid "raw[-backups]: display backup theme files"
-msgstr "raw[tags]: исписује ознаке за линије"
+msgstr "raw[-backups]: исписује резервне фајлове тема"
 
 msgid ""
 "raw[apply]: apply a theme (set every themable option to the value from the "
 "theme); if a file named <name>.theme exists in directory \"themes\" it "
 "shadows any built-in theme of the same name"
 msgstr ""
+"raw[apply]: примењује тему (поставља вредност сваке опције која може да се "
+"постави темом на вредност из теме); ако у директоријуму „themes” постоји "
+"фајл <име>.theme он заклања било коју уграђену тему са истим именом"
 
 msgid ""
 "raw[reset]: reset every themable option to its default value (restores the "
 "original look shipped with WeeChat)"
 msgstr ""
+"raw[reset]: ресетује вредност сваке опције која може да се постави темом на "
+"њену подразумевану вредност (враћа се оригинални изглед испоручен уз "
+"програм WeeChat)"
 
 msgid ""
 "raw[save]: save current themable options to a file <name>.theme in directory "
 "\"themes\"; every themable option is written, so the file is self-contained; "
 "the name must not match a built-in theme or start with \"backup-\""
 msgstr ""
+"raw[save]: чува опције које могу да се поставе темом у фајл под именом "
+"<име>.theme у директоријум „themes”; уписује се свака опција која може да "
+"се постави темом, тако да се у фајлу налази све; име не сме да буде исто "
+"као име неке уграђене теме или да почиње са „backup-”"
 
-#, fuzzy
-#| msgid "raw[rename]: rename a filter"
 msgid "raw[rename]: rename a user theme file"
-msgstr "raw[rename]: мења име филтеру"
+msgstr "raw[rename]: мења име фајла корисничке теме"
 
-#, fuzzy
-#| msgid "raw[del]: delete a server"
 msgid "raw[del]: delete a user theme file"
-msgstr "raw[del]: брисање сервера"
+msgstr "raw[del]: бриш фајл корисничке теме"
 
 msgid ""
 "raw[info]: display details on a theme (name, description, creation date, "
 "WeeChat version, number of option overrides)"
 msgstr ""
+"raw[info]: приказује детаље у вези са темом (име, опис, датум креирања, "
+"WeeChat верзију, број опција које преиначава)"
 
-#, fuzzy
-#| msgid "name: name of trigger"
 msgid "name: name of a theme"
-msgstr "име: име окидача"
+msgstr "име: име теме"
 
 msgid ""
 "Themes are named bundles of option overrides. Built-in themes are registered "
 "in memory by core/plugins/scripts; user themes are read from files in "
 "directory \"themes\" inside the WeeChat configuration directory."
 msgstr ""
+"Теме су именовани пакети преиначавања опција.  core/plugins/scripts "
+"региструје уграђене теме у меморији; корисничке теме се читају из "
+"директоријума „themes” унутар WeeChat конфигурационог директоријума."
 
 msgid ""
 "By default, `/theme apply` command creates a backup of current themable "
@@ -3963,6 +3959,11 @@ msgid ""
 "backup-<timestamp>`. This is controlled by the option "
 "weechat.look.theme_backup."
 msgstr ""
+"Команда `/theme apply` подразумевано креира резервну копију текућих "
+"вредности које могу да се поставе темом у директоријум „themes” пре него "
+"што се примене (име фајла: „backup-<временска_ознака>.theme”); претходно "
+"стање може да се врати са: `/theme apply backup-<временска_ознака>`. Ово се "
+"weechat.look.theme_backup."
 
 msgid "toggle value of a config option"
 msgstr "пребацује вредност опције конфигурације"
@@ -4586,13 +4587,13 @@ msgid "names of layouts"
 msgstr "имена распореда"
 
 msgid "names of themes (built-ins + user files + backups)"
-msgstr ""
+msgstr "имена тема (уграђене + коринички фајлови + резервне копије)"
 
 msgid "names of user theme files (without built-ins and backups)"
-msgstr ""
+msgstr "имена фајлова корисничких тема (без уграђених и резервних копија)"
 
 msgid "names of theme files on disk (user files + backups, no built-ins)"
-msgstr ""
+msgstr "имена фајлова тема на диску (коринички фајлови + резервне копије, без уграђених)"
 
 msgid "names of secured data (file sec.conf, section data)"
 msgstr "имена обезбеђених података (фајл sec.conf, одељак data)"
@@ -5732,6 +5733,9 @@ msgid ""
 "not change manually); informational only, the theme is not re-applied at "
 "startup"
 msgstr ""
+"име последње теме примењене командом /theme (поставља се аутоматски, не "
+"мењајте га ручно); само као информација, тема се приликом покретања не "
+"примењује поново"
 
 msgid ""
 "create a backup theme file with the current themable options before applying "
@@ -5740,6 +5744,12 @@ msgid ""
 "\"themes\" inside the WeeChat configuration directory and can be restored "
 "with the command: `/theme apply backup-<timestamp>`"
 msgstr ""
+"креира резервни фајл теме са текућим опцијама које могу да се поставе темом "
+"пре него што примени тему командом /theme; ако резервни фајл не може да се "
+"упише, примењивање се отказује (не мења се ниједна опција); фајл резервне "
+"копије се уписује у директоријум „themes” унутар WeeChat конфигурационог "
+"директоријума и може да се врати командом: `/theme apply backup-"
+"<временска_ознака>`"
 
 msgid ""
 "time format for dates converted to strings and displayed in messages (see "
@@ -6796,115 +6806,102 @@ msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Употреба ресурса (за помоћ погледајте „man getrusage”):"
 
 msgid "WeeChat default theme for light-background terminals"
-msgstr ""
+msgstr "WeeChat подразумевана тема за терминале са светлом позадином"
 
 msgid "Automatic backup"
-msgstr ""
+msgstr "Аутоматска резервна копија"
 
-#, fuzzy, c-format
-#| msgid "%sKey \"%s\" not found"
+#, c-format
 msgid "%sTheme: option \"%s\" not found, skipped"
-msgstr "%sНије пронађен тастер „%s”"
+msgstr "%sТема: није пронађена опција „%s”, прескаче се"
 
-#, fuzzy, c-format
-#| msgid "%s: script \"%s\" is not installed"
+#, c-format
 msgid "%sTheme: option \"%s\" is not themable, skipped"
-msgstr "%s: скрипта „%s” није инсталирана"
+msgstr "%sТема: опција „%s” не може да се постави темом, прескаче се"
 
 #, c-format
 msgid "%s%s: line %d: malformed section header"
-msgstr ""
+msgstr "%s%s: линија %d: лоше формирано заглавље одељка"
 
-#, fuzzy, c-format
-#| msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+#, c-format
 msgid "%s%s: line %d: ignoring unknown section \"%s\""
-msgstr ""
-"%sУпозорење: %s, линија %d: игнорише се непознати идентификатор одељка („%s”)"
+msgstr "%s%s: линија %d: игнорише се непознати одељак „%s”"
 
 #, c-format
 msgid "%s%s: line %d: missing '=' separator"
-msgstr ""
+msgstr "%s%s: линија %d: недостаје ’=’ граничник"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
+#, c-format
 msgid "%s%s: line %d: ignoring unknown [info] key \"%s\""
-msgstr ""
-"%sУпозорење: %s, линија %d: игнорише се непозната опција за одељак „%s”: %s"
+msgstr "%s%s: линија %d: игнорише се непознати [info] кључ „%s”"
 
 #, c-format
 msgid ""
 "%sUnable to create theme backup; aborting apply (disable option "
 "weechat.look.theme_backup to force)"
 msgstr ""
+"%sНе може да се креира резервна копија теме; отказује се примењивање "
+"(искључите опцију weechat.look.theme_backup да форсирате)"
 
 #, c-format
 msgid "Previous state saved as theme \"%s\"; to restore: /theme apply %s"
-msgstr ""
+msgstr "Претходно стање је сачувано као тема„%s”; да је вратите: /theme apply %s"
 
 #, c-format
 msgid ""
 "%sUnable to create theme backup; aborting reset (disable option "
 "weechat.look.theme_backup to force)"
 msgstr ""
+"%sНе може да се креира резервна копија теме; отказује се ресетовање "
+"(искључите опцију weechat.look.theme_backup да форсирате)"
 
-#, fuzzy, c-format
-#| msgid "%sBuffer name \"%s\" is reserved for WeeChat"
+#, c-format
 msgid "%sName \"%s\" is reserved for automatic backups"
-msgstr "%sИме бафера „%s” је резервисано за програм WeeChat"
+msgstr "%sИме „%s” је резервисано за аутоматске резервне копије"
 
-#, fuzzy, c-format
-#| msgid "%sBuffer name \"%s\" is reserved for WeeChat"
+#, c-format
 msgid "%sName \"%s\" is reserved for a built-in theme"
-msgstr "%sИме бафера „%s” је резервисано за програм WeeChat"
+msgstr "%sИме „%s” је резервисано за уграђену тему"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to parse file \"%s\""
+#, c-format
 msgid "%sFailed to save theme \"%s\""
-msgstr "%s%s: није успело парсирање фајла „%s”"
+msgstr "%sНије успело чување теме „%s”"
 
-#, fuzzy, c-format
-#| msgid "Option \"%s%s%s\":"
+#, c-format
 msgid "Theme saved to: %s"
-msgstr "Опција „%s%s%s”:"
+msgstr "Тема је сачувана у: %s"
 
-#, fuzzy, c-format
-#| msgid "%sCannot create file \"%s\""
+#, c-format
 msgid "%sCannot rename built-in theme \"%s\""
-msgstr "%sНе може да се креира фајл „%s”"
+msgstr "%sНе може да се промени име уграђене теме „%s”"
 
 #, c-format
 msgid "%sNew name is the same as old name"
-msgstr ""
+msgstr "%sНово име је исто као и старо име"
 
-#, fuzzy, c-format
-#| msgid "%sBar \"%s\" already exists"
+#, c-format
 msgid "%sTheme \"%s\" already exists"
-msgstr "%sТрака „%s” већ постоји"
+msgstr "%sТема „%s” већ постоји"
 
-#, fuzzy, c-format
-#| msgid "%sUnable to rename filter \"%s\" to \"%s\""
+#, c-format
 msgid "%sFailed to rename theme \"%s\" to \"%s\""
-msgstr "%sНије успела промена име филтера „%s” на „%s”"
+msgstr "%sНије успела промена имена теме „%s” на „%s”"
 
-#, fuzzy, c-format
-#| msgid "Trigger \"%s\" renamed to \"%s\""
+#, c-format
 msgid "Theme \"%s\" renamed to \"%s\""
-msgstr "Окидачу „%s” је промењено име у „%s”"
+msgstr "Теми „%s” је промењено име у „%s”"
 
-#, fuzzy, c-format
-#| msgid "%sCannot create file \"%s\""
+#, c-format
 msgid "%sCannot delete built-in theme \"%s\""
-msgstr "%sНе може да се креира фајл „%s”"
+msgstr "%sНе може да се обрише уграђена тема „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to parse file \"%s\""
+#, c-format
 msgid "%sFailed to delete theme \"%s\""
-msgstr "%s%s: није успело парсирање фајла „%s”"
+msgstr "%sНије успело брисање теме „%s”"
 
 #, c-format
 msgid "Theme deleted: %s"
-msgstr ""
+msgstr "Тема је обрисана: %s"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -7066,35 +7063,44 @@ msgid "WeeChat is running in headless mode (ctrl-c to quit)."
 msgstr "WeeChat се извршава у режиму без интерфејса (ctrl-c за излаз)."
 
 msgid "Welcome to WeeChat!"
-msgstr ""
+msgstr "Добродошли у WeeChat!"
 
 msgid ""
 "If you are discovering WeeChat, it is recommended to read at least the "
 "quickstart guide, and the user's guide if you have some time; they explain "
 "main WeeChat concepts."
 msgstr ""
+"Ако тек откривате WeeChat, препоручује се да прочитате барем водич за брзи "
+"почетак, а ако имате времена, и корисничко упутство; они објашњавају "
+"основне WeeChat концепте."
 
 #, c-format
 msgid "All WeeChat docs are available at: %s"
-msgstr ""
+msgstr "Комплетна WeeChat документација је на: %s"
 
 msgid ""
 "Moreover, there is inline help with /help on all commands and options (use "
 "Tab key to complete the name)."
 msgstr ""
+"Уз то, постоји и директна помоћ са /help над свим командама и опцијама "
+"(употребите тастер Tab да довршите име)."
 
 msgid "The command /fset can help to customize WeeChat."
-msgstr ""
+msgstr "Команда /fset може помоћи да прилагодите WeeChat."
 
 msgid ""
 "You can add and connect to an IRC server with /server and /connect commands "
 "(see /help server)."
 msgstr ""
+"IRC сервер можете да додате и да се повежете на њега командама /server и "
+"/connect (погледајте /help server)."
 
 msgid ""
 "The \"light\" theme will be automatically applied. Use /theme reset to "
 "switch back to the default dark theme."
 msgstr ""
+"„Светла” тема ће се применити аутоматски. Употребите /theme reset да се "
+"вратите назад на подразумевану тамну тему."
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux".
 #, c-format
@@ -8843,17 +8849,15 @@ msgstr "> `xxx`: приказивање само опција са „xxx” у 
 msgid "> `f:xxx`: show only configuration file \"xxx\""
 msgstr "> `f:xxx`: приказивање само конфигурационог фајла „xxx”"
 
-#, fuzzy
-#| msgid ""
-#| "> `t:xxx`: show only type \"xxx\" (bool/int/str/col/enum or boolean/"
-#| "integer/string/color/enum)"
 msgid ""
 "> `t:xxx`: show only type \"xxx\" (bool/int/str/col/enum or boolean/integer/"
 "string/color/enum); the special value \"themable\" can be used to show all "
 "options that can be used in themes, regardless of type"
 msgstr ""
 "> `t:xxx`: приказивање само типа „xxx” (bool/int/str/col/enum или boolean/"
-"integer/string/color/enum)"
+"integer/string/color/enum); за приказ свих опција које могу да се употребе "
+"у темама може да се искористи специјална вредност „themable”, без обзира на "
+"тип"
 
 msgid "> `d`: show only changed options"
 msgstr "> `d`: приказивање само измењених опција"
@@ -11935,15 +11939,11 @@ msgstr ""
 "аутоматски прелазак на бафер канала када му се аутоматски приступи (опцијом "
 "сервера „autojoin”)"
 
-#, fuzzy
-#| msgid ""
-#| "auto switch to channel buffer when it is auto joined (with server option "
-#| "\"autojoin\")"
 msgid ""
 "auto switch to server buffer when it is opened on connection to the server"
 msgstr ""
-"аутоматски прелазак на бафер канала када му се аутоматски приступи (опцијом "
-"сервера „autojoin”)"
+"аутоматски прелазак на бафер сервера када се отвара приликом успостављања "
+"везе са сервером"
 
 msgid ""
 "auto switch to channel buffer when it is manually joined (with /join command)"
