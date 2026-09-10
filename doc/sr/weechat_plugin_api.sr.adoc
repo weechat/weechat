@@ -2396,12 +2396,10 @@ int weechat_string_base_decode (const char *base, const char *from, char *to);
 
 * дужина стринга смештеног у _*to_ (не рачунајући завршно `\0`), -1 у случају грешке
 
-// TRANSLATION MISSING
-If the string to decode is invalid (invalid char, truncated string or invalid
-padding), an empty string is stored in _*to_ and -1 is returned.
+Ако је стринг који треба да се декодира неисправан (неисправни char,
+одсечени стринг или неисправна испуна), у _*to_ се смешта празан стринг и враћа се -1.
 
-// TRANSLATION MISSING
-Missing padding chars (`=`) at the end of string are accepted.
+Прихватају се недостајући карактери испуне (`=`) на крају стринга.
 
 C пример:
 
@@ -3372,8 +3370,7 @@ _WeeChat ≥ 1.8, ажурирано у верзији 3.0._
 
 Показивач на стринг _*string_ може да се промени ако се стринг реалоцира (у случају да нема довољно простора за надовезивање стринга).
 
-// TRANSLATION MISSING
-In case of error, the dynamic string is left unchanged.
+У случају грешке, динамички стринг остаје неизмењен.
 
 Прототип:
 
@@ -7245,10 +7242,9 @@ struct t_config_option *weechat_config_new_option (
 * _config_file_: показивач на конфигурациони фајл
 * _section_: показивач на одељак
 * _name_: име опције; у програм у WeeChat верзије ≥ 1.4, име може да укључи и име родитељске опције (у случају да је ова опција „null”, вредност родитељске опције ће се приказати у излазу команде `/set`), тада је синтакса: „име << фајл.одељак.опција”
-// TRANSLATION MISSING
-* _type_: type of option; any type can be suffixed with `+|themable+` to mark
-  the option as themable, so that it can be set by the `/theme` command
-  (options of type _color_ are always themable) _(WeeChat ≥ 4.10.0)_:
+* _type_: тип опције; иза било ког типа може да се стави `+|themable+` чиме се
+  опција обележава као она која може да се поставља темом, тако да се може поставити
+  командом `/theme` (опције типа _color_ увек могу да се поставе темом) _(WeeChat ≥ 4.10.0)_:
 ** _boolean_: логичка вредност (on/off)
 ** _integer_: целобројна вредност
 ** _string_: стринг вредност
@@ -9429,28 +9425,27 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
     # ...
 ----
 
-// TRANSLATION MISSING
 [[themes]]
 === Теме
 
-Functions to contribute color (and other themable option) overrides to
-built-in themes. See the
-link:weechat_user.sr.html#themes[user's guide / Themes] section for the
-end-user side and the `+/theme+` command.
+Функције које додају преиначавања боје (и осталих опција које могу да
+се поставе темом) уграђеним темама. Погледајте одељак
+link:weechat_user.sr.html#themes[корисничко упутство / Теме] за употребу
+на страни крајњег корисника и команду `+/theme+` command.
 
 ==== theme_register
 
 _WeeChat ≥ 4.10.0._
 
-Register a contribution of option overrides under a named theme. The
-caller's plugin is the owner of the contribution; subsequent calls
-with the same theme name from the same plugin merge into the existing
-contribution (later keys win for duplicates).
+Региструје допринос преиначавања опције у оквиру теме. Додатак позиваоца
+је власник доприноса; накнадни позиви од истог додатка и под истим именом
+теме се спајају у постојећи допринос (у случају дупликата, каснији кључеви
+побеђују).
 
-When the calling plugin is unloaded, all its contributions are
-automatically dropped from every theme.
+Када се позивајући додатак уклања из меморије, сви његови доприноси се
+аутоматски уклањају из сваке теме.
 
-Prototype:
+Прототип:
 
 [source,c]
 ----
@@ -9458,19 +9453,19 @@ struct t_theme *weechat_theme_register (const char *name,
                                         struct t_hashtable *overrides);
 ----
 
-Arguments:
+Аргументи:
 
-* _name_: theme name (for example `+light+` or a custom name)
-* _overrides_: hashtable mapping full option names
-  (e.g. `+irc.color.input_nick+`) to their string values; the caller
-  retains ownership and may free the hashtable right after the call
+* _name_: име теме (на пример `+light+` или произвољно име)
+* _overrides_: хештабела која мапира комплетна имена опције
+  (нпр. `+irc.color.input_nick+`) у њихове стринг вредности; позивалац
+  задржава власништво и може да ослободи хештабелу одмах након позива
 
-Return value:
+Повратна вредност:
 
-* pointer to the registered theme (existing or newly created), NULL on
-  error
+* показивач на регистровану тему (постојећу или новокреирану), NULL у
+  случају грешке
 
-C example:
+C пример:
 
 [source,c]
 ----
@@ -9488,7 +9483,7 @@ if (overrides)
 }
 ----
 
-Script (Python):
+Скрипта (Python):
 
 [source,python]
 ----
@@ -9503,15 +9498,17 @@ weechat.theme_register("light", {
 ----
 
 [NOTE]
-Only options that have the _themable_ flag will be set by `/theme apply`.
-All `*.color.*` options are themable by default; string options that
-hold `+${color:...}+` references are explicitly opted in. Entries
-targeting non-themable options are silently skipped at apply-time with
-a warning logged to the _core_ buffer.
+Команда `/theme apply` ће моћи да постави само опције којима је
+постављена заставица _themable_. Све `*.color.*` опције могу
+ подразумевано да се поставе темом; стринг опције које држе
+`+${color:...}+` референце се експлицитно укључују. Ставке које
+циљају на опције које не могу да се поставе у теми се током
+примењивања прескачу у тишини, при чему се у_core_ бафер уписује
+упозорење о томе.
 
 [NOTE]
-When called from a script, the contribution is automatically dropped
-when the script unloads (no manual cleanup is needed).
+Када се позива из скрипте, допринос се аутоматски брише у тренутку
+када се скрипта уклони из меморије (није потребно ручно чишћење).
 
 [[key_bindings]]
 === Тастерске пречице
@@ -11471,10 +11468,9 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | `+formatted+` +
   `+free+`
 
-// TRANSLATION MISSING
 | id
-| Line identifier: date and time of print with microseconds precision.
-| Line number ("y").
+| Идентификатор линије: датум и време штампања са прецизношћу до микросекунде.
+| Број линије ("y").
 | `+1786886000000000+`
 
 | y
@@ -12209,10 +12205,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Време приказа за сваку измењену линију.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_prefix_for_each_line_changed]] buffer_prefix_for_each_line_changed | 4.11.0
-| Pointer: buffer.
-| Display prefix for each line has been changed.
+| Показивач: бафер.
+| Приказује префикс за сваку линију која је промењена.
 
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Показивач: бафер.
@@ -13820,8 +13815,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _chat_line | Показивач на линију _(WeeChat ≥ 1.2)_.
 | "0x1234abcd" | ""
 
-// TRANSLATION MISSING
-| _chat_line_id | Line identifier ^(4)^ _(WeeChat ≥ 4.11.0)_.
+| _chat_line_id | Идентификатор линије ^(4)^ _(WeeChat ≥ 4.11.0)_.
 | "1786886000000000" | "-1"
 
 | _chat_line_x | Колона у линији ^(3)^.
@@ -13894,18 +13888,17 @@ struct t_hook *weechat_hook_focus (const char *area,
 | "0x1234abcd" | ""
 |===
 
-// TRANSLATION MISSING
 [NOTE]
 ^(1)^ Постоје исти кључеви са суфиксом „2” (тј: „_x2”, „_y2”, „_window2”, ...) са инфо о другој тачки (корисно је само за гестикулације мишем, како бисте знали где је отпуштен тастер миша). +
 ^(2)^ `XXX` је име локалне променљиве у баферу. +
 ^(3)^ Поставља се само за бафере са слободним садржајем. +
-^(4)^ On buffers with formatted content, this is the date when WeeChat added
-the line in the buffer, with microseconds precision (greater or equal to
-"_chat_line_date"); on buffers with free content, this is the line number
+^(4)^ На баферима са форматираним садржајем, ово је датум када је WeeChat
+додао линију у бафер, са прецизношћу до микросекунде (веће или једнако од
+"_chat_line_date"); на баферима са слободним садржајем, ово је број линије
 ("_chat_line_y"). +
-^(5)^ Deprecated since WeeChat 4.11.0 (still there for compatibility): it is
-derived from the line identifier ("_chat_line_id") and is "0" on buffers with
-free content.
+^(5)^ Застарело од верзије WeeChat 4.11.0 (још увек је ту из разлога компатибилности):
+изводи се из идентификатора линије ("_chat_line_id") и има вредност "0" на баферима са
+слободним садржајем.
 
 Додатне инфо за ставку траке „buffer_nicklist”:
 
@@ -14628,8 +14621,7 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _lines_hidden_: 1 ако је у баферу скривена бар једна линија (филтрирана), или 0 ако се приказују све линије
 ** _prefix_max_length_: максимална дужина префикса у овом баферу
 ** _time_for_each_line_: 1 ако се време приказује са сваку линију у баферу (подразумевано), у супротном 0
-// TRANSLATION MISSING
-** _prefix_for_each_line_: 1 if prefix is displayed for each line in buffer (default), otherwise 0 _(WeeChat ≥ 4.11.0)_
+** _prefix_for_each_line_: 1 ако се префикс приказује за сваку линију у баферу (подразумевано), иначе 0 _(WeeChat ≥ 4.11.0)_
 ** _nicklist_: 1 ако је укључена листа надимака, у супротном 0
 ** _nicklist_case_sensitive_: 1 ако се у надимцима прави разлика у величини слова, у супротном 0
 ** _nicklist_max_length_: максимална дужина надимка
@@ -14641,7 +14633,7 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _nicklist_nicks_count_: број надимака у листи надимака
 ** _nicklist_nicks_visible_count_: број приказаних надимака
 ** _input_: 1 ако је укључен унос, у супротном 0
-** _input_get_any_user_data_: 1 ако се било који кориснички подаци, укљуљчујући команде, шаљу функцији повратног позива уноса, иначе 0
+** _input_get_any_user_data_: 1 ако се било који кориснички подаци, укључујући команде, шаљу функцији повратног позива уноса, иначе 0
 ** _input_get_unknown_commands_: 1 ако се непознате команде шаљу функцији повратног позива уноса, у супротном 0
 ** _input_get_empty_: 1 ако се функцији повратног позива уноса шаље празан унос, у супротном 0
 ** _input_multiline_: 1 ако се више линија шаље као једна порука функцији повратног позива уноса, у супротном 0
@@ -14697,8 +14689,7 @@ weechat.prnt("", "број мог бафера је: %d" % weechat.buffer_get_in
 
 _WeeChat ≥ 4.11.0._
 
-// TRANSLATION MISSING
-Return value of a "long long" buffer property.
+Повратна вредност „long long” особине бафера.
 
 Прототип:
 
@@ -14712,16 +14703,13 @@ long long weechat_buffer_get_longlong (struct t_gui_buffer *buffer,
 
 * _buffer_: показивач на бафер
 * _property_: име особине:
-// TRANSLATION MISSING
-** _id_: unique identifier
-// TRANSLATION MISSING
-** _lines_last_id_assigned_: last unique identifier used in this buffer for a line _(WeeChat ≥ 4.11.0)_
-** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick
+** _id_: јединствени идентификатор
+** _lines_last_id_assigned_: последњи јединствени идентификатор употребљен у овом баферу за линију _(WeeChat ≥ 4.11.0)_
+** _nicklist_last_id_assigned_: последњи јединствени идентификатор употребљен у овом баферу за групу или надимак
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* "long long" value of property
+* „long long” вредност особине
 
 C пример:
 
@@ -14956,10 +14944,9 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | "0" да се скрива време у свим линијама бафера, "1" да се приказује у свим
   линијама (подразумевано за нови бафер).
 
-// TRANSLATION MISSING
-| prefix_for_each_line | 4.11.0 | "0" or "1"
-| "0" to hide prefix for all lines in buffer, "1" to see prefix for all lines
-  (default for a new buffer).
+| prefix_for_each_line | 4.11.0 | "0" или "1"
+| "0" да се префикс сакрије у свим линијама бафера, "1" да се префикс види у свим линијама
+  (подразумевано за нови бафер).
 
 | nicklist | | "0" или "1"
 | "0" да се листа надимака уклони из бафера, "1" да се у бафер дода листа надимака.
@@ -15278,10 +15265,9 @@ struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer,
 Аргументи:
 
 * _buffer_: показивач на бафер
-// TRANSLATION MISSING
-* _id_: line identifier: on buffer with formatted content, this is the date
-  and time of print with microseconds precision (number of microseconds
-  since the Epoch); on buffer with free content, this is the line number ("y")
+* _id_: идентификатор линије: на баферу са форматираним садржајем, ово је
+  датум и време штампања са прецизношћу до микросекунде (број микросекунди од
+  почетка Епохе); на баферу са слободни садржајем, ово је број линије ("y")
 
 Повратна вредност:
 
@@ -17761,8 +17747,7 @@ var = weechat.infolist_new_var_time(item, "my_time", int(time.time()))
 
 _WeeChat ≥ 4.11.0._
 
-// TRANSLATION MISSING
-Add a "long" variable to an infolist item.
+Додаје „long” променљиву у ставку инфолисте.
 
 Прототип:
 
@@ -17777,8 +17762,7 @@ struct t_infolist_var *weechat_infolist_new_var_long (struct t_infolist_item *it
 
 * _item_: показивач на ставку инфолисте
 * _name_: име променљиве
-// TRANSLATION MISSING
-* _value_: "long" value
+* _value_: „long” вредност
 
 Повратна вредност:
 
@@ -17808,8 +17792,7 @@ var = weechat.infolist_new_var_long(item, "my_long", 2123456789)
 
 _WeeChat ≥ 4.11.0._
 
-// TRANSLATION MISSING
-Add a "long long" variable to an infolist item.
+Додаје „long long” вредност у ставку инфолисте.
 
 Прототип:
 
@@ -17824,8 +17807,7 @@ struct t_infolist_var *weechat_infolist_new_var_longlong (struct t_infolist_item
 
 * _item_: показивач на ставку инфолисте
 * _name_: име променљиве
-// TRANSLATION MISSING
-* _value_: "long long" value
+* _value_: „long long” вредност
 
 Повратна вредност:
 
@@ -18312,8 +18294,7 @@ weechat.prnt("", "time = %d" % weechat.infolist_time(infolist, "my_time"))
 
 _WeeChat ≥ 4.11.0._
 
-// TRANSLATION MISSING
-Return value of "long" variable in current infolist item.
+Враћа вредност „long” променљиве у текућој ставки инфолисте.
 
 Прототип:
 
@@ -18329,8 +18310,7 @@ long weechat_infolist_long (struct t_infolist *infolist, const char *var);
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* "long" value of variable
+* „long” вредност променљиве
 
 C пример:
 
@@ -18355,7 +18335,7 @@ weechat.prnt("", "value = %d" % weechat.infolist_long(infolist, "my_long"))
 
 _WeeChat ≥ 4.11.0._
 
-Return value of "long long" variable in current infolist item.
+Враћа вредност „long long” променљиве у текућој ставки инфолисте.
 
 Прототип:
 
@@ -18371,8 +18351,7 @@ long long weechat_infolist_longlong (struct t_infolist *infolist, const char *va
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* "long long" value of variable
+* „long long” вредност променљиве
 
 C пример:
 
