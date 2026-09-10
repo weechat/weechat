@@ -474,10 +474,70 @@ theme_list (void)
 }
 
 /*
+ * Check whether a name can be used for a user theme file.
+ *
+ * The name is turned into "<weechat_config_dir>/themes/<name>.theme", so it
+ * must not be empty, must not be "." or ".." and must not contain a directory
+ * separator (which would point outside the themes directory) or a control
+ * character (which would break the line-based file format).
+ *
+ * Return 1 if the name is valid, 0 if it is not.
+ */
+
+int
+theme_name_is_valid (const char *name)
+{
+    const char *ptr_name;
+
+    if (!name || !name[0])
+        return 0;
+
+    if ((strcmp (name, ".") == 0) || (strcmp (name, "..") == 0))
+        return 0;
+
+    for (ptr_name = name; ptr_name[0]; ptr_name++)
+    {
+        if ((ptr_name[0] == '/') || (ptr_name[0] == DIR_SEPARATOR_CHAR)
+            || ((unsigned char)ptr_name[0] < 32))
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+/*
+ * Check that a name can be used for a user theme file (see
+ * theme_name_is_valid) and display an error if it cannot; no error is
+ * displayed for a NULL or empty name (callers reject it silently).
+ *
+ * Return 1 if the name is valid, 0 if it is not.
+ */
+
+int
+theme_check_name (const char *name)
+{
+    if (theme_name_is_valid (name))
+        return 1;
+
+    if (name && name[0])
+    {
+        gui_chat_printf (NULL,
+                         _("%sInvalid theme name \"%s\" (expected a name, "
+                           "not a path)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         name);
+    }
+
+    return 0;
+}
+
+/*
  * Build the on-disk path for a user theme:
  * "<weechat_config_dir>/themes/<name>.theme".
  *
- * Return NULL on error.
+ * Return NULL on error or if the name cannot be used for a theme file.
  *
  * Note: result must be freed after use.
  */
@@ -487,7 +547,7 @@ theme_user_file_path (const char *name)
 {
     char *path = NULL;
 
-    if (!name || !name[0])
+    if (!theme_name_is_valid (name))
         return NULL;
     string_asprintf (&path, "%s/themes/%s.theme",
                      weechat_config_dir, name);
@@ -551,7 +611,7 @@ theme_write_file (const char *name, const char *description)
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
 
-    if (!name || !name[0])
+    if (!theme_name_is_valid (name))
         return NULL;
 
     path = NULL;
@@ -1099,8 +1159,9 @@ theme_reset (void)
 /*
  * Save the current themable options to a user theme file.
  *
- * Refuse names that match a built-in theme (registered via API) or
- * that start with "backup-" (reserved for automatic backups). Every
+ * Refuse names that cannot be used for a theme file (see
+ * theme_name_is_valid), that match a built-in theme (registered via API)
+ * or that start with "backup-" (reserved for automatic backups). Every
  * themable option is written (full snapshot), so the file is
  * self-contained and round-trips exactly.
  *
@@ -1114,6 +1175,9 @@ theme_save (const char *name)
     char *path;
 
     if (!name || !name[0])
+        return WEECHAT_RC_ERROR;
+
+    if (!theme_check_name (name))
         return WEECHAT_RC_ERROR;
 
     if (strncmp (name, "backup-", 7) == 0)
@@ -1154,12 +1218,13 @@ theme_save (const char *name)
 /*
  * Rename a user theme file.
  *
- * Refuse to rename a built-in (no file) or to a name reserved for
- * built-ins or automatic backups. The target name must not already
- * exist on disk. The file content is copied with the [info] name
- * field rewritten so the parsed theme name stays consistent with the
- * new filename. If "weechat.look.theme" was pointing at the old name,
- * it is updated to the new name.
+ * Refuse names that cannot be used for a theme file (see
+ * theme_name_is_valid), refuse to rename a built-in (no file) or to a
+ * name reserved for built-ins or automatic backups. The target name
+ * must not already exist on disk. The file content is copied with the
+ * [info] name field rewritten so the parsed theme name stays consistent
+ * with the new filename. If "weechat.look.theme" was pointing at the old
+ * name, it is updated to the new name.
  *
  * Return WEECHAT_RC_OK on success, WEECHAT_RC_ERROR on validation or
  * I/O failure (in which case no file is created or removed).
@@ -1174,6 +1239,9 @@ theme_rename (const char *old_name, const char *new_name)
     int in_info, name_done, fd;
 
     if (!old_name || !old_name[0] || !new_name || !new_name[0])
+        return WEECHAT_RC_ERROR;
+
+    if (!theme_check_name (old_name) || !theme_check_name (new_name))
         return WEECHAT_RC_ERROR;
 
     if (theme_search (old_name))
@@ -1322,7 +1390,10 @@ theme_rename (const char *old_name, const char *new_name)
 /*
  * Delete a user theme file.
  *
- * Refuse names registered as built-in themes (they have no file).
+ * Refuse names that cannot be used for a theme file (see
+ * theme_name_is_valid) and names registered as built-in themes (they have
+ * no file).
+ *
  * Return WEECHAT_RC_OK on success, WEECHAT_RC_ERROR otherwise.
  */
 
@@ -1332,6 +1403,9 @@ theme_delete (const char *name)
     char *path;
 
     if (!name || !name[0])
+        return WEECHAT_RC_ERROR;
+
+    if (!theme_check_name (name))
         return WEECHAT_RC_ERROR;
 
     if (theme_search (name))

@@ -42,6 +42,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: reject theme names that cannot be used as file names in command `/theme`
 - core: fix active buffer in group of merged buffers when the merged buffer is not displayed in a window
 - core: fix buffer selected when searching by partial name and another buffer has a similar name ([#700](https://github.com/weechat/weechat/issues/700))
 - irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"

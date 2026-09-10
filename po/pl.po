@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-08-29 22:00+0200\n"
+"POT-Creation-Date: 2026-09-10 21:41+0200\n"
 "PO-Revision-Date: 2026-09-05 15:17+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -993,7 +993,6 @@ msgid "  description: %s"
 msgstr "  opis: %s"
 
 #, c-format
-#| msgid "    file: %s"
 msgid "  date: %s"
 msgstr "  data: %s"
 
@@ -6812,6 +6811,10 @@ msgstr "Zużycie zasobów (zobacz \"man getrusage\"):"
 msgid "WeeChat default theme for light-background terminals"
 msgstr "Domyślny motyw WeeChat dla terminali z jasnym tłem"
 
+#, c-format
+msgid "%sInvalid theme name \"%s\" (expected a name, not a path)"
+msgstr ""
+
 msgid "Automatic backup"
 msgstr "Automatyczna kopia zapasowa"
 
@@ -6869,7 +6872,6 @@ msgid "%sName \"%s\" is reserved for a built-in theme"
 msgstr "%sNazwa „%s” jest zarezerwowana dla wbudowanego motywu"
 
 #, c-format
-#| msgid "%s%s: unable to parse file \"%s\""
 msgid "%sFailed to save theme \"%s\""
 msgstr "%sNie udało się zapisać motywu „%s”"
 
