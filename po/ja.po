@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-08-29 22:00+0200\n"
+"POT-Creation-Date: 2026-09-10 21:41+0200\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -6636,6 +6636,10 @@ msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "メモリ使用量 (ヘルプを見るには \"man mallinfo\" を参照してください):"
 
 msgid "WeeChat default theme for light-background terminals"
+msgstr ""
+
+#, c-format
+msgid "%sInvalid theme name \"%s\" (expected a name, not a path)"
 msgstr ""
 
 msgid "Automatic backup"

@@ -262,6 +262,45 @@ TEST(CoreTheme, List)
 
 /*
  * Test functions:
+ *   theme_name_is_valid
+ *   theme_check_name
+ */
+
+TEST(CoreTheme, NameIsValid)
+{
+    /* NULL / empty */
+    LONGS_EQUAL(0, theme_name_is_valid (NULL));
+    LONGS_EQUAL(0, theme_name_is_valid (""));
+
+    /* Current / parent directory */
+    LONGS_EQUAL(0, theme_name_is_valid ("."));
+    LONGS_EQUAL(0, theme_name_is_valid (".."));
+
+    /* A theme name is a name, not a path. */
+    LONGS_EQUAL(0, theme_name_is_valid ("/tmp/test.theme"));
+    LONGS_EQUAL(0, theme_name_is_valid ("../../escaped"));
+    LONGS_EQUAL(0, theme_name_is_valid ("sub/dark"));
+    LONGS_EQUAL(0, theme_name_is_valid ("dark/"));
+
+    /* Control chars would break the line-based file format. */
+    LONGS_EQUAL(0, theme_name_is_valid ("dark\nname = \"other\""));
+    LONGS_EQUAL(0, theme_name_is_valid ("da\trk"));
+
+    /* Valid names */
+    LONGS_EQUAL(1, theme_name_is_valid ("dark"));
+    LONGS_EQUAL(1, theme_name_is_valid ("my theme_2.1-beta"));
+    LONGS_EQUAL(1, theme_name_is_valid (".hidden"));
+    LONGS_EQUAL(1, theme_name_is_valid ("backup-20260101-000000-000000"));
+
+    /* theme_check_name: same verdict, with an error displayed */
+    LONGS_EQUAL(0, theme_check_name (NULL));
+    LONGS_EQUAL(0, theme_check_name (""));
+    LONGS_EQUAL(0, theme_check_name ("/tmp/test.theme"));
+    LONGS_EQUAL(1, theme_check_name ("dark"));
+}
+
+/*
+ * Test functions:
  *   theme_user_file_path
  */
 
@@ -272,6 +311,11 @@ TEST(CoreTheme, UserFilePath)
     /* NULL / empty => NULL */
     POINTERS_EQUAL(NULL, theme_user_file_path (NULL));
     POINTERS_EQUAL(NULL, theme_user_file_path (""));
+
+    /* Invalid name => NULL (no path built outside the themes directory) */
+    POINTERS_EQUAL(NULL, theme_user_file_path ("/tmp/test.theme"));
+    POINTERS_EQUAL(NULL, theme_user_file_path (".."));
+    POINTERS_EQUAL(NULL, theme_user_file_path ("sub/dark"));
 
     /* "name" => "<weechat_config_dir>/themes/name.theme" */
     expected = NULL;
@@ -331,6 +375,10 @@ TEST(CoreTheme, WriteFile)
     /* Refuse empty/NULL. */
     POINTERS_EQUAL(NULL, theme_write_file (NULL, NULL));
     POINTERS_EQUAL(NULL, theme_write_file ("", NULL));
+
+    /* Refuse a name that is not usable as a file name. */
+    POINTERS_EQUAL(NULL, theme_write_file ("/tmp/test.theme", NULL));
+    POINTERS_EQUAL(NULL, theme_write_file ("../escaped", NULL));
 
     /*
      * Full snapshot: every themable option is written; the returned
@@ -888,6 +936,17 @@ TEST(CoreTheme, Save)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save (NULL));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save (""));
 
+    /* A path is not a name => error. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("/tmp/test.theme"));
+
+    /* A name escaping the themes directory => error, no file created. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("../escaped"));
+    path = NULL;
+    string_asprintf (&path, "%s/escaped.theme", weechat_config_dir);
+    CHECK(path != NULL);
+    LONGS_EQUAL(-1, stat (path, &st));
+    free (path);
+
     /* Reserved "backup-" prefix => error. */
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("backup-anything"));
 
@@ -918,6 +977,10 @@ TEST(CoreTheme, Delete)
     /* NULL / empty => error */
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete (NULL));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete (""));
+
+    /* Refuse a name that is not usable as a file name. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete ("/tmp/test.theme"));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete ("../../escaped"));
 
     /* Refuse to delete a built-in (no file to delete). */
     theme_register (NULL, NULL, "dark", NULL);
@@ -958,6 +1021,10 @@ TEST(CoreTheme, Rename)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("src", NULL));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("", "dst"));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("src", ""));
+
+    /* Refuse a name that is not usable as a file name, on both sides. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("../escaped", "rn_dst"));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "/tmp/test.theme"));
 
     /* Refuse to rename a built-in (no file to rename). */
     theme_register (NULL, NULL, "dark", NULL);

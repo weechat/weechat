@@ -44,6 +44,8 @@ extern struct t_theme *themes;
 extern struct t_theme *last_theme;
 extern int theme_applying;                /* gate for config_change_color    */
 
+extern int theme_name_is_valid (const char *name);
+extern int theme_check_name (const char *name);
 extern struct t_theme *theme_search (const char *name);
 extern struct t_theme *theme_register (struct t_weechat_plugin *plugin,
                                        const void *script,

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-08-29 22:00+0200\n"
+"POT-Creation-Date: 2026-09-10 21:41+0200\n"
 "PO-Revision-Date: 2026-07-05 19:16+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -7169,6 +7169,10 @@ msgstr "Ressourcennutzung (siehe „man getrusage“ für Hilfe):"
 
 msgid "WeeChat default theme for light-background terminals"
 msgstr "WeeChat-Standarddesign für Terminals mit hellem Hintergrund"
+
+#, c-format
+msgid "%sInvalid theme name \"%s\" (expected a name, not a path)"
+msgstr ""
 
 msgid "Automatic backup"
 msgstr "Automatische Datensicherung"
