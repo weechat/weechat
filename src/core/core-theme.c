@@ -597,7 +597,8 @@ theme_make_backup_name (void)
  * written (full snapshot), so a theme file is self-contained and round-trips
  * exactly, regardless of the current configuration.
  *
- * Return path to saved file on success, NULL on error.
+ * Return path to saved file on success, NULL on error (an error is displayed
+ * if the file cannot be written).
  *
  * Note: result must be freed after use.
  */
@@ -610,6 +611,7 @@ theme_write_file (const char *name, const char *description)
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
+    int write_error;
 
     if (!theme_name_is_valid (name))
         return NULL;
@@ -629,6 +631,10 @@ theme_write_file (const char *name, const char *description)
     file = fopen (path, "w");
     if (!file)
     {
+        gui_chat_printf (NULL,
+                         _("%sUnable to write theme file \"%s\" (%s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         path, strerror (errno));
         free (path);
         return NULL;
     }
@@ -665,7 +671,24 @@ theme_write_file (const char *name, const char *description)
         }
     }
 
-    fclose (file);
+    /*
+     * Catch a write error (for example a full disk): the partial file is
+     * removed, so that it cannot be applied later as a truncated theme.
+     */
+    write_error = (ferror (file)) ? 1 : 0;
+    if (fclose (file) != 0)
+        write_error = 1;
+    if (write_error)
+    {
+        gui_chat_printf (NULL,
+                         _("%sUnable to write theme file \"%s\" (%s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         path, strerror (errno));
+        unlink (path);
+        free (path);
+        return NULL;
+    }
+
     return path;
 }
 

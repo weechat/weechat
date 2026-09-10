@@ -962,6 +962,17 @@ TEST(CoreTheme, Save)
     CHECK(st.st_size > 0);
     unlink (path);
     free (path);
+
+    /*
+     * I/O failure: with a directory in place of the theme file, the write
+     * fails and the error is reported (nothing else is left behind).
+     */
+    path = theme_user_file_path ("save_io_error");
+    CHECK(path != NULL);
+    LONGS_EQUAL(0, mkdir (path, 0755));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("save_io_error"));
+    LONGS_EQUAL(0, rmdir (path));
+    free (path);
 }
 
 /*

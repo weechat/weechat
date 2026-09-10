@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-10 21:41+0200\n"
-"PO-Revision-Date: 2026-09-10 21:43+0200\n"
+"POT-Creation-Date: 2026-09-10 21:45+0200\n"
+"PO-Revision-Date: 2026-09-10 21:46+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -7046,6 +7046,10 @@ msgstr "Thème par défaut de WeeChat par défaut pour les terminaux à fond cla
 #, c-format
 msgid "%sInvalid theme name \"%s\" (expected a name, not a path)"
 msgstr "%sNom de thème invalide \"%s\" (un nom est attendu, pas un chemin)"
+
+#, c-format
+msgid "%sUnable to write theme file \"%s\" (%s)"
+msgstr "%sImpossible d'écrire le fichier de thème \"%s\" (%s)"
 
 msgid "Automatic backup"
 msgstr "Sauvegarde automatique"
