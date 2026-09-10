@@ -1633,113 +1633,112 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=fset_options]
 /set weechat.color.status_time *99999
 ----
 
-// TRANSLATION MISSING
 [[themes]]
 === Теме
 
-A theme is a named bundle of option overrides that can be applied with
-the <<command_weechat_theme,/theme>> command. WeeChat ships a built-in
-`"light"` theme tuned for light-background terminals and supports
-user-defined themes loaded transiently from files.
+Тема је именовани пакет преиначавања опција који може да се примени
+командом <<command_weechat_theme,/theme>>. WeeChat се испоручује са
+`„светлом”` темом која је прилагођена терминалима са светлом позадином
+и подржава пролазно учитавање кориснички дефинисаних фајлова теме.
 
 [[themes_themable_options]]
-==== Themable options
+==== Опције које могу да се поставе темом
 
-Themes can only set options marked as _themable_. All `*.color.*`
-options are themable by default; a few string options that hold format
-expressions with `+${color:...}+` references (such as
-`+weechat.color.chat_nick_colors+`, `+weechat.look.prefix_error+` or the
-`+buflist.format.*+` formats) are explicitly opted in.
+Теме могу да поставе само опције које су означене као _themable_. Све `*.color.*`
+опције подразумевано могу да се поставе темама; неколико стринг опција које
+чувају изразе формата са `+${color:...}+` референцама (као што су
+`+weechat.color.chat_nick_colors+`, `+weechat.look.prefix_error+` или
+`+buflist.format.*+` формати) мора експлицитно да се укључе.
 
-You can list the full themable surface area from the
-<<command_fset_fset,/fset>> buffer with the `+t:themable+` filter.
+Комплетну површину области која може да се подешава темом можете да видите из
+<<command_fset_fset,/fset>> бафера употребом `+t:themable+` филтера.
 
 [[themes_apply]]
-==== Applying a theme
+==== Примењивање теме
 
-To switch to the built-in light-background theme:
+Ако желите да пређете на уграђену тему светле позадине:
 
 ----
 /theme apply light
 ----
 
-The current state of every themable option is saved beforehand to a
-backup theme file named like `+backup-YYYYMMDD-HHMMSS-uuuuuu+` in
-directory `+themes+` inside the WeeChat configuration directory, so the
-previous look can be restored at any time with:
+Најпре се текуће стање сваке опције које може да се поставља темом чува
+у резервни фајл теме под именом `+backup-ГГГГММДД-ЧЧММСС-uuuuuu+` у
+директоријум `+themes+` унутар WeeChat конфигурационог директоријума,
+тако да се претходни изглед може вратити у било које време:
 
 ----
-/theme apply backup-YYYYMMDD-HHMMSS-uuuuuu
+/theme apply backup-ГГГГММДД-ЧЧММСС-uuuuuu
 ----
 
-Backup creation can be disabled (not recommended):
+Креирање резервне копије може да се искључи (не препоручује се):
 
 ----
 /set weechat.look.theme_backup off
 ----
 
-If backup is enabled and the backup file cannot be written, the apply
-is aborted before any option is changed.
+Ако је прављење резервне копије укључено, а фајл резервне копије не
+може да се упише, примењивање се прекида пре измене било које опције.
 
-The name of the last applied theme is stored in
-`+weechat.look.theme+` (informational only; not re-applied at startup).
+Име последње примењене теме се смешта у`+weechat.look.theme+`
+(чисто информације ради; не примењује се поново приликом покретања).
 
 [[themes_reset]]
-==== Resetting to defaults
+==== Ресетовање на подразумевано
 
-To restore the look shipped with WeeChat, reset every themable option
-to its default value:
+Ако желите да вратите изгледа на онај који се испоручује уз WeeChat,
+ресетујте сваку опцију која може да се постави темом на њену
+подразумевану вредност:
 
 ----
 /theme reset
 ----
 
-A backup is written first (same gate as `+/theme apply+`); on backup
-failure the reset is aborted before any option is changed.
-`+weechat.look.theme+` is cleared too.
+Најпре се записује резервна копија (иста капија као за `+/theme apply+`);
+ако прављење резервне копије не успе, ресетовање се прекида пре измене
+било које опције. `+weechat.look.theme+` се такође брише.
 
 [[themes_save_delete]]
-==== Saving and deleting user themes
+==== Чување и брисање корисничких тема
 
-Save the current themable options as a new user theme file:
-
-----
-/theme save mytheme
-----
-
-Every themable option is written, so the file is self-contained and
-applies the exact same look on any WeeChat, regardless of its current
-configuration.
-
-Reserved names (built-in theme names like `+light+` and any name
-starting with `+backup-+`) are refused. Files live at
-`+${weechat_config_dir}/themes/<name>.theme+`.
-
-Rename a user theme (typical use: keep a useful automatic backup
-under a meaningful name):
+Чување тренутних вредности опција које могу да се мењају темом као нов фајл теме:
 
 ----
-/theme rename backup-20260525-094210-123456 mybackup
+/theme save мојатема
 ----
 
-Built-in themes have no file and cannot be renamed; the target name
-cannot match a built-in name or start with `+backup-+`, and the
-target file must not already exist. The `+[info]+` `+name+` field
-inside the file is rewritten so `/theme info` reports the new name
-consistently.
+Уписује се свака опција која може да се постави темом, тако да се у
+фајлу налази све што је потребно и примењује потпуно исти изглед на
+било којем WeeChat програму, без обзира на његову текућу конфигурацију.
 
-Delete a user theme:
+Резервисана имена (имена уграђених тема као што су `+light+` и било која
+имена која почињу са `+backup-+`) се не прихватају. Фајлови се налазе у
+`+${weechat_config_dir}/themes/<име>.theme+`.
+
+Преименовање корисничке теме (типична употреба: чување корисне аутоматске
+резервне копије под смисленим именом):
 
 ----
-/theme del mytheme
+/theme rename backup-20260525-094210-123456 мојбекап
 ----
 
-This removes the file on disk; built-in themes cannot be deleted.
+Уграђене теме се не држе у фајлу и не могу да се преименују; циљно име не сме
+се поклопи са уграђеним именом или да почиње са `+backup-+`, и циљни фајл
+не сме већ да постоји. Поље `+[info]+` `+name+` унутар фајла се поново
+исписује тако да команда `/theme info` конзистентно пријављује ново име.
+
+Брисање корисничке теме:
+
+----
+/theme del мојатема
+----
+
+Ово уклања фајл са диска; уграђене теме не могу да се обришу.
 
 [[themes_file_format]]
-==== Theme file format
+==== Формат фајла теме
 
-A theme file is INI-like with two sections:
+Фајл теме је личи на INI фајл са два одељка:
 
 ----
 [info]
@@ -1755,29 +1754,30 @@ irc.color.input_nick = "magenta"
 buflist.format.number = "${color:28}${number}${if:${number_displayed}?.: }"
 ----
 
-`+[info]+` is informational metadata shown by `/theme info`. `+[options]+`
-holds the actual overrides; keys are the full option names that would
-appear in `/set`. String values can be enclosed in double or single
-quotes; quotes are stripped at parse time. Non-themable options listed
-in a theme file are refused at apply time and logged to the core
-buffer (so a `.theme` file imported from an untrusted source cannot
-overwrite passwords, autoload lists, or startup commands).
+`+[info]+` су информациони метаподаци који се приказују командом `/theme info`.
+`+[options]+` садржи стварна преиначавања; кључеви су пуна имена опција
+који би се појавили у `/set`. Стринг вредности могу да се поставе у знаке
+навода или полунавода; у време парсирања, знакови навода се уклањају. Опције
+које не могу да се поставе темом наведене у фајлу теме се одбијају у
+време примењивања теме и упозорење се логује у основни бафер (тако да
+`.theme` фајл који је увезен из неког извара којем се не верује не може
+да препише лозинке, листе аутоматског учитавања или команде за покретање).
 
-User theme files are never cached: on every `/theme apply <name>` the
-file is parsed, applied, and freed.
+Фајлови корисничких тема се никада не кеширају: приликом сваког извршавања
+`/theme apply <име>` фајл се парсира, примењује и ослобађа.
 
 [[themes_resolution]]
-==== Resolution order
+==== Редослед разрешавања
 
-When `+/theme apply <name>+` is run:
+Када се изврши `+/theme apply <име>+`:
 
-* If `+${weechat_config_dir}/themes/<name>.theme+` exists, the file
-  is parsed and used (it shadows any built-in with the same name).
-* Otherwise the built-in theme registry is consulted; built-ins are
-  registered programmatically by core, plugins and scripts (see the
-  plugin and scripting documentation for `+weechat_theme_register+`).
+* Ако постоји `+${weechat_config_dir}/themes/<име>.theme+`, фајл се
+  парсира и користи (он заклања било коју уграђену тему са истим именом).
+* У супротном, консултује се регистар уграђених тема; језгро, додаци и
+  скрипте програмски региструју уграђене теме (погледате документацију
+  додатак и скриптовања за `+weechat_theme_register+`).
 
-If neither source provides the name, the apply is refused.
+Ако ниједан извор не обезбеђује име, примењивање се одбија.
 
 [[charset]]
 === Charset
@@ -4865,8 +4865,7 @@ ${buffer[${tg_signal_data}].full_name}
 | buffer             | показивач | Бафер.
 | buffer_name        | стринг    | Име бафера.
 | buffer_type        | стринг    | Тип бафера („formatted” или „free”).
-// TRANSLATION MISSING
-| id                 | стринг    | Line identifier: date and time of print with microseconds precision (line number for a buffer with free content).
+| id                 | стринг    | Идентификатор линије: датум и време штампања са прецизношћу до милисекунде (број линије за бафер са слободним садржајем).
 | y                  | стринг    | Број линије за бафер са слободним садржајем (≥ 0), -1 за бафер са форматираним садржајем.
 | date               | стринг    | Датум линије (временска ознака).
 | date_usec          | стринг    | Microseconds датума линије.
