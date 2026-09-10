@@ -52,7 +52,7 @@ paths:
       operationId: handshake
       requestBody:
         description: Handshake request
-        required: true
+        required: false
         content:
           application/json:
             schema:
