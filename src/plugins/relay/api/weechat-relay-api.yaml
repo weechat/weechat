@@ -17,7 +17,7 @@ info:
   license:
     name: CC BY-NC-SA 4.0
     url: https://creativecommons.org/licenses/by-nc-sa/4.0/
-  version: 0.6.0
+  version: 0.6.1
 
 externalDocs:
   url: https://weechat.org/doc/
@@ -52,7 +52,7 @@ paths:
       operationId: handshake
       requestBody:
         description: Handshake request
-        required: true
+        required: false
         content:
           application/json:
             schema:
