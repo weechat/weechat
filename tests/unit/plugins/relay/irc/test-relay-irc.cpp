@@ -38,6 +38,11 @@ extern void relay_irc_parse_cap_message (struct t_relay_client *client,
 extern void relay_irc_parse_ctcp (const char *message,
                                   char **ctcp_type, char **ctcp_params);
 extern int relay_irc_tag_relay_client_id (const char *tags);
+extern int relay_irc_tag_relayed (struct t_relay_client *client,
+                                  const char *tag);
+extern char *relay_irc_remove_tags_not_negotiated (
+    struct t_relay_client *client,
+    const char *message);
 extern void relay_irc_input_send (struct t_relay_client *client,
                                   const char *irc_channel,
                                   const char *options,
@@ -107,6 +112,12 @@ extern struct t_arraylist *relay_irc_get_list_caps ();
         sent_msg_dump (sent_messages_irc, msg);                         \
         FAIL(string_dyn_free (msg, 0));                                 \
     }
+
+#define WEE_CHECK_REMOVE_TAGS(__result, __message)                      \
+    message = relay_irc_remove_tags_not_negotiated (ptr_relay_client,   \
+                                                    __message);         \
+    STRCMP_EQUAL(__result, message);                                    \
+    free (message);
 
 TEST_GROUP(RelayIrc)
 {
@@ -558,6 +569,89 @@ TEST(RelayIrc, SignalIrcOuttagsCb)
 TEST(RelayIrc, SignalIrcDiscCb)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   relay_irc_tag_relayed
+ */
+
+TEST(RelayIrcWithClient, TagRelayed)
+{
+    LONGS_EQUAL(0, relay_irc_tag_relayed (NULL, NULL));
+    LONGS_EQUAL(0, relay_irc_tag_relayed (NULL, "time"));
+    LONGS_EQUAL(0, relay_irc_tag_relayed (ptr_relay_client, NULL));
+    LONGS_EQUAL(0, relay_irc_tag_relayed (ptr_relay_client, ""));
+
+    /* No capability negotiated by the client: no tag relayed. */
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
+    LONGS_EQUAL(0, relay_irc_tag_relayed (ptr_relay_client, "time"));
+    LONGS_EQUAL(0, relay_irc_tag_relayed (ptr_relay_client,
+                                          "time=2026-09-08T04:25:41.259Z"));
+
+    /* Capability "echo-message" allows no tag. */
+    RELAY_IRC_DATA(ptr_relay_client, server_capabilities) =
+        1 << RELAY_IRC_CAPAB_ECHO_MESSAGE;
+    LONGS_EQUAL(0, relay_irc_tag_relayed (ptr_relay_client, "time"));
+
+    /* Capability "server-time" allows only the tag "time". */
+    RELAY_IRC_DATA(ptr_relay_client, server_capabilities) =
+        1 << RELAY_IRC_CAPAB_SERVER_TIME;
+    LONGS_EQUAL(1, relay_irc_tag_relayed (ptr_relay_client, "time"));
+    LONGS_EQUAL(1, relay_irc_tag_relayed (ptr_relay_client, "time="));
+    LONGS_EQUAL(1, relay_irc_tag_relayed (ptr_relay_client,
+                                          "time=2026-09-08T04:25:41.259Z"));
+    LONGS_EQUAL(0, relay_irc_tag_relayed (ptr_relay_client, "tim"));
+    LONGS_EQUAL(0, relay_irc_tag_relayed (ptr_relay_client, "times"));
+    LONGS_EQUAL(0, relay_irc_tag_relayed (ptr_relay_client, "msgid=abcdef"));
+    LONGS_EQUAL(0, relay_irc_tag_relayed (ptr_relay_client, "account=alice"));
+}
+
+/*
+ * Test functions:
+ *   relay_irc_remove_tags_not_negotiated
+ */
+
+TEST(RelayIrcWithClient, RemoveTagsNotNegotiated)
+{
+    char *message;
+
+    POINTERS_EQUAL(NULL, relay_irc_remove_tags_not_negotiated (NULL, NULL));
+    POINTERS_EQUAL(NULL, relay_irc_remove_tags_not_negotiated (NULL, "test"));
+    POINTERS_EQUAL(NULL,
+                   relay_irc_remove_tags_not_negotiated (ptr_relay_client,
+                                                         NULL));
+
+    /* No capability negotiated by the client: all tags are removed. */
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
+    WEE_CHECK_REMOVE_TAGS("", "");
+    WEE_CHECK_REMOVE_TAGS("", "@time=2026-09-08T04:25:41.259Z");
+    WEE_CHECK_REMOVE_TAGS(":server 318 alice bob :End of /WHOIS list.",
+                          ":server 318 alice bob :End of /WHOIS list.");
+    WEE_CHECK_REMOVE_TAGS(":server 318 alice bob :End of /WHOIS list.",
+                          "@time=2026-09-08T04:25:41.259Z "
+                          ":server 318 alice bob :End of /WHOIS list.");
+    WEE_CHECK_REMOVE_TAGS(":server 318 alice bob :End of /WHOIS list.",
+                          "@time=2026-09-08T04:25:41.259Z;msgid=abcdef  "
+                          ":server 318 alice bob :End of /WHOIS list.");
+
+    /* Capability "server-time" negotiated: only the tag "time" is kept. */
+    RELAY_IRC_DATA(ptr_relay_client, server_capabilities) =
+        1 << RELAY_IRC_CAPAB_SERVER_TIME;
+    WEE_CHECK_REMOVE_TAGS(":server 318 alice bob :End of /WHOIS list.",
+                          ":server 318 alice bob :End of /WHOIS list.");
+    WEE_CHECK_REMOVE_TAGS("@time=2026-09-08T04:25:41.259Z "
+                          ":server 318 alice bob :End of /WHOIS list.",
+                          "@time=2026-09-08T04:25:41.259Z "
+                          ":server 318 alice bob :End of /WHOIS list.");
+    WEE_CHECK_REMOVE_TAGS("@time=2026-09-08T04:25:41.259Z "
+                          ":server 318 alice bob :End of /WHOIS list.",
+                          "@msgid=abcdef;time=2026-09-08T04:25:41.259Z;"
+                          "account=alice "
+                          ":server 318 alice bob :End of /WHOIS list.");
+    WEE_CHECK_REMOVE_TAGS(":server 318 alice bob :End of /WHOIS list.",
+                          "@msgid=abcdef;account=alice "
+                          ":server 318 alice bob :End of /WHOIS list.");
 }
 
 /*

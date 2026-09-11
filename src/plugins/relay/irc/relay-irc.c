@@ -32,6 +32,9 @@ char *relay_irc_backlog_commands_tags[RELAY_IRC_NUM_CMD] =
 { "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg" };
 char *relay_irc_server_capabilities[RELAY_IRC_NUM_CAPAB] =
 { "server-time", "echo-message" };
+/* IRC message tag allowed by each capability (NULL if no tag allowed). */
+char *relay_irc_server_capabilities_tags[RELAY_IRC_NUM_CAPAB] =
+{ "time", NULL };
 
 
 /*
@@ -609,6 +612,111 @@ relay_irc_signal_irc_disc_cb (const void *pointer, void *data,
 }
 
 /*
+ * Check if an IRC message tag must be relayed to the client: this is the case
+ * only if the client has negotiated the capability allowing the tag.
+ *
+ * Return:
+ *   1: tag must be relayed
+ *   0: tag must not be relayed
+ */
+
+int
+relay_irc_tag_relayed (struct t_relay_client *client, const char *tag)
+{
+    const char *pos;
+    size_t length;
+    int i;
+
+    if (!client || !tag || !tag[0])
+        return 0;
+
+    /* Only the tag name is compared, the value (after "=") is ignored. */
+    pos = strchr (tag, '=');
+    length = (pos) ? (size_t)(pos - tag) : strlen (tag);
+
+    for (i = 0; i < RELAY_IRC_NUM_CAPAB; i++)
+    {
+        if (!relay_irc_server_capabilities_tags[i])
+            continue;
+        if (!(RELAY_IRC_DATA(client, server_capabilities) & (1 << i)))
+            continue;
+        if ((strlen (relay_irc_server_capabilities_tags[i]) == length)
+            && (strncmp (tag, relay_irc_server_capabilities_tags[i],
+                         length) == 0))
+        {
+            return 1;
+        }
+    }
+
+    /* Tag must NOT be relayed to client. */
+    return 0;
+}
+
+/*
+ * Remove from an IRC message the tags not negotiated by the client.
+ *
+ * Return a new message, NULL if error.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+relay_irc_remove_tags_not_negotiated (struct t_relay_client *client,
+                                      const char *message)
+{
+    const char *ptr_message;
+    char *str_tags, **tags, **result;
+    int i, num_tags, num_tags_relayed;
+
+    if (!client || !message)
+        return NULL;
+
+    /* No tags in message? */
+    if (message[0] != '@')
+        return strdup (message);
+
+    ptr_message = strchr (message, ' ');
+    if (!ptr_message)
+        ptr_message = message + strlen (message);
+
+    str_tags = weechat_strndup (message + 1, ptr_message - message - 1);
+    if (!str_tags)
+        return NULL;
+
+    while (ptr_message[0] == ' ')
+    {
+        ptr_message++;
+    }
+
+    result = weechat_string_dyn_alloc (strlen (message) + 1);
+    if (!result)
+    {
+        free (str_tags);
+        return NULL;
+    }
+
+    num_tags_relayed = 0;
+    tags = weechat_string_split (str_tags, ";", NULL, 0, 0, &num_tags);
+    for (i = 0; i < num_tags; i++)
+    {
+        if (!relay_irc_tag_relayed (client, tags[i]))
+            continue;
+        weechat_string_dyn_concat (result,
+                                   (num_tags_relayed == 0) ? "@" : ";", -1);
+        weechat_string_dyn_concat (result, tags[i], -1);
+        num_tags_relayed++;
+    }
+    if (num_tags_relayed > 0)
+        weechat_string_dyn_concat (result, " ", -1);
+    weechat_string_dyn_concat (result, ptr_message, -1);
+    weechat_string_free_split (tags);
+
+    free (str_tags);
+
+    return weechat_string_dyn_free (result, 0);
+}
+
+/*
  * Callback for hsignals "irc_redirection_*".
  *
  * This is called when an IRC command is redirected.
@@ -621,7 +729,7 @@ relay_irc_hsignal_irc_redir_cb (const void *pointer, void *data,
 {
     struct t_relay_client *client;
     int rc, client_id, num_messages, i;
-    char pattern[128], **messages;
+    char pattern[128], **messages, *message;
     const char *output;
 
     /* Make C compiler happy. */
@@ -665,7 +773,15 @@ relay_irc_hsignal_irc_redir_cb (const void *pointer, void *data,
     {
         for (i = 0; i < num_messages; i++)
         {
-            relay_irc_sendf (client, "%s", messages[i]);
+            /*
+             * Remove the tags received from the IRC server if the client did
+             * not negotiate the capabilities allowing them.
+             */
+            message = relay_irc_remove_tags_not_negotiated (client,
+                                                            messages[i]);
+            relay_irc_sendf (client, "%s",
+                             (message) ? message : messages[i]);
+            free (message);
         }
         weechat_string_free_split (messages);
     }
