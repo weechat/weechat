@@ -293,7 +293,7 @@ encodée en base64url avec le contenu `plain:secret_password` qui est
 Sec-WebSocket-Protocol: api.weechat, base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk
 ----
 
-Cela peut être défini avec l'API WebSocket de JavaScript comme ceci :
+Cela peut être défini avec l'API WebSocket de JavaScript comme ceci :
 
 [source,javascript]
 ----
@@ -1213,20 +1213,20 @@ HTTP/1.1 200 OK
 
 Retourner la liste des scripts chargés (tous les langages).
 
-Point de terminaison :
+Point de terminaison :
 
 ----
 GET /api/scripts
 ----
 
-Exemple de requête :
+Exemple de requête :
 
 [source,shell]
 ----
 curl -L -u 'plain:secret_password' 'https://localhost:9000/api/scripts'
 ----
 
-Réponse :
+Réponse :
 
 [source,http]
 ----
@@ -1268,7 +1268,7 @@ Paramètres du corps :
 
 * `buffer_id` (entier, facultatif) : identifiant unique du tampon (à ne pas
   confondre avec le numéro du tampon, qui est différent)
-* `buffer_name` (chaîne, facultatif, par défaut : `core.weechat`) : nom de tampon
+* `buffer_name` (chaîne, facultatif, par défaut : `core.weechat`) : nom de tampon
 * `command` (chaîne, **obligatoire**) : commande ou texte à envoyer au tampon
 
 Exemple de requête : dire "hello!" sur le canal #weechat :
@@ -1319,9 +1319,9 @@ Paramètres du corps :
 
 * `buffer_id` (entier, facultatif) : identifiant unique du tampon (à ne pas
   confondre avec le numéro du tampon, qui est différent)
-* `buffer_name` (chaîne, facultatif, par défaut : `core.weechat`) : nom de tampon
+* `buffer_name` (chaîne, facultatif, par défaut : `core.weechat`) : nom de tampon
 * `command` (chaîne, **obligatoire**) : commande ou texte à compléter
-* `position` (entier, facultatif, par défaut : fin de la chaîne) : position
+* `position` (entier, facultatif, par défaut : fin de la chaîne) : position
   dans la commande (la première position est 0)
 
 Exemple de requête : compléter la commande `/qu` sur le canal #weechat :
@@ -1560,7 +1560,7 @@ les champs suivants :
 * `request` (chaîne) : la méthode HTTP et le chemin
   (exemple : `GET /api/buffers?lines=-100`)
 * `body` (objet ou tableau) : le corps (facultatif, pour les méthodes `POST` et `PUT`)
-* `request_id` (chaîne) : identifiant renvoyé dans la réponse
+* `request_id` (chaîne) : identifiant renvoyé dans la réponse
 
 Plusieurs requêtes peuvent être envoyées simultanément avec un tableau d'objets,
 chaque objet étant une requête séparée. +
@@ -1574,7 +1574,7 @@ les champs suivants :
 * `request` (chaîne) : la requête (exemple : `GET /api/buffers?lines=-100`)
 * `request_body` (objet) : le corps de la requête, ou `null` si la requête
   n'avait pas de corps
-* `request_id` (chaîne) : l'identifiant de la requête, ou `null` si la requête
+* `request_id` (chaîne) : l'identifiant de la requête, ou `null` si la requête
   n'avait pas d'identifiant
 * `body_type` (chaîne) : type des objets retournés dans le corps (voir ci-dessous),
   ou `null` si la réponse n'a pas de corps
@@ -1596,7 +1596,7 @@ Les types de corps qui peuvent être retournés :
 * `ping` (objet)
 
 [TIP]
-Vous pouvez parcourir les schémas en ligne : https://weechat.org/api/[API relay WeeChat ^↗^^].
+Vous pouvez parcourir les schémas en ligne : https://weechat.org/api/[API relay WeeChat ^↗^^].
 
 Exemple de requête : obtenir la version :
 
@@ -1660,8 +1660,8 @@ Réponse :
 }
 ----
 
-Exemple de requêtes : envoyer deux requêtes en même temps : obtenir la liste des
-tampons avec les lignes et les pseudos, puis se synchroniser avec le relay distant :
+Exemple de requêtes : envoyer deux requêtes en même temps : obtenir la liste des
+tampons avec les lignes et les pseudos, puis se synchroniser avec le relay distant :
 
 [source,json]
 ----
@@ -1706,7 +1706,7 @@ Première réponse (le "body" avec les tampons est tronqué pour la lisibilité)
 }
 ----
 
-Seconde réponse :
+Seconde réponse :
 
 [source,json]
 ----

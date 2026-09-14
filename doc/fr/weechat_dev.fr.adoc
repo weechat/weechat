@@ -93,14 +93,14 @@ Les répertoires principaux de WeeChat sont :
 |       xfer/        | Extension Xfer (IRC DCC fichier/discussion).
 | tests/             | Tests.
 |    fuzz/           | Fuzzing (tests à données aléatoires).
-|       core/        | Fuzzing pour les fonctions du cœur.
+|       core/        | Fuzzing pour les fonctions du cœur.
 |    unit/           | Tests unitaires.
 |       core/        | Tests unitaires pour les fonctions du cœur.
-|          hook/     | Tests unitaires pour les fonctions hook.
+|          hook/     | Tests unitaires pour les fonctions hook.
 |       gui/         | Tests unitaires pour les fonctions de l'interface.
-|          curses/   | Tests unitaires pour les fonctions de l'interface Curses.
-|       scripts/     | Tests de l'API script.
-|          python/   | Scripts Python pour générer et lancer les tests de l'API script.
+|          curses/   | Tests unitaires pour les fonctions de l'interface Curses.
+|       scripts/     | Tests de l'API script.
+|          python/   | Scripts Python pour générer et lancer les tests de l'API script.
 |       plugins/     | Tests unitaires pour les extensions.
 |          alias/    | Tests unitaires pour l'extension alias.
 |          irc/      | Tests unitaires pour l'extension IRC.
@@ -434,18 +434,18 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 | Chemin/fichier                                  | Description
 | tests/                                          | Racine des tests.
 |    fuzz/                                        | Racine du fuzzing (tests à données aléatoires).
-|       ossfuzz.sh                                | Script de construction pour https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
+|       ossfuzz.sh                                | Script de construction pour https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
 |       core/                                     | Racine du fuzzing pour le cœur.
-|          calc-fuzzer.cc                         | Fuzzing : calcul d'expressions.
-|          crypto-fuzzer.cc                       | Fuzzing : fonctions cryptographiques.
-|          eval-fuzzer.cc                         | Fuzzing : évaluation d'expressions.
-|          secure-fuzzer.cc                       | Fuzzing : données sécurisées.
-|          string-fuzzer.cc                       | Fuzzing : chaînes.
-|          utf8-fuzzer.cc                         | Fuzzing : UTF-8.
-|          util-fuzzer.cc                         | Fuzzing : fonctions utiles.
+|          calc-fuzzer.cc                         | Fuzzing : calcul d'expressions.
+|          crypto-fuzzer.cc                       | Fuzzing : fonctions cryptographiques.
+|          eval-fuzzer.cc                         | Fuzzing : évaluation d'expressions.
+|          secure-fuzzer.cc                       | Fuzzing : données sécurisées.
+|          string-fuzzer.cc                       | Fuzzing : chaînes.
+|          utf8-fuzzer.cc                         | Fuzzing : UTF-8.
+|          util-fuzzer.cc                         | Fuzzing : fonctions utiles.
 |    unit/                                        | Racine des tests unitaires.
-|       tests.cpp                                 | Programme utilisé pour lancer tous les tests.
-|       tests-record.cpp                          | Enregistrement et recherche dans les messages affichés.
+|       tests.cpp                                 | Programme utilisé pour lancer tous les tests.
+|       tests-record.cpp                          | Enregistrement et recherche dans les messages affichés.
 |       core/                                     | Racine des tests unitaires pour le cœur.
 |          test-core-arraylist.cpp                | Tests : listes avec tableau (« arraylists »).
 |          test-core-calc.cpp                     | Tests : calcul d'expressions.
@@ -458,7 +458,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-hdata.cpp                    | Tests : hdata.
 |          test-core-hook.cpp                     | Tests : hooks.
 |          test-core-infolist.cpp                 | Tests : infolists.
-|          test-core-input.cpp                    | Tests : fonctions d'entrée.
+|          test-core-input.cpp                    | Tests : fonctions d'entrée.
 |          test-core-list.cpp                     | Tests : listes.
 |          test-core-network.cpp                  | Tests : fonctions réseau.
 |          test-core-secure.cpp                   | Tests : données sécurisées.
@@ -471,29 +471,29 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-util.cpp                     | Tests : fonctions utiles.
 |          hook/                                  | Racine des tests pour les hooks.
 |             test-hook-command.cpp               | Tests : hooks "command".
-|             test-hook-command-run.cpp           | Tests : hooks "command_run".
-|             test-hook-completion.cpp            | Tests : hooks "completion".
-|             test-hook-config.cpp                | Tests : hooks "config".
-|             test-hook-connect.cpp               | Tests : hooks "connect".
-|             test-hook-fd.cpp                    | Tests : hooks "fd".
-|             test-hook-focus.cpp                 | Tests : hooks "focus".
-|             test-hook-hdata.cpp                 | Tests : hooks "hdata".
-|             test-hook-hsignal.cpp               | Tests : hooks "hsignal".
-|             test-hook-info-hashtable.cpp        | Tests : hooks "info_hashtable".
-|             test-hook-info.cpp                  | Tests : hooks "info".
-|             test-hook-infolist.cpp              | Tests : hooks "infolist".
-|             test-hook-line.cpp                  | Tests : hooks "line".
+|             test-hook-command-run.cpp           | Tests : hooks "command_run".
+|             test-hook-completion.cpp            | Tests : hooks "completion".
+|             test-hook-config.cpp                | Tests : hooks "config".
+|             test-hook-connect.cpp               | Tests : hooks "connect".
+|             test-hook-fd.cpp                    | Tests : hooks "fd".
+|             test-hook-focus.cpp                 | Tests : hooks "focus".
+|             test-hook-hdata.cpp                 | Tests : hooks "hdata".
+|             test-hook-hsignal.cpp               | Tests : hooks "hsignal".
+|             test-hook-info-hashtable.cpp        | Tests : hooks "info_hashtable".
+|             test-hook-info.cpp                  | Tests : hooks "info".
+|             test-hook-infolist.cpp              | Tests : hooks "infolist".
+|             test-hook-line.cpp                  | Tests : hooks "line".
 |             test-hook-modifier.cpp              | Tests : hooks "modifier".
-|             test-hook-print.cpp                 | Tests : hooks "print".
-|             test-hook-process.cpp               | Tests : hooks "process".
-|             test-hook-signal.cpp                | Tests : hooks "signal".
-|             test-hook-timer.cpp                 | Tests : hooks "timer".
-|             test-hook-url.cpp                   | Tests : hooks "url".
+|             test-hook-print.cpp                 | Tests : hooks "print".
+|             test-hook-process.cpp               | Tests : hooks "process".
+|             test-hook-signal.cpp                | Tests : hooks "signal".
+|             test-hook-timer.cpp                 | Tests : hooks "timer".
+|             test-hook-url.cpp                   | Tests : hooks "url".
 |       gui/                                      | Racine des tests unitaires pour les interfaces.
-|          test-gui-bar-item-custom.cpp           | Tests : fonctions d'objets de barre personnalisés.
-|          test-gui-bar-item.cpp                  | Tests : fonctions d'objets de barre.
+|          test-gui-bar-item-custom.cpp           | Tests : fonctions d'objets de barre personnalisés.
+|          test-gui-bar-item.cpp                  | Tests : fonctions d'objets de barre.
 |          test-gui-bar-window.cpp                | Tests : fonctions de fenêtres de barre.
-|          test-gui-bar.cpp                       | Tests : fonctions de barres.
+|          test-gui-bar.cpp                       | Tests : fonctions de barres.
 |          test-gui-buffer.cpp                    | Tests : fonctions de tampons.
 |          test-gui-chat.cpp                      | Tests : fonctions de discussion.
 |          test-gui-color.cpp                     | Tests : couleurs.
@@ -507,18 +507,18 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          curses/                                | Racine des tests unitaires pour l'interface Curses.
 |             test-gui-curses-mouse.cpp           | Tests : souris (interface Curses).
 |             test-gui-curses-term.cpp            | Tests : fonctions pour le terminal (interface Curses).
-|       scripts/                                  | Racine des tests de l'API script.
-|          test-scripts.cpp                       | Programme utilisé pour lancer les tests de l'API script.
-|          python/                                | Scripts Python pour générer et lancer les tests de l'API script.
-|             testapigen.py                       | Script Python générant des scripts dans tous les languages pour tester l'API script.
-|             testapi.py                          | Script Python avec les tests API, utilisé par le script testapigen.py.
-|             unparse.py                          | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
+|       scripts/                                  | Racine des tests de l'API script.
+|          test-scripts.cpp                       | Programme utilisé pour lancer les tests de l'API script.
+|          python/                                | Scripts Python pour générer et lancer les tests de l'API script.
+|             testapigen.py                       | Script Python générant des scripts dans tous les languages pour tester l'API script.
+|             testapi.py                          | Script Python avec les tests API, utilisé par le script testapigen.py.
+|             unparse.py                          | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
 |       plugins/                                  | Racine des tests unitaires pour les extensions.
-|          test-plugin-api-info.cpp               | Tests : fonctions info de l'API extension.
-|          test-plugin-config.cpp                 | Tests : fonctions config de l'extension.
-|          test-plugins.cpp                       | Tests : extensions.
+|          test-plugin-api-info.cpp               | Tests : fonctions info de l'API extension.
+|          test-plugin-config.cpp                 | Tests : fonctions config de l'extension.
+|          test-plugins.cpp                       | Tests : extensions.
 |          alias/                                 | Racine des tests unitaires pour l'extension alias.
-|             test-alias.cpp                      | Tests : alias.
+|             test-alias.cpp                      | Tests : alias.
 |          irc/                                   | Racine des tests unitaires pour l'extension IRC.
 |             test-irc-batch.cpp                  | Tests : évènements batch IRC.
 |             test-irc-buffer.cpp                 | Tests : tampons IRC.
@@ -544,7 +544,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-logger-tail.cpp                | Tests : fonctions "tail".
 |          relay/                                 | Racine des tests unitaires pour l'extension Relay.
 |             test-relay-auth.cpp                 | Tests : authentification des clients.
-|             test-relay-bar-item.cpp             | Tests : objets de barre pour l'extension Relay.
+|             test-relay-bar-item.cpp             | Tests : objets de barre pour l'extension Relay.
 |             test-relay-client.cpp               | Tests : clients du relai.
 |             test-relay-http.cpp                 | Tests : fonctions HTTP pour l'extension Relay.
 |             test-relay-raw.cpp                  | Tests : fonctions sur les messages bruts pour l'extension Relay.
@@ -554,9 +554,9 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |                test-relay-api.cpp               | Tests : protocole relay "api" : fonctions générales.
 |                test-relay-api-msg.cpp           | Tests : protocole relay "api" : messages.
 |                test-relay-api-protocol.cpp      | Tests : protocole relay "api" : protocole.
-|                remote/                          | Tests : protocole relay "api" : fonctions "remote".
-|                   test-relay-remote-event.cpp   | Tests : protocole relay "api" : évènements "remote".
-|                   test-relay-remote-network.cpp | Tests : protocole relay "api" : réseau "remote".
+|                remote/                          | Tests : protocole relay "api" : fonctions "remote".
+|                   test-relay-remote-event.cpp   | Tests : protocole relay "api" : évènements "remote".
+|                   test-relay-remote-network.cpp | Tests : protocole relay "api" : réseau "remote".
 |             irc/                                | Racine des tests unitaires pour le protocole relay "irc".
 |                test-relay-irc.cpp               | Tests : protocole relay "irc".
 |          script/                                | Racine des tests unitaires pour l'extension script.

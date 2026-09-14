@@ -92,14 +92,14 @@ qweechat::
 |       xfer/        | Xfer додатак (IRC DCC фајл/разговор).
 | tests/             | Тестови.
 |    fuzz/           | Fuzz тестирање.
-|       core/        | Fuzz тестирање функција језгра.
+|       core/        | Fuzz тестирање функција језгра.
 |    unit/           | Unit тестови.
 |       core/        | Unit тестови за функције језгра.
-|          hook/     | Unit тестову за функције куке.
+|          hook/     | Unit тестову за функције куке.
 |       gui/         | Unit тестови за функције интерфејса.
-|          curses/   | Unit тестови за функције Curses интерфејса.
-|       scripts/     | Тестови за API скриптовања.
-|          python/   | Python скрипте за генерисање и покретање тестова за API скриптовања.
+|          curses/   | Unit тестови за функције Curses интерфејса.
+|       scripts/     | Тестови за API скриптовања.
+|          python/   | Python скрипте за генерисање и покретање тестова за API скриптовања.
 |       plugins/     | Unit тестови за додатке.
 |          alias/    | Unit тестови за alias додатак.
 |          irc/      | Unit тестови за IRC додатак.
@@ -433,18 +433,18 @@ WeeChat „језгро” се налази у следећим директо�
 | Путања/фајл                                     | Опис
 | tests/                                          | Корен тестова.
 |    fuzz/                                        | Корен fuzz тестирања.
-|       ossfuzz.sh                                | Скрипта изградње за https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
+|       ossfuzz.sh                                | Скрипта изградње за https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
 |       core/                                     | Корен fuzz тестирања за језгро.
-|          calc-fuzzer.cc                         | Fuzz тестирање: калкулација израза.
-|          crypto-fuzzer.cc                       | Fuzz тестирање: криптографске функције.
-|          eval-fuzzer.cc                         | Fuzz тестирање: израчунавање израза.
-|          secure-fuzzer.cc                       | Fuzz тестирање: обезбеђени подаци.
-|          string-fuzzer.cc                       | Fuzz тестирање: стрингови.
-|          utf8-fuzzer.cc                         | Fuzz тестирање: UTF-8.
-|          util-fuzzer.cc                         | Fuzz тестирање: услужне функције.
+|          calc-fuzzer.cc                         | Fuzz тестирање: калкулација израза.
+|          crypto-fuzzer.cc                       | Fuzz тестирање: криптографске функције.
+|          eval-fuzzer.cc                         | Fuzz тестирање: израчунавање израза.
+|          secure-fuzzer.cc                       | Fuzz тестирање: обезбеђени подаци.
+|          string-fuzzer.cc                       | Fuzz тестирање: стрингови.
+|          utf8-fuzzer.cc                         | Fuzz тестирање: UTF-8.
+|          util-fuzzer.cc                         | Fuzz тестирање: услужне функције.
 |    unit/                                        | Корен unit тестова.
-|       tests.cpp                                 | Програм који се користи за извршавање свих тестова.
-|       tests-record.cpp                          | Бележење и претрага у приказаним порукама.
+|       tests.cpp                                 | Програм који се користи за извршавање свих тестова.
+|       tests-record.cpp                          | Бележење и претрага у приказаним порукама.
 |       core/                                     | Корен unit тестова језгра.
 |          test-core-arraylist.cpp                | Тестови: arraylists.
 |          test-core-calc.cpp                     | Тестови: калкулација израза.
@@ -506,16 +506,16 @@ WeeChat „језгро” се налази у следећим директо�
 |          curses/                                | Корен unit тестова за Curses интерфејс.
 |             test-gui-curses-mouse.cpp           | Тестови: миш (Curses интерфејс).
 |             test-gui-curses-term.cpp            | Тестови: функције терминала (Curses интерфејс).
-|       scripts/                                  | Корен тестова за API скриптовања.
-|          test-scripts.cpp                       | Програм који се користи за извршавање тестова API скриптовања.
-|          python/                                | Python скрипте које генеришу и покрећу тестове API скриптовања.
-|             testapigen.py                       | Python скрипта која генерише скрипте на свим језицима за тестирање API скриптовања.
-|             testapi.py                          | Python скрипта са тестовима API скриптовања, користи је скрипта testapigen.py.
-|             unparse.py                          | Конверзија Python кода у остале језике, користи је скрипта testapigen.py.
+|       scripts/                                  | Корен тестова за API скриптовања.
+|          test-scripts.cpp                       | Програм који се користи за извршавање тестова API скриптовања.
+|          python/                                | Python скрипте које генеришу и покрећу тестове API скриптовања.
+|             testapigen.py                       | Python скрипта која генерише скрипте на свим језицима за тестирање API скриптовања.
+|             testapi.py                          | Python скрипта са тестовима API скриптовања, користи је скрипта testapigen.py.
+|             unparse.py                          | Конверзија Python кода у остале језике, користи је скрипта testapigen.py.
 |       plugins/                                  | Корен unit тестова додатака.
-|          test-plugin-config.cpp                 | Тестови: функције конфигурације додатка.
-|          test-plugin-api-info.cpp               | Тестови: инфо функције API додатака.
-|          test-plugins.cpp                       | Тестови: plugins.
+|          test-plugin-config.cpp                 | Тестови: функције конфигурације додатка.
+|          test-plugin-api-info.cpp               | Тестови: инфо функције API додатака.
+|          test-plugins.cpp                       | Тестови: plugins.
 |          alias/                                 | Корен unit тестова за alias додатак.
 |             test-alias.cpp                      | Тестови: алијаси.
 |          irc/                                   | Корен unit тестова IRC додатка.
@@ -553,9 +553,9 @@ WeeChat „језгро” се налази у следећим директо�
 |                test-relay-api.cpp               | Тестови: Релеј „api” протокол: опште функције.
 |                test-relay-api-msg.cpp           | Тестови: Релеј „api” протокол: поруке.
 |                test-relay-api-protocol.cpp      | Тестови: Релеј „api” протокол: протокол.
-|                remote/                          | Тестови: Релеј „api” протокол: удаљене функције.
-|                   test-relay-remote-event.cpp   | Тестови: Релеј „api” протокол: удаљени догађаји.
-|                   test-relay-remote-network.cpp | Тестови: Релеј „api” протокол: удаљена мрежа.
+|                remote/                          | Тестови: Релеј „api” протокол: удаљене функције.
+|                   test-relay-remote-event.cpp   | Тестови: Релеј „api” протокол: удаљени догађаји.
+|                   test-relay-remote-network.cpp | Тестови: Релеј „api” протокол: удаљена мрежа.
 |             irc/                                | Корен unit тестова за Релеј „irc” протокол.
 |                test-relay-irc.cpp               | Тестови: Релеј „irc” протокол.
 |          script/                                | Корен unit тестова за script додатак.

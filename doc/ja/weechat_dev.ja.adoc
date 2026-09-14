@@ -96,16 +96,16 @@ qweechat::
 // TRANSLATION MISSING
 |    fuzz/           | Fuzz testing.
 // TRANSLATION MISSING
-|       core/        | Fuzz testing for core functions.
+|       core/        | Fuzz testing for core functions.
 |    unit/           | 単体テスト
 |       core/        | コア関数の単体テスト
 // TRANSLATION MISSING
-|          hook/     | Unit tests for hook functions.
+|          hook/     | Unit tests for hook functions.
 |       gui/         | インターフェース関数の単体テスト
 // TRANSLATION MISSING
-|          curses/   | Unit tests for Curses interface functions.
-|       scripts/     | スクリプト API テスト
-|          python/   | スクリプト API テストを生成、実行する Python スクリプト
+|          curses/   | Unit tests for Curses interface functions.
+|       scripts/     | スクリプト API テスト
+|          python/   | スクリプト API テストを生成、実行する Python スクリプト
 |       plugins/     | プラグインの単体テスト
 // TRANSLATION MISSING
 |          alias/    | Unit tests for alias plugin.
@@ -493,27 +493,27 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |    fuzz/                                        | Root of fuzz testing.
 // TRANSLATION MISSING
-|       ossfuzz.sh                                | Build script for https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
+|       ossfuzz.sh                                | Build script for https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
 // TRANSLATION MISSING
 |       core/                                     | Root of fuzz testing for core.
 // TRANSLATION MISSING
-|          calc-fuzzer.cc                         | Fuzz testing: calculation of expressions.
+|          calc-fuzzer.cc                         | Fuzz testing: calculation of expressions.
 // TRANSLATION MISSING
-|          crypto-fuzzer.cc                       | Fuzz testing: cryptographic functions.
+|          crypto-fuzzer.cc                       | Fuzz testing: cryptographic functions.
 // TRANSLATION MISSING
-|          eval-fuzzer.cc                         | Fuzz testing: evaluation of expressions.
+|          eval-fuzzer.cc                         | Fuzz testing: evaluation of expressions.
 // TRANSLATION MISSING
-|          secure-fuzzer.cc                       | Fuzz testing: secured data.
+|          secure-fuzzer.cc                       | Fuzz testing: secured data.
 // TRANSLATION MISSING
-|          string-fuzzer.cc                       | Fuzz testing: 文字列
+|          string-fuzzer.cc                       | Fuzz testing: 文字列
 // TRANSLATION MISSING
-|          utf8-fuzzer.cc                         | Fuzz testing: UTF-8.
+|          utf8-fuzzer.cc                         | Fuzz testing: UTF-8.
 // TRANSLATION MISSING
-|          util-fuzzer.cc                         | Fuzz testing: utility functions.
+|          util-fuzzer.cc                         | Fuzz testing: utility functions.
 |    unit/                                        | 単体テスト用のルートディレクトリ
-|       tests.cpp                                 | 全テストの実行時に使われるプログラム
+|       tests.cpp                                 | 全テストの実行時に使われるプログラム
 // TRANSLATION MISSING
-|       tests-record.cpp                          | Record and search in messages displayed.
+|       tests-record.cpp                          | Record and search in messages displayed.
 |       core/                                     | core 向け単体テスト用のルートディレクトリ
 |          test-core-arraylist.cpp                | テスト: 配列リスト
 // TRANSLATION MISSING
@@ -622,18 +622,18 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-gui-curses-mouse.cpp           | Tests: mouse (Curses interface).
 // TRANSLATION MISSING
 |             test-gui-curses-term.cpp            | Tests: terminal functions (Curses interface).
-|       scripts/                                  | スクリプト API テスト用のルートディレクトリ
-|          test-scripts.cpp                       | スクリプト API テストの実行時に使われるプログラム
-|          python/                                | スクリプト API テストを生成、実行する Python スクリプト
-|             testapigen.py                       | スクリプト API のテスト時にすべての言語に関するスクリプトを生成する Python スクリプト
-|             testapi.py                          | スクリプト API テスト時に使われる Python スクリプト (スクリプト testapigen.py から使われます)
+|       scripts/                                  | スクリプト API テスト用のルートディレクトリ
+|          test-scripts.cpp                       | スクリプト API テストの実行時に使われるプログラム
+|          python/                                | スクリプト API テストを生成、実行する Python スクリプト
+|             testapigen.py                       | スクリプト API のテスト時にすべての言語に関するスクリプトを生成する Python スクリプト
+|             testapi.py                          | スクリプト API テスト時に使われる Python スクリプト (スクリプト testapigen.py から使われます)
 |          unparse.py                             | Python コードを別の言語に変換 (スクリプト testapigen.py から使われます)
 |       plugins/                                  | プラグインの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
-|          test-plugin-api-info.cpp               | Tests: plugin API info functions.
+|          test-plugin-api-info.cpp               | Tests: plugin API info functions.
 // TRANSLATION MISSING
-|          test-plugin-config.cpp                 | Tests: plugin config functions.
-|          test-plugins.cpp                       | テスト: プラグイン
+|          test-plugin-config.cpp                 | Tests: plugin config functions.
+|          test-plugins.cpp                       | テスト: プラグイン
 // TRANSLATION MISSING
 |          alias/                                 | Root of unit tests for alias plugin.
 // TRANSLATION MISSING
@@ -705,11 +705,11 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |                test-relay-api-protocol.cpp      | Tests: Relay "api" protocol: protocol.
 // TRANSLATION MISSING
-|                remote/                          | Tests: Relay "api" protocol: remote functions.
+|                remote/                          | Tests: Relay "api" protocol: remote functions.
 // TRANSLATION MISSING
-|                   test-relay-remote-event.cpp   | Tests: Relay "api" protocol: remote events.
+|                   test-relay-remote-event.cpp   | Tests: Relay "api" protocol: remote events.
 // TRANSLATION MISSING
-|                   test-relay-remote-network.cpp | Tests: Relay "api" protocol: remote network.
+|                   test-relay-remote-network.cpp | Tests: Relay "api" protocol: remote network.
 // TRANSLATION MISSING
 |             irc/                                | Root of unit tests for Relay "irc" protocol.
 // TRANSLATION MISSING
