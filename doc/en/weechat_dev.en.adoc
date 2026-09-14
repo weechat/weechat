@@ -98,8 +98,6 @@ The main WeeChat directories are:
 |          hook/     | Unit tests for hook functions.
 |       gui/         | Unit tests for interfaces functions.
 |          curses/   | Unit tests for Curses interface functions.
-|       scripts/     | Scripting API tests.
-|          python/   | Python scripts to generate and run the scripting API tests.
 |       plugins/     | Unit tests for plugins.
 |          alias/    | Unit tests for alias plugin.
 |          irc/      | Unit tests for IRC plugin.
@@ -109,6 +107,8 @@ The main WeeChat directories are:
 |          trigger/  | Unit tests for trigger plugin.
 |          typing/   | Unit tests for typing plugin.
 |          xfer/     | Unit tests for xfer plugin.
+|       scripts/     | Scripting API tests.
+|          python/   | Python scripts to generate and run the scripting API tests.
 | doc/               | Documentation.
 | po/                | Translations files (gettext).
 | debian/            | Debian packaging.
@@ -135,12 +135,12 @@ WeeChat "core" is located in following directories:
 |    core-calc.c                | Calculate result of expressions.
 |    core-command.c             | WeeChat core commands.
 |    core-completion.c          | Default completions.
-|    core-config-file.c         | Configuration file management.
 |    core-config.c              | Configuration options for WeeChat core (file weechat.conf).
+|    core-config-file.c         | Configuration file management.
 |    core-crypto.c              | Cryptographic functions.
 |    core-debug.c               | Some debug functions.
-|    core-doc.c                 | Build of files for documentation.
 |    core-dir.c                 | Directory/file functions.
+|    core-doc.c                 | Build of files for documentation.
 |    core-eval.c                | Evaluation of expressions with references to internal vars.
 |    core-hashtable.c           | Hashtables.
 |    core-hdata.c               | Hdata (direct access to data using hashtables).
@@ -159,16 +159,16 @@ WeeChat "core" is located in following directories:
 |    core-sys.c                 | System functions.
 |    core-theme.c               | Themes (bundles of option overrides).
 |    core-theme-builtin.c       | Built-in themes: core options.
-|    core-upgrade-file.c        | Internal upgrade system.
 |    core-upgrade.c             | Upgrade for WeeChat core (buffers, lines, history, ...).
+|    core-upgrade-file.c        | Internal upgrade system.
 |    core-url.c                 | URL transfer (using libcurl).
 |    core-utf8.c                | UTF-8 functions.
 |    core-util.c                | Some other functions.
 |    core-version.c             | Functions for WeeChat version.
 |    weechat.c                  | Main functions: command line options, startup.
 |    hook/                      | Hook functions.
-|       hook-command-run.c      | Hook "command_run".
 |       hook-command.c          | Hook "command".
+|       hook-command-run.c      | Hook "command_run".
 |       hook-completion.c       | Hook "completion".
 |       hook-config.c           | Hook "config".
 |       hook-connect.c          | Hook "connect".
@@ -176,8 +176,8 @@ WeeChat "core" is located in following directories:
 |       hook-focus.c            | Hook "focus".
 |       hook-hdata.c            | Hook "hdata".
 |       hook-hsignal.c          | Hook "hsignal".
-|       hook-info-hashtable.c   | Hook "info_hashtable".
 |       hook-info.c             | Hook "info".
+|       hook-info-hashtable.c   | Hook "info_hashtable".
 |       hook-infolist.c         | Hook "infolist".
 |       hook-line.c             | Hook "line".
 |       hook-modifier.c         | Hook "modifier".
@@ -187,10 +187,10 @@ WeeChat "core" is located in following directories:
 |       hook-timer.c            | Hook "timer".
 |       hook-url.c              | Hook "url".
 | gui/                          | Functions for buffers, windows, ... (used by all interfaces).
-|    gui-bar-item-custom.c      | Custom bar items.
-|    gui-bar-item.c             | Bar items.
-|    gui-bar-window.c           | Bar windows.
 |    gui-bar.c                  | Bars.
+|    gui-bar-item.c             | Bar items.
+|    gui-bar-item-custom.c      | Custom bar items.
+|    gui-bar-window.c           | Bar windows.
 |    gui-buffer.c               | Buffers.
 |    gui-chat.c                 | Chat functions (display message, ...).
 |    gui-color.c                | Color functions.
@@ -245,15 +245,6 @@ WeeChat "core" is located in following directories:
 |       alias-completion.c           | Alias completions.
 |       alias-config.c               | Alias config options (file alias.conf).
 |       alias-info.c                 | Alias info/infolists/hdata.
-|    spell/                          | Spell checker plugin.
-|       spell.c                      | Main spell checker functions.
-|       spell-bar-item.c             | Spell checker bar items.
-|       spell-command.c              | Spell checker commands.
-|       spell-completion.c           | Spell checker completions.
-|       spell-config.c               | Spell checker config options (file spell.conf).
-|       spell-info.c                 | Spell checker info/infolists/hdata.
-|       spell-speller.c              | Spellers management.
-|       spell-theme.c                | Spell checker contribution to built-in themes.
 |    buflist/                        | Buflist plugin.
 |       buflist.c                    | Main buflist functions.
 |       buflist-bar-item.c           | Buflist bar items.
@@ -394,6 +385,15 @@ WeeChat "core" is located in following directories:
 |       script-mouse.c               | Script mouse actions.
 |       script-repo.c                | Download and read repository file.
 |       script-theme.c               | Script manager contribution to built-in themes.
+|    spell/                          | Spell checker plugin.
+|       spell.c                      | Main spell checker functions.
+|       spell-bar-item.c             | Spell checker bar items.
+|       spell-command.c              | Spell checker commands.
+|       spell-completion.c           | Spell checker completions.
+|       spell-config.c               | Spell checker config options (file spell.conf).
+|       spell-info.c                 | Spell checker info/infolists/hdata.
+|       spell-speller.c              | Spellers management.
+|       spell-theme.c                | Spell checker contribution to built-in themes.
 |    tcl/                            | Tcl plugin.
 |       weechat-tcl.c                | Main tcl functions (load/unload scripts, execute tcl code).
 |       weechat-tcl-api.c            | Tcl scripting API functions.
@@ -469,8 +469,8 @@ WeeChat "core" is located in following directories:
 |          test-core-utf8.cpp                     | Tests: UTF-8.
 |          test-core-util.cpp                     | Tests: utility functions.
 |          hook/                                  | Root of unit tests for hooks.
-|             test-hook-command-run.cpp           | Tests: hooks "command_run".
 |             test-hook-command.cpp               | Tests: hooks "command".
+|             test-hook-command-run.cpp           | Tests: hooks "command_run".
 |             test-hook-completion.cpp            | Tests: hooks "completion".
 |             test-hook-config.cpp                | Tests: hooks "config".
 |             test-hook-connect.cpp               | Tests: hooks "connect".
@@ -478,8 +478,8 @@ WeeChat "core" is located in following directories:
 |             test-hook-focus.cpp                 | Tests: hooks "focus".
 |             test-hook-hdata.cpp                 | Tests: hooks "hdata".
 |             test-hook-hsignal.cpp               | Tests: hooks "hsignal".
-|             test-hook-info-hashtable.cpp        | Tests: hooks "info_hashtable".
 |             test-hook-info.cpp                  | Tests: hooks "info".
+|             test-hook-info-hashtable.cpp        | Tests: hooks "info_hashtable".
 |             test-hook-infolist.cpp              | Tests: hooks "infolist".
 |             test-hook-line.cpp                  | Tests: hooks "line".
 |             test-hook-modifier.cpp              | Tests: hooks "modifier".
@@ -489,10 +489,10 @@ WeeChat "core" is located in following directories:
 |             test-hook-timer.cpp                 | Tests: hooks "timer".
 |             test-hook-url.cpp                   | Tests: hooks "url".
 |       gui/                                      | Root of unit tests for interfaces.
-|          test-gui-bar-item-custom.cpp           | Tests: custom bar item functions.
-|          test-gui-bar-item.cpp                  | Tests: bar item functions.
-|          test-gui-bar-window.cpp                | Tests: bar window functions.
 |          test-gui-bar.cpp                       | Tests: bar functions.
+|          test-gui-bar-item.cpp                  | Tests: bar item functions.
+|          test-gui-bar-item-custom.cpp           | Tests: custom bar item functions.
+|          test-gui-bar-window.cpp                | Tests: bar window functions.
 |          test-gui-buffer.cpp                    | Tests: buffer functions.
 |          test-gui-chat.cpp                      | Tests: chat functions.
 |          test-gui-color.cpp                     | Tests: colors.
@@ -506,12 +506,6 @@ WeeChat "core" is located in following directories:
 |          curses/                                | Root of unit tests for Curses interface.
 |             test-gui-curses-mouse.cpp           | Tests: mouse (Curses interface).
 |             test-gui-curses-term.cpp            | Tests: terminal functions (Curses interface).
-|       scripts/                                  | Root of scripting API tests.
-|          test-scripts.cpp                       | Program used to run the scripting API tests.
-|          python/                                | Python scripts to generate and run the scripting API tests.
-|             testapigen.py                       | Python script generating scripts in all languages to test the scripting API.
-|             testapi.py                          | Python script with scripting API tests, used by script testapigen.py.
-|             unparse.py                          | Convert Python code to other languages, used by script testapigen.py.
 |       plugins/                                  | Root of unit tests for plugins.
 |          test-plugin-api-info.cpp               | Tests: plugin API info functions.
 |          test-plugin-config.cpp                 | Tests: plugin config functions.
@@ -571,6 +565,12 @@ WeeChat "core" is located in following directories:
 |             test-xfer-chat.cpp                  | Tests: DCC chat.
 |             test-xfer-file.cpp                  | Tests: file functions.
 |             test-xfer-network.cpp               | Tests: network functions.
+|       scripts/                                  | Root of scripting API tests.
+|          test-scripts.cpp                       | Program used to run the scripting API tests.
+|          python/                                | Python scripts to generate and run the scripting API tests.
+|             testapi.py                          | Python script with scripting API tests, used by script testapigen.py.
+|             testapigen.py                       | Python script generating scripts in all languages to test the scripting API.
+|             unparse.py                          | Convert Python code to other languages, used by script testapigen.py.
 |===
 
 [[documentation_translations]]
