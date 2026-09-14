@@ -4360,7 +4360,7 @@ Les signaux suivants sont captés par l'extension typing :
 | typing_set_nick
 | Chaîne : pointeur tampon + ";" + état (un parmi ceux-ci : "off", "typing",
   "paused", "cleared") + ";" + pseudo. +
-  Example: "0x1234abcd;typing;alice".
+  Exemple : "0x1234abcd;typing;alice".
 | Définir l'état de la saisie du pseudo sur le tampon.
 
 | typing_reset_buffer

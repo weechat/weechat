@@ -5082,7 +5082,7 @@ Paramètres :
   caractères de conversion supplémentaires :
 ** `%@` : retourner la date exprimée en Temps Universel Coordonné (UTC)
    au lieu de la date relative au fuseau horaire de l'utilisateur _(WeeChat ≥ 4.7.0)_
-** `%.N` où `N` est entre 1 and 6: microsecondes remplies avec des zéros sur
+** `%.N` où `N` est entre 1 et 6 : microsecondes remplies avec des zéros sur
    N chiffres (par exemple `%.3` pour les millisecondes)
 ** `%f` : alias de `%.6`
 ** `%!` : horodatage sous forme d'entier, en secondes (valeur de tv->tv_sec)
@@ -8720,10 +8720,13 @@ value = weechat.config_integer_default(option)
 
 _WeeChat ≥ 4.3.0._
 
-Return inherited integer value of option: value of option if not NULL,
-or value of the parent option (if option inherits from another option). +
-If the parent option is not found, return the default value of the option. +
-If the parent value is NULL, return the default value of the parent option.
+Retourner la valeur entière héritée de l'option : valeur de l'option si elle
+n'est pas NULL, ou valeur de l'option parente (si l'option hérite d'une autre
+option). +
+Si l'option parente n'est pas trouvée, retourner la valeur par défaut de
+l'option. +
+Si la valeur parente est NULL, retourner la valeur par défaut de l'option
+parente.
 
 Prototype :
 
@@ -8849,10 +8852,13 @@ value = weechat.config_string_default(option)
 
 _WeeChat ≥ 4.3.0._
 
-Return inherited string value of option: value of option if not NULL,
-or value of the parent option (if option inherits from another option). +
-If the parent option is not found, return the default value of the option. +
-If the parent value is NULL, return the default value of the parent option.
+Retourner la valeur chaîne héritée de l'option : valeur de l'option si elle
+n'est pas NULL, ou valeur de l'option parente (si l'option hérite d'une autre
+option). +
+Si l'option parente n'est pas trouvée, retourner la valeur par défaut de
+l'option. +
+Si la valeur parente est NULL, retourner la valeur par défaut de l'option
+parente.
 
 Prototype :
 
@@ -8978,10 +8984,13 @@ color = weechat.config_color_default(option)
 
 _WeeChat ≥ 4.3.0._
 
-Return inherited color value of option: value of option if not NULL,
-or value of the parent option (if option inherits from another option). +
-If the parent option is not found, return the default value of the option. +
-If the parent value is NULL, return the default value of the parent option.
+Retourner la valeur couleur héritée de l'option : valeur de l'option si elle
+n'est pas NULL, ou valeur de l'option parente (si l'option hérite d'une autre
+option). +
+Si l'option parente n'est pas trouvée, retourner la valeur par défaut de
+l'option. +
+Si la valeur parente est NULL, retourner la valeur par défaut de l'option
+parente.
 
 Prototype :
 
@@ -9111,10 +9120,13 @@ value = weechat.config_enum_default(option)
 
 _WeeChat ≥ 4.3.0._
 
-Return inherited enum value of option: value of option if not NULL,
-or value of the parent option (if option inherits from another option). +
-If the parent option is not found, return the default value of the option. +
-If the parent value is NULL, return the default value of the parent option.
+Retourner la valeur énumérée héritée de l'option : valeur de l'option si elle
+n'est pas NULL, ou valeur de l'option parente (si l'option hérite d'une autre
+option). +
+Si l'option parente n'est pas trouvée, retourner la valeur par défaut de
+l'option. +
+Si la valeur parente est NULL, retourner la valeur par défaut de l'option
+parente.
 
 Prototype :
 
@@ -12970,7 +12982,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Recherche de texte dans le tampon.
 
 | weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed | 4.3.0
-| Pointer: buffer.
+| Pointeur : tampon.
 | Invite de la zone de saisie modifiée.
 
 | weechat | [[hook_signal_input_text_changed]] input_text_changed |
@@ -18003,15 +18015,15 @@ Paramètres :
 * _property_ : nom de la propriété (voir le tableau ci-dessous)
 * _value_ : nouvelle valeur pour la propriété
 
-Properties:
+Propriétés :
 
 [width="100%",cols="^2,^1,4,8",options="header"]
 |===
-| Name | Min WeeChat | Value | Description
+| Nom | WeeChat mini | Valeur | Description
 
-| add_space | 4.6.0 | "0" or "1"
-| "0": do not add space after completion +
-  "1": add space after completion (default).
+| add_space | 4.6.0 | "0" ou "1"
+| "0" : ne pas ajouter d'espace après la complétion +
+  "1" : ajouter un espace après la complétion (par défaut).
 |===
 
 Exemple en C :
