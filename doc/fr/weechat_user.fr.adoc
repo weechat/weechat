@@ -2818,7 +2818,7 @@ définies via des options de configuration :
 
 Dans chacune des options, les variables suivantes peuvent être utilisées :
 
-* `window` : pointeur vers la fenêtre où la barre est affichée  (`NULL` pour une
+* `window` : pointeur vers la fenêtre où la barre est affichée (`NULL` pour une
   barre de type "root")
 * `buffer` : pointeur vers le tampon où la barre est affichée (tampon courant
   pour les barres de type "root").

@@ -6975,7 +6975,7 @@ Paramètres :
 * _callback_reload_pointer_ : pointeur donné à la fonction de rappel de
   rechargement lorsqu'elle est appelée par WeeChat
 * _callback_reload_data_ : pointeur donné à la fonction de rappel lorsqu'elle
-  est appelée  par WeeChat ; si non NULL, doit avoir été alloué par malloc (ou
+  est appelée par WeeChat ; si non NULL, doit avoir été alloué par malloc (ou
   une fonction similaire) et est automatiquement libéré (par free) lorsque le
   fichier de configuration est libéré
 
