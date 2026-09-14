@@ -6526,6 +6526,59 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+==== hashtable_map_sorted
+
+_WeeChat ≥ 4.11.0._
+
+// TRANSLATION MISSING
+Call a function on all hashtable entries, sorted by key (with the compare
+function on keys given when the hashtable was created).
+
+プロトタイプ:
+
+[source,c]
+----
+void weechat_hashtable_map_sorted (struct t_hashtable *hashtable,
+                                   void (*callback_map)(void *data,
+                                                        struct t_hashtable *hashtable,
+                                                        const void *key,
+                                                        const void *value),
+                                   void *callback_map_data);
+----
+
+引数:
+
+* _hashtable_: ハッシュテーブルへのポインタ
+* _callback_map_: ハッシュテーブルの各のエントリに対して呼び出すコールバック関数
+* _callback_map_data_: _callback_map_ コールバックを呼び出す際のコールバックの結果保存先へのポインタ
+
+[NOTE]
+// TRANSLATION MISSING
+The list of entries is built before the first call to the callback: entries
+added by the callback are not sent to it, and the callback must not remove an
+entry that has not been sent to it yet (removing the entry received or an entry
+already received is safe).
+
+C 言語での使用例:
+
+[source,c]
+----
+void
+map_cb (void *data, struct t_hashtable *hashtable,
+        const void *key, const void *value)
+{
+    /* Display key and value (they are both strings here). */
+    weechat_printf (NULL, "key: '%s', value: '%s'",
+                    (const char *)key,
+                    (const char *)value);
+}
+/* ... */
+weechat_hashtable_map_sorted (hashtable, &map_cb, NULL);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 ==== hashtable_map_string
 
 _WeeChat バージョン 0.3.7 以上で利用可。_

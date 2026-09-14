@@ -6650,6 +6650,59 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+==== hashtable_map_sorted
+
+_WeeChat ≥ 4.11.0._
+
+// TRANSLATION MISSING
+Call a function on all hashtable entries, sorted by key (with the compare
+function on keys given when the hashtable was created).
+
+Prototipo:
+
+[source,c]
+----
+void weechat_hashtable_map_sorted (struct t_hashtable *hashtable,
+                                   void (*callback_map)(void *data,
+                                                        struct t_hashtable *hashtable,
+                                                        const void *key,
+                                                        const void *value),
+                                   void *callback_map_data);
+----
+
+Argomenti:
+
+* _hashtable_: puntatore alla tabella hash
+* _callback_map_: funzione chiamata per ogni voce nella tabella hash
+* _callback_map_data_: puntatore fornito alla mappa di callback quando chiamata
+
+[NOTE]
+// TRANSLATION MISSING
+The list of entries is built before the first call to the callback: entries
+added by the callback are not sent to it, and the callback must not remove an
+entry that has not been sent to it yet (removing the entry received or an entry
+already received is safe).
+
+Esempio in C:
+
+[source,c]
+----
+void
+map_cb (void *data, struct t_hashtable *hashtable,
+        const void *key, const void *value)
+{
+    /* Display key and value (they are both strings here). */
+    weechat_printf (NULL, "key: '%s', value: '%s'",
+                    (const char *)key,
+                    (const char *)value);
+}
+/* ... */
+weechat_hashtable_map_sorted (hashtable, &map_cb, NULL);
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== hashtable_map_string
 
 _WeeChat ≥ 0.3.7._

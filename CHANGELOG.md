@@ -13,6 +13,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 ### Added
 
 - core: add flag "prefix_for_each_line" in buffer
+- api: add function "hashtable_map_sorted"
 - api: add focus key "_chat_line_id", deprecate keys "_chat_line_date_printed" and "_chat_line_date_usec_printed"
 - api: add function "buffer_get_longlong"
 - api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"

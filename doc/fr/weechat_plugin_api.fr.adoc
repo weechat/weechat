@@ -6478,6 +6478,60 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== hashtable_map_sorted
+
+_WeeChat ≥ 4.11.0._
+
+Appeller une fonction pour chaque entrée d'une table de hachage, triées par
+clé (avec la fonction de comparaison sur les clés donnée à la création de la
+table de hachage).
+
+Prototype :
+
+[source,c]
+----
+void weechat_hashtable_map_sorted (struct t_hashtable *hashtable,
+                                   void (*callback_map)(void *data,
+                                                        struct t_hashtable *hashtable,
+                                                        const void *key,
+                                                        const void *value),
+                                   void *callback_map_data);
+----
+
+Paramètres :
+
+* _hashtable_ : pointeur vers la table de hachage
+* _callback_map_ : fonction appelée pour chaque entrée de la table de hachage
+* _callback_map_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée
+
+[NOTE]
+La liste des entrées est construite avant le premier appel à la fonction de
+rappel : les entrées ajoutées par la fonction de rappel ne lui sont pas
+envoyées, et la fonction de rappel ne doit pas supprimer une entrée qui ne lui
+a pas encore été envoyée (supprimer l'entrée reçue ou une entrée déjà reçue ne
+pose pas de problème).
+
+Exemple en C :
+
+[source,c]
+----
+void
+map_cb (void *data, struct t_hashtable *hashtable,
+        const void *key, const void *value)
+{
+    /* Afficher la clé et la valeur (elles sont des chaînes ici). */
+    weechat_printf (NULL, "clé : '%s', valeur : '%s'",
+                    (const char *)key,
+                    (const char *)value);
+}
+/* ... */
+weechat_hashtable_map_sorted (hashtable, &map_cb, NULL);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== hashtable_map_string
 
 _WeeChat ≥ 0.3.7._

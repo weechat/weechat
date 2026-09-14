@@ -6225,6 +6225,59 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
+==== hashtable_map_sorted
+
+_WeeChat ≥ 4.11.0._
+
+// TRANSLATION MISSING
+Call a function on all hashtable entries, sorted by key (with the compare
+function on keys given when the hashtable was created).
+
+Прототип:
+
+[source,c]
+----
+void weechat_hashtable_map_sorted (struct t_hashtable *hashtable,
+                                   void (*callback_map)(void *data,
+                                                        struct t_hashtable *hashtable,
+                                                        const void *key,
+                                                        const void *value),
+                                   void *callback_map_data);
+----
+
+Аргументи:
+
+* _hashtable_: показивач на хеш табелу
+* _callback_map_: функција која се позива за сваку ставку у хеш табели
+* _callback_map_data_: показивач који се прослеђује функцији повратног позива мапирања када се позове
+
+[NOTE]
+// TRANSLATION MISSING
+The list of entries is built before the first call to the callback: entries
+added by the callback are not sent to it, and the callback must not remove an
+entry that has not been sent to it yet (removing the entry received or an entry
+already received is safe).
+
+C пример:
+
+[source,c]
+----
+void
+map_cb (void *data, struct t_hashtable *hashtable,
+        const void *key, const void *value)
+{
+    /* Приказује кључ и вредност (овде су оба стрингови) */
+    weechat_printf (NULL, "кључ: '%s', вредност: '%s'",
+                    (const char *)key,
+                    (const char *)value);
+}
+/* ... */
+weechat_hashtable_map_sorted (hashtable, &map_cb, NULL);
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
 ==== hashtable_map_string
 
 _WeeChat ≥ 0.3.7._
