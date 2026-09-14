@@ -99,8 +99,6 @@ Les répertoires principaux de WeeChat sont :
 |          hook/     | Tests unitaires pour les fonctions hook.
 |       gui/         | Tests unitaires pour les fonctions de l'interface.
 |          curses/   | Tests unitaires pour les fonctions de l'interface Curses.
-|       scripts/     | Tests de l'API script.
-|          python/   | Scripts Python pour générer et lancer les tests de l'API script.
 |       plugins/     | Tests unitaires pour les extensions.
 |          alias/    | Tests unitaires pour l'extension alias.
 |          irc/      | Tests unitaires pour l'extension IRC.
@@ -110,6 +108,8 @@ Les répertoires principaux de WeeChat sont :
 |          trigger/  | Tests unitaires pour l'extension trigger.
 |          typing/   | Tests unitaires pour l'extension typing.
 |          xfer/     | Tests unitaires pour l'extension xfer.
+|       scripts/     | Tests de l'API script.
+|          python/   | Scripts Python pour générer et lancer les tests de l'API script.
 | doc/               | Documentation.
 | po/                | Fichiers de traductions (gettext).
 | debian/            | Empaquetage Debian.
@@ -136,8 +136,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    core-calc.c                | Calcul du résultat d'expressions.
 |    core-command.c             | Commandes du cœur de WeeChat.
 |    core-completion.c          | Complétions par défaut.
-|    core-config-file.c         | Gestion des fichiers de configuration.
 |    core-config.c              | Options de configuration du cœur de WeeChat (fichier weechat.conf).
+|    core-config-file.c         | Gestion des fichiers de configuration.
 |    core-crypto.c              | Fonctions de cryptographie.
 |    core-debug.c               | Quelques fonctions de debug.
 |    core-dir.c                 | Fonctions sur les répertoires/fichiers.
@@ -160,16 +160,16 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    core-sys.c                 | Fonctions système.
 |    core-theme.c               | Thèmes (ensembles de surcharges d'options).
 |    core-theme-builtin.c       | Thèmes intégrés : options du cœur.
-|    core-upgrade-file.c        | Système de mise à jour interne.
 |    core-upgrade.c             | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...).
+|    core-upgrade-file.c        | Système de mise à jour interne.
 |    core-url.c                 | Transfert d'URL (en utilisant libcurl).
 |    core-utf8.c                | Fonctions UTF-8.
 |    core-util.c                | Quelques autres fonctions utilitaires.
 |    core-version.c             | Fonctions pour la version de WeeChat.
 |    weechat.c                  | Fonctions principales : options de ligne de commande, démarrage.
 |    hook/                      | Fonctions "hook".
-|       hook-command-run.c      | Hook "command_run".
 |       hook-command.c          | Hook "command".
+|       hook-command-run.c      | Hook "command_run".
 |       hook-completion.c       | Hook "completion".
 |       hook-config.c           | Hook "config".
 |       hook-connect.c          | Hook "connect".
@@ -177,8 +177,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       hook-focus.c            | Hook "focus".
 |       hook-hdata.c            | Hook "hdata".
 |       hook-hsignal.c          | Hook "hsignal".
-|       hook-info-hashtable.c   | Hook "info".
 |       hook-info.c             | Hook "info".
+|       hook-info-hashtable.c   | Hook "info".
 |       hook-infolist.c         | Hook "infolist".
 |       hook-line.c             | Hook "line".
 |       hook-modifier.c         | Hook "modifier".
@@ -188,10 +188,10 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       hook-timer.c            | Hook "timer".
 |       hook-url.c              | Hook "url".
 | gui/                          | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces).
-|    gui-bar-item-custom.c      | Objets de barre personnalisés.
-|    gui-bar-item.c             | Objets de barre.
-|    gui-bar-window.c           | Fenêtres de barre.
 |    gui-bar.c                  | Barres.
+|    gui-bar-item.c             | Objets de barre.
+|    gui-bar-item-custom.c      | Objets de barre personnalisés.
+|    gui-bar-window.c           | Fenêtres de barre.
 |    gui-buffer.c               | Tampons.
 |    gui-chat.c                 | Fonctions pour la discussion (afficher un message, ...).
 |    gui-color.c                | Fonctions de couleur.
@@ -246,15 +246,6 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       alias-completion.c           | Complétions pour Alias.
 |       alias-config.c               | Options de configuration des alias (fichier alias.conf).
 |       alias-info.c                 | Info/infolists/hdata pour les alias.
-|    spell/                          | Extension Spell.
-|       spell.c                      | Fonctions principales pour Spell.
-|       spell-bar-item.c             | Objets de barre Spell.
-|       spell-command.c              | Commandes Spell.
-|       spell-completion.c           | Complétions pour Spell.
-|       spell-config.c               | Options de configuration pour Spell (fichier spell.conf).
-|       spell-info.c                 | Info/infolists/hdata pour Spell.
-|       spell-speller.c              | Gestion des correcteurs orthographiques.
-|       spell-theme.c                | Contribution de Spell aux thèmes intégrés.
 |    buflist/                        | Extension Buflist.
 |       buflist.c                    | Fonctions principales de Buflist.
 |       buflist-bar-item.c           | Objets de barre Buflist.
@@ -395,6 +386,15 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       script-mouse.c               | Actions souris pour le gestionnaire de scripts.
 |       script-repo.c                | Téléchargement et lecture du dépôt de scripts.
 |       script-theme.c               | Contribution du gestionnaire de scripts aux thèmes intégrés.
+|    spell/                          | Extension Spell.
+|       spell.c                      | Fonctions principales pour Spell.
+|       spell-bar-item.c             | Objets de barre Spell.
+|       spell-command.c              | Commandes Spell.
+|       spell-completion.c           | Complétions pour Spell.
+|       spell-config.c               | Options de configuration pour Spell (fichier spell.conf).
+|       spell-info.c                 | Info/infolists/hdata pour Spell.
+|       spell-speller.c              | Gestion des correcteurs orthographiques.
+|       spell-theme.c                | Contribution de Spell aux thèmes intégrés.
 |    tcl/                            | Extension Tcl.
 |       weechat-tcl.c                | Fonctions principales pour Tcl (chargement/déchargement des scripts, exécution de code Tcl).
 |       weechat-tcl-api.c            | Fonctions de l'API script Tcl.
@@ -479,8 +479,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-hook-focus.cpp                 | Tests : hooks "focus".
 |             test-hook-hdata.cpp                 | Tests : hooks "hdata".
 |             test-hook-hsignal.cpp               | Tests : hooks "hsignal".
-|             test-hook-info-hashtable.cpp        | Tests : hooks "info_hashtable".
 |             test-hook-info.cpp                  | Tests : hooks "info".
+|             test-hook-info-hashtable.cpp        | Tests : hooks "info_hashtable".
 |             test-hook-infolist.cpp              | Tests : hooks "infolist".
 |             test-hook-line.cpp                  | Tests : hooks "line".
 |             test-hook-modifier.cpp              | Tests : hooks "modifier".
@@ -490,10 +490,10 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-hook-timer.cpp                 | Tests : hooks "timer".
 |             test-hook-url.cpp                   | Tests : hooks "url".
 |       gui/                                      | Racine des tests unitaires pour les interfaces.
-|          test-gui-bar-item-custom.cpp           | Tests : fonctions d'objets de barre personnalisés.
-|          test-gui-bar-item.cpp                  | Tests : fonctions d'objets de barre.
-|          test-gui-bar-window.cpp                | Tests : fonctions de fenêtres de barre.
 |          test-gui-bar.cpp                       | Tests : fonctions de barres.
+|          test-gui-bar-item.cpp                  | Tests : fonctions d'objets de barre.
+|          test-gui-bar-item-custom.cpp           | Tests : fonctions d'objets de barre personnalisés.
+|          test-gui-bar-window.cpp                | Tests : fonctions de fenêtres de barre.
 |          test-gui-buffer.cpp                    | Tests : fonctions de tampons.
 |          test-gui-chat.cpp                      | Tests : fonctions de discussion.
 |          test-gui-color.cpp                     | Tests : couleurs.
@@ -507,12 +507,6 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          curses/                                | Racine des tests unitaires pour l'interface Curses.
 |             test-gui-curses-mouse.cpp           | Tests : souris (interface Curses).
 |             test-gui-curses-term.cpp            | Tests : fonctions pour le terminal (interface Curses).
-|       scripts/                                  | Racine des tests de l'API script.
-|          test-scripts.cpp                       | Programme utilisé pour lancer les tests de l'API script.
-|          python/                                | Scripts Python pour générer et lancer les tests de l'API script.
-|             testapigen.py                       | Script Python générant des scripts dans tous les languages pour tester l'API script.
-|             testapi.py                          | Script Python avec les tests API, utilisé par le script testapigen.py.
-|             unparse.py                          | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
 |       plugins/                                  | Racine des tests unitaires pour les extensions.
 |          test-plugin-api-info.cpp               | Tests : fonctions info de l'API extension.
 |          test-plugin-config.cpp                 | Tests : fonctions config de l'extension.
@@ -572,6 +566,12 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-xfer-chat.cpp                  | Tests : discussion DCC.
 |             test-xfer-file.cpp                  | Tests : fonctions sur les fichiers.
 |             test-xfer-network.cpp               | Tests : fonctions réseau.
+|       scripts/                                  | Racine des tests de l'API script.
+|          test-scripts.cpp                       | Programme utilisé pour lancer les tests de l'API script.
+|          python/                                | Scripts Python pour générer et lancer les tests de l'API script.
+|             testapi.py                          | Script Python avec les tests API, utilisé par le script testapigen.py.
+|             testapigen.py                       | Script Python générant des scripts dans tous les languages pour tester l'API script.
+|             unparse.py                          | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
 |===
 
 [[documentation_translations]]
