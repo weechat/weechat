@@ -62,7 +62,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20260816-04"
+#define WEECHAT_PLUGIN_API_VERSION "20260914-01"
 
 /* Macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -537,6 +537,12 @@ struct t_weechat_plugin
                                                  const void *key,
                                                  const void *value),
                            void *callback_map_data);
+    void (*hashtable_map_sorted) (struct t_hashtable *hashtable,
+                                  void (*callback_map) (void *data,
+                                                        struct t_hashtable *hashtable,
+                                                        const void *key,
+                                                        const void *value),
+                                  void *callback_map_data);
     void (*hashtable_map_string) (struct t_hashtable *hashtable,
                                   void (*callback_map) (void *data,
                                                         struct t_hashtable *hashtable,
@@ -1650,6 +1656,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_hashtable_map(__hashtable, __cb_map, __cb_map_data)     \
     (weechat_plugin->hashtable_map)(__hashtable, __cb_map,              \
                                     __cb_map_data)
+#define weechat_hashtable_map_sorted(__hashtable, __cb_map,             \
+                                     __cb_map_data)                     \
+    (weechat_plugin->hashtable_map_sorted)(__hashtable, __cb_map,       \
+                                           __cb_map_data)
 #define weechat_hashtable_map_string(__hashtable, __cb_map,             \
                                      __cb_map_data)                     \
     (weechat_plugin->hashtable_map_string)(__hashtable, __cb_map,       \

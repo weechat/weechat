@@ -726,6 +726,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hashtable_get = &hashtable_get;
         new_plugin->hashtable_has_key = &hashtable_has_key;
         new_plugin->hashtable_map = &hashtable_map;
+        new_plugin->hashtable_map_sorted = &hashtable_map_sorted;
         new_plugin->hashtable_map_string = &hashtable_map_string;
         new_plugin->hashtable_dup = &hashtable_dup;
         new_plugin->hashtable_get_integer = &hashtable_get_integer;
