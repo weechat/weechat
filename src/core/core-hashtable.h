@@ -162,6 +162,9 @@ extern int hashtable_has_key (struct t_hashtable *hashtable, const void *key);
 extern void hashtable_map (struct t_hashtable *hashtable,
                            t_hashtable_map *callback_map,
                            void *callback_map_data);
+extern void hashtable_map_sorted (struct t_hashtable *hashtable,
+                                  t_hashtable_map *callback_map,
+                                  void *callback_map_data);
 extern void hashtable_map_string (struct t_hashtable *hashtable,
                                   t_hashtable_map_string *callback_map,
                                   void *callback_map_data);

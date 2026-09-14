@@ -16,6 +16,7 @@
 #include <time.h>
 
 #include "weechat.h"
+#include "core-arraylist.h"
 #include "core-hashtable.h"
 #include "core-infolist.h"
 #include "core-list.h"
@@ -719,6 +720,73 @@ hashtable_map (struct t_hashtable *hashtable,
 
         ptr_item = ptr_next_created_item;
     }
+}
+
+/*
+ * Compare two hashtable items by key (for sorting).
+ */
+
+int
+hashtable_map_sorted_cmp_cb (void *data, struct t_arraylist *arraylist,
+                             void *pointer1, void *pointer2)
+{
+    struct t_hashtable *hashtable;
+
+    /* Make C compiler happy. */
+    (void) arraylist;
+
+    hashtable = (struct t_hashtable *)data;
+
+    return (hashtable->callback_keycmp) (
+        hashtable,
+        ((struct t_hashtable_item *)pointer1)->key,
+        ((struct t_hashtable_item *)pointer2)->key);
+}
+
+/*
+ * Call a function on all hashtable entries, sorted by key.
+ *
+ * The list of entries is built before the first call to the callback: entries
+ * added by the callback are not sent to it, and the callback must not remove an
+ * entry that has not been sent to it yet (removing the entry received or an
+ * entry already received is safe).
+ */
+
+void
+hashtable_map_sorted (struct t_hashtable *hashtable,
+                      t_hashtable_map *callback_map,
+                      void *callback_map_data)
+{
+    struct t_arraylist *items;
+    struct t_hashtable_item *ptr_item;
+    int i, size;
+
+    if (!hashtable)
+        return;
+
+    items = arraylist_new (hashtable->items_count, 1, 1,
+                           &hashtable_map_sorted_cmp_cb, hashtable,
+                           NULL, NULL);
+    if (!items)
+        return;
+
+    for (ptr_item = hashtable->oldest_item; ptr_item;
+         ptr_item = ptr_item->next_created_item)
+    {
+        arraylist_add (items, ptr_item);
+    }
+
+    size = arraylist_size (items);
+    for (i = 0; i < size; i++)
+    {
+        ptr_item = (struct t_hashtable_item *)arraylist_get (items, i);
+        (void) (callback_map) (callback_map_data,
+                               hashtable,
+                               ptr_item->key,
+                               ptr_item->value);
+    }
+
+    arraylist_free (items);
 }
 
 /*

@@ -121,8 +121,8 @@ secure_buffer_display (void)
         line++;
         gui_chat_printf_y (secure_buffer, line++, _("Secured data:"));
         line++;
-        hashtable_map (secure_hashtable_data,
-                       &secure_buffer_display_data, &line);
+        hashtable_map_sorted (secure_hashtable_data,
+                              &secure_buffer_display_data, &line);
     }
     /* Display secured data not decrypted. */
     if (count_encrypted > 0)
@@ -132,8 +132,8 @@ secure_buffer_display (void)
                            _("Secured data STILL ENCRYPTED: (use /secure decrypt, "
                              "see /help secure)"));
         line++;
-        hashtable_map (secure_hashtable_data_encrypted,
-                       &secure_buffer_display_data, &line);
+        hashtable_map_sorted (secure_hashtable_data_encrypted,
+                              &secure_buffer_display_data, &line);
     }
     if ((count == 0) && (count_encrypted == 0))
     {

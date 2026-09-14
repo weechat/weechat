@@ -964,6 +964,114 @@ TEST(CoreHashtable, MapString)
     free (test_map_string);
 }
 
+void
+test_hashtable_map_sorted_cb (void *data,
+                              struct t_hashtable *hashtable,
+                              const void *key, const void *value)
+{
+    /* Make C++ compiler happy. */
+    (void) data;
+    (void) hashtable;
+
+    if (test_map_string[0])
+        strcat (test_map_string, ";");
+    strcat (test_map_string, (const char *)key);
+    strcat (test_map_string, ":");
+    strcat (test_map_string, (const char *)value);
+}
+
+void
+test_hashtable_map_sorted_int_cb (void *data,
+                                  struct t_hashtable *hashtable,
+                                  const void *key, const void *value)
+{
+    char str_key[32];
+
+    /* Make C++ compiler happy. */
+    (void) data;
+    (void) hashtable;
+
+    if (test_map_string[0])
+        strcat (test_map_string, ";");
+    snprintf (str_key, sizeof (str_key), "%d", *((int *)key));
+    strcat (test_map_string, str_key);
+    strcat (test_map_string, ":");
+    strcat (test_map_string, (const char *)value);
+}
+
+/*
+ * Test functions:
+ *   hashtable_map_sorted
+ */
+
+TEST(CoreHashtable, MapSorted)
+{
+    struct t_hashtable *hashtable;
+    int value_int;
+
+    test_map_string = (char *)malloc (1024);
+
+    /* invalid hashtable: callback is not called */
+    test_map_string[0] = '\0';
+    hashtable_map_sorted (NULL, &test_hashtable_map_sorted_cb, NULL);
+    STRCMP_EQUAL("", test_map_string);
+
+    /* empty hashtable: callback is not called */
+    test_map_string[0] = '\0';
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+    hashtable_map_sorted (hashtable, &test_hashtable_map_sorted_cb, NULL);
+    STRCMP_EQUAL("", test_map_string);
+    hashtable_free (hashtable);
+
+    /* string -> string: sorted by key, not by order of creation */
+    test_map_string[0] = '\0';
+    hashtable = get_weechat_hashtable ();
+    hashtable_map_sorted (hashtable, &test_hashtable_map_sorted_cb, NULL);
+    STRCMP_EQUAL("chat:item5;client:last item;extensible:item4;fast:item3;"
+                 "light:item2;weechat:the first item",
+                 test_map_string);
+    hashtable_free (hashtable);
+
+    /* string -> string: sort is case sensitive (strcmp) */
+    test_map_string[0] = '\0';
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+    hashtable_set (hashtable, "zebra", "1");
+    hashtable_set (hashtable, "apple", "2");
+    hashtable_set (hashtable, "mango", "3");
+    hashtable_set (hashtable, "Apple", "4");
+    hashtable_map_sorted (hashtable, &test_hashtable_map_sorted_cb, NULL);
+    STRCMP_EQUAL("Apple:4;apple:2;mango:3;zebra:1", test_map_string);
+    hashtable_free (hashtable);
+
+    /* integer -> string: sorted with the compare callback on keys */
+    test_map_string[0] = '\0';
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_INTEGER,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+    value_int = 45678;
+    hashtable_set (hashtable, &value_int, "value1");
+    value_int = -2;
+    hashtable_set (hashtable, &value_int, "value2");
+    value_int = 123;
+    hashtable_set (hashtable, &value_int, "value3");
+    hashtable_map_sorted (hashtable, &test_hashtable_map_sorted_int_cb, NULL);
+    STRCMP_EQUAL("-2:value2;123:value3;45678:value1", test_map_string);
+    hashtable_free (hashtable);
+
+    free (test_map_string);
+    test_map_string = NULL;
+}
+
 /*
  * Test functions:
  *   hashtable_map

@@ -498,8 +498,8 @@ secure_config_data_write_cb (const void *pointer, void *data,
             return WEECHAT_CONFIG_WRITE_ERROR;
         }
         /* Encrypt and write secured data. */
-        hashtable_map (secure_hashtable_data,
-                       &secure_config_data_write_map_cb, config_file);
+        hashtable_map_sorted (secure_hashtable_data,
+                              &secure_config_data_write_map_cb, config_file);
     }
     else if (secure_hashtable_data_encrypted->items_count > 0)
     {
@@ -513,8 +513,9 @@ secure_config_data_write_cb (const void *pointer, void *data,
         {
             return WEECHAT_CONFIG_WRITE_ERROR;
         }
-        hashtable_map (secure_hashtable_data_encrypted,
-                       &secure_config_data_write_map_encrypted_cb, config_file);
+        hashtable_map_sorted (secure_hashtable_data_encrypted,
+                              &secure_config_data_write_map_encrypted_cb,
+                              config_file);
     }
 
     return WEECHAT_CONFIG_WRITE_OK;
