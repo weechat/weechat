@@ -160,7 +160,7 @@ suivantes :
 ** _pbkdf2+sha512_
 * _password_hash_iterations_ : nombre d'itérations pour le hachage
   (pour l'algorithme PBKDF2 seulement)
-* _totp_:
+* _totp_ :
 ** _on_ : le mot de passe à usage unique basé sur le temps (TOTP : Time-based
    One-Time Password) est configuré et est attendu dans la commande _init_
 ** _off_ : le mot de passe à usage unique basé sur le temps (TOTP : Time-based
@@ -1003,7 +1003,7 @@ Exemples :
 input core.weechat /help filter
 ----
 
-* Envoyer le message "bonjour !" sur le canal #weechat :
+* Envoyer le message "bonjour !" sur le canal #weechat :
 
 ----
 input irc.libera.#weechat bonjour !

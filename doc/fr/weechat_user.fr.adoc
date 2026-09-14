@@ -1097,7 +1097,7 @@ Pour voir toutes les couleurs disponibles dans votre terminal, vous pouvez
 taper `/color` puis kbd:[Alt+c] dans WeeChat ou lancez cette commande dans le
 terminal : `weechat --colors`.
 
-Exemple : affichage de "bonjour Alice !" avec "bonjour" en bleu clair
+Exemple : affichage de "bonjour Alice !" avec "bonjour" en bleu clair
 gras, et "Alice" en rouge clair souligné :
 
 ----
@@ -1775,7 +1775,7 @@ fichiers.
 
 Les thèmes ne peuvent modifier que les options marquées comme
 _themable_ (modifiables par un thème). Toutes les options `*.color.*`
-le sont par défaut ; certaines options de type chaîne contenant des
+le sont par défaut ; certaines options de type chaîne contenant des
 références `+${color:...}+` (par exemple
 `+weechat.color.chat_nick_colors+`, `+weechat.look.prefix_error+` ou les
 formats `+buflist.format.*+`) sont explicitement déclarées comme
@@ -1787,7 +1787,7 @@ tampon <<command_fset_fset,/fset>> avec le filtre `+t:themable+`.
 [[themes_apply]]
 ==== Appliquer un thème
 
-Pour basculer vers le thème intégré pour fond clair :
+Pour basculer vers le thème intégré pour fond clair :
 
 ----
 /theme apply light
@@ -1797,13 +1797,13 @@ L'état actuel de toutes les options modifiables est sauvegardé au
 préalable dans un fichier de sauvegarde nommé
 `+backup-AAAAMMJJ-HHMMSS-uuuuuu+` dans le répertoire `+themes+` du
 répertoire de configuration de WeeChat. L'apparence précédente peut
-ainsi être restaurée à tout moment avec :
+ainsi être restaurée à tout moment avec :
 
 ----
 /theme apply backup-AAAAMMJJ-HHMMSS-uuuuuu
 ----
 
-La création de la sauvegarde peut être désactivée (déconseillé) :
+La création de la sauvegarde peut être désactivée (déconseillé) :
 
 ----
 /set weechat.look.theme_backup off
@@ -1813,21 +1813,21 @@ Si la sauvegarde est activée et que le fichier ne peut pas être écrit,
 l'application est annulée avant qu'aucune option ne soit modifiée.
 
 Le nom du dernier thème appliqué est conservé dans
-`+weechat.look.theme+` (à titre informatif uniquement ; il n'est pas
+`+weechat.look.theme+` (à titre informatif uniquement ; il n'est pas
 ré-appliqué au démarrage).
 
 [[themes_reset]]
 ==== Réinitialiser aux valeurs par défaut
 
 Pour rétablir l'apparence d'origine livrée avec WeeChat, réinitialiser
-toutes les options modifiables à leur valeur par défaut :
+toutes les options modifiables à leur valeur par défaut :
 
 ----
 /theme reset
 ----
 
 Une sauvegarde est écrite au préalable (même garde-fou que
-`+/theme apply+`) ; si la sauvegarde échoue, la réinitialisation est
+`+/theme apply+`) ; si la sauvegarde échoue, la réinitialisation est
 annulée avant qu'aucune option ne soit modifiée. L'option
 `+weechat.look.theme+` est également remise à vide.
 
@@ -1835,7 +1835,7 @@ annulée avant qu'aucune option ne soit modifiée. L'option
 ==== Sauvegarder et supprimer des thèmes utilisateur
 
 Sauvegarder l'état actuel des options modifiables en tant que nouveau
-thème utilisateur :
+thème utilisateur :
 
 ----
 /theme save monTheme
@@ -1849,33 +1849,33 @@ Les noms réservés (noms de thèmes intégrés comme `+light+` et tout nom
 commençant par `+backup-+`) sont refusés. Les fichiers sont placés
 dans `+${weechat_config_dir}/themes/<nom>.theme+`.
 
-Renommer un thème utilisateur (usage typique : conserver une
-sauvegarde automatique utile sous un nom plus parlant) :
+Renommer un thème utilisateur (usage typique : conserver une
+sauvegarde automatique utile sous un nom plus parlant) :
 
 ----
 /theme rename backup-20260525-094210-123456 maSauvegarde
 ----
 
 Les thèmes intégrés n'ont pas de fichier et ne peuvent pas être
-renommés ; le nom cible ne peut pas correspondre à un nom intégré ni
+renommés ; le nom cible ne peut pas correspondre à un nom intégré ni
 commencer par `+backup-+`, et le fichier cible ne doit pas déjà
 exister. Le champ `+name+` de la section `+[info]+` à l'intérieur du
 fichier est réécrit afin que `/theme info` affiche le nouveau nom de
 manière cohérente.
 
-Supprimer un thème utilisateur :
+Supprimer un thème utilisateur :
 
 ----
 /theme del monTheme
 ----
 
-Cela supprime le fichier sur le disque ; les thèmes intégrés ne
+Cela supprime le fichier sur le disque ; les thèmes intégrés ne
 peuvent pas être supprimés.
 
 [[themes_file_format]]
 ==== Format du fichier de thème
 
-Un fichier de thème est de type INI avec deux sections :
+Un fichier de thème est de type INI avec deux sections :
 
 ----
 [info]
@@ -1892,17 +1892,17 @@ buflist.format.number = "${color:28}${number}${if:${number_displayed}?.: }"
 ----
 
 `+[info]+` est une section de métadonnées informatives affichées par
-`/theme info`. `+[options]+` contient les surcharges réelles ; les clés
+`/theme info`. `+[options]+` contient les surcharges réelles ; les clés
 sont les noms complets d'options tels qu'affichés par `/set`. Les
 valeurs de type chaîne peuvent être encadrées par des guillemets
-simples ou doubles ; les guillemets sont retirés à l'analyse. Les
+simples ou doubles ; les guillemets sont retirés à l'analyse. Les
 options non modifiables par un thème listées dans un fichier sont
 refusées au moment de l'application et signalées sur le tampon _core_
 (ainsi, un fichier `.theme` importé depuis une source non fiable ne
 peut pas écraser des mots de passe, des listes d'auto-chargement ou
 des commandes de démarrage).
 
-Les fichiers de thème utilisateur ne sont jamais mis en cache : à
+Les fichiers de thème utilisateur ne sont jamais mis en cache : à
 chaque `/theme apply <nom>`, le fichier est analysé, appliqué, puis
 libéré.
 
@@ -1913,7 +1913,7 @@ Lors de l'exécution de `+/theme apply <nom>+` :
 
 * Si `+${weechat_config_dir}/themes/<nom>.theme+` existe, le fichier
   est analysé et utilisé (il masque tout thème intégré du même nom).
-* Sinon, le registre des thèmes intégrés est consulté ; les thèmes
+* Sinon, le registre des thèmes intégrés est consulté ; les thèmes
   intégrés sont enregistrés par programmation par le cœur, les
   extensions et les scripts (voir la documentation des extensions et
   des scripts pour `+weechat_theme_register+`).
@@ -2373,7 +2373,7 @@ dessous et multiplier par 1000, par exemple pour une taille maximale de 2,5 Go 
 ----
 
 Avec cette configuration, vous aurez des fichiers comme ceux-ci (dans cet exemple
-il y a eu une rotation seulement pour le log du canal "#weechat"):
+il y a eu une rotation seulement pour le log du canal "#weechat") :
 
 ....
 ~/.local/share/weechat
@@ -2768,7 +2768,7 @@ Un objet appelé `spacer` peut être utilisé pour aligner les objets
 (gauche, centre, droite).
 
 Lorsqu'au moins un objet `spacer` est utilisé dans une barre, la largeur totale
-de la barre est utilisée : les espacements sont automatiquement étendus avec la
+de la barre est utilisée : les espacements sont automatiquement étendus avec la
 même taille (ou presque). +
 Lorsque la barre n'est pas assez large pour afficher tous les objets, les
 espacements ne sont pas affichés.
@@ -3940,7 +3940,7 @@ Certains scripts peuvent aider pour définir automatiquement cette option,
 voir `/script search autojoin`.
 
 Attention, les espaces ne peuvent être utilisés que pour séparer les canaux
-des clés, par exemple si `#canal1` requiert une clé mais pas `#canal2`:
+des clés, par exemple si `#canal1` requiert une clé mais pas `#canal2` :
 
 ----
 /set irc.server.libera.autojoin "#canal1,#canal2 cle1"
@@ -4195,7 +4195,7 @@ Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 Les autres messages numériques peuvent être paramétrés de la même manière.
 
 Le message peut être préfixé par le nom du serveur pour être spécifique à un
-serveur IRC (par exemple: `libera.whois`).
+serveur IRC (par exemple : `libera.whois`).
 
 Quelques exemples :
 
@@ -5313,7 +5313,7 @@ de hachage :
 | buffer             | pointeur | Tampon.
 | buffer_name        | chaîne   | Nom du tampon.
 | buffer_type        | chaîne   | Type de tampon ("formatted" ou "free").
-| id                 | chaîne   | Identifiant de la ligne : date et heure d'affichage avec une précision à la microseconde (numéro de la ligne pour un tampon avec contenu libre).
+| id                 | chaîne   | Identifiant de la ligne : date et heure d'affichage avec une précision à la microseconde (numéro de la ligne pour un tampon avec contenu libre).
 | y                  | chaîne   | Numéro de ligne pour un tampon avec contenu libre (≥ 0), -1 pour un tampon avec contenu formaté.
 | date               | chaîne   | Date de la ligne (horodatage).
 | date_usec          | chaîne   | Microsecondes de la date de la ligne.
