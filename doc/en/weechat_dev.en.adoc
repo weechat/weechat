@@ -92,14 +92,14 @@ The main WeeChat directories are:
 |       xfer/        | Xfer plugin (IRC DCC file/chat).
 | tests/             | Tests.
 |    fuzz/           | Fuzz testing.
-|       core/        | Fuzz testing for core functions.
+|       core/        | Fuzz testing for core functions.
 |    unit/           | Unit tests.
 |       core/        | Unit tests for core functions.
-|          hook/     | Unit tests for hook functions.
+|          hook/     | Unit tests for hook functions.
 |       gui/         | Unit tests for interfaces functions.
-|          curses/   | Unit tests for Curses interface functions.
-|       scripts/     | Scripting API tests.
-|          python/   | Python scripts to generate and run the scripting API tests.
+|          curses/   | Unit tests for Curses interface functions.
+|       scripts/     | Scripting API tests.
+|          python/   | Python scripts to generate and run the scripting API tests.
 |       plugins/     | Unit tests for plugins.
 |          alias/    | Unit tests for alias plugin.
 |          irc/      | Unit tests for IRC plugin.
@@ -433,18 +433,18 @@ WeeChat "core" is located in following directories:
 | Path/file                                       | Description
 | tests/                                          | Root of tests.
 |    fuzz/                                        | Root of fuzz testing.
-|       ossfuzz.sh                                | Build script for https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
+|       ossfuzz.sh                                | Build script for https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
 |       core/                                     | Root of fuzz testing for core.
-|          calc-fuzzer.cc                         | Fuzz testing: calculation of expressions.
-|          crypto-fuzzer.cc                       | Fuzz testing: cryptographic functions.
-|          eval-fuzzer.cc                         | Fuzz testing: evaluation of expressions.
-|          secure-fuzzer.cc                       | Fuzz testing: secured data.
-|          string-fuzzer.cc                       | Fuzz testing: strings.
-|          utf8-fuzzer.cc                         | Fuzz testing: UTF-8.
-|          util-fuzzer.cc                         | Fuzz testing: utility functions.
+|          calc-fuzzer.cc                         | Fuzz testing: calculation of expressions.
+|          crypto-fuzzer.cc                       | Fuzz testing: cryptographic functions.
+|          eval-fuzzer.cc                         | Fuzz testing: evaluation of expressions.
+|          secure-fuzzer.cc                       | Fuzz testing: secured data.
+|          string-fuzzer.cc                       | Fuzz testing: strings.
+|          utf8-fuzzer.cc                         | Fuzz testing: UTF-8.
+|          util-fuzzer.cc                         | Fuzz testing: utility functions.
 |    unit/                                        | Root of unit tests.
-|       tests.cpp                                 | Program used to run all tests.
-|       tests-record.cpp                          | Record and search in messages displayed.
+|       tests.cpp                                 | Program used to run all tests.
+|       tests-record.cpp                          | Record and search in messages displayed.
 |       core/                                     | Root of unit tests for core.
 |          test-core-arraylist.cpp                | Tests: arraylists.
 |          test-core-calc.cpp                     | Tests: calculation of expressions.
@@ -506,16 +506,16 @@ WeeChat "core" is located in following directories:
 |          curses/                                | Root of unit tests for Curses interface.
 |             test-gui-curses-mouse.cpp           | Tests: mouse (Curses interface).
 |             test-gui-curses-term.cpp            | Tests: terminal functions (Curses interface).
-|       scripts/                                  | Root of scripting API tests.
-|          test-scripts.cpp                       | Program used to run the scripting API tests.
-|          python/                                | Python scripts to generate and run the scripting API tests.
-|             testapigen.py                       | Python script generating scripts in all languages to test the scripting API.
-|             testapi.py                          | Python script with scripting API tests, used by script testapigen.py.
-|             unparse.py                          | Convert Python code to other languages, used by script testapigen.py.
+|       scripts/                                  | Root of scripting API tests.
+|          test-scripts.cpp                       | Program used to run the scripting API tests.
+|          python/                                | Python scripts to generate and run the scripting API tests.
+|             testapigen.py                       | Python script generating scripts in all languages to test the scripting API.
+|             testapi.py                          | Python script with scripting API tests, used by script testapigen.py.
+|             unparse.py                          | Convert Python code to other languages, used by script testapigen.py.
 |       plugins/                                  | Root of unit tests for plugins.
-|          test-plugin-api-info.cpp               | Tests: plugin API info functions.
-|          test-plugin-config.cpp                 | Tests: plugin config functions.
-|          test-plugins.cpp                       | Tests: plugins.
+|          test-plugin-api-info.cpp               | Tests: plugin API info functions.
+|          test-plugin-config.cpp                 | Tests: plugin config functions.
+|          test-plugins.cpp                       | Tests: plugins.
 |          alias/                                 | Root of unit tests for alias plugin.
 |             test-alias.cpp                      | Tests: aliases.
 |          irc/                                   | Root of unit tests for IRC plugin.
@@ -553,9 +553,9 @@ WeeChat "core" is located in following directories:
 |                test-relay-api.cpp               | Tests: Relay "api" protocol: general functions.
 |                test-relay-api-msg.cpp           | Tests: Relay "api" protocol: messages.
 |                test-relay-api-protocol.cpp      | Tests: Relay "api" protocol: protocol.
-|                remote/                          | Tests: Relay "api" protocol: remote functions.
-|                   test-relay-remote-event.cpp   | Tests: Relay "api" protocol: remote events.
-|                   test-relay-remote-network.cpp | Tests: Relay "api" protocol: remote network.
+|                remote/                          | Tests: Relay "api" protocol: remote functions.
+|                   test-relay-remote-event.cpp   | Tests: Relay "api" protocol: remote events.
+|                   test-relay-remote-network.cpp | Tests: Relay "api" protocol: remote network.
 |             irc/                                | Root of unit tests for Relay "irc" protocol.
 |                test-relay-irc.cpp               | Tests: Relay "irc" protocol.
 |          script/                                | Root of unit tests for script plugin.

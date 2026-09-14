@@ -1516,7 +1516,7 @@ Les identifiants réservés par WeeChat :
 | _buffer_line_added | buffer | hdata : line
 | Ligne ajoutée dans le tampon. | Afficher la ligne dans le tampon.
 
-| _buffer_line_data_changed | buffer | hdata : line
+| _buffer_line_data_changed | buffer | hdata : line
 | Ligne changée dans le tampon. | Modifier la ligne affichée dans le tampon.
 
 | _nicklist | nicklist | hdata : nicklist_item
@@ -2135,7 +2135,7 @@ est envoyé par WeeChat.
 Données envoyées dans le hdata : mêmes données que pour
 <<message_buffer_line_added,_buffer_line_added>>.
 
-Exemple : le message _hello!_ du pseudo _FlashCode_ sur le tampon _irc.libera.#weechat_ a été mis à jour :
+Exemple : le message _hello!_ du pseudo _FlashCode_ sur le tampon _irc.libera.#weechat_ a été mis à jour :
 
 [source,python]
 ----

@@ -4742,7 +4742,7 @@ Prototype :
 int weechat_file_compare (const char *filename1, const char *filename2);
 ----
 
-Paramètres :
+Paramètres :
 
 * _filename1_ : premier fichier à comparer
 * _filename2_ : second fichier à comparer
@@ -4777,26 +4777,26 @@ _WeeChat ≥ 4.8.0._
 
 Analyser un nombre entier de type "int" dans une chaîne.
 
-Prototype :
+Prototype :
 
 [source,c]
 ----
 int weechat_util_parse_int (const char *string, int base, int *result);
 ----
 
-Paramètres :
+Paramètres :
 
-* _string_ : chaîne à analyser
-* _base_ : peut être 0 (automatique) ou un entier entre 2 et 36 (inclus)
-* _result_ : pointeur vers une variable mise à jour si la chaîne est correctement analysée
+* _string_ : chaîne à analyser
+* _base_ : peut être 0 (automatique) ou un entier entre 2 et 36 (inclus)
+* _result_ : pointeur vers une variable mise à jour si la chaîne est correctement analysée
   (si le pointeur est NULL, le nombre trouvé n'est pas retourné)
 
-Valeur de retour :
+Valeur de retour :
 
-* 1 : OK
-* 0 : erreur
+* 1 : OK
+* 0 : erreur
 
-Les chaînes suivantes sont invalides et la fonction retourne 0 :
+Les chaînes suivantes sont invalides et la fonction retourne 0 :
 
 * chaîne vide
 * nombre avec des caractères non numériques après
@@ -4804,7 +4804,7 @@ Les chaînes suivantes sont invalides et la fonction retourne 0 :
 * nombre > INT_MAX (valeur maximale pour une variable de type "int")
 * entier invalide pour la _base_ donnée
 
-Exemples en C :
+Exemples en C :
 
 [source,c]
 ----
@@ -4828,26 +4828,26 @@ _WeeChat ≥ 4.8.0._
 
 Analyser un nombre entier de type "long" dans une chaîne.
 
-Prototype :
+Prototype :
 
 [source,c]
 ----
 int weechat_util_parse_long (const char *string, int base, long *result);
 ----
 
-Paramètres :
+Paramètres :
 
-* _string_ : chaîne à analyser
-* _base_ : peut être 0 (automatique) ou un entier entre 2 et 36 (inclus)
-* _result_ : pointeur vers une variable mise à jour si la chaîne est correctement analysée
+* _string_ : chaîne à analyser
+* _base_ : peut être 0 (automatique) ou un entier entre 2 et 36 (inclus)
+* _result_ : pointeur vers une variable mise à jour si la chaîne est correctement analysée
   (si le pointeur est NULL, le nombre trouvé n'est pas retourné)
 
-Valeur de retour :
+Valeur de retour :
 
-* 1 : OK
-* 0 : erreur
+* 1 : OK
+* 0 : erreur
 
-Les chaînes suivantes sont invalides et la fonction retourne 0 :
+Les chaînes suivantes sont invalides et la fonction retourne 0 :
 
 * chaîne vide
 * nombre avec des caractères non numériques après
@@ -4855,7 +4855,7 @@ Les chaînes suivantes sont invalides et la fonction retourne 0 :
 * nombre > LONG_MAX (valeur maximale pour une variable de type "long")
 * entier invalide pour la _base_ donnée
 
-Exemples en C :
+Exemples en C :
 
 [source,c]
 ----
@@ -4879,26 +4879,26 @@ _WeeChat ≥ 4.8.0._
 
 Analyser un nombre entier de type "long long" dans une chaîne.
 
-Prototype :
+Prototype :
 
 [source,c]
 ----
 int weechat_util_parse_longlong (const char *string, int base, long long *result);
 ----
 
-Paramètres :
+Paramètres :
 
-* _string_ : chaîne à analyser
-* _base_ : peut être 0 (automatique) ou un entier entre 2 et 36 (inclus)
-* _result_ : pointeur vers une variable mise à jour si la chaîne est correctement analysée
+* _string_ : chaîne à analyser
+* _base_ : peut être 0 (automatique) ou un entier entre 2 et 36 (inclus)
+* _result_ : pointeur vers une variable mise à jour si la chaîne est correctement analysée
   (si le pointeur est NULL, le nombre trouvé n'est pas retourné)
 
-Valeur de retour :
+Valeur de retour :
 
-* 1 : OK
-* 0 : erreur
+* 1 : OK
+* 0 : erreur
 
-Les chaînes suivantes sont invalides et la fonction retourne 0 :
+Les chaînes suivantes sont invalides et la fonction retourne 0 :
 
 * chaîne vide
 * nombre avec des caractères non numériques après
@@ -4906,7 +4906,7 @@ Les chaînes suivantes sont invalides et la fonction retourne 0 :
 * nombre > LLONG_MAX (valeur maximale pour une variable de type "long long")
 * entier invalide pour la _base_ donnée
 
-Exemples en C :
+Exemples en C :
 
 [source,c]
 ----
@@ -5080,7 +5080,7 @@ Paramètres :
 * _max_ : taille de la chaîne
 * _format_ : format, le même que celui de la fonction _strftime_, avec des
   caractères de conversion supplémentaires :
-** `%@` : retourner la date exprimée en Temps Universel Coordonné (UTC)
+** `%@` : retourner la date exprimée en Temps Universel Coordonné (UTC)
    au lieu de la date relative au fuseau horaire de l'utilisateur _(WeeChat ≥ 4.7.0)_
 ** `%.N` où `N` est entre 1 et 6 : microsecondes remplies avec des zéros sur
    N chiffres (par exemple `%.3` pour les millisecondes)
@@ -5125,7 +5125,7 @@ Paramètres :
 
 Les formats supportés pour la date/heure (en supposant que l'heure courante est
 `2025-08-30 21:04:55` (Europe/Paris), donc avec le décalage horaire `+02:00`,
-l'heure UTC étant `19:04:55`) :
+l'heure UTC étant `19:04:55`) :
 
 [width="70%",cols="5,6m",options="header"]
 |===
@@ -5191,12 +5191,12 @@ l'heure UTC étant `19:04:55`) :
   1756580695,123456
 |===
 
-Notes :
+Notes :
 
 * Pour ISO 8601, le séparateur entre la date et l'heure est `T` (majuscule) ou
   `t` (minuscule).
 * Pour l'heure UTC, le caractère final est `Z` (majuscule) ou `z` (minuscule).
-* Le format du décalage horaire est l'un des suivants :
+* Le format du décalage horaire est l'un des suivants :
 ** `++[+/-]hh:mm++` (heures et minutes)
 ** `++[+/-]hhmm++` (heures et minutes)
 ** `++[+/-]hh++` (heures).
@@ -5215,7 +5215,7 @@ Exemples en C :
 struct timeval tv;
 
 weechat_util_parse_time ("2025-08-30T19:04:55.123456Z", &tv);  /* == 1 */
-/* Résultat : tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
+/* Résultat : tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
 
 weechat_util_parse_time ("2025-08-30 21:04:55.123456 +02:00", &tv);  /* == 1 */
 /* Même résultat */
@@ -11701,15 +11701,15 @@ Paramètres :
 *** _output_ : sortie standard (défini seulement si _file_out_ n'était pas défini
     dans les options)
 *** _error_ : message d'erreur (défini seulement en cas d'erreur)
-*** _error_code_ : code d'erreur (entier, défini seulement en cas d'erreur) :
-**** `1` : URL invalide
-**** `2` : erreur de transfert (erreur Curl)
-**** `3` : mémoire insuffisante
-**** `4` : erreur de fichier
-**** `5` : transfert stoppé (hook supprimé durant le transfert)
-**** `6` : délai d'attente dépassé pour le transfert ("timeout")
-**** `100` : erreur de création du thread
-*** _error_code_pthread_ : code retour de la fonction _pthread_create_
+*** _error_code_ : code d'erreur (entier, défini seulement en cas d'erreur) :
+**** `1` : URL invalide
+**** `2` : erreur de transfert (erreur Curl)
+**** `3` : mémoire insuffisante
+**** `4` : erreur de fichier
+**** `5` : transfert stoppé (hook supprimé durant le transfert)
+**** `6` : délai d'attente dépassé pour le transfert ("timeout")
+**** `100` : erreur de création du thread
+*** _error_code_pthread_ : code retour de la fonction _pthread_create_
     (entier, défini seulement si _error_code_ vaut `100`)
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
@@ -11763,7 +11763,7 @@ my_url_cb (const void *pointer, void *data, const char *url,
     return WEECHAT_RC_OK;
 }
 
-/* Exemple 1 : sortie dans un fichier */
+/* Exemple 1 : sortie dans un fichier */
 struct t_hashtable *options_url1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11779,7 +11779,7 @@ if (options_url1)
     weechat_hashtable_free (options_url1);
 }
 
-/* Exemple 2 : en-têtes HTTP personnalisés, sortie envoyée à la fonction de rappel */
+/* Exemple 2 : en-têtes HTTP personnalisés, sortie envoyée à la fonction de rappel */
 struct t_hashtable *options_url2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -11863,9 +11863,9 @@ Paramètres :
 * _address_ : nom ou adresse IP de la machine à laquelle se connecter
 * _port_ : numéro de port
 * _ipv6_ :
-** `WEECHAT_HOOK_CONNECT_IPV6_DISABLE` ^(1)^ : désactiver IPv6 (utiliser seulement IPv4)
-** `WEECHAT_HOOK_CONNECT_IPV6_AUTO` ^(1)^ : utiliser IPv6 avec repli sur IPv4
-** `WEECHAT_HOOK_CONNECT_IPV6_FORCE` ^(1)^ : forcer IPv6 (ne pas utiliser IPv4) _(WeeChat ≥ 4.4.0)_
+** `WEECHAT_HOOK_CONNECT_IPV6_DISABLE` ^(1)^ : désactiver IPv6 (utiliser seulement IPv4)
+** `WEECHAT_HOOK_CONNECT_IPV6_AUTO` ^(1)^ : utiliser IPv6 avec repli sur IPv4
+** `WEECHAT_HOOK_CONNECT_IPV6_FORCE` ^(1)^ : forcer IPv6 (ne pas utiliser IPv4) _(WeeChat ≥ 4.4.0)_
 * _retry_ : numéro de nouvelle tentative, utilisé pour se rabattre sur les
   adresses IPv4 si la connexion IPv6 échoue
 * _gnutls_sess_ : session GnuTLS (optionnel)
@@ -11887,7 +11887,7 @@ Paramètres :
   paramètres et valeur de retour :
 ** _const void *pointer_ : pointeur
 ** _void *data_ : pointeur
-** _int status_ : statut de connexion ^(2)^ :
+** _int status_ : statut de connexion ^(2)^ :
 *** _WEECHAT_HOOK_CONNECT_OK_ : connexion ok
 *** _WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND_ : adresse non trouvée
 *** _WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND_ : adresse IP non trouvée
@@ -12850,7 +12850,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Ligne ajoutée dans un tampon.
 
 | weechat | [[hook_signal_buffer_line_data_changed]] buffer_line_data_changed | 4.4.0
-| Pointeur : données de la ligne.
+| Pointeur : données de la ligne.
 | Les données de la ligne ont changé dans un tampon.
 
 | weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
@@ -13018,11 +13018,11 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Combinaison de touches dans le contexte _cursor_.
 
 | weechat | [[hook_signal_layout_buffers_applied]] layout_buffers_applied | 4.4.0
-| Chaîne : nom de la disposition.
+| Chaîne : nom de la disposition.
 | Disposition appliquée pour les tampons.
 
 | weechat | [[hook_signal_layout_windows_applied]] layout_windows_applied | 4.4.0
-| Chaîne : nom de la disposition.
+| Chaîne : nom de la disposition.
 | Disposition appliquée pour les fenêtres.
 
 | weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1
@@ -13232,20 +13232,20 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
 
 Paramètres :
 
-* _signal_ : signal à envoyer ; des drapeaux sont autorisés avant le nom du signal
+* _signal_ : signal à envoyer ; des drapeaux sont autorisés avant le nom du signal
   (voir ci-dessous) _(WeeChat ≥ 4.5.0)_
 * _type_data_ : type de données à envoyer avec le signal (voir
   <<_hook_signal,hook_signal>>)
 * _signal_data_ : données envoyées avec le signal
 
-Le nom du signal peut contenir des drapeaux avec le format suivant : `[flags:xxx,yyy]signal`
+Le nom du signal peut contenir des drapeaux avec le format suivant : `[flags:xxx,yyy]signal`
 où `xxx` et `yyy` sont des noms de drapeaux et `signal` le nom du signal. +
-Les drapeaux suivants sont supportés :
+Les drapeaux suivants sont supportés :
 
-* _stop_on_error_ : sortir immédiatement si une fonction de rappel retourne
+* _stop_on_error_ : sortir immédiatement si une fonction de rappel retourne
   WEECHAT_RC_ERROR (les autres fonctions de rappel ne sont donc PAS exécutées)
   _(WeeChat ≥ 4.5.0)_
-* _ignore_eat_ : considérer que toute fonction de rappel renvoyant WEECHAT_RC_OK_EAT
+* _ignore_eat_ : considérer que toute fonction de rappel renvoyant WEECHAT_RC_OK_EAT
   est en fait WEECHAT_RC_OK et exécuter les fonctions de rappel restantes
   _(WeeChat ≥ 4.5.0)_
 
@@ -13583,7 +13583,7 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 
 Paramètres :
 
-* _signal_ : signal à envoyer ; des drapeaux sont autorisés avant le nom du signal
+* _signal_ : signal à envoyer ; des drapeaux sont autorisés avant le nom du signal
   (voir la fonction <<_hook_signal_send,hook_signal_send>>) _(WeeChat ≥ 4.5.0)_
 * _hashtable_ : table de hachage
 
@@ -14721,9 +14721,9 @@ relâché). +
 ^(3)^ Renseigné seulement pour les tampons avec contenu libre. +
 ^(4)^ Sur un tampon avec contenu formaté, il s'agit de la date à laquelle
 WeeChat a ajouté la ligne dans le tampon, avec une précision à la microseconde
-(supérieure ou égale à "_chat_line_date") ; sur un tampon avec contenu libre,
+(supérieure ou égale à "_chat_line_date") ; sur un tampon avec contenu libre,
 il s'agit du numéro de la ligne ("_chat_line_y"). +
-^(5)^ Obsolète depuis WeeChat 4.11.0 (toujours présent pour la compatibilité) :
+^(5)^ Obsolète depuis WeeChat 4.11.0 (toujours présent pour la compatibilité) :
 il est déduit de l'identifiant de la ligne ("_chat_line_id") et vaut "0" sur
 les tampons avec contenu libre.
 
@@ -15551,7 +15551,7 @@ _WeeChat ≥ 4.11.0._
 
 Retourner une valeur entière de type "long long" pour une propriété du tampon.
 
-Prototype :
+Prototype :
 
 [source,c]
 ----
@@ -15579,7 +15579,7 @@ weechat_printf (NULL, "mon id de tampon est : %lld",
                 weechat_buffer_get_longlong (mon_tampon, "id"));
 ----
 
-Script (Python) :
+Script (Python) :
 
 [source,python]
 ----
@@ -16130,7 +16130,7 @@ _WeeChat ≥ 4.4.0, mis à jour dans la 4.11.0._
 
 Rechercher une ligne du tampon par son identifiant.
 
-Prototype :
+Prototype :
 
 [source,c]
 ----
@@ -16138,26 +16138,26 @@ struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer,
                                               long long id);
 ----
 
-Paramètres :
+Paramètres :
 
-* _buffer_ : pointeur vers le tampon
-* _id_ : identifiant de la ligne : sur un tampon avec contenu formaté,
+* _buffer_ : pointeur vers le tampon
+* _id_ : identifiant de la ligne : sur un tampon avec contenu formaté,
   c'est la date et l'heure d'affichage avec une précision à la microseconde
-  (nombre de microsecondes depuis l'Epoch) ; sur un tampon avec contenu
-  libre, c'est le numéro de la ligne (« y »)
+  (nombre de microsecondes depuis l'Epoch) ; sur un tampon avec contenu
+  libre, c'est le numéro de la ligne (« y »)
 
-Valeur de retour :
+Valeur de retour :
 
 * pointeur vers la ligne trouvée, NULL si non trouvée
 
-Exemple en C :
+Exemple en C :
 
 [source,c]
 ----
 struct t_gui_line *line = weechat_line_search_by_id (buffer, 1786886000000000);
 ----
 
-Script (Python) :
+Script (Python) :
 
 [source,python]
 ----
@@ -17804,7 +17804,7 @@ Paramètres :
   être des chaînes) (peut être NULL) :
 ** _commands_ : une liste de commandes autorisées pendant l'appel, séparées par
    des virgules (voir la fonction <<_string_match_list,string_match_list>>
-   pour le format) ; la valeur spéciale `-` (moins) désactive l'exécution des
+   pour le format) ; la valeur spéciale `-` (moins) désactive l'exécution des
    commandes et la chaîne dans _command_ est envoyée telle quelle au tampon
    (_WeeChat ≥ 4.5.0_)
 ** _delay_ : délai pour exécuter la commande, en millisecondes
@@ -18000,7 +18000,7 @@ _WeeChat ≥ 4.6.0._
 
 Affecter une valeur à une propriété d'une complétion.
 
-Prototype :
+Prototype :
 
 [source,c]
 ----
@@ -18009,7 +18009,7 @@ void weechat_completion_get_string (struct t_gui_completion *completion,
                                     const char *value);
 ----
 
-Paramètres :
+Paramètres :
 
 * _completion_ : pointeur vers la complétion
 * _property_ : nom de la propriété (voir le tableau ci-dessous)
@@ -18044,7 +18044,7 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
 }
 ----
 
-Script (Python) :
+Script (Python) :
 
 [source,python]
 ----

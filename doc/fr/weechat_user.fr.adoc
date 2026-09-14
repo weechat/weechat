@@ -948,7 +948,7 @@ La barre _status_ contient les objets (items) suivants par défaut :
 | scroll                | `-PLUS(50)-`           | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée.
 | lag                   | `Lag: 2.5`             | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible).
 | hotlist               | `H: 3:#abc(2,5), 5`    | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur _#abc_, un message non lu sur le tampon numéro 5).
-| typing                | `Écrit : bob, (alice)` | Notification de saisie, voir <<typing_notifications,Notifications de saisie>>.
+| typing                | `Écrit : bob, (alice)` | Notification de saisie, voir <<typing_notifications,Notifications de saisie>>.
 | completion            | `abc(2) def(5)`        | Liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot.
 |===
 
@@ -4544,7 +4544,7 @@ Pour vous connecter à un relai _api_ avec WeeChat :
 ----
 
 Pour vous connecter à un relai _api_ tournant ailleurs avec WeeChat
-(TLS est fortement recommandé) :
+(TLS est fortement recommandé) :
 
 ----
 /remote add weechat https://example.com:9000 -password=mypassword
