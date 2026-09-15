@@ -83,8 +83,10 @@ struct t_url_constant url_protocols[] =
     URL_DEF_CONST(PROTO, RTMPTS),
 #endif
     URL_DEF_CONST(PROTO, GOPHER),
+#if LIBCURL_VERSION_NUM < 0x081700 /* < 8.23.0 */
     URL_DEF_CONST(PROTO, SMB),
     URL_DEF_CONST(PROTO, SMBS),
+#endif
 #if LIBCURL_VERSION_NUM >= 0x074700 /* 7.71.0 */
     URL_DEF_CONST(PROTO, MQTT),
 #endif
