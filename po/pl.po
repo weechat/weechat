@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-09-10 21:45+0200\n"
-"PO-Revision-Date: 2026-09-05 15:17+0200\n"
+"PO-Revision-Date: 2026-09-17 19:04+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
 "Language: pl\n"
@@ -6813,12 +6813,11 @@ msgstr "Domyślny motyw WeeChat dla terminali z jasnym tłem"
 
 #, c-format
 msgid "%sInvalid theme name \"%s\" (expected a name, not a path)"
-msgstr ""
+msgstr "%sNieprawidłowa nazwa motywu „%s” (oczekiwano nazwy, a nie ścieżki)"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to write file \"%s\": %s"
+#, c-format
 msgid "%sUnable to write theme file \"%s\" (%s)"
-msgstr "%s%s: nie można zapisać pliku \"%s\": %s"
+msgstr "%sNie można zapisać pliku motywi „%s” (%s)"
 
 msgid "Automatic backup"
 msgstr "Automatyczna kopia zapasowa"
