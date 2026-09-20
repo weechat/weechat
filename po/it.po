@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-09-20 11:44+0200\n"
-"PO-Revision-Date: 2026-09-20 10:56+0200\n"
+"PO-Revision-Date: 2026-09-20 19:33+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -10895,7 +10895,7 @@ msgstr "legge/modifica argomento del canale"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] [<topic>|-delete]"
-msgstr "<[canale>] [<argomento>|delete]"
+msgstr "<[canale>] [<argomento>|-delete]"
 
 msgid "topic: new topic"
 msgstr ""
