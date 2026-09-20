@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-09-10 21:45+0200\n"
-"PO-Revision-Date: 2026-09-20 10:18+0200\n"
+"PO-Revision-Date: 2026-09-20 10:51+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -11466,7 +11466,7 @@ msgstr ""
 "angezeigt."
 
 msgid "send raw data to server without parsing"
-msgstr "Daten direkt an Server senden (siehe RFC 2812)"
+msgstr "Daten direkt an Server senden"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-server <server>] <data>"
