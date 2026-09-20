@@ -8989,7 +8989,7 @@ command_init (void)
                "(with two -d: more verbose debug)"),
             N_("raw[-c]: evaluate as condition: use operators and parentheses, "
                "return a boolean value (\"0\" or \"1\")"),
-            N_("expression: expression to evaluate, variables with format ${variable} "
+            N_("expression: expression to evaluate, variables with format ${xxx} "
                "are replaced (see below)"),
             N_("operator: a logical or comparison operator (see below)"),
             "",
@@ -9003,7 +9003,7 @@ command_init (void)
                "each expression, for example: 50 > 100 == 0 and \"50\" > \"100\" == 1"),
             "",
             N_("Some variables are replaced in expression, using the format "
-               "${variable}, which can be, by order of priority:"),
+               "${xxx}, which can be, by order of priority:"),
             N_("  - ${raw_hl:string}: the string itself without evaluation but "
                "with syntax highlighting"),
             N_("  - ${raw:string}: the string itself without evaluation"),

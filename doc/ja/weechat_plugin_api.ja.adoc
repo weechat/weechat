@@ -2716,12 +2716,12 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 // TRANSLATION MISSING
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0, 4.2.0, 4.3.0, 4.4.0._
 
-式を評価して文字列として返す。`+${variable}+`
+式を評価して文字列として返す。`+${xxx}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
 
 [NOTE]
 WeeChat バージョン 1.0 以上の場合、入れ子変数を使えるようになりました、例:
-`+${color:${variable}}+`。
+`+${color:${xxx}}+`。
 
 プロトタイプ:
 
@@ -3076,14 +3076,14 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   == `+test ${variable}+` (with colors)
 
 // TRANSLATION MISSING
-| `+${name}+` | 3.4
+| `+${xxx}+` | 3.4
 | User variable (defined with `+${define:name,value}+`).
-| >> `+${name}+` +
+| >> `+${xxx}+` +
   == `+value+`
 
-| `+${name}+` |
-| _extra_vars_ の変数 `name` の値に展開
-| >> `+${name}+` +
+| `+${xxx}+` |
+| _extra_vars_ の変数 `xxx` の値に展開
+| >> `+${xxx}+` +
   == `+value+`
 
 // TRANSLATION MISSING
@@ -3469,8 +3469,8 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 | >> `+${hdata_count:buffer[gui_buffers]}+` +
   == `+15+`
 
-| `+${sec.data.name}+` |
-| セキュアデータ `name` の値
+| `+${sec.data.xxx}+` |
+| セキュアデータ `xxx` の値
 | >> `+${sec.data.libera_pass}+` +
   == `+my_password+`
 
@@ -3479,13 +3479,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 | >> `+${weechat.look.buffer_time_format}+` +
   == `+%H:%M:%S+`
 
-| `+${name}+` |
-| バッファに対するローカル変数 `name` の値
+| `+${xxx}+` |
+| バッファに対するローカル変数 `xxx` の値
 | >> `+${nick}+` +
   == `+FlashCode+`
 
-| `+${pointer}+` |
-| _pointers_ の変数 `pointer` の値に展開
+| `+${xxx}+` |
+| _pointers_ の変数 `xxx` の値に展開
 | >> `+${buffer}+` +
   == `+0x1234abcd+`
 

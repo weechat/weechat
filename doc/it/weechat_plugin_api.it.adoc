@@ -2792,11 +2792,11 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0, 4.2.0, 4.3.0, 4.4.0._
 
 Evaluate an expression and return result as a string.
-Special variables with format `+${variable}+` are expanded (see table below).
+Special variables with format `+${xxx}+` are expanded (see table below).
 
 [NOTE]
 Since version 1.0, nested variables are supported, for example:
-`+${color:${variable}}+`.
+`+${color:${xxx}}+`.
 
 Prototipo:
 
@@ -3137,14 +3137,14 @@ expanded to last):
 | >> `+${hl:${file.section.option}}+` +
   == `+test ${variable}+` (with colors)
 
-| `+${name}+` | 3.4
+| `+${xxx}+` | 3.4
 | User variable (defined with `+${define:name,value}+`).
-| >> `+${name}+` +
+| >> `+${xxx}+` +
   == `+value+`
 
-| `+${name}+` |
-| Variable `name` from hashtable _extra_vars_.
-| >> `+${name}+` +
+| `+${xxx}+` |
+| Variable `xxx` from hashtable _extra_vars_.
+| >> `+${xxx}+` +
   == `+value+`
 
 | `+${weechat_xxx_dir}+` | 3.2
@@ -3509,8 +3509,8 @@ expanded to last):
 | >> `+${hdata_count:buffer[gui_buffers]}+` +
   == `+15+`
 
-| `+${sec.data.name}+` |
-| Value of the secured data `name`.
+| `+${sec.data.xxx}+` |
+| Value of the secured data `xxx`.
 | >> `+${sec.data.libera_pass}+` +
   == `+my_password+`
 
@@ -3519,13 +3519,13 @@ expanded to last):
 | >> `+${weechat.look.buffer_time_format}+` +
   == `+%H:%M:%S+`
 
-| `+${name}+` |
-| Value of local variable `name` in buffer.
+| `+${xxx}+` |
+| Value of local variable `xxx` in buffer.
 | >> `+${nick}+` +
   == `+FlashCode+`
 
-| `+${pointer}+` |
-| Variable `pointer` from hashtable _pointers_.
+| `+${xxx}+` |
+| Variable `xxx` from hashtable _pointers_.
 | >> `+${buffer}+` +
   == `+0x1234abcd+`
 
