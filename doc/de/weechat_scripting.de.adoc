@@ -911,7 +911,6 @@ eine Option des Skripts verändert hat.
 
 Beispiele:
 
-// TRANSLATION MISSING
 [source,python]
 ----
 SKRIPT_NAME = "meinskript"
