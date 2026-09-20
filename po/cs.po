@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-09-10 21:45+0200\n"
-"PO-Revision-Date: 2026-07-05 12:29+0200\n"
+"PO-Revision-Date: 2026-09-19 21:33+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -5807,8 +5807,7 @@ msgid ""
 msgstr "maximální počet uživatelských příkazů v historii (0 = nekonečně)"
 
 msgid "maximum number of visited buffers to keep in memory"
-msgstr ""
-"maximální počet navštívených bufferů uchovaných v paměti (0 = nekonečně)"
+msgstr "maximální počet navštívených bufferů uchovaných v paměti"
 
 #, fuzzy
 msgid ""
