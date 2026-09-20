@@ -435,7 +435,7 @@ logger_config_mask_create_option (const void *pointer, void *data,
                     config_file, section,
                     option_name, "string",
                     _("file mask for log file; local buffer variables are "
-                      "permitted"),
+                      "permitted with format $xxx"),
                     NULL, 0, 0, "", value, 0,
                     NULL, NULL, NULL,
                     &logger_config_mask_change, NULL, NULL,
@@ -606,10 +606,10 @@ logger_config_init (void)
             N_("default file name mask for log files (format is "
                "\"directory/to/file\" or \"file\", without first \"/\" because "
                "\"path\" option is used to build complete path to file); local "
-               "buffer variables are permitted (you should use only variables "
-               "that are defined on all buffers, so for example you should NOT "
-               "use $server nor $channel); date specifiers are permitted "
-               "(see man strftime)"),
+               "buffer variables are permitted with format $xxx (you should use "
+               "only variables that are defined on all buffers, so for example "
+               "you should NOT use $server nor $channel); date specifiers are "
+               "permitted (see man strftime)"),
             NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0,
             NULL, NULL, NULL,
             &logger_config_change_file_option_restart_log, NULL, NULL,
