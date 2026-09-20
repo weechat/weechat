@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-10 21:45+0200\n"
+"POT-Creation-Date: 2026-09-20 11:10+0200\n"
 "PO-Revision-Date: 2026-09-20 10:57+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -1914,7 +1914,9 @@ msgstr "  - ${raw:ciąg}: sam ciąg bez przetwarzania"
 msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr "  - ${hl:ciąg}: ciąg z podświetlaniem składni"
 
-msgid "  - ${name}: the user-defined variable"
+#, fuzzy
+#| msgid "  - ${name}: the user-defined variable"
+msgid "  - ${xxx}: the user-defined variable \"xxx\""
 msgstr "  - ${name}: zmienna zdefiniowana przez użytkownika"
 
 msgid "  - ${weechat_config_dir}: WeeChat config directory"
@@ -2122,7 +2124,9 @@ msgstr "  - ${sec.data.xxx}: wartość zabezpieczonej zmiennej „xxx”"
 msgid "  - ${file.section.option}: the value of the config option"
 msgstr "  - ${file.section.option}: wartość opcji konfiguracyjnej"
 
-msgid "  - ${name}: the local variable in buffer"
+#, fuzzy
+#| msgid "  - ${name}: the local variable in buffer"
+msgid "  - ${xxx}: the local variable \"xxx\" in buffer"
 msgstr "  - ${name}: zmienna lokalna w buforze"
 
 msgid ""

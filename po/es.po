@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-10 21:45+0200\n"
+"POT-Creation-Date: 2026-09-20 11:10+0200\n"
 "PO-Revision-Date: 2026-07-05 12:29+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
@@ -1941,8 +1941,10 @@ msgstr ""
 msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr ""
 
-msgid "  - ${name}: the user-defined variable"
-msgstr ""
+#, fuzzy
+#| msgid "value of an environment variable"
+msgid "  - ${xxx}: the user-defined variable \"xxx\""
+msgstr "valor de una variable de entorno"
 
 #, fuzzy
 msgid "  - ${weechat_config_dir}: WeeChat config directory"
@@ -2125,7 +2127,7 @@ msgstr "valores de una opción de configuración"
 
 #, fuzzy
 #| msgid "No local variable defined for buffer \"%s\""
-msgid "  - ${name}: the local variable in buffer"
+msgid "  - ${xxx}: the local variable \"xxx\" in buffer"
 msgstr "Ninguna variable local definida para el buffer \"%s\""
 
 msgid ""

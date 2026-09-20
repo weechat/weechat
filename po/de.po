@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-10 21:45+0200\n"
+"POT-Creation-Date: 2026-09-20 11:10+0200\n"
 "PO-Revision-Date: 2026-09-20 10:51+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -1968,7 +1968,9 @@ msgstr "  - ${raw:string}: eine Zeichenkette, ohne das dieser ausgewertet wird"
 msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr "  - ${hl:string}: eine Zeichenkette, mit Syntax-Hervorhebung"
 
-msgid "  - ${name}: the user-defined variable"
+#, fuzzy
+#| msgid "  - ${name}: the user-defined variable"
+msgid "  - ${xxx}: the user-defined variable \"xxx\""
 msgstr "  - ${name}: eine Anwender definierte Variable"
 
 msgid "  - ${weechat_config_dir}: WeeChat config directory"
@@ -2190,7 +2192,9 @@ msgstr "  - ${sec.data.xxx}: der Wert von geschützten Daten \"xxx\""
 msgid "  - ${file.section.option}: the value of the config option"
 msgstr "  - ${file.section.option}: der Wert der Konfigurationsoption"
 
-msgid "  - ${name}: the local variable in buffer"
+#, fuzzy
+#| msgid "  - ${name}: the local variable in buffer"
+msgid "  - ${xxx}: the local variable \"xxx\" in buffer"
 msgstr "  - ${name}: die lokale Variable im Buffer"
 
 msgid ""

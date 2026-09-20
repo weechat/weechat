@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-10 21:45+0200\n"
+"POT-Creation-Date: 2026-09-20 11:10+0200\n"
 "PO-Revision-Date: 2026-09-20 11:00+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -1903,7 +1903,9 @@ msgstr "  - ${raw:dizi}: Değerlendirme olmadan dizinin kendisi"
 msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr "  - ${hl:dizi}: Sözdizim vurgulamalı dizi"
 
-msgid "  - ${name}: the user-defined variable"
+#, fuzzy
+#| msgid "  - ${name}: the user-defined variable"
+msgid "  - ${xxx}: the user-defined variable \"xxx\""
 msgstr "  - ${ad}: Kullanıcı tanımlı değişken"
 
 msgid "  - ${weechat_config_dir}: WeeChat config directory"
@@ -2107,7 +2109,9 @@ msgstr "  - ${sec.veri.xxx}: Güvenli hale sokulmuş \"xxx\" verisinin değeri"
 msgid "  - ${file.section.option}: the value of the config option"
 msgstr "  - ${dosya.bölüm.seçenek}: Yapılandırma seçeneğinin değeri"
 
-msgid "  - ${name}: the local variable in buffer"
+#, fuzzy
+#| msgid "  - ${name}: the local variable in buffer"
+msgid "  - ${xxx}: the local variable \"xxx\" in buffer"
 msgstr "  - ${ad}: Arabellekteki yerel değişken"
 
 msgid ""

@@ -9008,7 +9008,7 @@ command_init (void)
                "with syntax highlighting"),
             N_("  - ${raw:string}: the string itself without evaluation"),
             N_("  - ${hl:string}: the string with syntax highlighting"),
-            N_("  - ${name}: the user-defined variable"),
+            N_("  - ${xxx}: the user-defined variable \"xxx\""),
             N_("  - ${weechat_config_dir}: WeeChat config directory"),
             N_("  - ${weechat_data_dir}: WeeChat data directory"),
             N_("  - ${weechat_state_dir}: WeeChat state directory"),
@@ -9061,7 +9061,7 @@ command_init (void)
             N_("  - ${hdata_count:name[ptr]}: number of items in this hdata with pointer"),
             N_("  - ${sec.data.xxx}: the value of the secured data \"xxx\""),
             N_("  - ${file.section.option}: the value of the config option"),
-            N_("  - ${name}: the local variable in buffer"),
+            N_("  - ${xxx}: the local variable \"xxx\" in buffer"),
             N_("  - the hdata name/variable (the value is automatically converted "
                "to string), by default \"window\" and \"buffer\" point to current "
                "window/buffer."),

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-10 21:45+0200\n"
+"POT-Creation-Date: 2026-09-20 11:10+0200\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -1806,8 +1806,9 @@ msgstr ""
 msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr ""
 
-msgid "  - ${name}: the user-defined variable"
-msgstr ""
+#, fuzzy
+msgid "  - ${xxx}: the user-defined variable \"xxx\""
+msgstr "  . típus: szám\n"
 
 #, fuzzy
 msgid "  - ${weechat_config_dir}: WeeChat config directory"
@@ -1985,8 +1986,9 @@ msgstr ""
 msgid "  - ${file.section.option}: the value of the config option"
 msgstr "Nem található az opció\n"
 
-msgid "  - ${name}: the local variable in buffer"
-msgstr ""
+#, fuzzy
+msgid "  - ${xxx}: the local variable \"xxx\" in buffer"
+msgstr "  . típus: szám\n"
 
 msgid ""
 "  - the hdata name/variable (the value is automatically converted to "

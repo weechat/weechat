@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-10 21:45+0200\n"
+"POT-Creation-Date: 2026-09-20 11:10+0200\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -1828,8 +1828,9 @@ msgstr ""
 msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr ""
 
-msgid "  - ${name}: the user-defined variable"
-msgstr ""
+#, fuzzy
+msgid "  - ${xxx}: the user-defined variable \"xxx\""
+msgstr "  . тип: целочисленный\n"
 
 #, fuzzy
 msgid "  - ${weechat_config_dir}: WeeChat config directory"
@@ -2009,7 +2010,7 @@ msgstr "Не найден параметр\n"
 
 #, fuzzy
 #| msgid "No local variable defined for buffer \"%s\""
-msgid "  - ${name}: the local variable in buffer"
+msgid "  - ${xxx}: the local variable \"xxx\" in buffer"
 msgstr "Нет локальной переменной определённой для буфера \"%s\""
 
 msgid ""

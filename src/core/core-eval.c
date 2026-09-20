@@ -1611,7 +1611,7 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
  *   - ${raw_hl:string}: the string itself without evaluation but with syntax highlighting
  *   - ${raw:string}: the string itself without evaluation
  *   - ${hl:string}: the string with syntax highlighting
- *   - ${name}: the variable from hashtable "user_vars" or "extra_vars"
+ *   - ${xxx}: the variable "xxx" from hashtable "user_vars" or "extra_vars"
  *   - ${weechat_config_dir}: WeeChat config directory
  *   - ${weechat_data_dir}: WeeChat data directory
  *   - ${weechat_state_dir}: WeeChat state directory
@@ -1660,8 +1660,8 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
  *   - ${hdata_count:name[ptr]}: number of items in this hdata with pointer
  *   - ${sec.data.xxx}: the value of the secured data "xxx"
  *   - ${file.section.option}: the value of the config option
- *   - ${name}: the local variable in buffer
- *   - ${name}: the pointer name from hashtable "pointers"
+ *   - ${xxx}: the local variable "xxx" in buffer
+ *   - ${xxx}: the pointer named "xxx" from hashtable "pointers"
  *   - ${hdata.var1.var2}: hdata with name
  *   - ${hdata[list].var1.var2}: hdata with list
  *   - ${hdata[ptr].var1.var2}: hdata with pointer
