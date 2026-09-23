@@ -749,12 +749,10 @@ gui_chat_display_day_changed (struct t_gui_window *window,
     /* Build the message to display. */
     if (date1)
     {
-        if (strftime (temp_message, sizeof (temp_message),
-                      CONFIG_STRING(config_look_day_change_message_2dates),
-                      date1) == 0)
-            temp_message[0] = '\0';
-        if (strftime (message, sizeof (message), temp_message, date2) == 0)
-            message[0] = '\0';
+        util_strftimeval (temp_message, sizeof (temp_message),
+                          CONFIG_STRING(config_look_day_change_message_2dates),
+                          tv_date1);
+        util_strftimeval (message, sizeof (message), temp_message, tv_date2);
     }
     else
     {
