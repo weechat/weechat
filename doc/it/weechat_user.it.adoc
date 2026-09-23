@@ -2388,7 +2388,8 @@ IRC ("logger.mask.irc.libera") o per un plugin ("logger.mask.irc").
 ===== File di log per data
 
 Per avere file di log per data, è possibile usare specificatori data/ora
-nei mask (consultare `man stfrtime` per i formati), ad esempio:
+nei mask (consultare `man strftime` per i formati, extra specifiers are supported, see link:weechat_plugin_api.it.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]),
+ad esempio:
 
 ----
 /set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"

@@ -2090,7 +2090,7 @@ logger.file.mask
 [[logger_files_by_date]]
 ===== Лог фајлови по датуму
 
-Ако желите да се лог фајлови креирају по датуму, у маски можете да употребите спецификаторе датума/времена (за формате, погледајте `man strftime`), на пример:
+Ако желите да се лог фајлови креирају по датуму, у маски можете да употребите спецификаторе датума/времена (за формате, погледајте `man strftime`, extra specifiers are supported, see link:weechat_plugin_api.sr.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]), на пример:
 
 ----
 /set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"

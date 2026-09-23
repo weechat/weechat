@@ -609,7 +609,9 @@ logger_config_init (void)
                "buffer variables are permitted with format $xxx (you should use "
                "only variables that are defined on all buffers, so for example "
                "you should NOT use $server nor $channel); date specifiers are "
-               "permitted (see man strftime)"),
+               "permitted (see man strftime for date/time specifiers, extra "
+               "specifiers are supported, see function util_strftimeval in "
+               "Plugin API reference)"),
             NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0,
             NULL, NULL, NULL,
             &logger_config_change_file_option_restart_log, NULL, NULL,
@@ -638,7 +640,9 @@ logger_config_init (void)
             logger_config_file, logger_config_section_file,
             "path", "string",
             N_("path for WeeChat log files; "
-               "date specifiers are permitted (see man strftime) "
+               "date specifiers are permitted (see man strftime for date/time "
+               "specifiers, extra specifiers are supported, see function "
+               "util_strftimeval in Plugin API reference) "
                "(path is evaluated, see function string_eval_path_home in "
                "plugin API reference)"),
             NULL, 0, 0, "${weechat_data_dir}/logs", NULL, 0,

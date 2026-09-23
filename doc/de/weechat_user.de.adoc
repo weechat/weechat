@@ -2259,7 +2259,7 @@ die Erweiterung ("logger.mask.irc").
 
 Um Protokolldateien mit einer Datumsrelevanz zu erstellen müssen
 Datumsspezifikationen in der Maske genutzt werden (siehe
-`man strftime` für das Format). Zum Beispiel:
+`man strftime` für das Format, extra specifiers are supported, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]). Zum Beispiel:
 
 ----
 /set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"

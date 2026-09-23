@@ -12,8 +12,12 @@
 
 extern "C"
 {
+#include "src/core/core-config-file.h"
 #include "src/gui/gui-buffer.h"
 #include "src/plugins/logger/logger.h"
+#include "src/plugins/logger/logger-config.h"
+
+extern char *logger_get_file_path (void);
 
 extern char *logger_get_mask_expanded (struct t_gui_buffer *buffer,
                                        const char *mask);
@@ -50,7 +54,20 @@ TEST(Logger, CheckConditions)
 
 TEST(Logger, GetFilePath)
 {
-    /* TODO: write tests */
+    char *str;
+
+    config_file_option_set (logger_config_file_path, "/tmp/logs", 1);
+    WEE_TEST_STR("/tmp/logs", logger_get_file_path ());
+
+    /* Escaped "%" */
+    config_file_option_set (logger_config_file_path, "/tmp/logs%%", 1);
+    WEE_TEST_STR("/tmp/logs%", logger_get_file_path ());
+
+    /* Extra specifier "%@" (UTC date) is supported */
+    config_file_option_set (logger_config_file_path, "/tmp/%@logs", 1);
+    WEE_TEST_STR("/tmp/logs", logger_get_file_path ());
+
+    config_file_option_reset (logger_config_file_path, 1);
 }
 
 /*
@@ -112,6 +129,15 @@ TEST(Logger, GetMaskExpanded)
     /* Local variable of buffer is expanded (buffer "name" == "weechat") */
     WEE_TEST_STR("weechat.weechatlog",
                  logger_get_mask_expanded (gui_buffers, "$name.weechatlog"));
+
+    /* Escaped "%" */
+    WEE_TEST_STR("weechat.%.weechatlog",
+                 logger_get_mask_expanded (gui_buffers,
+                                           "$name.%%.weechatlog"));
+
+    /* Extra specifier "%@" (UTC date) is supported */
+    WEE_TEST_STR("weechat.weechatlog",
+                 logger_get_mask_expanded (gui_buffers, "%@$name.weechatlog"));
 
     /* Directory separators of the mask itself are kept as directory levels. */
     WEE_TEST_STR("dir1/dir2/weechat.weechatlog",

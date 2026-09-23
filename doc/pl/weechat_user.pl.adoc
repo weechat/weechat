@@ -2237,7 +2237,8 @@ Oznacza to, że można mieć maski specyficzne tylko dla niektórych serwerów I
 ===== Pliki z logami uporządkowane według daty
 
 Żeby mieć pliki z logami uporządkowane według daty, możesz użyć specyfikatorów
-daty/czasu w masce (obsługiwane formaty można znaleźć w `man strftime`),
+daty/czasu w masce (obsługiwane formaty można znaleźć w `man strftime`,
+extra specifiers are supported, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]),
 na przykład:
 
 ----

@@ -95,7 +95,8 @@ logger_check_conditions (struct t_gui_buffer *buffer, const char *conditions)
  *
  * Special vars are replaced:
  *   - with call to function string_eval_path_home
- *   - date/time specifiers (see man strftime)
+ *   - date/time specifiers (see function util_strftimeval in Plugin API
+ *     reference)
  *
  * Note: result must be freed after use.
  */
@@ -105,8 +106,7 @@ logger_get_file_path (void)
 {
     char *path, *path2;
     int length;
-    time_t seconds;
-    struct tm *date_tmp;
+    struct timeval tv_now;
     struct t_hashtable *options;
 
     path = NULL;
@@ -131,11 +131,8 @@ logger_get_file_path (void)
     path2 = malloc (length);
     if (!path2)
         goto end;
-    seconds = time (NULL);
-    date_tmp = localtime (&seconds);
-    path2[0] = '\0';
-    if (strftime (path2, length, path, date_tmp) == 0)
-        path2[0] = '\0';
+    gettimeofday (&tv_now, NULL);
+    weechat_util_strftimeval (path2, length, path, &tv_now);
 
     if (weechat_logger_plugin->debug)
     {
@@ -330,7 +327,8 @@ logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
  *
  * Special vars are replaced:
  *   - local variables of buffer ($plugin, $name, ..)
- *   - date/time specifiers (see man strftime)
+ *   - date/time specifiers (see function util_strftimeval in Plugin API
+ *     reference)
  *
  * Note: result must be freed after use.
  */
@@ -342,8 +340,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     char *expanded, *replaced, **items;
     const char *ptr_replacement_char;
     int length, i, num_items;
-    time_t seconds;
-    struct tm *date_tmp;
+    struct timeval tv_now;
 
     mask2 = NULL;
     mask3 = NULL;
@@ -361,11 +358,8 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     mask2 = malloc (length);
     if (!mask2)
         goto end;
-    seconds = time (NULL);
-    date_tmp = localtime (&seconds);
-    mask2[0] = '\0';
-    if (strftime (mask2, length, mask, date_tmp) == 0)
-        mask2[0] = '\0';
+    gettimeofday (&tv_now, NULL);
+    weechat_util_strftimeval (mask2, length, mask, &tv_now);
 
     ptr_replacement_char = weechat_config_string (
         logger_config_file_replacement_char);

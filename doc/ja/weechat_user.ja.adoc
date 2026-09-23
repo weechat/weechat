@@ -2334,7 +2334,7 @@ logger.file.mask
 ===== ログファイルに日付を利用する
 
 ログファイルに日付を使うには、マスクに日時/時間指定子を利用できます
-(書式に関しては `man strftime` を参照してください)。例えば:
+(書式に関しては `man strftime` を参照してください, extra specifiers are supported, see link:weechat_plugin_api.ja.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^])。例えば:
 
 ----
 /set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
