@@ -248,17 +248,17 @@ util_get_microseconds_string (unsigned long long microseconds)
 const char *
 util_get_time_string (const time_t *date)
 {
-    struct tm *local_time;
+    struct timeval tv;
     static char text_time[128];
 
     text_time[0] = '\0';
-    local_time = localtime (date);
-    if (local_time)
-    {
-        if (strftime (text_time, sizeof (text_time),
-                      CONFIG_STRING(config_look_time_format), local_time) == 0)
-            text_time[0] = '\0';
-    }
+    if (!date)
+        return text_time;
+
+    tv.tv_sec = *date;
+    tv.tv_usec = 0;
+    util_strftimeval (text_time, sizeof (text_time),
+                      CONFIG_STRING(config_look_time_format), &tv);
 
     return text_time;
 }

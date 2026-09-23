@@ -19,6 +19,8 @@ extern "C"
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
+#include "src/core/core-config.h"
+#include "src/core/core-config-file.h"
 #include "src/core/core-string.h"
 #include "src/core/core-util.h"
 }
@@ -261,9 +263,17 @@ TEST(CoreUtil, GetTimeString)
     time_t date;
     const char *str_date;
 
+    STRCMP_EQUAL("", util_get_time_string (NULL));
+
     date = 946684800;  /* 2000-01-01 00:00 */
     str_date = util_get_time_string (&date);
     STRCMP_EQUAL("Sat, 01 Jan 2000 00:00:00", str_date);
+
+    /* Extra specifiers are supported */
+    config_file_option_set (config_look_time_format, "%@%F %T.%f (%!)", 1);
+    str_date = util_get_time_string (&date);
+    STRCMP_EQUAL("2000-01-01 00:00:00.000000 (946684800)", str_date);
+    config_file_option_reset (config_look_time_format, 1);
 }
 
 /*

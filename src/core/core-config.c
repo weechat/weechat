@@ -4439,7 +4439,9 @@ config_weechat_init_options (void)
             weechat_config_file, weechat_config_section_look,
             "time_format", "string",
             N_("time format for dates converted to strings and displayed in "
-               "messages (see man strftime for date/time specifiers)"),
+               "messages (see man strftime for date/time specifiers, extra "
+               "specifiers are supported, see function util_strftimeval in "
+               "Plugin API reference)"),
             NULL, 0, 0, "%a, %d %b %Y %T", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_whitespace_char = config_file_new_option (

@@ -44,6 +44,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: add support of extra date/time specifiers like "%@" (UTC date) in option weechat.look.time_format
 - core: display the path and the reason when a theme file cannot be written in command `/theme`
 - core: reject theme names that cannot be used as file names in command `/theme`
 - core: fix active buffer in group of merged buffers when the merged buffer is not displayed in a window
