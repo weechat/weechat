@@ -702,15 +702,26 @@ gui_chat_display_word (struct t_gui_window *window,
 
 void
 gui_chat_display_day_changed (struct t_gui_window *window,
-                              struct tm *date1, struct tm *date2,
+                              struct timeval *tv_date1,
+                              struct timeval *tv_date2,
                               int simulate)
 {
     char temp_message[1024], message[1024], *message_with_color;
     int year1, year1_last_yday;
+    struct tm local_time1, local_time2, *date1, *date2;
 
     if (simulate
         || (!simulate && (window->win_chat_cursor_y >= window->win_chat_height)))
         return;
+
+    date1 = NULL;
+    if (tv_date1)
+    {
+        localtime_r (&(tv_date1->tv_sec), &local_time1);
+        date1 = &local_time1;
+    }
+    localtime_r (&(tv_date2->tv_sec), &local_time2);
+    date2 = &local_time2;
 
     /*
      * If date1 is given, compare date1 and date2; if date2 is date1 + 1 day,
@@ -747,10 +758,9 @@ gui_chat_display_day_changed (struct t_gui_window *window,
     }
     else
     {
-        if (strftime (message, sizeof (message),
-                      CONFIG_STRING(config_look_day_change_message_1date),
-                      date2) == 0)
-            message[0] = '\0';
+        util_strftimeval (message, sizeof (message),
+                          CONFIG_STRING(config_look_day_change_message_1date),
+                          tv_date2);
     }
 
     message_with_color = (strstr (message, "${")) ?
@@ -1389,8 +1399,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     const char *ptr_data, *ptr_end_offset, *ptr_style, *next_char;
     struct t_gui_line *ptr_prev_line, *ptr_next_line;
     struct tm local_time, local_time2;
-    struct timeval tv_time;
-    time_t seconds, *ptr_time;
+    struct timeval tv_time, tv_date1, tv_date2;
 
     if (!line)
         return 0;
@@ -1429,7 +1438,6 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         && CONFIG_BOOLEAN(config_look_day_change)
         && window->buffer->day_change)
     {
-        ptr_time = NULL;
         ptr_prev_line = gui_line_get_prev_displayed (line);
         if (ptr_prev_line)
         {
@@ -1441,14 +1449,15 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         if (!ptr_prev_line)
         {
             gettimeofday (&tv_time, NULL);
-            seconds = tv_time.tv_sec;
-            localtime_r (&seconds, &local_time);
+            localtime_r (&(tv_time.tv_sec), &local_time);
             localtime_r (&line->data->date, &local_time2);
             if ((local_time.tm_mday != local_time2.tm_mday)
                 || (local_time.tm_mon != local_time2.tm_mon)
                 || (local_time.tm_year != local_time2.tm_year))
             {
-                gui_chat_display_day_changed (window, NULL, &local_time2,
+                tv_date2.tv_sec = line->data->date;
+                tv_date2.tv_usec = line->data->date_usec;
+                gui_chat_display_day_changed (window, NULL, &tv_date2,
                                               simulate);
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);
@@ -1651,7 +1660,6 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         && CONFIG_BOOLEAN(config_look_day_change)
         && window->buffer->day_change)
     {
-        ptr_time = NULL;
         ptr_next_line = gui_line_get_next_displayed (line);
         if (ptr_next_line)
         {
@@ -1663,24 +1671,25 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         if (ptr_next_line)
         {
             /* Get time of next line. */
-            ptr_time = &ptr_next_line->data->date;
+            tv_date2.tv_sec = ptr_next_line->data->date;
+            tv_date2.tv_usec = ptr_next_line->data->date_usec;
         }
         else
         {
             /* It was the last line => compare with current system time. */
-            gettimeofday (&tv_time, NULL);
-            seconds = tv_time.tv_sec;
-            ptr_time = &seconds;
+            gettimeofday (&tv_date2, NULL);
         }
-        if (ptr_time && (*ptr_time != 0))
+        if (tv_date2.tv_sec != 0)
         {
             localtime_r (&line->data->date, &local_time);
-            localtime_r (ptr_time, &local_time2);
+            localtime_r (&(tv_date2.tv_sec), &local_time2);
             if ((local_time.tm_mday != local_time2.tm_mday)
                 || (local_time.tm_mon != local_time2.tm_mon)
                 || (local_time.tm_year != local_time2.tm_year))
             {
-                gui_chat_display_day_changed (window, &local_time, &local_time2,
+                tv_date1.tv_sec = line->data->date;
+                tv_date1.tv_usec = line->data->date_usec;
+                gui_chat_display_day_changed (window, &tv_date1, &tv_date2,
                                               simulate);
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);
