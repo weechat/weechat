@@ -55,6 +55,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"
 - javascript, lua, perl, php, ruby, tcl: fix return value of function hdata_longlong
 - logger: add support of extra date/time specifiers like "%@" (UTC date) in options logger.file.mask, logger.file.path and logger.mask.* ([#2361](https://github.com/weechat/weechat/issues/2361))
+- relay/irc: add support of extra date/time specifiers like "%@" (UTC date) in option relay.irc.backlog_time_format
 - relay/irc: remove message tags not negotiated by the client in redirected messages ([#2359](https://github.com/weechat/weechat/issues/2359))
 - relay/api: fix notify tag in line when already read on remote ([#2343](https://github.com/weechat/weechat/issues/2343))
 

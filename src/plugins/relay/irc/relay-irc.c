@@ -817,7 +817,8 @@ relay_irc_get_line_info (struct t_relay_client *client,
     const char *ptr_tag, *ptr_message, *ptr_nick, *ptr_nick1, *ptr_nick2;
     const char *ptr_host, *localvar_nick, *time_format;
     time_t msg_date;
-    struct tm *tm, gm_time;
+    struct timeval tv_msg_date;
+    struct tm gm_time;
 
     if (irc_command)
         *irc_command = -1;
@@ -939,9 +940,12 @@ relay_irc_get_line_info (struct t_relay_client *client,
         if (!(RELAY_IRC_DATA(client, server_capabilities) & (1 << RELAY_IRC_CAPAB_SERVER_TIME))
             && time_format && time_format[0])
         {
-            tm = localtime (&msg_date);
-            if (strftime (str_time, sizeof (str_time), time_format, tm) == 0)
-                str_time[0] = '\0';
+            tv_msg_date.tv_sec = msg_date;
+            tv_msg_date.tv_usec = weechat_hdata_integer (relay_hdata_line_data,
+                                                         line_data,
+                                                         "date_usec");
+            weechat_util_strftimeval (str_time, sizeof (str_time), time_format,
+                                      &tv_msg_date);
             weechat_asprintf (message, "%s%s", str_time, pos);
         }
         else

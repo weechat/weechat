@@ -1878,9 +1878,11 @@ relay_config_init (void)
             relay_config_file, relay_config_section_irc,
             "backlog_time_format", "string",
             N_("format for time in backlog messages (see man strftime for "
-               "format) (not used if server capability \"server-time\" was "
-               "enabled by client, because time is sent as irc tag); empty "
-               "string = disable time in backlog messages"),
+               "date/time specifiers, extra specifiers are supported, see "
+               "function util_strftimeval in Plugin API reference) (not used "
+               "if server capability \"server-time\" was enabled by client, "
+               "because time is sent as irc tag); empty string = disable time "
+               "in backlog messages"),
             NULL, 0, 0, "[%H:%M] ", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }

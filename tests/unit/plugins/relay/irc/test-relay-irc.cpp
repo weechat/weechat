@@ -19,6 +19,9 @@ extern "C"
 #include "src/core/core-hashtable.h"
 #include "src/core/core-hook.h"
 #include "src/core/core-string.h"
+#include "src/gui/gui-buffer.h"
+#include "src/gui/gui-chat.h"
+#include "src/gui/gui-line.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/relay/relay.h"
@@ -40,6 +43,14 @@ extern void relay_irc_parse_ctcp (const char *message,
 extern int relay_irc_tag_relay_client_id (const char *tags);
 extern int relay_irc_tag_relayed (struct t_relay_client *client,
                                   const char *tag);
+extern void relay_irc_get_line_info (struct t_relay_client *client,
+                                     struct t_gui_buffer *buffer,
+                                     struct t_gui_line_data *line_data,
+                                     int *irc_command, int *irc_action,
+                                     time_t *date, const char **nick,
+                                     const char **nick1, const char **nick2,
+                                     const char **host, char **tags,
+                                     char **message);
 extern char *relay_irc_remove_tags_not_negotiated (
     struct t_relay_client *client,
     const char *message);
@@ -669,9 +680,53 @@ TEST(RelayIrc, HsignalIrcRedirCb)
  *   relay_irc_get_line_info
  */
 
-TEST(RelayIrc, GetLineInfo)
+TEST(RelayIrcWithClient, GetLineInfo)
 {
-    /* TODO: write tests */
+    struct t_gui_line_data *ptr_line_data;
+    int irc_command, irc_action;
+    time_t date;
+    const char *nick, *nick1, *nick2, *host;
+    char *tags, *message;
+
+    /* Test date: 2023-12-25T10:29:09.456789Z */
+    gui_chat_printf_datetime_tags (gui_buffers, 1703500149, 456789,
+                                   "irc_privmsg,nick_alice,host_user@host",
+                                   "alice\thello");
+    ptr_line_data = gui_buffers->own_lines->last_line->data;
+
+    /* Default time format */
+    relay_irc_get_line_info (ptr_relay_client, gui_buffers, ptr_line_data,
+                             &irc_command, &irc_action, &date,
+                             &nick, &nick1, &nick2, &host, &tags, &message);
+    CHECK(irc_command >= 0);
+    LONGS_EQUAL(0, irc_action);
+    LONGS_EQUAL(1703500149, date);
+    STRCMP_EQUAL("alice", nick);
+    STRCMP_EQUAL("user@host", host);
+    POINTERS_EQUAL(NULL, tags);
+    STRCMP_EQUAL("[10:29] hello", message);
+    free (message);
+
+    /* Extra specifiers are supported */
+    config_file_option_set (relay_config_irc_backlog_time_format,
+                            "%@[%T.%.3] ", 1);
+    relay_irc_get_line_info (ptr_relay_client, gui_buffers, ptr_line_data,
+                             &irc_command, &irc_action, &date,
+                             &nick, &nick1, &nick2, &host, &tags, &message);
+    POINTERS_EQUAL(NULL, tags);
+    STRCMP_EQUAL("[10:29:09.456] hello", message);
+    free (message);
+
+    /* Empty time format */
+    config_file_option_set (relay_config_irc_backlog_time_format, "", 1);
+    relay_irc_get_line_info (ptr_relay_client, gui_buffers, ptr_line_data,
+                             &irc_command, &irc_action, &date,
+                             &nick, &nick1, &nick2, &host, &tags, &message);
+    POINTERS_EQUAL(NULL, tags);
+    STRCMP_EQUAL("hello", message);
+    free (message);
+
+    config_file_option_reset (relay_config_irc_backlog_time_format, 1);
 }
 
 /*
