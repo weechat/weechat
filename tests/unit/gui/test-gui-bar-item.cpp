@@ -10,7 +10,10 @@
 
 extern "C"
 {
+#include <stdlib.h>
 #include <string.h>
+#include "src/core/core-config.h"
+#include "src/core/core-config-file.h"
 #include "src/gui/gui-bar.h"
 #include "src/gui/gui-bar-item.h"
 
@@ -19,6 +22,11 @@ extern char *gui_bar_item_buffer_name_cb (const void *pointer, void *data,
                                           struct t_gui_window *window,
                                           struct t_gui_buffer *buffer,
                                           struct t_hashtable *extra_info);
+extern char *gui_bar_item_time_cb (const void *pointer, void *data,
+                                   struct t_gui_bar_item *item,
+                                   struct t_gui_window *window,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_hashtable *extra_info);
 }
 
 TEST_GROUP(GuiBarItem)
@@ -246,7 +254,24 @@ TEST(GuiBarItem, InputTextCb)
 
 TEST(GuiBarItem, TimeCb)
 {
-    /* TODO: write tests */
+    char *str;
+    int length;
+
+    /* Empty format */
+    config_file_option_set (config_look_item_time_format, "", 1);
+    POINTERS_EQUAL(NULL, gui_bar_item_time_cb (NULL, NULL, NULL, NULL, NULL,
+                                               NULL));
+
+    /* Extra specifiers are supported */
+    config_file_option_set (config_look_item_time_format, "%@test%%", 1);
+    str = gui_bar_item_time_cb (NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(str);
+    length = strlen (str);
+    CHECK(length >= 5);
+    STRCMP_EQUAL("test%", str + length - 5);
+    free (str);
+
+    config_file_option_reset (config_look_item_time_format, 1);
 }
 
 /*

@@ -1170,20 +1170,16 @@ config_change_item_time_format (const void *pointer, void *data,
 void
 config_get_item_time (char *text_time, int max_length)
 {
-    time_t date;
-    struct tm *local_time;
+    struct timeval tv_now;
 
     if (!config_item_time_evaluated)
         config_change_item_time_format (NULL, NULL, NULL);
 
     text_time[0] = '\0';
 
-    date = time (NULL);
-    local_time = localtime (&date);
-    if (strftime (text_time, max_length,
-                  config_item_time_evaluated,
-                  local_time) == 0)
-        text_time[0] = '\0';
+    gettimeofday (&tv_now, NULL);
+    util_strftimeval (text_time, max_length, config_item_time_evaluated,
+                      &tv_now);
 }
 
 /*
@@ -3961,8 +3957,10 @@ config_weechat_init_options (void)
             weechat_config_file, weechat_config_section_look,
             "item_time_format", "string|themable",
             N_("time format for \"time\" bar item (see man strftime for "
-               "date/time specifiers) (note: content is evaluated, so you can "
-               "use colors with format \"${color:xxx}\", see /help eval)"),
+               "date/time specifiers, extra specifiers are supported, see "
+               "function util_strftimeval in Plugin API reference) (note: "
+               "content is evaluated, so you can use colors with format "
+               "\"${color:xxx}\", see /help eval)"),
             NULL, 0, 0, "%H:%M", NULL, 0,
             NULL, NULL, NULL,
             &config_change_item_time_format, NULL, NULL,
