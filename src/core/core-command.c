@@ -9003,7 +9003,9 @@ command_init (void)
                "each expression, for example: 50 > 100 == 0 and \"50\" > \"100\" == 1"),
             "",
             N_("Some variables are replaced in expression, using the format "
-               "${xxx}, which can be, by order of priority:"),
+               "${xxx}, which can be, by order of priority (for more information, "
+               "please look at \"Plugin API reference\", function "
+               "\"string_eval_expression\"):"),
             N_("  - ${raw_hl:string}: the string itself without evaluation but "
                "with syntax highlighting"),
             N_("  - ${raw:string}: the string itself without evaluation"),
@@ -9044,7 +9046,7 @@ command_init (void)
                "(N is an integer ≥ 1 or ≤ -1, if negative, counts from the last item)"),
             N_("  - ${split_shell:random,string}: random item of the split shell arguments"),
             N_("  - ${split_shell:count,string}: number of items of the split shell arguments"),
-            N_("  - ${color:name}: the color (see \"Plugin API reference\", function \"color\")"),
+            N_("  - ${color:name}: the color"),
             N_("  - ${modifier:name,data,string}: the modifier"),
             N_("  - ${info:name,arguments}: the info (arguments are optional)"),
             N_("  - ${base_encode:base,string}: the string encoded to base: 16, 32, 64 or 64url"),
@@ -9084,8 +9086,6 @@ command_init (void)
             N_("  - ${hdata[pointer].var1.method()}: when var1 is a hashtable, "
                "methods can be called: \"keys()\", \"values()\", \"keys_sorted()\", "
                "\"keys_values()\" and \"keys_values_sorted()\""),
-            N_("For name of hdata and variables, please look at \"Plugin API "
-               "reference\", function \"weechat_hdata_get\"."),
             "",
             N_("Logical operators (by order of priority):"),
             N_("  &&   boolean \"and\""),
