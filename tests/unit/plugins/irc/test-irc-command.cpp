@@ -8,11 +8,16 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests.h"
+
 extern "C"
 {
 #include <string.h>
+#include "src/core/core-config-file.h"
 #include "src/core/core-string.h"
 #include "src/plugins/irc/irc-command.h"
+#include "src/plugins/irc/irc-notify.h"
+#include "src/plugins/irc/irc-server.h"
 
 extern char **irc_command_mode_masks_convert_ranges (char **argv, int arg_start);
 }
@@ -689,7 +694,45 @@ TEST(IrcCommand, Notice)
 
 TEST(IrcCommand, Notify)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    run_cmd_quiet ("/mute /server add test_notify 127.0.0.1");
+    server = irc_server_search ("test_notify");
+    CHECK(server);
+
+    run_cmd_quiet ("/mute /notify add nick1 test_notify");
+    run_cmd_quiet ("/mute /notify add nick2 test_notify");
+    run_cmd_quiet ("/mute /notify add nick3 test_notify");
+    run_cmd_quiet ("/mute /notify add nick4 test_notify");
+    LONGS_EQUAL(4, server->notify_count);
+
+    /* Delete a single nick. */
+    run_cmd_quiet ("/mute /notify del nick2 test_notify");
+    LONGS_EQUAL(3, server->notify_count);
+    POINTERS_EQUAL(NULL, irc_notify_search (server, "nick2"));
+
+    /* Delete multiple nicks, including one not found. */
+    run_cmd_quiet ("/mute /notify del nick1,unknown,nick4 test_notify");
+    LONGS_EQUAL(1, server->notify_count);
+    POINTERS_EQUAL(NULL, irc_notify_search (server, "nick1"));
+    POINTERS_EQUAL(NULL, irc_notify_search (server, "nick4"));
+    CHECK(irc_notify_search (server, "nick3"));
+    STRCMP_EQUAL("nick3",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_NOTIFY]));
+
+    run_cmd_quiet ("/mute /notify add nick5 test_notify");
+    run_cmd_quiet ("/mute /notify add nick6 test_notify");
+    LONGS_EQUAL(3, server->notify_count);
+
+    /* Delete multiple nicks with empty items. */
+    run_cmd_quiet ("/mute /notify del ,nick5,,nick6, test_notify");
+    LONGS_EQUAL(1, server->notify_count);
+
+    /* Delete all nicks. */
+    run_cmd_quiet ("/mute /notify del -all test_notify");
+    LONGS_EQUAL(0, server->notify_count);
+
+    run_cmd_quiet ("/mute /server del test_notify");
 }
 
 /*

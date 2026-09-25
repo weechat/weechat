@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 07:56+0200\n"
+"POT-Creation-Date: 2026-09-25 20:50+0200\n"
 "PO-Revision-Date: 2026-09-25 07:57+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -9782,8 +9782,9 @@ msgstr "%s: нема обавештења у листи"
 msgid "%s: notification deleted for %s%s%s"
 msgstr "%s: обрисано је обавештење за %s%s%s"
 
-#, c-format
-msgid "%s%s: notification not found"
+#, fuzzy, c-format
+#| msgid "%s%s: notification not found"
+msgid "%s%s: notification not found for \"%s\""
 msgstr "%s%s: није пронађено обавештење"
 
 #, c-format
@@ -10850,7 +10851,12 @@ msgid "add a notification for presence or away status of nicks on servers"
 msgstr "додавање обавештења присуства или одсуства надимака на серверима"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
-msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid ""
+#| "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid ""
+"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
+"[<server>]"
 msgstr ""
 "add|addreplace <надимак> [<сервер> [-away]] || del <надимак>|-all [<сервер>]"
 
@@ -10869,8 +10875,9 @@ msgstr ""
 "raw[-away]: обавештавање када се порука одсуства измени (извршавајући whois "
 "за надимак)"
 
-msgid "raw[del]: delete a notification"
-msgstr "raw[del]: брисање обавештења"
+msgid ""
+"raw[del]: delete notifications (multiple nicks can be separated by commas)"
+msgstr ""
 
 msgid "raw[-all]: delete all notifications"
 msgstr "raw[-all]: брисање свих обавештења"
@@ -18519,3 +18526,6 @@ msgid ""
 msgstr ""
 "%s%s: не може да се прихвати настављање фајла „%s” (порт: %d, почетна "
 "позиција: %llu): xfer није пронађен или није спреман за трансфер"
+
+#~ msgid "raw[del]: delete a notification"
+#~ msgstr "raw[del]: брисање обавештења"

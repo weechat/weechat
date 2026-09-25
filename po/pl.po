@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 07:56+0200\n"
+"POT-Creation-Date: 2026-09-25 20:50+0200\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -9776,8 +9776,9 @@ msgstr "%s: brak powiadomień na liście"
 msgid "%s: notification deleted for %s%s%s"
 msgstr "%s: powiadomienie usunięte dla %s%s%s"
 
-#, c-format
-msgid "%s%s: notification not found"
+#, fuzzy, c-format
+#| msgid "%s%s: notification not found"
+msgid "%s%s: notification not found for \"%s\""
 msgstr "%s%s: nie znaleziono powiadomienia"
 
 #, c-format
@@ -10857,7 +10858,12 @@ msgstr ""
 "dodaje powiadomienie o obecności lub statusie nieobecności nicków na serwerze"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
-msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid ""
+#| "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid ""
+"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
+"[<server>]"
 msgstr "add|addreplace <nick> [<serwer> [-away]] || del <nick>|-all [<serwer>]"
 
 msgid "raw[add]: add a notification"
@@ -10875,8 +10881,9 @@ msgstr ""
 "raw[-away]: powiadom o zmianie wiadomości o nieobecności (przez wykonanie "
 "whois na nicku)"
 
-msgid "raw[del]: delete a notification"
-msgstr "raw[del]: usuń powiadomienie"
+msgid ""
+"raw[del]: delete notifications (multiple nicks can be separated by commas)"
+msgstr ""
 
 msgid "raw[-all]: delete all notifications"
 msgstr "raw[-all]: usuń wszystkie powiadomienia"
@@ -18549,3 +18556,6 @@ msgid ""
 msgstr ""
 "%s%s: nie można zaakceptować wznowienia pliku \"%s\" (port: %d, pozycja "
 "startowa: %llu): xfer nie znaleziony lub nie gotowy do transferu"
+
+#~ msgid "raw[del]: delete a notification"
+#~ msgstr "raw[del]: usuń powiadomienie"

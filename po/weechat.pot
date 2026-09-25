@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 07:56+0200\n"
+"POT-Creation-Date: 2026-09-25 20:50+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8066,7 +8066,7 @@ msgid "%s: notification deleted for %s%s%s"
 msgstr ""
 
 #, c-format
-msgid "%s%s: notification not found"
+msgid "%s%s: notification not found for \"%s\""
 msgstr ""
 
 #, c-format
@@ -9018,7 +9018,9 @@ msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
-msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid ""
+"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
+"[<server>]"
 msgstr ""
 
 msgid "raw[add]: add a notification"
@@ -9034,7 +9036,8 @@ msgid ""
 "raw[-away]: notify when away message is changed (by doing whois on nick)"
 msgstr ""
 
-msgid "raw[del]: delete a notification"
+msgid ""
+"raw[del]: delete notifications (multiple nicks can be separated by commas)"
 msgstr ""
 
 msgid "raw[-all]: delete all notifications"

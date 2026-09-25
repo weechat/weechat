@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 07:56+0200\n"
+"POT-Creation-Date: 2026-09-25 20:50+0200\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
@@ -9189,8 +9189,9 @@ msgstr "%s: no hay notificaciones en la lista"
 msgid "%s: notification deleted for %s%s%s"
 msgstr "%s: notificación para %s%s agregada"
 
-#, c-format
-msgid "%s%s: notification not found"
+#, fuzzy, c-format
+#| msgid "%s%s: notification not found"
+msgid "%s%s: notification not found for \"%s\""
 msgstr "%s%s: notificación no encontrada"
 
 #, fuzzy, c-format
@@ -10409,7 +10410,9 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
-msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid ""
+"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
+"[<server>]"
 msgstr "add <apodo> [<servidor> [-away]] || del <apodo>|-all [<servidor>]"
 
 #, fuzzy
@@ -10429,7 +10432,8 @@ msgid ""
 "raw[-away]: notify when away message is changed (by doing whois on nick)"
 msgstr ""
 
-msgid "raw[del]: delete a notification"
+msgid ""
+"raw[del]: delete notifications (multiple nicks can be separated by commas)"
 msgstr ""
 
 msgid "raw[-all]: delete all notifications"

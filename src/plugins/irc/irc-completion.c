@@ -839,6 +839,10 @@ irc_completion_ignores_numbers_cb (const void *pointer, void *data,
 
 /*
  * Add nicks in notify list to completion list.
+ *
+ * If a server is found for the buffer and has at least two nicks in its
+ * notify list, all nicks separated by commas are added at the end of the list
+ * (for example: "nick1,nick2,nick3").
  */
 
 int
@@ -848,6 +852,9 @@ irc_completion_notify_nicks_cb (const void *pointer, void *data,
                                 struct t_gui_completion *completion)
 {
     struct t_irc_notify *ptr_notify;
+    struct t_weelist *list_nicks;
+    struct t_weelist_item *ptr_item;
+    char **all_nicks;
 
     IRC_BUFFER_GET_SERVER(buffer);
 
@@ -858,12 +865,42 @@ irc_completion_notify_nicks_cb (const void *pointer, void *data,
 
     if (ptr_server)
     {
+        list_nicks = weechat_list_new ();
+        if (!list_nicks)
+            return WEECHAT_RC_ERROR;
         for (ptr_notify = ptr_server->notify_list; ptr_notify;
              ptr_notify = ptr_notify->next_notify)
         {
-            weechat_completion_list_add (completion, ptr_notify->nick,
+            weechat_list_add (list_nicks, ptr_notify->nick,
+                              WEECHAT_LIST_POS_SORT, NULL);
+        }
+        for (ptr_item = weechat_list_get (list_nicks, 0); ptr_item;
+             ptr_item = weechat_list_next (ptr_item))
+        {
+            weechat_completion_list_add (completion,
+                                         weechat_list_string (ptr_item),
                                          0, WEECHAT_LIST_POS_SORT);
         }
+        if (weechat_list_size (list_nicks) > 1)
+        {
+            all_nicks = weechat_string_dyn_alloc (256);
+            if (all_nicks)
+            {
+                for (ptr_item = weechat_list_get (list_nicks, 0); ptr_item;
+                     ptr_item = weechat_list_next (ptr_item))
+                {
+                    if ((*all_nicks)[0])
+                        weechat_string_dyn_concat (all_nicks, ",", -1);
+                    weechat_string_dyn_concat (all_nicks,
+                                               weechat_list_string (ptr_item),
+                                               -1);
+                }
+                weechat_completion_list_add (completion, *all_nicks,
+                                             0, WEECHAT_LIST_POS_END);
+                weechat_string_dyn_free (all_nicks, 1);
+            }
+        }
+        weechat_list_free (list_nicks);
     }
     else
     {

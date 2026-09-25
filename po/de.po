@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 07:56+0200\n"
+"POT-Creation-Date: 2026-09-25 20:50+0200\n"
 "PO-Revision-Date: 2026-09-25 08:48+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -10247,8 +10247,9 @@ msgstr "%s keine Benachrichtigung in Liste vorhanden"
 msgid "%s: notification deleted for %s%s%s"
 msgstr "%s: Benachrichtigung für %s%s%s gelöscht"
 
-#, c-format
-msgid "%s%s: notification not found"
+#, fuzzy, c-format
+#| msgid "%s%s: notification not found"
+msgid "%s%s: notification not found for \"%s\""
 msgstr "%s%s: Benachrichtigung nicht gefunden"
 
 #, c-format
@@ -11369,7 +11370,12 @@ msgstr ""
 "hinzu"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
-msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid ""
+#| "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid ""
+"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
+"[<server>]"
 msgstr "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 
 msgid "raw[add]: add a notification"
@@ -11389,8 +11395,9 @@ msgstr ""
 "raw[-away]: gibt eine Benachrichtigung aus, falls sich die "
 "Abwesenheitsnachricht ändert (der Nick wird mittels whois abgefragt)"
 
-msgid "raw[del]: delete a notification"
-msgstr "raw[del]: entfernt eine Benachrichtigung"
+msgid ""
+"raw[del]: delete notifications (multiple nicks can be separated by commas)"
+msgstr ""
 
 msgid "raw[-all]: delete all notifications"
 msgstr "raw[-all]: entfernt alle Benachrichtigungen"
@@ -19395,3 +19402,6 @@ msgstr ""
 "%s%s Datei \"%s\" zum Fortsetzen der Übertragung wird nicht akzeptiert "
 "(Port: %d, Startposition: %llu): xfer nicht gefunden oder nicht bereit für "
 "Transfer"
+
+#~ msgid "raw[del]: delete a notification"
+#~ msgstr "raw[del]: entfernt eine Benachrichtigung"

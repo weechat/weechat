@@ -4151,7 +4151,8 @@ IRC_COMMAND_CALLBACK(notice)
 IRC_COMMAND_CALLBACK(notify)
 {
     struct t_irc_notify *ptr_notify;
-    int i, check_away, update;
+    char **nicks;
+    int i, num_nicks, check_away, update, deleted, rc;
 
     IRC_BUFFER_GET_SERVER(buffer);
 
@@ -4314,28 +4315,44 @@ IRC_COMMAND_CALLBACK(notify)
         }
         else
         {
-            ptr_notify = irc_notify_search (ptr_server, argv[2]);
-            if (ptr_notify)
+            nicks = weechat_string_split (argv[2], ",", NULL,
+                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                          0, &num_nicks);
+            if (!nicks)
+                WEECHAT_COMMAND_ERROR;
+            rc = WEECHAT_RC_OK;
+            deleted = 0;
+            for (i = 0; i < num_nicks; i++)
             {
-                weechat_printf (
-                    ptr_server->buffer,
-                    _("%s: notification deleted for %s%s%s"),
-                    IRC_PLUGIN_NAME,
-                    irc_nick_color_for_msg (ptr_server, 1, NULL,
-                                            ptr_notify->nick),
-                    ptr_notify->nick,
-                    weechat_color ("reset"));
-                irc_notify_free (ptr_server, ptr_notify, 1);
+                ptr_notify = irc_notify_search (ptr_server, nicks[i]);
+                if (ptr_notify)
+                {
+                    weechat_printf (
+                        ptr_server->buffer,
+                        _("%s: notification deleted for %s%s%s"),
+                        IRC_PLUGIN_NAME,
+                        irc_nick_color_for_msg (ptr_server, 1, NULL,
+                                                ptr_notify->nick),
+                        ptr_notify->nick,
+                        weechat_color ("reset"));
+                    irc_notify_free (ptr_server, ptr_notify, 1);
+                    deleted = 1;
+                }
+                else
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: notification not found for \"%s\""),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME, nicks[i]);
+                    rc = WEECHAT_RC_ERROR;
+                }
+            }
+            weechat_string_free_split (nicks);
+            if (deleted)
                 irc_notify_set_server_option (ptr_server);
-            }
-            else
-            {
-                weechat_printf (
-                    NULL,
-                    _("%s%s: notification not found"),
-                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                return WEECHAT_RC_ERROR;
-            }
+            return rc;
         }
 
         return WEECHAT_RC_OK;
@@ -7663,14 +7680,14 @@ irc_command_init (void)
         N_("add a notification for presence or away status of nicks on servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated. */
         N_("add|addreplace <nick> [<server> [-away]]"
-           " || del <nick>|-all [<server>]"),
+           " || del <nick>[,<nick>...]|-all [<server>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[add]: add a notification"),
             N_("raw[addreplace]: add or replace a notification"),
             N_("nick: nick"),
             N_("server: internal server name (by default current server)"),
             N_("raw[-away]: notify when away message is changed (by doing whois on nick)"),
-            N_("raw[del]: delete a notification"),
+            N_("raw[del]: delete notifications (multiple nicks can be separated by commas)"),
             N_("raw[-all]: delete all notifications"),
             "",
             N_("Without argument, this command displays notifications for current "
@@ -7679,7 +7696,8 @@ irc_command_init (void)
             N_("Examples:"),
             AI("  /notify add toto"),
             AI("  /notify add toto libera"),
-            AI("  /notify add toto libera -away")),
+            AI("  /notify add toto libera -away"),
+            AI("  /notify del toto,titi libera")),
         "add|addreplace %(irc_channel_nicks) %(irc_servers) -away %-"
         " || del -all|%(irc_notify_nicks) %(irc_servers) %-",
         &irc_command_notify, NULL, NULL);

@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 07:56+0200\n"
+"POT-Creation-Date: 2026-09-25 20:50+0200\n"
 "PO-Revision-Date: 2026-09-25 07:57+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -9056,9 +9056,9 @@ msgstr ""
 msgid "%s: notification deleted for %s%s%s"
 msgstr "%s: desconectado do cliente %s%s%s (%s.%s)"
 
-#, c-format
-msgid "%s%s: notification not found"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: notification not found for \"%s\""
+msgstr "%s: desconectado do cliente %s%s%s (%s.%s)"
 
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command cannot be executed with a channel name (\"%s\")"
@@ -10170,7 +10170,9 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
-msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid ""
+"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
+"[<server>]"
 msgstr "list || add [re:]<apelido> [<servidor> [<canal>]] || del <número>|-all"
 
 msgid "raw[add]: add a notification"
@@ -10188,7 +10190,8 @@ msgid ""
 "raw[-away]: notify when away message is changed (by doing whois on nick)"
 msgstr ""
 
-msgid "raw[del]: delete a notification"
+msgid ""
+"raw[del]: delete notifications (multiple nicks can be separated by commas)"
 msgstr ""
 
 msgid "raw[-all]: delete all notifications"
