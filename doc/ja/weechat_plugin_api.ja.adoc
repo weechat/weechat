@@ -3497,7 +3497,8 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `list` can be a list name (example: "gui_buffers"), a pointer
   (example: "0x1234abcd") or a pointer name (example: "my_pointer"). +
   When `var1` is a hashtable, methods `keys()`, `values()`, `keys_sorted()`,
-  `keys_values()` and `keys_values_sorted()` can be called.
+  `keys_values()` and `keys_values_sorted()` can be called. +
+  For name of hdata and variables, see function <<_hdata_get,hdata_get>>.
 | >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +

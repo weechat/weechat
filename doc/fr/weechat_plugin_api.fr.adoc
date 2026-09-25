@@ -3443,7 +3443,8 @@ première étendue à la dernière) :
   (exemple : "gui_buffers"), un pointeur (exemple : "0x1234abcd") ou un nom
   de pointeur (exemple : "mon_pointeur"). +
   Lorsque `var1` est une table de hachage, les méthodes `keys()`, `values()`,
-  `keys_sorted()`, `keys_values()` et `keys_values_sorted()` peuvent être appelées.
+  `keys_sorted()`, `keys_values()` et `keys_values_sorted()` peuvent être appelées. +
+  Pour le nom du hdata et des variables, voir la fonction <<_hdata_get,hdata_get>>.
 | >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +

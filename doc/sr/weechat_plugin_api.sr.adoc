@@ -3265,11 +3265,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 | `+${hdata.пром1.пром2...}+` +
   `+${hdata[листа].пром1.пром2...}+` |
+// TRANSLATION MISSING
 | Hdata вредност (показивачи `window` и `buffer` се подразумевано постављају на текући
   прозор/бафер), `листа` може бити име листе (пример: „gui_buffers”), показивач
   (пример: „0x1234abcd”) или име показивача (пример: „my_pointer”). +
   Када је `var1` хеш табела, могу да се позову методе `keys()`, `values()`, `keys_sorted()`,
-  `keys_values()` и `keys_values_sorted()`.
+  `keys_values()` и `keys_values_sorted()`. +
+  For name of hdata and variables, see function <<_hdata_get,hdata_get>>.
 | >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +
