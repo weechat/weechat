@@ -4,18 +4,9 @@
 
 [check]
 select = [
-    "checks",
-]
-ignore = [
-    "acronyms",
-    "brackets",
-    "double-quotes",
-    "double-words",
-    "functions",
-    "html-tags",
-    "paths",
-    "unchanged",
-    "urls",
+    "default",
+    "compilation",
+    "spelling",
 ]
 path_words = "."
 spelling_langs = [
