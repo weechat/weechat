@@ -1755,6 +1755,7 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `buffer_unhidden`                     | id tampon | `buffer`      | tampon
 | `buffer_renamed`                      | id tampon | `buffer`      | tampon
 | `buffer_title_changed`                | id tampon | `buffer`      | tampon
+| `buffer_modes_changed`                | id tampon | `buffer`      | tampon
 | `buffer_notify_changed`               | id tampon | `buffer`      | tampon
 | `buffer_time_for_each_line_changed`   | id tampon | `buffer`      | tampon
 | `buffer_prefix_for_each_line_changed` | id tampon | `buffer`      | tampon

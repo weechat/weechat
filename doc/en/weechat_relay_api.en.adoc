@@ -1733,6 +1733,7 @@ The following events are sent to the client, according to synchronization option
 | `buffer_unhidden`                     | buffer id | `buffer`      | buffer
 | `buffer_renamed`                      | buffer id | `buffer`      | buffer
 | `buffer_title_changed`                | buffer id | `buffer`      | buffer
+| `buffer_modes_changed`                | buffer id | `buffer`      | buffer
 | `buffer_notify_changed`               | buffer id | `buffer`      | buffer
 | `buffer_time_for_each_line_changed`   | buffer id | `buffer`      | buffer
 | `buffer_prefix_for_each_line_changed` | buffer id | `buffer`      | buffer
