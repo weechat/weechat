@@ -13,9 +13,7 @@
 #include "../weechat-plugin.h"
 #include "relay.h"
 #include "relay-client.h"
-#ifdef HAVE_CJSON
 #include "api/relay-api.h"
-#endif
 
 
 /*
@@ -27,9 +25,7 @@ relay_info_info_relay_api_version_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
 {
-#ifdef HAVE_CJSON
     char version[128];
-#endif
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -37,12 +33,8 @@ relay_info_info_relay_api_version_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-#ifdef HAVE_CJSON
     snprintf (version, sizeof (version), "%s", RELAY_API_VERSION_STR);
     return strdup (version);
-#else
-    return NULL;
-#endif
 }
 
 /*
@@ -54,9 +46,7 @@ relay_info_info_relay_api_version_number_cb (const void *pointer, void *data,
                                              const char *info_name,
                                              const char *arguments)
 {
-#ifdef HAVE_CJSON
     char version_number[32];
-#endif
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -64,13 +54,9 @@ relay_info_info_relay_api_version_number_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-#ifdef HAVE_CJSON
     snprintf (version_number, sizeof (version_number),
               "%d", RELAY_API_VERSION_NUMBER);
     return strdup (version_number);
-#else
-    return NULL;
-#endif
 }
 
 /*

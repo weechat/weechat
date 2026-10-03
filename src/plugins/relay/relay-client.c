@@ -29,9 +29,7 @@
 #include "relay-raw.h"
 #include "relay-server.h"
 #include "relay-websocket.h"
-#ifdef HAVE_CJSON
 #include "api/relay-api.h"
-#endif
 #include "irc/relay-irc.h"
 #include "weechat/relay-weechat.h"
 
@@ -221,11 +219,9 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
                     relay_irc_get_initial_status (client));
                 break;
             case RELAY_PROTOCOL_API:
-#ifdef HAVE_CJSON
                 relay_client_set_status (
                     client,
                     relay_api_get_initial_status (client));
-#endif /* HAVE_CJSON */
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -375,9 +371,7 @@ relay_client_recv_text_multi_line (struct t_relay_client *client)
             /* Relay "irc" is single line only. */
             break;
         case RELAY_PROTOCOL_API:
-#ifdef HAVE_CJSON
             relay_api_recv_json (client, client->partial_message);
-#endif /* HAVE_CJSON */
             break;
         case RELAY_NUM_PROTOCOLS:
             break;
@@ -1514,14 +1508,12 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                 }
                 break;
             case RELAY_PROTOCOL_API:
-#ifdef HAVE_CJSON
                 relay_api_alloc (new_client);
                 if (!new_client->tls)
                 {
                     new_client->status =
                         relay_api_get_initial_status (new_client);
                 }
-#endif /* HAVE_CJSON */
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -1744,9 +1736,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
                 relay_irc_alloc_with_infolist (new_client, infolist);
                 break;
             case RELAY_PROTOCOL_API:
-#ifdef HAVE_CJSON
                 relay_api_alloc_with_infolist (new_client, infolist);
-#endif /* HAVE_CJSON */
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -1844,9 +1834,7 @@ relay_client_set_status (struct t_relay_client *client,
                 relay_irc_close_connection (client);
                 break;
             case RELAY_PROTOCOL_API:
-#ifdef HAVE_CJSON
                 relay_api_close_connection (client);
-#endif /* HAVE_CJSON */
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -1945,9 +1933,7 @@ relay_client_free (struct t_relay_client *client)
                 relay_irc_free (client);
                 break;
             case RELAY_PROTOCOL_API:
-#ifdef HAVE_CJSON
                 relay_api_free (client);
-#endif /* HAVE_CJSON */
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -2179,10 +2165,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
                                        force_disconnected_state);
             break;
         case RELAY_PROTOCOL_API:
-#ifdef HAVE_CJSON
             relay_api_add_to_infolist (ptr_item, client,
                                        force_disconnected_state);
-#endif /* HAVE_CJSON */
             break;
         case RELAY_NUM_PROTOCOLS:
             break;
@@ -2260,9 +2244,7 @@ relay_client_print_log (void)
                 relay_irc_print_log (ptr_client);
                 break;
             case RELAY_PROTOCOL_API:
-#ifdef HAVE_CJSON
                 relay_api_print_log (ptr_client);
-#endif /* HAVE_CJSON */
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;

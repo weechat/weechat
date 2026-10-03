@@ -27,9 +27,6 @@
 #ifdef HAVE_ZSTD
 #include <zstd.h>
 #endif
-#ifdef HAVE_CJSON
-#include <cjson/cJSON.h>
-#endif
 
 #include <gnutls/gnutls.h>
 
@@ -99,7 +96,6 @@ debug_build_info (void)
     DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_ALIAS);
     DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_BUFLIST);
     DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_CHARSET);
-    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_CJSON);
     DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_CODE_COVERAGE);
     DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_DOC);
     DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_DOC_INCOMPLETE);
@@ -797,16 +793,6 @@ debug_libs_cb (const void *pointer, void *data,
 #else
     gui_chat_printf (NULL, "    zstd: %s", _("not available"));
 #endif /* HAVE_ZSTD */
-
-    /* Display cJSON version. */
-#ifdef HAVE_CJSON
-    gui_chat_printf (NULL, "    cJSON: %d.%d.%d",
-                     CJSON_VERSION_MAJOR,
-                     CJSON_VERSION_MINOR,
-                     CJSON_VERSION_PATCH);
-#else
-    gui_chat_printf (NULL, "    cJSON: %s", _("not available"));
-#endif /* HAVE_CJSON */
 
     return WEECHAT_RC_OK;
 }

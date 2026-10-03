@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 20:50+0200\n"
+"POT-Creation-Date: 2026-10-03 09:43+0200\n"
 "PO-Revision-Date: 2026-09-25 07:57+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -16649,12 +16649,6 @@ msgstr "%s%s: SSL için öncelik ilklendirilemiyor"
 msgid "Relay raw messages"
 msgstr "Ham iletileri ilet"
 
-#, c-format
-msgid ""
-"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
-"not enabled)"
-msgstr ""
-
 #, fuzzy, c-format
 #| msgid "%s%s: reconnecting to server in %d %s, %d %s"
 msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
@@ -16771,10 +16765,6 @@ msgstr "%s: %s yolunda dinleniyor (aktarım: %s, %s)"
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: %d kapısında dinleniyor (aktarım: %s, %s)"
-
-#, c-format
-msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
-msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"

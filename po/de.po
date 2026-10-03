@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 20:50+0200\n"
-"PO-Revision-Date: 2026-09-27 13:43+0200\n"
+"POT-Creation-Date: 2026-10-03 09:43+0200\n"
+"PO-Revision-Date: 2026-10-03 09:49+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -17004,14 +17004,6 @@ msgid "Relay raw messages"
 msgstr "Relay RAW Nachrichten"
 
 #, c-format
-msgid ""
-"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
-"not enabled)"
-msgstr ""
-"%s%s: Fehler: Verbindung zu einem Remote-Relay über API nicht möglich (cJSON-"
-"Unterstützung ist nicht aktiviert)"
-
-#, c-format
 msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
 msgstr "remote[%s]: erneute Verbindung zum Remote-Relay in %d %s, %d %s"
 
@@ -17126,12 +17118,6 @@ msgstr "%s: lausche an Pfad %s (Relay: %s,%s)"
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: lausche an Port %d (Relay: %s,%s)"
-
-#, c-format
-msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
-msgstr ""
-"%s%s: Fehler: Relay „%s“ konnte nicht hinzugefügt werden (cJSON-"
-"Unterstützung ist nicht aktiviert)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -19402,6 +19388,3 @@ msgstr ""
 "%s%s Datei \"%s\" zum Fortsetzen der Übertragung wird nicht akzeptiert "
 "(Port: %d, Startposition: %llu): xfer nicht gefunden oder nicht bereit für "
 "Transfer"
-
-#~ msgid "raw[del]: delete a notification"
-#~ msgstr "raw[del]: entfernt eine Benachrichtigung"

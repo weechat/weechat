@@ -177,9 +177,6 @@ WeeChat:
 | TLS 接続に必要な証明書、relay プラグインで TLS サポート
 
 // TRANSLATION MISSING
-| libcjson-dev |
-| Relay plugin: protocol "api" (HTTP REST API).
-
 // TRANSLATION MISSING
 | libzstd-dev | ≥ 0.8.1
 | Logger plugin: compression of rotated log files (zstandard). +
@@ -310,9 +307,6 @@ List of available options:
 | <<charset,Charset プラグイン>>のコンパイル。
 
 // TRANSLATION MISSING
-| ENABLE_CJSON | `ON`, `OFF` | ON
-| Support of JSON with https://github.com/DaveGamble/cJSON[cJSON ^↗^^] library.
-
 | ENABLE_MAN | `ON`, `OFF` | OFF
 | man ページのコンパイル。
 

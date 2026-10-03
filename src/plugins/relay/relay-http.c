@@ -24,9 +24,7 @@
 #include "relay-http.h"
 #include "relay-raw.h"
 #include "relay-websocket.h"
-#ifdef HAVE_CJSON
 #include "api/relay-api.h"
-#endif
 
 #define HEX2DEC(c) (((c >= 'a') && (c <= 'f')) ? c - 'a' + 10 :         \
                     ((c >= 'A') && (c <= 'F')) ? c - 'A' + 10 :         \
@@ -966,10 +964,8 @@ relay_http_process_request (struct t_relay_client *client)
     }
     else
     {
-#ifdef HAVE_CJSON
         if (client->protocol == RELAY_PROTOCOL_API)
             relay_api_recv_http (client);
-#endif /* HAVE_CJSON */
     }
 }
 

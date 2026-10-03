@@ -21,6 +21,13 @@ set(RELAY_SRC
   relay-theme.c relay-theme.h
   relay-upgrade.c relay-upgrade.h
   relay-websocket.c relay-websocket.h
+  # API relay
+  api/relay-api.c api/relay-api.h
+  api/relay-api-msg.c api/relay-api-msg.h
+  api/relay-api-protocol.c api/relay-api-protocol.h
+  # API relay remote
+  api/remote/relay-remote-event.c api/remote/relay-remote-event.h
+  api/remote/relay-remote-network.c api/remote/relay-remote-network.h
   # IRC relay
   irc/relay-irc.c irc/relay-irc.h
   # WeeChat relay
@@ -30,18 +37,6 @@ set(RELAY_SRC
   weechat/relay-weechat-protocol.c weechat/relay-weechat-protocol.h
 
 )
-
-if(ENABLE_CJSON)
-  list(APPEND RELAY_SRC
-    # API relay
-    api/relay-api.c api/relay-api.h
-    api/relay-api-msg.c api/relay-api-msg.h
-    api/relay-api-protocol.c api/relay-api-protocol.h
-    # API relay remote
-    api/remote/relay-remote-event.c api/remote/relay-remote-event.h
-    api/remote/relay-remote-network.c api/remote/relay-remote-network.h
-  )
-endif()
 
 add_library(relay MODULE ${RELAY_SRC})
 set_target_properties(relay PROPERTIES PREFIX "")
@@ -56,10 +51,6 @@ list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
 
 if(ENABLE_ZSTD)
   list(APPEND LINK_LIBS ${LIBZSTD_LDFLAGS})
-endif()
-
-if(ENABLE_CJSON)
-  list(APPEND LINK_LIBS ${LIBCJSON_LDFLAGS})
 endif()
 
 target_link_libraries(relay ${LINK_LIBS} coverage_config)

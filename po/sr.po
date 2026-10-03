@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 20:50+0200\n"
-"PO-Revision-Date: 2026-09-25 07:57+0200\n"
+"POT-Creation-Date: 2026-10-03 09:43+0200\n"
+"PO-Revision-Date: 2026-10-03 09:49+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
 "Language: sr\n"
@@ -16254,14 +16254,6 @@ msgid "Relay raw messages"
 msgstr "Релеј сирових порука"
 
 #, c-format
-msgid ""
-"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
-"not enabled)"
-msgstr ""
-"%s%s: грешка: не може да се повеже са релејем удаљених преко API (није "
-"укључена cJSON подршка)"
-
-#, c-format
 msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
 msgstr ""
 "удаљени[%s]: поновно успостављање везе са удаљеним релејем за %d %s, %d %s"
@@ -16380,11 +16372,6 @@ msgstr "%s: слуша се на путањи %s (релеј: %s, %s)"
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: слуша се на порту %d (релеј: %s, %s)"
-
-#, c-format
-msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
-msgstr ""
-"%s%s: грешка: не може да се дода релеј „%s” (није укључена cJSON подршка)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -18526,6 +18513,3 @@ msgid ""
 msgstr ""
 "%s%s: не може да се прихвати настављање фајла „%s” (порт: %d, почетна "
 "позиција: %llu): xfer није пронађен или није спреман за трансфер"
-
-#~ msgid "raw[del]: delete a notification"
-#~ msgstr "raw[del]: брисање обавештења"

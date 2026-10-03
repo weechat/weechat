@@ -31,7 +31,6 @@ env:
     lcov
     libargon2-dev
     libaspell-dev
-    libcjson-dev
     libcpputest-dev
     libcurl4-gnutls-dev
     libgcrypt20-dev
@@ -54,7 +53,6 @@ env:
   WEECHAT_DEPS_REDHAT: >-
     asciidoctor
     aspell-devel
-    cjson-devel
     clang
     cmake
     cpputest-devel
@@ -87,7 +85,6 @@ env:
     gnutls
     guile3
     libargon2
-    libcjson
     libgcrypt
     libiconv
     llvm
@@ -105,7 +102,6 @@ env:
   WEECHAT_DEPS_MACOS: >-
     asciidoctor
     aspell
-    cjson
     guile
     lua
     pkg-config
@@ -183,10 +179,6 @@ jobs:
             cc: "gcc"
             cxx: "g++"
             buildargs: "-DENABLE_TESTS=ON -DENABLE_ZSTD=OFF"
-          - name: "gcc_no_cjson"
-            cc: "gcc"
-            cxx: "g++"
-            buildargs: "-DENABLE_TESTS=ON -DENABLE_CJSON=OFF"
           - name: "gcc_no_perl_multiplicity"
             cc: "gcc"
             cxx: "g++"

@@ -44,7 +44,6 @@ bkl
 blocksize
 bool
 buflist
-cJSON
 calc
 ccc
 charset

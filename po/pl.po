@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 20:50+0200\n"
-"PO-Revision-Date: 2026-09-28 21:15+0200\n"
+"POT-Creation-Date: 2026-10-03 09:43+0200\n"
+"PO-Revision-Date: 2026-10-03 09:49+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
 "Language: pl\n"
@@ -16227,14 +16227,6 @@ msgid "Relay raw messages"
 msgstr "Nieprzetworzone wiadomości relay"
 
 #, c-format
-msgid ""
-"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
-"not enabled)"
-msgstr ""
-"%s%s: błąd: nie udało się połączyć ze zdalnym pośrednikiem używając API "
-"(wsparcie dla cJSON jest wyłączone)"
-
-#, c-format
 msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
 msgstr "remote[%s]: łączę ponownie do zdalnego pośrednika za %d %s, %d %s"
 
@@ -16356,12 +16348,6 @@ msgstr "%s: nasłuchuję na ścieżce %s (pośrednik: %s, %s)"
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: nasłuchuję na porcie %d (pośrednik: %s, %s)"
-
-#, c-format
-msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
-msgstr ""
-"%s%s: błąd: nie udało się dodać pośrednika „%s” (wsparcie dla cJSON jest "
-"wyłączone)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -18516,6 +18502,3 @@ msgid ""
 msgstr ""
 "%s%s: nie można zaakceptować wznowienia pliku \"%s\" (port: %d, pozycja "
 "startowa: %llu): xfer nie znaleziony lub nie gotowy do transferu"
-
-#~ msgid "raw[del]: delete a notification"
-#~ msgstr "raw[del]: usuń powiadomienie"

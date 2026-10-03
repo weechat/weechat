@@ -159,17 +159,13 @@ if (ENABLE_RELAY)
     plugins/relay/test-relay-raw.cpp
     plugins/relay/test-relay-remote.cpp
     plugins/relay/test-relay-websocket.cpp
+    plugins/relay/api/test-relay-api.cpp
+    plugins/relay/api/test-relay-api-msg.cpp
+    plugins/relay/api/test-relay-api-protocol.cpp
+    plugins/relay/api/remote/test-relay-remote-event.cpp
+    plugins/relay/api/remote/test-relay-remote-network.cpp
     plugins/relay/irc/test-relay-irc.cpp
   )
-  if (ENABLE_CJSON)
-    list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
-      plugins/relay/api/test-relay-api.cpp
-      plugins/relay/api/test-relay-api-msg.cpp
-      plugins/relay/api/test-relay-api-protocol.cpp
-      plugins/relay/api/remote/test-relay-remote-event.cpp
-      plugins/relay/api/remote/test-relay-remote-network.cpp
-    )
-  endif()
 endif()
 
 if(ENABLE_SCRIPT)

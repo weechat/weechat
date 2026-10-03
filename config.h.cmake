@@ -9,7 +9,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
 #cmakedefine01 ENABLE_NLS
 #cmakedefine01 ENABLE_LARGEFILE
 #cmakedefine01 ENABLE_ZSTD
-#cmakedefine01 ENABLE_CJSON
 #cmakedefine01 ENABLE_ALIAS
 #cmakedefine01 ENABLE_BUFLIST
 #cmakedefine01 ENABLE_CHARSET

@@ -808,18 +808,6 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
     if (!protocol_string)
         return NULL;
 
-#ifndef HAVE_CJSON
-    if (protocol == RELAY_PROTOCOL_API)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error: unable to add relay \"%s\" "
-                          "(cJSON support is not enabled)"),
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        protocol_string);
-        return NULL;
-    }
-#endif /* HAVE_CJSON */
-
     /* Look for duplicate ports/paths. */
     dup_server = (unix_socket) ?
         relay_server_search_path (path) : relay_server_search_port (port);

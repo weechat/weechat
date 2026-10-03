@@ -71,6 +71,12 @@ In the "api" protocol, JSON is now parsed strictly, as specified in RFC 8259:
 - data after the JSON value (for example `{"request": "GET /api/version"}xyz`), numbers with
   leading zeros (like `01`) and strings with invalid UTF-8 are rejected.
 
+### cJSON is not used any more
+
+The CMake option `ENABLE_CJSON` has been removed: WeeChat now has its own JSON parser
+and writer, so the relay "api" protocol and the remote relays are always available.\
+The library cJSON (package `libcjson-dev` or equivalent) is no longer needed to build WeeChat.
+
 ### Types of variables in infolists
 
 Some variables in infolists are no longer strings or integers, so they must be read with the

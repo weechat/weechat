@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-09-25 20:50+0200\n"
+"POT-Creation-Date: 2026-10-03 09:43+0200\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -15575,12 +15575,6 @@ msgstr "%sChyba: nemohu inicializovat plugin \"%s\""
 msgid "Relay raw messages"
 msgstr "Přeposílat čisté zprávy"
 
-#, c-format
-msgid ""
-"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
-"not enabled)"
-msgstr ""
-
 #, fuzzy, c-format
 #| msgid "%s%s: reconnecting to server in %d %s, %d %s"
 msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
@@ -15698,10 +15692,6 @@ msgstr "%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klie
 #, fuzzy, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klientů)"
-
-#, c-format
-msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
-msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
