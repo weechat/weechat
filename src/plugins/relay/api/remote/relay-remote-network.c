@@ -16,13 +16,13 @@
 
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
-#include <cjson/cJSON.h>
 
 #include "../../../weechat-plugin.h"
 #include "../../relay.h"
 #include "../../relay-auth.h"
 #include "../../relay-config.h"
 #include "../../relay-http.h"
+#include "../../relay-json.h"
 #include "../../relay-raw.h"
 #include "../../relay-remote.h"
 #include "../../relay-websocket.h"
@@ -135,7 +135,7 @@ relay_remote_network_check_auth (struct t_relay_remote *remote,
                                  const char *buffer)
 {
     struct t_relay_http_response *http_resp;
-    cJSON *json_body, *json_error;
+    struct t_relay_json *json_body, *json_error;
     const char *msg_error, *msg_resp_error, *ptr_ws_accept;
     char *key, hash[160 / 8], sec_websocket_accept[128];
     int accept_ok, hash_size;
@@ -155,12 +155,12 @@ relay_remote_network_check_auth (struct t_relay_remote *remote,
 
     if (http_resp->body)
     {
-        json_body = cJSON_Parse (http_resp->body);
+        json_body = relay_json_parse (http_resp->body);
         if (json_body)
         {
-            json_error = cJSON_GetObjectItem (json_body, "error");
-            if (json_error && cJSON_IsString (json_error))
-                msg_resp_error = cJSON_GetStringValue (json_error);
+            json_error = relay_json_object_get (json_body, "error");
+            if (relay_json_is_string (json_error))
+                msg_resp_error = relay_json_get_string (json_error);
         }
     }
 
@@ -212,7 +212,7 @@ relay_remote_network_check_auth (struct t_relay_remote *remote,
     relay_http_response_free (http_resp);
 
     if (json_body)
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
 
     return 1;
 
@@ -228,7 +228,7 @@ error:
         (msg_resp_error) ? ")" : "");
     relay_http_response_free (http_resp);
     if (json_body)
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
     return 0;
 }
 
@@ -336,7 +336,8 @@ relay_remote_network_send (struct t_relay_remote *remote,
  */
 
 int
-relay_remote_network_send_json (struct t_relay_remote *remote, cJSON *json)
+relay_remote_network_send_json (struct t_relay_remote *remote,
+                                struct t_relay_json *json)
 {
     char *string;
     int num_bytes;
@@ -346,7 +347,7 @@ relay_remote_network_send_json (struct t_relay_remote *remote, cJSON *json)
 
     num_bytes = 0;
 
-    string = cJSON_PrintUnformatted (json);
+    string = relay_json_print (json);
     if (string)
     {
         num_bytes = relay_remote_network_send (remote, RELAY_MSG_STANDARD,
@@ -1176,7 +1177,9 @@ relay_remote_network_url_handshake_cb (const void *pointer,
     const char *ptr_output, *ptr_resp_code, *ptr_error;
     const char *proxy, *str_proxy_type, *str_proxy_address;
     char *option_name;
-    cJSON *json_body, *json_hash_algo, *json_hash_iterations, *json_totp;
+    struct t_relay_json *json_body, *json_hash_algo, *json_hash_iterations;
+    struct t_relay_json *json_totp;
+    long long number;
     int length;
 
     /* Make C compiler happy. */
@@ -1221,24 +1224,24 @@ relay_remote_network_url_handshake_cb (const void *pointer,
     ptr_output = weechat_hashtable_get (output, "output");
     if (ptr_output && ptr_output[0])
     {
-        json_body = cJSON_Parse (weechat_hashtable_get (output, "output"));
+        json_body = relay_json_parse (weechat_hashtable_get (output, "output"));
         if (json_body)
         {
             /* Hash algorithm */
-            json_hash_algo = cJSON_GetObjectItem (json_body, "password_hash_algo");
-            if (json_hash_algo && cJSON_IsString (json_hash_algo))
+            json_hash_algo = relay_json_object_get (json_body, "password_hash_algo");
+            if (relay_json_is_string (json_hash_algo))
             {
                 remote->password_hash_algo = relay_auth_password_hash_algo_search (
-                    cJSON_GetStringValue (json_hash_algo));
+                    relay_json_get_string (json_hash_algo));
             }
             /* Hash iterations */
-            json_hash_iterations = cJSON_GetObjectItem (json_body, "password_hash_iterations");
-            if (json_hash_iterations && cJSON_IsNumber (json_hash_iterations))
-                remote->password_hash_iterations = (int)cJSON_GetNumberValue (json_hash_iterations);
+            json_hash_iterations = relay_json_object_get (json_body, "password_hash_iterations");
+            if (relay_json_get_number (json_hash_iterations, &number))
+                remote->password_hash_iterations = (int)number;
             /* TOTP */
-            json_totp = cJSON_GetObjectItem (json_body, "totp");
-            if (json_totp && cJSON_IsBool (json_totp))
-                remote->totp = (cJSON_IsTrue (json_totp)) ? 1 : 0;
+            json_totp = relay_json_object_get (json_body, "totp");
+            if (relay_json_is_bool (json_totp))
+                remote->totp = (relay_json_is_true (json_totp)) ? 1 : 0;
         }
     }
 
@@ -1367,7 +1370,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
 
 end:
     if (json_body)
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
     return WEECHAT_RC_OK;
 }
 
@@ -1380,33 +1383,33 @@ end:
 char *
 relay_remote_network_get_handshake_request (void)
 {
-    cJSON *json, *json_algos;
+    struct t_relay_json *json, *json_algos;
     char *result;
     int i;
 
-    json = cJSON_CreateObject ();
+    json = relay_json_new_object ();
     if (!json)
         return NULL;
 
-    json_algos = cJSON_CreateArray ();
+    json_algos = relay_json_new_array ();
     if (!json_algos)
     {
-        cJSON_Delete (json);
+        relay_json_free (json);
         return NULL;
     }
 
     /* All password hash algorithms are supported. */
     for (i = 0; i < RELAY_NUM_PASSWORD_HASH_ALGOS; i++)
     {
-        cJSON_AddItemToArray (
+        relay_json_array_add (
             json_algos,
-            cJSON_CreateString (relay_auth_password_hash_algo_name[i]));
+            relay_json_new_string (relay_auth_password_hash_algo_name[i]));
     }
 
-    cJSON_AddItemToObject (json, "password_hash_algo", json_algos);
-    result = cJSON_PrintUnformatted (json);
+    relay_json_object_add (json, "password_hash_algo", json_algos);
+    result = relay_json_print (json);
 
-    cJSON_Delete (json);
+    relay_json_free (json);
 
     return result;
 }

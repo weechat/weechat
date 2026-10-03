@@ -15,7 +15,6 @@
 #include <sys/time.h>
 #include <gcrypt.h>
 #include <gnutls/gnutls.h>
-#include <cjson/cJSON.h>
 
 #include "../../../weechat-plugin.h"
 #include "../../relay.h"
@@ -23,6 +22,7 @@
 #include "../../relay-buffer.h"
 #include "../../relay-config.h"
 #include "../../relay-http.h"
+#include "../../relay-json.h"
 #include "../../relay-raw.h"
 #include "../../relay-remote.h"
 #include "../../relay-websocket.h"
@@ -31,23 +31,20 @@
 #include "relay-remote-network.h"
 
 #define JSON_GET_NUM(__json, __var, __default)                     \
-    json_obj = cJSON_GetObjectItem (__json, #__var);               \
-    if (json_obj && cJSON_IsNumber (json_obj))                     \
-        __var = cJSON_GetNumberValue (json_obj);                   \
+    json_obj = relay_json_object_get (__json, #__var);             \
+    if (relay_json_get_number (json_obj, &json_number))            \
+        __var = json_number;                                       \
     else                                                           \
         __var = __default;
 
 #define JSON_GET_STR(__json, __var)                                \
-    json_obj = cJSON_GetObjectItem (__json, #__var);               \
-    if (json_obj && cJSON_IsString (json_obj))                     \
-        __var = cJSON_GetStringValue (json_obj);                   \
-    else                                                           \
-        __var = NULL;
+    json_obj = relay_json_object_get (__json, #__var);             \
+    __var = relay_json_get_string (json_obj);
 
 #define JSON_GET_BOOL(__json, __var, __default)                    \
-    json_obj = cJSON_GetObjectItem (__json, #__var);               \
-    if (json_obj && cJSON_IsBool (json_obj))                       \
-        __var = cJSON_IsTrue (json_obj) ? 1 : 0;                   \
+    json_obj = relay_json_object_get (__json, #__var);             \
+    if (relay_json_is_bool (json_obj))                             \
+        __var = relay_json_is_true (json_obj) ? 1 : 0;             \
     else                                                           \
         __var = __default;
 
@@ -184,11 +181,11 @@ relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
  */
 
 char **
-relay_remote_build_string_tags (cJSON *json_tags,
+relay_remote_build_string_tags (struct t_relay_json *json_tags,
                                 struct t_gui_buffer *buffer,
                                 long long line_id, int highlight)
 {
-    cJSON *json_tag;
+    struct t_relay_json *json_tag;
     const char *ptr_tag;
     char **tags, str_tag_id[512];
     int tag_notify_highlight, line_already_read;
@@ -201,11 +198,11 @@ relay_remote_build_string_tags (cJSON *json_tags,
 
     tag_notify_highlight = 0;
 
-    if (json_tags && cJSON_IsArray (json_tags))
+    if (relay_json_is_array (json_tags))
     {
-        cJSON_ArrayForEach (json_tag, json_tags)
+        RELAY_JSON_FOREACH(json_tag, json_tags)
         {
-            ptr_tag = cJSON_GetStringValue (json_tag);
+            ptr_tag = relay_json_get_string (json_tag);
             if (ptr_tag)
             {
                 /*
@@ -267,7 +264,8 @@ relay_remote_build_string_tags (cJSON *json_tags,
 void
 relay_remote_event_line_add (struct t_relay_remote_event *event)
 {
-    cJSON *json_obj;
+    struct t_relay_json *json_obj;
+    long long json_number;
     const char *date, *prefix, *message;
     char **tags;
     long long id;
@@ -291,7 +289,7 @@ relay_remote_event_line_add (struct t_relay_remote_event *event)
     }
 
     tags = relay_remote_build_string_tags (
-        cJSON_GetObjectItem (event->json, "tags"),
+        relay_json_object_get (event->json, "tags"),
         event->buffer, id, highlight);
 
     if (y >= 0)
@@ -382,7 +380,8 @@ relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, long long id)
 void
 relay_remote_event_line_update (struct t_relay_remote_event *event)
 {
-    cJSON *json_obj;
+    struct t_relay_json *json_obj;
+    long long json_number;
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
     const char *date, *prefix, *message;
@@ -430,7 +429,7 @@ relay_remote_event_line_update (struct t_relay_remote_event *event)
     weechat_hashtable_set (hashtable, "date_usec", str_value);
 
     tags = relay_remote_build_string_tags (
-        cJSON_GetObjectItem (event->json, "tags"), event->buffer, id, highlight);
+        relay_json_object_get (event->json, "tags"), event->buffer, id, highlight);
     if (tags)
     {
         weechat_hashtable_set (hashtable, "tags_array", *tags);
@@ -467,9 +466,11 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
  */
 
 void
-relay_remote_event_handle_nick (struct t_gui_buffer *buffer, cJSON *json)
+relay_remote_event_handle_nick (struct t_gui_buffer *buffer,
+                                struct t_relay_json *json)
 {
-    cJSON *json_obj;
+    struct t_relay_json *json_obj;
+    long long json_number;
     struct t_gui_nick *ptr_nick;
     struct t_gui_nick_group *ptr_parent_group;
     const char *name, *color_name, *prefix, *prefix_color_name;
@@ -527,9 +528,12 @@ relay_remote_event_handle_nick (struct t_gui_buffer *buffer, cJSON *json)
  */
 
 void
-relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
+relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer,
+                                      struct t_relay_json *json)
 {
-    cJSON *json_obj, *json_groups, *json_group, *json_nicks, *json_nick;
+    struct t_relay_json *json_obj, *json_groups, *json_group, *json_nicks;
+    struct t_relay_json *json_nick;
+    long long json_number;
     struct t_gui_nick_group *ptr_group, *ptr_parent_group;
     const char *name, *color_name;
     char str_id[128];
@@ -575,20 +579,20 @@ relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
     }
 
     /* Add subgroups. */
-    json_groups = cJSON_GetObjectItem (json, "groups");
-    if (json_groups && cJSON_IsArray (json_groups))
+    json_groups = relay_json_object_get (json, "groups");
+    if (relay_json_is_array (json_groups))
     {
-        cJSON_ArrayForEach (json_group, json_groups)
+        RELAY_JSON_FOREACH(json_group, json_groups)
         {
             relay_remote_event_handle_nick_group (buffer, json_group);
         }
     }
 
     /* Add nicks. */
-    json_nicks = cJSON_GetObjectItem (json, "nicks");
-    if (json_nicks && cJSON_IsArray (json_nicks))
+    json_nicks = relay_json_object_get (json, "nicks");
+    if (relay_json_is_array (json_nicks))
     {
-        cJSON_ArrayForEach (json_nick, json_nicks)
+        RELAY_JSON_FOREACH(json_nick, json_nicks)
         {
             relay_remote_event_handle_nick (buffer, json_nick);
         }
@@ -603,7 +607,8 @@ RELAY_REMOTE_EVENT_CALLBACK(nick_group)
 {
     struct t_gui_nick_group *ptr_group;
     char str_id[128];
-    cJSON *json_obj;
+    struct t_relay_json *json_obj;
+    long long json_number;
     long long id;
 
     if (!event || !event->buffer || !event->json)
@@ -633,7 +638,8 @@ RELAY_REMOTE_EVENT_CALLBACK(nick)
 {
     struct t_gui_nick *ptr_nick;
     char str_id[128];
-    cJSON *json_obj;
+    struct t_relay_json *json_obj;
+    long long json_number;
     long long id;
 
     if (!event || !event->buffer || !event->json)
@@ -682,7 +688,7 @@ relay_remote_event_buffer_input (struct t_gui_buffer *buffer,
                                  const char *input_data)
 {
     struct t_relay_remote *ptr_remote;
-    cJSON *json, *json_body;
+    struct t_relay_json *json, *json_body;
     long long buffer_id;
 
     if (!buffer)
@@ -699,21 +705,21 @@ relay_remote_event_buffer_input (struct t_gui_buffer *buffer,
     if (buffer_id < 0)
         goto error;
 
-    json = cJSON_CreateObject ();
+    json = relay_json_new_object ();
     if (!json)
         goto error;
 
-    cJSON_AddItemToObject (json, "request",
-                           cJSON_CreateString ("POST /api/input"));
-    json_body = cJSON_CreateObject ();
+    relay_json_object_add (json, "request",
+                           relay_json_new_string ("POST /api/input"));
+    json_body = relay_json_new_object ();
     if (!json_body)
         goto error;
 
-    cJSON_AddItemToObject (json_body, "buffer_id",
-                           cJSON_CreateNumber (buffer_id));
-    cJSON_AddItemToObject (json_body, "command",
-                           cJSON_CreateString (input_data));
-    cJSON_AddItemToObject (json, "body", json_body);
+    relay_json_object_add (json_body, "buffer_id",
+                           relay_json_new_number (buffer_id));
+    relay_json_object_add (json_body, "command",
+                           relay_json_new_string (input_data));
+    relay_json_object_add (json, "body", json_body);
 
     if (relay_remote_network_send_json (ptr_remote, json) <= 0)
     {
@@ -725,13 +731,13 @@ relay_remote_event_buffer_input (struct t_gui_buffer *buffer,
         relay_remote_network_disconnect (ptr_remote);
     }
 
-    cJSON_Delete (json);
+    relay_json_free (json);
 
     return;
 
 error:
     if (json)
-        cJSON_Delete (json);
+        relay_json_free (json);
     return;
 }
 
@@ -775,7 +781,7 @@ relay_remote_event_remove_localvar_cb (void *data,
 {
     void **pointers;
     struct t_gui_buffer *buffer;
-    cJSON *json;
+    struct t_relay_json *json;
     char str_local_var[1024];
 
     /* Make C compiler happy. */
@@ -789,7 +795,7 @@ relay_remote_event_remove_localvar_cb (void *data,
     if (!relay_remote_event_check_local_var (key))
         return;
 
-    if (!cJSON_GetObjectItem (json, key))
+    if (!relay_json_object_get (json, key))
     {
         /* Local variable removed on remote? => remove it locally. */
         snprintf (str_local_var, sizeof (str_local_var),
@@ -812,7 +818,8 @@ relay_remote_event_initial_sync_buffers (struct t_relay_remote_event *event)
     struct t_hashtable *buffers_id;
     const char *ptr_name, *ptr_id;
     char str_id[64];
-    cJSON *json_buffer, *json_obj;
+    struct t_relay_json *json_buffer, *json_obj;
+    long long json_number;
     long long id;
     int i, list_size;
 
@@ -850,9 +857,9 @@ relay_remote_event_initial_sync_buffers (struct t_relay_remote_event *event)
         relay_remote_network_disconnect (event->remote);
         return;
     }
-    if (event->json && cJSON_IsArray (event->json))
+    if (event->json && relay_json_is_array (event->json))
     {
-        cJSON_ArrayForEach (json_buffer, event->json)
+        RELAY_JSON_FOREACH(json_buffer, event->json)
         {
             JSON_GET_NUM(json_buffer, id, -1);
             snprintf (str_id, sizeof (str_id), "%lld", id);
@@ -893,8 +900,10 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     struct t_hashtable *buffer_props;
     struct t_relay_remote_event event_line;
     struct t_hashtable *local_variables;
-    cJSON *json_obj, *json_keys, *json_key, *json_key_name, *json_key_command;
-    cJSON *json_vars, *json_var, *json_lines, *json_line, *json_nicklist_root;
+    struct t_relay_json *json_obj, *json_keys, *json_key, *json_key_name;
+    struct t_relay_json *json_key_command, *json_vars, *json_var, *json_lines;
+    struct t_relay_json *json_line, *json_nicklist_root;
+    long long json_number;
     void *pointers[2];
     const char *name, *short_name, *type, *title, *modes, *input_prompt, *input;
     const char *ptr_key, *ptr_command;
@@ -1016,8 +1025,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
                                &relay_remote_event_apply_props, ptr_buffer);
     }
 
-    json_vars = cJSON_GetObjectItem (event->json, "local_variables");
-    if (json_vars && cJSON_IsObject (json_vars))
+    json_vars = relay_json_object_get (event->json, "local_variables");
+    if (relay_json_is_object (json_vars))
     {
         if (weechat_strcmp (event->name, "buffer_localvar_removed") == 0)
         {
@@ -1041,36 +1050,36 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
         else
         {
             /* Add/update local variables. */
-            cJSON_ArrayForEach (json_var, json_vars)
+            RELAY_JSON_FOREACH(json_var, json_vars)
             {
-                if (json_var->string
-                    && cJSON_IsString (json_var)
-                    && relay_remote_event_check_local_var (json_var->string))
+                if (json_var->key
+                    && relay_json_is_string (json_var)
+                    && relay_remote_event_check_local_var (json_var->key))
                 {
                     snprintf (str_local_var, sizeof (str_local_var),
                               "localvar_set_%s",
-                              json_var->string);
+                              json_var->key);
                     weechat_buffer_set (ptr_buffer,
                                         str_local_var,
-                                        cJSON_GetStringValue (json_var));
+                                        relay_json_get_string (json_var));
                 }
             }
         }
     }
 
     /* Add keys. */
-    json_keys = cJSON_GetObjectItem (event->json, "keys");
-    if (json_keys && cJSON_IsArray (json_keys))
+    json_keys = relay_json_object_get (event->json, "keys");
+    if (relay_json_is_array (json_keys))
     {
-        cJSON_ArrayForEach (json_key, json_keys)
+        RELAY_JSON_FOREACH(json_key, json_keys)
         {
-            json_key_name = cJSON_GetObjectItem (json_key, "key");
-            json_key_command = cJSON_GetObjectItem (json_key, "command");
-            if (json_key_name && cJSON_IsString (json_key_name)
-                && json_key_command && cJSON_IsString (json_key_command))
+            json_key_name = relay_json_object_get (json_key, "key");
+            json_key_command = relay_json_object_get (json_key, "command");
+            if (relay_json_is_string (json_key_name)
+                && relay_json_is_string (json_key_command))
             {
-                ptr_key = cJSON_GetStringValue (json_key_name);
-                ptr_command = cJSON_GetStringValue (json_key_command);
+                ptr_key = relay_json_get_string (json_key_name);
+                ptr_command = relay_json_get_string (json_key_command);
                 if (ptr_key && ptr_command)
                 {
                     if (weechat_asprintf (&property, "key_bind_%s", ptr_key) >= 0)
@@ -1084,13 +1093,13 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     }
 
     /* Add lines. */
-    json_lines = cJSON_GetObjectItem (event->json, "lines");
-    if (json_lines && cJSON_IsArray (json_lines))
+    json_lines = relay_json_object_get (event->json, "lines");
+    if (relay_json_is_array (json_lines))
     {
         event_line.name = "buffer_line_added";
         event_line.remote = event->remote;
         event_line.buffer = ptr_buffer;
-        cJSON_ArrayForEach (json_line, json_lines)
+        RELAY_JSON_FOREACH(json_line, json_lines)
         {
             event_line.json = json_line;
             relay_remote_event_cb_line (&event_line);
@@ -1098,8 +1107,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     }
 
     /* Add nicklist groups and nicks. */
-    json_nicklist_root = cJSON_GetObjectItem (event->json, "nicklist_root");
-    if (json_nicklist_root && cJSON_IsObject (json_nicklist_root))
+    json_nicklist_root = relay_json_object_get (event->json, "nicklist_root");
+    if (relay_json_is_object (json_nicklist_root))
         relay_remote_event_handle_nick_group (ptr_buffer, json_nicklist_root);
 
 end:
@@ -1134,7 +1143,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer_closed)
 
 RELAY_REMOTE_EVENT_CALLBACK(input)
 {
-    cJSON *json_obj;
+    struct t_relay_json *json_obj;
+    long long json_number;
     const char *input_prompt, *input;
     char str_pos[64];
     int input_position;
@@ -1189,53 +1199,54 @@ relay_remote_event_clear_buffers (struct t_relay_remote *remote)
 void
 relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
 {
-    cJSON *json, *json_req1, *json_req2, *json_body;
+    struct t_relay_json *json, *json_req1, *json_req2, *json_body;
     char url[1024];
 
     if (!remote)
         return;
 
-    json = cJSON_CreateArray ();
+    json = relay_json_new_array ();
     if (!json)
         goto end;
 
     /* First request: GET /api/buffers. */
-    json_req1 = cJSON_CreateObject ();
+    json_req1 = relay_json_new_object ();
     if (json_req1)
     {
         snprintf (url, sizeof (url),
                   "GET /api/buffers?lines=-%d&nicks=true&colors=weechat",
                   weechat_config_integer (relay_config_api_remote_get_lines));
-        cJSON_AddItemToObject (json_req1, "request", cJSON_CreateString (url));
-        cJSON_AddItemToObject (
+        relay_json_object_add (json_req1, "request",
+                               relay_json_new_string (url));
+        relay_json_object_add (
             json_req1,
             "request_id",
-            cJSON_CreateString (RELAY_REMOTE_EVENT_ID_INITIAL_SYNC));
-        cJSON_AddItemToArray (json, json_req1);
+            relay_json_new_string (RELAY_REMOTE_EVENT_ID_INITIAL_SYNC));
+        relay_json_array_add (json, json_req1);
     }
 
     /* Second request: POST /api/sync. */
-    json_req2 = cJSON_CreateObject ();
+    json_req2 = relay_json_new_object ();
     if (json_req2)
     {
-        cJSON_AddItemToObject (json_req2, "request",
-                               cJSON_CreateString ("POST /api/sync"));
-        json_body = cJSON_CreateObject ();
+        relay_json_object_add (json_req2, "request",
+                               relay_json_new_string ("POST /api/sync"));
+        json_body = relay_json_new_object ();
         if (!json_body)
         {
-            cJSON_Delete (json_req2);
+            relay_json_free (json_req2);
             goto end;
         }
-        cJSON_AddItemToObject (json_body, "colors",
-                               cJSON_CreateString ("weechat"));
-        cJSON_AddItemToObject (json_req2, "body", json_body);
-        cJSON_AddItemToArray (json, json_req2);
+        relay_json_object_add (json_body, "colors",
+                               relay_json_new_string ("weechat"));
+        relay_json_object_add (json_req2, "body", json_body);
+        relay_json_array_add (json, json_req2);
     }
 
     relay_remote_network_send_json (remote, json);
 
 end:
-    cJSON_Delete (json);
+    relay_json_free (json);
 }
 
 /*
@@ -1244,7 +1255,7 @@ end:
 
 RELAY_REMOTE_EVENT_CALLBACK(version)
 {
-    cJSON *json_obj;
+    struct t_relay_json *json_obj;
     const char *weechat_version, *weechat_version_git, *relay_api_version;
     char *weechat_version_local;
 
@@ -1324,7 +1335,8 @@ RELAY_REMOTE_EVENT_CALLBACK(quit)
 void
 relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 {
-    cJSON *json, *json_body, *json_obj;
+    struct t_relay_json *json, *json_body, *json_obj;
+    long long json_number;
     const char *body_type, *event_name, *request_id;
     long long buffer_id;
     int i, rc, code, initial_sync;
@@ -1357,7 +1369,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
                         RELAY_PLUGIN_NAME, remote->name, data);
     }
 
-    json = cJSON_Parse (data);
+    json = relay_json_parse (data);
     if (!json)
     {
         weechat_printf (
@@ -1377,7 +1389,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     JSON_GET_NUM(json, code, -1);
     JSON_GET_STR(json, body_type);
     JSON_GET_STR(json, request_id);
-    json_body = cJSON_GetObjectItem (json, "body");
+    json_body = relay_json_object_get (json, "body");
 
     if (!body_type && ((code == 200) || (code == 204)))
         goto end;
@@ -1428,9 +1440,9 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
          * buffers, so a pointer searched once and reused for the next calls
          * could point to a freed buffer.
          */
-        if (cJSON_IsArray (json_body))
+        if (relay_json_is_array (json_body))
         {
-            cJSON_ArrayForEach (json_obj, json_body)
+            RELAY_JSON_FOREACH(json_obj, json_body)
             {
                 event.json = json_obj;
                 event.buffer = relay_remote_event_search_buffer (remote,
@@ -1462,5 +1474,5 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     }
 
 end:
-    cJSON_Delete (json);
+    relay_json_free (json);
 }

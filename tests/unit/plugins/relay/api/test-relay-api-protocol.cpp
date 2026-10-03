@@ -14,8 +14,8 @@
 extern "C"
 {
 #include <unistd.h>
+#include <limits.h>
 #include <string.h>
-#include <cjson/cJSON.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-string.h"
 #include "src/core/core-util.h"
@@ -29,6 +29,7 @@ extern "C"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-client.h"
 #include "src/plugins/relay/relay-config.h"
+#include "src/plugins/relay/relay-json.h"
 #include "src/plugins/relay/relay-server.h"
 #include "src/plugins/relay/api/relay-api.h"
 #include "src/plugins/relay/api/relay-api-protocol.h"
@@ -36,6 +37,19 @@ extern "C"
 extern void relay_client_recv_text (struct t_relay_client *client,
                                     const char *data);
 extern int relay_api_protocol_command_delay;
+}
+
+/*
+ * Return value of a JSON integer number, LLONG_MIN if the item is not an
+ * integer number.
+ */
+
+long long
+test_relay_api_protocol_json_number (struct t_relay_json *json)
+{
+    long long value;
+
+    return (relay_json_get_number (json, &value)) ? value : LLONG_MIN;
 }
 
 #define WEE_CHECK_HTTP_CODE(__code, __message)                          \
@@ -56,35 +70,36 @@ extern int relay_api_protocol_command_delay;
                  data_sent[0]);
 
 #define WEE_CHECK_OBJ_STR(__expected, __json, __name)                   \
-    json_obj = cJSON_GetObjectItem (__json, __name);                    \
+    json_obj = relay_json_object_get (__json, __name);                  \
     CHECK(json_obj);                                                    \
-    CHECK(cJSON_IsString (json_obj));                                   \
-    STRCMP_EQUAL(__expected, cJSON_GetStringValue (json_obj));
+    CHECK(relay_json_is_string (json_obj));                             \
+    STRCMP_EQUAL(__expected, relay_json_get_string (json_obj));
 
 #define WEE_CHECK_OBJ_STRN(__expected, __length, __json, __name)        \
-    json_obj = cJSON_GetObjectItem (__json, __name);                    \
+    json_obj = relay_json_object_get (__json, __name);                  \
     CHECK(json_obj);                                                    \
-    CHECK(cJSON_IsString (json_obj));                                   \
-    STRNCMP_EQUAL(__expected, cJSON_GetStringValue (json_obj),          \
+    CHECK(relay_json_is_string (json_obj));                             \
+    STRNCMP_EQUAL(__expected, relay_json_get_string (json_obj),         \
                   __length);
 
 #define WEE_CHECK_OBJ_NUM(__expected, __json, __name)                   \
-    json_obj = cJSON_GetObjectItem (__json, __name);                    \
+    json_obj = relay_json_object_get (__json, __name);                  \
     CHECK(json_obj);                                                    \
-    CHECK(cJSON_IsNumber (json_obj));                                   \
-    CHECK(__expected == cJSON_GetNumberValue (json_obj));
+    CHECK(relay_json_is_number (json_obj));                             \
+    CHECK((long long)(__expected)                                       \
+          == test_relay_api_protocol_json_number (json_obj));
 
 #define WEE_CHECK_OBJ_BOOL(__expected, __json, __name)                  \
-    json_obj = cJSON_GetObjectItem (__json, __name);                    \
+    json_obj = relay_json_object_get (__json, __name);                  \
     CHECK(json_obj);                                                    \
-    CHECK(cJSON_IsBool (json_obj));                                     \
-    LONGS_EQUAL(__expected, cJSON_IsTrue (json_obj) ? 1 : 0);
+    CHECK(relay_json_is_bool (json_obj));                               \
+    LONGS_EQUAL(__expected, relay_json_is_true (json_obj) ? 1 : 0);
 
 struct t_relay_server *ptr_relay_server = NULL;
 struct t_relay_client *ptr_relay_client = NULL;
 int data_sent_index = 0;
 char *data_sent[4] = { NULL, NULL, NULL, NULL };
-cJSON *json_body_sent[4] = { NULL, NULL, NULL, NULL };
+struct t_relay_json *json_body_sent[4] = { NULL, NULL, NULL, NULL };
 
 TEST_GROUP(RelayApiProtocol)
 {
@@ -100,7 +115,7 @@ TEST_GROUP(RelayApiProtocolWithClient)
         {
             free (data_sent[i]);
             data_sent[i] = NULL;
-            cJSON_Delete (json_body_sent[i]);
+            relay_json_free (json_body_sent[i]);
             json_body_sent[i] = NULL;
         }
         data_sent_index = 0;
@@ -167,7 +182,7 @@ TEST_GROUP(RelayApiProtocolWithClient)
 
         pos_body = strstr (data_sent[data_sent_index], "\r\n\r\n");
         if (pos_body)
-            json_body_sent[data_sent_index] = cJSON_Parse(pos_body + 4);
+            json_body_sent[data_sent_index] = relay_json_parse(pos_body + 4);
 
         data_sent_index++;
     }
@@ -350,7 +365,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
 
 TEST(RelayApiProtocolWithClient, CbVersion)
 {
-    cJSON *json, *json_obj;
+    struct t_relay_json *json, *json_obj;
 
     test_client_recv_http ("GET /api/version", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
@@ -370,7 +385,7 @@ TEST(RelayApiProtocolWithClient, CbVersion)
 
 TEST(RelayApiProtocolWithClient, CbBuffers)
 {
-    cJSON *json, *json_obj, *json_var, *json_groups;
+    struct t_relay_json *json, *json_obj, *json_var, *json_groups;
     char str_http[256];
 
     /* Error: invalid buffer name */
@@ -418,10 +433,10 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     test_client_recv_http ("GET /api/buffers", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
-    CHECK(cJSON_IsArray (json_body_sent[0]));
-    json = cJSON_GetArrayItem (json_body_sent[0], 0);
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    json = relay_json_array_get (json_body_sent[0], 0);
     CHECK(json);
-    CHECK(cJSON_IsObject (json));
+    CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
     WEE_CHECK_OBJ_STR("core.weechat", json, "name");
     WEE_CHECK_OBJ_STR("weechat", json, "short_name");
@@ -433,9 +448,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("", json, "input");
     WEE_CHECK_OBJ_NUM(0, json, "input_position");
     WEE_CHECK_OBJ_BOOL(0, json, "input_multiline");
-    json_var = cJSON_GetObjectItem (json, "local_variables");
+    json_var = relay_json_object_get (json, "local_variables");
     CHECK(json_var);
-    CHECK(cJSON_IsObject (json_var));
+    CHECK(relay_json_is_object (json_var));
     WEE_CHECK_OBJ_STR("core", json_var, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
 
@@ -447,7 +462,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     test_client_recv_http ("GET /api/buffers/core.weechat", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
-    CHECK(cJSON_IsObject (json_body_sent[0]));
+    CHECK(relay_json_is_object (json_body_sent[0]));
     json = json_body_sent[0];
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
     WEE_CHECK_OBJ_STR("core.weechat", json, "name");
@@ -460,9 +475,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("test", json, "input");
     WEE_CHECK_OBJ_NUM(4, json, "input_position");
     WEE_CHECK_OBJ_BOOL(1, json, "input_multiline");
-    json_var = cJSON_GetObjectItem (json, "local_variables");
+    json_var = relay_json_object_get (json, "local_variables");
     CHECK(json_var);
-    CHECK(cJSON_IsObject (json_var));
+    CHECK(relay_json_is_object (json_var));
     WEE_CHECK_OBJ_STR("core", json_var, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
     gui_buffer_set (gui_buffers, "input_prompt", "");
@@ -475,7 +490,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     test_client_recv_http (str_http, NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
-    CHECK(cJSON_IsObject (json_body_sent[0]));
+    CHECK(relay_json_is_object (json_body_sent[0]));
     json = json_body_sent[0];
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
     WEE_CHECK_OBJ_STR("core.weechat", json, "name");
@@ -488,9 +503,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("", json, "input");
     WEE_CHECK_OBJ_NUM(0, json, "input_position");
     WEE_CHECK_OBJ_BOOL(0, json, "input_multiline");
-    json_var = cJSON_GetObjectItem (json, "local_variables");
+    json_var = relay_json_object_get (json, "local_variables");
     CHECK(json_var);
-    CHECK(cJSON_IsObject (json_var));
+    CHECK(relay_json_is_object (json_var));
     WEE_CHECK_OBJ_STR("core", json_var, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
 
@@ -500,24 +515,24 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     test_client_recv_http ("GET /api/buffers/core.weechat/lines?lines=-2", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
-    CHECK(cJSON_IsArray (json_body_sent[0]));
-    json = cJSON_GetArrayItem (json_body_sent[0], 0);
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    json = relay_json_array_get (json_body_sent[0], 0);
     CHECK(json);
-    CHECK(cJSON_IsObject (json));
+    CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->prev_line->data->id, json, "id");
     WEE_CHECK_OBJ_NUM(-1, json, "y");
-    CHECK(cJSON_IsString (cJSON_GetObjectItem (json, "date")));
-    CHECK(!cJSON_GetObjectItem (json, "date_printed"));
+    CHECK(relay_json_is_string (relay_json_object_get (json, "date")));
+    CHECK(!relay_json_object_get (json, "date_printed"));
     WEE_CHECK_OBJ_BOOL(0, json, "highlight");
     WEE_CHECK_OBJ_STR("", json, "prefix");
     WEE_CHECK_OBJ_STR("test line 1", json, "message");
-    json = cJSON_GetArrayItem (json_body_sent[0], 1);
+    json = relay_json_array_get (json_body_sent[0], 1);
     CHECK(json);
-    CHECK(cJSON_IsObject (json));
+    CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->data->id, json, "id");
     WEE_CHECK_OBJ_NUM(-1, json, "y");
-    CHECK(cJSON_IsString (cJSON_GetObjectItem (json, "date")));
-    CHECK(!cJSON_GetObjectItem (json, "date_printed"));
+    CHECK(relay_json_is_string (relay_json_object_get (json, "date")));
+    CHECK(!relay_json_object_get (json, "date_printed"));
     WEE_CHECK_OBJ_BOOL(0, json, "highlight");
     WEE_CHECK_OBJ_STR("", json, "prefix");
     WEE_CHECK_OBJ_STR("test line 2", json, "message");
@@ -526,14 +541,14 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     test_client_recv_http ("GET /api/buffers/core.weechat/nicks", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
-    CHECK(cJSON_IsObject (json_body_sent[0]));
+    CHECK(relay_json_is_object (json_body_sent[0]));
     json = json_body_sent[0];
     WEE_CHECK_OBJ_STR("root", json, "name");
     WEE_CHECK_OBJ_STR("", json, "color");
-    json_groups = cJSON_GetObjectItem (json, "groups");
+    json_groups = relay_json_object_get (json, "groups");
     CHECK(json_groups);
-    CHECK(cJSON_IsArray (json_groups));
-    LONGS_EQUAL(0, cJSON_GetArraySize (json_groups));
+    CHECK(relay_json_is_array (json_groups));
+    LONGS_EQUAL(0, relay_json_array_size (json_groups));
 }
 
 /*
@@ -543,14 +558,14 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
 
 TEST(RelayApiProtocolWithClient, CbHotlist)
 {
-    cJSON *json, *json_obj, *json_count;
+    struct t_relay_json *json, *json_obj, *json_count;
 
     /* Get hotlist (empty). */
     test_client_recv_http ("GET /api/hotlist", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
-    CHECK(cJSON_IsArray (json_body_sent[0]));
-    LONGS_EQUAL(0, cJSON_GetArraySize (json_body_sent[0]));
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    LONGS_EQUAL(0, relay_json_array_size (json_body_sent[0]));
 
     gui_hotlist_add (gui_buffers, GUI_HOTLIST_LOW, NULL, 0);
     gui_hotlist_add (gui_buffers, GUI_HOTLIST_MESSAGE, NULL, 0);
@@ -567,33 +582,33 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
     test_client_recv_http ("GET /api/hotlist", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
-    CHECK(cJSON_IsArray (json_body_sent[0]));
-    LONGS_EQUAL(1, cJSON_GetArraySize (json_body_sent[0]));
-    json = cJSON_GetArrayItem (json_body_sent[0], 0);
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    LONGS_EQUAL(1, relay_json_array_size (json_body_sent[0]));
+    json = relay_json_array_get (json_body_sent[0], 0);
     CHECK(json);
-    CHECK(cJSON_IsObject (json));
+    CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_NUM(int(GUI_HOTLIST_HIGHLIGHT), json, "priority");
-    CHECK(cJSON_IsString (cJSON_GetObjectItem (json, "date")));
+    CHECK(relay_json_is_string (relay_json_object_get (json, "date")));
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "buffer_id");
-    json_count = cJSON_GetObjectItem (json, "count");
+    json_count = relay_json_object_get (json, "count");
     CHECK(json_count);
-    CHECK(cJSON_IsArray (json_count));
-    json_obj = cJSON_GetArrayItem (json_count, 0);
+    CHECK(relay_json_is_array (json_count));
+    json_obj = relay_json_array_get (json_count, 0);
     CHECK(json_obj);
-    CHECK(cJSON_IsNumber (json_obj));
-    CHECK(1 == cJSON_GetNumberValue (json_obj));
-    json_obj = cJSON_GetArrayItem (json_count, 1);
+    CHECK(relay_json_is_number (json_obj));
+    CHECK(1 == test_relay_api_protocol_json_number (json_obj));
+    json_obj = relay_json_array_get (json_count, 1);
     CHECK(json_obj);
-    CHECK(cJSON_IsNumber (json_obj));
-    CHECK(2 == cJSON_GetNumberValue (json_obj));
-    json_obj = cJSON_GetArrayItem (json_count, 2);
+    CHECK(relay_json_is_number (json_obj));
+    CHECK(2 == test_relay_api_protocol_json_number (json_obj));
+    json_obj = relay_json_array_get (json_count, 2);
     CHECK(json_obj);
-    CHECK(cJSON_IsNumber (json_obj));
-    CHECK(3 == cJSON_GetNumberValue (json_obj));
-    json_obj = cJSON_GetArrayItem (json_count, 3);
+    CHECK(relay_json_is_number (json_obj));
+    CHECK(3 == test_relay_api_protocol_json_number (json_obj));
+    json_obj = relay_json_array_get (json_count, 3);
     CHECK(json_obj);
-    CHECK(cJSON_IsNumber (json_obj));
-    CHECK(4 == cJSON_GetNumberValue (json_obj));
+    CHECK(relay_json_is_number (json_obj));
+    CHECK(4 == test_relay_api_protocol_json_number (json_obj));
 
     gui_hotlist_remove_buffer (gui_buffers, 1);
 }
@@ -605,7 +620,7 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
 
 TEST(RelayApiProtocolWithClient, CbScripts)
 {
-    cJSON *json, *json_obj;
+    struct t_relay_json *json, *json_obj;
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
     char *test_scripts_dir, str_command[(PATH_MAX * 2) + 128];
     const char *ptr_test_scripts_dir;
@@ -614,8 +629,8 @@ TEST(RelayApiProtocolWithClient, CbScripts)
     test_client_recv_http ("GET /api/scripts", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
-    CHECK(cJSON_IsArray (json_body_sent[0]));
-    LONGS_EQUAL(0, cJSON_GetArraySize (json_body_sent[0]));
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    LONGS_EQUAL(0, relay_json_array_size (json_body_sent[0]));
 
     /* Load a python script for this test. */
     ptr_test_scripts_dir = getenv ("WEECHAT_TESTS_SCRIPTS_DIR");
@@ -640,11 +655,11 @@ TEST(RelayApiProtocolWithClient, CbScripts)
     test_client_recv_http ("GET /api/scripts", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent[0]);
-    CHECK(cJSON_IsArray (json_body_sent[0]));
-    LONGS_EQUAL(1, cJSON_GetArraySize (json_body_sent[0]));
-    json = cJSON_GetArrayItem (json_body_sent[0], 0);
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    LONGS_EQUAL(1, relay_json_array_size (json_body_sent[0]));
+    json = relay_json_array_get (json_body_sent[0], 0);
     CHECK(json);
-    CHECK(cJSON_IsObject (json));
+    CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_STR("testapigen.py", json, "name");
     WEE_CHECK_OBJ_STR("0.1", json, "version");
     WEE_CHECK_OBJ_STR("Generate scripting API test scripts", json, "description");
@@ -664,7 +679,7 @@ TEST(RelayApiProtocolWithClient, CbScripts)
 
 TEST(RelayApiProtocolWithClient, CbCompletion)
 {
-    cJSON *json, *json_obj, *json_array;
+    struct t_relay_json *json, *json_obj, *json_array;
 
     /* Error: no body */
     test_client_recv_http ("POST /api/completion", NULL, NULL);
@@ -689,6 +704,45 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
                  "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
                  data_sent[0]);
 
+    /* Error: buffer id is a not an integer */
+    test_client_recv_http ("POST /api/completion",
+                           NULL,
+                           "{\"buffer_id\": 1.5, "
+                           "\"command\": \"test\"}");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
+                 data_sent[0]);
+
+    /* Error: buffer id is a integer with exponent */
+    test_client_recv_http ("POST /api/completion",
+                           NULL,
+                           "{\"buffer_id\": 1.70993282323864e+15, "
+                           "\"command\": \"test\"}");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
+                 data_sent[0]);
+
+    /* Error: buffer id is a string */
+    test_client_recv_http ("POST /api/completion",
+                           NULL,
+                           "{\"buffer_id\": \"123\", "
+                           "\"command\": \"test\"}");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
+                 data_sent[0]);
+
     /* On core buffer, with buffer name */
 
     /* Completion core.weechat -1 /help fi */
@@ -699,19 +753,19 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
     WEE_CHECK_HTTP_CODE(200, "OK");
     json = json_body_sent[0];
     CHECK(json);
-    CHECK(cJSON_IsObject (json));
+    CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_STR("command_arg", json, "context");
     WEE_CHECK_OBJ_STR("fi", json, "base_word");
     WEE_CHECK_OBJ_NUM(6, json, "position_replace");
     WEE_CHECK_OBJ_BOOL(0, json, "add_space");
-    json_array = cJSON_GetObjectItem (json, "list");
+    json_array = relay_json_object_get (json, "list");
     CHECK(json_array);
-    CHECK(cJSON_IsArray (json_array));
-    CHECK(cJSON_GetArraySize (json_array) == 4);
-    STRCMP_EQUAL("fifo", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 0)));
-    STRCMP_EQUAL("fifo.file.enabled", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 1)));
-    STRCMP_EQUAL("fifo.file.path", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 2)));
-    STRCMP_EQUAL("filter", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 3)));
+    CHECK(relay_json_is_array (json_array));
+    CHECK(relay_json_array_size (json_array) == 4);
+    STRCMP_EQUAL("fifo", relay_json_get_string (relay_json_array_get (json_array, 0)));
+    STRCMP_EQUAL("fifo.file.enabled", relay_json_get_string (relay_json_array_get (json_array, 1)));
+    STRCMP_EQUAL("fifo.file.path", relay_json_get_string (relay_json_array_get (json_array, 2)));
+    STRCMP_EQUAL("filter", relay_json_get_string (relay_json_array_get (json_array, 3)));
 
     /* Completion core.weechat 5 /quernick */
     test_client_recv_http ("POST /api/completion",
@@ -722,16 +776,16 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
     WEE_CHECK_HTTP_CODE(200, "OK");
     json = json_body_sent[0];
     CHECK(json);
-    CHECK(cJSON_IsObject (json));
+    CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_STR("command", json, "context");
     WEE_CHECK_OBJ_STR("quer", json, "base_word");
     WEE_CHECK_OBJ_NUM(1, json, "position_replace");
     WEE_CHECK_OBJ_BOOL(1, json, "add_space");
-    json_array = cJSON_GetObjectItem (json, "list");
+    json_array = relay_json_object_get (json, "list");
     CHECK(json_array);
-    CHECK(cJSON_IsArray (json_array));
-    CHECK(cJSON_GetArraySize (json_array) == 1);
-    STRCMP_EQUAL("query", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 0)));
+    CHECK(relay_json_is_array (json_array));
+    CHECK(relay_json_array_size (json_array) == 1);
+    STRCMP_EQUAL("query", relay_json_get_string (relay_json_array_get (json_array, 0)));
 }
 
 /*
@@ -765,6 +819,45 @@ TEST(RelayApiProtocolWithClient, CbInput)
                  "Content-Length: 40\r\n"
                  "\r\n"
                  "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
+                 data_sent[0]);
+
+    /* Error: buffer id is a not an integer */
+    test_client_recv_http ("POST /api/input",
+                           NULL,
+                           "{\"buffer_id\": 1.5, "
+                           "\"command\": \"/print test\"}");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
+                 data_sent[0]);
+
+    /* Error: buffer id is a integer with exponent */
+    test_client_recv_http ("POST /api/input",
+                           NULL,
+                           "{\"buffer_id\": 1.70993282323864e+15, "
+                           "\"command\": \"/print test\"}");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
+                 data_sent[0]);
+
+    /* Error: buffer id is a string */
+    test_client_recv_http ("POST /api/input",
+                           NULL,
+                           "{\"buffer_id\": \"123\", "
+                           "\"command\": \"/print test\"}");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
                  data_sent[0]);
 
     /* On core buffer, without buffer name */
@@ -814,7 +907,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
 
 TEST(RelayApiProtocolWithClient, CbPing)
 {
-    cJSON *json, *json_obj;
+    struct t_relay_json *json, *json_obj;
 
     /* Ping without body */
     test_client_recv_http ("POST /api/ping", NULL, NULL);

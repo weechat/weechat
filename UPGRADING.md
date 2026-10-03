@@ -64,6 +64,13 @@ a large number (a remote must run the same WeeChat version as the server).
 In the "weechat" protocol, the type of the line identifier sent in messages `_buffer_line_added`
 and `_buffer_line_data_changed` changed from `int` to `lon`.
 
+In the "api" protocol, JSON is now parsed strictly, as specified in RFC 8259:
+
+- keys of JSON objects are case-sensitive (they were case-insensitive): for example a request
+  with key `"Request"` instead of `"request"` is now rejected;
+- data after the JSON value (for example `{"request": "GET /api/version"}xyz`), numbers with
+  leading zeros (like `01`) and strings with invalid UTF-8 are rejected.
+
 ### Types of variables in infolists
 
 Some variables in infolists are no longer strings or integers, so they must be read with the

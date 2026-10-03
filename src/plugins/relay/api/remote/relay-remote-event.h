@@ -7,7 +7,7 @@
 #ifndef WEECHAT_PLUGIN_RELAY_REMOTE_EVENT_H
 #define WEECHAT_PLUGIN_RELAY_REMOTE_EVENT_H
 
-#include <cjson/cJSON.h>
+#include "../../relay-json.h"
 
 #define RELAY_REMOTE_EVENT_ID_INITIAL_SYNC "initial_sync"
 
@@ -21,7 +21,7 @@ struct t_relay_remote_event
     struct t_relay_remote *remote;     /* relay remote                      */
     const char *name;                  /* event name (signal, hsignal)      */
     struct t_gui_buffer *buffer;       /* buffer (can be NULL)              */
-    cJSON *json;                       /* JSON object                       */
+    struct t_relay_json *json;         /* JSON object                       */
 };
 
 typedef int (t_relay_remote_event_func)(struct t_relay_remote_event *event);

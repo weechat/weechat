@@ -13,7 +13,6 @@
 extern "C"
 {
 #include <limits.h>
-#include <cjson/cJSON.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
@@ -21,6 +20,7 @@ extern "C"
 #include "src/gui/gui-key.h"
 #include "src/gui/gui-line.h"
 #include "src/plugins/relay/relay.h"
+#include "src/plugins/relay/relay-json.h"
 #include "src/plugins/relay/relay-remote.h"
 #include "src/plugins/relay/api/remote/relay-remote-event.h"
 
@@ -28,7 +28,7 @@ extern int relay_remote_event_line_is_already_read (struct t_gui_buffer *ptr_buf
                                                     long long line_id);
 extern struct t_gui_buffer *relay_remote_event_search_buffer (struct t_relay_remote *remote,
                                                               long long id);
-extern char **relay_remote_build_string_tags (cJSON *json_tags,
+extern char **relay_remote_build_string_tags (struct t_relay_json *json_tags,
                                               struct t_gui_buffer *buffer,
                                               long long line_id, int highlight);
 extern struct t_gui_line *relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer,
@@ -37,13 +37,13 @@ extern struct t_gui_line *relay_remote_event_search_line_by_id (struct t_gui_buf
 
 #define WEE_CHECK_TAGS(__result, __json_tags, __buffer, __line_id,      \
                        __highlight)                                     \
-    json_tags = (__json_tags) ? cJSON_Parse (__json_tags) : NULL;       \
+    json_tags = (__json_tags) ? relay_json_parse (__json_tags) : NULL;  \
     tags = relay_remote_build_string_tags (json_tags, __buffer,         \
                                            __line_id, __highlight);     \
     CHECK(tags);                                                        \
     STRCMP_EQUAL(__result, *tags);                                      \
     string_dyn_free (tags, 1);                                          \
-    cJSON_Delete (json_tags);
+    relay_json_free (json_tags);
 
 TEST_GROUP(RelayRemoteEvent)
 {
@@ -164,7 +164,7 @@ TEST(RelayRemoteEvent, GetBufferId)
 TEST(RelayRemoteEvent, BuildStringTags)
 {
     struct t_gui_buffer *buffer;
-    cJSON *json_tags;
+    struct t_relay_json *json_tags;
     char **tags;
 
     buffer = gui_buffer_new_user ("test_build_string_tags",

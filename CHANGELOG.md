@@ -38,6 +38,8 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: allow multiple nicks separated by commas in command `/notify del`
 - **breaking:** relay: remove "date_printed" and "date_usec_printed" of lines in weechat protocol
 - **breaking:** relay: change type of line identifier from "int" to "lon" in weechat protocol
+- relay/api: return error 400 (Bad Request) if "buffer_id" is not an integer in resources "input" and "completion"
+- **breaking:** relay/api: parse JSON strictly (RFC 8259): keys are case-sensitive, data after the JSON value, numbers with leading zeros and invalid UTF-8 are rejected
 - relay/api: add field "prefix_displayed" in buffers
 - relay/api: add field "first_line_not_read" in buffers
 - **breaking:** relay/api: remove field "date_printed" in lines
@@ -58,6 +60,8 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - logger: add support of extra date/time specifiers like "%@" (UTC date) in options logger.file.mask, logger.file.path and logger.mask.* ([#2361](https://github.com/weechat/weechat/issues/2361))
 - relay/irc: add support of extra date/time specifiers like "%@" (UTC date) in option relay.irc.backlog_time_format
 - relay/irc: remove message tags not negotiated by the client in redirected messages ([#2359](https://github.com/weechat/weechat/issues/2359))
+- relay/api: replace invalid UTF-8 chars by "?" in JSON sent, so that it is always valid JSON
+- relay/api: fix integer numbers sent with exponent in JSON (for example buffer identifier sent as `1.70993282323864e+15` instead of `1709932823238640`)
 - relay/api: fix notify tag in line when already read on remote ([#2343](https://github.com/weechat/weechat/issues/2343))
 
 ### Security

@@ -13,11 +13,11 @@
 extern "C"
 {
 #include <string.h>
-#include <cjson/cJSON.h>
 #include "src/core/core-config-file.h"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-auth.h"
 #include "src/plugins/relay/relay-config.h"
+#include "src/plugins/relay/relay-json.h"
 #include "src/plugins/relay/relay-remote.h"
 #include "src/plugins/relay/api/remote/relay-remote-network.h"
 

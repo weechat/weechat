@@ -11,8 +11,6 @@
 #include <string.h>
 #include <limits.h>
 
-#include <cjson/cJSON.h>
-
 #include "../../weechat-plugin.h"
 #include "../relay.h"
 #include "../relay-auth.h"
@@ -20,6 +18,7 @@
 #include "../relay-client.h"
 #include "../relay-config.h"
 #include "../relay-http.h"
+#include "../relay-json.h"
 #include "../relay-websocket.h"
 #include "relay-api.h"
 #include "relay-api-msg.h"
@@ -57,7 +56,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
-    cJSON *json;
+    struct t_relay_json *json;
     long lines, lines_free;
     long long buffer_id, *ptr_buffer_id;
     int nicks;
@@ -153,7 +152,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
                 weechat_buffer_get_longlong (ptr_buffer, "id"),
                 "buffer",
                 json);
-            cJSON_Delete (json);
+            relay_json_free (json);
         }
     }
     else if (strcmp (signal, "buffer_line_added") == 0)
@@ -182,7 +181,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
                 weechat_buffer_get_longlong (ptr_buffer, "id"),
                 "line",
                 json);
-            cJSON_Delete (json);
+            relay_json_free (json);
         }
     }
     else if (strcmp (signal, "buffer_line_data_changed") == 0)
@@ -206,7 +205,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
                 weechat_buffer_get_longlong (ptr_buffer, "id"),
                 "line",
                 json);
-            cJSON_Delete (json);
+            relay_json_free (json);
         }
     }
 
@@ -226,7 +225,7 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_nick_group *ptr_parent_group, *ptr_group;
     struct t_gui_nick *ptr_nick;
-    cJSON *json;
+    struct t_relay_json *json;
     long long buffer_id;
 
     /* Make C compiler happy. */
@@ -261,7 +260,7 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
         {
             relay_api_msg_send_event (ptr_client, signal, buffer_id,
                                       "nick_group", json);
-            cJSON_Delete (json);
+            relay_json_free (json);
         }
     }
     else if ((strcmp (signal, "nicklist_nick_added") == 0)
@@ -275,7 +274,7 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
         {
             relay_api_msg_send_event (ptr_client, signal, buffer_id,
                                       "nick", json);
-            cJSON_Delete (json);
+            relay_json_free (json);
         }
     }
 
@@ -294,7 +293,7 @@ relay_api_protocol_signal_input_cb (const void *pointer, void *data,
 {
     struct t_relay_client *ptr_client;
     struct t_gui_buffer *ptr_buffer;
-    cJSON *json;
+    struct t_relay_json *json;
 
     /* Make C compiler happy. */
     (void) data;
@@ -320,7 +319,7 @@ relay_api_protocol_signal_input_cb (const void *pointer, void *data,
             weechat_buffer_get_longlong (ptr_buffer, "id"),
             "buffer",
             json);
-        cJSON_Delete (json);
+        relay_json_free (json);
     }
 
     return WEECHAT_RC_OK;
@@ -386,30 +385,30 @@ RELAY_API_PROTOCOL_CALLBACK(options)
 
 RELAY_API_PROTOCOL_CALLBACK(handshake)
 {
-    cJSON *json_body, *json_algos, *json_algo, *json;
+    struct t_relay_json *json_body, *json_algos, *json_algo, *json;
     const char *ptr_algo;
     char *totp_secret;
     int hash_algo_found, index_hash_algo;
 
     hash_algo_found = -1;
 
-    json_body = cJSON_Parse (client->http_req->body);
+    json_body = relay_json_parse (client->http_req->body);
     if (json_body)
     {
-        if (!cJSON_IsObject (json_body))
+        if (!relay_json_is_object (json_body))
         {
-            cJSON_Delete (json_body);
+            relay_json_free (json_body);
             return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
         }
-        json_algos = cJSON_GetObjectItem (json_body, "password_hash_algo");
+        json_algos = relay_json_object_get (json_body, "password_hash_algo");
         if (json_algos)
         {
-            if (!cJSON_IsArray (json_algos))
+            if (!relay_json_is_array (json_algos))
                 goto invalid_hash_algo;
-            cJSON_ArrayForEach (json_algo, json_algos)
+            RELAY_JSON_FOREACH(json_algo, json_algos)
             {
-                ptr_algo = (cJSON_IsString (json_algo)) ?
-                    cJSON_GetStringValue (json_algo) : NULL;
+                ptr_algo = (relay_json_is_string (json_algo)) ?
+                    relay_json_get_string (json_algo) : NULL;
                 if (ptr_algo)
                 {
                     index_hash_algo = relay_auth_password_hash_algo_search (ptr_algo);
@@ -420,7 +419,7 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
                             RELAY_HTTP_400_BAD_REQUEST, NULL,
                             "Hash algorithm \"%s\" not found",
                             ptr_algo);
-                        cJSON_Delete (json_body);
+                        relay_json_free (json_body);
                         return RELAY_API_PROTOCOL_RC_OK;
                     }
                     if (index_hash_algo > hash_algo_found)
@@ -440,11 +439,11 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
         }
     }
 
-    json = cJSON_CreateObject ();
+    json = relay_json_new_object ();
     if (!json)
     {
         if (json_body)
-            cJSON_Delete (json_body);
+            relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_MEMORY;
     }
 
@@ -452,26 +451,26 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
         weechat_config_string (relay_config_network_totp_secret),
         NULL, NULL, NULL);
 
-    cJSON_AddItemToObject (
+    relay_json_object_add (
         json,
         "password_hash_algo",
         (hash_algo_found >= 0) ?
-        cJSON_CreateString (relay_auth_password_hash_algo_name[hash_algo_found]) :
-        cJSON_CreateNull ());
-    cJSON_AddItemToObject (
+        relay_json_new_string (relay_auth_password_hash_algo_name[hash_algo_found]) :
+        relay_json_new_null ());
+    relay_json_object_add (
         json,
         "password_hash_iterations",
-        cJSON_CreateNumber (
+        relay_json_new_number (
             weechat_config_integer (relay_config_network_password_hash_iterations)));
-    cJSON_AddItemToObject (json, "totp",
-                           cJSON_CreateBool ((totp_secret && totp_secret[0]) ? 1 : 0));
+    relay_json_object_add (json, "totp",
+                           relay_json_new_bool ((totp_secret && totp_secret[0]) ? 1 : 0));
 
     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "handshake", json);
 
     free (totp_secret);
-    cJSON_Delete (json);
+    relay_json_free (json);
     if (json_body)
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
 
     return RELAY_API_PROTOCOL_RC_OK;
 
@@ -480,7 +479,7 @@ invalid_hash_algo:
         client,
         RELAY_HTTP_400_BAD_REQUEST, NULL,
         "Invalid hash algorithm");
-    cJSON_Delete (json_body);
+    relay_json_free (json_body);
     return RELAY_API_PROTOCOL_RC_OK;
 }
 
@@ -493,42 +492,42 @@ invalid_hash_algo:
 
 RELAY_API_PROTOCOL_CALLBACK(version)
 {
-    cJSON *json;
+    struct t_relay_json *json;
     char *version;
     long number;
 
-    json = cJSON_CreateObject ();
+    json = relay_json_new_object ();
     if (!json)
         return RELAY_API_PROTOCOL_RC_MEMORY;
 
     version = weechat_info_get ("version", NULL);
-    cJSON_AddItemToObject (json,
-                           "weechat_version", cJSON_CreateString (version));
+    relay_json_object_add (json,
+                           "weechat_version", relay_json_new_string (version));
     free (version);
 
     version = weechat_info_get ("version_git", NULL);
-    cJSON_AddItemToObject (json,
-                           "weechat_version_git", cJSON_CreateString (version));
+    relay_json_object_add (json, "weechat_version_git",
+                           relay_json_new_string (version));
     free (version);
 
     version = weechat_info_get ("version_number", NULL);
     if (weechat_util_parse_long (version, 10, &number))
     {
-        cJSON_AddItemToObject (json,
+        relay_json_object_add (json,
                                "weechat_version_number",
-                               cJSON_CreateNumber (number));
+                               relay_json_new_number (number));
     }
     free (version);
 
-    cJSON_AddItemToObject (json, "relay_api_version",
-                           cJSON_CreateString (RELAY_API_VERSION_STR));
-    cJSON_AddItemToObject (json,
+    relay_json_object_add (json, "relay_api_version",
+                           relay_json_new_string (RELAY_API_VERSION_STR));
+    relay_json_object_add (json,
                            "relay_api_version_number",
-                           cJSON_CreateNumber (RELAY_API_VERSION_NUMBER));
+                           relay_json_new_number (RELAY_API_VERSION_NUMBER));
 
     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "version", json);
 
-    cJSON_Delete (json);
+    relay_json_free (json);
 
     return RELAY_API_PROTOCOL_RC_OK;
 }
@@ -550,7 +549,7 @@ RELAY_API_PROTOCOL_CALLBACK(version)
 
 RELAY_API_PROTOCOL_CALLBACK(buffers)
 {
-    cJSON *json;
+    struct t_relay_json *json;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
@@ -702,14 +701,14 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         }
         else
         {
-            json = cJSON_CreateArray ();
+            json = relay_json_new_array ();
             if (!json)
                 return RELAY_API_PROTOCOL_RC_MEMORY;
             ptr_buffer = weechat_hdata_get_list (relay_hdata_buffer,
                                                  "gui_buffers");
             while (ptr_buffer)
             {
-                cJSON_AddItemToArray (
+                relay_json_array_add (
                     json,
                     relay_api_msg_buffer_to_json (ptr_buffer, lines, lines_free,
                                                   nicks, colors));
@@ -726,7 +725,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     if (!json)
         return RELAY_API_PROTOCOL_RC_MEMORY;
 
-    cJSON_Delete (json);
+    relay_json_free (json);
 
     return RELAY_API_PROTOCOL_RC_OK;
 }
@@ -740,24 +739,24 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
 
 RELAY_API_PROTOCOL_CALLBACK(hotlist)
 {
-    cJSON *json;
+    struct t_relay_json *json;
     struct t_gui_hotlist *ptr_hotlist;
 
-    json = cJSON_CreateArray ();
+    json = relay_json_new_array ();
     if (!json)
         return RELAY_API_PROTOCOL_RC_MEMORY;
 
     ptr_hotlist = weechat_hdata_get_list (relay_hdata_hotlist, "gui_hotlist");
     while (ptr_hotlist)
     {
-        cJSON_AddItemToArray (
+        relay_json_array_add (
             json,
             relay_api_msg_hotlist_to_json (ptr_hotlist));
         ptr_hotlist = weechat_hdata_move (relay_hdata_hotlist, ptr_hotlist, 1);
     }
 
     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "hotlist", json);
-    cJSON_Delete (json);
+    relay_json_free (json);
     return RELAY_API_PROTOCOL_RC_OK;
 }
 
@@ -770,13 +769,13 @@ RELAY_API_PROTOCOL_CALLBACK(hotlist)
 
 RELAY_API_PROTOCOL_CALLBACK(scripts)
 {
-    cJSON *json;
+    struct t_relay_json *json;
     char *info_languages, **languages, hdata_name[256], *pos;
     int num_languages, i;
     struct t_hdata *ptr_hdata;
     void *ptr_script;
 
-    json = cJSON_CreateArray ();
+    json = relay_json_new_array ();
     if (!json)
         return RELAY_API_PROTOCOL_RC_MEMORY;
 
@@ -802,7 +801,7 @@ RELAY_API_PROTOCOL_CALLBACK(scripts)
                     ptr_script = weechat_hdata_get_list (ptr_hdata, "scripts");
                     while (ptr_script)
                     {
-                        cJSON_AddItemToArray (
+                        relay_json_array_add (
                             json,
                             relay_api_msg_script_to_json (ptr_hdata, ptr_script, pos + 1));
                         ptr_script = weechat_hdata_move (ptr_hdata, ptr_script, 1);
@@ -815,7 +814,7 @@ RELAY_API_PROTOCOL_CALLBACK(scripts)
     }
 
     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "scripts", json);
-    cJSON_Delete (json);
+    relay_json_free (json);
     return RELAY_API_PROTOCOL_RC_OK;
 }
 
@@ -828,30 +827,32 @@ RELAY_API_PROTOCOL_CALLBACK(scripts)
 
 RELAY_API_PROTOCOL_CALLBACK(input)
 {
-    cJSON *json_body, *json_buffer_id, *json_buffer_name, *json_command;
+    struct t_relay_json *json_body, *json_buffer_id, *json_buffer_name;
+    struct t_relay_json *json_command;
     const char *ptr_buffer_name, *ptr_command, *ptr_commands;
+    long long buffer_id;
     char str_id[64];
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *options;
     char str_delay[32];
 
-    json_body = cJSON_Parse (client->http_req->body);
+    json_body = relay_json_parse (client->http_req->body);
     if (!json_body)
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
-    if (!cJSON_IsObject (json_body))
+    if (!relay_json_is_object (json_body))
     {
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
     /* Get buffer either by name or by id. */
     ptr_buffer = NULL;
-    json_buffer_name = cJSON_GetObjectItem (json_body, "buffer_name");
+    json_buffer_name = relay_json_object_get (json_body, "buffer_name");
     if (json_buffer_name)
     {
-        if (cJSON_IsString (json_buffer_name))
+        if (relay_json_is_string (json_buffer_name))
         {
-            ptr_buffer_name = cJSON_GetStringValue (json_buffer_name);
+            ptr_buffer_name = relay_json_get_string (json_buffer_name);
             ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
             if (!ptr_buffer)
             {
@@ -860,31 +861,32 @@ RELAY_API_PROTOCOL_CALLBACK(input)
                     RELAY_HTTP_404_NOT_FOUND, NULL,
                     "Buffer \"%s\" not found",
                     ptr_buffer_name);
-                cJSON_Delete (json_body);
+                relay_json_free (json_body);
                 return RELAY_API_PROTOCOL_RC_OK;
             }
         }
     }
     if (!ptr_buffer)
     {
-        json_buffer_id = cJSON_GetObjectItem (json_body, "buffer_id");
+        json_buffer_id = relay_json_object_get (json_body, "buffer_id");
         if (json_buffer_id)
         {
-            if (cJSON_IsNumber (json_buffer_id))
+            if (!relay_json_get_number (json_buffer_id, &buffer_id))
             {
-                snprintf (str_id, sizeof (str_id),
-                          "%lld", (long long)cJSON_GetNumberValue (json_buffer_id));
-                ptr_buffer = weechat_buffer_search ("==id", str_id);
-                if (!ptr_buffer)
-                {
-                    relay_api_msg_send_error_json (
-                        client,
-                        RELAY_HTTP_404_NOT_FOUND, NULL,
-                        "Buffer \"%lld\" not found",
-                        (long long)cJSON_GetNumberValue (json_buffer_id));
-                    cJSON_Delete (json_body);
-                    return RELAY_API_PROTOCOL_RC_OK;
-                }
+                relay_json_free (json_body);
+                return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+            }
+            snprintf (str_id, sizeof (str_id), "%lld", buffer_id);
+            ptr_buffer = weechat_buffer_search ("==id", str_id);
+            if (!ptr_buffer)
+            {
+                relay_api_msg_send_error_json (
+                    client,
+                    RELAY_HTTP_404_NOT_FOUND, NULL,
+                    "Buffer \"%lld\" not found",
+                    buffer_id);
+                relay_json_free (json_body);
+                return RELAY_API_PROTOCOL_RC_OK;
             }
         }
     }
@@ -892,22 +894,22 @@ RELAY_API_PROTOCOL_CALLBACK(input)
         ptr_buffer = weechat_buffer_search_main ();
     if (!ptr_buffer)
     {
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
-    json_command = cJSON_GetObjectItem (json_body, "command");
-    if (!json_command || !cJSON_IsString (json_command))
+    json_command = relay_json_object_get (json_body, "command");
+    if (!relay_json_is_string (json_command))
 
     {
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
-    ptr_command = cJSON_GetStringValue (json_command);
+    ptr_command = relay_json_get_string (json_command);
     if (!ptr_command)
     {
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
@@ -921,7 +923,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
                                        RELAY_HTTP_503_SERVICE_UNAVAILABLE,
                                        NULL,
                                        RELAY_HTTP_ERROR_OUT_OF_MEMORY);
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_OK;
     }
 
@@ -941,7 +943,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     weechat_command_options (ptr_buffer, ptr_command, options);
 
     weechat_hashtable_free (options);
-    cJSON_Delete (json_body);
+    relay_json_free (json_body);
 
     relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
 
@@ -957,32 +959,33 @@ RELAY_API_PROTOCOL_CALLBACK(input)
 
 RELAY_API_PROTOCOL_CALLBACK(completion)
 {
-    cJSON *json_response, *json_body;
-    cJSON *json_buffer_id, *json_buffer_name;
-    cJSON *json_command, *json_position;
+    struct t_relay_json *json_response, *json_body;
+    struct t_relay_json *json_buffer_id, *json_buffer_name;
+    struct t_relay_json *json_command, *json_position;
     const char *ptr_buffer_name, *ptr_command;
+    long long buffer_id, number;
     int position;
     char str_id[64];
     struct t_gui_completion *ptr_completion;
     struct t_gui_buffer *ptr_buffer;
 
-    json_body = cJSON_Parse (client->http_req->body);
+    json_body = relay_json_parse (client->http_req->body);
     if (!json_body)
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
-    if (!cJSON_IsObject(json_body))
+    if (!relay_json_is_object(json_body))
     {
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
     /* Get buffer either by name or by id. */
     ptr_buffer = NULL;
-    json_buffer_name = cJSON_GetObjectItem (json_body, "buffer_name");
+    json_buffer_name = relay_json_object_get (json_body, "buffer_name");
     if (json_buffer_name)
     {
-        if (cJSON_IsString (json_buffer_name))
+        if (relay_json_is_string (json_buffer_name))
         {
-            ptr_buffer_name = cJSON_GetStringValue (json_buffer_name);
+            ptr_buffer_name = relay_json_get_string (json_buffer_name);
             ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
             if (!ptr_buffer)
             {
@@ -991,31 +994,32 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
                     RELAY_HTTP_404_NOT_FOUND, NULL,
                     "Buffer \"%s\" not found",
                     ptr_buffer_name);
-                cJSON_Delete (json_body);
+                relay_json_free (json_body);
                 return RELAY_API_PROTOCOL_RC_OK;
             }
         }
     }
     if (!ptr_buffer)
     {
-        json_buffer_id = cJSON_GetObjectItem (json_body, "buffer_id");
+        json_buffer_id = relay_json_object_get (json_body, "buffer_id");
         if (json_buffer_id)
         {
-            if (cJSON_IsNumber (json_buffer_id))
+            if (!relay_json_get_number (json_buffer_id, &buffer_id))
             {
-                snprintf (str_id, sizeof(str_id),
-                          "%lld", (long long)cJSON_GetNumberValue (json_buffer_id));
-                ptr_buffer = weechat_buffer_search ("==id", str_id);
-                if (!ptr_buffer)
-                {
-                    relay_api_msg_send_error_json (
-                        client,
-                        RELAY_HTTP_404_NOT_FOUND, NULL,
-                        "Buffer \"%lld\" not found",
-                        (long long)cJSON_GetNumberValue (json_buffer_id));
-                    cJSON_Delete (json_body);
-                    return RELAY_API_PROTOCOL_RC_OK;
-                }
+                relay_json_free (json_body);
+                return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+            }
+            snprintf (str_id, sizeof (str_id), "%lld", buffer_id);
+            ptr_buffer = weechat_buffer_search ("==id", str_id);
+            if (!ptr_buffer)
+            {
+                relay_api_msg_send_error_json (
+                    client,
+                    RELAY_HTTP_404_NOT_FOUND, NULL,
+                    "Buffer \"%lld\" not found",
+                    buffer_id);
+                relay_json_free (json_body);
+                return RELAY_API_PROTOCOL_RC_OK;
             }
         }
     }
@@ -1023,31 +1027,31 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
         ptr_buffer = weechat_buffer_search_main ();
     if (!ptr_buffer)
     {
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
     /* Get command and position (optional) from input json object. */
-    json_command = cJSON_GetObjectItem (json_body, "command");
-    if (json_command && cJSON_IsString (json_command))
+    json_command = relay_json_object_get (json_body, "command");
+    if (relay_json_is_string (json_command))
     {
-        ptr_command = cJSON_GetStringValue (json_command);
+        ptr_command = relay_json_get_string (json_command);
     }
     else
     {
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
-    json_position = cJSON_GetObjectItem (json_body, "position");
+    json_position = relay_json_object_get (json_body, "position");
     if (json_position)
     {
-        if (cJSON_IsNumber (json_position))
+        if (relay_json_get_number (json_position, &number))
         {
-            position = cJSON_GetNumberValue (json_position);
+            position = number;
         }
         else
         {
-            cJSON_Delete (json_body);
+            relay_json_free (json_body);
             return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
         }
     }
@@ -1060,7 +1064,7 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
     ptr_completion = weechat_completion_new (ptr_buffer);
     if (!ptr_completion)
     {
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
         return RELAY_API_PROTOCOL_RC_MEMORY;
     }
 
@@ -1075,8 +1079,8 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "completion",
                              json_response);
 
-    cJSON_Delete (json_response);
-    cJSON_Delete (json_body);
+    relay_json_free (json_response);
+    relay_json_free (json_body);
     weechat_completion_free (ptr_completion);
 
     return RELAY_API_PROTOCOL_RC_OK;
@@ -1091,35 +1095,35 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
 
 RELAY_API_PROTOCOL_CALLBACK(ping)
 {
-    cJSON *json, *json_body, *json_data;
+    struct t_relay_json *json, *json_body, *json_data;
     const char *ptr_data;
 
     ptr_data = NULL;
-    json_body = cJSON_Parse (client->http_req->body);
+    json_body = relay_json_parse (client->http_req->body);
     if (json_body)
     {
-        if (!cJSON_IsObject (json_body))
+        if (!relay_json_is_object (json_body))
         {
-            cJSON_Delete (json_body);
+            relay_json_free (json_body);
             return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
         }
-        json_data = cJSON_GetObjectItem (json_body, "data");
-        if (json_data && cJSON_IsString (json_data))
-            ptr_data = cJSON_GetStringValue (json_data);
+        json_data = relay_json_object_get (json_body, "data");
+        if (relay_json_is_string (json_data))
+            ptr_data = relay_json_get_string (json_data);
     }
 
     if (ptr_data)
     {
-        json = cJSON_CreateObject ();
+        json = relay_json_new_object ();
         if (!json)
         {
-            cJSON_Delete (json_body);
+            relay_json_free (json_body);
             return RELAY_API_PROTOCOL_RC_MEMORY;
         }
-        cJSON_AddItemToObject (json, "data",
-                               cJSON_CreateString ((ptr_data) ? ptr_data : ""));
+        relay_json_object_add (
+            json, "data", relay_json_new_string ((ptr_data) ? ptr_data : ""));
         relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "ping", json);
-        cJSON_Delete (json);
+        relay_json_free (json);
     }
     else
     {
@@ -1127,7 +1131,7 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
     }
 
     if (json_body)
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
 
     return RELAY_API_PROTOCOL_RC_OK;
 }
@@ -1141,7 +1145,8 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
 
 RELAY_API_PROTOCOL_CALLBACK(sync)
 {
-    cJSON *json_body, *json_sync, *json_nicks, *json_input, *json_colors;
+    struct t_relay_json *json_body, *json_sync, *json_nicks, *json_input;
+    struct t_relay_json *json_colors;
 
     if (client->websocket != RELAY_CLIENT_WEBSOCKET_READY)
     {
@@ -1158,23 +1163,23 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     RELAY_API_DATA(client, sync_input) = 1;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
 
-    json_body = cJSON_Parse (client->http_req->body);
+    json_body = relay_json_parse (client->http_req->body);
     if (json_body)
     {
-        json_sync = cJSON_GetObjectItem (json_body, "sync");
-        if (json_sync && cJSON_IsBool (json_sync))
-            RELAY_API_DATA(client, sync_enabled) = (cJSON_IsTrue (json_sync)) ? 1 : 0;
-        json_nicks = cJSON_GetObjectItem (json_body, "nicks");
-        if (json_nicks && cJSON_IsBool (json_nicks))
-            RELAY_API_DATA(client, sync_nicks) = (cJSON_IsTrue (json_nicks)) ? 1 : 0;
-        json_input = cJSON_GetObjectItem (json_body, "input");
-        if (json_input && cJSON_IsBool (json_input))
-            RELAY_API_DATA(client, sync_input) = (cJSON_IsTrue (json_input)) ? 1 : 0;
-        json_colors = cJSON_GetObjectItem (json_body, "colors");
-        if (json_colors && cJSON_IsString (json_colors))
+        json_sync = relay_json_object_get (json_body, "sync");
+        if (relay_json_is_bool (json_sync))
+            RELAY_API_DATA(client, sync_enabled) = (relay_json_is_true (json_sync)) ? 1 : 0;
+        json_nicks = relay_json_object_get (json_body, "nicks");
+        if (relay_json_is_bool (json_nicks))
+            RELAY_API_DATA(client, sync_nicks) = (relay_json_is_true (json_nicks)) ? 1 : 0;
+        json_input = relay_json_object_get (json_body, "input");
+        if (relay_json_is_bool (json_input))
+            RELAY_API_DATA(client, sync_input) = (relay_json_is_true (json_input)) ? 1 : 0;
+        json_colors = relay_json_object_get (json_body, "colors");
+        if (relay_json_is_string (json_colors))
         {
             RELAY_API_DATA(client, sync_colors) = relay_api_search_colors (
-                cJSON_GetStringValue (json_colors));
+                relay_json_get_string (json_colors));
             if (RELAY_API_DATA(client, sync_colors) < 0)
                 RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
         }
@@ -1188,7 +1193,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
 
     if (json_body)
-        cJSON_Delete (json_body);
+        relay_json_free (json_body);
 
     return RELAY_API_PROTOCOL_RC_OK;
 }
@@ -1199,44 +1204,43 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
 
 void
 relay_api_protocol_recv_json_request (struct t_relay_client *client,
-                                      cJSON *json)
+                                      struct t_relay_json *json)
 {
-    cJSON *json_request, *json_request_id, *json_body;
+    struct t_relay_json *json_request, *json_request_id, *json_body;
     const char *ptr_request_id;
     char *string_body;
     int length;
 
     relay_http_request_reinit (client->http_req);
 
-    json_request_id = cJSON_GetObjectItem (json, "request_id");
+    json_request_id = relay_json_object_get (json, "request_id");
     if (json_request_id
-        && !cJSON_IsString (json_request_id)
-        && !cJSON_IsNull (json_request_id))
+        && !relay_json_is_string (json_request_id)
+        && !relay_json_is_null (json_request_id))
     {
         goto error;
     }
-    ptr_request_id = (json_request_id) ?
-        cJSON_GetStringValue (json_request_id) : NULL;
+    ptr_request_id = relay_json_get_string (json_request_id);
     free (client->http_req->id);
     client->http_req->id = NULL;
     client->http_req->id = (ptr_request_id) ? strdup (ptr_request_id) : NULL;
 
-    json_request = cJSON_GetObjectItem (json, "request");
-    if (!json_request || !cJSON_IsString (json_request))
+    json_request = relay_json_object_get (json, "request");
+    if (!relay_json_is_string (json_request))
         goto error;
 
     if (!relay_http_parse_method_path (client->http_req,
-                                       cJSON_GetStringValue (json_request)))
+                                       relay_json_get_string (json_request)))
     {
         goto error;
     }
 
-    json_body = cJSON_GetObjectItem (json, "body");
+    json_body = relay_json_object_get (json, "body");
     if (json_body)
     {
-        if (!cJSON_IsObject (json_body))
+        if (!relay_json_is_object (json_body))
             goto error;
-        string_body = cJSON_PrintUnformatted (json_body);
+        string_body = relay_json_print (json_body);
         if (string_body)
         {
             length = strlen (string_body);
@@ -1304,9 +1308,9 @@ error:
 void
 relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
 {
-    cJSON *json_obj, *json_request;
+    struct t_relay_json *json_obj, *json_request;
 
-    json_obj = cJSON_Parse (json);
+    json_obj = relay_json_parse (json);
     if (!json_obj)
     {
         relay_api_msg_send_error_json (
@@ -1317,9 +1321,9 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
         return;
     }
 
-    if (cJSON_IsArray (json_obj))
+    if (relay_json_is_array (json_obj))
     {
-        cJSON_ArrayForEach (json_request, json_obj)
+        RELAY_JSON_FOREACH(json_request, json_obj)
         {
             relay_api_protocol_recv_json_request (client, json_request);
         }
@@ -1329,7 +1333,7 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
         relay_api_protocol_recv_json_request (client, json_obj);
     }
 
-    cJSON_Delete (json_obj);
+    relay_json_free (json_obj);
 }
 
 /*
