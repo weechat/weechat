@@ -109,7 +109,7 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                                   const char *body_type,
                                   struct t_relay_json *json_body)
 {
-    struct t_relay_json *json;
+    struct t_relay_json *json, *ptr_body;
     char *string, *request;
     int num_bytes, length;
 
@@ -176,7 +176,13 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                 (string) ? strlen (string) : 0,
                 NULL);  /* raw_message */
             free (string);
-            relay_json_object_detach (json, "body");
+            /*
+             * Detach the body, which is owned by the caller (if the body
+             * is the JSON null created above, it is freed here).
+             */
+            ptr_body = relay_json_object_detach (json, "body");
+            if (ptr_body != json_body)
+                relay_json_free (ptr_body);
             relay_json_free (json);
         }
     }
