@@ -37,3 +37,13 @@ foreach(fuzz_target ${FUZZ_CORE_TARGETS})
   target_link_libraries(weechat_core_${fuzz_target}_fuzzer ${FUZZ_TARGET_LINK} coverage_config)
   set_target_properties(weechat_core_${fuzz_target}_fuzzer PROPERTIES LINK_OPTIONS "$ENV{LIB_FUZZING_ENGINE}")
 endforeach()
+
+# Fuzz targets: relay plugin
+if(ENABLE_RELAY)
+  add_executable(weechat_relay_json_fuzzer
+    plugins/relay/json-fuzzer.cc
+    ${PROJECT_SOURCE_DIR}/src/plugins/relay/relay-json.c
+  )
+  target_link_libraries(weechat_relay_json_fuzzer ${FUZZ_TARGET_LINK} coverage_config)
+  set_target_properties(weechat_relay_json_fuzzer PROPERTIES LINK_OPTIONS "$ENV{LIB_FUZZING_ENGINE}")
+endif()

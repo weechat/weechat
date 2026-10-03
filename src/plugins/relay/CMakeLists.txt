@@ -13,6 +13,7 @@ set(RELAY_SRC
   relay-config.c relay-config.h
   relay-http.c relay-http.h
   relay-info.c relay-info.h
+  relay-json.c relay-json.h
   relay-network.c relay-network.h
   relay-raw.c relay-raw.h
   relay-remote.c relay-remote.h
