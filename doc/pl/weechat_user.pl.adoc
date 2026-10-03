@@ -99,8 +99,9 @@ WeeChat musi być kompilowany przy użyciu CMake.
 Na macOS możesz użyć https://brew.sh/[Homebrew ^↗^^]:
 `brew install --build-from-source weechat`.
 
+// TRANSLATION MISSING
 [[dependencies]]
-==== Zależności
+==== Required dependencies
 
 Poniższa tabela pokazuje listę pakietów *wymaganych* do skompilowania
 WeeChat:
@@ -143,6 +144,10 @@ WeeChat:
 wersja i nazwa mogą się różnić dla innych dystrybucji. +
 ^(2)^ GnuTLS ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
 mechanizmu ECDSA-NIST256P-CHALLENGE.
+
+// TRANSLATION MISSING
+[[optional_dependencies]]
+==== Optional dependencies
 
 The following table shows the list of packages that are optional to compile
 WeeChat:

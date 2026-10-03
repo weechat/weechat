@@ -94,8 +94,9 @@ WeeChat мора да се изгради са CMake.
 [NOTE]
 На macOS можете да употребите https://brew.sh/[Homebrew ^↗^^]: `brew install --build-from-source weechat`.
 
+// TRANSLATION MISSING
 [[dependencies]]
-==== Зависности
+==== Required dependencies
 
 Следећа табела приказује листу пакета који су *неопходни* да се изгради
 програм WeeChat:
@@ -137,6 +138,10 @@ WeeChat мора да се изгради са CMake.
 ^(1)^ Име долази из Debian GNU/Linux Trixie дистрибуције, верзија и
 име могу да буду другачији у осталим дистрибуцијама. +
 ^(2)^ GnuTLS ≥ 3.0.21 је неопходан за IRC SASL аутентификацију механизмом ECDSA-NIST256P-CHALLENGE.
+
+// TRANSLATION MISSING
+[[optional_dependencies]]
+==== Optional dependencies
 
 Следећа табела приказује листу пакета који нису обавезни за компајлирање програма WeeChat:
 

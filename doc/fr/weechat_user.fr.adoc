@@ -100,7 +100,7 @@ Sous macOS, vous pouvez utiliser https://brew.sh/[Homebrew ^↗^^] :
 `brew install --build-from-source weechat`.
 
 [[dependencies]]
-==== Dépendances
+==== Dépendances obligatoires
 
 Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 
@@ -142,6 +142,9 @@ Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 et le nom peuvent être différents dans les autres distributions. +
 ^(2)^ GnuTLS ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
 ECDSA-NIST256P-CHALLENGE.
+
+[[optional_dependencies]]
+==== Dépendances optionnelles
 
 Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 

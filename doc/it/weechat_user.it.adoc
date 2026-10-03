@@ -115,8 +115,9 @@ WeeChat must be built with CMake.
 On macOS, you can use https://brew.sh/[Homebrew ^↗^^]:
 `brew install --build-from-source weechat`.
 
+// TRANSLATION MISSING
 [[dependencies]]
-==== Dipendenze
+==== Required dependencies
 
 // TRANSLATION MISSING
 The following table shows the list of packages that are *required* to build
@@ -169,6 +170,10 @@ name can be different in other distributions. +
 // TRANSLATION MISSING
 ^(2)^ GnuTLS ≥ 3.0.21 is required for IRC SASL authentication with mechanism
 ECDSA-NIST256P-CHALLENGE.
+
+// TRANSLATION MISSING
+[[optional_dependencies]]
+==== Optional dependencies
 
 // TRANSLATION MISSING
 The following table shows the list of packages that are optional to compile
