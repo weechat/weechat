@@ -8,6 +8,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 _The file [UPGRADING.md](UPGRADING.md) contains important information about upgrades, for example manual actions to perform when upgrading from a version to another one (most changes are automated, but some of them cannot be)._
 
+## [Unreleased]
+
+### Fixed
+
+- relay/api: fix memory leak when a message without body is sent to a client connected with websocket
+
 ## [4.10.1] - 2026-09-05
 
 ### Fixed
