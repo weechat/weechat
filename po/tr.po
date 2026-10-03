@@ -1900,6 +1900,7 @@ msgstr ""
 "Bir dizi karşılaştırması zorlamak için her bir ifadenin çevresine çift "
 "tırnaklar ekleyebilirsiniz; örneğin: 50 > 100 == 0 ve \"50\" > \"100\" == 1"
 
+# noqa:variables
 msgid ""
 "Some variables are replaced in expression, using the format ${variable}, "
 "which can be, by order of priority:"
@@ -1920,6 +1921,7 @@ msgstr "  - ${raw:dizi}: Değerlendirme olmadan dizinin kendisi"
 msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr "  - ${hl:dizi}: Sözdizim vurgulamalı dizi"
 
+# noqa:variables
 msgid "  - ${name}: the user-defined variable"
 msgstr "  - ${ad}: Kullanıcı tanımlı değişken"
 
@@ -2124,6 +2126,7 @@ msgstr "  - ${sec.veri.xxx}: Güvenli hale sokulmuş \"xxx\" verisinin değeri"
 msgid "  - ${file.section.option}: the value of the config option"
 msgstr "  - ${dosya.bölüm.seçenek}: Yapılandırma seçeneğinin değeri"
 
+# noqa:variables
 msgid "  - ${name}: the local variable in buffer"
 msgstr "  - ${ad}: Arabellekteki yerel değişken"
 

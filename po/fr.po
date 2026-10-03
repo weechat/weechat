@@ -1966,6 +1966,7 @@ msgstr "  - ${raw:chaîne} : la chaîne elle-même sans évaluation"
 msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr "  - ${hl:chaîne} : la chaîne avec mise en valeur de la syntaxe"
 
+# noqa:variables
 msgid "  - ${name}: the user-defined variable"
 msgstr "  - ${nom} : la variable définie par l'utilisateur"
 
@@ -2187,6 +2188,7 @@ msgstr "  - ${sec.data.xxx} : la valeur de la donnée sécurisée \"xxx\""
 msgid "  - ${file.section.option}: the value of the config option"
 msgstr "  - ${fichier.section.option} : la valeur de l'option de configuration"
 
+# noqa:variables
 msgid "  - ${name}: the local variable in buffer"
 msgstr "  - ${nom} : la variable locale du tampon"
 

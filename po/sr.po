@@ -1871,6 +1871,7 @@ msgstr ""
 "raw[-c]: израчунава као услов: користе се оператори и заграде, враћа логичку "
 "вредност („0” или „1”)"
 
+# noqa:variables
 msgid ""
 "expression: expression to evaluate, variables with format ${variable} are "
 "replaced (see below)"
@@ -1905,6 +1906,7 @@ msgstr ""
 "Ако желите да форсирате поређење стрингова, можете да додате знаке навода "
 "око сваког израза, на пример: 50 > 100 == 0 и \"50\" > \"100\" == 1"
 
+# noqa:variables
 msgid ""
 "Some variables are replaced in expression, using the format ${variable}, "
 "which can be, by order of priority:"
@@ -1924,6 +1926,7 @@ msgstr "  - ${raw:стринг}: сам стринг без израчунава
 msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr "  - ${hl:стринг}: стринг са истицањем синтаксе"
 
+# noqa:variables
 msgid "  - ${name}: the user-defined variable"
 msgstr "  - ${име}: кориснички дефинисана променљива"
 
@@ -2133,6 +2136,7 @@ msgstr "  - ${sec.data.xxx}: вредност безбедних податак�
 msgid "  - ${file.section.option}: the value of the config option"
 msgstr "  - ${фајл.одељак.опција}: вредност конфигурационе опције"
 
+# noqa:variables
 msgid "  - ${name}: the local variable in buffer"
 msgstr "  - ${име}: локална променљива бафера"
 
