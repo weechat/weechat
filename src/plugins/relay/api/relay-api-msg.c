@@ -368,6 +368,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     if (weechat_strcmp (ptr_string, "free") == 0)
         lines = lines_free;
     MSG_ADD_STR_PTR("type", ptr_string);
+    MSG_ADD_STR_PTR("notify", weechat_buffer_get_string (buffer, "notify"));
     MSG_ADD_HDATA_VAR(bool, "hidden", integer, "hidden");
     MSG_ADD_HDATA_STR_COLORS("title", "title");
     MSG_ADD_HDATA_STR_COLORS("modes", "modes");

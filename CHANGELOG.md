@@ -12,7 +12,9 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
+- core: add signal "buffer_notify_changed"
 - core: add flag "prefix_for_each_line" in buffer
+- api: add property "notify" in function buffer_get_string
 - api: add function "hashtable_map_sorted"
 - api: add focus key "_chat_line_id", deprecate keys "_chat_line_date_printed" and "_chat_line_date_usec_printed"
 - api: add function "buffer_get_longlong"
@@ -39,6 +41,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: allow multiple nicks separated by commas in command `/notify del`
 - **breaking:** relay: remove "date_printed" and "date_usec_printed" of lines in weechat protocol
 - **breaking:** relay: change type of line identifier from "int" to "lon" in weechat protocol
+- relay/api: add field "notify" in buffers, send event "buffer_notify_changed" to clients
 - relay/api: return error 400 (Bad Request) if "buffer_id" is not an integer in resources "input" and "completion"
 - **breaking:** relay/api: parse JSON strictly (RFC 8259): keys are case-sensitive, data after the JSON value, numbers with leading zeros and invalid UTF-8 are rejected
 - relay/api: add field "prefix_displayed" in buffers

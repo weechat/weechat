@@ -12848,6 +12848,10 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | Pointer: buffer.
 | Modes of buffer changed.
 
+| weechat | [[hook_signal_buffer_notify_changed]] buffer_notify_changed | 5.0.0
+| Pointer: buffer.
+| Notify level of buffer changed.
+
 // TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_time_for_each_line_changed]] buffer_time_for_each_line_changed | 4.4.0
 | Pointer: buffer.
@@ -15584,6 +15588,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _short_name_: バッファの短縮名 (注意: 表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、_name_、_full_name_、またはローカル変数 _channel_ を使うこと)
 // TRANSLATION MISSING
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
+** _notify_: notify level of buffer: "none", "highlight", "message" or "all" _(WeeChat ≥ 5.0.0)_
 ** _title_: バッファのタイトル
 // TRANSLATION MISSING
 ** _modes_: modes _(WeeChat ≥ 4.3.0)_

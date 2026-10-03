@@ -103,8 +103,8 @@ char *gui_buffer_properties_get_longlong[] =
   NULL
 };
 char *gui_buffer_properties_get_string[] =
-{ "id", "plugin", "name", "full_name", "old_full_name", "short_name", "title",
-  "modes", "nicklist_last_id_assigned", "input_prompt", "input",
+{ "id", "plugin", "name", "full_name", "old_full_name", "short_name", "notify",
+  "title", "modes", "nicklist_last_id_assigned", "input_prompt", "input",
   "text_search_input", "highlight_words", "highlight_disable_regex",
   "highlight_regex", "highlight_tags_restrict", "highlight_tags",
   "hotlist_max_level_nicks",
@@ -388,6 +388,9 @@ gui_buffer_notify_set (struct t_gui_buffer *buffer)
                          GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                          gui_buffer_notify_string[buffer->notify],
                          GUI_COLOR(GUI_COLOR_CHAT));
+        (void) gui_buffer_send_signal (buffer,
+                                       "buffer_notify_changed",
+                                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 }
 
@@ -1577,6 +1580,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
         return buffer->short_name;
     else if (strcmp (property, "type") == 0)
        return gui_buffer_type_string[buffer->type];
+    else if (strcmp (property, "notify") == 0)
+       return gui_buffer_notify_string[buffer->notify];
     else if (strcmp (property, "title") == 0)
         return buffer->title;
     else if (strcmp (property, "modes") == 0)

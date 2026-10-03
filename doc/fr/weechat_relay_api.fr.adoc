@@ -537,6 +537,7 @@ HTTP/1.1 200 OK
         "short_name": "weechat",
         "number": 1,
         "type": "formatted",
+        "notify": "all",
         "title": "WeeChat 4.2.0-dev (C) 2003-2023 - https://weechat.org/",
         "modes": "",
         "input_prompt": "",
@@ -562,6 +563,7 @@ HTTP/1.1 200 OK
         "short_name": "libera",
         "number": 2,
         "type": "formatted",
+        "notify": "all",
         "title": "IRC: irc.libera.chat/6697 (2001:4b7a:a008::6667)",
         "modes": "",
         "input_prompt": "",
@@ -594,6 +596,7 @@ HTTP/1.1 200 OK
         "short_name": "#weechat",
         "number": 3,
         "type": "formatted",
+        "notify": "all",
         "title": "Welcome to the WeeChat official support channel",
         "modes": "+nt",
         "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
@@ -644,6 +647,7 @@ HTTP/1.1 200 OK
     "short_name": "weechat",
     "number": 1,
     "type": "formatted",
+    "notify": "all",
     "title": "WeeChat 4.2.0-dev (C) 2003-2023 - https://weechat.org/",
     "modes": "",
     "input_prompt": "",
@@ -700,6 +704,7 @@ HTTP/1.1 200 OK
     "short_name": "#weechat",
     "number": 3,
     "type": "formatted",
+    "notify": "all",
     "title": "Welcome to the WeeChat official support channel",
     "modes": "+nt",
     "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
@@ -811,6 +816,7 @@ HTTP/1.1 200 OK
     "short_name": "",
     "number": 4,
     "type": "free",
+    "notify": "all",
     "title": "\u001b[96m1/\u001b[36m3565 | Filter: \u001b[93m* | Sort: \u001b[97m~name | Key(input): alt+space=toggle boolean, alt+'-'(-)=subtract 1 or set, alt+'+'(+)=add 1 or append, alt+f,alt+r(r)=reset, alt+f,alt+u(u)=unset, alt+enter(s)=set, alt+f,alt+n(n)=set new value, alt+f,alt+a(a)=append, alt+','=mark/unmark, shift+down=mark and move down, shift+up=move up and mark, ($)=refresh, ($$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+x(x)=switch format, (q)=close buffer",
     "modes": "",
     "input_prompt": "",
@@ -1749,6 +1755,7 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `buffer_unhidden`                     | id tampon | `buffer`      | tampon
 | `buffer_renamed`                      | id tampon | `buffer`      | tampon
 | `buffer_title_changed`                | id tampon | `buffer`      | tampon
+| `buffer_notify_changed`               | id tampon | `buffer`      | tampon
 | `buffer_time_for_each_line_changed`   | id tampon | `buffer`      | tampon
 | `buffer_prefix_for_each_line_changed` | id tampon | `buffer`      | tampon
 | `buffer_localvar_added`               | id tampon | `buffer`      | tampon
@@ -1794,6 +1801,7 @@ Exemple : nouveau tampon : le canal `#weechat` a été rejoint :
         "short_name": "",
         "number": 4,
         "type": "formatted",
+        "notify": "all",
         "title": "",
         "modes": "+nt",
         "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",

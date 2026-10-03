@@ -1011,6 +1011,15 @@ components:
             - free
           description: the buffer type
           example: formatted
+        notify:
+          type: string
+          enum:
+            - none
+            - highlight
+            - message
+            - all
+          description: the notify level of buffer (messages added to hotlist)
+          example: all
         hidden:
           type: boolean
           description: buffer is hidden
@@ -1099,6 +1108,7 @@ components:
         - short_name
         - number
         - type
+        - notify
         - hidden
         - title
         - modes

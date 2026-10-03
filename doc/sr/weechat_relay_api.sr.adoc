@@ -528,6 +528,7 @@ HTTP/1.1 200 OK
         "short_name": "weechat",
         "number": 1,
         "type": "formatted",
+        "notify": "all",
         "hidden": false,
         "title": "WeeChat 4.2.0-dev (C) 2003-2023 - https://weechat.org/",
         "modes": "",
@@ -554,6 +555,7 @@ HTTP/1.1 200 OK
         "short_name": "libera",
         "number": 2,
         "type": "formatted",
+        "notify": "all",
         "hidden": false,
         "title": "IRC: irc.libera.chat/6697 (2001:4b7a:a008::6667)",
         "modes": "",
@@ -587,6 +589,7 @@ HTTP/1.1 200 OK
         "short_name": "#weechat",
         "number": 3,
         "type": "formatted",
+        "notify": "all",
         "hidden": false,
         "title": "Welcome to the WeeChat official support channel",
         "modes": "+nt",
@@ -637,6 +640,7 @@ HTTP/1.1 200 OK
     "short_name": "weechat",
     "number": 1,
     "type": "formatted",
+    "notify": "all",
     "hidden": false,
     "title": "WeeChat 4.2.0-dev (C) 2003-2023 - https://weechat.org/",
     "modes": "",
@@ -694,6 +698,7 @@ HTTP/1.1 200 OK
     "short_name": "#weechat",
     "number": 3,
     "type": "formatted",
+    "notify": "all",
     "hidden": false,
     "title": "Welcome to the WeeChat official support channel",
     "modes": "+nt",
@@ -806,6 +811,7 @@ HTTP/1.1 200 OK
     "short_name": "",
     "number": 4,
     "type": "free",
+    "notify": "all",
     "hidden": false,
     "title": "\u001b[96m1/\u001b[36m3565 | Filter: \u001b[93m* | Sort: \u001b[97m~name | Key(input): alt+space=toggle boolean, alt+'-'(-)=subtract 1 or set, alt+'+'(+)=add 1 or append, alt+f,alt+r(r)=reset, alt+f,alt+u(u)=unset, alt+enter(s)=set, alt+f,alt+n(n)=set new value, alt+f,alt+a(a)=append, alt+','=mark/unmark, shift+down=mark and move down, shift+up=move up and mark, ($)=refresh, ($$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+x(x)=switch format, (q)=close buffer",
     "modes": "",
@@ -1726,6 +1732,7 @@ WeeChat гура податке клијенту у било које време
 | `buffer_unhidden`                     | buffer id | `buffer`      | бафер
 | `buffer_renamed`                      | buffer id | `buffer`      | бафер
 | `buffer_title_changed`                | buffer id | `buffer`      | бафер
+| `buffer_notify_changed`               | buffer id | `buffer`      | бафер
 | `buffer_time_for_each_line_changed`   | buffer id | `buffer`      | бафер
 | `buffer_prefix_for_each_line_changed` | buffer id | `buffer`      | бафер
 | `buffer_localvar_added`               | buffer id | `buffer`      | бафер
@@ -1770,6 +1777,7 @@ WeeChat гура податке клијенту у било које време
         "short_name": "",
         "number": 4,
         "type": "formatted",
+        "notify": "all",
         "hidden": false,
         "title": "",
         "modes": "+nt",

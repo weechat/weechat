@@ -12898,6 +12898,10 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Pointeur : tampon.
 | Modes du tampon changés.
 
+| weechat | [[hook_signal_buffer_notify_changed]] buffer_notify_changed | 5.0.0
+| Pointeur : tampon.
+| Niveau de notification du tampon changé.
+
 | weechat | [[hook_signal_buffer_time_for_each_line_changed]] buffer_time_for_each_line_changed | 4.4.0
 | Pointeur : tampon.
 | Affichage de l'heure pour chaque ligne changé.
@@ -15614,6 +15618,7 @@ Paramètres :
 ** _old_full_name_ : ancien nom complet du tampon ("extension.nom"), défini avant que le tampon ne soit renommé _(WeeChat ≥ 2.8)_
 ** _short_name_ : nom court du tampon (note : utilisé pour l'affichage seulement et peut être changé par l'utilisateur, il ne doit pas être utilisé pour trouver le nom du tampon, utilisez à la place _name_, _full_name_ ou bien la variable locale _channel_)
 ** _type_ : type de tampon : "formatted" (formaté) ou "free" (contenu libre) _(WeeChat ≥ 4.2.0)_
+** _notify_ : niveau de notification du tampon : "none", "highlight", "message" ou "all" _(WeeChat ≥ 5.0.0)_
 ** _title_ : titre du tampon
 ** _modes_ : modes _(WeeChat ≥ 4.3.0)_
 ** _nicklist_last_id_assigned_ : dernier identifiant unique utilisé dans ce tampon pour un groupe ou un pseudo _(WeeChat ≥ 4.3.0)_

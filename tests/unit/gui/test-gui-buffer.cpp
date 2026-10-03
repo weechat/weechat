@@ -39,6 +39,9 @@ extern int gui_buffer_user_close_cb (const void *pointer, void *data,
 
 char signal_buffer_user_input[256];
 int signal_buffer_user_closing = 0;
+int signal_buffer_notify_changed_count = 0;
+struct t_gui_buffer *signal_buffer_notify_changed_buffer = NULL;
+char signal_buffer_notify_changed_value[32];
 
 TEST_GROUP(GuiBuffer)
 {
@@ -98,6 +101,27 @@ TEST_GROUP(GuiBuffer)
 
         signal_buffer_user_closing = 1;
         return WEECHAT_RC_OK_EAT;
+    }
+
+    static int signal_buffer_notify_changed_cb (const void *pointer, void *data,
+                                                const char *signal,
+                                                const char *type_data,
+                                                void *signal_data)
+    {
+        /* Make C++ compiler happy. */
+        (void) pointer;
+        (void) data;
+        (void) signal;
+        (void) type_data;
+
+        signal_buffer_notify_changed_count++;
+        signal_buffer_notify_changed_buffer = (struct t_gui_buffer *)signal_data;
+        snprintf (signal_buffer_notify_changed_value,
+                  sizeof (signal_buffer_notify_changed_value),
+                  "%s",
+                  gui_buffer_get_string (signal_buffer_notify_changed_buffer,
+                                         "notify"));
+        return WEECHAT_RC_OK;
     }
 };
 
@@ -890,6 +914,7 @@ TEST(GuiBuffer, GetString)
     STRCMP_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "old_full_name"));
     STRCMP_EQUAL("weechat", gui_buffer_get_string (gui_buffers, "short_name"));
     STRCMP_EQUAL("formatted", gui_buffer_get_string (gui_buffers, "type"));
+    STRCMP_EQUAL("all", gui_buffer_get_string (gui_buffers, "notify"));
     STRNCMP_EQUAL("WeeChat ", gui_buffer_get_string (gui_buffers, "title"), 8);
     STRCMP_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "modes"));
     STRCMP_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "input_prompt"));
@@ -971,6 +996,7 @@ TEST(GuiBuffer, AskChatRefresh)
 TEST(GuiBuffer, Set)
 {
     struct t_gui_buffer *buffer;
+    struct t_hook *signal_notify;
     int notify, old_notify;
     char str_notify[32];
 
@@ -1106,23 +1132,43 @@ TEST(GuiBuffer, Set)
     LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, buffer->type);
 
     /* notify */
+    signal_notify = hook_signal (NULL, "buffer_notify_changed",
+                                 &signal_buffer_notify_changed_cb, NULL, NULL);
+    signal_buffer_notify_changed_count = 0;
+    signal_buffer_notify_changed_buffer = NULL;
+    signal_buffer_notify_changed_value[0] = '\0';
     old_notify = buffer->notify;
+    LONGS_EQUAL(GUI_BUFFER_NOTIFY_ALL, old_notify);
     for (notify = 0; notify < GUI_BUFFER_NUM_NOTIFY; notify++)
     {
         snprintf (str_notify, sizeof (str_notify), "%d", notify);
         gui_buffer_set (buffer, "notify", str_notify);
         LONGS_EQUAL(notify, buffer->notify);
+        LONGS_EQUAL(notify + 1, signal_buffer_notify_changed_count);
+        POINTERS_EQUAL(buffer, signal_buffer_notify_changed_buffer);
+        STRCMP_EQUAL(gui_buffer_notify_string[notify],
+                     signal_buffer_notify_changed_value);
     }
     for (notify = 0; notify < GUI_BUFFER_NUM_NOTIFY; notify++)
     {
         gui_buffer_set (buffer, "notify", gui_buffer_notify_string[notify]);
         LONGS_EQUAL(notify, buffer->notify);
+        LONGS_EQUAL(GUI_BUFFER_NUM_NOTIFY + notify + 1,
+                    signal_buffer_notify_changed_count);
+        STRCMP_EQUAL(gui_buffer_notify_string[notify],
+                     signal_buffer_notify_changed_value);
     }
+    /* Signal is not sent when the notify level does not change. */
+    gui_buffer_set (buffer, "notify", "all");
+    LONGS_EQUAL(2 * GUI_BUFFER_NUM_NOTIFY, signal_buffer_notify_changed_count);
     gui_buffer_set (buffer, "notify", "-1");
     LONGS_EQUAL(CONFIG_ENUM(config_look_buffer_notify_default), buffer->notify);
+    LONGS_EQUAL(2 * GUI_BUFFER_NUM_NOTIFY, signal_buffer_notify_changed_count);
     snprintf (str_notify, sizeof (str_notify), "%d", old_notify);
     gui_buffer_set (buffer, "notify", str_notify);
     LONGS_EQUAL(old_notify, buffer->notify);
+    LONGS_EQUAL(2 * GUI_BUFFER_NUM_NOTIFY, signal_buffer_notify_changed_count);
+    unhook (signal_notify);
 
     /* title */
     STRCMP_EQUAL(NULL, buffer->title);

@@ -16,6 +16,7 @@ extern "C"
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
+#include "src/core/core-config-file.h"
 #include "src/core/core-hdata.h"
 #include "src/core/core-hook.h"
 #include "src/core/core-util.h"
@@ -132,6 +133,7 @@ TEST(RelayApiMsg, BufferToJson)
     struct t_relay_json *json_group_nicks, *json_nick;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
+    struct t_config_option *ptr_option;
     long long group_id;
     char *color;
 
@@ -153,6 +155,7 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_STR("weechat", json, "short_name");
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
+    WEE_CHECK_OBJ_STR("all", json, "notify");
     WEE_CHECK_OBJ_BOOL(0, json, "hidden");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
     WEE_CHECK_OBJ_STR("", json, "modes");
@@ -188,10 +191,13 @@ TEST(RelayApiMsg, BufferToJson)
     gui_buffer_hide (gui_buffers);
     gui_buffer_set_time_for_each_line (gui_buffers, 0);
     gui_buffer_set_prefix_for_each_line (gui_buffers, 0);
+    config_file_option_set_with_string ("weechat.notify.core.weechat",
+                                        "highlight");
 
     json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_object (json));
+    WEE_CHECK_OBJ_STR("highlight", json, "notify");
     WEE_CHECK_OBJ_BOOL(1, json, "hidden");
     WEE_CHECK_OBJ_BOOL(0, json, "time_displayed");
     WEE_CHECK_OBJ_BOOL(0, json, "prefix_displayed");
@@ -200,6 +206,9 @@ TEST(RelayApiMsg, BufferToJson)
     gui_buffer_unhide (gui_buffers);
     gui_buffer_set_time_for_each_line (gui_buffers, 1);
     gui_buffer_set_prefix_for_each_line (gui_buffers, 1);
+    config_file_search_with_string ("weechat.notify.core.weechat",
+                                    NULL, NULL, &ptr_option, NULL);
+    config_file_option_unset (ptr_option);
 
     /* Buffer with 2 lines, without nicks */
     json = relay_api_msg_buffer_to_json (gui_buffers, 2L, 0L, 0, RELAY_API_COLORS_ANSI);
