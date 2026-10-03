@@ -255,7 +255,7 @@ config_file_set_version (struct t_config_file *config_file,
                          const void *callback_update_pointer,
                          void *callback_update_data)
 {
-    if (version < 1)
+    if (!config_file || (version < 1))
         return 0;
 
     config_file->version = version;
@@ -2516,8 +2516,12 @@ config_file_option_default_is_null (struct t_config_option *option)
  *   0: option has default value
  */
 
-int config_file_option_has_changed (struct t_config_option *option)
+int
+config_file_option_has_changed (struct t_config_option *option)
 {
+    if (!option)
+        return 0;
+
     /* Both default and current value are null => not changed. */
     if (!option->default_value && !option->value)
         return 0;
