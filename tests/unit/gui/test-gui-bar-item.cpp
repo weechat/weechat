@@ -40,12 +40,15 @@ TEST_GROUP(GuiBarItem)
 
 TEST(GuiBarItem, Valid)
 {
+    int dummy;
+
     LONGS_EQUAL(0, gui_bar_item_valid (NULL));
     LONGS_EQUAL(0, gui_bar_item_valid ((struct t_gui_bar_item *)0x1));
 
     LONGS_EQUAL(1, gui_bar_item_valid (gui_bar_items));
 
-    LONGS_EQUAL(0, gui_bar_item_valid (gui_bar_items + 1));
+    /* Stack address: it can never be a bar item (allocated on heap). */
+    LONGS_EQUAL(0, gui_bar_item_valid ((struct t_gui_bar_item *)&dummy));
 }
 
 /*

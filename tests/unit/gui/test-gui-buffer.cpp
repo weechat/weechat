@@ -722,13 +722,15 @@ TEST(GuiBuffer, UserSetCallbacks)
 TEST(GuiBuffer, Valid)
 {
     struct t_gui_buffer *buffer;
+    int dummy;
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              &test_buffer_input_cb, NULL, NULL,
                              &test_buffer_close_cb, NULL, NULL);
 
     LONGS_EQUAL(0, gui_buffer_valid ((struct t_gui_buffer *)0x1));
-    LONGS_EQUAL(0, gui_buffer_valid (buffer + 1));
+    /* Stack address: it can never be a buffer (allocated on heap). */
+    LONGS_EQUAL(0, gui_buffer_valid ((struct t_gui_buffer *)&dummy));
 
     /* NULL pointer is considered valid: to print on core buffer */
     LONGS_EQUAL(1, gui_buffer_valid (NULL));

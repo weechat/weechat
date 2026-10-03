@@ -29,12 +29,14 @@ TEST_GROUP(Alias)
 TEST(Alias, Valid)
 {
     struct t_alias *alias;
+    int dummy;
 
     alias = alias_new ("test_alias", "/mute", NULL);
 
     LONGS_EQUAL(0, alias_valid (NULL));
     LONGS_EQUAL(0, alias_valid ((struct t_alias *)0x1));
-    LONGS_EQUAL(0, alias_valid (alias + 1));
+    /* Stack address: it can never be an alias (allocated on heap). */
+    LONGS_EQUAL(0, alias_valid ((struct t_alias *)&dummy));
 
     LONGS_EQUAL(1, alias_valid (alias));
 

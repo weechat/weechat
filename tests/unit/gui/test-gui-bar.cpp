@@ -24,12 +24,15 @@ TEST_GROUP(GuiBar)
 
 TEST(GuiBar, Valid)
 {
+    int dummy;
+
     LONGS_EQUAL(0, gui_bar_valid (NULL));
     LONGS_EQUAL(0, gui_bar_valid ((struct t_gui_bar *)0x1));
 
     LONGS_EQUAL(1, gui_bar_valid (gui_bars));
 
-    LONGS_EQUAL(0, gui_bar_valid (gui_bars + 1));
+    /* Stack address: it can never be a bar (allocated on heap). */
+    LONGS_EQUAL(0, gui_bar_valid ((struct t_gui_bar *)&dummy));
 }
 
 /*

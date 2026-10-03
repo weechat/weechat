@@ -38,12 +38,14 @@ TEST_GROUP(IrcServer)
 TEST(IrcServer, Valid)
 {
     struct t_irc_server *server;
+    int dummy;
 
     server = irc_server_alloc ("server1");
 
     LONGS_EQUAL(0, irc_server_valid (NULL));
     LONGS_EQUAL(0, irc_server_valid ((struct t_irc_server *)0x1));
-    LONGS_EQUAL(0, irc_server_valid (server + 1));
+    /* Stack address: it can never be a server (allocated on heap). */
+    LONGS_EQUAL(0, irc_server_valid ((struct t_irc_server *)&dummy));
 
     LONGS_EQUAL(1, irc_server_valid (server));
 

@@ -29,12 +29,15 @@ TEST_GROUP(GuiBarWindow)
 
 TEST(GuiBarWindow, Valid)
 {
+    int dummy;
+
     LONGS_EQUAL(0, gui_bar_window_valid (NULL));
     LONGS_EQUAL(0, gui_bar_window_valid ((struct t_gui_bar_window *)0x1));
 
     LONGS_EQUAL(1, gui_bar_window_valid (gui_windows->bar_windows));
 
-    LONGS_EQUAL(0, gui_bar_window_valid (gui_windows->bar_windows + 1));
+    /* Stack address: it can never be a bar window (allocated on heap). */
+    LONGS_EQUAL(0, gui_bar_window_valid ((struct t_gui_bar_window *)&dummy));
 }
 
 /*
