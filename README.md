@@ -71,6 +71,20 @@ CMake options can be given with `-DOPTION=VALUE`, for example:
 
 See the [list of CMake options](https://weechat.org/doc/weechat/user/#build).
 
+## First steps
+
+Start WeeChat with the command `weechat`, then add an IRC server, connect to it and join a channel:
+
+```text
+/server add libera irc.libera.chat
+/connect libera
+/join #weechat
+```
+
+Help is available in WeeChat with `/help` (list of commands) and `/help <command>` or `/help <option>`, and options can be browsed and changed with `/fset`.
+
+For more information, see the [quick start guide](https://weechat.org/doc/weechat/quickstart/).
+
 ## Semantic versioning
 
 WeeChat follows "practical" semantic versioning; see [CONTRIBUTING.md](CONTRIBUTING.md#semantic-versioning).
