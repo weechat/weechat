@@ -102,6 +102,13 @@ For more information, see the [quick start guide](https://weechat.org/doc/weecha
 The man pages are available with `man weechat` and `man weechat-headless`.\
 All the documentation is available in [several languages](https://weechat.org/doc/weechat/).
 
+## Support
+
+- **IRC** (recommended): channels `#weechat` (English) and `#weechat-fr` (French) on server `irc.libera.chat`.
+- **Bugs and feature requests**: [GitHub issues](https://github.com/weechat/weechat/issues).
+
+See the [support page](https://weechat.org/about/support/) for more information.
+
 ## Contributing
 
 Bug reports, feature requests, translations and pull requests are welcome; please read [CONTRIBUTING.md](CONTRIBUTING.md) first.\
