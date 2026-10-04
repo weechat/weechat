@@ -12,14 +12,15 @@ First, some basic things:
 
 - Use only English to communicate with developers.
 - Search in issues if the same problem or feature request has already been
-  reported (a duplicate is waste of time for you and the developers!).
-- If you can, please check if the problem has been fixed in development version
+  reported (a duplicate is a waste of time for you and the developers!).
+- If you can, please check if the problem has been fixed in the development version
   (if you are using a stable release or old version).
 - Report only one bug or feature request per issue.
 
 ### Security reports
 
-Please **DO NOT** file a GitHub issue for security related problems; see [SECURITY.md](SECURITY.md) instead.
+Please **DO NOT** file a GitHub issue for security-related problems;
+see [SECURITY.md](SECURITY.md) instead.
 
 ### Required info
 
@@ -37,19 +38,19 @@ please include the following info (the issue form asks for it):
   It's even better if you can reproduce the problem with a new config (and no
   scripts loaded): try `weechat -t` (temporary home directory, deleted on exit)
   and check if you have the problem there.
-- The **gdb's backtrace** (only for a crash): if you can reproduce the crash
-  (or if you have a core file), please include the backtrace from gdb (look at
+- The **gdb backtrace** (only for a crash): if you can reproduce the crash
+  (or if you have a core file), please include the backtrace from gdb (see the
   [User's guide](https://weechat.org/doc/weechat/user/#report_crashes) for more info).
 - The **actual result**.
 - The **expected result**: the correct result you are expecting.
 
 > [!IMPORTANT]
-> Most of times, the WeeChat crash log file (_weechat_crash_YYYYMMDD_xxx.log_)
-is **NOT USEFUL** to fix the bug, so please report this file **ONLY** if a developer
-asked you to send it (and be extremely careful, this file can contain personal
-data like passwords and contents of your chats).
+> Most of the time, the WeeChat crash log file (_weechat_crash_YYYYMMDD_xxx.log_)
+> is **NOT USEFUL** to fix the bug, so please report this file **ONLY** if a developer
+> asked you to send it (and be extremely careful, this file can contain personal
+> data like passwords and contents of your chats).
 
-### Scripts related issues
+### Script-related issues
 
 If you are using scripts, they can cause problems/crashes. To check if the
 problem is related to one script, try to unload them one by one (using
@@ -69,33 +70,33 @@ time, for [WeeChat](https://github.com/weechat/weechat) and the website
 
 To start a translation in a new language (not yet supported), please look at
 [translations](https://weechat.org/doc/weechat/dev/#translations)
-in Developer's guide.
+in the Developer's guide.
 
 ## Feature requests
 
 WeeChat is under active development, so your idea may already have been
 implemented, or scheduled for a future version (you can check in
 [roadmap](https://weechat.org/dev/) or
-[milestones](https://github.com/weechat/weechat/milestones) on GitHub.
+[milestones](https://github.com/weechat/weechat/milestones) on GitHub).
 
 Pull requests on GitHub are welcome for minor new features.
 
-For major new features, it's better to discuss about it in IRC
+For major new features, it's better to discuss it on IRC
 (server: `irc.libera.chat`, channel `#weechat`).
 
 Before submitting any pull request, be sure you have read the
 [coding rules](https://weechat.org/doc/weechat/dev/#coding_rules)
-in Developer's guide, which contains info about styles used, naming convention
+in the Developer's guide, which contains info about styles used, naming convention
 and other useful info.
 
 ## Semantic versioning
 
-Since version 4.0.0, WeeChat is following a "practical" semantic versioning.
+Since version 4.0.0, WeeChat follows a "practical" semantic versioning.
 
 It is based on [Semantic Versioning](https://semver.org/) but in a less strict way:
 breaking changes in API with low user impact don't bump the major version.
 
-The version number is on three digits `X.Y.Z`, where:
+The version number is made of three numbers `X.Y.Z`, where:
 
 - `X` is the major version
 - `Y` is the minor version
