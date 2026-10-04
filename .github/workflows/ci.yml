@@ -355,10 +355,6 @@ jobs:
         os:
           - ubuntu-26.04
         config:
-          # - name: "gcc"
-          # cc: "gcc"
-          # cxx: "g++"
-          # buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
