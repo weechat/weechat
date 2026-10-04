@@ -18,6 +18,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 [![CI](https://github.com/weechat/weechat/workflows/CI/badge.svg)](https://github.com/weechat/weechat/actions)
 [![Code coverage](https://codecov.io/gh/weechat/weechat/branch/main/graph/badge.svg)](https://codecov.io/gh/weechat/weechat)
 [![REUSE status](https://api.reuse.software/badge/github.com/weechat/weechat)](https://api.reuse.software/info/github.com/weechat/weechat)
+[![Packaging status](https://repology.org/badge/tiny-repos/weechat.svg)](https://repology.org/project/weechat/versions)
 
 **WeeChat** (Wee Enhanced Environment for Chat) is a free chat client, fast and light, designed for many operating systems.\
 It is highly customizable and extensible with scripts.
