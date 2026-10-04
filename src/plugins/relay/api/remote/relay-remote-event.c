@@ -912,7 +912,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     int number, hidden, nicklist, nicklist_case_sensitive;
     int nicklist_display_groups, time_displayed, first_line_not_read;
     int prefix_displayed, apply_props, input_position, input_multiline;
-    int free_content;
+    int day_change, free_content;
 
     if (!event || !event->json)
         return WEECHAT_RC_OK;
@@ -939,6 +939,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
      */
     JSON_GET_BOOL(event->json, time_displayed, (free_content) ? 0 : 1);
     JSON_GET_BOOL(event->json, prefix_displayed, (free_content) ? 0 : 1);
+    JSON_GET_BOOL(event->json, day_change, 1);
     JSON_GET_NUM(event->json, last_read_line_id, -1);
     JSON_GET_BOOL(event->json, first_line_not_read, 0);
 
@@ -968,6 +969,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
                            (time_displayed) ? "1" : "0");
     weechat_hashtable_set (buffer_props, "prefix_for_each_line",
                            (prefix_displayed) ? "1" : "0");
+    weechat_hashtable_set (buffer_props, "day_change",
+                           (day_change) ? "1" : "0");
 
     /* Extra properties for relay */
     weechat_hashtable_set (buffer_props,

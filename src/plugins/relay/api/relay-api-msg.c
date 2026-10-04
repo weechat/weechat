@@ -381,6 +381,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     MSG_ADD_HDATA_VAR(bool, "nicklist_display_groups", integer, "nicklist_display_groups");
     MSG_ADD_HDATA_VAR(bool, "time_displayed", integer, "time_for_each_line");
     MSG_ADD_HDATA_VAR(bool, "prefix_displayed", integer, "prefix_for_each_line");
+    MSG_ADD_HDATA_VAR(bool, "day_change", integer, "day_change");
 
     /* Local variables */
     json_local_vars = relay_json_new_object ();

@@ -167,6 +167,8 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_BOOL(0, json, "nicklist_case_sensitive");
     WEE_CHECK_OBJ_BOOL(1, json, "nicklist_display_groups");
     WEE_CHECK_OBJ_BOOL(1, json, "time_displayed");
+    WEE_CHECK_OBJ_BOOL(1, json, "prefix_displayed");
+    WEE_CHECK_OBJ_BOOL(1, json, "day_change");
     json_local_vars = relay_json_object_get (json, "local_variables");
     CHECK(json_local_vars);
     CHECK(relay_json_is_object (json_local_vars));
@@ -191,6 +193,7 @@ TEST(RelayApiMsg, BufferToJson)
     gui_buffer_hide (gui_buffers);
     gui_buffer_set_time_for_each_line (gui_buffers, 0);
     gui_buffer_set_prefix_for_each_line (gui_buffers, 0);
+    gui_buffer_set (gui_buffers, "day_change", "0");
     config_file_option_set_with_string ("weechat.notify.core.weechat",
                                         "highlight");
 
@@ -201,11 +204,13 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_BOOL(1, json, "hidden");
     WEE_CHECK_OBJ_BOOL(0, json, "time_displayed");
     WEE_CHECK_OBJ_BOOL(0, json, "prefix_displayed");
+    WEE_CHECK_OBJ_BOOL(0, json, "day_change");
     relay_json_free (json);
 
     gui_buffer_unhide (gui_buffers);
     gui_buffer_set_time_for_each_line (gui_buffers, 1);
     gui_buffer_set_prefix_for_each_line (gui_buffers, 1);
+    gui_buffer_set (gui_buffers, "day_change", "1");
     config_file_search_with_string ("weechat.notify.core.weechat",
                                     NULL, NULL, &ptr_option, NULL);
     config_file_option_unset (ptr_option);

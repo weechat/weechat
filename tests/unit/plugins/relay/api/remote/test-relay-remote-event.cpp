@@ -448,6 +448,7 @@ TEST(RelayRemoteEvent, CbBuffer)
         "\"nicklist_display_groups\": true, "
         "\"time_displayed\": true, "
         "\"prefix_displayed\": true, "
+        "\"day_change\": false, "
         "\"last_read_line_id\": 5, "
         "\"first_line_not_read\": false, "
         "\"local_variables\": {\"plugin\": \"irc\", "
@@ -469,6 +470,7 @@ TEST(RelayRemoteEvent, CbBuffer)
     LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "nicklist_display_groups"));
     LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "time_for_each_line"));
     LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "prefix_for_each_line"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "day_change"));
 
     /* Extra local variables set for the remote. */
     STRCMP_EQUAL("testcbbuffer",
@@ -509,13 +511,15 @@ TEST(RelayRemoteEvent, CbBuffer)
         "\"short_name\": \"#test2\", "
         "\"title\": \"new title\", "
         "\"time_displayed\": false, "
-        "\"prefix_displayed\": false}}");
+        "\"prefix_displayed\": false, "
+        "\"day_change\": true}}");
 
     POINTERS_EQUAL(buffer, relay_remote_event_search_buffer (remote, 123));
     STRCMP_EQUAL("#test2", gui_buffer_get_string (buffer, "short_name"));
     STRCMP_EQUAL("new title", gui_buffer_get_string (buffer, "title"));
     LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "time_for_each_line"));
     LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "prefix_for_each_line"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "day_change"));
 
     /*
      * The time and the prefix are displayed when the fields "time_displayed"
@@ -529,6 +533,19 @@ TEST(RelayRemoteEvent, CbBuffer)
 
     LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "time_for_each_line"));
     LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "prefix_for_each_line"));
+
+    /*
+     * The day change is displayed when the field "day_change" is not
+     * received from the remote.
+     */
+    gui_buffer_set (buffer, "day_change", "0");
+    LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "day_change"));
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 200, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 123, \"name\": \"irc.libera.#test\"}}");
+    LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "day_change"));
 
     gui_buffer_close (buffer);
 

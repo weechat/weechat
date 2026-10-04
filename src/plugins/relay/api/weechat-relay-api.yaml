@@ -1069,6 +1069,10 @@ components:
           type: boolean
           description: prefix is displayed on each line
           example: true
+        day_change:
+          type: boolean
+          description: day change message is displayed in the buffer
+          example: true
         local_variables:
           type: object
           description: the buffer local variables
@@ -1121,6 +1125,7 @@ components:
         - nicklist_display_groups
         - time_displayed
         - prefix_displayed
+        - day_change
         - local_variables
         - keys
     Key:

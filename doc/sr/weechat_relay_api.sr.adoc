@@ -541,6 +541,7 @@ HTTP/1.1 200 OK
         "nicklist_display_groups": true,
         "time_displayed": true,
         "prefix_displayed": true,
+        "day_change": true,
         "local_variables": {
             "plugin": "core",
             "name": "weechat"
@@ -568,6 +569,7 @@ HTTP/1.1 200 OK
         "nicklist_display_groups": true,
         "time_displayed": true,
         "prefix_displayed": true,
+        "day_change": true,
         "local_variables": {
             "plugin": "irc",
             "name": "server.libera",
@@ -602,6 +604,7 @@ HTTP/1.1 200 OK
         "nicklist_display_groups": false,
         "time_displayed": true,
         "prefix_displayed": true,
+        "day_change": true,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#weechat",
@@ -653,6 +656,7 @@ HTTP/1.1 200 OK
     "nicklist_display_groups": true,
     "time_displayed": true,
     "prefix_displayed": true,
+    "day_change": true,
     "local_variables": {
         "plugin": "core",
         "name": "weechat"
@@ -711,6 +715,7 @@ HTTP/1.1 200 OK
     "nicklist_display_groups": false,
     "time_displayed": true,
     "prefix_displayed": true,
+    "day_change": true,
     "local_variables": {
         "plugin": "irc",
         "name": "libera.#weechat",
@@ -824,6 +829,7 @@ HTTP/1.1 200 OK
     "nicklist_display_groups": true,
     "time_displayed": true,
     "prefix_displayed": true,
+    "day_change": true,
     "local_variables": {
         "plugin": "fset",
         "name": "fset",
@@ -1791,6 +1797,7 @@ WeeChat гура податке клијенту у било које време
         "nicklist_display_groups": false,
         "time_displayed": true,
         "prefix_displayed": true,
+        "day_change": true,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#test",
