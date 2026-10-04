@@ -109,6 +109,7 @@ env:
   WEECHAT_DEPS_MACOS: >-
     asciidoctor
     aspell
+    cpputest
     guile
     lua
     pkg-config
@@ -396,11 +397,12 @@ jobs:
           - name: "gcc"
             cc: "gcc"
             cxx: "g++"
+            # Tests disabled: CppUTest from Homebrew is built with libc++, not compatible with GCC.
             buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=OFF"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=OFF"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=ON"
 
     name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -423,11 +425,10 @@ jobs:
 
       - uses: actions/checkout@v7
 
-      - name: Build
+      - name: Build and run tests
         env:
           CC: ${{ env.CC || matrix.config.cc }}
           CXX: ${{ env.CXX || matrix.config.cxx }}
-          RUN_TESTS: "0"
           JOBS: "2"
         run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
