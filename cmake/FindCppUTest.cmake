@@ -7,9 +7,9 @@
 # files and libraries are. It also determines what the name of the library is.
 # This code sets the following variables:
 #
-# CPPUTEST_FOUND        = CppUTest is installed
-# CPPUTEST_INCLUDE_DIRS = CppUTest include directory
-# CPPUTEST_LIBRARIES    = Link options to compile with CppUTest
+# CPPUTEST_FOUND          = CppUTest is installed
+# CPPUTEST_INCLUDE_DIRS   = CppUTest include directory
+# CPPUTEST_LINK_LIBRARIES = Libraries to link with CppUTest (full paths)
 
 if(CPPUTEST_FOUND)
   # Already in cache, be silent.
