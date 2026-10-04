@@ -85,6 +85,23 @@ Help is available in WeeChat with `/help` (list of commands) and `/help <command
 
 For more information, see the [quick start guide](https://weechat.org/doc/weechat/quickstart/).
 
+## Documentation
+
+| Document                                                                 | Description                                               |
+|--------------------------------------------------------------------------|-----------------------------------------------------------|
+| [Quick start guide](https://weechat.org/doc/weechat/quickstart/)         | First steps with WeeChat.                                 |
+| [User's guide](https://weechat.org/doc/weechat/user/)                    | Installation, usage, commands and options.                |
+| [Cheat sheet](https://weechat.org/doc/weechat/devel/cheatsheet/)         | Default key bindings and mouse actions.                   |
+| [FAQ](https://weechat.org/doc/weechat/faq/)                              | Frequently asked questions.                               |
+| [Scripting guide](https://weechat.org/doc/weechat/scripting/)            | How to write scripts (Python, Perl, Ruby, etc.).          |
+| [Plugin API reference](https://weechat.org/doc/weechat/plugin/)          | API for C plugins and scripts.                            |
+| [Relay API](https://weechat.org/doc/weechat/relay_api/)                  | HTTP REST API of the relay plugin ("api" protocol).       |
+| [Relay WeeChat protocol](https://weechat.org/doc/weechat/relay_weechat/) | Binary protocol of the relay plugin ("weechat" protocol). |
+| [Developer's guide](https://weechat.org/doc/weechat/dev/)                | Sources, coding rules, contributing and translations.     |
+
+The man pages are available with `man weechat` and `man weechat-headless`.\
+All the documentation is available in [several languages](https://weechat.org/doc/weechat/).
+
 ## Semantic versioning
 
 WeeChat follows "practical" semantic versioning; see [CONTRIBUTING.md](CONTRIBUTING.md#semantic-versioning).
