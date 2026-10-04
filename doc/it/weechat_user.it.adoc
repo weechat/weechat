@@ -292,7 +292,7 @@ sudo make install
 ----
 mkdir build
 cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=/path/della/directory
+cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/.local
 make
 make install
 ----

@@ -248,7 +248,7 @@ sudo make install
 ----
 mkdir build
 cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=/chemin/vers/répertoire
+cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/.local
 make
 make install
 ----
