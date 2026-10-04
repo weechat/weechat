@@ -102,6 +102,13 @@ For more information, see the [quick start guide](https://weechat.org/doc/weecha
 The man pages are available with `man weechat` and `man weechat-headless`.\
 All the documentation is available in [several languages](https://weechat.org/doc/weechat/).
 
+## Contributing
+
+Bug reports, feature requests, translations and pull requests are welcome; please read [CONTRIBUTING.md](CONTRIBUTING.md) first.\
+Before submitting a pull request, please read the [coding rules](https://weechat.org/doc/weechat/dev/#coding_rules) and the [commit message format](https://weechat.org/doc/weechat/dev/#git_repository) in the developer's guide.
+
+Please **DO NOT** file a GitHub issue for security related problems; see [SECURITY.md](SECURITY.md) to report a vulnerability.
+
 ## Semantic versioning
 
 WeeChat follows "practical" semantic versioning; see [CONTRIBUTING.md](CONTRIBUTING.md#semantic-versioning).
