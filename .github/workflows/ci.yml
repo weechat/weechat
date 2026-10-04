@@ -199,7 +199,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_TESTS=ON -DENABLE_CODE_COVERAGE=ON -DENABLE_FUZZ=ON"
+            buildargs: "-DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
     name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
