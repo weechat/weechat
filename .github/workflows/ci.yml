@@ -245,7 +245,10 @@ jobs:
             --run-command '/relay add api 9000' \
             --daemon \
           ;
-          sleep 5
+          curl --silent --show-error --fail --output /dev/null \
+            --retry 30 --retry-connrefused --retry-delay 1 \
+            --user "plain:$RELAY_PASSWORD" \
+            http://localhost:9000/api/version
           schemathesis run --url http://localhost:9000/api ./src/plugins/relay/api/weechat-relay-api.yaml
           echo '*/quit' >/tmp/weechat-test-api/weechat_fifo_*
 
