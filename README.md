@@ -47,6 +47,30 @@ On WeeChat's website you can find [more screenshots](https://weechat.org/about/s
 WeeChat can be installed using your favorite package manager (recommended) or by compiling it yourself.\
 For detailed instructions, please check the [WeeChat user's guide](https://weechat.org/doc/weechat/user/#install).
 
+### Build from source
+
+The main dependencies are a C compiler, CMake, pkg-config, ncurses, libcurl, libgcrypt, GnuTLS and zlib; many others are optional (zstd, gettext, scripting languages, etc.).\
+See the [full list of dependencies](https://weechat.org/doc/weechat/user/#dependencies).
+
+To build and install WeeChat in your home directory:
+
+```bash
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/.local
+make
+make install
+```
+
+CMake options can be given with `-DOPTION=VALUE`, for example:
+
+- `-DCMAKE_BUILD_TYPE=Debug`: build with debug info (recommended if you are using a development version)
+- `-DENABLE_PHP=OFF`: disable a plugin (here the PHP plugin)
+- `-DENABLE_DOC=ON -DENABLE_MAN=ON`: build HTML documentation and man page
+- `-DENABLE_TESTS=ON`: build tests (run them with `ctest -V`)
+
+See the [list of CMake options](https://weechat.org/doc/weechat/user/#build).
+
 ## Semantic versioning
 
 WeeChat follows "practical" semantic versioning; see [CONTRIBUTING.md](CONTRIBUTING.md#semantic-versioning).
