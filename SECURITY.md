@@ -28,5 +28,16 @@ form.
 Alternatively, if you are not able to use this form, you can send an email to
 [security@weechat.org](mailto:security@weechat.org) instead.
 
+The same process applies to vulnerabilities found in the development version
+(`main` branch).
+
+Vulnerabilities in scripts must be reported privately to the script author,
+not here.
+
 We will investigate all legitimate reports and do our best to quickly fix the
 problem.
+
+## Security advisories
+
+Security vulnerabilities fixed in WeeChat are listed on
+[weechat.org](https://weechat.org/doc/weechat/security/).
