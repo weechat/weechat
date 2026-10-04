@@ -119,9 +119,15 @@ Before submitting a pull request, please read the [coding rules](https://weechat
 
 Please **DO NOT** file a GitHub issue for security related problems; see [SECURITY.md](SECURITY.md) to report a vulnerability.
 
-## Semantic versioning
+## Releases
 
 WeeChat follows "practical" semantic versioning; see [CONTRIBUTING.md](CONTRIBUTING.md#semantic-versioning).
+
+A new minor version is released approximately every four months, and patch versions are released in between when needed, to fix severe bugs or security issues.
+
+Only the latest stable version of WeeChat is supported; see [SECURITY.md](SECURITY.md#supported-versions).
+
+The changes in each version are listed in [CHANGELOG.md](CHANGELOG.md), and the manual actions required when upgrading are listed in [UPGRADING.md](UPGRADING.md).
 
 ## Copyright
 
