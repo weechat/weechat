@@ -198,6 +198,11 @@ if(ENABLE_XFER)
 endif()
 
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  # Symbols are resolved at runtime, from the tests binary and the plugins
+  # loaded with RTLD_GLOBAL.
+  target_link_options(weechat_unit_tests_plugins PRIVATE "LINKER:-undefined,dynamic_lookup")
+endif()
 
 # Binary to run tests
 set(WEECHAT_TESTS_SRC
