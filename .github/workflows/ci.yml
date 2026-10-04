@@ -10,6 +10,9 @@ on:
   schedule:
     - cron: '22 9 * * 2'
 
+permissions:
+  contents: read
+
 env:
   CHECK_DEPS_UBUNTU: >-
     curl
