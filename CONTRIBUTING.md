@@ -24,10 +24,10 @@ Please **DO NOT** file a GitHub issue for security related problems; see [SECURI
 ### Required info
 
 When reporting [issues](https://github.com/weechat/weechat/issues) on GitHub,
-please include:
+please include the following info (the issue form asks for it):
 
 - Your **WeeChat version**: the output of `/v` in WeeChat, for example:
-  `WeeChat 4.10.0-dev (git: v4.10.0-2-g60a360559)`.\
+  `WeeChat 5.0.0-dev (git: v4.10.0-214-g4739fb458)`.\
   If WeeChat does not start at all, please include the version displayed by
   `weechat --help` (or the version installed with your package manager).
 - Your **operating system**: its name and version (examples: Linux Debian Trixie,
@@ -35,8 +35,8 @@ please include:
 - The **steps to reproduce**: if possible, please include a reproducible example:
   explain the steps which led you to the problem.\
   It's even better if you can reproduce the problem with a new config (and no
-  scripts loaded): try `weechat --dir /tmp/weechat` and check if you have the
-  problem here.
+  scripts loaded): try `weechat -t` (temporary home directory, deleted on exit)
+  and check if you have the problem there.
 - The **gdb's backtrace** (only for a crash): if you can reproduce the crash
   (or if you have a core file), please include the backtrace from gdb (look at
   [User's guide](https://weechat.org/doc/weechat/user/#report_crashes) for more info).
