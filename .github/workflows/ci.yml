@@ -244,14 +244,19 @@ jobs:
 
       - name: Code coverage
         if: ${{ matrix.config.name == 'gcc_coverage' }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
           cd build-tmp-*
-          lcov --directory . --capture --output-file coverage.info
-          lcov --remove coverage.info '/usr/*' --output-file coverage.info
-          lcov --list coverage.info
-          bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
+          lcov --directory . --capture --output-file "$GITHUB_WORKSPACE/coverage.info"
+          lcov --remove "$GITHUB_WORKSPACE/coverage.info" '/usr/*' --output-file "$GITHUB_WORKSPACE/coverage.info"
+          lcov --list "$GITHUB_WORKSPACE/coverage.info"
+
+      - name: Upload code coverage
+        if: ${{ matrix.config.name == 'gcc_coverage' }}
+        uses: codecov/codecov-action@v7
+        with:
+          files: coverage.info
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
 
   install_fedora:
 
