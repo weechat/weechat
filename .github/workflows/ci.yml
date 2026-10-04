@@ -278,7 +278,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_CODE_COVERAGE=ON -DENABLE_FUZZ=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
     name: "install (fedora:43, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -317,7 +317,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_CODE_COVERAGE=ON -DENABLE_FUZZ=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
     name: "install (rockylinux:9, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -361,7 +361,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_CODE_COVERAGE=ON -DENABLE_FUZZ=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
     name: "install (freebsd, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
