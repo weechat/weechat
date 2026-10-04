@@ -1383,6 +1383,7 @@ WeeChat резервисани идентификатори:
 | _buffer_title_changed | buffers / buffer | hdata: buffer
 | Промењен је наслов бафера. | Промена наслова бафера.
 
+// TRANSLATION MISSING
 | _buffer_notify_changed | buffers / buffer | hdata: buffer
 | Notify level of buffer changed. | Change notify level of buffer.
 
@@ -1436,6 +1437,7 @@ WeeChat резервисани идентификатори:
 | number          | целобројни | Број бафера (≥ 1).
 | full_name       | стринг     | Пуно име (пример: _irc.libera.#weechat_).
 | short_name      | стринг     | Кратко име (пример: _#weechat_).
+// TRANSLATION MISSING
 | notify          | целобројни | Notify level: 0 = none, 1 = highlight, 2 = message, 3 = all _(WeeChat ≥ 5.0.0)_.
 | nicklist        | целобројни | 1 ако бафер има листу надимака, у супротном 0.
 | title           | стринг     | Наслов бафера.
@@ -1759,9 +1761,11 @@ _WeeChat ≥ 5.0.0._
 | Име       | Тип        | Опис
 | number    | целобројни | Број бафера (≥ 1).
 | full_name | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+// TRANSLATION MISSING
 | notify    | целобројни | Notify level: 0 = none, 1 = highlight, 2 = message, 3 = all.
 |===
 
+// TRANSLATION MISSING
 Example: notify level changed to "highlight" on channel _#weechat_:
 
 [source,python]

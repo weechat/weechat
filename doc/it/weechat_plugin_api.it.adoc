@@ -13138,6 +13138,7 @@ List of signals sent by WeeChat and plugins:
 | Pointer: buffer.
 | Modes of buffer changed.
 
+// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_notify_changed]] buffer_notify_changed | 5.0.0
 | Pointer: buffer.
 | Notify level of buffer changed.
@@ -13152,6 +13153,7 @@ List of signals sent by WeeChat and plugins:
 | Pointer: buffer.
 | Display prefix for each line has been changed.
 
+// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_day_change_changed]] buffer_day_change_changed | 5.0.0
 | Pointer: buffer.
 | Display of day change message has been changed.
@@ -16008,6 +16010,7 @@ Argomenti:
 ** _short_name_: nome breve del buffer (nota: usato solo per il display e può essere cambiato dall'utente, questo nome non va usato per trovare il nome del buffer, utilizzare invece _name_, _fullname_ o la variabile locale _channel_)
 // TRANSLATION MISSING
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
+// TRANSLATION MISSING
 ** _notify_: notify level of buffer: "none", "highlight", "message" or "all" _(WeeChat ≥ 5.0.0)_
 ** _title_: titolo del buffer
 // TRANSLATION MISSING

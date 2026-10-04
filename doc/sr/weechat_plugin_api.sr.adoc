@@ -12256,6 +12256,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Промењени су режими бафера.
 
+// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_notify_changed]] buffer_notify_changed | 5.0.0
 | Pointer: buffer.
 | Notify level of buffer changed.
@@ -12268,6 +12269,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Приказује префикс за сваку линију која је промењена.
 
+// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_day_change_changed]] buffer_day_change_changed | 5.0.0
 | Pointer: buffer.
 | Display of day change message has been changed.
@@ -14816,6 +14818,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _old_full_name_: старо пуно име бафера („додатак.име”), постављено пре промене имена бафера _(WeeChat ≥ 2.8)_
 ** _short_name_: кратко име бафера (напомена: користи се само за приказ и корисник може да га промени, ово не сме да се употребљава за проналажење имена бафера, уместо њега употребите _name_, _full_name_ или локалну променљиву _channel_)
 ** _type_: тип бафера: „formatted” или „free” _(WeeChat ≥ 4.2.0)_
+// TRANSLATION MISSING
 ** _notify_: notify level of buffer: "none", "highlight", "message" or "all" _(WeeChat ≥ 5.0.0)_
 ** _title_: наслов бафера
 ** _modes_: режими _(WeeChat ≥ 4.3.0)_
