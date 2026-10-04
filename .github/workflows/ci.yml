@@ -425,7 +425,6 @@ jobs:
         env:
           CC: ${{ env.CC || matrix.config.cc }}
           CXX: ${{ env.CXX || matrix.config.cxx }}
-          JOBS: "2"
         run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
       - name: Run WeeChat

@@ -28,7 +28,12 @@ mkdir "${build_dir}"
 cd "${build_dir}"
 
 if [ -z "${JOBS}" ]; then
-    JOBS="$(nproc)"
+    if command -v nproc >/dev/null 2>&1; then
+        JOBS="$(nproc)"
+    else
+        # macOS and BSD.
+        JOBS="$(sysctl -n hw.ncpu)"
+    fi
 fi
 
 cmake .. "$@"
