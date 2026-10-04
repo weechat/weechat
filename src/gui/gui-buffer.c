@@ -1673,6 +1673,10 @@ gui_buffer_set_day_change (struct t_gui_buffer *buffer, int day_change)
 
     buffer->day_change = day_change;
     gui_buffer_ask_chat_refresh (buffer, 2);
+
+    (void) gui_buffer_send_signal (buffer,
+                                   "buffer_day_change_changed",
+                                   WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*

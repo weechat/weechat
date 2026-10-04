@@ -12268,6 +12268,10 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Приказује префикс за сваку линију која је промењена.
 
+| weechat | [[hook_signal_buffer_day_change_changed]] buffer_day_change_changed | 5.0.0
+| Pointer: buffer.
+| Display of day change message has been changed.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Показивач: бафер.
 | Промењен је тип бафера.

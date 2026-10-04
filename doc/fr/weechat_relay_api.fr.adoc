@@ -1765,6 +1765,7 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `buffer_notify_changed`               | id tampon | `buffer`      | tampon
 | `buffer_time_for_each_line_changed`   | id tampon | `buffer`      | tampon
 | `buffer_prefix_for_each_line_changed` | id tampon | `buffer`      | tampon
+| `buffer_day_change_changed`           | id tampon | `buffer`      | tampon
 | `buffer_localvar_added`               | id tampon | `buffer`      | tampon
 | `buffer_localvar_changed`             | id tampon | `buffer`      | tampon
 | `buffer_localvar_removed`             | id tampon | `buffer`      | tampon

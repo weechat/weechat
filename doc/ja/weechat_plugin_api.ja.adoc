@@ -12862,6 +12862,10 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | Pointer: buffer.
 | Display prefix for each line has been changed.
 
+| weechat | [[hook_signal_buffer_day_change_changed]] buffer_day_change_changed | 5.0.0
+| Pointer: buffer.
+| Display of day change message has been changed.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Pointer: バッファ
 | バッファのタイプを変更

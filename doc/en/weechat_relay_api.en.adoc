@@ -1743,6 +1743,7 @@ The following events are sent to the client, according to synchronization option
 | `buffer_notify_changed`               | buffer id | `buffer`      | buffer
 | `buffer_time_for_each_line_changed`   | buffer id | `buffer`      | buffer
 | `buffer_prefix_for_each_line_changed` | buffer id | `buffer`      | buffer
+| `buffer_day_change_changed`           | buffer id | `buffer`      | buffer
 | `buffer_localvar_added`               | buffer id | `buffer`      | buffer
 | `buffer_localvar_changed`             | buffer id | `buffer`      | buffer
 | `buffer_localvar_removed`             | buffer id | `buffer`      | buffer

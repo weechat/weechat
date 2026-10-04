@@ -12910,6 +12910,10 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Pointeur : tampon.
 | Affichage du préfixe pour chaque ligne changé.
 
+| weechat | [[hook_signal_buffer_day_change_changed]] buffer_day_change_changed | 5.0.0
+| Pointeur : tampon.
+| Affichage du message de changement de jour changé.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Pointeur : tampon.
 | Type de tampon changé.

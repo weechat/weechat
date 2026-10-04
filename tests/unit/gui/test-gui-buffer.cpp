@@ -42,6 +42,8 @@ int signal_buffer_user_closing = 0;
 int signal_buffer_notify_changed_count = 0;
 struct t_gui_buffer *signal_buffer_notify_changed_buffer = NULL;
 char signal_buffer_notify_changed_value[32];
+int signal_buffer_day_change_changed_count = 0;
+struct t_gui_buffer *signal_buffer_day_change_changed_buffer = NULL;
 
 TEST_GROUP(GuiBuffer)
 {
@@ -121,6 +123,24 @@ TEST_GROUP(GuiBuffer)
                   "%s",
                   gui_buffer_get_string (signal_buffer_notify_changed_buffer,
                                          "notify"));
+        return WEECHAT_RC_OK;
+    }
+
+    static int signal_buffer_day_change_changed_cb (const void *pointer,
+                                                    void *data,
+                                                    const char *signal,
+                                                    const char *type_data,
+                                                    void *signal_data)
+    {
+        /* Make C++ compiler happy. */
+        (void) pointer;
+        (void) data;
+        (void) signal;
+        (void) type_data;
+
+        signal_buffer_day_change_changed_count++;
+        signal_buffer_day_change_changed_buffer =
+            (struct t_gui_buffer *)signal_data;
         return WEECHAT_RC_OK;
     }
 };
@@ -996,7 +1016,7 @@ TEST(GuiBuffer, AskChatRefresh)
 TEST(GuiBuffer, Set)
 {
     struct t_gui_buffer *buffer;
-    struct t_hook *signal_notify;
+    struct t_hook *signal_notify, *signal_day_change;
     int notify, old_notify;
     char str_notify[32];
 
@@ -1061,15 +1081,29 @@ TEST(GuiBuffer, Set)
     LONGS_EQUAL(1, buffer->print_hooks_enabled);
 
     /* day_change */
+    signal_day_change = hook_signal (NULL, "buffer_day_change_changed",
+                                     &signal_buffer_day_change_changed_cb,
+                                     NULL, NULL);
+    signal_buffer_day_change_changed_count = 0;
+    signal_buffer_day_change_changed_buffer = NULL;
     LONGS_EQUAL(1, buffer->day_change);
     gui_buffer_set (buffer, "day_change", "0");
     LONGS_EQUAL(0, buffer->day_change);
+    LONGS_EQUAL(1, signal_buffer_day_change_changed_count);
+    POINTERS_EQUAL(buffer, signal_buffer_day_change_changed_buffer);
     gui_buffer_set (buffer, "day_change", "1");
     LONGS_EQUAL(1, buffer->day_change);
+    LONGS_EQUAL(2, signal_buffer_day_change_changed_count);
+    /* Signal is not sent when the value does not change. */
+    gui_buffer_set (buffer, "day_change", "1");
+    LONGS_EQUAL(2, signal_buffer_day_change_changed_count);
     gui_buffer_set (buffer, "day_change", "0");
     LONGS_EQUAL(0, buffer->day_change);
+    LONGS_EQUAL(3, signal_buffer_day_change_changed_count);
     gui_buffer_set (buffer, "day_change", "2");
     LONGS_EQUAL(1, buffer->day_change);
+    LONGS_EQUAL(4, signal_buffer_day_change_changed_count);
+    unhook (signal_day_change);
 
     /* clear */
     LONGS_EQUAL(1, buffer->clear);

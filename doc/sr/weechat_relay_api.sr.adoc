@@ -1742,6 +1742,7 @@ WeeChat гура податке клијенту у било које време
 | `buffer_notify_changed`               | buffer id | `buffer`      | бафер
 | `buffer_time_for_each_line_changed`   | buffer id | `buffer`      | бафер
 | `buffer_prefix_for_each_line_changed` | buffer id | `buffer`      | бафер
+| `buffer_day_change_changed`           | buffer id | `buffer`      | бафер
 | `buffer_localvar_added`               | buffer id | `buffer`      | бафер
 | `buffer_localvar_changed`             | buffer id | `buffer`      | бафер
 | `buffer_localvar_removed`             | buffer id | `buffer`      | бафер
