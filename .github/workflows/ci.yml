@@ -415,12 +415,21 @@ jobs:
           brew update
           brew install ${{ env.WEECHAT_DEPS_MACOS }}
 
+      # On macOS, "gcc" is Apple clang: use the versioned binaries from Homebrew.
+      - name: Install GCC
+        if: ${{ matrix.config.name == 'gcc' }}
+        run: |
+          brew install gcc
+          gcc_bin="$(brew --prefix gcc)/bin"
+          echo "CC=$(ls "${gcc_bin}"/gcc-[0-9]* | head -n 1)" >>"$GITHUB_ENV"
+          echo "CXX=$(ls "${gcc_bin}"/g++-[0-9]* | head -n 1)" >>"$GITHUB_ENV"
+
       - uses: actions/checkout@v7
 
       - name: Build
         env:
-          CC: ${{ matrix.config.cc }}
-          CXX: ${{ matrix.config.cxx }}
+          CC: ${{ env.CC || matrix.config.cc }}
+          CXX: ${{ env.CXX || matrix.config.cxx }}
           RUN_TESTS: "0"
           JOBS: "2"
         run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
