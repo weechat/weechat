@@ -225,14 +225,7 @@ jobs:
       - name: Run WeeChat
         env:
           TERM: xterm-256color
-        run: |
-          weechat --help
-          weechat-curses --help
-          weechat --version
-          weechat --build-info
-          weechat --colors
-          weechat --license
-          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+        run: ./tools/run_weechat_smoke.sh
 
       - name: Test Relay OpenAPI
         if: ${{ matrix.config.name == 'gcc' }}
@@ -307,14 +300,7 @@ jobs:
       - name: Run WeeChat
         env:
           TERM: xterm-256color
-        run: |
-          weechat --help
-          weechat-curses --help
-          weechat --version
-          weechat --build-info
-          weechat --colors
-          weechat --license
-          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+        run: ./tools/run_weechat_smoke.sh
 
   install_rockylinux:
 
@@ -358,14 +344,7 @@ jobs:
       - name: Run WeeChat
         env:
           TERM: xterm-256color
-        run: |
-          weechat --help
-          weechat-curses --help
-          weechat --version
-          weechat --build-info
-          weechat --colors
-          weechat --license
-          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+        run: ./tools/run_weechat_smoke.sh
 
   install_freebsd:
 
@@ -403,13 +382,7 @@ jobs:
           prepare: pkg install -y ${{ env.WEECHAT_DEPS_FREEBSD }}
           run: |
             ./tools/build_test.sh ${{ matrix.config.buildargs }}
-            weechat --help
-            weechat-curses --help
-            weechat --version
-            weechat --build-info
-            weechat --colors
-            weechat --license
-            weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+            ./tools/run_weechat_smoke.sh
 
   install_macos:
 
@@ -455,14 +428,7 @@ jobs:
       - name: Run WeeChat
         env:
           TERM: xterm-256color
-        run: |
-          weechat --help
-          weechat-curses --help
-          weechat --version
-          weechat --build-info
-          weechat --colors
-          weechat --license
-          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+        run: ./tools/run_weechat_smoke.sh
 
   build_debian:
 
@@ -494,12 +460,7 @@ jobs:
       - name: Run WeeChat
         env:
           TERM: xterm-256color
-        run: |
-          weechat --help
-          weechat-curses --help
-          weechat --version
-          weechat --build-info
-          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+        run: ./tools/run_weechat_smoke.sh
 
   codeql_analysis:
 
