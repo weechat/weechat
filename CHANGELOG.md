@@ -48,6 +48,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - relay/api: add field "first_line_not_read" in buffers
 - **breaking:** relay/api: remove field "date_printed" in lines
 - **breaking:** relay/api: bump API version to 0.7.0
+- relay/weechat: add field "notify" in message "_buffer_opened", send message "_buffer_notify_changed" to clients
 
 ### Fixed
 

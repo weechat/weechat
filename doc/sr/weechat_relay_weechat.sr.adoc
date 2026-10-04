@@ -1383,6 +1383,9 @@ WeeChat резервисани идентификатори:
 | _buffer_title_changed | buffers / buffer | hdata: buffer
 | Промењен је наслов бафера. | Промена наслова бафера.
 
+| _buffer_notify_changed | buffers / buffer | hdata: buffer
+| Notify level of buffer changed. | Change notify level of buffer.
+
 | _buffer_localvar_added | buffers / buffer | hdata: buffer
 | Додата је локална променљива. | Додавање локалне променљиве.
 
@@ -1433,6 +1436,7 @@ WeeChat резервисани идентификатори:
 | number          | целобројни | Број бафера (≥ 1).
 | full_name       | стринг     | Пуно име (пример: _irc.libera.#weechat_).
 | short_name      | стринг     | Кратко име (пример: _#weechat_).
+| notify          | целобројни | Notify level: 0 = none, 1 = highlight, 2 = message, 3 = all _(WeeChat ≥ 5.0.0)_.
 | nicklist        | целобројни | 1 ако бафер има листу надимака, у супротном 0.
 | title           | стринг     | Наслов бафера.
 | local_variables | хештабела  | Локалне променљиве.
@@ -1450,6 +1454,7 @@ hda:
         'number': 'int',
         'full_name': 'str',
         'short_name': 'str',
+        'notify': 'int',
         'nicklist': 'int',
         'title': 'str',
         'local_variables': 'htb',
@@ -1462,6 +1467,7 @@ hda:
         number: 3
         full_name: 'irc.libera.#weechat'
         short_name: None
+        notify: 3
         nicklist: 0
         title: None
         local_variables: {
@@ -1737,6 +1743,42 @@ hda:
         number: 3
         full_name: 'irc.libera.#weechat'
         title: 'Welcome on #weechat!  https://weechat.org/'
+----
+
+[[message_buffer_notify_changed]]
+==== _buffer_notify_changed
+
+_WeeChat ≥ 5.0.0._
+
+Ова порука се шаље клијенту када програм WeeChat пошаље сигнал „buffer_notify_changed”.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име       | Тип        | Опис
+| number    | целобројни | Број бафера (≥ 1).
+| full_name | стринг     | Пуно име (пример: _irc.libera.#weechat_).
+| notify    | целобројни | Notify level: 0 = none, 1 = highlight, 2 = message, 3 = all.
+|===
+
+Example: notify level changed to "highlight" on channel _#weechat_:
+
+[source,python]
+----
+id: '_buffer_notify_changed'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'notify': 'int',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a715d0']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+        notify: 1
 ----
 
 [[message_buffer_cleared]]

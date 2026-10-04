@@ -1498,6 +1498,9 @@ Les identifiants réservés par WeeChat :
 | _buffer_title_changed | buffers / buffer | hdata : buffer
 | Titre du tampon changé. | Changer le titre du tampon.
 
+| _buffer_notify_changed | buffers / buffer | hdata : buffer
+| Niveau de notification du tampon changé. | Changer le niveau de notification du tampon.
+
 | _buffer_localvar_added | buffers / buffer | hdata : buffer
 | Variable locale ajoutée. | Ajouter la variable locale dans le tampon.
 
@@ -1549,6 +1552,7 @@ Données envoyées dans le hdata :
 | number          | entier           | Numéro de tampon (≥ 1).
 | full_name       | chaîne           | Nom complet (exemple : _irc.libera.#weechat_).
 | short_name      | chaîne           | Nom court (exemple : _#weechat_).
+| notify          | entier           | Niveau de notification : 0 = aucun (none), 1 = highlight, 2 = message, 3 = tous (all) _(WeeChat ≥ 5.0.0)_.
 | nicklist        | entier           | 1 si le tampon a une liste de pseudos, sinon 0.
 | title           | chaîne           | Titre du tampon.
 | local_variables | table de hachage | Variables locales.
@@ -1567,6 +1571,7 @@ hda:
         'number': 'int',
         'full_name': 'str',
         'short_name': 'str',
+        'notify': 'int',
         'nicklist': 'int',
         'title': 'str',
         'local_variables': 'htb',
@@ -1579,6 +1584,7 @@ hda:
         number: 3
         full_name: 'irc.libera.#weechat'
         short_name: None
+        notify: 3
         nicklist: 0
         title: None
         local_variables: {
@@ -1861,6 +1867,43 @@ hda:
         number: 3
         full_name: 'irc.libera.#weechat'
         title: 'Welcome on #weechat!  https://weechat.org/'
+----
+
+[[message_buffer_notify_changed]]
+==== _buffer_notify_changed
+
+_WeeChat ≥ 5.0.0._
+
+Ce message est envoyé au client lorsque le signal "buffer_notify_changed" est
+envoyé par WeeChat.
+
+Données envoyées dans le hdata :
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Nom       | Type   | Description
+| number    | entier | Numéro de tampon (≥ 1).
+| full_name | chaîne | Nom complet (exemple : _irc.libera.#weechat_).
+| notify    | entier | Niveau de notification : 0 = aucun (none), 1 = highlight, 2 = message, 3 = tous (all).
+|===
+
+Exemple : niveau de notification changé en "highlight" sur le canal _#weechat_ :
+
+[source,python]
+----
+id: '_buffer_notify_changed'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'notify': 'int',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a715d0']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+        notify: 1
 ----
 
 [[message_buffer_cleared]]

@@ -1473,6 +1473,9 @@ WeeChat reserved identifiers:
 | _buffer_title_changed | buffers / buffer | hdata: buffer
 | Title of buffer changed. | Change title of buffer.
 
+| _buffer_notify_changed | buffers / buffer | hdata: buffer
+| Notify level of buffer changed. | Change notify level of buffer.
+
 | _buffer_localvar_added | buffers / buffer | hdata: buffer
 | Local variable added. | Add local variable in buffer.
 
@@ -1524,6 +1527,7 @@ Data sent as hdata:
 | number          | integer   | Buffer number (≥ 1).
 | full_name       | string    | Full name (example: _irc.libera.#weechat_).
 | short_name      | string    | Short name (example: _#weechat_).
+| notify          | integer   | Notify level: 0 = none, 1 = highlight, 2 = message, 3 = all _(WeeChat ≥ 5.0.0)_.
 | nicklist        | integer   | 1 if buffer has a nicklist, otherwise 0.
 | title           | string    | Buffer title.
 | local_variables | hashtable | Local variables.
@@ -1542,6 +1546,7 @@ hda:
         'number': 'int',
         'full_name': 'str',
         'short_name': 'str',
+        'notify': 'int',
         'nicklist': 'int',
         'title': 'str',
         'local_variables': 'htb',
@@ -1554,6 +1559,7 @@ hda:
         number: 3
         full_name: 'irc.libera.#weechat'
         short_name: None
+        notify: 3
         nicklist: 0
         title: None
         local_variables: {
@@ -1836,6 +1842,43 @@ hda:
         number: 3
         full_name: 'irc.libera.#weechat'
         title: 'Welcome on #weechat!  https://weechat.org/'
+----
+
+[[message_buffer_notify_changed]]
+==== _buffer_notify_changed
+
+_WeeChat ≥ 5.0.0._
+
+This message is sent to the client when the signal "buffer_notify_changed" is
+sent by WeeChat.
+
+Data sent as hdata:
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Name      | Type    | Description
+| number    | integer | Buffer number (≥ 1).
+| full_name | string  | Full name (example: _irc.libera.#weechat_).
+| notify    | integer | Notify level: 0 = none, 1 = highlight, 2 = message, 3 = all.
+|===
+
+Example: notify level changed to "highlight" on channel _#weechat_:
+
+[source,python]
+----
+id: '_buffer_notify_changed'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'notify': 'int',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a715d0']
+        number: 3
+        full_name: 'irc.libera.#weechat'
+        notify: 1
 ----
 
 [[message_buffer_cleared]]
