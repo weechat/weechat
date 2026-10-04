@@ -272,10 +272,10 @@ TEST(RelayApiProtocol, SignalUpgradeCb)
 
 /*
  * Test functions:
- *   relay_api_protocol_cb_options
+ *   relay_api_protocol_cb_preflight
  */
 
-TEST(RelayApiProtocolWithClient, CbOptions)
+TEST(RelayApiProtocolWithClient, CbPreflight)
 {
     test_client_recv_http ("OPTIONS /api/buffers", NULL,
                            "{\"password_hash_algo\": [\"invalid\"]}");
@@ -787,6 +787,109 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
     CHECK(relay_json_is_array (json_array));
     CHECK(relay_json_array_size (json_array) == 1);
     STRCMP_EQUAL("query", relay_json_get_string (relay_json_array_get (json_array, 0)));
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_cb_options
+ */
+
+TEST(RelayApiProtocolWithClient, CbOptions)
+{
+    struct t_relay_json *json, *json_obj;
+
+    /* Error: missing option name */
+    test_client_recv_http ("GET /api/options", NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 60\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request: not enough path parameters (min: 1)\"}",
+                 data_sent[0]);
+
+    /* Error: unknown option */
+    test_client_recv_http ("GET /api/options/xxx.yyy.zzz", NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 44\r\n"
+                 "\r\n"
+                 "{\"error\":\"Option \\\"xxx.yyy.zzz\\\" not found\"}",
+                 data_sent[0]);
+
+    /* Error: method not allowed */
+    test_client_recv_http ("POST /api/options/weechat.look.scroll_amount",
+                           NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 405 Method Not Allowed\r\n"
+                 "Allow: GET, POST, PUT, DELETE\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 30\r\n"
+                 "\r\n"
+                 "{\"error\":\"Method Not Allowed\"}",
+                 data_sent[0]);
+
+    /* Integer option */
+    test_client_recv_http ("GET /api/options/weechat.look.scroll_amount",
+                           NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("weechat.look.scroll_amount", json, "name");
+    WEE_CHECK_OBJ_STR("integer", json, "type");
+    WEE_CHECK_OBJ_NUM(3, json, "value");
+    WEE_CHECK_OBJ_NUM(3, json, "default_value");
+    WEE_CHECK_OBJ_NUM(1, json, "min");
+    WEE_CHECK_OBJ_NUM(INT_MAX, json, "max");
+
+    /* Enum option, name URL-encoded */
+    test_client_recv_http ("GET /api/options/weechat%2Elook%2Ebuffer_notify_default",
+                           NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("weechat.look.buffer_notify_default", json, "name");
+    WEE_CHECK_OBJ_STR("enum", json, "type");
+    WEE_CHECK_OBJ_STR("all", json, "value");
+    json_obj = relay_json_object_get (json, "string_values");
+    CHECK(json_obj);
+    LONGS_EQUAL(4, relay_json_array_size (json_obj));
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_cb_options (websocket)
+ */
+
+TEST(RelayApiProtocolWithClient, CbOptionsWebsocket)
+{
+    struct t_relay_json *json, *json_obj, *json_body;
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+    test_client_recv_text ("{\"request\": "
+                           "\"GET /api/options/weechat.look.day_change\"}");
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_NUM(200, json, "code");
+    WEE_CHECK_OBJ_STR("option", json, "body_type");
+    json_body = relay_json_object_get (json, "body");
+    CHECK(json_body);
+    WEE_CHECK_OBJ_STR("weechat.look.day_change", json_body, "name");
+    WEE_CHECK_OBJ_STR("boolean", json_body, "type");
+    WEE_CHECK_OBJ_BOOL(1, json_body, "value");
+    WEE_CHECK_OBJ_BOOL(1, json_body, "default_value");
+    relay_json_free (json);
 }
 
 /*

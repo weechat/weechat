@@ -893,3 +893,112 @@ relay_api_msg_script_to_json (struct t_hdata *hdata, void *script, const char *e
 
     return json;
 }
+
+/*
+ * Create a JSON value with the value (or default value if default_value == 1)
+ * of a configuration option, according to the option type.
+ *
+ * Return a JSON null if the value is null.
+ */
+
+struct t_relay_json *
+relay_api_msg_option_value_to_json (struct t_config_option *option,
+                                    int default_value)
+{
+    const char *ptr_type;
+
+    if (!option)
+        return relay_json_new_null ();
+
+    if ((default_value && weechat_config_option_default_is_null (option))
+        || (!default_value && weechat_config_option_is_null (option)))
+    {
+        return relay_json_new_null ();
+    }
+
+    ptr_type = weechat_config_option_get_string (option, "type");
+
+    if (weechat_strcmp (ptr_type, "boolean") == 0)
+    {
+        return relay_json_new_bool (
+            (default_value) ?
+            weechat_config_boolean_default (option) :
+            weechat_config_boolean (option));
+    }
+
+    if (weechat_strcmp (ptr_type, "integer") == 0)
+    {
+        return relay_json_new_number (
+            (default_value) ?
+            weechat_config_integer_default (option) :
+            weechat_config_integer (option));
+    }
+
+    /* String, color and enum: value as string. */
+    return relay_json_new_string (
+        (default_value) ?
+        weechat_config_string_default (option) :
+        weechat_config_string (option));
+}
+
+/*
+ * Create a JSON object with a configuration option.
+ */
+
+struct t_relay_json *
+relay_api_msg_option_to_json (struct t_config_option *option)
+{
+    struct t_relay_json *json, *json_values;
+    const char *ptr_type, *ptr_string;
+    char name[4096], **string_values;
+    int *ptr_number, i;
+
+    json = relay_json_new_object ();
+    if (!json)
+        return NULL;
+
+    if (!option)
+        return json;
+
+    snprintf (name, sizeof (name),
+              "%s.%s.%s",
+              weechat_config_option_get_string (option, "config_name"),
+              weechat_config_option_get_string (option, "section_name"),
+              weechat_config_option_get_string (option, "name"));
+    MSG_ADD_STR_BUF("name", name);
+    ptr_type = weechat_config_option_get_string (option, "type");
+    MSG_ADD_STR_PTR("type", ptr_type);
+    relay_json_object_add (json, "value",
+                           relay_api_msg_option_value_to_json (option, 0));
+    relay_json_object_add (json, "default_value",
+                           relay_api_msg_option_value_to_json (option, 1));
+    ptr_string = weechat_config_option_get_string (option, "description");
+    MSG_ADD_STR_PTR("description", ptr_string);
+
+    if (weechat_strcmp (ptr_type, "integer") == 0)
+    {
+        ptr_number = weechat_config_option_get_pointer (option, "min");
+        if (ptr_number)
+            relay_json_object_add (json, "min", relay_json_new_number (*ptr_number));
+        ptr_number = weechat_config_option_get_pointer (option, "max");
+        if (ptr_number)
+            relay_json_object_add (json, "max", relay_json_new_number (*ptr_number));
+    }
+    else if (weechat_strcmp (ptr_type, "enum") == 0)
+    {
+        json_values = relay_json_new_array ();
+        if (json_values)
+        {
+            string_values = weechat_config_option_get_pointer (option,
+                                                               "string_values");
+            for (i = 0; string_values && string_values[i]; i++)
+            {
+                relay_json_array_add (json_values,
+                                      relay_json_new_string (string_values[i]));
+            }
+            relay_json_object_add (json, "string_values", json_values);
+        }
+    }
+
+    return json;
+}

@@ -391,7 +391,7 @@ relay_api_protocol_signal_day_changed_cb (const void *pointer, void *data,
  *   OPTIONS /api/xxx
  */
 
-RELAY_API_PROTOCOL_CALLBACK(options)
+RELAY_API_PROTOCOL_CALLBACK(preflight)
 {
     relay_api_msg_send_json (
         client,
@@ -842,6 +842,36 @@ RELAY_API_PROTOCOL_CALLBACK(scripts)
     }
 
     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "scripts", json);
+    relay_json_free (json);
+    return RELAY_API_PROTOCOL_RC_OK;
+}
+
+/*
+ * Callback for resource "options".
+ *
+ * Routes:
+ *   GET /api/options/{option_name}
+ */
+
+RELAY_API_PROTOCOL_CALLBACK(options)
+{
+    struct t_relay_json *json;
+    struct t_config_option *ptr_option;
+
+    ptr_option = weechat_config_get (client->http_req->path_items[2]);
+    if (!ptr_option)
+    {
+        relay_api_msg_send_error_json (client, RELAY_HTTP_404_NOT_FOUND, NULL,
+                                       "Option \"%s\" not found",
+                                       client->http_req->path_items[2]);
+        return RELAY_API_PROTOCOL_RC_OK;
+    }
+
+    json = relay_api_msg_option_to_json (ptr_option);
+    if (!json)
+        return RELAY_API_PROTOCOL_RC_MEMORY;
+
+    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "option", json);
     relay_json_free (json);
     return RELAY_API_PROTOCOL_RC_OK;
 }
@@ -1377,12 +1407,13 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
     struct t_relay_api_protocol_cb protocol_cb[] = {
         /* method,   resource,     auth, args,   callback                */
         /*                               min,max                         */
-        { "OPTIONS", "*",          0,    0, -1,  RELAY_API_CB(options)    },
+        { "OPTIONS", "*",          0,    0, -1,  RELAY_API_CB(preflight)  },
         { "POST",    "handshake",  0,    0,  0,  RELAY_API_CB(handshake)  },
         { "GET",     "version",    1,    0,  0,  RELAY_API_CB(version)    },
         { "GET",     "buffers",    1,    0,  3,  RELAY_API_CB(buffers)    },
         { "GET",     "hotlist",    1,    0,  3,  RELAY_API_CB(hotlist)    },
         { "GET",     "scripts",    1,    0,  0,  RELAY_API_CB(scripts)    },
+        { "GET",     "options",    1,    1,  1,  RELAY_API_CB(options)    },
         { "POST",    "input",      1,    0,  0,  RELAY_API_CB(input)      },
         { "POST",    "completion", 1,    0,  0,  RELAY_API_CB(completion) },
         { "POST",    "ping",       1,    0,  0,  RELAY_API_CB(ping)       },

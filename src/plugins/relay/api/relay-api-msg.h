@@ -45,5 +45,6 @@ extern struct t_relay_json *relay_api_msg_completion_to_json (struct t_gui_compl
 extern struct t_relay_json *relay_api_msg_hotlist_to_json (struct t_gui_hotlist *hotlist);
 extern struct t_relay_json *relay_api_msg_script_to_json (struct t_hdata *hdata, void *script,
                                                           const char *extension);
+extern struct t_relay_json *relay_api_msg_option_to_json (struct t_config_option *option);
 
 #endif /* WEECHAT_PLUGIN_RELAY_API_MSG_H */

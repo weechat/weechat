@@ -1252,6 +1252,168 @@ HTTP/1.1 200 OK
 ]
 ----
 
+[[resource_options]]
+=== Options
+
+Return a configuration option.
+
+Endpoint:
+
+----
+GET /api/options/{option_name}
+----
+
+Path parameters:
+
+* `option_name` (string, required): option full name: configuration file,
+  section and option, separated by dots (example: `weechat.look.buffer_time_format`)
+
+The value is returned as it is stored in the option, like the command `/set`
+displays it: it is not evaluated (for example `${sec.data.xxx}` is returned as-is).
+
+Fields returned:
+
+* `name` (string): option full name
+* `type` (string): option type: `boolean`, `integer`, `string`, `color` or `enum`
+* `value` (boolean, integer, string or null): option value: boolean for type
+  `boolean`, integer for type `integer`, string for types `string`, `color` and
+  `enum`, `null` if the value is null
+* `default_value` (boolean, integer, string or null): option default value
+  (same types as `value`)
+* `description` (string): option description (in English)
+* `min` (integer): minimum value (only for type `integer`)
+* `max` (integer): maximum value (only for type `integer`)
+* `string_values` (array of strings): allowed values (only for type `enum`)
+
+Request example: get an integer option:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/weechat.look.scroll_amount'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "weechat.look.scroll_amount",
+    "type": "integer",
+    "value": 3,
+    "default_value": 3,
+    "description": "how many lines to scroll by with scroll_up and scroll_down",
+    "min": 1,
+    "max": 2147483647
+}
+----
+
+Request example: get a color option:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/weechat.color.chat'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "weechat.color.chat",
+    "type": "color",
+    "value": "default",
+    "default_value": "default",
+    "description": "text color for chat"
+}
+----
+
+Request example: get an enum option:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/weechat.look.buffer_notify_default'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "weechat.look.buffer_notify_default",
+    "type": "enum",
+    "value": "message",
+    "default_value": "all",
+    "description": "default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message): all=all messages (default), message=messages+highlights, highlight=highlights only, none=never display in hotlist",
+    "string_values": [
+        "none",
+        "highlight",
+        "message",
+        "all"
+    ]
+}
+----
+
+Request example: get a boolean option:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/weechat.look.day_change'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "weechat.look.day_change",
+    "type": "boolean",
+    "value": true,
+    "default_value": true,
+    "description": "display special message when day changes"
+}
+----
+
+Request example: get an unknown option:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/xxx.yyy.zzz'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 404 Not Found
+----
+
+[source,json]
+----
+{
+    "error": "Option \"xxx.yyy.zzz\" not found"
+}
+----
+
 [[resource_input]]
 === Input
 

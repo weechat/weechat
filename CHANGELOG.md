@@ -22,6 +22,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"
 - doc: add cheat sheet with all key bindings and mouse actions
 - irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
+- relay/api: add resource `GET /api/options`
 
 ### Changed
 

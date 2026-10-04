@@ -1265,6 +1265,172 @@ HTTP/1.1 200 OK
 ]
 ----
 
+[[resource_options]]
+=== Options
+
+Retourner une option de configuration.
+
+Point de terminaison :
+
+----
+GET /api/options/{option_name}
+----
+
+Paramètres de chemin :
+
+* `option_name` (chaîne, obligatoire) : nom complet de l'option : fichier de
+  configuration, section et option, séparés par des points (exemple :
+  `weechat.look.buffer_time_format`)
+
+La valeur est retournée telle qu'elle est stockée dans l'option, comme la
+commande `/set` l'affiche : elle n'est pas évaluée (par exemple `${sec.data.xxx}`
+est retourné tel quel).
+
+Champs retournés :
+
+* `name` (chaîne) : nom complet de l'option
+* `type` (chaîne) : type de l'option : `boolean`, `integer`, `string`, `color`
+  ou `enum`
+* `value` (booléen, entier, chaîne ou null) : valeur de l'option : booléen pour
+  le type `boolean`, entier pour le type `integer`, chaîne pour les types
+  `string`, `color` et `enum`, `null` si la valeur est nulle
+* `default_value` (booléen, entier, chaîne ou null) : valeur par défaut de
+  l'option (mêmes types que `value`)
+* `description` (chaîne) : description de l'option (en anglais)
+* `min` (entier) : valeur minimale (seulement pour le type `integer`)
+* `max` (entier) : valeur maximale (seulement pour le type `integer`)
+* `string_values` (tableau de chaînes) : valeurs autorisées (seulement pour le
+  type `enum`)
+
+Exemple de requête : obtenir une option de type entier :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/weechat.look.scroll_amount'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "weechat.look.scroll_amount",
+    "type": "integer",
+    "value": 3,
+    "default_value": 3,
+    "description": "how many lines to scroll by with scroll_up and scroll_down",
+    "min": 1,
+    "max": 2147483647
+}
+----
+
+Exemple de requête : obtenir une option de type couleur :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/weechat.color.chat'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "weechat.color.chat",
+    "type": "color",
+    "value": "default",
+    "default_value": "default",
+    "description": "text color for chat"
+}
+----
+
+Exemple de requête : obtenir une option de type énuméré :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/weechat.look.buffer_notify_default'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "weechat.look.buffer_notify_default",
+    "type": "enum",
+    "value": "message",
+    "default_value": "all",
+    "description": "default notify level for buffers (used to tell WeeChat if buffer must be displayed in hotlist or not, according to importance of message): all=all messages (default), message=messages+highlights, highlight=highlights only, none=never display in hotlist",
+    "string_values": [
+        "none",
+        "highlight",
+        "message",
+        "all"
+    ]
+}
+----
+
+Exemple de requête : obtenir une option de type booléen :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/weechat.look.day_change'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "weechat.look.day_change",
+    "type": "boolean",
+    "value": true,
+    "default_value": true,
+    "description": "display special message when day changes"
+}
+----
+
+Exemple de requête : obtenir une option inconnue :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/options/xxx.yyy.zzz'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 404 Not Found
+----
+
+[source,json]
+----
+{
+    "error": "Option \"xxx.yyy.zzz\" not found"
+}
+----
+
 [[resource_input]]
 === Entrée
 

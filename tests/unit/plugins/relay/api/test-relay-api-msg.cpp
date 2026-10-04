@@ -740,3 +740,136 @@ TEST(RelayApiMsg, ScriptToJson)
               "/script unload -q weechat_testapi.py");
     run_cmd (str_command);
 }
+
+/*
+ * Test functions:
+ *   relay_api_msg_option_value_to_json
+ *   relay_api_msg_option_to_json
+ */
+
+TEST(RelayApiMsg, OptionToJson)
+{
+    struct t_config_file *config;
+    struct t_config_section *section;
+    struct t_config_option *opt_bool, *opt_int, *opt_str, *opt_color;
+    struct t_config_option *opt_enum, *opt_null;
+    struct t_relay_json *json, *json_obj, *json_values;
+
+    config = config_file_new (NULL, "testoptjson", NULL, NULL, NULL);
+    CHECK(config);
+    section = config_file_new_section (config, "sec", 0, 0,
+                                       NULL, NULL, NULL,
+                                       NULL, NULL, NULL,
+                                       NULL, NULL, NULL,
+                                       NULL, NULL, NULL,
+                                       NULL, NULL, NULL);
+    CHECK(section);
+    opt_bool = config_file_new_option (
+        config, section, "opt_bool", "boolean", "boolean option",
+        NULL, 0, 0, "on", "off", 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(opt_bool);
+    opt_int = config_file_new_option (
+        config, section, "opt_int", "integer", "integer option",
+        NULL, 0, 100, "10", "42", 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(opt_int);
+    opt_str = config_file_new_option (
+        config, section, "opt_str", "string", "string option",
+        NULL, 0, 0, "abc", "def", 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(opt_str);
+    opt_color = config_file_new_option (
+        config, section, "opt_color", "color", "color option",
+        NULL, 0, 0, "red", "blue", 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(opt_color);
+    opt_enum = config_file_new_option (
+        config, section, "opt_enum", "enum", "enum option",
+        "v1|v2|v3", 0, 0, "v2", "v3", 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(opt_enum);
+    opt_null = config_file_new_option (
+        config, section, "opt_null", "string", "null option",
+        NULL, 0, 0, NULL, NULL, 1,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(opt_null);
+
+    /* No option */
+    json = relay_api_msg_option_to_json (NULL);
+    CHECK(json);
+    CHECK(relay_json_is_object (json));
+    POINTERS_EQUAL(NULL, relay_json_object_get (json, "name"));
+    relay_json_free (json);
+
+    /* Boolean */
+    json = relay_api_msg_option_to_json (opt_bool);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("testoptjson.sec.opt_bool", json, "name");
+    WEE_CHECK_OBJ_STR("boolean", json, "type");
+    WEE_CHECK_OBJ_BOOL(0, json, "value");
+    WEE_CHECK_OBJ_BOOL(1, json, "default_value");
+    WEE_CHECK_OBJ_STR("boolean option", json, "description");
+    POINTERS_EQUAL(NULL, relay_json_object_get (json, "min"));
+    POINTERS_EQUAL(NULL, relay_json_object_get (json, "string_values"));
+    relay_json_free (json);
+
+    /* Integer */
+    json = relay_api_msg_option_to_json (opt_int);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("testoptjson.sec.opt_int", json, "name");
+    WEE_CHECK_OBJ_STR("integer", json, "type");
+    WEE_CHECK_OBJ_NUM(42, json, "value");
+    WEE_CHECK_OBJ_NUM(10, json, "default_value");
+    WEE_CHECK_OBJ_NUM(0, json, "min");
+    WEE_CHECK_OBJ_NUM(100, json, "max");
+    POINTERS_EQUAL(NULL, relay_json_object_get (json, "string_values"));
+    relay_json_free (json);
+
+    /* String */
+    json = relay_api_msg_option_to_json (opt_str);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("string", json, "type");
+    WEE_CHECK_OBJ_STR("def", json, "value");
+    WEE_CHECK_OBJ_STR("abc", json, "default_value");
+    POINTERS_EQUAL(NULL, relay_json_object_get (json, "min"));
+    relay_json_free (json);
+
+    /* Color */
+    json = relay_api_msg_option_to_json (opt_color);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("color", json, "type");
+    WEE_CHECK_OBJ_STR("blue", json, "value");
+    WEE_CHECK_OBJ_STR("red", json, "default_value");
+    relay_json_free (json);
+
+    /* Enum */
+    json = relay_api_msg_option_to_json (opt_enum);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("enum", json, "type");
+    WEE_CHECK_OBJ_STR("v3", json, "value");
+    WEE_CHECK_OBJ_STR("v2", json, "default_value");
+    json_values = relay_json_object_get (json, "string_values");
+    CHECK(json_values);
+    CHECK(relay_json_is_array (json_values));
+    LONGS_EQUAL(3, relay_json_array_size (json_values));
+    STRCMP_EQUAL("v1", relay_json_get_string (relay_json_array_get (json_values, 0)));
+    STRCMP_EQUAL("v2", relay_json_get_string (relay_json_array_get (json_values, 1)));
+    STRCMP_EQUAL("v3", relay_json_get_string (relay_json_array_get (json_values, 2)));
+    POINTERS_EQUAL(NULL, relay_json_object_get (json, "min"));
+    relay_json_free (json);
+
+    /* Null value and default value */
+    json = relay_api_msg_option_to_json (opt_null);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("string", json, "type");
+    json_obj = relay_json_object_get (json, "value");
+    CHECK(json_obj);
+    CHECK(relay_json_is_null (json_obj));
+    json_obj = relay_json_object_get (json, "default_value");
+    CHECK(json_obj);
+    CHECK(relay_json_is_null (json_obj));
+    relay_json_free (json);
+
+    config_file_free (config);
+}

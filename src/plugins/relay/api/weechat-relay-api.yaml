@@ -33,6 +33,7 @@ tags:
   - name: buffers
   - name: hotlist
   - name: scripts
+  - name: options
   - name: input
   - name: completion
   - name: ping
@@ -596,6 +597,48 @@ paths:
                 $ref: '#/components/schemas/Error'
       security:
         - password: []
+  /options/{option_name}:
+    get:
+      tags:
+        - options
+      description: Get a single configuration option by full name.
+      operationId: getOption
+      parameters:
+        - $ref: '#/components/parameters/totp'
+        - $ref: '#/components/parameters/optionName'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Option'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Option not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - password: []
   /input:
     post:
       tags:
@@ -868,6 +911,15 @@ components:
       description: >-
         Buffer full name
       example: 'irc.libera.#weechat'
+    optionName:
+      name: option_name
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        Option full name: configuration file, section and option, separated by dots
+      example: 'weechat.look.buffer_time_format'
     lineId:
       name: line_id
       in: path
@@ -1417,6 +1469,72 @@ components:
         - description
         - author
         - license
+    Option:
+      type: object
+      properties:
+        name:
+          type: string
+          description: option full name
+          example: 'weechat.look.buffer_time_format'
+        type:
+          type: string
+          enum:
+            - boolean
+            - integer
+            - string
+            - color
+            - enum
+          description: the option type
+          example: string
+        value:
+          type:
+            - boolean
+            - integer
+            - string
+            - 'null'
+          description: |
+            the option value: boolean for type "boolean", integer for type
+            "integer", string for types "string", "color" and "enum";
+            null if the value is null
+          example: '%H:%M:%S'
+        default_value:
+          type:
+            - boolean
+            - integer
+            - string
+            - 'null'
+          description: the option default value (same types as "value")
+          example: '%H:%M:%S'
+        description:
+          type: string
+          description: the option description
+          example: 'time format for each line displayed in buffers'
+        min:
+          type: integer
+          format: int32
+          description: minimum value (only for type "integer")
+          example: 0
+        max:
+          type: integer
+          format: int32
+          description: maximum value (only for type "integer")
+          example: 100
+        string_values:
+          type: array
+          items:
+            type: string
+          description: allowed values (only for type "enum")
+          example:
+            - none
+            - highlight
+            - message
+            - all
+      required:
+        - name
+        - type
+        - value
+        - default_value
+        - description
     Completion:
       type: object
       properties:
