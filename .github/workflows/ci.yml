@@ -121,6 +121,7 @@ jobs:
 
     env:
       POEXAM_VERSION: "0.2.0"
+      RUFF_VERSION: "0.16.10"
 
     strategy:
       matrix:
@@ -137,7 +138,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get --yes --no-install-recommends install ${{ env.CHECK_DEPS_UBUNTU }}
-          pipx install ruff
+          pipx install "ruff==$RUFF_VERSION"
 
       - name: Install poexam
         run: |
@@ -206,6 +207,7 @@ jobs:
     timeout-minutes: 60
     env:
       PHP_INI_SCAN_DIR: /tmp/php-noscan  # Embed PHP loads no add-on extensions (see #2009).
+      SCHEMATHESIS_VERSION: "4.29.2"
 
     steps:
       - uses: actions/checkout@v7
@@ -215,7 +217,7 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
           mkdir -p /tmp/php-noscan
-          pipx install schemathesis
+          pipx install "schemathesis==$SCHEMATHESIS_VERSION"
 
       - name: Build and run tests
         env:
