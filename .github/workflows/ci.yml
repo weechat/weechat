@@ -234,6 +234,7 @@ jobs:
         run: |
           weechat-headless \
             --dir /tmp/weechat-test-api \
+            --run-command '/set fifo.file.path "/tmp/weechat-test-api/weechat_fifo"' \
             --run-command "/set relay.network.password \"${RELAY_PASSWORD}\"" \
             --run-command '/set relay.network.password_hash_iterations 100' \
             --run-command '/set relay.network.max_clients 0' \
@@ -245,7 +246,7 @@ jobs:
             --user "plain:$RELAY_PASSWORD" \
             http://localhost:9000/api/version
           schemathesis run --url http://localhost:9000/api ./src/plugins/relay/api/weechat-relay-api.yaml
-          echo '*/quit' >/tmp/weechat-test-api/weechat_fifo_*
+          echo '*/quit' >/tmp/weechat-test-api/weechat_fifo
 
       - name: Code coverage
         if: ${{ matrix.config.name == 'gcc_coverage' }}
