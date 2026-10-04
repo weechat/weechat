@@ -10,6 +10,10 @@ on:
   schedule:
     - cron: '22 9 * * 2'
 
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
