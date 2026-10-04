@@ -127,6 +127,7 @@ jobs:
           - ubuntu-26.04
 
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@v7
@@ -201,6 +202,7 @@ jobs:
 
     name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     env:
       PHP_INI_SCAN_DIR: /tmp/php-noscan  # Embed PHP loads no add-on extensions (see #2009).
 
@@ -286,6 +288,7 @@ jobs:
 
     name: "install (fedora:43, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     container:
       image: fedora:43
 
@@ -331,6 +334,7 @@ jobs:
 
     name: "install (rockylinux:9, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     container:
       image: rockylinux:9
 
@@ -381,6 +385,7 @@ jobs:
 
     name: "install (freebsd, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@v7
@@ -425,6 +430,7 @@ jobs:
 
     name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
 
     steps:
       - name: Setup Homebrew
@@ -466,6 +472,7 @@ jobs:
           - ubuntu-26.04
 
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@v7
@@ -502,6 +509,7 @@ jobs:
           - ubuntu-26.04
 
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
 
     permissions:
       actions: read
