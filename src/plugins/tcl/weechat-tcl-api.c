@@ -4078,7 +4078,7 @@ API_FUNC(buffer_match_list)
 API_FUNC(line_search_by_id)
 {
     char *buffer;
-    long long id;
+    Tcl_WideInt id;
     const char *result;
 
     API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
@@ -4089,7 +4089,7 @@ API_FUNC(line_search_by_id)
     if (Tcl_GetWideIntFromObj (interp, objv[2], &id) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(buffer), id));
+    result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(buffer), (long long)id));
 
     API_RETURN_STRING(result);
 }
@@ -5010,7 +5010,7 @@ API_FUNC(infolist_new_var_long)
 API_FUNC(infolist_new_var_longlong)
 {
     const char *result;
-    long long value;
+    Tcl_WideInt value;
 
     API_INIT_FUNC(1, "infolist_new_var_longlong", API_RETURN_EMPTY);
     if (objc < 4)
@@ -5021,7 +5021,7 @@ API_FUNC(infolist_new_var_longlong)
 
     result = API_PTR2STR(weechat_infolist_new_var_longlong (API_STR2PTR(Tcl_GetString (objv[1])), /* item */
                                                             Tcl_GetString (objv[2]), /* name */
-                                                            value));
+                                                            (long long)value));
 
     API_RETURN_STRING(result);
 }
