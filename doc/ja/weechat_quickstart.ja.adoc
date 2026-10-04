@@ -109,7 +109,7 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 IRC サーバを追加するには `/server` コマンドを使ってください、例:
 
 ----
-/server add libera irc.libera.chat/6697 -tls
+/server add libera irc.libera.chat
 ----
 
 このコマンドにおいて、`libera` は WeeChat が使う内部サーバ名です:

@@ -108,7 +108,7 @@ na liście "irc" oraz inne wtyczki.
 Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
 
 ----
-/server add libera irc.libera.chat/6697 -tls
+/server add libera irc.libera.chat
 ----
 
 W tej komendzie `libera` to nazwa wewnętrzna używana przez WeeChat:
