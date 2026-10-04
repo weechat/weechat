@@ -143,7 +143,7 @@ TEST(PluginApiInfo, AbsolutePath)
     STRCMP_EQUAL(NULL, plugin_api_info_absolute_path (""));
     STRCMP_EQUAL(NULL, plugin_api_info_absolute_path ("/invalid/dir"));
 
-    WEE_TEST_STR("/", plugin_api_info_absolute_path ("/tmp/.."));
+    WEE_TEST_STR("/", plugin_api_info_absolute_path ("/usr/.."));
 }
 
 /*
