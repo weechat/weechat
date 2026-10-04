@@ -17,6 +17,7 @@ extern "C"
 #include <limits.h>
 #include <string.h>
 #include "src/core/core-config-file.h"
+#include "src/core/core-hook.h"
 #include "src/core/core-string.h"
 #include "src/core/core-util.h"
 #include "src/core/core-version.h"
@@ -1004,6 +1005,55 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
     LONGS_EQUAL(RELAY_API_COLORS_STRIP, RELAY_API_DATA(ptr_relay_client, sync_colors));
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_signal_day_changed_cb
+ */
+
+TEST(RelayApiProtocolWithClient, SignalDayChangedCb)
+{
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    /* No event sent if the client is not synchronized. */
+    free_data_sent ();
+    (void) hook_signal_send ("day_changed",
+                             WEECHAT_HOOK_SIGNAL_STRING, (void *)"2026-10-05");
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+
+    /* Event sent to the client synchronized. */
+    free_data_sent ();
+    (void) hook_signal_send ("day_changed",
+                             WEECHAT_HOOK_SIGNAL_STRING, (void *)"2026-10-05");
+    STRCMP_EQUAL("{\"code\":0,"
+                 "\"message\":\"Event\","
+                 "\"event_name\":\"day_changed\","
+                 "\"buffer_id\":-1,"
+                 "\"body_type\":null,"
+                 "\"body\":null}",
+                 data_sent[0]);
+
+    /* No event sent after the client is desynchronized. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"sync\": false}}");
+    free_data_sent ();
+    (void) hook_signal_send ("day_changed",
+                             WEECHAT_HOOK_SIGNAL_STRING, (void *)"2026-10-05");
+    POINTERS_EQUAL(NULL, data_sent[0]);
 }
 
 /*

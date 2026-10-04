@@ -42,6 +42,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: allow multiple nicks separated by commas in command `/notify del`
 - **breaking:** relay: remove "date_printed" and "date_usec_printed" of lines in weechat protocol
 - **breaking:** relay: change type of line identifier from "int" to "lon" in weechat protocol
+- relay/api: send event "day_changed" to clients
 - relay/api: send event "buffer_day_change_changed" to clients
 - relay/api: add field "day_change" in buffers
 - relay/api: add field "notify" in buffers, send event "buffer_notify_changed" to clients

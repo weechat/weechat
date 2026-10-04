@@ -110,6 +110,13 @@ relay_api_hook_signals (struct t_relay_client *client)
                                  &relay_api_protocol_signal_upgrade_cb,
                                  client, NULL);
     }
+    if (!RELAY_API_DATA(client, hook_signal_day_changed))
+    {
+        RELAY_API_DATA(client, hook_signal_day_changed) =
+            weechat_hook_signal ("day_changed",
+                                 &relay_api_protocol_signal_day_changed_cb,
+                                 client, NULL);
+    }
 }
 
 /*
@@ -138,6 +145,11 @@ relay_api_unhook_signals (struct t_relay_client *client)
     {
         weechat_unhook (RELAY_API_DATA(client, hook_signal_upgrade));
         RELAY_API_DATA(client, hook_signal_upgrade) = NULL;
+    }
+    if (RELAY_API_DATA(client, hook_signal_day_changed))
+    {
+        weechat_unhook (RELAY_API_DATA(client, hook_signal_day_changed));
+        RELAY_API_DATA(client, hook_signal_day_changed) = NULL;
     }
 }
 
@@ -193,6 +205,7 @@ relay_api_alloc (struct t_relay_client *client)
     RELAY_API_DATA(client, hook_hsignal_nicklist) = NULL;
     RELAY_API_DATA(client, hook_signal_input) = NULL;
     RELAY_API_DATA(client, hook_signal_upgrade) = NULL;
+    RELAY_API_DATA(client, hook_signal_day_changed) = NULL;
     RELAY_API_DATA(client, buffers_closing) = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_POINTER,
@@ -223,6 +236,7 @@ relay_api_alloc_with_infolist (struct t_relay_client *client,
     RELAY_API_DATA(client, hook_hsignal_nicklist) = NULL;
     RELAY_API_DATA(client, hook_signal_input) = NULL;
     RELAY_API_DATA(client, hook_signal_upgrade) = NULL;
+    RELAY_API_DATA(client, hook_signal_day_changed) = NULL;
     RELAY_API_DATA(client, buffers_closing) = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_POINTER,
@@ -275,6 +289,7 @@ relay_api_free (struct t_relay_client *client)
         weechat_unhook (RELAY_API_DATA(client, hook_hsignal_nicklist));
         weechat_unhook (RELAY_API_DATA(client, hook_signal_input));
         weechat_unhook (RELAY_API_DATA(client, hook_signal_upgrade));
+        weechat_unhook (RELAY_API_DATA(client, hook_signal_day_changed));
         weechat_hashtable_free (RELAY_API_DATA(client, buffers_closing));
 
         free (client->protocol_data);
@@ -314,6 +329,8 @@ relay_api_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!weechat_infolist_new_var_pointer (item, "hook_signal_upgrade", RELAY_API_DATA(client, hook_signal_upgrade)))
         return 0;
+    if (!weechat_infolist_new_var_pointer (item, "hook_signal_day_changed", RELAY_API_DATA(client, hook_signal_day_changed)))
+        return 0;
     if (!weechat_infolist_new_var_integer (item, "sync_enabled", RELAY_API_DATA(client, sync_enabled)))
         return 0;
     if (!weechat_infolist_new_var_integer (item, "sync_nicks", RELAY_API_DATA(client, sync_nicks)))
@@ -339,6 +356,7 @@ relay_api_print_log (struct t_relay_client *client)
         weechat_log_printf ("    hook_hsignal_nicklist . : %p", RELAY_API_DATA(client, hook_hsignal_nicklist));
         weechat_log_printf ("    hook_signal_input . . . : %p", RELAY_API_DATA(client, hook_signal_input));
         weechat_log_printf ("    hook_signal_upgrade . . : %p", RELAY_API_DATA(client, hook_signal_upgrade));
+        weechat_log_printf ("    hook_signal_day_changed : %p", RELAY_API_DATA(client, hook_signal_day_changed));
         weechat_log_printf ("    buffers_closing. . . . .: %p (hashtable: '%s')",
                             RELAY_API_DATA(client, buffers_closing),
                             weechat_hashtable_get_string (

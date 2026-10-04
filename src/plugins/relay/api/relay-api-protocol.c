@@ -359,6 +359,32 @@ relay_api_protocol_signal_upgrade_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for signal "day_changed".
+ */
+
+int
+relay_api_protocol_signal_day_changed_cb (const void *pointer, void *data,
+                                          const char *signal,
+                                          const char *type_data,
+                                          void *signal_data)
+{
+    struct t_relay_client *ptr_client;
+
+    /* Make C compiler happy. */
+    (void) data;
+    (void) type_data;
+    (void) signal_data;
+
+    ptr_client = (struct t_relay_client *)pointer;
+    if (!ptr_client || !relay_client_valid (ptr_client))
+        return WEECHAT_RC_OK;
+
+    relay_api_msg_send_event (ptr_client, signal, -1, NULL, NULL);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the OPTIONS preflight request.
  *
  * Routes:

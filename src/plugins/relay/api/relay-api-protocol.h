@@ -53,6 +53,11 @@ extern int relay_api_protocol_signal_upgrade_cb (const void *pointer,
                                                  const char *signal,
                                                  const char *type_data,
                                                  void *signal_data);
+extern int relay_api_protocol_signal_day_changed_cb (const void *pointer,
+                                                     void *data,
+                                                     const char *signal,
+                                                     const char *type_data,
+                                                     void *signal_data);
 extern void relay_api_protocol_recv_json (struct t_relay_client *client,
                                           const char *json);
 extern void relay_api_protocol_recv_http (struct t_relay_client *client);

@@ -1759,6 +1759,7 @@ WeeChat гура податке клијенту у било које време
 | `nicklist_nick_added`                 | buffer id | `nick`        | надимак
 | `nicklist_nick_removing`              | buffer id | `nick`        | надимак
 | `nicklist_nick_changed`               | buffer id | `nick`        | надимак
+| `day_changed`                         | -1        | null          | null
 | `upgrade` ^(1)^                       | -1        | null          | null
 | `upgrade_ended` ^(1)^                 | -1        | null          | null
 | `quit`                                | -1        | null          | null
@@ -1879,6 +1880,21 @@ WeeChat гура податке клијенту у било које време
     "message": "Event",
     "event_name": "buffer_closed",
     "buffer_id": 1709932823649069,
+    "body_type": null,
+    "body": null
+}
+----
+
+// TRANSLATION MISSING
+Example: the day has changed:
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "day_changed",
+    "buffer_id": -1,
     "body_type": null,
     "body": null
 }
