@@ -16,6 +16,8 @@ First, some basic things:
 - If you can, please check if the problem has been fixed in the development version
   (if you are using a stable release or old version).
 - Report only one bug or feature request per issue.
+- If you use AI tools to help you write your report, please read the
+  [AI policy](#ai-policy) first.
 
 ### Security reports
 
@@ -88,6 +90,35 @@ Before submitting any pull request, be sure you have read the
 [coding rules](https://weechat.org/doc/weechat/dev/#coding_rules)
 in the Developer's guide, which contains info about styles used, naming convention
 and other useful info.
+
+## AI policy
+
+Using AI tools to contribute is allowed, under the following conditions:
+
+- You **must** review the AI-generated content yourself before submitting the
+  pull request.
+- You **must** fully understand everything you submit: you are responsible
+  for it, and you must be able to explain and defend it during the review.
+- You **must** ensure that the contribution meets WeeChat's usual standards
+  for correctness, quality, security, and maintainability.
+- Commit messages **must** be short and focused on what changed and why,
+  without paraphrasing the code or listing every detail of the diff.
+
+Mentioning in the pull request that AI was used, and for which parts, is
+appreciated but not mandatory.
+
+The following is forbidden:
+
+- AI tools **must not** be listed as co-authors in git commits
+  (for example with a `Co-Authored-By` trailer).
+- AI tools **must not** be used to review a pull request, nor to answer
+  comments made by reviewers (except to translate or fix the grammar of your
+  own answers): the review is done between humans only.
+
+AI tools can also assist you in reporting issues (including security issues),
+but you **must** understand everything in your report: do not let AI write it
+without checking it yourself (for example that the problem can actually be
+reproduced).
 
 ## Semantic versioning
 

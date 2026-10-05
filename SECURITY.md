@@ -34,6 +34,9 @@ The same process applies to vulnerabilities found in the development version
 Vulnerabilities in scripts must be reported privately to the script author,
 not here.
 
+If you use AI tools to help you write your report, please read the
+[AI policy](CONTRIBUTING.md#ai-policy) first.
+
 We will investigate all legitimate reports and do our best to quickly fix the
 problem.
 
