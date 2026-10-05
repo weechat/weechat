@@ -1325,7 +1325,7 @@ Where _component_ is one of following:
 | Relay protocols
 
 | doc/dev
-| doc/xx/weechat_dev.en.adoc
+| doc/xx/weechat_dev.xx.adoc
 | Developer's guide
 
 | irc +

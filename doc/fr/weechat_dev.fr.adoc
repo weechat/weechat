@@ -1344,7 +1344,7 @@ Où _composant_ est :
 | Protocoles relay
 
 | doc/dev
-| doc/xx/weechat_dev.en.adoc
+| doc/xx/weechat_dev.xx.adoc
 | Guide du développeur
 
 | irc +
