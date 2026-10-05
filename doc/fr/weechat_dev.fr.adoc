@@ -1277,6 +1277,7 @@ Où _composant_ est :
   icons/* +
   po/* +
   README.md +
+  SECURITY.md +
   UPGRADING.md +
   src/core/* +
   src/gui/* +
