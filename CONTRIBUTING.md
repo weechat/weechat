@@ -107,13 +107,13 @@ Using AI tools to contribute is allowed, under the following conditions:
 Mentioning in the pull request that AI was used, and for which parts, is
 appreciated but not mandatory.
 
-The following is forbidden:
+The following is **forbidden**:
 
-- AI tools **must not** be listed as co-authors in git commits
-  (for example with a `Co-Authored-By` trailer).
-- AI tools **must not** be used to review a pull request, nor to answer
-  comments made by reviewers (except to translate or fix the grammar of your
-  own answers): the review is done between humans only.
+- Listing AI tools as co-authors in git commits (for example with a
+  `Co-Authored-By` trailer).
+- Using AI tools to review a pull request, or to answer comments made by
+  reviewers (except to translate or fix the grammar of your own answers):
+  the review is done between humans only.
 
 AI tools can also assist you in reporting issues (including security issues),
 but you **must** understand everything in your report: do not let AI write it
