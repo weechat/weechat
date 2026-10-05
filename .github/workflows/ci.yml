@@ -415,6 +415,12 @@ jobs:
       - name: Install dependencies
         run: |
           brew update
+          # The runner image has an "openssl" symlink to openssl@1.1 that brew
+          # does not manage, which breaks the link of openssl@3 when upgraded.
+          openssl_link="$(brew --prefix)/bin/openssl"
+          case "$(readlink "${openssl_link}")" in
+            *openssl@1.1*) rm -f "${openssl_link}" ;;
+          esac
           brew install ${{ env.WEECHAT_DEPS_MACOS }}
 
       # On macOS, "gcc" is Apple clang: use the versioned binaries from Homebrew.
