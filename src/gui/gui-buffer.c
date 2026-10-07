@@ -1235,21 +1235,12 @@ gui_buffer_user_set_callbacks (void)
 int
 gui_buffer_valid (struct t_gui_buffer *buffer)
 {
-    struct t_gui_buffer *ptr_buffer;
-
     /* NULL buffer is valid (it's for printing on first buffer) */
     if (!buffer)
         return 1;
 
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer == buffer)
-            return 1;
-    }
-
-    /* Buffer not found */
-    return 0;
+    return (gui_buffer_pointers
+            && hashtable_has_key (gui_buffer_pointers, buffer)) ? 1 : 0;
 }
 
 /*

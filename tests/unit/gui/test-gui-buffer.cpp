@@ -787,6 +787,10 @@ TEST(GuiBuffer, Valid)
     LONGS_EQUAL(1, gui_buffer_valid (buffer));
 
     gui_buffer_close (buffer);
+
+    /* Closed buffer is not valid any more. */
+    LONGS_EQUAL(0, gui_buffer_valid (buffer));
+    LONGS_EQUAL(1, gui_buffer_valid (gui_buffers));
 }
 
 /*

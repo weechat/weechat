@@ -26,6 +26,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: use a hashtable to check buffer pointers faster
 - core: improve hash of pointer keys in hashtables to spread aligned pointers over all buckets
 - **breaking:** core, relay: remove dependency on cJSON and CMake option ENABLE_CJSON, the relay "api" protocol is now always available
 - core: save secured data in sec.conf and display them on secured data buffer sorted by name
