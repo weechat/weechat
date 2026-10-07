@@ -274,6 +274,7 @@ extern int gui_buffers_visited_count;
 extern int gui_buffers_visited_frozen;
 extern struct t_gui_buffer *gui_buffer_last_displayed;
 extern struct t_hashtable *gui_buffer_by_id;
+extern struct t_hashtable *gui_buffer_pointers;
 extern long long gui_buffer_last_id_assigned;
 extern char *gui_buffer_reserved_names[];
 extern char *gui_buffer_type_string[];

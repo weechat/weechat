@@ -657,6 +657,8 @@ TEST(GuiBuffer, New)
                              &test_buffer_input_cb, NULL, NULL,
                              &test_buffer_close_cb, NULL, NULL);
     CHECK(buffer);
+    LONGS_EQUAL(1, hashtable_has_key (gui_buffer_pointers, gui_buffers));
+    LONGS_EQUAL(1, hashtable_has_key (gui_buffer_pointers, buffer));
     POINTERS_EQUAL(NULL, buffer->plugin);
     STRCMP_EQUAL(NULL, buffer->plugin_name_for_upgrade);
     LONGS_EQUAL(2, buffer->number);
@@ -667,6 +669,8 @@ TEST(GuiBuffer, New)
     STRCMP_EQUAL(NULL, buffer->old_full_name);
     STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->short_name);
     gui_buffer_close (buffer);
+    LONGS_EQUAL(0, hashtable_has_key (gui_buffer_pointers, buffer));
+    LONGS_EQUAL(1, hashtable_has_key (gui_buffer_pointers, gui_buffers));
 }
 
 /*

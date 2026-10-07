@@ -65,6 +65,7 @@ int gui_buffers_visited_frozen = 0;             /* 1 to forbid list updates */
 struct t_gui_buffer *gui_buffer_last_displayed = NULL; /* last b. displayed */
 
 struct t_hashtable *gui_buffer_by_id = NULL;    /* buffers by id            */
+struct t_hashtable *gui_buffer_pointers = NULL; /* buffer pointers (keys)   */
 long long gui_buffer_last_id_assigned = -1;     /* last id assigned         */
 
 char *gui_buffer_reserved_names[] =
@@ -849,6 +850,16 @@ gui_buffer_new_props_with_id (long long id,
             NULL, NULL);
     }
     hashtable_set (gui_buffer_by_id, &id, new_buffer);
+
+    if (!gui_buffer_pointers)
+    {
+        gui_buffer_pointers = hashtable_new (
+            64,
+            WEECHAT_HASHTABLE_POINTER,
+            WEECHAT_HASHTABLE_POINTER,
+            NULL, NULL);
+    }
+    hashtable_set (gui_buffer_pointers, new_buffer, NULL);
 
     /* Initialize buffer. */
     new_buffer->id = id;
@@ -3994,6 +4005,12 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     {
         hashtable_free (gui_buffer_by_id);
         gui_buffer_by_id = NULL;
+    }
+    hashtable_remove (gui_buffer_pointers, buffer);
+    if (gui_buffer_pointers && (gui_buffer_pointers->items_count == 0))
+    {
+        hashtable_free (gui_buffer_pointers);
+        gui_buffer_pointers = NULL;
     }
 
     for (ptr_window = gui_windows; ptr_window;
