@@ -38,6 +38,7 @@
 
 struct t_gui_completion *weechat_completions = NULL;
 struct t_gui_completion *last_weechat_completion = NULL;
+struct t_hashtable *gui_completion_pointers = NULL; /* completion pointers  */
 
 int gui_completion_freeze = 0;         /* 1 to freeze completions (do not   */
                                        /* stop partial completion on key)   */
@@ -133,6 +134,23 @@ gui_completion_init (struct t_gui_completion *completion,
 }
 
 /*
+ * Check if a completion pointer is valid.
+ *
+ * Return:
+ *   1: completion exists
+ *   0: completion does not exist
+ */
+
+int
+gui_completion_valid (struct t_gui_completion *completion)
+{
+    return (completion
+            && gui_completion_pointers
+            && hashtable_has_key (gui_completion_pointers, completion)) ?
+        1 : 0;
+}
+
+/*
  * Create a new completion.
  *
  * Return pointer to completion, NULL if error.
@@ -150,6 +168,16 @@ gui_completion_new (struct t_weechat_plugin *plugin,
     completion = malloc (sizeof (*completion));
     if (!completion)
         return NULL;
+
+    if (!gui_completion_pointers)
+    {
+        gui_completion_pointers = hashtable_new (
+            64,
+            WEECHAT_HASHTABLE_POINTER,
+            WEECHAT_HASHTABLE_POINTER,
+            NULL, NULL);
+    }
+    hashtable_set (gui_completion_pointers, completion, NULL);
 
     gui_completion_init (completion, plugin, buffer);
 
@@ -247,6 +275,12 @@ gui_completion_free (struct t_gui_completion *completion)
     if (completion->next_completion)
         (completion->next_completion)->prev_completion = completion->prev_completion;
     weechat_completions = new_weechat_completions;
+    hashtable_remove (gui_completion_pointers, completion);
+    if (gui_completion_pointers && (gui_completion_pointers->items_count == 0))
+    {
+        hashtable_free (gui_completion_pointers);
+        gui_completion_pointers = NULL;
+    }
 
     /* Free data. */
     gui_completion_free_data (completion);

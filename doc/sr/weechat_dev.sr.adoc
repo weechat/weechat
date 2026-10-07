@@ -496,6 +496,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-gui-buffer.cpp                    | Тестови: бафер функције.
 |          test-gui-chat.cpp                      | Тестови: чет функције.
 |          test-gui-color.cpp                     | Тестови: боје.
+// TRANSLATION MISSING
+|          test-gui-completion.cpp                | Tests: completion functions.
 |          test-gui-filter.cpp                    | Тестови: филтери.
 |          test-gui-hotlist.cpp                   | Тестови: функције врућих листи.
 |          test-gui-input.cpp                     | Тестови: улазне функције.

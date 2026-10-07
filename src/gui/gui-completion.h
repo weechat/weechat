@@ -64,10 +64,12 @@ struct t_gui_completion
 
 /* Completion variables */
 
+extern struct t_hashtable *gui_completion_pointers;
 extern int gui_completion_freeze;
 
 /* Completion functions */
 
+extern int gui_completion_valid (struct t_gui_completion *completion);
 extern struct t_gui_completion *gui_completion_new (struct t_weechat_plugin *plugin,
                                                     struct t_gui_buffer *buffer);
 extern void gui_completion_free (struct t_gui_completion *completion);

@@ -604,6 +604,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          test-gui-color.cpp                     | Tests: colors.
 // TRANSLATION MISSING
+|          test-gui-completion.cpp                | Tests: completion functions.
+// TRANSLATION MISSING
 |          test-gui-filter.cpp                    | Tests: filters.
 // TRANSLATION MISSING
 |          test-gui-hotlist.cpp                   | Tests: hotlist functions.
