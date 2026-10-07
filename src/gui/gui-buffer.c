@@ -3992,7 +3992,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     hashtable_remove (gui_buffer_by_id, &buffer->id);
     if (gui_buffer_by_id->items_count == 0)
     {
-        free (gui_buffer_by_id);
+        hashtable_free (gui_buffer_by_id);
         gui_buffer_by_id = NULL;
     }
 

@@ -58,6 +58,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix memory leak when the last buffer is closed
 - core: add support of extra date/time specifiers like "%@" (UTC date) in option weechat.look.day_change_message_2dates
 - core: add support of extra date/time specifiers like "%@" (UTC date) in option weechat.look.day_change_message_1date
 - core: add support of extra date/time specifiers like "%@" (UTC date) in option weechat.look.item_time_format
