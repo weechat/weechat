@@ -108,6 +108,32 @@ hashtable_hash_key_djb2 (const char *string)
 }
 
 /*
+ * Hash a pointer using the finalizer of MurmurHash3 (64-bit), function
+ * "fmix64" written by Austin Appleby (public domain), see:
+ * https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp
+ *
+ * Pointers returned by malloc are aligned (low bits are always 0), so the
+ * bits are mixed to spread pointers over all the buckets of the hashtable.
+ *
+ * Return the hash of the pointer.
+ */
+
+unsigned long long
+hashtable_hash_key_pointer (const void *pointer)
+{
+    uint64_t hash;
+
+    hash = (uint64_t)((uintptr_t)pointer);
+    hash ^= hash >> 33;
+    hash *= 0xff51afd7ed558ccdULL;
+    hash ^= hash >> 33;
+    hash *= 0xc4ceb9fe1a85ec53ULL;
+    hash ^= hash >> 33;
+
+    return hash;
+}
+
+/*
  * Hash a key (default callback).
  *
  * Return the hash of the key, depending on the type.
@@ -127,7 +153,7 @@ hashtable_hash_key_default_cb (struct t_hashtable *hashtable, const void *key)
                 return hashtable_hash_key_djb2 ((const char *)key);
             break;
         case HASHTABLE_POINTER:
-            return (unsigned long long)((unsigned long)((void *)key));
+            return hashtable_hash_key_pointer (key);
         case HASHTABLE_BUFFER:
             break;
         case HASHTABLE_TIME:

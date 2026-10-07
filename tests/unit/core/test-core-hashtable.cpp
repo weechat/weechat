@@ -65,6 +65,34 @@ TEST(CoreHashtable, HashDbj2)
 }
 
 /*
+ * Test functions:
+ *   hashtable_hash_key_pointer
+ */
+
+TEST(CoreHashtable, HashPointer)
+{
+    char buckets[64];
+    int i, count;
+
+    CHECK(hashtable_hash_key_pointer (NULL) == 0ULL);
+    CHECK(hashtable_hash_key_pointer ((void *)0x12345670)
+          == 13003746006530497512ULL);
+
+    /* Aligned pointers must be spread over the buckets. */
+    memset (buckets, 0, sizeof (buckets));
+    for (i = 0; i < 64; i++)
+    {
+        buckets[hashtable_hash_key_pointer ((void *)(0x10000UL + (16 * i))) % 64] = 1;
+    }
+    count = 0;
+    for (i = 0; i < 64; i++)
+    {
+        count += buckets[i];
+    }
+    CHECK(count >= 32);
+}
+
+/*
  * Test callback hashing a key.
  *
  * It returns the djb2 hash + 1.

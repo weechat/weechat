@@ -141,6 +141,7 @@ struct t_hashtable
 };
 
 extern unsigned long long hashtable_hash_key_djb2 (const char *string);
+extern unsigned long long hashtable_hash_key_pointer (const void *pointer);
 extern struct t_hashtable *hashtable_new (int size,
                                           const char *type_keys,
                                           const char *type_values,
