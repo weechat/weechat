@@ -180,14 +180,52 @@ TEST(GuiBarItem, Update)
 }
 
 /*
+ * Test callback building a bar item: return NULL (empty item).
+ */
+
+char *
+test_bar_item_build_cb (const void *pointer, void *data,
+                        struct t_gui_bar_item *item,
+                        struct t_gui_window *window,
+                        struct t_gui_buffer *buffer,
+                        struct t_hashtable *extra_info)
+{
+    /* Make C++ compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) buffer;
+    (void) extra_info;
+
+    return NULL;
+}
+
+/*
  * Test functions:
  *   gui_bar_item_free
  */
 
 TEST(GuiBarItem, Free)
 {
+    struct t_gui_bar_item *item, item_not_in_list;
+
     /* Test free of NULL bar item. */
     gui_bar_item_free (NULL);
+
+    /* Bar item not in list: it must not be freed. */
+    memset (&item_not_in_list, 0, sizeof (item_not_in_list));
+    gui_bar_item_free (&item_not_in_list);
+
+    item = gui_bar_item_new (NULL, "test_item",
+                             &test_bar_item_build_cb, NULL, NULL);
+    CHECK(item);
+    LONGS_EQUAL(1, gui_bar_item_valid (item));
+    gui_bar_item_free (item);
+    LONGS_EQUAL(0, gui_bar_item_valid (item));
+
+    /* Bar item already freed: it must not be freed again. */
+    gui_bar_item_free (item);
 }
 
 /*

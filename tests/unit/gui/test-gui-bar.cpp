@@ -10,6 +10,8 @@
 
 extern "C"
 {
+#include <string.h>
+#include "src/core/core-config-file.h"
 #include "src/gui/gui-bar.h"
 }
 
@@ -398,7 +400,28 @@ TEST(GuiBar, SetName)
 
 TEST(GuiBar, BarSet)
 {
-    /* TODO: write tests */
+    struct t_gui_bar *bar, bar_not_in_list;
+
+    LONGS_EQUAL(0, gui_bar_set (NULL, NULL, NULL));
+    LONGS_EQUAL(0, gui_bar_set (NULL, "priority", "5"));
+
+    /* Bar not in list: it must not be used. */
+    memset (&bar_not_in_list, 0, sizeof (bar_not_in_list));
+    LONGS_EQUAL(0, gui_bar_set (&bar_not_in_list, "name", "test"));
+
+    bar = gui_bar_new ("test_bar", "0", "0", "window", "", "top",
+                       "horizontal", "vertical", "1", "0",
+                       "default", "cyan", "default", "default",
+                       "off", "time");
+    CHECK(bar);
+    LONGS_EQUAL(0, gui_bar_set (bar, NULL, "5"));
+    LONGS_EQUAL(0, gui_bar_set (bar, "priority", NULL));
+    LONGS_EQUAL(1, gui_bar_set (bar, "priority", "5"));
+    LONGS_EQUAL(5, CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_PRIORITY]));
+    gui_bar_free (bar);
+
+    /* Bar freed: it must not be used. */
+    LONGS_EQUAL(0, gui_bar_set (bar, "priority", "10"));
 }
 
 /*
@@ -558,7 +581,25 @@ TEST(GuiBar, Scroll)
 
 TEST(GuiBar, Free)
 {
-    /* TODO: write tests */
+    struct t_gui_bar *bar, bar_not_in_list;
+
+    gui_bar_free (NULL);
+
+    /* Bar not in list: it must not be freed. */
+    memset (&bar_not_in_list, 0, sizeof (bar_not_in_list));
+    gui_bar_free (&bar_not_in_list);
+
+    bar = gui_bar_new ("test_bar", "0", "0", "window", "", "top",
+                       "horizontal", "vertical", "1", "0",
+                       "default", "cyan", "default", "default",
+                       "off", "time");
+    CHECK(bar);
+    LONGS_EQUAL(1, gui_bar_valid (bar));
+    gui_bar_free (bar);
+    LONGS_EQUAL(0, gui_bar_valid (bar));
+
+    /* Bar already freed: it must not be freed again. */
+    gui_bar_free (bar);
 }
 
 /*

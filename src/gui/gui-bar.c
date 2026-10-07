@@ -1209,7 +1209,7 @@ gui_bar_set_name (struct t_gui_bar *bar, const char *name)
 int
 gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
 {
-    if (!bar || !property || !value)
+    if (!gui_bar_valid (bar) || !property || !value)
         return 0;
 
     if (strcmp (property, "name") == 0)
@@ -2153,7 +2153,7 @@ gui_bar_free (struct t_gui_bar *bar)
 {
     int i;
 
-    if (!bar)
+    if (!gui_bar_valid (bar))
         return;
 
     /* Remove bar window(s). */

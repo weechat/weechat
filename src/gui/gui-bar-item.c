@@ -697,7 +697,7 @@ gui_bar_item_update (const char *item_name)
 void
 gui_bar_item_free (struct t_gui_bar_item *item)
 {
-    if (!item)
+    if (!gui_bar_item_valid (item))
         return;
 
     /* Force refresh of bars displaying this bar item. */

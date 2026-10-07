@@ -32,6 +32,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: save secured data in sec.conf and display them on secured data buffer sorted by name
 - **breaking:** core: use the current date/time with microseconds as line identifier, replace buffer property "next_line_id" by "lines_last_id_assigned"
 - **breaking:** core: remove fields "date_printed" and "date_usec_printed" in lines, replaced by the line identifier
+- api: check bar and bar item pointers in functions bar_set, bar_remove and bar_item_remove to prevent a crash when a removed bar or bar item is used
 - api: check window pointer in functions window_get_integer and window_get_pointer to prevent a crash when a closed window is used
 - api: check buffer pointer in buffer, nicklist, line and completion functions to prevent a crash when a closed buffer is used
 - **breaking:** api: change type of parameter "id" from int to long long in function line_search_by_id
