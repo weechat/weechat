@@ -803,7 +803,7 @@ gui_window_search_with_buffer (struct t_gui_buffer *buffer)
 int
 gui_window_get_integer (struct t_gui_window *window, const char *property)
 {
-    if (!window || !property)
+    if (!window || !gui_window_valid (window) || !property)
         return 0;
 
     if (strcmp (property, "number") == 0)
@@ -864,7 +864,7 @@ gui_window_get_pointer (struct t_gui_window *window, const char *property)
     if (strcmp (property, "current") == 0)
         return gui_current_window;
 
-    if (window)
+    if (window && gui_window_valid (window))
     {
         if (strcmp (property, "buffer") == 0)
             return window->buffer;

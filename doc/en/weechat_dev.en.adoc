@@ -503,6 +503,7 @@ WeeChat "core" is located in following directories:
 |          test-gui-line.cpp                      | Tests: lines.
 |          test-gui-nick.cpp                      | Tests: nicks.
 |          test-gui-nicklist.cpp                  | Tests: nicklist functions.
+|          test-gui-window.cpp                    | Tests: window functions.
 |          curses/                                | Root of unit tests for Curses interface.
 |             test-gui-curses-mouse.cpp           | Tests: mouse (Curses interface).
 |             test-gui-curses-term.cpp            | Tests: terminal functions (Curses interface).

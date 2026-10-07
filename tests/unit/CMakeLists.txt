@@ -98,6 +98,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   gui/test-gui-line.cpp
   gui/test-gui-nick.cpp
   gui/test-gui-nicklist.cpp
+  gui/test-gui-window.cpp
   gui/curses/test-gui-curses-mouse.cpp
   gui/curses/test-gui-curses-term.cpp
   scripts/test-scripts.cpp

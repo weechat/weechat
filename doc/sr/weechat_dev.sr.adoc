@@ -503,6 +503,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-gui-line.cpp                      | Тестови: линије.
 |          test-gui-nick.cpp                      | Тестови: надимци.
 |          test-gui-nicklist.cpp                  | Тестови: функције листе надимака.
+// TRANSLATION MISSING
+|          test-gui-window.cpp                    | Tests: window functions.
 |          curses/                                | Корен unit тестова за Curses интерфејс.
 |             test-gui-curses-mouse.cpp           | Тестови: миш (Curses интерфејс).
 |             test-gui-curses-term.cpp            | Тестови: функције терминала (Curses интерфејс).
