@@ -144,7 +144,7 @@ gui_completion_new (struct t_weechat_plugin *plugin,
 {
     struct t_gui_completion *completion;
 
-    if (!buffer)
+    if (!buffer || !gui_buffer_valid (buffer))
         return NULL;
 
     completion = malloc (sizeof (*completion));

@@ -263,7 +263,8 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
     const char *ptr_name;
     long long id;
 
-    if ((!buffer && !from_group)
+    if (!gui_buffer_valid (buffer)
+        || (!buffer && !from_group)
         || !name
         || (!from_group && !buffer->nicklist_root))
     {
@@ -382,7 +383,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
                         struct t_gui_nick_group *parent_group, const char *name,
                         const char *color, int visible)
 {
-    if (!buffer)
+    if (!buffer || !gui_buffer_valid (buffer))
         return NULL;
 
     return gui_nicklist_add_group_with_id (
@@ -555,7 +556,8 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
 {
     long long id;
 
-    if ((!buffer && !from_group)
+    if (!gui_buffer_valid (buffer)
+        || (!buffer && !from_group)
         || !name
         || (!from_group && !buffer->nicklist_root))
     {
@@ -636,7 +638,7 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
                        const char *prefix, const char *prefix_color,
                        int visible)
 {
-    if (!buffer)
+    if (!buffer || !gui_buffer_valid (buffer))
         return NULL;
 
     return gui_nicklist_add_nick_with_id (
@@ -660,7 +662,7 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
 {
     char *nick_removed;
 
-    if (!buffer || !nick)
+    if (!buffer || !gui_buffer_valid (buffer) || !nick)
         return;
 
     nick_removed = (nick->name) ? strdup (nick->name) : NULL;
@@ -715,7 +717,7 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
 {
     char *group_removed;
 
-    if (!buffer || !group)
+    if (!buffer || !gui_buffer_valid (buffer) || !group)
         return;
 
     group_removed = (group->name) ? strdup (group->name) : NULL;
@@ -781,7 +783,7 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
 void
 gui_nicklist_remove_all (struct t_gui_buffer *buffer)
 {
-    if (buffer && buffer->nicklist_root)
+    if (buffer && gui_buffer_valid (buffer) && buffer->nicklist_root)
     {
         /* Remove children of root group. */
         while (buffer->nicklist_root->children)
@@ -808,7 +810,7 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
 {
     struct t_gui_nick_group *ptr_group;
 
-    if (!buffer)
+    if (!buffer || !gui_buffer_valid (buffer))
         return;
 
     /* Root group */
@@ -950,10 +952,7 @@ gui_nicklist_group_get_integer (struct t_gui_buffer *buffer,
                                 struct t_gui_nick_group *group,
                                 const char *property)
 {
-    /* Make C compiler happy. */
-    (void) buffer;
-
-    if (!group || !property)
+    if (!gui_buffer_valid (buffer) || !group || !property)
         return 0;
 
     if (strcmp (property, "visible") == 0)
@@ -973,10 +972,7 @@ gui_nicklist_group_get_string (struct t_gui_buffer *buffer,
                                struct t_gui_nick_group *group,
                                const char *property)
 {
-    /* Make C compiler happy. */
-    (void) buffer;
-
-    if (!group || !property)
+    if (!gui_buffer_valid (buffer) || !group || !property)
         return NULL;
 
     if (strcmp (property, "name") == 0)
@@ -996,10 +992,7 @@ gui_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
                                 struct t_gui_nick_group *group,
                                 const char *property)
 {
-    /* Make C compiler happy. */
-    (void) buffer;
-
-    if (!group || !property)
+    if (!gui_buffer_valid (buffer) || !group || !property)
         return NULL;
 
     if (strcmp (property, "parent") == 0)
@@ -1020,7 +1013,7 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
     long long id;
     int group_changed, number;
 
-    if (!buffer || !group || !property || !value)
+    if (!buffer || !gui_buffer_valid (buffer) || !group || !property || !value)
         return;
 
     group_changed = 0;
@@ -1065,10 +1058,7 @@ gui_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
                                struct t_gui_nick *nick,
                                const char *property)
 {
-    /* Make C compiler happy. */
-    (void) buffer;
-
-    if (!nick || !property)
+    if (!gui_buffer_valid (buffer) || !nick || !property)
         return 0;
 
     if (strcmp (property, "visible") == 0)
@@ -1086,10 +1076,7 @@ gui_nicklist_nick_get_string (struct t_gui_buffer *buffer,
                               struct t_gui_nick *nick,
                               const char *property)
 {
-    /* Make C compiler happy. */
-    (void) buffer;
-
-    if (!nick || !property)
+    if (!gui_buffer_valid (buffer) || !nick || !property)
         return NULL;
 
     if (strcmp (property, "name") == 0)
@@ -1113,10 +1100,7 @@ gui_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
                                struct t_gui_nick *nick,
                                const char *property)
 {
-    /* Make C compiler happy. */
-    (void) buffer;
-
-    if (!nick || !property)
+    if (!gui_buffer_valid (buffer) || !nick || !property)
         return NULL;
 
     if (strcmp (property, "group") == 0)
@@ -1137,7 +1121,7 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
     long long id;
     int nick_changed, number;
 
-    if (!buffer || !nick || !property || !value)
+    if (!buffer || !gui_buffer_valid (buffer) || !nick || !property || !value)
         return;
 
     nick_changed = 0;

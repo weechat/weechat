@@ -915,6 +915,71 @@ TEST(GuiNicklist, AddToInfolist)
 }
 
 /*
+ * Test functions with a closed buffer:
+ *   gui_nicklist_add_group
+ *   gui_nicklist_search_group
+ *   gui_nicklist_add_nick
+ *   gui_nicklist_search_nick
+ *   gui_nicklist_remove_group
+ *   gui_nicklist_remove_nick
+ *   gui_nicklist_remove_all
+ *   gui_nicklist_get_next_item
+ *   gui_nicklist_group_get_integer
+ *   gui_nicklist_group_get_string
+ *   gui_nicklist_group_get_pointer
+ *   gui_nicklist_group_set
+ *   gui_nicklist_nick_get_integer
+ *   gui_nicklist_nick_get_string
+ *   gui_nicklist_nick_get_pointer
+ *   gui_nicklist_nick_set
+ */
+
+TEST(GuiNicklist, ClosedBuffer)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group, *ptr_group;
+    struct t_gui_nick *nick, *ptr_nick;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+    group = gui_nicklist_add_group (buffer, NULL, "group", NULL, 1);
+    CHECK(group);
+    nick = gui_nicklist_add_nick (buffer, group, "nick", NULL, NULL, NULL, 1);
+    CHECK(nick);
+    gui_buffer_close (buffer);
+
+    /* Buffer, group and nick are freed: functions must not use them. */
+    POINTERS_EQUAL(NULL,
+                   gui_nicklist_add_group (buffer, NULL, "group2", NULL, 1));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, NULL, "group"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group, "group"));
+    POINTERS_EQUAL(NULL,
+                   gui_nicklist_add_nick (buffer, NULL, "nick2",
+                                          NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, NULL, "nick"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group, "nick"));
+    gui_nicklist_remove_nick (buffer, nick);
+    gui_nicklist_remove_group (buffer, group);
+    gui_nicklist_remove_all (buffer);
+    ptr_group = NULL;
+    ptr_nick = NULL;
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(NULL, ptr_group);
+    POINTERS_EQUAL(NULL, ptr_nick);
+    LONGS_EQUAL(0, gui_nicklist_group_get_integer (buffer, group, "visible"));
+    STRCMP_EQUAL(NULL, gui_nicklist_group_get_string (buffer, group, "name"));
+    POINTERS_EQUAL(NULL,
+                   gui_nicklist_group_get_pointer (buffer, group, "parent"));
+    gui_nicklist_group_set (buffer, group, "visible", "0");
+    LONGS_EQUAL(0, gui_nicklist_nick_get_integer (buffer, nick, "visible"));
+    STRCMP_EQUAL(NULL, gui_nicklist_nick_get_string (buffer, nick, "name"));
+    POINTERS_EQUAL(NULL, gui_nicklist_nick_get_pointer (buffer, nick, "group"));
+    gui_nicklist_nick_set (buffer, nick, "visible", "0");
+}
+
+/*
  * Test functions:
  *   gui_nicklist_print_log
  */

@@ -1258,7 +1258,7 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
     char *result, *result2, *local_var;
     const char *pos_end_name, *ptr_value;
 
-    if (!buffer || !string)
+    if (!buffer || !gui_buffer_valid (buffer) || !string)
         return NULL;
 
     length = strlen (string) + 1;
@@ -1355,7 +1355,7 @@ gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
     char **buffers;
     int match;
 
-    if (!buffer || !string || !string[0])
+    if (!buffer || !gui_buffer_valid (buffer) || !string || !string[0])
         return 0;
 
     match = 0;
@@ -1433,7 +1433,7 @@ gui_buffer_property_in_list (char *properties[], char *property)
 int
 gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
 {
-    if (!buffer || !property)
+    if (!buffer || !gui_buffer_valid (buffer) || !property)
         return 0;
 
     if (strcmp (property, "opening") == 0)
@@ -1539,7 +1539,7 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
 long long
 gui_buffer_get_longlong (struct t_gui_buffer *buffer, const char *property)
 {
-    if (!buffer || !property)
+    if (!buffer || !gui_buffer_valid (buffer) || !property)
         return 0;
 
     if (strcmp (property, "id") == 0)
@@ -1562,7 +1562,7 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
     const char *ptr_value;
     static char str_value[64];
 
-    if (!buffer || !property)
+    if (!buffer || !gui_buffer_valid (buffer) || !property)
         return NULL;
 
     if (strcmp (property, "id") == 0)
@@ -1630,7 +1630,7 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 void *
 gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
 {
-    if (!buffer || !property)
+    if (!buffer || !gui_buffer_valid (buffer) || !property)
         return NULL;
 
     if (strcmp (property, "plugin") == 0)
@@ -2612,7 +2612,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
 {
     int number;
 
-    if (!property || !value)
+    if (!gui_buffer_valid (buffer) || !property || !value)
         return;
 
     /* Properties with optional buffer */
@@ -2879,7 +2879,7 @@ void
 gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
                         void *pointer)
 {
-    if (!buffer || !property)
+    if (!buffer || !gui_buffer_valid (buffer) || !property)
         return;
 
     if (strcmp (property, "close_callback") == 0)
@@ -3476,7 +3476,7 @@ gui_buffer_count_merged_buffers (int number)
 void
 gui_buffer_clear (struct t_gui_buffer *buffer)
 {
-    if (!buffer)
+    if (!buffer || !gui_buffer_valid (buffer))
         return;
 
     /* Remove all lines. */
@@ -3793,7 +3793,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     int index;
     struct t_gui_buffer_visited *ptr_buffer_visited;
 
-    if (!buffer)
+    if (!buffer || !gui_buffer_valid (buffer) || buffer->closing)
         return;
 
     buffer->closing = 1;
@@ -4581,8 +4581,11 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
     struct t_gui_buffer *ptr_buffer_active;
     struct t_gui_window *ptr_window;
 
-    if (!buffer || !target_buffer)
+    if (!buffer || !target_buffer
+        || !gui_buffer_valid (buffer) || !gui_buffer_valid (target_buffer))
+    {
         return;
+    }
 
     /*
      * Nothing to do if:
@@ -4728,7 +4731,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     int num_merged;
     struct t_gui_buffer *ptr_buffer, *ptr_new_active_buffer;
 
-    if (!buffer)
+    if (!buffer || !gui_buffer_valid (buffer))
         return;
 
     /* Nothing to do if there is only one buffer. */

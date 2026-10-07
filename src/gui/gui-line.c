@@ -610,7 +610,7 @@ gui_line_search_by_id (struct t_gui_buffer *buffer, long long id)
 {
     struct t_gui_line *ptr_line;
 
-    if (!buffer || !buffer->own_lines)
+    if (!buffer || !gui_buffer_valid (buffer) || !buffer->own_lines)
         return NULL;
 
     /* No line in buffer */

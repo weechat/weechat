@@ -794,6 +794,87 @@ TEST(GuiBuffer, Valid)
 }
 
 /*
+ * Test callback for buffer close: close the buffer again.
+ */
+
+int
+test_buffer_close_again_cb (const void *pointer, void *data,
+                            struct t_gui_buffer *buffer)
+{
+    /* Make C++ compiler happy. */
+    (void) pointer;
+    (void) data;
+
+    gui_buffer_close (buffer);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Test functions with a closed buffer:
+ *   gui_buffer_clear
+ *   gui_buffer_close
+ *   gui_buffer_merge
+ *   gui_buffer_unmerge
+ *   gui_buffer_get_integer
+ *   gui_buffer_get_longlong
+ *   gui_buffer_get_string
+ *   gui_buffer_get_pointer
+ *   gui_buffer_set
+ *   gui_buffer_set_pointer
+ *   gui_buffer_string_replace_local_var
+ *   gui_buffer_match_list
+ *   gui_line_search_by_id
+ *   gui_completion_new
+ */
+
+TEST(GuiBuffer, ClosedBuffer)
+{
+    struct t_gui_buffer *buffer;
+    int count;
+
+    /* Close buffer again in its close callback: must not crash. */
+    count = gui_buffers_count;
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             &test_buffer_input_cb, NULL, NULL,
+                             &test_buffer_close_again_cb, NULL, NULL);
+    CHECK(buffer);
+    gui_buffer_close (buffer);
+    LONGS_EQUAL(count, gui_buffers_count);
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             &test_buffer_input_cb, NULL, NULL,
+                             &test_buffer_close_cb, NULL, NULL);
+    CHECK(buffer);
+    gui_buffer_close (buffer);
+    LONGS_EQUAL(count, gui_buffers_count);
+
+    /* The pointer is now invalid: functions must not use it. */
+    gui_buffer_close (buffer);
+    LONGS_EQUAL(count, gui_buffers_count);
+    gui_buffer_clear (buffer);
+    gui_buffer_merge (buffer, gui_buffers);
+    gui_buffer_merge (gui_buffers, buffer);
+    gui_buffer_unmerge (buffer, -1);
+    LONGS_EQUAL(0, gui_buffer_get_integer (buffer, "number"));
+    LONGS_EQUAL(0, gui_buffer_get_longlong (buffer, "id"));
+    STRCMP_EQUAL(NULL, gui_buffer_get_string (buffer, "name"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (buffer, "plugin"));
+    gui_buffer_set (buffer, "title", "test");
+    gui_buffer_set_pointer (buffer, "close_callback", NULL);
+    STRCMP_EQUAL(NULL, gui_buffer_string_replace_local_var (buffer, "$name"));
+    LONGS_EQUAL(0, gui_buffer_match_list (buffer, "*"));
+    POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 0));
+    POINTERS_EQUAL(NULL, gui_completion_new (NULL, buffer));
+
+    /* Properties without buffer still work. */
+    gui_buffer_set (NULL, "hotlist", "-");
+    LONGS_EQUAL(0, gui_add_hotlist);
+    gui_buffer_set (NULL, "hotlist", "+");
+    LONGS_EQUAL(1, gui_add_hotlist);
+}
+
+/*
  * Test functions:
  *   gui_buffer_string_replace_local_var
  */
