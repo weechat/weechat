@@ -259,7 +259,7 @@ gui_completion_free (struct t_gui_completion *completion)
 {
     struct t_gui_completion *new_weechat_completions;
 
-    if (!completion)
+    if (!gui_completion_valid (completion))
         return;
 
     /* Remove completion from global list. */
@@ -527,7 +527,7 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
     char buffer[512];
     int index;
 
-    if (!word || !word[0])
+    if (!gui_completion_valid (completion) || !word || !word[0])
         return;
 
     if (!completion->base_word || !completion->base_word[0]
@@ -1524,7 +1524,7 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
     char *old_word_found;
     int real_position, force_no_partial;
 
-    if (!completion || !data || (position < 0))
+    if (!gui_completion_valid (completion) || !data || (position < 0))
         return 0;
 
     real_position = utf8_real_pos (data, position);
@@ -1656,7 +1656,7 @@ const char *
 gui_completion_get_string (struct t_gui_completion *completion,
                            const char *property)
 {
-    if (!completion || !property)
+    if (!gui_completion_valid (completion) || !property)
         return NULL;
 
     if (strcmp (property, "base_command") == 0)
@@ -1677,7 +1677,7 @@ void
 gui_completion_set (struct t_gui_completion *completion,
                     const char *property, const char *value)
 {
-    if (!completion || !property || !value)
+    if (!gui_completion_valid (completion) || !property || !value)
         return;
 
     if (strcmp (property, "add_space") == 0)
