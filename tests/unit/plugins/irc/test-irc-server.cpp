@@ -15,8 +15,10 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include "src/core/core-config-file.h"
+#include "src/gui/gui-buffer.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-channel.h"
+#include "src/plugins/irc/irc-nick.h"
 #include "src/plugins/irc/irc-server.h"
 
 extern int irc_server_fingerprint_search_algo_with_size (int size);
@@ -642,7 +644,71 @@ TEST(IrcServer, GetIsupportValue)
 
 TEST(IrcServer, SetPrefixModesChars)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *nick;
+
+    irc_server_set_prefix_modes_chars (NULL, NULL);
+    irc_server_set_prefix_modes_chars (NULL, "(ov)@+");
+
+    run_cmd_quiet ("/mute /server add test_prefix fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_prefix");
+
+    server = irc_server_search ("test_prefix");
+    CHECK(server);
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    nick = irc_nick_new (server, channel, "bob", "user@host", "@", 0, NULL, NULL);
+    CHECK(nick);
+
+    STRCMP_EQUAL(NULL, server->prefix_modes);
+    STRCMP_EQUAL(NULL, server->prefix_chars);
+    STRCMP_EQUAL("@ ", nick->prefixes);
+
+    /* Reset with default values already set: no change. */
+    irc_server_set_prefix_modes_chars (server, NULL);
+    STRCMP_EQUAL(NULL, server->prefix_modes);
+    STRCMP_EQUAL(NULL, server->prefix_chars);
+    STRCMP_EQUAL("@ ", nick->prefixes);
+
+    /* More prefix chars: nick prefixes are extended. */
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    STRCMP_EQUAL("qaohv", server->prefix_modes);
+    STRCMP_EQUAL("~&@%+", server->prefix_chars);
+    STRCMP_EQUAL("@    ", nick->prefixes);
+
+    /* Less prefix chars: nick prefixes are truncated. */
+    irc_server_set_prefix_modes_chars (server, "(ov)@+");
+    STRCMP_EQUAL("ov", server->prefix_modes);
+    STRCMP_EQUAL("@+", server->prefix_chars);
+    STRCMP_EQUAL("@ ", nick->prefixes);
+
+    /* Missing prefix chars are replaced by spaces. */
+    irc_server_set_prefix_modes_chars (server, "(ohv)@");
+    STRCMP_EQUAL("ohv", server->prefix_modes);
+    STRCMP_EQUAL("@  ", server->prefix_chars);
+    STRCMP_EQUAL("@  ", nick->prefixes);
+
+    /* No prefix at all. */
+    irc_server_set_prefix_modes_chars (server, "()");
+    STRCMP_EQUAL("", server->prefix_modes);
+    STRCMP_EQUAL("", server->prefix_chars);
+    STRCMP_EQUAL("", nick->prefixes);
+
+    /* Reset: default values are used, nick prefixes are extended. */
+    irc_server_set_prefix_modes_chars (server, NULL);
+    STRCMP_EQUAL(NULL, server->prefix_modes);
+    STRCMP_EQUAL(NULL, server->prefix_chars);
+    STRCMP_EQUAL("  ", nick->prefixes);
+
+    irc_nick_free (server, channel, nick);
+    if (channel->buffer)
+        gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_prefix");
+    run_cmd_quiet ("/mute /server del test_prefix");
 }
 
 /*

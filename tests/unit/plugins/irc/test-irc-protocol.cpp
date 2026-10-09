@@ -3965,6 +3965,54 @@ TEST(IrcProtocolWithServer, 005_multiple_messages)
 
 /*
  * Test functions:
+ *   irc_protocol_cb_005 (empty PREFIX before a reconnection)
+ */
+
+TEST(IrcProtocolWithServer, 005_prefix_empty_reconnect)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    LONGS_EQUAL(0, ptr_server->is_connected);
+
+    /* Join a channel before the message 001. */
+    RECV(":nick1!user@host JOIN #test");
+    ptr_channel = irc_channel_search (ptr_server, "#test");
+    CHECK(ptr_channel);
+    ptr_nick = irc_nick_search (ptr_server, ptr_channel, "nick1");
+    CHECK(ptr_nick);
+    STRCMP_EQUAL("  ", ptr_nick->prefixes);
+
+    /* Empty PREFIX: nick prefixes are truncated. */
+    RECV(":server 005 nick1 PREFIX=() :are supported");
+    STRCMP_EQUAL("", ptr_server->prefix_modes);
+    STRCMP_EQUAL("", ptr_server->prefix_chars);
+    STRCMP_EQUAL("", ptr_nick->prefixes);
+
+    /* Disconnection before the message 001: channels and nicks are kept. */
+    irc_server_disconnect (ptr_server, 0, 0);
+    LONGS_EQUAL(0, ptr_server->is_connected);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_modes);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_chars);
+    POINTERS_EQUAL(ptr_channel, irc_channel_search (ptr_server, "#test"));
+    POINTERS_EQUAL(ptr_nick, irc_nick_search (ptr_server, ptr_channel, "nick1"));
+    STRCMP_EQUAL("  ", ptr_nick->prefixes);
+
+    /* Reconnection: default prefixes are used. */
+    LONGS_EQUAL(1, irc_server_connect (ptr_server));
+    STRCMP_EQUAL(NULL, ptr_server->prefix_modes);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_chars);
+    STRCMP_EQUAL("  ", ptr_nick->prefixes);
+
+    RECV(":server 353 nick1 = #test :+nick1");
+    ptr_nick = irc_nick_search (ptr_server, ptr_channel, "nick1");
+    CHECK(ptr_nick);
+    STRCMP_EQUAL(" +", ptr_nick->prefixes);
+    STRCMP_EQUAL("+", ptr_nick->prefix);
+}
+
+/*
+ * Test functions:
  *   irc_protocol_cb_008 (server notice mask)
  */
 
