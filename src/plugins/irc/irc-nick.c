@@ -198,7 +198,7 @@ irc_nick_set_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
         return;
 
     index = irc_server_get_prefix_char_index (server, prefix);
-    if (index >= 0)
+    if ((index >= 0) && ((size_t)index < strlen (nick->prefixes)))
     {
         nick->prefixes[index] = (set) ? prefix : ' ';
         irc_nick_set_current_prefix (nick);

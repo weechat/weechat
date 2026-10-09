@@ -15,6 +15,10 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: fix memory leak when the last buffer is closed
 - relay/api: fix memory leak when a message without body is sent to a client connected with websocket
 
+### Security
+
+- irc: fix heap buffer overflow in nick prefixes when the server sends an empty PREFIX in message 005 and the connection is lost before message 001 ([GHSA-xj8h-x2w9-m8m6](https://github.com/weechat/weechat/security/advisories/GHSA-xj8h-x2w9-m8m6))
+
 ## [4.10.1] - 2026-09-05
 
 ### Fixed

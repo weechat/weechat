@@ -1122,6 +1122,11 @@ irc_server_get_chantypes (struct t_irc_server *server)
  * For example, if prefix is "(ohv)@%+":
  *   prefix_modes is set to "ohv"
  *   prefix_chars is set to "@%+".
+ *
+ * If prefix is NULL, prefix_modes and prefix_chars are reset (default values
+ * are then used).
+ *
+ * Prefixes of all nicks are reallocated if the number of prefix chars changes.
  */
 
 void
@@ -1131,7 +1136,7 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
     const char *pos;
     int i, old_length_chars, length_modes, length_chars;
 
-    if (!server || !prefix)
+    if (!server)
         return;
 
     old_length_chars = (server->prefix_chars) ?
@@ -1151,7 +1156,7 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
     }
 
     /* assign new values */
-    pos = strchr (prefix, ')');
+    pos = (prefix) ? strchr (prefix, ')') : NULL;
     if (pos)
     {
         server->prefix_modes = weechat_strndup (prefix + 1,
@@ -5410,16 +5415,7 @@ irc_server_connect (struct t_irc_server *server)
         free (server->isupport);
         server->isupport = NULL;
     }
-    if (server->prefix_modes)
-    {
-        free (server->prefix_modes);
-        server->prefix_modes = NULL;
-    }
-    if (server->prefix_chars)
-    {
-        free (server->prefix_chars);
-        server->prefix_chars = NULL;
-    }
+    irc_server_set_prefix_modes_chars (server, NULL);
 
     proxy_type = NULL;
     proxy_ipv6 = NULL;
@@ -5728,16 +5724,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         free (server->isupport);
         server->isupport = NULL;
     }
-    if (server->prefix_modes)
-    {
-        free (server->prefix_modes);
-        server->prefix_modes = NULL;
-    }
-    if (server->prefix_chars)
-    {
-        free (server->prefix_chars);
-        server->prefix_chars = NULL;
-    }
+    irc_server_set_prefix_modes_chars (server, NULL);
     server->msg_max_length = 0;
     server->nick_max_length = 0;
     server->user_max_length = 0;
