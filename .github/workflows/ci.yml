@@ -117,7 +117,7 @@ jobs:
 
     env:
       POEXAM_VERSION: "0.2.0"
-      RUFF_VERSION: "0.16.10"
+      RUFF_VERSION: "0.17.0"
 
     strategy:
       matrix:
