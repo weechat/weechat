@@ -2364,10 +2364,15 @@ sont les noms complets d'options tels qu'affichés par `/set`. Les
 valeurs de type chaîne peuvent être encadrées par des guillemets
 simples ou doubles ; les guillemets sont retirés à l'analyse. Les
 options non modifiables par un thème listées dans un fichier sont
-refusées au moment de l'application et signalées sur le tampon _core_
-(ainsi, un fichier `.theme` importé depuis une source non fiable ne
-peut pas écraser des mots de passe, des listes d'auto-chargement ou
-des commandes de démarrage).
+refusées au moment de l'application et signalées sur le tampon _core_.
+
+[WARNING]
+N'appliquez pas un fichier de thème provenant d'une source non fiable
+sans l'avoir vérifié auparavant : de nombreuses options modifiables par
+un thème sont évaluées (voir `/help eval`), et une expression évaluée
+peut exécuter du code, par exemple avec `+${info:python_eval,...}+`.
+Un fichier de thème doit être considéré avec la même confiance qu'un
+script.
 
 Les fichiers de thème utilisateur ne sont jamais mis en cache : à
 chaque `/theme apply <nom>`, le fichier est analysé, appliqué, puis
