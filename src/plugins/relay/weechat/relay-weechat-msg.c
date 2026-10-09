@@ -585,7 +585,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
 {
     struct t_hdata *ptr_hdata_head, *ptr_hdata;
     char *hdata_head, **list_keys, *keys_types, **list_path;
-    char *path_returned, *pos_paren;
+    char **path_returned, *pos_paren;
     const char *hdata_name, *array_size, *pos;
     void *pointer, **path_pointers;
     unsigned long value;
@@ -659,11 +659,11 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
      * - counters are removed
      * - variable names are replaced by hdata name
      */
-    path_returned = malloc (strlen (path) * 2);
+    path_returned = weechat_string_dyn_alloc (256);
     if (!path_returned)
         goto end;
     ptr_hdata = ptr_hdata_head;
-    strcpy (path_returned, hdata_head);
+    weechat_string_dyn_concat (path_returned, hdata_head, -1);
     for (i = 1; i < num_path; i++)
     {
         pos_paren = strchr (list_path[i], '(');
@@ -675,8 +675,8 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
         ptr_hdata = weechat_hdata_get (hdata_name);
         if (!ptr_hdata)
             goto end;
-        strcat (path_returned, "/");
-        strcat (path_returned, hdata_name);
+        weechat_string_dyn_concat (path_returned, "/", -1);
+        weechat_string_dyn_concat (path_returned, hdata_name, -1);
         if (pos_paren)
             pos_paren[0] = '(';
     }
@@ -747,7 +747,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
 
     /* start hdata in message */
     relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HDATA);
-    relay_weechat_msg_add_string (msg, path_returned);
+    relay_weechat_msg_add_string (msg, *path_returned);
     relay_weechat_msg_add_string (msg, keys_types);
 
     /* "count" will be set later, with number of objects in hdata */
@@ -775,7 +775,7 @@ end:
     weechat_string_free_split (list_keys);
     free (keys_types);
     weechat_string_free_split (list_path);
-    free (path_returned);
+    weechat_string_dyn_free (path_returned, 1);
     free (hdata_head);
 
     return rc;
