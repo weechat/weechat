@@ -558,6 +558,10 @@ WeeChat „језгро” се налази у следећим директо�
 |                   test-relay-remote-network.cpp | Тестови: Релеј „api” протокол: удаљена мрежа.
 |             irc/                                | Корен unit тестова за Релеј „irc” протокол.
 |                test-relay-irc.cpp               | Тестови: Релеј „irc” протокол.
+// TRANSLATION MISSING
+|             weechat/                            | Root of unit tests for Relay "weechat" protocol.
+// TRANSLATION MISSING
+|                test-relay-weechat-msg.cpp       | Tests: Relay "weechat" protocol: messages.
 |          script/                                | Корен unit тестова за script додатак.
 |             test-script-repo.cpp                | Тестови: script репозиторијум.
 |          trigger/                               | Корен unit тестова за окидач додатак.

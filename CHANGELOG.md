@@ -86,6 +86,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 - irc: fix heap buffer overflow in nick prefixes when the server sends an empty PREFIX in message 005 and the connection is lost before message 001 ([GHSA-xj8h-x2w9-m8m6](https://github.com/weechat/weechat/security/advisories/GHSA-xj8h-x2w9-m8m6))
 - irc: fix crash on invalid SASL challenge received with mechanism "ecdsa-nist256p-challenge" ([#2350](https://github.com/weechat/weechat/issues/2350))
+- relay: fix heap buffer overflow in path of hdata sent to clients with "weechat" protocol ([GHSA-8wr2-x42m-7fxv](https://github.com/weechat/weechat/security/advisories/GHSA-8wr2-x42m-7fxv))
 - relay: limit size of data queued for sending to a client to prevent memory exhaustion ([#2357](https://github.com/weechat/weechat/issues/2357))
 - relay: reject fragmented, compressed or oversized websocket control frames received from a client ([#2356](https://github.com/weechat/weechat/issues/2356))
 - relay: limit size of partial message received from a client to prevent memory exhaustion ([#2347](https://github.com/weechat/weechat/issues/2347))
