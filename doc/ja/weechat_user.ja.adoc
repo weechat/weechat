@@ -1960,8 +1960,13 @@ holds the actual overrides; keys are the full option names that would
 appear in `/set`. String values can be enclosed in double or single
 quotes; quotes are stripped at parse time. Non-themable options listed
 in a theme file are refused at apply time and logged to the core
-buffer (so a `.theme` file imported from an untrusted source cannot
-overwrite passwords, autoload lists, or startup commands).
+buffer.
+
+[WARNING]
+Do not apply a theme file from an untrusted source without reviewing it
+first: many themable options are evaluated (see `/help eval`), and an
+evaluated expression can execute code, for example with
+`+${info:python_eval,...}+`. A theme file must be trusted like a script.
 
 User theme files are never cached: on every `/theme apply <name>` the
 file is parsed, applied, and freed.

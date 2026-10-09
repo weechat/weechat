@@ -1858,9 +1858,14 @@ przechowuje aktualne wartości; klucze to pełne nazwy opcji, które
 pojawiły by się w `/set`. Wartości ciągów mogą być ujęte w podwójnie lub
 pojedyncze cudzysłowy; cudzysłowy są pomijane podczas parsowania. Opcje
 nie wapierane przez motywy są pomijane podczas parsowania i wyświetlane
-w głównym buforze (dzięki czemu plik `.theme` zaimportowany z niezaufanego
-Źródła nie może nadpisać haseł, list automatycznego ładowania ani komend
-wykonywanych przy uruchomieniu).
+w głównym buforze.
+
+// TRANSLATION MISSING
+[WARNING]
+Do not apply a theme file from an untrusted source without reviewing it
+first: many themable options are evaluated (see `/help eval`), and an
+evaluated expression can execute code, for example with
+`+${info:python_eval,...}+`. A theme file must be trusted like a script.
 
 Motywy użytkowników nie są przechowywane: przy każdym wykonaniu
 `/theme apply <nazwa>` plik jest parsowany, zmiany są stosowane i plik 

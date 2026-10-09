@@ -1866,9 +1866,14 @@ enthält die eigentlichen Anpassungen; bei den Schlüsseln handelt es sich um di
 Optionsnamen, wie sie auch bei `/set` verwendet werden. Zeichenkettenwerte können in doppelte
 oder einfache Anführungszeichen gesetzt werden; diese werden beim Parsen entfernt. Optionen,
 die nicht über ein Theme angepasst werden können, aber dennoch in einer Theme-Datei aufgeführt
-sind, werden beim Anwenden abgelehnt und im Core-Buffer protokolliert (sodass eine aus einer
-nicht vertrauenswürdigen Quelle importierte `.theme`-Datei keine Passwörter, Autoload-Listen
-oder Startbefehle überschreiben kann).
+sind, werden beim Anwenden abgelehnt und im Core-Buffer protokolliert.
+
+// TRANSLATION MISSING
+[WARNING]
+Do not apply a theme file from an untrusted source without reviewing it
+first: many themable options are evaluated (see `/help eval`), and an
+evaluated expression can execute code, for example with
+`+${info:python_eval,...}+`. A theme file must be trusted like a script.
 
 Benutzer-Theme-Dateien werden niemals zwischengespeichert: Bei jedem
 `/theme apply <name>` wird die Datei geparst, angewendet und wieder

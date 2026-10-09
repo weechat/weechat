@@ -1758,9 +1758,14 @@ buflist.format.number = "${color:28}${number}${if:${number_displayed}?.: }"
 који би се појавили у `/set`. Стринг вредности могу да се поставе у знаке
 навода или полунавода; у време парсирања, знакови навода се уклањају. Опције
 које не могу да се поставе темом наведене у фајлу теме се одбијају у
-време примењивања теме и упозорење се логује у основни бафер (тако да
-`.theme` фајл који је увезен из неког извара којем се не верује не може
-да препише лозинке, листе аутоматског учитавања или команде за покретање).
+време примењивања теме и упозорење се логује у основни бафер.
+
+// TRANSLATION MISSING
+[WARNING]
+Do not apply a theme file from an untrusted source without reviewing it
+first: many themable options are evaluated (see `/help eval`), and an
+evaluated expression can execute code, for example with
+`+${info:python_eval,...}+`. A theme file must be trusted like a script.
 
 Фајлови корисничких тема се никада не кеширају: приликом сваког извршавања
 `/theme apply <име>` фајл се парсира, примењује и ослобађа.
