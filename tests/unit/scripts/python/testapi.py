@@ -1331,6 +1331,42 @@ def test_infolist():
     weechat.infolist_free(infolist)
 
 
+def upgrade_read_cb(data, upgrade_file, object_id, infolist):
+    """Read an object from the upgrade file."""
+    check(data == "upgrade_read_data")
+    check(upgrade_file != "")
+    check(object_id == 1)
+    check(weechat.infolist_next(infolist) == 1)
+    check(weechat.infolist_integer(infolist, "integer") == 123)
+    check(weechat.infolist_string(infolist, "string") == "test string")
+    check(weechat.infolist_time(infolist, "time") == 1231231230)
+    check(weechat.infolist_next(infolist) == 0)
+    return weechat.WEECHAT_RC_OK
+
+
+def test_upgrade():
+    """Test upgrade functions."""
+    check(weechat.upgrade_new("testapi_upgrade_missing", "upgrade_read_cb", "upgrade_read_data") == "")
+    # Write the upgrade file.
+    upgrade_file = weechat.upgrade_new("testapi_upgrade", "", "")
+    check(upgrade_file != "")
+    infolist = weechat.infolist_new()
+    item = weechat.infolist_new_item(infolist)
+    weechat.infolist_new_var_integer(item, "integer", 123)
+    weechat.infolist_new_var_string(item, "string", "test string")
+    weechat.infolist_new_var_time(item, "time", 1231231230)
+    check(weechat.upgrade_write_object("", 1, infolist) == 0)
+    check(weechat.upgrade_write_object(upgrade_file, 1, infolist) == 1)
+    weechat.infolist_free(infolist)
+    check(weechat.upgrade_read("") == 0)
+    weechat.upgrade_close(upgrade_file)
+    # Read the upgrade file (the callback is called once, for the object).
+    upgrade_file = weechat.upgrade_new("testapi_upgrade", "upgrade_read_cb", "upgrade_read_data")
+    check(upgrade_file != "")
+    check(weechat.upgrade_read(upgrade_file) == 1)
+    weechat.upgrade_close(upgrade_file)
+
+
 def test_hdata():
     """Test hdata functions."""
     buffer = weechat.buffer_search_main()
@@ -1467,6 +1503,7 @@ def cmd_test_cb(data, buf, args):
     test_windows()
     test_command()
     test_infolist()
+    test_upgrade()
     test_hdata()
     weechat.prnt("", "  > TESTS END")
     return weechat.WEECHAT_RC_OK
