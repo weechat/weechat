@@ -92,6 +92,25 @@ functions `infolist_long` and `infolist_longlong` (both added in this version) i
 - infolist `hook` (hook process and hook url): variable `timeout` is now `long`
   (it was an integer), read with `infolist_long`.
 
+### PHP signal callbacks
+
+In PHP scripts, the callback of `weechat_hook_signal` now receives 3 arguments, like in all
+other languages: `data`, `signal` and `signal_data`. The argument `type_data` (third of 4
+arguments) has been removed, so callbacks must be updated, for example:
+
+```php
+// Before:
+function signal_cb($data, $signal, $type_data, $signal_data) { ... }
+
+// Now:
+function signal_cb($data, $signal, $signal_data) { ... }
+```
+
+The signal data is now also converted according to its type: integers are received as strings
+(like `"123"`) and pointers as pointer strings (like `"0x1234abcd"`). Function
+`weechat_hook_signal_send` now sends string and integer data correctly (before, they were
+sent as pointers, so the callback received nothing).
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer

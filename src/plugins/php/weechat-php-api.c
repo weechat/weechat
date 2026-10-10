@@ -3141,13 +3141,32 @@ weechat_php_api_hook_signal_cb (const void *pointer, void *data,
                                 void *signal_data)
 {
     int rc;
-    void *func_argv[4];
+    void *func_argv[3];
+    static char str_value[64];
 
     func_argv[1] = signal ? (char *)signal : weechat_php_empty_arg;
-    func_argv[2] = type_data ? (char *)type_data : weechat_php_empty_arg;
-    func_argv[3] = signal_data ? (char *)signal_data : weechat_php_empty_arg;
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        func_argv[2] = (signal_data) ? (char *)signal_data : weechat_php_empty_arg;
+    }
+    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
+    {
+        str_value[0] = '\0';
+        if (signal_data)
+        {
+            snprintf (str_value, sizeof (str_value),
+                      "%d", *((int *)signal_data));
+        }
+        func_argv[2] = str_value;
+    }
+    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
+    {
+        func_argv[2] = (char *)API_PTR2STR(signal_data);
+    }
+    else
+        func_argv[2] = weechat_php_empty_arg;
 
-    weechat_php_cb (pointer, data, func_argv, "ssss",
+    weechat_php_cb (pointer, data, func_argv, "sss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
 
     return rc;
@@ -3184,9 +3203,8 @@ API_FUNC(hook_signal)
 API_FUNC(hook_signal_send)
 {
     zend_string *z_signal, *z_type_data, *z_signal_data;
-    char *signal, *type_data;
-    void *signal_data;
-    int result;
+    char *signal, *type_data, *signal_data;
+    int number, rc;
 
     API_INIT_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_signal, &z_type_data,
@@ -3195,11 +3213,29 @@ API_FUNC(hook_signal_send)
 
     signal = ZSTR_VAL(z_signal);
     type_data = ZSTR_VAL(z_type_data);
-    signal_data = (void *)API_STR2PTR(ZSTR_VAL(z_signal_data));
-    result = weechat_hook_signal_send ((const char *)signal,
-                                       (const char *)type_data, signal_data);
+    signal_data = ZSTR_VAL(z_signal_data);
 
-    API_RETURN_INT(result);
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        rc = weechat_hook_signal_send (signal, type_data, signal_data);
+        API_RETURN_INT(rc);
+    }
+    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
+    {
+        if (weechat_util_parse_int (signal_data, 10, &number))
+            rc = weechat_hook_signal_send (signal, type_data, &number);
+        else
+            rc = WEECHAT_RC_ERROR;
+        API_RETURN_INT(rc);
+    }
+    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
+    {
+        rc = weechat_hook_signal_send (signal, type_data,
+                                       API_STR2PTR(signal_data));
+        API_RETURN_INT(rc);
+    }
+
+    API_RETURN_INT(WEECHAT_RC_ERROR);
 }
 
 static int
