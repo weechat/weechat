@@ -1015,6 +1015,24 @@ def url_error_cb(data, url, options, output):
     return weechat.WEECHAT_RC_OK
 
 
+def connect_cb(data, status, gnutls_rc, sock, error, ip_address):
+    """Get the result of the connection (called once, when connected)."""
+    check(data == "connect_data")
+    check(status == weechat.WEECHAT_HOOK_CONNECT_OK)
+    check(gnutls_rc == 0)
+    check(sock >= 0)
+    check(ip_address == "127.0.0.1")
+    check(error == "")
+    return weechat.WEECHAT_RC_OK
+
+
+def connect_refused_cb(data, status, gnutls_rc, sock, error, ip_address):
+    """Get the result of the connection (called once, when refused)."""
+    check(data == "connect_refused_data")
+    check(status == weechat.WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED)
+    return weechat.WEECHAT_RC_OK
+
+
 def test_hooks():
     """Test hook functions."""
     buffer = weechat.buffer_search_main()
@@ -1799,6 +1817,40 @@ def test_hooks_url():
     check(hook_url2 != "")
 
 
+def test_hooks_connect():
+    """Test function hook_connect.
+
+    The callbacks are called later, by the main loop, when the connections
+    are done (the hooks are then automatically removed), so this function must
+    be called after test_unhook_all (which would remove the hooks).
+
+    The ports (on 127.0.0.1) are given by the C++ test in environment
+    variables: one is listening (connection OK), the other is not (connection
+    refused); function string_parse_size is used to convert them to integers.
+    """
+    port = weechat.string_parse_size(weechat.string_eval_expression("${env:WEECHAT_TESTS_CONNECT_PORT}", {}, {}, {}))
+    check(port > 0)
+    hook_conn1 = weechat.hook_connect(
+        "", "127.0.0.1", port, weechat.WEECHAT_HOOK_CONNECT_IPV6_DISABLE, 0, "", "connect_cb", "connect_data"
+    )
+    check(hook_conn1 != "")
+    port_refused = weechat.string_parse_size(
+        weechat.string_eval_expression("${env:WEECHAT_TESTS_CONNECT_PORT_REFUSED}", {}, {}, {})
+    )
+    check(port_refused > 0)
+    hook_conn2 = weechat.hook_connect(
+        "",
+        "127.0.0.1",
+        port_refused,
+        weechat.WEECHAT_HOOK_CONNECT_IPV6_DISABLE,
+        0,
+        "",
+        "connect_refused_cb",
+        "connect_refused_data",
+    )
+    check(hook_conn2 != "")
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt("", ">>>")
@@ -1829,6 +1881,7 @@ def cmd_test_cb(data, buf, args):
     test_unhook_all()
     test_hooks_process()
     test_hooks_url()
+    test_hooks_connect()
     weechat.prnt("", "  > TESTS END")
     return weechat.WEECHAT_RC_OK
 

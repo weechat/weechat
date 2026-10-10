@@ -18,7 +18,11 @@ extern "C"
 #endif
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/socket.h>
 #include <sys/time.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include "src/core/weechat.h"
 #include "src/core/core-dir.h"
 #include "src/core/core-hdata.h"
@@ -34,6 +38,42 @@ int api_tests_errors = 0;
 int api_tests_count = 0;
 int api_tests_end = 0;
 int api_tests_other = 0;
+
+/*
+ * Create a TCP socket bound to a free port on 127.0.0.1 (listening on it if
+ * "listening" is 1), and set the port in environment variable "env_var".
+ *
+ * Return the socket, -1 if error.
+ */
+
+int
+test_scripts_create_socket (int listening, const char *env_var)
+{
+    struct sockaddr_in addr;
+    socklen_t length;
+    char str_port[16];
+    int sock;
+
+    sock = socket (AF_INET, SOCK_STREAM, 0);
+    if (sock < 0)
+        return -1;
+    memset (&addr, 0, sizeof (addr));
+    addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = htonl (INADDR_LOOPBACK);
+    addr.sin_port = 0;
+    length = sizeof (addr);
+    if ((bind (sock, (struct sockaddr *)&addr, sizeof (addr)) < 0)
+        || (listening && (listen (sock, 16) < 0))
+        || (getsockname (sock, (struct sockaddr *)&addr, &length) < 0))
+    {
+        close (sock);
+        return -1;
+    }
+    snprintf (str_port, sizeof (str_port), "%d", ntohs (addr.sin_port));
+    setenv (env_var, str_port, 1);
+
+    return sock;
+}
 
 /*
  * Run the main loop (timers, file descriptors and processes) until all the
@@ -138,6 +178,7 @@ TEST(Scripts, API)
 {
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
     char *path_testapi_output_dir, *path_testapi_dir;
+    int sock_listen, sock_refused;
     char str_command[(PATH_MAX * 2) + 128];
     char *test_scripts_dir, str_condition[128], str_error[128];
     struct timeval time_start, time_end;
@@ -200,6 +241,19 @@ TEST(Scripts, API)
         "${weechat_data_dir}/testapi_dir",
         NULL, NULL, NULL);
     CHECK(path_testapi_dir);
+
+    /*
+     * Ports used to test hook_connect: one with a listening socket
+     * (connection OK), one free (connection refused): the socket is closed
+     * right away, because a connection to a socket bound but not listening is
+     * not refused on all systems (on macOS, the connection attempt is dropped
+     * and the client waits until timeout).
+     */
+    sock_listen = test_scripts_create_socket (1, "WEECHAT_TESTS_CONNECT_PORT");
+    CHECK(sock_listen >= 0);
+    sock_refused = test_scripts_create_socket (0, "WEECHAT_TESTS_CONNECT_PORT_REFUSED");
+    CHECK(sock_refused >= 0);
+    close (sock_refused);
 
     api_tests_ok = 0;
     api_tests_errors = 0;
@@ -330,6 +384,10 @@ TEST(Scripts, API)
     }
 
     dir_rmtree (path_testapi_dir);
+
+    close (sock_listen);
+    unsetenv ("WEECHAT_TESTS_CONNECT_PORT");
+    unsetenv ("WEECHAT_TESTS_CONNECT_PORT_REFUSED");
 
     free (path_testapi_output_dir);
     free (path_testapi_dir);
