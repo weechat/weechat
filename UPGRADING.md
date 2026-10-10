@@ -92,6 +92,23 @@ functions `infolist_long` and `infolist_longlong` (both added in this version) i
 - infolist `hook` (hook process and hook url): variable `timeout` is now `long`
   (it was an integer), read with `infolist_long`.
 
+### Callback of hook_connect in scripts
+
+In scripts written in Python, Perl, Ruby, Lua, Tcl, Guile (Scheme) and JavaScript, the last two
+arguments of the callback of function `hook_connect` have been swapped, to match the C API and
+the documentation: the callback now receives `error` before `ip_address` (PHP already used this
+order).
+
+Callbacks using these arguments must be updated, for example in Python:
+
+```python
+# Before:
+def connect_cb(data, status, gnutls_rc, sock, ip_address, error): ...
+
+# Now:
+def connect_cb(data, status, gnutls_rc, sock, error, ip_address): ...
+```
+
 ### PHP scripting API
 
 In PHP scripts, the callback of `weechat_hook_signal` now receives 3 arguments, like in all

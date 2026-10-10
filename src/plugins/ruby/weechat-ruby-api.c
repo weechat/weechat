@@ -3481,8 +3481,8 @@ weechat_ruby_api_hook_connect_cb (const void *pointer, void *data,
         func_argv[1] = &status;
         func_argv[2] = &gnutls_rc;
         func_argv[3] = &sock;
-        func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
-        func_argv[5] = (error) ? (char *)error : empty_arg;
+        func_argv[4] = (error) ? (char *)error : empty_arg;
+        func_argv[5] = (ip_address) ? (char *)ip_address : empty_arg;
 
         rc = (int *) weechat_ruby_exec (script,
                                         WEECHAT_SCRIPT_EXEC_INT,

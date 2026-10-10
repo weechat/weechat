@@ -47,6 +47,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - **breaking:** api: convert variable "timeout" from int to long in infolist "hook" (hook process)
 - **breaking:** api: convert variable "interval" from string to long in infolist "hook" (hook timer)
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
+- **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
 - irc: allow multiple nicks separated by commas in command `/notify del`
 - **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script
 - **breaking:** php: fix arguments of hook_print callback, remove argument "tags_count"
