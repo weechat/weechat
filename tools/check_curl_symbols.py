@@ -30,11 +30,11 @@ This script requires Python 3.7+.
 
 # ruff: noqa: COM812,T201
 
-import io
 import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TextIO
 
 SRC_PATH = Path(__file__).resolve().parent.parent / "src" / "core" / "core-url.c"
 
@@ -108,7 +108,7 @@ def curl_version_to_str(version: int) -> str:
     return result.rstrip(".")
 
 
-def get_curl_symbols(symbols_file: io.TextIOBase) -> dict[str, tuple[int, int]]:
+def get_curl_symbols(symbols_file: TextIO) -> dict[str, tuple[int, int]]:
     """Parse file docs/libcurl/symbols-in-versions from Curl repository.
 
     :param symbols_file: file with Curl symbols

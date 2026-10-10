@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2026 Sébastien Helleu <flashcode@flashtux.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[environment]
+extra-paths = ["src/plugins/python"]
+
+[[overrides]]
+# Calls to check() are completed by testapigen.py with source and line number.
+include = ["tests/unit/scripts/python/testapi.py"]
+
+[overrides.rules]
+missing-argument = "ignore"

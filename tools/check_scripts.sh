@@ -6,7 +6,7 @@
 
 # Check shell and Python scripts in WeeChat git repository using these tools:
 #  - shell scripts: shellcheck
-#  - Python scripts: ruff
+#  - Python scripts: ruff, ty
 
 set -o errexit
 
@@ -28,4 +28,5 @@ done
 # Check Python scripts.
 for script in ${python_scripts}; do
     ruff check "${root_dir}/$script"
+    ty check "${root_dir}/$script"
 done
