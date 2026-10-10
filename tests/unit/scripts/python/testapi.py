@@ -260,6 +260,80 @@ def option_delete_cb(data, option):
     pass  # noqa: PIE790
 
 
+def config_write_section_cb(data, config_file, section_name):
+    """Write the section, with an option and a custom line."""
+    check(data == "write_data")
+    check(section_name == "section")
+    section = weechat.config_search_section(config_file, section_name)
+    option = weechat.config_search_option(config_file, section, "option1")
+    check(option != "")
+    check(weechat.config_write_line(config_file, section_name, "") == 1)
+    check(weechat.config_write_option(config_file, option) == 1)
+    check(weechat.config_write_line(config_file, "custom", '"custom value"') == 1)
+    return weechat.WEECHAT_CONFIG_WRITE_OK
+
+
+def config_write_read_cb(data, config_file, section, option_name, value):
+    """Read an option of the section (it is saved in a local variable of core buffer)."""
+    weechat.buffer_set(weechat.buffer_search_main(), "localvar_set_testapi_read_" + option_name, value)
+    return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
+
+
+def test_config_write():
+    """Test functions config_write_line and config_write_option."""
+    config = weechat.config_new("test_config_write_" + "{SCRIPT_LANGUAGE}", "config_reload_cb", "")
+    check(config != "")
+    section = weechat.config_new_section(
+        config,
+        "section",
+        0,
+        0,
+        "config_write_read_cb",
+        "",
+        "config_write_section_cb",
+        "write_data",
+        "section_write_default_cb",
+        "",
+        "section_create_option_cb",
+        "",
+        "section_delete_option_cb",
+        "",
+    )
+    check(section != "")
+    option = weechat.config_new_option(
+        config,
+        section,
+        "option1",
+        "string",
+        "string option",
+        "",
+        0,
+        0,
+        "default",
+        "value1",
+        0,
+        "option_check_value_cb",
+        "",
+        "option_change_cb",
+        "",
+        "option_delete_cb",
+        "",
+    )
+    check(option != "")
+    # Outside a write callback, the file is not opened: nothing is written.
+    weechat.config_write_line(config, "custom", '"value"')
+    weechat.config_write_option(config, option)
+    # Write the file (the write callback is called once), then read it.
+    check(weechat.config_write(config) == weechat.WEECHAT_CONFIG_WRITE_OK)
+    check(weechat.config_read(config) == weechat.WEECHAT_CONFIG_READ_OK)
+    buffer = weechat.buffer_search_main()
+    check(weechat.buffer_get_string(buffer, "localvar_testapi_read_option1") == "value1")
+    check(weechat.buffer_get_string(buffer, "localvar_testapi_read_custom") == "custom value")
+    weechat.buffer_set(buffer, "localvar_del_testapi_read_option1", "")
+    weechat.buffer_set(buffer, "localvar_del_testapi_read_custom", "")
+    weechat.config_free(config)
+
+
 def test_config():
     """Test config functions."""
     # Config
@@ -1631,6 +1705,7 @@ def cmd_test_cb(data, buf, args):
     test_dir()
     test_lists()
     test_config()
+    test_config_write()
     test_key()
     test_display()
     test_theme()

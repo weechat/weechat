@@ -125,6 +125,11 @@ class UnparsePython(Unparse):
         return result
 
     @staticmethod
+    def escape_string(value: str) -> str:
+        """Escape backslashes and double quotes in a string enclosed by double quotes."""
+        return value.replace("\\", "\\\\").replace('"', '\\"')
+
+    @staticmethod
     def is_bool(node: ast.AST) -> bool:
         """Check if the node is a boolean."""
         return isinstance(node, ast.Name) and node.id in ("False", "True")
@@ -135,8 +140,13 @@ class UnparsePython(Unparse):
         return (
             (isinstance(node, ast.Constant) and isinstance(node.value, int))
             or (isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)))
-            # Return codes (WEECHAT_RC_OK, WEECHAT_RC_OK_EAT, WEECHAT_RC_ERROR).
-            or (isinstance(node, ast.Attribute) and node.attr.startswith("WEECHAT_RC_"))
+            # Integer constants (return codes, config and hook process/connect).
+            or (
+                isinstance(node, ast.Attribute)
+                and node.attr.startswith(
+                    ("WEECHAT_RC_", "WEECHAT_CONFIG_", "WEECHAT_HOOK_PROCESS_", "WEECHAT_HOOK_CONNECT_"),
+                )
+            )
         )
 
     def _ast_alias(self, node: ast.AST) -> None:
@@ -374,7 +384,7 @@ class UnparsePerl(UnparsePython):
     def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            str_node = node.value.replace("$", "\\$").replace("@", "\\@")
+            str_node = self.escape_string(node.value).replace("$", "\\$").replace("@", "\\@")
             self.add(f'"{str_node}"')
         elif node.value is None:
             self.add("undef")
@@ -508,7 +518,7 @@ class UnparseRuby(UnparsePython):
     def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            str_node = node.value.replace("#{", "\\#{")
+            str_node = self.escape_string(node.value).replace("#{", "\\#{")
             self.add(f'"{str_node}"')
         elif node.value is None:
             self.add("nil")
@@ -773,7 +783,7 @@ class UnparseTcl(UnparsePython):
     def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            str_node = node.value.replace("$", "\\$").replace("[", "\\[").replace("]", "\\]")
+            str_node = self.escape_string(node.value).replace("$", "\\$").replace("[", "\\[").replace("]", "\\]")
             self.add(f'"{str_node}"')
         elif node.value is None:
             self.add("$::weechat::WEECHAT_NULL")
@@ -965,7 +975,7 @@ class UnparseGuile(UnparsePython):
     def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            self.add(f'"{node.value}"')
+            self.add(f'"{self.escape_string(node.value)}"')
         elif node.value is None:
             self.add("#nil")
         else:
@@ -1192,7 +1202,7 @@ class UnparsePhp(UnparsePython):
     def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            str_node = node.value.replace("$", "\\$")
+            str_node = self.escape_string(node.value).replace("$", "\\$")
             self.add(f'"{str_node}"')
         elif node.value is None:
             self.add("NULL")
