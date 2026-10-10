@@ -738,6 +738,31 @@ def test_display():
     check(weechat.log_print("test log_print: %s %n %d") == 1)
 
 
+def test_theme():
+    """Test theme functions."""
+    check(weechat.theme_register("", {"weechat.color.chat_delimiters": "red"}) == "")
+    theme = weechat.theme_register("testapi_theme", {"weechat.color.chat_delimiters": "red"})
+    check(theme != "")
+    # Overrides are merged in the contribution of the script.
+    check(weechat.theme_register("testapi_theme", {"weechat.color.chat_inactive_window": "blue"}) == theme)
+    # Apply the theme (without backup, which would display a message).
+    option_backup = weechat.config_get("weechat.look.theme_backup")
+    option_theme = weechat.config_get("weechat.look.theme")
+    option_delimiters = weechat.config_get("weechat.color.chat_delimiters")
+    option_inactive_window = weechat.config_get("weechat.color.chat_inactive_window")
+    weechat.config_option_set(option_backup, "off", 1)
+    check(weechat.command("", "/theme apply testapi_theme") == weechat.WEECHAT_RC_OK)
+    check(weechat.config_string(option_theme) == "testapi_theme")
+    check(weechat.config_color(option_delimiters) == "red")
+    check(weechat.config_color(option_inactive_window) == "blue")
+    # Restore options.
+    weechat.config_option_reset(option_delimiters, 1)
+    weechat.config_option_reset(option_inactive_window, 1)
+    weechat.config_option_reset(option_theme, 1)
+    weechat.config_option_reset(option_backup, 1)
+    check(weechat.config_color(option_delimiters) == "22")
+
+
 def completion1_cb(data, completion_item, buf, completion):
     """Completion callback."""
     check(data == "completion_data")
@@ -1608,6 +1633,7 @@ def cmd_test_cb(data, buf, args):
     test_config()
     test_key()
     test_display()
+    test_theme()
     test_hooks()
     test_buffers()
     test_nicklist()
