@@ -57,7 +57,7 @@ release_start ()
 
     # Check if commit for the version already exists.
     msg=$(git log -1 --pretty=%B | tr -d "\n")
-    if [ "${msg}" = "core: bump version to ${version}" ]; then
+    if [ "${msg}" = "core: release version ${version}" ]; then
         release_error "commit for version already exists"
     fi
 
@@ -102,7 +102,7 @@ release_bump_version ()
 release_commit_tag ()
 {
     cd "${root_dir}"
-    git commit -m "core: bump version to ${version}" version.sh CHANGELOG.md UPGRADING.md || release_error "git commit error, release already done?"
+    git commit -m "core: release version ${version}" version.sh CHANGELOG.md UPGRADING.md || release_error "git commit error, release already done?"
     git tag -a "v${version}" -m "WeeChat ${version}"
 }
 
