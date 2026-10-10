@@ -5940,7 +5940,7 @@ API_FUNC(upgrade_new)
     zval *z_callback_read;
     char *filename;
     char *data;
-    const char *result;
+    const char *callback_read_name, *result;
 
     API_INIT_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_filename,
@@ -5948,7 +5948,18 @@ API_FUNC(upgrade_new)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     filename = ZSTR_VAL(z_filename);
-    weechat_php_get_function_name (z_callback_read, callback_read_name);
+    /* Empty callback: the file is opened in write mode. */
+    callback_read_name = "";
+    if ((Z_TYPE_P(z_callback_read) != IS_STRING)
+        || (Z_STRLEN_P(z_callback_read) > 0))
+    {
+        if (!zend_is_callable (z_callback_read, 0, NULL))
+        {
+            php_error_docref (NULL, E_WARNING, "Expected callable");
+            RETURN_FALSE;
+        }
+        callback_read_name = weechat_php_func_map_add (z_callback_read);
+    }
     data = ZSTR_VAL(z_data);
 
     result = API_PTR2STR(
