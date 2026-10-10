@@ -886,8 +886,12 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
     for (ptr_hook = weechat_hooks[type]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
+        /* Skip hooks deleted during a hook exec (their data is freed). */
+        if (ptr_hook->deleted)
+            continue;
+
         match = 1;
-        if (arguments && !ptr_hook->deleted)
+        if (arguments)
         {
             switch (ptr_hook->type)
             {
