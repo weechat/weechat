@@ -27,14 +27,13 @@ import os
 import sys
 import traceback
 from pathlib import Path
-from typing import Tuple, Type, Union
+from typing import TextIO, Tuple, Type, Union
 
 sys.dont_write_bytecode = True
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.append(str(SCRIPT_DIR))
 from unparse import (  # noqa: E402
-    Unparse,
     UnparseGuile,
     UnparseJavaScript,
     UnparseLua,
@@ -70,7 +69,7 @@ class WeechatScript:
 
     def __init__(
         self,
-        unparse_class: Type[Unparse],
+        unparse_class: Type[UnparsePython],
         tree: ast.AST,
         source_script: str,
         output_dir: str,
@@ -113,6 +112,7 @@ class WeechatScript:
                 self.language != "python"
                 and isinstance(node, ast.Call)
                 and isinstance(node.func, ast.Attribute)
+                and isinstance(node.func.value, ast.Name)
                 and node.func.value.id == "weechat"
             ):
                 node.func.attr = functions.get(node.func.attr, node.func.attr)
@@ -134,10 +134,10 @@ class WeechatScript:
         }
         # Replace variables.
         for node in ast.walk(self.tree):
-            if isinstance(node, ast.Constant) and node.value in variables:
+            if isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value in variables:
                 node.value = variables[node.value]
 
-    def write_header(self, output: io.TextIOBase) -> None:
+    def write_header(self, output: TextIO) -> None:
         """Generate script header (just comments by default)."""
         comments = (
             "",
@@ -161,7 +161,7 @@ class WeechatScript:
             self.write_footer(output)
         print("OK")
 
-    def write_footer(self, output: io.TextIOBase) -> None:
+    def write_footer(self, output: TextIO) -> None:
         """Write footer (nothing by default)."""
 
 
@@ -172,12 +172,12 @@ class WeechatPythonScript(WeechatScript):
         """Initialize Python script."""
         super().__init__(UnparsePython, tree, source_script, output_dir, "python", "py")
 
-    def write_header(self, output: io.TextIOBase) -> None:
+    def write_header(self, output: TextIO) -> None:
         """Write header of Python script."""
         super().write_header(output)
         output.write("\nimport weechat")
 
-    def write_footer(self, output: io.TextIOBase) -> None:
+    def write_footer(self, output: TextIO) -> None:
         """Write footer of Python script."""
         super().write_footer(output)
         output.write('\n\nif __name__ == "__main__":\n    weechat_init()\n')
@@ -190,7 +190,7 @@ class WeechatPerlScript(WeechatScript):
         """Initialize Perl script."""
         super().__init__(UnparsePerl, tree, source_script, output_dir, "perl", "pl")
 
-    def write_footer(self, output: io.TextIOBase) -> None:
+    def write_footer(self, output: TextIO) -> None:
         """Write footer of Perl script."""
         super().write_footer(output)
         output.write("\nweechat_init();\n")
@@ -207,7 +207,7 @@ class WeechatRubyScript(WeechatScript):
         """Make changes in AST tree of Ruby script."""
         super().update_tree()
         for node in ast.walk(self.tree):
-            if isinstance(node, ast.Attribute) and node.value.id == "weechat":
+            if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == "weechat":
                 node.value.id = "Weechat"
             if (
                 isinstance(node, ast.Call)
@@ -224,7 +224,7 @@ class WeechatLuaScript(WeechatScript):
         """Initialize Lua script."""
         super().__init__(UnparseLua, tree, source_script, output_dir, "lua", "lua", comment_char="--")
 
-    def write_footer(self, output: io.TextIOBase) -> None:
+    def write_footer(self, output: TextIO) -> None:
         """Write footer of Lua script."""
         super().write_footer(output)
         output.write("\nweechat_init()\n")
@@ -237,7 +237,7 @@ class WeechatTclScript(WeechatScript):
         """Initialize Tcl script."""
         super().__init__(UnparseTcl, tree, source_script, output_dir, "tcl", "tcl")
 
-    def write_footer(self, output: io.TextIOBase) -> None:
+    def write_footer(self, output: TextIO) -> None:
         """Write footer of Tcl script."""
         super().write_footer(output)
         output.write("\nweechat_init\n")
@@ -263,9 +263,9 @@ class WeechatGuileScript(WeechatScript):
                 and isinstance(node.func, ast.Attribute)
                 and node.func.attr in functions_with_list
             ):
-                node.args = [ast.Call("list", node.args)]
+                node.args = [ast.Call(ast.Name("list"), node.args, [])]
 
-    def write_footer(self, output: io.TextIOBase) -> None:
+    def write_footer(self, output: TextIO) -> None:
         """Write footer of Guile script."""
         super().write_footer(output)
         output.write("\n(weechat_init)\n")
@@ -278,7 +278,7 @@ class WeechatJavaScriptScript(WeechatScript):
         """Initialize JavaScript script."""
         super().__init__(UnparseJavaScript, tree, source_script, output_dir, "javascript", "js", comment_char="//")
 
-    def write_footer(self, output: io.TextIOBase) -> None:
+    def write_footer(self, output: TextIO) -> None:
         """Writer footer of JavaScript script."""
         super().write_footer(output)
         output.write("\nweechat_init()\n")
@@ -291,12 +291,12 @@ class WeechatPhpScript(WeechatScript):
         """Initialize PHP script."""
         super().__init__(UnparsePhp, tree, source_script, output_dir, "php", "php", comment_char="//")
 
-    def write_header(self, output: io.TextIOBase) -> None:
+    def write_header(self, output: TextIO) -> None:
         """Writer header of PHP script."""
         output.write("<?php\n")
         super().write_header(output)
 
-    def write_footer(self, output: io.TextIOBase) -> None:
+    def write_footer(self, output: TextIO) -> None:
         """Write footer of PHP script."""
         super().write_footer(output)
         output.write("\nweechat_init();\n")
@@ -315,7 +315,7 @@ def update_nodes(tree: ast.AST) -> None:
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef) and node.name.startswith("test_"):
             # Add a print at the beginning of each test function.
-            node.body.insert(0, ast.parse(f'weechat.prnt("", "  > {node.name}");'))
+            node.body.insert(0, ast.parse(f'weechat.prnt("", "  > {node.name}");').body[0])
         elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "check":
             # Add two arguments in the call to "check" function:
             #   1. the string representation of the test

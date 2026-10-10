@@ -18,7 +18,7 @@ import io
 import os
 import select
 import sys
-from typing import Any, List, Union
+from typing import Any, List, TextIO, Union
 
 sys.dont_write_bytecode = True
 
@@ -37,9 +37,7 @@ class UnparsePython(Unparse):
     the script to test WeeChat scripting API).
     """
 
-    __lineno__ = inspect.currentframe().f_lineno
-
-    def __init__(self, output: io.TextIOBase = sys.stdout) -> None:
+    def __init__(self, output: TextIO = sys.stdout) -> None:
         """Initialize Python parser."""
         self.output = output
         self.indent_string = " " * 4
@@ -143,7 +141,7 @@ class UnparsePython(Unparse):
         # Ignore alias.
         pass  # noqa: PIE790
 
-    def _ast_arg(self, node: ast.AST) -> None:
+    def _ast_arg(self, node: ast.arg) -> None:
         """Add an AST arg in output."""
         prefix = self._prefix[-1] if self._prefix else ""
         self.add(f"{prefix}{node.arg}")
@@ -240,17 +238,12 @@ class UnparsePython(Unparse):
                 self.unindent,
             )
 
-    def _ast_index(self, node: ast.Index) -> None:
-        """Add an AST Subscript in output."""
-        # Note: deprecated since Python 3.9
-        self.add(node.value)
-
     def _ast_import(self, node: ast.AST) -> None:
         """Add an AST Import in output."""
         # Ignore import.
         pass  # noqa: PIE790
 
-    def _ast_list(self, node: ast.AST) -> None:
+    def _ast_list(self, node: ast.List) -> None:
         """Add an AST List in output."""
         self.add(
             "[",
@@ -267,10 +260,6 @@ class UnparsePython(Unparse):
         prefix = self._prefix[-1] if self._prefix else ""
         self.add(f"{prefix}{node.id}")
 
-    def _ast_num(self, node: ast.Num) -> None:
-        """Add an AST Num in output."""
-        self.add(repr(node.n))
-
     def _ast_pass(self, node: ast.Pass) -> None:  # noqa: ARG002
         """Add an AST Pass in output."""
         self.fill("pass")
@@ -280,10 +269,6 @@ class UnparsePython(Unparse):
         self.fill("return")
         if node.value:
             self.add(" ", node.value)
-
-    def _ast_str(self, node: ast.Str) -> None:
-        """Add an AST Str in output."""
-        self._ast_constant(node)
 
     def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
@@ -317,8 +302,6 @@ class UnparsePerl(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
-
-    __lineno__ = inspect.currentframe().f_lineno
 
     def _ast_assign(self, node: ast.Assign) -> None:
         """Add an AST Assign in output."""
@@ -492,10 +475,6 @@ class UnparsePerl(UnparsePython):
                 ";",
             )
 
-    def _ast_str(self, node: ast.Str) -> None:
-        """Add an AST Str in output."""
-        self._ast_constant(node)
-
     def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
@@ -514,8 +493,6 @@ class UnparseRuby(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
-
-    __lineno__ = inspect.currentframe().f_lineno
 
     def _ast_attribute(self, node: ast.Attribute) -> None:
         """Add an AST Attribute in output."""
@@ -597,10 +574,6 @@ class UnparseRuby(UnparsePython):
         """Add an AST Pass in output."""
         pass  # noqa: PIE790
 
-    def _ast_str(self, node: ast.Str) -> None:
-        """Add an AST Str in output."""
-        self._ast_constant(node)
-
 
 class UnparseLua(UnparsePython):
     """Unparse AST to generate Lua script code.
@@ -608,8 +581,6 @@ class UnparseLua(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
-
-    __lineno__ = inspect.currentframe().f_lineno
 
     def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002,ANN003
         """Initialize Lua parser."""
@@ -709,8 +680,6 @@ class UnparseTcl(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
-
-    __lineno__ = inspect.currentframe().f_lineno
 
     def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002,ANN003
         """Initialize Tcl parser."""
@@ -876,10 +845,6 @@ class UnparseTcl(UnparsePython):
                 (self.prefix, None),
             )
 
-    def _ast_str(self, node: ast.Str) -> None:
-        """Add an AST Str in output."""
-        self._ast_constant(node)
-
     def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
@@ -899,8 +864,6 @@ class UnparseGuile(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
-
-    __lineno__ = inspect.currentframe().f_lineno
 
     def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002,ANN003
         """Initialize Guile parser."""
@@ -1083,10 +1046,6 @@ class UnparseGuile(UnparsePython):
         if node.value:
             self.add(self.fill, node.value)
 
-    def _ast_str(self, node: ast.Str) -> None:
-        """Add an AST Str in output."""
-        self._ast_constant(node)
-
     def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
@@ -1104,8 +1063,6 @@ class UnparseJavaScript(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
-
-    __lineno__ = inspect.currentframe().f_lineno
 
     def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
@@ -1171,8 +1128,6 @@ class UnparsePhp(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
-
-    __lineno__ = inspect.currentframe().f_lineno
 
     def _ast_assign(self, node: ast.Assign) -> None:
         """Add an AST Assign in output."""
@@ -1321,10 +1276,6 @@ class UnparsePhp(UnparsePython):
                 ";",
             )
 
-    def _ast_str(self, node: ast.Str) -> None:
-        """Add an AST Str in output."""
-        self._ast_constant(node)
-
     def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
@@ -1338,12 +1289,11 @@ class UnparsePhp(UnparsePython):
 
 def get_languages() -> List[str]:
     """Return a list of supported languages: ['python', 'perl', ...]."""
-    members = [
-        member
-        for member in inspect.getmembers(sys.modules[__name__], predicate=inspect.isclass)
-        if inspect.isclass(member[1]) and member[0].startswith("Unparse") and member[0] != "Unparse"
+    return [
+        name[7:].lower()
+        for name, obj in vars(sys.modules[__name__]).items()
+        if inspect.isclass(obj) and issubclass(obj, Unparse) and obj is not Unparse
     ]
-    return [name[7:].lower() for name, _ in sorted(members, key=lambda member: member[1].__lineno__)]
 
 
 LANGUAGES = get_languages()
