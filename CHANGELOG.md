@@ -49,6 +49,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
 - irc: allow multiple nicks separated by commas in command `/notify del`
+- **breaking:** php: remove GnuTLS arguments of function hook_connect, like in all other languages
 - **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script
 - **breaking:** php: fix arguments of hook_print callback, remove argument "tags_count"
 - **breaking:** php: fix signal data sent by function hook_signal_send and received in hook_signal callback, remove argument "type_data" from hook_signal callback

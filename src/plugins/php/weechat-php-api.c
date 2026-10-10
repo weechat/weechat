@@ -2968,22 +2968,18 @@ weechat_php_api_hook_connect_cb (const void *pointer, void *data, int status,
 
 API_FUNC(hook_connect)
 {
-    zend_string *z_proxy, *z_address, *z_gnutls_sess, *z_gnutls_cb;
-    zend_string *z_gnutls_priorities, *z_local_hostname, *z_data;
-    zend_long z_port, z_ipv6, z_retry, z_gnutls_dhkey_size;
+    zend_string *z_proxy, *z_address, *z_local_hostname, *z_data;
+    zend_long z_port, z_ipv6, z_retry;
     zval *z_callback;
-    char *proxy, *address, *gnutls_priorities, *local_hostname, *data;
+    char *proxy, *address, *local_hostname, *data;
     int port, ipv6, retry;
-    void *gnutls_sess, *gnutls_cb;
-    int gnutls_dhkey_size;
     const char *result;
 
     API_INIT_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     if (zend_parse_parameters (
-            ZEND_NUM_ARGS(), "SSlllSSlSSzS", &z_proxy, &z_address, &z_port,
-            &z_ipv6, &z_retry, &z_gnutls_sess, &z_gnutls_cb,
-            &z_gnutls_dhkey_size, &z_gnutls_priorities, &z_local_hostname,
-            &z_callback, &z_data) == FAILURE)
+            ZEND_NUM_ARGS(), "SSlllSzS", &z_proxy, &z_address, &z_port,
+            &z_ipv6, &z_retry, &z_local_hostname, &z_callback,
+            &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     proxy = ZSTR_VAL(z_proxy);
@@ -2991,10 +2987,6 @@ API_FUNC(hook_connect)
     port = (int)z_port;
     ipv6 = (int)z_ipv6;
     retry = (int)z_retry;
-    gnutls_sess = (void *)API_STR2PTR(ZSTR_VAL(z_gnutls_sess));
-    gnutls_cb = (void *)API_STR2PTR(ZSTR_VAL(z_gnutls_cb));
-    gnutls_dhkey_size = (int)z_gnutls_dhkey_size;
-    gnutls_priorities = ZSTR_VAL(z_gnutls_priorities);
     local_hostname = ZSTR_VAL(z_local_hostname);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
@@ -3008,10 +3000,10 @@ API_FUNC(hook_connect)
             port,
             ipv6,
             retry,
-            gnutls_sess,
-            gnutls_cb,
-            gnutls_dhkey_size,
-            (const char *)gnutls_priorities,
+            NULL, /* GnuTLS session */
+            NULL, /* GnuTLS callback */
+            0,    /* GnuTLS DH key size */
+            NULL, /* GnuTLS priorities */
             (const char *)local_hostname,
             &weechat_php_api_hook_connect_cb,
             (const char *)callback_name,

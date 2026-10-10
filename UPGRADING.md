@@ -145,6 +145,18 @@ all hooks of the current script (before, it removed the hooks of the script give
 argument, so calls must be updated: `weechat_unhook_all("my_script")` becomes
 `weechat_unhook_all()`).
 
+Function `weechat_hook_connect` now takes 8 arguments, like in all other languages: the
+GnuTLS arguments (`gnutls_sess`, `gnutls_cb`, `gnutls_dhkey_size` and `gnutls_priorities`)
+have been removed, for example:
+
+```php
+// Before:
+weechat_hook_connect($proxy, $address, $port, $ipv6, $retry, "", "", 0, "", $local_hostname, "connect_cb", "");
+
+// Now:
+weechat_hook_connect($proxy, $address, $port, $ipv6, $retry, $local_hostname, "connect_cb", "");
+```
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer
