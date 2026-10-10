@@ -215,6 +215,8 @@ class WeechatRubyScript(WeechatScript):
                 and node.func.attr == "config_new_option"
             ):
                 node.args = [*node.args[:11], ast.List(node.args[11:])]
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "bar_new":
+                node.args = [*node.args[:10], ast.List(node.args[10:14]), *node.args[14:]]
 
 
 class WeechatLuaScript(WeechatScript):
@@ -256,6 +258,7 @@ class WeechatGuileScript(WeechatScript):
         functions_with_list = (
             "config_new_section",
             "config_new_option",
+            "bar_new",
         )
         for node in ast.walk(self.tree):
             if (

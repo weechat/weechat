@@ -941,6 +941,138 @@ def test_lines():
     check(weechat.line_search_by_id(buffer, line_id) == line)
 
 
+def bar_item_cb(data, item, window):
+    """Bar item callback."""
+    return "item"
+
+
+def bar_item_extra_cb(data, item, window, buf, extra_info):
+    """Bar item callback (with buffer and extra info)."""
+    return "item_extra"
+
+
+def test_bars():
+    """Test bar and bar item functions."""
+    # bar items
+    check(weechat.bar_item_search("test_item") == "")
+    item1 = weechat.bar_item_new("test_item", "bar_item_cb", "bar_item_data")
+    check(item1 != "")
+    check(weechat.bar_item_new("test_item", "bar_item_cb", "bar_item_data") == "")
+    item2 = weechat.bar_item_new("(extra)test_item_extra", "bar_item_extra_cb", "bar_item_data")
+    check(item2 != "")
+    check(weechat.bar_item_search("test_item") == item1)
+    check(weechat.bar_item_search("test_item_extra") == item2)
+    check(weechat.bar_item_search("(extra)test_item_extra") == "")
+    weechat.bar_item_update("test_item")
+    weechat.bar_item_update("test_item_extra")
+    # bars
+    check(weechat.bar_search("test_bar") == "")
+    check(
+        weechat.bar_new(
+            "test_bar",
+            "off",
+            "100",
+            "xxx",
+            "",
+            "top",
+            "horizontal",
+            "vertical",
+            "0",
+            "5",
+            "default",
+            "cyan",
+            "blue",
+            "darkgray",
+            "off",
+            "test_item,test_item_extra",
+        )
+        == ""
+    )
+    check(
+        weechat.bar_new(
+            "test_bar",
+            "off",
+            "100",
+            "window",
+            "",
+            "xxx",
+            "horizontal",
+            "vertical",
+            "0",
+            "5",
+            "default",
+            "cyan",
+            "blue",
+            "darkgray",
+            "off",
+            "test_item,test_item_extra",
+        )
+        == ""
+    )
+    bar = weechat.bar_new(
+        "test_bar",
+        "off",
+        "100",
+        "window",
+        "",
+        "top",
+        "horizontal",
+        "vertical",
+        "0",
+        "5",
+        "default",
+        "cyan",
+        "blue",
+        "darkgray",
+        "off",
+        "test_item,test_item_extra",
+    )
+    check(bar != "")
+    check(weechat.bar_search("test_bar") == bar)
+    check(weechat.config_string(weechat.config_get("weechat.bar.test_bar.type")) == "window")
+    check(weechat.config_string(weechat.config_get("weechat.bar.test_bar.position")) == "top")
+    check(weechat.config_integer(weechat.config_get("weechat.bar.test_bar.size_max")) == 5)
+    check(weechat.config_string(weechat.config_get("weechat.bar.test_bar.items")) == "test_item,test_item_extra")
+    bar2 = weechat.bar_new(
+        "test_bar",
+        "off",
+        "100",
+        "window",
+        "",
+        "bottom",
+        "horizontal",
+        "vertical",
+        "0",
+        "5",
+        "default",
+        "cyan",
+        "blue",
+        "darkgray",
+        "off",
+        "test_item,test_item_extra",
+    )
+    check(bar2 == bar)
+    check(weechat.config_string(weechat.config_get("weechat.bar.test_bar.position")) == "top")
+    check(weechat.config_string_default(weechat.config_get("weechat.bar.test_bar.position")) == "bottom")
+    check(weechat.bar_set(bar, "xxx", "value") == 0)
+    check(weechat.bar_set(bar, "position", "left") == 1)
+    check(weechat.config_string(weechat.config_get("weechat.bar.test_bar.position")) == "left")
+    check(weechat.bar_set(bar, "size", "2") == 1)
+    check(weechat.config_integer(weechat.config_get("weechat.bar.test_bar.size")) == 2)
+    check(weechat.bar_set(bar, "hidden", "on") == 1)
+    check(weechat.config_boolean(weechat.config_get("weechat.bar.test_bar.hidden")) == 1)
+    check(weechat.bar_set(bar, "items", "test_item") == 1)
+    check(weechat.config_string(weechat.config_get("weechat.bar.test_bar.items")) == "test_item")
+    weechat.bar_update("test_bar")
+    weechat.bar_remove(bar)
+    check(weechat.bar_search("test_bar") == "")
+    check(weechat.config_get("weechat.bar.test_bar.position") == "")
+    weechat.bar_item_remove(item1)
+    weechat.bar_item_remove(item2)
+    check(weechat.bar_item_search("test_item") == "")
+    check(weechat.bar_item_search("test_item_extra") == "")
+
+
 def test_windows():
     """Test window functions."""
     window = weechat.current_window()
@@ -1130,6 +1262,7 @@ def cmd_test_cb(data, buf, args):
     test_buffers()
     test_nicklist()
     test_lines()
+    test_bars()
     test_windows()
     test_command()
     test_infolist()
