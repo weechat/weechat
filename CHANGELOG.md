@@ -77,6 +77,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: fix crash in function upgrade_write_object when the upgrade file is invalid
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
 - irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"
+- javascript: fix arguments of functions upgrade_new, upgrade_close and hdata_get_list
 - javascript, lua, perl, php, ruby, tcl: fix return value of function hdata_longlong
 - logger: add support of extra date/time specifiers like "%@" (UTC date) in options logger.file.mask, logger.file.path and logger.mask.* ([#2361](https://github.com/weechat/weechat/issues/2361))
 - perl: fix wrong arguments error in function nicklist_remove_all

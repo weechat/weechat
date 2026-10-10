@@ -3489,8 +3489,6 @@ API_FUNC(unhook_all)
 {
     API_INIT_FUNC(1, "unhook_all", "", API_RETURN_ERROR);
 
-    v8::String::Utf8Value hook(args[0]);
-
     weechat_unhook_all (js_current_script->name);
 
     API_RETURN_OK;
@@ -5039,7 +5037,7 @@ API_FUNC(hdata_get_list)
 {
     const char *result;
 
-    API_INIT_FUNC(1, "hdata_get_list", "s", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_list", "ss", API_RETURN_EMPTY);
 
     v8::String::Utf8Value hdata(args[0]);
     v8::String::Utf8Value name(args[1]);
@@ -5396,8 +5394,8 @@ API_FUNC(upgrade_new)
     API_INIT_FUNC(1, "upgrade_new", "sss", API_RETURN_EMPTY);
 
     v8::String::Utf8Value filename(args[0]);
-    v8::String::Utf8Value function(args[0]);
-    v8::String::Utf8Value data(args[0]);
+    v8::String::Utf8Value function(args[1]);
+    v8::String::Utf8Value data(args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_upgrade_new (
@@ -5445,7 +5443,7 @@ API_FUNC(upgrade_read)
 
 API_FUNC(upgrade_close)
 {
-    API_INIT_FUNC(1, "upgrade_close", "sss", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "upgrade_close", "s", API_RETURN_ERROR);
 
     v8::String::Utf8Value upgrade_file(args[0]);
 
