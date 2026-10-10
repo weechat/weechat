@@ -3618,6 +3618,10 @@ TEST(CoreConfigFileWithTestConfig, WriteLine)
     LONGS_EQUAL(0, config_file_write_line (NULL, "sec", NULL));
     LONGS_EQUAL(0, config_file_write_line (config_test, NULL, NULL));
 
+    /* File not opened */
+    LONGS_EQUAL(0, config_file_write_line (config_test, "sec", NULL));
+    LONGS_EQUAL(0, config_file_write_line (config_test, "opt", "value"));
+
     path = test_config_get_path (TEST_CONFIG_NAME ".conf");
     config_test->file = fopen (path, "w");
     CHECK(config_test->file);

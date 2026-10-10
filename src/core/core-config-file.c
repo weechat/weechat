@@ -3093,7 +3093,7 @@ config_file_write_line (struct t_config_file *config_file,
 {
     int rc;
 
-    if (!config_file || !option_name)
+    if (!config_file || !config_file->file || !option_name)
         return 0;
 
     if (value && value[0])
