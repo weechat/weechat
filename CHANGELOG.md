@@ -16,6 +16,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
 - perl: fix wrong arguments error in function nicklist_remove_all
 - relay/api: fix memory leak when a message without body is sent to a client connected with websocket
+- tcl: return 0 instead of raising an error in functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
 - tcl: add missing function completion_free
 
 ### Security

@@ -592,7 +592,7 @@ API_FUNC(mkdir_home)
                             mode))
         API_RETURN_OK;
 
-    API_RETURN_ERROR;
+    API_RETURN_INT(0);
 }
 
 API_FUNC(mkdir)
@@ -610,7 +610,7 @@ API_FUNC(mkdir)
                        mode))
         API_RETURN_OK;
 
-    API_RETURN_ERROR;
+    API_RETURN_INT(0);
 }
 
 API_FUNC(mkdir_parents)
@@ -628,7 +628,7 @@ API_FUNC(mkdir_parents)
                                mode))
         API_RETURN_OK;
 
-    API_RETURN_ERROR;
+    API_RETURN_INT(0);
 }
 
 API_FUNC(list_new)
