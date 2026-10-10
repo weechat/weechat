@@ -1,5 +1,5 @@
 /* This is a generated file, edit weechat-php.stub.php instead.
- * Stub hash: da231dda5992ced41e85aee5a5cde312925a0bdb */
+ * Stub hash: 409f9fd047e58996ebbb7b81b9e9e2ffb1ae5a13 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_register, 0, 7, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
@@ -399,7 +399,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_unhook arginfo_weechat_charset_set
 
-#define arginfo_weechat_unhook_all arginfo_weechat_charset_set
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_unhook_all, 0, 0, IS_LONG, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_buffer_new, 0, 5, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)

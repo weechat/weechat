@@ -48,6 +48,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - **breaking:** api: convert variable "interval" from string to long in infolist "hook" (hook timer)
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
 - irc: allow multiple nicks separated by commas in command `/notify del`
+- **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script
 - **breaking:** php: fix arguments of hook_print callback, remove argument "tags_count"
 - **breaking:** php: fix signal data sent by function hook_signal_send and received in hook_signal callback, remove argument "type_data" from hook_signal callback
 - **breaking:** relay: remove "date_printed" and "date_usec_printed" of lines in weechat protocol

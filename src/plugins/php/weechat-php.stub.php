@@ -138,7 +138,7 @@ function weechat_hook_infolist(string $p0, string $p1, string $p2, string $p3, m
 function weechat_hook_focus(string $p0, mixed $p1, string $p2): string {}
 function weechat_hook_set(string $p0, string $p1, string $p2): int {}
 function weechat_unhook(string $p0): int {}
-function weechat_unhook_all(string $p0): int {}
+function weechat_unhook_all(): int {}
 function weechat_buffer_new(string $p0, mixed $p1, string $p2, mixed $p3, string $p4): string {}
 function weechat_buffer_new_props(string $p0, array $p1, mixed $p2, string $p3, mixed $p4, string $p5): string {}
 function weechat_buffer_search(string $p0, string $p1): string {}

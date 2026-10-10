@@ -92,7 +92,7 @@ functions `infolist_long` and `infolist_longlong` (both added in this version) i
 - infolist `hook` (hook process and hook url): variable `timeout` is now `long`
   (it was an integer), read with `infolist_long`.
 
-### PHP signal and print callbacks
+### PHP scripting API
 
 In PHP scripts, the callback of `weechat_hook_signal` now receives 3 arguments, like in all
 other languages: `data`, `signal` and `signal_data`. The argument `type_data` (third of 4
@@ -122,6 +122,11 @@ function print_cb($data, $buffer, $date, $tags_count, $tags, $displayed, $highli
 // Now:
 function print_cb($data, $buffer, $date, $tags, $displayed, $highlight, $prefix, $message) { ... }
 ```
+
+Function `weechat_unhook_all` now takes no argument, like in all other languages: it removes
+all hooks of the current script (before, it removed the hooks of the script given as
+argument, so calls must be updated: `weechat_unhook_all("my_script")` becomes
+`weechat_unhook_all()`).
 
 ## Version 4.10.0
 

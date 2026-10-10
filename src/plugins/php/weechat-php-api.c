@@ -3673,16 +3673,11 @@ API_FUNC(unhook)
 
 API_FUNC(unhook_all)
 {
-    zend_string *z_subplugin;
-    char *subplugin;
-
     API_INIT_FUNC(1, "unhook_all", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_subplugin) == FAILURE)
+    if (zend_parse_parameters_none () == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    subplugin = ZSTR_VAL(z_subplugin);
-
-    weechat_unhook_all ((const char *)subplugin);
+    weechat_unhook_all (php_current_script->name);
 
     API_RETURN_OK;
 }
