@@ -56,35 +56,55 @@
                                         &guile_num_strings);            \
     }
 #define API_RETURN_OK                                                   \
-    API_FREE_STRINGS;                                                   \
-    return scm_from_int (1)
+    {                                                                   \
+        API_FREE_STRINGS;                                               \
+        return scm_from_int (1);                                        \
+    }
 #define API_RETURN_ERROR                                                \
-    API_FREE_STRINGS                                                    \
-    return scm_from_int (0)
+    {                                                                   \
+        API_FREE_STRINGS;                                               \
+        return scm_from_int (0);                                        \
+    }
 #define API_RETURN_EMPTY                                                \
-    API_FREE_STRINGS;                                                   \
-    return scm_from_locale_string ("")
+    {                                                                   \
+        API_FREE_STRINGS;                                               \
+        return scm_from_locale_string ("");                             \
+    }
 #define API_RETURN_STRING(__string)                                     \
-    return_value = scm_from_locale_string ((__string) ? __string : ""); \
-    API_FREE_STRINGS;                                                   \
-    return return_value
+    {                                                                   \
+        return_value = scm_from_locale_string (                         \
+            (__string) ? __string : "");                                \
+        API_FREE_STRINGS;                                               \
+        return return_value;                                            \
+    }
 #define API_RETURN_STRING_FREE(__string)                                \
-    return_value = scm_from_locale_string ((__string) ? __string : ""); \
-    free (__string);                                                    \
-    API_FREE_STRINGS;                                                   \
-    return return_value
+    {                                                                   \
+        return_value = scm_from_locale_string (                         \
+            (__string) ? __string : "");                                \
+        free (__string);                                                \
+        API_FREE_STRINGS;                                               \
+        return return_value;                                            \
+    }
 #define API_RETURN_INT(__int)                                           \
-    API_FREE_STRINGS;                                                   \
-    return scm_from_int (__int)
+    {                                                                   \
+        API_FREE_STRINGS;                                               \
+        return scm_from_int (__int);                                    \
+    }
 #define API_RETURN_LONG(__long)                                         \
-    API_FREE_STRINGS;                                                   \
-    return scm_from_long (__long)
+    {                                                                   \
+        API_FREE_STRINGS;                                               \
+        return scm_from_long (__long);                                  \
+    }
 #define API_RETURN_LONGLONG(__long)                                     \
-    API_FREE_STRINGS;                                                   \
-    return scm_from_long_long (__long)
+    {                                                                   \
+        API_FREE_STRINGS;                                               \
+        return scm_from_long_long (__long);                             \
+    }
 #define API_RETURN_OTHER(__scm)                                         \
-    API_FREE_STRINGS;                                                   \
-    return __scm
+    {                                                                   \
+        API_FREE_STRINGS;                                               \
+        return __scm;                                                   \
+    }
 
 #define API_DEF_FUNC(__name, __argc)                                    \
     scm_c_define_gsubr ("weechat:" #__name, __argc, 0, 0,               \
