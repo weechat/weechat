@@ -971,6 +971,8 @@ weeurl_download (const char *url, struct t_hashtable *options,
     CURL *curl;
     CURLM *multi;
     CURLMcode curl_mc;
+    CURLMsg *curl_msg;
+    CURLcode curl_rc;
     struct t_url_file url_file[2];
     char *url_file_option[2] = { "file_in", "file_out" };
     char *url_file_mode[2] = { "rb", "wb" };
@@ -981,7 +983,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
     CURLoption url_file_opt_data[2] = { CURLOPT_READDATA, CURLOPT_WRITEDATA };
     void *url_file_opt_cb[2] = { &weeurl_read_stream, &weeurl_write_stream };
     struct t_proxy *ptr_proxy;
-    int rc, i, output_to_file, still_running;
+    int rc, i, output_to_file, still_running, msgs_left;
     long response_code;
     struct timeval tv_now, tv_end;
 
@@ -1130,6 +1132,40 @@ weeurl_download (const char *url, struct t_hashtable *options,
         }
         if (!still_running)
         {
+            /* Transfer done: check its result. */
+            curl_rc = CURLE_OK;
+            while ((curl_msg = curl_multi_info_read (multi, &msgs_left)))
+            {
+                if (curl_msg->msg == CURLMSG_DONE)
+                    curl_rc = curl_msg->data.result;
+            }
+            if (curl_rc != CURLE_OK)
+            {
+                if (output)
+                {
+                    snprintf (url_error_code, sizeof (url_error_code),
+                              "%d", curl_rc);
+                    if (!url_error[0])
+                    {
+                        snprintf (url_error, sizeof (url_error),
+                                  "%s", curl_easy_strerror (curl_rc));
+                    }
+                }
+                else
+                {
+                    /*
+                     * URL transfer done in a forked process: display error on stderr,
+                     * which will be sent to the hook_process callback.
+                     */
+                    fprintf (stderr,
+                             _("curl error %d (%s) (URL: \"%s\")\n"),
+                             curl_rc,
+                             (url_error[0]) ? url_error : curl_easy_strerror (curl_rc),
+                             url);
+                }
+                rc = 2;
+                break;
+            }
             /* Transfer OK */
             if (output)
             {

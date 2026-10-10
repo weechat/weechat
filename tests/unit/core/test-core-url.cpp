@@ -10,7 +10,13 @@
 
 extern "C"
 {
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "src/core/core-hashtable.h"
+#include "src/core/core-string.h"
 #include "src/core/core-url.h"
+#include "src/plugins/weechat-plugin.h"
 
 extern struct t_url_constant url_proxy_types[];
 extern struct t_url_constant url_protocols[];
@@ -133,7 +139,57 @@ TEST(CoreUrl, SetProxy)
 
 TEST(CoreUrl, Download)
 {
-    /* TODO: write tests */
+    struct t_hashtable *output;
+    char *path, *real_path, *url;
+    FILE *file;
+
+    output = hashtable_new (32, WEECHAT_HASHTABLE_STRING,
+                            WEECHAT_HASHTABLE_STRING, NULL, NULL);
+    CHECK(output);
+
+    /* Invalid URL */
+    LONGS_EQUAL(1, weeurl_download (NULL, NULL, 0, output, NULL));
+    STRCMP_EQUAL("invalid URL", (const char *)hashtable_get (output, "error"));
+    hashtable_remove_all (output);
+    LONGS_EQUAL(1, weeurl_download ("", NULL, 0, output, NULL));
+    hashtable_remove_all (output);
+
+    /* Local file */
+    path = string_eval_path_home ("${weechat_data_dir}/test_url_download.txt",
+                                  NULL, NULL, NULL);
+    CHECK(path);
+    file = fopen (path, "w");
+    CHECK(file);
+    fputs ("test file content\n", file);
+    fclose (file);
+    /* A "file://" URL needs an absolute path. */
+    real_path = realpath (path, NULL);
+    CHECK(real_path);
+    string_asprintf (&url, "file://%s", real_path);
+    CHECK(url);
+    LONGS_EQUAL(0, weeurl_download (url, NULL, 10000, output, NULL));
+    STRCMP_EQUAL("0", (const char *)hashtable_get (output, "response_code"));
+    STRCMP_EQUAL("test file content\n",
+                 (const char *)hashtable_get (output, "output"));
+    POINTERS_EQUAL(NULL, hashtable_get (output, "error"));
+    POINTERS_EQUAL(NULL, hashtable_get (output, "error_code_curl"));
+    hashtable_remove_all (output);
+    free (url);
+    unlink (path);
+
+    /* Missing file: curl error */
+    string_asprintf (&url, "file://%s", real_path);
+    CHECK(url);
+    LONGS_EQUAL(2, weeurl_download (url, NULL, 10000, output, NULL));
+    CHECK(hashtable_get (output, "error"));
+    STRCMP_EQUAL("37", (const char *)hashtable_get (output, "error_code_curl"));
+    POINTERS_EQUAL(NULL, hashtable_get (output, "response_code"));
+    hashtable_remove_all (output);
+    free (url);
+
+    free (real_path);
+    free (path);
+    hashtable_free (output);
 }
 
 /*
