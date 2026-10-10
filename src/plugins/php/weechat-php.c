@@ -442,7 +442,7 @@ weechat_php_array_to_hashtable (zval *arr,
     return hashtable;
 }
 
-static void
+void
 weechat_php_func_map_free_val (struct t_hashtable *hashtable,
                                const void *key, void *value)
 {
@@ -454,7 +454,7 @@ weechat_php_func_map_free_val (struct t_hashtable *hashtable,
     efree ((zval *)value);
 }
 
-static void
+void
 weechat_php_func_map_free_key (struct t_hashtable *hashtable, void *key)
 {
     /* Make C compiler happy. */

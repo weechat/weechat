@@ -172,7 +172,7 @@ API_FUNC(register)
  * Generic PHP callback function.
  */
 
-static void
+void
 weechat_php_cb (const void *pointer, void *data, void **func_argv,
                 const char *func_types, int ret_type, void *rc)
 {
@@ -1008,7 +1008,7 @@ API_FUNC(list_free)
     API_RETURN_OK;
 }
 
-static int
+int
 weechat_php_api_config_reload_cb (const void *pointer, void *data,
                                   struct t_config_file *config_file)
 {
@@ -1104,7 +1104,7 @@ API_FUNC(config_set_version)
     API_RETURN_INT(rc);
 }
 
-static int
+int
 weechat_php_api_config_section_read_cb (const void *pointer, void *data,
                                         struct t_config_file *config_file,
                                         struct t_config_section *section,
@@ -1125,7 +1125,7 @@ weechat_php_api_config_section_read_cb (const void *pointer, void *data,
     return rc;
 }
 
-static int
+int
 weechat_php_api_config_section_write_cb (const void *pointer, void *data,
                                          struct t_config_file *config_file,
                                          const char *section_name)
@@ -1142,7 +1142,7 @@ weechat_php_api_config_section_write_cb (const void *pointer, void *data,
     return rc;
 }
 
-static int
+int
 weechat_php_api_config_section_write_default_cb (const void *pointer,
                                                  void *data,
                                                  struct t_config_file *config_file,
@@ -1160,7 +1160,7 @@ weechat_php_api_config_section_write_default_cb (const void *pointer,
     return rc;
 }
 
-static int
+int
 weechat_php_api_config_section_create_option_cb (const void *pointer,
                                                  void *data,
                                                  struct t_config_file *config_file,
@@ -1182,7 +1182,7 @@ weechat_php_api_config_section_create_option_cb (const void *pointer,
     return rc;
 }
 
-static int
+int
 weechat_php_api_config_section_delete_option_cb (const void *pointer,
                                                  void *data,
                                                  struct t_config_file *config_file,
@@ -1294,7 +1294,7 @@ API_FUNC(config_search_section)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_config_option_check_value_cb (const void *pointer,
                                               void *data,
                                               struct t_config_option *option,
@@ -1312,7 +1312,7 @@ weechat_php_api_config_option_check_value_cb (const void *pointer,
     return rc;
 }
 
-static void
+void
 weechat_php_api_config_option_change_cb (const void *pointer,
                                          void *data,
                                          struct t_config_option *option)
@@ -1325,7 +1325,7 @@ weechat_php_api_config_option_change_cb (const void *pointer,
                     WEECHAT_SCRIPT_EXEC_IGNORE, NULL);
 }
 
-static void
+void
 weechat_php_api_config_option_delete_cb (const void *pointer,
                                          void *data,
                                          struct t_config_option *option)
@@ -2460,7 +2460,7 @@ API_FUNC(log_print)
     API_RETURN_OK;
 }
 
-static int
+int
 weechat_php_api_hook_command_cb (const void *pointer, void *data,
                                  struct t_gui_buffer *buffer,
                                  int argc, char **argv, char **argv_eol)
@@ -2518,7 +2518,7 @@ API_FUNC(hook_command)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_hook_completion_cb (const void *pointer, void *data,
                                     const char *completion_item,
                                     struct t_gui_buffer *buffer,
@@ -2625,7 +2625,7 @@ API_FUNC(hook_completion_list_add)
     API_RETURN_OK;
 }
 
-static int
+int
 weechat_php_api_hook_command_run_cb (const void *pointer, void *data,
                                      struct t_gui_buffer *buffer,
                                      const char *command)
@@ -2670,7 +2670,7 @@ API_FUNC(hook_command_run)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_hook_timer_cb (const void *pointer, void *data,
                                int remaining_calls)
 {
@@ -2721,7 +2721,7 @@ API_FUNC(hook_timer)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_hook_fd_cb (const void *pointer, void *data,
                             int fd)
 {
@@ -2772,7 +2772,7 @@ API_FUNC(hook_fd)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_hook_process_cb (const void *pointer, void *data,
                                  const char *command, int return_code,
                                  const char *out, const char *err)
@@ -2823,7 +2823,7 @@ API_FUNC(hook_process)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_hook_process_hashtable_cb (const void *pointer, void *data,
                                            const char *command,
                                            int return_code,
@@ -2885,7 +2885,7 @@ API_FUNC(hook_process_hashtable)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_hook_url_cb (const void *pointer, void *data,
                              const char *url,
                              struct t_hashtable *options,
@@ -2946,7 +2946,7 @@ API_FUNC(hook_url)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_hook_connect_cb (const void *pointer, void *data, int status,
                                  int gnutls_rc, int sock, const char *error,
                                  const char *ip_address)
@@ -3068,7 +3068,7 @@ API_FUNC(hook_line)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_hook_print_cb (const void *pointer, void *data,
                                struct t_gui_buffer *buffer,
                                time_t date, int date_usec,
@@ -3135,7 +3135,7 @@ API_FUNC(hook_print)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_hook_signal_cb (const void *pointer, void *data,
                                 const char *signal, const char *type_data,
                                 void *signal_data)
@@ -3238,7 +3238,7 @@ API_FUNC(hook_signal_send)
     API_RETURN_INT(WEECHAT_RC_ERROR);
 }
 
-static int
+int
 weechat_php_api_hook_hsignal_cb (const void *pointer, void *data,
                                  const char *signal,
                                  struct t_hashtable *hashtable)
@@ -3310,7 +3310,7 @@ API_FUNC(hook_hsignal_send)
     API_RETURN_INT(result);
 }
 
-static int
+int
 weechat_php_api_hook_config_cb (const void *pointer, void *data,
                                 const char *option, const char *value)
 {
@@ -3354,7 +3354,7 @@ API_FUNC(hook_config)
     API_RETURN_STRING(result);
 }
 
-static char *
+char *
 weechat_php_api_hook_modifier_cb (const void *pointer, void *data,
                                   const char *modifier,
                                   const char *modifier_data,
@@ -3422,7 +3422,7 @@ API_FUNC(hook_modifier_exec)
     API_RETURN_STRING_FREE(result);
 }
 
-static char *
+char *
 weechat_php_api_hook_info_cb (const void *pointer,
                               void *data,
                               const char *info_name,
@@ -4560,7 +4560,7 @@ API_FUNC(bar_item_search)
     API_RETURN_STRING(result);
 }
 
-static char *
+char *
 weechat_php_api_bar_item_new_build_cb (const void *pointer, void *data,
                                        struct t_gui_bar_item *item,
                                        struct t_gui_window *window,
@@ -5915,7 +5915,7 @@ API_FUNC(hdata_get_string)
     API_RETURN_STRING(result);
 }
 
-static int
+int
 weechat_php_api_upgrade_read_cb (const void *pointer, void *data,
                                  struct t_upgrade_file *upgrade_file,
                                  int object_id,
@@ -6021,8 +6021,15 @@ API_FUNC(upgrade_close)
     API_RETURN_OK;
 }
 
-static void
-forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
+/*
+ * Remove an entry (class or function) from a PHP hash table.
+ *
+ * Return true if the entry was removed, false otherwise (always false with
+ * PHP >= 8).
+ */
+
+void
+weechat_php_forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
 {
 #if PHP_VERSION_ID >= 80000
     /* Make C compiler happy. */
@@ -6059,10 +6066,12 @@ forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
 
 PHP_FUNCTION(forget_class)
 {
-    forget_hash_entry (EG(class_table), INTERNAL_FUNCTION_PARAM_PASSTHRU);
+    weechat_php_forget_hash_entry (EG(class_table),
+                                   INTERNAL_FUNCTION_PARAM_PASSTHRU);
 }
 
 PHP_FUNCTION(forget_function)
 {
-    forget_hash_entry (EG(function_table), INTERNAL_FUNCTION_PARAM_PASSTHRU);
+    weechat_php_forget_hash_entry (EG(function_table),
+                                   INTERNAL_FUNCTION_PARAM_PASSTHRU);
 }
