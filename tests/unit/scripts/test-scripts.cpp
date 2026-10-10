@@ -178,7 +178,8 @@ TEST(Scripts, API)
 {
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
     char *path_testapi_output_dir, *path_testapi_dir;
-    int sock_listen, sock_refused;
+    int sock_listen, sock_refused, fd_pipe[2];
+    char str_fd[16];
     char str_command[(PATH_MAX * 2) + 128];
     char *test_scripts_dir, str_condition[128], str_error[128];
     struct timeval time_start, time_end;
@@ -254,6 +255,15 @@ TEST(Scripts, API)
     sock_refused = test_scripts_create_socket (0, "WEECHAT_TESTS_CONNECT_PORT_REFUSED");
     CHECK(sock_refused >= 0);
     close (sock_refused);
+
+    /*
+     * Pipe used to test hook_fd: data is written in the pipe (and never read),
+     * so that the read end is always ready for reading.
+     */
+    LONGS_EQUAL(0, pipe (fd_pipe));
+    LONGS_EQUAL(1, write (fd_pipe[1], "x", 1));
+    snprintf (str_fd, sizeof (str_fd), "%d", fd_pipe[0]);
+    setenv ("WEECHAT_TESTS_FD", str_fd, 1);
 
     api_tests_ok = 0;
     api_tests_errors = 0;
@@ -388,6 +398,9 @@ TEST(Scripts, API)
     close (sock_listen);
     unsetenv ("WEECHAT_TESTS_CONNECT_PORT");
     unsetenv ("WEECHAT_TESTS_CONNECT_PORT_REFUSED");
+    close (fd_pipe[0]);
+    close (fd_pipe[1]);
+    unsetenv ("WEECHAT_TESTS_FD");
 
     free (path_testapi_output_dir);
     free (path_testapi_dir);

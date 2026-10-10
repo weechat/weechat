@@ -1033,6 +1033,19 @@ def connect_refused_cb(data, status, gnutls_rc, sock, error, ip_address):
     return weechat.WEECHAT_RC_OK
 
 
+def fd_cb(data, fd):
+    """Handle data available on the file descriptor (called once: the hook is removed here)."""
+    check(data == "fd_data")
+    check(fd == weechat.string_parse_size(weechat.string_eval_expression("${env:WEECHAT_TESTS_FD}", {}, {}, {})))
+    # The data is never read, so the hook must be removed to not be called again.
+    buffer = weechat.buffer_search_main()
+    hook_fd = weechat.buffer_get_string(buffer, "localvar_testapi_hook_fd")
+    check(hook_fd != "")
+    weechat.unhook(hook_fd)
+    weechat.buffer_set(buffer, "localvar_del_testapi_hook_fd", "")
+    return weechat.WEECHAT_RC_OK
+
+
 def test_hooks():
     """Test hook functions."""
     buffer = weechat.buffer_search_main()
@@ -1851,6 +1864,24 @@ def test_hooks_connect():
     check(hook_conn2 != "")
 
 
+def test_hooks_fd():
+    """Test function hook_fd.
+
+    The callback is called later, by the main loop, so this function must be
+    called after test_unhook_all (which would remove the hook).
+
+    The file descriptor is the read end of a pipe given by the C++ test in an
+    environment variable (with data that is never read, so it is always ready
+    for reading); the hook is saved in a local variable of core buffer, so
+    that the callback can remove it.
+    """
+    fd = weechat.string_parse_size(weechat.string_eval_expression("${env:WEECHAT_TESTS_FD}", {}, {}, {}))
+    check(fd > 0)
+    hook_fd = weechat.hook_fd(fd, 1, 0, 0, "fd_cb", "fd_data")
+    check(hook_fd != "")
+    weechat.buffer_set(weechat.buffer_search_main(), "localvar_set_testapi_hook_fd", hook_fd)
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt("", ">>>")
@@ -1882,6 +1913,7 @@ def cmd_test_cb(data, buf, args):
     test_hooks_process()
     test_hooks_url()
     test_hooks_connect()
+    test_hooks_fd()
     weechat.prnt("", "  > TESTS END")
     return weechat.WEECHAT_RC_OK
 

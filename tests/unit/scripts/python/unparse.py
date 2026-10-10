@@ -961,16 +961,24 @@ class UnparseGuile(UnparsePython):
                 and not self.is_number(comparator)
                 and not self.is_bool(comparator)
             ):
-                prefix = "string"
+                # Type is unknown (string or number): use generic equality.
+                self.add(
+                    "(not " if isinstance(operator, ast.NotEq) else None,
+                    "(equal? ",
+                    node.left,
+                    " ",
+                    comparator,
+                    ")",
+                    ")" if isinstance(operator, ast.NotEq) else None,
+                )
             else:
-                prefix = ""
-            self.add(
-                f"({prefix}{self.cmpop[operator.__class__.__name__]} ",
-                node.left,
-                " ",
-                comparator,
-                ")",
-            )
+                self.add(
+                    f"({self.cmpop[operator.__class__.__name__]} ",
+                    node.left,
+                    " ",
+                    comparator,
+                    ")",
+                )
 
     def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
