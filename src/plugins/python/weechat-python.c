@@ -63,7 +63,7 @@ PyThreadState *python_current_interpreter = NULL;
 char **python_buffer_output = NULL;
 
 /* Outputs subroutines */
-static PyObject *weechat_python_output (PyObject *self, PyObject *args);
+PyObject *weechat_python_output (PyObject *self, PyObject *args);
 static PyMethodDef weechat_python_output_funcs[] = {
     { "write", weechat_python_output, METH_VARARGS, "" },
     { NULL, NULL, 0, NULL }
@@ -339,7 +339,7 @@ weechat_python_output_flush (void)
  * Redirection for stdout and stderr.
  */
 
-static PyObject *
+PyObject *
 weechat_python_output (PyObject *self, PyObject *args)
 {
     char *msg, *ptr_msg, *ptr_newline;
@@ -589,7 +589,8 @@ end:
  * Initialize the "weechat" module.
  */
 
-static PyObject *weechat_python_init_module_weechat (void)
+PyObject *
+weechat_python_init_module_weechat (void)
 {
     PyObject *weechat_module;
     int i;
