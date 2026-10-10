@@ -734,6 +734,8 @@ def test_display():
         buffer, 1, 2146383600, 123456, "tag1,tag2", "## test print_y_date_tags free buffer, January, 6th 2038"
     )
     weechat.buffer_close(buffer)
+    # The message must not be used as format (it contains "%s" and "%n").
+    check(weechat.log_print("test log_print: %s %n %d") == 1)
 
 
 def completion1_cb(data, completion_item, buf, completion):
