@@ -700,7 +700,7 @@ infolist_reset_item_cursor (struct t_infolist *infolist)
  * before.
  */
 
-static struct t_infolist_var *
+struct t_infolist_var *
 infolist_item_search_var (struct t_infolist_item *item, const char *name)
 {
     struct t_infolist_var *ptr_var, *ptr_start;

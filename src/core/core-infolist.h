@@ -122,6 +122,8 @@ extern struct t_infolist_var *infolist_new_var_long_take_name_ownership (struct 
                                                                          char *name, long value);
 extern struct t_infolist_var *infolist_new_var_longlong_take_name_ownership (struct t_infolist_item *item,
                                                                              char *name, long long value);
+extern struct t_infolist_var *infolist_item_search_var (struct t_infolist_item *item,
+                                                        const char *name);
 extern struct t_infolist_var *infolist_search_var (struct t_infolist *infolist,
                                                    const char *name);
 extern struct t_infolist_item *infolist_next (struct t_infolist *infolist);

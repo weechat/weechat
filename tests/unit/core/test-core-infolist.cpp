@@ -371,6 +371,58 @@ TEST(CoreInfolist, Valid)
 
 /*
  * Test functions:
+ *   infolist_item_search_var
+ */
+
+TEST(CoreInfolist, ItemSearchVar)
+{
+    struct t_infolist *infolist;
+    struct t_infolist_item *ptr_item;
+    struct t_infolist_var *ptr_var_integer, *ptr_var_string, *ptr_var_longlong;
+
+    infolist = hook_infolist_get (NULL, "infolist_test", NULL, NULL);
+    ptr_item = infolist->items;
+
+    ptr_var_integer = ptr_item->vars;
+    ptr_var_string = ptr_var_integer->next_var;
+    ptr_var_longlong = ptr_item->last_var;
+
+    POINTERS_EQUAL(NULL, infolist_item_search_var (NULL, NULL));
+    POINTERS_EQUAL(NULL, infolist_item_search_var (NULL, "integer"));
+    POINTERS_EQUAL(NULL, infolist_item_search_var (ptr_item, NULL));
+    POINTERS_EQUAL(NULL, infolist_item_search_var (ptr_item, ""));
+    POINTERS_EQUAL(NULL, ptr_item->cursor_var);
+
+    /* Search in order of variables. */
+    POINTERS_EQUAL(ptr_var_integer,
+                   infolist_item_search_var (ptr_item, "integer"));
+    POINTERS_EQUAL(ptr_var_integer, ptr_item->cursor_var);
+    POINTERS_EQUAL(ptr_var_string,
+                   infolist_item_search_var (ptr_item, "string"));
+    POINTERS_EQUAL(ptr_var_string, ptr_item->cursor_var);
+
+    /* Search the same variable again (wrap around). */
+    POINTERS_EQUAL(ptr_var_string,
+                   infolist_item_search_var (ptr_item, "string"));
+    POINTERS_EQUAL(ptr_var_string, ptr_item->cursor_var);
+
+    /* Search the last variable, then a variable before it (wrap around). */
+    POINTERS_EQUAL(ptr_var_longlong,
+                   infolist_item_search_var (ptr_item, "longlong"));
+    POINTERS_EQUAL(ptr_var_longlong, ptr_item->cursor_var);
+    POINTERS_EQUAL(ptr_var_integer,
+                   infolist_item_search_var (ptr_item, "integer"));
+    POINTERS_EQUAL(ptr_var_integer, ptr_item->cursor_var);
+
+    /* Search an unknown variable: cursor is unchanged. */
+    POINTERS_EQUAL(NULL, infolist_item_search_var (ptr_item, "xxx"));
+    POINTERS_EQUAL(ptr_var_integer, ptr_item->cursor_var);
+
+    infolist_free (infolist);
+}
+
+/*
+ * Test functions:
  *   infolist_search_var
  */
 
