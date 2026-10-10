@@ -120,7 +120,7 @@ jobs:
   checks:
 
     env:
-      POEXAM_VERSION: "0.2.0"
+      POEXAM_VERSION: "0.3.0"
       REUSE_VERSION: "6.2.0"
       RUFF_VERSION: "0.17.0"
       TY_VERSION: "0.0.86"
