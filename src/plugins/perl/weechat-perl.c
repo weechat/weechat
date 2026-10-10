@@ -537,6 +537,13 @@ weechat_perl_load (const char *filename, const char *code)
     perl_current_script_filename = filename;
     perl_registered_script = NULL;
 
+    snprintf (str_warning, sizeof (str_warning),
+              weechat_gettext ("%s: warning:"),
+              PERL_PLUGIN_NAME);
+    snprintf (str_error, sizeof (str_error),
+              weechat_gettext ("%s: error:"),
+              PERL_PLUGIN_NAME);
+
 #ifdef MULTIPLICITY
     perl_current_interpreter = perl_alloc ();
 
@@ -548,13 +555,6 @@ weechat_perl_load (const char *filename, const char *code)
                         weechat_prefix ("error"), PERL_PLUGIN_NAME);
         return NULL;
     }
-
-    snprintf (str_warning, sizeof (str_warning),
-              weechat_gettext ("%s: warning:"),
-              PERL_PLUGIN_NAME);
-    snprintf (str_error, sizeof (str_error),
-              weechat_gettext ("%s: error:"),
-              PERL_PLUGIN_NAME);
 
     PERL_SET_CONTEXT (perl_current_interpreter);
     wcwidth160 = wcwidth (160);
