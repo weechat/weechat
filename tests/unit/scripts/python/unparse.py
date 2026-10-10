@@ -782,11 +782,16 @@ class UnparseTcl(UnparsePython):
 
     def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
+        # Calls in values must be enclosed in brackets.
+        self._call += 1
         self.add(
             "[dict create ",
+            (self.prefix, "$"),
             self.make_list([[key, " ", value] for key, value in zip(node.keys, node.values)], sep=" "),
+            (self.prefix, None),
             "]",
         )
+        self._call -= 1
 
     def _ast_functiondef(self, node: ast.FunctionDef) -> None:
         """Add an AST FunctionDef in output."""
@@ -968,10 +973,12 @@ class UnparseGuile(UnparsePython):
 
     def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
+        # Quasiquote the list and unquote values, so that values are evaluated.
         self.add(
-            "'(",
+            "`(",
             self.make_list(
-                [["(", key, " ", value, ")"] for key, value in zip(node.keys, node.values)], sep=" ",
+                [["(", key, " ,", value, ")"] for key, value in zip(node.keys, node.values)],
+                sep=" ",
             ),
             ")",
         )

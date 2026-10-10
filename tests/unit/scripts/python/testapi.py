@@ -824,6 +824,44 @@ def info_hashtable_cb(data, info_name, hashtable):
     return {"key_out": "value_out"}
 
 
+def config_cb(data, option, value):
+    """Handle a change of option."""
+    check(data == "config_data")
+    check(option == "plugins.var." + "{SCRIPT_LANGUAGE}" + "." + "{SCRIPT_NAME}" + ".test_hook_config")
+    check(value == "value2")
+    return weechat.WEECHAT_RC_OK
+
+
+def print_cb(data, buf, date, tags, displayed, highlight, prefix, message):
+    """Handle a printed message."""
+    check(data == "print_data")
+    check(buf != "")
+    check(date == "1231231230")
+    check(tags == "testapi_print_tag,tag2")
+    check(displayed == 1)
+    check(highlight == 0)
+    check(prefix == "## prefix")
+    check(message == "## test hook_print")
+    return weechat.WEECHAT_RC_OK
+
+
+def line_cb(data, line):
+    """Update a line before it is displayed."""
+    check(data == "line_data")
+    check(line["buffer_type"] == "formatted")
+    check(line["tags"] == "testapi_line_tag")
+    check(line["message"] == "## test hook_line")
+    return {"message": "## test hook_line (modified)"}
+
+
+def focus_cb(data, info):
+    """Add data to the focus info."""
+    check(data == "focus_data")
+    check(info["_chat"] == "1")
+    check(info["_window_number"] == "1")
+    return {"test_key": "test_value"}
+
+
 def test_hooks():
     """Test hook functions."""
     buffer = weechat.buffer_search_main()
@@ -925,6 +963,43 @@ def test_hooks():
     result = weechat.info_get_hashtable(info_hashtable, {"key_in": "value_in"})
     check(result["key_out"] == "value_out")
     weechat.unhook(hook_inf_hashtable)
+    # hook_config
+    weechat.config_set_plugin("test_hook_config", "value1")
+    hook_cfg = weechat.hook_config("plugins.var.*." + "{SCRIPT_NAME}" + ".test_hook_config", "config_cb", "config_data")
+    check(hook_cfg != "")
+    weechat.config_set_plugin("test_hook_config", "value2")
+    weechat.unhook(hook_cfg)
+    weechat.config_set_plugin("test_hook_config", "value3")
+    weechat.config_unset_plugin("test_hook_config")
+    # hook_print
+    buffer_hooks = weechat.buffer_new("test_hooks", "buffer_input_cb", "", "buffer_close_cb", "")
+    hook_prt = weechat.hook_print(buffer_hooks, "testapi_print_tag", "", 1, "print_cb", "print_data")
+    check(hook_prt != "")
+    weechat.prnt_date_tags(buffer_hooks, 1231231230, "tag2", "## test hook_print (not caught)")
+    weechat.prnt_date_tags(buffer_hooks, 1231231230, "testapi_print_tag,tag2", "## prefix\t## test hook_print")
+    weechat.unhook(hook_prt)
+    weechat.prnt_date_tags(buffer_hooks, 1231231230, "testapi_print_tag,tag2", "## prefix\t## test hook_print")
+    # hook_line
+    hook_ln = weechat.hook_line("formatted", "*", "testapi_line_tag", "line_cb", "line_data")
+    check(hook_ln != "")
+    weechat.prnt_date_tags(buffer_hooks, 0, "testapi_line_tag", "## test hook_line")
+    weechat.unhook(hook_ln)
+    lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), buffer_hooks, "own_lines")
+    line = weechat.hdata_pointer(weechat.hdata_get("lines"), lines, "last_line")
+    line_data = weechat.hdata_pointer(weechat.hdata_get("line"), line, "data")
+    check(weechat.hdata_string(weechat.hdata_get("line_data"), line_data, "message") == "## test hook_line (modified)")
+    weechat.buffer_close(buffer_hooks)
+    # hook_focus
+    hook_fcs = weechat.hook_focus("chat", "focus_cb", "focus_data")
+    check(hook_fcs != "")
+    focus_pos = {
+        "x": weechat.string_eval_expression("${window.win_chat_x}", {}, {}, {}),
+        "y": weechat.string_eval_expression("${window.win_chat_y}", {}, {}, {}),
+    }
+    focus_info = weechat.info_get_hashtable("focus_info", focus_pos)
+    check(focus_info["_chat"] == "1")
+    check(focus_info["test_key"] == "test_value")
+    weechat.unhook(hook_fcs)
 
 
 def test_buffers():
