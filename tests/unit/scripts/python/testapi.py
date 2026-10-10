@@ -721,7 +721,9 @@ def test_config():
     # Free option.
     weechat.config_option_free(ptr_opt_bool)
     # Free options in section.
+    check(weechat.config_search_option(ptr_config, ptr_section, "option_str") != "")
     weechat.config_section_free_options(ptr_section)
+    check(weechat.config_search_option(ptr_config, ptr_section, "option_str") == "")
     # Free section.
     weechat.config_section_free(ptr_section)
     # Free config.
@@ -735,6 +737,9 @@ def test_config():
     check(weechat.config_is_set_plugin("option") == 0)
     check(weechat.config_set_plugin("option", "value") == 1)  # SET_OK_SAME_VALUE
     weechat.config_set_desc_plugin("option", "description of option")
+    ptr_option_desc = weechat.config_get("plugins.desc." + "{SCRIPT_LANGUAGE}" + "." + "{SCRIPT_NAME}" + ".option")
+    check(ptr_option_desc != "")
+    check(weechat.config_string(ptr_option_desc) == "description of option")
     check(weechat.config_get_plugin("option") == "value")
     check(weechat.config_is_set_plugin("option") == 1)
     check(weechat.config_unset_plugin("option") == 2)  # UNSET_OK_REMOVED
@@ -768,6 +773,13 @@ def buffer_close_cb(data, buffer):
     return weechat.WEECHAT_RC_OK
 
 
+def buffer_line_data(buffer, position):
+    """Return pointer to data of the first or last line of a buffer (position is "first_line" or "last_line")."""
+    own_lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), buffer, "own_lines")
+    line = weechat.hdata_pointer(weechat.hdata_get("lines"), own_lines, position)
+    return weechat.hdata_pointer(weechat.hdata_get("line"), line, "data")
+
+
 def test_display():
     """Test display functions."""
     check(weechat.prefix("action") != "")
@@ -778,35 +790,71 @@ def test_display():
     check(weechat.prefix("unknown") == "")
     check(weechat.color("green") != "")
     check(weechat.color("unknown") == "")
+    hdata_line_data = weechat.hdata_get("line_data")
+    # Print on core buffer.
+    buffer = weechat.buffer_search_main()
     weechat.prnt("", "## test print core buffer")
+    data = buffer_line_data(buffer, "last_line")
+    check(weechat.hdata_string(hdata_line_data, data, "message") == "## test print core buffer")
+    check(weechat.hdata_integer(hdata_line_data, data, "tags_count") == 0)
     weechat.prnt_date_tags("", 946681200, "tag1,tag2", "## test print_date_tags core buffer")
+    data = buffer_line_data(buffer, "last_line")
+    check(weechat.hdata_string(hdata_line_data, data, "message") == "## test print_date_tags core buffer")
+    check(weechat.hdata_time(hdata_line_data, data, "date") == 946681200)
+    check(weechat.hdata_integer(hdata_line_data, data, "tags_count") == 2)
+    check(weechat.hdata_string(hdata_line_data, data, "0|tags_array") == "tag1")
+    check(weechat.hdata_string(hdata_line_data, data, "1|tags_array") == "tag2")
     weechat.prnt_datetime_tags(
         "", 2146383600, 123456, "tag1,tag2", "## test print_date_tags core buffer, January, 6th 2038"
     )
-    hdata_buffer = weechat.hdata_get("buffer")
-    hdata_lines = weechat.hdata_get("lines")
-    hdata_line = weechat.hdata_get("line")
-    hdata_line_data = weechat.hdata_get("line_data")
-    buffer = weechat.buffer_search_main()
-    own_lines = weechat.hdata_pointer(hdata_buffer, buffer, "own_lines")
-    line = weechat.hdata_pointer(hdata_lines, own_lines, "last_line")
-    data = weechat.hdata_pointer(hdata_line, line, "data")
+    data = buffer_line_data(buffer, "last_line")
+    check(
+        weechat.hdata_string(hdata_line_data, data, "message")
+        == "## test print_date_tags core buffer, January, 6th 2038"
+    )
     check(weechat.hdata_time(hdata_line_data, data, "date") == 2146383600)
     check(weechat.hdata_integer(hdata_line_data, data, "date_usec") == 123456)
+    check(weechat.hdata_integer(hdata_line_data, data, "tags_count") == 2)
+    # Print on buffer with formatted content.
     buffer = weechat.buffer_new("test_formatted", "buffer_input_cb", "", "buffer_close_cb", "")
     check(buffer != "")
     check(weechat.buffer_get_integer(buffer, "type") == 0)
-    weechat.prnt(buffer, "## test print formatted buffer")
+    weechat.prnt(buffer, "## prefix\t## test print formatted buffer")
+    data = buffer_line_data(buffer, "last_line")
+    check(weechat.hdata_string(hdata_line_data, data, "prefix") == "## prefix")
+    check(weechat.hdata_string(hdata_line_data, data, "message") == "## test print formatted buffer")
     weechat.prnt_date_tags(buffer, 946681200, "tag1,tag2", "## test print_date_tags formatted buffer")
+    data = buffer_line_data(buffer, "last_line")
+    check(weechat.hdata_string(hdata_line_data, data, "message") == "## test print_date_tags formatted buffer")
+    check(weechat.hdata_time(hdata_line_data, data, "date") == 946681200)
+    check(weechat.hdata_string(hdata_line_data, data, "1|tags_array") == "tag2")
     weechat.buffer_close(buffer)
+    # Print on buffer with free content.
     buffer = weechat.buffer_new_props("test_free", {"type": "free"}, "buffer_input_cb", "", "buffer_close_cb", "")
     check(weechat.buffer_get_integer(buffer, "type") == 1)
     check(buffer != "")
     weechat.prnt_y(buffer, 0, "## test print_y free buffer")
+    data = buffer_line_data(buffer, "first_line")
+    check(weechat.hdata_integer(hdata_line_data, data, "y") == 0)
+    check(weechat.hdata_string(hdata_line_data, data, "message") == "## test print_y free buffer")
+    # Same line number: the line is replaced.
     weechat.prnt_y_date_tags(buffer, 0, 946681200, "tag1,tag2", "## test print_y_date_tags free buffer")
+    data = buffer_line_data(buffer, "first_line")
+    check(weechat.hdata_integer(hdata_line_data, data, "y") == 0)
+    check(weechat.hdata_string(hdata_line_data, data, "message") == "## test print_y_date_tags free buffer")
+    check(weechat.hdata_string(hdata_line_data, data, "0|tags_array") == "tag1")
     weechat.prnt_y_datetime_tags(
         buffer, 1, 2146383600, 123456, "tag1,tag2", "## test print_y_date_tags free buffer, January, 6th 2038"
     )
+    data = buffer_line_data(buffer, "last_line")
+    check(weechat.hdata_integer(hdata_line_data, data, "y") == 1)
+    check(
+        weechat.hdata_string(hdata_line_data, data, "message")
+        == "## test print_y_date_tags free buffer, January, 6th 2038"
+    )
+    check(weechat.hdata_string(hdata_line_data, data, "1|tags_array") == "tag2")
+    own_lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), buffer, "own_lines")
+    check(weechat.hdata_integer(weechat.hdata_get("lines"), own_lines, "lines_count") == 2)
     weechat.buffer_close(buffer)
     # The message must not be used as format (it contains "%s" and "%n").
     check(weechat.log_print("test log_print: %s %n %d") == 1)
@@ -1220,6 +1268,9 @@ def test_buffers():
     weechat.prnt(buffer2, "## test line 1")
     check(weechat.buffer_get_longlong(buffer2, "lines_last_id_assigned") > 0)
     weechat.buffer_clear(buffer2)
+    own_lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), buffer2, "own_lines")
+    check(weechat.hdata_integer(weechat.hdata_get("lines"), own_lines, "lines_count") == 0)
+    check(weechat.hdata_pointer(weechat.hdata_get("lines"), own_lines, "first_line") == "")
     weechat.buffer_merge(buffer2, buffer1)
     check(weechat.buffer_get_integer(buffer1, "number") == 2)
     check(weechat.buffer_get_integer(buffer2, "number") == 2)

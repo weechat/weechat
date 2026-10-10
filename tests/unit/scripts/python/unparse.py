@@ -859,11 +859,15 @@ class UnparseTcl(UnparsePython):
         """Add an AST Return in output."""
         self.fill("return")
         if node.value:
+            # A call must be enclosed in brackets to return its result.
+            is_call = isinstance(node.value, ast.Call)
             self.add(
                 " ",
+                "[" if is_call else None,
                 (self.prefix, "$"),
                 node.value,
                 (self.prefix, None),
+                "]" if is_call else None,
             )
 
     def _ast_subscript(self, node: ast.Subscript) -> None:
