@@ -3077,22 +3077,29 @@ weechat_php_api_hook_print_cb (const void *pointer, void *data,
                                const char *prefix, const char *message)
 {
     int rc;
-    void *func_argv[9];
+    void *func_argv[8];
+    static char timebuffer[64];
 
     /* Make C compiler happy. */
     (void) date_usec;
+    (void) tags_count;
+
+    snprintf (timebuffer, sizeof (timebuffer), "%lld", (long long)date);
 
     func_argv[1] = (char *)API_PTR2STR(buffer);
-    func_argv[2] = &date;
-    func_argv[3] = &tags_count;
-    func_argv[4] = tags ? (char *)tags : weechat_php_empty_arg;
-    func_argv[5] = &displayed;
-    func_argv[6] = &highlight;
-    func_argv[7] = prefix ? (char *)prefix : weechat_php_empty_arg;
-    func_argv[8] = message ? (char *)message : weechat_php_empty_arg;
+    func_argv[2] = timebuffer;
+    func_argv[3] = weechat_string_rebuild_split_string (tags, ",", 0, -1);
+    if (!func_argv[3])
+        func_argv[3] = strdup ("");
+    func_argv[4] = &displayed;
+    func_argv[5] = &highlight;
+    func_argv[6] = prefix ? (char *)prefix : weechat_php_empty_arg;
+    func_argv[7] = message ? (char *)message : weechat_php_empty_arg;
 
-    weechat_php_cb (pointer, data, func_argv, "ssiisiiss",
+    weechat_php_cb (pointer, data, func_argv, "ssssiiss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    free (func_argv[3]);
 
     return rc;
 }
