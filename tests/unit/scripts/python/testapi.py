@@ -998,6 +998,23 @@ def process_hashtable_cb(data, command, return_code, out, err):
     return weechat.WEECHAT_RC_OK
 
 
+def url_cb(data, url, options, output):
+    """Get the result of the URL transfer (called once, when the transfer has ended)."""
+    check(data == "url_data")
+    check(weechat.string_match(url, "file://*/test_config_write_" + "{SCRIPT_LANGUAGE}" + ".conf", 1) == 1)
+    check(output["response_code"] == "0")
+    check(weechat.string_match(output["output"], '*custom = "custom value"*', 1) == 1)
+    return weechat.WEECHAT_RC_OK
+
+
+def url_error_cb(data, url, options, output):
+    """Get the result of the URL transfer (called once, when the transfer has ended)."""
+    check(data == "url_error_data")
+    check(output["error"] != "")
+    check(output["error_code"] == "2")  # Transfer error (curl error)
+    return weechat.WEECHAT_RC_OK
+
+
 def test_hooks():
     """Test hook functions."""
     buffer = weechat.buffer_search_main()
@@ -1764,6 +1781,24 @@ def test_hooks_process():
     check(hook_proc_hashtable != "")
 
 
+def test_hooks_url():
+    """Test function hook_url.
+
+    The callbacks are called later, by the main loop, when the transfers have
+    ended (the hooks are then automatically removed), so this function must be
+    called after test_unhook_all (which would remove the hooks).
+
+    The URL is a local file written by test_config_write.
+    """
+    config_dir = weechat.info_get("weechat_config_dir", "")
+    url = "file://" + config_dir + "/test_config_write_" + "{SCRIPT_LANGUAGE}" + ".conf"
+    hook_url1 = weechat.hook_url(url, {}, 10000, "url_cb", "url_data")
+    check(hook_url1 != "")
+    url_missing = "file://" + config_dir + "/test_url_missing.conf"
+    hook_url2 = weechat.hook_url(url_missing, {}, 10000, "url_error_cb", "url_error_data")
+    check(hook_url2 != "")
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt("", ">>>")
@@ -1793,6 +1828,7 @@ def cmd_test_cb(data, buf, args):
     test_hdata()
     test_unhook_all()
     test_hooks_process()
+    test_hooks_url()
     weechat.prnt("", "  > TESTS END")
     return weechat.WEECHAT_RC_OK
 
