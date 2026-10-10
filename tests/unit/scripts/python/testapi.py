@@ -774,6 +774,56 @@ def timer_cb(data, remaining_calls):
     return weechat.WEECHAT_RC_OK
 
 
+def signal_string_cb(data, signal, signal_data):
+    """Signal callback (string)."""
+    check(data == "signal_data")
+    check(signal == "{SCRIPT_NAME}_signal_string")
+    check(signal_data == "test string")
+    return weechat.WEECHAT_RC_OK_EAT
+
+
+def signal_pointer_cb(data, signal, signal_data):
+    """Signal callback (pointer)."""
+    check(data == "signal_data")
+    check(signal == "{SCRIPT_NAME}_signal_pointer")
+    check(signal_data == weechat.buffer_search_main())
+    return weechat.WEECHAT_RC_OK
+
+
+def hsignal_cb(data, signal, hashtable):
+    """Hsignal callback."""
+    check(data == "hsignal_data")
+    check(signal == "{SCRIPT_NAME}_hsignal")
+    check(hashtable["key1"] == "value1")
+    check(hashtable["key2"] == "value2")
+    return weechat.WEECHAT_RC_OK_EAT
+
+
+def modifier_cb(data, modifier, modifier_data, string):
+    """Modify the string (modifier callback)."""
+    check(data == "modifier_data")
+    check(modifier == "{SCRIPT_NAME}_modifier")
+    check(modifier_data == "test data")
+    check(string == "test string")
+    return string + " (modified)"
+
+
+def info_cb(data, info_name, arguments):
+    """Info callback."""
+    check(data == "info_data")
+    check(info_name == "{SCRIPT_NAME}_info")
+    check(arguments == "test args")
+    return "info: " + arguments
+
+
+def info_hashtable_cb(data, info_name, hashtable):
+    """Info_hashtable callback."""
+    check(data == "info_hashtable_data")
+    check(info_name == "{SCRIPT_NAME}_info_hashtable")
+    check(hashtable["key_in"] == "value_in")
+    return {"key_out": "value_out"}
+
+
 def test_hooks():
     """Test hook functions."""
     buffer = weechat.buffer_search_main()
@@ -823,6 +873,58 @@ def test_hooks():
     check(weechat.infolist_long(ptr_infolist, "interval") == 2000111000)
     weechat.infolist_free(ptr_infolist)
     weechat.unhook(hook_timer)
+    # hook_signal / hook_signal_send
+    signal_string = "{SCRIPT_NAME}_signal_string"
+    signal_pointer = "{SCRIPT_NAME}_signal_pointer"
+    hook_sig_string = weechat.hook_signal(signal_string, "signal_string_cb", "signal_data")
+    check(hook_sig_string != "")
+    hook_sig_pointer = weechat.hook_signal(signal_pointer, "signal_pointer_cb", "signal_data")
+    check(hook_sig_pointer != "")
+    rc = weechat.hook_signal_send(signal_string, weechat.WEECHAT_HOOK_SIGNAL_STRING, "test string")
+    check(rc == weechat.WEECHAT_RC_OK_EAT)
+    rc = weechat.hook_signal_send(signal_pointer, weechat.WEECHAT_HOOK_SIGNAL_POINTER, buffer)
+    check(rc == weechat.WEECHAT_RC_OK)
+    weechat.unhook(hook_sig_string)
+    weechat.unhook(hook_sig_pointer)
+    rc = weechat.hook_signal_send(signal_string, weechat.WEECHAT_HOOK_SIGNAL_STRING, "test string")
+    check(rc == weechat.WEECHAT_RC_OK)
+    # hook_hsignal / hook_hsignal_send
+    hsignal = "{SCRIPT_NAME}_hsignal"
+    hook_hsig = weechat.hook_hsignal(hsignal, "hsignal_cb", "hsignal_data")
+    check(hook_hsig != "")
+    rc = weechat.hook_hsignal_send(hsignal, {"key1": "value1", "key2": "value2"})
+    check(rc == weechat.WEECHAT_RC_OK_EAT)
+    weechat.unhook(hook_hsig)
+    rc = weechat.hook_hsignal_send(hsignal, {"key1": "value1", "key2": "value2"})
+    check(rc == weechat.WEECHAT_RC_OK)
+    # hook_modifier / hook_modifier_exec
+    modifier = "{SCRIPT_NAME}_modifier"
+    hook_mod = weechat.hook_modifier(modifier, "modifier_cb", "modifier_data")
+    check(hook_mod != "")
+    check(weechat.hook_modifier_exec(modifier, "test data", "test string") == "test string (modified)")
+    weechat.unhook(hook_mod)
+    check(weechat.hook_modifier_exec(modifier, "test data", "test string") == "test string")
+    # hook_info / info_get
+    info = "{SCRIPT_NAME}_info"
+    hook_inf = weechat.hook_info(info, "description", "arguments", "info_cb", "info_data")
+    check(hook_inf != "")
+    check(weechat.info_get(info, "test args") == "info: test args")
+    weechat.unhook(hook_inf)
+    check(weechat.info_get(info, "test args") == "")
+    # hook_info_hashtable / info_get_hashtable
+    info_hashtable = "{SCRIPT_NAME}_info_hashtable"
+    hook_inf_hashtable = weechat.hook_info_hashtable(
+        info_hashtable,
+        "description",
+        "arguments",
+        "output",
+        "info_hashtable_cb",
+        "info_hashtable_data",
+    )
+    check(hook_inf_hashtable != "")
+    result = weechat.info_get_hashtable(info_hashtable, {"key_in": "value_in"})
+    check(result["key_out"] == "value_out")
+    weechat.unhook(hook_inf_hashtable)
 
 
 def test_buffers():

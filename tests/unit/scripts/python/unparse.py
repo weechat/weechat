@@ -132,8 +132,11 @@ class UnparsePython(Unparse):
     @staticmethod
     def is_number(node: ast.AST) -> bool:
         """Check if the node is a number."""
-        return (isinstance(node, ast.Constant) and isinstance(node.value, int)) or (
-            isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub))
+        return (
+            (isinstance(node, ast.Constant) and isinstance(node.value, int))
+            or (isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)))
+            # Return codes (WEECHAT_RC_OK, WEECHAT_RC_OK_EAT, WEECHAT_RC_ERROR).
+            or (isinstance(node, ast.Attribute) and node.attr.startswith("WEECHAT_RC_"))
         )
 
     def _ast_alias(self, node: ast.AST) -> None:
@@ -770,7 +773,7 @@ class UnparseTcl(UnparsePython):
     def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            str_node = node.value.replace("$", "\\$")
+            str_node = node.value.replace("$", "\\$").replace("[", "\\[").replace("]", "\\]")
             self.add(f'"{str_node}"')
         elif node.value is None:
             self.add("$::weechat::WEECHAT_NULL")
@@ -1282,8 +1285,9 @@ class UnparsePhp(UnparsePython):
     def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
-            "$",
+            (self.prefix, "$"),
             node.value,
+            (self.prefix, None),
             "[",
             node.slice,
             "]",
