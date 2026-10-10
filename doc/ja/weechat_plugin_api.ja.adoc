@@ -8366,8 +8366,16 @@ C 言語での使用例:
 const char *type = weechat_config_option_get_string (option, "type");
 ----
 
-[NOTE]
-スクリプト API ではこの関数を利用できません。
+スクリプト (Python) での使用例、_WeeChat バージョン 4.3.0 以上で利用可_:
+
+[source,python]
+----
+# プロトタイプ
+def config_option_get_string(option: str, property: str) -> str: ...
+
+# 例
+type = weechat.config_option_get_string(option, "type")
+----
 
 ==== config_option_get_pointer
 
@@ -8410,8 +8418,16 @@ C 言語での使用例:
 char *description = weechat_config_option_get_pointer (option, "description");
 ----
 
-[NOTE]
-スクリプト API ではこの関数を利用できません。
+スクリプト (Python) での使用例、_WeeChat バージョン 4.3.0 以上で利用可_:
+
+[source,python]
+----
+# プロトタイプ
+def config_option_get_pointer(option: str, property: str) -> str: ...
+
+# 例
+ptr_section = weechat.config_option_get_pointer(option, "section")
+----
 
 ==== config_option_is_null
 

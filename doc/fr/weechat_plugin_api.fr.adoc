@@ -8344,8 +8344,16 @@ Exemple en C :
 const char *type = weechat_config_option_get_string (option, "type");
 ----
 
-[NOTE]
-Cette fonction n'est pas disponible dans l'API script.
+Script (Python), _WeeChat ≥ 4.3.0_ :
+
+[source,python]
+----
+# Prototype
+def config_option_get_string(option: str, property: str) -> str: ...
+
+# Exemple
+type = weechat.config_option_get_string(option, "type")
+----
 
 ==== config_option_get_pointer
 
@@ -8391,8 +8399,16 @@ Exemple en C :
 char *description = weechat_config_option_get_pointer (option, "description");
 ----
 
-[NOTE]
-Cette fonction n'est pas disponible dans l'API script.
+Script (Python), _WeeChat ≥ 4.3.0_ :
+
+[source,python]
+----
+# Prototype
+def config_option_get_pointer(option: str, property: str) -> str: ...
+
+# Exemple
+ptr_section = weechat.config_option_get_pointer(option, "section")
+----
 
 ==== config_option_is_null
 

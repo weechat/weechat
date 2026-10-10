@@ -757,6 +757,26 @@ def config_option_rename(option: str, new_name: str) -> int:
     ...
 
 
+def config_option_get_string(option: str, property: str) -> str:
+    """`config_option_get_string in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_option_get_string>`_
+    ::
+
+        # Example
+        type = weechat.config_option_get_string(option, "type")
+    """
+    ...
+
+
+def config_option_get_pointer(option: str, property: str) -> str:
+    """`config_option_get_pointer in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_option_get_pointer>`_
+    ::
+
+        # Example
+        ptr_section = weechat.config_option_get_pointer(option, "section")
+    """
+    ...
+
+
 def config_option_is_null(option: str) -> int:
     """`config_option_is_null in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_option_is_null>`_
     ::
