@@ -856,6 +856,21 @@ def completion2_cb(data, completion_item, buf, completion):
     return weechat.WEECHAT_RC_OK
 
 
+def completion3_cb(data, completion_item, buf, completion):
+    """Completion callback (using old function names)."""
+    check(data == "completion_data")
+    check(completion_item == "{SCRIPT_NAME}3")
+    # The old functions are not documented, so they are not in the Python stub.
+    check(weechat.hook_completion_get_string(completion, "args") == "w")  # ty: ignore[unresolved-attribute]
+    check(
+        weechat.hook_completion_list_add(  # ty: ignore[unresolved-attribute]
+            completion, "word_completed", 0, weechat.WEECHAT_LIST_POS_END
+        )
+        == 1
+    )
+    return weechat.WEECHAT_RC_OK
+
+
 def command_cb(data, buf, args):
     """Command callback."""
     check(data == "command_data")
@@ -1004,6 +1019,23 @@ def test_hooks():
     weechat.unhook(hook_cmplt1)
     weechat.unhook(hook_cmd2)
     weechat.unhook(hook_cmplt2)
+    # hook_completion with old functions hook_completion_get_string and hook_completion_list_add
+    hook_cmplt3 = weechat.hook_completion("{SCRIPT_NAME}3", "description", "completion3_cb", "completion_data")
+    hook_cmd3 = weechat.hook_command(
+        "cmd3" + "{SCRIPT_NAME}",
+        "description",
+        "arguments",
+        "description arguments",
+        "%(" + "{SCRIPT_NAME}3" + ")",
+        "command_cb",
+        "command_data",
+    )
+    weechat.command("", "/input insert /cmd3" + "{SCRIPT_NAME}" + " w")
+    weechat.command("", "/input complete_next")
+    check(weechat.buffer_get_string(buffer, "input") == "/cmd3" + "{SCRIPT_NAME}" + " word_completed ")
+    weechat.command("", "/input delete_line")
+    weechat.unhook(hook_cmd3)
+    weechat.unhook(hook_cmplt3)
     # hook_timer
     hook_timer = weechat.hook_timer(2000111000, 0, 1, "timer_cb", "timer_cb_data")
     ptr_infolist = weechat.infolist_get("hook", hook_timer, "")
