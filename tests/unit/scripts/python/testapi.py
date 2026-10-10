@@ -1073,6 +1073,31 @@ def test_bars():
     check(weechat.bar_item_search("test_item_extra") == "")
 
 
+def test_completion():
+    """Test completion functions."""
+    buffer = weechat.buffer_search_main()
+    hdata = weechat.hdata_get("completion")
+    completion = weechat.completion_new(buffer)
+    check(completion != "")
+    check(weechat.hdata_pointer(hdata, completion, "buffer") == buffer)
+    check(weechat.completion_search(completion, "/help filt", -1, 1) == 0)
+    # command
+    check(weechat.completion_search(completion, "/filt", 5, 1) == 1)
+    check(weechat.completion_get_string(completion, "base_command") == "")
+    check(weechat.completion_get_string(completion, "base_word") == "filt")
+    check(weechat.hdata_string(hdata, completion, "word_found") == "filter")
+    check(weechat.hdata_integer(hdata, completion, "position_replace") == 1)
+    # command argument
+    check(weechat.completion_search(completion, "/help filt", 10, 1) == 1)
+    check(weechat.completion_get_string(completion, "base_command") == "help")
+    check(weechat.completion_get_string(completion, "base_word") == "filt")
+    check(weechat.completion_get_string(completion, "args") == "filt")
+    check(weechat.completion_get_string(completion, "xxx") == "")
+    check(weechat.hdata_string(hdata, completion, "word_found") == "filter")
+    check(weechat.hdata_integer(hdata, completion, "position_replace") == 6)
+    weechat.completion_free(completion)
+
+
 def test_windows():
     """Test window functions."""
     window = weechat.current_window()
@@ -1263,6 +1288,7 @@ def cmd_test_cb(data, buf, args):
     test_nicklist()
     test_lines()
     test_bars()
+    test_completion()
     test_windows()
     test_command()
     test_infolist()
