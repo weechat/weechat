@@ -267,6 +267,13 @@ TEST(Scripts, API)
                   languages[i][1]);
         run_cmd (str_command);
 
+        /*
+         * Enable memory leak detection again before checks:
+         * a failed check exits the test immediately.
+         */
+        if (turnoff_memleak)
+            MemoryLeakWarningPlugin::turnOnThreadSafeNewDeleteOverloads();
+
         /* Check that tests were found in script. */
         CHECK(api_tests_count > 0);
 
@@ -285,9 +292,6 @@ TEST(Scripts, API)
          * and 2 messages when it is unloaded, so total is 4).
          */
         LONGS_EQUAL(0, api_tests_other);
-
-        if (turnoff_memleak)
-            MemoryLeakWarningPlugin::turnOnThreadSafeNewDeleteOverloads();
     }
 
     free (path_testapi_output_dir);
