@@ -187,81 +187,90 @@ weechat_js_exec (struct t_plugin_script *script,
         goto end;
     }
 
-    argc = 0;
-    if (format && format[0])
     {
-        argc = strlen (format);
-        for (i = 0; i < argc; i++)
+        /*
+         * Enter the context of script: it is required to create and read
+         * objects (for hashtables) when the function is called from the main
+         * loop (for example a callback of hook_url).
+         */
+        v8::Context::Scope context_scope(js_v8->getContext());
+
+        argc = 0;
+        if (format && format[0])
         {
-            switch (format[i])
+            argc = strlen (format);
+            for (i = 0; i < argc; i++)
             {
-                case 's': /* String or null */
-                    if (argv[i])
-                        argv2[i] = v8::String::New((const char *)argv[i]);
-                    else
-                        argv2[i] = v8::Null();
-                    break;
-                case 'i': /* Integer */
-                    argv2[i] = v8::Integer::New(*((int *)argv[i]));
-                    break;
-                case 'h': /* Hash */
-                    argv2[i] = weechat_js_hashtable_to_object (
-                        (struct t_hashtable *)argv[i]);
-                    break;
+                switch (format[i])
+                {
+                    case 's': /* String or null */
+                        if (argv[i])
+                            argv2[i] = v8::String::New((const char *)argv[i]);
+                        else
+                            argv2[i] = v8::Null();
+                        break;
+                    case 'i': /* Integer */
+                        argv2[i] = v8::Integer::New(*((int *)argv[i]));
+                        break;
+                    case 'h': /* Hash */
+                        argv2[i] = weechat_js_hashtable_to_object (
+                            (struct t_hashtable *)argv[i]);
+                        break;
+                }
             }
         }
-    }
 
-    ret_js = js_v8->execFunction(function,
-                                 argc,
-                                 (argc > 0) ? argv2 : NULL);
+        ret_js = js_v8->execFunction(function,
+                                     argc,
+                                     (argc > 0) ? argv2 : NULL);
 
-    if (!ret_js.IsEmpty())
-    {
-        if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (ret_js->IsString()))
+        if (!ret_js.IsEmpty())
         {
-            v8::String::Utf8Value temp_str(ret_js);
-            ret_value = (*temp_str) ? strdup(*temp_str) : NULL;
-        }
-        else if ((ret_type == WEECHAT_SCRIPT_EXEC_POINTER) && (ret_js->IsString()))
-        {
-            v8::String::Utf8Value temp_str(ret_js);
-            if (*temp_str)
+            if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (ret_js->IsString()))
             {
-                ret_value = plugin_script_str2ptr (weechat_js_plugin,
-                                                   script->name, function,
-                                                   *temp_str);
+                v8::String::Utf8Value temp_str(ret_js);
+                ret_value = (*temp_str) ? strdup(*temp_str) : NULL;
+            }
+            else if ((ret_type == WEECHAT_SCRIPT_EXEC_POINTER) && (ret_js->IsString()))
+            {
+                v8::String::Utf8Value temp_str(ret_js);
+                if (*temp_str)
+                {
+                    ret_value = plugin_script_str2ptr (weechat_js_plugin,
+                                                       script->name, function,
+                                                       *temp_str);
+                }
+                else
+                {
+                    ret_value = NULL;
+                }
+            }
+            else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (ret_js->IsInt32()))
+            {
+                ret_int = (int *)malloc (sizeof (*ret_int));
+                if (ret_int)
+                    *ret_int = (int)(ret_js->IntegerValue());
+                ret_value = ret_int;
+            }
+            else if ((ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+                     && (ret_js->IsObject()))
+            {
+                ret_value = (struct t_hashtable *)weechat_js_object_to_hashtable (
+                    ret_js->ToObject(),
+                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                    WEECHAT_HASHTABLE_STRING,
+                    WEECHAT_HASHTABLE_STRING);
             }
             else
             {
-                ret_value = NULL;
-            }
-        }
-        else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (ret_js->IsInt32()))
-        {
-            ret_int = (int *)malloc (sizeof (*ret_int));
-            if (ret_int)
-                *ret_int = (int)(ret_js->IntegerValue());
-            ret_value = ret_int;
-        }
-        else if ((ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
-                 && (ret_js->IsObject()))
-        {
-            ret_value = (struct t_hashtable *)weechat_js_object_to_hashtable (
-                ret_js->ToObject(),
-                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
-                WEECHAT_HASHTABLE_STRING,
-                WEECHAT_HASHTABLE_STRING);
-        }
-        else
-        {
-            if (ret_type != WEECHAT_SCRIPT_EXEC_IGNORE)
-            {
-                weechat_printf (NULL,
-                                weechat_gettext ("%s%s: function \"%s\" must "
-                                                 "return a valid value"),
-                                weechat_prefix ("error"), JS_PLUGIN_NAME,
-                                function);
+                if (ret_type != WEECHAT_SCRIPT_EXEC_IGNORE)
+                {
+                    weechat_printf (NULL,
+                                    weechat_gettext ("%s%s: function \"%s\" must "
+                                                     "return a valid value"),
+                                    weechat_prefix ("error"), JS_PLUGIN_NAME,
+                                    function);
+                }
             }
         }
     }

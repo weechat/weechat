@@ -104,6 +104,16 @@ WeechatJsV8::execScript()
 }
 
 /*
+ * Get the context of script.
+ */
+
+Handle<Context>
+WeechatJsV8::getContext(void)
+{
+    return this->context;
+}
+
+/*
  * Check if a function with given name exists in script.
  */
 

@@ -21,6 +21,7 @@ public:
     bool load (const char *);
 
     bool execScript (void);
+    v8::Handle<v8::Context> getContext (void);
     bool functionExists (const char *);
     v8::Handle<v8::Value> execFunction (const char *,
                                         int argc, v8::Handle<v8::Value> *);
