@@ -4262,7 +4262,7 @@ API_FUNC(nicklist_remove_all)
     dXSARGS;
 
     API_INIT_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
-    if (items < 2)
+    if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     weechat_nicklist_remove_all (API_STR2PTR(SvPV_nolen (ST (0)))); /* buffer */
