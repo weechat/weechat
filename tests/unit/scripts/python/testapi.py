@@ -1555,6 +1555,43 @@ def test_hdata():
     weechat.buffer_close(buffer2)
 
 
+def unhook_all_signal_cb(data, signal, signal_data):
+    """Eat the signal (callback used to check if the hook exists)."""
+    return weechat.WEECHAT_RC_OK_EAT
+
+
+def test_unhook_all():
+    """Test functions hook_set (subplugin) and unhook_all."""
+    # Get the hook of the command running the tests.
+    infolist = weechat.infolist_get("hook", "", "command," + "{SCRIPT_NAME}")
+    check(weechat.infolist_next(infolist) == 1)
+    hook_cmd = weechat.infolist_pointer(infolist, "pointer")
+    check(hook_cmd != "")
+    check(weechat.infolist_string(infolist, "subplugin") == "{SCRIPT_NAME}")
+    weechat.infolist_free(infolist)
+    # hook_set: move the command hook to another subplugin, so that it is not
+    # removed by unhook_all (it is running).
+    weechat.hook_set(hook_cmd, "subplugin", "testapi_subplugin")
+    infolist = weechat.infolist_get("hook", "", "command," + "{SCRIPT_NAME}")
+    check(weechat.infolist_next(infolist) == 1)
+    check(weechat.infolist_string(infolist, "subplugin") == "testapi_subplugin")
+    weechat.infolist_free(infolist)
+    # unhook_all
+    signal = "{SCRIPT_NAME}_unhook_all"
+    hook_sig = weechat.hook_signal(signal, "unhook_all_signal_cb", "")
+    check(hook_sig != "")
+    check(weechat.hook_signal_send(signal, weechat.WEECHAT_HOOK_SIGNAL_STRING, "") == weechat.WEECHAT_RC_OK_EAT)
+    weechat.unhook_all()
+    check(weechat.hook_signal_send(signal, weechat.WEECHAT_HOOK_SIGNAL_STRING, "") == weechat.WEECHAT_RC_OK)
+    # The command hook (other subplugin) is still there.
+    infolist = weechat.infolist_get("hook", "", "command," + "{SCRIPT_NAME}")
+    check(weechat.infolist_next(infolist) == 1)
+    check(weechat.infolist_pointer(infolist, "pointer") == hook_cmd)
+    weechat.infolist_free(infolist)
+    # Restore the subplugin, so that the hook is removed when the script is unloaded.
+    weechat.hook_set(hook_cmd, "subplugin", "{SCRIPT_NAME}")
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt("", ">>>")
@@ -1580,6 +1617,7 @@ def cmd_test_cb(data, buf, args):
     test_infolist()
     test_upgrade()
     test_hdata()
+    test_unhook_all()
     weechat.prnt("", "  > TESTS END")
     return weechat.WEECHAT_RC_OK
 
