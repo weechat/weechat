@@ -13,6 +13,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 ### Fixed
 
 - core: fix memory leak when the last buffer is closed
+- perl: fix wrong arguments error in function nicklist_remove_all
 - relay/api: fix memory leak when a message without body is sent to a client connected with websocket
 
 ### Security
