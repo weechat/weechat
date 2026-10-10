@@ -466,6 +466,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-string.cpp                   | Tests : chaînes.
 |          test-core-sys.cpp                      | Tests : fonctions système.
 |          test-core-theme.cpp                    | Tests : thèmes.
+|          test-core-upgrade.cpp                  | Tests : mise à jour du cœur de WeeChat.
+|          test-core-upgrade-file.cpp             | Tests : système de mise à jour interne.
 |          test-core-url.cpp                      | Tests : URLs.
 |          test-core-utf8.cpp                     | Tests : UTF-8.
 |          test-core-util.cpp                     | Tests : fonctions utiles.

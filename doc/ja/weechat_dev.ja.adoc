@@ -544,6 +544,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-sys.cpp                      | Tests: system functions.
 // TRANSLATION MISSING
 |          test-core-theme.cpp                    | Tests: themes.
+// TRANSLATION MISSING
+|          test-core-upgrade.cpp                  | Tests: upgrade of WeeChat core.
+// TRANSLATION MISSING
+|          test-core-upgrade-file.cpp             | Tests: internal upgrade system.
 |          test-core-url.cpp                      | テスト: URL
 |          test-core-utf8.cpp                     | テスト: UTF-8
 |          test-core-util.cpp                     | テスト: ユーティリティ関数

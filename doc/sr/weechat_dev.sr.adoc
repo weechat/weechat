@@ -465,6 +465,10 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-string.cpp                   | Тестови: стрингови.
 |          test-core-sys.cpp                      | Тестови: системске функције.
 |          test-core-theme.cpp                    | Тестови: теме.
+// TRANSLATION MISSING
+|          test-core-upgrade.cpp                  | Tests: upgrade of WeeChat core.
+// TRANSLATION MISSING
+|          test-core-upgrade-file.cpp             | Tests: internal upgrade system.
 |          test-core-url.cpp                      | Тестови: URL адресе.
 |          test-core-utf8.cpp                     | Тестови: UTF-8.
 |          test-core-util.cpp                     | Тестови: помоћне функције.

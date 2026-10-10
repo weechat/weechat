@@ -300,6 +300,9 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
     const char *fields;
     void *buf;
 
+    if (!upgrade_file || !infolist)
+        return 0;
+
     /* Write all infolist variables. */
     infolist_reset_item_cursor (infolist);
     while (infolist_next (infolist))
