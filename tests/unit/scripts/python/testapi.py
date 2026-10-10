@@ -138,6 +138,33 @@ def test_strings():
     check(weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) == "core.weechat")
 
 
+def test_dir():
+    """Test directory functions."""
+    # The directory "testapi_dir" is removed before each run of the tests.
+    path = weechat.info_get("weechat_data_dir", "") + "/testapi_dir"
+    # mkdir
+    check(weechat.mkdir(path + "/dir1/sub", 0o755) == 0)
+    check(weechat.mkdir(path, 0o755) == 1)
+    check(weechat.mkdir(path, 0o755) == 1)
+    check(weechat.mkdir(path + "/dir1", 0o755) == 1)
+    check(weechat.mkdir(path + "/dir1/sub", 0o755) == 1)
+    check(weechat.mkdir("/dev/null/testapi_dir", 0o755) == 0)
+    # mkdir_parents
+    check(weechat.mkdir(path + "/dir2/sub1/sub2/sub3", 0o755) == 0)
+    check(weechat.mkdir_parents(path + "/dir2/sub1/sub2", 0o755) == 1)
+    check(weechat.mkdir(path + "/dir2/sub1/sub2/sub3", 0o755) == 1)
+    check(weechat.mkdir_parents(path + "/dir2/sub1/sub2", 0o755) == 1)
+    check(weechat.mkdir_parents("/dev/null/testapi_dir/sub", 0o755) == 0)
+    # mkdir_home
+    check(weechat.mkdir(path + "/dir3/sub", 0o755) == 0)
+    check(weechat.mkdir_home("testapi_dir/dir3", 0o755) == 1)
+    check(weechat.mkdir(path + "/dir3/sub", 0o755) == 1)
+    check(weechat.mkdir(path + "/dir4/sub", 0o755) == 0)
+    check(weechat.mkdir_home("${weechat_data_dir}/testapi_dir/dir4", 0o755) == 1)
+    check(weechat.mkdir(path + "/dir4/sub", 0o755) == 1)
+    check(weechat.mkdir_home("testapi_dir/dir5/sub", 0o755) == 0)
+
+
 def test_lists():
     """Test list functions."""
     ptr_list = weechat.list_new()
@@ -1324,6 +1351,7 @@ def cmd_test_cb(data, buf, args):
     test_constants()
     test_plugins()
     test_strings()
+    test_dir()
     test_lists()
     test_config()
     test_key()

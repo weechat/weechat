@@ -20,6 +20,7 @@ extern "C"
 #include <string.h>
 #include <sys/time.h>
 #include "src/core/weechat.h"
+#include "src/core/core-dir.h"
 #include "src/core/core-hdata.h"
 #include "src/core/core-string.h"
 #include "src/core/core-hook.h"
@@ -114,7 +115,8 @@ TEST_GROUP(Scripts)
 TEST(Scripts, API)
 {
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
-    char *path_testapi_output_dir, str_command[(PATH_MAX * 2) + 128];
+    char *path_testapi_output_dir, *path_testapi_dir;
+    char str_command[(PATH_MAX * 2) + 128];
     char *test_scripts_dir, str_condition[128], str_error[128];
     struct timeval time_start, time_end;
     long long diff;
@@ -172,6 +174,10 @@ TEST(Scripts, API)
         "${weechat_data_dir}/testapi",
         NULL, NULL, NULL);
     CHECK(path_testapi_output_dir);
+    path_testapi_dir = string_eval_path_home (
+        "${weechat_data_dir}/testapi_dir",
+        NULL, NULL, NULL);
+    CHECK(path_testapi_dir);
 
     api_tests_ok = 0;
     api_tests_errors = 0;
@@ -229,6 +235,9 @@ TEST(Scripts, API)
         api_tests_count = 0;
         api_tests_end = 0;
         api_tests_other = 0;
+
+        /* Remove directories created by previous tests. */
+        dir_rmtree (path_testapi_dir);
 
         /* Load script (run tests). */
         snprintf (str_command, sizeof (str_command),
@@ -295,7 +304,10 @@ TEST(Scripts, API)
         LONGS_EQUAL(0, api_tests_other);
     }
 
+    dir_rmtree (path_testapi_dir);
+
     free (path_testapi_output_dir);
+    free (path_testapi_dir);
     free (test_scripts_dir);
 
     printf ("TEST(Scripts, API)");

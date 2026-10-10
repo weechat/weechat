@@ -688,7 +688,7 @@ class UnparseTcl(UnparsePython):
 
     def _ast_assign(self, node: ast.Assign) -> None:
         """Add an AST Assign in output."""
-        exclude_types = (ast.Dict, ast.List, ast.Constant, ast.Subscript)
+        exclude_types = (ast.BinOp, ast.Dict, ast.List, ast.Constant, ast.Subscript)
         self.add(
             self.fill,
             "set ",
@@ -710,6 +710,8 @@ class UnparseTcl(UnparsePython):
 
     def _ast_binop(self, node: ast.BinOp) -> None:
         """Add an AST BinOp in output."""
+        # Calls in operands must be enclosed in brackets.
+        self._call += 1
         self.add(
             "[join [list ",
             (self.prefix, "$"),
@@ -719,6 +721,7 @@ class UnparseTcl(UnparsePython):
             (self.prefix, None),
             '] ""]',
         )
+        self._call -= 1
 
     def _ast_call(self, node: ast.Call) -> None:
         """Add an AST Call in output."""
