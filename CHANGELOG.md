@@ -86,6 +86,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - relay/api: replace invalid UTF-8 chars by "?" in JSON sent, so that it is always valid JSON
 - relay/api: fix integer numbers sent with exponent in JSON (for example buffer identifier sent as `1.70993282323864e+15` instead of `1709932823238640`)
 - relay/api: fix notify tag in line when already read on remote ([#2343](https://github.com/weechat/weechat/issues/2343))
+- tcl: add missing function completion_free
 
 ### Security
 

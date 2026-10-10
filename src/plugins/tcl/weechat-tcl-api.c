@@ -4853,6 +4853,17 @@ API_FUNC(completion_list_add)
     API_RETURN_OK;
 }
 
+API_FUNC(completion_free)
+{
+    API_INIT_FUNC(1, "completion_free", API_RETURN_ERROR);
+    if (objc < 2)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_free (API_STR2PTR(Tcl_GetString (objv[1]))); /* completion */
+
+    API_RETURN_OK;
+}
+
 API_FUNC(info_get)
 {
     char *result;
@@ -6001,6 +6012,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(completion_get_string);
     API_DEF_FUNC(completion_set);
     API_DEF_FUNC(completion_list_add);
+    API_DEF_FUNC(completion_free);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);
     API_DEF_FUNC(infolist_new);
