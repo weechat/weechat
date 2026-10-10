@@ -133,7 +133,7 @@ function weechat_hook_config(string $p0, mixed $p1, string $p2): string {}
 function weechat_hook_modifier(string $p0, mixed $p1, string $p2): string {}
 function weechat_hook_modifier_exec(string $p0, string $p1, string $p2): string {}
 function weechat_hook_info(string $p0, string $p1, string $p2, mixed $p3, string $p4): string {}
-function weechat_hook_info_hashtable(string $p0, string $p1, string $p2, string $p3, string $p4, mixed $p5, string $p6): string {}
+function weechat_hook_info_hashtable(string $p0, string $p1, string $p2, string $p3, mixed $p4, string $p5): string {}
 function weechat_hook_infolist(string $p0, string $p1, string $p2, string $p3, mixed $p4, string $p5): string {}
 function weechat_hook_focus(string $p0, mixed $p1, string $p2): string {}
 function weechat_hook_set(string $p0, string $p1, string $p2): int {}

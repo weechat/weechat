@@ -1,5 +1,5 @@
 /* This is a generated file, edit weechat-php.stub.php instead.
- * Stub hash: 1bf8013bdcd61ae7e3193c29d5a2c4fabae8eadd */
+ * Stub hash: da231dda5992ced41e85aee5a5cde312925a0bdb */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_register, 0, 7, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
@@ -382,9 +382,7 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_hook_info arginfo_weechat_hook_line
 
-#define arginfo_weechat_hook_info_hashtable arginfo_weechat_hook_command
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_hook_infolist, 0, 6, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_hook_info_hashtable, 0, 6, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, p1, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, p2, IS_STRING, 0)
@@ -392,6 +390,8 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_hook_infolist, 0, 6, IS_
 	ZEND_ARG_TYPE_INFO(0, p4, IS_MIXED, 0)
 	ZEND_ARG_TYPE_INFO(0, p5, IS_STRING, 0)
 ZEND_END_ARG_INFO()
+
+#define arginfo_weechat_hook_infolist arginfo_weechat_hook_info_hashtable
 
 #define arginfo_weechat_hook_focus arginfo_weechat_config_new
 

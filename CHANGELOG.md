@@ -80,6 +80,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - perl: fix wrong arguments error in function nicklist_remove_all
 - perl: fix warnings "Subroutine redefined" when loading multiple scripts with Perl built without multiplicity
 - perl: fix prefix of warnings and errors displayed by scripts with Perl built without multiplicity
+- php: fix arguments of function hook_info_hashtable
 - python: add functions config_option_get_string and config_option_get_pointer in stub (weechat.pyi) and plugin API reference
 - relay/irc: add support of extra date/time specifiers like "%@" (UTC date) in option relay.irc.backlog_time_format
 - relay/irc: remove message tags not negotiated by the client in redirected messages ([#2359](https://github.com/weechat/weechat/issues/2359))

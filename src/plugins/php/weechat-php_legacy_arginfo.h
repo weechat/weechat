@@ -1,5 +1,5 @@
 /* This is a generated file, edit weechat-php.stub.php instead.
- * Stub hash: 1bf8013bdcd61ae7e3193c29d5a2c4fabae8eadd */
+ * Stub hash: da231dda5992ced41e85aee5a5cde312925a0bdb */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_weechat_register, 0, 0, 7)
 	ZEND_ARG_INFO(0, p0)
@@ -271,7 +271,7 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_hook_info arginfo_weechat_print_datetime_tags
 
-#define arginfo_weechat_hook_info_hashtable arginfo_weechat_register
+#define arginfo_weechat_hook_info_hashtable arginfo_weechat_print_y_datetime_tags
 
 #define arginfo_weechat_hook_infolist arginfo_weechat_print_y_datetime_tags
 

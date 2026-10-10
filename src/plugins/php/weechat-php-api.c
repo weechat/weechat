@@ -3464,7 +3464,7 @@ API_FUNC(hook_info_hashtable)
     const char *result;
 
     API_INIT_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSSzS", &z_info_name,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSzS", &z_info_name,
                                &z_description, &z_args_description,
                                &z_output_description, &z_callback,
                                &z_data) == FAILURE)
