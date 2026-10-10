@@ -35,6 +35,28 @@ int api_tests_count = 0;
 int api_tests_end = 0;
 int api_tests_other = 0;
 
+/*
+ * Run the main loop (timers, file descriptors and processes) until all the
+ * tests are done (some tests are in callbacks of hooks called later, like
+ * hook_process), or until timeout (in milliseconds) is reached.
+ */
+
+void
+test_scripts_wait_tests (int timeout)
+{
+    struct timeval time_start, time_now;
+
+    gettimeofday (&time_start, NULL);
+    while (api_tests_ok + api_tests_errors < api_tests_count)
+    {
+        hook_timer_exec ();
+        hook_fd_exec ();
+        hook_process_exec ();
+        gettimeofday (&time_now, NULL);
+        if (util_timeval_diff (&time_start, &time_now) >= (long long)timeout * 1000)
+            break;
+    }
+}
 
 TEST_GROUP(Scripts)
 {
@@ -254,6 +276,9 @@ TEST(Scripts, API)
                   "/weechat_testapi.%s",
                   languages[i][1]);
         run_cmd (str_command);
+
+        /* Wait for tests run in callbacks of hooks (like hook_process). */
+        test_scripts_wait_tests (10000);
 
         /* Compute elapsed time. */
         gettimeofday (&time_end, NULL);

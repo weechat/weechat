@@ -978,6 +978,26 @@ def focus_cb(data, info):
     return {"test_key": "test_value"}
 
 
+def process_cb(data, command, return_code, out, err):
+    """Get the result of the process (called once, when the process has ended)."""
+    check(data == "process_data")
+    check(command == "sh -c 'echo test; echo error >&2; exit 3'")
+    check(return_code == 3)
+    check(out == "test\n")
+    check(err == "error\n")
+    return weechat.WEECHAT_RC_OK
+
+
+def process_hashtable_cb(data, command, return_code, out, err):
+    """Get the result of the process (called once, when the process has ended)."""
+    check(data == "process_hashtable_data")
+    check(command == "sh")
+    check(return_code == 0)
+    check(out == "test hashtable\n")
+    check(err == "")
+    return weechat.WEECHAT_RC_OK
+
+
 def test_hooks():
     """Test hook functions."""
     buffer = weechat.buffer_search_main()
@@ -1725,6 +1745,25 @@ def test_unhook_all():
     weechat.hook_set(hook_cmd, "subplugin", "{SCRIPT_NAME}")
 
 
+def test_hooks_process():
+    """Test functions hook_process and hook_process_hashtable.
+
+    The callbacks are called later, by the main loop, when the processes have
+    ended (the hooks are then automatically removed), so this function must be
+    called after test_unhook_all (which would remove the hooks).
+    """
+    hook_proc = weechat.hook_process("sh -c 'echo test; echo error >&2; exit 3'", 10000, "process_cb", "process_data")
+    check(hook_proc != "")
+    hook_proc_hashtable = weechat.hook_process_hashtable(
+        "sh",
+        {"arg1": "-c", "arg2": "echo test hashtable"},
+        10000,
+        "process_hashtable_cb",
+        "process_hashtable_data",
+    )
+    check(hook_proc_hashtable != "")
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt("", ">>>")
@@ -1753,6 +1792,7 @@ def cmd_test_cb(data, buf, args):
     test_upgrade()
     test_hdata()
     test_unhook_all()
+    test_hooks_process()
     weechat.prnt("", "  > TESTS END")
     return weechat.WEECHAT_RC_OK
 
