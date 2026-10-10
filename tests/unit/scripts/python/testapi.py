@@ -1108,8 +1108,24 @@ def test_windows():
     check(buffer1 != "")
     check(weechat.window_search_with_buffer(buffer1) == "")
     weechat.buffer_close(buffer1)
+    check(weechat.window_search_with_buffer(buffer) == window)
     check(weechat.window_get_integer(window, "number") == 1)
+    check(weechat.window_get_integer(window, "win_x") == 0)
+    check(weechat.window_get_integer(window, "win_y") == 0)
+    check(weechat.window_get_integer(window, "win_width") > 0)
+    check(weechat.window_get_integer(window, "win_height") > 0)
+    check(weechat.window_get_integer(window, "win_width_pct") == 100)
+    check(weechat.window_get_integer(window, "win_height_pct") == 100)
+    check(weechat.window_get_integer(window, "scrolling") == 0)
+    check(weechat.window_get_integer(window, "xxx") == 0)
     check(weechat.window_get_string(window, "xxx") == "")
+    check(weechat.window_get_pointer(window, "current") == window)
+    check(weechat.window_get_pointer("", "current") == window)
+    check(weechat.window_get_pointer(window, "buffer") == buffer)
+    check(weechat.window_get_pointer("", "buffer") == "")
+    check(weechat.window_get_pointer(window, "xxx") == "")
+    # Empty title: no-op (a title would be sent to the terminal running the tests).
+    weechat.window_set_title("")
 
 
 def test_command():
