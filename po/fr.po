@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-03 09:43+0200\n"
-"PO-Revision-Date: 2026-10-03 09:49+0200\n"
+"POT-Creation-Date: 2026-10-10 21:14+0200\n"
+"PO-Revision-Date: 2026-10-10 21:21+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -14290,16 +14290,20 @@ msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s : impossible de créer le sous-interpréteur"
 
 #, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s : impossible de charger le code source"
+
+#, c-format
 msgid "%s%s: unable to load file \"%s\""
 msgstr "%s%s : impossible de charger le fichier \"%s\""
 
 #, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s : impossible d'exécuter le fichier \"%s\""
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s : impossible d'exécuter le code source"
 
 #, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sLa commande \"/%s eval\" n'est pas implémentée"
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s : impossible d'exécuter le fichier \"%s\""
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -14657,14 +14661,6 @@ msgstr ""
 
 msgid "Support of lua scripts"
 msgstr "Support des scripts lua"
-
-#, c-format
-msgid "%s%s: unable to load source code"
-msgstr "%s%s : impossible de charger le code source"
-
-#, c-format
-msgid "%s%s: unable to execute source code"
-msgstr "%s%s : impossible d'exécuter le code source"
 
 msgid "Support of perl scripts"
 msgstr "Support des scripts perl"

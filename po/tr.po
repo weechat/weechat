@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-03 09:43+0200\n"
-"PO-Revision-Date: 2026-09-25 07:57+0200\n"
+"POT-Creation-Date: 2026-10-10 21:14+0200\n"
+"PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
 "Language: tr\n"
@@ -14080,16 +14080,20 @@ msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: Yeni alt yorumcu oluşturulamıyor"
 
 #, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s: Kaynak kod yüklenemiyor"
+
+#, c-format
 msgid "%s%s: unable to load file \"%s\""
 msgstr "%s%s: \"%s\" dosyası yüklenemiyor"
 
 #, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: \"%s\" dosyası yürütülemiyor"
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s: Kaynak kod yürütülemiyor"
 
 #, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%s\"/%s eval\" komutu henüz yazılıma eklenmemiş"
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: \"%s\" dosyası yürütülemiyor"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -14445,14 +14449,6 @@ msgstr ""
 
 msgid "Support of lua scripts"
 msgstr "lua betikleri desteği"
-
-#, c-format
-msgid "%s%s: unable to load source code"
-msgstr "%s%s: Kaynak kod yüklenemiyor"
-
-#, c-format
-msgid "%s%s: unable to execute source code"
-msgstr "%s%s: Kaynak kod yürütülemiyor"
 
 msgid "Support of perl scripts"
 msgstr "Perl betik desteği"

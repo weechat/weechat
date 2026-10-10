@@ -39,10 +39,13 @@ struct t_config_option *js_config_look_eval_keep_context = NULL;
 int js_quiet = 0;
 
 struct t_plugin_script *js_script_eval = NULL;
-int js_eval_mode = 0;
-int js_eval_send_input = 0;
-int js_eval_exec_commands = 0;
-struct t_gui_buffer *js_eval_buffer = NULL;
+#define JS_EVAL_SCRIPT                                                  \
+    "function script_js_eval(code) {\n"                                 \
+    "    (0, eval)(code);\n"                                            \
+    "}\n"                                                               \
+    "\n"                                                                \
+    "weechat.register('" WEECHAT_SCRIPT_EVAL_NAME "', '', '1.0', "      \
+    "'" WEECHAT_LICENSE "', 'Evaluation of source code', '', '');\n"
 
 struct t_plugin_script *js_scripts = NULL;
 struct t_plugin_script *last_js_script = NULL;
@@ -290,17 +293,19 @@ weechat_js_load (const char *filename, const char *code)
 {
     char *source;
 
-    /* Make C compiler happy. */
-    /* TODO: implement load of code in JavaScript */
-    (void) code;
+    source = NULL;
 
-    source = weechat_file_get_content (filename);
-    if (!source)
+    if (!code)
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: script \"%s\" not found"),
-                        weechat_prefix ("error"), JS_PLUGIN_NAME, filename);
-        return NULL;
+        source = weechat_file_get_content (filename);
+        if (!source)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: script \"%s\" not found"),
+                            weechat_prefix ("error"), JS_PLUGIN_NAME,
+                            filename);
+            return NULL;
+        }
     }
 
     if ((weechat_js_plugin->debug >= 2) || !js_quiet)
@@ -330,11 +335,23 @@ weechat_js_load (const char *filename, const char *code)
 
     js_current_script_filename = filename;
 
-    if (!js_current_interpreter->load(source))
+    if (!js_current_interpreter->load((code) ? code : source))
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: unable to load file \"%s\""),
-                        weechat_prefix ("error"), JS_PLUGIN_NAME);
+        if (code)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: unable to load source "
+                                             "code"),
+                            weechat_prefix ("error"), JS_PLUGIN_NAME);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: unable to load file "
+                                             "\"%s\""),
+                            weechat_prefix ("error"), JS_PLUGIN_NAME,
+                            filename);
+        }
         delete js_current_interpreter;
         free (source);
 
@@ -354,10 +371,21 @@ weechat_js_load (const char *filename, const char *code)
 
     if (!js_current_interpreter->execScript())
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: unable to execute file "
-                                         "\"%s\""),
-                        weechat_prefix ("error"), JS_PLUGIN_NAME, filename);
+        if (code)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: unable to execute source "
+                                             "code"),
+                            weechat_prefix ("error"), JS_PLUGIN_NAME);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: unable to execute file "
+                                             "\"%s\""),
+                            weechat_prefix ("error"), JS_PLUGIN_NAME,
+                            filename);
+        }
         delete js_current_interpreter;
 
         /* If script was registered, remove it from list. */
@@ -550,11 +578,41 @@ int
 weechat_js_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                  int exec_commands, const char *code)
 {
-    /* TODO: implement javascript eval */
+    void *func_argv[1], *result;
+    int old_js_quiet;
+
+    /* Make C++ compiler happy. */
     (void) buffer;
     (void) send_to_buffer_as_input;
     (void) exec_commands;
-    (void) code;
+
+    if (!js_script_eval)
+    {
+        old_js_quiet = js_quiet;
+        js_quiet = 1;
+        js_script_eval = weechat_js_load (WEECHAT_SCRIPT_EVAL_NAME,
+                                          JS_EVAL_SCRIPT);
+        js_quiet = old_js_quiet;
+        if (!js_script_eval)
+            return 0;
+    }
+
+    func_argv[0] = (char *)code;
+    result = weechat_js_exec (js_script_eval,
+                              WEECHAT_SCRIPT_EXEC_IGNORE,
+                              "script_js_eval",
+                              "s", func_argv);
+    /* Result is ignored. */
+    free (result);
+
+    if (!weechat_config_boolean (js_config_look_eval_keep_context))
+    {
+        old_js_quiet = js_quiet;
+        js_quiet = 1;
+        weechat_js_unload (js_script_eval);
+        js_quiet = old_js_quiet;
+        js_script_eval = NULL;
+    }
 
     return 1;
 }
@@ -692,11 +750,6 @@ weechat_js_command_cb (const void *pointer, void *data,
             if (!weechat_js_eval (buffer, send_to_buffer_as_input,
                                   exec_commands, ptr_code))
                 WEECHAT_COMMAND_ERROR;
-            /* TODO: implement /javascript eval */
-            weechat_printf (NULL,
-                            _("%sCommand \"/%s eval\" is not yet implemented"),
-                            weechat_prefix ("error"),
-                            weechat_js_plugin->name);
         }
         else
             WEECHAT_COMMAND_ERROR;
@@ -752,15 +805,14 @@ weechat_js_info_eval_cb (const void *pointer, void *data,
                          const char *info_name,
                          const char *arguments)
 {
-    const char *not_implemented = "not yet implemented";
-
-    /* Make C compiler happy. */
+    /* Make C++ compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
-    (void) arguments;
 
-    return strdup (not_implemented);
+    weechat_js_eval (NULL, 0, 0, (arguments) ? arguments : "");
+
+    return strdup ("");
 }
 
 /*
@@ -917,9 +969,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_js_plugin = plugin;
 
     js_quiet = 0;
-    js_eval_mode = 0;
-    js_eval_send_input = 0;
-    js_eval_exec_commands = 0;
 
     /* Set interpreter name and version. */
     snprintf (str_interpreter, sizeof (str_interpreter),

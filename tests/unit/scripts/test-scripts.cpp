@@ -9,6 +9,7 @@
 #include "CppUTest/TestHarness.h"
 
 #include "tests.h"
+#include "tests-record.h"
 
 extern "C"
 {
@@ -298,4 +299,80 @@ TEST(Scripts, API)
     free (test_scripts_dir);
 
     printf ("TEST(Scripts, API)");
+}
+
+/*
+ * Tests info "<language>_eval" (evaluation of source code).
+ */
+
+TEST(Scripts, InfoEval)
+{
+    char str_info[128], *value;
+    /* Language, code to evaluate, expected output. */
+    const char *languages[][3] = {
+#ifdef HAVE_PYTHON
+        { "python", "print(6 * 7)",        "42" },
+#endif
+#ifdef HAVE_PERL
+        { "perl",   "print 6 * 7;",        "42" },
+#endif
+#ifdef HAVE_RUBY
+        { "ruby",   "puts (6 * 7).to_s",   "42" },
+#endif
+#ifdef HAVE_LUA
+        { "lua",    "print(6 * 7)",        "42" },
+#endif
+#ifdef HAVE_TCL
+        { "tcl",    "puts [expr {6 * 7}]", "42" },
+#endif
+#ifdef HAVE_GUILE
+        { "guile",  "(display (* 6 7))",   "42" },
+#endif
+#ifdef HAVE_PHP
+        { "php",    "echo 6 * 7;",         "42" },
+#endif
+        { NULL,     NULL,                  NULL }
+    };
+    int i;
+
+    for (i = 0; languages[i][0]; i++)
+    {
+        snprintf (str_info, sizeof (str_info), "%s_eval", languages[i][0]);
+
+        value = hook_info_get (NULL, str_info, languages[i][1]);
+        STRCMP_EQUAL(languages[i][2], value);
+        free (value);
+
+        value = hook_info_get (NULL, str_info, "");
+        STRCMP_EQUAL("", value);
+        free (value);
+    }
+
+#ifdef HAVE_JAVASCRIPT
+    /*
+     * There is no stdout in javascript: the info always returns an empty
+     * string, so the evaluation is checked with a message displayed.
+     *
+     * TODO: fix memory leaks in javascript plugin
+     * and keep memory leak detection enabled.
+     *
+     * Checks are done after memory leak detection is enabled again:
+     * a failed check exits the test immediately.
+     */
+    record_start ();
+    MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
+    value = hook_info_get (NULL, "javascript_eval",
+                           "weechat.print('', 'js eval: ' + (6 * 7));");
+    MemoryLeakWarningPlugin::turnOnThreadSafeNewDeleteOverloads();
+    record_stop ();
+    STRCMP_EQUAL("", value);
+    free (value);
+    RECORD_CHECK_MSG("core.weechat", "", "js eval: 42", NULL);
+
+    MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
+    value = hook_info_get (NULL, "javascript_eval", "");
+    MemoryLeakWarningPlugin::turnOnThreadSafeNewDeleteOverloads();
+    STRCMP_EQUAL("", value);
+    free (value);
+#endif
 }

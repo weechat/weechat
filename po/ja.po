@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-03 09:43+0200\n"
-"PO-Revision-Date: 2026-09-25 07:56+0200\n"
+"POT-Creation-Date: 2026-10-10 21:14+0200\n"
+"PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
 "Language: ja\n"
@@ -14035,16 +14035,20 @@ msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: 新しい sub-interpreter を作成できません"
 
 #, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s: ソースコードをロードできません"
+
+#, c-format
 msgid "%s%s: unable to load file \"%s\""
 msgstr "%s%s: ファイル \"%s\" をロードできません"
 
 #, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: ファイル \"%s\" を実行できません"
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s: ソースコードを実行できません"
 
 #, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sコマンド \"/%s eval\" はまだ実装されていません"
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: ファイル \"%s\" を実行できません"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -14385,14 +14389,6 @@ msgstr ""
 
 msgid "Support of lua scripts"
 msgstr "lua スクリプトサポート"
-
-#, c-format
-msgid "%s%s: unable to load source code"
-msgstr "%s%s: ソースコードをロードできません"
-
-#, c-format
-msgid "%s%s: unable to execute source code"
-msgstr "%s%s: ソースコードを実行できません"
 
 msgid "Support of perl scripts"
 msgstr "perl スクリプトサポート"

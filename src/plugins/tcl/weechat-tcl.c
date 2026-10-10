@@ -43,12 +43,24 @@ struct t_plugin_script *tcl_script_eval = NULL;
 int tcl_eval_mode = 0;
 int tcl_eval_send_input = 0;
 int tcl_eval_exec_commands = 0;
+struct t_gui_buffer *tcl_eval_buffer = NULL;
+#define TCL_EVAL_SCRIPT                                                 \
+    "proc script_tcl_eval {code} {\n"                                   \
+    "    uplevel #0 $code\n"                                            \
+    "}\n"                                                               \
+    "\n"                                                                \
+    "weechat::register \"" WEECHAT_SCRIPT_EVAL_NAME "\" \"\" \"1.0\" "  \
+    "\"" WEECHAT_LICENSE "\" \"Evaluation of source code\" \"\" \"\"\n"
+
+/* Name of the original tcl command "puts" (replaced by WeeChat). */
+#define TCL_PUTS_ORIG "::weechat::__puts"
 
 struct t_plugin_script *tcl_scripts = NULL;
 struct t_plugin_script *last_tcl_script = NULL;
 struct t_plugin_script *tcl_current_script = NULL;
 struct t_plugin_script *tcl_registered_script = NULL;
 const char *tcl_current_script_filename = NULL;
+char **tcl_buffer_output = NULL;
 
 /*
  * String used to execute action "install":
@@ -176,6 +188,157 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
 }
 
 /*
+ * Flush output.
+ */
+
+void
+weechat_tcl_output_flush (void)
+{
+    const char *ptr_command;
+    char *temp_buffer, *command;
+
+    if (!(*tcl_buffer_output)[0])
+        return;
+
+    /* If there's no buffer, we catch the output, so there's no flush. */
+    if (tcl_eval_mode && !tcl_eval_buffer)
+        return;
+
+    temp_buffer = strdup (*tcl_buffer_output);
+    if (!temp_buffer)
+        return;
+
+    weechat_string_dyn_copy (tcl_buffer_output, NULL);
+
+    if (tcl_eval_mode)
+    {
+        if (tcl_eval_send_input)
+        {
+            if (tcl_eval_exec_commands)
+                ptr_command = temp_buffer;
+            else
+                ptr_command = weechat_string_input_for_buffer (temp_buffer);
+            if (ptr_command)
+            {
+                weechat_command (tcl_eval_buffer, temp_buffer);
+            }
+            else
+            {
+                if (weechat_asprintf (&command,
+                                      "%c%s",
+                                      temp_buffer[0],
+                                      temp_buffer) >= 0)
+                {
+                    weechat_command (tcl_eval_buffer,
+                                     (command[0]) ? command : " ");
+                    free (command);
+                }
+            }
+        }
+        else
+        {
+            weechat_printf (tcl_eval_buffer, "%s", temp_buffer);
+        }
+    }
+    else
+    {
+        /* Script (no eval mode) */
+        weechat_printf (
+            NULL,
+            weechat_gettext ("%s: stdout/stderr (%s): %s"),
+            TCL_PLUGIN_NAME,
+            (tcl_current_script) ? tcl_current_script->name : "?",
+            temp_buffer);
+    }
+
+    free (temp_buffer);
+}
+
+/*
+ * Redirection for stdout and stderr: replacement of tcl command "puts".
+ *
+ * Output to any other channel (or with invalid arguments) is sent to the
+ * original tcl command "puts".
+ */
+
+int
+weechat_tcl_output (ClientData clientData, Tcl_Interp *interp,
+                    int objc, Tcl_Obj *const objv[])
+{
+    Tcl_Obj **new_objv;
+    const char *ptr_channel;
+    char *ptr_msg, *ptr_newline;
+    int i, rc, index_msg, newline;
+
+    /* Make C compiler happy. */
+    (void) clientData;
+
+    ptr_channel = NULL;
+    index_msg = -1;
+    newline = 1;
+
+    switch (objc)
+    {
+        case 2:
+            /* puts string */
+            index_msg = 1;
+            break;
+        case 3:
+            /* puts -nonewline string || puts channel string */
+            if (strcmp (Tcl_GetString (objv[1]), "-nonewline") == 0)
+                newline = 0;
+            else
+                ptr_channel = Tcl_GetString (objv[1]);
+            index_msg = 2;
+            break;
+        case 4:
+            /* puts -nonewline channel string */
+            if (strcmp (Tcl_GetString (objv[1]), "-nonewline") == 0)
+            {
+                newline = 0;
+                ptr_channel = Tcl_GetString (objv[2]);
+                index_msg = 3;
+            }
+            break;
+    }
+
+    if ((index_msg < 0)
+        || (ptr_channel
+            && (strcmp (ptr_channel, "stdout") != 0)
+            && (strcmp (ptr_channel, "stderr") != 0)))
+    {
+        new_objv = malloc (objc * sizeof (*new_objv));
+        if (!new_objv)
+            return TCL_ERROR;
+        new_objv[0] = Tcl_NewStringObj (TCL_PUTS_ORIG, -1);
+        Tcl_IncrRefCount (new_objv[0]);
+        for (i = 1; i < objc; i++)
+        {
+            new_objv[i] = objv[i];
+        }
+        rc = Tcl_EvalObjv (interp, objc, new_objv, 0);
+        Tcl_DecrRefCount (new_objv[0]);
+        free (new_objv);
+        return rc;
+    }
+
+    ptr_msg = Tcl_GetString (objv[index_msg]);
+    while ((ptr_newline = strchr (ptr_msg, '\n')) != NULL)
+    {
+        weechat_string_dyn_concat (tcl_buffer_output,
+                                   ptr_msg,
+                                   ptr_newline - ptr_msg);
+        weechat_tcl_output_flush ();
+        ptr_msg = ++ptr_newline;
+    }
+    weechat_string_dyn_concat (tcl_buffer_output, ptr_msg, -1);
+    if (newline)
+        weechat_tcl_output_flush ();
+
+    return TCL_OK;
+}
+
+/*
  * Execute a tcl function.
  */
 
@@ -184,7 +347,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
                   int ret_type, const char *function,
                   const char *format, void **argv)
 {
-    int argc, i;
+    int argc, i, rc;
     int *ret_i;
     char *ret_cv;
     void *ret_val;
@@ -231,7 +394,11 @@ weechat_tcl_exec (struct t_plugin_script *script,
         }
     }
 
-    if (Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT) == TCL_OK)
+    rc = Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT);
+
+    weechat_tcl_output_flush ();
+
+    if (rc == TCL_OK)
     {
         Tcl_DecrRefCount (cmdlist);  /* -1 */
         ret_val = NULL;
@@ -312,12 +479,9 @@ weechat_tcl_load (const char *filename, const char *code)
 {
     Tcl_Interp *interp;
     struct stat buf;
+    int rc;
 
-    /* Make C compiler happy. */
-    /* TODO: implement load of code in TCL */
-    (void) code;
-
-    if (stat (filename, &buf) != 0)
+    if (!code && (stat (filename, &buf) != 0))
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" not found"),
@@ -346,13 +510,48 @@ weechat_tcl_load (const char *filename, const char *code)
 
     weechat_tcl_api_init (interp);
 
-    if (Tcl_EvalFile (interp, filename) != TCL_OK)
+    /* Redirect stdout and stderr: replace command "puts". */
+    Tcl_Eval (interp, "rename ::puts " TCL_PUTS_ORIG);
+    Tcl_CreateObjCommand (interp, "::puts",
+                          &weechat_tcl_output,
+                          (ClientData) NULL,
+                          (Tcl_CmdDeleteProc*)NULL);
+
+    if (code)
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: error occurred while "
-                                         "parsing file \"%s\": %s"),
-                        weechat_prefix ("error"), TCL_PLUGIN_NAME, filename,
-                        Tcl_GetString (Tcl_GetObjResult (interp)));
+        /* Execute code without reading file. */
+        rc = Tcl_EvalEx (interp, code, -1, TCL_EVAL_GLOBAL);
+    }
+    else
+    {
+        /* Read and execute code from file. */
+        rc = Tcl_EvalFile (interp, filename);
+    }
+
+    weechat_tcl_output_flush ();
+
+    if (rc != TCL_OK)
+    {
+        if (code)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: unable to execute source "
+                                             "code"),
+                            weechat_prefix ("error"), TCL_PLUGIN_NAME);
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: error: %s"),
+                            weechat_prefix ("error"), TCL_PLUGIN_NAME,
+                            Tcl_GetString (Tcl_GetObjResult (interp)));
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: error occurred while "
+                                             "parsing file \"%s\": %s"),
+                            weechat_prefix ("error"), TCL_PLUGIN_NAME,
+                            filename,
+                            Tcl_GetString (Tcl_GetObjResult (interp)));
+        }
 
         /* If script was registered, remove it from list. */
         if (tcl_current_script)
@@ -542,11 +741,50 @@ int
 weechat_tcl_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                   int exec_commands, const char *code)
 {
-    /* TODO: implement tcl eval */
-    (void) buffer;
-    (void) send_to_buffer_as_input;
-    (void) exec_commands;
-    (void) code;
+    void *func_argv[1], *result;
+    int old_tcl_quiet;
+
+    if (!tcl_script_eval)
+    {
+        old_tcl_quiet = tcl_quiet;
+        tcl_quiet = 1;
+        tcl_script_eval = weechat_tcl_load (WEECHAT_SCRIPT_EVAL_NAME,
+                                            TCL_EVAL_SCRIPT);
+        tcl_quiet = old_tcl_quiet;
+        if (!tcl_script_eval)
+            return 0;
+    }
+
+    weechat_tcl_output_flush ();
+
+    tcl_eval_mode = 1;
+    tcl_eval_send_input = send_to_buffer_as_input;
+    tcl_eval_exec_commands = exec_commands;
+    tcl_eval_buffer = buffer;
+
+    func_argv[0] = (char *)code;
+    result = weechat_tcl_exec (tcl_script_eval,
+                               WEECHAT_SCRIPT_EXEC_IGNORE,
+                               "script_tcl_eval",
+                               "s", func_argv);
+    /* Result is ignored. */
+    free (result);
+
+    weechat_tcl_output_flush ();
+
+    tcl_eval_mode = 0;
+    tcl_eval_send_input = 0;
+    tcl_eval_exec_commands = 0;
+    tcl_eval_buffer = NULL;
+
+    if (!weechat_config_boolean (tcl_config_look_eval_keep_context))
+    {
+        old_tcl_quiet = tcl_quiet;
+        tcl_quiet = 1;
+        weechat_tcl_unload (tcl_script_eval);
+        tcl_quiet = old_tcl_quiet;
+        tcl_script_eval = NULL;
+    }
 
     return 1;
 }
@@ -684,11 +922,6 @@ weechat_tcl_command_cb (const void *pointer, void *data,
             if (!weechat_tcl_eval (buffer, send_to_buffer_as_input,
                                    exec_commands, ptr_code))
                 WEECHAT_COMMAND_ERROR;
-            /* TODO: implement /tcl eval */
-            weechat_printf (NULL,
-                            _("%sCommand \"/%s eval\" is not yet implemented"),
-                            weechat_prefix ("error"),
-                            weechat_tcl_plugin->name);
         }
         else
             WEECHAT_COMMAND_ERROR;
@@ -744,15 +977,18 @@ weechat_tcl_info_eval_cb (const void *pointer, void *data,
                           const char *info_name,
                           const char *arguments)
 {
-    const char *not_implemented = "not yet implemented";
+    char *output;
 
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
-    (void) arguments;
 
-    return strdup (not_implemented);
+    weechat_tcl_eval (NULL, 0, 0, (arguments) ? arguments : "");
+    output = strdup (*tcl_buffer_output);
+    weechat_string_dyn_copy (tcl_buffer_output, NULL);
+
+    return output;
 }
 
 /*
@@ -922,6 +1158,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                            "");
 #endif /* TCL_VERSION */
 
+    /* Initialize stdout/stderr buffer. */
+    tcl_buffer_output = weechat_string_dyn_alloc (256);
+    if (!tcl_buffer_output)
+        return WEECHAT_RC_ERROR;
+
     tcl_data.config_file = &tcl_config_file;
     tcl_data.config_look_check_license = &tcl_config_look_check_license;
     tcl_data.config_look_eval_keep_context = &tcl_config_look_eval_keep_context;
@@ -986,7 +1227,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (tcl_action_autoload_list);
         tcl_action_autoload_list = NULL;
     }
-    /* weechat_string_dyn_free (tcl_buffer_output, 1); */
+    weechat_string_dyn_free (tcl_buffer_output, 1);
+    tcl_buffer_output = NULL;
 
     return WEECHAT_RC_OK;
 }

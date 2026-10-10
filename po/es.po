@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-03 09:43+0200\n"
-"PO-Revision-Date: 2026-09-27 13:44+0200\n"
+"POT-Creation-Date: 2026-10-10 21:14+0200\n"
+"PO-Revision-Date: 2026-10-10 21:21+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -13526,17 +13526,21 @@ msgstr "%s%s: no es posible ejecutar la función \"%s\""
 msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: no es posible crear un sub-interprete nuevo"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s: no es posible cargar el archivo \"%s\""
+
 #, c-format
 msgid "%s%s: unable to load file \"%s\""
 msgstr "%s%s: no es posible cargar el archivo \"%s\""
 
+#, fuzzy, c-format
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
+
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
-
-#, fuzzy, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sColor \"%s\" no está definido en la paleta"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -13854,14 +13858,6 @@ msgstr ""
 
 msgid "Support of lua scripts"
 msgstr "Soporte para scripts en lua"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to load source code"
-msgstr "%s%s: no es posible cargar el archivo \"%s\""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to execute source code"
-msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
 
 msgid "Support of perl scripts"
 msgstr "Soporte para scripts en perl"

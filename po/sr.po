@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-03 09:43+0200\n"
-"PO-Revision-Date: 2026-10-03 09:49+0200\n"
+"POT-Creation-Date: 2026-10-10 21:14+0200\n"
+"PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
 "Language: sr\n"
@@ -13885,16 +13885,20 @@ msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: не може да се креира нови под-интерпретер"
 
 #, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s: није успело учитавање изворног кода"
+
+#, c-format
 msgid "%s%s: unable to load file \"%s\""
 msgstr "%s%s: фајл „%s” не може да се учита"
 
 #, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: фајл „%s” не може да се изврши"
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s: није успело извршавање изворног кода"
 
 #, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sКоманда „/%s eval” још увек није имплементирана"
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: фајл „%s” не може да се изврши"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -14248,14 +14252,6 @@ msgstr ""
 
 msgid "Support of lua scripts"
 msgstr "Подршка за lua скрипте"
-
-#, c-format
-msgid "%s%s: unable to load source code"
-msgstr "%s%s: није успело учитавање изворног кода"
-
-#, c-format
-msgid "%s%s: unable to execute source code"
-msgstr "%s%s: није успело извршавање изворног кода"
 
 msgid "Support of perl scripts"
 msgstr "Подршка за perl скрипте"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-03 09:43+0200\n"
-"PO-Revision-Date: 2026-10-10 12:55+0200\n"
+"POT-Creation-Date: 2026-10-10 21:14+0200\n"
+"PO-Revision-Date: 2026-10-10 21:21+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -10248,7 +10248,6 @@ msgid "%s: notification deleted for %s%s%s"
 msgstr "%s: Benachrichtigung für %s%s%s gelöscht"
 
 #, c-format
-#| msgid "%s%s: notification not found"
 msgid "%s%s: notification not found for \"%s\""
 msgstr "%s%s: keine Benachrichtigung für \"%s\" gefunden"
 
@@ -11371,8 +11370,6 @@ msgstr ""
 "hinzu"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
-#| msgid ""
-#| "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgid ""
 "add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
 "[<server>]"
@@ -14563,16 +14560,20 @@ msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: Kann sub-Interpreter nicht erstellen"
 
 #, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s: Quelltext kann nicht geladen werden"
+
+#, c-format
 msgid "%s%s: unable to load file \"%s\""
 msgstr "%s%s: Kann die Datei \"%s\" nicht laden"
 
 #, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s: Quelltext kann nicht ausgeführt werden"
 
 #, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sBefehl \"/%s eval\" ist zur Zeit noch nicht implementiert"
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -14936,14 +14937,6 @@ msgstr ""
 
 msgid "Support of lua scripts"
 msgstr "Unterstützung von Lua-Skripten"
-
-#, c-format
-msgid "%s%s: unable to load source code"
-msgstr "%s%s: Quelltext kann nicht geladen werden"
-
-#, c-format
-msgid "%s%s: unable to execute source code"
-msgstr "%s%s: Quelltext kann nicht ausgeführt werden"
 
 msgid "Support of perl scripts"
 msgstr "Unterstützung von Perl-Skripten"

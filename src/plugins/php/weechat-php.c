@@ -57,6 +57,9 @@ int php_eval_mode = 0;
 int php_eval_send_input = 0;
 int php_eval_exec_commands = 0;
 struct t_gui_buffer *php_eval_buffer = NULL;
+#define PHP_EVAL_SCRIPT                                                 \
+    "weechat_register('" WEECHAT_SCRIPT_EVAL_NAME "', '', '1.0', "      \
+    "'" WEECHAT_LICENSE "', 'Evaluation of source code', '', '');\n"
 
 struct t_plugin_script *php_scripts = NULL;
 struct t_plugin_script *last_php_script = NULL;
@@ -64,6 +67,7 @@ struct t_plugin_script *php_current_script = NULL;
 struct t_plugin_script *php_registered_script = NULL;
 const char *php_current_script_filename = NULL;
 struct t_hashtable *weechat_php_func_map = NULL;
+char **php_buffer_output = NULL;
 
 /*
  * String used to execute action "install":
@@ -498,6 +502,73 @@ weechat_php_func_map_add (zval *ofunc)
 }
 
 /*
+ * Flush output.
+ */
+
+void
+weechat_php_output_flush (void)
+{
+    const char *ptr_command;
+    char *temp_buffer, *command;
+
+    if (!(*php_buffer_output)[0])
+        return;
+
+    /* If there's no buffer, we catch the output, so there's no flush. */
+    if (php_eval_mode && !php_eval_buffer)
+        return;
+
+    temp_buffer = strdup (*php_buffer_output);
+    if (!temp_buffer)
+        return;
+
+    weechat_string_dyn_copy (php_buffer_output, NULL);
+
+    if (php_eval_mode)
+    {
+        if (php_eval_send_input)
+        {
+            if (php_eval_exec_commands)
+                ptr_command = temp_buffer;
+            else
+                ptr_command = weechat_string_input_for_buffer (temp_buffer);
+            if (ptr_command)
+            {
+                weechat_command (php_eval_buffer, temp_buffer);
+            }
+            else
+            {
+                if (weechat_asprintf (&command,
+                                      "%c%s",
+                                      temp_buffer[0],
+                                      temp_buffer) >= 0)
+                {
+                    weechat_command (php_eval_buffer,
+                                     (command[0]) ? command : " ");
+                    free (command);
+                }
+            }
+        }
+        else
+        {
+            weechat_printf (php_eval_buffer, "%s", temp_buffer);
+        }
+    }
+    else
+    {
+        /* Script (no eval mode) */
+        weechat_printf (
+            NULL,
+            weechat_gettext ("%s: stdout/stderr (%s): %s"),
+            PHP_PLUGIN_NAME,
+            (php_current_script) ? php_current_script->name : "?",
+            temp_buffer);
+    }
+
+    free (temp_buffer);
+}
+
+/*
  * Execute a PHP function.
  */
 
@@ -612,6 +683,8 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     }
     zend_end_try ();
 
+    weechat_php_output_flush ();
+
     if ((ret_type != WEECHAT_SCRIPT_EXEC_IGNORE) && !ret_value)
     {
         weechat_printf (NULL,
@@ -650,10 +723,6 @@ weechat_php_load (const char *filename, const char *code)
 {
     zend_file_handle file_handle;
 
-    /* Make C compiler happy. */
-    /* TODO: implement load of code in PHP */
-    (void) code;
-
     if ((weechat_php_plugin->debug >= 2) || !php_quiet)
     {
         weechat_printf (NULL,
@@ -665,19 +734,34 @@ weechat_php_load (const char *filename, const char *code)
     php_registered_script = NULL;
     php_current_script_filename = filename;
 
-    memset (&file_handle, 0, sizeof (file_handle));
-    file_handle.type = ZEND_HANDLE_FILENAME;
-#if PHP_VERSION_ID >= 80100
-    file_handle.filename = zend_string_init (filename, strlen(filename), 0);
-#else
-    file_handle.filename = filename;
-#endif
-
-    zend_try
+    if (code)
     {
-        php_execute_script (&file_handle);
+        /* Execute code without reading file. */
+        zend_try
+        {
+            zend_eval_stringl_ex ((char *)code, strlen (code), NULL,
+                                  (char *)filename, 1);
+        }
+        zend_end_try ();
     }
-    zend_end_try ();
+    else
+    {
+        /* Read and execute code from file. */
+        memset (&file_handle, 0, sizeof (file_handle));
+        file_handle.type = ZEND_HANDLE_FILENAME;
+#if PHP_VERSION_ID >= 80100
+        file_handle.filename = zend_string_init (filename, strlen(filename), 0);
+#else
+        file_handle.filename = filename;
+#endif
+        zend_try
+        {
+            php_execute_script (&file_handle);
+        }
+        zend_end_try ();
+    }
+
+    weechat_php_output_flush ();
 
     if (!php_registered_script)
     {
@@ -846,11 +930,54 @@ int
 weechat_php_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                   int exec_commands, const char *code)
 {
-    /* TODO: implement PHP eval */
-    (void) buffer;
-    (void) send_to_buffer_as_input;
-    (void) exec_commands;
-    (void) code;
+    struct t_plugin_script *old_php_current_script;
+    int old_php_quiet;
+
+    if (!php_script_eval)
+    {
+        old_php_quiet = php_quiet;
+        php_quiet = 1;
+        php_script_eval = weechat_php_load (WEECHAT_SCRIPT_EVAL_NAME,
+                                            PHP_EVAL_SCRIPT);
+        php_quiet = old_php_quiet;
+        if (!php_script_eval)
+            return 0;
+    }
+
+    weechat_php_output_flush ();
+
+    php_eval_mode = 1;
+    php_eval_send_input = send_to_buffer_as_input;
+    php_eval_exec_commands = exec_commands;
+    php_eval_buffer = buffer;
+
+    old_php_current_script = php_current_script;
+    php_current_script = php_script_eval;
+
+    zend_try
+    {
+        zend_eval_stringl_ex ((char *)code, strlen (code), NULL,
+                              (char *)WEECHAT_SCRIPT_EVAL_NAME, 1);
+    }
+    zend_end_try ();
+
+    php_current_script = old_php_current_script;
+
+    weechat_php_output_flush ();
+
+    php_eval_mode = 0;
+    php_eval_send_input = 0;
+    php_eval_exec_commands = 0;
+    php_eval_buffer = NULL;
+
+    if (!weechat_config_boolean (php_config_look_eval_keep_context))
+    {
+        old_php_quiet = php_quiet;
+        php_quiet = 1;
+        weechat_php_unload (php_script_eval);
+        php_quiet = old_php_quiet;
+        php_script_eval = NULL;
+    }
 
     return 1;
 }
@@ -988,11 +1115,6 @@ weechat_php_command_cb (const void *pointer, void *data,
             if (!weechat_php_eval (buffer, send_to_buffer_as_input,
                                    exec_commands, ptr_code))
                 WEECHAT_COMMAND_ERROR;
-            /* TODO: implement /php eval */
-            weechat_printf (NULL,
-                            _("%sCommand \"/%s eval\" is not yet implemented"),
-                            weechat_prefix ("error"),
-                            weechat_php_plugin->name);
         }
         else
             WEECHAT_COMMAND_ERROR;
@@ -1048,15 +1170,18 @@ weechat_php_info_eval_cb (const void *pointer, void *data,
                           const char *info_name,
                           const char *arguments)
 {
-    const char *not_implemented = "not yet implemented";
+    char *output;
 
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
     (void) info_name;
-    (void) arguments;
 
-    return strdup (not_implemented);
+    weechat_php_eval (NULL, 0, 0, (arguments) ? arguments : "");
+    output = strdup (*php_buffer_output);
+    weechat_string_dyn_copy (php_buffer_output, NULL);
+
+    return output;
 }
 
 /*
@@ -1206,11 +1331,33 @@ php_weechat_startup (sapi_module_struct *sapi_module)
 #endif
 }
 
+/*
+ * Redirection for stdout and stderr.
+ */
+
 size_t
 php_weechat_ub_write (const char *str, size_t str_length)
 {
-    weechat_printf (NULL, "php: %s", str);
-    return str_length + 5;
+    const char *ptr_msg, *ptr_end, *ptr_newline;
+
+    ptr_msg = str;
+    ptr_end = str + str_length;
+    while ((ptr_newline = memchr (ptr_msg, '\n', ptr_end - ptr_msg)) != NULL)
+    {
+        weechat_string_dyn_concat (php_buffer_output,
+                                   ptr_msg,
+                                   ptr_newline - ptr_msg);
+        weechat_php_output_flush ();
+        ptr_msg = ptr_newline + 1;
+    }
+    if (ptr_msg < ptr_end)
+    {
+        weechat_string_dyn_concat (php_buffer_output,
+                                   ptr_msg,
+                                   ptr_end - ptr_msg);
+    }
+
+    return str_length;
 }
 
 void
@@ -1223,6 +1370,7 @@ php_weechat_sapi_error (int type, const char *format, ...)
     if (vbuffer)
     {
         php_weechat_ub_write (vbuffer, strlen (vbuffer));
+        php_weechat_ub_write ("\n", 1);
         free (vbuffer);
     }
 }
@@ -1236,6 +1384,7 @@ php_weechat_log_message (const char *message, int syslog_type_int)
     (void) syslog_type_int;
 
     php_weechat_ub_write (message, strlen (message));
+    php_weechat_ub_write ("\n", 1);
 }
 #elif PHP_VERSION_ID >= 70100
 /* 7.1 <= PHP < 8.0 */
@@ -1246,6 +1395,7 @@ php_weechat_log_message (char *message, int syslog_type_int)
     (void) syslog_type_int;
 
     php_weechat_ub_write (message, strlen (message));
+    php_weechat_ub_write ("\n", 1);
 }
 #else
 /* PHP 7.0 */
@@ -1253,6 +1403,7 @@ void
 php_weechat_log_message (char *message)
 {
     php_weechat_ub_write (message, strlen (message));
+    php_weechat_ub_write ("\n", 1);
 }
 #endif
 
@@ -1286,6 +1437,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hashtable_set (plugin->variables, "interpreter_version",
                            "");
 #endif /* PHP_VERSION */
+
+    /* Initialize stdout/stderr buffer. */
+    php_buffer_output = weechat_string_dyn_alloc (256);
+    if (!php_buffer_output)
+        return WEECHAT_RC_ERROR;
 
     php_data.config_file = &php_config_file;
     php_data.config_look_check_license = &php_config_look_check_license;
@@ -1369,7 +1525,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (php_action_autoload_list);
         php_action_autoload_list = NULL;
     }
-    /* weechat_string_dyn_free (php_buffer_output, 1); */
+    weechat_string_dyn_free (php_buffer_output, 1);
+    php_buffer_output = NULL;
 
     return WEECHAT_RC_OK;
 }
