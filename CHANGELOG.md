@@ -93,6 +93,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - javascript: fix arguments of functions upgrade_new, upgrade_close and hdata_get_list
 - javascript, lua, perl, php, ruby, tcl: fix return value of function hdata_longlong
 - logger: add support of extra date/time specifiers like "%@" (UTC date) in options logger.file.mask, logger.file.path and logger.mask.* ([#2361](https://github.com/weechat/weechat/issues/2361))
+- perl: fix memory leak in functions info_get_hashtable, hdata_hashtable and in callbacks receiving hashtables ([#878](https://github.com/weechat/weechat/issues/878))
 - perl: fix wrong arguments error in function nicklist_remove_all
 - perl: fix warnings "Subroutine redefined" when loading multiple scripts with Perl built without multiplicity
 - perl: fix prefix of warnings and errors displayed by scripts with Perl built without multiplicity

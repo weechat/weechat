@@ -77,7 +77,7 @@
     XST_mIV (0, __longlong);                                            \
     XSRETURN (1)
 #define API_RETURN_OBJ(__obj)                                           \
-    ST (0) = newRV_inc((SV *)__obj);                                    \
+    ST (0) = newRV_noinc((SV *)__obj);                                  \
     if (SvREFCNT(ST(0))) sv_2mortal(ST(0));                             \
     XSRETURN (1)
 

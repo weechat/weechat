@@ -373,7 +373,7 @@ weechat_perl_exec (struct t_plugin_script *script,
                     break;
                 case 'h': /* Hash */
                     hash = weechat_perl_hashtable_to_hash (argv[i]);
-                    XPUSHs (sv_2mortal (newRV_inc ((SV *)hash)));
+                    XPUSHs (sv_2mortal (newRV_noinc ((SV *)hash)));
                     break;
             }
         }
