@@ -322,7 +322,7 @@ Liste der verfügbaren Optionen:
 | ENABLE_IRC | `ON`, `OFF` | ON
 | kompiliert <<irc,IRC Erweiterung>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,JavaScript Erweiterung>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON

@@ -50,6 +50,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: accept a number or a string with a number as integer data in function hook_signal_send, return an error if the data is not a valid integer
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
 - irc: allow multiple nicks separated by commas in command `/notify del`
+- javascript: enable build by default ([#360](https://github.com/weechat/weechat/issues/360))
 - **breaking:** javascript: use the current V8 API, require V8 ≥ 11.3 (provided by libnode-dev on Debian/Ubuntu), V8 is now initialized on first script load and runs in single-threaded mode ([#360](https://github.com/weechat/weechat/issues/360))
 - **breaking:** php: remove GnuTLS arguments of function hook_connect, like in all other languages
 - **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script

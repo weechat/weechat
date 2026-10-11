@@ -319,7 +319,7 @@ Lista dostępnych opcji:
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Kompilacja <<irc,wtyczki IRC>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON
 | Kompilacja <<scripting_plugins,wtyczki javascript>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON

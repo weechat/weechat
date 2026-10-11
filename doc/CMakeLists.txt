@@ -171,7 +171,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         # Translations must be compiled.
         translations
         # All plugins must be loaded during doc generation.
-        alias buflist charset exec fifo fset guile irc logger lua perl php python relay ruby script spell tcl trigger typing xfer
+        alias buflist charset exec fifo fset guile irc javascript logger lua perl php python relay ruby script spell tcl trigger typing xfer
         BYPRODUCTS ${AUTOGEN_FILES}
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
       )

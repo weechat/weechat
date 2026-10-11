@@ -310,7 +310,7 @@ make install
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Компајлира <<irc,IRC додатак>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,JavaScript додатак>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON

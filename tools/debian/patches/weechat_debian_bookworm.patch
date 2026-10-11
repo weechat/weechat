@@ -32,11 +32,10 @@ diff --git a/debian-devel/control b/debian-devel/control
 diff --git a/debian-devel/rules b/debian-devel/rules
 --- a/debian-devel/rules
 +++ b/debian-devel/rules
-@@ -8,7 +8,7 @@ override_dh_auto_configure:
+@@ -8,6 +8,7 @@ override_dh_auto_configure:
  	dh_auto_configure --buildsystem=cmake -- \
  		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
  		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
--		-DENABLE_JAVASCRIPT:BOOL=ON \
 +		-DENABLE_JAVASCRIPT:BOOL=OFF \
  		-DENABLE_DOC:BOOL=ON \
  		-DENABLE_MAN:BOOL=ON \
@@ -74,11 +73,10 @@ diff --git a/debian-stable/control b/debian-stable/control
 diff --git a/debian-stable/rules b/debian-stable/rules
 --- a/debian-stable/rules
 +++ b/debian-stable/rules
-@@ -8,7 +8,7 @@ override_dh_auto_configure:
+@@ -8,6 +8,7 @@ override_dh_auto_configure:
  	dh_auto_configure --buildsystem=cmake -- \
  		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
  		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
--		-DENABLE_JAVASCRIPT:BOOL=ON \
 +		-DENABLE_JAVASCRIPT:BOOL=OFF \
  		-DENABLE_DOC:BOOL=ON \
  		-DENABLE_MAN:BOOL=ON \

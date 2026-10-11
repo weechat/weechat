@@ -179,7 +179,7 @@ jobs:
           - name: "gcc"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_JAVASCRIPT=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
           - name: "gcc_ninja"
             cc: "gcc"
             cxx: "g++"
@@ -207,7 +207,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_TESTS=ON -DENABLE_FUZZ=ON -DENABLE_JAVASCRIPT=ON"
+            buildargs: "-DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
     name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -284,11 +284,11 @@ jobs:
           - name: "gcc"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_JAVASCRIPT=OFF"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON -DENABLE_JAVASCRIPT=OFF"
 
     name: "install (fedora:43, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -323,11 +323,11 @@ jobs:
           - name: "gcc"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_JAVASCRIPT=OFF"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON -DENABLE_JAVASCRIPT=OFF"
 
     name: "install (rockylinux:9, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -367,7 +367,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON -DENABLE_JAVASCRIPT=OFF"
 
     name: "install (freebsd, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -403,11 +403,11 @@ jobs:
             cc: "gcc"
             cxx: "g++"
             # Tests disabled: CppUTest from Homebrew is built with libc++, not compatible with GCC.
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=OFF"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=OFF -DENABLE_JAVASCRIPT=OFF"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=ON -DENABLE_JAVASCRIPT=OFF"
 
     name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}

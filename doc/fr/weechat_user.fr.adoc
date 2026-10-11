@@ -315,7 +315,7 @@ Liste des options disponibles :
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Compiler <<irc,l'extension IRC>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,l'extension JavaScript>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON

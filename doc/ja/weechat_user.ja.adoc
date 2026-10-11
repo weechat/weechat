@@ -345,7 +345,7 @@ List of available options:
 | ENABLE_IRC | `ON`, `OFF` | ON
 | <<irc,IRC プラグイン>>のコンパイル
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON
 | <<scripting_plugins,JavaScript プラグイン>>のコンパイル。
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON
