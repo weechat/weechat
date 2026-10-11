@@ -13204,7 +13204,7 @@ hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 
 ==== hook_signal_send
 
-_WeeChat バージョン 1.0, 4.5.0 で更新。_
+_WeeChat バージョン 1.0, 4.5.0, 5.0.0 で更新。_
 
 シグナルを送信。
 
@@ -13252,12 +13252,18 @@ int rc2 = weechat_hook_signal_send ("[flags:stop_on_error,ignore_eat]my_signal2"
                                     WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
 
+// TRANSLATION MISSING
+[NOTE]
+In scripts, with type _int_, the signal data can be an integer or a string
+with an integer; if it is not a valid integer, the signal is not sent and
+_WEECHAT_RC_ERROR_ is returned _(WeeChat ≥ 5.0.0)_.
+
 スクリプト (Python) での使用例:
 
 [source,python]
 ----
 # プロトタイプ
-def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int: ...
+def hook_signal_send(signal: str, type_data: str, signal_data: Union[str, int]) -> int: ...
 
 # 例
 rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)

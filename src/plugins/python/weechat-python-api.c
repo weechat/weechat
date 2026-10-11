@@ -3134,36 +3134,60 @@ API_FUNC(hook_signal)
 API_FUNC(hook_signal_send)
 {
     char *signal, *type_data, *signal_data;
+    PyObject *py_signal_data, *py_str;
     int number, rc;
 
     API_INIT_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     signal = NULL;
     type_data = NULL;
-    signal_data = NULL;
-    if (!PyArg_ParseTuple (args, "sss", &signal, &type_data, &signal_data))
+    py_signal_data = NULL;
+    if (!PyArg_ParseTuple (args, "ssO", &signal, &type_data, &py_signal_data))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
+
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
+    {
+        /* Integer: a number or a string with a number. */
+        rc = WEECHAT_RC_ERROR;
+        if (PyLong_Check (py_signal_data) || PyUnicode_Check (py_signal_data))
+        {
+            py_str = PyObject_Str (py_signal_data);
+            if (py_str)
+            {
+                signal_data = weechat_python_unicode_to_string (py_str);
+                if (signal_data
+                    && weechat_util_parse_int (signal_data, 10, &number))
+                {
+                    rc = weechat_hook_signal_send (signal, type_data, &number);
+                }
+                free (signal_data);
+                Py_DECREF(py_str);
+            }
+        }
+        API_RETURN_INT(rc);
+    }
+
+    /* String or pointer: a string. */
+    if (!PyUnicode_Check (py_signal_data))
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
+    signal_data = weechat_python_unicode_to_string (py_signal_data);
 
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         rc = weechat_hook_signal_send (signal, type_data, signal_data);
-        API_RETURN_INT(rc);
-    }
-    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
-    {
-        if (weechat_util_parse_int (signal_data, 10, &number))
-            rc = weechat_hook_signal_send (signal, type_data, &number);
-        else
-            rc = WEECHAT_RC_ERROR;
-        API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
     {
         rc = weechat_hook_signal_send (signal, type_data,
                                        API_STR2PTR(signal_data));
-        API_RETURN_INT(rc);
+    }
+    else
+    {
+        rc = WEECHAT_RC_ERROR;
     }
 
-    API_RETURN_INT(WEECHAT_RC_ERROR);
+    free (signal_data);
+
+    API_RETURN_INT(rc);
 }
 
 int

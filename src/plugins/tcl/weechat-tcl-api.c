@@ -3209,13 +3209,17 @@ API_FUNC(hook_signal_send)
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
-        if (Tcl_GetIntFromObj (interp, objv[3], &number) != TCL_OK)
+        /* Integer: a number or a string with a number. */
+        if (weechat_util_parse_int (Tcl_GetString (objv[3]), 10, &number))
         {
-            API_RETURN_INT(WEECHAT_RC_ERROR);
+            rc = weechat_hook_signal_send (signal,
+                                           type_data,
+                                           &number); /* signal_data */
         }
-        rc = weechat_hook_signal_send (signal,
-                                       type_data,
-                                       &number); /* signal_data */
+        else
+        {
+            rc = WEECHAT_RC_ERROR;
+        }
         API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)

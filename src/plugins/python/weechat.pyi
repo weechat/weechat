@@ -1592,7 +1592,7 @@ def hook_signal(signal: str, callback: str, callback_data: str) -> str:
     ...
 
 
-def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int:
+def hook_signal_send(signal: str, type_data: str, signal_data: Union[str, int]) -> int:
     """`hook_signal_send in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_hook_signal_send>`_
     ::
 

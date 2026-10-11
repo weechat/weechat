@@ -3096,12 +3096,20 @@ weechat_guile_api_hook_signal_send (SCM signal, SCM type_data,
     }
     else if (strcmp (API_SCM_TO_STRING(type_data), WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
-        if (!scm_is_integer (signal_data))
-            API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
-        number = scm_to_int (signal_data);
-        rc = weechat_hook_signal_send (API_SCM_TO_STRING(signal),
-                                       API_SCM_TO_STRING(type_data),
-                                       &number);
+        /* Integer: a number or a string with a number. */
+        rc = WEECHAT_RC_ERROR;
+        if (scm_is_string (signal_data) || scm_is_integer (signal_data))
+        {
+            if (!scm_is_string (signal_data))
+                signal_data = scm_number_to_string (signal_data, scm_from_int (10));
+            if (weechat_util_parse_int (API_SCM_TO_STRING(signal_data), 10,
+                                        &number))
+            {
+                rc = weechat_hook_signal_send (API_SCM_TO_STRING(signal),
+                                               API_SCM_TO_STRING(type_data),
+                                               &number);
+            }
+        }
         API_RETURN_INT(rc);
     }
     else if (strcmp (API_SCM_TO_STRING(type_data), WEECHAT_HOOK_SIGNAL_POINTER) == 0)

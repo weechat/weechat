@@ -3810,6 +3810,7 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
                                    VALUE signal_data)
 {
     char *c_signal, *c_type_data, *c_signal_data;
+    VALUE str_signal_data;
     int number, rc;
 
     API_INIT_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
@@ -3831,9 +3832,15 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
     }
     else if (strcmp (c_type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
-        CHECK_INTEGER(signal_data);
-        number = NUM2INT (signal_data);
-        rc = weechat_hook_signal_send (c_signal, c_type_data, &number);
+        /* Integer: a number or a string with a number. */
+        rc = WEECHAT_RC_ERROR;
+        if (RB_INTEGER_TYPE_P(signal_data) || RB_TYPE_P(signal_data, T_STRING))
+        {
+            str_signal_data = rb_obj_as_string (signal_data);
+            c_signal_data = StringValuePtr (str_signal_data);
+            if (weechat_util_parse_int (c_signal_data, 10, &number))
+                rc = weechat_hook_signal_send (c_signal, c_type_data, &number);
+        }
         API_RETURN_INT(rc);
     }
     else if (strcmp (c_type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)

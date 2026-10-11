@@ -109,6 +109,17 @@ def connect_cb(data, status, gnutls_rc, sock, ip_address, error): ...
 def connect_cb(data, status, gnutls_rc, sock, error, ip_address): ...
 ```
 
+### Integer data in hook_signal_send in scripts
+
+In all scripting languages, the integer data sent with function `hook_signal_send` (type
+`WEECHAT_HOOK_SIGNAL_INT`) can be a number or a string with a number (like `123` or `"123"`).
+If it is not a valid integer (for example `"abc"`, a float or a number out of range), the signal
+is not sent and `WEECHAT_RC_ERROR` is returned.
+
+Before, the behavior was different in each language, for example Perl and Lua silently sent `0`
+for an invalid integer, and Ruby and Guile did not accept a string: scripts that relied on this
+must be updated.
+
 ### PHP scripting API
 
 In PHP scripts, the callback of `weechat_hook_signal` now receives 3 arguments, like in all

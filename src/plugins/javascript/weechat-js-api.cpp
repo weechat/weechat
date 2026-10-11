@@ -2996,23 +2996,37 @@ API_FUNC(hook_signal_send)
 {
     int number, rc;
 
-    API_INIT_FUNC(1, "hook_signal_send", "sss", API_RETURN_INT(WEECHAT_RC_ERROR));
+    /* Type of signal data (3rd argument) is checked below. */
+    API_INIT_FUNC(1, "hook_signal_send", "ss", API_RETURN_INT(WEECHAT_RC_ERROR));
+    if (args.Length() < 3)
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     v8::String::Utf8Value signal(args[0]);
     v8::String::Utf8Value type_data(args[1]);
     v8::String::Utf8Value signal_data(args[2]);
 
+    if (strcmp (*type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
+    {
+        /* Integer: a number or a string with a number. */
+        if ((args[2]->IsString() || args[2]->IsNumber())
+            && weechat_util_parse_int (*signal_data, 10, &number))
+        {
+            rc = weechat_hook_signal_send (*signal, *type_data, &number);
+        }
+        else
+        {
+            rc = WEECHAT_RC_ERROR;
+        }
+        API_RETURN_INT(rc);
+    }
+
+    /* String or pointer: a string. */
+    if (!args[2]->IsString())
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
+
     if (strcmp (*type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         rc = weechat_hook_signal_send (*signal, *type_data, *signal_data);
-        API_RETURN_INT(rc);
-    }
-    else if (strcmp (*type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
-    {
-        if (weechat_util_parse_int (*signal_data, 10, &number))
-            rc = weechat_hook_signal_send (*signal, *type_data, &number);
-        else
-            rc = WEECHAT_RC_ERROR;
         API_RETURN_INT(rc);
     }
     else if (strcmp (*type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
