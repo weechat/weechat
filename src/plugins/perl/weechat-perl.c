@@ -366,7 +366,7 @@ weechat_perl_exec (struct t_plugin_script *script,
                     if (argv[i])
                         XPUSHs (sv_2mortal (newSVpv((char *)argv[i], 0)));
                     else
-                        XPUSHs (sv_2mortal (&PL_sv_undef));
+                        XPUSHs (&PL_sv_undef);
                     break;
                 case 'i': /* Integer */
                     XPUSHs (sv_2mortal (newSViv (*((int *)argv[i]))));
