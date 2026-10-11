@@ -954,6 +954,12 @@ def signal_pointer_cb(data, signal, signal_data):
     return weechat.WEECHAT_RC_OK
 
 
+def signal_int_cb(data, signal, signal_data):
+    """Signal callback (integer): the data is saved in a local variable of core buffer."""
+    weechat.buffer_set(weechat.buffer_search_main(), "localvar_set_testapi_signal_int", signal_data)
+    return weechat.WEECHAT_RC_OK_EAT
+
+
 def hsignal_cb(data, signal, hashtable):
     """Hsignal callback."""
     check(data == "hsignal_data")
@@ -1171,8 +1177,34 @@ def test_hooks():
     check(rc == weechat.WEECHAT_RC_OK_EAT)
     rc = weechat.hook_signal_send(signal_pointer, weechat.WEECHAT_HOOK_SIGNAL_POINTER, buffer)
     check(rc == weechat.WEECHAT_RC_OK)
+    # Integer: a number or a string with a number.
+    signal_int = "{SCRIPT_NAME}_signal_int"
+    hook_sig_int = weechat.hook_signal(signal_int, "signal_int_cb", "signal_data")
+    check(hook_sig_int != "")
+    check(weechat.hook_signal_send(signal_int, weechat.WEECHAT_HOOK_SIGNAL_INT, "123") == weechat.WEECHAT_RC_OK_EAT)
+    check(weechat.buffer_get_string(buffer, "localvar_testapi_signal_int") == "123")
+    check(weechat.hook_signal_send(signal_int, weechat.WEECHAT_HOOK_SIGNAL_INT, -42) == weechat.WEECHAT_RC_OK_EAT)
+    check(weechat.buffer_get_string(buffer, "localvar_testapi_signal_int") == "-42")
+    weechat.buffer_set(buffer, "localvar_del_testapi_signal_int", "")
+    # Invalid integers: the signal is not sent.
+    check(weechat.hook_signal_send(signal_int, weechat.WEECHAT_HOOK_SIGNAL_INT, "abc") == weechat.WEECHAT_RC_ERROR)
+    check(weechat.hook_signal_send(signal_int, weechat.WEECHAT_HOOK_SIGNAL_INT, "12abc") == weechat.WEECHAT_RC_ERROR)
+    check(weechat.hook_signal_send(signal_int, weechat.WEECHAT_HOOK_SIGNAL_INT, "") == weechat.WEECHAT_RC_ERROR)
+    check(
+        weechat.hook_signal_send(signal_int, weechat.WEECHAT_HOOK_SIGNAL_INT, "99999999999") == weechat.WEECHAT_RC_ERROR
+    )
+    check(
+        weechat.hook_signal_send(signal_int, weechat.WEECHAT_HOOK_SIGNAL_INT, 99999999999) == weechat.WEECHAT_RC_ERROR
+    )
+    # A float is invalid on purpose (not allowed by the type of argument).
+    check(
+        weechat.hook_signal_send(signal_int, weechat.WEECHAT_HOOK_SIGNAL_INT, 1.5)  # ty: ignore[invalid-argument-type]
+        == weechat.WEECHAT_RC_ERROR
+    )
+    check(weechat.buffer_get_string(buffer, "localvar_testapi_signal_int") == "")
     weechat.unhook(hook_sig_string)
     weechat.unhook(hook_sig_pointer)
+    weechat.unhook(hook_sig_int)
     rc = weechat.hook_signal_send(signal_string, weechat.WEECHAT_HOOK_SIGNAL_STRING, "test string")
     check(rc == weechat.WEECHAT_RC_OK)
     # hook_hsignal / hook_hsignal_send
