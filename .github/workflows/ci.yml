@@ -46,8 +46,8 @@ env:
     libncurses-dev
     libperl-dev
     libphp-embed
+    libnode-dev
     libsodium-dev
-    libv8-dev
     libzstd-dev
     ninja-build
     php-dev
@@ -179,7 +179,7 @@ jobs:
           - name: "gcc"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_JAVASCRIPT=ON"
           - name: "gcc_ninja"
             cc: "gcc"
             cxx: "g++"
@@ -207,7 +207,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
+            buildargs: "-DENABLE_TESTS=ON -DENABLE_FUZZ=ON -DENABLE_JAVASCRIPT=ON"
 
     name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}

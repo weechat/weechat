@@ -187,7 +187,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | guile-3.0-dev | ≥ 2.0
 | Extension guile (scheme).
 
-| libv8-dev | ≤ 3.24.3
+| libnode-dev | ≥ 20 (V8 ≥ 11.3)
 | Extension javascript.
 
 | php-dev | ≥ 7.0

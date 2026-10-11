@@ -28,11 +28,11 @@ extern "C"
 
 #define API_DEF_FUNC(__name)                                            \
     weechat_obj->Set(                                                   \
-        v8::String::New(#__name),                                       \
-        v8::FunctionTemplate::New(weechat_js_api_##__name));
+        js_isolate, #__name,                                            \
+        v8::FunctionTemplate::New(js_isolate, weechat_js_api_##__name));
 #define API_FUNC(__name)                                                \
-    static v8::Handle<v8::Value>                                        \
-    weechat_js_api_##__name(const v8::Arguments &args)
+    static void                                                         \
+    weechat_js_api_##__name(const v8::FunctionCallbackInfo<v8::Value> &args)
 #define API_INIT_FUNC(__init, __name, __args_fmt, __ret)                \
     std::string js_function_name(__name);                               \
     std::string js_args(__args_fmt);                                    \
@@ -78,28 +78,51 @@ extern "C"
     plugin_script_str2ptr (weechat_js_plugin,                           \
                            JS_CURRENT_SCRIPT_NAME,                      \
                            js_function_name.c_str(), __string)
-#define API_RETURN_OK return v8::True();
-#define API_RETURN_ERROR return v8::False();
+#define API_INTEGER_VALUE(__value)                                      \
+    (__value)->IntegerValue(js_isolate->GetCurrentContext()).FromMaybe(0)
+#define API_RETURN_OK                                                   \
+    return args.GetReturnValue().Set(true)
+#define API_RETURN_ERROR                                                \
+    return args.GetReturnValue().Set(false)
 #define API_RETURN_EMPTY                                                \
-    return v8::String::New("");
+    return args.GetReturnValue().SetEmptyString()
 #define API_RETURN_STRING(__string)                                     \
-    if (__string)                                                       \
-        return v8::String::New(__string);                               \
-    return v8::String::New("")
+    return weechat_js_api_return_string (args, __string)
 #define API_RETURN_STRING_FREE(__string)                                \
-    if (__string)                                                       \
-    {                                                                   \
-        v8::Handle<v8::Value> return_value = v8::String::New(__string); \
-        free ((void *)__string);                                        \
-        return return_value;                                            \
-    }                                                                   \
-    return v8::String::New("")
+    weechat_js_api_return_string (args, __string);                      \
+    free ((void *)__string);                                            \
+    return
 #define API_RETURN_INT(__int)                                           \
-    return v8::Integer::New(__int)
+    return args.GetReturnValue().Set((int32_t)(__int))
 #define API_RETURN_LONG(__int)                                          \
-    return v8::Number::New(__int)
+    return args.GetReturnValue().Set((double)(__int))
 #define API_RETURN_LONGLONG(__int)                                      \
-    return v8::Number::New(__int)
+    return args.GetReturnValue().Set((double)(__int))
+#define API_RETURN_OBJECT(__object)                                     \
+    return args.GetReturnValue().Set(__object)
+
+
+/*
+ * Set a string as return value of a javascript function
+ * (empty string if string is NULL).
+ */
+
+void
+weechat_js_api_return_string (const v8::FunctionCallbackInfo<v8::Value> &args,
+                              const char *string)
+{
+    v8::Local<v8::String> js_string;
+
+    if (string
+        && v8::String::NewFromUtf8(js_isolate, string).ToLocal(&js_string))
+    {
+        args.GetReturnValue().Set(js_string);
+    }
+    else
+    {
+        args.GetReturnValue().SetEmptyString();
+    }
+}
 
 
 /*
@@ -124,13 +147,13 @@ API_FUNC(register)
     js_current_script = NULL;
     js_registered_script = NULL;
 
-    v8::String::Utf8Value name(args[0]);
-    v8::String::Utf8Value author(args[1]);
-    v8::String::Utf8Value version(args[2]);
-    v8::String::Utf8Value license(args[3]);
-    v8::String::Utf8Value description(args[4]);
-    v8::String::Utf8Value shutdown_func(args[5]);
-    v8::String::Utf8Value charset(args[6]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
+    v8::String::Utf8Value author(js_isolate, args[1]);
+    v8::String::Utf8Value version(js_isolate, args[2]);
+    v8::String::Utf8Value license(js_isolate, args[3]);
+    v8::String::Utf8Value description(js_isolate, args[4]);
+    v8::String::Utf8Value shutdown_func(js_isolate, args[5]);
+    v8::String::Utf8Value charset(js_isolate, args[6]);
 
     if (plugin_script_search (js_scripts, *name))
     {
@@ -185,7 +208,7 @@ API_FUNC(plugin_get_name)
 
     API_INIT_FUNC(1, "plugin_get_name", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value plugin(args[0]);
+    v8::String::Utf8Value plugin(js_isolate, args[0]);
 
     result = weechat_plugin_get_name (
         (struct t_weechat_plugin *)API_STR2PTR(*plugin));
@@ -197,7 +220,7 @@ API_FUNC(charset_set)
 {
     API_INIT_FUNC(1, "charset_set", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value charset(args[0]);
+    v8::String::Utf8Value charset(js_isolate, args[0]);
 
     plugin_script_api_charset_set (js_current_script, *charset);
 
@@ -210,8 +233,8 @@ API_FUNC(iconv_to_internal)
 
     API_INIT_FUNC(1, "iconv_to_internal", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value charset(args[0]);
-    v8::String::Utf8Value string(args[1]);
+    v8::String::Utf8Value charset(js_isolate, args[0]);
+    v8::String::Utf8Value string(js_isolate, args[1]);
 
     result = weechat_iconv_to_internal (*charset, *string);
 
@@ -224,8 +247,8 @@ API_FUNC(iconv_from_internal)
 
     API_INIT_FUNC(1, "iconv_from_internal", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value charset(args[0]);
-    v8::String::Utf8Value string(args[1]);
+    v8::String::Utf8Value charset(js_isolate, args[0]);
+    v8::String::Utf8Value string(js_isolate, args[1]);
 
     result = weechat_iconv_from_internal (*charset, *string);
 
@@ -238,7 +261,7 @@ API_FUNC(gettext)
 
     API_INIT_FUNC(1, "gettext", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value string(args[0]);
+    v8::String::Utf8Value string(js_isolate, args[0]);
 
     result = weechat_gettext (*string);
 
@@ -251,9 +274,9 @@ API_FUNC(ngettext)
 
     API_INIT_FUNC(1, "ngettext", "ssi", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value single(args[0]);
-    v8::String::Utf8Value plural(args[1]);
-    int count = args[2]->IntegerValue();
+    v8::String::Utf8Value single(js_isolate, args[0]);
+    v8::String::Utf8Value plural(js_isolate, args[1]);
+    int count = API_INTEGER_VALUE(args[2]);
 
     result = weechat_ngettext (*single, *plural, count);
 
@@ -266,7 +289,7 @@ API_FUNC(strlen_screen)
 
     API_INIT_FUNC(1, "strlen_screen", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value string(args[0]);
+    v8::String::Utf8Value string(js_isolate, args[0]);
 
     value = weechat_strlen_screen (*string);
 
@@ -279,9 +302,9 @@ API_FUNC(string_match)
 
     API_INIT_FUNC(1, "string_match", "ssi", API_RETURN_INT(0));
 
-    v8::String::Utf8Value string(args[0]);
-    v8::String::Utf8Value mask(args[1]);
-    int case_sensitive = args[2]->IntegerValue();
+    v8::String::Utf8Value string(js_isolate, args[0]);
+    v8::String::Utf8Value mask(js_isolate, args[1]);
+    int case_sensitive = API_INTEGER_VALUE(args[2]);
 
     value = weechat_string_match (*string, *mask, case_sensitive);
 
@@ -294,9 +317,9 @@ API_FUNC(string_match_list)
 
     API_INIT_FUNC(1, "string_match_list", "ssi", API_RETURN_INT(0));
 
-    v8::String::Utf8Value string(args[0]);
-    v8::String::Utf8Value masks(args[1]);
-    int case_sensitive = args[2]->IntegerValue();
+    v8::String::Utf8Value string(js_isolate, args[0]);
+    v8::String::Utf8Value masks(js_isolate, args[1]);
+    int case_sensitive = API_INTEGER_VALUE(args[2]);
 
     value = plugin_script_api_string_match_list (weechat_js_plugin,
                                                  *string,
@@ -312,8 +335,8 @@ API_FUNC(string_has_highlight)
 
     API_INIT_FUNC(1, "string_has_highlight", "ss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value string(args[0]);
-    v8::String::Utf8Value highlight_words(args[1]);
+    v8::String::Utf8Value string(js_isolate, args[0]);
+    v8::String::Utf8Value highlight_words(js_isolate, args[1]);
 
     value = weechat_string_has_highlight (*string, *highlight_words);
 
@@ -326,8 +349,8 @@ API_FUNC(string_has_highlight_regex)
 
     API_INIT_FUNC(1, "string_has_highlight_regex", "ss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value string(args[0]);
-    v8::String::Utf8Value regex(args[1]);
+    v8::String::Utf8Value string(js_isolate, args[0]);
+    v8::String::Utf8Value regex(js_isolate, args[1]);
 
     value = weechat_string_has_highlight_regex (*string, *regex);
 
@@ -340,7 +363,7 @@ API_FUNC(string_mask_to_regex)
 
     API_INIT_FUNC(1, "string_mask_to_regex", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value mask(args[0]);
+    v8::String::Utf8Value mask(js_isolate, args[0]);
 
     result = weechat_string_mask_to_regex (*mask);
 
@@ -354,7 +377,7 @@ API_FUNC(string_format_size)
 
     API_INIT_FUNC(1, "string_format_size", "n", API_RETURN_EMPTY);
 
-    size = args[0]->IntegerValue();
+    size = API_INTEGER_VALUE(args[0]);
 
     result = weechat_string_format_size (size);
 
@@ -367,7 +390,7 @@ API_FUNC(string_parse_size)
 
     API_INIT_FUNC(1, "string_parse_size", "s", API_RETURN_LONG(0));
 
-    v8::String::Utf8Value size(args[0]);
+    v8::String::Utf8Value size(js_isolate, args[0]);
 
     value = weechat_string_parse_size (*size);
 
@@ -380,7 +403,7 @@ API_FUNC(string_color_code_size)
 
     API_INIT_FUNC(1, "string_color_code_size", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value string(args[0]);
+    v8::String::Utf8Value string(js_isolate, args[0]);
 
     size = weechat_string_color_code_size (*string);
 
@@ -393,8 +416,8 @@ API_FUNC(string_remove_color)
 
     API_INIT_FUNC(1, "string_remove_color", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value string(args[0]);
-    v8::String::Utf8Value replacement(args[1]);
+    v8::String::Utf8Value string(js_isolate, args[0]);
+    v8::String::Utf8Value replacement(js_isolate, args[1]);
 
     result = weechat_string_remove_color (*string, *replacement);
 
@@ -407,7 +430,7 @@ API_FUNC(string_is_command_char)
 
     API_INIT_FUNC(1, "string_is_command_char", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value string(args[0]);
+    v8::String::Utf8Value string(js_isolate, args[0]);
 
     value = weechat_string_is_command_char (*string);
 
@@ -420,7 +443,7 @@ API_FUNC(string_input_for_buffer)
 
     API_INIT_FUNC(1, "string_input_for_buffer", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value string(args[0]);
+    v8::String::Utf8Value string(js_isolate, args[0]);
 
     result = weechat_string_input_for_buffer (*string);
 
@@ -434,19 +457,19 @@ API_FUNC(string_eval_expression)
 
     API_INIT_FUNC(1, "string_eval_expression", "shhh", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value expr(args[0]);
+    v8::String::Utf8Value expr(js_isolate, args[0]);
     pointers = weechat_js_object_to_hashtable (
-        args[1]->ToObject(),
+        args[1],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_POINTER);
     extra_vars = weechat_js_object_to_hashtable (
-        args[2]->ToObject(),
+        args[2],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
     options = weechat_js_object_to_hashtable (
-        args[3]->ToObject(),
+        args[3],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
@@ -471,19 +494,19 @@ API_FUNC(string_eval_path_home)
 
     API_INIT_FUNC(1, "string_eval_path_home", "shhh", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value path(args[0]);
+    v8::String::Utf8Value path(js_isolate, args[0]);
     pointers = weechat_js_object_to_hashtable (
-        args[1]->ToObject(),
+        args[1],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_POINTER);
     extra_vars = weechat_js_object_to_hashtable (
-        args[2]->ToObject(),
+        args[2],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
     options = weechat_js_object_to_hashtable (
-        args[3]->ToObject(),
+        args[3],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
@@ -507,8 +530,8 @@ API_FUNC(mkdir_home)
 
     API_INIT_FUNC(1, "mkdir_home", "si", API_RETURN_ERROR);
 
-    v8::String::Utf8Value directory(args[0]);
-    mode = args[1]->IntegerValue();
+    v8::String::Utf8Value directory(js_isolate, args[0]);
+    mode = API_INTEGER_VALUE(args[1]);
 
     if (weechat_mkdir_home (*directory, mode))
         API_RETURN_OK;
@@ -522,8 +545,8 @@ API_FUNC(mkdir)
 
     API_INIT_FUNC(1, "mkdir", "si", API_RETURN_ERROR);
 
-    v8::String::Utf8Value directory(args[0]);
-    mode = args[1]->IntegerValue();
+    v8::String::Utf8Value directory(js_isolate, args[0]);
+    mode = API_INTEGER_VALUE(args[1]);
 
     if (weechat_mkdir (*directory, mode))
         API_RETURN_OK;
@@ -537,8 +560,8 @@ API_FUNC(mkdir_parents)
 
     API_INIT_FUNC(1, "mkdir_parents", "si", API_RETURN_ERROR);
 
-    v8::String::Utf8Value directory(args[0]);
-    mode = args[1]->IntegerValue();
+    v8::String::Utf8Value directory(js_isolate, args[0]);
+    mode = API_INTEGER_VALUE(args[1]);
 
     if (weechat_mkdir_parents (*directory, mode))
         API_RETURN_OK;
@@ -563,10 +586,10 @@ API_FUNC(list_add)
 
     API_INIT_FUNC(1, "list_add", "ssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value weelist(args[0]);
-    v8::String::Utf8Value data(args[1]);
-    v8::String::Utf8Value where(args[2]);
-    v8::String::Utf8Value user_data(args[3]);
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
+    v8::String::Utf8Value data(js_isolate, args[1]);
+    v8::String::Utf8Value where(js_isolate, args[2]);
+    v8::String::Utf8Value user_data(js_isolate, args[3]);
 
     result = API_PTR2STR(
         weechat_list_add ((struct t_weelist *)API_STR2PTR(*weelist),
@@ -583,8 +606,8 @@ API_FUNC(list_search)
 
     API_INIT_FUNC(1, "list_search", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value weelist(args[0]);
-    v8::String::Utf8Value data(args[1]);
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
+    v8::String::Utf8Value data(js_isolate, args[1]);
 
     result = API_PTR2STR(
         weechat_list_search (
@@ -599,8 +622,8 @@ API_FUNC(list_search_pos)
 
     API_INIT_FUNC(1, "list_search_pos", "ss", API_RETURN_INT(-1));
 
-    v8::String::Utf8Value weelist(args[0]);
-    v8::String::Utf8Value data(args[1]);
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
+    v8::String::Utf8Value data(js_isolate, args[1]);
 
     pos = weechat_list_search_pos (
         (struct t_weelist *)API_STR2PTR(*weelist), *data);
@@ -614,8 +637,8 @@ API_FUNC(list_casesearch)
 
     API_INIT_FUNC(1, "list_casesearch", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value weelist(args[0]);
-    v8::String::Utf8Value data(args[1]);
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
+    v8::String::Utf8Value data(js_isolate, args[1]);
 
     result = API_PTR2STR(
         weechat_list_casesearch (
@@ -630,8 +653,8 @@ API_FUNC(list_casesearch_pos)
 
     API_INIT_FUNC(1, "list_casesearch_pos", "ss", API_RETURN_INT(-1));
 
-    v8::String::Utf8Value weelist(args[0]);
-    v8::String::Utf8Value data(args[1]);
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
+    v8::String::Utf8Value data(js_isolate, args[1]);
 
     pos = weechat_list_casesearch_pos (
         (struct t_weelist *)API_STR2PTR(*weelist), *data);
@@ -646,8 +669,8 @@ API_FUNC(list_get)
 
     API_INIT_FUNC(1, "list_get", "si", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value weelist(args[0]);
-    position = args[1]->IntegerValue();
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
+    position = API_INTEGER_VALUE(args[1]);
 
     result = API_PTR2STR(
         weechat_list_get ((struct t_weelist *)API_STR2PTR(*weelist),
@@ -660,8 +683,8 @@ API_FUNC(list_set)
 {
     API_INIT_FUNC(1, "list_set", "ss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value item(args[0]);
-    v8::String::Utf8Value new_value(args[1]);
+    v8::String::Utf8Value item(js_isolate, args[0]);
+    v8::String::Utf8Value new_value(js_isolate, args[1]);
 
     weechat_list_set ((struct t_weelist_item *)API_STR2PTR(*item), *new_value);
 
@@ -674,7 +697,7 @@ API_FUNC(list_next)
 
     API_INIT_FUNC(1, "list_next", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value item(args[0]);
+    v8::String::Utf8Value item(js_isolate, args[0]);
 
     result = API_PTR2STR(
         weechat_list_next ((struct t_weelist_item *)API_STR2PTR(*item)));
@@ -688,7 +711,7 @@ API_FUNC(list_prev)
 
     API_INIT_FUNC(1, "list_prev", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value item(args[0]);
+    v8::String::Utf8Value item(js_isolate, args[0]);
 
     result = API_PTR2STR(
         weechat_list_prev ((struct t_weelist_item *)API_STR2PTR(*item)));
@@ -702,7 +725,7 @@ API_FUNC(list_string)
 
     API_INIT_FUNC(1, "list_string", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value item(args[0]);
+    v8::String::Utf8Value item(js_isolate, args[0]);
 
     result = weechat_list_string (
         (struct t_weelist_item *)API_STR2PTR(*item));
@@ -716,7 +739,7 @@ API_FUNC(list_size)
 
     API_INIT_FUNC(1, "list_size", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value weelist(args[0]);
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
 
     size = weechat_list_size ((struct t_weelist *)API_STR2PTR(*weelist));
 
@@ -727,8 +750,8 @@ API_FUNC(list_remove)
 {
     API_INIT_FUNC(1, "list_remove", "ss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value weelist(args[0]);
-    v8::String::Utf8Value item(args[1]);
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
+    v8::String::Utf8Value item(js_isolate, args[1]);
 
     weechat_list_remove ((struct t_weelist *)API_STR2PTR(*weelist),
                          (struct t_weelist_item *)API_STR2PTR(*item));
@@ -740,7 +763,7 @@ API_FUNC(list_remove_all)
 {
     API_INIT_FUNC(1, "list_remove_all", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value weelist(args[0]);
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
 
     weechat_list_remove_all ((struct t_weelist *)API_STR2PTR(*weelist));
 
@@ -753,7 +776,7 @@ API_FUNC(list_free)
     if (args.Length() < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    v8::String::Utf8Value weelist(args[0]);
+    v8::String::Utf8Value weelist(js_isolate, args[0]);
 
     weechat_list_free ((struct t_weelist *)API_STR2PTR(*weelist));
 
@@ -803,9 +826,9 @@ API_FUNC(config_new)
 
     API_INIT_FUNC(1, "config_new", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
-    v8::String::Utf8Value function(args[1]);
-    v8::String::Utf8Value data(args[2]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
+    v8::String::Utf8Value function(js_isolate, args[1]);
+    v8::String::Utf8Value data(js_isolate, args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_config_new (weechat_js_plugin,
@@ -858,10 +881,10 @@ API_FUNC(config_set_version)
 
     API_INIT_FUNC(1, "config_set_version", "siss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value config_file(args[0]);
-    version = args[1]->IntegerValue();
-    v8::String::Utf8Value function(args[2]);
-    v8::String::Utf8Value data(args[3]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
+    version = API_INTEGER_VALUE(args[1]);
+    v8::String::Utf8Value function(js_isolate, args[2]);
+    v8::String::Utf8Value data(js_isolate, args[3]);
 
     rc = plugin_script_api_config_set_version (
         weechat_js_plugin,
@@ -1086,20 +1109,20 @@ API_FUNC(config_new_section)
 
     API_INIT_FUNC(1, "config_new_section", "ssiissssssssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value config_file(args[0]);
-    v8::String::Utf8Value name(args[1]);
-    user_can_add_options = args[2]->IntegerValue();
-    user_can_delete_options = args[3]->IntegerValue();
-    v8::String::Utf8Value function_read(args[4]);
-    v8::String::Utf8Value data_read(args[5]);
-    v8::String::Utf8Value function_write(args[6]);
-    v8::String::Utf8Value data_write(args[7]);
-    v8::String::Utf8Value function_write_default(args[8]);
-    v8::String::Utf8Value data_write_default(args[9]);
-    v8::String::Utf8Value function_create_option(args[10]);
-    v8::String::Utf8Value data_create_option(args[11]);
-    v8::String::Utf8Value function_delete_option(args[12]);
-    v8::String::Utf8Value data_delete_option(args[13]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
+    user_can_add_options = API_INTEGER_VALUE(args[2]);
+    user_can_delete_options = API_INTEGER_VALUE(args[3]);
+    v8::String::Utf8Value function_read(js_isolate, args[4]);
+    v8::String::Utf8Value data_read(js_isolate, args[5]);
+    v8::String::Utf8Value function_write(js_isolate, args[6]);
+    v8::String::Utf8Value data_write(js_isolate, args[7]);
+    v8::String::Utf8Value function_write_default(js_isolate, args[8]);
+    v8::String::Utf8Value data_write_default(js_isolate, args[9]);
+    v8::String::Utf8Value function_create_option(js_isolate, args[10]);
+    v8::String::Utf8Value data_create_option(js_isolate, args[11]);
+    v8::String::Utf8Value function_delete_option(js_isolate, args[12]);
+    v8::String::Utf8Value data_delete_option(js_isolate, args[13]);
 
     result = API_PTR2STR(
         plugin_script_api_config_new_section (
@@ -1134,8 +1157,8 @@ API_FUNC(config_search_section)
 
     API_INIT_FUNC(1, "config_search_section", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value config_file(args[0]);
-    v8::String::Utf8Value section_name(args[1]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
+    v8::String::Utf8Value section_name(js_isolate, args[1]);
 
     result = API_PTR2STR(
         weechat_config_search_section (
@@ -1242,34 +1265,34 @@ API_FUNC(config_new_option)
 
     API_INIT_FUNC(1, "config_new_option", "ssssssiiSSissssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value config_file(args[0]);
-    v8::String::Utf8Value section(args[1]);
-    v8::String::Utf8Value name(args[2]);
-    v8::String::Utf8Value type(args[3]);
-    v8::String::Utf8Value description(args[4]);
-    v8::String::Utf8Value string_values(args[5]);
-    min = args[6]->IntegerValue();
-    max = args[7]->IntegerValue();
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
+    v8::String::Utf8Value section(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
+    v8::String::Utf8Value type(js_isolate, args[3]);
+    v8::String::Utf8Value description(js_isolate, args[4]);
+    v8::String::Utf8Value string_values(js_isolate, args[5]);
+    min = API_INTEGER_VALUE(args[6]);
+    max = API_INTEGER_VALUE(args[7]);
 
-    v8::String::Utf8Value v8_default_value(args[8]);
+    v8::String::Utf8Value v8_default_value(js_isolate, args[8]);
     if (args[8]->IsNull() || args[8]->IsUndefined())
         default_value = NULL;
     else
         default_value = *v8_default_value;
 
-    v8::String::Utf8Value v8_value(args[9]);
+    v8::String::Utf8Value v8_value(js_isolate, args[9]);
     if (args[8]->IsNull() || args[8]->IsUndefined())
         value = NULL;
     else
         value = *v8_value;
 
-    null_value_allowed = args[10]->IntegerValue();
-    v8::String::Utf8Value function_check_value(args[11]);
-    v8::String::Utf8Value data_check_value(args[12]);
-    v8::String::Utf8Value function_change(args[13]);
-    v8::String::Utf8Value data_change(args[14]);
-    v8::String::Utf8Value function_delete(args[15]);
-    v8::String::Utf8Value data_delete(args[16]);
+    null_value_allowed = API_INTEGER_VALUE(args[10]);
+    v8::String::Utf8Value function_check_value(js_isolate, args[11]);
+    v8::String::Utf8Value data_check_value(js_isolate, args[12]);
+    v8::String::Utf8Value function_change(js_isolate, args[13]);
+    v8::String::Utf8Value data_change(js_isolate, args[14]);
+    v8::String::Utf8Value function_delete(js_isolate, args[15]);
+    v8::String::Utf8Value data_delete(js_isolate, args[16]);
 
     result = API_PTR2STR(
         plugin_script_api_config_new_option (
@@ -1305,9 +1328,9 @@ API_FUNC(config_search_option)
 
     API_INIT_FUNC(1, "config_search_option", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value config_file(args[0]);
-    v8::String::Utf8Value section(args[1]);
-    v8::String::Utf8Value option_name(args[2]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
+    v8::String::Utf8Value section(js_isolate, args[1]);
+    v8::String::Utf8Value option_name(js_isolate, args[2]);
 
     result = API_PTR2STR(
         weechat_config_search_option (
@@ -1324,7 +1347,7 @@ API_FUNC(config_string_to_boolean)
 
     API_INIT_FUNC(1, "config_string_to_boolean", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value text(args[0]);
+    v8::String::Utf8Value text(js_isolate, args[0]);
 
     value = weechat_config_string_to_boolean (*text);
 
@@ -1337,8 +1360,8 @@ API_FUNC(config_option_reset)
 
     API_INIT_FUNC(1, "config_option_reset", "si", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
-    run_callback = args[1]->IntegerValue();
+    v8::String::Utf8Value option(js_isolate, args[0]);
+    run_callback = API_INTEGER_VALUE(args[1]);
 
     rc = weechat_config_option_reset (
         (struct t_config_option *)API_STR2PTR(*option), run_callback);
@@ -1352,9 +1375,9 @@ API_FUNC(config_option_set)
 
     API_INIT_FUNC(1, "config_option_set", "ssi", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
-    v8::String::Utf8Value option(args[0]);
-    v8::String::Utf8Value value(args[1]);
-    run_callback = args[2]->IntegerValue();
+    v8::String::Utf8Value option(js_isolate, args[0]);
+    v8::String::Utf8Value value(js_isolate, args[1]);
+    run_callback = API_INTEGER_VALUE(args[2]);
 
     rc = weechat_config_option_set (
         (struct t_config_option *)API_STR2PTR(*option), *value, run_callback);
@@ -1368,8 +1391,8 @@ API_FUNC(config_option_set_null)
 
     API_INIT_FUNC(1, "config_option_set_null", "si", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
-    v8::String::Utf8Value option(args[0]);
-    run_callback = args[1]->IntegerValue();
+    v8::String::Utf8Value option(js_isolate, args[0]);
+    run_callback = API_INTEGER_VALUE(args[1]);
 
     rc = weechat_config_option_set_null (
         (struct t_config_option *)API_STR2PTR(*option), run_callback);
@@ -1383,7 +1406,7 @@ API_FUNC(config_option_unset)
 
     API_INIT_FUNC(1, "config_option_unset", "s", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     rc = weechat_config_option_unset (
         (struct t_config_option *) API_STR2PTR(*option));
@@ -1395,8 +1418,8 @@ API_FUNC(config_option_rename)
 {
     API_INIT_FUNC(1, "config_option_rename", "ss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value option(args[0]);
-    v8::String::Utf8Value new_name(args[1]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
+    v8::String::Utf8Value new_name(js_isolate, args[1]);
 
     weechat_config_option_rename (
         (struct t_config_option *)API_STR2PTR(*option), *new_name);
@@ -1410,8 +1433,8 @@ API_FUNC(config_option_get_string)
 
     API_INIT_FUNC(1, "config_option_get_string", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     result = weechat_config_option_get_string (
         (struct t_config_option *)API_STR2PTR(*option),
@@ -1426,8 +1449,8 @@ API_FUNC(config_option_get_pointer)
 
     API_INIT_FUNC(1, "config_option_get_pointer", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     result = API_PTR2STR(
         weechat_config_option_get_pointer (
@@ -1443,7 +1466,7 @@ API_FUNC(config_option_is_null)
 
     API_INIT_FUNC(1, "config_option_is_null", "s", API_RETURN_INT(1));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_option_is_null (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1457,7 +1480,7 @@ API_FUNC(config_option_default_is_null)
 
     API_INIT_FUNC(1, "config_option_default_is_null", "s", API_RETURN_INT(1));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_option_default_is_null (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1471,7 +1494,7 @@ API_FUNC(config_boolean)
 
     API_INIT_FUNC(1, "config_boolean", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_boolean (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1485,7 +1508,7 @@ API_FUNC(config_boolean_default)
 
     API_INIT_FUNC(1, "config_boolean_default", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_boolean_default (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1499,7 +1522,7 @@ API_FUNC(config_boolean_inherited)
 
     API_INIT_FUNC(1, "config_boolean_inherited", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_boolean_inherited (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1513,7 +1536,7 @@ API_FUNC(config_integer)
 
     API_INIT_FUNC(1, "config_integer", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_integer (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1527,7 +1550,7 @@ API_FUNC(config_integer_default)
 
     API_INIT_FUNC(1, "config_integer_default", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_integer_default (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1541,7 +1564,7 @@ API_FUNC(config_integer_inherited)
 
     API_INIT_FUNC(1, "config_integer_inherited", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_integer_inherited (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1555,7 +1578,7 @@ API_FUNC(config_string)
 
     API_INIT_FUNC(1, "config_string", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     result = weechat_config_string (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1569,7 +1592,7 @@ API_FUNC(config_string_default)
 
     API_INIT_FUNC(1, "config_string_default", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     result = weechat_config_string_default (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1583,7 +1606,7 @@ API_FUNC(config_string_inherited)
 
     API_INIT_FUNC(1, "config_string_inherited", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     result = weechat_config_string_inherited (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1597,7 +1620,7 @@ API_FUNC(config_color)
 
     API_INIT_FUNC(1, "config_color", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     result = weechat_config_color (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1611,7 +1634,7 @@ API_FUNC(config_color_default)
 
     API_INIT_FUNC(1, "config_color_default", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     result = weechat_config_color_default (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1625,7 +1648,7 @@ API_FUNC(config_color_inherited)
 
     API_INIT_FUNC(1, "config_color_inherited", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     result = weechat_config_color_inherited (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1639,7 +1662,7 @@ API_FUNC(config_enum)
 
     API_INIT_FUNC(1, "config_enum", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_enum (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1653,7 +1676,7 @@ API_FUNC(config_enum_default)
 
     API_INIT_FUNC(1, "config_enum_default", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_enum_default (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1667,7 +1690,7 @@ API_FUNC(config_enum_inherited)
 
     API_INIT_FUNC(1, "config_enum_inherited", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     value = weechat_config_enum_inherited (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1679,8 +1702,8 @@ API_FUNC(config_write_option)
 {
     API_INIT_FUNC(1, "config_write_option", "ss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value config_file(args[0]);
-    v8::String::Utf8Value option(args[1]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
+    v8::String::Utf8Value option(js_isolate, args[1]);
 
     weechat_config_write_option (
         (struct t_config_file *)API_STR2PTR(*config_file),
@@ -1693,9 +1716,9 @@ API_FUNC(config_write_line)
 {
     API_INIT_FUNC(1, "config_write_line", "sss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value config_file(args[0]);
-    v8::String::Utf8Value option_name(args[1]);
-    v8::String::Utf8Value value(args[2]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
+    v8::String::Utf8Value option_name(js_isolate, args[1]);
+    v8::String::Utf8Value value(js_isolate, args[2]);
 
     weechat_config_write_line (
         (struct t_config_file *)API_STR2PTR(*config_file),
@@ -1712,7 +1735,7 @@ API_FUNC(config_write)
 
     API_INIT_FUNC(1, "config_write", "s", API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
 
-    v8::String::Utf8Value config_file(args[0]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
 
     rc = weechat_config_write (
         (struct t_config_file *)API_STR2PTR(*config_file));
@@ -1726,7 +1749,7 @@ API_FUNC(config_read)
 
     API_INIT_FUNC(1, "config_read", "s", API_RETURN_INT(-1));
 
-    v8::String::Utf8Value config_file(args[0]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
 
     rc = weechat_config_read (
         (struct t_config_file *)API_STR2PTR(*config_file));
@@ -1740,7 +1763,7 @@ API_FUNC(config_reload)
 
     API_INIT_FUNC(1, "config_reload", "s", API_RETURN_INT(-1));
 
-    v8::String::Utf8Value config_file(args[0]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
 
     rc = weechat_config_reload (
         (struct t_config_file *)API_STR2PTR(*config_file));
@@ -1752,7 +1775,7 @@ API_FUNC(config_option_free)
 {
     API_INIT_FUNC(1, "config_option_free", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     weechat_config_option_free (
         (struct t_config_option *)API_STR2PTR(*option));
@@ -1764,7 +1787,7 @@ API_FUNC(config_section_free_options)
 {
     API_INIT_FUNC(1, "config_section_free_options", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value section(args[0]);
+    v8::String::Utf8Value section(js_isolate, args[0]);
 
     weechat_config_section_free_options (
         (struct t_config_section *)API_STR2PTR(*section));
@@ -1776,7 +1799,7 @@ API_FUNC(config_section_free)
 {
     API_INIT_FUNC(1, "config_section_free", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value section(args[0]);
+    v8::String::Utf8Value section(js_isolate, args[0]);
 
     weechat_config_section_free (
         (struct t_config_section *)API_STR2PTR(*section));
@@ -1788,7 +1811,7 @@ API_FUNC(config_free)
 {
     API_INIT_FUNC(1, "config_free", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value config_file(args[0]);
+    v8::String::Utf8Value config_file(js_isolate, args[0]);
 
     weechat_config_free ((struct t_config_file *)API_STR2PTR(*config_file));
 
@@ -1801,7 +1824,7 @@ API_FUNC(config_get)
 
     API_INIT_FUNC(1, "config_get", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     result = API_PTR2STR(weechat_config_get (*option));
 
@@ -1814,7 +1837,7 @@ API_FUNC(config_get_plugin)
 
     API_INIT_FUNC(1, "config_get_plugin", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     result = plugin_script_api_config_get_plugin (weechat_js_plugin,
                                                   js_current_script,
@@ -1829,7 +1852,7 @@ API_FUNC(config_is_set_plugin)
 
     API_INIT_FUNC(1, "config_is_set_plugin", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     rc = plugin_script_api_config_is_set_plugin (weechat_js_plugin,
                                                  js_current_script,
@@ -1844,8 +1867,8 @@ API_FUNC(config_set_plugin)
 
     API_INIT_FUNC(1, "config_set_plugin", "ss", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
-    v8::String::Utf8Value option(args[0]);
-    v8::String::Utf8Value value(args[1]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
+    v8::String::Utf8Value value(js_isolate, args[1]);
 
     rc = plugin_script_api_config_set_plugin (weechat_js_plugin,
                                               js_current_script,
@@ -1859,8 +1882,8 @@ API_FUNC(config_set_desc_plugin)
 {
     API_INIT_FUNC(1, "config_set_desc_plugin", "ss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value option(args[0]);
-    v8::String::Utf8Value description(args[1]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
+    v8::String::Utf8Value description(js_isolate, args[1]);
 
     plugin_script_api_config_set_desc_plugin (weechat_js_plugin,
                                               js_current_script,
@@ -1876,7 +1899,7 @@ API_FUNC(config_unset_plugin)
 
     API_INIT_FUNC(1, "config_unset_plugin", "s", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
-    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
 
     rc = plugin_script_api_config_unset_plugin (weechat_js_plugin,
                                                 js_current_script,
@@ -1892,9 +1915,9 @@ API_FUNC(theme_register)
 
     API_INIT_FUNC(1, "theme_register", "sh", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
     hashtable = weechat_js_object_to_hashtable (
-        args[1]->ToObject(),
+        args[1],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
@@ -1913,14 +1936,13 @@ API_FUNC(theme_register)
 API_FUNC(key_bind)
 {
     struct t_hashtable *hashtable;
-    v8::Handle<v8::Object> obj;
     int num_keys;
 
     API_INIT_FUNC(1, "key_bind", "sh", API_RETURN_INT(0));
 
-    v8::String::Utf8Value context(args[0]);
+    v8::String::Utf8Value context(js_isolate, args[0]);
     hashtable = weechat_js_object_to_hashtable (
-        args[1]->ToObject(),
+        args[1],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
@@ -1939,8 +1961,8 @@ API_FUNC(key_unbind)
 
     API_INIT_FUNC(1, "key_unbind", "ss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value context(args[0]);
-    v8::String::Utf8Value key(args[1]);
+    v8::String::Utf8Value context(js_isolate, args[0]);
+    v8::String::Utf8Value key(js_isolate, args[1]);
 
     num_keys = weechat_key_unbind (*context, *key);
 
@@ -1953,7 +1975,7 @@ API_FUNC(prefix)
 
     API_INIT_FUNC(0, "prefix", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value prefix(args[0]);
+    v8::String::Utf8Value prefix(js_isolate, args[0]);
 
     result = weechat_prefix (*prefix);
 
@@ -1966,7 +1988,7 @@ API_FUNC(color)
 
     API_INIT_FUNC(0, "color", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value color(args[0]);
+    v8::String::Utf8Value color(js_isolate, args[0]);
 
     result = weechat_color (*color);
 
@@ -1977,8 +1999,8 @@ API_FUNC(print)
 {
     API_INIT_FUNC(0, "print", "ss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value message(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value message(js_isolate, args[1]);
 
     plugin_script_api_printf (weechat_js_plugin,
                               js_current_script,
@@ -1994,10 +2016,10 @@ API_FUNC(print_date_tags)
 
     API_INIT_FUNC(1, "print_date_tags", "snss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    date = args[1]->IntegerValue();
-    v8::String::Utf8Value tags(args[2]);
-    v8::String::Utf8Value message(args[3]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    date = API_INTEGER_VALUE(args[1]);
+    v8::String::Utf8Value tags(js_isolate, args[2]);
+    v8::String::Utf8Value message(js_isolate, args[3]);
 
     plugin_script_api_printf_date_tags (
         weechat_js_plugin,
@@ -2017,11 +2039,11 @@ API_FUNC(print_datetime_tags)
 
     API_INIT_FUNC(1, "print_datetime_tags", "sniss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    date = args[1]->IntegerValue();
-    date_usec = args[2]->IntegerValue();
-    v8::String::Utf8Value tags(args[3]);
-    v8::String::Utf8Value message(args[4]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    date = API_INTEGER_VALUE(args[1]);
+    date_usec = API_INTEGER_VALUE(args[2]);
+    v8::String::Utf8Value tags(js_isolate, args[3]);
+    v8::String::Utf8Value message(js_isolate, args[4]);
 
     plugin_script_api_printf_datetime_tags (
         weechat_js_plugin,
@@ -2041,9 +2063,9 @@ API_FUNC(print_y)
 
     API_INIT_FUNC(1, "print_y", "sis", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    y = args[1]->IntegerValue();
-    v8::String::Utf8Value message(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    y = API_INTEGER_VALUE(args[1]);
+    v8::String::Utf8Value message(js_isolate, args[2]);
 
     plugin_script_api_printf_y (
         weechat_js_plugin,
@@ -2062,11 +2084,11 @@ API_FUNC(print_y_date_tags)
 
     API_INIT_FUNC(1, "print_y_date_tags", "sinss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    y = args[1]->IntegerValue();
-    date = args[2]->IntegerValue();
-    v8::String::Utf8Value tags(args[3]);
-    v8::String::Utf8Value message(args[4]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    y = API_INTEGER_VALUE(args[1]);
+    date = API_INTEGER_VALUE(args[2]);
+    v8::String::Utf8Value tags(js_isolate, args[3]);
+    v8::String::Utf8Value message(js_isolate, args[4]);
 
     plugin_script_api_printf_y_date_tags (
         weechat_js_plugin,
@@ -2087,12 +2109,12 @@ API_FUNC(print_y_datetime_tags)
 
     API_INIT_FUNC(1, "print_y_datetime_tags", "siniss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    y = args[1]->IntegerValue();
-    date = args[2]->IntegerValue();
-    date_usec = args[3]->IntegerValue();
-    v8::String::Utf8Value tags(args[4]);
-    v8::String::Utf8Value message(args[5]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    y = API_INTEGER_VALUE(args[1]);
+    date = API_INTEGER_VALUE(args[2]);
+    date_usec = API_INTEGER_VALUE(args[3]);
+    v8::String::Utf8Value tags(js_isolate, args[4]);
+    v8::String::Utf8Value message(js_isolate, args[5]);
 
     plugin_script_api_printf_y_datetime_tags (
         weechat_js_plugin,
@@ -2111,7 +2133,7 @@ API_FUNC(log_print)
 {
     API_INIT_FUNC(1, "log_print", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value message(args[0]);
+    v8::String::Utf8Value message(js_isolate, args[0]);
 
     plugin_script_api_log_printf (weechat_js_plugin,
                                   js_current_script,
@@ -2168,13 +2190,13 @@ API_FUNC(hook_command)
 
     API_INIT_FUNC(1, "hook_command", "sssssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value command(args[0]);
-    v8::String::Utf8Value description(args[1]);
-    v8::String::Utf8Value arguments(args[2]);
-    v8::String::Utf8Value args_description(args[3]);
-    v8::String::Utf8Value completion(args[4]);
-    v8::String::Utf8Value function(args[5]);
-    v8::String::Utf8Value data(args[6]);
+    v8::String::Utf8Value command(js_isolate, args[0]);
+    v8::String::Utf8Value description(js_isolate, args[1]);
+    v8::String::Utf8Value arguments(js_isolate, args[2]);
+    v8::String::Utf8Value args_description(js_isolate, args[3]);
+    v8::String::Utf8Value completion(js_isolate, args[4]);
+    v8::String::Utf8Value function(js_isolate, args[5]);
+    v8::String::Utf8Value data(js_isolate, args[6]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_command (weechat_js_plugin,
@@ -2238,10 +2260,10 @@ API_FUNC(hook_completion)
 
     API_INIT_FUNC(1, "hook_completion", "ssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value description(args[1]);
-    v8::String::Utf8Value function(args[2]);
-    v8::String::Utf8Value data(args[3]);
+    v8::String::Utf8Value completion(js_isolate, args[0]);
+    v8::String::Utf8Value description(js_isolate, args[1]);
+    v8::String::Utf8Value function(js_isolate, args[2]);
+    v8::String::Utf8Value data(js_isolate, args[3]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_completion (
@@ -2267,8 +2289,8 @@ API_FUNC(hook_completion_get_string)
 
     API_INIT_FUNC(1, "hook_completion_get_string", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value completion(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     result = weechat_hook_completion_get_string (
         (struct t_gui_completion *)API_STR2PTR(*completion),
@@ -2288,10 +2310,10 @@ API_FUNC(hook_completion_list_add)
 
     API_INIT_FUNC(1, "hook_completion_list_add", "ssis", API_RETURN_ERROR);
 
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value word(args[1]);
-    nick_completion = args[2]->IntegerValue();
-    v8::String::Utf8Value where(args[3]);
+    v8::String::Utf8Value completion(js_isolate, args[0]);
+    v8::String::Utf8Value word(js_isolate, args[1]);
+    nick_completion = API_INTEGER_VALUE(args[2]);
+    v8::String::Utf8Value where(js_isolate, args[3]);
 
     weechat_hook_completion_list_add (
         (struct t_gui_completion *)API_STR2PTR(*completion),
@@ -2347,9 +2369,9 @@ API_FUNC(hook_command_run)
 
     API_INIT_FUNC(1, "hook_command_run", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value command(args[0]);
-    v8::String::Utf8Value function(args[1]);
-    v8::String::Utf8Value data(args[2]);
+    v8::String::Utf8Value command(js_isolate, args[0]);
+    v8::String::Utf8Value function(js_isolate, args[1]);
+    v8::String::Utf8Value data(js_isolate, args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_command_run (
@@ -2408,11 +2430,11 @@ API_FUNC(hook_timer)
 
     API_INIT_FUNC(1, "hook_timer", "niiss", API_RETURN_EMPTY);
 
-    interval = args[0]->IntegerValue();
-    align_second = args[1]->IntegerValue();
-    max_calls = args[2]->IntegerValue();
-    v8::String::Utf8Value function(args[3]);
-    v8::String::Utf8Value data(args[4]);
+    interval = API_INTEGER_VALUE(args[0]);
+    align_second = API_INTEGER_VALUE(args[1]);
+    max_calls = API_INTEGER_VALUE(args[2]);
+    v8::String::Utf8Value function(js_isolate, args[3]);
+    v8::String::Utf8Value data(js_isolate, args[4]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_timer (
@@ -2471,12 +2493,12 @@ API_FUNC(hook_fd)
 
     API_INIT_FUNC(1, "hook_fd", "iiiiss", API_RETURN_EMPTY);
 
-    fd = args[0]->IntegerValue();
-    read = args[1]->IntegerValue();
-    write = args[2]->IntegerValue();
-    exception = args[3]->IntegerValue();
-    v8::String::Utf8Value function(args[4]);
-    v8::String::Utf8Value data(args[5]);
+    fd = API_INTEGER_VALUE(args[0]);
+    read = API_INTEGER_VALUE(args[1]);
+    write = API_INTEGER_VALUE(args[2]);
+    exception = API_INTEGER_VALUE(args[3]);
+    v8::String::Utf8Value function(js_isolate, args[4]);
+    v8::String::Utf8Value data(js_isolate, args[5]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_fd (
@@ -2560,10 +2582,10 @@ API_FUNC(hook_process)
 
     API_INIT_FUNC(1, "hook_process", "siss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value command(args[0]);
-    timeout = args[1]->IntegerValue();
-    v8::String::Utf8Value function(args[2]);
-    v8::String::Utf8Value data(args[3]);
+    v8::String::Utf8Value command(js_isolate, args[0]);
+    timeout = API_INTEGER_VALUE(args[1]);
+    v8::String::Utf8Value function(js_isolate, args[2]);
+    v8::String::Utf8Value data(js_isolate, args[3]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_process (
@@ -2586,15 +2608,15 @@ API_FUNC(hook_process_hashtable)
 
     API_INIT_FUNC(1, "hook_process_hashtable", "shiss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value command(args[0]);
+    v8::String::Utf8Value command(js_isolate, args[0]);
     options = weechat_js_object_to_hashtable (
-        args[1]->ToObject(),
+        args[1],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
-    timeout = args[2]->IntegerValue();
-    v8::String::Utf8Value function(args[3]);
-    v8::String::Utf8Value data(args[4]);
+    timeout = API_INTEGER_VALUE(args[2]);
+    v8::String::Utf8Value function(js_isolate, args[3]);
+    v8::String::Utf8Value data(js_isolate, args[4]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_process_hashtable (
@@ -2662,15 +2684,15 @@ API_FUNC(hook_url)
 
     API_INIT_FUNC(1, "hook_url", "shiss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value url(args[0]);
+    v8::String::Utf8Value url(js_isolate, args[0]);
     options = weechat_js_object_to_hashtable (
-        args[1]->ToObject(),
+        args[1],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
-    timeout = args[2]->IntegerValue();
-    v8::String::Utf8Value function(args[3]);
-    v8::String::Utf8Value data(args[4]);
+    timeout = API_INTEGER_VALUE(args[2]);
+    v8::String::Utf8Value function(js_isolate, args[3]);
+    v8::String::Utf8Value data(js_isolate, args[4]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_url (
@@ -2739,14 +2761,14 @@ API_FUNC(hook_connect)
 
     API_INIT_FUNC(1, "hook_connect", "ssiiisss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value proxy(args[0]);
-    v8::String::Utf8Value address(args[1]);
-    port = args[2]->IntegerValue();
-    ipv6 = args[3]->IntegerValue();
-    retry = args[4]->IntegerValue();
-    v8::String::Utf8Value local_hostname(args[5]);
-    v8::String::Utf8Value function(args[6]);
-    v8::String::Utf8Value data(args[7]);
+    v8::String::Utf8Value proxy(js_isolate, args[0]);
+    v8::String::Utf8Value address(js_isolate, args[1]);
+    port = API_INTEGER_VALUE(args[2]);
+    ipv6 = API_INTEGER_VALUE(args[3]);
+    retry = API_INTEGER_VALUE(args[4]);
+    v8::String::Utf8Value local_hostname(js_isolate, args[5]);
+    v8::String::Utf8Value function(js_isolate, args[6]);
+    v8::String::Utf8Value data(js_isolate, args[7]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_connect (
@@ -2805,11 +2827,11 @@ API_FUNC(hook_line)
 
     API_INIT_FUNC(1, "hook_line", "sssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer_type(args[0]);
-    v8::String::Utf8Value buffer_name(args[1]);
-    v8::String::Utf8Value tags(args[2]);
-    v8::String::Utf8Value function(args[3]);
-    v8::String::Utf8Value data(args[4]);
+    v8::String::Utf8Value buffer_type(js_isolate, args[0]);
+    v8::String::Utf8Value buffer_name(js_isolate, args[1]);
+    v8::String::Utf8Value tags(js_isolate, args[2]);
+    v8::String::Utf8Value function(js_isolate, args[3]);
+    v8::String::Utf8Value data(js_isolate, args[4]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_line (
@@ -2889,12 +2911,12 @@ API_FUNC(hook_print)
 
     API_INIT_FUNC(1, "hook_print", "sssiss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value tags(args[1]);
-    v8::String::Utf8Value message(args[2]);
-    strip_colors = args[3]->IntegerValue();
-    v8::String::Utf8Value function(args[4]);
-    v8::String::Utf8Value data(args[5]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value tags(js_isolate, args[1]);
+    v8::String::Utf8Value message(js_isolate, args[2]);
+    strip_colors = API_INTEGER_VALUE(args[3]);
+    v8::String::Utf8Value function(js_isolate, args[4]);
+    v8::String::Utf8Value data(js_isolate, args[5]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_print (
@@ -2976,9 +2998,9 @@ API_FUNC(hook_signal)
 
     API_INIT_FUNC(1, "hook_signal", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value signal(args[0]);
-    v8::String::Utf8Value function(args[1]);
-    v8::String::Utf8Value data(args[2]);
+    v8::String::Utf8Value signal(js_isolate, args[0]);
+    v8::String::Utf8Value function(js_isolate, args[1]);
+    v8::String::Utf8Value data(js_isolate, args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_signal (
@@ -3001,9 +3023,9 @@ API_FUNC(hook_signal_send)
     if (args.Length() < 3)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
-    v8::String::Utf8Value signal(args[0]);
-    v8::String::Utf8Value type_data(args[1]);
-    v8::String::Utf8Value signal_data(args[2]);
+    v8::String::Utf8Value signal(js_isolate, args[0]);
+    v8::String::Utf8Value type_data(js_isolate, args[1]);
+    v8::String::Utf8Value signal_data(js_isolate, args[2]);
 
     if (strcmp (*type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
@@ -3084,9 +3106,9 @@ API_FUNC(hook_hsignal)
 
     API_INIT_FUNC(1, "hook_hsignal", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value signal(args[0]);
-    v8::String::Utf8Value function(args[1]);
-    v8::String::Utf8Value data(args[2]);
+    v8::String::Utf8Value signal(js_isolate, args[0]);
+    v8::String::Utf8Value function(js_isolate, args[1]);
+    v8::String::Utf8Value data(js_isolate, args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_hsignal (
@@ -3107,9 +3129,9 @@ API_FUNC(hook_hsignal_send)
 
     API_INIT_FUNC(1, "hook_hsignal_send", "sh", API_RETURN_INT(WEECHAT_RC_ERROR));
 
-    v8::String::Utf8Value signal(args[0]);
+    v8::String::Utf8Value signal(js_isolate, args[0]);
     hashtable = weechat_js_object_to_hashtable (
-        args[1]->ToObject(),
+        args[1],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
@@ -3166,9 +3188,9 @@ API_FUNC(hook_config)
 
     API_INIT_FUNC(1, "hook_config", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value option(args[0]);
-    v8::String::Utf8Value function(args[1]);
-    v8::String::Utf8Value data(args[2]);
+    v8::String::Utf8Value option(js_isolate, args[0]);
+    v8::String::Utf8Value function(js_isolate, args[1]);
+    v8::String::Utf8Value data(js_isolate, args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_config (
@@ -3217,9 +3239,9 @@ API_FUNC(hook_modifier)
 
     API_INIT_FUNC(1, "hook_modifier", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value modifier(args[0]);
-    v8::String::Utf8Value function(args[1]);
-    v8::String::Utf8Value data(args[2]);
+    v8::String::Utf8Value modifier(js_isolate, args[0]);
+    v8::String::Utf8Value function(js_isolate, args[1]);
+    v8::String::Utf8Value data(js_isolate, args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_modifier (
@@ -3239,9 +3261,9 @@ API_FUNC(hook_modifier_exec)
 
     API_INIT_FUNC(1, "hook_modifier_exec", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value modifier(args[0]);
-    v8::String::Utf8Value modifier_data(args[1]);
-    v8::String::Utf8Value string(args[2]);
+    v8::String::Utf8Value modifier(js_isolate, args[0]);
+    v8::String::Utf8Value modifier_data(js_isolate, args[1]);
+    v8::String::Utf8Value string(js_isolate, args[2]);
 
     result = weechat_hook_modifier_exec (*modifier, *modifier_data, *string);
 
@@ -3282,11 +3304,11 @@ API_FUNC(hook_info)
 
     API_INIT_FUNC(1, "hook_info", "sssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value info_name(args[0]);
-    v8::String::Utf8Value description(args[1]);
-    v8::String::Utf8Value args_description(args[2]);
-    v8::String::Utf8Value function(args[3]);
-    v8::String::Utf8Value data(args[4]);
+    v8::String::Utf8Value info_name(js_isolate, args[0]);
+    v8::String::Utf8Value description(js_isolate, args[1]);
+    v8::String::Utf8Value args_description(js_isolate, args[2]);
+    v8::String::Utf8Value function(js_isolate, args[3]);
+    v8::String::Utf8Value data(js_isolate, args[4]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_info (
@@ -3340,12 +3362,12 @@ API_FUNC(hook_info_hashtable)
 
     API_INIT_FUNC(1, "hook_info_hashtable", "ssssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value info_name(args[0]);
-    v8::String::Utf8Value description(args[1]);
-    v8::String::Utf8Value args_description(args[2]);
-    v8::String::Utf8Value output_description(args[3]);
-    v8::String::Utf8Value function(args[4]);
-    v8::String::Utf8Value data(args[5]);
+    v8::String::Utf8Value info_name(js_isolate, args[0]);
+    v8::String::Utf8Value description(js_isolate, args[1]);
+    v8::String::Utf8Value args_description(js_isolate, args[2]);
+    v8::String::Utf8Value output_description(js_isolate, args[3]);
+    v8::String::Utf8Value function(js_isolate, args[4]);
+    v8::String::Utf8Value data(js_isolate, args[5]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_info_hashtable (
@@ -3401,12 +3423,12 @@ API_FUNC(hook_infolist)
 
     API_INIT_FUNC(1, "hook_infolist", "ssssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value infolist_name(args[0]);
-    v8::String::Utf8Value description(args[1]);
-    v8::String::Utf8Value pointer_description(args[2]);
-    v8::String::Utf8Value args_description(args[3]);
-    v8::String::Utf8Value function(args[4]);
-    v8::String::Utf8Value data(args[5]);
+    v8::String::Utf8Value infolist_name(js_isolate, args[0]);
+    v8::String::Utf8Value description(js_isolate, args[1]);
+    v8::String::Utf8Value pointer_description(js_isolate, args[2]);
+    v8::String::Utf8Value args_description(js_isolate, args[3]);
+    v8::String::Utf8Value function(js_isolate, args[4]);
+    v8::String::Utf8Value data(js_isolate, args[5]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_infolist (
@@ -3459,9 +3481,9 @@ API_FUNC(hook_focus)
 
     API_INIT_FUNC(1, "hook_focus", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value area(args[0]);
-    v8::String::Utf8Value function(args[1]);
-    v8::String::Utf8Value data(args[2]);
+    v8::String::Utf8Value area(js_isolate, args[0]);
+    v8::String::Utf8Value function(js_isolate, args[1]);
+    v8::String::Utf8Value data(js_isolate, args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_hook_focus (
@@ -3479,9 +3501,9 @@ API_FUNC(hook_set)
 {
     API_INIT_FUNC(1, "hook_set", "sss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value hook(args[0]);
-    v8::String::Utf8Value property(args[1]);
-    v8::String::Utf8Value value(args[2]);
+    v8::String::Utf8Value hook(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
+    v8::String::Utf8Value value(js_isolate, args[2]);
 
     weechat_hook_set ((struct t_hook *)API_STR2PTR(*hook), *property, *value);
 
@@ -3492,7 +3514,7 @@ API_FUNC(unhook)
 {
     API_INIT_FUNC(1, "unhook", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value hook(args[0]);
+    v8::String::Utf8Value hook(js_isolate, args[0]);
 
     weechat_unhook ((struct t_hook *)API_STR2PTR(*hook));
 
@@ -3590,11 +3612,11 @@ API_FUNC(buffer_new)
 
     API_INIT_FUNC(1, "buffer_new", "sssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
-    v8::String::Utf8Value function_input(args[1]);
-    v8::String::Utf8Value data_input(args[2]);
-    v8::String::Utf8Value function_close(args[3]);
-    v8::String::Utf8Value data_close(args[4]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
+    v8::String::Utf8Value function_input(js_isolate, args[1]);
+    v8::String::Utf8Value data_input(js_isolate, args[2]);
+    v8::String::Utf8Value function_close(js_isolate, args[3]);
+    v8::String::Utf8Value data_close(js_isolate, args[4]);
 
     result = API_PTR2STR(
         plugin_script_api_buffer_new (
@@ -3618,16 +3640,16 @@ API_FUNC(buffer_new_props)
 
     API_INIT_FUNC(1, "buffer_new_props", "shssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
     properties = weechat_js_object_to_hashtable (
-        args[1]->ToObject(),
+        args[1],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
-    v8::String::Utf8Value function_input(args[2]);
-    v8::String::Utf8Value data_input(args[3]);
-    v8::String::Utf8Value function_close(args[4]);
-    v8::String::Utf8Value data_close(args[5]);
+    v8::String::Utf8Value function_input(js_isolate, args[2]);
+    v8::String::Utf8Value data_input(js_isolate, args[3]);
+    v8::String::Utf8Value function_close(js_isolate, args[4]);
+    v8::String::Utf8Value data_close(js_isolate, args[5]);
 
     result = API_PTR2STR(
         plugin_script_api_buffer_new_props (
@@ -3654,8 +3676,8 @@ API_FUNC(buffer_search)
 
     API_INIT_FUNC(1, "buffer_search", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value plugin(args[0]);
-    v8::String::Utf8Value name(args[1]);
+    v8::String::Utf8Value plugin(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
 
     result = API_PTR2STR(weechat_buffer_search (*plugin, *name));
 
@@ -3688,7 +3710,7 @@ API_FUNC(buffer_clear)
 {
     API_INIT_FUNC(1, "buffer_clear", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
 
     weechat_buffer_clear ((struct t_gui_buffer *)API_STR2PTR(*buffer));
 
@@ -3699,7 +3721,7 @@ API_FUNC(buffer_close)
 {
     API_INIT_FUNC(1, "buffer_close", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
 
     weechat_buffer_close ((struct t_gui_buffer *)API_STR2PTR(*buffer));
 
@@ -3710,8 +3732,8 @@ API_FUNC(buffer_merge)
 {
     API_INIT_FUNC(1, "buffer_merge", "ss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value target_buffer(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value target_buffer(js_isolate, args[1]);
 
     weechat_buffer_merge ((struct t_gui_buffer *)API_STR2PTR(*buffer),
                           (struct t_gui_buffer *)API_STR2PTR(*target_buffer));
@@ -3725,8 +3747,8 @@ API_FUNC(buffer_unmerge)
 
     API_INIT_FUNC(1, "buffer_merge", "si", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    number = args[1]->IntegerValue();
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    number = API_INTEGER_VALUE(args[1]);
 
     weechat_buffer_unmerge ((struct t_gui_buffer *)API_STR2PTR(*buffer),
                             number);
@@ -3740,8 +3762,8 @@ API_FUNC(buffer_get_integer)
 
     API_INIT_FUNC(1, "buffer_get_integer", "ss", API_RETURN_INT(-1));
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     value = weechat_buffer_get_integer (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -3756,8 +3778,8 @@ API_FUNC(buffer_get_longlong)
 
     API_INIT_FUNC(1, "buffer_get_longlong", "ss", API_RETURN_LONGLONG(-1));
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     value = weechat_buffer_get_longlong (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -3772,8 +3794,8 @@ API_FUNC(buffer_get_string)
 
     API_INIT_FUNC(1, "buffer_get_string", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     result = weechat_buffer_get_string (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -3788,8 +3810,8 @@ API_FUNC(buffer_get_pointer)
 
     API_INIT_FUNC(1, "buffer_get_pointer", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     result = API_PTR2STR(
         weechat_buffer_get_pointer (
@@ -3803,9 +3825,9 @@ API_FUNC(buffer_set)
 {
     API_INIT_FUNC(1, "buffer_set", "sss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value property(args[1]);
-    v8::String::Utf8Value value(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
+    v8::String::Utf8Value value(js_isolate, args[2]);
 
     weechat_buffer_set (
             (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -3821,8 +3843,8 @@ API_FUNC(buffer_string_replace_local_var)
 
     API_INIT_FUNC(1, "buffer_string_replace_local_var", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value string(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value string(js_isolate, args[1]);
 
     result = weechat_buffer_string_replace_local_var (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -3837,8 +3859,8 @@ API_FUNC(buffer_match_list)
 
     API_INIT_FUNC(1, "buffer_match_list", "ss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value string(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value string(js_isolate, args[1]);
 
     value = weechat_buffer_match_list (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -3854,8 +3876,8 @@ API_FUNC(line_search_by_id)
 
     API_INIT_FUNC(1, "line_search_by_id", "sn", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    id = args[1]->IntegerValue();
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    id = API_INTEGER_VALUE(args[1]);
 
     result = API_PTR2STR(
         weechat_line_search_by_id ((struct t_gui_buffer *)API_STR2PTR(*buffer), id));
@@ -3880,7 +3902,7 @@ API_FUNC(window_search_with_buffer)
 
     API_INIT_FUNC(1, "window_search_with_buffer", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
 
     result = API_PTR2STR(
         weechat_window_search_with_buffer (
@@ -3895,8 +3917,8 @@ API_FUNC(window_get_integer)
 
     API_INIT_FUNC(1, "window_get_integer", "ss", API_RETURN_INT(-1));
 
-    v8::String::Utf8Value window(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value window(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     value = weechat_window_get_integer (
         (struct t_gui_window *)API_STR2PTR(*window),
@@ -3911,8 +3933,8 @@ API_FUNC(window_get_string)
 
     API_INIT_FUNC(1, "window_get_string", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value window(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value window(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     result = weechat_window_get_string (
         (struct t_gui_window *)API_STR2PTR(*window),
@@ -3927,8 +3949,8 @@ API_FUNC(window_get_pointer)
 
     API_INIT_FUNC(1, "window_get_pointer", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value window(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value window(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     result = API_PTR2STR(
         weechat_window_get_pointer (
@@ -3942,7 +3964,7 @@ API_FUNC(window_set_title)
 {
     API_INIT_FUNC(1, "window_set_title", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value title(args[0]);
+    v8::String::Utf8Value title(js_isolate, args[0]);
 
     weechat_window_set_title (*title);
 
@@ -3956,11 +3978,11 @@ API_FUNC(nicklist_add_group)
 
     API_INIT_FUNC(1, "nicklist_add_group", "ssssi", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value parent_group(args[1]);
-    v8::String::Utf8Value name(args[2]);
-    v8::String::Utf8Value color(args[3]);
-    visible = args[4]->IntegerValue();
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value parent_group(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
+    v8::String::Utf8Value color(js_isolate, args[3]);
+    visible = API_INTEGER_VALUE(args[4]);
 
     result = API_PTR2STR(
         weechat_nicklist_add_group (
@@ -3979,9 +4001,9 @@ API_FUNC(nicklist_search_group)
 
     API_INIT_FUNC(1, "nicklist_search_group", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value from_group(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value from_group(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     result = API_PTR2STR(
         weechat_nicklist_search_group (
@@ -3999,13 +4021,13 @@ API_FUNC(nicklist_add_nick)
 
     API_INIT_FUNC(1, "nicklist_add_nick", "ssssssi", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value group(args[1]);
-    v8::String::Utf8Value name(args[2]);
-    v8::String::Utf8Value color(args[3]);
-    v8::String::Utf8Value prefix(args[4]);
-    v8::String::Utf8Value prefix_color(args[5]);
-    visible = args[6]->IntegerValue();
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value group(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
+    v8::String::Utf8Value color(js_isolate, args[3]);
+    v8::String::Utf8Value prefix(js_isolate, args[4]);
+    v8::String::Utf8Value prefix_color(js_isolate, args[5]);
+    visible = API_INTEGER_VALUE(args[6]);
 
     result = API_PTR2STR(
         weechat_nicklist_add_nick (
@@ -4026,9 +4048,9 @@ API_FUNC(nicklist_search_nick)
 
     API_INIT_FUNC(1, "nicklist_search_nick", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value from_group(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value from_group(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     result = API_PTR2STR(
         weechat_nicklist_search_nick (
@@ -4043,8 +4065,8 @@ API_FUNC(nicklist_remove_group)
 {
     API_INIT_FUNC(1, "nicklist_remove_group", "ss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value group(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value group(js_isolate, args[1]);
 
     weechat_nicklist_remove_group (
             (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -4057,8 +4079,8 @@ API_FUNC(nicklist_remove_nick)
 {
     API_INIT_FUNC(1, "nicklist_remove_nick", "ss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value nick(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value nick(js_isolate, args[1]);
 
     weechat_nicklist_remove_nick (
             (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -4071,7 +4093,7 @@ API_FUNC(nicklist_remove_all)
 {
     API_INIT_FUNC(1, "nicklist_remove_all", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
 
     weechat_nicklist_remove_all ((struct t_gui_buffer *)API_STR2PTR(*buffer));
 
@@ -4084,9 +4106,9 @@ API_FUNC(nicklist_group_get_integer)
 
     API_INIT_FUNC(1, "nicklist_group_get_integer", "sss", API_RETURN_INT(-1));
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value group(args[1]);
-    v8::String::Utf8Value property(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value group(js_isolate, args[1]);
+    v8::String::Utf8Value property(js_isolate, args[2]);
 
     value = weechat_nicklist_group_get_integer (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -4102,9 +4124,9 @@ API_FUNC(nicklist_group_get_string)
 
     API_INIT_FUNC(1, "nicklist_group_get_string", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value group(args[1]);
-    v8::String::Utf8Value property(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value group(js_isolate, args[1]);
+    v8::String::Utf8Value property(js_isolate, args[2]);
 
     result = weechat_nicklist_group_get_string (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -4120,9 +4142,9 @@ API_FUNC(nicklist_group_get_pointer)
 
     API_INIT_FUNC(1, "nicklist_group_get_pointer", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value group(args[1]);
-    v8::String::Utf8Value property(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value group(js_isolate, args[1]);
+    v8::String::Utf8Value property(js_isolate, args[2]);
 
     result = API_PTR2STR(
         weechat_nicklist_group_get_pointer (
@@ -4137,10 +4159,10 @@ API_FUNC(nicklist_group_set)
 {
     API_INIT_FUNC(1, "nicklist_group_set", "ssss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value group(args[1]);
-    v8::String::Utf8Value property(args[2]);
-    v8::String::Utf8Value value(args[3]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value group(js_isolate, args[1]);
+    v8::String::Utf8Value property(js_isolate, args[2]);
+    v8::String::Utf8Value value(js_isolate, args[3]);
 
     weechat_nicklist_group_set (
             (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -4157,9 +4179,9 @@ API_FUNC(nicklist_nick_get_integer)
 
     API_INIT_FUNC(1, "nicklist_nick_get_integer", "sss", API_RETURN_INT(-1));
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value nick(args[1]);
-    v8::String::Utf8Value property(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value nick(js_isolate, args[1]);
+    v8::String::Utf8Value property(js_isolate, args[2]);
 
     value = weechat_nicklist_nick_get_integer (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -4175,9 +4197,9 @@ API_FUNC(nicklist_nick_get_string)
 
     API_INIT_FUNC(1, "nicklist_nick_get_string", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value nick(args[1]);
-    v8::String::Utf8Value property(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value nick(js_isolate, args[1]);
+    v8::String::Utf8Value property(js_isolate, args[2]);
 
     result = weechat_nicklist_nick_get_string (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -4193,9 +4215,9 @@ API_FUNC(nicklist_nick_get_pointer)
 
     API_INIT_FUNC(1, "nicklist_nick_get_pointer", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value nick(args[1]);
-    v8::String::Utf8Value property(args[2]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value nick(js_isolate, args[1]);
+    v8::String::Utf8Value property(js_isolate, args[2]);
 
     result = API_PTR2STR(
         weechat_nicklist_nick_get_pointer (
@@ -4210,10 +4232,10 @@ API_FUNC(nicklist_nick_set)
 {
     API_INIT_FUNC(1, "nicklist_nick_set", "ssss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value nick(args[1]);
-    v8::String::Utf8Value property(args[2]);
-    v8::String::Utf8Value value(args[3]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value nick(js_isolate, args[1]);
+    v8::String::Utf8Value property(js_isolate, args[2]);
+    v8::String::Utf8Value value(js_isolate, args[3]);
 
     weechat_nicklist_nick_set (
             (struct t_gui_buffer *)API_STR2PTR(*buffer),
@@ -4230,7 +4252,7 @@ API_FUNC(bar_item_search)
 
     API_INIT_FUNC(1, "bar_item_search", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
 
     result = API_PTR2STR(weechat_bar_item_search (*name));
 
@@ -4293,9 +4315,9 @@ API_FUNC(bar_item_new)
 
     API_INIT_FUNC(1, "bar_item_new", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
-    v8::String::Utf8Value function(args[1]);
-    v8::String::Utf8Value data(args[2]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
+    v8::String::Utf8Value function(js_isolate, args[1]);
+    v8::String::Utf8Value data(js_isolate, args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_bar_item_new (
@@ -4313,7 +4335,7 @@ API_FUNC(bar_item_update)
 {
     API_INIT_FUNC(1, "bar_item_update", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value name(args[0]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
 
     weechat_bar_item_update (*name);
 
@@ -4324,7 +4346,7 @@ API_FUNC(bar_item_remove)
 {
     API_INIT_FUNC(1, "bar_item_remove", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value item(args[0]);
+    v8::String::Utf8Value item(js_isolate, args[0]);
 
     weechat_bar_item_remove ((struct t_gui_bar_item *)API_STR2PTR(*item));
 
@@ -4337,7 +4359,7 @@ API_FUNC(bar_search)
 
     API_INIT_FUNC(1, "bar_search", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
 
     result = API_PTR2STR(weechat_bar_search (*name));
 
@@ -4350,22 +4372,22 @@ API_FUNC(bar_new)
 
     API_INIT_FUNC(1, "bar_new", "ssssssssssssssss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
-    v8::String::Utf8Value hidden(args[1]);
-    v8::String::Utf8Value priority(args[2]);
-    v8::String::Utf8Value type(args[3]);
-    v8::String::Utf8Value conditions(args[4]);
-    v8::String::Utf8Value position(args[5]);
-    v8::String::Utf8Value filling_top_bottom(args[6]);
-    v8::String::Utf8Value filling_left_right(args[7]);
-    v8::String::Utf8Value size(args[8]);
-    v8::String::Utf8Value size_max(args[9]);
-    v8::String::Utf8Value color_fg(args[10]);
-    v8::String::Utf8Value color_delim(args[11]);
-    v8::String::Utf8Value color_bg(args[12]);
-    v8::String::Utf8Value color_bg_inactive(args[13]);
-    v8::String::Utf8Value separator(args[14]);
-    v8::String::Utf8Value items(args[15]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
+    v8::String::Utf8Value hidden(js_isolate, args[1]);
+    v8::String::Utf8Value priority(js_isolate, args[2]);
+    v8::String::Utf8Value type(js_isolate, args[3]);
+    v8::String::Utf8Value conditions(js_isolate, args[4]);
+    v8::String::Utf8Value position(js_isolate, args[5]);
+    v8::String::Utf8Value filling_top_bottom(js_isolate, args[6]);
+    v8::String::Utf8Value filling_left_right(js_isolate, args[7]);
+    v8::String::Utf8Value size(js_isolate, args[8]);
+    v8::String::Utf8Value size_max(js_isolate, args[9]);
+    v8::String::Utf8Value color_fg(js_isolate, args[10]);
+    v8::String::Utf8Value color_delim(js_isolate, args[11]);
+    v8::String::Utf8Value color_bg(js_isolate, args[12]);
+    v8::String::Utf8Value color_bg_inactive(js_isolate, args[13]);
+    v8::String::Utf8Value separator(js_isolate, args[14]);
+    v8::String::Utf8Value items(js_isolate, args[15]);
 
     result = API_PTR2STR(weechat_bar_new (*name,
                                           *hidden,
@@ -4393,9 +4415,9 @@ API_FUNC(bar_set)
 
     API_INIT_FUNC(1, "bar_set", "sss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value bar(args[0]);
-    v8::String::Utf8Value property(args[1]);
-    v8::String::Utf8Value value(args[2]);
+    v8::String::Utf8Value bar(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
+    v8::String::Utf8Value value(js_isolate, args[2]);
 
     rc = weechat_bar_set (
             (struct t_gui_bar *)API_STR2PTR(*bar),
@@ -4409,7 +4431,7 @@ API_FUNC(bar_update)
 {
     API_INIT_FUNC(1, "bar_update", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value name(args[0]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
 
     weechat_bar_update (*name);
 
@@ -4420,7 +4442,7 @@ API_FUNC(bar_remove)
 {
     API_INIT_FUNC(1, "bar_remove", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value bar(args[0]);
+    v8::String::Utf8Value bar(js_isolate, args[0]);
 
     weechat_bar_remove ((struct t_gui_bar *)API_STR2PTR(*bar));
 
@@ -4433,8 +4455,8 @@ API_FUNC(command)
 
     API_INIT_FUNC(1, "command", "ss", API_RETURN_INT(WEECHAT_RC_ERROR));
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value command(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value command(js_isolate, args[1]);
 
     rc = plugin_script_api_command (weechat_js_plugin,
                                     js_current_script,
@@ -4451,10 +4473,10 @@ API_FUNC(command_options)
 
     API_INIT_FUNC(1, "command_options", "ssh", API_RETURN_INT(WEECHAT_RC_ERROR));
 
-    v8::String::Utf8Value buffer(args[0]);
-    v8::String::Utf8Value command(args[1]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
+    v8::String::Utf8Value command(js_isolate, args[1]);
     options = weechat_js_object_to_hashtable (
-        args[2]->ToObject(),
+        args[2],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
@@ -4477,7 +4499,7 @@ API_FUNC(completion_new)
 
     API_INIT_FUNC(1, "completion_new", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value buffer(args[0]);
+    v8::String::Utf8Value buffer(js_isolate, args[0]);
 
     result = API_PTR2STR(
         weechat_completion_new ((struct t_gui_buffer *)API_STR2PTR(*buffer)));
@@ -4491,10 +4513,10 @@ API_FUNC(completion_search)
 
     API_INIT_FUNC(1, "completion_search", "ssii", API_RETURN_INT(0));
 
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value data(args[1]);
-    position = args[2]->IntegerValue();
-    direction = args[3]->IntegerValue();
+    v8::String::Utf8Value completion(js_isolate, args[0]);
+    v8::String::Utf8Value data(js_isolate, args[1]);
+    position = API_INTEGER_VALUE(args[2]);
+    direction = API_INTEGER_VALUE(args[3]);
 
     rc = weechat_completion_search (
         (struct t_gui_completion *)API_STR2PTR(*completion),
@@ -4511,8 +4533,8 @@ API_FUNC(completion_get_string)
 
     API_INIT_FUNC(1, "completion_get_string", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value completion(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     result = weechat_completion_get_string (
         (struct t_gui_completion *)API_STR2PTR(*completion),
@@ -4525,9 +4547,9 @@ API_FUNC(completion_set)
 {
     API_INIT_FUNC(1, "completion_set", "sss", API_RETURN_ERROR);
 
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value property(args[1]);
-    v8::String::Utf8Value value(args[2]);
+    v8::String::Utf8Value completion(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
+    v8::String::Utf8Value value(js_isolate, args[2]);
 
     weechat_completion_set (
         (struct t_gui_completion *)API_STR2PTR(*completion),
@@ -4543,10 +4565,10 @@ API_FUNC(completion_list_add)
 
     API_INIT_FUNC(1, "completion_list_add", "ssis", API_RETURN_ERROR);
 
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value word(args[1]);
-    nick_completion = args[2]->IntegerValue();
-    v8::String::Utf8Value where(args[3]);
+    v8::String::Utf8Value completion(js_isolate, args[0]);
+    v8::String::Utf8Value word(js_isolate, args[1]);
+    nick_completion = API_INTEGER_VALUE(args[2]);
+    v8::String::Utf8Value where(js_isolate, args[3]);
 
     weechat_completion_list_add (
         (struct t_gui_completion *)API_STR2PTR(*completion),
@@ -4561,7 +4583,7 @@ API_FUNC(completion_free)
 {
     API_INIT_FUNC(1, "completion_free", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value completion(args[0]);
+    v8::String::Utf8Value completion(js_isolate, args[0]);
 
     weechat_completion_free ((struct t_gui_completion *)API_STR2PTR(*completion));
 
@@ -4574,8 +4596,8 @@ API_FUNC(info_get)
 
     API_INIT_FUNC(1, "info_get", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value info_name(args[0]);
-    v8::String::Utf8Value arguments(args[1]);
+    v8::String::Utf8Value info_name(js_isolate, args[0]);
+    v8::String::Utf8Value arguments(js_isolate, args[1]);
 
     result = weechat_info_get (*info_name, *arguments);
 
@@ -4585,13 +4607,13 @@ API_FUNC(info_get)
 API_FUNC(info_get_hashtable)
 {
     struct t_hashtable *hashtable, *result_hashtable;
-    v8::Handle<v8::Object> result_obj;
+    v8::Local<v8::Object> result_obj;
 
     API_INIT_FUNC(1, "info_get_hashtable", "sh", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value info_name(args[0]);
+    v8::String::Utf8Value info_name(js_isolate, args[0]);
     hashtable = weechat_js_object_to_hashtable (
-        args[1]->ToObject(),
+        args[1],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
@@ -4605,7 +4627,7 @@ API_FUNC(info_get_hashtable)
     if (result_hashtable)
         weechat_hashtable_free (result_hashtable);
 
-    return result_obj;
+    API_RETURN_OBJECT(result_obj);
 }
 
 API_FUNC(infolist_new)
@@ -4625,7 +4647,7 @@ API_FUNC(infolist_new_item)
 
     API_INIT_FUNC(1, "infolist_new_item", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value infolist(args[0]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
 
     result = API_PTR2STR(
         weechat_infolist_new_item (
@@ -4641,9 +4663,9 @@ API_FUNC(infolist_new_var_integer)
 
     API_INIT_FUNC(1, "infolist_new_var_integer", "ssi", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value item(args[0]);
-    v8::String::Utf8Value name(args[1]);
-    value = args[2]->IntegerValue();
+    v8::String::Utf8Value item(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
+    value = API_INTEGER_VALUE(args[2]);
 
     result = API_PTR2STR(
         weechat_infolist_new_var_integer (
@@ -4660,9 +4682,9 @@ API_FUNC(infolist_new_var_string)
 
     API_INIT_FUNC(1, "infolist_new_var_string", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value item(args[0]);
-    v8::String::Utf8Value name(args[1]);
-    v8::String::Utf8Value value(args[2]);
+    v8::String::Utf8Value item(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
+    v8::String::Utf8Value value(js_isolate, args[2]);
 
     result = API_PTR2STR(
         weechat_infolist_new_var_string (
@@ -4679,9 +4701,9 @@ API_FUNC(infolist_new_var_pointer)
 
     API_INIT_FUNC(1, "infolist_new_var_pointer", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value item(args[0]);
-    v8::String::Utf8Value name(args[1]);
-    v8::String::Utf8Value value(args[2]);
+    v8::String::Utf8Value item(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
+    v8::String::Utf8Value value(js_isolate, args[2]);
 
     result = API_PTR2STR(
         weechat_infolist_new_var_pointer (
@@ -4699,9 +4721,9 @@ API_FUNC(infolist_new_var_time)
 
     API_INIT_FUNC(1, "infolist_new_var_time", "ssn", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value item(args[0]);
-    v8::String::Utf8Value name(args[1]);
-    value = args[2]->IntegerValue();
+    v8::String::Utf8Value item(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
+    value = API_INTEGER_VALUE(args[2]);
 
     result = API_PTR2STR(
         weechat_infolist_new_var_time (
@@ -4719,9 +4741,9 @@ API_FUNC(infolist_new_var_long)
 
     API_INIT_FUNC(1, "infolist_new_var_long", "ssn", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value item(args[0]);
-    v8::String::Utf8Value name(args[1]);
-    value = args[2]->IntegerValue();
+    v8::String::Utf8Value item(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
+    value = API_INTEGER_VALUE(args[2]);
 
     result = API_PTR2STR(
         weechat_infolist_new_var_long (
@@ -4739,9 +4761,9 @@ API_FUNC(infolist_new_var_longlong)
 
     API_INIT_FUNC(1, "infolist_new_var_longlong", "ssn", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value item(args[0]);
-    v8::String::Utf8Value name(args[1]);
-    value = args[2]->IntegerValue();
+    v8::String::Utf8Value item(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
+    value = API_INTEGER_VALUE(args[2]);
 
     result = API_PTR2STR(
         weechat_infolist_new_var_longlong (
@@ -4758,8 +4780,8 @@ API_FUNC(infolist_search_var)
 
     API_INIT_FUNC(1, "infolist_search_var", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value infolist(args[0]);
-    v8::String::Utf8Value name(args[1]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
 
     result = API_PTR2STR(
         weechat_infolist_search_var (
@@ -4775,9 +4797,9 @@ API_FUNC(infolist_get)
 
     API_INIT_FUNC(1, "infolist_get", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value arguments(args[2]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value arguments(js_isolate, args[2]);
 
     result = API_PTR2STR(
         weechat_infolist_get (
@@ -4794,7 +4816,7 @@ API_FUNC(infolist_next)
 
     API_INIT_FUNC(1, "infolist_next", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value infolist(args[0]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
 
     value = weechat_infolist_next (
         (struct t_infolist *)API_STR2PTR(*infolist));
@@ -4808,7 +4830,7 @@ API_FUNC(infolist_prev)
 
     API_INIT_FUNC(1, "infolist_prev", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value infolist(args[0]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
 
     value = weechat_infolist_prev (
         (struct t_infolist *)API_STR2PTR(*infolist));
@@ -4820,7 +4842,7 @@ API_FUNC(infolist_reset_item_cursor)
 {
     API_INIT_FUNC(1, "infolist_reset_item_cursor", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value infolist(args[0]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
 
     weechat_infolist_reset_item_cursor (
         (struct t_infolist *)API_STR2PTR(*infolist));
@@ -4834,7 +4856,7 @@ API_FUNC(infolist_fields)
 
     API_INIT_FUNC(1, "infolist_fields", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value infolist(args[0]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
 
     result = weechat_infolist_fields (
         (struct t_infolist *)API_STR2PTR(*infolist));
@@ -4848,8 +4870,8 @@ API_FUNC(infolist_integer)
 
     API_INIT_FUNC(1, "infolist_integer", "ss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value infolist(args[0]);
-    v8::String::Utf8Value variable(args[1]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
+    v8::String::Utf8Value variable(js_isolate, args[1]);
 
     value = weechat_infolist_integer (
         (struct t_infolist *)API_STR2PTR(*infolist),
@@ -4864,8 +4886,8 @@ API_FUNC(infolist_string)
 
     API_INIT_FUNC(1, "infolist_string", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value infolist(args[0]);
-    v8::String::Utf8Value variable(args[1]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
+    v8::String::Utf8Value variable(js_isolate, args[1]);
 
     result = weechat_infolist_string (
         (struct t_infolist *)API_STR2PTR(*infolist),
@@ -4880,8 +4902,8 @@ API_FUNC(infolist_pointer)
 
     API_INIT_FUNC(1, "infolist_pointer", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value infolist(args[0]);
-    v8::String::Utf8Value variable(args[1]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
+    v8::String::Utf8Value variable(js_isolate, args[1]);
 
     result = API_PTR2STR(
         weechat_infolist_pointer (
@@ -4897,8 +4919,8 @@ API_FUNC(infolist_time)
 
     API_INIT_FUNC(1, "infolist_time", "ss", API_RETURN_LONG(0));
 
-    v8::String::Utf8Value infolist(args[0]);
-    v8::String::Utf8Value variable(args[1]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
+    v8::String::Utf8Value variable(js_isolate, args[1]);
 
     time = weechat_infolist_time (
         (struct t_infolist *)API_STR2PTR(*infolist),
@@ -4913,8 +4935,8 @@ API_FUNC(infolist_long)
 
     API_INIT_FUNC(1, "infolist_long", "ss", API_RETURN_LONG(0));
 
-    v8::String::Utf8Value infolist(args[0]);
-    v8::String::Utf8Value variable(args[1]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
+    v8::String::Utf8Value variable(js_isolate, args[1]);
 
     value = weechat_infolist_long (
         (struct t_infolist *)API_STR2PTR(*infolist),
@@ -4929,8 +4951,8 @@ API_FUNC(infolist_longlong)
 
     API_INIT_FUNC(1, "infolist_longlong", "ss", API_RETURN_LONGLONG(0));
 
-    v8::String::Utf8Value infolist(args[0]);
-    v8::String::Utf8Value variable(args[1]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
+    v8::String::Utf8Value variable(js_isolate, args[1]);
 
     value = weechat_infolist_longlong (
         (struct t_infolist *)API_STR2PTR(*infolist),
@@ -4943,7 +4965,7 @@ API_FUNC(infolist_free)
 {
     API_INIT_FUNC(1, "infolist_free", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value infolist(args[0]);
+    v8::String::Utf8Value infolist(js_isolate, args[0]);
 
     weechat_infolist_free ((struct t_infolist *)API_STR2PTR(*infolist));
 
@@ -4956,7 +4978,7 @@ API_FUNC(hdata_get)
 
     API_INIT_FUNC(1, "hdata_get", "s", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value name(args[0]);
+    v8::String::Utf8Value name(js_isolate, args[0]);
 
     result = API_PTR2STR(weechat_hdata_get (*name));
 
@@ -4969,8 +4991,8 @@ API_FUNC(hdata_get_var_offset)
 
     API_INIT_FUNC(1, "hdata_get_var_offset", "ss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value name(args[1]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
 
     value = weechat_hdata_get_var_offset (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -4985,8 +5007,8 @@ API_FUNC(hdata_get_var_type_string)
 
     API_INIT_FUNC(1, "hdata_get_var_type_string", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value name(args[1]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
 
     result = weechat_hdata_get_var_type_string (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5001,9 +5023,9 @@ API_FUNC(hdata_get_var_array_size)
 
     API_INIT_FUNC(1, "hdata_get_var_array_size", "sss", API_RETURN_INT(-1));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     value = weechat_hdata_get_var_array_size (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5019,9 +5041,9 @@ API_FUNC(hdata_get_var_array_size_string)
 
     API_INIT_FUNC(1, "hdata_get_var_array_size_string", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     result = weechat_hdata_get_var_array_size_string (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5037,8 +5059,8 @@ API_FUNC(hdata_get_var_hdata)
 
     API_INIT_FUNC(1, "hdata_get_var_hdata", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value name(args[1]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
 
     result = weechat_hdata_get_var_hdata (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5053,8 +5075,8 @@ API_FUNC(hdata_get_list)
 
     API_INIT_FUNC(1, "hdata_get_list", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value name(args[1]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value name(js_isolate, args[1]);
 
     result = API_PTR2STR(
         weechat_hdata_get_list (
@@ -5070,9 +5092,9 @@ API_FUNC(hdata_check_pointer)
 
     API_INIT_FUNC(1, "hdata_check_pointer", "sss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value list(args[1]);
-    v8::String::Utf8Value pointer(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value list(js_isolate, args[1]);
+    v8::String::Utf8Value pointer(js_isolate, args[2]);
 
     value = weechat_hdata_check_pointer (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5089,9 +5111,9 @@ API_FUNC(hdata_move)
 
     API_INIT_FUNC(1, "hdata_move", "ssi", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    count = args[2]->IntegerValue();
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    count = API_INTEGER_VALUE(args[2]);
 
     result = API_PTR2STR(
         weechat_hdata_move (
@@ -5110,25 +5132,25 @@ API_FUNC(hdata_search)
 
     API_INIT_FUNC(1, "hdata_search", "ssshhhi", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value search(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value search(js_isolate, args[2]);
     pointers = weechat_js_object_to_hashtable (
-        args[3]->ToObject(),
+        args[3],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_POINTER);
     extra_vars = weechat_js_object_to_hashtable (
-        args[4]->ToObject(),
+        args[4],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
     options = weechat_js_object_to_hashtable (
-        args[5]->ToObject(),
+        args[5],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
-    move = args[6]->IntegerValue();
+    move = API_INTEGER_VALUE(args[6]);
 
     result = API_PTR2STR(
         weechat_hdata_search (
@@ -5156,9 +5178,9 @@ API_FUNC(hdata_char)
 
     API_INIT_FUNC(1, "hdata_char", "sss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     value = (int)weechat_hdata_char (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5174,9 +5196,9 @@ API_FUNC(hdata_integer)
 
     API_INIT_FUNC(1, "hdata_integer", "sss", API_RETURN_INT(0));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     value = weechat_hdata_integer (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5192,9 +5214,9 @@ API_FUNC(hdata_long)
 
     API_INIT_FUNC(1, "hdata_long", "sss", API_RETURN_LONG(0));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     value = weechat_hdata_long (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5210,9 +5232,9 @@ API_FUNC(hdata_longlong)
 
     API_INIT_FUNC(1, "hdata_longlong", "sss", API_RETURN_LONGLONG(0));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     value = weechat_hdata_longlong (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5228,9 +5250,9 @@ API_FUNC(hdata_string)
 
     API_INIT_FUNC(1, "hdata_string", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     result = weechat_hdata_string (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5246,9 +5268,9 @@ API_FUNC(hdata_pointer)
 
     API_INIT_FUNC(1, "hdata_pointer", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     result = API_PTR2STR(
         weechat_hdata_pointer (
@@ -5265,9 +5287,9 @@ API_FUNC(hdata_time)
 
     API_INIT_FUNC(1, "hdata_time", "sss", API_RETURN_LONG(0));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     time = weechat_hdata_time (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5279,13 +5301,13 @@ API_FUNC(hdata_time)
 
 API_FUNC(hdata_hashtable)
 {
-    v8::Handle<v8::Object> result_obj;
+    v8::Local<v8::Object> result_obj;
 
     API_INIT_FUNC(1, "hdata_hashtable", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
-    v8::String::Utf8Value name(args[2]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
+    v8::String::Utf8Value name(js_isolate, args[2]);
 
     result_obj = weechat_js_hashtable_to_object (
         weechat_hdata_hashtable (
@@ -5293,7 +5315,7 @@ API_FUNC(hdata_hashtable)
             API_STR2PTR(*pointer),
             *name));
 
-    return result_obj;
+    API_RETURN_OBJECT(result_obj);
 }
 
 API_FUNC(hdata_compare)
@@ -5302,11 +5324,11 @@ API_FUNC(hdata_compare)
 
     API_INIT_FUNC(1, "hdata_compare", "ssssi", API_RETURN_INT(0));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer1(args[1]);
-    v8::String::Utf8Value pointer2(args[2]);
-    v8::String::Utf8Value name(args[3]);
-    case_sensitive = args[4]->IntegerValue();
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer1(js_isolate, args[1]);
+    v8::String::Utf8Value pointer2(js_isolate, args[2]);
+    v8::String::Utf8Value name(js_isolate, args[3]);
+    case_sensitive = API_INTEGER_VALUE(args[4]);
 
     rc = weechat_hdata_compare (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5325,10 +5347,10 @@ API_FUNC(hdata_update)
 
     API_INIT_FUNC(1, "hdata_update", "ssh", API_RETURN_INT(0));
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value pointer(args[1]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value pointer(js_isolate, args[1]);
     hashtable = weechat_js_object_to_hashtable (
-        args[2]->ToObject(),
+        args[2],
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
@@ -5350,8 +5372,8 @@ API_FUNC(hdata_get_string)
 
     API_INIT_FUNC(1, "hdata_get_string", "ss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value hdata(args[0]);
-    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value hdata(js_isolate, args[0]);
+    v8::String::Utf8Value property(js_isolate, args[1]);
 
     result = weechat_hdata_get_string (
         (struct t_hdata *)API_STR2PTR(*hdata),
@@ -5407,9 +5429,9 @@ API_FUNC(upgrade_new)
 
     API_INIT_FUNC(1, "upgrade_new", "sss", API_RETURN_EMPTY);
 
-    v8::String::Utf8Value filename(args[0]);
-    v8::String::Utf8Value function(args[1]);
-    v8::String::Utf8Value data(args[2]);
+    v8::String::Utf8Value filename(js_isolate, args[0]);
+    v8::String::Utf8Value function(js_isolate, args[1]);
+    v8::String::Utf8Value data(js_isolate, args[2]);
 
     result = API_PTR2STR(
         plugin_script_api_upgrade_new (
@@ -5429,9 +5451,9 @@ API_FUNC(upgrade_write_object)
 
     API_INIT_FUNC(1, "upgrade_write_object", "sis", API_RETURN_INT(0));
 
-    v8::String::Utf8Value upgrade_file(args[0]);
-    object_id = args[1]->IntegerValue();
-    v8::String::Utf8Value infolist(args[2]);
+    v8::String::Utf8Value upgrade_file(js_isolate, args[0]);
+    object_id = API_INTEGER_VALUE(args[1]);
+    v8::String::Utf8Value infolist(js_isolate, args[2]);
 
     rc = weechat_upgrade_write_object (
         (struct t_upgrade_file *)API_STR2PTR(*upgrade_file),
@@ -5447,7 +5469,7 @@ API_FUNC(upgrade_read)
 
     API_INIT_FUNC(1, "upgrade_read", "s", API_RETURN_INT(0));
 
-    v8::String::Utf8Value upgrade_file(args[0]);
+    v8::String::Utf8Value upgrade_file(js_isolate, args[0]);
 
     rc = weechat_upgrade_read (
         (struct t_upgrade_file *)API_STR2PTR(*upgrade_file));
@@ -5459,7 +5481,7 @@ API_FUNC(upgrade_close)
 {
     API_INIT_FUNC(1, "upgrade_close", "s", API_RETURN_ERROR);
 
-    v8::String::Utf8Value upgrade_file(args[0]);
+    v8::String::Utf8Value upgrade_file(js_isolate, args[0]);
 
     weechat_upgrade_close (
         (struct t_upgrade_file *)API_STR2PTR(*upgrade_file));
@@ -5468,11 +5490,11 @@ API_FUNC(upgrade_close)
 }
 
 void
-WeechatJsV8::loadLibs()
+WeechatJsV8::loadLibs(v8::Local<v8::ObjectTemplate> global)
 {
     int i;
 
-    v8::Local<v8::ObjectTemplate> weechat_obj = v8::ObjectTemplate::New();
+    v8::Local<v8::ObjectTemplate> weechat_obj = v8::ObjectTemplate::New(js_isolate);
 
     /* Interface constants */
     for (i = 0; weechat_script_constants[i].name; i++)
@@ -5480,14 +5502,17 @@ WeechatJsV8::loadLibs()
         if (weechat_script_constants[i].value_string)
         {
             weechat_obj->Set(
-                v8::String::New(weechat_script_constants[i].name),
-                v8::String::New(weechat_script_constants[i].value_string));
+                js_isolate, weechat_script_constants[i].name,
+                v8::String::NewFromUtf8(
+                    js_isolate,
+                    weechat_script_constants[i].value_string).ToLocalChecked());
         }
         else
         {
             weechat_obj->Set(
-                v8::String::New(weechat_script_constants[i].name),
-                v8::Integer::New(weechat_script_constants[i].value_integer));
+                js_isolate, weechat_script_constants[i].name,
+                v8::Integer::New(js_isolate,
+                                 weechat_script_constants[i].value_integer));
         }
     }
 
@@ -5720,5 +5745,5 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(upgrade_read);
     API_DEF_FUNC(upgrade_close);
 
-    this->addGlobal ("weechat", weechat_obj);
+    global->Set(js_isolate, "weechat", weechat_obj);
 }

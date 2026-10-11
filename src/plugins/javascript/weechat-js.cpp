@@ -92,19 +92,25 @@ weechat_js_hashtable_map_cb (void *data,
     /* Make C++ compiler happy. */
     (void) hashtable;
 
-    v8::Handle<v8::Object> *obj = (v8::Handle<v8::Object> *)data;
+    v8::Local<v8::Object> *obj = (v8::Local<v8::Object> *)data;
+    v8::Local<v8::String> js_key, js_value;
 
-    (*obj)->Set(v8::String::New(key), v8::String::New(value));
+    if (v8::String::NewFromUtf8(js_isolate, key).ToLocal(&js_key)
+        && v8::String::NewFromUtf8(js_isolate, (value) ? value : "").ToLocal(&js_value))
+    {
+        (void) (*obj)->Set(js_isolate->GetCurrentContext(),
+                           js_key, js_value).FromMaybe(false);
+    }
 }
 
 /*
  * Convert a WeeChat hashtable to a javascript hashtable.
  */
 
-v8::Handle<v8::Object>
+v8::Local<v8::Object>
 weechat_js_hashtable_to_object (struct t_hashtable *hashtable)
 {
-    v8::Handle<v8::Object> obj = v8::Object::New();
+    v8::Local<v8::Object> obj = v8::Object::New(js_isolate);
 
     weechat_hashtable_map_string (hashtable,
                                   &weechat_js_hashtable_map_cb,
@@ -119,15 +125,17 @@ weechat_js_hashtable_to_object (struct t_hashtable *hashtable)
  */
 
 struct t_hashtable *
-weechat_js_object_to_hashtable (v8::Handle<v8::Object> obj,
+weechat_js_object_to_hashtable (v8::Local<v8::Value> value,
                                 int size,
                                 const char *type_keys,
                                 const char *type_values)
 {
     struct t_hashtable *hashtable;
     unsigned int i;
-    v8::Handle<v8::Array> keys;
-    v8::Handle<v8::Value> key, value;
+    v8::Local<v8::Context> context;
+    v8::Local<v8::Object> obj;
+    v8::Local<v8::Array> keys;
+    v8::Local<v8::Value> js_key, js_value;
 
     hashtable = weechat_hashtable_new (size, type_keys, type_values,
                                        NULL, NULL);
@@ -135,13 +143,25 @@ weechat_js_object_to_hashtable (v8::Handle<v8::Object> obj,
     if (!hashtable)
         return NULL;
 
-    keys = obj->GetPropertyNames();
+    context = js_isolate->GetCurrentContext();
+
+    if (!value->ToObject(context).ToLocal(&obj)
+        || !obj->GetPropertyNames(context).ToLocal(&keys))
+    {
+        return hashtable;
+    }
+
     for (i = 0; i < keys->Length(); i++)
     {
-        key = keys->Get(i);
-        value = obj->Get(key);
-        v8::String::Utf8Value str_key(key);
-        v8::String::Utf8Value str_value(value);
+        if (!keys->Get(context, i).ToLocal(&js_key)
+            || !obj->Get(context, js_key).ToLocal(&js_value))
+        {
+            continue;
+        }
+        v8::String::Utf8Value str_key(js_isolate, js_key);
+        v8::String::Utf8Value str_value(js_isolate, js_value);
+        if (!*str_key || !*str_value)
+            continue;
         if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
         {
             weechat_hashtable_set (hashtable, *str_key, *str_value);
@@ -170,7 +190,8 @@ weechat_js_exec (struct t_plugin_script *script,
     struct t_plugin_script *old_js_current_script;
     WeechatJsV8 *js_v8;
     void *ret_value;
-    v8::Handle<v8::Value> argv2[16], ret_js;
+    v8::HandleScope handle_scope(js_isolate);
+    v8::Local<v8::Value> argv2[16], ret_js;
     int i, argc, *ret_int;
 
     ret_value = NULL;
@@ -193,7 +214,8 @@ weechat_js_exec (struct t_plugin_script *script,
          * objects (for hashtables) when the function is called from the main
          * loop (for example a callback of hook_url).
          */
-        v8::Context::Scope context_scope(js_v8->getContext());
+        v8::Local<v8::Context> context = js_v8->getContext();
+        v8::Context::Scope context_scope(context);
 
         argc = 0;
         if (format && format[0])
@@ -204,13 +226,17 @@ weechat_js_exec (struct t_plugin_script *script,
                 switch (format[i])
                 {
                     case 's': /* String or null */
-                        if (argv[i])
-                            argv2[i] = v8::String::New((const char *)argv[i]);
-                        else
-                            argv2[i] = v8::Null();
+                        if (!argv[i]
+                            || !v8::String::NewFromUtf8(
+                                js_isolate,
+                                (const char *)argv[i]).ToLocal(&argv2[i]))
+                        {
+                            argv2[i] = v8::Null(js_isolate);
+                        }
                         break;
                     case 'i': /* Integer */
-                        argv2[i] = v8::Integer::New(*((int *)argv[i]));
+                        argv2[i] = v8::Integer::New(js_isolate,
+                                                    *((int *)argv[i]));
                         break;
                     case 'h': /* Hash */
                         argv2[i] = weechat_js_hashtable_to_object (
@@ -228,12 +254,12 @@ weechat_js_exec (struct t_plugin_script *script,
         {
             if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (ret_js->IsString()))
             {
-                v8::String::Utf8Value temp_str(ret_js);
+                v8::String::Utf8Value temp_str(js_isolate, ret_js);
                 ret_value = (*temp_str) ? strdup(*temp_str) : NULL;
             }
             else if ((ret_type == WEECHAT_SCRIPT_EXEC_POINTER) && (ret_js->IsString()))
             {
-                v8::String::Utf8Value temp_str(ret_js);
+                v8::String::Utf8Value temp_str(js_isolate, ret_js);
                 if (*temp_str)
                 {
                     ret_value = plugin_script_str2ptr (weechat_js_plugin,
@@ -249,14 +275,14 @@ weechat_js_exec (struct t_plugin_script *script,
             {
                 ret_int = (int *)malloc (sizeof (*ret_int));
                 if (ret_int)
-                    *ret_int = (int)(ret_js->IntegerValue());
+                    *ret_int = ret_js->Int32Value(context).FromMaybe(0);
                 ret_value = ret_int;
             }
             else if ((ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
                      && (ret_js->IsObject()))
             {
                 ret_value = (struct t_hashtable *)weechat_js_object_to_hashtable (
-                    ret_js->ToObject(),
+                    ret_js,
                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
                     WEECHAT_HASHTABLE_STRING,
                     WEECHAT_HASHTABLE_STRING);
@@ -327,6 +353,8 @@ weechat_js_load (const char *filename, const char *code)
     js_current_script = NULL;
     js_registered_script = NULL;
 
+    weechat_js_v8_init ();
+
     js_current_interpreter = new WeechatJsV8();
 
     if (!js_current_interpreter)
@@ -338,9 +366,6 @@ weechat_js_load (const char *filename, const char *code)
         free (source);
         return NULL;
     }
-
-    /* Load libs. */
-    js_current_interpreter->loadLibs();
 
     js_current_script_filename = filename;
 
@@ -1049,6 +1074,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         js_action_autoload_list = NULL;
     }
     /* weechat_string_dyn_free (js_buffer_output, 1); */
+
+    weechat_js_v8_end ();
 
     return WEECHAT_RC_OK;
 }
