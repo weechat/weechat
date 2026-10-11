@@ -119,13 +119,18 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
 }
 
 /*
- * Add a new variable in a hdata.
+ * Add a new variable in a hdata, with the size of the variable.
+ *
+ * The size is used only if it is different from the size of the type
+ * (0 = size of type); it is supported only for type long (not for arrays),
+ * where the variable can be an integer, for example "tv_usec" in
+ * struct timeval on macOS.
  */
 
 void
-hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
-               int update_allowed, const char *array_size,
-               const char *hdata_name)
+hdata_new_var_size (struct t_hdata *hdata, const char *name, int offset,
+                    int size, int type, int update_allowed,
+                    const char *array_size, const char *hdata_name)
 {
     struct t_hdata_var *var;
     const char *ptr_array_size;
@@ -137,6 +142,9 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
     if (var)
     {
         var->offset = offset;
+        var->size = ((type == WEECHAT_HDATA_LONG) && (size > 0)
+                     && (size != (int)sizeof (long)) && !array_size) ?
+            size : 0;
         var->type = type;
         var->update_allowed = update_allowed;
         ptr_array_size = array_size;
@@ -155,6 +163,19 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
             strdup (hdata_name) : NULL;
         hashtable_set (hdata->hash_var, name, var);
     }
+}
+
+/*
+ * Add a new variable in a hdata.
+ */
+
+void
+hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
+               int update_allowed, const char *array_size,
+               const char *hdata_name)
+{
+    hdata_new_var_size (hdata, name, offset, 0, type, update_allowed,
+                        array_size, hdata_name);
 }
 
 /*
@@ -798,6 +819,8 @@ hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
         }
         else
         {
+            if (var->size == (int)sizeof (int))
+                return *((int *)(pointer + var->offset));
             return *((long *)(pointer + var->offset));
         }
     }
@@ -1258,7 +1281,15 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             }
             break;
         case WEECHAT_HDATA_LONG:
-            if (util_parse_long (value, 10, &number_long))
+            if (var->size == (int)sizeof (int))
+            {
+                if (util_parse_int (value, 10, &number_int))
+                {
+                    *((int *)(pointer + var->offset)) = number_int;
+                    return 1;
+                }
+            }
+            else if (util_parse_long (value, 10, &number_long))
             {
                 *((long *)(pointer + var->offset)) = number_long;
                 return 1;
@@ -1467,6 +1498,7 @@ hdata_print_log_var_map_cb (void *data, struct t_hashtable *hashtable,
     log_printf ("");
     log_printf ("  [hdata var '%s']", (const char *)key);
     log_printf ("    offset . . . . . . . . : %d", var->offset);
+    log_printf ("    size . . . . . . . . . : %d", var->size);
     log_printf ("    type . . . . . . . . . : %d ('%s')", var->type, hdata_type_string[(int)var->type]);
     log_printf ("    update_allowed . . . . : %d", (int)var->update_allowed);
     log_printf ("    array_size . . . . . . : '%s'", var->array_size);

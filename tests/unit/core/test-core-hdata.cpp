@@ -22,6 +22,12 @@ extern "C"
 #include "src/plugins/plugin.h"
 }
 
+struct t_test_size
+{
+    int value;
+    int guard;
+};
+
 struct t_test_item
 {
     /* char */
@@ -205,6 +211,7 @@ TEST(CoreHdata, NewVar)
     var = (struct t_hdata_var *)hashtable_get (hdata->hash_var, "var1");
     CHECK(var);
     LONGS_EQUAL(0, var->offset);
+    LONGS_EQUAL(0, var->size);
     LONGS_EQUAL(WEECHAT_HDATA_STRING, var->type);
     LONGS_EQUAL(0, var->update_allowed);
     POINTERS_EQUAL(NULL, var->array_size);
@@ -245,6 +252,66 @@ TEST(CoreHdata, NewVar)
     LONGS_EQUAL(1, var->update_allowed);
     STRCMP_EQUAL("*", var->array_size);
     STRCMP_EQUAL("other_hdata", var->hdata_name);
+
+    hashtable_remove (weechat_hdata, "test_hdata");
+}
+
+/*
+ * Test functions:
+ *   hdata_new_var_size
+ *   hdata_long (variable with the size of an integer)
+ *   hdata_set (variable with the size of an integer)
+ */
+
+TEST(CoreHdata, NewVarSize)
+{
+    struct t_hdata *hdata;
+    struct t_hdata_var *var;
+    struct t_test_size item;
+
+    hdata = hdata_new (NULL, "test_hdata", NULL, NULL, 0, 0, NULL, NULL);
+    CHECK(hdata);
+
+    /* Size of long: same size as type */
+    hdata_new_var_size (hdata, "var1", 0, sizeof (long), WEECHAT_HDATA_LONG,
+                        0, NULL, NULL);
+    var = (struct t_hdata_var *)hashtable_get (hdata->hash_var, "var1");
+    CHECK(var);
+    LONGS_EQUAL(0, var->size);
+
+    /* Size is ignored for types other than long */
+    hdata_new_var_size (hdata, "var2", 0, sizeof (char), WEECHAT_HDATA_INTEGER,
+                        0, NULL, NULL);
+    var = (struct t_hdata_var *)hashtable_get (hdata->hash_var, "var2");
+    CHECK(var);
+    LONGS_EQUAL(0, var->size);
+
+    /* Size is ignored for arrays */
+    hdata_new_var_size (hdata, "var3", 0, sizeof (int), WEECHAT_HDATA_LONG,
+                        0, "2", NULL);
+    var = (struct t_hdata_var *)hashtable_get (hdata->hash_var, "var3");
+    CHECK(var);
+    LONGS_EQUAL(0, var->size);
+
+    /* Long stored in an integer */
+    HDATA_VAR_NAME_SIZE(struct t_test_size, value, "value", LONG, 1, NULL);
+    var = (struct t_hdata_var *)hashtable_get (hdata->hash_var, "value");
+    CHECK(var);
+    LONGS_EQUAL((sizeof (int) != sizeof (long)) ? (int)sizeof (int) : 0,
+                var->size);
+    LONGS_EQUAL(WEECHAT_HDATA_LONG, var->type);
+
+    item.value = 123456;
+    item.guard = -1;
+    LONGS_EQUAL(123456, hdata_long (hdata, &item, "value"));
+
+    hdata->update_pending = 1;
+    LONGS_EQUAL(1, hdata_set (hdata, &item, "value", "-789"));
+    LONGS_EQUAL(0, hdata_set (hdata, &item, "value", "abc"));
+    hdata->update_pending = 0;
+    LONGS_EQUAL(-789, item.value);
+    LONGS_EQUAL(-1, item.guard);
+    LONGS_EQUAL(-789, hdata_long (hdata, &item, "value"));
 
     hashtable_remove (weechat_hdata, "test_hdata");
 }
@@ -706,7 +773,7 @@ TEST_GROUP(CoreHdataWithList)
         /* time */
         HDATA_VAR(struct t_test_item, test_time, TIME, 1, NULL, NULL);
         HDATA_VAR_NAME(struct t_test_item, test_time_tv.tv_sec, "test_time_tv_sec", TIME, 1, NULL, NULL);
-        HDATA_VAR_NAME(struct t_test_item, test_time_tv.tv_usec, "test_time_tv_usec", LONG, 1, NULL, NULL);
+        HDATA_VAR_NAME_SIZE(struct t_test_item, test_time_tv.tv_usec, "test_time_tv_usec", LONG, 1, NULL);
         HDATA_VAR(struct t_test_item, test_count_time, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_test_item, test_array_2_time_fixed_size, TIME, 0, "2", NULL);
         HDATA_VAR(struct t_test_item, test_ptr_2_time, TIME, 0, "*,test_count_time", NULL);
@@ -2135,7 +2202,7 @@ TEST(CoreHdataWithList, Time)
     /* Item 1 */
     LONGS_EQUAL(123456, hdata_time (ptr_hdata, ptr_item1, "test_time"));
     LONGS_EQUAL(1710485123, hdata_time (ptr_hdata, ptr_item1, "test_time_tv_sec"));
-    LONGS_EQUAL(123456, hdata_time (ptr_hdata, ptr_item1, "test_time_tv_usec"));
+    LONGS_EQUAL(123456, hdata_long (ptr_hdata, ptr_item1, "test_time_tv_usec"));
     LONGS_EQUAL(112,
                 hdata_time (ptr_hdata, ptr_item1, "0|test_array_2_time_fixed_size"));
     LONGS_EQUAL(334,
@@ -2148,7 +2215,7 @@ TEST(CoreHdataWithList, Time)
     /* Item 2 */
     LONGS_EQUAL(789123, hdata_time (ptr_hdata, ptr_item2, "test_time"));
     LONGS_EQUAL(1710485456, hdata_time (ptr_hdata, ptr_item2, "test_time_tv_sec"));
-    LONGS_EQUAL(456789, hdata_time (ptr_hdata, ptr_item2, "test_time_tv_usec"));
+    LONGS_EQUAL(456789, hdata_long (ptr_hdata, ptr_item2, "test_time_tv_usec"));
     LONGS_EQUAL(556,
                 hdata_time (ptr_hdata, ptr_item2, "0|test_array_2_time_fixed_size"));
     LONGS_EQUAL(778,

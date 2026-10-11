@@ -381,9 +381,9 @@ hook_timer_hdata_hook_timer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_hook_timer, align_second, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_hook_timer, remaining_calls, INTEGER, 0, NULL, NULL);
         HDATA_VAR_NAME(struct t_hook_timer, last_exec.tv_sec, "last_exec", TIME, 0, NULL, NULL);
-        HDATA_VAR_NAME(struct t_hook_timer, last_exec.tv_usec, "last_exec_usec", LONG, 0, NULL, NULL);
+        HDATA_VAR_NAME_SIZE(struct t_hook_timer, last_exec.tv_usec, "last_exec_usec", LONG, 0, NULL);
         HDATA_VAR_NAME(struct t_hook_timer, next_exec.tv_sec, "next_exec", TIME, 0, NULL, NULL);
-        HDATA_VAR_NAME(struct t_hook_timer, next_exec.tv_usec, "next_exec_usec", LONG, 0, NULL, NULL);
+        HDATA_VAR_NAME_SIZE(struct t_hook_timer, next_exec.tv_usec, "next_exec_usec", LONG, 0, NULL);
     }
     return hdata;
 }

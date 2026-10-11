@@ -21,6 +21,18 @@
     hdata_new_var (hdata, __name, offsetof (__struct, __field),         \
                    WEECHAT_HDATA_##__type, __update_allowed,            \
                    __array_size, __hdata_name)
+/*
+ * Create a hdata variable with a custom name and the size of the struct field,
+ * for a field which may have a different size than the hdata type, for
+ * example "tv_usec" in struct timeval: it is a long on Linux and a 32-bit
+ * integer on macOS (only for type LONG, not for arrays).
+ */
+#define HDATA_VAR_NAME_SIZE(__struct, __field, __name, __type,          \
+                            __update_allowed, __hdata_name)             \
+    hdata_new_var_size (hdata, __name, offsetof (__struct, __field),    \
+                        sizeof (((__struct *)0)->__field),              \
+                        WEECHAT_HDATA_##__type, __update_allowed,       \
+                        NULL, __hdata_name)
 /* Create a hdata list. */
 #define HDATA_LIST(__name, __flags)                                     \
     hdata_new_list (hdata, #__name, &(__name), __flags);
@@ -28,6 +40,8 @@
 struct t_hdata_var
 {
     int offset;                        /* offset                            */
+    int size;                          /* size of variable (0 = size of     */
+                                       /* type)                             */
     char type;                         /* type                              */
     char update_allowed;               /* update allowed?                   */
     char *array_size;                  /* array size                        */
@@ -81,6 +95,10 @@ extern struct t_hdata *hdata_new (struct t_weechat_plugin *plugin,
                                                          void *pointer,
                                                          struct t_hashtable *hashtable),
                                   void *callback_update_data);
+extern void hdata_new_var_size (struct t_hdata *hdata, const char *name,
+                                int offset, int size, int type,
+                                int update_allowed, const char *array_size,
+                                const char *hdata_name);
 extern void hdata_new_var (struct t_hdata *hdata, const char *name, int offset,
                            int type, int update_allowed, const char *array_size,
                            const char *hdata_name);
