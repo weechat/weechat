@@ -8,6 +8,7 @@ override_dh_auto_configure:
 	dh_auto_configure --buildsystem=cmake -- \
 		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
 		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
+		-DENABLE_JAVASCRIPT:BOOL=ON \
 		-DENABLE_DOC:BOOL=ON \
 		-DENABLE_MAN:BOOL=ON \
 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \

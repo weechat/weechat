@@ -1,0 +1,85 @@
+diff --git a/debian-devel/control b/debian-devel/control
+--- a/debian-devel/control
++++ b/debian-devel/control
+@@ -15,7 +15,6 @@ Build-Depends:
+     liblua5.4-dev,
+     tcl8.6-dev,
+     guile-3.0-dev,
+-    libnode-dev,
+     php-dev, libphp-embed, libargon2-dev, libsodium-dev,
+     libxml2-dev,
+     libcurl4-gnutls-dev,
+@@ -236,19 +235,6 @@ Description: Fast, light and extensible chat client - Guile plugin
+  .
+  This package provides the Guile scripting API plugin.
+ 
+-Package: weechat-devel-javascript
+-Architecture: any
+-Depends:
+-    ${misc:Depends},
+-    ${shlibs:Depends},
+-    weechat-devel-curses (= ${binary:Version}) | weechat-devel-headless (= ${binary:Version})
+-Conflicts: weechat-javascript
+-Description: Fast, light and extensible chat client - JavaScript plugin
+- WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+- for many operating systems. Everything can be done with a keyboard.
+- .
+- This package provides the JavaScript scripting API plugin.
+-
+ Package: weechat-devel-php
+ Architecture: any
+ Depends:
+diff --git a/debian-devel/rules b/debian-devel/rules
+--- a/debian-devel/rules
++++ b/debian-devel/rules
+@@ -8,7 +8,7 @@ override_dh_auto_configure:
+ 	dh_auto_configure --buildsystem=cmake -- \
+ 		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
+ 		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
+-		-DENABLE_JAVASCRIPT:BOOL=ON \
++		-DENABLE_JAVASCRIPT:BOOL=OFF \
+ 		-DENABLE_DOC:BOOL=ON \
+ 		-DENABLE_MAN:BOOL=ON \
+ 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+diff --git a/debian-stable/control b/debian-stable/control
+--- a/debian-stable/control
++++ b/debian-stable/control
+@@ -15,7 +15,6 @@ Build-Depends:
+     liblua5.4-dev,
+     tcl8.6-dev,
+     guile-3.0-dev,
+-    libnode-dev,
+     php-dev, libphp-embed, libargon2-dev, libsodium-dev,
+     libxml2-dev,
+     libcurl4-gnutls-dev,
+@@ -225,18 +224,6 @@ Description: Fast, light and extensible chat client - Guile plugin
+  .
+  This package provides the Guile scripting API plugin.
+ 
+-Package: weechat-javascript
+-Architecture: any
+-Depends:
+-    ${misc:Depends},
+-    ${shlibs:Depends},
+-    weechat-curses (= ${binary:Version}) | weechat-headless (= ${binary:Version})
+-Description: Fast, light and extensible chat client - JavaScript plugin
+- WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+- for many operating systems. Everything can be done with a keyboard.
+- .
+- This package provides the JavaScript scripting API plugin.
+-
+ Package: weechat-php
+ Architecture: any
+ Depends:
+diff --git a/debian-stable/rules b/debian-stable/rules
+--- a/debian-stable/rules
++++ b/debian-stable/rules
+@@ -8,7 +8,7 @@ override_dh_auto_configure:
+ 	dh_auto_configure --buildsystem=cmake -- \
+ 		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
+ 		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
+-		-DENABLE_JAVASCRIPT:BOOL=ON \
++		-DENABLE_JAVASCRIPT:BOOL=OFF \
+ 		-DENABLE_DOC:BOOL=ON \
+ 		-DENABLE_MAN:BOOL=ON \
+ 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
