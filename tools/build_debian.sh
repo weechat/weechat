@@ -16,7 +16,7 @@
 # Script arguments:          Examples:
 #
 #   1. version               devel, devel-2, stable, stable-2, 1.9, 1.9-2
-#   2. distro type/name      debian/sid, ubuntu/resolute, raspbian/trixie
+#   2. distro type/name      debian/sid, ubuntu/resolute
 #
 # The script can also just check that all Debian/Ubuntu patches apply fine
 # with a single argument: "test-patches".
@@ -60,7 +60,7 @@ Syntax: $0 devel|stable|<version> distro
        version  version to build: stable, devel or specific version
                 (debian package revision is allowed after name (default is 1),
                 for example: devel-2, stable-2, 1.9-2)
-        distro  the distro type/name (debian/sid, ubuntu/resolute, raspbian/trixie, ...)
+        distro  the distro type/name (debian/sid, ubuntu/resolute, ...)
 
   test-patches  test that all Debian/Ubuntu patches apply fine (with git apply --check)
 
@@ -188,7 +188,7 @@ if [ "${distro_type}" = "ubuntu" ]; then
         DCH_DISTRO="${distro_name}"
     fi
 else
-    # debian/raspbian
+    # debian
     DCH_DISTRO="unstable"
 fi
 
