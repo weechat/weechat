@@ -9,6 +9,7 @@
 
 #undef _
 #include <cstdio>
+#include <dlfcn.h>
 #include <libplatform/libplatform.h>
 
 extern "C"
@@ -33,7 +34,8 @@ using namespace v8;
  * V8 can be initialized only once in a process (it can not be initialized
  * again after V8::Dispose), so the platform and the isolate are created on
  * first load of the plugin and kept until the end of the process (the plugin
- * library is never unloaded from memory, see "-z nodelete" in CMakeLists.txt).
+ * library is never unloaded from memory, see function
+ * weechat_js_v8_pin_library).
  *
  * V8 runs in single-threaded mode: WeeChat is single-threaded and forks
  * child processes (for example in hook_process), so no background thread
@@ -45,6 +47,21 @@ Isolate *js_isolate = NULL;
 int js_isolate_entered = 0;
 int js_exec_depth = 0;
 
+
+/*
+ * Prevent the plugin library from being unloaded from memory when the plugin
+ * is unloaded, so that V8 data are kept and can be used again if the plugin
+ * is loaded again.
+ */
+
+void
+weechat_js_v8_pin_library (void)
+{
+    Dl_info info;
+
+    if (dladdr ((void *)&weechat_js_v8_pin_library, &info) && info.dli_fname)
+        (void) dlopen (info.dli_fname, RTLD_NOW | RTLD_NOLOAD | RTLD_NODELETE);
+}
 
 /*
  * Initialize V8 (on first call only) and enter the isolate.
@@ -65,6 +82,7 @@ weechat_js_v8_init (void)
     {
         if (!js_platform)
         {
+            weechat_js_v8_pin_library ();
             V8::SetFlagsFromString("--single-threaded");
             js_platform = platform::NewSingleThreadedDefaultPlatform().release();
             V8::InitializePlatform(js_platform);

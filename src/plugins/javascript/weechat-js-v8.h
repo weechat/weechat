@@ -39,6 +39,7 @@ private:
     std::string source;
 };
 
+extern void weechat_js_v8_pin_library (void);
 extern void weechat_js_v8_init (void);
 extern void weechat_js_v8_run_pending_tasks (void);
 extern void weechat_js_v8_end (void);
