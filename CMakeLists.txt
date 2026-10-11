@@ -113,8 +113,9 @@ option(ENABLE_CODE_COVERAGE  "Enable code coverage"                     OFF)
 add_library(coverage_config INTERFACE)
 if(ENABLE_CODE_COVERAGE)
   if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
-    # GCC
-    target_compile_options(coverage_config INTERFACE -O0 -g --coverage)
+    # GCC: counters are updated atomically, as some code runs in threads
+    # (for example the transfer of hook_url).
+    target_compile_options(coverage_config INTERFACE -O0 -g --coverage -fprofile-update=atomic)
     target_link_libraries(coverage_config INTERFACE --coverage)
   elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang")
     # Clang
