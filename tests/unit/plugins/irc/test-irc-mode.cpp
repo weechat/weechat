@@ -10,6 +10,7 @@
 
 extern "C"
 {
+#include <string.h>
 #include "src/core/core-string.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-color.h"
