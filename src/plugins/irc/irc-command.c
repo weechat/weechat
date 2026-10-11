@@ -3728,7 +3728,51 @@ IRC_COMMAND_CALLBACK(me)
 }
 
 /*
+ * Send MODE command on a channel, with modes split into multiple messages if
+ * the number of modes with an argument is greater than the server limit
+ * (number of modes allowed in a single message).
+ *
+ * In this case, the first message is sent with "flags", and subsequent
+ * messages are sent with low priority.
+ */
+
+void
+irc_command_mode_channel (struct t_irc_server *server,
+                          const char *command,
+                          const char *channel_name,
+                          const char *modes,
+                          int flags)
+{
+    char **messages;
+    int i;
+
+    messages = irc_mode_split_channel_modes (server, modes,
+                                             irc_server_get_max_modes (server));
+    if (!messages)
+    {
+        irc_server_sendf (server, flags, NULL,
+                          "%s %s %s",
+                          command, channel_name, modes);
+        return;
+    }
+
+    for (i = 0; messages[i]; i++)
+    {
+        irc_server_sendf (server,
+                          (i == 0) ? flags : IRC_SERVER_SEND_OUTQ_PRIO_LOW,
+                          NULL,
+                          "%s %s %s",
+                          command, channel_name, messages[i]);
+    }
+
+    weechat_string_free_split (messages);
+}
+
+/*
  * Send MODE command on a server.
+ *
+ * Channel modes are split into multiple messages if needed, according to the
+ * server limit (see function irc_command_mode_channel).
  */
 
 void
@@ -3738,22 +3782,54 @@ irc_command_mode_server (struct t_irc_server *server,
                          const char *arguments,
                          int flags)
 {
-    if (server && command && (channel || arguments))
+    const char *pos_modes;
+    char *target;
+
+    if (!server || !command || (!channel && !arguments))
+        return;
+
+    if (channel && arguments)
     {
-        if (channel && arguments)
+        if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+        {
+            irc_command_mode_channel (server, command, channel->name,
+                                      arguments, flags);
+        }
+        else
         {
             irc_server_sendf (server, flags, NULL,
                               "%s %s %s",
                               command, channel->name, arguments);
         }
-        else
+        return;
+    }
+
+    if (arguments)
+    {
+        pos_modes = strchr (arguments, ' ');
+        if (pos_modes)
         {
-            irc_server_sendf (server, flags, NULL,
-                              "%s %s",
-                              command,
-                              (channel) ? channel->name : arguments);
+            target = weechat_strndup (arguments, pos_modes - arguments);
+            while (pos_modes[0] == ' ')
+            {
+                pos_modes++;
+            }
+            if (target && pos_modes[0]
+                && irc_channel_is_channel (server, target))
+            {
+                irc_command_mode_channel (server, command, target,
+                                          pos_modes, flags);
+                free (target);
+                return;
+            }
+            free (target);
         }
     }
+
+    irc_server_sendf (server, flags, NULL,
+                      "%s %s",
+                      command,
+                      (channel) ? channel->name : arguments);
 }
 
 /*

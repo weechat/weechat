@@ -1098,6 +1098,60 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
 }
 
 /*
+ * Tests send of modes with commands /mode and /samode, with split of modes
+ * according to the server limit (MODES in message 005).
+ */
+
+TEST(IrcProtocolWithServer, SendModes)
+{
+    const char *buffer_server = "irc.server." IRC_FAKE_SERVER;
+    const char *buffer_chan = "irc." IRC_FAKE_SERVER ".#test";
+    const char *buffer_pv = "irc." IRC_FAKE_SERVER ".bob";
+
+    SRV_INIT_JOIN;
+
+    RECV(":server 005 alice MODES=2 :are supported");
+
+    /* Open private buffer */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+
+    /* Modes on channel, no split needed */
+    server_input_data (buffer_chan, "/mode +nt");
+    CHECK_SENT("MODE #test +nt");
+    LONGS_EQUAL(1, arraylist_size (sent_messages));
+    server_input_data (buffer_chan, "/mode +o-v n1 n2");
+    CHECK_SENT("MODE #test +o-v n1 n2");
+    LONGS_EQUAL(1, arraylist_size (sent_messages));
+
+    /* Modes on current channel, split needed */
+    server_input_data (buffer_chan, "/mode +ooo-v+b n1 n2 n3 n4 mask1");
+    CHECK_SENT("MODE #test +oo n1 n2");
+    CHECK_SENT("MODE #test +o-v n3 n4");
+    CHECK_SENT("MODE #test +b mask1");
+    LONGS_EQUAL(3, arraylist_size (sent_messages));
+
+    /* Modes on a channel given in arguments, split needed */
+    server_input_data (buffer_server, "/mode #test2 +vvv n1 n2 n3");
+    CHECK_SENT("MODE #test2 +vv n1 n2");
+    CHECK_SENT("MODE #test2 +v n3");
+    LONGS_EQUAL(2, arraylist_size (sent_messages));
+
+    /* Command /samode, split needed */
+    server_input_data (buffer_chan, "/samode +ooo n1 n2 n3");
+    CHECK_SENT("SAMODE #test +oo n1 n2");
+    CHECK_SENT("SAMODE #test +o n3");
+    LONGS_EQUAL(2, arraylist_size (sent_messages));
+
+    /* User modes: never split */
+    server_input_data (buffer_server, "/mode alice +iwxz");
+    CHECK_SENT("MODE alice +iwxz");
+    LONGS_EQUAL(1, arraylist_size (sent_messages));
+    server_input_data (buffer_pv, "/mode +ooo n1 n2 n3");
+    CHECK_SENT("MODE bob +ooo n1 n2 n3");
+    LONGS_EQUAL(1, arraylist_size (sent_messages));
+}
+
+/*
  * Test functions:
  *   irc_protocol_nick_address
  */

@@ -122,6 +122,196 @@ irc_mode_get_chanmode_type (struct t_irc_server *server, char chanmode)
 }
 
 /*
+ * Add a message with modes and arguments in the array of messages.
+ *
+ * Return:
+ *   1: OK
+ *   0: error
+ */
+
+int
+irc_mode_split_add_message (char ***messages, int *num_messages,
+                            const char *modes, const char *arguments)
+{
+    char **new_messages;
+
+    new_messages = realloc (*messages,
+                            (*num_messages + 2) * sizeof ((*messages)[0]));
+    if (!new_messages)
+        return 0;
+    *messages = new_messages;
+
+    if (arguments && arguments[0])
+    {
+        if (weechat_asprintf (&((*messages)[*num_messages]),
+                              "%s %s", modes, arguments) < 0)
+        {
+            (*messages)[*num_messages] = NULL;
+            return 0;
+        }
+    }
+    else
+    {
+        (*messages)[*num_messages] = strdup (modes);
+        if (!(*messages)[*num_messages])
+            return 0;
+    }
+
+    (*num_messages)++;
+    (*messages)[*num_messages] = NULL;
+
+    return 1;
+}
+
+/*
+ * Split channel modes with their arguments into multiple messages, so that
+ * each message has at most "max_modes" modes with an argument (limit "MODES"
+ * sent by the server in message 005).
+ *
+ * Modes without argument (type D, type C when unset, type A without argument)
+ * are not counted in the limit.
+ *
+ * The modes are returned unchanged in a single message if no split is needed
+ * or if an argument starts with a colon (trailing parameter).
+ *
+ * Example with max_modes == 4:
+ *   "+ooooo-v n1 n2 n3 n4 n5 n6"  ==>  [ "+oooo n1 n2 n3 n4",
+ *                                        "+o-v n5 n6" ]
+ *
+ * Note: result must be freed after use with function
+ * weechat_string_free_split.
+ */
+
+char **
+irc_mode_split_channel_modes (struct t_irc_server *server,
+                              const char *modes, int max_modes)
+{
+    char **argv, **messages, **str_modes, **str_args, set_flag, msg_flag;
+    char chanmode_type;
+    const char *pos;
+    int argc, i, current_arg, num_messages, modes_added, has_arg, error;
+
+    if (!server || !modes)
+        return NULL;
+
+    if (max_modes < 1)
+        max_modes = 1;
+
+    argv = NULL;
+    messages = NULL;
+    str_modes = NULL;
+    str_args = NULL;
+    num_messages = 0;
+    error = 0;
+
+    argv = weechat_string_split (modes, " ", NULL,
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &argc);
+    if (!argv || (argc < 2))
+        goto unchanged;
+    for (i = 0; i < argc; i++)
+    {
+        if (argv[i][0] == ':')
+            goto unchanged;
+    }
+
+    str_modes = weechat_string_dyn_alloc (64);
+    str_args = weechat_string_dyn_alloc (256);
+    if (!str_modes || !str_args)
+        goto error;
+
+    current_arg = 1;
+    modes_added = 0;
+    set_flag = '+';
+    msg_flag = '\0';
+    for (pos = argv[0]; pos[0]; pos++)
+    {
+        if ((pos[0] == '+') || (pos[0] == '-'))
+        {
+            set_flag = pos[0];
+            continue;
+        }
+        chanmode_type = irc_mode_get_chanmode_type (server, pos[0]);
+        has_arg = (current_arg < argc)
+            && ((chanmode_type == 'A')
+                || (chanmode_type == 'B')
+                || ((chanmode_type == 'C') && (set_flag == '+')));
+        if (has_arg && (modes_added >= max_modes))
+        {
+            if (!irc_mode_split_add_message (&messages, &num_messages,
+                                             *str_modes, *str_args))
+            {
+                goto error;
+            }
+            weechat_string_dyn_copy (str_modes, NULL);
+            weechat_string_dyn_copy (str_args, NULL);
+            modes_added = 0;
+            msg_flag = '\0';
+        }
+        if (msg_flag != set_flag)
+        {
+            weechat_string_dyn_concat (str_modes, &set_flag, 1);
+            msg_flag = set_flag;
+        }
+        weechat_string_dyn_concat (str_modes, pos, 1);
+        if (has_arg)
+        {
+            if ((*str_args)[0])
+                weechat_string_dyn_concat (str_args, " ", -1);
+            weechat_string_dyn_concat (str_args, argv[current_arg], -1);
+            current_arg++;
+            modes_added++;
+        }
+    }
+
+    /* No split needed: return modes unchanged. */
+    if (num_messages == 0)
+        goto unchanged;
+
+    /* Extra arguments (not used by any mode) are kept in the last message. */
+    for (; current_arg < argc; current_arg++)
+    {
+        if ((*str_args)[0])
+            weechat_string_dyn_concat (str_args, " ", -1);
+        weechat_string_dyn_concat (str_args, argv[current_arg], -1);
+    }
+
+    if ((*str_modes)[0] || (*str_args)[0])
+    {
+        if (!irc_mode_split_add_message (&messages, &num_messages,
+                                         *str_modes, *str_args))
+        {
+            goto error;
+        }
+    }
+    goto end;
+
+unchanged:
+    weechat_string_free_split (messages);
+    messages = NULL;
+    num_messages = 0;
+    if (!irc_mode_split_add_message (&messages, &num_messages, modes, NULL))
+        error = 1;
+    goto end;
+
+error:
+    error = 1;
+
+end:
+    if (error)
+    {
+        weechat_string_free_split (messages);
+        messages = NULL;
+    }
+    weechat_string_free_split (argv);
+    weechat_string_dyn_free (str_modes, 1);
+    weechat_string_dyn_free (str_args, 1);
+    return messages;
+}
+
+/*
  * Update channel modes using the mode and argument.
  *
  * Example:

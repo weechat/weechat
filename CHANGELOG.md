@@ -49,6 +49,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: accept a number or a string with a number as integer data in function hook_signal_send, return an error if the data is not a valid integer
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
+- irc: split channel modes in multiple messages in commands `/mode` and `/samode` according to the server limit ([#295](https://github.com/weechat/weechat/issues/295))
 - irc: allow multiple nicks separated by commas in command `/notify del`
 - javascript: enable build by default ([#360](https://github.com/weechat/weechat/issues/360))
 - **breaking:** javascript: use the current V8 API, require V8 ≥ 11.3 (provided by Node.js shared library on Linux, or standalone V8 library like on macOS with Homebrew), V8 is now initialized on first script load and runs in single-threaded mode ([#360](https://github.com/weechat/weechat/issues/360))

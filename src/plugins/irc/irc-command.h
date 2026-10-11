@@ -62,6 +62,11 @@ extern void irc_command_join_server (struct t_irc_server *server,
                                      const char *arguments,
                                      int manual_join,
                                      int noswitch);
+extern void irc_command_mode_channel (struct t_irc_server *server,
+                                      const char *command,
+                                      const char *channel_name,
+                                      const char *modes,
+                                      int flags);
 extern void irc_command_mode_server (struct t_irc_server *server,
                                      const char *command,
                                      struct t_irc_channel *channel,

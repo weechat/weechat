@@ -13,6 +13,9 @@ struct t_irc_channel;
 extern char *irc_mode_get_arguments_colors (const char *arguments);
 extern char irc_mode_get_chanmode_type (struct t_irc_server *server,
                                         char chanmode);
+extern char **irc_mode_split_channel_modes (struct t_irc_server *server,
+                                            const char *modes,
+                                            int max_modes);
 extern int irc_mode_channel_set (struct t_irc_server *server,
                                  struct t_irc_channel *channel,
                                  const char *host,
