@@ -372,6 +372,45 @@ weechat_python_output (PyObject *self, PyObject *args)
 }
 
 /*
+ * Display the pending python error (with traceback) on stderr and clear it.
+ *
+ * PyErr_Print is not used because it calls sys.excepthook, which can be
+ * replaced by the system (for example by apport on Ubuntu), and it exits
+ * the process on SystemExit (for example when a script calls sys.exit).
+ */
+
+void
+weechat_python_display_error (void)
+{
+#if PY_VERSION_HEX >= 0x030C0000
+    /* Python >= 3.12 */
+    PyObject *exc;
+
+    exc = PyErr_GetRaisedException ();
+    if (exc)
+    {
+        PyErr_DisplayException (exc);
+        Py_DECREF(exc);
+    }
+#else
+    /* Python < 3.12 */
+    PyObject *type, *value, *traceback;
+
+    PyErr_Fetch (&type, &value, &traceback);
+    if (type)
+    {
+        PyErr_NormalizeException (&type, &value, &traceback);
+        if (value && traceback)
+            PyException_SetTraceback (value, traceback);
+        PyErr_Display (type, value, traceback);
+    }
+    Py_XDECREF(type);
+    Py_XDECREF(value);
+    Py_XDECREF(traceback);
+#endif
+}
+
+/*
  * Print the pending python error (with traceback).
  *
  * With info "python_eval" (eval mode without buffer), the output is caught
@@ -386,7 +425,7 @@ weechat_python_print_error (void)
 
     if (!python_eval_mode || python_eval_buffer)
     {
-        PyErr_Print ();
+        weechat_python_display_error ();
         return;
     }
 
@@ -394,7 +433,7 @@ weechat_python_print_error (void)
     weechat_string_dyn_copy (python_buffer_output, NULL);
 
     python_eval_mode = 0;
-    PyErr_Print ();
+    weechat_python_display_error ();
     weechat_python_output_flush ();
     python_eval_mode = 1;
 
@@ -707,9 +746,11 @@ struct t_plugin_script *
 weechat_python_load (const char *filename, const char *code)
 {
     FILE *fp;
-    PyObject *python_path, *path, *module_main, *globals, *rc;
+    PyObject *python_path, *path, *module_main, *globals, *rc, *file_name;
+    PyObject *err_type, *err_value, *err_traceback;
     char *weechat_sharedir, *weechat_data_dir;
     char *str_sharedir, *str_home;
+    int set_file_name;
 
     fp = NULL;
 
@@ -810,7 +851,7 @@ weechat_python_load (const char *filename, const char *code)
                             weechat_gettext ("%s%s: unable to execute source "
                                              "code"),
                             weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
-            PyErr_Print ();
+            weechat_python_display_error ();
             if (rc)
                 Py_XDECREF(rc);
 
@@ -833,16 +874,41 @@ weechat_python_load (const char *filename, const char *code)
     }
     else
     {
-        /* Read and execute code from file. */
-        if (PyRun_SimpleFile (fp, filename) != 0)
+        /*
+         * Read and execute code from file, with "__file__" set during
+         * execution (like PyRun_SimpleFile, which is not used because it
+         * calls PyErr_Print in case of error).
+         */
+        module_main = PyImport_AddModule ("__main__");
+        globals = PyModule_GetDict (module_main);
+        set_file_name = 0;
+        if (!PyDict_GetItemString (globals, "__file__"))
+        {
+            file_name = PyUnicode_DecodeFSDefault (filename);
+            if (file_name)
+            {
+                if (PyDict_SetItemString (globals, "__file__", file_name) == 0)
+                    set_file_name = 1;
+                Py_DECREF(file_name);
+            }
+        }
+        rc = PyRun_File (fp, filename, Py_file_input, globals, globals);
+        if (set_file_name)
+        {
+            /* Remove "__file__", keeping the pending error (if any). */
+            PyErr_Fetch (&err_type, &err_value, &err_traceback);
+            if (PyDict_DelItemString (globals, "__file__") != 0)
+                PyErr_Clear ();
+            PyErr_Restore (err_type, err_value, err_traceback);
+        }
+        if (!rc)
         {
             weechat_printf (NULL,
                             weechat_gettext ("%s%s: unable to parse file \"%s\""),
                             weechat_prefix ("error"), PYTHON_PLUGIN_NAME, filename);
             fclose (fp);
 
-            if (PyErr_Occurred ())
-                PyErr_Print ();
+            weechat_python_display_error ();
 
             /* If script was registered, remove it from list. */
             if (python_current_script)
@@ -858,11 +924,12 @@ weechat_python_load (const char *filename, const char *code)
 
             return NULL;
         }
+        Py_XDECREF(rc);
         fclose (fp);
     }
 
     if (PyErr_Occurred ())
-        PyErr_Print ();
+        weechat_python_display_error ();
 
     if (!python_registered_script)
     {
@@ -872,7 +939,7 @@ weechat_python_load (const char *filename, const char *code)
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, filename);
 
         if (PyErr_Occurred ())
-            PyErr_Print ();
+            weechat_python_display_error ();
         Py_EndInterpreter (python_current_interpreter);
         /* PyEval_ReleaseLock (); */
 

@@ -520,6 +520,32 @@ TEST(Scripts, InfoEval)
         RECORD_CHECK_MSG_REGEX("core.weechat", errors[i][3]);
     }
 
+#ifdef HAVE_PYTHON
+    /* sys.excepthook must not be called (it can be replaced by the system). */
+    record_start ();
+    value = hook_info_get (NULL, "python_eval",
+                           "import sys; "
+                           "sys.excepthook = lambda *args: print('hook'); "
+                           "1 / 0");
+    record_stop ();
+    STRCMP_EQUAL("", value);
+    free (value);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "^python: stdout/stderr \\(__eval__\\): "
+                           "ZeroDivisionError: division by zero$");
+
+    /* SystemExit must not exit the process. */
+    record_start ();
+    value = hook_info_get (NULL, "python_eval",
+                           "print('a'); import sys; sys.exit(3)");
+    record_stop ();
+    STRCMP_EQUAL("a", value);
+    free (value);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "^python: stdout/stderr \\(__eval__\\): "
+                           "SystemExit: 3$");
+#endif
+
 #ifdef HAVE_RUBY
     /* The exception must be cleared after an error. */
     record_start ();
