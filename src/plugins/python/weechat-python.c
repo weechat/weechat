@@ -372,6 +372,37 @@ weechat_python_output (PyObject *self, PyObject *args)
 }
 
 /*
+ * Print the pending python error (with traceback).
+ *
+ * With info "python_eval" (eval mode without buffer), the output is caught
+ * and returned by the info: the error is displayed in core buffer instead,
+ * and the output caught so far is kept.
+ */
+
+void
+weechat_python_print_error (void)
+{
+    char *output;
+
+    if (!python_eval_mode || python_eval_buffer)
+    {
+        PyErr_Print ();
+        return;
+    }
+
+    output = strdup (*python_buffer_output);
+    weechat_string_dyn_copy (python_buffer_output, NULL);
+
+    python_eval_mode = 0;
+    PyErr_Print ();
+    weechat_python_output_flush ();
+    python_eval_mode = 1;
+
+    weechat_string_dyn_copy (python_buffer_output, output);
+    free (output);
+}
+
+/*
  * Execute a python function.
  */
 
@@ -491,7 +522,7 @@ weechat_python_exec (struct t_plugin_script *script,
 
     if (PyErr_Occurred ())
     {
-        PyErr_Print ();
+        weechat_python_print_error ();
         Py_XDECREF(rc);
     }
     else if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (PyUnicode_Check (rc)))

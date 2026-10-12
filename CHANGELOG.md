@@ -87,6 +87,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: fix error code not set in function hook_url (and exit code of hook_process with "url:") when the URL transfer fails
 - api: fix crash in function config_write_line when the file is not opened
 - api: fix crash in function upgrade_write_object when the upgrade file is invalid
+- guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
 - irc: display each message sent when the text is split in multiple messages in commands `/msg` and `/query` ([#1719](https://github.com/weechat/weechat/issues/1719))
 - irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"

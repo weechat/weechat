@@ -37,6 +37,21 @@
         FAIL(string_dyn_free (msg, 0));                                 \
     }
 
+#define RECORD_CHECK_MSG_REGEX(__buffer, __regex)                       \
+    if (!record_search_msg_regex (__buffer, __regex))                   \
+    {                                                                   \
+        char **msg = string_dyn_alloc (256);                            \
+        string_dyn_concat (msg, "Message not displayed: ", -1);         \
+        string_dyn_concat (msg, "buffer=\"", -1);                       \
+        string_dyn_concat (msg, __buffer, -1);                          \
+        string_dyn_concat (msg, "\", regex=\"", -1);                    \
+        string_dyn_concat (msg, __regex, -1);                           \
+        string_dyn_concat (msg, "\"\n", -1);                            \
+        string_dyn_concat (msg, "All messages displayed:\n", -1);       \
+        record_dump (msg);                                              \
+        FAIL(string_dyn_free (msg, 0));                                 \
+    }
+
 extern struct t_arraylist *recorded_messages;
 
 extern void record_start ();

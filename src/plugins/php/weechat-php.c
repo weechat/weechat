@@ -1360,6 +1360,39 @@ php_weechat_ub_write (const char *str, size_t str_length)
     return str_length;
 }
 
+/*
+ * Write an error message (with a final newline).
+ *
+ * With info "php_eval" (eval mode without buffer), the output is caught
+ * and returned by the info: the error is displayed in core buffer instead,
+ * and the output caught so far is kept.
+ */
+
+void
+php_weechat_write_error (const char *message)
+{
+    char *output;
+
+    if (!php_eval_mode || php_eval_buffer)
+    {
+        php_weechat_ub_write (message, strlen (message));
+        php_weechat_ub_write ("\n", 1);
+        return;
+    }
+
+    output = strdup (*php_buffer_output);
+    weechat_string_dyn_copy (php_buffer_output, NULL);
+
+    php_eval_mode = 0;
+    php_weechat_ub_write (message, strlen (message));
+    php_weechat_ub_write ("\n", 1);
+    weechat_php_output_flush ();
+    php_eval_mode = 1;
+
+    weechat_string_dyn_copy (php_buffer_output, output);
+    free (output);
+}
+
 void
 php_weechat_sapi_error (int type, const char *format, ...)
 {
@@ -1369,8 +1402,7 @@ php_weechat_sapi_error (int type, const char *format, ...)
     weechat_va_format (format);
     if (vbuffer)
     {
-        php_weechat_ub_write (vbuffer, strlen (vbuffer));
-        php_weechat_ub_write ("\n", 1);
+        php_weechat_write_error (vbuffer);
         free (vbuffer);
     }
 }
@@ -1383,8 +1415,7 @@ php_weechat_log_message (const char *message, int syslog_type_int)
     /* Make C compiler happy. */
     (void) syslog_type_int;
 
-    php_weechat_ub_write (message, strlen (message));
-    php_weechat_ub_write ("\n", 1);
+    php_weechat_write_error (message);
 }
 #elif PHP_VERSION_ID >= 70100
 /* 7.1 <= PHP < 8.0 */
@@ -1394,16 +1425,14 @@ php_weechat_log_message (char *message, int syslog_type_int)
     /* Make C compiler happy. */
     (void) syslog_type_int;
 
-    php_weechat_ub_write (message, strlen (message));
-    php_weechat_ub_write ("\n", 1);
+    php_weechat_write_error (message);
 }
 #else
 /* PHP 7.0 */
 void
 php_weechat_log_message (char *message)
 {
-    php_weechat_ub_write (message, strlen (message));
-    php_weechat_ub_write ("\n", 1);
+    php_weechat_write_error (message);
 }
 #endif
 

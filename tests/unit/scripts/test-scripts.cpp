@@ -441,6 +441,58 @@ TEST(Scripts, InfoEval)
 #endif
         { NULL,     NULL,                  NULL }
     };
+    /*
+     * Language, code with an error, expected output, regex of error
+     * displayed in core buffer: the error must not be returned by the info
+     * (the output before the error is kept).
+     */
+    const char *errors[][4] = {
+#ifdef HAVE_PYTHON
+        { "python",
+          "print('a'); print('b', end=''); 1 / 0",
+          "ab",
+          "^python: stdout/stderr \\(__eval__\\): "
+          "ZeroDivisionError: division by zero$" },
+#endif
+#ifdef HAVE_PERL
+        { "perl",
+          "print \"a\\nb\"; die \"boom\\n\";",
+          "ab",
+          "^perl: error: boom$" },
+#endif
+#ifdef HAVE_RUBY
+        { "ruby",
+          "puts 'a'; print 'b'; raise 'boom'",
+          "ab",
+          "^ruby: error: .*: boom " },
+#endif
+#ifdef HAVE_LUA
+        { "lua",
+          "print('a') io.write('b') error('boom')",
+          "ab",
+          "^lua: error: .*: boom$" },
+#endif
+#ifdef HAVE_TCL
+        { "tcl",
+          "puts a; puts -nonewline b; error boom",
+          "ab",
+          "^tcl: unable to run function \"script_tcl_eval\": boom$" },
+#endif
+#ifdef HAVE_GUILE
+        { "guile",
+          "(display \"a\") (newline) (display \"b\") (error \"boom\")",
+          "ab",
+          "^guile: stdout/stderr \\(__eval__\\): boom$" },
+#endif
+#ifdef HAVE_PHP
+        { "php",
+          "echo \"a\\nb\"; throw new Exception('boom');",
+          "ab",
+          "^php: stdout/stderr \\(__eval__\\): PHP Fatal error: +"
+          "Uncaught Exception: boom" },
+#endif
+        { NULL, NULL, NULL, NULL }
+    };
     int i;
 
     for (i = 0; languages[i][0]; i++)
@@ -454,6 +506,18 @@ TEST(Scripts, InfoEval)
         value = hook_info_get (NULL, str_info, "");
         STRCMP_EQUAL("", value);
         free (value);
+    }
+
+    for (i = 0; errors[i][0]; i++)
+    {
+        snprintf (str_info, sizeof (str_info), "%s_eval", errors[i][0]);
+
+        record_start ();
+        value = hook_info_get (NULL, str_info, errors[i][1]);
+        record_stop ();
+        STRCMP_EQUAL(errors[i][2], value);
+        free (value);
+        RECORD_CHECK_MSG_REGEX("core.weechat", errors[i][3]);
     }
 
 #ifdef HAVE_JAVASCRIPT
@@ -482,5 +546,16 @@ TEST(Scripts, InfoEval)
     MemoryLeakWarningPlugin::turnOnThreadSafeNewDeleteOverloads();
     STRCMP_EQUAL("", value);
     free (value);
+
+    record_start ();
+    MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
+    value = hook_info_get (NULL, "javascript_eval",
+                           "throw new Error('boom');");
+    MemoryLeakWarningPlugin::turnOnThreadSafeNewDeleteOverloads();
+    record_stop ();
+    STRCMP_EQUAL("", value);
+    free (value);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "^javascript: exception: Error: boom$");
 #endif
 }

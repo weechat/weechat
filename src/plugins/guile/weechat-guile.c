@@ -166,6 +166,37 @@ weechat_guile_output_flush (void)
 }
 
 /*
+ * Handle an exception: display the error message.
+ *
+ * With info "guile_eval" (eval mode without buffer), the output is caught
+ * and returned by the info: the error is displayed in core buffer instead,
+ * and the output caught so far is kept.
+ */
+
+SCM
+weechat_guile_catch_handler (void *data, SCM tag, SCM throw_args)
+{
+    SCM value;
+    char *output;
+
+    if (!guile_eval_mode || guile_eval_buffer)
+        return scm_handle_by_message_noexit (data, tag, throw_args);
+
+    output = strdup (*guile_buffer_output);
+    weechat_string_dyn_copy (guile_buffer_output, NULL);
+
+    guile_eval_mode = 0;
+    value = scm_handle_by_message_noexit (data, tag, throw_args);
+    weechat_guile_output_flush ();
+    guile_eval_mode = 1;
+
+    weechat_string_dyn_copy (guile_buffer_output, output);
+    free (output);
+
+    return value;
+}
+
+/*
  * Execute scheme procedure with internal catch and return value.
  */
 
@@ -177,7 +208,7 @@ weechat_guile_catch (void *procedure, void *data)
     value = scm_internal_catch (SCM_BOOL_T,
                                 (scm_t_catch_body)procedure,
                                 data,
-                                (scm_t_catch_handler) scm_handle_by_message_noexit,
+                                &weechat_guile_catch_handler,
                                 NULL);
     return value;
 }
