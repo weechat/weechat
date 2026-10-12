@@ -464,7 +464,7 @@ TEST(Scripts, InfoEval)
         { "ruby",
           "puts 'a'; print 'b'; raise 'boom'",
           "ab",
-          "^ruby: error: .*: boom " },
+          "^ruby: error: .*: boom \\(RuntimeError\\)$" },
 #endif
 #ifdef HAVE_LUA
         { "lua",
@@ -530,6 +530,18 @@ TEST(Scripts, InfoEval)
     value = hook_info_get (NULL, "ruby_eval", "print $!.inspect");
     STRCMP_EQUAL("nil", value);
     free (value);
+
+    /* Exception without backtrace. */
+    record_start ();
+    value = hook_info_get (NULL, "ruby_eval",
+                           "class NoBacktrace < StandardError; "
+                           "def backtrace; nil; end; end; "
+                           "raise NoBacktrace, 'boom'");
+    record_stop ();
+    STRCMP_EQUAL("", value);
+    free (value);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "^ruby: error: boom \\(.*::NoBacktrace\\)$");
 #endif
 
 #ifdef HAVE_JAVASCRIPT
