@@ -20,11 +20,15 @@ endif()
 include(CheckIncludeFiles)
 include(CheckLibraryExists)
 include(CheckFunctionExists)
+include(CMakePushCheckState)
 
 find_path(LIBINTL_INCLUDE
   NAMES libintl.h
   PATH /usr/local/include /usr/pkg/include /usr/include
 )
+
+# Ignore variables CMAKE_REQUIRED_* set by other modules and do not leak them.
+cmake_push_check_state(RESET)
 
 set(CMAKE_REQUIRED_INCLUDES ${LIBINTL_INCLUDE})
 
@@ -55,3 +59,5 @@ else()
     endif()
   endif()
 endif()
+
+cmake_pop_check_state()

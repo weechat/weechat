@@ -20,6 +20,11 @@ endif()
 
 include(CheckLibraryExists)
 include(CheckFunctionExists)
+include(CheckCSourceCompiles)
+include(CMakePushCheckState)
+
+# Do not leak variables CMAKE_REQUIRED_* to other modules.
+cmake_push_check_state(RESET)
 
 find_path(ICONV_INCLUDE_PATH
   NAMES iconv.h
@@ -43,8 +48,6 @@ if(ICONV_INCLUDE_PATH)
   endif()
 endif()
 
-include(CheckCSourceCompiles)
-
 if(ICONV_LIBRARY)
   set(CMAKE_REQUIRED_LIBRARIES ${ICONV_LIBRARY})
   set(CMAKE_REQUIRED_INCLUDES ${ICONV_INCLUDE_PATH})
@@ -63,6 +66,8 @@ check_c_source_compiles("
     return 0;
   }
 " ICONV_2ARG_IS_CONST)
+
+cmake_pop_check_state()
 
 mark_as_advanced(
   ICONV_INCLUDE_PATH
