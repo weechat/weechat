@@ -1276,8 +1276,7 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                 while (pos_end_name[0])
                 {
                     if (isalnum ((unsigned char)pos_end_name[0])
-                        && (pos_end_name[0] != '_')
-                        && (pos_end_name[0] != '$'))
+                        || (pos_end_name[0] == '_'))
                         pos_end_name++;
                     else
                         break;

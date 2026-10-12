@@ -84,6 +84,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: reject theme names that cannot be used as file names in command `/theme`
 - core: fix active buffer in group of merged buffers when the merged buffer is not displayed in a window
 - core: fix buffer selected when searching by partial name and another buffer has a similar name ([#700](https://github.com/weechat/weechat/issues/700))
+- api: fix replacement of buffer local variables containing underscores in function buffer_string_replace_local_var
 - api: fix error code not set in function hook_url (and exit code of hook_process with "url:") when the URL transfer fails
 - api: fix crash in function config_write_line when the file is not opened
 - api: fix crash in function upgrade_write_object when the upgrade file is invalid

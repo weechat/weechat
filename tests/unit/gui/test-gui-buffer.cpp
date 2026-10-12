@@ -8,6 +8,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests.h"
+
 extern "C"
 {
 #include <string.h>
@@ -881,7 +883,35 @@ TEST(GuiBuffer, ClosedBuffer)
 
 TEST(GuiBuffer, StringReplaceLocalVar)
 {
-    /* TODO: write tests */
+    char *str;
+
+    STRCMP_EQUAL(NULL, gui_buffer_string_replace_local_var (NULL, NULL));
+    STRCMP_EQUAL(NULL, gui_buffer_string_replace_local_var (NULL, "$name"));
+    STRCMP_EQUAL(NULL, gui_buffer_string_replace_local_var (gui_buffers, NULL));
+
+    gui_buffer_set (gui_buffers, "localvar_set_test_var", "value");
+
+    WEE_TEST_STR("", gui_buffer_string_replace_local_var (gui_buffers, ""));
+    WEE_TEST_STR("test", gui_buffer_string_replace_local_var (gui_buffers, "test"));
+    WEE_TEST_STR("$", gui_buffer_string_replace_local_var (gui_buffers, "$"));
+    WEE_TEST_STR("$$", gui_buffer_string_replace_local_var (gui_buffers, "$$"));
+    WEE_TEST_STR("$xxx", gui_buffer_string_replace_local_var (gui_buffers, "$xxx"));
+    WEE_TEST_STR("weechat",
+                 gui_buffer_string_replace_local_var (gui_buffers, "$name"));
+    WEE_TEST_STR("core.weechat!",
+                 gui_buffer_string_replace_local_var (gui_buffers, "$plugin.$name!"));
+    WEE_TEST_STR("$weechat",
+                 gui_buffer_string_replace_local_var (gui_buffers, "$$name"));
+    WEE_TEST_STR("value",
+                 gui_buffer_string_replace_local_var (gui_buffers, "$test_var"));
+    WEE_TEST_STR("value-weechat",
+                 gui_buffer_string_replace_local_var (gui_buffers, "$test_var-$name"));
+    WEE_TEST_STR("$test_xxx",
+                 gui_buffer_string_replace_local_var (gui_buffers, "$test_xxx"));
+    WEE_TEST_STR("\\$name",
+                 gui_buffer_string_replace_local_var (gui_buffers, "\\$name"));
+
+    gui_buffer_set (gui_buffers, "localvar_del_test_var", "");
 }
 
 /*
