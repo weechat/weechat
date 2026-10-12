@@ -1098,6 +1098,83 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
 }
 
 /*
+ * Tests send of long messages to a channel and a nick, which are split in
+ * multiple messages: each message sent must be displayed.
+ */
+
+TEST(IrcProtocolWithServer, SendMessagesSplit)
+{
+    const char *buffer_server = "irc.server." IRC_FAKE_SERVER;
+    const char *buffer_chan = "irc." IRC_FAKE_SERVER ".#test";
+    const char *buffer_pv = "irc." IRC_FAKE_SERVER ".bob";
+
+    SRV_INIT_JOIN;
+
+    /* Open private buffer */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+
+    /* Force a small max length to split messages */
+    ptr_server->msg_max_length = 150;
+
+    /* Message to channel (text in buffer) */
+    server_input_data (buffer_chan,
+                       "chan1 aaaaaaaaaa bbbbbbbbbb cccccccccc dddddddddd eeeeeeeeee");
+    CHECK_CHAN("alice", "chan1 aaaaaaaaaa bbbbbbbbbb cccccccccc",
+               "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+               "nick_alice,log1");
+    CHECK_CHAN("alice", "dddddddddd eeeeeeeeee",
+               "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+               "nick_alice,log1");
+    LONGS_EQUAL(2, arraylist_size (recorded_messages));
+
+    /* Message to channel (with /msg <channel>) */
+    server_input_data (buffer_server, "/msg #test "
+                       "chan2 aaaaaaaaaa bbbbbbbbbb cccccccccc dddddddddd eeeeeeeeee");
+    CHECK_CHAN("alice", "chan2 aaaaaaaaaa bbbbbbbbbb cccccccccc",
+               "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+               "nick_alice,log1");
+    CHECK_CHAN("alice", "dddddddddd eeeeeeeeee",
+               "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+               "nick_alice,log1");
+    LONGS_EQUAL(2, arraylist_size (recorded_messages));
+
+    /* Message to a nick (text in private buffer) */
+    server_input_data (buffer_pv,
+                       "pv1 aaaaaaaaaa bbbbbbbbbb cccccccccc dddddddddd eeeeeeeeee");
+    CHECK_PV("bob", "alice", "pv1 aaaaaaaaaa bbbbbbbbbb cccccccccc",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+    CHECK_PV("bob", "alice", "dddddddddd eeeeeeeeee",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+    LONGS_EQUAL(2, arraylist_size (recorded_messages));
+
+    /* Message to a nick (with /msg <nick>) */
+    server_input_data (buffer_server, "/msg bob "
+                       "pv2 aaaaaaaaaa bbbbbbbbbb cccccccccc dddddddddd eeeeeeeeee");
+    CHECK_PV("bob", "alice", "pv2 aaaaaaaaaa bbbbbbbbbb cccccccccc",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+    CHECK_PV("bob", "alice", "dddddddddd eeeeeeeeee",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+    LONGS_EQUAL(2, arraylist_size (recorded_messages));
+
+    /* Message to a nick (with /query <nick>) */
+    server_input_data (buffer_server, "/query bob "
+                       "pv3 aaaaaaaaaa bbbbbbbbbb cccccccccc dddddddddd eeeeeeeeee");
+    CHECK_PV("bob", "alice", "pv3 aaaaaaaaaa bbbbbbbbbb cccccccccc",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+    CHECK_PV("bob", "alice", "dddddddddd eeeeeeeeee",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+    LONGS_EQUAL(2, arraylist_size (recorded_messages));
+
+    ptr_server->msg_max_length = 0;
+}
+
+/*
  * Tests send of modes with commands /mode and /samode, with split of modes
  * according to the server limit (MODES in message 005).
  */

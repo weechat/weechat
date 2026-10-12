@@ -88,6 +88,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: fix crash in function config_write_line when the file is not opened
 - api: fix crash in function upgrade_write_object when the upgrade file is invalid
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: display each message sent when the text is split in multiple messages in commands `/msg` and `/query` ([#1719](https://github.com/weechat/weechat/issues/1719))
 - irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"
 - javascript: fix crash in callbacks receiving hashtables when they are called from the main loop (for example callback of hook_url)
 - javascript: fix arguments of functions upgrade_new, upgrade_close and hdata_get_list

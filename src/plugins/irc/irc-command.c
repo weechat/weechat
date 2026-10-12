@@ -3917,6 +3917,50 @@ IRC_COMMAND_CALLBACK(motd)
 }
 
 /*
+ * Send a PRIVMSG to a target (nick or channel) and display each message sent
+ * (the message is split if it is too long for the server).
+ */
+
+void
+irc_command_send_privmsg (struct t_irc_server *server, const char *target,
+                          const char *text)
+{
+    struct t_arraylist *list_messages;
+    int i, list_size;
+
+    list_messages = irc_server_sendf (
+        server,
+        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST
+        | IRC_SERVER_SEND_MULTILINE,
+        NULL,
+        "PRIVMSG %s :%s",
+        target, text);
+    if (list_messages)
+    {
+        /* Display only if capability "echo-message" is NOT enabled. */
+        if (!weechat_hashtable_has_key (server->cap_list, "echo-message"))
+        {
+            list_size = weechat_arraylist_size (list_messages);
+            for (i = 0; i < list_size; i++)
+            {
+                irc_input_user_message_display (
+                    server,
+                    0,  /* date */
+                    0,  /* date_usec */
+                    NULL,  /* tags */
+                    target,
+                    NULL,  /* address */
+                    "privmsg",
+                    NULL,  /* ctcp_type */
+                    (const char *)weechat_arraylist_get (list_messages, i),
+                    1);  /* decode_colors */
+            }
+        }
+        weechat_arraylist_free (list_messages);
+    }
+}
+
+/*
  * Callback for command "/msg": send a message to a nick or channel.
  */
 
@@ -3970,52 +4014,14 @@ IRC_COMMAND_CALLBACK(msg)
             }
             else
             {
-                /* Display only if capability "echo-message" is NOT enabled. */
-                if (!weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
-                {
-                    irc_input_user_message_display (
-                        ptr_server,
-                        0,  /* date */
-                        0,  /* date_usec */
-                        NULL,  /* tags */
-                        ptr_channel->name,
-                        NULL,  /* address */
-                        "privmsg",
-                        NULL,  /* ctcp_type */
-                        argv_eol[arg_text],
-                        1);  /* decode_colors */
-                }
-                irc_server_sendf (ptr_server,
-                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH
-                                  | IRC_SERVER_SEND_MULTILINE,
-                                  NULL,
-                                  "PRIVMSG %s :%s",
-                                  ptr_channel->name, argv_eol[arg_text]);
+                irc_command_send_privmsg (ptr_server, ptr_channel->name,
+                                          argv_eol[arg_text]);
             }
         }
         else
         {
-            /* Display only if capability "echo-message" is NOT enabled. */
-            if (!weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
-            {
-                irc_input_user_message_display (
-                    ptr_server,
-                    0,  /* date */
-                    0,  /* date_usec */
-                    NULL,  /* tags */
-                    targets[i],
-                    NULL,  /* address */
-                    "privmsg",
-                    NULL,  /* ctcp_type */
-                    argv_eol[arg_text],
-                    1);  /* decode_colors */
-            }
-            irc_server_sendf (ptr_server,
-                              IRC_SERVER_SEND_OUTQ_PRIO_HIGH
-                              | IRC_SERVER_SEND_MULTILINE,
-                              NULL,
-                              "PRIVMSG %s :%s",
-                              targets[i], argv_eol[arg_text]);
+            irc_command_send_privmsg (ptr_server, targets[i],
+                                      argv_eol[arg_text]);
         }
     }
 
@@ -4757,30 +4763,11 @@ IRC_COMMAND_CALLBACK(query)
             if (!noswitch)
                 weechat_buffer_set (ptr_channel->buffer, "display", "1");
 
-            /* Display text if given. */
+            /* Send text if given. */
             if (argv_eol[arg_text])
             {
-                /* Display only if capability "echo-message" is NOT enabled. */
-                if (!weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
-                {
-                    irc_input_user_message_display (
-                        ptr_server,
-                        0,  /* date */
-                        0,  /* date_usec */
-                        NULL,  /* tags */
-                        ptr_channel->name,
-                        NULL,  /* address */
-                        "privmsg",
-                        NULL,  /* ctcp_type */
-                        argv_eol[arg_text],
-                        1);  /* decode_colors */
-                }
-                irc_server_sendf (ptr_server,
-                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH
-                                  | IRC_SERVER_SEND_MULTILINE,
-                                  NULL,
-                                  "PRIVMSG %s :%s",
-                                  nicks[i], argv_eol[arg_text]);
+                irc_command_send_privmsg (ptr_server, nicks[i],
+                                          argv_eol[arg_text]);
             }
         }
     }
