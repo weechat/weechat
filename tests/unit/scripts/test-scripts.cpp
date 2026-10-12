@@ -546,6 +546,15 @@ TEST(Scripts, InfoEval)
                            "SystemExit: 3$");
 #endif
 
+#ifdef HAVE_PHP
+    /* Errors are reported only with log_message, whatever the php.ini. */
+    value = hook_info_get (NULL, "php_eval",
+                           "echo ini_get('display_errors') . ',' "
+                           ". ini_get('log_errors');");
+    STRCMP_EQUAL("0,1", value);
+    free (value);
+#endif
+
 #ifdef HAVE_RUBY
     /* The exception must be cleared after an error. */
     record_start ();

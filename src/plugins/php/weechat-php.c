@@ -1361,6 +1361,21 @@ php_weechat_ub_write (const char *str, size_t str_length)
 }
 
 /*
+ * Set value of a PHP ini entry.
+ */
+
+void
+weechat_php_set_ini (const char *name, const char *value)
+{
+    zend_string *str_name;
+
+    str_name = zend_string_init (name, strlen (name), 0);
+    zend_alter_ini_entry_chars (str_name, value, strlen (value),
+                                PHP_INI_SYSTEM, PHP_INI_STAGE_RUNTIME);
+    zend_string_release (str_name);
+}
+
+/*
  * Write an error message (with a final newline).
  *
  * With info "php_eval" (eval mode without buffer), the output is caught
@@ -1497,6 +1512,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     php_embed_init (0, NULL);
 
     PG(report_zend_debug) = 0;  /* Turn off --enable-debug output */
+
+    /*
+     * Report errors only with log_message (not displayed on stdout), so that
+     * they are displayed once, whatever the php.ini settings.
+     */
+    weechat_php_set_ini ("display_errors", "0");
+    weechat_php_set_ini ("log_errors", "1");
 
     old_php_quiet = php_quiet;
     php_quiet = 1;
