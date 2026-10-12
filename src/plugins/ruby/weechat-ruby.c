@@ -314,6 +314,13 @@ weechat_ruby_print_exception (VALUE err)
         weechat_string_dyn_free (cline, 1);
     }
 
+    /*
+     * Clear the exception: otherwise it is set as cause of the next
+     * exception and displayed again by ruby_cleanup when the plugin is
+     * unloaded.
+     */
+    rb_set_errinfo (Qnil);
+
     return 0;
 }
 

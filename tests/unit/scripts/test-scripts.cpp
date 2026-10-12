@@ -520,6 +520,18 @@ TEST(Scripts, InfoEval)
         RECORD_CHECK_MSG_REGEX("core.weechat", errors[i][3]);
     }
 
+#ifdef HAVE_RUBY
+    /* The exception must be cleared after an error. */
+    record_start ();
+    value = hook_info_get (NULL, "ruby_eval", "raise 'boom'");
+    record_stop ();
+    STRCMP_EQUAL("", value);
+    free (value);
+    value = hook_info_get (NULL, "ruby_eval", "print $!.inspect");
+    STRCMP_EQUAL("nil", value);
+    free (value);
+#endif
+
 #ifdef HAVE_JAVASCRIPT
     /*
      * There is no stdout in javascript: the info always returns an empty
