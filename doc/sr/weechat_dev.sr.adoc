@@ -570,6 +570,8 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-script-repo.cpp                | Тестови: script репозиторијум.
 |          trigger/                               | Корен unit тестова за окидач додатак.
 |             test-trigger.cpp                    | Тестови: окидачи.
+// TRANSLATION MISSING
+|             test-trigger-command.cpp            | Tests: trigger commands.
 |             test-trigger-config.cpp             | Тестови: конфигурација окидача.
 |          typing/                                | Корен unit тестова за typing додатак.
 |             test-typing.cpp                     | Тестови: typing.

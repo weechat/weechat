@@ -563,6 +563,7 @@ WeeChat "core" is located in following directories:
 |             test-script-repo.cpp                | Tests: script repository.
 |          trigger/                               | Root of unit tests for trigger plugin.
 |             test-trigger.cpp                    | Tests: triggers.
+|             test-trigger-command.cpp            | Tests: trigger commands.
 |             test-trigger-config.cpp             | Tests: trigger configuration.
 |          typing/                                | Root of unit tests for typing plugin.
 |             test-typing.cpp                     | Tests: typing.

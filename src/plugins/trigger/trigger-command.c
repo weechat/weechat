@@ -572,13 +572,29 @@ trigger_command_build_string (const char *format, ...)
 }
 
 /*
- * Return escaped argument for input by adding a backslash before each double quote.
+ * Return escaped argument for input by adding a backslash before each
+ * backslash and double quote.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
 trigger_command_escape_argument (const char *argument)
 {
-    return weechat_string_replace (argument, "\"", "\\\"");
+    char *str_escaped_backslashes, *result;
+
+    if (!argument)
+        return NULL;
+
+    str_escaped_backslashes = weechat_string_replace (argument, "\\", "\\\\");
+    if (!str_escaped_backslashes)
+        return NULL;
+
+    result = weechat_string_replace (str_escaped_backslashes, "\"", "\\\"");
+
+    free (str_escaped_backslashes);
+
+    return result;
 }
 
 /*

@@ -731,6 +731,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-trigger.cpp                    | Tests: triggers.
 // TRANSLATION MISSING
+|             test-trigger-command.cpp            | Tests: trigger commands.
+// TRANSLATION MISSING
 |             test-trigger-config.cpp             | Tests: trigger configuration.
 // TRANSLATION MISSING
 |          typing/                                | Root of unit tests for typing plugin.

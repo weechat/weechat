@@ -114,6 +114,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - ruby: clear exception after an error, so that it is not set as cause of the next exception and not displayed again when the plugin is unloaded
 - tcl: return 0 instead of raising an error in functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
 - tcl: add missing function completion_free
+- trigger: escape backslashes in arguments displayed by commands `/trigger input|output|recreate` ([#729](https://github.com/weechat/weechat/issues/729))
 
 ### Security
 

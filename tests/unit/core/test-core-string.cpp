@@ -2021,6 +2021,18 @@ TEST(CoreString, SplitShell)
     STRCMP_EQUAL(NULL, argv[4]);
     string_free_split (argv);
 
+    /* Test with escaped backslashes and quotes in double quotes */
+    argv = string_split_shell ("test \"a\\\\b\" \"\\\\\\\"\" \"\\\\\\c\"",
+                               &argc);
+    LONGS_EQUAL(4, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("test", argv[0]);
+    STRCMP_EQUAL("a\\b", argv[1]);
+    STRCMP_EQUAL("\\\"", argv[2]);
+    STRCMP_EQUAL("\\\\c", argv[3]);
+    STRCMP_EQUAL(NULL, argv[4]);
+    string_free_split (argv);
+
     /* Free split with NULL. */
     string_free_split_shared (NULL);
 }
