@@ -7,6 +7,7 @@
 /* Alias plugin for WeeChat: command aliases */
 
 #include <stdlib.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -26,6 +27,7 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 WEECHAT_PLUGIN_PRIORITY(ALIAS_PLUGIN_PRIORITY);
 
 #define ALIAS_IS_ARG_NUMBER(number) ((number >= '1') && (number <= '9'))
+#define ALIAS_IS_LOCAL_VAR_CHAR(c) (isalnum ((unsigned char)c) || (c == '_'))
 
 struct t_weechat_plugin *weechat_alias_plugin = NULL;
 
@@ -119,7 +121,7 @@ alias_string_add_arguments (char **alias, char **argv,
 }
 
 /*
- * Replace arguments in alias.
+ * Replace arguments and buffer local variables in alias.
  *
  * Arguments replaced are (n and m in 1..9):
  *   $n   argument n
@@ -129,6 +131,16 @@ alias_string_add_arguments (char **alias, char **argv,
  *   $*   all arguments
  *   $&   all arguments, with double quotes escaped (" replaced by \")
  *   $~   last argument
+ *   $var local variable "var" of buffer (kept as-is if not found)
+ *
+ * A "$" preceded by a backslash is not replaced: "\$" becomes "$".
+ *
+ * Replacement is made in a single pass, so the user arguments inserted in
+ * the alias are never evaluated (local variables are not replaced in user
+ * arguments).
+ *
+ * If args_used is not NULL, it is set to 1 if at least one argument is
+ * referenced in the alias, 0 otherwise.
  *
  * Example:
  *
@@ -142,11 +154,15 @@ alias_string_add_arguments (char **alias, char **argv,
  */
 
 char *
-alias_replace_args (const char *alias_args, const char *user_args)
+alias_replace_args (const char *alias_args, const char *user_args,
+                    struct t_gui_buffer *buffer, int *args_used)
 {
-    char **argv, **result, *temp;
-    const char *start, *pos;
-    int n, m, argc, offset;
+    char **argv, **result, *temp, *local_var;
+    const char *start, *pos, *pos_end_name, *ptr_value;
+    int n, m, argc, offset, is_arg;
+
+    if (args_used)
+        *args_used = 0;
 
     if (!alias_args || !user_args)
         return NULL;
@@ -163,6 +179,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
     while (pos && pos[0])
     {
         offset = 0;
+        is_arg = 1;
 
         if ((pos[0] == '\\') && (pos[1] == '$'))
         {
@@ -249,11 +266,39 @@ alias_replace_args (const char *alias_args, const char *user_args)
                             alias_string_add_arguments (result, argv, n, m);
                     }
                 }
+                else if (ALIAS_IS_LOCAL_VAR_CHAR(pos[1]))
+                {
+                    /* Replace with buffer local variable. */
+                    is_arg = 0;
+                    pos_end_name = pos + 1;
+                    while (ALIAS_IS_LOCAL_VAR_CHAR(pos_end_name[0]))
+                    {
+                        pos_end_name++;
+                    }
+                    ptr_value = NULL;
+                    if (weechat_asprintf (&local_var, "localvar_%.*s",
+                                          (int)(pos_end_name - pos - 1),
+                                          pos + 1) >= 0)
+                    {
+                        ptr_value = weechat_buffer_get_string (buffer,
+                                                               local_var);
+                        free (local_var);
+                    }
+                    if (ptr_value)
+                    {
+                        offset = pos_end_name - pos;
+                        if (pos > start)
+                            alias_string_add_word_range (result, start, pos);
+                        weechat_string_dyn_concat (result, ptr_value, -1);
+                    }
+                }
             }
         }
 
         if (offset != 0)
         {
+            if (is_arg && (pos[0] == '$') && args_used)
+                *args_used = 1;
             pos += offset;
             start = pos;
         }
@@ -270,23 +315,19 @@ alias_replace_args (const char *alias_args, const char *user_args)
 }
 
 /*
- * Replace local buffer variables in string, then runs command on buffer.
+ * Run command on buffer.
  */
 
 void
 alias_run_command (struct t_gui_buffer **buffer, const char *command)
 {
-    char *string;
     struct t_gui_buffer *old_current_buffer, *new_current_buffer;
 
     /* Save current buffer pointer. */
     old_current_buffer = weechat_current_buffer ();
 
     /* Execute command. */
-    string = weechat_buffer_string_replace_local_var (*buffer, command);
-    weechat_command (*buffer,
-                     (string) ? string : command);
-    free (string);
+    weechat_command (*buffer, command);
 
     /* Get new current buffer. */
     new_current_buffer = weechat_current_buffer ();
@@ -311,7 +352,7 @@ alias_cb (const void *pointer, void *data,
     struct t_alias *ptr_alias;
     char **commands, **ptr_cmd, **ptr_next_cmd;
     char *args_replaced, **alias_command;
-    int some_args_replaced;
+    int args_used, some_args_replaced;
 
     /* Make C compiler happy. */
     (void) data;
@@ -342,8 +383,10 @@ alias_cb (const void *pointer, void *data,
                 ptr_next_cmd++;
 
                 args_replaced = alias_replace_args (*ptr_cmd,
-                                                    (argc > 1) ? argv_eol[1] : "");
-                if (args_replaced && (strcmp (args_replaced, *ptr_cmd) != 0))
+                                                    (argc > 1) ? argv_eol[1] : "",
+                                                    buffer,
+                                                    &args_used);
+                if (args_used)
                     some_args_replaced = 1;
 
                 /*
@@ -358,7 +401,10 @@ alias_cb (const void *pointer, void *data,
                     {
                         if (!weechat_string_is_command_char (*ptr_cmd))
                             weechat_string_dyn_concat (alias_command, "/", -1);
-                        weechat_string_dyn_concat (alias_command, *ptr_cmd, -1);
+                        weechat_string_dyn_concat (
+                            alias_command,
+                            (args_replaced) ? args_replaced : *ptr_cmd,
+                            -1);
                         weechat_string_dyn_concat (alias_command, " ", -1);
                         weechat_string_dyn_concat (alias_command, argv_eol[1], -1);
                         alias_run_command (&buffer, *alias_command);

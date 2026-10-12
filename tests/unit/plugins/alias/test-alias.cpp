@@ -9,12 +9,16 @@
 #include "CppUTest/TestHarness.h"
 
 #include "tests.h"
+#include "tests-record.h"
 
 extern "C"
 {
+#include "src/core/core-string.h"
+#include "src/gui/gui-buffer.h"
 #include "src/plugins/alias/alias.h"
 
-extern char *alias_replace_args (const char *alias_args, const char *user_args);
+extern char *alias_replace_args (const char *alias_args, const char *user_args,
+                                 struct t_gui_buffer *buffer, int *args_used);
 }
 
 TEST_GROUP(Alias)
@@ -74,70 +78,153 @@ TEST(Alias, ReplaceArgs)
 {
     char *str;
 
-    STRCMP_EQUAL(NULL, alias_replace_args (NULL, NULL));
-    STRCMP_EQUAL(NULL, alias_replace_args (NULL, ""));
-    STRCMP_EQUAL(NULL, alias_replace_args ("", NULL));
+    STRCMP_EQUAL(NULL, alias_replace_args (NULL, NULL, NULL, NULL));
+    STRCMP_EQUAL(NULL, alias_replace_args (NULL, "", NULL, NULL));
+    STRCMP_EQUAL(NULL, alias_replace_args ("", NULL, NULL, NULL));
 
-    WEE_TEST_STR("", alias_replace_args ("", ""));
-    WEE_TEST_STR("", alias_replace_args ("", "abc def"));
-    WEE_TEST_STR("/test", alias_replace_args ("/test", ""));
-    WEE_TEST_STR("/test $1", alias_replace_args ("/test \\$1", "abc def"));
+    WEE_TEST_STR("", alias_replace_args ("", "", NULL, NULL));
+    WEE_TEST_STR("", alias_replace_args ("", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test", alias_replace_args ("/test", "", NULL, NULL));
+    WEE_TEST_STR("/test $1", alias_replace_args ("/test \\$1", "abc def", NULL, NULL));
 
     /* Arguments by index: $n */
-    WEE_TEST_STR("/test $0", alias_replace_args ("/test $0", ""));
-    WEE_TEST_STR("/test $0", alias_replace_args ("/test $0", "abc def"));
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $1", ""));
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $9", "abc def"));
-    WEE_TEST_STR("/test abc", alias_replace_args ("/test $1", "abc def"));
-    WEE_TEST_STR("/test def abc", alias_replace_args ("/test $2 $1", "abc def"));
-    WEE_TEST_STR("/test def abc", alias_replace_args ("/test $2 $1", "abc def"));
+    WEE_TEST_STR("/test $0", alias_replace_args ("/test $0", "", NULL, NULL));
+    WEE_TEST_STR("/test $0", alias_replace_args ("/test $0", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $1", "", NULL, NULL));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $9", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test abc", alias_replace_args ("/test $1", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test def abc", alias_replace_args ("/test $2 $1", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test def abc", alias_replace_args ("/test $2 $1", "abc def", NULL, NULL));
 
     /* Arguments from 1 to m: $-m */
-    WEE_TEST_STR("/test $-0", alias_replace_args ("/test $-0", ""));
-    WEE_TEST_STR("/test $-0", alias_replace_args ("/test $-0", "abc def"));
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $-1", ""));
-    WEE_TEST_STR("/test abc", alias_replace_args ("/test $-1", "abc def"));
-    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $-2", "abc def"));
-    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $-3", "abc def"));
-    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $-9", "abc def"));
+    WEE_TEST_STR("/test $-0", alias_replace_args ("/test $-0", "", NULL, NULL));
+    WEE_TEST_STR("/test $-0", alias_replace_args ("/test $-0", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $-1", "", NULL, NULL));
+    WEE_TEST_STR("/test abc", alias_replace_args ("/test $-1", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $-2", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $-3", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $-9", "abc def", NULL, NULL));
 
     /* Arguments from n to last: $n- */
-    WEE_TEST_STR("/test $0-", alias_replace_args ("/test $0-", ""));
-    WEE_TEST_STR("/test $0-", alias_replace_args ("/test $0-", "abc def"));
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $1-", ""));
-    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $1-", "abc def"));
-    WEE_TEST_STR("/test def", alias_replace_args ("/test $2-", "abc def"));
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $3-", "abc def"));
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $9-", "abc def"));
+    WEE_TEST_STR("/test $0-", alias_replace_args ("/test $0-", "", NULL, NULL));
+    WEE_TEST_STR("/test $0-", alias_replace_args ("/test $0-", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $1-", "", NULL, NULL));
+    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $1-", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test def", alias_replace_args ("/test $2-", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $3-", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $9-", "abc def", NULL, NULL));
 
     /* Arguments from n to m: $n-m */
-    WEE_TEST_STR("/test $0-0", alias_replace_args ("/test $0-0", ""));
-    WEE_TEST_STR("/test $0-0", alias_replace_args ("/test $0-0", "abc def"));
-    WEE_TEST_STR("/test $0-1", alias_replace_args ("/test $0-1", ""));
-    WEE_TEST_STR("/test $0-1", alias_replace_args ("/test $0-1", "abc def"));
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $1-1", ""));
-    WEE_TEST_STR("/test abc", alias_replace_args ("/test $1-1", "abc def"));
-    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $1-2", "abc def"));
-    WEE_TEST_STR("/test def", alias_replace_args ("/test $2-2", "abc def"));
-    WEE_TEST_STR("/test def", alias_replace_args ("/test $2-3", "abc def"));
-    WEE_TEST_STR("/test def", alias_replace_args ("/test $2-9", "abc def"));
+    WEE_TEST_STR("/test $0-0", alias_replace_args ("/test $0-0", "", NULL, NULL));
+    WEE_TEST_STR("/test $0-0", alias_replace_args ("/test $0-0", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test $0-1", alias_replace_args ("/test $0-1", "", NULL, NULL));
+    WEE_TEST_STR("/test $0-1", alias_replace_args ("/test $0-1", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $1-1", "", NULL, NULL));
+    WEE_TEST_STR("/test abc", alias_replace_args ("/test $1-1", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test abc def", alias_replace_args ("/test $1-2", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test def", alias_replace_args ("/test $2-2", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test def", alias_replace_args ("/test $2-3", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test def", alias_replace_args ("/test $2-9", "abc def", NULL, NULL));
 
     /* All arguments: $* */
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $*", ""));
-    WEE_TEST_STR("/test abc \"def\"", alias_replace_args ("/test $*", "abc \"def\""));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $*", "", NULL, NULL));
+    WEE_TEST_STR("/test abc \"def\"", alias_replace_args ("/test $*", "abc \"def\"", NULL, NULL));
 
     /* All arguments with double quotes escaped: $& */
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $&", ""));
-    WEE_TEST_STR("/test abc \\\"def\\\"", alias_replace_args ("/test $&", "abc \"def\""));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $&", "", NULL, NULL));
+    WEE_TEST_STR("/test abc \\\"def\\\"", alias_replace_args ("/test $&", "abc \"def\"", NULL, NULL));
 
     /* Last argument: $~ */
-    WEE_TEST_STR("/test ", alias_replace_args ("/test $~", ""));
-    WEE_TEST_STR("/test abc", alias_replace_args ("/test $~", "abc"));
-    WEE_TEST_STR("/test def", alias_replace_args ("/test $~", "abc def"));
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $~", "", NULL, NULL));
+    WEE_TEST_STR("/test abc", alias_replace_args ("/test $~", "abc", NULL, NULL));
+    WEE_TEST_STR("/test def", alias_replace_args ("/test $~", "abc def", NULL, NULL));
 
     /* Multiple arguments */
     WEE_TEST_STR("/test def abc 'ghi jkl'",
-                 alias_replace_args("/test $2 $1 '$3-'", "abc def ghi jkl"));
+                 alias_replace_args ("/test $2 $1 '$3-'", "abc def ghi jkl", NULL, NULL));
+
+    /* Escaped "$" */
+    WEE_TEST_STR("/test $", alias_replace_args ("/test \\$", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test $*", alias_replace_args ("/test \\$*", "abc def", NULL, NULL));
+    WEE_TEST_STR("/test \\$1",
+                 alias_replace_args ("/test \\\\$1", "abc def", NULL, NULL));
+}
+
+/*
+ * Test functions:
+ *   alias_replace_args (flag "args_used")
+ */
+
+TEST(Alias, ReplaceArgsUsed)
+{
+    char *str;
+    int args_used;
+
+    STRCMP_EQUAL(NULL, alias_replace_args (NULL, NULL, NULL, &args_used));
+    LONGS_EQUAL(0, args_used);
+
+    WEE_TEST_STR("/test", alias_replace_args ("/test", "abc", NULL, &args_used));
+    LONGS_EQUAL(0, args_used);
+    WEE_TEST_STR("/test $0", alias_replace_args ("/test $0", "abc", NULL, &args_used));
+    LONGS_EQUAL(0, args_used);
+    WEE_TEST_STR("/test $1", alias_replace_args ("/test \\$1", "abc", NULL, &args_used));
+    LONGS_EQUAL(0, args_used);
+    WEE_TEST_STR("/test core",
+                 alias_replace_args ("/test $plugin", "abc", gui_buffers, &args_used));
+    LONGS_EQUAL(0, args_used);
+
+    WEE_TEST_STR("/test abc", alias_replace_args ("/test $1", "abc", NULL, &args_used));
+    LONGS_EQUAL(1, args_used);
+    WEE_TEST_STR("/test ", alias_replace_args ("/test $2", "abc", NULL, &args_used));
+    LONGS_EQUAL(1, args_used);
+    WEE_TEST_STR("/test abc", alias_replace_args ("/test $*", "abc", NULL, &args_used));
+    LONGS_EQUAL(1, args_used);
+}
+
+/*
+ * Test functions:
+ *   alias_replace_args (buffer local variables)
+ */
+
+TEST(Alias, ReplaceArgsLocalVar)
+{
+    char *str;
+
+    gui_buffer_set (gui_buffers, "localvar_set_test_var", "value");
+
+    /* No buffer: local variables are not replaced. */
+    WEE_TEST_STR("/test $name", alias_replace_args ("/test $name", "", NULL, NULL));
+
+    /* Local variables. */
+    WEE_TEST_STR("/test weechat",
+                 alias_replace_args ("/test $name", "", gui_buffers, NULL));
+    WEE_TEST_STR("/test core.weechat!",
+                 alias_replace_args ("/test $plugin.$name!", "", gui_buffers, NULL));
+    WEE_TEST_STR("/test value",
+                 alias_replace_args ("/test $test_var", "", gui_buffers, NULL));
+    WEE_TEST_STR("/test $xxx",
+                 alias_replace_args ("/test $xxx", "", gui_buffers, NULL));
+    WEE_TEST_STR("/test $",
+                 alias_replace_args ("/test $", "", gui_buffers, NULL));
+
+    /* Arguments and local variables. */
+    WEE_TEST_STR("/test abc weechat def",
+                 alias_replace_args ("/test $1 $name $2", "abc def",
+                                     gui_buffers, NULL));
+
+    /* Escaped local variables. */
+    WEE_TEST_STR("/test $name",
+                 alias_replace_args ("/test \\$name", "", gui_buffers, NULL));
+    WEE_TEST_STR("/test \\$name",
+                 alias_replace_args ("/test \\\\$name", "", gui_buffers, NULL));
+
+    /* Local variables in user arguments are not replaced. */
+    WEE_TEST_STR("/test $name",
+                 alias_replace_args ("/test $1", "$name", gui_buffers, NULL));
+    WEE_TEST_STR("/test $name $plugin",
+                 alias_replace_args ("/test $*", "$name $plugin", gui_buffers, NULL));
+
+    gui_buffer_set (gui_buffers, "localvar_del_test_var", "");
 }
 
 /*
@@ -157,7 +244,29 @@ TEST(Alias, RunCommand)
 
 TEST(Alias, Cb)
 {
-    /* TODO: write tests */
+    struct t_alias *alias1, *alias2;
+
+    alias1 = alias_new ("test_alias1", "/print $name \\$name \\$1 $1", NULL);
+    alias2 = alias_new ("test_alias2", "/print $name", NULL);
+    CHECK(alias1);
+    CHECK(alias2);
+
+    record_start ();
+
+    run_cmd_quiet ("/test_alias1");
+    run_cmd_quiet ("/test_alias1 $plugin");
+    run_cmd_quiet ("/test_alias2");
+    run_cmd_quiet ("/test_alias2 $plugin");
+
+    record_stop ();
+
+    RECORD_CHECK_MSG("core.weechat", "", "weechat $name $1 ", NULL);
+    RECORD_CHECK_MSG("core.weechat", "", "weechat $name $1 $plugin", NULL);
+    RECORD_CHECK_MSG("core.weechat", "", "weechat", NULL);
+    RECORD_CHECK_MSG("core.weechat", "", "weechat $plugin", NULL);
+
+    alias_free (alias1);
+    alias_free (alias2);
 }
 
 /*
