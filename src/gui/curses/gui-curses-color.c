@@ -81,6 +81,7 @@ int gui_color_term_has_colors = 0;       /* terminal supports colors?       */
 int gui_color_term_colors = 0;           /* number of colors in terminal    */
 int gui_color_term_color_pairs = 0;      /* number of pairs in terminal     */
 int gui_color_term_can_change_color = 0; /* change color allowed in term?   */
+int gui_color_term_direct_colors = 0;    /* direct colors (RGB) in term?    */
 int gui_color_use_term_colors = 0;       /* temp. use of terminal colors?   */
 short *gui_color_term_color_content = NULL; /* content of colors (r/b/g)    */
 
@@ -417,6 +418,27 @@ gui_color_timer_warning_pairs_full (const void *pointer, void *data,
 }
 
 /*
+ * Initialize a color pair with given foreground/background colors.
+ *
+ * With a terminal using direct colors, colors are converted to RGB values.
+ */
+
+void
+gui_color_init_pair (int number, int fg, int bg)
+{
+#if defined(NCURSES_EXT_COLORS) && (NCURSES_EXT_COLORS >= 20180127)
+    if (gui_color_term_direct_colors)
+    {
+        init_extended_pair (number,
+                            gui_color_convert_term_to_direct (fg),
+                            gui_color_convert_term_to_direct (bg));
+        return;
+    }
+#endif /* NCURSES_EXT_COLORS >= 20180127 */
+    init_pair (number, fg, bg);
+}
+
+/*
  * Get a pair with given foreground/background colors.
  *
  * If no pair is found for fg/bg, a new pair is created.
@@ -485,7 +507,7 @@ gui_color_get_pair (int fg, int bg)
         /* Create a new pair if no pair exists for this fg/bg. */
         gui_color_pairs_used++;
         gui_color_pairs[index] = gui_color_pairs_used;
-        init_pair (gui_color_pairs_used, fg, bg);
+        gui_color_init_pair (gui_color_pairs_used, fg, bg);
         if ((gui_color_num_pairs > 1) && !gui_color_pairs_auto_reset_pending
             && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) >= 0)
             && (gui_color_num_pairs - gui_color_pairs_used <= CONFIG_INTEGER(config_look_color_pairs_auto_reset)))
@@ -635,6 +657,7 @@ gui_color_init_vars (void)
     gui_color_term_colors = 0;
     gui_color_term_color_pairs = 0;
     gui_color_term_can_change_color = 0;
+    gui_color_term_direct_colors = 0;
     gui_color_num_pairs = 63;
     if (gui_color_pairs)
     {
@@ -648,6 +671,22 @@ gui_color_init_vars (void)
         gui_color_term_colors = COLORS;
         gui_color_term_color_pairs = COLOR_PAIRS;
         gui_color_term_can_change_color = (can_change_color ()) ? 1 : 0;
+
+        /*
+         * Terminal with direct colors (like "xterm-direct"): colors are RGB
+         * values, so WeeChat uses only 256 colors, converted to RGB when
+         * pairs are initialized (or 8 colors if ncurses does not support
+         * extended colors).
+         */
+        if (gui_color_term_colors > 256)
+        {
+#if defined(NCURSES_EXT_COLORS) && (NCURSES_EXT_COLORS >= 20180127)
+            gui_color_term_direct_colors = 1;
+            gui_color_term_colors = 256;
+#else
+            gui_color_term_colors = 8;
+#endif /* NCURSES_EXT_COLORS >= 20180127 */
+        }
 
         /* TODO: ncurses may support 65536, but short type used for pairs supports only 32768? */
         gui_color_num_pairs = (gui_color_term_color_pairs >= 32768) ?
@@ -716,7 +755,7 @@ gui_color_init_pairs_terminal (void)
     {
         for (i = 1; i <= gui_color_num_pairs; i++)
         {
-            init_pair (i, i, -1);
+            gui_color_init_pair (i, i, -1);
         }
     }
 }
@@ -742,9 +781,9 @@ gui_color_init_pairs_weechat (void)
             for (i = 1; i <= gui_color_num_pairs; i++)
             {
                 if ((foregrounds[i] >= -1) && (backgrounds[i] >= -1))
-                    init_pair (i, foregrounds[i], backgrounds[i]);
+                    gui_color_init_pair (i, foregrounds[i], backgrounds[i]);
                 else
-                    init_pair (i, i, -1);
+                    gui_color_init_pair (i, i, -1);
             }
         }
         free (foregrounds);
@@ -837,10 +876,11 @@ void
 gui_color_info_term_colors (char *buffer, int size)
 {
     snprintf (buffer, size,
-              "$TERM=%s  COLORS: %d, COLOR_PAIRS: %d, "
+              "$TERM=%s  COLORS: %d%s, COLOR_PAIRS: %d, "
               "can_change_color: %s",
               getenv ("TERM"),
               gui_color_term_colors,
+              (gui_color_term_direct_colors) ? " (direct)" : "",
               gui_color_term_color_pairs,
               (gui_color_term_can_change_color) ? "yes" : "no");
 }

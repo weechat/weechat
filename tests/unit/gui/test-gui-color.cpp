@@ -262,6 +262,36 @@ TEST(GuiColor, GetCustom)
 
 /*
  * Test functions:
+ *   gui_color_convert_term_to_direct
+ */
+
+TEST(GuiColor, ConvertTermToDirect)
+{
+    /* default color and basic ANSI colors: unchanged */
+    LONGS_EQUAL(-1, gui_color_convert_term_to_direct (-1));
+    LONGS_EQUAL(0, gui_color_convert_term_to_direct (0));
+    LONGS_EQUAL(1, gui_color_convert_term_to_direct (1));
+    LONGS_EQUAL(7, gui_color_convert_term_to_direct (7));
+
+    /* out of range: unchanged */
+    LONGS_EQUAL(-2, gui_color_convert_term_to_direct (-2));
+    LONGS_EQUAL(256, gui_color_convert_term_to_direct (256));
+    LONGS_EQUAL(0x123456, gui_color_convert_term_to_direct (0x123456));
+
+    /* colors converted to RGB */
+    LONGS_EQUAL(0x808080, gui_color_convert_term_to_direct (8));
+    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (9));
+    LONGS_EQUAL(0xffffff, gui_color_convert_term_to_direct (15));
+    LONGS_EQUAL(0x00005f, gui_color_convert_term_to_direct (17));
+    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (196));
+    LONGS_EQUAL(0xeeeeee, gui_color_convert_term_to_direct (255));
+
+    /* black: forced to 8 so that it is not a basic ANSI color */
+    LONGS_EQUAL(8, gui_color_convert_term_to_direct (16));
+}
+
+/*
+ * Test functions:
  *   gui_color_code_size
  */
 

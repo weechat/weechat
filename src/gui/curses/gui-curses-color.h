@@ -17,6 +17,7 @@
 
 extern struct t_gui_color *gui_weechat_colors;
 extern int gui_color_term_colors;
+extern int gui_color_term_direct_colors;
 extern int gui_color_num_pairs;
 extern int gui_color_pairs_auto_reset;
 extern int gui_color_pairs_auto_reset_pending;
@@ -24,6 +25,7 @@ extern time_t gui_color_pairs_auto_reset_last;
 extern int gui_color_buffer_refresh_needed;
 
 extern int gui_color_get_gui_attrs (int color);
+extern void gui_color_init_pair (int number, int fg, int bg);
 extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
 extern void gui_color_alloc (void);

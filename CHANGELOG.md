@@ -73,6 +73,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix crash and wrong colors on terminals with direct colors (`TERM` like "xterm-direct") ([#1701](https://github.com/weechat/weechat/issues/1701))
 - core: fix value of hdata variables "time_usec" (hotlist), "last_exec_usec" and "next_exec_usec" (hook timer) on macOS
 - core: do not return deleted hooks in infolist "hook"
 - core: fix memory leak when the last buffer is closed

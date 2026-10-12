@@ -582,6 +582,32 @@ gui_color_convert_rgb_to_term (int rgb, int limit)
 }
 
 /*
+ * Convert a terminal color (0-255) to a color for a terminal with direct
+ * colors (like "xterm-direct", where COLORS is 16777216).
+ *
+ * With such terminals, colors 0-7 are the basic ANSI colors and any other
+ * value is a RGB color (0xRRGGBB).
+ *
+ * Return:
+ *   - color unchanged if < 8 (including -1 for default color) or > 255
+ *   - RGB value of color otherwise (forced to at least 8, so that a very
+ *     dark color is not confused with a basic ANSI color)
+ */
+
+int
+gui_color_convert_term_to_direct (int color)
+{
+    int rgb;
+
+    if ((color < 8) || (color > 255))
+        return color;
+
+    rgb = gui_color_term256[color];
+
+    return (rgb < 8) ? 8 : rgb;
+}
+
+/*
  * Return the size (in bytes) of the WeeChat color code at the beginning
  * of "string".
  *
