@@ -328,11 +328,11 @@ jobs:
           - name: "gcc"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_JAVASCRIPT=OFF"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON -DENABLE_JAVASCRIPT=OFF"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
     name: "install (rockylinux:9, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -349,7 +349,9 @@ jobs:
           dnf config-manager --set-enabled crb
           # Pin a working ruby stream (ruby:4.0 has broken module metadata on Rocky 9.8).
           dnf module enable -y ruby:3.3
-          dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }}
+          # Default nodejs stream is too old for the JavaScript plugin (V8 >= 11.3 required).
+          dnf module enable -y nodejs:24
+          dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }} nodejs-devel
 
       - name: Build and run tests
         env:
@@ -373,6 +375,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
+            # JavaScript disabled: no libnode, and V8 from quarterly packages is too old (V8 >= 11.3 required).
             buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON -DENABLE_JAVASCRIPT=OFF"
 
     name: "install (freebsd, ${{ matrix.config.name }})"
