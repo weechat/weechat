@@ -324,6 +324,15 @@ jobs:
       matrix:
         os:
           - ubuntu-26.04
+        rockylinux:
+          - version: "9"
+            image: "rockylinux:9"
+            # Pin a working ruby stream (ruby:4.0 has broken module metadata on Rocky 9.8).
+            # Default nodejs stream is too old for the JavaScript plugin (V8 >= 11.3 required).
+            modules: "ruby:3.3 nodejs:24"
+          - version: "10"
+            image: "rockylinux/rockylinux:10"
+            modules: ""
         config:
           - name: "gcc"
             cc: "gcc"
@@ -334,11 +343,11 @@ jobs:
             cxx: "clang++"
             buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
-    name: "install (rockylinux:9, ${{ matrix.config.name }})"
+    name: "install (rockylinux:${{ matrix.rockylinux.version }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     container:
-      image: rockylinux:9
+      image: ${{ matrix.rockylinux.image }}
 
     steps:
       - uses: actions/checkout@v7
@@ -347,10 +356,9 @@ jobs:
         run: |
           dnf install -y epel-release dnf-plugins-core
           dnf config-manager --set-enabled crb
-          # Pin a working ruby stream (ruby:4.0 has broken module metadata on Rocky 9.8).
-          dnf module enable -y ruby:3.3
-          # Default nodejs stream is too old for the JavaScript plugin (V8 >= 11.3 required).
-          dnf module enable -y nodejs:24
+          if [ -n "${{ matrix.rockylinux.modules }}" ]; then
+            dnf module enable -y ${{ matrix.rockylinux.modules }}
+          fi
           dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }} nodejs-devel
 
       - name: Build and run tests
