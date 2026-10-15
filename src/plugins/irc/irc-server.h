@@ -392,6 +392,8 @@ extern void irc_server_set_buffer_input_multiline (struct t_irc_server *server,
                                                    int multiline);
 extern int irc_server_has_channels (struct t_irc_server *server);
 extern struct t_irc_server *irc_server_alloc (const char *name);
+extern void irc_server_option_set_no_eval (struct t_config_option *option,
+                                           const char *value);
 extern struct t_irc_server *irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_apply_command_line_options (struct t_irc_server *server,
                                                    int argc, char **argv);
