@@ -15,6 +15,7 @@
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
 - api: do not free dynamic string on error in function string_dyn_concat
 - api: fix infinite loop in function string_replace when the search string is empty
+- irc: escape `${` in values of variables `$nick`, `$channel` and `$server` in commands `/allchan`, `/allpv` and `/allserv`, to prevent evaluation of untrusted values
 - irc: escape `${` in server options addresses, nicks, password and autojoin set from an IRC URL (`irc://...`), to prevent evaluation of untrusted values
 - irc: escape `${` in channel names saved in server option autojoin, to prevent evaluation of channel names received from the server (for example on channel forward)
 - irc: fix heap buffer overflow in nick prefixes when the server sends an empty PREFIX in message 005 and the connection is lost before message 001 ([GHSA-xj8h-x2w9-m8m6](https://github.com/weechat/weechat/security/advisories/GHSA-xj8h-x2w9-m8m6))
