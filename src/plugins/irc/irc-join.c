@@ -582,6 +582,10 @@ irc_join_add_channels (struct t_irc_server *server,
  * If the autojoin contains a link to secure data (eg: "${sec.data.xxx}" with
  * nothing before "${" and nothing after "}"), update the content of secure data
  * and keep the server autojoin option as-is.
+ *
+ * Otherwise "${" is escaped as "\${" in the option, because the option is
+ * evaluated and channel names may come from the server (for example a channel
+ * forward), so they must not be evaluated.
  */
 
 void
@@ -589,7 +593,7 @@ irc_join_set_autojoin_option (struct t_irc_server *server,
                               const char *join)
 {
     const char *ptr_autojoin, *pos_option, *pos_closing_brace;
-    char *sec_data_name, **command;
+    char *sec_data_name, **command, *join_escaped;
 
     sec_data_name = NULL;
     ptr_autojoin = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN);
@@ -619,8 +623,13 @@ irc_join_set_autojoin_option (struct t_irc_server *server,
     }
     else
     {
-        weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
-                                   join, 1);
+        join_escaped = weechat_string_replace (join, "${", "\\${");
+        if (join_escaped)
+        {
+            weechat_config_option_set (
+                server->options[IRC_SERVER_OPTION_AUTOJOIN], join_escaped, 1);
+            free (join_escaped);
+        }
     }
 }
 
