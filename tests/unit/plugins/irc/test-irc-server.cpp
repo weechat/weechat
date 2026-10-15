@@ -924,6 +924,43 @@ TEST(IrcServer, Alloc)
 
 /*
  * Test functions:
+ *   irc_server_option_set_no_eval
+ */
+
+TEST(IrcServer, OptionSetNoEval)
+{
+    struct t_irc_server *server;
+    char *str;
+
+    server = irc_server_alloc ("my_ircd");
+    CHECK(server);
+
+    irc_server_option_set_no_eval (NULL, "test");
+    irc_server_option_set_no_eval (
+        server->options[IRC_SERVER_OPTION_PASSWORD], NULL);
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+
+    irc_server_option_set_no_eval (
+        server->options[IRC_SERVER_OPTION_PASSWORD], "secret");
+    STRCMP_EQUAL("secret",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+
+    irc_server_option_set_no_eval (
+        server->options[IRC_SERVER_OPTION_PASSWORD], "a${info:version}b${x}");
+    STRCMP_EQUAL("a\\${info:version}b\\${x}",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    str = irc_server_eval_expression (
+        server,
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    STRCMP_EQUAL("a${info:version}b${x}", str);
+    free (str);
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
  *   irc_server_alloc_with_url
  */
 
@@ -1057,6 +1094,21 @@ TEST(IrcServer, AllocWithUrl)
     STRCMP_EQUAL("alice,alice2,alice3,alice4,alice5",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
     STRCMP_EQUAL("#test1,#test2",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
+
+    /* "${" is escaped in options (they must not be evaluated) */
+    server = irc_server_alloc_with_url (
+        "irc://${n}:${p}@irc.example.org:${x}/#${info:version},#a${b}");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/\\${x}",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    STRCMP_EQUAL("\\${p}",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    STRCMP_EQUAL("\\${n},\\${n}2,\\${n}3,\\${n}4,\\${n}5",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    STRCMP_EQUAL("#\\${info:version},#a\\${b}",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     irc_server_free (server);
 }

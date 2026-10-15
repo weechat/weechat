@@ -1898,6 +1898,28 @@ irc_server_alloc (const char *name)
 }
 
 /*
+ * Set a server option with a value that must not be evaluated, for example
+ * a value received from an IRC URL: "${" is escaped as "\${".
+ */
+
+void
+irc_server_option_set_no_eval (struct t_config_option *option,
+                               const char *value)
+{
+    char *value_escaped;
+
+    if (!option || !value)
+        return;
+
+    value_escaped = weechat_string_replace (value, "${", "\\${");
+    if (value_escaped)
+    {
+        weechat_config_option_set (option, value_escaped, 1);
+        free (value_escaped);
+    }
+}
+
+/*
  * Initialize a server with URL, using this format:
  *
  *   irc[6][s]://[[nick][:pass]@]server[:port][/#chan1[,#chan2...]]
@@ -2050,10 +2072,9 @@ irc_server_alloc_with_url (const char *irc_url)
                     pos_address,
                     (pos_port && pos_port[0]) ? pos_port : default_port) >= 0)
             {
-                weechat_config_option_set (
+                irc_server_option_set_no_eval (
                     ptr_server->options[IRC_SERVER_OPTION_ADDRESSES],
-                    server_address,
-                    1);
+                    server_address);
                 free (server_address);
             }
         }
@@ -2070,19 +2091,17 @@ irc_server_alloc_with_url (const char *irc_url)
                     "%s,%s2,%s3,%s4,%s5",
                     pos_nick, pos_nick, pos_nick, pos_nick, pos_nick) >= 0)
             {
-                weechat_config_option_set (
+                irc_server_option_set_no_eval (
                     ptr_server->options[IRC_SERVER_OPTION_NICKS],
-                    server_nicks,
-                    1);
+                    server_nicks);
                 free (server_nicks);
             }
         }
         if (pos_password && pos_password[0])
         {
-            weechat_config_option_set (
+            irc_server_option_set_no_eval (
                 ptr_server->options[IRC_SERVER_OPTION_PASSWORD],
-                pos_password,
-                1);
+                pos_password);
         }
         weechat_config_option_set (
             ptr_server->options[IRC_SERVER_OPTION_AUTOCONNECT],
@@ -2097,10 +2116,9 @@ irc_server_alloc_with_url (const char *irc_url)
                 weechat_asprintf (&server_autojoin, "#%s", pos_channel);
             if (server_autojoin)
             {
-                weechat_config_option_set (
+                irc_server_option_set_no_eval (
                     ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN],
-                    server_autojoin,
-                    1);
+                    server_autojoin);
                 free (server_autojoin);
             }
         }
