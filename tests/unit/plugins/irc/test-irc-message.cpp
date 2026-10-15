@@ -1020,20 +1020,20 @@ TEST(IrcMessage, ReplaceVars)
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
 
-    WEE_TEST_STR(NULL, irc_message_replace_vars (NULL, NULL, NULL));
-    WEE_TEST_STR(NULL, irc_message_replace_vars (server, NULL, NULL));
-    WEE_TEST_STR(NULL, irc_message_replace_vars (NULL, "#test", NULL));
-    WEE_TEST_STR(NULL, irc_message_replace_vars (server, "#test", NULL));
-    WEE_TEST_STR("", irc_message_replace_vars (NULL, NULL, ""));
-    WEE_TEST_STR("", irc_message_replace_vars (server, NULL, ""));
-    WEE_TEST_STR("", irc_message_replace_vars (NULL, "#test", ""));
-    WEE_TEST_STR("", irc_message_replace_vars (server, "#test", ""));
+    WEE_TEST_STR(NULL, irc_message_replace_vars (NULL, NULL, NULL, 0));
+    WEE_TEST_STR(NULL, irc_message_replace_vars (server, NULL, NULL, 0));
+    WEE_TEST_STR(NULL, irc_message_replace_vars (NULL, "#test", NULL, 0));
+    WEE_TEST_STR(NULL, irc_message_replace_vars (server, "#test", NULL, 0));
+    WEE_TEST_STR("", irc_message_replace_vars (NULL, NULL, "", 0));
+    WEE_TEST_STR("", irc_message_replace_vars (server, NULL, "", 0));
+    WEE_TEST_STR("", irc_message_replace_vars (NULL, "#test", "", 0));
+    WEE_TEST_STR("", irc_message_replace_vars (server, "#test", "", 0));
 
     /* empty nick, empty channel, empty server */
     WEE_TEST_STR("nick '', channel '', server ''",
                  irc_message_replace_vars (
                      NULL, NULL,
-                     "nick '$nick', channel '$channel', server '$server'"));
+                     "nick '$nick', channel '$channel', server '$server'", 0));
 
     irc_server_set_nick (server, "my_nick");
 
@@ -1041,13 +1041,13 @@ TEST(IrcMessage, ReplaceVars)
     WEE_TEST_STR("nick 'my_nick', channel '', server 'my_ircd'",
                  irc_message_replace_vars (
                      server, NULL,
-                     "nick '$nick', channel '$channel', server '$server'"));
+                     "nick '$nick', channel '$channel', server '$server'", 0));
 
     /* nick, channel, server */
     WEE_TEST_STR("nick 'my_nick', channel '#test', server 'my_ircd'",
                  irc_message_replace_vars (
                      server, "#test",
-                     "nick '$nick', channel '$channel', server '$server'"));
+                     "nick '$nick', channel '$channel', server '$server'", 0));
 
     /* nick, channel, server (2 vars for each) */
     WEE_TEST_STR("nick 'my_nick', channel '#test', server 'my_ircd', "
@@ -1055,7 +1055,26 @@ TEST(IrcMessage, ReplaceVars)
                  irc_message_replace_vars (
                      server, "#test",
                      "nick '$nick', channel '$channel', server '$server', "
-                     "nick '$nick', channel '$channel', server '$server'"));
+                     "nick '$nick', channel '$channel', server '$server'", 0));
+
+    /* no escape of "${" in values of vars */
+    WEE_TEST_STR("channel '#${x}'",
+                 irc_message_replace_vars (
+                     server, "#${x}", "channel '$channel'", 0));
+
+    /* escape "${" in values of vars (they must not be evaluated) */
+    WEE_TEST_STR("channel '#\\${x}', ${raw:${y}}",
+                 irc_message_replace_vars (
+                     server, "#${x}", "channel '$channel', ${raw:${y}}", 1));
+    irc_server_set_nick (server, "${n}");
+    WEE_TEST_STR("nick '\\${n}', channel '#a\\${b}\\${c}', server 'my_ircd'",
+                 irc_message_replace_vars (
+                     server, "#a${b}${c}",
+                     "nick '$nick', channel '$channel', server '$server'", 1));
+    WEE_TEST_STR("nick '', channel '', server ''",
+                 irc_message_replace_vars (
+                     NULL, NULL,
+                     "nick '$nick', channel '$channel', server '$server'", 1));
 
     irc_server_free (server);
 }

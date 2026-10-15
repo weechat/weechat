@@ -59,7 +59,8 @@ extern int irc_message_ignored (struct t_irc_server *server,
                                 const char *message);
 extern char *irc_message_replace_vars (struct t_irc_server *server,
                                        const char *channel_name,
-                                       const char *string);
+                                       const char *string,
+                                       int escape_eval);
 extern char *irc_message_hide_password (struct t_irc_server *server,
                                         const char *target, const char *text);
 extern struct t_hashtable *irc_message_split (struct t_irc_server *server,

@@ -843,42 +843,56 @@ irc_message_ignored (struct t_irc_server *server, const char *message)
 /*
  * Replace special IRC vars ($nick, $channel, $server) in a string.
  *
+ * If escape_eval == 1, "${" is escaped as "\${" in values of vars, so that
+ * the result can be evaluated without evaluating the content of vars (for
+ * example a channel name received from the server).
+ *
  * Note: result must be freed after use.
  */
 
 char *
 irc_message_replace_vars (struct t_irc_server *server,
-                          const char *channel_name, const char *string)
+                          const char *channel_name, const char *string,
+                          int escape_eval)
 {
-    const char *var_nick, *var_channel, *var_server;
+    const char *vars[] = { "$nick", "$channel", "$server", NULL };
+    const char *values[3];
     char empty_string[1] = { '\0' };
-    char *res, *temp;
+    char *res, *temp, *value_escaped;
+    int i;
 
-    var_nick = (server && server->nick) ? server->nick : empty_string;
-    var_channel = (channel_name) ? channel_name : empty_string;
-    var_server = (server) ? server->name : empty_string;
-
-    /* replace nick */
-    temp = weechat_string_replace (string, "$nick", var_nick);
-    if (!temp)
+    if (!string)
         return NULL;
-    res = temp;
 
-    /* replace channel */
-    temp = weechat_string_replace (res, "$channel", var_channel);
-    free (res);
-    if (!temp)
+    values[0] = (server && server->nick) ? server->nick : empty_string;
+    values[1] = (channel_name) ? channel_name : empty_string;
+    values[2] = (server) ? server->name : empty_string;
+
+    res = strdup (string);
+    if (!res)
         return NULL;
-    res = temp;
 
-    /* replace server */
-    temp = weechat_string_replace (res, "$server", var_server);
-    free (res);
-    if (!temp)
-        return NULL;
-    res = temp;
+    for (i = 0; vars[i]; i++)
+    {
+        value_escaped = NULL;
+        if (escape_eval)
+        {
+            value_escaped = weechat_string_replace (values[i], "${", "\\${");
+            if (!value_escaped)
+            {
+                free (res);
+                return NULL;
+            }
+        }
+        temp = weechat_string_replace (
+            res, vars[i], (value_escaped) ? value_escaped : values[i]);
+        free (value_escaped);
+        free (res);
+        if (!temp)
+            return NULL;
+        res = temp;
+    }
 
-    /* return result */
     return res;
 }
 

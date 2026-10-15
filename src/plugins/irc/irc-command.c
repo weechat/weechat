@@ -660,7 +660,8 @@ irc_command_exec_buffers (struct t_weelist *list_buffers,
         cmd_vars_replaced = irc_message_replace_vars (
             ptr_server,
             (ptr_channel) ? ptr_channel->name : NULL,
-            command);
+            command,
+            1);
         cmd_eval = weechat_string_eval_expression (
             (cmd_vars_replaced) ? cmd_vars_replaced : command,
             pointers,
@@ -5028,7 +5029,8 @@ IRC_COMMAND_CALLBACK(remove)
     {
         msg_vars_replaced = irc_message_replace_vars (ptr_server,
                                                       ptr_channel_name,
-                                                      argv_eol[index_nick + 1]);
+                                                      argv_eol[index_nick + 1],
+                                                      0);
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "REMOVE %s %s :%s",
                           ptr_channel_name,

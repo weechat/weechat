@@ -5852,7 +5852,7 @@ irc_server_execute_command (struct t_irc_server *server)
         command2 = irc_server_eval_expression (server, *ptr_command);
         if (command2)
         {
-            command3 = irc_message_replace_vars (server, NULL, command2);
+            command3 = irc_message_replace_vars (server, NULL, command2, 0);
             if (command3)
             {
                 if (weechat_string_is_command_char (command3))
