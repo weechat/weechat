@@ -122,6 +122,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Security
 
+- irc: escape `${` in channel names saved in server option autojoin, to prevent evaluation of channel names received from the server (for example on channel forward)
 - irc: fix heap buffer overflow in nick prefixes when the server sends an empty PREFIX in message 005 and the connection is lost before message 001 ([GHSA-xj8h-x2w9-m8m6](https://github.com/weechat/weechat/security/advisories/GHSA-xj8h-x2w9-m8m6))
 - irc: fix crash on invalid SASL challenge received with mechanism "ecdsa-nist256p-challenge" ([#2350](https://github.com/weechat/weechat/issues/2350))
 - relay: fix heap buffer overflow in path of hdata sent to clients with "weechat" protocol ([GHSA-8wr2-x42m-7fxv](https://github.com/weechat/weechat/security/advisories/GHSA-8wr2-x42m-7fxv))

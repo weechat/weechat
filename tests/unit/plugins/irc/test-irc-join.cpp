@@ -550,6 +550,7 @@ TEST(IrcJoin, SortChannels)
 TEST(IrcJoin, AddRemoveChannelsAutojoin)
 {
     struct t_irc_server *server;
+    char *str;
 
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
@@ -701,6 +702,42 @@ TEST(IrcJoin, AddRemoveChannelsAutojoin)
         "#xyz,#DEF,#jkl key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
+    /* Channel names with "${" are escaped (they must not be evaluated). */
+    irc_join_remove_channel_from_autojoin (server, "#xyz");
+    irc_join_remove_channel_from_autojoin (server, "#DEF");
+    irc_join_remove_channel_from_autojoin (server, "#jkl");
+    irc_join_add_channel_to_autojoin (server, "#${info:version}", NULL);
+    STRCMP_EQUAL(
+        "#\\${info:version}",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    str = irc_server_eval_expression (
+        server,
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    STRCMP_EQUAL("#${info:version}", str);
+    free (str);
+    irc_join_add_channels_to_autojoin (server, "#abc,#${x}${y} key_abc,key_x");
+    STRCMP_EQUAL(
+        "#abc,#\\${x}\\${y},#\\${info:version} key_abc,key_x",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_join_rename_channel_in_autojoin (server, "#abc", "#a\\${b}");
+    STRCMP_EQUAL(
+        "#a\\\\${b},#\\${x}\\${y},#\\${info:version} key_abc,key_x",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    str = irc_server_eval_expression (
+        server,
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    STRCMP_EQUAL("#a\\${b},#${x}${y},#${info:version} key_abc,key_x", str);
+    free (str);
+    irc_join_remove_channel_from_autojoin (server, "#${x}${y}");
+    STRCMP_EQUAL(
+        "#a\\\\${b},#\\${info:version} key_abc",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_join_remove_channel_from_autojoin (server, "#a\\${b}");
+    irc_join_remove_channel_from_autojoin (server, "#${info:version}");
+    STRCMP_EQUAL(
+        "",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
     /* Use of secure data in autojoin option. */
     hashtable_set (secure_hashtable_data, "autojoin", "#abc");
     config_file_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
@@ -725,6 +762,14 @@ TEST(IrcJoin, AddRemoveChannelsAutojoin)
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
     STRCMP_EQUAL(
         "#zzz",
+        (const char *)hashtable_get (secure_hashtable_data, "autojoin"));
+    /* Secured data is not evaluated: no escape of "${". */
+    irc_join_add_channel_to_autojoin (server, "#${x}", NULL);
+    STRCMP_EQUAL(
+        "${sec.data.autojoin}",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    STRCMP_EQUAL(
+        "#zzz,#${x}",
         (const char *)hashtable_get (secure_hashtable_data, "autojoin"));
     hashtable_remove (secure_hashtable_data, "autojoin");
 
