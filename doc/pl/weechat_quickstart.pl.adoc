@@ -38,7 +38,7 @@ Aby otrzymać pomoc dla konkretnej komendy wpisz:
 /help komenda
 ----
 
-Pomoc dostępna jest równiez dla opcji:
+Pomoc dostępna jest również dla opcji:
 
 ----
 /help config.section.option
@@ -72,7 +72,7 @@ zmiany.
 
 Wtyczka _fset_ pozwala na łatwe przeglądanie i zmianę opcji.
 
-Na przykład w celu wyświetlenia opci WeeChat:
+Na przykład w celu wyświetlenia opcji WeeChat:
 
 ----
 /fset weechat.*
@@ -84,7 +84,7 @@ Opcji IRC:
 /fset irc.*
 ----
 
-Komenda `/fset` posiada uzupełanianie części nazw opcji, na przykład jeśli
+Komenda `/fset` posiada uzupełnianie części nazw opcji, na przykład jeśli
 napiszesz `/fset hot` i naciśniesz kbd:[Tab] zostanie to uzupełnione do `/fset hotlist`.
 Jeśli wciśniesz kbd:[Enter], zostaną wyświetlone opcje dotyczące hotlist.
 
@@ -197,7 +197,7 @@ Aby automatycznie wejść na kanały po połączeniu z serwerem:
 /set irc.server.libera.autojoin "#kanał1,#kanał2"
 ----
 
-Komenda `/autojoin` pozwala w łatwy sposów skonfigurować opcję _autojoin_
+Komenda `/autojoin` pozwala w łatwy sposób skonfigurować opcję _autojoin_
 (zobacz `/help autojoin`).
 
 Możesz też skonfigurować WeeChat żeby sam aktualizował opcję _autojoin_
@@ -222,7 +222,7 @@ nazwa opcji):
 ----
 
 [TIP]
-Możesz dopełnić nazwę lub wartość opzji za pomocą klawisza kbd:[Tab] oraz
+Możesz dopełnić nazwę lub wartość opcji za pomocą klawisza kbd:[Tab] oraz
 kbd:[Shift+Tab] dla częściowego dopełnienia (przydatne dla długich nazw jak
 nazwy opcji).
 

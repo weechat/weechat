@@ -80,18 +80,18 @@ https://raw.githubusercontent.com/weechat/weechat/main/src/plugins/python/weecha
 
 Funkcje są wywoływane za pomocą `+weechat.xxx(arg1, arg2, ...)+`.
 
-Funkcje `+print*+` nzwyają się `+prnt*+` (ponieważ `print` był zarezerwowanym
+Funkcje `+print*+` nazywają się `+prnt*+` (ponieważ `print` był zarezerwowanym
 łowem kluczowym w Pythonie 2).
 
 [[python_strings]]
 ===== Ciągi otrzymywane w callbackach
 
 W Pythonie 3 i dla wersji WeeChat ≥ 2.7, ciągi te mają typ `str` jeśli ciąg
-zawiera poprawne dane UTF-8 (najrzęstzy przypadek), lub `bytes` w przeciwnym
+zawiera poprawne dane UTF-8 (najczęstszy przypadek), lub `bytes` w przeciwnym
 razie. Dlatego callback powinien być w stanie obsłużyć również taki typ danych.
 
 Niektóre niepoprawne dane UTF-8 mogą zostać otrzymane w poniższych przypadkach,
-dlatego callback może otrzymać ciąc typu `str` lub `bytes` (lista nie jest pełna):
+dlatego callback może otrzymać ciąg typu `str` lub `bytes` (lista nie jest pełna):
 
 [width="100%",cols="3m,3m,3m,8",options="header"]
 |===
@@ -107,7 +107,7 @@ dlatego callback może otrzymać ciąc typu `str` lub `bytes` (lista nie jest pe
   Zalecane jest używanie w zamian modyfikatora `+irc_in2_yyy+`, otrzymany ciąg
   jest zawsze poprawnym UTF-8. +
   Zobacz funkcję `+hook_modifier+` w
-  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat ^↗^^].
+  link:weechat_plugin_api.en.html#_hook_modifier[Opisie API wtyczek WeeChat ^↗^^].
 
 | hook_signal
 | xxx,irc_out_yyy +
@@ -122,7 +122,7 @@ dlatego callback może otrzymać ciąc typu `str` lub `bytes` (lista nie jest pe
   Zaleca się użycie w zamian sygnału `+xxx,irc_out1_yyy+`,otrzymany ciąg jest
   zawsze poprawnym UTF-8. +
   Zobacz funkcję `+hook_signal+` w
-  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat ^↗^^].
+  link:weechat_plugin_api.en.html#_hook_modifier[Opisie API wtyczek WeeChat ^↗^^].
 
 | hook_process +
   hook_process_hashtable
@@ -148,7 +148,7 @@ Funkcje są wywoływane za pomocą `+weechat::xxx(arg1, arg2, ...);+`.
 ==== Ruby
 
 [[ruby_init]]
-===== Inicjalizacja
+===== Inicjacja
 
 Musisz zdefiniowac _weechat_init_ i wywołać wewnątrz _register_.
 
@@ -168,7 +168,7 @@ Weechat.config_new_option(config, section, "name", "string", "opis opcji", "", 0
 ----
 
 Funkcja `+Weechat.bar_new+` przyjmuje kolory w tablicy składającej się z 4 ciągów
-(color_fg, color_delim, color_bg, color_bg_inactive), wywołaine tej funkcji wygląda
+(color_fg, color_delim, color_bg, color_bg_inactive), wywołanie tej funkcji wygląda
 następująco:
 
 [source,ruby]
@@ -205,7 +205,7 @@ jest więc mało prawdopodobne, że pokaże się przypadkowo.
 
 Możesz przekazać tą stałą do funkcji przyjmujących null jako argument i otrzymasz
 tą wartość w funkcji callback jeśli wartość argumentu to null. Aby zobaczyć które
-funlcje akceptują wartości null i przekazują ja do callbacków przejrzyj prototypy
+funkcje akceptują wartości null i przekazują ja do callbacków przejrzyj prototypy
 języka Python w
 link:weechat_plugin_api.en.html[Opisie API wtyczek WeeChat ^↗^^].
 
@@ -217,7 +217,7 @@ link:weechat_plugin_api.en.html[Opisie API wtyczek WeeChat ^↗^^].
 
 Funkcje są wywoływane za pomocą `+(weechat:xxx arg1 arg2 ...)+`.
 /
-Następujące funkcje przyjmują litę argumentów (zamiast wielu argumentów dla
+Następujące funkcje przyjmują listę argumentów (zamiast wielu argumentów dla
 innych funkcji), ponieważ ilość argumentów przekracza maksymalną ilość
 argumentów dozwolonych w Guile:
 
@@ -424,7 +424,7 @@ Na przykład, jeśli funkcja zwraca wskaźnik 0x1234ab56 skrypt otrzyma ciąg
 "0x1234ab56".
 
 W sytuacji, kiedy funkcja API spodziewa się wskaźnika jako argumentu skrypt musi
-przekazać go jako ciąg. Wtyczki napisane w C przekonwertują go na prawdziwy
+przekazać go jako ciąg. Wtyczki napisane w C skonwertują go na prawdziwy
 wskaźnik, zanim wywołają funkcję z API C.
 
 Dozwolone są puste ciągi lub "0x0", oznaczają NULL w C.
@@ -446,7 +446,7 @@ wypadku możesz zobaczyć ładny raport o błędzie ;)
 Prawie wszystkie callbacki muszą zwrócić WEECHAT_RC_OK lub WEECHAT_RC_ERROR
 (wyjątkiem jest callback modyfikujący, który zwraca ciąg).
 
-Callbacki w języku C używają akgumentów "callback_pointer" i "callback_data", które
+Callbacki w języku C używają argumentów "callback_pointer" i "callback_data", które
 są wskaźnikami. W API skryptów, obecny jest tylko "callback_data" (lub "data") i jest
 to ciąg a nie wskaźnik.
 
@@ -555,7 +555,7 @@ Więcej informacji o funkcjach w API, znajdziesz w
 link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^^] (Angielski).
 
 [[script_api_functions]]
-=== Fukcje
+=== Funkcje
 
 Lista funkcji w API skryptów:
 
@@ -789,7 +789,7 @@ weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 ----
 
 Zamiast zewnętrznej komendy możesz też wywołać bezpośrednio funkcję ze skryptu,
-tóra robi coś blokującego:
+która robi coś blokującego:
 
 [source,python]
 ----
@@ -957,7 +957,7 @@ xxx,irc_raw_in_yyy::
     sygnał wysyłany przed przetworzeniem wiadomości, nawet jeśli wiadomość jest ignorowana
 
 xxx,irc_raw_in2_yyy::
-    sygnał wysyłany po przetworzeniu wiadomoci, nawet jeśli wiadomość jest ignorowana
+    sygnał wysyłany po przetworzeniu wiadomości, nawet jeśli wiadomość jest ignorowana
 
 [source,python]
 ----
@@ -1033,7 +1033,7 @@ Wynik jest tabela hashy z następującymi kluczami
 | `+:nick!user@host PRIVMSG #weechat :hello!+`
 
 | nick | 0.3.4
-| Nick żródła.
+| Nick źródła.
 | `+nick+`
 
 | user | 2.7
@@ -1041,7 +1041,7 @@ Wynik jest tabela hashy z następującymi kluczami
 | `+user+`
 
 | host | 0.3.4
-| Host żródła (zawiera nick).
+| Host źródła (zawiera nick).
 | `+nick!user@host+`
 
 | command | 0.3.4

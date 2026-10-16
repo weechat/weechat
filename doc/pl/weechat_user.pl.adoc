@@ -37,7 +37,7 @@ Główne cechy to:
   https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^^] i
   https://datatracker.ietf.org/doc/html/rfc7194[7194 ^↗^^]
 * proxy IRC i pośrednik dla WeeChat i zdalnych interfejsów
-* wielo-platformowy (GNU/Linux, *BSD, macOS, Windows i inne)
+* wieloplatformowy (GNU/Linux, *BSD, macOS, Windows i inne)
 * 100% GPL, darmowe oprogramowanie
 
 Listę wszystkich cech i możliwości można znaleźć na
@@ -61,7 +61,7 @@ https://weechat.org/about/features/[tej stronie ^↗^^].
 
 Pakiety binarne dostępne są dla wielu dystrybucji, wliczając:
 
-* Arch Linuxa: `pacman -S weechat`
+* Arch Linux: `pacman -S weechat`
 * Cygwin (Windows): wybierz pakiet WeeChat w setup.exe
 * Debiana/Ubuntu (lub dowolna kompatybilna):
   `apt-get install weechat-curses weechat-plugins` +
@@ -129,7 +129,7 @@ WeeChat:
 | Zabezpieczone dane, uwierzytelnianie IRC SASL.
 
 | libgnutls28-dev | ≥ 2.2.0 ^(2)^
-| Wtyczka IRC: wsparcie dla połączeń TLS, autentykacja IRC SASL (ECDSA-NIST256P-CHALLENGE). +
+| Wtyczka IRC: wsparcie dla połączeń TLS, uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE). +
   Wtyczka relay: wsparcie dla połączeń TLS.
 
 | zlib1g-dev |
@@ -223,8 +223,8 @@ WeeChat:
 ^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Trixie distribution,
 wersja i nazwa mogą się różnić dla innych dystrybucji. +
 
-Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy
-"deb-src" w pliku _/etc/apt/sources.list_, możesz zainstalować wszytkie zależności
+Jeśli używasz dystrybucji bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy
+"deb-src" w pliku _/etc/apt/sources.list_, możesz zainstalować wszystkie zależności
 za pomocą jednej komendy:
 
 [source,shell]
@@ -267,7 +267,7 @@ Lista dostępnych opcji:
 
 | CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` |
 | Typ budowania pakietu: `Debug` (lub `RelWithDebInfo`) jest zalecany dla
-  wersjrozwojowej WeeChat.
+  wersji rozwojowej WeeChat.
 
 | CMAKE_INSTALL_PREFIX | katalog | /usr/local
 | Katalog, do którego zostanie zainstalowany WeeChat.
@@ -295,7 +295,7 @@ Lista dostępnych opcji:
 | Generowanie dokumentacji HTML.
 
 | ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
-| Wymusza wygenerowanie dokumentacji nawet w przypadku jeśli nie wszystki
+| Wymusza wygenerowanie dokumentacji nawet w przypadku jeśli nie wszystkie
   wtyczki zostaną skompilowane (nie zalecane: dokumentacja nie będzie kompletna).
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF
@@ -461,7 +461,7 @@ cmake .. -DCMAKE_BUILD_TYPE=Debug
 [[address_sanitizer]]
 ==== Weryfikacja adresów w pamięci
 
-Możesz dodatowo włączyć weryfikację adresów, co spowoduje natychmiastową awarię
+Możesz dodatkowo włączyć weryfikację adresów, co spowoduje natychmiastową awarię
 WeeChat w przypadku wystąpienia problemu:
 
 [source,shell]
@@ -614,7 +614,7 @@ include::includes/cmdline_options.pl.adoc[tag=debug]
 [[environment_variables]]
 === Zmienne środowiskowe
 
-Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefiniowane:
+Niektóre zmienne środowiskowe są używane przez WeeChat o ile zostały zdefiniowane:
 
 [width="100%",cols="1m,6",options="header"]
 |===
@@ -705,7 +705,7 @@ Katalogi używane przez WeeChat to:
 [width="100%",cols="1m,3",options="header"]
 |===
 | Ścieżka ^(1)^           | Opis
-| ~/.config/weechat/      | Pliki konfiguracyjne WeeChat: `*.conf`, certifikaty, itp.
+| ~/.config/weechat/      | Pliki konfiguracyjne WeeChat: `*.conf`, certyfikaty, itp.
 | ~/.local/share/weechat/ | Pliki z danymi WeeChat: logi, skrypty, dane skryptów, pliki xfer, itp.
 |    logs/                | Pliki z logami (jeden na bufor).
 |    python/              | Skrypty pythonowe.
@@ -719,7 +719,7 @@ Katalogi używane przez WeeChat to:
 |    tcl/                 | Skrypty tcl.
 |       autoload/         | Skrypty tcl automatycznie ładowane przy starcie ^(2)^.
 |    guile/               | Skrypty guile.
-|       autoload/         | Skrypry guile automatycznie ładowane przy starcie ^(2)^.
+|       autoload/         | Skrypty guile automatycznie ładowane przy starcie ^(2)^.
 |    javascript/          | Skrypty JavaScript.
 |       autoload/         | Skrypty JavaScript automatycznie ładowane przy starcie ^(2)^.
 |    php/                 | Skrypty PHP.
@@ -730,7 +730,7 @@ Katalogi używane przez WeeChat to:
 
 [NOTE]
 ^(1)^ Katalogi XDG mogą się różnić w zależności od wartości zmiennych `XDG_*`. +
-^(2)^ Ten folder zawiera przewazine linki symboliczne do plików w folderze nadrzędnym.
+^(2)^ Ten folder zawiera przeważnie linki symboliczne do plików w folderze nadrzędnym.
 
 [[weechat_files]]
 ==== Pliki WeeChat
@@ -784,7 +784,7 @@ się do tej wersji.
 
 Na samym początku musisz zainstalować nową wersje WeeChat albo za pomocą
 managera pakietów albo kompilując ją samemu, w taki sposób żeby plik
-wykonywalny `weechat` i wszystke wymagane pliki znajdowały się w tych samych
+wykonywalny `weechat` i wszystkie wymagane pliki znajdowały się w tych samych
 ścieżkach. +
 Można to zrobić podczas działania WeeChat.
 
@@ -799,7 +799,7 @@ przywracane po jej zakończeniu (przeładowanie sesji TLS jest obecnie
 niemożliwe z użyciem GnuTLS).
 
 Komenda ta może zostać użyta również w momencie restartu maszyny, na przykład
-w celu aktualizacji kernela albo przeniesienia WeeChat na nową maszynę:
+w celu aktualizacji jądra albo przeniesienia WeeChat na nową maszynę:
 
 ----
 /upgrade -quit
@@ -845,8 +845,8 @@ Przykład ostrzeżenia o usuwanej opcji:
 =!= Ostrzeżenie: /home/user/.config/weechat/sec.conf, linia 15: nieznana opcja dla sekcji "crypt": passphrase_file = ""
 ----
 
-Oznaza to, że opcja `sec.crypt.passphrase_file` została usunięta i jej wartość była
-ustawiona na pusty ciąg, który był domyślną wartością w poprzednej wersji
+Oznacza to, że opcja `sec.crypt.passphrase_file` została usunięta i jej wartość była
+ustawiona na pusty ciąg, który był domyślną wartością w poprzedniej wersji
 (w tym przypadku żadna dodatkowa akcja nie jest wymagana).
 
 [[interface]]
@@ -952,7 +952,7 @@ Pasek _input_ posiada następujące domyślne elementy:
 
 Dostępne są dwa tryby wyszukiwania:
 
-* wyszukiwanie w liniach, na przydład `[Search lines (~ str,msg)]`, z następującymi informacjami:
+* wyszukiwanie w liniach, na przykład `[Search lines (~ str,msg)]`, z następującymi informacjami:
 ** `~`: wielkość liter ma znaczenie
 ** `==`: wielkość liter nie ma znaczenia
 ** `str`: wyszukiwanie ciągu
@@ -960,7 +960,7 @@ Dostępne są dwa tryby wyszukiwania:
 ** `msg`: wyszukiwanie w wiadomościach
 ** `pre`: wyszukiwanie w prefiksach
 ** `pre\|msg`: wyszukiwanie w prefiksach i wiadomościach)
-* wyszukiwanie w historii komend, na przydład `[Search command (~ str,local)]`,
+* wyszukiwanie w historii komend, na przykład `[Search command (~ str,local)]`,
   z następującymi informacjami:
 ** `~`: wielkość liter ma znaczenie
 ** `==`: wielkość liter nie ma znaczenia
@@ -987,7 +987,7 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | buffer_nicklist_count_groups | `0`                      | Liczba widocznych grup na nickliście.
 | buffer_short_name            | `#test`                  | Skrócona nazwa obecnego buforu.
 | buflist2                     | `1.weechat`              | Lista buforów, drugi element paska (zobacz opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
-| buflist3                     | `1.weechat`              | Lista buforów, trzeci element paska (zobac opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist3                     | `1.weechat`              | Lista buforów, trzeci element paska (zobacz opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
 | buflist4                     | `1.weechat`              | Lista buforów, czwarty element paska (zobacz opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
 | buflist5                     | `1.weechat`              | Lista buforów, piąty element paska (zobacz opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
 | fset                         | `+buflist.look.sort: …+` | Pomoc dla obecnie wybranej opcji w buforze fset.
@@ -1007,7 +1007,7 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 Każdy aspekt układu może zostać spersonalizowany za pomocą <<command_line,komend>>:
 <<command_weechat_bar,`/bar`>> do dostosowania pasków,
 <<command_weechat_buffer,/buffer>> i <<command_weechat_window,`/window`>>
-do dostosowania <<buffers_and_windows,budorów i okien>>,
+do dostosowania <<buffers_and_windows,buforów i okien>>,
 i <<command_weechat_layout,/layout>> żeby nazwać, zapisać i przywrócić układ ekranu
 i powiązania między oknami i buforami.
 
@@ -1244,7 +1244,7 @@ Format czasu może zostać dostosowany za pomocą opcji
 Tryb ten może być włączony również na specyficzny czas za pomocą komendy
 <<command_weechat_window,/window>>.
 
-Jeśłi WeeChat wygląda następująco:
+Jeśli WeeChat wygląda następująco:
 
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
@@ -1317,17 +1317,17 @@ Linie wyświetlane w formatowanych buforach maja następujące pola:
 
 [width="100%",cols="2,2,10",options="header"]
 |===
-| Pole                    | Wyświetlane         | Opis
-| data/czas (wiadomość)   | Tak                 | Data/czas wiadomości (może być przeszła).
-| data/czas (wywietlenie) | Nie                 | Data/time, kiedy WeeChat wyświetlił wiadomość.
-| prefiks                 | Tak                 | Prefiks wiadomości, zazwyczaj nick.
-| wiadomość               | Tak                 | Wiadomość.
-| wyświetlone             | Nie                 | Boolean: true jeśli linia została wyświetlona, false jeśli linia została odfiltrowana komendą <<command_weechat_filter,/filter>>.
-| podświetlenie           | Nie                 | Boolean: true jeśli linia ma podświetlenie, false w przeciwnym wypadku.
-| tagi                    | Przez `/debug tags` | Tagi powiązane z linią (zobacz <<lines_tags,tagi linii>>).
+| Pole                     | Wyświetlane         | Opis
+| data/czas (wiadomość)    | Tak                 | Data/czas wiadomości (może być przeszła).
+| data/czas (wyświetlenie) | Nie                 | Data/time, kiedy WeeChat wyświetlił wiadomość.
+| prefiks                  | Tak                 | Prefiks wiadomości, zazwyczaj nick.
+| wiadomość                | Tak                 | Wiadomość.
+| wyświetlone              | Nie                 | Boolean: true jeśli linia została wyświetlona, false jeśli linia została odfiltrowana komendą <<command_weechat_filter,/filter>>.
+| podświetlenie            | Nie                 | Boolean: true jeśli linia ma podświetlenie, false w przeciwnym wypadku.
+| tagi                     | Przez `/debug tags` | Tagi powiązane z linią (zobacz <<lines_tags,tagi linii>>).
 |===
 
-Wyświetlanie linni może być zmienione za pomocą wielu opcji wyglądu
+Wyświetlanie lini może być zmienione za pomocą wielu opcji wyglądu
 (_pass:[weechat.look.*]_) oraz koloru (_pass:[weechat.color.chat_*]_).
 
 [[lines_tags]]
@@ -1337,7 +1337,7 @@ WeeChat używa tagów w liniach dla różnych celów:
 
 * podświetleń
 * poziomu powiadomień
-* logowaia
+* logowania
 * użycia komendy <<command_weechat_filter,/filter>>
 
 Tagi można wyświetlić używając komendy `/debug tags` (tą samą komendą można je ukryć).
@@ -1352,16 +1352,16 @@ Popularnie używane tagi (niepełna lista):
 | no_log           | Linia nie jest zapisywana w logu.
 | log0 … log9      | Poziom logowania dla linii (zobacz komendę <<command_logger_logger,/logger>>).
 | notify_none      | Linia nie może być dodana do hotlisty. ^(1)^
-| notify_message   | Linia jest wiasomością użytkownika. ^(1)^
+| notify_message   | Linia jest wiadomością użytkownika. ^(1)^
 | notify_private   | Linia jest wiadomością prywatną. ^(1)^
 | notify_highlight | Linia jest wiadomością z podświetleniem. ^(1)^
 | self_msg         | Własna wiadomość.
 | nick_xxx         | Wiadomość od nicku "xxx".
 | prefix_nick_ccc  | Prefiks to nick o kolorze "ccc".
-| host_xxx         | Nazwa użytkowniak i host w wiadomości.
+| host_xxx         | Nazwa użytkownika i host w wiadomości.
 | irc_xxx          | Wiadomość IRC "xxx" (komenda, albo 3 cyfrowy numer).
 | irc_numeric      | Wiadomość numeryczna IRC.
-| irc_error        | Błąd od erwera IRC.
+| irc_error        | Błąd od serwera IRC.
 | irc_action       | Akcja nicka (komenda `/me`).
 | irc_ctcp         | Wiadomość CTCP.
 | irc_ctcp_reply   | Odpowiedź na wiadomość CTCP.
@@ -1378,7 +1378,7 @@ być niższy niż wartość dla tagu.
 [[local_variables]]
 ==== Zmienne lokalne
 
-Zmienne lokalne mogą być definiowane dla wsystkich buforów.
+Zmienne lokalne mogą być definiowane dla wszystkich buforów.
 
 Zmienna lokalna posiada:
 
@@ -1520,7 +1520,7 @@ External plugins and scripts can define and use other local variables.
 Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist"
 (cztery dodatkowe elementy "buflist2", "buflist3", "buflist4" i "buflist5" są
 również dostępne). +
-Domyślny pasek "buflist" jest tworzony podczas uruchomieina z włączoną wtyczką.
+Domyślny pasek "buflist" jest tworzony podczas uruchomienia z włączoną wtyczką.
 
 [[buflist_commands]]
 ==== Komendy
@@ -1546,7 +1546,7 @@ include::{autogendir}/autogen_user_options.pl.adoc[tag=buflist_options]
 [[cursor_mode]]
 === Tryb kursora
 
-Tryb kursora pozwala na przesuwanie kurdsora w dowolne miejsce na ekranie,
+Tryb kursora pozwala na przesuwanie kursora w dowolne miejsce na ekranie,
 w obszarze czatu i paskach, i pozwala na wykonywanie akcji w danym miejscu. +
 Możesz wejść w tryb kursora za pomocą komendy `/cursor` lub za pomocą środkowego
 przycisku myszy (obsługa myszy musi być włączona za pomocą kbd:[Alt+m] lub
@@ -1579,8 +1579,8 @@ Przykład bufora fset wyświetlający opcje zaczynające się od `weechat.look`�
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
 │1.weechat│7/125 | Filtr: weechat.look.* | Sortowanie: ~name | Klawisz(wejście): alt+>>│
-│2.fset   │weechat.look.bare_display_exit_on_input: wyjście z trybu niesformatowanego w│
-│         │yświetlania po każdej zmianie wejścia [domyślnie: on]                       │
+│2.fset   │weechat.look.bare_display_exit_on_input: wyjście z trybu niesformatowanego  │
+│         │wyświetlania po każdej zmianie wejścia [domyślnie: on]                      │
 │         │----------------------------------------------------------------------------│
 │         │  weechat.look.align_end_of_lines              enum    message              │
 │         │  weechat.look.align_multiline_words           bool    on                   │
@@ -1747,7 +1747,7 @@ wartości są ciągami, mogących przechować wyrażenia formatujące z odwołan
 `+${color:...}+` (jak `+weechat.color.chat_nick_colors+`, `+weechat.look.prefix_error+`
 lub format `+buflist.format.*+`) są również uwzględnione.
 
-Możesz wyświetlić wszystkie opcjie, jakie mogą być ustawione przez motyw
+Możesz wyświetlić wszystkie opcje, jakie mogą być ustawione przez motyw
 w buforze <<command_fset_fset,/fset>> używając filtru `+t:themable+`.
 
 [[themes_apply]]
@@ -1759,7 +1759,7 @@ W celu wybrania wbudowanego motywu o jasnym tle:
 /theme apply light
 ----
 
-Aktualny stan wszystkich opcji ustawanych przez motyw zostaną wcześniej
+Aktualny stan wszystkich opcji ustawianych przez motyw zostaną wcześniej
 zapisane do pliku z kopią zapasową motywu o nazwie jak `+backup-YYYYMMDD-HHMMSS-uuuuuu+`
 w katalogu `+themes+` wewnątrz katalogu z konfiguracją WeeChat, dzięki
 czemu wcześniejszy wygląd można zawsze przywrócić za pomocą:
@@ -1768,7 +1768,7 @@ czemu wcześniejszy wygląd można zawsze przywrócić za pomocą:
 /theme apply backup-YYYYMMDD-HHMMSS-uuuuuu
 ----
 
-Tworzenie kopi zapasowej można wyłąćzyć (nie zalecane):
+Tworzenie kopi zapasowej można wyłączyć (nie zalecane):
 
 ----
 /set weechat.look.theme_backup off
@@ -1778,13 +1778,13 @@ Jeśli kopie zapasowe są włączone i nie mogą zostać zapisane, wczytywanie
 motywu jest przerywane zanim jakakolwiek opcja zostanie zmieniona.
 
 Nazwa ostatnio użytego motywu jest przechowywana w `+weechat.look.theme+` 
-(wyłącznie informacyjnie; wartość nie ma wpływu na motyw ladowany podczas 
+(wyłącznie informacyjnie; wartość nie ma wpływu na motyw ładowany podczas 
 uruchamiania).
 
 [[themes_reset]]
 ==== Przywracanie wartości domyślnych
 
-W celu przywrócenia wyglądu dostaczanego z WeeChat należy przywrócić
+W celu przywrócenia wyglądu dostarczanego z WeeChat należy przywrócić
 wartości domyślne opcji motywów:
 
 ----
@@ -1805,11 +1805,11 @@ Zapisanie obecnego wyglądu jako nowy motyw użytkownika:
 /theme save mytheme
 ----
 
-Każda opca motywu jest zapisywana, dzięki czemu każdy motyw jest
+Każda opcja motywu jest zapisywana, dzięki czemu każdy motyw jest
 kompletny i będzie wyglądać tak samo na każdym WeeChat, bez
 względu na obecną konfigurację.
 
-Nazwy zarezerwowane (wbudowane motywy jak `+light+` i każdna
+Nazwy zarezerwowane (wbudowane motywy jak `+light+` i każda
 nazwa zaczynająca się od `+backup-+`) zostaną odrzucone. Pliki
 są przechowywane w `+${weechat_config_dir}/themes/<name>.theme+`.
 
@@ -1817,7 +1817,7 @@ Zmiana nazwy motywu użytkownika (zwykłe użycie: trzymaj przydatne
 kopie zapasowe z nazwami mającymi sens):
 
 ----
-/theme rename backup-20260525-094210-123456 mójmotyw
+/theme rename backup-20260525-094210-123456 mój-motyw
 ----
 
 Wbudowane motywy nie posiadają plików i nie można zmienić ich nazwy;
@@ -1857,7 +1857,7 @@ buflist.format.number = "${color:28}${number}${if:${number_displayed}?.: }"
 przechowuje aktualne wartości; klucze to pełne nazwy opcji, które
 pojawiły by się w `/set`. Wartości ciągów mogą być ujęte w podwójnie lub
 pojedyncze cudzysłowy; cudzysłowy są pomijane podczas parsowania. Opcje
-nie wapierane przez motywy są pomijane podczas parsowania i wyświetlane
+nie wspierane przez motywy są pomijane podczas parsowania i wyświetlane
 w głównym buforze.
 
 // TRANSLATION MISSING
@@ -1936,7 +1936,7 @@ Na przykład:
 ----
 
 Jeżeli globalna wartość dla kodowania nie jest ustawiona (na przykład podczas
-pierwszego zaladowania wtyczki), zostanie automatycznie ustawione na kodowanie
+pierwszego załadowania wtyczki), zostanie automatycznie ustawione na kodowanie
 terminala (jeśli jest inne niż UTF-8), lub domyślnie na _ISO-8859-1_.
 
 Domyślnie kodowanie dla wysyłanych danych nie jest ustawione, dane domyślnie
@@ -2057,16 +2057,16 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 ==== Maksymalny poziom hotlisty dla nicków
 
 Jest możliwe ustawienie maksymalnego poziomu hotlist dla nicków, dla bufora lub grupy buforów
-(jak erwery IRC).
+(jak serwery IRC).
 
 Właściwość bufora "hotlist_max_level_nicks" może być ustawiona na listę nicków,
-z ustawonym dla każdego z nich maksymalnym poziomem hotlisty, możliwe poziomy to:
+z ustawionym dla każdego z nich maksymalnym poziomem hotlisty, możliwe poziomy to:
 
 * -1: brak zmiany hotlisty dla nicka
 * 0: niski priorytet (jak wiadomości join/part)
 * 1: wiadomość
 * 2: prywatna wiadomość
-* 3: podświetlenie (mało przydatne, jest to domyślny poziom dla wszytkich wiadomości)
+* 3: podświetlenie (mało przydatne, jest to domyślny poziom dla wszystkich wiadomości)
 
 Na przykład, żeby wyłączyć podświetlenia od "joe" oraz "mike" w obecnym buforze:
 
@@ -2107,7 +2107,7 @@ Ten sam przykład, tylko dla konkretnego bufora:
 Domyślnie WeeChat podświetla wiadomości od innych użytkowników zawierające Twój nick,
 dlatego podświetlenia zależą od buforu (nick może być inny w zależności od buforu).
 
-Możesz dodawać inne słowa do podświetlen używając opcji
+Możesz dodawać inne słowa do podświetleń używając opcji
 <<option_weechat.look.highlight,weechat.look.highlight>>, na przykład, żeby
 podświetlać Twój nick oraz słowa "słowo1", "słowo2" oraz wszystko co zaczyna się od "test":
 
@@ -2115,22 +2115,22 @@ podświetlać Twój nick oraz słowa "słowo1", "słowo2" oraz wszystko co zaczy
 /set weechat.look.highlight "słowo1,słowo2,test*"
 ----
 
-Jeżeli potrzebujesz bardziej przecyzyjnej reguły, możesz użyć wyrażenia reglarnego
+Jeżeli potrzebujesz bardziej precyzyjnej reguły, możesz użyć wyrażenia regularnego
 używając opcji <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
-na przydład do podświetlania słów "flashcode", "flashcöde" i "flashy":
+na przykład do podświetlania słów "flashcode", "flashcöde" i "flashy":
 
 ----
 /set weechat.look.highlight_regex "flashc[oö]de|flashy"
 ----
 
-Separatory do okoła podświetlanych słów można zmienić za pomocą opcji
+Separatory dookoła podświetlanych słów można zmienić za pomocą opcji
 <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
 
 [[highlights_tags]]
 ==== Dodawanie tagów do podświetleń
 
 Wyświetlane linie moga zawierać "tagi", które dają troche informacji o pochodzeniu
-wiasomości lub o samej wiadmości. +
+wiadomości lub o samej wiadomości. +
 Możesz wyświetlić tagi za pomocą komendy `/debug tags` (ta sama komenda je ukrywa).
 
 Możesz dodać konkretne tagi do podświetleń za pomocą opcji
@@ -2138,7 +2138,7 @@ Możesz dodać konkretne tagi do podświetleń za pomocą opcji
 Tagi są oddzielane przecinkami, kilka tagów może być oddzielone przez `+++` dla wykonania
 logicznego "i" między nimi.
 
-Na przykład dla podświetlenia wszytkich wiadomości od nicka "FlashCode" oraz powiadomień od
+Na przykład dla podświetlenia wszystkich wiadomości od nicka "FlashCode" oraz powiadomień od
 nicków zaczynających się od "toto":
 
 ----
@@ -2148,10 +2148,10 @@ nicków zaczynających się od "toto":
 [[highlights_regex_buffer]]
 ==== Ustawianie dodatkowych podświetleń dla bufora
 
-Możesz wymusić podświetlenia używając wyrażenia regularnego z właściwościa bufora
+Możesz wymusić podświetlenia używając wyrażenia regularnego z właściwością bufora
 "highlight_regex".
 
-Na przykład żeby wymusić podświetlenie dla wszytkich wiadomości w obecnym buforze:
+Na przykład żeby wymusić podświetlenie dla wszystkich wiadomości w obecnym buforze:
 
 ----
 /buffer setauto highlight_regex .*
@@ -2300,9 +2300,9 @@ Spowoduje powstanie następującej struktury:
 ==== Rotowanie i kompresja
 
 Istnieje możliwość zdefiniowania rozmiaru pliku z logami, po przekroczeniu
-którego nastąpi automatyczne zrotowanie pliku z logiem.
+którego nastąpi automatyczne rotowanie pliku z logiem.
 
-Zrotowany plik z logami może być skompresowany za pomocą gzip lub
+Rotowany plik z logami może być skompresowany za pomocą gzip lub
 https://facebook.github.io/zstd/[zstd ^↗^^].
 
 [NOTE]
@@ -2318,7 +2318,7 @@ z użyciem dobrego poziomu kompresji (wolniejsze od domyślnego):
 ----
 
 Jeśli chcesz użyć liczby dziesiętnej, możesz użyć poniższej jednostki
-i pomnożyć przez 1000, na przykład aby ustwić maksymalny rozmiar na 2.5GB:
+i pomnożyć przez 1000, na przykład aby ustawić maksymalny rozmiar na 2.5GB:
 
 ----
 /set logger.file.rotation_size_max "2500m"
@@ -2396,7 +2396,7 @@ przechwytywane przez WeeChat. Dlatego akcje jak kopiowanie/wklejanie lub
 klikanie w URLe nie są przesyłane do terminala. +
 Użycie klawisza kbd:[Shift] sprawia, że te zdarzenia są przesyłane bezpośrednio
 do terminala, tak jakby obsługa myszy była wyłączona (w niektórych terminalach
-jak iTerm, należy użyc klawisza kbd:[Alt] zamiast kbd:[Shift]).
+jak iTerm, należy użyć klawisza kbd:[Alt] zamiast kbd:[Shift]).
 
 [NOTE]
 W razie jakichkolwiek problemów z obsługą myszy, zajrzyj do
@@ -2426,7 +2426,7 @@ Lista modyfikatorów (według nazwy):
 
 [NOTE]
 ^(1)^ Modyfikator `shift` można sporadycznie użyć w WeeChat ponieważ terminale
-zazwyczaj używają tego modyfikatora do przechwytywania ewentów myszy.
+zazwyczaj używają tego modyfikatora do przechwytywania zdarzeń myszy.
 
 Modyfikatory można ze sobą łączyć, na przykład:
 
@@ -2462,7 +2462,7 @@ Lista gestów (tylko dla klawiszy, nie rolki):
 | gesture-right-long | ≥ 40
 |===
 
-Lista niedkończonych zdarzeń (tylko dla przycisków, użyteczne dla wtyczek/skryptów):
+Lista niedokończonych zdarzeń (tylko dla przycisków, użyteczne dla wtyczek/skryptów):
 
 [width="100%",cols="1m,4",options="header"]
 |===
@@ -2499,7 +2499,7 @@ następnie zdarzenie za pomocą myszy. Umieści to zdarzenie w linii poleceń.
 Wtyczka spell pozwala na sprawdzanie pisowni w linii poleceń. Możliwe jest
 ustawienie wielu języków dla bufora.
 
-Sprawdzenie pisowni jest domyślnie wyłączone i możę być przełączone za pomocą kbd:[Alt+s].
+Sprawdzenie pisowni jest domyślnie wyłączone i może być przełączone za pomocą kbd:[Alt+s].
 
 [[spell_dictionaries]]
 ==== Słowniki
@@ -2517,14 +2517,14 @@ Na przykład dla angielskiego i francuskiego:
 ----
 
 Możliwe jest użycie innego słownika dla konkretnego buforu, na przykład na kanale
-niemieckojęzycnzym:
+niemieckojęzycznym:
 
 ----
 /spell setdict de
 ----
 
 Możesz również ustawić słownik dla grupy buforów, na przykład angielski dla
-wsystkich kanałów na serwerze IRC libera:
+wszystkich kanałów na serwerze IRC libera:
 
 ----
 /set spell.dict.irc.libera en
@@ -2771,9 +2771,9 @@ Przykłady warunków:
 |===
 
 [NOTE]
-Nie istnieje wbudowany sposób na odświerzenie niestandardowych elementów paska.
-Możesz użyć wtyczki <<trigger,Trigger>> do wymuszenia odświerzenia, na przykład
-przez ostrzymanie jednego lub więcej sygnałów.
+Nie istnieje wbudowany sposób na odświeżenie niestandardowych elementów paska.
+Możesz użyć wtyczki <<trigger,Trigger>> do wymuszenia odświeżenia, na przykład
+przez otrzymanie jednego lub więcej sygnałów.
 
 Więcej informacji i przykładów można otrzymać wykonując komendę <<command_weechat_item,/item>>.
 
@@ -2917,11 +2917,11 @@ zwykły tekst.
 [[secured_data_passphrase_on_startup]]
 ===== Hasło przy uruchomieniu
 
-Kiedy ustawione jest hasło WeeChat poprosi o nie podczas uruchomieina
+Kiedy ustawione jest hasło WeeChat poprosi o nie podczas uruchomienia
 (ale nie podczas `/upgrade`).
 
 Jeśli używasz managera haseł, możesz uruchomić zewnętrzny program do
-odczytania hasła bez konieczności wprowadzania go ręcznie przy utuchomieniu WeeChat. +
+odczytania hasła bez konieczności wprowadzania go ręcznie przy uruchomieniu WeeChat. +
 Na przykład dla password-store (komenda `pass`):
 
 ----
@@ -2932,7 +2932,7 @@ Program może poprosić o odblokowanie klucza GPG lub wprowadzenie innego hasła
 aby odczytać sekret. WeeChat poczeka do zakończenia komendy i odczyta hasło
 ze standardowego wyjścia (musi to być w pierwszej linii bez żadnych dodatkowych
 znaków). +
-Jeśli wyjście programu nie zawiera hasla lub jest ono błęde, WeeChat poprosi
+Jeśli wyjście programu nie zawiera hasła lub jest ono błędne, WeeChat poprosi
 i jego wprowadzenie.
 
 [[secured_data_encryption]]
@@ -2999,7 +2999,7 @@ W celu użycia hasła _libera_, na przykład z
 Wtyczka alias pozwala tworzyć aliasy dla komend (z WeeChat lub innych wtyczek).
 
 Niektóre aliasy tworzone są domyślnie z nazwami pisanymi wielkimi literami
-(żeby można było je odróżnić od standardowch poleceń); komendy w WeeChat nie
+(żeby można było je odróżnić od standardowych poleceń); komendy w WeeChat nie
 rozróżniają wielkości znaków dlatego na przykład `/close` wywoła alias `/CLOSE`.
 
 Lista domyślnych aliasów:
@@ -3014,7 +3014,7 @@ include::{autogendir}/autogen_user_commands.pl.adoc[tag=alias_commands]
 [[alias_options]]
 ==== Options
 
-Ssekcje w pliku _alias.conf_:
+Sekcje w pliku _alias.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3074,7 +3074,7 @@ Sekcje w pliku _weechat.conf_:
 | bar        | <<command_weechat_bar,/bar>>               +
                /set weechat.bar.*                         | Opcje pasków.
 | layout     | <<command_weechat_layout,/layout>>         | Układy.
-| buffer     | <<command_weechat_buffer,/buffer setauto>> | Właściwości automatycznie nanoszne na bufory podczas otwierania.
+| buffer     | <<command_weechat_buffer,/buffer setauto>> | Właściwości automatycznie nanoszone na bufory podczas otwierania.
 | notify     | <<command_weechat_buffer,/buffer notify>>  | Poziomy powiadomień dla buforów (opcje mogą być dodawane/usuwane w sekcji).
 | filter     | <<command_weechat_filter,/filter>>         | Filtry.
 | key        | <<command_weechat_key,/key>>               | Skróty klawiszowe dla domyślnego kontekstu.
@@ -3140,7 +3140,7 @@ uruchomieniu:
 ----
 
 W celu uwierzytelnienia zalecane jest używanie SASL (jeśli wspiera to
-serwer), za pomocą hasła przechowaywanego w bezpieczny sposób (więcej
+serwer), za pomocą hasła przechowywanego w bezpieczny sposób (więcej
 w rozdziale <<irc_sasl_authentication,Uwierzytelnianie SASL>>):
 
 ----
@@ -3168,7 +3168,7 @@ komendy: `/set irc.server.libera.command_delay 5`.
 Opcje serwerów są nazywane w taki sposób `irc.server.<serwer>.<opcja>`,
 gdzie `<serwer>` to zdefiniowana nazwa serwera, `<opcja>` to nazwa opcji. +
 Wartość opcji jest dziedziczona z `irc.server_default.xxx` w przypadku
-kiedy opcja ma specalną wartość `null`.
+kiedy opcja ma specjalną wartość `null`.
 
 Na przykład jeśli stworzyłeś serwer _libera_ za pomocą po wyższych komend
 zobaczysz to po wykonaniu `/fset libera`:
@@ -3246,7 +3246,7 @@ jest w pełni zaufane.
 Niektóre opcje są używane do kontroli połączenia TLS:
 
 weechat.network.gnutls_ca_system::
-    ładuje domyślne systemowe zaufane urzędy cetyfikujące
+    ładuje domyślne systemowe zaufane urzędy certyfikujące
 
 weechat.network.gnutls_ca_user::
     dodatkowy plik(i) urzędów certyfikacyjnych
@@ -3268,7 +3268,7 @@ się nie powieść, nawet jeśli wszystko było OK w wersjach przed 0.3.1.
 [[irc_connect_oftc_with_certificate]]
 ===== Pierwszy przykład: połączenie z oftc i sprawdzenie certyfikatu
 
-* Import certyfikatu w kosoli:
+* Import certyfikatu w konsoli:
 
 [source,shell]
 ----
@@ -3364,7 +3364,7 @@ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | 
 
 Połącz się do serwera, zidentyfikuj (na przykład za pomocą "nickserv identify")
 i ustaw swój klucz publiczny dla swojego konta, za pomocą nickserva (zamień
-wartość base64 wartościa dla swojego klucza):
+wartość base64 wartością dla swojego klucza):
 
 ----
 /connect libera
@@ -3420,8 +3420,8 @@ oddzielnych buforów dla serwerów:
 [[irc_tor_sasl]]
 ==== Połączenie za pomocą Tora i SASL
 
-Niekróre serwery wspierają połączenia z sieci https://www.torproject.org/[Tor ^↗^^],
-sieci wirtualnych tuneli, które umożliwają poprawienie swojej prywatności
+Niektóre serwery wspierają połączenia z sieci https://www.torproject.org/[Tor ^↗^^],
+sieci wirtualnych tuneli, które umożliwiają poprawienie swojej prywatności
 i bezpieczeństwa w Internecie.
 
 Pierwszym krokiem jest instalacja Tora. Dla Debiana (i pochodnych):
@@ -3505,7 +3505,7 @@ https://ircv3.net/software/clients[tej stronie ^↗^^].
 Specyfikacja: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^^]
 
 Ta właściwość pozwala serwerowi na wysyłanie wiadomości po tym jak użytkownik
-zostanie zidentyfikwany lub niezidentyfikowany na serwerze. +
+zostanie zidentyfikowany lub niezidentyfikowany na serwerze. +
 WeeChat wyświetla takie wiadomości jeśli opcja
 <<option_irc.look.display_account_message,irc.look.display_account_message>>
 jest włączona (domyślna wartość).
@@ -3527,7 +3527,7 @@ Ta właściwość pozwala serwerowi na wysyłanie komend konta jako tagów wiado
 do komend wysyłanych do klienta. +
 WeeChat parsuje te tagi i zapisuje je w wiadomości ale nie jest on używany ani
 wyświetlany. Można ich użyć w komendzie <<command_weechat_filter,/filter>> do filtrowania
-wiadmości pasujących do konkretnych kont:
+wiadomości pasujących do konkretnych kont:
 
 Przykład otrzymanej nieprzetworzonej wiadomości:
 
@@ -3565,7 +3565,7 @@ konkretnym kolorze na liście nicków, za pomocą następujących opcji:
 [[irc_ircv3_batch]]
 ==== batch
 
-Specifikacja: https://ircv3.net/specs/extensions/batch[batch ^↗^^]
+Specyfikacja: https://ircv3.net/specs/extensions/batch[batch ^↗^^]
 
 Ta właściwość pozwala serwerowi na wysyłanie seri zdarzeń (pogrupowane kilka powiązanych
 wiadomości).
@@ -3610,9 +3610,9 @@ Przykłady:
 [[irc_ircv3_draft_multiline]]
 ==== draft/multiline
 
-Specifikacja: https://ircv3.net/specs/extensions/multiline[multiline ^↗^^]
+Specyfikacja: https://ircv3.net/specs/extensions/multiline[multiline ^↗^^]
 
-Ta właściwość pozwala klientowi i serwerowi wysyłać wieloliniowe wiadomości,
+Ta właściwość pozwala klientowi i serwerowi wysyłać wielowierszowe wiadomości,
 za pomocą właściwości <<irc_ircv3_batch,batch>>, która również musi być włączona.
 
 Istnieje limit bajtów lub ilości lini tych wiadomości podawane dla tej
@@ -3622,17 +3622,17 @@ właściwości wysyłanej przez serwer, na przykład:
 CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
 ....
 
-Ustawia to limit na 4096 bajtów i 24 linie dla zawartości wieloliniowej serii.
+Ustawia to limit na 4096 bajtów i 24 linie dla zawartości wielowierszowej serii.
 
 Jeśli serwer nie ustawia limitu, domyślne wartości dla WeeChat to:
 
 * ilość bajtów: 4096
 * ilość lin: 24
 
-Tylko standardowe wiadmości oraz te wysyłane przez polecenie  <<command_irc_notice,/notice>>
+Tylko standardowe wiadomości oraz te wysyłane przez polecenie  <<command_irc_notice,/notice>>
 mogą mieć wiele linii. +
 Ta właściwość nie ma wpływu na wiadomości ACTION CTCP wysyłane przez polecenie
-<<command_irc_me,/me>>. Oznacza to ze wieloliniowe akcje wysyłane są jako wiele akcji.
+<<command_irc_me,/me>>. Oznacza to że wielowierszowe akcje wysyłane są jako wiele akcji.
 
 [WARNING]
 Ponieważ specyfikacja jest "szkicem" może się zmienić i wsparcie dla tej właściwości
@@ -3640,7 +3640,7 @@ w WeeChat może się zepsuć w dowolnym momencie. +
 Wsparcie dla tej właściwości jest automatycznie włączane jeśli serwer ją wspiera,
 można ją wyłączyć za pomocą polecenia:
 `/set irc.server_default.capabilities "*,!draft/multiline"`. +
-Kiedy wsparcie jest wyłączone, wieloliniowe wiadomości są wysyłane jako wiele wiadomości,
+Kiedy wsparcie jest wyłączone, wielowierszowe wiadomości są wysyłane jako wiele wiadomości,
 tak jakby były wysyłane sekwencyjnie do serwera.
 
 Przykład wiadomości IRC wysłanych dla wiadomości użytkownika z dwoma liniami
@@ -3663,10 +3663,10 @@ Wiadomość wyświetlana w WeeChat:
 [[irc_ircv3_echo_message]]
 ==== echo-message
 
-Specifikacja: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^^]
+Specyfikacja: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^^]
 
 Ta właściwość wymusza na serwerze wysyłanie wiadomości PRIVMSG, NOTICE i TAGMSG
-spowrotem do WeeChat.
+z powrotem do WeeChat.
 
 WeeChat wyświetla tylko otrzymane wiadomości, dlatego można zaobserwować pewne
 opóźnienia pomiędzy wysłaniem a wyświetleniem wiadomości. Kiedy wiadomość zostanie
@@ -3709,7 +3709,7 @@ Przykłady:
 
 Specyfikacja: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^^]
 
-Ta właściwość pozwala dodawać metdane do wiadomości. +
+Ta właściwość pozwala dodawać metadane do wiadomości. +
 Tagi te mogą być wyświetlone za pomocą komendy `/debug tags`.
 
 Musi to być włączone, żeby używać <<typing_notifications,powiadomień o pisaniu>>.
@@ -3741,8 +3741,8 @@ Przykład: wynik `/names`:
 ////
 
 [NOTE]
-Obecnie WeeChat nie wyświetla wszystkich prefuksów w wyniku komendy `/names`,
-nawet jeśli zostały poprawnie otrzmane i zapisane wewnętrznie.
+Obecnie WeeChat nie wyświetla wszystkich prefiksów w wyniku komendy `/names`,
+nawet jeśli zostały poprawnie otrzymane i zapisane wewnętrznie.
 
 Przykład: wynik `/whois alice`:
 
@@ -3755,7 +3755,7 @@ Przykład: wynik `/whois alice`:
 
 Specyfikacja: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^^]
 
-Zobacz dedykowany rozdział <<irc_sasl_authentication,autentykacja SASL>>.
+Zobacz dedykowany rozdział <<irc_sasl_authentication,uwierzytelnianie SASL>>.
 
 [[irc_ircv3_server_time]]
 ==== server-time
@@ -3764,7 +3764,7 @@ Specyfikacja: https://ircv3.net/specs/extensions/server-time[server-time ^↗^^
 
 Ta właściwość pozwala serwerowi na wysyłanie czasu dla wiadomości w tagach. +
 Po otrzymaniu czasu w wiadomości WeeChat używa go do jej wyświetlenia
-(może zostać wyświetlona z wrześniejszym czasem).
+(może zostać wyświetlona z wcześniejszym czasem).
 
 <<relay_irc_proxy,IRC proxy>> we wtyczce Relay wspiera tą właściwość,
 każdy klient IRC połączony z Relay powinien włączyć tą właściwość jeśli
@@ -3813,7 +3813,7 @@ Przykład nieprzetworzonych wiadomości IRC z tą właściwością:
 
 Specyfikacja: https://ircv3.net/specs/extensions/whox[WHOX ^↗^^]
 
-Ta właściwość pozwala na zarządanie dodatkowych pól w odpowiedzi na WHO
+Ta właściwość pozwala na zażądanie dodatkowych pól w odpowiedzi na WHO
 (przez komendę <<command_irc_who,/who>>). +
 WeeChat wyświetla wszystkie dodatkowe informacje otrzymane w odpowiedzi
 na WHO.
@@ -3893,8 +3893,8 @@ kiedy ktoś nic nie napisał na kanale w określonym czasie:
 - nick: user changes its nick
 - setname: user changes its real name
 
-Intgeligentne filtry są domyślnie włączone, ale musisz dodać filtr ukrywający
-wiadomości w buforach, na przydład:
+Inteligentne filtry są domyślnie włączone, ale musisz dodać filtr ukrywający
+wiadomości w buforach, na przykład:
 
 ----
 /filter add irc_smart * irc_smart_filter *
@@ -4245,7 +4245,7 @@ Następujące sygnały są wysyłane, kiedy piszesz wiadomość:
 [[typing_signals_caught]]
 === Przechwytywane sygnały
 
-Wtyczka typing przechwyytuje niektóre sygnały, które mogą być wysłane przez
+Wtyczka typing przechwytuje niektóre sygnały, które mogą być wysłane przez
 inne wtyczki (jak IRC) do aktualizacji wewnętrznych tablicy hashy używanych
 do przechowywania stanu nicków i buforów. Te tablice są używane do budowania
 zawartości elementu paska "typing".
@@ -4254,7 +4254,7 @@ Następujące sygnały są przechwytywane przez wtyczke typing:
 
 [width="100%",cols="1,4,3",options="header"]
 |===
-| Sygnal | Argumenty | Opis
+| Sygnał | Argumenty | Opis
 
 | typing_set_nick
 | Ciąg: wskaźnik bufora + ";" + stan (jeden z: "off", "typing", "paused",
@@ -4301,7 +4301,7 @@ https://weechat.org/about/interfaces/[tej stronie ^↗^^].
 [[relay_password]]
 === Hasło
 
-Zaleca się ustawenia hasła dla pośrednika za pomocą poniższych komend:
+Zaleca się ustawienia hasła dla pośrednika za pomocą poniższych komend:
 
 ----
 /secure set relay moje_hasło
@@ -4317,7 +4317,7 @@ To hasło jest używane przez wszystkie protokoły.
 TOTP (Time-based One-Time Password) może być użyte jako drugi składnik uwierzytelniania
 dla protokołów _api_ i _weechat_, poza samym hasłem.
 
-Jest to opcjomalne ale podnosi to poziom bezpieczeństwa.
+Jest to opcjonalne ale podnosi to poziom bezpieczeństwa.
 This is optional and increases the security level.
 
 Hasła jednorazowe mogą być generowane między innymi za pomocą:
@@ -4330,9 +4330,9 @@ Hasła jednorazowe mogą być generowane między innymi za pomocą:
   https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android ^↗^^],
   https://apps.apple.com/fr/app/google-authenticator/id388497605[iOS ^↗^^]
 
-Ten sam sekret TOTP musi być utawiony w WeeChat i aplikacji używanej do generowania haseł.
+Ten sam sekret TOTP musi być ustawiony w WeeChat i aplikacji używanej do generowania haseł.
 
-Musi to być ciąg zakodowany za pomocą base32, zawierajcy tylko litery i liczby od 2 do 7,
+Musi to być ciąg zakodowany za pomocą base32, zawierający tylko litery i liczby od 2 do 7,
 na przykład:
 
 ----
@@ -4362,7 +4362,7 @@ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay
 Musisz zamienić `~/.config/weechat` na ścieżkę do katalogu z konfiguracją WeeChat,
 który może być ustawiony na przykład na `~/.weechat`.
 
-Jeśli WeeChat jest już uruchomiony, możesz przładować certyfikat i klucz prywatny
+Jeśli WeeChat jest już uruchomiony, możesz przeładować certyfikat i klucz prywatny
 za pomocą polecenia:
 
 ----
@@ -4401,7 +4401,7 @@ Teraz możesz się połączyć na porcie 8000 za pomocą dowolnego klienta IRC
 używając hasła serwera "moje_hasło" (lub "libera:moje_hasło" jeśli żaden
 serwer nie został podany w przekaźniku).
 
-Na przydład jeśli używasz WeeChat jako klienta pośrednika IRC, z serwerem
+Na przykład jeśli używasz WeeChat jako klienta pośrednika IRC, z serwerem
 nazwanym "relay" i hasłem pośrednika "moje_hasło", możesz ustawić hasło
 za pomocą tych komend:
 
@@ -4439,7 +4439,7 @@ Połączenie z pośrednikiem _api_ działającym lokalnie z WeeChat:
 ----
 
 Połączenie z pośrednikiem _api_ działającym gdzieś z WeeChat
-(TLS jest baredzo zalecany):
+(TLS jest bardzo zalecany):
 
 ----
 /remote add weechat https://example.com:9000 -password=mypassword
@@ -4516,7 +4516,7 @@ Za pomocą OpenSSH:
 ssh -L 9000:.weechat/relay_socket user@hostname
 ----
 
-Przekerowuje to połączenia lokalnych klientów łączących się na port 9000 do intancji
+Przekierowuje to połączenia lokalnych klientów łączących się na port 9000 do instancji
 WeeChat uruchomionej na "hostname".
 
 [[relay_commands]]
@@ -4589,7 +4589,7 @@ Składnia dla komend/tekstu przekazywanego do kolejki FIFO wygląda następując
 ....
 
 Backslashe mogą być użyte w tym formacie zastępując `*` przez `\`, pozwalając
-na przykład wysyłanie wiadomości wieloliniowych:
+na przykład wysyłanie wiadomości wielowierszowych:
 
 ....
   plugin.buffer \text or command here
@@ -4598,11 +4598,11 @@ na przykład wysyłanie wiadomości wieloliniowych:
 
 Kilka przykładów:
 
-* Zmiana nicka na serwerze IRC libera na "newnick":
+* Zmiana nicka na serwerze IRC libera na "nowy nick":
 
 [source,shell]
 ----
-echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.server.libera */nick nowy nick' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Wysłanie wiadomości na kanał IRC #weechat:
@@ -4612,7 +4612,7 @@ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_123
 echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
-* Wysyłanie wielolinowych wiadomości na kanał IRC #test, jeśli właściwość
+* Wysyłanie wielowierszowych wiadomości na kanał IRC #test, jeśli właściwość
   "draft/multiline" jest włączona na serwerze ergo:
 
 [source,shell]
@@ -4659,7 +4659,7 @@ include::{autogendir}/autogen_user_options.pl.adoc[tag=fifo_options]
 == Trigger
 
 Trigger to scyzoryk szwajcarski dla WeeChat: może być podpięty do wielu rzeczy
-(sygnał, modyrikator, wyśiwrtlanie, ...), zmieniać zawartość danych, oraz wykonać
+(sygnał, modyfikator, wyświetlanie, ...), zmieniać zawartość danych, oraz wykonać
 jedną lub więcej komend. Można użyć warunków w celu ograniczenia działania
 w określonych przypadkach.
 
@@ -4676,7 +4676,7 @@ lub usunięte:
 * trigger _beep_ dla powiadomień
 * cztery pozostałe triggery służą ukrywaniu haseł na ekranie
 
-Lista domyśłnych triggerów:
+Lista domyślnych triggerów:
 
 [width="100%",cols="5m,3,22",options="header"]
 |===
@@ -4725,7 +4725,7 @@ Trigger posiada następujące opcje (nazwy to `trigger.trigger.<nazwa>.<opcja>`)
 | Argumenty dla zdarzenia, zależą od jego typu.
 
 | conditions | string
-| Waruki do wykonania triggera; są one przetwarzane (zobacz komendę
+| Warunki do wykonania triggera; są one przetwarzane (zobacz komendę
   <<command_weechat_eval,/eval>>).
 
 | regex | string
@@ -4768,7 +4768,7 @@ kolejności, jeśli triggery są globalnie włączone i jeśli sam trigger jest 
 . sprawdzenie warunków triggera: jeśli nie jest spełniony następuje wyjście
 . zastępowanie tekstu w triggerze za pomocą wyrażenia
 . wykonanie komend(-y)
-. wyjście z kodem poweoru (nie dotyczy hooków _modifier_, _line_, _focus_,
+. wyjście z kodem powrotu (nie dotyczy hooków _modifier_, _line_, _focus_,
   _info_ i _info_hashtable_)
 . wykonanie akcji kończącej (jeśli inna niż `none`).
 
@@ -4951,8 +4951,8 @@ s/regex1/replace1/var1 y/abcdef/ABDDEF/var2
 [[trigger_regex_replace]]
 ==== Zamiana wyrażeniem regularnym
 
-Dla komendy `s`, format jest jestępujący: `s/regex/replace` lub `s/regex/replace/var`
-(gdzie _var_ to zmianna z tablicy hashy).
+Dla komendy `s`, format jest jest następujący: `s/regex/replace` lub `s/regex/replace/var`
+(gdzie _var_ to zmienna z tablicy hashy).
 
 Jako że `s` to domyślna komenda, można to pominąć, dlatego `/regex/replace`
 jest także poprawne (jednak pierwszy znak, który będzie separatorem, nie może być
@@ -5020,7 +5020,7 @@ y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 [[trigger_regex_variable]]
 ==== Zmienna
 
-Jeśli _var_ nie istnieje w tabeli hashy zostanie sutomatycznie utworzona bez
+Jeśli _var_ nie istnieje w tabeli hashy zostanie automatycznie utworzona bez
 wartości. Pozwala to na tworzenie zmiennych tymczasowych.
 
 Jeśli _var_ nie została podana, zostanie użyta domyślna zmienna w zależności
@@ -5040,7 +5040,7 @@ od typu hooka:
 | config         | tg_value           |
 | focus          |                    |
 | info           | tg_info            | tg_info
-| info_hashtable |                    | wszytkie zmienne otrzymane w tablicy hashy
+| info_hashtable |                    | wszystkie zmienne otrzymane w tablicy hashy
 |===
 
 [NOTE]
@@ -5370,7 +5370,7 @@ Wyświetlanie URLi na zielono:
 ----
 
 [NOTE]
-Proste wyrażenie użyte do wykrycia URLa może nie łapać wszstkich URLi, ale jest
+Proste wyrażenie użyte do wykrycia URLa może nie łapać wszystkich URLi, ale jest
 szybsze od złożonego wyrażenia.
 
 [[trigger_example_auto_pong]]
@@ -5470,7 +5470,7 @@ możliwe jest również ładowanie lub wyładowywanie wtyczek podczas pracy WeeC
 Możesz użyć komendy `/plugin` żeby załadować/wyładować wtyczkę, lub wyświetlić
 wszystkie załadowane wtyczki.
 
-Podcza wyładowywania wtyczki WeeChat usówa:
+Podczas wyładowywania wtyczki WeeChat usuwa:
 
 * bufory
 * opcje konfiguracyjne (options są zapisywane w plikach)
@@ -5536,9 +5536,9 @@ znaleźć w link:weechat_scripting.pl.html[Poradniku pisania skryptów ^↗^^].
 Manager skryptów (komenda <<command_script_script,/script>>) jest używany
 do ładowania/wyładowania skryptów w dowolnym języku, oraz do
 instalowania/usuwania skryptów z repozytorium skryptów WeeChat, które można
-znależć na https://weechat.org/scripts/[tej stronie ^↗^^].
+znaleźć na https://weechat.org/scripts/[tej stronie ^↗^^].
 
-W trosce o prywatność pobieranie skryptów jest domyślnie wyłąćzone. +
+W trosce o prywatność pobieranie skryptów jest domyślnie wyłączone. +
 Żeby je włączyć, wpisz poniższe polecenie:
 
 ----
@@ -5554,14 +5554,14 @@ za pomocą polecenia <<command_script_script,/script>>:
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │1.weechat│322/322 skrypty (filtr: {x}) | Sort: i,p,n | Alt+klawisz/wejście: i=instaluj r=usuń l=załaduj L=prze>>│
 │2.scripts│{x}      autosort.py                     3.10    2023-12-31 | Automatycznie grupowanie buforów wg serw│
-│         │{x}      highmon.pl                      2.7     2020-06-21 | Dodaje bufor monitorujący higlighty.    │
+│         │{x}      highmon.pl                      2.7     2020-06-21 | Dodaje bufor monitorujący wywołania.    │
 │         │{x}ia r  grep.py                   0.8.6 0.8.6   2022-11-11 | Przeszukuje bufor lub plik z logami za p│
 │         │{x}      colorize_nicks.py               32      2023-10-30 | Używaj kolorów nicków weechat w oknie ro│
 │         │##{x}ia r  go.py                     3.0.1 3.0.1   2024-05-30 | Szybkie przemieszczanie się pomiędzy buf##│
 │         │       aesthetic.py                    1.0.6   2020-10-25 | Spraw, że wiadomości będą bardziej E S T│
 │         │       aformat.py                      0.2     2018-06-21 | Alternatywne formatowanie tekstu, przyda│
-│         │       alternatetz.py                  0.4     2022-01-25 | Dodaje alternatywny element strefy czaso│
-│         │       amarok2.pl                      0.7     2012-05-08 | Kontrola i wyświetlanie aktualnie odtwar│
+│         │       alternatetz.py                  0.4     2022-01-25 | Dodaje alternatywny element strefy czasu│
+│         │       amarok2.pl                      0.7     2012-05-08 | Kontrola i wyświetlanie aktualnie otwart│
 │         │       amqp_notify.rb                  0.1     2011-01-12 | Wysyła prywatne wiadomości i higlighty d│
 │         │       announce_url_title.py           19      2021-06-05 | Prezentuje tytuł URL'a użytkownikowi lub│
 │         │       anotify.py                      1.0.2   2020-05-16 | Powiadomienia na ekranie dla prywatnych │

@@ -71,7 +71,7 @@ Dla pomocy wpisz `/help`. Aby uzyskać pomoc dla komendy wpisz `/help komenda`.
 link:weechat_user.pl.html#key_bindings[Keys ^↗^^] i
 link:weechat_user.pl.html#commands_and_options[commands ^↗^^] są opisane w dokumentacji.
 
-Nowym użytkowniką zaleca się przeczytanie dokumentu
+Nowym użytkownikom zaleca się przeczytanie dokumentu
 link:weechat_quickstart.pl.html[Szybki start ^↗^^].
 
 [[display]]
@@ -145,7 +145,7 @@ Na przykład, _xterm-color_ może wyświetlać takie dziwne znaki, możesz uży�
 który działa dobrze (jak wiele innych wartości). +
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
-Jeśli używasz gnome-terminal, sprawdź czy opcja "Ambigous-width chracters"
+Jeśli używasz gnome-terminal, sprawdź czy opcja "Ambagious-width characters"
 w menu Preferencje/Profile/Kompatybilność jest ustawiona na `narrow`.
 
 [[macos_display_broken]]
@@ -167,7 +167,7 @@ _okno_ jest to obszar ekranu wyświetlający bufor. Możliwe jest podzielenie
 ekranu na wiele okien.
 
 Każde okno wyświetla jeden bufor lub grupę połączonych buforów.
-Buform może być ukryty (nie wyświetlany w żadnym oknie) lub wyświetlany w jednym lub
+Bufor może być ukryty (nie wyświetlany w żadnym oknie) lub wyświetlany w jednym lub
 kilku oknach.
 
 [[buffers_list]]
@@ -195,7 +195,7 @@ Domyślne skróty do przewijania paska _buflist_ to kbd:[F1] (lub kbd:[Ctrl+F1])
 kbd:[F2] (lub kbd:[Ctrl+F2]), kbd:[Alt+F1] oraz kbd:[Alt+F2].
 
 [[customize_buflist]]
-=== Jak mogę spersonalizować lisę buforów, na przykład kolor aktywnego budora?
+=== Jak mogę spersonalizować lisę buforów, na przykład kolor aktywnego bufora?
 
 Możesz sprawdzić wszystkie opcję listy buforów za pomocą polecenia:
 
@@ -241,7 +241,7 @@ W celu ograniczenia długości nicków w oknie rozmowy:
 === Co oznacza [H: 3(1,8), 2(4)] na pasku statusu?
 
 Jest to "hotlista", lista buforów z ilością nieprzeczytanych wiadomości,
-w kolejnoci: podświetlenia, prywatne wiadomości, wiadomości, inne (jak
+w kolejności: podświetlenia, prywatne wiadomości, wiadomości, inne (jak
 wejścia/wyjścia). +
 Ilość "nieprzeczytanych wiadomości" to lista nowych wyświetlonych/odebranych
 wiadomości od ostatniej wizyty w buforze.
@@ -262,7 +262,7 @@ Kolory można zmienić za pomocą opcji __weechat.color.status_data_*__
 (bufory) i __weechat.color.status_count_*__ (liczniki). +
 Pozostałe opcje hotlist można zmienić za pomocą opcji __weechat.look.hotlist_*__.
 
-Więcej informacji na temat hotlity można znaleźć w
+Więcej informacji na temat hotlisty można znaleźć w
 link:weechat_user.pl.html#screen_layout[Poradniku użytkownika / Układ ekranu ^↗^^].
 
 [[input_bar_size]]
@@ -308,7 +308,7 @@ użyty w żadnym z pasków:
 [[terminal_copy_paste]]
 === Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 
-Możesz użyć prostego tybu wyświetlania (domyślnie: kbd:[Alt+l] (`L`)), który pokazuje
+Możesz użyć prostego trybu wyświetlania (domyślnie: kbd:[Alt+l] (`L`)), który pokazuje
 samą zawartość obecnie wybranego okna, bez żadnego formatowania.
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
@@ -329,7 +329,7 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
 
 Możesz użyć prostego trybu wyświetlania (domyślnie: kbd:[Alt+l] (`L`)).
 
-Żeby operowanie na URLach było latwiejsze możesz:
+Żeby operowanie na URLach było łatwiejsze możesz:
 
 * wyłączyć listę nicków i pokazać ja tylko, kiedy będzie potrzebna, za pomocą kbd:[Alt+Shift+N]
 
@@ -340,7 +340,7 @@ Możesz użyć prostego trybu wyświetlania (domyślnie: kbd:[Alt+l] (`L`)).
 /set weechat.bar.nicklist.size_max 8
 ----
 
-* wyłączyć wyrównanie dla wieloliniowych słów:
+* wyłączyć wyrównanie dla wyrazów wielowierszowych:
 
 ----
 /set weechat.look.align_multiline_words off
@@ -386,7 +386,7 @@ Oczywiście jest to możliwe:
 Nie ma opcji na zmianę strefy czasowej w WeeChat, zmienna środowiskowa `TZ` musi
 być ustawiona na odpowiednią wartość.
 
-W pliku inicjalizującym powłokę lub w linii poleceń, przed uruchomieniem WeeChat wpisz:
+W pliku inicjującym powłokę lub w linii poleceń, przed uruchomieniem WeeChat wpisz:
 
 [source,shell]
 ----
@@ -451,8 +451,8 @@ Musisz włączyć obsługę tego zdarzenia za pomocą specjalnego kodu wysyłane
 *Ważne*:
 
 * Musisz użyć współczesnego terminala zgodnego z xterm.
-* Dodatkowo, istotne jest, any zmenna TERM była utawiona na wartość _xterm_ lub _xterm-256color_.
-* Jeśli używaz tmuxa, musisz dodatkowo włączyć obsługę zdarzeń aktywności poprzez dodanie
+* Dodatkowo, istotne jest, any zmienna TERM była ustawiona na wartość _xterm_ lub _xterm-256color_.
+* Jeśli używasz tmuxa, musisz dodatkowo włączyć obsługę zdarzeń aktywności poprzez dodanie
   `set -g focus-events on` do pliku _.tmux.conf_.
 * *Nie* działa to pod screenem.
 
@@ -470,7 +470,7 @@ Następnie przypisz dwie kombinacje klawiszy dla stanu aktywności (zamień kome
 /key bind meta-[O /print -core unfocus
 ----
 
-Na przykład w celu oznaczenia boforów jako nie przeczytane w momencie jak terminal straci focus:
+Na przykład w celu oznaczenia buforów jako nie przeczytane w momencie jak terminal straci focus:
 
 ----
 /key bind meta-[O /allbuf /buffer set unread
@@ -638,10 +638,10 @@ Można również samemu stworzyć skrót, na przykład:
 /key bind meta-q /buffer *11
 ----
 
-Listę domyślnych skrótów klawiszowych można znależć w
+Listę domyślnych skrótów klawiszowych można znaleźć w
 link:weechat_user.pl.html#key_bindings[Poradniku uzytkownika / Domyślne skróty klawiszowe ^↗^^].
 
-Aby przesjść do bufora o numerze  ≥ 100, możesz zdefiniować trigger i następnie użyć
+Aby przejść do bufora o numerze  ≥ 100, możesz zdefiniować trigger i następnie użyć
 komendy w stylu `/123` żeby przejść do bufora #123:
 
 ----
@@ -720,7 +720,7 @@ rxvt-unicode.
 === Jak mogę zaznaczyć lub wkleić tekst w terminalu z włączoną obsługa myszy w WeeChat?
 
 Kiedy obsługa myszy jest włączona w WeeChat, można użyć modyfikatora kbd:[Shift]
-do zaznaczania lub kliknać w terminalu, tak jak w przypadku wyłączonej obsługi
+do zaznaczania lub kliknąć w terminalu, tak jak w przypadku wyłączonej obsługi
 myszy (w niektórych terminalach jak iTerm należy użyć kbd:[Alt] zamiast
 kbd:[Shift]).
 
@@ -766,7 +766,7 @@ Możesz spróbować innego ciągu priorytetu, zamień "xxx" nazwą serwera:
 [[irc_tls_libera]]
 === Jak mogę połączyć się z serwerem libera używając TLS?
 
-Sprawdź czy masz zainstalowane cartyfikaty w systemie, zazwyczaj zapewnia je paczka
+Sprawdź czy masz zainstalowane certyfikaty w systemie, zazwyczaj zapewnia je paczka
 o nazwie "ca-certificates".
 
 Ustaw port serwera, TLS, następnie się połącz:
@@ -811,7 +811,7 @@ na kanały):
 ----
 
 [[edit_autojoin]]
-=== Jak mogę dodać/usunąć kanaly z opcji automatycznego wejścia?
+=== Jak mogę dodać/usunąć kanały z opcji automatycznego wejścia?
 
 Z WeeChat ≥ 3.5, możesz automatycznie śledzić kanały, na które wchodzisz
 i które opuszczasz w opcji serwera "autojoin".
@@ -904,7 +904,7 @@ set away_devoice false
 Aby dowiedzieć się jak sprawdzić nieobecność w WeeChat, spójrz na pytanie o
 <<color_away_nicks,nieobecnych osobach>>.
 
-Jeśli napewno chcesz filtrować wiadomości o statusie voice, możesz użyć tej komendy,
+Jeśli na pewno chcesz filtrować wiadomości o statusie voice, możesz użyć tej komendy,
 nie jest ona jednak doskonała (działa tylko jeśli pierwszy z modyfikowanych trybów to voice):
 
 ----
@@ -932,7 +932,7 @@ osobami:
 === Jak mogę zostać powiadomiony, jeśli ktoś będzie chciał przyciągnąć moją uwagę na kanale?
 
 Istnieje domyślny trigger "beep" wysyłający sygnał _BEL_ do terminala przy
-wyołaniu na kanale lub prywatnej wiadomości. Możesz skonfigurować swój terminal
+wywołaniu na kanale lub prywatnej wiadomości. Możesz skonfigurować swój terminal
 (lub multiplekser jak screen/tmux), aby wykonał polecenie lub odtworzył dźwięk
 po otrzymaniu sygnału _BEL_.
 
@@ -984,10 +984,10 @@ Dla wszystkich kanałów na serwerze "libera":
 Domyślna kombinacja to kbd:[Ctrl+x] (komenda: `+/buffer switch+`).
 
 [[plugins_scripts]]
-== Pluginy / skrypty
+== Wtyczki / skrypty
 
 [[openbsd_plugins]]
-=== Używam OpenBSD, WeeChat nie ładuje żadnych pluginów, co jest nie tak?
+=== Używam OpenBSD, WeeChat nie ładuje żadnych wtyczek, co jest nie tak?
 
 Pod  OpenBSD, nazwy wtyczek kończą się ".so.0.0" (".so" dla Linuksa).
 
@@ -1022,7 +1022,7 @@ rm ~/.cache/weechat/script/plugins.xml.gz
 [NOTE]
 Jeśli nie używasz katalogów XDG, lista skryptów znajduję się w: _~/.weechat/script/plugins.xml.gz_.
 
-Następnie ponownie zaktualizuj listę sktyptów w WeeChat:
+Następnie ponownie zaktualizuj listę skryptów w WeeChat:
 
 ----
 /script update
@@ -1047,7 +1047,7 @@ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 Jeśli używasz macOS i pobrany plik ma wielkość 0 bajtów, spróbuj ustawić poniższą
-zmianną w inicjalizującym powłokę w terminalu lub z linii poleceń przed
+zmienną w inicjującym powłokę w terminalu lub z linii poleceń przed
 uruchomieniem WeeChat:
 
 [source,shell]
@@ -1074,10 +1074,10 @@ Możesz, ale *NIE* jest to zalecane.
 
 Zaleca się użycie komendy `/set`:
 
-* Możesz dopałnić nazwę i wartość opcji za pomocą klawisza kbd:[Tab]
-  (lub kbd:[Shift+Tab] dla częściowego dopełnieina, przydatne dla nazw).
+* Możesz dopełnić nazwę i wartość opcji za pomocą klawisza kbd:[Tab]
+  (lub kbd:[Shift+Tab] dla częściowego dopełnienia, przydatne dla nazw).
 * wartość jest sprawdzana, w razie błędu wyświetlana jest wiadomość
-* wartości zmieniane są od razu, nie trzeba retartować WeeChat ani nic takiego
+* wartości zmieniane są od razu, nie trzeba restartować WeeChat ani nic takiego
 
 Jeśli nadal chcesz ręcznie edytować pliki, powinieneś zachować ostrożność:
 
@@ -1094,7 +1094,7 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 
 * używać najnowsze stabilnej wersji (powinna mieć mniej wycieków pamięci
   niż starsze wersje)
-* nie ładuj nieużywanych pluginów, np: buflist, fifo, logger, perl, python,
+* nie ładuj nieużywanych wtyczek, np: buflist, fifo, logger, perl, python,
   ruby, lua, tcl, guile, javascript, php, spell, xfer (używana do DCC).
   Zobacz `/help weechat.plugin.autoload`.
 * ładować tylko naprawdę używane skrypty
@@ -1138,7 +1138,7 @@ Wyłącz odpowiedzi na wszystkie zapytania CTCP:
 /set irc.ctcp.ping ""
 ----
 
-Dla WeeChat < 4.1.0, automatyczne odpowiedzi są również domyślnie wysyłane dla innch zapytań CTCP i muszą zostać
+Dla WeeChat < 4.1.0, automatyczne odpowiedzi są również domyślnie wysyłane dla innych zapytań CTCP i muszą zostać
 również wyłączone:
 
 ----
@@ -1172,7 +1172,7 @@ Na przykład:
 
 
 Możesz się dzielić wszystkimi plikami konfiguracyjnymi _*.conf_ oprócz _sec.conf_, który
-zawiera hasla zaszyfrowane twoim kluczem.
+zawiera hasła zaszyfrowane twoim kluczem.
 
 Niektóre inne pliki mogą zawierać poufne informacje jak hasła (jeśli nie są przetrzymywane
 w _sec.conf_ za pomocą komendy `/secure`).
@@ -1194,7 +1194,7 @@ Jeśli używasz pojedynczego katalogu (domyślne dla WeeChat < 3.2) jest to kata
 [IMPORTANT]
 Wersja WeeChat na nowym urządzeniu musi być wyższa lub taka sama jak na obecnym. +
 Przenoszenie konfiguracji do starszej wersji WeeChat *NIE JEST WSPIERANE* i może ją zepsuć,
-prowadząć do niestabilnego działania WeeChat.
+prowadząc do niestabilnego działania WeeChat.
 
 Kroki:
 
@@ -1222,7 +1222,7 @@ Podczas uruchamiania WeeChat pod gdb, można spotkać się z takim błędem:
 
 [source,shell]
 ----
-$ gdb /scieżka/do/weechat
+$ gdb /ścieżka/do/weechat
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
@@ -1238,7 +1238,7 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /ścieżka/do/weechat
 ----
 
 [[supported_os]]
-=== Jaka jest lista platform wspieranych przez WeeChat? Czy będzie przeportowany na inne systemy operacyjne?
+=== Jaka jest lista platform wspieranych przez WeeChat? Czy będzie wspierać inne systemy operacyjne?
 
 WeeChat działa dobrze na większości systemów Linux/BSD, GNU/Hurd, macOS i Windowsie
 (Cygwin i Windows Subsystem for Linux).
