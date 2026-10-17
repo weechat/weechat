@@ -477,6 +477,9 @@ weechat_tcl_exec (struct t_plugin_script *script,
 struct t_plugin_script *
 weechat_tcl_load (const char *filename, const char *code)
 {
+    struct t_plugin_script *new_script, *old_tcl_current_script;
+    struct t_plugin_script *old_tcl_registered_script;
+    const char *old_tcl_current_script_filename;
     Tcl_Interp *interp;
     struct stat buf;
     int rc;
@@ -496,6 +499,17 @@ weechat_tcl_load (const char *filename, const char *code)
                         TCL_PLUGIN_NAME, filename);
     }
 
+    /*
+     * Save the current state, restored at the end: the script may be
+     * loaded by another script (for example with "/tcl load"), which
+     * must still be the current script after this load.
+     */
+    old_tcl_current_script = tcl_current_script;
+    old_tcl_current_script_filename = tcl_current_script_filename;
+    old_tcl_registered_script = tcl_registered_script;
+
+    new_script = NULL;
+
     tcl_current_script = NULL;
     tcl_registered_script = NULL;
 
@@ -504,7 +518,7 @@ weechat_tcl_load (const char *filename, const char *code)
                         weechat_gettext ("%s%s: unable to create new "
                                          "interpreter"),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME);
-        return NULL;
+        goto end;
     }
     tcl_current_script_filename = filename;
 
@@ -562,7 +576,7 @@ weechat_tcl_load (const char *filename, const char *code)
             tcl_current_script = NULL;
         }
 
-        return NULL;
+        goto end;
     }
 
     if (!tcl_registered_script)
@@ -572,7 +586,7 @@ weechat_tcl_load (const char *filename, const char *code)
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename);
         Tcl_DeleteInterp (interp);
-        return NULL;
+        goto end;
     }
     tcl_current_script = tcl_registered_script;
 
@@ -590,7 +604,14 @@ weechat_tcl_load (const char *filename, const char *code)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      tcl_current_script->filename);
 
-    return tcl_current_script;
+    new_script = tcl_current_script;
+
+end:
+    tcl_current_script = old_tcl_current_script;
+    tcl_current_script_filename = old_tcl_current_script_filename;
+    tcl_registered_script = old_tcl_registered_script;
+
+    return new_script;
 }
 
 /*
