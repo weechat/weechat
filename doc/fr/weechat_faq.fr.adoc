@@ -454,6 +454,57 @@ pouvez ajouter des alias de couleurs avec la commande `/color`).
 Merci de lire le link:weechat_user.fr.html#colors[Guide utilisateur / Couleurs ^↗^^]
 pour plus d'information sur la gestion des couleurs.
 
+[[italic_screen]]
+=== Pourquoi le texte en italique n'est pas affiché lorsque WeeChat tourne sous screen ?
+
+WeeChat affiche le texte en italique avec ncurses, qui utilise les capacités
+du terminal décrites par la variable _TERM_. +
+Les entrées terminfo _screen_, _screen-256color_ et _screen-256color-bce_ ne
+définissent pas les capacités pour l'italique (_sitm_ et _ritm_), donc ncurses
+ne peut pas afficher de texte en italique, même si le terminal le supporte.
+
+Vous pouvez vérifier si l'italique est défini avec cette commande (aucune
+sortie signifie pas d'italique) :
+
+[source,shell]
+----
+infocmp -1 screen-256color | grep -E "sitm|ritm"
+----
+
+Pour corriger cela, vous pouvez créer une entrée terminfo avec l'italique,
+dans un fichier appelé _screen-256color-italic.terminfo_ :
+
+----
+screen-256color-italic|GNU Screen with 256 colors and italic,
+    sitm=\E[3m, ritm=\E[23m,
+    use=screen-256color,
+----
+
+Puis la compiler (elle est installée dans _~/.terminfo_), sur la machine où
+WeeChat tourne :
+
+[source,shell]
+----
+tic -x screen-256color-italic.terminfo
+----
+
+Et ajouter cette ligne dans votre _~/.screenrc_ :
+
+----
+term screen-256color-italic
+----
+
+Si WeeChat tourne déjà, vous pouvez changer la variable _TERM_ avec ces deux
+commandes :
+
+----
+/set env TERM screen-256color-italic
+/upgrade
+----
+
+[NOTE]
+Sous tmux, la valeur _tmux-256color_ supporte l'italique.
+
 [[search_text]]
 === Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
 

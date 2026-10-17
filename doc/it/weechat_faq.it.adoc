@@ -487,6 +487,58 @@ with command `/color`).
 Please read the link:weechat_user.it.html#colors[User's guide / Colors ^↗^^]
 for more information about colors management.
 
+// TRANSLATION MISSING
+[[italic_screen]]
+=== Why is italic text not displayed when WeeChat runs under screen?
+
+WeeChat displays italic text with ncurses, which uses the capabilities of the
+terminal described by the _TERM_ variable. +
+The terminfo entries _screen_, _screen-256color_ and _screen-256color-bce_ do
+not define the italic capabilities (_sitm_ and _ritm_), so ncurses can not
+display italic text, even if the terminal supports it.
+
+You can check if italic is defined with this command (no output means no
+italic):
+
+[source,shell]
+----
+infocmp -1 screen-256color | grep -E "sitm|ritm"
+----
+
+To fix this, you can create a terminfo entry with italic, in a file called
+_screen-256color-italic.terminfo_:
+
+----
+screen-256color-italic|GNU Screen with 256 colors and italic,
+    sitm=\E[3m, ritm=\E[23m,
+    use=screen-256color,
+----
+
+Then compile it (it is installed in _~/.terminfo_), on the machine where
+WeeChat is running:
+
+[source,shell]
+----
+tic -x screen-256color-italic.terminfo
+----
+
+And add this line to your _~/.screenrc_:
+
+----
+term screen-256color-italic
+----
+
+If WeeChat is already running, you can change the _TERM_ variable with these
+two commands:
+
+----
+/set env TERM screen-256color-italic
+/upgrade
+----
+
+[NOTE]
+Under tmux, the value _tmux-256color_ supports italic.
+
 [[search_text]]
 === Come posso cercare testo nel buffer (come /lastlog con irssi)?
 
