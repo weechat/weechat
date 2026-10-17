@@ -202,7 +202,7 @@ typing_input_text_for_buffer_modifier_cb (const void *pointer,
     /* ignore any change in input if the user is searching text in the buffer */
     text_search = weechat_buffer_get_integer (ptr_buffer, "text_search");
     if (text_search != 0)
-        return WEECHAT_RC_OK;
+        return NULL;
 
     /* string is a command? ignore it */
     ptr_input_for_buffer = weechat_string_input_for_buffer (string);
