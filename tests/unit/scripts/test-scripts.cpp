@@ -76,6 +76,30 @@ test_scripts_create_socket (int listening, const char *env_var)
 }
 
 /*
+ * Write content in a file.
+ *
+ * Return:
+ *   1: OK
+ *   0: error
+ */
+
+int
+test_scripts_write_file (const char *path, const char *content)
+{
+    FILE *file;
+    int rc;
+
+    file = fopen (path, "w");
+    if (!file)
+        return 0;
+    rc = (fputs (content, file) >= 0);
+    if (fclose (file) != 0)
+        rc = 0;
+
+    return rc;
+}
+
+/*
  * Run the main loop (timers, file descriptors and processes) until all the
  * tests are done (some tests are in callbacks of hooks called later, like
  * hook_process), or until timeout (in milliseconds) is reached.
@@ -407,6 +431,198 @@ TEST(Scripts, API)
     free (test_scripts_dir);
 
     printf ("TEST(Scripts, API)");
+}
+
+/*
+ * Tests load of scripts by a script during its initialization: the outer
+ * script loads a script with an error, then a valid script, and must still
+ * be able to call the API after each load.
+ */
+
+TEST(Scripts, NestedLoad)
+{
+    /*
+     * Language, extension, code of outer script (the two "%s" are replaced
+     * by the directory with scripts), code of script with an error, code of
+     * valid script.
+     */
+    const char *languages[][5] = {
+#ifdef HAVE_PYTHON
+        { "python", "py",
+          "import weechat\n"
+          "weechat.register('nested_outer', 'me', '0.1', 'GPL3', '', '', '')\n"
+          "weechat.command('', '/python load %s/nested_bad.py')\n"
+          "weechat.prnt('', 'nested: after bad')\n"
+          "weechat.command('', '/python load %s/nested_good.py')\n"
+          "weechat.prnt('', 'nested: after good')\n",
+          "this is ( not python\n",
+          "import weechat\n"
+          "weechat.register('nested_good', 'me', '0.1', 'GPL3', '', '', '')\n" },
+#endif
+#ifdef HAVE_PERL
+        { "perl", "pl",
+          "weechat::register('nested_outer', 'me', '0.1', 'GPL3', '', '', '');\n"
+          "weechat::command('', '/perl load %s/nested_bad.pl');\n"
+          "weechat::print('', 'nested: after bad');\n"
+          "weechat::command('', '/perl load %s/nested_good.pl');\n"
+          "weechat::print('', 'nested: after good');\n",
+          "this is ( not perl\n",
+          "weechat::register('nested_good', 'me', '0.1', 'GPL3', '', '', '');\n" },
+#endif
+#ifdef HAVE_RUBY
+        { "ruby", "rb",
+          "def weechat_init\n"
+          "  Weechat.register('nested_outer', 'me', '0.1', 'GPL3', '', '', '')\n"
+          "  Weechat.command('', '/ruby load %s/nested_bad.rb')\n"
+          "  Weechat.print('', 'nested: after bad')\n"
+          "  Weechat.command('', '/ruby load %s/nested_good.rb')\n"
+          "  Weechat.print('', 'nested: after good')\n"
+          "  return Weechat::WEECHAT_RC_OK\n"
+          "end\n",
+          "def (\n",
+          "def weechat_init\n"
+          "  Weechat.register('nested_good', 'me', '0.1', 'GPL3', '', '', '')\n"
+          "  return Weechat::WEECHAT_RC_OK\n"
+          "end\n" },
+#endif
+#ifdef HAVE_LUA
+        { "lua", "lua",
+          "weechat.register('nested_outer', 'me', '0.1', 'GPL3', '', '', '')\n"
+          "weechat.command('', '/lua load %s/nested_bad.lua')\n"
+          "weechat.print('', 'nested: after bad')\n"
+          "weechat.command('', '/lua load %s/nested_good.lua')\n"
+          "weechat.print('', 'nested: after good')\n",
+          "this is ( not lua\n",
+          "weechat.register('nested_good', 'me', '0.1', 'GPL3', '', '', '')\n" },
+#endif
+#ifdef HAVE_TCL
+        { "tcl", "tcl",
+          "weechat::register nested_outer me 0.1 GPL3 {} {} {}\n"
+          "weechat::command {} {/tcl load %s/nested_bad.tcl}\n"
+          "weechat::print {} {nested: after bad}\n"
+          "weechat::command {} {/tcl load %s/nested_good.tcl}\n"
+          "weechat::print {} {nested: after good}\n",
+          "this is { not tcl\n",
+          "weechat::register nested_good me 0.1 GPL3 {} {} {}\n" },
+#endif
+#ifdef HAVE_GUILE
+        { "guile", "scm",
+          "(weechat:register \"nested_outer\" \"me\" \"0.1\" \"GPL3\" \"\" \"\" \"\")\n"
+          "(weechat:command \"\" \"/guile load %s/nested_bad.scm\")\n"
+          "(weechat:print \"\" \"nested: after bad\")\n"
+          "(weechat:command \"\" \"/guile load %s/nested_good.scm\")\n"
+          "(weechat:print \"\" \"nested: after good\")\n",
+          "(this is not ( scheme\n",
+          "(weechat:register \"nested_good\" \"me\" \"0.1\" \"GPL3\" \"\" \"\" \"\")\n" },
+#endif
+#ifdef HAVE_JAVASCRIPT
+        { "javascript", "js",
+          "weechat.register('nested_outer', 'me', '0.1', 'GPL3', '', '', '');\n"
+          "weechat.command('', '/javascript load %s/nested_bad.js');\n"
+          "weechat.print('', 'nested: after bad');\n"
+          "weechat.command('', '/javascript load %s/nested_good.js');\n"
+          "weechat.print('', 'nested: after good');\n",
+          "this is ( not javascript\n",
+          "weechat.register('nested_good', 'me', '0.1', 'GPL3', '', '', '');\n" },
+#endif
+#ifdef HAVE_PHP
+        { "php", "php",
+          "<?php\n"
+          "weechat_register('nested_outer', 'me', '0.1', 'GPL3', '', '', '');\n"
+          "weechat_command('', '/php load %s/nested_bad.php');\n"
+          "weechat_print('', 'nested: after bad');\n"
+          "weechat_command('', '/php load %s/nested_good.php');\n"
+          "weechat_print('', 'nested: after good');\n",
+          "<?php\nthis is ( not php\n",
+          "<?php\n"
+          "weechat_register('nested_good', 'me', '0.1', 'GPL3', '', '', '');\n" },
+#endif
+        { NULL, NULL, NULL, NULL, NULL }
+    };
+    char *path_dir, path[PATH_MAX], content[(PATH_MAX * 2) + 1024];
+    char str_hdata[128], str_command[PATH_MAX + 128];
+    struct t_hdata *hdata;
+    void *scripts;
+    int i, turnoff_memleak, outer_loaded, good_loaded;
+
+    path_dir = string_eval_path_home ("${weechat_data_dir}/test_nested_load",
+                                      NULL, NULL, NULL);
+    CHECK(path_dir);
+    dir_rmtree (path_dir);
+    LONGS_EQUAL(1, dir_mkdir_parents (path_dir, 0755));
+
+    for (i = 0; languages[i][0]; i++)
+    {
+        /* Write the scripts. */
+        snprintf (content, sizeof (content), languages[i][2],
+                  path_dir, path_dir);
+        snprintf (path, sizeof (path), "%s/nested_outer.%s",
+                  path_dir, languages[i][1]);
+        LONGS_EQUAL(1, test_scripts_write_file (path, content));
+        snprintf (path, sizeof (path), "%s/nested_bad.%s",
+                  path_dir, languages[i][1]);
+        LONGS_EQUAL(1, test_scripts_write_file (path, languages[i][3]));
+        snprintf (path, sizeof (path), "%s/nested_good.%s",
+                  path_dir, languages[i][1]);
+        LONGS_EQUAL(1, test_scripts_write_file (path, languages[i][4]));
+
+        /*
+         * TODO: fix memory leaks in javascript plugin
+         * and keep memory leak detection enabled.
+         */
+        turnoff_memleak = (strcmp (languages[i][0], "javascript") == 0);
+
+        if (turnoff_memleak)
+            MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
+
+        /* Load the outer script, which loads the two other scripts. */
+        record_start ();
+        snprintf (str_command, sizeof (str_command),
+                  "/%s load %s/nested_outer.%s",
+                  languages[i][0], path_dir, languages[i][1]);
+        run_cmd (str_command);
+        record_stop ();
+
+        /* Check which scripts are loaded. */
+        snprintf (str_hdata, sizeof (str_hdata),
+                  "%s_script", languages[i][0]);
+        hdata = hook_hdata_get (NULL, str_hdata);
+        scripts = hdata_get_list (hdata, "scripts");
+        snprintf (str_command, sizeof (str_command),
+                  "${%s_script.name} == nested_outer", languages[i][0]);
+        outer_loaded = (hdata_search (hdata, scripts, str_command,
+                                      NULL, NULL, NULL, 1) != NULL);
+        snprintf (str_command, sizeof (str_command),
+                  "${%s_script.name} == nested_good", languages[i][0]);
+        good_loaded = (hdata_search (hdata, scripts, str_command,
+                                     NULL, NULL, NULL, 1) != NULL);
+
+        /* Unload the scripts. */
+        snprintf (str_command, sizeof (str_command),
+                  "/%s unload nested_outer", languages[i][0]);
+        run_cmd_quiet (str_command);
+        snprintf (str_command, sizeof (str_command),
+                  "/%s unload nested_good", languages[i][0]);
+        run_cmd_quiet (str_command);
+
+        /*
+         * Enable memory leak detection again before checks:
+         * a failed check exits the test immediately.
+         */
+        if (turnoff_memleak)
+            MemoryLeakWarningPlugin::turnOnThreadSafeNewDeleteOverloads();
+
+        /* The outer script can still call the API after each load. */
+        RECORD_CHECK_MSG("core.weechat", "", "nested: after bad", NULL);
+        RECORD_CHECK_MSG("core.weechat", "", "nested: after good", NULL);
+
+        /* The outer script and the valid script are both registered. */
+        CHECK(outer_loaded);
+        CHECK(good_loaded);
+    }
+
+    dir_rmtree (path_dir);
+    free (path_dir);
 }
 
 /*
