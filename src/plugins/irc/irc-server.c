@@ -4610,7 +4610,8 @@ irc_server_connect_cb (const void *pointer, void *data,
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, error);
             }
             irc_server_close_connection (server);
-            irc_server_reconnect_schedule (server);
+            server->current_retry++;
+            irc_server_switch_address (server, 1);
             break;
         case WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR:
             weechat_printf (

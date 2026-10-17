@@ -102,6 +102,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - **breaking:** alias: allow escaping buffer local variables with `\$`, do not replace buffer local variables in the arguments given to the alias ([#896](https://github.com/weechat/weechat/issues/896))
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: switch to next server address when the local hostname/IP cannot be set ([#540](https://github.com/weechat/weechat/issues/540))
 - irc: do not add tag "notify_private" on notices received from a server ([#478](https://github.com/weechat/weechat/issues/478))
 - irc: display each message sent when the text is split in multiple messages in commands `/msg` and `/query` ([#1719](https://github.com/weechat/weechat/issues/1719))
 - irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"

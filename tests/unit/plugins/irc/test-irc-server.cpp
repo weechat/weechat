@@ -24,6 +24,11 @@ extern "C"
 extern int irc_server_fingerprint_search_algo_with_size (int size);
 extern char *irc_server_eval_fingerprint (struct t_irc_server *server);
 extern char *irc_server_build_autojoin (struct t_irc_server *server);
+extern void irc_server_set_index_current_address (struct t_irc_server *server,
+                                                  int index);
+extern int irc_server_connect_cb (const void *pointer, void *data,
+                                  int status, int gnutls_rc, int sock,
+                                  const char *error, const char *ip_address);
 }
 
 #define IRC_FAKE_SERVER "fake"
@@ -1478,7 +1483,29 @@ TEST(IrcServer, SwitchAddress)
 
 TEST(IrcServer, ConnectCb)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    run_cmd_quiet ("/mute /server add test_connect "
+                   "irc.example.org,irc2.example.org");
+
+    server = irc_server_search ("test_connect");
+    CHECK(server);
+
+    /* local hostname error: switch to next address (#540) */
+    irc_server_set_index_current_address (server, 1);
+    LONGS_EQUAL(2, server->addresses_count);
+    STRCMP_EQUAL("irc2.example.org", server->current_address);
+    LONGS_EQUAL(0, server->retry_array[1]);
+    LONGS_EQUAL(0, server->reconnect_start);
+    irc_server_connect_cb (server, NULL,
+                           WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR,
+                           0, -1, "test error", NULL);
+    LONGS_EQUAL(0, server->index_current_address);
+    STRCMP_EQUAL("irc.example.org", server->current_address);
+    LONGS_EQUAL(1, server->retry_array[1]);
+    CHECK(server->reconnect_start > 0);
+
+    run_cmd_quiet ("/mute /server del test_connect");
 }
 
 /*
