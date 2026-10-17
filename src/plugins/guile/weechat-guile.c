@@ -530,6 +530,9 @@ weechat_guile_module_init_code (void *code)
 struct t_plugin_script *
 weechat_guile_load (const char *filename, const char *code)
 {
+    struct t_plugin_script *new_script, *old_guile_current_script;
+    struct t_plugin_script *old_guile_registered_script;
+    const char *old_guile_current_script_filename;
     char *filename2, *ptr_base_name, *base_name;
     SCM module;
     struct stat buf;
@@ -553,6 +556,17 @@ weechat_guile_load (const char *filename, const char *code)
                         GUILE_PLUGIN_NAME, filename);
     }
 
+    /*
+     * Save the current state, restored at the end: the script may be
+     * loaded by another script (for example with "/guile load"), which
+     * must still be the current script after this load.
+     */
+    old_guile_current_script = guile_current_script;
+    old_guile_current_script_filename = guile_current_script_filename;
+    old_guile_registered_script = guile_registered_script;
+
+    new_script = NULL;
+
     guile_current_script = NULL;
     guile_registered_script = NULL;
     guile_current_script_filename = filename;
@@ -567,7 +581,7 @@ weechat_guile_load (const char *filename, const char *code)
     {
         filename2 = strdup (filename);
         if (!filename2)
-            return NULL;
+            goto end;
         ptr_base_name = basename (filename2);
         base_name = strdup (ptr_base_name);
         module = scm_c_define_module (base_name,
@@ -582,7 +596,7 @@ weechat_guile_load (const char *filename, const char *code)
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), GUILE_PLUGIN_NAME, filename);
-        return NULL;
+        goto end;
     }
 
     weechat_guile_catch (scm_gc_protect_object, (void *)module);
@@ -603,7 +617,14 @@ weechat_guile_load (const char *filename, const char *code)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      guile_current_script->filename);
 
-    return guile_current_script;
+    new_script = guile_current_script;
+
+end:
+    guile_current_script = old_guile_current_script;
+    guile_current_script_filename = old_guile_current_script_filename;
+    guile_registered_script = old_guile_registered_script;
+
+    return new_script;
 }
 
 /*
