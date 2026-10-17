@@ -748,6 +748,10 @@ weechat_python_load (const char *filename, const char *code)
     FILE *fp;
     PyObject *python_path, *path, *module_main, *globals, *rc, *file_name;
     PyObject *err_type, *err_value, *err_traceback;
+    PyThreadState *old_python_current_interpreter, *old_interpreter;
+    struct t_plugin_script *new_script, *old_python_current_script;
+    struct t_plugin_script *old_python_registered_script;
+    const char *old_python_current_script_filename;
     char *weechat_sharedir, *weechat_data_dir;
     char *str_sharedir, *str_home;
     int set_file_name;
@@ -774,6 +778,20 @@ weechat_python_load (const char *filename, const char *code)
                         PYTHON_PLUGIN_NAME, filename);
     }
 
+    /*
+     * Save the current state, restored at the end: the script may be
+     * loaded by another script (for example with "/python load"), which
+     * must continue to run in its own interpreter after this load.
+     */
+    old_python_current_script = python_current_script;
+    old_python_current_script_filename = python_current_script_filename;
+    old_python_registered_script = python_registered_script;
+    old_python_current_interpreter = python_current_interpreter;
+    old_interpreter = PyThreadState_Swap (NULL);
+    PyThreadState_Swap (old_interpreter);
+
+    new_script = NULL;
+
     python_current_script = NULL;
     python_registered_script = NULL;
 
@@ -788,7 +806,7 @@ weechat_python_load (const char *filename, const char *code)
         if (fp)
             fclose (fp);
         /* PyEval_ReleaseLock (); */
-        return NULL;
+        goto end;
     }
 
     PyThreadState_Swap (python_current_interpreter);
@@ -867,7 +885,7 @@ weechat_python_load (const char *filename, const char *code)
             Py_EndInterpreter (python_current_interpreter);
             /* PyEval_ReleaseLock (); */
 
-            return NULL;
+            goto end;
         }
         if (rc)
             Py_XDECREF(rc);
@@ -922,7 +940,7 @@ weechat_python_load (const char *filename, const char *code)
             Py_EndInterpreter (python_current_interpreter);
             /* PyEval_ReleaseLock (); */
 
-            return NULL;
+            goto end;
         }
         Py_XDECREF(rc);
         fclose (fp);
@@ -943,7 +961,7 @@ weechat_python_load (const char *filename, const char *code)
         Py_EndInterpreter (python_current_interpreter);
         /* PyEval_ReleaseLock (); */
 
-        return NULL;
+        goto end;
     }
     python_current_script = python_registered_script;
 
@@ -963,7 +981,17 @@ weechat_python_load (const char *filename, const char *code)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      python_current_script->filename);
 
-    return python_current_script;
+    new_script = python_current_script;
+
+end:
+    python_current_script = old_python_current_script;
+    python_current_script_filename = old_python_current_script_filename;
+    python_registered_script = old_python_registered_script;
+    python_current_interpreter = old_python_current_interpreter;
+    if (old_interpreter)
+        PyThreadState_Swap (old_interpreter);
+
+    return new_script;
 }
 
 /*
