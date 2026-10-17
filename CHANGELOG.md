@@ -75,6 +75,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: ignore keys typed while asking confirmation for a bracketed paste, so that they are not added to the pasted text ([#341](https://github.com/weechat/weechat/issues/341))
 - core: fix position of new buffer in layout when buffers not in layout are before its layout number ([#232](https://github.com/weechat/weechat/issues/232))
 - core: fix missing lines in group of merged buffers after merging buffers into a zoomed group
 - core: set zoom on buffers merged into a zoomed group of merged buffers

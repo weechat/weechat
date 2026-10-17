@@ -541,6 +541,10 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
             /* Ctrl-n: cancel paste */
             cancel_paste = 1;
         }
+        else if (gui_key_paste_pending && gui_key_paste_complete)
+        {
+            /* Paste is complete: ignore any other key until ctrl-y/ctrl-n */
+        }
         else
         {
             gui_key_buffer_add (buffer[i]);
@@ -594,7 +598,7 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
 
             /* Stop bracketed mode. */
             gui_key_paste_bracketed_timer_remove ();
-            gui_key_paste_bracketed_stop ();
+            gui_key_paste_bracketed_stop (1);
 
             /* If paste confirmation not displayed, flush buffer now. */
             if (!gui_key_paste_pending)

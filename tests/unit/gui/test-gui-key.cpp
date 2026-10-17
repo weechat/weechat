@@ -46,6 +46,15 @@ extern struct t_gui_key *gui_key_search_part (struct t_gui_buffer *buffer, int c
 
 TEST_GROUP(GuiKey)
 {
+    void buffer_add_string (const char *string)
+    {
+        const char *ptr_string;
+
+        for (ptr_string = string; ptr_string[0]; ptr_string++)
+        {
+            gui_key_buffer_add ((unsigned char)ptr_string[0]);
+        }
+    }
 };
 
 /*
@@ -1634,7 +1643,13 @@ TEST(GuiKey, PasteReplaceTabs)
 
 TEST(GuiKey, PasteStart)
 {
-    /* TODO: write tests */
+    gui_key_paste_complete = 1;
+
+    gui_key_paste_start ();
+    LONGS_EQUAL(1, gui_key_paste_pending);
+    LONGS_EQUAL(0, gui_key_paste_complete);
+
+    gui_key_paste_cancel ();
 }
 
 /*
@@ -1714,7 +1729,38 @@ TEST(GuiKey, PasteBracketedStart)
 
 TEST(GuiKey, PasteBracketedStop)
 {
-    /* TODO: write tests */
+    config_file_option_set (config_look_paste_max_lines, "1", 1);
+
+    /* one line: no confirmation asked */
+    gui_key_buffer_reset ();
+    buffer_add_string ("abc");
+    gui_key_paste_bracketed_start ();
+    gui_key_paste_bracketed_stop (1);
+    LONGS_EQUAL(0, gui_key_paste_bracketed);
+    LONGS_EQUAL(0, gui_key_paste_pending);
+    LONGS_EQUAL(0, gui_key_paste_complete);
+    gui_key_buffer_reset ();
+
+    /* two lines, end of bracketed paste not received (timeout) */
+    buffer_add_string ("abc\ndef");
+    gui_key_paste_bracketed_start ();
+    gui_key_paste_bracketed_stop (0);
+    LONGS_EQUAL(0, gui_key_paste_bracketed);
+    LONGS_EQUAL(1, gui_key_paste_pending);
+    LONGS_EQUAL(0, gui_key_paste_complete);
+    gui_key_paste_cancel ();
+
+    /* two lines, end of bracketed paste received */
+    buffer_add_string ("abc\ndef");
+    gui_key_paste_bracketed_start ();
+    gui_key_paste_bracketed_stop (1);
+    LONGS_EQUAL(0, gui_key_paste_bracketed);
+    LONGS_EQUAL(1, gui_key_paste_pending);
+    LONGS_EQUAL(1, gui_key_paste_complete);
+    gui_key_paste_cancel ();
+
+    gui_key_paste_bracketed_timer_remove ();
+    config_file_option_reset (config_look_paste_max_lines, 1);
 }
 
 /*
@@ -1724,7 +1770,23 @@ TEST(GuiKey, PasteBracketedStop)
 
 TEST(GuiKey, PasteAccept)
 {
-    /* TODO: write tests */
+    config_file_option_set (config_look_paste_max_lines, "1", 1);
+
+    gui_key_buffer_reset ();
+    buffer_add_string ("abc\ndef\n");
+    gui_key_paste_bracketed_start ();
+    gui_key_paste_bracketed_stop (1);
+    LONGS_EQUAL(1, gui_key_paste_pending);
+    LONGS_EQUAL(1, gui_key_paste_complete);
+
+    gui_key_paste_accept ();
+    LONGS_EQUAL(0, gui_key_paste_pending);
+    LONGS_EQUAL(0, gui_key_paste_complete);
+    LONGS_EQUAL(7, gui_key_buffer_size);
+
+    gui_key_buffer_reset ();
+    gui_key_paste_bracketed_timer_remove ();
+    config_file_option_reset (config_look_paste_max_lines, 1);
 }
 
 /*
@@ -1734,7 +1796,22 @@ TEST(GuiKey, PasteAccept)
 
 TEST(GuiKey, PasteCancel)
 {
-    /* TODO: write tests */
+    config_file_option_set (config_look_paste_max_lines, "1", 1);
+
+    gui_key_buffer_reset ();
+    buffer_add_string ("abc\ndef\n");
+    gui_key_paste_bracketed_start ();
+    gui_key_paste_bracketed_stop (1);
+    LONGS_EQUAL(1, gui_key_paste_pending);
+    LONGS_EQUAL(1, gui_key_paste_complete);
+
+    gui_key_paste_cancel ();
+    LONGS_EQUAL(0, gui_key_paste_pending);
+    LONGS_EQUAL(0, gui_key_paste_complete);
+    LONGS_EQUAL(0, gui_key_buffer_size);
+
+    gui_key_paste_bracketed_timer_remove ();
+    config_file_option_reset (config_look_paste_max_lines, 1);
 }
 
 /*

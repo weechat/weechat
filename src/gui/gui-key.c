@@ -86,6 +86,9 @@ int gui_key_last_key_pressed_sent = -1;
 
 int gui_key_paste_pending = 0;      /* 1 is big paste was detected and      */
                                     /* WeeChat is asking user what to do    */
+int gui_key_paste_complete = 0;     /* 1 if pending paste is complete (end  */
+                                    /* of bracketed paste received): keys   */
+                                    /* other than ctrl-y/ctrl-n are ignored */
 int gui_key_paste_bracketed = 0;    /* bracketed paste mode detected        */
 struct t_hook *gui_key_paste_bracketed_timer = NULL;
                                     /* timer for bracketed paste            */
@@ -2848,6 +2851,7 @@ void
 gui_key_paste_start (void)
 {
     gui_key_paste_pending = 1;
+    gui_key_paste_complete = 0;
     gui_input_paste_pending_signal ();
 }
 
@@ -2944,7 +2948,7 @@ gui_key_paste_bracketed_timer_cb (const void *pointer, void *data,
     gui_key_paste_bracketed_timer = NULL;
 
     if (gui_key_paste_bracketed)
-        gui_key_paste_bracketed_stop ();
+        gui_key_paste_bracketed_stop (0);
 
     return WEECHAT_RC_OK;
 }
@@ -2992,12 +2996,17 @@ gui_key_paste_bracketed_start (void)
 /*
  * Stop bracketed paste of text (ESC[201~ detected or timeout while waiting for
  * this code).
+ *
+ * If end_received == 1 (ESC[201~ detected) and confirmation is asked to user,
+ * the paste is marked as complete: any key other than ctrl-y/ctrl-n received
+ * while waiting for user confirmation is then ignored.
  */
 
 void
-gui_key_paste_bracketed_stop (void)
+gui_key_paste_bracketed_stop (int end_received)
 {
-    gui_key_paste_check (1);
+    if (gui_key_paste_check (1))
+        gui_key_paste_complete = (end_received) ? 1 : 0;
     gui_key_paste_bracketed = 0;
 }
 
@@ -3009,6 +3018,7 @@ void
 gui_key_paste_accept (void)
 {
     gui_key_paste_pending = 0;
+    gui_key_paste_complete = 0;
     gui_input_paste_pending_signal ();
     gui_key_paste_finish ();
 }
@@ -3022,6 +3032,7 @@ gui_key_paste_cancel (void)
 {
     gui_key_buffer_reset ();
     gui_key_paste_pending = 0;
+    gui_key_paste_complete = 0;
     gui_input_paste_pending_signal ();
 }
 

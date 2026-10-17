@@ -72,6 +72,7 @@ extern int *gui_key_buffer;
 extern int gui_key_buffer_size;
 extern int gui_key_last_key_pressed_sent;
 extern int gui_key_paste_pending;
+extern int gui_key_paste_complete;
 extern int gui_key_paste_bracketed;
 extern time_t gui_key_last_activity_time;
 
@@ -129,7 +130,7 @@ extern int gui_key_paste_check (int bracketed_paste);
 extern void gui_key_paste_bracketed_timer_remove (void);
 extern void gui_key_paste_bracketed_timer_add (void);
 extern void gui_key_paste_bracketed_start (void);
-extern void gui_key_paste_bracketed_stop (void);
+extern void gui_key_paste_bracketed_stop (int end_received);
 extern void gui_key_paste_accept (void);
 extern void gui_key_paste_cancel (void);
 extern void gui_key_end (void);
