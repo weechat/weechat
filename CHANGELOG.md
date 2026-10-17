@@ -107,6 +107,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: allow server commands in a channel buffer opened before the join when the join failed ([#1417](https://github.com/weechat/weechat/issues/1417))
 - irc: do not smart filter part/quit of a nick who has sent a notice to the channel ([#585](https://github.com/weechat/weechat/issues/585))
 - irc: switch to next server address when the local hostname/IP cannot be set ([#540](https://github.com/weechat/weechat/issues/540))
 - irc: do not add tag "notify_private" on notices received from a server ([#478](https://github.com/weechat/weechat/issues/478))

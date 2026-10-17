@@ -17,6 +17,7 @@
 #include "irc-buffer.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-list.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
@@ -117,9 +118,12 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
     display_server = (weechat_config_enum (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
 
     irc_buffer_get_server_and_channel (buffer, &server, &channel);
-    if (server || channel)
+    if (channel
+        || (server
+            && ((buffer == server->buffer)
+                || (buffer == server->list->buffer))))
     {
-        if (server && !channel)
+        if (!channel)
         {
             snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
                       _("server"),
@@ -257,9 +261,12 @@ irc_bar_item_channel (const void *pointer, void *data,
     display_server = (weechat_config_enum (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
 
     irc_buffer_get_server_and_channel (buffer, &server, &channel);
-    if (server || channel)
+    if (channel
+        || (server
+            && ((buffer == server->buffer)
+                || (buffer == server->list->buffer))))
     {
-        if (server && !channel)
+        if (!channel)
         {
             snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
                       _("server"),

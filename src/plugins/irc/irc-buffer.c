@@ -26,6 +26,11 @@
 /*
  * Get IRC server and channel pointers with a buffer pointer (buffer may be a
  * server or a channel).
+ *
+ * If the buffer is a channel/private buffer which is not linked to any
+ * channel (for example a channel buffer opened before the JOIN, when the
+ * join failed), the server is found with the buffer local variable "server"
+ * and the channel is set to NULL.
  */
 
 void
@@ -35,6 +40,7 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
+    const char *ptr_type, *ptr_server_name;
 
     if (server)
         *server = NULL;
@@ -76,7 +82,21 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
         }
     }
 
-    /* No server or channel found */
+    /* Channel/private buffer without channel: search server by name. */
+    if (weechat_buffer_get_pointer (buffer, "plugin") != weechat_irc_plugin)
+        return;
+    ptr_type = weechat_buffer_get_string (buffer, "localvar_type");
+    if (!ptr_type
+        || ((strcmp (ptr_type, "channel") != 0)
+            && (strcmp (ptr_type, "private") != 0)))
+    {
+        return;
+    }
+    ptr_server_name = weechat_buffer_get_string (buffer, "localvar_server");
+    if (!ptr_server_name || !ptr_server_name[0])
+        return;
+    if (server)
+        *server = irc_server_search (ptr_server_name);
 }
 
 /*
