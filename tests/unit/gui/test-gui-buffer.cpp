@@ -2467,6 +2467,38 @@ TEST(GuiBuffer, Unmerge)
     gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
 
     /*
+     * Three merged buffers, unmerge a buffer which is not the active one:
+     * the active buffer is unchanged.
+     */
+    gui_buffer_merge (buffer2, buffer1);
+    gui_buffer_merge (buffer3, buffer1);
+    gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
+    LONGS_EQUAL(1, buffer1->active);
+    LONGS_EQUAL(0, buffer2->active);
+    LONGS_EQUAL(0, buffer3->active);
+    gui_buffer_unmerge (buffer2, -1);
+    LONGS_EQUAL(1, buffer1->active);
+    LONGS_EQUAL(1, buffer2->active);
+    LONGS_EQUAL(0, buffer3->active);
+    POINTERS_EQUAL(buffer1, gui_current_window->buffer);
+    POINTERS_EQUAL(buffer1->mixed_lines, buffer1->lines);
+    POINTERS_EQUAL(buffer1->mixed_lines, buffer3->mixed_lines);
+    gui_buffer_unmerge (buffer3, -1);
+
+    /*
+     * Three merged buffers, unmerge the active buffer: another merged buffer
+     * becomes active.
+     */
+    gui_buffer_merge (buffer2, buffer1);
+    gui_buffer_merge (buffer3, buffer1);
+    gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
+    gui_buffer_unmerge (buffer1, -1);
+    LONGS_EQUAL(1, buffer1->active);
+    LONGS_EQUAL(1, buffer2->active + buffer3->active);
+    gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
+    gui_buffer_unmerge (buffer3, -1);
+
+    /*
      * Three merged buffers, zoomed, unmerge a hidden buffer: the unmerged
      * buffer is not zoomed any more, the other ones stay zoomed.
      */
@@ -2481,9 +2513,10 @@ TEST(GuiBuffer, Unmerge)
     LONGS_EQUAL(2, buffer1->number);
     LONGS_EQUAL(3, buffer2->number);
     LONGS_EQUAL(2, buffer3->number);
+    LONGS_EQUAL(2, buffer1->active);
     LONGS_EQUAL(1, buffer2->active);
-    LONGS_EQUAL(2, buffer1->active + buffer3->active);
-    CHECK((buffer1->active == 2) || (buffer3->active == 2));
+    LONGS_EQUAL(0, buffer3->active);
+    POINTERS_EQUAL(buffer1->own_lines, buffer1->lines);
     LONGS_EQUAL(1, buffer1->zoomed);
     LONGS_EQUAL(0, buffer2->zoomed);
     LONGS_EQUAL(1, buffer3->zoomed);

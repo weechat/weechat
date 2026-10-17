@@ -4747,6 +4747,9 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
  *
  * If number >= 1, move buffer to this number, otherwise move buffer to
  * buffer->number + 1.
+ *
+ * If the buffer is the active one in the group, another merged buffer becomes
+ * active (keeping the zoom), otherwise the active buffer is unchanged.
  */
 
 void
@@ -4754,6 +4757,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 {
     int num_merged;
     struct t_gui_buffer *ptr_buffer, *ptr_new_active_buffer;
+    struct t_gui_lines *ptr_mixed_lines;
 
     if (!buffer || !gui_buffer_valid (buffer))
         return;
@@ -4768,6 +4772,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
         return;
 
     ptr_new_active_buffer = NULL;
+    ptr_mixed_lines = NULL;
 
     if (number > GUI_BUFFER_NUMBER_MAX)
         number = GUI_BUFFER_NUMBER_MAX;
@@ -4806,12 +4811,20 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     }
     else
     {
-        /* Remove this buffer from mixed_lines, but keep other buffers merged. */
-        ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer, 0);
-        if (!ptr_new_active_buffer)
-            ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer, 1);
-        if (ptr_new_active_buffer)
-            gui_buffer_set_active_buffer (ptr_new_active_buffer);
+        /*
+         * Remove this buffer from mixed_lines, but keep other buffers merged;
+         * if the buffer is the active one, another merged buffer becomes
+         * active, otherwise the active buffer is unchanged.
+         */
+        if (buffer->active)
+        {
+            ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer, 0);
+            if (!ptr_new_active_buffer)
+                ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer, 1);
+            if (ptr_new_active_buffer)
+                gui_buffer_set_active_buffer (ptr_new_active_buffer);
+        }
+        ptr_mixed_lines = buffer->mixed_lines;
         gui_line_mixed_free_buffer (buffer);
         buffer->mixed_lines = NULL;
         buffer->lines = buffer->own_lines;
@@ -4868,10 +4881,10 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 
     gui_buffer_compute_num_displayed ();
 
-    if (ptr_new_active_buffer)
+    if (ptr_mixed_lines)
     {
-        ptr_new_active_buffer->mixed_lines->prefix_max_length_refresh = 1;
-        ptr_new_active_buffer->mixed_lines->buffer_max_length_refresh = 1;
+        ptr_mixed_lines->prefix_max_length_refresh = 1;
+        ptr_mixed_lines->buffer_max_length_refresh = 1;
     }
 
     gui_window_ask_refresh (1);
