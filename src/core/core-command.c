@@ -8920,6 +8920,7 @@ command_init (void)
             N_("> raw[s]: seconds"),
             N_("> raw[m]: minutes"),
             N_("> raw[h]: hours"),
+            N_("> raw[d]: days"),
             N_("raw[certs]: display number of loaded trusted certificate authorities"),
             N_("raw[color]: display infos about current color pairs"),
             N_("raw[cursor]: toggle debug for cursor mode"),
@@ -9885,6 +9886,7 @@ command_init (void)
             N_("> raw[s]: seconds (default)"),
             N_("> raw[m]: minutes"),
             N_("> raw[h]: hours"),
+            N_("> raw[d]: days"),
             N_("count: number of times to execute command"),
             N_("command: command to execute (or text to send to buffer if command "
                "does not start with \"/\"), evaluated and the following variables "
@@ -10272,6 +10274,7 @@ command_init (void)
             N_("> raw[s]: seconds (default)"),
             N_("> raw[m]: minutes"),
             N_("> raw[h]: hours"),
+            N_("> raw[d]: days"),
             N_("command: command to execute (or text to send to buffer if command "
                "does not start with \"/\")"),
             "",

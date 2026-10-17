@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-10 21:14+0200\n"
+"POT-Creation-Date: 2026-10-17 08:26+0200\n"
 "PO-Revision-Date: 2026-10-10 21:21+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -1794,6 +1794,11 @@ msgstr "> raw[m]: Minuten"
 
 msgid "> raw[h]: hours"
 msgstr "> raw[h]: Stunden"
+
+#, fuzzy
+#| msgid "> raw[s]: seconds"
+msgid "> raw[d]: days"
+msgstr "> raw[s]: Sekunden"
 
 msgid "raw[certs]: display number of loaded trusted certificate authorities"
 msgstr ""

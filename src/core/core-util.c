@@ -695,6 +695,7 @@ util_get_time_diff (time_t time1, time_t time2,
  *   - "s": seconds
  *   - "m": minutes
  *   - "h": hours
+ *   - "d": days
  *
  * The default factor sets the default unit:
  *   - 1: microseconds
@@ -702,6 +703,7 @@ util_get_time_diff (time_t time1, time_t time2,
  *   - 1000000: seconds
  *   - 60000000: minutes
  *   - 3600000000: hours
+ *   - 86400000000: days
  *
  * Return:
  *   1: OK
@@ -744,6 +746,8 @@ util_parse_delay (const char *string_delay, unsigned long long default_factor,
             factor = 1000ULL * 1000ULL * 60ULL;
         else if (strcmp (pos, "h") == 0)
             factor = 1000ULL * 1000ULL * 60ULL * 60ULL;
+        else if (strcmp (pos, "d") == 0)
+            factor = 1000ULL * 1000ULL * 60ULL * 60ULL * 24ULL;
         else
             return 0;
         str_number = string_strndup (string_delay, pos - string_delay);
