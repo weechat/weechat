@@ -327,6 +327,10 @@ struct t_plugin_script *
 weechat_js_load (const char *filename, const char *code)
 {
     char *source;
+    WeechatJsV8 *old_js_current_interpreter;
+    struct t_plugin_script *new_script, *old_js_current_script;
+    struct t_plugin_script *old_js_registered_script;
+    const char *old_js_current_script_filename;
 
     source = NULL;
 
@@ -350,6 +354,18 @@ weechat_js_load (const char *filename, const char *code)
                         JS_PLUGIN_NAME, filename);
     }
 
+    /*
+     * Save the current state, restored at the end: the script may be
+     * loaded by another script (for example with "/javascript load"),
+     * which must continue to run in its own interpreter after this load.
+     */
+    old_js_current_script = js_current_script;
+    old_js_current_script_filename = js_current_script_filename;
+    old_js_registered_script = js_registered_script;
+    old_js_current_interpreter = js_current_interpreter;
+
+    new_script = NULL;
+
     js_current_script = NULL;
     js_registered_script = NULL;
 
@@ -364,7 +380,7 @@ weechat_js_load (const char *filename, const char *code)
                                          "sub-interpreter"),
                         weechat_prefix ("error"), JS_PLUGIN_NAME);
         free (source);
-        return NULL;
+        goto end;
     }
 
     js_current_script_filename = filename;
@@ -398,7 +414,7 @@ weechat_js_load (const char *filename, const char *code)
             js_current_script = NULL;
         }
 
-        return NULL;
+        goto end;
     }
 
     free (source);
@@ -430,7 +446,7 @@ weechat_js_load (const char *filename, const char *code)
                                   js_current_script);
             js_current_script = NULL;
         }
-        return NULL;
+        goto end;
     }
 
     if (!js_registered_script)
@@ -440,7 +456,7 @@ weechat_js_load (const char *filename, const char *code)
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), JS_PLUGIN_NAME, filename);
         delete js_current_interpreter;
-        return NULL;
+        goto end;
     }
 
     js_current_script = js_registered_script;
@@ -459,7 +475,15 @@ weechat_js_load (const char *filename, const char *code)
                               WEECHAT_HOOK_SIGNAL_STRING,
                               js_current_script->filename);
 
-    return js_current_script;
+    new_script = js_current_script;
+
+end:
+    js_current_script = old_js_current_script;
+    js_current_script_filename = old_js_current_script_filename;
+    js_registered_script = old_js_registered_script;
+    js_current_interpreter = old_js_current_interpreter;
+
+    return new_script;
 }
 
 /*

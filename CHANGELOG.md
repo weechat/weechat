@@ -112,6 +112,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: do not add tag "notify_private" on notices received from a server ([#478](https://github.com/weechat/weechat/issues/478))
 - irc: display each message sent when the text is split in multiple messages in commands `/msg` and `/query` ([#1719](https://github.com/weechat/weechat/issues/1719))
 - irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"
+- javascript: fix crash when a script loads another script during its initialization
 - javascript: fix crash in callbacks receiving hashtables when they are called from the main loop (for example callback of hook_url)
 - javascript: fix arguments of functions upgrade_new, upgrade_close and hdata_get_list
 - javascript, lua, perl, php, ruby, tcl: fix return value of function hdata_longlong
