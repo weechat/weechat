@@ -43,6 +43,7 @@ struct t_gui_completion
     int add_space;                /* add space after completion?             */
     int partial_completion;       /* partial completion?                     */
     int template_partial_completion; /* template with partial completion?    */
+    int template_custom_completion; /* template with custom completion?      */
 
     /* for command argument completion */
     struct t_arraylist *list;     /* data list for completion                */

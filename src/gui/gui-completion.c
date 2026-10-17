@@ -115,6 +115,7 @@ gui_completion_init (struct t_gui_completion *completion,
     completion->add_space = 1;
     completion->partial_completion = 0;
     completion->template_partial_completion = 0;
+    completion->template_custom_completion = 0;
 
     completion->list = arraylist_new (
         32, 1, 0,
@@ -652,6 +653,7 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                                         {
                                             completion->template_partial_completion = 1;
                                         }
+                                        completion->template_custom_completion = 1;
                                         gui_completion_custom (completion,
                                                                custom_completion,
                                                                plugin);
@@ -1500,8 +1502,12 @@ gui_completion_auto (struct t_gui_completion *completion)
         return;
     }
 
-    /* Use default template completion. */
-    if (completion->list->size == 0)
+    /*
+     * Use default template completion, unless a custom completion was used
+     * in command template (an empty list then means nothing to complete).
+     */
+    if ((completion->list->size == 0)
+        && !completion->template_custom_completion)
     {
         default_completion = gui_completion_get_default_template (completion);
         gui_completion_build_list_template (
@@ -1718,6 +1724,7 @@ gui_completion_hdata_completion_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_completion, add_space, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, partial_completion, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, template_partial_completion, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, template_custom_completion, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, list, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, word_found, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, word_found_is_nick, INTEGER, 0, NULL, NULL);
@@ -1807,6 +1814,7 @@ gui_completion_print_log (void)
         log_printf ("  add_space . . . . . . . . . : %d", ptr_completion->add_space);
         log_printf ("  partial_completion. . . . . : %d", ptr_completion->partial_completion);
         log_printf ("  template_partial_completion : %d", ptr_completion->template_partial_completion);
+        log_printf ("  template_custom_completion. : %d", ptr_completion->template_custom_completion);
         log_printf ("  list. . . . . . . . . . . . : %p", ptr_completion->list);
         log_printf ("  word_found. . . . . . . . . : '%s'", ptr_completion->word_found);
         log_printf ("  word_found_is_nick. . . . . : %d", ptr_completion->word_found_is_nick);
