@@ -500,9 +500,14 @@ struct t_plugin_script *
 weechat_perl_load (const char *filename, const char *code)
 {
     char str_warning[512], str_error[512], *perl_code;
-    struct t_plugin_script temp_script;
+    struct t_plugin_script temp_script, *new_script;
+    struct t_plugin_script *old_perl_current_script;
+    struct t_plugin_script *old_perl_registered_script;
+    const char *old_perl_current_script_filename;
     struct stat buf;
 #ifdef MULTIPLICITY
+    PerlInterpreter *old_perl_current_interpreter;
+    void *old_context;
     int wcwidth160;
 #else
     char pkgname[64];
@@ -537,6 +542,21 @@ weechat_perl_load (const char *filename, const char *code)
                         PERL_PLUGIN_NAME, filename);
     }
 
+    /*
+     * Save the current state, restored at the end: the script may be
+     * loaded by another script (for example with "/perl load"), which
+     * must continue to run in its own interpreter after this load.
+     */
+    old_perl_current_script = perl_current_script;
+    old_perl_current_script_filename = perl_current_script_filename;
+    old_perl_registered_script = perl_registered_script;
+#ifdef MULTIPLICITY
+    old_perl_current_interpreter = perl_current_interpreter;
+    old_context = PERL_GET_CONTEXT;
+#endif /* MULTIPLICITY */
+
+    new_script = NULL;
+
     perl_current_script = NULL;
     perl_current_script_filename = filename;
     perl_registered_script = NULL;
@@ -557,7 +577,7 @@ weechat_perl_load (const char *filename, const char *code)
                         weechat_gettext ("%s%s: unable to create new "
                                          "sub-interpreter"),
                         weechat_prefix ("error"), PERL_PLUGIN_NAME);
-        return NULL;
+        goto end;
     }
 
     PERL_SET_CONTEXT (perl_current_interpreter);
@@ -598,7 +618,7 @@ weechat_perl_load (const char *filename, const char *code)
 #endif /* MULTIPLICITY */
 
     if (!perl_code)
-        return NULL;
+        goto end;
     eval_pv (perl_code, TRUE);
     free (perl_code);
 
@@ -625,7 +645,7 @@ weechat_perl_load (const char *filename, const char *code)
             perl_current_script = NULL;
         }
 
-        return NULL;
+        goto end;
     }
 
     if (!perl_registered_script)
@@ -638,7 +658,7 @@ weechat_perl_load (const char *filename, const char *code)
         perl_destruct (perl_current_interpreter);
         perl_free (perl_current_interpreter);
 #endif /* MULTIPLICITY */
-        return NULL;
+        goto end;
     }
     perl_current_script = perl_registered_script;
 
@@ -660,7 +680,18 @@ weechat_perl_load (const char *filename, const char *code)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      perl_current_script->filename);
 
-    return perl_current_script;
+    new_script = perl_current_script;
+
+end:
+    perl_current_script = old_perl_current_script;
+    perl_current_script_filename = old_perl_current_script_filename;
+    perl_registered_script = old_perl_registered_script;
+#ifdef MULTIPLICITY
+    perl_current_interpreter = old_perl_current_interpreter;
+    PERL_SET_CONTEXT (old_context);
+#endif /* MULTIPLICITY */
+
+    return new_script;
 }
 
 /*
@@ -729,9 +760,18 @@ weechat_perl_unload (struct t_plugin_script *script)
         perl_destruct (interpreter);
         perl_free (interpreter);
     }
+    /*
+     * Never keep the interpreter freed as context: restoring it later
+     * (for example at the end of weechat_perl_load) would switch to the
+     * locale of a freed interpreter.
+     */
     if (perl_current_script)
     {
         PERL_SET_CONTEXT (perl_current_script->interpreter);
+    }
+    else
+    {
+        PERL_SET_CONTEXT (NULL);
     }
 #else
     free (interpreter);
