@@ -136,6 +136,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - relay/api: replace invalid UTF-8 chars by "?" in JSON sent, so that it is always valid JSON
 - relay/api: fix integer numbers sent with exponent in JSON (for example buffer identifier sent as `1.70993282323864e+15` instead of `1709932823238640`)
 - relay/api: fix notify tag in line when already read on remote ([#2343](https://github.com/weechat/weechat/issues/2343))
+- ruby: fix errors when a script loads another script during its initialization
 - ruby: fix crash when an exception has no backtrace, display the class name of exception instead of its singleton class
 - ruby: clear exception after an error, so that it is not set as cause of the next exception and not displayed again when the plugin is unloaded
 - tcl: return 0 instead of raising an error in functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created

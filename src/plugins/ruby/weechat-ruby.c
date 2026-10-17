@@ -561,6 +561,10 @@ weechat_ruby_exec (struct t_plugin_script *script,
 struct t_plugin_script *
 weechat_ruby_load (const char *filename, const char *code)
 {
+    struct t_plugin_script *new_script, *old_ruby_current_script;
+    struct t_plugin_script *old_ruby_registered_script;
+    const char *old_ruby_current_script_filename;
+    VALUE old_ruby_current_module;
     char modname[64];
     VALUE ruby_retcode, err, argv[2];
     int ruby_error;
@@ -585,6 +589,18 @@ weechat_ruby_load (const char *filename, const char *code)
                         RUBY_PLUGIN_NAME, filename);
     }
 
+    /*
+     * Save the current state, restored at the end: the script may be
+     * loaded by another script (for example with "/ruby load"), which
+     * must still be the current script after this load.
+     */
+    old_ruby_current_script = ruby_current_script;
+    old_ruby_current_script_filename = ruby_current_script_filename;
+    old_ruby_registered_script = ruby_registered_script;
+    old_ruby_current_module = ruby_current_module;
+
+    new_script = NULL;
+
     ruby_current_script = NULL;
     ruby_registered_script = NULL;
 
@@ -605,7 +621,7 @@ weechat_ruby_load (const char *filename, const char *code)
     {
         err = rb_gv_get ("$!");
         weechat_ruby_print_exception (err);
-        return NULL;
+        goto end;
     }
 
     if (NUM2INT(ruby_retcode) != 0)
@@ -642,7 +658,7 @@ weechat_ruby_load (const char *filename, const char *code)
                                                      "@load_eval_file_error"));
         }
 
-        return NULL;
+        goto end;
     }
 
     (void) rb_protect_funcall (ruby_current_module, rb_intern ("weechat_init"),
@@ -666,7 +682,7 @@ weechat_ruby_load (const char *filename, const char *code)
             ruby_current_script = NULL;
         }
 
-        return NULL;
+        goto end;
     }
 
     if (!ruby_registered_script)
@@ -675,7 +691,7 @@ weechat_ruby_load (const char *filename, const char *code)
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME, filename);
-        return NULL;
+        goto end;
     }
     ruby_current_script = ruby_registered_script;
 
@@ -695,7 +711,15 @@ weechat_ruby_load (const char *filename, const char *code)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      ruby_current_script->filename);
 
-    return ruby_current_script;
+    new_script = ruby_current_script;
+
+end:
+    ruby_current_script = old_ruby_current_script;
+    ruby_current_script_filename = old_ruby_current_script_filename;
+    ruby_registered_script = old_ruby_registered_script;
+    ruby_current_module = old_ruby_current_module;
+
+    return new_script;
 }
 
 /*
