@@ -4798,6 +4798,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
             if (ptr_buffer->number == buffer->number)
             {
                 ptr_buffer->active = 1;
+                ptr_buffer->zoomed = 0;
                 ptr_buffer->mixed_lines = NULL;
                 ptr_buffer->lines = ptr_buffer->own_lines;
             }
@@ -4853,6 +4854,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
         last_gui_buffer = buffer;
     }
     buffer->active = 1;
+    buffer->zoomed = 0;
     buffer->number = number;
 
     /* Compute "number + 1" on next buffers. */
