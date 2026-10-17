@@ -135,6 +135,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - tcl: return 0 instead of raising an error in functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
 - tcl: add missing function completion_free
 - trigger: escape backslashes in arguments displayed by commands `/trigger input|output|recreate` ([#729](https://github.com/weechat/weechat/issues/729))
+- build: use ncurses library and headers given with PKG_CONFIG_PATH or CMake options NCURSESW_LIBRARY and NCURSES_INCLUDE_PATH instead of the system ones ([#921](https://github.com/weechat/weechat/issues/921))
 - build: do not leak compiler flags of iconv checks to other checks, fix detection of gettext on macOS ([#2031](https://github.com/weechat/weechat/issues/2031))
 
 ### Security
