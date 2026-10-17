@@ -14637,7 +14637,7 @@ valeurs sont de type "string") :
 | "0" ... "n" |
 
 | _key | Touche ou évènement souris.
-| "button1", "button2-gesture-left", ... |
+| "f1", "ctrl-x", "button1", "button2-gesture-left", ... |
 
 | _window | Pointeur vers la fenêtre.
 | "0x1234abcd" | ""

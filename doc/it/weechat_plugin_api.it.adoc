@@ -14951,7 +14951,7 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | "0" ... "n" |
 
 | _key | Evento tasto o mouse.
-| "button1", "button2-gesture-left", ... |
+| "f1", "ctrl-x", "button1", "button2-gesture-left", ... |
 
 | _window | Puntatore alla finestra.
 | "0x1234abcd" | ""

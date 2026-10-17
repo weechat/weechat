@@ -2019,9 +2019,9 @@ gui_key_focus_display_hashtable (struct t_hashtable *hashtable)
 /*
  * Run command according to focus.
  *
- * Parameter "key" is the raw key (context cursor) or the mouse key (context
- * mouse). In context cursor, the key in area is compared to "key_name" and
- * "key_name_alias" (key name with alias), which are ignored in context mouse.
+ * Parameter "key" is the key name with alias (context cursor) or the mouse
+ * key (context mouse). In context cursor, the key in area is compared to
+ * "key" and "key_name" (key name without alias, ignored in context mouse).
  *
  * Return:
  *   1: command was executed
@@ -2029,8 +2029,7 @@ gui_key_focus_display_hashtable (struct t_hashtable *hashtable)
  */
 
 int
-gui_key_focus_command (const char *key, const char *key_name,
-                       const char *key_name_alias, int context,
+gui_key_focus_command (const char *key, const char *key_name, int context,
                        struct t_hashtable **hashtable_focus)
 {
     struct t_gui_key *ptr_key;
@@ -2060,9 +2059,8 @@ gui_key_focus_command (const char *key, const char *key_name,
 
         /* Ignore key if key for area is not matching (context: cursor). */
         if ((context == GUI_KEY_CONTEXT_CURSOR)
-            && (!key_name || (strcmp (key_name, ptr_key->area_key) != 0))
-            && (!key_name_alias
-                || (strcmp (key_name_alias, ptr_key->area_key) != 0)))
+            && (!key || (strcmp (key, ptr_key->area_key) != 0))
+            && (!key_name || (strcmp (key_name, ptr_key->area_key) != 0)))
         {
             continue;
         }
@@ -2178,8 +2176,10 @@ gui_key_focus_command (const char *key, const char *key_name,
  * Process key pressed in cursor or mouse mode, looking for keys: "{area}key"
  * in context "cursor" or "mouse".
  *
- * Parameters "key_name" and "key_name_alias" are used only in context cursor
- * (see function gui_key_focus_command).
+ * Parameter "key" is the key name with alias (context cursor) or the mouse
+ * key (context mouse), it is set in key "_key" of focus hashtable.
+ * Parameter "key_name" is the key name without alias, used only in context
+ * cursor (see function gui_key_focus_command).
  *
  * Return:
  *   1: command was executed
@@ -2187,8 +2187,7 @@ gui_key_focus_command (const char *key, const char *key_name,
  */
 
 int
-gui_key_focus (const char *key, const char *key_name,
-               const char *key_name_alias, int context)
+gui_key_focus (const char *key, const char *key_name, int context)
 {
     struct t_gui_focus_info *focus_info1, *focus_info2;
     struct t_hashtable *hashtable_focus[2];
@@ -2238,8 +2237,7 @@ gui_key_focus (const char *key, const char *key_name,
             goto end;
     }
 
-    rc = gui_key_focus_command (key, key_name, key_name_alias, context,
-                                hashtable_focus);
+    rc = gui_key_focus_command (key, key_name, context, hashtable_focus);
 
 end:
     gui_focus_free_info (focus_info1);
@@ -2555,7 +2553,7 @@ gui_key_pressed (const char *key_str)
                 gui_key_combo[0] = '\0';
                 goto end_no_input;
             }
-            if (gui_key_focus (gui_key_combo, key_name, key_name_alias,
+            if (gui_key_focus (key_name_alias, key_name,
                                GUI_KEY_CONTEXT_CURSOR))
             {
                 gui_key_combo[0] = '\0';

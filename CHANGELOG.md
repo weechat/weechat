@@ -29,6 +29,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: set key name with alias in key "_key" of focus hashtable in cursor mode, for example "f1" instead of the raw key
 - core: use a hashtable to check buffer pointers faster
 - core: improve hash of pointer keys in hashtables to spread aligned pointers over all buckets
 - **breaking:** core, relay: remove dependency on cJSON and CMake option ENABLE_CJSON, the relay "api" protocol is now always available

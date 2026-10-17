@@ -14299,7 +14299,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | "0" ... "n" |
 
 | _key | Key or mouse event.
-| "button1", "button2-gesture-left", ... |
+| "f1", "ctrl-x", "button1", "button2-gesture-left", ... |
 
 | _window | Pointer to window.
 | "0x1234abcd" | ""

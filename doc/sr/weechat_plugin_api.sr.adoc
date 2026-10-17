@@ -13870,7 +13870,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 | "0" ... "n" |
 
 | _key | Догађај тастера или миша.
-| "button1", "button2-gesture-left", ... |
+| "f1", "ctrl-x", "button1", "button2-gesture-left", ... |
 
 | _window | Показивач на прозор.
 | "0x1234abcd" | ""

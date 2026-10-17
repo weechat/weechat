@@ -14572,7 +14572,7 @@ info を使う前にエリアが一致していることを確認して下さい
 | "0" ... "n" |
 
 | _key | キーまたはマウスイベント
-| "button1"、"button2-gesture-left"、... |
+| "f1"、"ctrl-x"、"button1"、"button2-gesture-left"、... |
 
 | _window | ウィンドウへのポインタ
 | "0x1234abcd" | ""

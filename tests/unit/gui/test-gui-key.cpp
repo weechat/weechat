@@ -17,7 +17,9 @@ extern "C"
 #include "src/core/core-input.h"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-cursor.h"
 #include "src/gui/gui-key.h"
+#include "src/gui/gui-window.h"
 #include "src/plugins/plugin.h"
 
 extern int gui_key_get_current_context ();
@@ -35,7 +37,7 @@ extern struct t_gui_key *gui_key_search_part (struct t_gui_buffer *buffer, int c
                                               const char **chunks2, int chunks2_count,
                                               int *exact_match);
 extern int gui_key_focus_command (const char *key, const char *key_name,
-                                  const char *key_name_alias, int context,
+                                  int context,
                                   struct t_hashtable **hashtable_focus);
 }
 
@@ -1544,48 +1546,48 @@ TEST(GuiKey, FocusCommand)
     CHECK(ptr_key3);
 
     /* key not bound */
-    LONGS_EQUAL(0, gui_key_focus_command ("\001[OR", "meta-OR", "f3",
+    LONGS_EQUAL(0, gui_key_focus_command ("f3", "meta-OR",
                                           GUI_KEY_CONTEXT_CURSOR,
                                           hashtable_focus));
     POINTERS_EQUAL(NULL, hashtable_get (gui_buffers->local_variables,
                                         "test_focus"));
 
     /* key bound with alias: F1 */
-    LONGS_EQUAL(1, gui_key_focus_command ("\001[OP", "meta-OP", "f1",
+    LONGS_EQUAL(1, gui_key_focus_command ("f1", "meta-OP",
                                           GUI_KEY_CONTEXT_CURSOR,
                                           hashtable_focus));
     STRCMP_EQUAL("f1", (const char *)hashtable_get (gui_buffers->local_variables,
                                                     "test_focus"));
 
     /* key bound with raw name: F2 */
-    LONGS_EQUAL(1, gui_key_focus_command ("\001[OQ", "meta-OQ", "f2",
+    LONGS_EQUAL(1, gui_key_focus_command ("f2", "meta-OQ",
                                           GUI_KEY_CONTEXT_CURSOR,
                                           hashtable_focus));
     STRCMP_EQUAL("f2", (const char *)hashtable_get (gui_buffers->local_variables,
                                                     "test_focus"));
 
     /* printable char */
-    LONGS_EQUAL(1, gui_key_focus_command ("z", "z", "z",
+    LONGS_EQUAL(1, gui_key_focus_command ("z", "z",
                                           GUI_KEY_CONTEXT_CURSOR,
                                           hashtable_focus));
     STRCMP_EQUAL("z", (const char *)hashtable_get (gui_buffers->local_variables,
                                                    "test_focus"));
 
     /* key name with a printable char as prefix: no match */
-    LONGS_EQUAL(0, gui_key_focus_command ("zy", "z,y", "z,y",
+    LONGS_EQUAL(0, gui_key_focus_command ("z,y", "z,y",
                                           GUI_KEY_CONTEXT_CURSOR,
                                           hashtable_focus));
 
     /* area not matching: not in chat area */
     hashtable_set (hashtable_focus[0], "_chat", "0");
-    LONGS_EQUAL(0, gui_key_focus_command ("\001[OP", "meta-OP", "f1",
+    LONGS_EQUAL(0, gui_key_focus_command ("f1", "meta-OP",
                                           GUI_KEY_CONTEXT_CURSOR,
                                           hashtable_focus));
 
     /* area not matching: other buffer */
     hashtable_set (hashtable_focus[0], "_chat", "1");
     hashtable_set (hashtable_focus[0], "_buffer_full_name", "core.test");
-    LONGS_EQUAL(0, gui_key_focus_command ("\001[OP", "meta-OP", "f1",
+    LONGS_EQUAL(0, gui_key_focus_command ("f1", "meta-OP",
                                           GUI_KEY_CONTEXT_CURSOR,
                                           hashtable_focus));
 
@@ -1620,7 +1622,56 @@ TEST(GuiKey, FocusCommand)
 
 TEST(GuiKey, Focus)
 {
-    /* TODO: write tests */
+    struct t_gui_key *ptr_key1, *ptr_key2;
+    int old_cursor_x, old_cursor_y;
+
+    old_cursor_x = gui_cursor_x;
+    old_cursor_y = gui_cursor_y;
+
+    gui_cursor_x = gui_windows->win_chat_x;
+    gui_cursor_y = gui_windows->win_chat_y;
+
+    ptr_key1 = gui_key_new (NULL, GUI_KEY_CONTEXT_CURSOR,
+                            "@chat(core.weechat):f1",
+                            "/buffer set localvar_set_test_focus ${_key}", 1);
+    CHECK(ptr_key1);
+    ptr_key2 = gui_key_new (NULL, GUI_KEY_CONTEXT_CURSOR,
+                            "@chat(core.weechat):meta-OQ",
+                            "/buffer set localvar_set_test_focus ${_key}", 1);
+    CHECK(ptr_key2);
+
+    /* key not bound */
+    LONGS_EQUAL(0, gui_key_focus ("f3", "meta-OR", GUI_KEY_CONTEXT_CURSOR));
+    POINTERS_EQUAL(NULL, hashtable_get (gui_buffers->local_variables,
+                                        "test_focus"));
+
+    /* key bound with alias: "_key" is the key name with alias */
+    LONGS_EQUAL(1, gui_key_focus ("f1", "meta-OP", GUI_KEY_CONTEXT_CURSOR));
+    STRCMP_EQUAL("f1", (const char *)hashtable_get (gui_buffers->local_variables,
+                                                    "test_focus"));
+
+    /* key bound with raw name: "_key" is the key name with alias */
+    LONGS_EQUAL(1, gui_key_focus ("f2", "meta-OQ", GUI_KEY_CONTEXT_CURSOR));
+    STRCMP_EQUAL("f2", (const char *)hashtable_get (gui_buffers->local_variables,
+                                                    "test_focus"));
+
+    input_data (gui_buffers, "/buffer set localvar_del_test_focus", NULL, 0, 0);
+
+    gui_key_free (GUI_KEY_CONTEXT_CURSOR,
+                  &gui_keys[GUI_KEY_CONTEXT_CURSOR],
+                  &last_gui_key[GUI_KEY_CONTEXT_CURSOR],
+                  &gui_keys_count[GUI_KEY_CONTEXT_CURSOR],
+                  ptr_key1,
+                  1);
+    gui_key_free (GUI_KEY_CONTEXT_CURSOR,
+                  &gui_keys[GUI_KEY_CONTEXT_CURSOR],
+                  &last_gui_key[GUI_KEY_CONTEXT_CURSOR],
+                  &gui_keys_count[GUI_KEY_CONTEXT_CURSOR],
+                  ptr_key2,
+                  1);
+
+    gui_cursor_x = old_cursor_x;
+    gui_cursor_y = old_cursor_y;
 }
 
 /*
