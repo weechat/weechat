@@ -1313,8 +1313,8 @@ network_connect_child (struct t_hook *hook_connect)
                     continue;
 
                 rc = bind (sock, ptr_loc->ai_addr, ptr_loc->ai_addrlen);
-                if (rc < 0)
-                    continue;
+                if (rc == 0)
+                    break;
             }
 
             if (rc < 0)
