@@ -106,14 +106,14 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
     if (!weechat_hooks[HOOK_TYPE_COMPLETION])
         return;
 
-    hook_exec_start ();
-
     pos = strchr (completion_item, ':');
     item = (pos) ?
         string_strndup (completion_item, pos - completion_item) :
         strdup (completion_item);
     if (!item)
         return;
+
+    hook_exec_start ();
 
     ptr_hook = weechat_hooks[HOOK_TYPE_COMPLETION];
     while (ptr_hook)
