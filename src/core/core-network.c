@@ -321,6 +321,30 @@ network_is_ip_address (const char *address)
 }
 
 /*
+ * Check if a list of addresses contains at least one address of the given
+ * family (AF_INET or AF_INET6).
+ *
+ * Return:
+ *   1: at least one address has the given family
+ *   0: no address has the given family
+ */
+
+int
+network_addrinfo_has_family (struct addrinfo *addrinfo, int family)
+{
+    struct addrinfo *ptr_addrinfo;
+
+    for (ptr_addrinfo = addrinfo; ptr_addrinfo;
+         ptr_addrinfo = ptr_addrinfo->ai_next)
+    {
+        if (ptr_addrinfo->ai_family == family)
+            return 1;
+    }
+
+    return 0;
+}
+
+/*
  * Send data on a socket with retry.
  *
  * WARNING: this function is blocking, it must be called only in a forked
@@ -924,6 +948,7 @@ network_connect_child (struct t_hook *hook_connect)
     char status_str[2], *ptr_address, *status_with_string;
     char remote_address[NI_MAXHOST + 1];
     char status_without_string[1 + 5 + 1];
+    char bind_error[256];
     const char *error;
     int rc, num_written;
     int sock, set, flags, j;
@@ -950,6 +975,7 @@ network_connect_child (struct t_hook *hook_connect)
 
     status_str[1] = '\0';
     status_with_string = NULL;
+    bind_error[0] = '\0';
 
     ptr_address = NULL;
 
@@ -1247,6 +1273,22 @@ network_connect_child (struct t_hook *hook_connect)
     {
         ptr_res = res_reorder[i];
 
+        /*
+         * Skip remote address if no local hostname/IP has the same family
+         * (the error is reported only if no other address can be tried).
+         */
+        if (res_local
+            && !network_addrinfo_has_family (res_local, ptr_res->ai_family))
+        {
+            if (status_str[0] == '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND)
+            {
+                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
+                snprintf (bind_error, sizeof (bind_error),
+                          "%s", strerror (EAFNOSUPPORT));
+            }
+            continue;
+        }
+
         if (hook_socketpair_ok)
         {
             /* Create a socket. */
@@ -1315,11 +1357,15 @@ network_connect_child (struct t_hook *hook_connect)
                 rc = bind (sock, ptr_loc->ai_addr, ptr_loc->ai_addrlen);
                 if (rc == 0)
                     break;
+                snprintf (bind_error, sizeof (bind_error),
+                          "%s", strerror (errno));
             }
 
             if (rc < 0)
             {
-                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
+                /* Do not hide a connection refused on another address. */
+                if (status_str[0] != '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED)
+                    status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
                 close (sock);
                 sock = -1;
                 continue;
@@ -1414,6 +1460,29 @@ network_connect_child (struct t_hook *hook_connect)
             num_written = write (HOOK_CONNECT(hook_connect, child_write), &sock, sizeof (sock));
             (void) num_written;
         }
+    }
+    else if ((status_str[0] == '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR)
+             && bind_error[0])
+    {
+        status_with_string = NULL;
+        string_asprintf (&status_with_string,
+                         "%s%05d%s",
+                         status_str,
+                         (int)strlen (bind_error),
+                         bind_error);
+        if (status_with_string)
+        {
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_with_string, strlen (status_with_string));
+        }
+        else
+        {
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%s00000", status_str);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_without_string, strlen (status_without_string));
+        }
+        (void) num_written;
     }
     else
     {

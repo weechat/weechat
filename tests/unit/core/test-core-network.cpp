@@ -10,9 +10,14 @@
 
 extern "C"
 {
+#include <string.h>
+#include <sys/socket.h>
+#include <netdb.h>
 #include "src/core/core-network.h"
 
 extern int network_is_ip_address (const char *address);
+extern int network_addrinfo_has_family (struct addrinfo *addrinfo,
+                                        int family);
 }
 
 TEST_GROUP(CoreNetwork)
@@ -119,6 +124,35 @@ TEST(CoreNetwork, IsIpAddress)
     LONGS_EQUAL(1, network_is_ip_address ("2001:0db8:0000:85a3:0000:0000:ac1f:8001"));
     LONGS_EQUAL(1, network_is_ip_address ("2001:db8:0:85a3:0:0:ac1f:8001"));
     LONGS_EQUAL(1, network_is_ip_address ("2001:db8:0:85a3::ac1f:8001"));
+}
+
+/*
+ * Test functions:
+ *   network_addrinfo_has_family
+ */
+
+TEST(CoreNetwork, AddrinfoHasFamily)
+{
+    struct addrinfo addr1, addr2;
+
+    memset (&addr1, 0, sizeof (addr1));
+    memset (&addr2, 0, sizeof (addr2));
+
+    /* Empty list */
+    LONGS_EQUAL(0, network_addrinfo_has_family (NULL, AF_INET));
+    LONGS_EQUAL(0, network_addrinfo_has_family (NULL, AF_INET6));
+
+    /* One IPv4 address */
+    addr1.ai_family = AF_INET;
+    LONGS_EQUAL(1, network_addrinfo_has_family (&addr1, AF_INET));
+    LONGS_EQUAL(0, network_addrinfo_has_family (&addr1, AF_INET6));
+
+    /* IPv4 + IPv6 addresses */
+    addr2.ai_family = AF_INET6;
+    addr1.ai_next = &addr2;
+    LONGS_EQUAL(1, network_addrinfo_has_family (&addr1, AF_INET));
+    LONGS_EQUAL(1, network_addrinfo_has_family (&addr1, AF_INET6));
+    LONGS_EQUAL(0, network_addrinfo_has_family (&addr1, AF_UNSPEC));
 }
 
 /*

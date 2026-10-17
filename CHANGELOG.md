@@ -77,6 +77,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix error "unable to set local hostname/IP" displayed instead of "connection refused" when the local hostname has no IP address of the same family as one of the server addresses, display the error returned by the system when the local hostname/IP cannot be set ([#776](https://github.com/weechat/weechat/issues/776))
 - core: fix freeze when displaying a very long message, for example a corrupted log file displayed in backlog ([#637](https://github.com/weechat/weechat/issues/637))
 - core: fix connection error when the local hostname resolves to multiple IP addresses of the same family
 - core: fix key bindings with an area in cursor context when the key is not a printable char, for example `@chat:f1` ([#531](https://github.com/weechat/weechat/issues/531))
