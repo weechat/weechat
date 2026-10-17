@@ -415,6 +415,10 @@ gui_buffer_notify_set_all (void)
  * Search for position of buffer in list using its layout number
  * (to keep buffers sorted by number).
  *
+ * Buffers not in layout keep their current number: the buffer is inserted
+ * before such a buffer only if its layout number is less than or equal to
+ * the number of this buffer.
+ *
  * Return the pointer to the buffer that will be after the new buffer in list.
  * Return NULL if position is undefined.
  */
@@ -434,10 +438,16 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if ((ptr_buffer->layout_number < 1)
-            || (buffer->layout_number < ptr_buffer->layout_number)
-            || ((buffer->layout_number == ptr_buffer->layout_number)
-                && (buffer->layout_number_merge_order <= ptr_buffer->layout_number_merge_order)))
+        /*
+         * Buffers not in layout are compared using their current number,
+         * buffers in layout using their layout number and merge order.
+         */
+        if (((ptr_buffer->layout_number < 1)
+             && (buffer->layout_number <= ptr_buffer->number))
+            || ((ptr_buffer->layout_number >= 1)
+                && ((buffer->layout_number < ptr_buffer->layout_number)
+                    || ((buffer->layout_number == ptr_buffer->layout_number)
+                        && (buffer->layout_number_merge_order <= ptr_buffer->layout_number_merge_order)))))
         {
             /* Not possible to insert a buffer between 2 merged buffers */
             if (!ptr_buffer->prev_buffer

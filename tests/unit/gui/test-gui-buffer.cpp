@@ -23,11 +23,13 @@ extern "C"
 #include "src/gui/gui-completion.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-key.h"
+#include "src/gui/gui-layout.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-nicklist.h"
 #include "src/gui/gui-window.h"
 #include "src/plugins/plugin.h"
 
+extern struct t_gui_buffer *gui_buffer_find_pos (struct t_gui_buffer *buffer);
 extern void gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer);
 extern int gui_buffer_notify_get (struct t_gui_buffer *buffer);
 extern int gui_buffer_user_input_cb (const void *pointer, void *data,
@@ -340,7 +342,62 @@ TEST(GuiBuffer, NotifyGet)
 
 TEST(GuiBuffer, FindPos)
 {
-    /* TODO: write tests */
+    struct t_gui_layout *layout, *old_layout_current;
+    struct t_gui_buffer buffer, *buffer1, *buffer3;
+
+    POINTERS_EQUAL(NULL, gui_buffer_find_pos (NULL));
+
+    memset (&buffer, 0, sizeof (buffer));
+
+    /* Buffer not in layout: position is undefined. */
+    POINTERS_EQUAL(NULL, gui_buffer_find_pos (&buffer));
+
+    layout = gui_layout_alloc ("test_layout");
+    gui_layout_add (layout);
+    gui_layout_buffer_add (layout, "core", "weechat", 1);
+    gui_layout_buffer_add (layout, "core", "test1", 2);
+    gui_layout_buffer_add (layout, "core", "test2", 3);
+    gui_layout_buffer_add (layout, "core", "test4", 4);
+    old_layout_current = gui_layout_current;
+    gui_layout_current = layout;
+    gui_layout_buffer_get_number_all (layout);
+
+    /* Buffers: 1 = core.weechat (layout: 1), 2 = test1 (layout: 2). */
+    buffer1 = gui_buffer_new (NULL, "test1", NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer1);
+    LONGS_EQUAL(2, buffer1->number);
+
+    buffer.layout_number = 1;
+    buffer.layout_number_merge_order = 0;
+    POINTERS_EQUAL(gui_buffers, gui_buffer_find_pos (&buffer));
+    buffer.layout_number_merge_order = 1;
+    POINTERS_EQUAL(buffer1, gui_buffer_find_pos (&buffer));
+    buffer.layout_number = 3;
+    buffer.layout_number_merge_order = 0;
+    POINTERS_EQUAL(NULL, gui_buffer_find_pos (&buffer));
+
+    /* Add buffer not in layout: 3 = test3 (layout: 0). */
+    buffer3 = gui_buffer_new (NULL, "test3", NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer3);
+    LONGS_EQUAL(3, buffer3->number);
+    LONGS_EQUAL(0, buffer3->layout_number);
+
+    buffer.layout_number = 2;
+    POINTERS_EQUAL(buffer1, gui_buffer_find_pos (&buffer));
+    buffer.layout_number_merge_order = 1;
+    POINTERS_EQUAL(buffer3, gui_buffer_find_pos (&buffer));
+    buffer.layout_number_merge_order = 0;
+    buffer.layout_number = 3;
+    POINTERS_EQUAL(buffer3, gui_buffer_find_pos (&buffer));
+    buffer.layout_number = 4;
+    POINTERS_EQUAL(NULL, gui_buffer_find_pos (&buffer));
+
+    gui_buffer_close (buffer3);
+    gui_buffer_close (buffer1);
+
+    gui_layout_current = old_layout_current;
+    gui_layout_remove (layout);
+    gui_layout_buffer_get_number_all (gui_layout_current);
 }
 
 /*
@@ -360,7 +417,65 @@ TEST(GuiBuffer, ShiftNumbers)
 
 TEST(GuiBuffer, Insert)
 {
-    /* TODO: write tests */
+    struct t_gui_layout *layout, *old_layout_current;
+    struct t_gui_buffer *buffer1, *buffer2, *buffer3, *buffer4;
+
+    layout = gui_layout_alloc ("test_layout");
+    gui_layout_add (layout);
+    gui_layout_buffer_add (layout, "core", "weechat", 1);
+    gui_layout_buffer_add (layout, "core", "test1", 2);
+    gui_layout_buffer_add (layout, "core", "test2", 3);
+    gui_layout_buffer_add (layout, "core", "test4", 4);
+    old_layout_current = gui_layout_current;
+    gui_layout_current = layout;
+    gui_layout_buffer_get_number_all (layout);
+
+    /*
+     * Buffer in layout opened after a buffer not in layout: the buffer not
+     * in layout keeps its number (issue #232).
+     */
+    buffer1 = gui_buffer_new (NULL, "test1", NULL, NULL, NULL, NULL, NULL, NULL);
+    buffer3 = gui_buffer_new (NULL, "test3", NULL, NULL, NULL, NULL, NULL, NULL);
+    buffer4 = gui_buffer_new (NULL, "test4", NULL, NULL, NULL, NULL, NULL, NULL);
+    LONGS_EQUAL(2, buffer1->number);
+    LONGS_EQUAL(3, buffer3->number);
+    LONGS_EQUAL(4, buffer4->number);
+    POINTERS_EQUAL(buffer3, buffer1->next_buffer);
+    POINTERS_EQUAL(buffer4, buffer3->next_buffer);
+    POINTERS_EQUAL(buffer4, last_gui_buffer);
+
+    /*
+     * Buffer in layout with a layout number used by a buffer not in layout:
+     * the buffer takes its layout number, next buffers are shifted.
+     */
+    buffer2 = gui_buffer_new (NULL, "test2", NULL, NULL, NULL, NULL, NULL, NULL);
+    LONGS_EQUAL(2, buffer1->number);
+    LONGS_EQUAL(3, buffer2->number);
+    LONGS_EQUAL(4, buffer3->number);
+    LONGS_EQUAL(5, buffer4->number);
+    POINTERS_EQUAL(buffer2, buffer1->next_buffer);
+    POINTERS_EQUAL(buffer3, buffer2->next_buffer);
+    POINTERS_EQUAL(buffer4, buffer3->next_buffer);
+
+    gui_buffer_close (buffer4);
+    gui_buffer_close (buffer2);
+
+    /* Same with buffer auto renumber disabled: number is the layout number. */
+    config_file_option_set (config_look_buffer_auto_renumber, "off", 1);
+    buffer4 = gui_buffer_new (NULL, "test4", NULL, NULL, NULL, NULL, NULL, NULL);
+    LONGS_EQUAL(2, buffer1->number);
+    LONGS_EQUAL(3, buffer3->number);
+    LONGS_EQUAL(4, buffer4->number);
+    POINTERS_EQUAL(buffer4, buffer3->next_buffer);
+    gui_buffer_close (buffer4);
+    config_file_option_reset (config_look_buffer_auto_renumber, 1);
+
+    gui_buffer_close (buffer3);
+    gui_buffer_close (buffer1);
+
+    gui_layout_current = old_layout_current;
+    gui_layout_remove (layout);
+    gui_layout_buffer_get_number_all (gui_layout_current);
 }
 
 /*
