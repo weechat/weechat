@@ -486,6 +486,10 @@ struct t_plugin_script *
 weechat_lua_load (const char *filename, const char *code)
 {
     FILE *fp;
+    lua_State *old_lua_current_interpreter;
+    struct t_plugin_script *new_script, *old_lua_current_script;
+    struct t_plugin_script *old_lua_registered_script;
+    const char *old_lua_current_script_filename;
 
     fp = NULL;
 
@@ -509,6 +513,18 @@ weechat_lua_load (const char *filename, const char *code)
                         LUA_PLUGIN_NAME, filename);
     }
 
+    /*
+     * Save the current state, restored at the end: the script may be
+     * loaded by another script (for example with "/lua load"), which
+     * must continue to run in its own interpreter after this load.
+     */
+    old_lua_current_script = lua_current_script;
+    old_lua_current_script_filename = lua_current_script_filename;
+    old_lua_registered_script = lua_registered_script;
+    old_lua_current_interpreter = lua_current_interpreter;
+
+    new_script = NULL;
+
     lua_current_script = NULL;
     lua_registered_script = NULL;
 
@@ -522,7 +538,7 @@ weechat_lua_load (const char *filename, const char *code)
                         weechat_prefix ("error"), LUA_PLUGIN_NAME);
         if (fp)
             fclose (fp);
-        return NULL;
+        goto end;
     }
 
     luaL_openlibs (lua_current_interpreter);
@@ -578,7 +594,7 @@ weechat_lua_load (const char *filename, const char *code)
                             weechat_prefix ("error"), LUA_PLUGIN_NAME,
                             lua_tostring (lua_current_interpreter, -1));
             lua_close (lua_current_interpreter);
-            return NULL;
+            goto end;
         }
     }
     else
@@ -595,7 +611,7 @@ weechat_lua_load (const char *filename, const char *code)
                             lua_tostring (lua_current_interpreter, -1));
             lua_close (lua_current_interpreter);
             fclose (fp);
-            return NULL;
+            goto end;
         }
     }
 
@@ -633,7 +649,7 @@ weechat_lua_load (const char *filename, const char *code)
             lua_current_script = NULL;
         }
 
-        return NULL;
+        goto end;
     }
 
     if (fp)
@@ -646,7 +662,7 @@ weechat_lua_load (const char *filename, const char *code)
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), LUA_PLUGIN_NAME, filename);
         lua_close (lua_current_interpreter);
-        return NULL;
+        goto end;
     }
     lua_current_script = lua_registered_script;
 
@@ -664,7 +680,15 @@ weechat_lua_load (const char *filename, const char *code)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      lua_current_script->filename);
 
-    return lua_current_script;
+    new_script = lua_current_script;
+
+end:
+    lua_current_script = old_lua_current_script;
+    lua_current_script_filename = old_lua_current_script_filename;
+    lua_registered_script = old_lua_registered_script;
+    lua_current_interpreter = old_lua_current_interpreter;
+
+    return new_script;
 }
 
 /*
