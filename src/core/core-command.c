@@ -639,6 +639,29 @@ command_buffer_display_localvar (void *data,
 }
 
 /*
+ * Clear a buffer for command "/buffer clear".
+ *
+ * If clear_older == 1, only lines with a date strictly lower than "date_min"
+ * (date/time with microseconds precision) are deleted, otherwise all lines
+ * are deleted.
+ *
+ * Nothing is done if the buffer can not be cleared (property "clear" is 0).
+ */
+
+void
+command_buffer_clear (struct t_gui_buffer *buffer, int clear_older,
+                      long long date_min)
+{
+    if (!buffer || !buffer->clear)
+        return;
+
+    if (clear_older)
+        gui_buffer_clear_older (buffer, date_min);
+    else
+        gui_buffer_clear (buffer);
+}
+
+/*
  * Callback for command "/buffer": manage buffers.
  */
 
@@ -650,8 +673,10 @@ COMMAND_CALLBACK(buffer)
     char *value, *pos, *str_number1, *pos_number2;
     int i, count, prev_number, clear_by_number, list_size;
     int buffer_found, arg_name, type_free, switch_to_buffer, rc;
-    int number, number1, number2, numbers[3];
-    long long number_id;
+    int number, number1, number2, numbers[3], arg_start, clear_older;
+    long long number_id, date_now, date_min;
+    unsigned long long delay;
+    struct timeval tv_now;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -729,15 +754,42 @@ COMMAND_CALLBACK(buffer)
     /* Clear content of buffer(s). */
     if (string_strcmp (argv[1], "clear") == 0)
     {
-        if (argc > 2)
+        arg_start = 2;
+        clear_older = 0;
+        date_min = 0;
+        if ((argc > 2) && (string_strcmp (argv[2], "-older") == 0))
         {
-            if (string_strcmp (argv[2], "-all") == 0)
+            COMMAND_MIN_ARGS(4, "clear -older");
+            if (!util_parse_delay (argv[3], 1000000ULL, &delay))
+                COMMAND_ERROR;
+            gettimeofday (&tv_now, NULL);
+            date_now = ((long long)tv_now.tv_sec * 1000000LL)
+                + (long long)tv_now.tv_usec;
+            date_min = (delay < (unsigned long long)date_now) ?
+                date_now - (long long)delay : 0;
+            clear_older = 1;
+            arg_start = 4;
+        }
+        if (argc > arg_start)
+        {
+            if (string_strcmp (argv[arg_start], "-all") == 0)
             {
-                gui_buffer_clear_all ();
+                if (clear_older)
+                {
+                    for (ptr_buffer = gui_buffers; ptr_buffer;
+                         ptr_buffer = ptr_buffer->next_buffer)
+                    {
+                        command_buffer_clear (ptr_buffer, 1, date_min);
+                    }
+                }
+                else
+                {
+                    gui_buffer_clear_all ();
+                }
             }
             else
             {
-                for (i = 2; i < argc; i++)
+                for (i = arg_start; i < argc; i++)
                 {
                     if (string_strcmp (argv[i], "-merged") == 0)
                     {
@@ -759,17 +811,18 @@ COMMAND_CALLBACK(buffer)
                             for (ptr_buffer2 = gui_buffers; ptr_buffer2;
                                  ptr_buffer2 = ptr_buffer2->next_buffer)
                             {
-                                if ((ptr_buffer2->number == ptr_buffer->number)
-                                    && ptr_buffer2->clear)
+                                if (ptr_buffer2->number == ptr_buffer->number)
                                 {
-                                    gui_buffer_clear (ptr_buffer2);
+                                    command_buffer_clear (ptr_buffer2,
+                                                          clear_older,
+                                                          date_min);
                                 }
                             }
                         }
                         else
                         {
-                            if (ptr_buffer->clear)
-                                gui_buffer_clear (ptr_buffer);
+                            command_buffer_clear (ptr_buffer, clear_older,
+                                                  date_min);
                         }
                     }
                 }
@@ -777,8 +830,7 @@ COMMAND_CALLBACK(buffer)
         }
         else
         {
-            if (buffer->clear)
-                gui_buffer_clear (buffer);
+            command_buffer_clear (buffer, clear_older, date_min);
         }
 
         return WEECHAT_RC_OK;
@@ -8666,7 +8718,7 @@ command_init (void)
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated. */
         N_("list"
            " || add [-free] [-switch] <name>"
-           " || clear [<id>|<number>|<name>|-merged|-all [<id>|<number>|<name>...]]"
+           " || clear [-older <delay>[<unit>]] [<id>|<number>|<name>|-merged|-all [<id>|<number>|<name>...]]"
            " || move <number>|-|+"
            " || swap <id1>|<number1>|<name1> [<id2>|<number2>|<name2>]"
            " || cycle <id>|<number>|<name>..."
@@ -8694,6 +8746,12 @@ command_init (void)
             N_("raw[clear]: clear buffer content (number for a buffer, \"-merged\" "
                "for merged buffers, \"-all\" for all buffers, or nothing for "
                "current buffer)"),
+            N_("raw[-older]: clear only lines older than the delay (the date "
+               "displayed is used), where optional unit is one of:"),
+            N_("> raw[s]: seconds (default)"),
+            N_("> raw[m]: minutes"),
+            N_("> raw[h]: hours"),
+            N_("> raw[d]: days"),
             N_("raw[move]: move buffer in the list (may be relative, for example -1); "
                "\"-\" = move to first buffer number, \"+\" = move to last buffer "
                "number + 1"),
@@ -8745,6 +8803,8 @@ command_init (void)
                "will find buffer \"irc.libera.#UPPERCASE\")"),
             "",
             N_("Examples:"),
+            AI("  /buffer clear -older 1h"),
+            AI("  /buffer clear -older 2d -all"),
             AI("  /buffer move 5"),
             AI("  /buffer swap 1 3"),
             AI("  /buffer swap #weechat"),
@@ -8756,7 +8816,7 @@ command_init (void)
             AI("  /buffer +1"),
             AI("  /buffer +")),
         "add -free|-switch"
-        " || clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names) "
+        " || clear -older|-merged|-all|%(buffers_numbers)|%(buffers_plugins_names) "
         "%(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || move %(buffers_numbers)"
         " || swap %(buffers_numbers)|%(buffers_plugins_names) "

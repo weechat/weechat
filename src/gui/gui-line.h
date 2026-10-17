@@ -108,6 +108,8 @@ extern void gui_line_free_data (struct t_gui_line *line);
 extern void gui_line_free (struct t_gui_buffer *buffer,
                            struct t_gui_line *line);
 extern void gui_line_free_all (struct t_gui_buffer *buffer);
+extern int gui_line_free_older (struct t_gui_buffer *buffer,
+                                long long date_min);
 extern int gui_line_get_max_notify_level (struct t_gui_line *line);
 extern void gui_line_set_notify_level (struct t_gui_line *line,
                                        int max_notify_level);

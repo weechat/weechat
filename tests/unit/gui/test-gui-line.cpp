@@ -901,6 +901,59 @@ TEST(GuiLine, FreeAll)
 
 /*
  * Test functions:
+ *   gui_line_free_older
+ */
+
+TEST(GuiLine, FreeOlder)
+{
+    struct t_gui_buffer *buffer;
+
+    LONGS_EQUAL(0, gui_line_free_older (NULL, 0));
+
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    /* Lines are not sorted by date. */
+    gui_chat_printf_datetime_tags (buffer, 3000, 0, NULL, "line 1");
+    gui_chat_printf_datetime_tags (buffer, 1000, 0, NULL, "line 2");
+    gui_chat_printf_datetime_tags (buffer, 2000, 500000, NULL, "line 3");
+    gui_chat_printf_datetime_tags (buffer, 2000, 0, NULL, "line 4");
+    gui_chat_printf_datetime_tags (buffer, 4000, 0, NULL, "line 5");
+    LONGS_EQUAL(5, buffer->own_lines->lines_count);
+
+    /* No line older than this date. */
+    LONGS_EQUAL(0, gui_line_free_older (buffer, 0));
+    LONGS_EQUAL(0, gui_line_free_older (buffer, 1000000000LL));
+    LONGS_EQUAL(5, buffer->own_lines->lines_count);
+
+    /* Lines with a date strictly lower than 2000.5 are deleted. */
+    LONGS_EQUAL(2, gui_line_free_older (buffer, 2000500000LL));
+    LONGS_EQUAL(3, buffer->own_lines->lines_count);
+    STRCMP_EQUAL("line 1", buffer->own_lines->first_line->data->message);
+    STRCMP_EQUAL("line 3",
+                 buffer->own_lines->first_line->next_line->data->message);
+    STRCMP_EQUAL("line 5", buffer->own_lines->last_line->data->message);
+
+    /* All lines are deleted. */
+    LONGS_EQUAL(3, gui_line_free_older (buffer, 5000000000LL));
+    LONGS_EQUAL(0, buffer->own_lines->lines_count);
+    POINTERS_EQUAL(NULL, buffer->own_lines->first_line);
+    POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
+
+    gui_buffer_close (buffer);
+
+    /* Buffer with free content: nothing is deleted. */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+    gui_chat_printf_y (buffer, 0, "line 1");
+    LONGS_EQUAL(1, buffer->own_lines->lines_count);
+    LONGS_EQUAL(0, gui_line_free_older (buffer, 5000000000LL));
+    LONGS_EQUAL(1, buffer->own_lines->lines_count);
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
  *   gui_line_get_max_notify_level
  */
 

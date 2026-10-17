@@ -3491,6 +3491,31 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Clear lines older than a date in a buffer with formatted content.
+ *
+ * Argument "date_min" is a date/time with microseconds precision: all lines
+ * with a date strictly lower than this one are deleted.
+ *
+ * If all lines are deleted, the buffer is fully cleared (like function
+ * gui_buffer_clear).
+ */
+
+void
+gui_buffer_clear_older (struct t_gui_buffer *buffer, long long date_min)
+{
+    if (!buffer || !gui_buffer_valid (buffer))
+        return;
+
+    if (gui_line_free_older (buffer, date_min) == 0)
+        return;
+
+    if (buffer->own_lines->first_line)
+        gui_buffer_ask_chat_refresh (buffer, 2);
+    else
+        gui_buffer_clear (buffer);
+}
+
+/*
  * Clear content of all buffers.
  */
 

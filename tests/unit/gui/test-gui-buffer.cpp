@@ -19,6 +19,7 @@ extern "C"
 #include "src/core/core-input.h"
 #include "src/core/core-list.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-chat.h"
 #include "src/gui/gui-completion.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-key.h"
@@ -815,6 +816,7 @@ test_buffer_close_again_cb (const void *pointer, void *data,
 /*
  * Test functions with a closed buffer:
  *   gui_buffer_clear
+ *   gui_buffer_clear_older
  *   gui_buffer_close
  *   gui_buffer_merge
  *   gui_buffer_unmerge
@@ -855,6 +857,7 @@ TEST(GuiBuffer, ClosedBuffer)
     gui_buffer_close (buffer);
     LONGS_EQUAL(count, gui_buffers_count);
     gui_buffer_clear (buffer);
+    gui_buffer_clear_older (buffer, 0);
     gui_buffer_merge (buffer, gui_buffers);
     gui_buffer_merge (gui_buffers, buffer);
     gui_buffer_unmerge (buffer, -1);
@@ -2031,6 +2034,45 @@ TEST(GuiBuffer, CountMergedBuffers)
 TEST(GuiBuffer, Clear)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   gui_buffer_clear_older
+ */
+
+TEST(GuiBuffer, ClearOlder)
+{
+    struct t_gui_buffer *buffer;
+
+    gui_buffer_clear_older (NULL, 0);
+
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    gui_chat_printf_datetime_tags (buffer, 1000, 0, NULL, "line 1");
+    gui_chat_printf_datetime_tags (buffer, 3000, 0, NULL, "line 2");
+    gui_chat_printf_datetime_tags (buffer, 2000, 0, NULL, "line 3");
+    gui_hotlist_add (buffer, GUI_HOTLIST_MESSAGE, NULL, 0);
+    CHECK(buffer->hotlist);
+
+    /* No line deleted. */
+    gui_buffer_clear_older (buffer, 1000000000LL);
+    LONGS_EQUAL(3, buffer->own_lines->lines_count);
+    CHECK(buffer->hotlist);
+
+    /* Some lines deleted: buffer is kept in hotlist. */
+    gui_buffer_clear_older (buffer, 2500000000LL);
+    LONGS_EQUAL(1, buffer->own_lines->lines_count);
+    STRCMP_EQUAL("line 2", buffer->own_lines->first_line->data->message);
+    CHECK(buffer->hotlist);
+
+    /* All lines deleted: buffer is fully cleared. */
+    gui_buffer_clear_older (buffer, 5000000000LL);
+    LONGS_EQUAL(0, buffer->own_lines->lines_count);
+    POINTERS_EQUAL(NULL, buffer->hotlist);
+
+    gui_buffer_close (buffer);
 }
 
 /*

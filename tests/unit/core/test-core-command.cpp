@@ -17,6 +17,7 @@ extern "C"
 #define HAVE_CONFIG_H
 #endif
 #include <string.h>
+#include <time.h>
 #include "src/core/weechat.h"
 #include "src/core/core-command.h"
 #include "src/core/core-debug.h"
@@ -30,6 +31,7 @@ extern "C"
 #include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-key.h"
+#include "src/gui/gui-line.h"
 #include "src/gui/gui-mouse.h"
 #include "src/plugins/plugin.h"
 }
@@ -281,6 +283,7 @@ TEST(CoreCommand, Bar)
 
 TEST(CoreCommand, Buffer)
 {
+    struct t_gui_buffer *ptr_buffer;
     char command[1024], string[1024];
 
     WEE_CMD_CORE_ERROR_GENERIC("/buffer xxx");
@@ -316,6 +319,33 @@ TEST(CoreCommand, Buffer)
     WEE_CMD_CORE("/buffer clear -merged");
     WEE_CMD_CORE("/buffer add test");
     WEE_CMD_CORE("/buffer clear core.test");
+    WEE_CMD_CORE("/buffer close core.test");
+    WEE_CMD_CORE_MIN_ARGS("/buffer clear -older", "/buffer clear -older");
+    WEE_CMD_CORE_ERROR_GENERIC("/buffer clear -older xxx");
+    WEE_CMD_CORE_ERROR_GENERIC("/buffer clear -older 1y");
+    WEE_CMD_CORE("/buffer clear -older 1d");
+    WEE_CMD_CORE("/buffer clear -older 1h -all");
+    WEE_CMD_CORE("/buffer clear -older 15m -merged");
+    WEE_CMD_CORE("/buffer add test");
+    ptr_buffer = gui_buffer_search_by_full_name ("core.test");
+    CHECK(ptr_buffer);
+    gui_chat_printf_datetime_tags (ptr_buffer, time (NULL) - 7200, 0,
+                                   NULL, "line 1");
+    gui_chat_printf_datetime_tags (ptr_buffer, time (NULL) - 1800, 0,
+                                   NULL, "line 2");
+    gui_chat_printf_datetime_tags (ptr_buffer, time (NULL) - 10, 0,
+                                   NULL, "line 3");
+    LONGS_EQUAL(3, ptr_buffer->own_lines->lines_count);
+    WEE_CMD_CORE("/buffer clear -older 1d core.test");
+    LONGS_EQUAL(3, ptr_buffer->own_lines->lines_count);
+    WEE_CMD_CORE("/buffer clear -older 1h core.test");
+    LONGS_EQUAL(2, ptr_buffer->own_lines->lines_count);
+    WEE_CMD_CORE("/buffer clear -older 1m core.test");
+    LONGS_EQUAL(1, ptr_buffer->own_lines->lines_count);
+    STRNCMP_EQUAL("line 3",
+                  ptr_buffer->own_lines->first_line->data->message, 6);
+    WEE_CMD_CORE("/buffer clear -older 0 core.test");
+    LONGS_EQUAL(0, ptr_buffer->own_lines->lines_count);
     WEE_CMD_CORE("/buffer close core.test");
 
     /* /buffer move */

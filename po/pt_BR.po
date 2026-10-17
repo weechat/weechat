@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-17 08:26+0200\n"
+"POT-Creation-Date: 2026-10-17 08:29+0200\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -1393,17 +1393,17 @@ msgstr "gerenciar buffers"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
-"list || add [-free] [-switch] <name> || clear [<id>|<number>|<name>|-merged|-"
-"all [<id>|<number>|<name>...]] || move <number>|-|+ || swap <id1>|<number1>|"
-"<name1> [<id2>|<number2>|<name2>] || cycle <id>|<number>|<name>... || merge "
-"<id>|<number>|<name> || unmerge [<number>|-all] || hide [<id>|<number>|"
-"<name>|-all [<id>|<number>|<name>...]] || unhide [<id>|<number>|<name>|-all "
-"[<id>|<number>|<name>...]] || switch [-previous] || zoom || renumber "
-"[<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|<name>...] || notify "
-"[<level>] || listvar [<id>|<number>|<name>] || setvar <name> [<value>] || "
-"delvar <name> || set <property> [<value>] || setauto <property> [<value>] || "
-"get <property> || jump smart|last_displayed|prev_visited|next_visited || "
-"<id>|<number>|-|+|<name>"
+"list || add [-free] [-switch] <name> || clear [-older <delay>[<unit>]] [<id>|"
+"<number>|<name>|-merged|-all [<id>|<number>|<name>...]] || move <number>|-|+ "
+"|| swap <id1>|<number1>|<name1> [<id2>|<number2>|<name2>] || cycle <id>|"
+"<number>|<name>... || merge <id>|<number>|<name> || unmerge [<number>|-all] "
+"|| hide [<id>|<number>|<name>|-all [<id>|<number>|<name>...]] || unhide "
+"[<id>|<number>|<name>|-all [<id>|<number>|<name>...]] || switch [-previous] "
+"|| zoom || renumber [<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|"
+"<name>...] || notify [<level>] || listvar [<id>|<number>|<name>] || setvar "
+"<name> [<value>] || delvar <name> || set <property> [<value>] || setauto "
+"<property> [<value>] || get <property> || jump smart|last_displayed|"
+"prev_visited|next_visited || <id>|<number>|-|+|<name>"
 msgstr ""
 "list || clear [<número>|<nome>|-merged|-all] || move|merge <número> || swap "
 "<número1>|<nome1> [<número2>|<nome2>] || unmerge [<número>|-all] || close "
@@ -1421,6 +1421,23 @@ msgstr ""
 msgid ""
 "raw[clear]: clear buffer content (number for a buffer, \"-merged\" for "
 "merged buffers, \"-all\" for all buffers, or nothing for current buffer)"
+msgstr ""
+
+msgid ""
+"raw[-older]: clear only lines older than the delay (the date displayed is "
+"used), where optional unit is one of:"
+msgstr ""
+
+msgid "> raw[s]: seconds (default)"
+msgstr ""
+
+msgid "> raw[m]: minutes"
+msgstr ""
+
+msgid "> raw[h]: hours"
+msgstr ""
+
+msgid "> raw[d]: days"
 msgstr ""
 
 msgid ""
@@ -1760,15 +1777,6 @@ msgid "> raw[ms]: milliseconds"
 msgstr ""
 
 msgid "> raw[s]: seconds"
-msgstr ""
-
-msgid "> raw[m]: minutes"
-msgstr ""
-
-msgid "> raw[h]: hours"
-msgstr ""
-
-msgid "> raw[d]: days"
 msgstr ""
 
 #, fuzzy
@@ -3435,9 +3443,6 @@ msgid "unit: optional, values are:"
 msgstr ""
 
 msgid "> raw[us]: microseconds"
-msgstr ""
-
-msgid "> raw[s]: seconds (default)"
 msgstr ""
 
 msgid "count: number of times to execute command"

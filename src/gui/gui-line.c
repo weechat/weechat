@@ -1506,6 +1506,62 @@ gui_line_free_all (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Delete formatted lines older than a date from a buffer.
+ *
+ * Argument "date_min" is a date/time with microseconds precision: all lines
+ * with a date strictly lower than this one are deleted (the date of line is
+ * used, which is the date displayed, not the date of print).
+ *
+ * Lines are not always sorted by date (for example with lines received from
+ * an IRC bouncer), so all lines of buffer are checked.
+ *
+ * Return number of lines deleted.
+ */
+
+int
+gui_line_free_older (struct t_gui_buffer *buffer, long long date_min)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_line *ptr_line, *ptr_next_line;
+    int lines_removed;
+
+    if (!buffer || (buffer->type != GUI_BUFFER_TYPE_FORMATTED))
+        return 0;
+
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        ptr_win->scroll_changed = 0;
+    }
+
+    lines_removed = 0;
+    ptr_line = buffer->own_lines->first_line;
+    while (ptr_line)
+    {
+        ptr_next_line = ptr_line->next_line;
+        if (((long long)ptr_line->data->date * 1000000LL)
+            + ptr_line->data->date_usec < date_min)
+        {
+            gui_line_free (buffer, ptr_line);
+            lines_removed++;
+        }
+        ptr_line = ptr_next_line;
+    }
+
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win->scroll_changed)
+        {
+            ptr_win->scroll_changed = 0;
+            (void) hook_signal_send ("window_scrolled",
+                                     WEECHAT_HOOK_SIGNAL_POINTER,
+                                     ptr_win);
+        }
+    }
+
+    return lines_removed;
+}
+
+/*
  * Get max notify level for a line, according to the nick.
  *
  * Return max notify level, between -1 and GUI_HOTLIST_HIGHLIGHT.

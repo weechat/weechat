@@ -412,6 +412,8 @@ extern struct t_gui_buffer *gui_buffer_search_by_id_name (const char *string);
 extern struct t_gui_buffer *gui_buffer_search_by_id_number_name (const char *string);
 extern int gui_buffer_count_merged_buffers (int number);
 extern void gui_buffer_clear (struct t_gui_buffer *buffer);
+extern void gui_buffer_clear_older (struct t_gui_buffer *buffer,
+                                    long long date_min);
 extern void gui_buffer_clear_all (void);
 extern void gui_buffer_close (struct t_gui_buffer *buffer);
 extern void gui_buffer_switch_by_number (struct t_gui_window *window,
