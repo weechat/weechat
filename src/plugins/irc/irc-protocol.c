@@ -2636,6 +2636,17 @@ IRC_PROTOCOL_CALLBACK(notice)
                 (is_channel_orig) ? ctxt->params[0] : "",  /* channel */
                 (is_channel_orig) ? IRC_COLOR_RESET : "",
                 IRC_COLOR_MSG(pos_args));
+
+            /*
+             * Remember that nick has spoken, so that its part/quit is not
+             * filtered by smart filter (like its join, unmasked above).
+             */
+            if (ptr_channel && !ctxt->nick_is_me)
+            {
+                irc_channel_nick_speaking_time_remove_old (ptr_channel);
+                irc_channel_nick_speaking_time_add (ctxt->server, ptr_channel,
+                                                    ctxt->nick, time (NULL));
+            }
         }
         else
         {

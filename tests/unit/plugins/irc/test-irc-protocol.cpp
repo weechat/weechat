@@ -2977,6 +2977,17 @@ TEST(IrcProtocolWithServer, part)
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     CHECK(ptr_server->channels->nicks == ptr_server->channels->last_nick);
     LONGS_EQUAL(0, ptr_server->channels->part);
+
+    /* Part from another user who has sent a notice to the channel */
+    RECV(":bob!user@host JOIN #test");
+    CHECK_CHAN("-->", "bob (user@host) has joined #test",
+               "irc_join,irc_smart_filter,nick_bob,host_user@host,log4");
+    RECV(":bob!user@host NOTICE #test :a notice ");
+    CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
+               "irc_notice,notify_message,nick_bob,host_user@host,log1");
+    RECV(":bob!user@host PART #test :part message ");
+    CHECK_CHAN("<--", "bob (user@host) has left #test (part message )",
+               "irc_part,nick_bob,host_user@host,log4");
 }
 
 /*
