@@ -56,6 +56,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: allow multiple nicks separated by commas in command `/notify del`
 - javascript: enable build by default ([#360](https://github.com/weechat/weechat/issues/360))
 - **breaking:** javascript: use the current V8 API, require V8 ≥ 11.3 (provided by Node.js shared library on Linux, or standalone V8 library like on macOS with Homebrew), V8 is now initialized on first script load and runs in single-threaded mode ([#360](https://github.com/weechat/weechat/issues/360))
+- logger: read the backlog faster when the log file has very long lines
 - **breaking:** php: remove GnuTLS arguments of function hook_connect, like in all other languages
 - **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script
 - **breaking:** php: fix arguments of hook_print callback, remove argument "tags_count"

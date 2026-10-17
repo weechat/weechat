@@ -47,6 +47,50 @@ logger_tail_last_eol (const char *string_start, const char *string_ptr)
 }
 
 /*
+ * Read a line in a file, from offset "start" (included) to offset "end"
+ * (excluded).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+logger_tail_read_line (int fd, off_t start, off_t end)
+{
+    char *line;
+    size_t length, total_read;
+    ssize_t bytes_read;
+
+    if ((fd < 0) || (start < 0) || (end < start))
+        return NULL;
+
+    length = end - start;
+    line = malloc (length + 1);
+    if (!line)
+        return NULL;
+
+    if (lseek (fd, start, SEEK_SET) < 0)
+    {
+        free (line);
+        return NULL;
+    }
+
+    total_read = 0;
+    while (total_read < length)
+    {
+        bytes_read = read (fd, line + total_read, length - total_read);
+        if (bytes_read <= 0)
+        {
+            free (line);
+            return NULL;
+        }
+        total_read += bytes_read;
+    }
+    line[length] = '\0';
+
+    return line;
+}
+
+/*
  * Compare two lines in arraylist.
  */
 
@@ -88,18 +132,18 @@ struct t_arraylist *
 logger_tail_file (const char *filename, int lines)
 {
     int fd, count_read;
-    off_t file_length, file_pos;
+    off_t file_length, file_pos, part_of_line_end;
     size_t to_read;
     ssize_t bytes_read;
     char buf[LOGGER_TAIL_BUFSIZE + 1];
-    char *ptr_buf, *pos_eol, *part_of_line, *new_part_of_line, *line;
+    char *ptr_buf, *pos_eol, *line;
     struct t_arraylist *list_lines;
 
     if (!filename || !filename[0] || (lines < 1))
         return NULL;
 
     fd = -1;
-    part_of_line = 0;
+    part_of_line_end = -1;
     list_lines = NULL;
 
     /* Allocate arraylist. */
@@ -152,12 +196,18 @@ logger_tail_file (const char *filename, int lines)
                 ptr_buf = pos_eol - 1;
                 pos_eol[0] = '\0';
                 pos_eol++;
-                if (part_of_line)
+                if (part_of_line_end >= 0)
                 {
-                    if (weechat_asprintf (&line, "%s%s", pos_eol, part_of_line) < 0)
+                    /*
+                     * The line started in a block read before: read the
+                     * whole line at once from the file.
+                     */
+                    line = logger_tail_read_line (fd,
+                                                  file_pos + (pos_eol - buf),
+                                                  part_of_line_end);
+                    if (!line)
                         goto error;
-                    free (part_of_line);
-                    part_of_line = NULL;
+                    part_of_line_end = -1;
                     weechat_arraylist_insert (list_lines, 0, line);
                 }
                 else
@@ -172,24 +222,11 @@ logger_tail_file (const char *filename, int lines)
             {
                 /*
                  * Beginning of read buffer reached without EOL, then we
-                 * add string to part_of_line, we'll use that later.
+                 * save the position of the end of this line in file, the
+                 * line will be read when its beginning is found.
                  */
-                if (part_of_line)
-                {
-                    if (weechat_asprintf (&new_part_of_line,
-                                          "%s%s", buf, part_of_line) < 0)
-                    {
-                        goto error;
-                    }
-                    free (part_of_line);
-                    part_of_line = new_part_of_line;
-                }
-                else
-                {
-                    part_of_line = strdup (buf);
-                    if (!part_of_line)
-                        goto error;
-                }
+                if (part_of_line_end < 0)
+                    part_of_line_end = file_pos + (ptr_buf - buf) + 1;
                 ptr_buf = NULL;
             }
         }
@@ -203,10 +240,13 @@ logger_tail_file (const char *filename, int lines)
             to_read = LOGGER_TAIL_BUFSIZE;
     }
 
-    if (part_of_line)
+    if ((lines > 0) && (part_of_line_end >= 0))
     {
-        /* Add part of line (will be freed when arraylist is destroyed). */
-        weechat_arraylist_insert (list_lines, 0, part_of_line);
+        /* Beginning of file reached: add the first line of file. */
+        line = logger_tail_read_line (fd, 0, part_of_line_end);
+        if (!line)
+            goto error;
+        weechat_arraylist_insert (list_lines, 0, line);
     }
 
     close (fd);
@@ -214,7 +254,6 @@ logger_tail_file (const char *filename, int lines)
     return list_lines;
 
 error:
-    free (part_of_line);
     weechat_arraylist_free (list_lines);
     if (fd >= 0)
         close (fd);
