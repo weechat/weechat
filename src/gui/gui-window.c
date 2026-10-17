@@ -178,14 +178,10 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
         return;
 
     /* No data for line? */
-    if (!window->coords[win_y].data)
+    if (!window->coords[win_y].data || (window->coords[win_y].data_x < 0))
         return;
 
-    coords_x_message = gui_line_get_align (
-        (*line)->data->buffer,
-        *line,
-        1,  /* with suffix */
-        ((win_y > 0) && (window->coords[win_y - 1].line != *line)));
+    coords_x_message = window->coords[win_y].data_x;
 
     if (win_x < coords_x_message)
     {
@@ -930,6 +926,7 @@ gui_window_coords_init_line (struct t_gui_window *window, int line)
 
     window->coords[line].line = NULL;
     window->coords[line].data = NULL;
+    window->coords[line].data_x = -1;
     window->coords[line].time_x1 = -1;
     window->coords[line].time_x2 = -1;
     window->coords[line].buffer_x1 = -1;

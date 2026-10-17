@@ -17,6 +17,7 @@ struct t_gui_window_coords
 {
     struct t_gui_line *line;           /* pointer to line                   */
     char *data;                        /* pointer to data                   */
+    int data_x;                        /* x where data is displayed         */
     int time_x1, time_x2;              /* start/end of time on screen       */
     int buffer_x1, buffer_x2;          /* start/end of buffer name on screen*/
     int prefix_x1, prefix_x2;          /* start/end of prefix on screen     */

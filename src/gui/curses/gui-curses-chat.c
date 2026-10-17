@@ -558,6 +558,7 @@ gui_chat_display_prefix_suffix (struct t_gui_window *window,
         {
             window->coords[window->win_chat_cursor_y].line = line;
             window->coords[window->win_chat_cursor_y].data = (char *)word;
+            window->coords[window->win_chat_cursor_y].data_x = window->win_chat_cursor_x;
         }
     }
 
@@ -1478,7 +1479,10 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     if (!simulate && !gui_chat_display_tags)
     {
         if (window->win_chat_cursor_y < window->coords_size)
+        {
             window->coords[window->win_chat_cursor_y].data = line->data->message;
+            window->coords[window->win_chat_cursor_y].data_x = window->win_chat_cursor_x;
+        }
     }
 
     /* Reset color & style for a new line. */
@@ -2085,6 +2089,7 @@ gui_chat_draw_free_buffer (struct t_gui_window *window, int clear_chat)
                 {
                     window->coords[y].line = ptr_line;
                     window->coords[y].data = ptr_line->data->message;
+                    window->coords[y].data_x = 0;
                 }
                 if (ptr_line->data->refresh_needed || clear_chat)
                 {
