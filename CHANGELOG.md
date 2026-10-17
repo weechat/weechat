@@ -123,6 +123,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - perl: fix wrong arguments error in function nicklist_remove_all
 - perl: fix warnings "Subroutine redefined" when loading multiple scripts with Perl built without multiplicity
 - perl: fix prefix of warnings and errors displayed by scripts with Perl built without multiplicity
+- php: fix errors when a script loads another script during its initialization
 - php: force options display_errors to 0 and log_errors to 1, so that errors are displayed only once whatever the php.ini settings
 - php: fix function upgrade_new with an empty callback (write mode)
 - php: fix arguments of function hook_info_hashtable

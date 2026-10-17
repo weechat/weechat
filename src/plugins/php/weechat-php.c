@@ -721,6 +721,9 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
 struct t_plugin_script *
 weechat_php_load (const char *filename, const char *code)
 {
+    struct t_plugin_script *new_script, *old_php_current_script;
+    struct t_plugin_script *old_php_registered_script;
+    const char *old_php_current_script_filename;
     zend_file_handle file_handle;
 
     if ((weechat_php_plugin->debug >= 2) || !php_quiet)
@@ -729,6 +732,17 @@ weechat_php_load (const char *filename, const char *code)
                         weechat_gettext ("%s: loading script \"%s\""),
                         PHP_PLUGIN_NAME, filename);
     }
+
+    /*
+     * Save the current state, restored at the end: the script may be
+     * loaded by another script (for example with "/php load"), which
+     * must still be the current script after this load.
+     */
+    old_php_current_script = php_current_script;
+    old_php_current_script_filename = php_current_script_filename;
+    old_php_registered_script = php_registered_script;
+
+    new_script = NULL;
 
     php_current_script = NULL;
     php_registered_script = NULL;
@@ -769,7 +783,7 @@ weechat_php_load (const char *filename, const char *code)
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), PHP_PLUGIN_NAME, filename);
-        return NULL;
+        goto end;
     }
     php_current_script = php_registered_script;
 
@@ -783,7 +797,14 @@ weechat_php_load (const char *filename, const char *code)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      php_current_script->filename);
 
-    return php_current_script;
+    new_script = php_current_script;
+
+end:
+    php_current_script = old_php_current_script;
+    php_current_script_filename = old_php_current_script_filename;
+    php_registered_script = old_php_registered_script;
+
+    return new_script;
 }
 
 /*
