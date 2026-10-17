@@ -75,6 +75,8 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix missing lines in group of merged buffers after merging buffers into a zoomed group
+- core: set zoom on buffers merged into a zoomed group of merged buffers
 - core: keep the active buffer in group of merged buffers when another buffer is unmerged or closed
 - core: reset zoom on unmerged buffers so that they are removed from hotlist when displayed ([#215](https://github.com/weechat/weechat/issues/215))
 - core: fix crash and wrong colors on terminals with direct colors (`TERM` like "xterm-direct") ([#1701](https://github.com/weechat/weechat/issues/1701))

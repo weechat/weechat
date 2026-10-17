@@ -2329,7 +2329,7 @@ TEST(GuiBuffer, Swap)
 
 TEST(GuiBuffer, Merge)
 {
-    struct t_gui_buffer *buffer1, *buffer2;
+    struct t_gui_buffer *buffer1, *buffer2, *buffer3;
 
     buffer1 = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                               NULL, NULL, NULL,
@@ -2384,9 +2384,83 @@ TEST(GuiBuffer, Merge)
     POINTERS_EQUAL(buffer1, gui_current_window->buffer);
     gui_buffer_unmerge (buffer2, -1);
 
+    buffer3 = gui_buffer_new (NULL, "test3",
+                              NULL, NULL, NULL,
+                              NULL, NULL, NULL);
+    CHECK(buffer3);
+    gui_chat_printf_datetime_tags (buffer1, 1000, 0, NULL, "line 1");
+    gui_chat_printf_datetime_tags (buffer2, 2000, 0, NULL, "line 2");
+    gui_chat_printf_datetime_tags (buffer3, 3000, 0, NULL, "line 3");
+
+    /*
+     * Merge a buffer into a zoomed group of merged buffers: the merged
+     * buffer is zoomed too (hidden) and the mixed lines contain the lines
+     * of all buffers.
+     */
+    gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
+    gui_buffer_merge (buffer2, buffer1);
+    gui_buffer_zoom (buffer1);
+    LONGS_EQUAL(2, buffer1->active);
+    LONGS_EQUAL(0, buffer2->active);
+    gui_buffer_merge (buffer3, buffer1);
+    LONGS_EQUAL(2, buffer1->number);
+    LONGS_EQUAL(2, buffer2->number);
+    LONGS_EQUAL(2, buffer3->number);
+    LONGS_EQUAL(2, buffer1->active);
+    LONGS_EQUAL(0, buffer2->active);
+    LONGS_EQUAL(0, buffer3->active);
+    LONGS_EQUAL(1, buffer1->zoomed);
+    LONGS_EQUAL(1, buffer2->zoomed);
+    LONGS_EQUAL(1, buffer3->zoomed);
+    POINTERS_EQUAL(buffer1->own_lines, buffer1->lines);
+    LONGS_EQUAL(1, buffer1->num_displayed);
+    LONGS_EQUAL(0, buffer2->num_displayed);
+    LONGS_EQUAL(0, buffer3->num_displayed);
+    POINTERS_EQUAL(buffer1->mixed_lines, buffer2->mixed_lines);
+    POINTERS_EQUAL(buffer1->mixed_lines, buffer3->mixed_lines);
+    LONGS_EQUAL(3, buffer1->mixed_lines->lines_count);
+    gui_buffer_zoom (buffer1);
+    LONGS_EQUAL(0, buffer1->zoomed);
+    LONGS_EQUAL(0, buffer2->zoomed);
+    LONGS_EQUAL(0, buffer3->zoomed);
+    POINTERS_EQUAL(buffer1->mixed_lines, buffer1->lines);
+    LONGS_EQUAL(3, buffer1->lines->lines_count);
+    gui_buffer_unmerge (buffer3, -1);
+    gui_buffer_unmerge (buffer2, -1);
+
+    /*
+     * Merge a zoomed group of merged buffers into a buffer which is not
+     * zoomed: the group is not zoomed any more and the mixed lines contain
+     * the lines of all buffers.
+     */
+    gui_window_switch_to_buffer (gui_current_window, buffer2, 1);
+    gui_buffer_merge (buffer3, buffer2);
+    gui_buffer_zoom (buffer2);
+    LONGS_EQUAL(2, buffer2->active);
+    LONGS_EQUAL(0, buffer3->active);
+    gui_buffer_merge (buffer2, buffer1);
+    LONGS_EQUAL(2, buffer1->number);
+    LONGS_EQUAL(2, buffer2->number);
+    LONGS_EQUAL(2, buffer3->number);
+    POINTERS_EQUAL(buffer2, gui_current_window->buffer);
+    LONGS_EQUAL(0, buffer1->active);
+    LONGS_EQUAL(1, buffer2->active);
+    LONGS_EQUAL(0, buffer3->active);
+    LONGS_EQUAL(0, buffer1->zoomed);
+    LONGS_EQUAL(0, buffer2->zoomed);
+    LONGS_EQUAL(0, buffer3->zoomed);
+    POINTERS_EQUAL(buffer2->mixed_lines, buffer2->lines);
+    LONGS_EQUAL(1, buffer1->num_displayed);
+    LONGS_EQUAL(1, buffer2->num_displayed);
+    LONGS_EQUAL(1, buffer3->num_displayed);
+    LONGS_EQUAL(3, buffer2->mixed_lines->lines_count);
+    gui_buffer_unmerge (buffer3, -1);
+    gui_buffer_unmerge (buffer2, -1);
+
     gui_window_switch_to_buffer (gui_current_window, gui_buffers, 1);
     gui_buffer_close (buffer1);
     gui_buffer_close (buffer2);
+    gui_buffer_close (buffer3);
 }
 
 /*

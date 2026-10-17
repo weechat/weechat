@@ -4722,6 +4722,14 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
     }
     gui_buffer_set_active_buffer (ptr_buffer_active);
 
+    /* Set "zoomed" in merged buffers, according to the active buffer. */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->number == buffer->number)
+            ptr_buffer->zoomed = (ptr_buffer_active->active == 2) ? 1 : 0;
+    }
+
     gui_buffer_compute_num_displayed ();
 
     gui_window_ask_refresh (1);

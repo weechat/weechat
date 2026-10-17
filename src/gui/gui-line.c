@@ -2345,12 +2345,19 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
     if (!ptr_buffer_found)
         return;
 
-    /* Mix all lines (sorting by date) to a new structure "new_lines". */
+    /*
+     * Mix all lines (sorting by date) to a new structure "new_lines";
+     * for a group of merged buffers, the mixed lines are used (and not the
+     * lines displayed, which are the own lines of the buffer if it is zoomed).
+     */
     new_lines = gui_line_lines_alloc ();
     if (!new_lines)
         return;
-    ptr_line1 = ptr_buffer_found->lines->first_line;
-    ptr_line2 = buffer->lines->first_line;
+    ptr_line1 = (ptr_buffer_found->mixed_lines) ?
+        ptr_buffer_found->mixed_lines->first_line :
+        ptr_buffer_found->own_lines->first_line;
+    ptr_line2 = (buffer->mixed_lines) ?
+        buffer->mixed_lines->first_line : buffer->own_lines->first_line;
     while (ptr_line1 || ptr_line2)
     {
         if (!ptr_line1)
