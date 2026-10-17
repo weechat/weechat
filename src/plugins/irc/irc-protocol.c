@@ -2643,13 +2643,19 @@ IRC_PROTOCOL_CALLBACK(notice)
             notify_private = 0;
             if (ctxt->server->is_connected
                 && ctxt->nick
+                && ((ctxt->address && ctxt->address[0])
+                    || !strchr (ctxt->nick, '.'))
                 && irc_config_notice_nick_notify (ctxt->nick))
             {
                 /*
                  * Add tag "notify_private" only if:
                  *   - server is connected (message 001 already received)
                  * and:
-                 *   - notice is from a non-empty nick not present in option
+                 *   - notice is from a non-empty nick, not from a server
+                 *     (a server name has no address and contains a dot,
+                 *     which is not allowed in nicks)
+                 * and:
+                 *   - nick is not present in option
                  *     irc.look.notice_nicks_disable_notify.
                  */
                 notify_private = 1;

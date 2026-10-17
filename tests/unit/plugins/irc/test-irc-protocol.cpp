@@ -2698,10 +2698,10 @@ TEST(IrcProtocolWithServer, notice)
         CHECK_SRV("--", "*** Looking up your hostname... ", "irc_notice,log1");
         RECV(":server.address NOTICE AUTH :*** Looking up your hostname... ");
         CHECK_SRV("--", "server.address: *** Looking up your hostname... ",
-                  "irc_notice,notify_private,nick_server.address,log1");
+                  "irc_notice,nick_server.address,log1");
         RECV(":server.address NOTICE * :*** Looking up your hostname... ");
         CHECK_SRV("--", "server.address: *** Looking up your hostname... ",
-                  "irc_notice,notify_private,nick_server.address,log1");
+                  "irc_notice,nick_server.address,log1");
 
         /* Notice to channel/user */
         RECV(":server.address NOTICE #test :\002a notice ");
@@ -2709,13 +2709,16 @@ TEST(IrcProtocolWithServer, notice)
                    "irc_notice,notify_message,nick_server.address,log1");
         RECV(":server.address NOTICE alice :a notice ");
         CHECK_SRV("--", "server.address: a notice ",
-                  "irc_notice,notify_private,nick_server.address,log1");
+                  "irc_notice,nick_server.address,log1");
         RECV(":bob!user@host NOTICE #test :a notice ");
         CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
                    "irc_notice,notify_message,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :a notice ");
         CHECK_SRV("--", "bob (user@host): a notice ",
                   "irc_notice,notify_private,nick_bob,host_user@host,log1");
+        RECV(":bob NOTICE alice :a notice ");
+        CHECK_SRV("--", "bob: a notice ",
+                  "irc_notice,notify_private,nick_bob,log1");
 
         /* Notice to channel/user with color in address */
         RECV(":bob!user_\00304red@host_\00304red NOTICE #test :a notice ");
@@ -2732,7 +2735,7 @@ TEST(IrcProtocolWithServer, notice)
                    "irc_notice,notify_message,nick_server.address,log1");
         RECV(":server.address NOTICE alice :a notice ");
         CHECK_SRV("--", "server.address: a notice ",
-                  "irc_notice,notify_private,nick_server.address,log1");
+                  "irc_notice,nick_server.address,log1");
         RECV(":bob!user@host NOTICE #test :a notice ");
         CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
                    "irc_notice,notify_message,nick_bob,host_user@host,log1");
