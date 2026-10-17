@@ -5069,6 +5069,14 @@ Comme `s` est la commande par défaut, elle peut être omise, donc `/regex/repla
 est également valide (mais le premier caractère, qui est le délimiteur, ne doit
 pas être une lettre).
 
+[NOTE]
+L'expression régulière est une expression régulière POSIX étendue : l'antislash
+n'est pas un caractère d'échappement entre crochets, donc par exemple `+[^\]]+`
+correspond à tout caractère sauf l'antislash, suivi de `+]+`. Pour exclure `+]+`,
+il doit être le premier caractère entre crochets : `+[^]]+`.
+De même, `+[^\s]+` exclut l'antislash et `s`, pas les espaces : utilisez plutôt
+`+[^[:space:]]+`.
+
 Les groupes de correspondance peuvent être utilisés dans le _remplacement_ :
 
 * `+${re:0}+` à `+${re:99}+` : `+${re:0}+` est la correspondance complète, `+${re:1}+`

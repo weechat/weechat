@@ -5011,6 +5011,15 @@ Für den Befehl `s` ist das Format: `s/regex/replace` oder `s/regex/replace/var`
 Da `s` der Standardbefehl ist, kann dieser weggelassen werden, also ist es auch `/regex/replace`
 gültig (aber das erste Zeichen, das das Trennzeichen ist, darf kein Buchstabe sein).
 
+// TRANSLATION MISSING
+[NOTE]
+The regular expression is a POSIX extended regular expression: the backslash
+is not an escape char inside brackets, so for example `+[^\]]+` matches any
+char except backslash, followed by `+]+`. To exclude `+]+`, it must be the first
+char inside brackets: `+[^]]+`.
+Likewise, `+[^\s]+` excludes the backslash and `s`, not whitespace:
+use `+[^[:space:]]+` instead.
+
 Zutreffende Gruppen können in _replace_ verwendet werden:
 
 * `+${re:0}+` nach `+${re:99}+`: `+${re:0}+` ist die ganze Trefferanzahl, `+${re:1}+` nach

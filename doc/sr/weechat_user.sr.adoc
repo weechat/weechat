@@ -4646,6 +4646,15 @@ s/regex1/replace1/var1 y/abcdef/ABDDEF/var2
 Пошто је `s` подразумевана команда, може да се изостави, тако да је исправно и `/регуларни/замена`
 (али први карактер, тј. граничник, не сме да буде слово).
 
+// TRANSLATION MISSING
+[NOTE]
+The regular expression is a POSIX extended regular expression: the backslash
+is not an escape char inside brackets, so for example `+[^\]]+` matches any
+char except backslash, followed by `+]+`. To exclude `+]+`, it must be the first
+char inside brackets: `+[^]]+`.
+Likewise, `+[^\s]+` excludes the backslash and `s`, not whitespace:
+use `+[^[:space:]]+` instead.
+
 У _замена_ могу да се користе групе подударања:
 
 * `+${re:0}+` до `+${re:99}+`: `+${re:0}+` је комплетно подударање, `+${re:1}+` до

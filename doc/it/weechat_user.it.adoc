@@ -5211,6 +5211,15 @@ For the command `s`, the format is: `s/regex/replace` or `s/regex/replace/var`
 As `s` is the default command, it can be omitted, so `/regex/replace` is also
 valid (but the first char, which is the delimiter, must not be a letter).
 
+// TRANSLATION MISSING
+[NOTE]
+The regular expression is a POSIX extended regular expression: the backslash
+is not an escape char inside brackets, so for example `+[^\]]+` matches any
+char except backslash, followed by `+]+`. To exclude `+]+`, it must be the first
+char inside brackets: `+[^]]+`.
+Likewise, `+[^\s]+` excludes the backslash and `s`, not whitespace:
+use `+[^[:space:]]+` instead.
+
 Matching groups can be used in _replace_:
 
 * `+${re:0}+` to `+${re:99}+`: `+${re:0}+` is the whole match, `+${re:1}+` to
