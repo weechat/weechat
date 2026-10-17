@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix freeze when displaying a very long message, for example a corrupted log file displayed in backlog ([#637](https://github.com/weechat/weechat/issues/637))
 - core: fix memory leak when the last buffer is closed
 - api: fix compilation error with macro weechat_file_compare
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created

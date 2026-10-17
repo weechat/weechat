@@ -4763,6 +4763,8 @@ string_dyn_copy (char **string, const char *new_string)
  * The parameter "bytes" is the max number of bytes to concatenate
  * (a terminating null byte '\0' is automatically added); value -1 means
  * automatic: whole string "add" is concatenated.
+ * If "bytes" is >= 0, the string "add" does not need to be null-terminated:
+ * at most "bytes" bytes are read.
  *
  * The string pointer (*string) is updated with the new allocated string
  * if the string had to be extended, or the same pointer if there was enough
@@ -4790,9 +4792,7 @@ string_dyn_concat (char **string, const char *add, int bytes)
 
     ptr_string_dyn = (struct t_string_dyn *)string;
 
-    length_add = strlen (add);
-    if ((bytes >= 0) && (bytes < (int)length_add))
-        length_add = bytes;
+    length_add = (bytes >= 0) ? strnlen (add, bytes) : strlen (add);
 
     new_size = ptr_string_dyn->size + length_add;
 
