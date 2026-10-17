@@ -3218,7 +3218,7 @@ TEST(CoreString, Shared)
 
 TEST(CoreString, Dyn)
 {
-    char **str, *str_ptr;
+    char **str, *str_ptr, not_terminated[3] = { 'x', 'y', 'z' };
     struct t_string_dyn *ptr_string_dyn;
 
     POINTERS_EQUAL(NULL, string_dyn_alloc (-1));
@@ -3351,10 +3351,18 @@ TEST(CoreString, Dyn)
     STRCMP_EQUAL("abcdxxyxyz", ptr_string_dyn->string);
     STRCMP_EQUAL("abcdxxyxyz", *str);
 
+    /* Check concat with fixed length and string not null-terminated. */
+    LONGS_EQUAL(1, string_dyn_concat (str, not_terminated, 2));
+    LONGS_EQUAL(15, ptr_string_dyn->size_alloc);
+    LONGS_EQUAL(13, ptr_string_dyn->size);
+    POINTERS_EQUAL(ptr_string_dyn->string, *str);
+    STRCMP_EQUAL("abcdxxyxyzxy", ptr_string_dyn->string);
+    STRCMP_EQUAL("abcdxxyxyzxy", *str);
+
     str_ptr = *str;
     string_dyn_free (str, 0);
 
-    STRCMP_EQUAL("abcdxxyxyz", str_ptr);
+    STRCMP_EQUAL("abcdxxyxyzxy", str_ptr);
 
     free (str_ptr);
 
