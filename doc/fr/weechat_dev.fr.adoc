@@ -562,6 +562,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |                test-relay-weechat-msg.cpp       | Tests : protocole relay "weechat" : messages.
 |          script/                                | Racine des tests unitaires pour l'extension script.
 |             test-script-repo.cpp                | Tests : dépôt de scripts.
+|          spell/                                 | Racine des tests unitaires pour l'extension spell.
+|             test-spell-config.cpp               | Tests : configuration spell.
 |          trigger/                               | Racine des tests unitaires pour l'extension trigger.
 |             test-trigger.cpp                    | Tests : triggers.
 |             test-trigger-command.cpp            | Tests : commandes trigger.

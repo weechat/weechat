@@ -293,9 +293,10 @@ spell_config_option_change (const void *pointer, void *data,
     (void) data;
     (void) option;
 
+    /* Spellers are recreated with the new options when needed. */
     weechat_hashtable_remove_all (spell_speller_buffer);
     if (!spell_config_loading)
-        spell_speller_remove_unused ();
+        weechat_hashtable_remove_all (spell_spellers);
 }
 
 /*
@@ -316,9 +317,10 @@ spell_config_option_delete_option (const void *pointer, void *data,
 
     weechat_config_option_free (option);
 
+    /* Spellers are recreated without this option when needed. */
     weechat_hashtable_remove_all (spell_speller_buffer);
     if (!spell_config_loading)
-        spell_speller_remove_unused ();
+        weechat_hashtable_remove_all (spell_spellers);
 
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
@@ -387,9 +389,10 @@ spell_config_option_create_option (const void *pointer, void *data,
     }
     else
     {
+        /* Spellers are recreated with the new options when needed. */
         weechat_hashtable_remove_all (spell_speller_buffer);
         if (!spell_config_loading)
-            spell_speller_remove_unused ();
+            weechat_hashtable_remove_all (spell_spellers);
     }
 
     return rc;

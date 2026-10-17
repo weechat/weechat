@@ -38,6 +38,16 @@ endif()
 if(ENABLE_PHP)
   add_definitions(-DHAVE_PHP)
 endif()
+if(ENABLE_SPELL)
+  if(ENABLE_ENCHANT)
+    pkg_check_modules(ENCHANT REQUIRED enchant-2)
+    include_directories(${ENCHANT_INCLUDE_DIRS})
+    add_definitions(-DUSE_ENCHANT)
+  else()
+    find_package(Aspell REQUIRED)
+    include_directories(${ASPELL_INCLUDE_PATH})
+  endif()
+endif()
 
 # Unit tests (core)
 set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
@@ -175,6 +185,12 @@ endif()
 if(ENABLE_SCRIPT)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/script/test-script-repo.cpp
+  )
+endif()
+
+if(ENABLE_SPELL)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    plugins/spell/test-spell-config.cpp
   )
 endif()
 

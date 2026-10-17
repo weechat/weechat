@@ -139,6 +139,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - ruby: fix errors when a script loads another script during its initialization
 - ruby: fix crash when an exception has no backtrace, display the class name of exception instead of its singleton class
 - ruby: clear exception after an error, so that it is not set as cause of the next exception and not displayed again when the plugin is unloaded
+- spell: apply changes on options spell.option.* immediately, without reloading the plugin ([#1241](https://github.com/weechat/weechat/issues/1241))
 - tcl: fix errors when a script loads another script during its initialization
 - tcl: return 0 instead of raising an error in functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
 - tcl: add missing function completion_free

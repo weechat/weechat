@@ -568,6 +568,10 @@ WeeChat „језгро” се налази у следећим директо�
 |                test-relay-weechat-msg.cpp       | Tests: Relay "weechat" protocol: messages.
 |          script/                                | Корен unit тестова за script додатак.
 |             test-script-repo.cpp                | Тестови: script репозиторијум.
+// TRANSLATION MISSING
+|          spell/                                 | Root of unit tests for spell plugin.
+// TRANSLATION MISSING
+|             test-spell-config.cpp               | Tests: spell configuration.
 |          trigger/                               | Корен unit тестова за окидач додатак.
 |             test-trigger.cpp                    | Тестови: окидачи.
 // TRANSLATION MISSING
