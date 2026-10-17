@@ -100,7 +100,8 @@ extern int gui_key_bind_plugin (const char *context, struct t_hashtable *keys);
 extern int gui_key_unbind (struct t_gui_buffer *buffer, int context,
                            const char *key);
 extern int gui_key_unbind_plugin (const char *context, const char *key);
-extern int gui_key_focus (const char *key, int context);
+extern int gui_key_focus (const char *key, const char *key_name,
+                          const char *key_name_alias, int context);
 extern void gui_key_debug_print_key (const char *combo, const char *key_name,
                                      const char *key_name_alias,
                                      const char *command, int mouse);

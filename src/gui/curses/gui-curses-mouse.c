@@ -600,7 +600,8 @@ gui_mouse_event_process (const char *key)
         else if (!gui_key_debug)
         {
             /* Execute command (if found). */
-            (void) gui_key_focus (mouse_key, GUI_KEY_CONTEXT_MOUSE);
+            (void) gui_key_focus (mouse_key, NULL, NULL,
+                                  GUI_KEY_CONTEXT_MOUSE);
         }
         if (!bare_event)
             gui_mouse_event_reset ();
