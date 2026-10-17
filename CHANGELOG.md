@@ -104,6 +104,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: fix crash in function config_write_line when the file is not opened
 - api: fix crash in function upgrade_write_object when the upgrade file is invalid
 - **breaking:** alias: allow escaping buffer local variables with `\$`, do not replace buffer local variables in the arguments given to the alias ([#896](https://github.com/weechat/weechat/issues/896))
+- guile: fix conversion of alist with pairs like `(("key" . "value"))` to hashtable in API functions and callbacks ([#1490](https://github.com/weechat/weechat/issues/1490))
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created

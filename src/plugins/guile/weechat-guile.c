@@ -301,6 +301,10 @@ weechat_guile_hashtable_to_alist (struct t_hashtable *hashtable)
 /*
  * Convert a guile alist to a WeeChat hashtable.
  *
+ * Each item of the alist can be a pair ("key" . "value") or a list with two
+ * elements ("key" "value"); items that are not pairs or with a key or value
+ * which is not a string are ignored.
+ *
  * Note: hashtable must be freed after use.
  */
 
@@ -309,8 +313,7 @@ weechat_guile_alist_to_hashtable (SCM alist, int size, const char *type_keys,
                                   const char *type_values)
 {
     struct t_hashtable *hashtable;
-    int length, i;
-    SCM pair;
+    SCM item, key, value;
     char *str, *str2;
 
     hashtable = weechat_hashtable_new (size, type_keys, type_values,
@@ -318,22 +321,29 @@ weechat_guile_alist_to_hashtable (SCM alist, int size, const char *type_keys,
     if (!hashtable)
         return NULL;
 
-    length = scm_to_int (scm_length (alist));
-    for (i = 0; i < length; i++)
+    for (; scm_is_pair (alist); alist = scm_cdr (alist))
     {
-        pair = scm_list_ref (alist, scm_from_int (i));
+        item = scm_car (alist);
+        if (!scm_is_pair (item))
+            continue;
+        key = scm_car (item);
+        value = scm_cdr (item);
+        if (scm_is_pair (value))
+            value = scm_car (value);
+        if (!scm_is_string (key) || !scm_is_string (value))
+            continue;
         if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
         {
-            str = scm_to_locale_string (scm_list_ref (pair, scm_from_int (0)));
-            str2 = scm_to_locale_string (scm_list_ref (pair, scm_from_int (1)));
+            str = scm_to_locale_string (key);
+            str2 = scm_to_locale_string (value);
             weechat_hashtable_set (hashtable, str, str2);
             free (str);
             free (str2);
         }
         else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
         {
-            str = scm_to_locale_string (scm_list_ref (pair, scm_from_int (0)));
-            str2 = scm_to_locale_string (scm_list_ref (pair, scm_from_int (1)));
+            str = scm_to_locale_string (key);
+            str2 = scm_to_locale_string (value);
             weechat_hashtable_set (hashtable, str,
                                    plugin_script_str2ptr (weechat_guile_plugin,
                                                           NULL, NULL, str2));

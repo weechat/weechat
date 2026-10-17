@@ -995,11 +995,11 @@ class UnparseGuile(UnparsePython):
 
     def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
-        # Quasiquote the list and unquote values, so that values are evaluated.
+        # Quasiquote the alist and unquote values, so that values are evaluated.
         self.add(
             "`(",
             self.make_list(
-                [["(", key, " ,", value, ")"] for key, value in zip(node.keys, node.values)],
+                [["(", key, " . ,", value, ")"] for key, value in zip(node.keys, node.values)],
                 sep=" ",
             ),
             ")",
