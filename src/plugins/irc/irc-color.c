@@ -195,7 +195,7 @@ irc_color_decode (const char *string, int keep_colors)
     char str_fg[16], str_bg[16], str_color[128], str_key[128], str_to_add[128];
     const char *remapped_color;
     unsigned char *ptr_string;
-    int length, fg, bg, fg_term, bg_term;
+    int length, fg, bg, fg_term, bg_term, current_bg_irc, current_bg_term;
     int bold, reverse, italic, strikethrough, underline;
     long fg_rgb, bg_rgb;
 
@@ -213,6 +213,14 @@ irc_color_decode (const char *string, int keep_colors)
     italic = 0;
     strikethrough = 0;
     underline = 0;
+
+    /*
+     * Current background, used in key of remapped colors when a color code
+     * has no background: -1 = default background, -2 = background set by
+     * the other kind of color code (IRC color number or RGB color).
+     */
+    current_bg_irc = -1;
+    current_bg_term = -1;
 
     ptr_string = (unsigned char *)string;
     while (ptr_string && ptr_string[0])
@@ -240,6 +248,8 @@ irc_color_decode (const char *string, int keep_colors)
                 italic = 0;
                 strikethrough = 0;
                 underline = 0;
+                current_bg_irc = -1;
+                current_bg_term = -1;
                 ptr_string++;
                 break;
             case IRC_COLOR_REVERSE_CHAR:
@@ -329,8 +339,18 @@ irc_color_decode (const char *string, int keep_colors)
                             else
                                 bg = -1;
                         }
-                        /* Search "fg,bg" in hashtable of remapped colors. */
-                        snprintf (str_key, sizeof (str_key), "%d,%d", fg, bg);
+                        if (bg >= 0)
+                        {
+                            /* IRC color 99 is the default background. */
+                            current_bg_irc = (bg == 99) ? -1 : bg;
+                            current_bg_term = (bg == 99) ? -1 : -2;
+                        }
+                        /*
+                         * Search "fg,bg" in hashtable of remapped colors
+                         * (with the current background if bg is not given).
+                         */
+                        snprintf (str_key, sizeof (str_key), "%d,%d",
+                                  fg, (bg >= 0) ? bg : current_bg_irc);
                         remapped_color = weechat_hashtable_get (
                             irc_config_hashtable_color_mirc_remap,
                             str_key);
@@ -352,6 +372,8 @@ irc_color_decode (const char *string, int keep_colors)
                     }
                     else
                     {
+                        current_bg_irc = -1;
+                        current_bg_term = -1;
                         snprintf (str_to_add, sizeof (str_to_add), "%s",
                                   weechat_color ("resetcolor"));
                     }
@@ -422,9 +444,19 @@ irc_color_decode (const char *string, int keep_colors)
                             if (bg_term >= 0)
                                 snprintf (str_bg, sizeof (str_bg), "%d", bg_term);
                         }
-                        /* Search "fg_term,bg_term" in hashtable of remapped colors. */
-                        snprintf (str_key, sizeof (str_key),
-                                  "%d,%d", fg_term, bg_term);
+                        if (bg_term >= 0)
+                        {
+                            current_bg_irc = -2;
+                            current_bg_term = bg_term;
+                        }
+                        /*
+                         * Search "fg_term,bg_term" in hashtable of remapped
+                         * colors (with the current background if bg_term is
+                         * not given).
+                         */
+                        snprintf (str_key, sizeof (str_key), "%d,%d",
+                                  fg_term,
+                                  (bg_term >= 0) ? bg_term : current_bg_term);
                         remapped_color = weechat_hashtable_get (
                             irc_config_hashtable_color_term_remap,
                             str_key);
@@ -446,6 +478,8 @@ irc_color_decode (const char *string, int keep_colors)
                     }
                     else
                     {
+                        current_bg_irc = -1;
+                        current_bg_term = -1;
                         snprintf (str_to_add, sizeof (str_to_add), "%s",
                                   weechat_color ("resetcolor"));
                     }

@@ -3954,8 +3954,11 @@ irc_config_init (void)
             /* TRANSLATORS: please do not translate the list of WeeChat color names at the end of string. */
             N_("remap mirc colors in messages using a hashtable (used only "
                "for standard colors, not RGB colors): keys are \"fg,bg\" as "
-               "integers between -1 (not specified) and 15, values are WeeChat "
-               "color names or numbers (format is: \"1,-1:color1;2,7:color2\"), "
+               "integers between -1 and 15 (-1 for fg: not specified, -1 for "
+               "bg: default background; if a color code has no background, "
+               "the current background in message is used), values are "
+               "WeeChat color names or numbers (format is: "
+               "\"1,-1:color1;2,7:color2\"), "
                "example: \"1,-1:darkgray;1,2:white,blue\" to remap black to "
                "\"darkgray\" and black on blue to \"white,blue\"; default "
                "WeeChat colors for IRC codes: 0=white, 1=black, 2=blue, "
@@ -4003,8 +4006,11 @@ irc_config_init (void)
             N_("remap terminal color numbers in messages using a hashtable "
                "(used only for RGB colors as hexadecimal, which are first "
                "translated to terminal color numbers): keys are \"fg,bg\" as "
-               "integers between -1 (not specified) and 255, values are WeeChat "
-               "color names or numbers (format is: \"1,-1:color1;2,7:color2\"), "
+               "integers between -1 and 255 (-1 for fg: not specified, -1 for "
+               "bg: default background; if a color code has no background, "
+               "the current background in message is used), values are "
+               "WeeChat color names or numbers (format is: "
+               "\"1,-1:color1;2,7:color2\"), "
                "example: \"0,-1:darkgray;0,90:white,blue\" to remap black to "
                "\"darkgray\" and black on dark magenta to \"white,blue\""),
             NULL, 0, 0, "0,-1:darkgray", NULL, 0,

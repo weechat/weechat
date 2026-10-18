@@ -65,6 +65,17 @@ extern int irc_color_convert_term2irc (int color);
 #define STRING_IRC_COLOR_MIRC_REMAPPED                                  \
     "test_"                                                             \
     IRC_COLOR_COLOR_STR "03,02" "remapped"
+#define STRING_IRC_COLOR_MIRC_REMAPPED_CURRENT_BG                       \
+    "test_"                                                             \
+    IRC_COLOR_COLOR_STR "01,95" "black/gray_"                           \
+    IRC_COLOR_COLOR_STR "01" "black_"                                   \
+    IRC_COLOR_COLOR_STR IRC_COLOR_COLOR_STR "01" "remapped1_"           \
+    IRC_COLOR_COLOR_STR "01,05" "black/red_"                            \
+    IRC_COLOR_RESET_STR IRC_COLOR_COLOR_STR "01" "remapped2_"           \
+    IRC_COLOR_COLOR_STR "01,99" "black/default_"                        \
+    IRC_COLOR_COLOR_STR "01" "remapped3_"                               \
+    IRC_COLOR_HEX_COLOR_STR "FFFF00,8B008B" "yellow/darkmagenta_"       \
+    IRC_COLOR_COLOR_STR "01" "black"
 #define STRING_IRC_COLOR_FG_ORANGE                                      \
     "test_" IRC_COLOR_HEX_COLOR_STR "FF7F00" "orange"                   \
     IRC_COLOR_HEX_COLOR_STR "_end"
@@ -75,6 +86,16 @@ extern int irc_color_convert_term2irc (int color);
 #define STRING_IRC_COLOR_TERM_REMAPPED                                  \
     "test_"                                                             \
     IRC_COLOR_HEX_COLOR_STR "FFFF00,8B008B" "remapped"
+#define STRING_IRC_COLOR_TERM_REMAPPED_CURRENT_BG                       \
+    "test_"                                                             \
+    IRC_COLOR_HEX_COLOR_STR "000000,8B008B" "black/darkmagenta_"        \
+    IRC_COLOR_HEX_COLOR_STR "000000" "black_"                           \
+    IRC_COLOR_HEX_COLOR_STR IRC_COLOR_HEX_COLOR_STR "000000"            \
+    "remapped1_"                                                        \
+    IRC_COLOR_HEX_COLOR_STR "000000,8B008B" "black/darkmagenta_"        \
+    IRC_COLOR_RESET_STR IRC_COLOR_HEX_COLOR_STR "000000" "remapped2_"   \
+    IRC_COLOR_COLOR_STR "01,05" "black/red_"                            \
+    IRC_COLOR_HEX_COLOR_STR "000000" "black"
 
 /* Tests on irc_color_encode(): command line -> IRC color */
 #define STRING_USER_BOLD                                                \
@@ -330,6 +351,32 @@ TEST(IrcColor, Decode)
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_MIRC_REMAPPED, 1);
     config_file_option_unset (irc_config_color_mirc_remap);
 
+    /*
+     * Color: 01 -> darkgray (remapped via option irc.color.mirc_remap)
+     * only if the current background is the default one.
+     */
+    config_file_option_set (irc_config_color_mirc_remap, "1,-1:darkgray", 1);
+    WEE_CHECK_DECODE("test_black/gray_black_remapped1_black/red_remapped2_"
+                     "black/default_remapped3_yellow/darkmagenta_black",
+                     STRING_IRC_COLOR_MIRC_REMAPPED_CURRENT_BG, 0);
+    snprintf (string, sizeof (string),
+              "test_%sblack/gray_%sblack_%s%sremapped1_%sblack/red_"
+              "%s%sremapped2_%sblack/default_%sremapped3_"
+              "%syellow/darkmagenta_%sblack",
+              gui_color_get_custom ("|black,247"),
+              gui_color_get_custom ("|black"),
+              gui_color_get_custom ("resetcolor"),
+              gui_color_get_custom ("|darkgray"),
+              gui_color_get_custom ("|black,red"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|darkgray"),
+              gui_color_get_custom ("|black,default"),
+              gui_color_get_custom ("|darkgray"),
+              gui_color_get_custom ("|11,90"),
+              gui_color_get_custom ("|black"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_MIRC_REMAPPED_CURRENT_BG, 1);
+    config_file_option_unset (irc_config_color_mirc_remap);
+
     /* Color: hex 0xFF7F00 (orange / 208) */
     WEE_CHECK_DECODE("test_orange_end",
                      STRING_IRC_COLOR_FG_ORANGE, 0);
@@ -358,6 +405,30 @@ TEST(IrcColor, Decode)
               "test_%sremapped",
               gui_color_get_custom ("|blue"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_TERM_REMAPPED, 1);
+    config_file_option_unset (irc_config_color_term_remap);
+
+    /*
+     * Color: hex 0x000000 (black / 0) -> darkgray (remapped via option
+     * irc.color.term_remap) only if the current background is the default
+     * one.
+     */
+    config_file_option_set (irc_config_color_term_remap, "0,-1:darkgray", 1);
+    WEE_CHECK_DECODE("test_black/darkmagenta_black_remapped1_"
+                     "black/darkmagenta_remapped2_black/red_black",
+                     STRING_IRC_COLOR_TERM_REMAPPED_CURRENT_BG, 0);
+    snprintf (string, sizeof (string),
+              "test_%sblack/darkmagenta_%sblack_%s%sremapped1_"
+              "%sblack/darkmagenta_%s%sremapped2_%sblack/red_%sblack",
+              gui_color_get_custom ("|0,90"),
+              gui_color_get_custom ("|0"),
+              gui_color_get_custom ("resetcolor"),
+              gui_color_get_custom ("|darkgray"),
+              gui_color_get_custom ("|0,90"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|darkgray"),
+              gui_color_get_custom ("|black,red"),
+              gui_color_get_custom ("|0"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_TERM_REMAPPED_CURRENT_BG, 1);
     config_file_option_unset (irc_config_color_term_remap);
 }
 
