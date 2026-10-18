@@ -107,6 +107,8 @@ extern void irc_channel_set_buffer_modes (struct t_irc_server *server,
                                           struct t_irc_channel *channel);
 extern void irc_channel_set_buffer_input_prompt (struct t_irc_server *server,
                                                  struct t_irc_channel *channel);
+extern void irc_channel_refresh_self_prefix (struct t_irc_server *server,
+                                             struct t_irc_channel *channel);
 extern void irc_channel_set_buffer_title (struct t_irc_channel *channel);
 extern void irc_channel_set_topic (struct t_irc_channel *channel,
                                    const char *topic);

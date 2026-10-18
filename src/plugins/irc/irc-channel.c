@@ -663,6 +663,22 @@ irc_channel_set_buffer_input_prompt (struct t_irc_server *server,
 }
 
 /*
+ * Refresh display of own nick prefix in a channel: input prompt of channel
+ * buffer and bar item "irc_nick_prefix".
+ */
+
+void
+irc_channel_refresh_self_prefix (struct t_irc_server *server,
+                                 struct t_irc_channel *channel)
+{
+    if (!server || !channel)
+        return;
+
+    irc_channel_set_buffer_input_prompt (server, channel);
+    weechat_bar_item_update ("irc_nick_prefix");
+}
+
+/*
  * Set the buffer title with the channel topic.
  */
 

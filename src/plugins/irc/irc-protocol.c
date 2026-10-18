@@ -1390,6 +1390,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     {
         irc_nick_nicklist_set_prefix_server (ctxt->server);
         irc_server_set_buffer_input_prompt (ctxt->server);
+        weechat_bar_item_update ("irc_nick_prefix");
     }
 
     return WEECHAT_RC_OK;

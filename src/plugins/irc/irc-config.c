@@ -729,7 +729,8 @@ irc_config_change_look_topic_strip_colors (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on an option affecting input prompt.
+ * Callback for changes on an option affecting input prompt and bar item
+ * "irc_nick_prefix".
  */
 
 void
@@ -749,6 +750,8 @@ irc_config_change_buffer_input_prompt (const void *pointer, void *data,
         if (ptr_server->buffer)
             irc_server_set_buffer_input_prompt (ptr_server);
     }
+
+    weechat_bar_item_update ("irc_nick_prefix");
 }
 
 /*

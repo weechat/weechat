@@ -510,8 +510,8 @@ irc_nick_get_color_for_nicklist (struct t_irc_server *server,
 /*
  * Add a nick to buffer nicklist.
  *
- * If the nick is our own nick, the input prompt of channel is refreshed (our
- * own nick prefixes may have changed).
+ * If the nick is our own nick, the input prompt of channel and the bar item
+ * "irc_nick_prefix" are refreshed (our own nick prefixes may have changed).
  */
 
 void
@@ -537,7 +537,7 @@ irc_nick_nicklist_add (struct t_irc_server *server,
     if (server->nick
         && (irc_server_strcasecmp (server, nick->name, server->nick) == 0))
     {
-        irc_channel_set_buffer_input_prompt (server, channel);
+        irc_channel_refresh_self_prefix (server, channel);
     }
 }
 
@@ -1000,6 +1000,9 @@ irc_nick_realloc_prefixes (struct t_irc_server *server,
 
 /*
  * Remove a nick from a channel.
+ *
+ * If the nick is our own nick, the input prompt of channel and the bar item
+ * "irc_nick_prefix" are refreshed.
  */
 
 void
@@ -1007,9 +1010,14 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
                struct t_irc_nick *nick)
 {
     struct t_irc_nick *new_nicks;
+    int nick_is_me;
 
     if (!channel || !nick)
         return;
+
+    nick_is_me = (server && server->nick
+                  && (irc_server_strcasecmp (server, nick->name,
+                                             server->nick) == 0)) ? 1 : 0;
 
     /* Remove nick from nicklist. */
     irc_nick_nicklist_remove (server, channel, nick);
@@ -1044,6 +1052,9 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
 
     channel->nicks = new_nicks;
     channel->nick_completion_reset = 1;
+
+    if (nick_is_me)
+        irc_channel_refresh_self_prefix (server, channel);
 }
 
 /*
