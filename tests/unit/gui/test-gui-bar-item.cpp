@@ -16,12 +16,20 @@ extern "C"
 #include "src/core/core-config-file.h"
 #include "src/gui/gui-bar.h"
 #include "src/gui/gui-bar-item.h"
+#include "src/gui/gui-buffer.h"
+#include "src/gui/gui-color.h"
+#include "src/gui/gui-nicklist.h"
 
 extern char *gui_bar_item_buffer_name_cb (const void *pointer, void *data,
                                           struct t_gui_bar_item *item,
                                           struct t_gui_window *window,
                                           struct t_gui_buffer *buffer,
                                           struct t_hashtable *extra_info);
+extern char *gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
+                                              struct t_gui_bar_item *item,
+                                              struct t_gui_window *window,
+                                              struct t_gui_buffer *buffer,
+                                              struct t_hashtable *extra_info);
 extern char *gui_bar_item_time_cb (const void *pointer, void *data,
                                    struct t_gui_bar_item *item,
                                    struct t_gui_window *window,
@@ -482,7 +490,86 @@ TEST(GuiBarItem, BufferTitleCb)
 
 TEST(GuiBarItem, BufferNicklistCb)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group;
+    struct t_gui_nick *nick;
+    char *str, *str_decoded, str_expected[256];
+
+    POINTERS_EQUAL(NULL,
+                   gui_bar_item_buffer_nicklist_cb (NULL, NULL, NULL, NULL,
+                                                    NULL, NULL));
+
+    buffer = gui_buffer_new (NULL, "test", NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer);
+    gui_buffer_set (buffer, "nicklist_display_groups", "0");
+
+    group = gui_nicklist_add_group (buffer, NULL, "group", "blue", 1);
+    CHECK(group);
+
+    /* No nicks. */
+    str = gui_bar_item_buffer_nicklist_cb (NULL, NULL, NULL, NULL, buffer,
+                                           NULL);
+    CHECK(str);
+    STRCMP_EQUAL("", str);
+    free (str);
+
+    /* Prefixes with same length. */
+    CHECK(gui_nicklist_add_nick (buffer, group, "alice", "green",
+                                 "@", "lightgreen", 1));
+    CHECK(gui_nicklist_add_nick (buffer, group, "bob", "green",
+                                 " ", "lightgreen", 1));
+    str = gui_bar_item_buffer_nicklist_cb (NULL, NULL, NULL, NULL, buffer,
+                                           NULL);
+    str_decoded = gui_color_decode (str, NULL);
+    STRCMP_EQUAL("@alice\n bob", str_decoded);
+    free (str_decoded);
+    free (str);
+
+    /* Nicks aligned on the longest prefix. */
+    nick = gui_nicklist_add_nick (buffer, group, "carol", "green",
+                                  "@+", "lightgreen", 1);
+    CHECK(nick);
+    CHECK(gui_nicklist_add_nick (buffer, group, "dan", "green",
+                                 NULL, NULL, 1));
+    str = gui_bar_item_buffer_nicklist_cb (NULL, NULL, NULL, NULL, buffer,
+                                           NULL);
+    str_decoded = gui_color_decode (str, NULL);
+    STRCMP_EQUAL("@ alice\n  bob\n@+carol\n  dan", str_decoded);
+    free (str_decoded);
+    /* Padding is displayed without the prefix color. */
+    snprintf (str_expected, sizeof (str_expected),
+              "@%s %s%salice",
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("lightgreen"),
+              gui_color_get_custom ("green"));
+    CHECK(strstr (str, str_expected));
+    free (str);
+
+    /* Nick without color: displayed with the prefix color after padding. */
+    CHECK(gui_nicklist_add_nick (buffer, group, "eve", NULL,
+                                 "~", "yellow", 1));
+    str = gui_bar_item_buffer_nicklist_cb (NULL, NULL, NULL, NULL, buffer,
+                                           NULL);
+    snprintf (str_expected, sizeof (str_expected),
+              "%s~%s %seve",
+              gui_color_get_custom ("yellow"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("yellow"));
+    CHECK(strstr (str, str_expected));
+    free (str);
+    gui_nicklist_remove_nick (buffer,
+                              gui_nicklist_search_nick (buffer, NULL, "eve"));
+
+    /* Hidden nick with the longest prefix: ignored for alignment. */
+    gui_nicklist_nick_set (buffer, nick, "visible", "0");
+    str = gui_bar_item_buffer_nicklist_cb (NULL, NULL, NULL, NULL, buffer,
+                                           NULL);
+    str_decoded = gui_color_decode (str, NULL);
+    STRCMP_EQUAL("@alice\n bob\n dan", str_decoded);
+    free (str_decoded);
+    free (str);
+
+    gui_buffer_close (buffer);
 }
 
 /*

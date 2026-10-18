@@ -591,6 +591,110 @@ TEST(GuiNicklist, ComputeVisibleCount)
 
 /*
  * Test functions:
+ *   gui_nicklist_get_prefix_length
+ */
+
+TEST(GuiNicklist, GetPrefixLength)
+{
+    struct t_gui_nick nick;
+
+    LONGS_EQUAL(0, gui_nicklist_get_prefix_length (NULL));
+
+    memset (&nick, 0, sizeof (nick));
+    LONGS_EQUAL(0, gui_nicklist_get_prefix_length (&nick));
+
+    nick.prefix = (char *)"@";
+    LONGS_EQUAL(1, gui_nicklist_get_prefix_length (&nick));
+
+    nick.prefix = (char *)"@+";
+    LONGS_EQUAL(2, gui_nicklist_get_prefix_length (&nick));
+
+    nick.prefix = (char *)"\u3000";
+    LONGS_EQUAL(2, gui_nicklist_get_prefix_length (&nick));
+}
+
+/*
+ * Test functions:
+ *   gui_nicklist_get_max_prefix_length
+ */
+
+TEST(GuiNicklist, GetMaxPrefixLength)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group;
+    struct t_gui_nick *nick1, *nick2, *nick3;
+
+
+    LONGS_EQUAL(0, gui_nicklist_get_max_prefix_length (NULL));
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    LONGS_EQUAL(0, gui_nicklist_get_max_prefix_length (buffer));
+
+    group = gui_nicklist_add_group (buffer, NULL, "group", "blue", 1);
+    CHECK(group);
+
+    LONGS_EQUAL(0, gui_nicklist_get_max_prefix_length (buffer));
+
+    CHECK(gui_nicklist_add_nick (buffer, group, "nick_no_prefix", "green",
+                                 NULL, NULL, 1));
+    LONGS_EQUAL(0, gui_nicklist_get_max_prefix_length (buffer));
+
+    CHECK(gui_nicklist_add_nick (buffer, group, "nick_space", "green",
+                                 " ", NULL, 1));
+    LONGS_EQUAL(1, gui_nicklist_get_max_prefix_length (buffer));
+
+    nick1 = gui_nicklist_add_nick (buffer, group, "nick1", "green",
+                                   "@+", "lightgreen", 1);
+    CHECK(nick1);
+    LONGS_EQUAL(2, gui_nicklist_get_max_prefix_length (buffer));
+
+    /* Wide chars: 2 columns per char. */
+    nick2 = gui_nicklist_add_nick (buffer, NULL, "nick2", "green",
+                                   "\u3000\u3000", "lightgreen", 1);
+    CHECK(nick2);
+    LONGS_EQUAL(4, gui_nicklist_get_max_prefix_length (buffer));
+
+    /* Hidden nicks are ignored. */
+    gui_nicklist_nick_set (buffer, nick2, "visible", "0");
+    LONGS_EQUAL(2, gui_nicklist_get_max_prefix_length (buffer));
+    gui_nicklist_nick_set (buffer, nick1, "visible", "0");
+    LONGS_EQUAL(1, gui_nicklist_get_max_prefix_length (buffer));
+    gui_nicklist_nick_set (buffer, nick1, "visible", "1");
+    LONGS_EQUAL(2, gui_nicklist_get_max_prefix_length (buffer));
+
+    /* Hidden nick added: ignored. */
+    nick3 = gui_nicklist_add_nick (buffer, group, "nick3", "green",
+                                   "~&@%+", "lightgreen", 0);
+    CHECK(nick3);
+    LONGS_EQUAL(2, gui_nicklist_get_max_prefix_length (buffer));
+
+    /* Prefix changed. */
+    gui_nicklist_nick_set (buffer, nick3, "visible", "1");
+    LONGS_EQUAL(5, gui_nicklist_get_max_prefix_length (buffer));
+    gui_nicklist_nick_set (buffer, nick3, "prefix", "@+");
+    LONGS_EQUAL(2, gui_nicklist_get_max_prefix_length (buffer));
+
+    /* Nick with max prefix removed, another one has the same prefix. */
+    gui_nicklist_remove_nick (buffer, nick3);
+    LONGS_EQUAL(2, gui_nicklist_get_max_prefix_length (buffer));
+
+    /* Last nick with max prefix removed. */
+    gui_nicklist_remove_nick (buffer, nick1);
+    LONGS_EQUAL(1, gui_nicklist_get_max_prefix_length (buffer));
+
+    /* All nicks removed. */
+    gui_nicklist_remove_all (buffer);
+    LONGS_EQUAL(0, gui_nicklist_get_max_prefix_length (buffer));
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
  *   gui_nicklist_group_get_integer
  */
 

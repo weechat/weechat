@@ -944,6 +944,52 @@ gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Get length of nick prefix (number of chars displayed on screen).
+ */
+
+int
+gui_nicklist_get_prefix_length (struct t_gui_nick *nick)
+{
+    return (nick && nick->prefix) ? utf8_strlen_screen (nick->prefix) : 0;
+}
+
+/*
+ * Get max length of prefix (number of chars displayed on screen) for visible
+ * nicks in the buffer nicklist.
+ *
+ * Return 0 if buffer is NULL or if no visible nick has a prefix.
+ */
+
+int
+gui_nicklist_get_max_prefix_length (struct t_gui_buffer *buffer)
+{
+    struct t_gui_nick_group *ptr_group;
+    struct t_gui_nick *ptr_nick;
+    int length, max_length;
+
+    if (!buffer)
+        return 0;
+
+    max_length = 0;
+
+    ptr_group = NULL;
+    ptr_nick = NULL;
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    while (ptr_group || ptr_nick)
+    {
+        if (ptr_nick && ptr_nick->visible)
+        {
+            length = gui_nicklist_get_prefix_length (ptr_nick);
+            if (length > max_length)
+                max_length = length;
+        }
+        gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    }
+
+    return max_length;
+}
+
+/*
  * Get a group property as integer.
  */
 

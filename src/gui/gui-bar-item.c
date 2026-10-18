@@ -1822,8 +1822,8 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
     struct t_config_option *ptr_option;
-    char **nicklist;
-    int i;
+    char **nicklist, str_prefix_color[128];
+    int i, max_prefix_length, prefix_length;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -1838,6 +1838,9 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
     nicklist = string_dyn_alloc (256);
     if (!nicklist)
         return NULL;
+
+    /* Nicks are aligned on the longest prefix. */
+    max_prefix_length = gui_nicklist_get_max_prefix_length (buffer);
 
     ptr_group = NULL;
     ptr_nick = NULL;
@@ -1861,6 +1864,7 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                         string_dyn_concat (nicklist, " ", -1);
                     }
                 }
+                str_prefix_color[0] = '\0';
                 if (ptr_nick->prefix_color)
                 {
                     if (strchr (ptr_nick->prefix_color, '.'))
@@ -1870,24 +1874,40 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                             NULL, NULL, &ptr_option, NULL);
                         if (ptr_option)
                         {
-                            string_dyn_concat (
-                                nicklist,
-                                gui_color_get_custom (
-                                    gui_color_get_name (
-                                        CONFIG_COLOR(ptr_option))),
-                                -1);
+                            snprintf (str_prefix_color,
+                                      sizeof (str_prefix_color),
+                                      "%s",
+                                      gui_color_get_custom (
+                                          gui_color_get_name (
+                                              CONFIG_COLOR(ptr_option))));
                         }
                     }
                     else
                     {
-                        string_dyn_concat (nicklist,
-                                           gui_color_get_custom (
-                                               ptr_nick->prefix_color),
-                                           -1);
+                        snprintf (str_prefix_color, sizeof (str_prefix_color),
+                                  "%s",
+                                  gui_color_get_custom (ptr_nick->prefix_color));
                     }
                 }
+                string_dyn_concat (nicklist, str_prefix_color, -1);
                 if (ptr_nick->prefix)
                     string_dyn_concat (nicklist, ptr_nick->prefix, -1);
+                prefix_length = gui_nicklist_get_prefix_length (ptr_nick);
+                if (prefix_length < max_prefix_length)
+                {
+                    /*
+                     * Padding is displayed without the prefix color, then the
+                     * prefix color is set again (used for the nick if it has
+                     * no color).
+                     */
+                    string_dyn_concat (nicklist,
+                                       gui_color_get_custom ("reset"), -1);
+                    for (i = prefix_length; i < max_prefix_length; i++)
+                    {
+                        string_dyn_concat (nicklist, " ", -1);
+                    }
+                    string_dyn_concat (nicklist, str_prefix_color, -1);
+                }
                 if (ptr_nick->color)
                 {
                     if (strchr (ptr_nick->color, '.'))

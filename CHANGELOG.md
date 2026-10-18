@@ -34,6 +34,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: align nicks on the longest prefix in bar item "buffer_nicklist"
 - core: set key name with alias in key "_key" of focus hashtable in cursor mode, for example "f1" instead of the raw key
 - core: use a hashtable to check buffer pointers faster
 - core: improve hash of pointer keys in hashtables to spread aligned pointers over all buckets
