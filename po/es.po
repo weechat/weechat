@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-18 10:21+0200\n"
+"POT-Creation-Date: 2026-10-18 10:43+0200\n"
 "PO-Revision-Date: 2026-10-10 21:21+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
@@ -15356,8 +15356,7 @@ msgid ""
 "to connect on the port."
 msgstr ""
 
-msgid ""
-"The list of remote interfaces is here: https://weechat.org/about/interfaces/"
+msgid "The list of remote interfaces is here:"
 msgstr ""
 
 #, fuzzy
