@@ -2041,6 +2041,58 @@ TEST(IrcProtocolWithServer, cap)
 
 /*
  * Test functions:
+ *   irc_protocol_cb_cap (refresh of nick prefixes with "multi-prefix")
+ */
+
+TEST(IrcProtocolWithServer, cap_multi_prefix)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_nick *ptr_gui_nick;
+    char *prompt;
+
+    SRV_INIT_JOIN;
+
+    ptr_channel = ptr_server->channels;
+    CHECK(ptr_channel);
+
+    RECV(":server 353 alice = #test :@+alice @+bob");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    ptr_gui_nick = gui_nicklist_search_nick (ptr_channel->buffer, NULL, "bob");
+    CHECK(ptr_gui_nick);
+    STRCMP_EQUAL("@", ptr_gui_nick->prefix);
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("@alice", prompt);
+    free (prompt);
+
+    /* Capability "multi-prefix" enabled: all prefixes displayed */
+    RECV(":server CAP alice ACK :multi-prefix");
+    STRCMP_EQUAL("@+", ptr_gui_nick->prefix);
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("@+alice", prompt);
+    free (prompt);
+
+    /* Multi-line "CAP LIST": refresh only on last line */
+    RECV(":server CAP alice LIST * :away-notify");
+    STRCMP_EQUAL("@+", ptr_gui_nick->prefix);
+    RECV(":server CAP alice LIST :multi-prefix");
+    STRCMP_EQUAL("@+", ptr_gui_nick->prefix);
+
+    /* "CAP LIST" without "multi-prefix": only the highest prefix displayed */
+    RECV(":server CAP alice LIST :away-notify");
+    STRCMP_EQUAL("@", ptr_gui_nick->prefix);
+    RECV(":server CAP alice ACK :multi-prefix");
+    STRCMP_EQUAL("@+", ptr_gui_nick->prefix);
+
+    /* Capability "multi-prefix" removed: only the highest prefix displayed */
+    RECV(":server CAP alice DEL :multi-prefix");
+    STRCMP_EQUAL("@", ptr_gui_nick->prefix);
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("@alice", prompt);
+    free (prompt);
+}
+
+/*
+ * Test functions:
  *   irc_protocol_cb_chghost
  */
 

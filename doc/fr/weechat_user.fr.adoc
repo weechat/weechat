@@ -3846,6 +3846,11 @@ selon ces options :
 * <<option_irc.look.multi_prefix_in_nicklist,irc.look.multi_prefix_in_nicklist>> :
   liste des pseudos
 
+[NOTE]
+Si la capacité est activée après l'arrivée sur des canaux (par exemple avec
+`/cap req multi-prefix`), les préfixes des pseudos sont mis à jour lors du
+prochain `/names` sur chaque canal.
+
 Exemple : sortie de `/whois alice` :
 
 ....

@@ -961,9 +961,11 @@ IRC_PROTOCOL_CALLBACK(cap)
     char **str_caps_disabled, *str_params;
     int arg_caps, num_caps_supported, num_caps_added, num_caps_removed;
     int num_caps_enabled, sasl, sasl_to_do, sasl_mechanism;
-    int i, j, timeout, last_reply;
+    int i, j, timeout, last_reply, multi_prefix, refresh_prefixes;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
+
+    multi_prefix = irc_server_cap_multi_prefix_enabled (ctxt->server);
 
     if (strcmp (ctxt->params[1], "LS") == 0)
     {
@@ -1366,6 +1368,28 @@ IRC_PROTOCOL_CALLBACK(cap)
             }
             weechat_string_free_split (caps_removed);
         }
+    }
+
+    /*
+     * Refresh nick prefixes if capability "multi-prefix" was toggled.
+     * With "CAP LIST" (sent by command /cap list), the list of enabled
+     * capabilities is cleared on first line of reply, which may be split
+     * on several lines: the refresh is done only on last line, and always
+     * done since the state before the first line is unknown.
+     */
+    if (strcmp (ctxt->params[1], "LIST") == 0)
+    {
+        refresh_prefixes = (ctxt->server->checking_cap_list) ? 0 : 1;
+    }
+    else
+    {
+        refresh_prefixes = (irc_server_cap_multi_prefix_enabled (ctxt->server)
+                            != multi_prefix) ? 1 : 0;
+    }
+    if (refresh_prefixes)
+    {
+        irc_nick_nicklist_set_prefix_server (ctxt->server);
+        irc_server_set_buffer_input_prompt (ctxt->server);
     }
 
     return WEECHAT_RC_OK;

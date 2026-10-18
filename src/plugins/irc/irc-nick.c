@@ -701,6 +701,25 @@ irc_nick_nicklist_set_prefix_channel (struct t_irc_server *server,
 }
 
 /*
+ * Set nick prefixes in nicklist for all channels of a server.
+ */
+
+void
+irc_nick_nicklist_set_prefix_server (struct t_irc_server *server)
+{
+    struct t_irc_channel *ptr_channel;
+
+    if (!server)
+        return;
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        irc_nick_nicklist_set_prefix_channel (server, ptr_channel);
+    }
+}
+
+/*
  * Set nick prefixes in nicklist for all servers/channels.
  */
 
@@ -708,16 +727,11 @@ void
 irc_nick_nicklist_set_prefix_all (void)
 {
     struct t_irc_server *ptr_server;
-    struct t_irc_channel *ptr_channel;
 
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        for (ptr_channel = ptr_server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
-        {
-            irc_nick_nicklist_set_prefix_channel (ptr_server, ptr_channel);
-        }
+        irc_nick_nicklist_set_prefix_server (ptr_server);
     }
 }
 

@@ -3717,6 +3717,11 @@ according to these options:
 * <<option_irc.look.multi_prefix_in_nicklist,irc.look.multi_prefix_in_nicklist>>:
   nicklist
 
+[NOTE]
+If the capability is enabled after joining channels (for example with
+`/cap req multi-prefix`), the prefixes of nicks are updated on the next
+`/names` on each channel.
+
 Example: output of `/whois alice`:
 
 ....
