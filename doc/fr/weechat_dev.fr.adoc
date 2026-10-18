@@ -632,6 +632,12 @@ fichiers sont dans le répertoire _po/_ :
 
 * Dans le code source, vos commentaires, noms de variables, ... doivent être
   écrits en anglais *uniquement* (aucune autre langue n'est autorisée).
+* Le code doit compiler sans aucun avertissement, et tous les tests doivent
+  passer.
+* Ajoutez des tests unitaires dans le répertoire _tests/unit/_ pour tout
+  changement non trivial.
+* Ajoutez tout nouveau fichier source ou de test dans le chapitre
+  <<sources,Sources>> de ce document, dans toutes les langues.
 * Utilisez un en-tête de copyright dans chaque nouveau fichier source avec :
 ** la date
 ** le nom
@@ -678,6 +684,10 @@ Quelques règles basiques que vous *devez* suivre quand vous écrivez du code C�
 * Ajoutez un commentaire avant chaque fonction, pour expliquer ce qu'elle fait
   (utilisez toujours un commentaire multi-lignes, même si la description est
   très courte).
+** Utilisez l'impératif (en anglais), par exemple "Check if ..." au lieu de
+   "Checks if ...".
+** Lorsque le comportement d'une fonction change, mettez à jour son commentaire
+   (paramètres, valeur de retour, unités, ...).
 
 Exemple :
 
@@ -748,7 +758,7 @@ if (nicks_count == 1)
 [source,c]
 ----
 /*
- * Sends a message from out queue.
+ * Send a message from out queue.
  */
 
 void
@@ -852,6 +862,8 @@ struct t_hook_fd *new_hook_fd;
 new_hook_fd = malloc (sizeof (*new_hook_fd));
 ----
 
+* Ne déclarez pas les fonctions `static`, afin qu'elles puissent être
+  utilisées dans les tests unitaires (déclarées avec `extern`).
 * Ce code Lisp peut être utilisé dans votre _~/.emacs.el_ pour indenter
   correctement si vous utilisez l'éditeur de texte Emacs :
 
@@ -1372,6 +1384,12 @@ Quelques règles à suivre :
 * Utilisez des verbes à l'infinitif.
 * Si le commit est relatif à un bug GitHub, écrivez-le entre parenthèses après
   le message, avec ce format : `(issue #123)` ou `(closes #123)` pour le fermer.
+* Chaque commit d'une série doit compiler et passer les tests à lui seul.
+* Chaque changement visible par l'utilisateur doit inclure son entrée dans
+  _CHANGELOG.md_ dans le même commit (voir <<changelog,Changelog>>).
+* Ne faites pas référence à d'autres commits ("next commit", "previous
+  commit", ...), ni dans les messages de commit ni dans les commentaires du
+  code.
 
 Exemples de messages de commit :
 
@@ -1381,6 +1399,40 @@ core: update Japanese translations
 irc: add command /unquiet (closes #36)
 python: fix crash when unloading a script without pointer to interpreter
 ruby: add detection of ruby version 1.9.3 in CMake
+----
+
+[[changelog]]
+=== Changelog
+
+Le fichier _CHANGELOG.md_ doit être mis à jour pour chaque changement visible
+par l'utilisateur, dans la section `[Unreleased]`.
+
+* N'ajoutez pas d'entrée pour corriger ou modifier une fonctionnalité qui est
+  déjà listée dans la section `[Unreleased]` (pas encore publiée) : mettez à
+  jour l'entrée existante si besoin.
+* Le format est basé sur https://keepachangelog.com/[Keep a Changelog ^↗^^],
+  avec les sections dans cet ordre : Added, Changed, Deprecated, Removed,
+  Fixed, Security ; seules les sections avec des entrées sont présentes.
+* Chaque entrée commence par le composant (le même que dans les messages de
+  commit) et se termine par le bug GitHub s'il y en a un.
+* Les entrées sont groupées par composant : core d'abord, puis api, puis les
+  autres composants (doc, extensions, ...) triés par ordre alphabétique ; une
+  nouvelle entrée est ajoutée en haut des entrées de son composant.
+* Utilisez des backticks pour les saisies littérales (commandes, touches,
+  ressources), des guillemets doubles pour les noms d'identifiants ou les
+  valeurs, et rien pour les noms d'options.
+* Les changements cassants sont marqués par la balise en gras `+**breaking:**+`
+  au début de l'entrée.
+* Les changements purement internes (refactorisation, tests, CI, ...) n'ont
+  pas d'entrée.
+
+Exemples d'entrées :
+
+----
+- core: add option `insert_raw` in command `/input` to insert text without converting escaped chars
+- core: add signal "buffer_notify_changed"
+- irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
+- **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script
 ----
 
 [[translations]]
@@ -1459,3 +1511,11 @@ Lorsqu'il y a un nom après `+<<link_name>>+`, alors vous devez le traduire :
 ----
 <<link_name,ce texte doit être traduit>>
 ----
+
+Lorsque la documentation est mise à jour, toutes les langues doivent être mises
+à jour :
+
+* Anglais : c'est la référence.
+* Autres langues : texte en anglais, avec la ligne `// TRANSLATION MISSING` au-dessus
+  de chaque texte non traduit (paragraphe, titre, ligne de tableau, légende
+  d'exemple, ...), les traducteurs le mettent à jour plus tard.

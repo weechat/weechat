@@ -631,6 +631,10 @@ directory:
 
 * In source code, your comments, variable names, .. must be written in English
   *only* (no other language is allowed).
+* Code must compile without any warning, and all tests must pass.
+* Add unit tests in directory _tests/unit/_ for any non-trivial change.
+* Add any new source or test file in chapter <<sources,Sources>> of this
+  document, in all languages.
 * Use a copyright header in each new source file with:
 ** date
 ** name
@@ -674,6 +678,10 @@ Some basic rules you *must* follow when you write C code:
 ** Comments describing fields of a struct can be lower case only.
 * Add a comment before any function, to explain what it does (always use a
   multi-line comment, even if description is very short).
+** Use the imperative mood, for example "Check if ..." instead of
+   "Checks if ...".
+** When the behavior of a function changes, update its comment (parameters,
+   return value, units, ...).
 
 Example:
 
@@ -740,7 +748,7 @@ if (nicks_count == 1)
 [source,c]
 ----
 /*
- * Sends a message from out queue.
+ * Send a message from out queue.
  */
 
 void
@@ -842,6 +850,8 @@ struct t_hook_fd *new_hook_fd;
 new_hook_fd = malloc (sizeof (*new_hook_fd));
 ----
 
+* Do not declare functions `static`, so that they can be used in unit tests
+  (declared with `extern`).
 * This Lisp code can be used in your _~/.emacs.el_ to indent properly if you are
   using Emacs as text editor:
 
@@ -1353,6 +1363,11 @@ Some rules to follow:
 * Use infinitive form of verb.
 * If commit is related to a GitHub issue, write it in parenthesis after
   the message, with this format: `(issue #123)` or `(closes #123)` to close it.
+* Each commit of a series must build and pass tests on its own.
+* Each user-visible change must include its entry in _CHANGELOG.md_ in the
+  same commit (see <<changelog,Changelog>>).
+* Do not refer to other commits ("next commit", "previous commit", ...),
+  neither in commit messages nor in code comments.
 
 Examples of commit messages:
 
@@ -1363,6 +1378,36 @@ doc/user: add chapter on typing extension
 irc: add command /unquiet (closes #36)
 python: fix crash when unloading a script without pointer to interpreter
 ruby: add detection of ruby version 1.9.3 in CMake
+----
+
+[[changelog]]
+=== Changelog
+
+The file _CHANGELOG.md_ must be updated for every user-visible change, in the
+section `[Unreleased]`.
+
+* Do not add an entry to fix or change a feature that is already listed in the
+  section `[Unreleased]` (not yet released): update the existing entry if needed.
+* The format is based on https://keepachangelog.com/[Keep a Changelog ^↗^^],
+  with sections in this order: Added, Changed, Deprecated, Removed, Fixed,
+  Security; only sections with entries are present.
+* Each entry starts with the component (same as in commit messages) and ends
+  with the GitHub issue if any.
+* Entries are grouped by component: core first, then api, then other components
+  (doc, plugins, ...) sorted alphabetically; a new entry is added at the top of
+  the entries of its component.
+* Use backticks for literal input (commands, keys, resources), double quotes for
+  names of identifiers or values, and nothing for option names.
+* Breaking changes are marked with a leading bold tag `+**breaking:**+`.
+* Purely internal changes (refactoring, tests, CI, ...) don't have any entry.
+
+Examples of entries:
+
+----
+- core: add option `insert_raw` in command `/input` to insert text without converting escaped chars
+- core: add signal "buffer_notify_changed"
+- irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
+- **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script
 ----
 
 [[translations]]
@@ -1439,3 +1484,10 @@ When there is a name after `+<<link_name>>+`, then you must translate it:
 ----
 <<link_name,this text should be translated>>
 ----
+
+When the documentation is updated, all languages must be updated:
+
+* English: this is the reference.
+* Other languages: English text, with the line `// TRANSLATION MISSING` above each
+  untranslated text (paragraph, heading, table row, example caption, ...),
+  translators update it later.

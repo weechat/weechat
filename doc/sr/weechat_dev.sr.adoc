@@ -639,6 +639,13 @@ WeeChat „језгро” се налази у следећим директо�
 === Општа правила
 
 * Ваши коментари, имена променљивих, ... у изворном коду морају бити написани *само* на енглеском језику (није дозвољена употреба ниједног другог језика).
+// TRANSLATION MISSING
+* Code must compile without any warning, and all tests must pass.
+// TRANSLATION MISSING
+* Add unit tests in directory _tests/unit/_ for any non-trivial change.
+// TRANSLATION MISSING
+* Add any new source or test file in chapter <<sources,Sources>> of this
+  document, in all languages.
 * Употребите заглавље ауторских права у сваком новом изворном фајлу са:
 ** датумом
 ** именом
@@ -682,6 +689,12 @@ WeeChat „језгро” се налази у следећим директо�
 ** Комплетна реченица мора да се заврши тачком.
 ** Коментари који описују поља у struct могу да буду исписани само малим словима.
 * Испред сваке функције додајте коментар који објашњава шта она ради (увек користите вишелинијски коментар, чак и ако је опис кратак).
+// TRANSLATION MISSING
+** Use the imperative mood, for example "Check if ..." instead of
+   "Checks if ...".
+// TRANSLATION MISSING
+** When the behavior of a function changes, update its comment (parameters,
+   return value, units, ...).
 
 Пример:
 
@@ -744,7 +757,7 @@ if (nicks_count == 1)
 [source,c]
 ----
 /*
- * Sends a message from out queue.
+ * Send a message from out queue.
  */
 
 void
@@ -845,6 +858,9 @@ struct t_hook_fd *new_hook_fd;
 new_hook_fd = malloc (sizeof (*new_hook_fd));
 ----
 
+// TRANSLATION MISSING
+* Do not declare functions `static`, so that they can be used in unit tests
+  (declared with `extern`).
 * Ако користите Emacs као текст едитор, за исправно увлачење можете у свом _~/.emacs.el_ употребити Lisp кôд који следи:
 
 [source,lisp]
@@ -1331,6 +1347,14 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 * Користите само енглески језик.
 * Користите глагол у инфинитиву.
 * Ако је комит у вези са GitHub проблемом, напишите га у заградама након поруке, у формату: `(issue #123)` или `(closes #123)` да га затворите.
+// TRANSLATION MISSING
+* Each commit of a series must build and pass tests on its own.
+// TRANSLATION MISSING
+* Each user-visible change must include its entry in _CHANGELOG.md_ in the
+  same commit (see <<changelog,Changelog>>).
+// TRANSLATION MISSING
+* Do not refer to other commits ("next commit", "previous commit", ...),
+  neither in commit messages nor in code comments.
 
 Примери комит порука:
 
@@ -1340,6 +1364,46 @@ core: update Japanese translations
 irc: add command /unquiet (closes #36)
 python: fix crash when unloading a script without pointer to interpreter
 ruby: add detection of ruby version 1.9.3 in CMake
+----
+
+// TRANSLATION MISSING
+[[changelog]]
+=== Changelog
+
+// TRANSLATION MISSING
+The file _CHANGELOG.md_ must be updated for every user-visible change, in the
+section `[Unreleased]`.
+
+// TRANSLATION MISSING
+* Do not add an entry to fix or change a feature that is already listed in the
+  section `[Unreleased]` (not yet released): update the existing entry if needed.
+// TRANSLATION MISSING
+* The format is based on https://keepachangelog.com/[Keep a Changelog ^↗^^],
+  with sections in this order: Added, Changed, Deprecated, Removed, Fixed,
+  Security; only sections with entries are present.
+// TRANSLATION MISSING
+* Each entry starts with the component (same as in commit messages) and ends
+  with the GitHub issue if any.
+// TRANSLATION MISSING
+* Entries are grouped by component: core first, then api, then other components
+  (doc, plugins, ...) sorted alphabetically; a new entry is added at the top of
+  the entries of its component.
+// TRANSLATION MISSING
+* Use backticks for literal input (commands, keys, resources), double quotes for
+  names of identifiers or values, and nothing for option names.
+// TRANSLATION MISSING
+* Breaking changes are marked with a leading bold tag `+**breaking:**+`.
+// TRANSLATION MISSING
+* Purely internal changes (refactoring, tests, CI, ...) don't have any entry.
+
+// TRANSLATION MISSING
+Examples of entries:
+
+----
+- core: add option `insert_raw` in command `/input` to insert text without converting escaped chars
+- core: add signal "buffer_notify_changed"
+- irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
+- **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script
 ----
 
 [[translations]]
@@ -1410,3 +1474,13 @@ Asciidoc фајлови се налазе у директоријуму _doc/XX/
 ----
 <<име_линка,овај текст мора да се преведе>>
 ----
+
+// TRANSLATION MISSING
+When the documentation is updated, all languages must be updated:
+
+// TRANSLATION MISSING
+* English: this is the reference.
+// TRANSLATION MISSING
+* Other languages: English text, with the line `// TRANSLATION MISSING` above each
+  untranslated text (paragraph, heading, table row, example caption, ...),
+  translators update it later.
