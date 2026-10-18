@@ -3756,7 +3756,12 @@ COMMAND_CALLBACK(input)
     else if (string_strcmp (argv[1], "insert") == 0)
     {
         if (argc > 2)
-            gui_input_insert (buffer, argv_eol[2]);
+            gui_input_insert (buffer, argv_eol[2], 1);
+    }
+    else if (string_strcmp (argv[1], "insert_raw") == 0)
+    {
+        if (argc > 2)
+            gui_input_insert (buffer, argv_eol[2], 0);
     }
     else if (string_strcmp (argv[1], "send") == 0)
     {
@@ -9457,6 +9462,8 @@ command_init (void)
             N_("> raw[grab_mouse_area]: grab mouse event code with area"),
             N_("> raw[insert]: insert text in command line (escaped chars are allowed, "
                "see /help print)"),
+            N_("> raw[insert_raw]: insert raw text in command line (escaped chars "
+               "are not converted)"),
             N_("> raw[send]: send text to the buffer"),
             N_("arguments: optional arguments for the action"),
             "",
@@ -9482,7 +9489,7 @@ command_init (void)
         "history_global_next || history_use_get_next || "
         "grab_key || grab_key_command || "
         "grab_mouse || grab_mouse_area || "
-        "insert || send",
+        "insert || insert_raw || send",
         &command_input, NULL, NULL);
     hook_command (
         NULL, "item",

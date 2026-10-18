@@ -998,7 +998,24 @@ TEST(GuiInput, GrabMouse)
 
 TEST(GuiInput, Insert)
 {
-    /* TODO: write tests */
+    gui_input_replace_input (gui_buffers, "");
+
+    gui_input_insert (gui_buffers, NULL, 1);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+    gui_input_insert (gui_buffers, NULL, 0);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+
+    gui_input_insert (gui_buffers, "a\\nb\\x41", 1);
+    STRCMP_EQUAL("a\nbA", gui_buffers->input_buffer);
+    LONGS_EQUAL(4, gui_buffers->input_buffer_pos);
+
+    gui_input_replace_input (gui_buffers, "");
+
+    gui_input_insert (gui_buffers, "a\\nb\\x41", 0);
+    STRCMP_EQUAL("a\\nb\\x41", gui_buffers->input_buffer);
+    LONGS_EQUAL(8, gui_buffers->input_buffer_pos);
+
+    gui_input_replace_input (gui_buffers, "");
 }
 
 /*

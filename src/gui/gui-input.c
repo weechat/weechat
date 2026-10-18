@@ -1903,10 +1903,14 @@ gui_input_grab_mouse (struct t_gui_buffer *buffer, int area)
 
 /*
  * Insert a string in command line.
+ *
+ * If convert_escaped_chars == 1, escaped chars (like "\n") are converted
+ * before insertion, otherwise the string is inserted as-is.
  */
 
 void
-gui_input_insert (struct t_gui_buffer *buffer, const char *args)
+gui_input_insert (struct t_gui_buffer *buffer, const char *args,
+                  int convert_escaped_chars)
 {
     char *args2;
 
@@ -1914,7 +1918,8 @@ gui_input_insert (struct t_gui_buffer *buffer, const char *args)
         return;
 
     gui_buffer_undo_snap (buffer);
-    args2 = string_convert_escaped_chars (args);
+    args2 = (convert_escaped_chars) ?
+        string_convert_escaped_chars (args) : NULL;
     gui_input_insert_string (buffer, (args2) ? args2 : args);
     gui_input_text_changed_modifier_and_signal (buffer,
                                                 1, /* save undo */
