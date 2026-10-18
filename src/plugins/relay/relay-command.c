@@ -921,6 +921,7 @@ relay_command_init (void)
             N_("The \"weechat\" protocol allows a remote interface "
                "(but not WeeChat itself) to connect on the port."),
             "",
+            /* xgettext: no-url-check */
             N_("The list of remote interfaces is here: "
                "https://weechat.org/about/interfaces/"),
             "",
@@ -968,6 +969,7 @@ relay_command_init (void)
             N_("name: name of remote relay server, for internal and display use; "
                "this name is used to connect to the remote relay and to set "
                "remote relay options: relay.remote.name.xxx"),
+            /* xgettext: no-url-check */
             N_("url: URL of the remote relay, format is https://example.com:9000 "
                "or http://example.com:9000 (plain-text connection, not recommended)"),
             N_("option: set option for remote relay"),

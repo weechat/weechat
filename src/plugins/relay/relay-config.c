@@ -1111,6 +1111,7 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
             ptr_option = weechat_config_new_option (
                 relay_config_file, relay_config_section_remote,
                 option_name, "string",
+                /* xgettext: no-url-check */
                 N_("remote relay URL with optional port (default is 9000), "
                    "examples: https://example.com:9000 or http://example.com:9000 "
                    "(plain-text connection, not recommended)"),
