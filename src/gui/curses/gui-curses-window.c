@@ -1211,6 +1211,9 @@ gui_window_draw_separators (struct t_gui_window *window)
 
 /*
  * Switch to another buffer in a window.
+ *
+ * If the buffer is merged with the current buffer of the window and zoomed,
+ * the scroll is reset (window scrolled to the bottom).
  */
 
 void
@@ -1272,6 +1275,20 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
 
     gui_buffer_set_active_buffer (buffer);
     gui_buffer_compute_num_displayed ();
+
+    /*
+     * When switching to another merged buffer which is zoomed, the scroll
+     * can not be kept: its start line is in the own lines of the previous
+     * buffer, which are not displayed any more, so scroll to the bottom.
+     */
+    if ((old_buffer != buffer)
+        && (old_buffer->number == buffer->number)
+        && (buffer->active == 2))
+    {
+        window->scroll->start_line = NULL;
+        window->scroll->start_line_pos = 0;
+        window->scroll->text_search_start_line = NULL;
+    }
 
     if (!weechat_upgrading
         && (old_buffer != buffer)

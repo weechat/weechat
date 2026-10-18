@@ -77,6 +77,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix display of a scrolled zoomed buffer after switching to another merged buffer, scroll to the bottom of the new active buffer ([#1005](https://github.com/weechat/weechat/issues/1005))
 - core: fix window zoom after command `/layout apply` while a window is zoomed, do not save the internal layout "_zoom" in configuration file and save the layout of windows before zoom on exit, forbid layout name "_zoom" in commands `/layout store` and `/layout rename` ([#596](https://github.com/weechat/weechat/issues/596))
 - core: fix display of a combining char at the beginning of a wrapped line, keep it with the space it is combined with instead of displaying it with the color of the prefix suffix ([#793](https://github.com/weechat/weechat/issues/793))
 - core: fix focus keys "_chat_word", "_chat_bol" and "_chat_eol" on a word wrapped in the middle when option weechat.look.align_multiline_words is off ([#1494](https://github.com/weechat/weechat/issues/1494))

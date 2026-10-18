@@ -2339,7 +2339,63 @@ TEST(GuiBuffer, SetActiveBuffer)
 
 TEST(GuiBuffer, SwitchActiveBuffer)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer1, *buffer2;
+    struct t_gui_line *ptr_line;
+
+    buffer1 = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                              NULL, NULL, NULL,
+                              NULL, NULL, NULL);
+    CHECK(buffer1);
+    buffer2 = gui_buffer_new (NULL, TEST_BUFFER_NAME2,
+                              NULL, NULL, NULL,
+                              NULL, NULL, NULL);
+    CHECK(buffer2);
+
+    gui_chat_printf_datetime_tags (buffer1, 1000, 0, NULL, "line 1");
+    gui_chat_printf_datetime_tags (buffer2, 2000, 0, NULL, "line 2");
+
+    gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
+    gui_buffer_merge (buffer2, buffer1);
+    LONGS_EQUAL(1, buffer1->active);
+    LONGS_EQUAL(0, buffer2->active);
+
+    /* Not zoomed: scroll is kept (mixed lines are shared). */
+    ptr_line = buffer1->mixed_lines->first_line;
+    gui_current_window->scroll->start_line = ptr_line;
+    gui_buffer_switch_active_buffer (buffer1);
+    POINTERS_EQUAL(buffer2, gui_current_window->buffer);
+    LONGS_EQUAL(0, buffer1->active);
+    LONGS_EQUAL(1, buffer2->active);
+    POINTERS_EQUAL(buffer2->mixed_lines, buffer2->lines);
+    POINTERS_EQUAL(ptr_line, gui_current_window->scroll->start_line);
+    gui_buffer_switch_active_buffer (buffer2);
+    POINTERS_EQUAL(buffer1, gui_current_window->buffer);
+    POINTERS_EQUAL(ptr_line, gui_current_window->scroll->start_line);
+    gui_window_scroll_bottom (gui_current_window);
+
+    /* Zoomed: scroll is reset (own lines of buffer1 are not displayed). */
+    gui_buffer_zoom (buffer1);
+    LONGS_EQUAL(2, buffer1->active);
+    gui_current_window->scroll->start_line = buffer1->own_lines->first_line;
+    gui_current_window->scroll->start_line_pos = 1;
+    gui_current_window->scroll->text_search_start_line =
+        buffer1->own_lines->first_line;
+    gui_buffer_switch_active_buffer (buffer1);
+    POINTERS_EQUAL(buffer2, gui_current_window->buffer);
+    LONGS_EQUAL(0, buffer1->active);
+    LONGS_EQUAL(2, buffer2->active);
+    POINTERS_EQUAL(buffer1->mixed_lines, buffer1->lines);
+    POINTERS_EQUAL(buffer2->own_lines, buffer2->lines);
+    POINTERS_EQUAL(NULL, gui_current_window->scroll->start_line);
+    LONGS_EQUAL(0, gui_current_window->scroll->start_line_pos);
+    POINTERS_EQUAL(NULL, gui_current_window->scroll->text_search_start_line);
+
+    gui_buffer_zoom (buffer2);
+    gui_buffer_unmerge (buffer2, -1);
+
+    gui_window_switch_to_buffer (gui_current_window, gui_buffers, 1);
+    gui_buffer_close (buffer1);
+    gui_buffer_close (buffer2);
 }
 
 /*
