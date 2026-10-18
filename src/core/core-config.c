@@ -2536,6 +2536,16 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
     if (!layout_name)
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 
+    /*
+     * The zoom layout is read only when upgrading: any other time it is a
+     * leftover of a zoom that is not active anymore.
+     */
+    if (!weechat_upgrading && (strcmp (layout_name, GUI_LAYOUT_ZOOM) == 0))
+    {
+        free (layout_name);
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    }
+
     ptr_layout = gui_layout_search (layout_name);
     if (!ptr_layout)
     {
@@ -2677,6 +2687,16 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
     for (ptr_layout = gui_layouts; ptr_layout;
          ptr_layout = ptr_layout->next_layout)
     {
+        /*
+         * The zoom layout is written only when upgrading, so that the zoom
+         * is kept after the upgrade.
+         */
+        if (!weechat_upgrading
+            && (strcmp (ptr_layout->name, GUI_LAYOUT_ZOOM) == 0))
+        {
+            continue;
+        }
+
         /* Write layout for buffers. */
         for (ptr_layout_buffer = ptr_layout->layout_buffers; ptr_layout_buffer;
              ptr_layout_buffer = ptr_layout_buffer->next_layout)

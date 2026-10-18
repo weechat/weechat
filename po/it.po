@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-17 08:29+0200\n"
+"POT-Creation-Date: 2026-10-18 09:16+0200\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -649,6 +649,10 @@ msgstr " (layout corrente)"
 #, fuzzy
 msgid "No stored layouts"
 msgstr "elenco dei layout"
+
+#, c-format
+msgid "%sLayout \"%s\" is reserved for internal use"
+msgstr ""
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows".
 #, fuzzy, c-format

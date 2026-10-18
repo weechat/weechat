@@ -31,8 +31,10 @@ extern "C"
 #include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-key.h"
+#include "src/gui/gui-layout.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-mouse.h"
+#include "src/gui/gui-window.h"
 #include "src/plugins/plugin.h"
 }
 
@@ -1198,7 +1200,39 @@ TEST(CoreCommand, Key)
 
 TEST(CoreCommand, Layout)
 {
-    /* TODO: write tests */
+    /* /layout apply while a window is zoomed */
+    WEE_CMD_CORE("/layout store test windows");
+    WEE_CMD_CORE("/window splith");
+    WEE_CMD_CORE("/window zoom");
+    CHECK(gui_layout_search (GUI_LAYOUT_ZOOM));
+    WEE_CMD_CORE("/layout apply test");
+    POINTERS_EQUAL(NULL, gui_layout_search (GUI_LAYOUT_ZOOM));
+    POINTERS_EQUAL(NULL, gui_windows->next_window);
+
+    /* /layout apply _zoom */
+    WEE_CMD_CORE("/window splith");
+    WEE_CMD_CORE("/window zoom");
+    CHECK(gui_layout_search (GUI_LAYOUT_ZOOM));
+    WEE_CMD_CORE("/layout apply _zoom");
+    POINTERS_EQUAL(NULL, gui_layout_search (GUI_LAYOUT_ZOOM));
+    CHECK(gui_windows->next_window);
+    STRCMP_EQUAL("test", gui_layout_current->name);
+
+    /* /layout store _zoom, /layout rename with _zoom */
+    WEE_CMD_CORE_ERROR_MSG("/layout store _zoom",
+                           "Layout \"_zoom\" is reserved for internal use");
+    POINTERS_EQUAL(NULL, gui_layout_search (GUI_LAYOUT_ZOOM));
+    WEE_CMD_CORE_ERROR_MSG("/layout rename test _zoom",
+                           "Layout \"_zoom\" is reserved for internal use");
+    CHECK(gui_layout_search ("test"));
+    WEE_CMD_CORE("/window zoom");
+    WEE_CMD_CORE_ERROR_MSG("/layout rename _zoom test2",
+                           "Layout \"_zoom\" is reserved for internal use");
+    CHECK(gui_layout_search (GUI_LAYOUT_ZOOM));
+    WEE_CMD_CORE("/window zoom");
+
+    WEE_CMD_CORE("/window merge all");
+    WEE_CMD_CORE("/layout del test");
 }
 
 /*

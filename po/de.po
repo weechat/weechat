@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-17 08:29+0200\n"
+"POT-Creation-Date: 2026-10-18 09:16+0200\n"
 "PO-Revision-Date: 2026-10-17 10:22+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -656,6 +656,11 @@ msgstr " (aktuelles Layout)"
 
 msgid "No stored layouts"
 msgstr "Keine Layouts erstellt"
+
+#, fuzzy, c-format
+#| msgid "%sName \"%s\" is reserved for a built-in theme"
+msgid "%sLayout \"%s\" is reserved for internal use"
+msgstr "%sName \"%s\" ist reserviert für ein integriertes Design"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows".
 #, c-format
@@ -1366,18 +1371,6 @@ msgid "manage buffers"
 msgstr "Buffer verwalten"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
-#| msgid ""
-#| "list || add [-free] [-switch] <name> || clear [<id>|<number>|<name>|-"
-#| "merged|-all [<id>|<number>|<name>...]] || move <number>|-|+ || swap <id1>|"
-#| "<number1>|<name1> [<id2>|<number2>|<name2>] || cycle <id>|<number>|"
-#| "<name>... || merge <id>|<number>|<name> || unmerge [<number>|-all] || "
-#| "hide [<id>|<number>|<name>|-all [<id>|<number>|<name>...]] || unhide "
-#| "[<id>|<number>|<name>|-all [<id>|<number>|<name>...]] || switch [-"
-#| "previous] || zoom || renumber [<number1> [<number2> [<start>]]] || close "
-#| "[<n1>[-<n2>]|<name>...] || notify [<level>] || listvar [<id>|<number>|"
-#| "<name>] || setvar <name> [<value>] || delvar <name> || set <property> "
-#| "[<value>] || setauto <property> [<value>] || get <property> || jump smart|"
-#| "last_displayed|prev_visited|next_visited || <id>|<number>|-|+|<name>"
 msgid ""
 "list || add [-free] [-switch] <name> || clear [-older <delay>[<unit>]] [<id>|"
 "<number>|<name>|-merged|-all [<id>|<number>|<name>...]] || move <number>|-|+ "

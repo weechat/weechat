@@ -96,6 +96,7 @@ extern int gui_layout_window_check_buffer (struct t_gui_window *window);
 extern void gui_layout_window_assign_buffer (struct t_gui_buffer *buffer);
 extern void gui_layout_window_apply (struct t_gui_layout *layout,
                                      int internal_id_current_window);
+extern void gui_layout_window_store_on_exit (struct t_gui_layout *layout);
 extern void gui_layout_store_on_exit (void);
 extern void gui_layout_free (struct t_gui_layout *layout);
 extern void gui_layout_remove (struct t_gui_layout *layout);

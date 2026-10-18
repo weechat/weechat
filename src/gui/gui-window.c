@@ -1908,6 +1908,48 @@ gui_window_zoom (struct t_gui_window *window)
 }
 
 /*
+ * Apply a layout of windows.
+ *
+ * If a window is zoomed, the zoom is left: the layout stored before zooming
+ * the window is removed and not restored, so that next zoom works fine.
+ *
+ * If the layout is the one stored before zooming a window, this is the same
+ * as unzooming the window.
+ */
+
+void
+gui_window_layout_apply (struct t_gui_layout *layout)
+{
+    struct t_gui_layout *ptr_layout_zoom;
+
+    if (!layout)
+        return;
+
+    ptr_layout_zoom = gui_layout_search (GUI_LAYOUT_ZOOM);
+
+    if (!ptr_layout_zoom)
+    {
+        gui_layout_window_apply (layout, -1);
+        return;
+    }
+
+    if (layout == ptr_layout_zoom)
+    {
+        gui_window_zoom (gui_current_window);
+        return;
+    }
+
+    (void) hook_signal_send ("window_unzoom",
+                             WEECHAT_HOOK_SIGNAL_POINTER,
+                             gui_current_window);
+    gui_layout_remove (ptr_layout_zoom);
+    gui_layout_window_apply (layout, -1);
+    (void) hook_signal_send ("window_unzoomed",
+                             WEECHAT_HOOK_SIGNAL_POINTER,
+                             gui_current_window);
+}
+
+/*
  * Return hdata for window.
  */
 

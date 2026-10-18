@@ -13,6 +13,7 @@ extern "C"
 #include <stdlib.h>
 #include <string.h>
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-layout.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-window.h"
 }
@@ -270,4 +271,52 @@ TEST(GuiWindow, GetContextAtXy)
     free (focused_line_end);
     free (beginning);
     free (end);
+}
+
+/*
+ * Test functions:
+ *   gui_window_layout_apply
+ */
+
+TEST(GuiWindow, LayoutApply)
+{
+    struct t_gui_layout *layout, *ptr_layout_zoom;
+
+    gui_window_layout_apply (NULL);
+
+    /* Layout with a single window. */
+    layout = gui_layout_alloc ("test");
+    CHECK(layout);
+    gui_layout_add (layout);
+    gui_layout_window_store (layout);
+
+    /* No zoom. */
+    CHECK(gui_window_split_horizontal (gui_current_window, 50));
+    CHECK(gui_windows->next_window);
+    gui_window_layout_apply (layout);
+    POINTERS_EQUAL(NULL, gui_windows->next_window);
+    POINTERS_EQUAL(NULL, gui_layout_search (GUI_LAYOUT_ZOOM));
+
+    /* Zoom: the zoom is left, next zoom must zoom again. */
+    CHECK(gui_window_split_horizontal (gui_current_window, 50));
+    gui_window_zoom (gui_current_window);
+    POINTERS_EQUAL(NULL, gui_windows->next_window);
+    CHECK(gui_layout_search (GUI_LAYOUT_ZOOM));
+    gui_window_layout_apply (layout);
+    POINTERS_EQUAL(NULL, gui_windows->next_window);
+    POINTERS_EQUAL(NULL, gui_layout_search (GUI_LAYOUT_ZOOM));
+    CHECK(gui_window_split_horizontal (gui_current_window, 50));
+    gui_window_zoom (gui_current_window);
+    POINTERS_EQUAL(NULL, gui_windows->next_window);
+    CHECK(gui_layout_search (GUI_LAYOUT_ZOOM));
+
+    /* Apply the zoom layout: same as unzoom. */
+    ptr_layout_zoom = gui_layout_search (GUI_LAYOUT_ZOOM);
+    gui_window_layout_apply (ptr_layout_zoom);
+    POINTERS_EQUAL(NULL, gui_layout_search (GUI_LAYOUT_ZOOM));
+    CHECK(gui_windows->next_window);
+    POINTERS_EQUAL(NULL, gui_windows->next_window->next_window);
+
+    gui_window_merge_all (gui_current_window);
+    gui_layout_remove (layout);
 }

@@ -107,6 +107,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   gui/test-gui-hotlist.cpp
   gui/test-gui-input.cpp
   gui/test-gui-key.cpp
+  gui/test-gui-layout.cpp
   gui/test-gui-line.cpp
   gui/test-gui-nick.cpp
   gui/test-gui-nicklist.cpp

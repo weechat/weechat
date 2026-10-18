@@ -4705,6 +4705,14 @@ COMMAND_CALLBACK(layout)
     {
         command_layout_get_arguments (argc, argv, &layout_name, &ptr_layout,
                                       &flag_buffers, &flag_windows);
+        if (layout_name && (strcmp (layout_name, GUI_LAYOUT_ZOOM) == 0))
+        {
+            gui_chat_printf (NULL,
+                             _("%sLayout \"%s\" is reserved for internal use"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             layout_name);
+            return WEECHAT_RC_ERROR;
+        }
         if (!ptr_layout)
         {
             ptr_layout = gui_layout_alloc ((layout_name) ? layout_name : GUI_LAYOUT_DEFAULT_NAME);
@@ -4736,10 +4744,17 @@ COMMAND_CALLBACK(layout)
                                       &flag_buffers, &flag_windows);
         if (ptr_layout)
         {
+            if (strcmp (ptr_layout->name, GUI_LAYOUT_ZOOM) == 0)
+            {
+                /* Applying the zoom layout is the same as unzooming. */
+                if (flag_windows)
+                    gui_window_layout_apply (ptr_layout);
+                return WEECHAT_RC_OK;
+            }
             if (flag_buffers)
                 gui_layout_buffer_apply (ptr_layout);
             if (flag_windows)
-                gui_layout_window_apply (ptr_layout, -1);
+                gui_window_layout_apply (ptr_layout);
             gui_layout_current = ptr_layout;
         }
 
@@ -4814,6 +4829,15 @@ COMMAND_CALLBACK(layout)
     if (string_strcmp (argv[1], "rename") == 0)
     {
         COMMAND_MIN_ARGS(4, argv[1]);
+        if ((strcmp (argv[2], GUI_LAYOUT_ZOOM) == 0)
+            || (strcmp (argv[3], GUI_LAYOUT_ZOOM) == 0))
+        {
+            gui_chat_printf (NULL,
+                             _("%sLayout \"%s\" is reserved for internal use"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             GUI_LAYOUT_ZOOM);
+            return WEECHAT_RC_ERROR;
+        }
         ptr_layout = gui_layout_search (argv[2]);
         if (!ptr_layout)
         {

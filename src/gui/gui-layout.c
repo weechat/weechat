@@ -751,6 +751,39 @@ gui_layout_window_apply (struct t_gui_layout *layout,
 }
 
 /*
+ * Store layout of windows on exit.
+ *
+ * If a window is zoomed (and WeeChat is not upgrading), the layout of windows
+ * stored before zooming the window is moved to the layout, so that the windows
+ * are restored without zoom on next startup.
+ */
+
+void
+gui_layout_window_store_on_exit (struct t_gui_layout *layout)
+{
+    struct t_gui_layout *ptr_layout_zoom;
+
+    if (!layout)
+        return;
+
+    ptr_layout_zoom = (weechat_upgrading) ?
+        NULL : gui_layout_search (GUI_LAYOUT_ZOOM);
+
+    if (!ptr_layout_zoom || (ptr_layout_zoom == layout))
+    {
+        gui_layout_window_store (layout);
+        return;
+    }
+
+    gui_layout_window_remove (layout->layout_windows);
+    layout->layout_windows = ptr_layout_zoom->layout_windows;
+    layout->internal_id = ptr_layout_zoom->internal_id;
+    layout->internal_id_current_window = ptr_layout_zoom->internal_id_current_window;
+    ptr_layout_zoom->layout_windows = NULL;
+    gui_layout_remove (ptr_layout_zoom);
+}
+
+/*
  * Store layout according to option "store_layout_on_exit".
  */
 
@@ -783,11 +816,11 @@ gui_layout_store_on_exit (void)
             gui_layout_buffer_store (ptr_layout);
             break;
         case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_WINDOWS:
-            gui_layout_window_store (ptr_layout);
+            gui_layout_window_store_on_exit (ptr_layout);
             break;
         case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_ALL:
             gui_layout_buffer_store (ptr_layout);
-            gui_layout_window_store (ptr_layout);
+            gui_layout_window_store_on_exit (ptr_layout);
             break;
         default:
             break;

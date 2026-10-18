@@ -9,6 +9,7 @@
 
 struct t_infolist;
 struct t_gui_bar_window;
+struct t_gui_layout;
 struct t_gui_line_data;
 
 /* Window structures */
@@ -183,6 +184,7 @@ extern void gui_window_search_restart (struct t_gui_window *window);
 extern void gui_window_search_stop (struct t_gui_window *window, int stop_here);
 extern int gui_window_search_text (struct t_gui_window *window);
 extern void gui_window_zoom (struct t_gui_window *window);
+extern void gui_window_layout_apply (struct t_gui_layout *layout);
 extern struct t_hdata *gui_window_hdata_window_cb (const void *pointer,
                                                    void *data,
                                                    const char *hdata_name);
