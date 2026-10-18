@@ -77,6 +77,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix display of a combining char at the beginning of a wrapped line, keep it with the space it is combined with instead of displaying it with the color of the prefix suffix ([#793](https://github.com/weechat/weechat/issues/793))
 - core: fix focus keys "_chat_word", "_chat_bol" and "_chat_eol" on a word wrapped in the middle when option weechat.look.align_multiline_words is off ([#1494](https://github.com/weechat/weechat/issues/1494))
 - core: do not use default completion template when a custom completion in command template returns no words ([#1482](https://github.com/weechat/weechat/issues/1482))
 - core: fix error "unable to set local hostname/IP" displayed instead of "connection refused" when the local hostname has no IP address of the same family as one of the server addresses, display the error returned by the system when the local hostname/IP cannot be set ([#776](https://github.com/weechat/weechat/issues/776))

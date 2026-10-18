@@ -332,6 +332,39 @@ TEST(GuiChat, StringPos)
 
 /*
  * Test functions:
+ *   gui_chat_space_is_base_char
+ */
+
+TEST(GuiChat, SpaceIsBaseChar)
+{
+    char string[32];
+
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, NULL));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, ""));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, " "));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, "a"));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, " a"));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, "  "));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, " ~"));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, " \x7f"));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, " é"));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, "  \u0361"));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, "a\u0361"));
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, " \n\u0361"));
+
+    /* Zero width space (U+200B) is not displayed */
+    LONGS_EQUAL(0, gui_chat_space_is_base_char (gui_windows, " \u200b"));
+
+    /* Combining char (U+0361) */
+    LONGS_EQUAL(1, gui_chat_space_is_base_char (gui_windows, " \u0361"));
+    LONGS_EQUAL(1, gui_chat_space_is_base_char (gui_windows, " \u0361\u00b0"));
+    snprintf (string, sizeof (string), " %c%c01\u0361\u00b0",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR);
+    LONGS_EQUAL(1, gui_chat_space_is_base_char (gui_windows, string));
+}
+
+/*
+ * Test functions:
  *   gui_chat_get_word_info
  */
 
@@ -368,6 +401,18 @@ TEST(GuiChat, GetWordInfo)
     WEE_GET_WORD_INFO (0, 4, 0, 0, string);
     snprintf (string, sizeof (string), " %c%c01 \nabc", GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR);
     WEE_GET_WORD_INFO (0, 6, 2, 0, string);
+
+    /* Space followed by a combining char (U+0361): the space starts the word */
+    WEE_GET_WORD_INFO (0, 3, 1, 1, " ͡");
+    WEE_GET_WORD_INFO (0, 5, 2, 2, " ͡°");
+    WEE_GET_WORD_INFO (1, 6, 3, 2, "  ͡°");
+    WEE_GET_WORD_INFO (0, 2, 2, 2, "ab ͡°");
+    snprintf (string, sizeof (string), " %c%c01͡°",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR);
+    WEE_GET_WORD_INFO (0, 9, 2, 2, string);
+
+    /* Space followed by a zero width space (U+200B, not displayed) */
+    WEE_GET_WORD_INFO (1, 4, 1, 0, " ​");
 }
 
 /*

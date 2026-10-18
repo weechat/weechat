@@ -308,10 +308,48 @@ gui_chat_string_pos (const char *string, int real_pos)
 }
 
 /*
+ * Check if string starts with a space which is the base of a zero-width char
+ * (like a combining char) displayed after it (formatting chars like
+ * colors/attributes between them are ignored).
+ *
+ * Return:
+ *   1: string starts with a space followed by a zero-width char
+ *   0: string does not start with a space followed by a zero-width char
+ */
+
+int
+gui_chat_space_is_base_char (struct t_gui_window *window, const char *string)
+{
+    const char *next_char;
+
+    if (!string || (string[0] != ' '))
+        return 0;
+
+    /* Fast path: end of string or printable ASCII is never zero-width. */
+    if (!string[1]
+        || (((unsigned char)string[1] >= 32)
+            && ((unsigned char)string[1] < 128)))
+    {
+        return 0;
+    }
+
+    next_char = gui_chat_string_next_char (window, NULL,
+                                           (unsigned char *)string + 1,
+                                           0, 0, 0);
+
+    return (next_char && next_char[0]
+            && (utf8_char_size_screen (next_char) == 0)) ? 1 : 0;
+}
+
+/*
  * Return info about next word: beginning, end, length.
  *
  * Stop before the first newline character, even if no characters or only spaces
  * and color codes precede it.
+ *
+ * A space followed by a zero-width char (like a combining char) is the base
+ * of this char, so it starts the word: they are kept together on the same
+ * line when the line is wrapped.
  *
  * Note: the word_{start|end}_offset are in bytes, but word_length(_with_spaces)
  * are in number of chars on screen.
@@ -350,7 +388,10 @@ gui_chat_get_word_info (struct t_gui_window *window,
                         *word_length = 0;
                     return;
                 }
-                else if (next_char[0] != ' ')
+                else if ((next_char[0] != ' ')
+                         || (leading_spaces
+                             && gui_chat_space_is_base_char (window,
+                                                             next_char)))
                 {
                     if (leading_spaces)
                         *word_start_offset = next_char - start_data;

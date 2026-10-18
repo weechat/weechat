@@ -1624,7 +1624,13 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
 
                     if (window->win_chat_cursor_x == 0)
                     {
-                        while (ptr_data && (ptr_data[0] == ' '))
+                        /*
+                         * Skip spaces at beginning of line, except a space
+                         * which is the base of a zero-width char.
+                         */
+                        while (ptr_data && (ptr_data[0] == ' ')
+                               && !gui_chat_space_is_base_char (window,
+                                                                ptr_data))
                         {
                             next_char = utf8_next_char (ptr_data);
                             if (!next_char)
