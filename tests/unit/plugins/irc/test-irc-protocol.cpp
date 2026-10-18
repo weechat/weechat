@@ -2056,7 +2056,6 @@ TEST(IrcProtocolWithServer, cap_multi_prefix)
     CHECK(ptr_channel);
 
     RECV(":server 353 alice = #test :@+alice @+bob");
-    RECV(":server 366 alice #test :End of /NAMES list");
     ptr_gui_nick = gui_nicklist_search_nick (ptr_channel->buffer, NULL, "bob");
     CHECK(ptr_gui_nick);
     STRCMP_EQUAL("@", ptr_gui_nick->prefix);
@@ -2630,6 +2629,7 @@ TEST(IrcProtocolWithServer, nick)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick1, *ptr_nick2;
+    char *prompt;
 
     SRV_INIT_JOIN2;
 
@@ -2657,7 +2657,8 @@ TEST(IrcProtocolWithServer, nick)
     RECV("NICK alice_away");
     CHECK_ERROR_NICK("nick");
 
-    /* New nick for alice */
+    /* New nick for alice (op on channel) */
+    RECV(":admin!user@host MODE #test +o alice");
     RECV(":alice!user@host NICK alice_away ");
     CHECK_SRV("--", "You are now known as alice_away",
               "irc_nick,irc_nick1_alice,irc_nick2_alice_away,"
@@ -2666,6 +2667,9 @@ TEST(IrcProtocolWithServer, nick)
                "irc_nick,irc_nick1_alice,irc_nick2_alice_away,"
                "nick_alice,host_user@host,log2");
     STRCMP_EQUAL("alice_away", ptr_nick1->name);
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("@alice_away", prompt);
+    free (prompt);
 
     /* New nick for alice_away (with ":") */
     RECV(":alice_away!user@host NICK :alice2");
@@ -5535,6 +5539,7 @@ TEST(IrcProtocolWithServer, 352)
 TEST(IrcProtocolWithServer, 353)
 {
     struct t_irc_channel *ptr_channel;
+    char *prompt;
 
     SRV_INIT_JOIN2;
 
@@ -5606,6 +5611,19 @@ TEST(IrcProtocolWithServer, 353)
                  ptr_channel->nicks->next_nick->next_nick->next_nick->host);
     POINTERS_EQUAL(NULL,
                    ptr_channel->nicks->next_nick->next_nick->next_nick->next_nick);
+
+    /* Input prompt updated with our own nick prefix */
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("alice", prompt);
+    free (prompt);
+    RECV(":server 353 alice = #test :@alice");
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("@alice", prompt);
+    free (prompt);
+    RECV(":server 353 alice = #test :alice");
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("alice", prompt);
+    free (prompt);
 
     /* With option irc.look.color_nicks_in_names enabled */
     config_file_option_set (irc_config_look_color_nicks_in_names, "on", 1);

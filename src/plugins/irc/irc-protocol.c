@@ -2405,8 +2405,6 @@ IRC_PROTOCOL_CALLBACK(nick)
 
                         /* Enable hotlist. */
                         weechat_buffer_set (NULL, "hotlist", "+");
-
-                        irc_server_set_buffer_input_prompt (ctxt->server);
                     }
                     else
                     {

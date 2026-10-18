@@ -509,6 +509,9 @@ irc_nick_get_color_for_nicklist (struct t_irc_server *server,
 
 /*
  * Add a nick to buffer nicklist.
+ *
+ * If the nick is our own nick, the input prompt of channel is refreshed (our
+ * own nick prefixes may have changed).
  */
 
 void
@@ -530,6 +533,12 @@ irc_nick_nicklist_add (struct t_irc_server *server,
                                irc_nick_get_prefix_color_name (server, nick->prefix[0]),
                                1);
     free (color);
+
+    if (server->nick
+        && (irc_server_strcasecmp (server, nick->name, server->nick) == 0))
+    {
+        irc_channel_set_buffer_input_prompt (server, channel);
+    }
 }
 
 /*
@@ -910,12 +919,11 @@ irc_nick_set_mode (struct t_irc_server *server, struct t_irc_channel *channel,
     prefix_chars = irc_server_get_prefix_chars (server);
     irc_nick_set_prefix (server, nick, set, prefix_chars[index]);
 
-    /* Add nick in nicklist. */
+    /* Add nick in nicklist (input prompt is refreshed if nick is me). */
     irc_nick_nicklist_add (server, channel, nick);
 
     if (irc_server_strcasecmp (server, nick->name, server->nick) == 0)
     {
-        irc_server_set_buffer_input_prompt (server);
         weechat_bar_item_update ("irc_nick");
         weechat_bar_item_update ("irc_nick_host");
     }
