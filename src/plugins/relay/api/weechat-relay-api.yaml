@@ -176,6 +176,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/bufferLinesFree'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
       responses:
@@ -222,6 +223,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/bufferLinesFree'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
       responses:
@@ -267,7 +269,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
-        - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/lines'
         - $ref: '#/components/parameters/colors'
       responses:
         '200':
@@ -315,7 +317,6 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/lineId'
-        - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/colors'
       responses:
         '200':
@@ -360,7 +361,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
-        - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/lines'
         - $ref: '#/components/parameters/colors'
       responses:
         '200':
@@ -408,7 +409,6 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/lineId'
-        - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/colors'
       responses:
         '200':
@@ -453,6 +453,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
+        - $ref: '#/components/parameters/colors'
       responses:
         '200':
           description: Successful operation
@@ -496,6 +497,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
+        - $ref: '#/components/parameters/colors'
       responses:
         '200':
           description: Successful operation
@@ -730,11 +732,10 @@ paths:
                 position:
                   type: integer
                   format: int32
-                  description: Position in data (≥ 0)
+                  description: Position in data (≥ 0), default is the end of data
                   example: 4
               required:
                 - command
-                - position
             example:
               buffer_name: 'core.weechat'
               command: '/hel'
@@ -950,6 +951,18 @@ components:
         * negative number: return N lines from the end of buffer (newest lines)
         * `0`: do not return any line
         * positive number: return N lines from the beginning of buffer (oldest lines)
+    lines:
+      name: lines
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int64
+      description: |
+        Number of lines to return (default: all lines):
+        * negative number: return N lines from the end of buffer (newest lines)
+        * `0`: do not return any line
+        * positive number: return N lines from the beginning of buffer (oldest lines)
     bufferLinesFree:
       name: lines_free
       in: query
@@ -1000,14 +1013,17 @@ components:
       type: object
       properties:
         password_hash_algo:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           enum:
             - plain
             - sha256
             - sha512
             - pbkdf2+sha256
             - pbkdf2+sha512
+            - null
+          description: the hash algorithm to use, null if no algorithm is compatible
           example: pbkdf2+sha512
         password_hash_iterations:
           type: integer
@@ -1062,7 +1078,7 @@ components:
           example: '#weechat'
         number:
           type: integer
-          format: int64
+          format: int32
           description: buffer number (≥ 1)
           example: 3
         type:
@@ -1217,13 +1233,17 @@ components:
         y:
           type: integer
           format: int64
-          description: line index (≥ 1) on free buffer, -1 on formatted buffer
+          description: line index (≥ 0) on free buffer, -1 on formatted buffer
           example: -1
         date:
           type: string
           format: date-time
           description: date and time of line
           example: '2023-12-05T19:46:03.847625Z'
+        displayed:
+          type: boolean
+          description: line is displayed (not filtered)
+          example: true
         highlight:
           type: boolean
           description: line has a highlight
@@ -1248,6 +1268,7 @@ components:
           description: the message (can contain colors)
           example: 'alice (~alice@example.com) has joined #test'
         tags:
+          type: array
           items:
             type: string
           description: tags
@@ -1262,6 +1283,7 @@ components:
         - id
         - y
         - date
+        - displayed
         - highlight
         - notify_level
         - prefix
@@ -1320,7 +1342,7 @@ components:
             visible: true
             groups: []
             nicks:
-              - id: 1709932823649184
+              - id: 1709932823649215
                 parent_group_id: 1709932823649181
                 prefix: '@'
                 prefix_color_name: 'lightgreen'
@@ -1329,17 +1351,9 @@ components:
                 color_name: 'bar_fg'
                 color: ''
                 visible: true
-          - id: 1709932823649189
-            parent_group_id: 0
-            name: '001|h'
-            color_name: 'weechat.color.nicklist_group'
-            color: '\u001b[32m'
-            visible: true
-            groups: []
-            nicks: []
           - id: 1709932823649203
             parent_group_id: 0
-            name: '002|v'
+            name: '001|v'
             color_name: 'weechat.color.nicklist_group'
             color: '\u001b[32m'
             visible: true
@@ -1369,13 +1383,13 @@ components:
         id:
           type: integer
           format: int64
-          description: group identifier (≥ 0, unique in buffer)
-          example: 1709932823649181
+          description: nick identifier (≥ 0, unique in buffer)
+          example: 1709932823649215
         parent_group_id:
           type: integer
           format: int64
-          description: parent group identifier, -1 if group is the root of nicklist
-          example: 1709932823145768
+          description: parent group identifier
+          example: 1709932823649181
         prefix:
           type: string
           description: nick prefix
