@@ -1086,6 +1086,56 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
+==== string_memcmp_constant_time
+
+_WeeChat ≥ 4.10.0._
+
+// TRANSLATION MISSING
+Compare two memory areas of the same size in constant time: the execution
+time depends only on _size_, not on the content of the areas, so this function
+can be used to compare secrets (for example password hashes or MACs) without
+leaking information through the comparison time.
+
+Прототип:
+
+[source,c]
+----
+int weechat_string_memcmp_constant_time (const void *area1, const void *area2,
+                                         size_t size);
+----
+
+Аргументи:
+
+// TRANSLATION MISSING
+* _area1_: first memory area
+* _area2_: second memory area
+* _size_: number of bytes to compare (both areas must have at least _size_
+  bytes)
+
+Повратна вредност:
+
+// TRANSLATION MISSING
+* 0 if areas are equal (or if both pointers are NULL)
+* 1 if areas are different (or if only one pointer is NULL)
+
+[NOTE]
+// TRANSLATION MISSING
+Unlike function `memcmp`, the return value is not an ordering: it only tells
+if the areas are equal or not.
+
+C пример:
+
+[source,c]
+----
+if (weechat_string_memcmp_constant_time (hash, expected_hash, 32) == 0)
+{
+    /* hashes are equal */
+}
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
 ==== strcasestr
 
 _Ажурирано у верзији 1.3, 3.8._

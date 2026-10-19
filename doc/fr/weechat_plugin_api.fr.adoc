@@ -1131,6 +1131,53 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== string_memcmp_constant_time
+
+_WeeChat ≥ 4.10.0._
+
+Comparer deux zones mémoire de même taille en temps constant : le temps
+d'exécution dépend seulement de _size_, pas du contenu des zones, donc cette
+fonction peut être utilisée pour comparer des secrets (par exemple des hachages
+de mots de passe ou des MAC) sans divulguer d'information via le temps de
+comparaison.
+
+Prototype :
+
+[source,c]
+----
+int weechat_string_memcmp_constant_time (const void *area1, const void *area2,
+                                         size_t size);
+----
+
+Paramètres :
+
+* _area1_ : première zone mémoire
+* _area2_ : seconde zone mémoire
+* _size_ : nombre d'octets à comparer (les deux zones doivent avoir au moins
+  _size_ octets)
+
+Valeur de retour :
+
+* 0 si les zones sont égales (ou si les deux pointeurs sont NULL)
+* 1 si les zones sont différentes (ou si un seul des pointeurs est NULL)
+
+[NOTE]
+Contrairement à la fonction `memcmp`, la valeur de retour n'est pas un ordre :
+elle indique seulement si les zones sont égales ou non.
+
+Exemple en C :
+
+[source,c]
+----
+if (weechat_string_memcmp_constant_time (hash, expected_hash, 32) == 0)
+{
+    /* les hachages sont égaux */
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== strcasestr
 
 _Mis à jour dans la 1.3, 3.8._
