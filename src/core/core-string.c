@@ -917,9 +917,9 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
  * data, so the execution time depends on "size" alone, not on the
  * position of the first differing byte.
  *
- * If either pointer is NULL, the areas are considered different (the
- * NULL check itself is not constant time but does not look at any
- * secret content).
+ * If both pointers are NULL, the areas are considered equal; if only one
+ * pointer is NULL, the areas are considered different (the NULL check
+ * itself is not constant time but does not look at any secret content).
  *
  * Return:
  *   0: areas are equal
