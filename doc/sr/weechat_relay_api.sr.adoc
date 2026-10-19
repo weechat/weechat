@@ -78,7 +78,7 @@ API можете да прегледате и тестирате на мрежи
 * `401 Unauthorized`: подаци за пријаву недостају или нису исправни
 * `403 Forbidden`: нема довољно дозвола
 * `404 Not Found`: није пронађен ресурс
-* `500 Internal Server Error`: интерна грешка сервера
+* `405 Method Not Allowed`: method not allowed for this resource
 * `503 Service Unavailable`: сервис није доступан
 
 Када је веза успостављена преко websocket протокола, шаље се још један додатни код
@@ -93,15 +93,12 @@ API можете да прегледате и тестирате на мрежи
 Формат датума је https://en.wikipedia.org/wiki/ISO_8601[ISO 8601 ^↗^^],
 уз коришћење UTC временске зоне (ово се разликује у односу на приказ у програму
 WeeChat који користи локалну временску зону). +
-Датуми се враћају са максималном прецизношћу: до микросекунде, ако је то могуће,
-или милисекунде, или само секунде.
+The dates are always returned with microseconds precision.
 
-Примери:
+Пример:
 
 ----
 2023-12-05T19:46:03.847625Z
-2023-12-05T19:46:03.847Z
-2023-12-05T19:46:03Z
 ----
 
 [[authentication]]
@@ -324,6 +321,7 @@ curl -L -u 'plain:secret_password' -H "Accept-Encoding: gzip" 'https://localhost
 [source,http]
 ----
 HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
 Content-Type: application/json; charset=utf-8
 Content-Encoding: gzip
 Content-Length: 77
@@ -429,6 +427,27 @@ HTTP/1.1 200 OK
     "password_hash_algo": "sha512",
     "password_hash_iterations": 100000,
     "totp": false
+}
+----
+
+In case of error, a response `400 Bad Request` is returned with a field `error`
+in JSON data that describes the error:
+
+* `Bad request`: the body is not a JSON object
+* `Invalid hash algorithm`: `password_hash_algo` is not an array of strings
+* `Hash algorithm "xxx" not found`: the hash algorithm `xxx` is unknown
+
+Одговор: unknown hash algorithm:
+
+[source,http]
+----
+HTTP/1.1 400 Bad Request
+----
+
+[source,json]
+----
+{
+    "error": "Hash algorithm \"md5\" not found"
 }
 ----
 
@@ -680,7 +699,7 @@ HTTP/1.1 200 OK
 }
 ----
 
-Пример захтева: врати бафере IRC канала са надимцима:
+Пример захтева: врати бафер IRC канала са надимцима:
 
 [source,shell]
 ----
@@ -746,7 +765,7 @@ HTTP/1.1 200 OK
                 "groups": [],
                 "nicks": [
                     {
-                        "id": 1709932823649184,
+                        "id": 1709932823649215,
                         "parent_group_id": 1709932823649181,
                         "prefix": "@",
                         "prefix_color_name": "lightgreen",
@@ -759,19 +778,9 @@ HTTP/1.1 200 OK
                 ]
             },
             {
-                "id": 1709932823649189,
-                "parent_group_id": 0,
-                "name": "001|h",
-                "color_name": "weechat.color.nicklist_group",
-                "color": "\u001b[32m",
-                "visible": true,
-                "groups": [],
-                "nicks": []
-            },
-            {
                 "id": 1709932823649203,
                 "parent_group_id": 0,
-                "name": "002|v",
+                "name": "001|v",
                 "color_name": "weechat.color.nicklist_group",
                 "color": "\u001b[32m",
                 "visible": true,
@@ -813,7 +822,7 @@ HTTP/1.1 200 OK
 {
     "id": 1709932823897200,
     "name": "fset.fset",
-    "short_name": "",
+    "short_name": "fset",
     "number": 4,
     "type": "free",
     "notify": "all",
@@ -840,10 +849,6 @@ HTTP/1.1 200 OK
         {
             "key": "ctrl-l",
             "command": "/fset -refresh"
-        },
-        {
-            "key": "ctrl-n",
-            "command": "/eval ${if:${weechat.bar.buflist.hidden}?/fset -down:/buffer +1}"
         },
         {
             "key": "ctrl-x",
@@ -900,10 +905,6 @@ HTTP/1.1 200 OK
         {
             "key": "meta-p",
             "command": "/mute /set fset.look.show_plugins_desc toggle"
-        },
-        {
-            "key": "meta-q",
-            "command": "/input insert meta-q fset ${property}"
         },
         {
             "key": "meta-return",
@@ -1097,7 +1098,7 @@ HTTP/1.1 200 OK
             "groups": [],
             "nicks": [
                 {
-                    "id": 1709932823649184,
+                    "id": 1709932823649215,
                     "parent_group_id": 1709932823649181,
                     "prefix": "@",
                     "prefix_color_name": "lightgreen",
@@ -1110,19 +1111,9 @@ HTTP/1.1 200 OK
             ]
         },
         {
-            "id": 1709932823649189,
-            "parent_group_id": 0,
-            "name": "001|h",
-            "color_name": "weechat.color.nicklist_group",
-            "color": "\u001b[32m",
-            "visible": true,
-            "groups": [],
-            "nicks": []
-        },
-        {
             "id": 1709932823649203,
             "parent_group_id": 0,
-            "name": "002|v",
+            "name": "001|v",
             "color_name": "weechat.color.nicklist_group",
             "color": "\u001b[32m",
             "visible": true,
@@ -1464,7 +1455,7 @@ curl -L -u 'plain:secret_password' -X POST \
 
 [source,http]
 ----
-HTTP/1.1 204 No content
+HTTP/1.1 204 No Content
 ----
 
 Пример захтева: напусти и затвори канал #weechat (команда се извршава у WeeChat
@@ -1481,7 +1472,7 @@ curl -L -u 'plain:secret_password' -X POST \
 
 [source,http]
 ----
-HTTP/1.1 204 No content
+HTTP/1.1 204 No Content
 ----
 
 [[resource_completion]]
@@ -1562,7 +1553,7 @@ curl -L -u 'plain:secret_password' -X POST 'https://localhost:9000/api/ping'
 
 [source,http]
 ----
-HTTP/1.1 204 No content
+HTTP/1.1 204 No Content
 ----
 
 Пример захтева: са подацима:
@@ -1655,8 +1646,9 @@ buffers again, because the events not sent are lost.
     "message": "No Content",
     "request": "POST /api/sync",
     "request_body": {
-        "nicks":false
+        "nicks": false
     },
+    "request_id": null,
     "body_type": null,
     "body": null
 }
@@ -1727,7 +1719,7 @@ HTTP/1.1 101 Switching Protocols
 Upgrade: websocket
 Connection: Upgrade
 Sec-WebSocket-Accept: PaY9vRflWeOKuD0/F7e5gD9At9U=
-Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits=15
 ----
 
 [NOTE]
@@ -1749,8 +1741,8 @@ GUID `258EAFA5-E914-47DA-95CA-C5AB0DC85B11` (SHA-1 се кодира у base64).
 Захтеви WeeChat програму се праве JSON објектом који садржи следећа поља:
 
 * `request` (стринг): HTTP метода и путања (пример: `GET /api/buffers?lines=-100`)
-* `body` (објекат или низ): тело (није обавезно, за `POST` и `PUT` методе)
-* `request_id` (стринг): идентификатор који се шаље назад у одговору
+* `body` (објекат): тело (није обавезно, за `POST` и `PUT` методе)
+* `request_id` (стринг, није обавезно): идентификатор који се шаље назад у одговору
 
 Употребом низа објеката, више захтева може да се пошаље одједном, тако што је
 сваки објекат посебан захтев. +
@@ -1764,7 +1756,8 @@ GUID `258EAFA5-E914-47DA-95CA-C5AB0DC85B11` (SHA-1 се кодира у base64).
 * `request_body` (објекат): тело захтева, или `null` ако захтев није имао тело
 * `request_id` (стринг): id захтева, или `null` ако захтев није имао id
 * `body_type` (стринг): тип објеката који се враћа у телу (погледајте испод),
-  или `null` ако одговор нема тело
+  или `null` ако одговор нема тело or if it is an error (in this case the body is
+  an object with the field `error`)
 * `body` (објекат или низ): враћено тело, или `null` ако одговор нема тело
 
 Типови тела који могу да се врате:
@@ -1777,8 +1770,10 @@ GUID `258EAFA5-E914-47DA-95CA-C5AB0DC85B11` (SHA-1 се кодира у base64).
 * `line` (објекат)
 * `nick_group` (објекат)
 * `nick` (објекат)
-* `hotlist` (објекат)
+* `hotlist` (низ)
 * `scripts` (низ)
+* `option` (објекат)
+* `completion` (објекат)
 * `ping` (објекат)
 
 [TIP]
@@ -1917,8 +1912,11 @@ WeeChat гура податке клијенту у било које време
 * `code`: `0`
 * `message`: `Event`
 * `event_name` (стринг): име догађаја (име сигнала or hsignal)
-* `buffer_id` (цео број): јединствени идентификатор бафера, поставља се само за под-објекте,
-  -1 у осталим случајевима
+* `buffer_id` (цео број): јединствени идентификатор бафера, for events related to
+  a buffer, -1 у осталим случајевима
+* `body_type` (стринг): type of object returned in body, or `null` if the
+  event has no body
+* `body` (објекат): the body, or `null` if the event has no body
 
 When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
 `buffer_line_added` (only lines with a highlight or a private message), `upgrade`,
@@ -1951,6 +1949,7 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
 | `buffer_closed`                       | buffer id | null          | null
 | `buffer_line_added`                   | buffer id | `line`        | бафер линија
 | `buffer_line_data_changed`            | buffer id | `line`        | бафер линија
+| `input_prompt_changed`                | buffer id | `buffer`      | бафер
 | `input_text_changed`                  | buffer id | `buffer`      | бафер
 | `input_text_cursor_moved`             | buffer id | `buffer`      | бафер
 | `nicklist_group_changed`              | buffer id | `nick_group`  | група надимака
@@ -1982,35 +1981,47 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
     "body_type": "buffer",
     "body": {
         "id": 1709932823649069,
-        "name": "irc.libera.#test",
-        "short_name": "",
+        "name": "irc.libera.#weechat",
+        "short_name": "#weechat",
         "number": 4,
         "type": "formatted",
         "notify": "all",
         "hidden": false,
         "title": "",
-        "modes": "+nt",
-        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "modes": "",
+        "input_prompt": "\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
         "input": "",
         "input_position": 0,
         "input_multiline": false,
-        "nicklist": true,
+        "nicklist": false,
         "nicklist_case_sensitive": false,
-        "nicklist_display_groups": false,
+        "nicklist_display_groups": true,
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
         "local_variables": {
             "plugin": "irc",
-            "name": "libera.#test",
+            "name": "libera.#weechat",
             "type": "channel",
             "nick": "alice",
             "host": "~alice@example.com",
             "server": "libera",
-            "channel": "#test"
+            "channel": "#weechat"
         },
         "keys": [],
-        "lines": []
+        "lines": [],
+        "last_read_line_id": -1,
+        "first_line_not_read": false,
+        "nicklist_root": {
+            "id": 0,
+            "parent_group_id": -1,
+            "name": "root",
+            "color_name": "",
+            "color": "",
+            "visible": false,
+            "groups": [],
+            "nicks": []
+        }
     }
 }
 ----
@@ -2027,11 +2038,11 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
     "body_type": "line",
     "body": {
         "id": 1704617640179483,
-        "index": -1,
+        "y": -1,
         "date": "2024-01-07T08:54:00.179483Z",
         "displayed": true,
         "highlight": false,
-        "notify_level": 0,
+        "notify_level": -1,
         "prefix": "alice",
         "message": "hello!",
         "tags": [

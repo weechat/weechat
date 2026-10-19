@@ -80,7 +80,7 @@ Les codes réponse HTTP suivants peuvent être retournés au client :
 * `401 Unauthorized` : informations d'identification manquantes ou invalides
 * `403 Forbidden` : permissions insuffisantes
 * `404 Not Found` : ressource non trouvée
-* `500 Internal Server Error` : erreur interne du serveur
+* `405 Method Not Allowed` : méthode non autorisée pour cette ressource
 * `503 Service Unavailable` : service non disponible
 
 Lors d'une connexion via le protocole websocket, un code de réponse supplémentaire
@@ -95,15 +95,12 @@ est envoyé quand WeeChat pousse des données vers le client sur des évènement
 Le format de date est https://en.wikipedia.org/wiki/ISO_8601[ISO 8601 ^↗^^],
 en utilisant le fuseau horaire UTC (cela est donc différent de l'affichage par
 WeeChat qui utilise le fuseau horaire local). +
-Les dates sont retournées avec le maximum de précision : jusqu'aux microsecondes
-si cela est possible ou bien les millisecondes, ou juste secondes.
+Les dates sont toujours retournées avec une précision à la microseconde.
 
-Exemples :
+Exemple :
 
 ----
 2023-12-05T19:46:03.847625Z
-2023-12-05T19:46:03.847Z
-2023-12-05T19:46:03Z
 ----
 
 [[authentication]]
@@ -327,6 +324,7 @@ Réponse :
 [source,http]
 ----
 HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
 Content-Type: application/json; charset=utf-8
 Content-Encoding: gzip
 Content-Length: 77
@@ -434,6 +432,27 @@ HTTP/1.1 200 OK
     "password_hash_algo": "sha512",
     "password_hash_iterations": 100000,
     "totp": false
+}
+----
+
+En cas d'erreur, une réponse `400 Bad Request` est retournée avec un champ `error`
+dans les données JSON qui décrit l'erreur :
+
+* `Bad request` : le corps n'est pas un objet JSON
+* `Invalid hash algorithm` : `password_hash_algo` n'est pas un tableau de chaînes
+* `Hash algorithm "xxx" not found` : l'algorithme de hachage `xxx` est inconnu
+
+Réponse : algorithme de hachage inconnu :
+
+[source,http]
+----
+HTTP/1.1 400 Bad Request
+----
+
+[source,json]
+----
+{
+    "error": "Hash algorithm \"md5\" not found"
 }
 ----
 
@@ -751,7 +770,7 @@ HTTP/1.1 200 OK
                 "groups": [],
                 "nicks": [
                     {
-                        "id": 1709932823649184,
+                        "id": 1709932823649215,
                         "parent_group_id": 1709932823649181,
                         "prefix": "@",
                         "prefix_color_name": "lightgreen",
@@ -764,19 +783,9 @@ HTTP/1.1 200 OK
                 ]
             },
             {
-                "id": 1709932823649189,
-                "parent_group_id": 0,
-                "name": "001|h",
-                "color_name": "weechat.color.nicklist_group",
-                "color": "\u001b[32m",
-                "visible": true,
-                "groups": [],
-                "nicks": []
-            },
-            {
                 "id": 1709932823649203,
                 "parent_group_id": 0,
-                "name": "002|v",
+                "name": "001|v",
                 "color_name": "weechat.color.nicklist_group",
                 "color": "\u001b[32m",
                 "visible": true,
@@ -818,7 +827,7 @@ HTTP/1.1 200 OK
 {
     "id": 1709932823897200,
     "name": "fset.fset",
-    "short_name": "",
+    "short_name": "fset",
     "number": 4,
     "type": "free",
     "notify": "all",
@@ -844,10 +853,6 @@ HTTP/1.1 200 OK
         {
             "key": "ctrl-l",
             "command": "/fset -refresh"
-        },
-        {
-            "key": "ctrl-n",
-            "command": "/eval ${if:${weechat.bar.buflist.hidden}?/fset -down:/buffer +1}"
         },
         {
             "key": "ctrl-x",
@@ -906,10 +911,6 @@ HTTP/1.1 200 OK
             "command": "/mute /set fset.look.show_plugins_desc toggle"
         },
         {
-            "key": "meta-q",
-            "command": "/input insert meta-q fset ${property}"
-        },
-        {
             "key": "meta-return",
             "command": "/fset -set"
         },
@@ -959,7 +960,8 @@ Paramètres de chemin :
   confondre avec le numéro du tampon, qui est différent)
 * `buffer_name` (chaîne, **obligatoire**) : nom du tampon
 * `line_id` (entier, facultatif) : retourner une seule ligne avec cet identifiant
-  (date et heure d'affichage avec une précision à la microseconde)
+  (date et heure d'affichage avec une précision à la microseconde, ou numéro de
+  ligne pour un tampon avec contenu libre)
 
 Paramètres de requête :
 
@@ -1109,7 +1111,7 @@ HTTP/1.1 200 OK
             "groups": [],
             "nicks": [
                 {
-                    "id": 1709932823649184,
+                    "id": 1709932823649215,
                     "parent_group_id": 1709932823649181,
                     "prefix": "@",
                     "prefix_color_name": "lightgreen",
@@ -1122,19 +1124,9 @@ HTTP/1.1 200 OK
             ]
         },
         {
-            "id": 1709932823649189,
-            "parent_group_id": 0,
-            "name": "001|h",
-            "color_name": "weechat.color.nicklist_group",
-            "color": "\u001b[32m",
-            "visible": true,
-            "groups": [],
-            "nicks": []
-        },
-        {
             "id": 1709932823649203,
             "parent_group_id": 0,
-            "name": "002|v",
+            "name": "001|v",
             "color_name": "weechat.color.nicklist_group",
             "color": "\u001b[32m",
             "visible": true,
@@ -1462,7 +1454,7 @@ Réponse :
 
 [source,http]
 ----
-HTTP/1.1 204 No content
+HTTP/1.1 204 No Content
 ----
 
 Exemple de requête : quitter et fermer le canal #weechat (commande exécutée
@@ -1479,7 +1471,7 @@ Réponse :
 
 [source,http]
 ----
-HTTP/1.1 204 No content
+HTTP/1.1 204 No Content
 ----
 
 [[resource_completion]]
@@ -1560,7 +1552,7 @@ Réponse :
 
 [source,http]
 ----
-HTTP/1.1 204 No content
+HTTP/1.1 204 No Content
 ----
 
 Exemple de requête : avec des données :
@@ -1661,6 +1653,7 @@ Réponse :
     "request_body": {
         "nicks": false
     },
+    "request_id": null,
     "body_type": null,
     "body": null
 }
@@ -1731,7 +1724,7 @@ HTTP/1.1 101 Switching Protocols
 Upgrade: websocket
 Connection: Upgrade
 Sec-WebSocket-Accept: PaY9vRflWeOKuD0/F7e5gD9At9U=
-Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits=15
 ----
 
 [NOTE]
@@ -1756,8 +1749,8 @@ les champs suivants :
 
 * `request` (chaîne) : la méthode HTTP et le chemin
   (exemple : `GET /api/buffers?lines=-100`)
-* `body` (objet ou tableau) : le corps (facultatif, pour les méthodes `POST` et `PUT`)
-* `request_id` (chaîne) : identifiant renvoyé dans la réponse
+* `body` (objet) : le corps (facultatif, pour les méthodes `POST` et `PUT`)
+* `request_id` (chaîne, facultatif) : identifiant renvoyé dans la réponse
 
 Plusieurs requêtes peuvent être envoyées simultanément avec un tableau d'objets,
 chaque objet étant une requête séparée. +
@@ -1774,7 +1767,8 @@ les champs suivants :
 * `request_id` (chaîne) : l'identifiant de la requête, ou `null` si la requête
   n'avait pas d'identifiant
 * `body_type` (chaîne) : type des objets retournés dans le corps (voir ci-dessous),
-  ou `null` si la réponse n'a pas de corps
+  ou `null` si la réponse n'a pas de corps ou si c'est une erreur (dans ce cas
+  le corps est un objet avec le champ `error`)
 * `body` (objet ou tableau) : le corps retourné, ou `null` si la réponse n'a pas
   de corps
 
@@ -1788,8 +1782,10 @@ Les types de corps qui peuvent être retournés :
 * `line` (objet)
 * `nick_group` (objet)
 * `nick` (objet)
-* `hotlist` (objet)
+* `hotlist` (tableau)
 * `scripts` (tableau)
+* `option` (objet)
+* `completion` (objet)
 * `ping` (objet)
 
 [TIP]
@@ -1929,8 +1925,11 @@ Les messages envoyés au client ont les champs suivants :
 * `code` : `0`
 * `message` : `Event`
 * `event_name` (chaîne) : le nom de l'évènement (nom du signal ou hsignal)
-* `buffer_id` (entier) : l'identifiant unique du tampon, défini seulement pour
-  les sous-objets, -1 dans les autres cas
+* `buffer_id` (entier) : l'identifiant unique du tampon, pour les évènements
+  liés à un tampon, -1 dans les autres cas
+* `body_type` (chaîne) : type de l'objet retourné dans le corps, ou `null` si
+  l'évènement n'a pas de corps
+* `body` (objet) : le corps, ou `null` si l'évènement n'a pas de corps
 
 Lorsque `notify_only` vaut `true` dans la ressource <<resource_sync,sync>>,
 seulement les évènements `buffer_line_added` (seulement les lignes avec un
@@ -1964,6 +1963,7 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `buffer_closed`                       | id tampon | null          | null
 | `buffer_line_added`                   | id tampon | `line`        | ligne de tampon
 | `buffer_line_data_changed`            | id tampon | `line`        | ligne de tampon
+| `input_prompt_changed`                | id tampon | `buffer`      | tampon
 | `input_text_changed`                  | id tampon | `buffer`      | tampon
 | `input_text_cursor_moved`             | id tampon | `buffer`      | tampon
 | `nicklist_group_changed`              | id tampon | `nick_group`  | groupe de pseudos
@@ -1996,34 +1996,46 @@ Exemple : nouveau tampon : le canal `#weechat` a été rejoint :
     "body_type": "buffer",
     "body": {
         "id": 1709932823649069,
-        "name": "irc.libera.#test",
-        "short_name": "",
+        "name": "irc.libera.#weechat",
+        "short_name": "#weechat",
         "number": 4,
         "type": "formatted",
         "notify": "all",
         "title": "",
-        "modes": "+nt",
-        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "modes": "",
+        "input_prompt": "\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
         "input": "",
         "input_position": 0,
         "input_multiline": false,
-        "nicklist": true,
+        "nicklist": false,
         "nicklist_case_sensitive": false,
-        "nicklist_display_groups": false,
+        "nicklist_display_groups": true,
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
         "local_variables": {
             "plugin": "irc",
-            "name": "libera.#test",
+            "name": "libera.#weechat",
             "type": "channel",
             "nick": "alice",
             "host": "~alice@example.com",
             "server": "libera",
-            "channel": "#test"
+            "channel": "#weechat"
         },
         "keys": [],
-        "lines": []
+        "lines": [],
+        "last_read_line_id": -1,
+        "first_line_not_read": false,
+        "nicklist_root": {
+            "id": 0,
+            "parent_group_id": -1,
+            "name": "root",
+            "color_name": "",
+            "color": "",
+            "visible": false,
+            "groups": [],
+            "nicks": []
+        }
     }
 }
 ----
@@ -2040,11 +2052,11 @@ Exemple : nouvelle ligne affichée sur le canal `#weechat` :
     "body_type": "line",
     "body": {
         "id": 1704617640179483,
-        "index": -1,
+        "y": -1,
         "date": "2024-01-07T08:54:00.179483Z",
         "displayed": true,
         "highlight": false,
-        "notify_level": 0,
+        "notify_level": -1,
         "prefix": "alice",
         "message": "hello!",
         "tags": [

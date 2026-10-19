@@ -76,7 +76,7 @@ The following HTTP response codes can be sent back to the client:
 * `401 Unauthorized`: missing or invalid credentials
 * `403 Forbidden`: insufficient permissions
 * `404 Not Found`: resource not found
-* `500 Internal Server Error`: internal server error
+* `405 Method Not Allowed`: method not allowed for this resource
 * `503 Service Unavailable`: service unavailable
 
 When connected via websocket protocol, an extra response code is sent when WeeChat
@@ -91,15 +91,12 @@ pushes data to the client on events:
 The date format is https://en.wikipedia.org/wiki/ISO_8601[ISO 8601 ^↗^^],
 using UTC timezone (this is then different from the display by WeeChat which
 uses the local timezone). +
-The dates are returned with maximum precision: up to microseconds if possible,
-or milliseconds, or just seconds.
+The dates are always returned with microseconds precision.
 
-Examples:
+Example:
 
 ----
 2023-12-05T19:46:03.847625Z
-2023-12-05T19:46:03.847Z
-2023-12-05T19:46:03Z
 ----
 
 [[authentication]]
@@ -322,6 +319,7 @@ Response:
 [source,http]
 ----
 HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
 Content-Type: application/json; charset=utf-8
 Content-Encoding: gzip
 Content-Length: 77
@@ -378,7 +376,7 @@ Content-Length: 0
 [[resource_handshake]]
 === Handshake
 
-Perform an handshake between the client and WeeChat.
+Perform a handshake between the client and WeeChat.
 
 This resource is accessible without authentication.
 
@@ -427,6 +425,27 @@ HTTP/1.1 200 OK
     "password_hash_algo": "sha512",
     "password_hash_iterations": 100000,
     "totp": false
+}
+----
+
+In case of error, a response `400 Bad Request` is returned with a field `error`
+in JSON data that describes the error:
+
+* `Bad request`: the body is not a JSON object
+* `Invalid hash algorithm`: `password_hash_algo` is not an array of strings
+* `Hash algorithm "xxx" not found`: the hash algorithm `xxx` is unknown
+
+Response: unknown hash algorithm:
+
+[source,http]
+----
+HTTP/1.1 400 Bad Request
+----
+
+[source,json]
+----
+{
+    "error": "Hash algorithm \"md5\" not found"
 }
 ----
 
@@ -678,7 +697,7 @@ HTTP/1.1 200 OK
 }
 ----
 
-Request example: get an IRC channel buffers with nicks:
+Request example: get an IRC channel buffer with nicks:
 
 [source,shell]
 ----
@@ -744,7 +763,7 @@ HTTP/1.1 200 OK
                 "groups": [],
                 "nicks": [
                     {
-                        "id": 1709932823649184,
+                        "id": 1709932823649215,
                         "parent_group_id": 1709932823649181,
                         "prefix": "@",
                         "prefix_color_name": "lightgreen",
@@ -757,19 +776,9 @@ HTTP/1.1 200 OK
                 ]
             },
             {
-                "id": 1709932823649189,
-                "parent_group_id": 0,
-                "name": "001|h",
-                "color_name": "weechat.color.nicklist_group",
-                "color": "\u001b[32m",
-                "visible": true,
-                "groups": [],
-                "nicks": []
-            },
-            {
                 "id": 1709932823649203,
                 "parent_group_id": 0,
-                "name": "002|v",
+                "name": "001|v",
                 "color_name": "weechat.color.nicklist_group",
                 "color": "\u001b[32m",
                 "visible": true,
@@ -811,7 +820,7 @@ HTTP/1.1 200 OK
 {
     "id": 1709932823897200,
     "name": "fset.fset",
-    "short_name": "",
+    "short_name": "fset",
     "number": 4,
     "type": "free",
     "notify": "all",
@@ -838,10 +847,6 @@ HTTP/1.1 200 OK
         {
             "key": "ctrl-l",
             "command": "/fset -refresh"
-        },
-        {
-            "key": "ctrl-n",
-            "command": "/eval ${if:${weechat.bar.buflist.hidden}?/fset -down:/buffer +1}"
         },
         {
             "key": "ctrl-x",
@@ -900,10 +905,6 @@ HTTP/1.1 200 OK
             "command": "/mute /set fset.look.show_plugins_desc toggle"
         },
         {
-            "key": "meta-q",
-            "command": "/input insert meta-q fset ${property}"
-        },
-        {
             "key": "meta-return",
             "command": "/fset -set"
         },
@@ -953,7 +954,8 @@ Path parameters:
   confused with the buffer number, which is different)
 * `buffer_name` (string, **required**): buffer name
 * `line_id` (integer, optional): return a single line with this identifier
-  (date and time of print with microseconds precision)
+  (date and time of print with microseconds precision, or line number for
+  a buffer with free content)
 
 Query parameters:
 
@@ -1096,7 +1098,7 @@ HTTP/1.1 200 OK
             "groups": [],
             "nicks": [
                 {
-                    "id": 1709932823649184,
+                    "id": 1709932823649215,
                     "parent_group_id": 1709932823649181,
                     "prefix": "@",
                     "prefix_color_name": "lightgreen",
@@ -1109,19 +1111,9 @@ HTTP/1.1 200 OK
             ]
         },
         {
-            "id": 1709932823649189,
-            "parent_group_id": 0,
-            "name": "001|h",
-            "color_name": "weechat.color.nicklist_group",
-            "color": "\u001b[32m",
-            "visible": true,
-            "groups": [],
-            "nicks": []
-        },
-        {
             "id": 1709932823649203,
             "parent_group_id": 0,
-            "name": "002|v",
+            "name": "001|v",
             "color_name": "weechat.color.nicklist_group",
             "color": "\u001b[32m",
             "visible": true,
@@ -1445,7 +1437,7 @@ Response:
 
 [source,http]
 ----
-HTTP/1.1 204 No content
+HTTP/1.1 204 No Content
 ----
 
 Request example: part and close channel #weechat (command executed on WeeChat
@@ -1462,7 +1454,7 @@ Response:
 
 [source,http]
 ----
-HTTP/1.1 204 No content
+HTTP/1.1 204 No Content
 ----
 
 [[resource_completion]]
@@ -1543,7 +1535,7 @@ Response:
 
 [source,http]
 ----
-HTTP/1.1 204 No content
+HTTP/1.1 204 No Content
 ----
 
 Request example: with data:
@@ -1637,8 +1629,9 @@ Response:
     "message": "No Content",
     "request": "POST /api/sync",
     "request_body": {
-        "nicks":false
+        "nicks": false
     },
+    "request_id": null,
     "body_type": null,
     "body": null
 }
@@ -1709,7 +1702,7 @@ HTTP/1.1 101 Switching Protocols
 Upgrade: websocket
 Connection: Upgrade
 Sec-WebSocket-Accept: PaY9vRflWeOKuD0/F7e5gD9At9U=
-Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits=15
 ----
 
 [NOTE]
@@ -1732,8 +1725,8 @@ When the client is connected via the websocket protocol:
 Requests to WeeChat are made with a JSON object containing these fields:
 
 * `request` (string): the HTTP method and path (example: `GET /api/buffers?lines=-100`)
-* `body` (object or array): the body (optional, for `POST` and `PUT` methods)
-* `request_id` (string): identifier sent back in the response
+* `body` (object): the body (optional, for `POST` and `PUT` methods)
+* `request_id` (string, optional): identifier sent back in the response
 
 Multiple requests can be sent at once using an array of objects, each object
 being a separate request. +
@@ -1747,7 +1740,8 @@ Responses to client are made with a JSON object containing these fields:
 * `request_body` (object): the request body, or `null` if the request had no body
 * `request_id` (string): the request id, or `null` if the request had no id
 * `body_type` (string): type of objects returned in body (see below), or `null`
-  if the response has no body
+  if the response has no body or if it is an error (in this case the body is
+  an object with the field `error`)
 * `body` (object or array): the body returned, or `null` if the response has no body
 
 Body types that can be returned:
@@ -1760,8 +1754,10 @@ Body types that can be returned:
 * `line` (object)
 * `nick_group` (object)
 * `nick` (object)
-* `hotlist` (object)
+* `hotlist` (array)
 * `scripts` (array)
+* `option` (object)
+* `completion` (object)
 * `ping` (object)
 
 [TIP]
@@ -1900,8 +1896,11 @@ The messages sent to client have the following fields:
 * `code`: `0`
 * `message`: `Event`
 * `event_name` (string): the event name (name of signal or hsignal)
-* `buffer_id` (integer): the buffer unique identifier, set only for sub-objects,
-  -1 in other cases
+* `buffer_id` (integer): the buffer unique identifier, for events related to
+  a buffer, -1 in other cases
+* `body_type` (string): type of object returned in body, or `null` if the
+  event has no body
+* `body` (object): the body, or `null` if the event has no body
 
 When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
 `buffer_line_added` (only lines with a highlight or a private message), `upgrade`,
@@ -1934,6 +1933,7 @@ The following events are sent to the client, according to synchronization option
 | `buffer_closed`                       | buffer id | null          | null
 | `buffer_line_added`                   | buffer id | `line`        | buffer line
 | `buffer_line_data_changed`            | buffer id | `line`        | buffer line
+| `input_prompt_changed`                | buffer id | `buffer`      | buffer
 | `input_text_changed`                  | buffer id | `buffer`      | buffer
 | `input_text_cursor_moved`             | buffer id | `buffer`      | buffer
 | `nicklist_group_changed`              | buffer id | `nick_group`  | nick group
@@ -1965,35 +1965,47 @@ Example: new buffer: channel `#weechat` has been joined:
     "body_type": "buffer",
     "body": {
         "id": 1709932823649069,
-        "name": "irc.libera.#test",
-        "short_name": "",
+        "name": "irc.libera.#weechat",
+        "short_name": "#weechat",
         "number": 4,
         "type": "formatted",
         "notify": "all",
         "hidden": false,
         "title": "",
-        "modes": "+nt",
-        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "modes": "",
+        "input_prompt": "\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
         "input": "",
         "input_position": 0,
         "input_multiline": false,
-        "nicklist": true,
+        "nicklist": false,
         "nicklist_case_sensitive": false,
-        "nicklist_display_groups": false,
+        "nicklist_display_groups": true,
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
         "local_variables": {
             "plugin": "irc",
-            "name": "libera.#test",
+            "name": "libera.#weechat",
             "type": "channel",
             "nick": "alice",
             "host": "~alice@example.com",
             "server": "libera",
-            "channel": "#test"
+            "channel": "#weechat"
         },
         "keys": [],
-        "lines": []
+        "lines": [],
+        "last_read_line_id": -1,
+        "first_line_not_read": false,
+        "nicklist_root": {
+            "id": 0,
+            "parent_group_id": -1,
+            "name": "root",
+            "color_name": "",
+            "color": "",
+            "visible": false,
+            "groups": [],
+            "nicks": []
+        }
     }
 }
 ----
@@ -2010,11 +2022,11 @@ Example: new line displayed on channel `#weechat`:
     "body_type": "line",
     "body": {
         "id": 1704617640179483,
-        "index": -1,
+        "y": -1,
         "date": "2024-01-07T08:54:00.179483Z",
         "displayed": true,
         "highlight": false,
-        "notify_level": 0,
+        "notify_level": -1,
         "prefix": "alice",
         "message": "hello!",
         "tags": [
