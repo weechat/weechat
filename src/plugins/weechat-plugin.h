@@ -62,7 +62,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20260914-01"
+#define WEECHAT_PLUGIN_API_VERSION "20261019-01"
 
 /* Macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -1550,7 +1550,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->file_compress)(__from, __to, __compressor,         \
                                     __compression_level)
 #define weechat_file_compare(__filename1, __filename2)                  \
-    (weechat_plugin->file_compress)(__filename1, __filename2)
+    (weechat_plugin->file_compare)(__filename1, __filename2)
 
 /* util */
 #define weechat_util_parse_int(__string, __base, __result)              \
