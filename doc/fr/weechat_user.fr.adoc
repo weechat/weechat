@@ -4456,6 +4456,21 @@ chiffres de 2 à 7, par exemple :
 /set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
+[[relay_allowed_networks]]
+=== Réseaux autorisés
+
+Les connexions au relai peuvent être restreintes à certains réseaux, avec une
+liste de réseaux IPv4 ou IPv6 séparés par des virgules, en notation CIDR ;
+une adresse sans longueur de préfixe autorise uniquement cette adresse, par
+exemple :
+
+----
+/set relay.network.allowed_networks "127.0.0.1,192.168.1.0/24,2001:db8::/48"
+----
+
+Si l'option <<option_relay.network.allowed_ips,relay.network.allowed_ips>>
+est également définie, l'adresse IP doit correspondre aux deux options.
+
 [[relay_tls]]
 === TLS
 

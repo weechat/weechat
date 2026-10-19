@@ -26,6 +26,7 @@
 #include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-config.h"
+#include "relay-network.h"
 
 
 struct t_relay_server *relay_servers = NULL;
@@ -420,8 +421,13 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
 
     /* Check if IP is allowed, if not, just close socket. */
     if (!server->unix_socket
-        && relay_config_regex_allowed_ips
-        && (regexec (relay_config_regex_allowed_ips, ptr_ip_address, 0, NULL, 0) != 0))
+        && ((relay_config_regex_allowed_ips
+             && (regexec (relay_config_regex_allowed_ips, ptr_ip_address, 0, NULL, 0) != 0))
+            || ((relay_config_num_allowed_networks > 0)
+                && !relay_network_address_in_networks (
+                    ptr_ip_address,
+                    relay_config_allowed_networks,
+                    relay_config_num_allowed_networks))))
     {
         if (weechat_relay_plugin->debug >= 1)
         {

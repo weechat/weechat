@@ -4473,6 +4473,23 @@ TOTP の secret は base32 でエンコードされた文字列
 /set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
+[[relay_allowed_networks]]
+// TRANSLATION MISSING
+=== Allowed networks
+
+// TRANSLATION MISSING
+Connections to relay can be restricted to some networks, with a comma-separated
+list of IPv4 or IPv6 networks in CIDR notation; an address without prefix length
+allows only this address, for example:
+
+----
+/set relay.network.allowed_networks "127.0.0.1,192.168.1.0/24,2001:db8::/48"
+----
+
+// TRANSLATION MISSING
+If the option <<option_relay.network.allowed_ips,relay.network.allowed_ips>>
+is also set, the IP address must match both options.
+
 [[relay_tls]]
 === TLS
 

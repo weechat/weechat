@@ -31,6 +31,7 @@ extern struct t_config_option *relay_config_color_text_selected;
 
 extern struct t_config_option *relay_config_network_allow_empty_password;
 extern struct t_config_option *relay_config_network_allowed_ips;
+extern struct t_config_option *relay_config_network_allowed_networks;
 extern struct t_config_option *relay_config_network_auth_timeout;
 extern struct t_config_option *relay_config_network_bind_address;
 extern struct t_config_option *relay_config_network_clients_purge_delay;
@@ -67,6 +68,8 @@ extern struct t_config_option *relay_config_api_remote_input_cmd_remote;
 extern int relay_config_auto_open_buffer[];
 extern int relay_config_display_clients[];
 extern regex_t *relay_config_regex_allowed_ips;
+extern struct t_relay_network_cidr *relay_config_allowed_networks;
+extern int relay_config_num_allowed_networks;
 extern regex_t *relay_config_regex_websocket_allowed_origins;
 extern struct t_hashtable *relay_config_hashtable_irc_backlog_tags;
 extern char **relay_config_network_password_hash_algo_list;

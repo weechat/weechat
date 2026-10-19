@@ -271,6 +271,7 @@ int
 integer
 interval
 invite-notify
+ips
 irc
 ison
 iterations
@@ -352,6 +353,7 @@ names
 ncurses
 near
 network
+networks
 newbuffer
 newline
 next

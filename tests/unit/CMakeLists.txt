@@ -170,6 +170,7 @@ if (ENABLE_RELAY)
     plugins/relay/test-relay-client.cpp
     plugins/relay/test-relay-http.cpp
     plugins/relay/test-relay-json.cpp
+    plugins/relay/test-relay-network.cpp
     plugins/relay/test-relay-raw.cpp
     plugins/relay/test-relay-remote.cpp
     plugins/relay/test-relay-websocket.cpp

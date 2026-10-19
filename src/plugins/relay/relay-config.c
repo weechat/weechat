@@ -62,6 +62,7 @@ struct t_config_option *relay_config_color_text_selected = NULL;
 
 struct t_config_option *relay_config_network_allow_empty_password = NULL;
 struct t_config_option *relay_config_network_allowed_ips = NULL;
+struct t_config_option *relay_config_network_allowed_networks = NULL;
 struct t_config_option *relay_config_network_auth_timeout = NULL;
 struct t_config_option *relay_config_network_bind_address = NULL;
 struct t_config_option *relay_config_network_clients_purge_delay = NULL;
@@ -104,6 +105,8 @@ struct t_config_option *relay_config_api_remote_input_cmd_remote = NULL;
 int relay_config_auto_open_buffer[RELAY_NUM_PROTOCOLS];
 int relay_config_display_clients[RELAY_NUM_PROTOCOLS];
 regex_t *relay_config_regex_allowed_ips = NULL;
+struct t_relay_network_cidr *relay_config_allowed_networks = NULL;
+int relay_config_num_allowed_networks = 0;
 regex_t *relay_config_regex_websocket_allowed_origins = NULL;
 struct t_hashtable *relay_config_hashtable_irc_backlog_tags = NULL;
 char **relay_config_network_password_hash_algo_list = NULL;
@@ -252,6 +255,105 @@ relay_config_change_network_allowed_ips (const void *pointer, void *data,
             }
         }
     }
+}
+
+/*
+ * Check if option "relay.network.allowed_networks" is valid.
+ *
+ * Return:
+ *   1: value is valid
+ *   0: value is not valid
+ */
+
+int
+relay_config_check_network_allowed_networks (const void *pointer, void *data,
+                                             struct t_config_option *option,
+                                             const char *value)
+{
+    struct t_relay_network_cidr cidr;
+    char **items;
+    int num_items, i, rc;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    rc = 1;
+
+    items = weechat_string_split (value, ",", " ",
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            if (!relay_network_parse_cidr (items[i], &cidr))
+            {
+                weechat_printf (NULL,
+                                _("%s%s: invalid network: \"%s\""),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                items[i]);
+                rc = 0;
+                break;
+            }
+        }
+        weechat_string_free_split (items);
+    }
+
+    return rc;
+}
+
+/*
+ * Callback for changes on option "relay.network.allowed_networks".
+ */
+
+void
+relay_config_change_network_allowed_networks (const void *pointer, void *data,
+                                              struct t_config_option *option)
+{
+    char **items;
+    int num_items, i;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    free (relay_config_allowed_networks);
+    relay_config_allowed_networks = NULL;
+    relay_config_num_allowed_networks = 0;
+
+    items = weechat_string_split (
+        weechat_config_string (relay_config_network_allowed_networks),
+        ",",
+        " ",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_items);
+    if (!items)
+        return;
+
+    relay_config_allowed_networks = malloc (
+        num_items * sizeof (*relay_config_allowed_networks));
+    if (relay_config_allowed_networks)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            if (relay_network_parse_cidr (
+                    items[i],
+                    &relay_config_allowed_networks[relay_config_num_allowed_networks]))
+            {
+                relay_config_num_allowed_networks++;
+            }
+        }
+    }
+
+    weechat_string_free_split (items);
 }
 
 /*
@@ -1620,10 +1722,28 @@ relay_config_init (void)
                "(case-insensitive, use \"(?-i)\" at beginning to make it "
                "case-sensitive), example: "
                "\"^(123\\.45\\.67\\.89|192\\.160\\..*)$\"; "
-               "this option is ignored for relays on UNIX domain sockets"),
+               "option relay.network.allowed_networks is recommended instead "
+               "(networks in CIDR notation); if both options are set, the IP "
+               "must match both; this option is ignored for relays on UNIX "
+               "domain sockets"),
             NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL,
             &relay_config_change_network_allowed_ips, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_network_allowed_networks = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "allowed_networks", "string",
+            N_("comma-separated list of networks allowed to use relay, in "
+               "CIDR notation (IPv4 or IPv6 address, optionally followed by "
+               "\"/\" and prefix length; without prefix length, only this "
+               "address is allowed), example: "
+               "\"127.0.0.1,192.168.1.0/24,2001:db8::/32\"; if option "
+               "relay.network.allowed_ips is also set, the IP must match both; "
+               "empty value allows all IPs; this option is ignored for relays "
+               "on UNIX domain sockets"),
+            NULL, 0, 0, "", NULL, 0,
+            &relay_config_check_network_allowed_networks, NULL, NULL,
+            &relay_config_change_network_allowed_networks, NULL, NULL,
             NULL, NULL, NULL);
         relay_config_network_auth_timeout = weechat_config_new_option (
             relay_config_file, relay_config_section_network,
@@ -1988,6 +2108,7 @@ relay_config_read (void)
         relay_config_change_auto_open_buffer_cb (NULL, NULL, NULL);
         relay_config_change_display_clients_cb (NULL, NULL, NULL);
         relay_config_change_network_allowed_ips (NULL, NULL, NULL);
+        relay_config_change_network_allowed_networks (NULL, NULL, NULL);
         relay_config_change_network_password_hash_algo (NULL, NULL, NULL);
         relay_config_change_irc_backlog_tags (NULL, NULL, NULL);
         relay_config_use_temp_remotes ();
@@ -2021,6 +2142,10 @@ relay_config_free (void)
         free (relay_config_regex_allowed_ips);
         relay_config_regex_allowed_ips = NULL;
     }
+
+    free (relay_config_allowed_networks);
+    relay_config_allowed_networks = NULL;
+    relay_config_num_allowed_networks = 0;
 
     if (relay_config_regex_websocket_allowed_origins)
     {
