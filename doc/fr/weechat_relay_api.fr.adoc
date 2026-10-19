@@ -1613,11 +1613,30 @@ Paramètres du corps :
 * `input` (booléen, facultatif, par défaut : `true`) : `true` pour synchroniser
   l'entrée de tampon depuis le relai distant vers le client local (utilisé
   seulement si `sync` vaut `true`)
+* `notify_only` (booléen, facultatif, par défaut : `false`) : `true` pour
+  recevoir seulement les nouvelles lignes avec un highlight ou un message privé
+  (niveau de notification supérieur ou égal à 2) et les évènements `upgrade`,
+  `upgrade_ended` et `quit`, tous les autres évènements ne sont pas envoyés et
+  les paramètres `nicks` et `input` sont ignorés (utilisé seulement si `sync`
+  vaut `true`) ; ceci est utile pour un client mobile en arrière-plan
 * `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
   des couleurs sont retournées :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+
+Chaque requête réinitialise tous les paramètres à leur valeur par défaut avant
+d'appliquer le corps, donc le client doit envoyer de nouveau tous les paramètres
+qui n'ont pas la valeur par défaut.
+Cette ressource peut être envoyée plusieurs fois pour changer les paramètres,
+par exemple pour activer ou désactiver `notify_only`.
+
+Lorsque `notify_only` vaut `true`, la ligne reçue peut être dans un tampon
+inconnu du client (par exemple un nouveau tampon privé) : le tampon peut être
+récupéré avec la ressource <<resource_buffers,buffers>>, en utilisant
+l'identifiant du tampon. +
+Lorsque le client se synchronise de nouveau sans `notify_only`, il doit
+récupérer à nouveau les tampons, car les évènements non envoyés sont perdus.
 
 Exemple de requête avec le protocole websocket :
 
@@ -1912,6 +1931,11 @@ Les messages envoyés au client ont les champs suivants :
 * `event_name` (chaîne) : le nom de l'évènement (nom du signal ou hsignal)
 * `buffer_id` (entier) : l'identifiant unique du tampon, défini seulement pour
   les sous-objets, -1 dans les autres cas
+
+Lorsque `notify_only` vaut `true` dans la ressource <<resource_sync,sync>>,
+seulement les évènements `buffer_line_added` (seulement les lignes avec un
+highlight ou un message privé), `upgrade`, `upgrade_ended` et `quit` sont
+envoyés.
 
 Les évènements suivants sont envoyés au client, selon les options de synchronisation :
 

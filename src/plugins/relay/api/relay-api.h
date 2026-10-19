@@ -53,6 +53,8 @@ struct t_relay_api_data
     int sync_nicks;                       /* 1 if nicks are synchronized    */
     int sync_input;                       /* 1 if input is synchronized     */
                                           /* (WeeChat -> client)            */
+    int sync_notify_only;                 /* 1 to sync only highlights and  */
+                                          /* private messages               */
     enum t_relay_api_colors sync_colors;  /* colors to send with sync       */
 };
 

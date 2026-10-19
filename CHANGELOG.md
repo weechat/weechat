@@ -30,6 +30,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: add field "all_prefixes" (all prefixes of nick, from higher to lower) in hdata and infolist "irc_nick"
 - irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
 - javascript, php, tcl: add `eval` option in script commands and info "xxx_eval" ([#128](https://github.com/weechat/weechat/issues/128))
+- relay/api: add option "notify_only" in resource `POST /api/sync` to receive only highlights and private messages ([#2363](https://github.com/weechat/weechat/issues/2363))
 - relay/api: add resource `GET /api/options`
 
 ### Changed

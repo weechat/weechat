@@ -1612,11 +1612,27 @@ POST /api/sync
   ажурирања надимака у баферима (користи се само ако је `sync` `true`)
 * `input` (логичка, није обавезно, подразумевано: `true`): `true` да се синхронизује улаз
   бафера са удаљеног релеја на локални клијент (користи се само ако је `sync` `true`)
+* `notify_only` (логичка, није обавезно, подразумевано: `false`): `true` to receive only
+  new lines with a highlight or a private message (notify level greater than or
+  equal to 2) and the events `upgrade`, `upgrade_ended` and `quit`, all other
+  events are not sent and parameters `nicks` and `input` are ignored (used only
+  if `sync` is `true`); this is useful for a mobile client in background
 * `colors` (стринг, није обавезно, подразумевано: `ansi`): како се враћају стрингови са
   кодовома боје (користи се само ако је `sync` `true`):
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје
 ** `strip`: уклањају се боје
+
+Each request resets all parameters to their default value before applying the
+body, so the client must send again all parameters with a non-default value.
+This resource can be sent multiple times to change the parameters, for example
+to enable or disable `notify_only`.
+
+When `notify_only` is `true`, the line received may be in a buffer unknown by
+the client (for example a new private buffer): the buffer can be retrieved with
+the resource <<resource_buffers,buffers>>, using the buffer id. +
+When the client synchronizes again without `notify_only`, it must fetch the
+buffers again, because the events not sent are lost.
 
 Пример захтева са websocket протоколом:
 
@@ -1903,6 +1919,10 @@ WeeChat гура податке клијенту у било које време
 * `event_name` (стринг): име догађаја (име сигнала or hsignal)
 * `buffer_id` (цео број): јединствени идентификатор бафера, поставља се само за под-објекте,
   -1 у осталим случајевима
+
+When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
+`buffer_line_added` (only lines with a highlight or a private message), `upgrade`,
+`upgrade_ended` and `quit` are sent.
 
 Клијенту се шаљу следећи догађаји, у сагласности са опцијама синхронизације:
 

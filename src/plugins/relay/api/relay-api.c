@@ -53,6 +53,13 @@ relay_api_search_colors (const char *colors)
 
 /*
  * Hook signals for a client.
+ *
+ * If "sync_notify_only" is set, only signals "buffer_line_added", "upgrade*"
+ * and "quit" are hooked.
+ *
+ * Note: the hook on signals "buffer_*" is not changed if it already exists,
+ * so relay_api_unhook_signals must be called before this function when
+ * "sync_notify_only" is changed.
  */
 
 void
@@ -61,11 +68,13 @@ relay_api_hook_signals (struct t_relay_client *client)
     if (!RELAY_API_DATA(client, hook_signal_buffer))
     {
         RELAY_API_DATA(client, hook_signal_buffer) =
-            weechat_hook_signal ("buffer_*",
+            weechat_hook_signal ((RELAY_API_DATA(client, sync_notify_only)) ?
+                                 "buffer_line_added" : "buffer_*",
                                  &relay_api_protocol_signal_buffer_cb,
                                  client, NULL);
     }
-    if (RELAY_API_DATA(client, sync_nicks))
+    if (RELAY_API_DATA(client, sync_nicks)
+        && !RELAY_API_DATA(client, sync_notify_only))
     {
         if (!RELAY_API_DATA(client, hook_hsignal_nicklist))
         {
@@ -83,7 +92,8 @@ relay_api_hook_signals (struct t_relay_client *client)
             RELAY_API_DATA(client, hook_hsignal_nicklist) = NULL;
         }
     }
-    if (RELAY_API_DATA(client, sync_input))
+    if (RELAY_API_DATA(client, sync_input)
+        && !RELAY_API_DATA(client, sync_notify_only))
     {
         if (!RELAY_API_DATA(client, hook_signal_input))
         {
@@ -110,12 +120,23 @@ relay_api_hook_signals (struct t_relay_client *client)
                                  &relay_api_protocol_signal_upgrade_cb,
                                  client, NULL);
     }
-    if (!RELAY_API_DATA(client, hook_signal_day_changed))
+    if (!RELAY_API_DATA(client, sync_notify_only))
     {
-        RELAY_API_DATA(client, hook_signal_day_changed) =
-            weechat_hook_signal ("day_changed",
-                                 &relay_api_protocol_signal_day_changed_cb,
-                                 client, NULL);
+        if (!RELAY_API_DATA(client, hook_signal_day_changed))
+        {
+            RELAY_API_DATA(client, hook_signal_day_changed) =
+                weechat_hook_signal ("day_changed",
+                                     &relay_api_protocol_signal_day_changed_cb,
+                                     client, NULL);
+        }
+    }
+    else
+    {
+        if (RELAY_API_DATA(client, hook_signal_day_changed))
+        {
+            weechat_unhook (RELAY_API_DATA(client, hook_signal_day_changed));
+            RELAY_API_DATA(client, hook_signal_day_changed) = NULL;
+        }
     }
 }
 
@@ -215,6 +236,7 @@ relay_api_alloc (struct t_relay_client *client)
     RELAY_API_DATA(client, sync_enabled) = 0;
     RELAY_API_DATA(client, sync_nicks) = 0;
     RELAY_API_DATA(client, sync_input) = 0;
+    RELAY_API_DATA(client, sync_notify_only) = 0;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
 }
 
@@ -249,6 +271,8 @@ relay_api_alloc_with_infolist (struct t_relay_client *client,
         infolist, "sync_nicks");
     RELAY_API_DATA(client, sync_input) = weechat_infolist_integer (
         infolist, "sync_input");
+    RELAY_API_DATA(client, sync_notify_only) = weechat_infolist_integer (
+        infolist, "sync_notify_only");
     RELAY_API_DATA(client, sync_colors) = weechat_infolist_integer (
         infolist, "sync_colors");
 
@@ -337,6 +361,8 @@ relay_api_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!weechat_infolist_new_var_integer (item, "sync_input", RELAY_API_DATA(client, sync_input)))
         return 0;
+    if (!weechat_infolist_new_var_integer (item, "sync_notify_only", RELAY_API_DATA(client, sync_notify_only)))
+        return 0;
     if (!weechat_infolist_new_var_integer (item, "sync_colors", RELAY_API_DATA(client, sync_colors)))
         return 0;
 
@@ -365,6 +391,7 @@ relay_api_print_log (struct t_relay_client *client)
         weechat_log_printf ("    sync_enabled. . . . . . : %d", RELAY_API_DATA(client, sync_enabled));
         weechat_log_printf ("    sync_nicks. . . . . . . : %d", RELAY_API_DATA(client, sync_nicks));
         weechat_log_printf ("    sync_input. . . . . . . : %d", RELAY_API_DATA(client, sync_input));
+        weechat_log_printf ("    sync_notify_only. . . . : %d", RELAY_API_DATA(client, sync_notify_only));
         weechat_log_printf ("    sync_colors . . . . . . : %d", RELAY_API_DATA(client, sync_colors));
     }
 }

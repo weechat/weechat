@@ -1108,6 +1108,157 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
     LONGS_EQUAL(RELAY_API_COLORS_STRIP, RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_notify_only));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_buffer));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_hsignal_nicklist));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_input));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_upgrade));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_day_changed));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"notify_only\": true}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "{\"notify_only\":true}", "null");
+
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_notify_only));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_buffer));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_hsignal_nicklist));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_input));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_upgrade));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_day_changed));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_notify_only));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_buffer));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_hsignal_nicklist));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_input));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_upgrade));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_day_changed));
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_signal_buffer_cb (with "notify_only")
+ */
+
+TEST(RelayApiProtocolWithClient, SignalBufferCbNotifyOnly)
+{
+    struct t_gui_buffer *buffer;
+    struct t_relay_json *json, *json_obj;
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"notify_only\": true}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "{\"notify_only\":true}", "null");
+
+    /* No event sent for a new buffer. */
+    free_data_sent ();
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* No event sent for lines with notify level lower than "private". */
+    free_data_sent ();
+    gui_chat_printf_date_tags (buffer, 0, "notify_none", "test none");
+    gui_chat_printf_date_tags (buffer, 0, NULL, "test low");
+    gui_chat_printf_date_tags (buffer, 0, "notify_message", "test message");
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* Event sent for a private message. */
+    free_data_sent ();
+    gui_chat_printf_date_tags (buffer, 0, "notify_private", "test private");
+    CHECK(data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_line_added", json, "event_name");
+    WEE_CHECK_OBJ_NUM(buffer->id, json, "buffer_id");
+    WEE_CHECK_OBJ_STR("line", json, "body_type");
+    WEE_CHECK_OBJ_NUM(2, relay_json_object_get (json, "body"), "notify_level");
+    WEE_CHECK_OBJ_STR("test private", relay_json_object_get (json, "body"), "message");
+    relay_json_free (json);
+
+    /* Event sent for a highlight. */
+    free_data_sent ();
+    gui_chat_printf_date_tags (buffer, 0, "notify_highlight", "test highlight");
+    CHECK(data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_line_added", json, "event_name");
+    WEE_CHECK_OBJ_NUM(3, relay_json_object_get (json, "body"), "notify_level");
+    WEE_CHECK_OBJ_STR("test highlight", relay_json_object_get (json, "body"), "message");
+    relay_json_free (json);
+
+    /* No event sent for other signals. */
+    free_data_sent ();
+    gui_buffer_set (buffer, "title", "new title");
+    (void) hook_signal_send ("day_changed",
+                             WEECHAT_HOOK_SIGNAL_STRING, (void *)"2026-10-05");
+    gui_buffer_close (buffer);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /*
+     * Events "upgrade*" and "quit" are sent (signal "quit" is not sent
+     * because it would have side effects in irc plugin).
+     */
+    free_data_sent ();
+    (void) hook_signal_send ("upgrade_ended", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    STRCMP_EQUAL("{\"code\":0,"
+                 "\"message\":\"Event\","
+                 "\"event_name\":\"upgrade_ended\","
+                 "\"buffer_id\":-1,"
+                 "\"body_type\":null,"
+                 "\"body\":null}",
+                 data_sent[0]);
+
+    /* All events are sent again after a sync without "notify_only". */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+    free_data_sent ();
+    gui_chat_printf_date_tags (buffer, 0, NULL, "test low");
+    CHECK(data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_line_added", json, "event_name");
+    WEE_CHECK_OBJ_NUM(0, relay_json_object_get (json, "body"), "notify_level");
+    WEE_CHECK_OBJ_STR("test low", relay_json_object_get (json, "body"), "message");
+    relay_json_free (json);
+    free_data_sent ();
+    (void) hook_signal_send ("day_changed",
+                             WEECHAT_HOOK_SIGNAL_STRING, (void *)"2026-10-05");
+    STRCMP_EQUAL("{\"code\":0,"
+                 "\"message\":\"Event\","
+                 "\"event_name\":\"day_changed\","
+                 "\"buffer_id\":-1,"
+                 "\"body_type\":null,"
+                 "\"body\":null}",
+                 data_sent[0]);
+
+    /* Close the buffer with "notify_only" (no event sent). */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"notify_only\": true}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "{\"notify_only\":true}", "null");
+    free_data_sent ();
+    gui_buffer_close (buffer);
+    POINTERS_EQUAL(NULL, data_sent[0]);
 }
 
 /*

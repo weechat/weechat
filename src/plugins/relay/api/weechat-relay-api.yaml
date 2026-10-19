@@ -847,6 +847,15 @@ paths:
                   type: boolean
                   description: Receive input changes in buffers (content and cursor position)
                   example: true
+                notify_only:
+                  type: boolean
+                  default: false
+                  description: |
+                    Receive only new lines with highlight or private message
+                    (notify level >= 2), and events `upgrade`, `upgrade_ended`
+                    and `quit`; all other events are not sent, and options
+                    `nicks` and `input` are ignored
+                  example: false
                 colors:
                   type: string
                   enum:

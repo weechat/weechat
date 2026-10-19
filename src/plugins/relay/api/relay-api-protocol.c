@@ -173,6 +173,17 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
             return WEECHAT_RC_OK;
 
+        /*
+         * If "notify_only" is set, send only lines with notify level
+         * private message (2) or highlight (3).
+         */
+        if (RELAY_API_DATA(ptr_client, sync_notify_only)
+            && (weechat_hdata_char (relay_hdata_line_data, ptr_line_data,
+                                    "notify_level") < 2))
+        {
+            return WEECHAT_RC_OK;
+        }
+
         json = relay_api_msg_line_data_to_json (
             ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
@@ -1204,7 +1215,7 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
 RELAY_API_PROTOCOL_CALLBACK(sync)
 {
     struct t_relay_json *json_body, *json_sync, *json_nicks, *json_input;
-    struct t_relay_json *json_colors;
+    struct t_relay_json *json_notify_only, *json_colors;
 
     if (client->websocket != RELAY_CLIENT_WEBSOCKET_READY)
     {
@@ -1219,6 +1230,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     RELAY_API_DATA(client, sync_enabled) = 1;
     RELAY_API_DATA(client, sync_nicks) = 1;
     RELAY_API_DATA(client, sync_input) = 1;
+    RELAY_API_DATA(client, sync_notify_only) = 0;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
 
     json_body = relay_json_parse (client->http_req->body);
@@ -1233,6 +1245,9 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
         json_input = relay_json_object_get (json_body, "input");
         if (relay_json_is_bool (json_input))
             RELAY_API_DATA(client, sync_input) = (relay_json_is_true (json_input)) ? 1 : 0;
+        json_notify_only = relay_json_object_get (json_body, "notify_only");
+        if (relay_json_is_bool (json_notify_only))
+            RELAY_API_DATA(client, sync_notify_only) = (relay_json_is_true (json_notify_only)) ? 1 : 0;
         json_colors = relay_json_object_get (json_body, "colors");
         if (relay_json_is_string (json_colors))
         {
@@ -1243,10 +1258,10 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
         }
     }
 
+    /* Hooks are created again because they depend on "notify_only". */
+    relay_api_unhook_signals (client);
     if (RELAY_API_DATA(client, sync_enabled))
         relay_api_hook_signals (client);
-    else
-        relay_api_unhook_signals (client);
 
     relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
 

@@ -1594,11 +1594,27 @@ Body parameters:
   in buffers (used only if `sync` is `true`)
 * `input` (boolean, optional, default: `true`): `true` to synchronize buffer input
   from remote relay to local client (used only if `sync` is `true`)
+* `notify_only` (boolean, optional, default: `false`): `true` to receive only
+  new lines with a highlight or a private message (notify level greater than or
+  equal to 2) and the events `upgrade`, `upgrade_ended` and `quit`, all other
+  events are not sent and parameters `nicks` and `input` are ignored (used only
+  if `sync` is `true`); this is useful for a mobile client in background
 * `colors` (string, optional, default: `ansi`): how to return strings with
   color codes (used only if `sync` is `true`):
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+
+Each request resets all parameters to their default value before applying the
+body, so the client must send again all parameters with a non-default value.
+This resource can be sent multiple times to change the parameters, for example
+to enable or disable `notify_only`.
+
+When `notify_only` is `true`, the line received may be in a buffer unknown by
+the client (for example a new private buffer): the buffer can be retrieved with
+the resource <<resource_buffers,buffers>>, using the buffer id. +
+When the client synchronizes again without `notify_only`, it must fetch the
+buffers again, because the events not sent are lost.
 
 Request example with websocket protocol:
 
@@ -1886,6 +1902,10 @@ The messages sent to client have the following fields:
 * `event_name` (string): the event name (name of signal or hsignal)
 * `buffer_id` (integer): the buffer unique identifier, set only for sub-objects,
   -1 in other cases
+
+When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
+`buffer_line_added` (only lines with a highlight or a private message), `upgrade`,
+`upgrade_ended` and `quit` are sent.
 
 The following events are sent to the client, according to synchronization options:
 
