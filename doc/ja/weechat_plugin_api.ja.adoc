@@ -1746,7 +1746,7 @@ else
 [source,c]
 ----
 int weechat_string_has_highlight (const char *string,
-                                  const char highlight_words);
+                                  const char *highlight_words);
 ----
 
 引数:
@@ -2180,7 +2180,7 @@ first/last string to use.
 
 [source,c]
 ----
-char *weechat_string_rebuild_split_string (char **split_string,
+char *weechat_string_rebuild_split_string (const char **split_string,
                                            const char *separator,
                                            int index_start, int index_end);
 ----
@@ -4450,8 +4450,9 @@ Compute keyed-hash message authentication code (HMAC).
 
 [source,c]
 ----
-int weechat_crypto_hmac (const void *key, int key_size, const void *message, int message_size,
-                         int hash_algo, void *hash, int *hash_size);
+int weechat_crypto_hmac (const void *key, int key_size,
+                         const void *message, int message_size,
+                         const char *hash_algo, void *hash, int *hash_size);
 ----
 
 引数:
@@ -5788,7 +5789,7 @@ weechat_printf (NULL, "user data of item: %p", weechat_list_user_data (item));
 
 [source,c]
 ----
-char *weechat_list_size (struct t_weelist *weelist);
+int weechat_list_size (struct t_weelist *weelist);
 ----
 
 引数:
@@ -6009,7 +6010,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 [source,c]
 ----
-int weechat_list_size (struct t_arraylist *arraylist);
+int weechat_arraylist_size (struct t_arraylist *arraylist);
 ----
 
 引数:
@@ -6423,7 +6424,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 
 [source,c]
 ----
-void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
+void *weechat_hashtable_get (struct t_hashtable *hashtable, const void *key);
 ----
 
 引数:
@@ -6455,7 +6456,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 [source,c]
 ----
-int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
+int weechat_hashtable_has_key (struct t_hashtable *hashtable, const void *key);
 ----
 
 引数:
@@ -6671,7 +6672,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 [source,c]
 ----
 int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
-                                   void *property);
+                                   const char *property);
 ----
 
 引数:
@@ -9206,14 +9207,18 @@ sasl_fail = weechat.config_enum_inherited(option)
 
 [source,c]
 ----
-void weechat_config_write_option (struct t_config_file *config_file,
-                                  struct t_config_option *option);
+int weechat_config_write_option (struct t_config_file *config_file,
+                                 struct t_config_option *option);
 ----
 
 引数:
 
 * _config_file_: 設定ファイルへのポインタ
 * _option_: オプションへのポインタ
+
+戻り値:
+
+* 1 if OK, 0 if error
 
 C 言語での使用例:
 
@@ -9255,9 +9260,9 @@ def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
 
 [source,c]
 ----
-void weechat_config_write_line (struct t_config_file *config_file,
-                                const char *option_name,
-                                const char *value, ...);
+int weechat_config_write_line (struct t_config_file *config_file,
+                               const char *option_name,
+                               const char *value, ...);
 ----
 
 引数:
@@ -9266,6 +9271,10 @@ void weechat_config_write_line (struct t_config_file *config_file,
 * _option_name_: オプション名
 * _value_: 値 (NULL の場合、セクション名の行を書き込みます。例:
   "[section]")
+
+戻り値:
+
+* 1 if OK, 0 if error
 
 C 言語での使用例:
 
@@ -15670,8 +15679,8 @@ weechat.prnt("", "name / short name of buffer are: %s / %s"
 
 [source,c]
 ----
-void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
-                              const char *property);
+void *weechat_buffer_get_pointer (struct t_gui_buffer *buffer,
+                                  const char *property);
 ----
 
 引数:
@@ -18009,9 +18018,9 @@ Set a completion property.
 
 [source,c]
 ----
-void weechat_completion_get_string (struct t_gui_completion *completion,
-                                    const char *property,
-                                    const char *value);
+void weechat_completion_set (struct t_gui_completion *completion,
+                             const char *property,
+                             const char *value);
 ----
 
 引数:

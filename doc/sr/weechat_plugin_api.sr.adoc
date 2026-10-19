@@ -1633,7 +1633,7 @@ else
 [source,c]
 ----
 int weechat_string_has_highlight (const char *string,
-                                  const char highlight_words);
+                                  const char *highlight_words);
 ----
 
 Аргументи:
@@ -2040,7 +2040,7 @@ _Ажурирано у верзији 3.7._
 
 [source,c]
 ----
-char *weechat_string_rebuild_split_string (char **split_string,
+char *weechat_string_rebuild_split_string (const char **split_string,
                                            const char *separator,
                                            int index_start, int index_end);
 ----
@@ -4184,8 +4184,9 @@ _WeeChat ≥ 3.2._
 
 [source,c]
 ----
-int weechat_crypto_hmac (const void *key, int key_size, const void *message, int message_size,
-                         int hash_algo, void *hash, int *hash_size);
+int weechat_crypto_hmac (const void *key, int key_size,
+                         const void *message, int message_size,
+                         const char *hash_algo, void *hash, int *hash_size);
 ----
 
 Аргументи:
@@ -5503,7 +5504,7 @@ weechat_printf (NULL, "кориснички подаци ставке: %p", weec
 
 [source,c]
 ----
-char *weechat_list_size (struct t_weelist *weelist);
+int weechat_list_size (struct t_weelist *weelist);
 ----
 
 Аргументи:
@@ -5722,7 +5723,7 @@ _WeeChat ≥ 1.8._
 
 [source,c]
 ----
-int weechat_list_size (struct t_arraylist *arraylist);
+int weechat_arraylist_size (struct t_arraylist *arraylist);
 ----
 
 Аргументи:
@@ -6124,7 +6125,7 @@ _WeeChat ≥ 0.3.3._
 
 [source,c]
 ----
-void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
+void *weechat_hashtable_get (struct t_hashtable *hashtable, const void *key);
 ----
 
 Аргументи:
@@ -6156,7 +6157,7 @@ _WeeChat ≥ 0.3.4._
 
 [source,c]
 ----
-int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
+int weechat_hashtable_has_key (struct t_hashtable *hashtable, const void *key);
 ----
 
 Аргументи:
@@ -6369,7 +6370,7 @@ _WeeChat ≥ 0.3.3._
 [source,c]
 ----
 int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
-                                   void *property);
+                                   const char *property);
 ----
 
 Аргументи:
@@ -8811,14 +8812,18 @@ sasl_fail = weechat.config_enum_inherited(option)
 
 [source,c]
 ----
-void weechat_config_write_option (struct t_config_file *config_file,
-                                  struct t_config_option *option);
+int weechat_config_write_option (struct t_config_file *config_file,
+                                 struct t_config_option *option);
 ----
 
 Аргументи:
 
 * _config_file_: показивач на конфигурациони фајл
 * _option_: показивач на опцију
+
+Повратна вредност:
+
+* 1 ако је све OK, 0 у случају грешке
 
 C пример:
 
@@ -8859,9 +8864,9 @@ def my_section_write_cb(data: str, config_file: str, section_name: str) -> int:
 
 [source,c]
 ----
-void weechat_config_write_line (struct t_config_file *config_file,
-                                const char *option_name,
-                                const char *value, ...);
+int weechat_config_write_line (struct t_config_file *config_file,
+                               const char *option_name,
+                               const char *value, ...);
 ----
 
 Аргументи:
@@ -8869,6 +8874,10 @@ void weechat_config_write_line (struct t_config_file *config_file,
 * _config_file_: показивач на конфигурациони фајл
 * _option_name_: име опције
 * _value_: вредност (ако је NULL, онда се уписује линија са именом одељка, на пример: "[section]")
+
+Повратна вредност:
+
+* 1 ако је све OK, 0 у случају грешке
 
 C пример:
 
@@ -14890,8 +14899,8 @@ weechat.prnt("", "име / кратко име бафера су: %s / %s"
 
 [source,c]
 ----
-void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
-                              const char *property);
+void *weechat_buffer_get_pointer (struct t_gui_buffer *buffer,
+                                  const char *property);
 ----
 
 Аргументи:
@@ -17149,9 +17158,9 @@ _WeeChat ≥ 4.6.0._
 
 [source,c]
 ----
-void weechat_completion_get_string (struct t_gui_completion *completion,
-                                    const char *property,
-                                    const char *value);
+void weechat_completion_set (struct t_gui_completion *completion,
+                             const char *property,
+                             const char *value);
 ----
 
 Аргументи:

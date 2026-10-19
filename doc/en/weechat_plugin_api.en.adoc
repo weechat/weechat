@@ -1688,7 +1688,7 @@ Prototype:
 [source,c]
 ----
 int weechat_string_has_highlight (const char *string,
-                                  const char highlight_words);
+                                  const char *highlight_words);
 ----
 
 Arguments:
@@ -2117,7 +2117,7 @@ Prototype:
 
 [source,c]
 ----
-char *weechat_string_rebuild_split_string (char **split_string,
+char *weechat_string_rebuild_split_string (const char **split_string,
                                            const char *separator,
                                            int index_start, int index_end);
 ----
@@ -4318,8 +4318,9 @@ Prototype:
 
 [source,c]
 ----
-int weechat_crypto_hmac (const void *key, int key_size, const void *message, int message_size,
-                         int hash_algo, void *hash, int *hash_size);
+int weechat_crypto_hmac (const void *key, int key_size,
+                         const void *message, int message_size,
+                         const char *hash_algo, void *hash, int *hash_size);
 ----
 
 Arguments:
@@ -5643,7 +5644,7 @@ Prototype:
 
 [source,c]
 ----
-char *weechat_list_size (struct t_weelist *weelist);
+int weechat_list_size (struct t_weelist *weelist);
 ----
 
 Arguments:
@@ -5864,7 +5865,7 @@ Prototype:
 
 [source,c]
 ----
-int weechat_list_size (struct t_arraylist *arraylist);
+int weechat_arraylist_size (struct t_arraylist *arraylist);
 ----
 
 Arguments:
@@ -6278,7 +6279,7 @@ Prototype:
 
 [source,c]
 ----
-void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
+void *weechat_hashtable_get (struct t_hashtable *hashtable, const void *key);
 ----
 
 Arguments:
@@ -6310,7 +6311,7 @@ Prototype:
 
 [source,c]
 ----
-int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
+int weechat_hashtable_has_key (struct t_hashtable *hashtable, const void *key);
 ----
 
 Arguments:
@@ -6522,7 +6523,7 @@ Prototype:
 [source,c]
 ----
 int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
-                                   void *property);
+                                   const char *property);
 ----
 
 Arguments:
@@ -9034,14 +9035,18 @@ Prototype:
 
 [source,c]
 ----
-void weechat_config_write_option (struct t_config_file *config_file,
-                                  struct t_config_option *option);
+int weechat_config_write_option (struct t_config_file *config_file,
+                                 struct t_config_option *option);
 ----
 
 Arguments:
 
 * _config_file_: configuration file pointer
 * _option_: option pointer
+
+Return value:
+
+* 1 if OK, 0 if error
 
 C example:
 
@@ -9083,9 +9088,9 @@ Prototype:
 
 [source,c]
 ----
-void weechat_config_write_line (struct t_config_file *config_file,
-                                const char *option_name,
-                                const char *value, ...);
+int weechat_config_write_line (struct t_config_file *config_file,
+                               const char *option_name,
+                               const char *value, ...);
 ----
 
 Arguments:
@@ -9094,6 +9099,10 @@ Arguments:
 * _option_name_: option name
 * _value_: value (if NULL, then line with section name is written, for
   example: "[section]")
+
+Return value:
+
+* 1 if OK, 0 if error
 
 C example:
 
@@ -15349,8 +15358,8 @@ Prototype:
 
 [source,c]
 ----
-void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
-                              const char *property);
+void *weechat_buffer_get_pointer (struct t_gui_buffer *buffer,
+                                  const char *property);
 ----
 
 Arguments:
@@ -17645,9 +17654,9 @@ Prototype:
 
 [source,c]
 ----
-void weechat_completion_get_string (struct t_gui_completion *completion,
-                                    const char *property,
-                                    const char *value);
+void weechat_completion_set (struct t_gui_completion *completion,
+                             const char *property,
+                             const char *value);
 ----
 
 Arguments:
