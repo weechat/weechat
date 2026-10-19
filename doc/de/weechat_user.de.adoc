@@ -100,9 +100,8 @@ WeeChat muss mit CMake erstellt werden.
 Unter macOS kann https://brew.sh/[Homebrew ^↗^^] verwendet werden:
 `brew install --build-from-source weechat`.
 
-// TRANSLATION MISSING
 [[dependencies]]
-==== Required dependencies
+==== Erforderliche Abhängigkeiten
 
 Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von WeeChat
 *erforderlich* sind:
@@ -146,9 +145,8 @@ Version und Name können in anderen Distributionen anders lauten. +
 ^(2)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen.
 
-// TRANSLATION MISSING
 [[optional_dependencies]]
-==== Optional dependencies
+==== Optionale Abhängigkeiten
 
 Die folgende Tabelle zeigt die Liste der Pakete, die zum Kompilieren von
 WeeChat optional sind:
@@ -1868,19 +1866,20 @@ oder einfache Anführungszeichen gesetzt werden; diese werden beim Parsen entfer
 die nicht über ein Theme angepasst werden können, aber dennoch in einer Theme-Datei aufgeführt
 sind, werden beim Anwenden abgelehnt und im Core-Buffer protokolliert.
 
-// TRANSLATION MISSING
 [WARNING]
-Do not apply a theme file from an untrusted source without reviewing it
-first: many themable options are evaluated (see `/help eval`), and an
-evaluated expression can execute code, for example with
-`+${info:python_eval,...}+`. A theme file must be trusted like a script.
+Verwenden Sie keine Themendatei aus einer nicht vertrauenswürdigen Quelle,
+ohne sie zuvor zu überprüfen: Viele Optionen innerhalb eines Themas werden
+ausgewertet (siehe `/help eval`), und ein solcher ausgewerteter Ausdruck
+kann Code ausführen – beispielsweise mittels `+${info:python_eval,...}+`.
+Eine Themendatei sollte daher genauso wie ein Skript als vertrauenswürdig
+eingestuft werden.
 
 Benutzer-Theme-Dateien werden niemals zwischengespeichert: Bei jedem
 `/theme apply <name>` wird die Datei geparst, angewendet und wieder
 freigegeben.
 
 [[themes_resolution]]
-==== Resolution order
+==== Auflösungsreihenfolge
 
 Wenn `+/theme apply <name>+` ausgeführt wird:
 
@@ -3778,22 +3777,21 @@ Beispiele: Ausgabe von `/names`:
 -- Nicks #test: [@%+alice bob +carol]
 ....
 
-// TRANSLATION MISSING
-WeeChat displays all prefixes received when this capability is enabled,
-according to these options:
+Wenn diese Funktion aktiviert ist, zeigt WeeChat alle empfangenen Präfixe an –
+gemäß den folgenden Optionen:
 
 * <<option_irc.look.multi_prefix_in_prompt,irc.look.multi_prefix_in_prompt>>:
   input prompt
 * <<option_irc.look.multi_prefix_in_names,irc.look.multi_prefix_in_names>>:
-  output of `/names` (and list of nicks displayed when joining a channel)
+  output of `/names` (sowie eine Liste der Nicknamen, die beim Betreten eines Kanals angezeigt wird)
 * <<option_irc.look.multi_prefix_in_nicklist,irc.look.multi_prefix_in_nicklist>>:
   nicklist
 
-// TRANSLATION MISSING
 [NOTE]
-If the capability is enabled after joining channels (for example with
-`/cap req multi-prefix`), the prefixes of nicks are updated on the next
-`/names` on each channel.
+Wird die Funktion erst nach dem Beitreten zu Kanälen aktiviert (zum
+Beispiel mittels `/cap req multi-prefix`), so werden die Präfixe der
+Nicknamen beim nächsten `/names`-Befehl in den jeweiligen Kanälen
+aktualisiert.
 
 Beispiele: Ausgabe von `/whois alice`:
 
@@ -5022,14 +5020,14 @@ Für den Befehl `s` ist das Format: `s/regex/replace` oder `s/regex/replace/var`
 Da `s` der Standardbefehl ist, kann dieser weggelassen werden, also ist es auch `/regex/replace`
 gültig (aber das erste Zeichen, das das Trennzeichen ist, darf kein Buchstabe sein).
 
-// TRANSLATION MISSING
 [NOTE]
-The regular expression is a POSIX extended regular expression: the backslash
-is not an escape char inside brackets, so for example `+[^\]]+` matches any
-char except backslash, followed by `+]+`. To exclude `+]+`, it must be the first
-char inside brackets: `+[^]]+`.
-Likewise, `+[^\s]+` excludes the backslash and `s`, not whitespace:
-use `+[^[:space:]]+` instead.
+Der reguläre Ausdruck ist ein erweiterter, regulärer POSIX-Ausdruck: Innerhalb
+von eckigen Klammern fungiert der Backslash nicht als Escape-Zeichen. So
+entspricht beispielsweise `+[^\]]+` einem beliebigen Zeichen (außer einem
+Backslash), gefolgt von `+]+`. Um `+]+` auszuschließen, muss es als erstes
+Zeichen innerhalb der eckigen Klammern stehen: `+[^]]+`.
+Ebenso schließt `+[^\s]+` den Backslash und das Zeichen `s` aus – nicht etwa
+Leerzeichen. Verwenden Sie stattdessen `+[^[:space:]]+`.
 
 Zutreffende Gruppen können in _replace_ verwendet werden:
 

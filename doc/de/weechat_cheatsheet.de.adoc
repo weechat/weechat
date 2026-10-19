@@ -8,7 +8,6 @@
 :kb-user-guide: weechat_user.de
 include::includes/attributes-de.adoc[]
 
-// TRANSLATION MISSING
 Alle Tasten und Mausaktionen lassen sich mit dem Befehl <<{kb-user-guide}#command_weechat_key,/key>> anpassen.
 
 // the introduction of the user's guide is replaced by the sentence above

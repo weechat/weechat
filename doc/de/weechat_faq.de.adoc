@@ -455,26 +455,26 @@ mit dem Befehl `/color`, erstellen.
 Bitte lese link:weechat_user.de.html#colors[Benutzerhandbuch / Farben ^↗^^]
 für weitere Informationen die das Farbmanagement betreffen.
 
-// TRANSLATION MISSING
 [[italic_screen]]
-=== Why is italic text not displayed when WeeChat runs under screen?
+=== Weshalb wird kursiver Text nicht angezeigt, wenn WeeChat unter screen ausgeführt wird?
 
-WeeChat displays italic text with ncurses, which uses the capabilities of the
-terminal described by the _TERM_ variable. +
-The terminfo entries _screen_, _screen-256color_ and _screen-256color-bce_ do
-not define the italic capabilities (_sitm_ and _ritm_), so ncurses can not
-display italic text, even if the terminal supports it.
+WeeChat stellt mithilfe von ncurses kursiven Text dar; dabei werden die
+Terminal-Eigenschaften genutzt, die durch die Variable _TERM_ definiert sind. +
+Die terminfo-Einträge _screen_, _screen-256color_ und _screen-256color-bce_
+definieren die Eigenschaften für Kursivschrift (_sitm_ und _ritm_) nicht;
+daher kann ncurses keinen kursiven Text anzeigen, selbst wenn das Terminal
+dies unterstützt.
 
-You can check if italic is defined with this command (no output means no
-italic):
+Mit diesem Befehl können Sie prüfen, ob Kursivschrift definiert ist (keine Ausgabe
+bedeutet: keine Kursivschrift):
 
 [source,shell]
 ----
 infocmp -1 screen-256color | grep -E "sitm|ritm"
 ----
 
-To fix this, you can create a terminfo entry with italic, in a file called
-_screen-256color-italic.terminfo_:
+Um dies zu beheben, können Sie einen terminfo-Eintrag mit Kursivschrift in einer
+Datei namens _screen-256color-italic.terminfo_ erstellen:
 
 ----
 screen-256color-italic|GNU Screen with 256 colors and italic,
@@ -482,22 +482,22 @@ screen-256color-italic|GNU Screen with 256 colors and italic,
     use=screen-256color,
 ----
 
-Then compile it (it is installed in _~/.terminfo_), on the machine where
-WeeChat is running:
+Kompiliere Sie es anschließend (es wird unter _~/.terminfo_ installiert) auf dem
+Rechner, auf dem WeeChat läuft:
 
 [source,shell]
 ----
 tic -x screen-256color-italic.terminfo
 ----
 
-And add this line to your _~/.screenrc_:
+Fügen Sie folgende Zeile in Ihre _~/.screenrc_ Datei hinzu:
 
 ----
 term screen-256color-italic
 ----
 
-If WeeChat is already running, you can change the _TERM_ variable with these
-two commands:
+Falls WeeChat bereits läuft, können Sie die Variable _TERM_ mit diesen beiden
+Befehlen ändern:
 
 ----
 /set env TERM screen-256color-italic
@@ -505,7 +505,7 @@ two commands:
 ----
 
 [NOTE]
-Under tmux, the value _tmux-256color_ supports italic.
+Unter tmux unterstützt der Wert _tmux-256color_ Kursivschrift.
 
 [[search_text]]
 === Wie kann ich in einem Buffer nach einem Text suchen (vergleichbar /lastlog in irssi)?
