@@ -150,6 +150,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - python: fix crash when a script loads another script during its initialization
 - python: do not call sys.excepthook and do not exit WeeChat on SystemExit when an error is displayed (for example when a script calls sys.exit)
 - python: add functions config_option_get_string and config_option_get_pointer in stub (weechat.pyi) and plugin API reference
+- relay: ignore option relay.network.allowed_ips for relays on UNIX domain sockets (clients were rejected if the regular expression did not match an empty string)
 - relay/irc: add support of extra date/time specifiers like "%@" (UTC date) in option relay.irc.backlog_time_format
 - relay/irc: remove message tags not negotiated by the client in redirected messages ([#2359](https://github.com/weechat/weechat/issues/2359))
 - relay/api: fix memory leak when a message without body is sent to a client connected with websocket

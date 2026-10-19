@@ -419,7 +419,8 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
     }
 
     /* Check if IP is allowed, if not, just close socket. */
-    if (relay_config_regex_allowed_ips
+    if (!server->unix_socket
+        && relay_config_regex_allowed_ips
         && (regexec (relay_config_regex_allowed_ips, ptr_ip_address, 0, NULL, 0) != 0))
     {
         if (weechat_relay_plugin->debug >= 1)
