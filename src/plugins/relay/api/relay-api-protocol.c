@@ -96,7 +96,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         {
             /*
              * When a buffer is closed, we send the buffer id
-             * with body type "buffer" and empty body.
+             * without body (body type and body are null).
              */
             buffer_id = -1;
             ptr_buffer_id = weechat_hashtable_get (
