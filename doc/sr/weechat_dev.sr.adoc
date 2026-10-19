@@ -603,11 +603,11 @@ WeeChat „језгро” се налази у следећим директо�
 |===
 | Путања/фајл                                   | Опис
 | doc/                                          | Документација.
-|    cheatsheet.css                             | Asciidoctor стил за пушкице.
+|    cheatsheet.css                             | Asciidoctor стил за пушкице.
 |    docinfo.html                               | Asciidoctor стил.
 |    XX/                                        | Документација за језик XX (језици: en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Man страница(`man weechat`).
-|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.sr.html[Пушкице ^↗^^].
+|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.sr.html[Пушкице ^↗^^].
 |       weechat_dev.XX.adoc                     | link:weechat_dev.sr.html[Водич за програмере ^↗^^] (овај документ).
 |       weechat_faq.XX.adoc                     | link:weechat_faq.sr.html[ЧПП ^↗^^].
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.sr.html[Референца за API додатака ^↗^^].
@@ -618,7 +618,7 @@ WeeChat „језгро” се налази у следећим директо�
 |       weechat_user.XX.adoc                    | link:weechat_user.sr.html[Корисничко упутство ^↗^^].
 |       includes/                               | Фајлови укључени у документацију.
 |          cmdline_options.XX.adoc              | Опције командне линије (фајл се укључује у man странице и корисничко упутство).
-|          key_bindings.XX.adoc                 | Пречице на тастатури (фајл је укључен у корисничко упутство и пушкице).
+|          key_bindings.XX.adoc                 | Пречице на тастатури (фајл је укључен у корисничко упутство и пушкице).
 |          man.XX.adoc                          | Део man страница: опције додатака, фајлови и ауторска права.
 |===
 
