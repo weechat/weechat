@@ -1694,6 +1694,17 @@ TEST(CoreString, ReplaceWithCallback)
     WEE_REPLACE_CB("no_replace:${abc}", 0, "${no_replace:${abc}}", "${", "}",
                    1, list_prefix_no_replace,
                    &test_replace_cb, NULL, &errors);
+
+    /* Literal text with chars that start neither an escape nor a prefix. */
+    WEE_REPLACE_CB("cost $5: def$", 0, "cost $5: ${abc}$", "${", "}", 1, NULL,
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("a\\b def \\", 0, "a\\b ${abc} \\", "${", "}", 1, NULL,
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("é def ê def à", 0, "é ${abc} ê ${abc} à", "${", "}", 1, NULL,
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("[def] (def) end of text", 0,
+                   "[${abc}] (${abc}) end of text", "${", "}", 1, NULL,
+                   &test_replace_cb, NULL, &errors);
 }
 
 /*

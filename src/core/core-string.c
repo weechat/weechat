@@ -4573,7 +4573,7 @@ string_replace_with_callback (const char *string,
     int length_prefix, length_suffix, index_string;
     int sub_count, sub_level, sub_errors, replace, i;
     char **result, *key, *key2, *value, str[128];
-    const char *pos_end_name;
+    const char *pos_end_name, *ptr_start;
 
     if (errors)
         *errors = 0;
@@ -4706,9 +4706,20 @@ string_replace_with_callback (const char *string,
         }
         else
         {
-            str[0] = string[index_string++];
-            str[1] = '\0';
-            string_dyn_concat (result, str, -1);
+            /*
+             * Copy all chars until a possible escape or prefix at once (this
+             * is much faster than copying chars one by one).
+             */
+            ptr_start = string + index_string;
+            index_string++;
+            while (string[index_string]
+                   && (string[index_string] != '\\')
+                   && (string[index_string] != prefix[0]))
+            {
+                index_string++;
+            }
+            string_dyn_concat (result, ptr_start,
+                               string + index_string - ptr_start);
         }
     }
 
