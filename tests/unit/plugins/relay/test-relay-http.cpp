@@ -716,6 +716,8 @@ TEST(RelayHttp, GetAuthStatus)
     int hash_size;
 
     config_file_option_set (relay_config_network_password, good_pwd, 1);
+    config_file_option_set (relay_config_network_password_hash_iterations,
+                            "1000", 1);
 
     client = (struct t_relay_client *)calloc (1, sizeof (*client));
     CHECK(client);
@@ -860,11 +862,11 @@ TEST(RelayHttp, GetAuthStatus)
     LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (bad_pwd, strlen (bad_pwd),
                                           GCRY_MD_SHA256,
                                           salt, strlen (salt),
-                                          100000,
+                                          1000,
                                           hash, &hash_size));
     LONGS_EQUAL(64, string_base_encode ("16", hash, hash_size, hash_hexa));
     snprintf (auth, sizeof (auth),
-              "hash:pbkdf2+sha256:%ld:100000:%s",
+              "hash:pbkdf2+sha256:%ld:1000:%s",
               time_now,
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
@@ -878,11 +880,11 @@ TEST(RelayHttp, GetAuthStatus)
     LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (good_pwd, strlen (good_pwd),
                                           GCRY_MD_SHA256,
                                           salt, strlen (salt),
-                                          100000,
+                                          1000,
                                           hash, &hash_size));
     LONGS_EQUAL(64, string_base_encode ("16", hash, hash_size, hash_hexa));
     snprintf (auth, sizeof (auth),
-              "hash:pbkdf2+sha256:%ld:100000:%s",
+              "hash:pbkdf2+sha256:%ld:1000:%s",
               time_now,
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
@@ -896,11 +898,11 @@ TEST(RelayHttp, GetAuthStatus)
     LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (good_pwd, strlen (good_pwd),
                                           GCRY_MD_SHA512,
                                           salt, strlen (salt),
-                                          100000,
+                                          1000,
                                           hash, &hash_size));
     LONGS_EQUAL(128, string_base_encode ("16", hash, hash_size, hash_hexa));
     snprintf (auth, sizeof (auth),
-              "hash:pbkdf2+sha512:%ld:100000:%s",
+              "hash:pbkdf2+sha512:%ld:1000:%s",
               time_now,
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
@@ -962,6 +964,7 @@ TEST(RelayHttp, GetAuthStatus)
     config_file_option_set (relay_config_network_password, good_pwd, 1);
 
     config_file_option_reset (relay_config_network_password, 1);
+    config_file_option_reset (relay_config_network_password_hash_iterations, 1);
 
     relay_http_request_free (client->http_req);
     free (client);

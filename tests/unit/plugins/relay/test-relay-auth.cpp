@@ -571,17 +571,20 @@ TEST(RelayAuth, PasswordHash)
               "sha512:%ld:%s", time_now, hash_hexa);
     LONGS_EQUAL(0, relay_auth_password_hash (client, hashed_password, password));
 
-    /* PBKDF2 (SHA256), with the default number of iterations (100000) */
+    /* PBKDF2 (SHA256), with 1000 iterations (faster than the default) */
+    config_file_option_set (relay_config_network_password_hash_iterations,
+                            "1000", 1);
     time_now = time (NULL);
     snprintf (salt, sizeof (salt), "%ld", time_now);
     LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (password, strlen (password),
                                           GCRY_MD_SHA256,
                                           salt, strlen (salt),
-                                          100000, hash, &hash_size));
+                                          1000, hash, &hash_size));
     string_base_encode ("16", hash, hash_size, hash_hexa);
     snprintf (hashed_password, sizeof (hashed_password),
-              "pbkdf2+sha256:%ld:100000:%s", time_now, hash_hexa);
+              "pbkdf2+sha256:%ld:1000:%s", time_now, hash_hexa);
     LONGS_EQUAL(0, relay_auth_password_hash (client, hashed_password, password));
+    config_file_option_reset (relay_config_network_password_hash_iterations, 1);
 
     /*
      * Nominal case: authentication OK with protocol "weechat", where the salt
