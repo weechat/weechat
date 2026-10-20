@@ -764,15 +764,12 @@ weechat_perl_unload (struct t_plugin_script *script)
      * Never keep the interpreter freed as context: restoring it later
      * (for example at the end of weechat_perl_load) would switch to the
      * locale of a freed interpreter.
+     * A variable is used instead of NULL to prevent a compiler warning
+     * on Cygwin (-Wnonnull) with the expansion of the Perl macro.
      */
-    if (perl_current_script)
-    {
-        PERL_SET_CONTEXT (perl_current_script->interpreter);
-    }
-    else
-    {
-        PERL_SET_CONTEXT (NULL);
-    }
+    interpreter = (perl_current_script) ?
+        perl_current_script->interpreter : NULL;
+    PERL_SET_CONTEXT (interpreter);
 #else
     free (interpreter);
 #endif /* MULTIPLICITY */
