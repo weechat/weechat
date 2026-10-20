@@ -527,6 +527,9 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(0, utf8_char_size_screen (NULL));
     LONGS_EQUAL(0, utf8_char_size_screen (""));
     LONGS_EQUAL(1, utf8_char_size_screen ("A"));
+    LONGS_EQUAL(1, utf8_char_size_screen (" "));
+    LONGS_EQUAL(1, utf8_char_size_screen ("~"));
+    LONGS_EQUAL(1, utf8_char_size_screen ("\x1f"));
     LONGS_EQUAL(1, utf8_char_size_screen ("ë"));
     LONGS_EQUAL(1, utf8_char_size_screen ("€"));
     LONGS_EQUAL(1, utf8_char_size_screen ("\x01"));
@@ -576,6 +579,8 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(0, utf8_strlen_screen (NULL));
     LONGS_EQUAL(0, utf8_strlen_screen (""));
     LONGS_EQUAL(1, utf8_strlen_screen ("A"));
+    LONGS_EQUAL(3, utf8_strlen_screen (" ~ "));
+    LONGS_EQUAL(5, utf8_strlen_screen ("~" UNICODE_DELETE "\x1f" UNICODE_SNOWMAN " "));
     LONGS_EQUAL(1, utf8_strlen_screen ("ë"));
     LONGS_EQUAL(1, utf8_strlen_screen ("€"));
     LONGS_EQUAL(1, utf8_strlen_screen ("\x01"));

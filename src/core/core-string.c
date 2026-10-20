@@ -610,7 +610,7 @@ string_charcasecmp_range (const char *string1, const char *string2, int range)
 int
 string_strcmp (const char *string1, const char *string2)
 {
-    int diff;
+    int diff, char1, char2;
 
     if (!string1 && string2)
         return -1;
@@ -620,6 +620,21 @@ string_strcmp (const char *string1, const char *string2)
 
     while (string1 && string1[0] && string2 && string2[0])
     {
+        /*
+         * Optimization for single-byte chars: compare them here, this is
+         * faster than calling string_charcmp and utf8_next_char.
+         */
+        char1 = (unsigned char)string1[0];
+        char2 = (unsigned char)string2[0];
+        if (!((char1 | char2) & 0x80))
+        {
+            if (char1 != char2)
+                return char1 - char2;
+            string1++;
+            string2++;
+            continue;
+        }
+
         diff = string_charcmp (string1, string2);
         if (diff != 0)
             return diff;
@@ -644,7 +659,7 @@ string_strcmp (const char *string1, const char *string2)
 int
 string_strncmp (const char *string1, const char *string2, int max)
 {
-    int count, diff;
+    int count, diff, char1, char2;
 
     if (!string1 && string2)
         return -1;
@@ -655,6 +670,22 @@ string_strncmp (const char *string1, const char *string2, int max)
     count = 0;
     while ((count < max) && string1 && string1[0] && string2 && string2[0])
     {
+        /*
+         * Optimization for single-byte chars: compare them here, this is
+         * faster than calling string_charcmp and utf8_next_char.
+         */
+        char1 = (unsigned char)string1[0];
+        char2 = (unsigned char)string2[0];
+        if (!((char1 | char2) & 0x80))
+        {
+            if (char1 != char2)
+                return char1 - char2;
+            string1++;
+            string2++;
+            count++;
+            continue;
+        }
+
         diff = string_charcmp (string1, string2);
         if (diff != 0)
             return diff;

@@ -80,11 +80,14 @@ utf8_is_valid (const char *string, int length, char **error)
     while (string && string[0]
            && ((length <= 0) || (current_char < length)))
     {
+        /* UTF-8, 1 byte: 0vvvvvvv (most common case, checked first) */
+        if (!((unsigned char)(string[0]) & 0x80))
+            string++;
         /*
          * UTF-8, 2 bytes, should be: 110vvvvv 10vvvvvv
          * and in range: U+0080 - U+07FF.
          */
-        if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
+        else if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
         {
             if (!string[1] || (((unsigned char)(string[1]) & 0xC0) != 0x80))
                 goto invalid;
@@ -134,11 +137,9 @@ utf8_is_valid (const char *string, int length, char **error)
                 goto invalid;
             string += 4;
         }
-        /* UTF-8, 1 byte, should be: 0vvvvvvv */
-        else if ((unsigned char)(string[0]) >= 0x80)
-            goto invalid;
+        /* Invalid first byte */
         else
-            string++;
+            goto invalid;
         current_char++;
     }
     if (error)
@@ -230,6 +231,10 @@ utf8_next_char (const char *string)
     if (!string || !string[0])
         return NULL;
 
+    /* UTF-8, 1 byte: 0vvvvvvv (most common case, checked first) */
+    if (!((unsigned char)(string[0]) & 0x80))
+        return string + 1;
+
     /* UTF-8, 2 bytes: 110vvvvv 10vvvvvv */
     if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
     {
@@ -319,6 +324,10 @@ utf8_char_int (const char *string)
         return 0;
 
     ptr_string = (unsigned char *)string;
+
+    /* UTF-8, 1 byte: 0vvvvvvv (most common case, checked first) */
+    if (!(ptr_string[0] & 0x80))
+        return (int)ptr_string[0];
 
     /* UTF-8, 2 bytes: 110vvvvv 10vvvvvv */
     if ((ptr_string[0] & 0xE0) == 0xC0)
@@ -441,6 +450,10 @@ utf8_char_size (const char *string)
     if (!string || !string[0])
         return 0;
 
+    /* UTF-8, 1 byte: 0vvvvvvv (most common case, checked first) */
+    if (!((unsigned char)(string[0]) & 0x80))
+        return 1;
+
     ptr_next = utf8_next_char (string);
     if (!ptr_next)
         return 0;
@@ -466,7 +479,11 @@ utf8_strlen (const char *string)
     length = 0;
     while (string && string[0])
     {
-        string = utf8_next_char (string);
+        /* Optimization for single-byte char: no call to utf8_next_char. */
+        if (!((unsigned char)(string[0]) & 0x80))
+            string++;
+        else
+            string = utf8_next_char (string);
         length++;
     }
     return length;
@@ -491,7 +508,11 @@ utf8_strnlen (const char *string, int bytes)
     length = 0;
     while (string && string[0] && (string - start < bytes))
     {
-        string = utf8_next_char (string);
+        /* Optimization for single-byte char: no call to utf8_next_char. */
+        if (!((unsigned char)(string[0]) & 0x80))
+            string++;
+        else
+            string = utf8_next_char (string);
         length++;
     }
     return length;
@@ -519,6 +540,13 @@ utf8_char_size_screen (const char *string)
      * so exactly one column.
      */
     if (((unsigned char)string[0]) < 32)
+        return 1;
+
+    /*
+     * Optimization for printable single-byte chars (32-126): they are
+     * displayed on one column (no need to call `wcwidth`).
+     */
+    if (((unsigned char)string[0]) < 127)
         return 1;
 
     codepoint = (wchar_t)utf8_char_int (string);
@@ -558,6 +586,14 @@ utf8_strlen_screen (const char *string)
     ptr_string = string;
     while (ptr_string && ptr_string[0])
     {
+        /* Optimization for printable single-byte chars (32-126). */
+        if ((((unsigned char)ptr_string[0]) >= 32)
+            && (((unsigned char)ptr_string[0]) < 127))
+        {
+            size_screen++;
+            ptr_string++;
+            continue;
+        }
         size_screen_char = utf8_char_size_screen (ptr_string);
         /* Count only chars that use at least one column. */
         if (size_screen_char > 0)
@@ -582,7 +618,11 @@ utf8_add_offset (const char *string, int offset)
 
     while (string && string[0] && (offset > 0))
     {
-        string = utf8_next_char (string);
+        /* Optimization for single-byte char: no call to utf8_next_char. */
+        if (!((unsigned char)(string[0]) & 0x80))
+            string++;
+        else
+            string = utf8_next_char (string);
         offset--;
     }
     return string;
@@ -611,7 +651,9 @@ utf8_real_pos (const char *string, int pos)
     real_pos = 0;
     while (string && string[0] && (count < pos))
     {
-        next_char = utf8_next_char (string);
+        /* Optimization for single-byte char: no call to utf8_next_char. */
+        next_char = (!((unsigned char)(string[0]) & 0x80)) ?
+            string + 1 : utf8_next_char (string);
         real_pos += (next_char - string);
         string = next_char;
         count++;
@@ -642,7 +684,11 @@ utf8_pos (const char *string, int real_pos)
     limit = (char *)string + real_pos;
     while (string && string[0] && (string < limit))
     {
-        string = utf8_next_char (string);
+        /* Optimization for single-byte char: no call to utf8_next_char. */
+        if (!((unsigned char)(string[0]) & 0x80))
+            string++;
+        else
+            string = utf8_next_char (string);
         count++;
     }
     return count;
