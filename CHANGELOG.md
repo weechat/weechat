@@ -36,6 +36,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: duplicate part of long strings faster
 - core: replace text in long strings faster
 - core: process UTF-8 strings and compare strings faster
 - core: evaluate expressions faster

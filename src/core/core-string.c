@@ -123,19 +123,20 @@ char *
 string_strndup (const char *string, int bytes)
 {
     char *result;
+    size_t length;
 
     if (!string || (bytes < 0))
         return NULL;
 
-    if ((int)strlen (string) <= bytes)
-        return strdup (string);
+    /* Do not read the string after "bytes" (it can be very long). */
+    length = strnlen (string, bytes);
 
-    result = malloc (bytes + 1);
+    result = malloc (length + 1);
     if (!result)
         return NULL;
 
-    memcpy (result, string, bytes);
-    result[bytes] = '\0';
+    memcpy (result, string, length);
+    result[length] = '\0';
 
     return result;
 }

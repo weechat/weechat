@@ -148,6 +148,7 @@ TEST(CoreString, Asprintf)
 TEST(CoreString, Strndup)
 {
     const char *str_test = "test";
+    const char str_not_terminated[3] = { 'a', 'b', 'c' };
     char *str;
 
     STRCMP_EQUAL(NULL, string_strndup (NULL, 0));
@@ -194,6 +195,12 @@ TEST(CoreString, Strndup)
     CHECK(str);
     CHECK(str != str_test);
     STRCMP_EQUAL(str_test, str);
+    free (str);
+
+    /* String not NUL-terminated: it must not be read after "bytes". */
+    str = string_strndup (str_not_terminated, 3);
+    CHECK(str);
+    STRCMP_EQUAL("abc", str);
     free (str);
 }
 
