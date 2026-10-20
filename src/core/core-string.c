@@ -973,6 +973,68 @@ string_strcasestr (const char *string, const char *search)
 }
 
 /*
+ * Check if a string starts with a word, the word is the first "length_word"
+ * bytes of "word" (it is not NUL-terminated, so it can be a part of a mask).
+ *
+ * Return:
+ *   1: string starts with the word
+ *   0: string does not start with the word
+ */
+
+int
+string_match_word (const char *string, const char *word, int length_word,
+                   int case_sensitive)
+{
+    const char *end_word;
+
+    if (case_sensitive)
+        return (strncmp (string, word, length_word) == 0) ? 1 : 0;
+
+    end_word = word + length_word;
+    while (word < end_word)
+    {
+        if (!string[0] || (string_charcasecmp (string, word) != 0))
+            return 0;
+        string = utf8_next_char (string);
+        word = utf8_next_char (word);
+    }
+
+    return 1;
+}
+
+/*
+ * Search a word in a string, the word is the first "length_word" bytes of
+ * "word" (it is not NUL-terminated, so it can be a part of a mask).
+ *
+ * Return pointer to the word found in string, NULL if not found.
+ */
+
+const char *
+string_match_search_word (const char *string, const char *word,
+                          int length_word, int case_sensitive)
+{
+    if (case_sensitive)
+    {
+        while ((string = strchr (string, word[0])) != NULL)
+        {
+            if (strncmp (string, word, length_word) == 0)
+                return string;
+            string++;
+        }
+        return NULL;
+    }
+
+    while (string[0])
+    {
+        if (string_match_word (string, word, length_word, 0))
+            return string;
+        string = utf8_next_char (string);
+    }
+
+    return NULL;
+}
+
+/*
  * Check if a string matches a mask.
  *
  * The mask can contain wildcards ("*"), each wildcard matches 0 or more chars
@@ -986,8 +1048,7 @@ string_strcasestr (const char *string, const char *search)
 int
 string_match (const char *string, const char *mask, int case_sensitive)
 {
-    const char *ptr_string, *ptr_mask, *pos_word, *pos_word2, *pos_end;
-    char *word;
+    const char *ptr_string, *ptr_mask, *pos_word, *pos_end;
     int wildcard, length_word;
 
     if (!string || !mask || !mask[0])
@@ -1020,7 +1081,7 @@ string_match (const char *string, const char *mask, int case_sensitive)
         /* Search the next wildcard (after the word). */
         pos_end = strchr (ptr_mask, '*');
 
-        /* Extract the word before the wildcard (or the end of mask). */
+        /* The word is between ptr_mask and the wildcard (or end of mask). */
         if (pos_end)
         {
             length_word = pos_end - ptr_mask;
@@ -1030,9 +1091,6 @@ string_match (const char *string, const char *mask, int case_sensitive)
             length_word = strlen (ptr_mask);
             pos_end = ptr_mask + length_word;
         }
-        word = string_strndup (ptr_mask, length_word);
-        if (!word)
-            return 0;
 
         /* Check if the word is matching. */
         if (wildcard)
@@ -1041,55 +1099,32 @@ string_match (const char *string, const char *mask, int case_sensitive)
              * Search the word anywhere in the string (from current position),
              * multiple times if needed.
              */
-            pos_word = (case_sensitive) ?
-                strstr (ptr_string, word) : string_strcasestr (ptr_string, word);
-            if (!pos_word)
+            pos_word = string_match_search_word (ptr_string, ptr_mask,
+                                                 length_word, case_sensitive);
+            while (pos_word)
             {
-                free (word);
-                return 0;
-            }
-            if ((!pos_word[length_word] && !pos_end[0])
-                || string_match (pos_word + length_word, pos_end,
-                                 case_sensitive))
-            {
-                free (word);
-                return 1;
-            }
-            while (1)
-            {
-                pos_word2 = (case_sensitive) ?
-                    strstr (pos_word + length_word, word) :
-                    string_strcasestr (pos_word + length_word, word);
-                if (!pos_word2)
-                    break;
-                pos_word = pos_word2;
                 if ((!pos_word[length_word] && !pos_end[0])
                     || string_match (pos_word + length_word, pos_end,
                                      case_sensitive))
                 {
-                    free (word);
                     return 1;
                 }
+                pos_word = string_match_search_word (pos_word + length_word,
+                                                     ptr_mask, length_word,
+                                                     case_sensitive);
             }
-            free (word);
             return 0;
         }
         else
         {
             /* Check if word is at beginning of string. */
-            if ((case_sensitive
-                 && (strncmp (ptr_string, word, length_word) != 0))
-                || (!case_sensitive
-                    && (string_strncasecmp (ptr_string, word,
-                                            utf8_strlen (word)) != 0)))
+            if (!string_match_word (ptr_string, ptr_mask, length_word,
+                                    case_sensitive))
             {
-                free (word);
                 return 0;
             }
             ptr_string += length_word;
         }
-
-        free (word);
 
         ptr_mask = pos_end;
     }

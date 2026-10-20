@@ -26,6 +26,13 @@ extern "C"
 #include "src/core/core-hashtable.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
+
+extern int string_match_word (const char *string, const char *word,
+                              int length_word, int case_sensitive);
+extern const char *string_match_search_word (const char *string,
+                                             const char *word,
+                                             int length_word,
+                                             int case_sensitive);
 }
 
 #define ONE_KB 1000ULL
@@ -834,6 +841,58 @@ TEST(CoreString, Search)
     STRCMP_EQUAL(NULL, string_strcasestr (str, "zz"));
     STRCMP_EQUAL(str + 1, string_strcasestr (str, "est"));
     STRCMP_EQUAL(str + 1, string_strcasestr (str, "EST"));
+}
+
+/*
+ * Test functions:
+ *   string_match_word
+ */
+
+TEST(CoreString, MatchWord)
+{
+    /* Case-sensitive: word is the first bytes of a mask. */
+    LONGS_EQUAL(1, string_match_word ("abc", "abc*", 3, 1));
+    LONGS_EQUAL(1, string_match_word ("abcdef", "abc*", 3, 1));
+    LONGS_EQUAL(0, string_match_word ("ab", "abc*", 3, 1));
+    LONGS_EQUAL(0, string_match_word ("ABC", "abc*", 3, 1));
+    LONGS_EQUAL(0, string_match_word ("", "abc*", 3, 1));
+
+    /* Case-insensitive. */
+    LONGS_EQUAL(1, string_match_word ("abc", "ABC*", 3, 0));
+    LONGS_EQUAL(1, string_match_word ("AbCdef", "aBc*", 3, 0));
+    LONGS_EQUAL(1, string_match_word ("\u00e9t\u00e9", "\u00c9T*", 3, 0));
+    LONGS_EQUAL(0, string_match_word ("ab", "abc*", 3, 0));
+    LONGS_EQUAL(0, string_match_word ("abd", "ABC*", 3, 0));
+    LONGS_EQUAL(0, string_match_word ("", "abc*", 3, 0));
+}
+
+/*
+ * Test functions:
+ *   string_match_search_word
+ */
+
+TEST(CoreString, MatchSearchWord)
+{
+    const char *str = "abc_ABC_\u00e9t\u00e9";
+
+    /* Case-sensitive: word is the first bytes of a mask. */
+    POINTERS_EQUAL(str, string_match_search_word (str, "abc*", 3, 1));
+    POINTERS_EQUAL(str + 4, string_match_search_word (str, "ABC*", 3, 1));
+    POINTERS_EQUAL(str + 2, string_match_search_word (str, "c_A*", 3, 1));
+    POINTERS_EQUAL(str + 8, string_match_search_word (str, "\u00e9t*", 3, 1));
+    POINTERS_EQUAL(NULL, string_match_search_word (str, "abcd", 4, 1));
+    POINTERS_EQUAL(NULL, string_match_search_word (str, "\u00c9T*", 3, 1));
+    POINTERS_EQUAL(NULL, string_match_search_word ("", "abc", 3, 1));
+
+    /* Case-insensitive. */
+    POINTERS_EQUAL(str, string_match_search_word (str, "ABC*", 3, 0));
+    POINTERS_EQUAL(str + 2, string_match_search_word (str, "C_a*", 3, 0));
+    POINTERS_EQUAL(str + 8, string_match_search_word (str, "\u00c9T*", 3, 0));
+    POINTERS_EQUAL(NULL, string_match_search_word (str, "abcd", 4, 0));
+    POINTERS_EQUAL(NULL, string_match_search_word ("", "abc", 3, 0));
+
+    /* Search from a position in string (next occurrence). */
+    POINTERS_EQUAL(str + 4, string_match_search_word (str + 1, "abc*", 3, 0));
 }
 
 /*
