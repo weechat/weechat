@@ -684,7 +684,7 @@ string_strncmp (const char *string1, const char *string2, int max)
 int
 string_strcasecmp (const char *string1, const char *string2)
 {
-    int diff;
+    int diff, char1, char2;
 
     if (!string1 && string2)
         return -1;
@@ -694,6 +694,25 @@ string_strcasecmp (const char *string1, const char *string2)
 
     while (string1 && string1[0] && string2 && string2[0])
     {
+        /*
+         * Optimization for single-byte chars: compare them here, this is
+         * faster than calling string_charcasecmp and utf8_next_char.
+         */
+        char1 = (unsigned char)string1[0];
+        char2 = (unsigned char)string2[0];
+        if (!((char1 | char2) & 0x80))
+        {
+            if ((char1 >= 'A') && (char1 <= 'Z'))
+                char1 += ('a' - 'A');
+            if ((char2 >= 'A') && (char2 <= 'Z'))
+                char2 += ('a' - 'A');
+            if (char1 != char2)
+                return char1 - char2;
+            string1++;
+            string2++;
+            continue;
+        }
+
         diff = string_charcasecmp (string1, string2);
         if (diff != 0)
             return diff;
@@ -763,7 +782,7 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
 int
 string_strncasecmp (const char *string1, const char *string2, int max)
 {
-    int count, diff;
+    int count, diff, char1, char2;
 
     if (!string1 && string2)
         return -1;
@@ -774,6 +793,26 @@ string_strncasecmp (const char *string1, const char *string2, int max)
     count = 0;
     while ((count < max) && string1 && string1[0] && string2 && string2[0])
     {
+        /*
+         * Optimization for single-byte chars: compare them here, this is
+         * faster than calling string_charcasecmp and utf8_next_char.
+         */
+        char1 = (unsigned char)string1[0];
+        char2 = (unsigned char)string2[0];
+        if (!((char1 | char2) & 0x80))
+        {
+            if ((char1 >= 'A') && (char1 <= 'Z'))
+                char1 += ('a' - 'A');
+            if ((char2 >= 'A') && (char2 <= 'Z'))
+                char2 += ('a' - 'A');
+            if (char1 != char2)
+                return char1 - char2;
+            string1++;
+            string2++;
+            count++;
+            continue;
+        }
+
         diff = string_charcasecmp (string1, string2);
         if (diff != 0)
             return diff;
@@ -986,6 +1025,7 @@ string_match_word (const char *string, const char *word, int length_word,
                    int case_sensitive)
 {
     const char *end_word;
+    int char1, char2;
 
     if (case_sensitive)
         return (strncmp (string, word, length_word) == 0) ? 1 : 0;
@@ -993,7 +1033,27 @@ string_match_word (const char *string, const char *word, int length_word,
     end_word = word + length_word;
     while (word < end_word)
     {
-        if (!string[0] || (string_charcasecmp (string, word) != 0))
+        if (!string[0])
+            return 0;
+        /*
+         * Optimization for single-byte chars: compare them here, this is
+         * faster than calling string_charcasecmp and utf8_next_char.
+         */
+        char1 = (unsigned char)string[0];
+        char2 = (unsigned char)word[0];
+        if (!((char1 | char2) & 0x80))
+        {
+            if ((char1 >= 'A') && (char1 <= 'Z'))
+                char1 += ('a' - 'A');
+            if ((char2 >= 'A') && (char2 <= 'Z'))
+                char2 += ('a' - 'A');
+            if (char1 != char2)
+                return 0;
+            string++;
+            word++;
+            continue;
+        }
+        if (string_charcasecmp (string, word) != 0)
             return 0;
         string = utf8_next_char (string);
         word = utf8_next_char (word);
