@@ -99,9 +99,8 @@ WeeChat musi być kompilowany przy użyciu CMake.
 Na macOS możesz użyć https://brew.sh/[Homebrew ^↗^^]:
 `brew install --build-from-source weechat`.
 
-// TRANSLATION MISSING
 [[dependencies]]
-==== Required dependencies
+==== Wymagane zależności
 
 Poniższa tabela pokazuje listę pakietów *wymaganych* do skompilowania
 WeeChat:
@@ -145,11 +144,10 @@ wersja i nazwa mogą się różnić dla innych dystrybucji. +
 ^(2)^ GnuTLS ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
 mechanizmu ECDSA-NIST256P-CHALLENGE.
 
-// TRANSLATION MISSING
 [[optional_dependencies]]
-==== Optional dependencies
+==== Opcjonalne zależności
 
-The following table shows the list of packages that are optional to compile
+Poniższa tabela pokazuje listę pakietów opcjonalnych do skompilowania
 WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
@@ -1860,12 +1858,11 @@ pojedyncze cudzysłowy; cudzysłowy są pomijane podczas parsowania. Opcje
 nie wspierane przez motywy są pomijane podczas parsowania i wyświetlane
 w głównym buforze.
 
-// TRANSLATION MISSING
 [WARNING]
-Do not apply a theme file from an untrusted source without reviewing it
-first: many themable options are evaluated (see `/help eval`), and an
-evaluated expression can execute code, for example with
-`+${info:python_eval,...}+`. A theme file must be trusted like a script.
+Nie używaj plików z motywem z niezaufanego źródła bez wcześniejszego
+sprawdzenia zawartości: wiele opcji jest przetwarzanych (zobacz `/help eval`),
+przetwarzane wyrażenia mogą wykonywać kod, na przykład za pomocą
+`+${info:python_eval,...}+`. Pliki motywów muszą być zaufane tak jak skrypty.
 
 Motywy użytkowników nie są przechowywane: przy każdym wykonaniu
 `/theme apply <nazwa>` plik jest parsowany, zmiany są stosowane i plik 
@@ -3738,22 +3735,20 @@ Przykład: wynik `/names`:
 -- Nicki #test: [@%+alice bob +carol]
 ....
 
-// TRANSLATION MISSING
-WeeChat displays all prefixes received when this capability is enabled,
-according to these options:
+WeeChat wyświetla wszystkie prefiksy kiedy ta funkcja jest włączona,
+zgodnie z tymi opcjami:
 
 * <<option_irc.look.multi_prefix_in_prompt,irc.look.multi_prefix_in_prompt>>:
-  input prompt
+  polecenie wejściowe
 * <<option_irc.look.multi_prefix_in_names,irc.look.multi_prefix_in_names>>:
-  output of `/names` (and list of nicks displayed when joining a channel)
+  wynik `/names` (i lista nicków wyświetlana przy wejściu na kanał)
 * <<option_irc.look.multi_prefix_in_nicklist,irc.look.multi_prefix_in_nicklist>>:
-  nicklist
+  lista nicków
 
-// TRANSLATION MISSING
 [NOTE]
-If the capability is enabled after joining channels (for example with
-`/cap req multi-prefix`), the prefixes of nicks are updated on the next
-`/names` on each channel.
+Jeśli funkcja jest włączona po wejściu na kanały (na przykład przez
+`/cap req multi-prefix`), prefiksy nicków są aktualizowane przy ponownym wykonaniu
+`/names` na każdym kanale.
 
 Przykład: wynik `/whois alice`:
 
@@ -4352,21 +4347,18 @@ na przykład:
 ----
 
 [[relay_allowed_networks]]
-// TRANSLATION MISSING
-=== Allowed networks
+=== Dozwolone sieci
 
-// TRANSLATION MISSING
-Connections to relay can be restricted to some networks, with a comma-separated
-list of IPv4 or IPv6 networks in CIDR notation; an address without prefix length
-allows only this address, for example:
+Można ograniczyć sieci mogące się łączyć z relay, za pomocą oddzielonej przecinkami
+listy sieci IPv4 lub IPv6 w notacji CIDR; adres bez prefiksu długości pozwala
+tylko na ten adres, na przykład:
 
 ----
 /set relay.network.allowed_networks "127.0.0.1,192.168.1.0/24,2001:db8::/48"
 ----
 
-// TRANSLATION MISSING
-If the option <<option_relay.network.allowed_ips,relay.network.allowed_ips>>
-is also set, the IP address must match both options.
+Jeśli opcja <<option_relay.network.allowed_ips,relay.network.allowed_ips>>
+jest również ustawiona adres IP musi pasować do obu opcji.
 
 [[relay_tls]]
 === TLS
@@ -4986,14 +4978,13 @@ Jako że `s` to domyślna komenda, można to pominąć, dlatego `/regex/replace`
 jest także poprawne (jednak pierwszy znak, który będzie separatorem, nie może być
 literą).
 
-// TRANSLATION MISSING
 [NOTE]
-The regular expression is a POSIX extended regular expression: the backslash
-is not an escape char inside brackets, so for example `+[^\]]+` matches any
-char except backslash, followed by `+]+`. To exclude `+]+`, it must be the first
-char inside brackets: `+[^]]+`.
-Likewise, `+[^\s]+` excludes the backslash and `s`, not whitespace:
-use `+[^[:space:]]+` instead.
+Wyrażenie regularne jest rozszerzonym wyrażeniem regularnym w standardzie POSIX:
+backslash wewnątrz nawiasów kwadratowych nie pełni funkcji znaku ucieczki, dlatego
+na przykład `+[^\]]+` dopasuje każdy znak poza backslashem, po którym jest `+]+`. 
+Aby wykluczyć `+]+`, musi to być pierwszy znak wewnątrz nawiasów kwadratowych: `+[^]]+`.
+Podobnie zapis `+[^\s]+` wyklucza znak backslash oraz literę `s`, a nie znaki białe:
+zamiast tego należy użyć `+[^[:space:]]+`.
 
 Dopasowanie grup może być także użyte:
 
