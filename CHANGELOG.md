@@ -36,6 +36,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: call the URL hook callback as soon as the transfer has ended, instead of waiting up to 100 milliseconds
 - core: call the process hook callback as soon as the child process has ended, instead of waiting up to 100 milliseconds
 - core: align nicks on the longest prefix in bar item "buffer_nicklist"
 - core: set key name with alias in key "_key" of focus hashtable in cursor mode, for example "f1" instead of the raw key

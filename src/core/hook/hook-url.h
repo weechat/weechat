@@ -30,6 +30,9 @@ struct t_hook_url
     pthread_t thread_id;               /* thread id                         */
     int thread_created;                /* thread created                    */
     int thread_running;                /* 1 if thread is running            */
+    int thread_pipe_read;              /* pipe written by thread at its end */
+    int thread_pipe_write;             /* (read in main thread)             */
+    struct t_hook *hook_fd;            /* fd hook on thread_pipe_read       */
     struct t_hook *hook_timer;         /* timer to check if thread has ended*/
     struct t_hashtable *output;        /* URL transfer output data          */
 };

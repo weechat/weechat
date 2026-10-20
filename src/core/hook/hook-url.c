@@ -100,10 +100,18 @@ void
 hook_url_thread_cleanup (void *hook_pointer)
 {
     struct t_hook *hook;
+    ssize_t num_written;
 
     hook = (struct t_hook *)hook_pointer;
 
     HOOK_URL(hook, thread_running) = 0;
+
+    /* Wake up the main thread (see function hook_url_fd_cb). */
+    if (HOOK_URL(hook, thread_pipe_write) >= 0)
+    {
+        num_written = write (HOOK_URL(hook, thread_pipe_write), "x", 1);
+        (void) num_written;
+    }
 }
 
 /*
@@ -139,6 +147,63 @@ hook_url_transfer_thread (void *hook_pointer)
 }
 
 /*
+ * Check if transfer thread has ended: if so, run the callback and remove the
+ * URL hook.
+ *
+ * Return:
+ *   1: transfer thread has ended (hook removed)
+ *   0: transfer thread is still running
+ */
+
+int
+hook_url_check_end (struct t_hook *hook)
+{
+    const char *ptr_error;
+
+    if (hook->deleted || HOOK_URL(hook, thread_running))
+        return 0;
+
+    hook_url_run_callback (hook);
+    ptr_error = hashtable_get (HOOK_URL(hook, output), "error");
+    if ((weechat_debug_core >= 1) && ptr_error && ptr_error[0])
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sURL transfer error: %s (URL: \"%s\")"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            ptr_error,
+            HOOK_URL(hook, url));
+    }
+    unhook (hook);
+
+    return 1;
+}
+
+/*
+ * Callback called when the transfer thread has ended (data written in pipe).
+ */
+
+int
+hook_url_fd_cb (const void *pointer, void *data, int fd)
+{
+    struct t_hook *hook;
+    char buffer[16];
+    ssize_t num_read;
+
+    /* Make C compiler happy. */
+    (void) data;
+
+    hook = (struct t_hook *)pointer;
+
+    num_read = read (fd, buffer, sizeof (buffer));
+    (void) num_read;
+
+    (void) hook_url_check_end (hook);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Check if thread is still alive.
  */
 
@@ -146,7 +211,6 @@ int
 hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_hook *hook;
-    const char *ptr_error;
     char str_error[1024];
 
     /* Make C compiler happy. */
@@ -158,22 +222,8 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
     if (hook->deleted)
         return WEECHAT_RC_OK;
 
-    if (!HOOK_URL(hook, thread_running))
-    {
-        hook_url_run_callback (hook);
-        ptr_error = hashtable_get (HOOK_URL(hook, output), "error");
-        if ((weechat_debug_core >= 1) && ptr_error && ptr_error[0])
-        {
-            gui_chat_printf (
-                NULL,
-                _("%sURL transfer error: %s (URL: \"%s\")"),
-                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                ptr_error,
-                HOOK_URL(hook, url));
-        }
-        unhook (hook);
+    if (hook_url_check_end (hook))
         return WEECHAT_RC_OK;
-    }
 
     if (remaining_calls == 0)
     {
@@ -209,9 +259,28 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
 void
 hook_url_transfer (struct t_hook *hook)
 {
-    int rc, timeout, max_calls;
+    int rc, timeout, max_calls, pipes[2];
     long interval;
     char str_error[1024], str_error_code_pthread[12];
+
+    /*
+     * Create pipe written by the thread when it ends, so that the callback is
+     * called right away (if the pipe can not be created, the timer is used to
+     * detect the end of the thread).
+     */
+    if (pipe (pipes) == 0)
+    {
+        (void) fcntl (pipes[0], F_SETFD, FD_CLOEXEC);
+        (void) fcntl (pipes[1], F_SETFD, FD_CLOEXEC);
+        HOOK_URL(hook, thread_pipe_read) = pipes[0];
+        HOOK_URL(hook, thread_pipe_write) = pipes[1];
+        HOOK_URL(hook, hook_fd) = hook_fd (hook->plugin,
+                                           HOOK_URL(hook, thread_pipe_read),
+                                           1, 0, 0,
+                                           &hook_url_fd_cb,
+                                           hook,
+                                           NULL);
+    }
 
     HOOK_URL(hook, thread_running) = 1;
 
@@ -314,6 +383,9 @@ hook_url (struct t_weechat_plugin *plugin,
     new_hook_url->thread_id = 0;
     new_hook_url->thread_created = 0;
     new_hook_url->thread_running = 0;
+    new_hook_url->thread_pipe_read = -1;
+    new_hook_url->thread_pipe_write = -1;
+    new_hook_url->hook_fd = NULL;
     new_hook_url->hook_timer = NULL;
     new_hook_url->output = hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
@@ -384,6 +456,11 @@ hook_url_free_data (struct t_hook *hook)
         hashtable_free (HOOK_URL(hook, options));
         HOOK_URL(hook, options) = NULL;
     }
+    if (HOOK_URL(hook, hook_fd))
+    {
+        unhook (HOOK_URL(hook, hook_fd));
+        HOOK_URL(hook, hook_fd) = NULL;
+    }
     if (HOOK_URL(hook, hook_timer))
     {
         unhook (HOOK_URL(hook, hook_timer));
@@ -396,6 +473,17 @@ hook_url_free_data (struct t_hook *hook)
     }
     if (HOOK_URL(hook, thread_created))
         pthread_join (HOOK_URL(hook, thread_id), &retval);
+    /* Pipe is closed after the end of thread, which writes in it. */
+    if (HOOK_URL(hook, thread_pipe_read) >= 0)
+    {
+        close (HOOK_URL(hook, thread_pipe_read));
+        HOOK_URL(hook, thread_pipe_read) = -1;
+    }
+    if (HOOK_URL(hook, thread_pipe_write) >= 0)
+    {
+        close (HOOK_URL(hook, thread_pipe_write));
+        HOOK_URL(hook, thread_pipe_write) = -1;
+    }
     if (HOOK_URL(hook, output))
     {
         hashtable_free (HOOK_URL(hook, output));
@@ -430,6 +518,9 @@ hook_url_hdata_hook_url_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_hook_url, thread_id, LONG, 0, NULL, NULL);
         HDATA_VAR(struct t_hook_url, thread_created, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_hook_url, thread_running, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, thread_pipe_read, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, thread_pipe_write, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, hook_fd, POINTER, 0, NULL, "hook");
         HDATA_VAR(struct t_hook_url, hook_timer, POINTER, 0, NULL, "hook");
         HDATA_VAR(struct t_hook_url, output, HASHTABLE, 0, NULL, NULL);
     }
@@ -465,6 +556,12 @@ hook_url_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!infolist_new_var_integer (item, "thread_running", (int)(HOOK_URL(hook, thread_running))))
         return 0;
+    if (!infolist_new_var_integer (item, "thread_pipe_read", HOOK_URL(hook, thread_pipe_read)))
+        return 0;
+    if (!infolist_new_var_integer (item, "thread_pipe_write", HOOK_URL(hook, thread_pipe_write)))
+        return 0;
+    if (!infolist_new_var_pointer (item, "hook_fd", HOOK_URL(hook, hook_fd)))
+        return 0;
     if (!infolist_new_var_pointer (item, "hook_timer", HOOK_URL(hook, hook_timer)))
         return 0;
     if (!infolist_new_var_string (item, "output", hashtable_get_string (HOOK_URL(hook, output), "keys_values")))
@@ -494,6 +591,9 @@ hook_url_print_log (struct t_hook *hook)
     log_printf ("    stop_transfer . . . . : %d", HOOK_URL(hook, stop_transfer));
     log_printf ("    thread_created. . . . : %d", (int)HOOK_URL(hook, thread_created));
     log_printf ("    thread_running. . . . : %d", (int)HOOK_URL(hook, thread_running));
+    log_printf ("    thread_pipe_read. . . : %d", HOOK_URL(hook, thread_pipe_read));
+    log_printf ("    thread_pipe_write . . : %d", HOOK_URL(hook, thread_pipe_write));
+    log_printf ("    hook_fd . . . . . . . : %p", HOOK_URL(hook, hook_fd));
     log_printf ("    hook_timer. . . . . . : %p", HOOK_URL(hook, hook_timer));
     log_printf ("    output. . . . . . . . : %p (hashtable: '%s')",
                 HOOK_URL(hook, output),
