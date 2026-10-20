@@ -4131,7 +4131,7 @@ TEST(IrcProtocolWithServer, 005_limit)
 {
     char str_msg[4096], str_value[3500];
     size_t length1, length2;
-    int i;
+    int i, count;
 
     SRV_INIT;
 
@@ -4140,8 +4140,12 @@ TEST(IrcProtocolWithServer, 005_limit)
     snprintf (str_msg, sizeof (str_msg),
               ":server 005 alice TEST=%s :are supported", str_value);
 
-    /* Flood the server with "005" messages. */
-    for (i = 0; i < 100; i++)
+    /*
+     * Flood the server with "005" messages: send a bit more than needed to
+     * reach the maximum length of the accumulated ISUPPORT data.
+     */
+    count = (IRC_SERVER_ISUPPORT_MAX_LENGTH / (sizeof (str_value) - 1)) + 2;
+    for (i = 0; i < count; i++)
     {
         server_recv (str_msg);
     }
@@ -4152,7 +4156,7 @@ TEST(IrcProtocolWithServer, 005_limit)
     CHECK(length1 <= IRC_SERVER_ISUPPORT_MAX_LENGTH + sizeof (str_value));
 
     /* Receiving more "005" messages must not grow it any further. */
-    for (i = 0; i < 100; i++)
+    for (i = 0; i < 5; i++)
     {
         server_recv (str_msg);
     }
