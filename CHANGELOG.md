@@ -36,6 +36,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: format strings faster in function string_asprintf
 - core: evaluate expressions faster when they contain text outside variables
 - core: evaluate conditions faster, by searching all operators in a single pass
 - core: search text in strings faster when case is ignored, for example to detect highlights

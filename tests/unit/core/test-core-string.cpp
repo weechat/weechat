@@ -110,7 +110,8 @@ TEST_GROUP(CoreString)
 
 TEST(CoreString, Asprintf)
 {
-    char *test;
+    char *test, *str;
+    int i, lengths[] = { 1022, 1023, 1024, 5000 };
 
     test = (char *)0x1;
     LONGS_EQUAL(-1, string_asprintf (NULL, NULL));
@@ -138,6 +139,26 @@ TEST(CoreString, Asprintf)
     LONGS_EQUAL(16, string_asprintf (&test, "test, %s, %d", "string", 42));
     STRCMP_EQUAL("test, string, 42", test);
     free (test);
+
+    /*
+     * Long strings: shorter than, equal to and longer than the buffer used
+     * to format the string (1024 bytes, including final '\0').
+     */
+    for (i = 0; i < (int)(sizeof (lengths) / sizeof (lengths[0])); i++)
+    {
+        str = (char *)malloc (lengths[i]);
+        CHECK(str);
+        memset (str, 'a', lengths[i] - 1);
+        str[lengths[i] - 1] = '\0';
+        test = (char *)0x1;
+        LONGS_EQUAL(lengths[i], string_asprintf (&test, "%sz", str));
+        CHECK(test);
+        LONGS_EQUAL(lengths[i], strlen (test));
+        CHECK(strncmp (test, str, lengths[i] - 1) == 0);
+        STRCMP_EQUAL("z", test + lengths[i] - 1);
+        free (test);
+        free (str);
+    }
 }
 
 /*

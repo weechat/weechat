@@ -77,6 +77,7 @@ string_asprintf (char **result, const char *fmt, ...)
     va_list argptr;
     int num_bytes;
     size_t size;
+    char buffer[1024];
 
     if (!result)
         return -1;
@@ -86,9 +87,12 @@ string_asprintf (char **result, const char *fmt, ...)
     if (!fmt)
         return -1;
 
-    /* Determine required size. */
+    /*
+     * Format the string in a buffer on the stack, which also gives the
+     * required size if the buffer is too small.
+     */
     va_start (argptr, fmt);
-    num_bytes = vsnprintf (NULL, 0, fmt, argptr);
+    num_bytes = vsnprintf (buffer, sizeof (buffer), fmt, argptr);
     va_end (argptr);
 
     if (num_bytes < 0)
@@ -99,6 +103,14 @@ string_asprintf (char **result, const char *fmt, ...)
     if (!*result)
         return -1;
 
+    /* Most common case: the string fits in the buffer, just copy it. */
+    if (size <= sizeof (buffer))
+    {
+        memcpy (*result, buffer, size);
+        return num_bytes;
+    }
+
+    /* The string is too long for the buffer: format it again. */
     va_start (argptr, fmt);
     num_bytes = vsnprintf (*result, size, fmt, argptr);
     va_end (argptr);
