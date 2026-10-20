@@ -25,6 +25,12 @@ extern "C"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
+
+extern const char *eval_strstr_level (const char *string, const char *search,
+                                      struct t_eval_context *eval_context,
+                                      const char *extra_prefix,
+                                      const char *extra_suffix,
+                                      int escape);
 }
 
 #define WEE_CHECK_EVAL(__result, __expr)                                \
@@ -53,6 +59,67 @@ TEST(CoreEval, IsTrue)
     LONGS_EQUAL(1, eval_is_true ("1"));
     LONGS_EQUAL(1, eval_is_true ("A"));
     LONGS_EQUAL(1, eval_is_true ("abcdef"));
+}
+
+/*
+ * Test functions:
+ *   eval_strstr_level
+ */
+
+TEST(CoreEval, StrstrLevel)
+{
+    struct t_eval_context eval_context;
+    const char *str;
+
+    memset (&eval_context, 0, sizeof (eval_context));
+    eval_context.prefix = "${";
+    eval_context.length_prefix = 2;
+    eval_context.suffix = "}";
+    eval_context.length_suffix = 1;
+
+    POINTERS_EQUAL(NULL, eval_strstr_level (NULL, "||", &eval_context,
+                                            NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, eval_strstr_level ("abc", NULL, &eval_context,
+                                            NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, eval_strstr_level ("", "||", &eval_context,
+                                            NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, eval_strstr_level ("abc", "||", &eval_context,
+                                            NULL, NULL, 0));
+
+    /* String found at level 0. */
+    str = "a || b";
+    POINTERS_EQUAL(str + 2, eval_strstr_level (str, "||", &eval_context,
+                                               NULL, NULL, 0));
+    str = "} == x";
+    POINTERS_EQUAL(str + 2, eval_strstr_level (str, "==", &eval_context,
+                                               NULL, NULL, 0));
+
+    /* String in a sub-expression (prefix/suffix) is skipped. */
+    str = "${a || b} || c";
+    POINTERS_EQUAL(str + 10, eval_strstr_level (str, "||", &eval_context,
+                                                NULL, NULL, 0));
+    str = "${x?y}?z";
+    POINTERS_EQUAL(str + 6, eval_strstr_level (str, "?", &eval_context,
+                                               NULL, NULL, 0));
+    str = "${a || b}";
+    POINTERS_EQUAL(NULL, eval_strstr_level (str, "||", &eval_context,
+                                            NULL, NULL, 0));
+
+    /* String in a sub-expression (extra prefix/suffix) is skipped. */
+    str = "(x || y) || z";
+    POINTERS_EQUAL(str + 9, eval_strstr_level (str, "||", &eval_context,
+                                               "(", ")", 0));
+    str = "(a)(b) == c";
+    POINTERS_EQUAL(str + 7, eval_strstr_level (str, "==", &eval_context,
+                                               "(", ")", 0));
+    str = "(${a}) || (b || c)";
+    POINTERS_EQUAL(str + 7, eval_strstr_level (str, "||", &eval_context,
+                                               "(", ")", 0));
+
+    /* Search string starting with the same char as the prefix. */
+    str = "a $x";
+    POINTERS_EQUAL(str + 2, eval_strstr_level (str, "$x", &eval_context,
+                                               NULL, NULL, 0));
 }
 
 /*

@@ -36,6 +36,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: evaluate expressions faster
 - core: compare strings faster when case is ignored
 - core: match strings with wildcards faster
 - core: match signals faster in signal hooks when the hooked signal has no wildcard

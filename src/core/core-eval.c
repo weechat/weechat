@@ -204,6 +204,22 @@ eval_strstr_level (const char *string, const char *search,
     level = 0;
     while (ptr_string[0])
     {
+        /*
+         * Optimization: skip quickly a char which can not be the start of
+         * an escape, prefix, suffix or the string to search (this is much
+         * faster than calling strncmp for each of them).
+         */
+        if ((length_search > 0)
+            && (ptr_string[0] != '\\')
+            && (ptr_string[0] != eval_context->prefix[0])
+            && (ptr_string[0] != eval_context->suffix[0])
+            && (ptr_string[0] != search[0])
+            && ((length_prefix2 == 0) || (ptr_string[0] != extra_prefix[0]))
+            && ((length_suffix2 == 0) || (ptr_string[0] != extra_suffix[0])))
+        {
+            ptr_string++;
+            continue;
+        }
         if (escape
             && (ptr_string[0] == '\\')
             && ((ptr_string[1] == eval_context->prefix[0])
