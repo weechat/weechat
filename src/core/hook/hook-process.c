@@ -36,6 +36,7 @@ int hook_process_pending = 0;          /* 1 if there are some process to    */
 
 
 void hook_process_run (struct t_hook *hook_process);
+int hook_process_check_end (struct t_hook *hook_process);
 
 
 /*
@@ -442,6 +443,15 @@ hook_process_child_read (struct t_hook *hook_process, int fd,
     {
         unhook (*hook_fd);
         *hook_fd = NULL;
+        /*
+         * EOF on stdout and stderr: the child has most likely ended, so check
+         * it now instead of waiting for the next call to the timer.
+         */
+        if (!HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDOUT])
+            && !HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDERR]))
+        {
+            (void) hook_process_check_end (hook_process);
+        }
     }
 }
 
@@ -560,6 +570,53 @@ hook_process_child_read_until_eof (struct t_hook *hook_process)
 }
 
 /*
+ * Check if child process has ended: if so, read its remaining output, send
+ * buffers to the callback and remove the process hook (the child pid is set
+ * to 0, so that the child is not checked again, nor killed when the hook is
+ * freed).
+ *
+ * Return:
+ *   1: child process has ended (hook removed)
+ *   0: child process is still running
+ */
+
+int
+hook_process_check_end (struct t_hook *hook_process)
+{
+    int status, rc;
+
+    if (hook_process->deleted || (HOOK_PROCESS(hook_process, child_pid) <= 0))
+        return 0;
+
+    if (waitpid (HOOK_PROCESS(hook_process, child_pid),
+                 &status, WNOHANG) <= 0)
+        return 0;
+
+    if (WIFEXITED(status))
+    {
+        /* Child terminated normally */
+        HOOK_PROCESS(hook_process, child_pid) = 0;
+        rc = WEXITSTATUS(status);
+        hook_process_child_read_until_eof (hook_process);
+        hook_process_send_buffers (hook_process, rc);
+        unhook (hook_process);
+        return 1;
+    }
+
+    if (WIFSIGNALED(status))
+    {
+        /* Child terminated by a signal */
+        HOOK_PROCESS(hook_process, child_pid) = 0;
+        hook_process_child_read_until_eof (hook_process);
+        hook_process_send_buffers (hook_process, WEECHAT_HOOK_PROCESS_ERROR);
+        unhook (hook_process);
+        return 1;
+    }
+
+    return 0;
+}
+
+/*
  * Check if child process is still alive.
  */
 
@@ -567,7 +624,6 @@ int
 hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_hook *hook_process;
-    int status, rc;
 
     /* Make C compiler happy. */
     (void) data;
@@ -593,26 +649,7 @@ hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
     }
     else
     {
-        if (waitpid (HOOK_PROCESS(hook_process, child_pid),
-                     &status, WNOHANG) > 0)
-        {
-            if (WIFEXITED(status))
-            {
-                /* Child terminated normally */
-                rc = WEXITSTATUS(status);
-                hook_process_child_read_until_eof (hook_process);
-                hook_process_send_buffers (hook_process, rc);
-                unhook (hook_process);
-            }
-            else if (WIFSIGNALED(status))
-            {
-                /* Child terminated by a signal */
-                hook_process_child_read_until_eof (hook_process);
-                hook_process_send_buffers (hook_process,
-                                           WEECHAT_HOOK_PROCESS_ERROR);
-                unhook (hook_process);
-            }
-        }
+        (void) hook_process_check_end (hook_process);
     }
 
     return WEECHAT_RC_OK;
