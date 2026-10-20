@@ -2272,6 +2272,132 @@ end:
 }
 
 /*
+ * Search the operator used to split an expression, with a single scan of the
+ * expression (sub-expressions between prefix/suffix and between parentheses
+ * are skipped).
+ *
+ * Only the first occurrence of each operator is considered; the operator
+ * used is (by order of priority):
+ *   1. a logical operator ("||" then "&&"), ignored if it is at the beginning
+ *      of expression,
+ *   2. a comparison operator, in the order of array eval_comparisons.
+ *
+ * If an operator is found, *logic (logical operator) or *comp (comparison)
+ * is set to its index, and the other one is set to -1.
+ *
+ * Return pointer to the operator found in expression, NULL if not found.
+ */
+
+const char *
+eval_search_operator (const char *expr, struct t_eval_context *eval_context,
+                      int *logic, int *comp)
+{
+    const char *pos_logic[EVAL_NUM_LOGICAL_OPS];
+    const char *pos_comp[EVAL_NUM_COMPARISONS];
+    const char *ptr_string, *result;
+    int i, level, debug_id;
+
+    EVAL_DEBUG_MSG(2, "eval_search_operator(\"%s\")", expr);
+
+    result = NULL;
+    *logic = -1;
+    *comp = -1;
+
+    for (i = 0; i < EVAL_NUM_LOGICAL_OPS; i++)
+    {
+        pos_logic[i] = NULL;
+    }
+    for (i = 0; i < EVAL_NUM_COMPARISONS; i++)
+    {
+        pos_comp[i] = NULL;
+    }
+
+    /* Search the first occurrence of each operator at level 0. */
+    ptr_string = expr;
+    level = 0;
+    while (ptr_string[0])
+    {
+        if ((ptr_string[0] == eval_context->prefix[0])
+            && (strncmp (ptr_string, eval_context->prefix,
+                         eval_context->length_prefix) == 0))
+        {
+            level++;
+            ptr_string += eval_context->length_prefix;
+        }
+        else if (ptr_string[0] == '(')
+        {
+            level++;
+            ptr_string++;
+        }
+        else if ((ptr_string[0] == eval_context->suffix[0])
+                 && (strncmp (ptr_string, eval_context->suffix,
+                              eval_context->length_suffix) == 0))
+        {
+            if (level > 0)
+                level--;
+            ptr_string += eval_context->length_suffix;
+        }
+        else if (ptr_string[0] == ')')
+        {
+            if (level > 0)
+                level--;
+            ptr_string++;
+        }
+        else
+        {
+            /* All operators start with one of these chars. */
+            if ((level == 0) && strchr ("|&=!<>", ptr_string[0]))
+            {
+                for (i = 0; i < EVAL_NUM_LOGICAL_OPS; i++)
+                {
+                    if (!pos_logic[i]
+                        && (strncmp (ptr_string, eval_logical_ops[i],
+                                     strlen (eval_logical_ops[i])) == 0))
+                    {
+                        pos_logic[i] = ptr_string;
+                    }
+                }
+                for (i = 0; i < EVAL_NUM_COMPARISONS; i++)
+                {
+                    if (!pos_comp[i]
+                        && (strncmp (ptr_string, eval_comparisons[i],
+                                     strlen (eval_comparisons[i])) == 0))
+                    {
+                        pos_comp[i] = ptr_string;
+                    }
+                }
+            }
+            ptr_string++;
+        }
+    }
+
+    /* Choose the operator, by order of priority. */
+    for (i = 0; i < EVAL_NUM_LOGICAL_OPS; i++)
+    {
+        if (pos_logic[i] && (pos_logic[i] > expr))
+        {
+            *logic = i;
+            result = pos_logic[i];
+            goto end;
+        }
+    }
+    for (i = 0; i < EVAL_NUM_COMPARISONS; i++)
+    {
+        if (pos_comp[i])
+        {
+            *comp = i;
+            result = pos_comp[i];
+            goto end;
+        }
+    }
+
+end:
+    EVAL_DEBUG_RESULT(2, result);
+
+    return result;
+}
+
+/*
  * Evaluate a condition (this function must not be called directly).
  *
  * For return value, see function eval_expression().
@@ -2323,17 +2449,61 @@ eval_expression_condition (const char *expr,
     if (!expr2)
         goto end;
 
+    /* Search for a logical operator or a comparison. */
+    pos = eval_search_operator (expr2, eval_context, &logic, &comp);
+
     /*
-     * Search for a logical operator, and if one is found:
+     * If a logical operator is found:
      * - split expression into two sub-expressions
      * - evaluate first sub-expression
      * - if needed, evaluate second sub-expression
      * - return result.
      */
-    for (logic = 0; logic < EVAL_NUM_LOGICAL_OPS; logic++)
+    if (pos && (logic >= 0))
     {
-        pos = eval_strstr_level (expr2, eval_logical_ops[logic], eval_context,
-                                 "(", ")", 0);
+        pos_end = pos - 1;
+        while ((pos_end > expr2) && (pos_end[0] == ' '))
+        {
+            pos_end--;
+        }
+        sub_expr = string_strndup (expr2, pos_end + 1 - expr2);
+        if (!sub_expr)
+            goto end;
+        tmp_value = eval_expression_condition (sub_expr, eval_context);
+        free (sub_expr);
+        rc = eval_is_true (tmp_value);
+        free (tmp_value);
+        /*
+         * If rc == 0 with "&&" or rc == 1 with "||", no need to
+         * evaluate second sub-expression, just return the rc.
+         */
+        if ((!rc && (logic == EVAL_LOGICAL_OP_AND))
+            || (rc && (logic == EVAL_LOGICAL_OP_OR)))
+        {
+            value = strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
+            goto end;
+        }
+        pos += strlen (eval_logical_ops[logic]);
+        while (pos[0] == ' ')
+        {
+            pos++;
+        }
+        tmp_value = eval_expression_condition (pos, eval_context);
+        rc = eval_is_true (tmp_value);
+        free (tmp_value);
+        value = strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
+        goto end;
+    }
+
+    /*
+     * If a comparison is found:
+     * - split expression into two sub-expressions
+     * - evaluate the two sub-expressions
+     * - compare sub-expressions
+     * - return result.
+     */
+    if (pos && (comp >= 0))
+    {
         if (pos > expr2)
         {
             pos_end = pos - 1;
@@ -2342,87 +2512,36 @@ eval_expression_condition (const char *expr,
                 pos_end--;
             }
             sub_expr = string_strndup (expr2, pos_end + 1 - expr2);
-            if (!sub_expr)
-                goto end;
-            tmp_value = eval_expression_condition (sub_expr, eval_context);
-            free (sub_expr);
-            rc = eval_is_true (tmp_value);
-            free (tmp_value);
-            /*
-             * If rc == 0 with "&&" or rc == 1 with "||", no need to
-             * evaluate second sub-expression, just return the rc.
-             */
-            if ((!rc && (logic == EVAL_LOGICAL_OP_AND))
-                || (rc && (logic == EVAL_LOGICAL_OP_OR)))
-            {
-                value = strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
-                goto end;
-            }
-            pos += strlen (eval_logical_ops[logic]);
-            while (pos[0] == ' ')
-            {
-                pos++;
-            }
-            tmp_value = eval_expression_condition (pos, eval_context);
-            rc = eval_is_true (tmp_value);
-            free (tmp_value);
-            value = strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
-            goto end;
         }
-    }
-
-    /*
-     * Search for a comparison, and if one is found:
-     * - split expression into two sub-expressions
-     * - evaluate the two sub-expressions
-     * - compare sub-expressions
-     * - return result.
-     */
-    for (comp = 0; comp < EVAL_NUM_COMPARISONS; comp++)
-    {
-        pos = eval_strstr_level (expr2, eval_comparisons[comp], eval_context,
-                                 "(", ")", 0);
-        if (pos >= expr2)
+        else
         {
-            if (pos > expr2)
-            {
-                pos_end = pos - 1;
-                while ((pos_end > expr2) && (pos_end[0] == ' '))
-                {
-                    pos_end--;
-                }
-                sub_expr = string_strndup (expr2, pos_end + 1 - expr2);
-            }
-            else
-            {
-                sub_expr = strdup ("");
-            }
-            if (!sub_expr)
-                goto end;
-            pos += strlen (eval_comparisons[comp]);
-            while (pos[0] == ' ')
-            {
-                pos++;
-            }
-            if ((comp == EVAL_COMPARE_REGEX_MATCHING)
-                || (comp == EVAL_COMPARE_REGEX_NOT_MATCHING))
-            {
-                /* For regex: just replace vars in both expressions. */
-                tmp_value = eval_replace_vars (sub_expr, eval_context);
-                tmp_value2 = eval_replace_vars (pos, eval_context);
-            }
-            else
-            {
-                /* Other comparison: fully evaluate both expressions. */
-                tmp_value = eval_expression_condition (sub_expr, eval_context);
-                tmp_value2 = eval_expression_condition (pos, eval_context);
-            }
-            free (sub_expr);
-            value = eval_compare (tmp_value, comp, tmp_value2, eval_context);
-            free (tmp_value);
-            free (tmp_value2);
-            goto end;
+            sub_expr = strdup ("");
         }
+        if (!sub_expr)
+            goto end;
+        pos += strlen (eval_comparisons[comp]);
+        while (pos[0] == ' ')
+        {
+            pos++;
+        }
+        if ((comp == EVAL_COMPARE_REGEX_MATCHING)
+            || (comp == EVAL_COMPARE_REGEX_NOT_MATCHING))
+        {
+            /* For regex: just replace vars in both expressions. */
+            tmp_value = eval_replace_vars (sub_expr, eval_context);
+            tmp_value2 = eval_replace_vars (pos, eval_context);
+        }
+        else
+        {
+            /* Other comparison: fully evaluate both expressions. */
+            tmp_value = eval_expression_condition (sub_expr, eval_context);
+            tmp_value2 = eval_expression_condition (pos, eval_context);
+        }
+        free (sub_expr);
+        value = eval_compare (tmp_value, comp, tmp_value2, eval_context);
+        free (tmp_value);
+        free (tmp_value2);
+        goto end;
     }
 
     /*

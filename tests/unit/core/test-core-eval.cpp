@@ -31,6 +31,9 @@ extern const char *eval_strstr_level (const char *string, const char *search,
                                       const char *extra_prefix,
                                       const char *extra_suffix,
                                       int escape);
+extern const char *eval_search_operator (const char *expr,
+                                         struct t_eval_context *eval_context,
+                                         int *logic, int *comp);
 }
 
 #define WEE_CHECK_EVAL(__result, __expr)                                \
@@ -120,6 +123,96 @@ TEST(CoreEval, StrstrLevel)
     str = "a $x";
     POINTERS_EQUAL(str + 2, eval_strstr_level (str, "$x", &eval_context,
                                                NULL, NULL, 0));
+}
+
+/*
+ * Test functions:
+ *   eval_search_operator
+ */
+
+TEST(CoreEval, SearchOperator)
+{
+    struct t_eval_context eval_context;
+    const char *str;
+    int logic, comp;
+
+    memset (&eval_context, 0, sizeof (eval_context));
+    eval_context.prefix = "${";
+    eval_context.length_prefix = 2;
+    eval_context.suffix = "}";
+    eval_context.length_suffix = 1;
+
+    /* No operator. */
+    POINTERS_EQUAL(NULL, eval_search_operator ("", &eval_context,
+                                               &logic, &comp));
+    LONGS_EQUAL(-1, logic);
+    LONGS_EQUAL(-1, comp);
+    POINTERS_EQUAL(NULL, eval_search_operator ("abc", &eval_context,
+                                               &logic, &comp));
+    POINTERS_EQUAL(NULL, eval_search_operator ("(a || b)", &eval_context,
+                                               &logic, &comp));
+    POINTERS_EQUAL(NULL, eval_search_operator ("${a == b}", &eval_context,
+                                               &logic, &comp));
+
+    /* Logical operators: "||" has priority over "&&". */
+    str = "a && b || c";
+    POINTERS_EQUAL(str + 7, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(EVAL_LOGICAL_OP_OR, logic);
+    LONGS_EQUAL(-1, comp);
+    str = "a || b || c";
+    POINTERS_EQUAL(str + 2, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(EVAL_LOGICAL_OP_OR, logic);
+    str = "(a || b) && c == d";
+    POINTERS_EQUAL(str + 9, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(EVAL_LOGICAL_OP_AND, logic);
+    LONGS_EQUAL(-1, comp);
+
+    /* Logical operator at beginning of expression is ignored. */
+    str = "|| a && b";
+    POINTERS_EQUAL(str + 5, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(EVAL_LOGICAL_OP_AND, logic);
+    str = "|| a || b";
+    POINTERS_EQUAL(NULL, eval_search_operator (str, &eval_context,
+                                               &logic, &comp));
+
+    /* Comparisons: logical operators have priority. */
+    str = "a == b && c";
+    POINTERS_EQUAL(str + 7, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(EVAL_LOGICAL_OP_AND, logic);
+
+    /* Comparisons: order of priority is the order of array. */
+    str = "a == b =~ c";
+    POINTERS_EQUAL(str + 7, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(-1, logic);
+    LONGS_EQUAL(EVAL_COMPARE_REGEX_MATCHING, comp);
+    str = "a ==* b";
+    POINTERS_EQUAL(str + 2, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(EVAL_COMPARE_STRING_MATCHING_CASE_SENSITIVE, comp);
+    str = "a <= b";
+    POINTERS_EQUAL(str + 2, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(EVAL_COMPARE_LESS_EQUAL, comp);
+    str = "a >= b < c";
+    POINTERS_EQUAL(str + 7, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(EVAL_COMPARE_LESS, comp);
+    str = "(a == b) != c";
+    POINTERS_EQUAL(str + 9, eval_search_operator (str, &eval_context,
+                                                  &logic, &comp));
+    LONGS_EQUAL(EVAL_COMPARE_NOT_EQUAL, comp);
+
+    /* Comparison at beginning of expression is allowed. */
+    str = "=~ abc";
+    POINTERS_EQUAL(str, eval_search_operator (str, &eval_context,
+                                              &logic, &comp));
+    LONGS_EQUAL(EVAL_COMPARE_REGEX_MATCHING, comp);
 }
 
 /*
@@ -375,120 +468,22 @@ TEST(CoreEval, EvalCondition)
     STRCMP_EQUAL(
         "1:eval_expression(\"abc < def\")\n"
         "  2:eval_expression_condition(\"abc < def\")\n"
-        "    3:eval_strstr_level(\"abc < def\", \"||\", \"(\", \")\", 0)\n"
-        "    3:== null\n"
-        "    4:eval_strstr_level(\"abc < def\", \"&&\", \"(\", \")\", 0)\n"
-        "    4:== null\n"
-        "    5:eval_strstr_level(\"abc < def\", \"=~\", \"(\", \")\", 0)\n"
-        "    5:== null\n"
-        "    6:eval_strstr_level(\"abc < def\", \"!~\", \"(\", \")\", 0)\n"
-        "    6:== null\n"
-        "    7:eval_strstr_level(\"abc < def\", \"==*\", \"(\", \")\", 0)\n"
-        "    7:== null\n"
-        "    8:eval_strstr_level(\"abc < def\", \"!!*\", \"(\", \")\", 0)\n"
-        "    8:== null\n"
-        "    9:eval_strstr_level(\"abc < def\", \"=*\", \"(\", \")\", 0)\n"
-        "    9:== null\n"
-        "    10:eval_strstr_level(\"abc < def\", \"!*\", \"(\", \")\", 0)\n"
-        "    10:== null\n"
-        "    11:eval_strstr_level(\"abc < def\", \"==-\", \"(\", \")\", 0)\n"
-        "    11:== null\n"
-        "    12:eval_strstr_level(\"abc < def\", \"!!-\", \"(\", \")\", 0)\n"
-        "    12:== null\n"
-        "    13:eval_strstr_level(\"abc < def\", \"=-\", \"(\", \")\", 0)\n"
-        "    13:== null\n"
-        "    14:eval_strstr_level(\"abc < def\", \"!-\", \"(\", \")\", 0)\n"
-        "    14:== null\n"
-        "    15:eval_strstr_level(\"abc < def\", \"==\", \"(\", \")\", 0)\n"
-        "    15:== null\n"
-        "    16:eval_strstr_level(\"abc < def\", \"!=\", \"(\", \")\", 0)\n"
-        "    16:== null\n"
-        "    17:eval_strstr_level(\"abc < def\", \"<=\", \"(\", \")\", 0)\n"
-        "    17:== null\n"
-        "    18:eval_strstr_level(\"abc < def\", \"<\", \"(\", \")\", 0)\n"
-        "    18:== \"< def\"\n"
-        "    19:eval_expression_condition(\"abc\")\n"
-        "      20:eval_strstr_level(\"abc\", \"||\", \"(\", \")\", 0)\n"
-        "      20:== null\n"
-        "      21:eval_strstr_level(\"abc\", \"&&\", \"(\", \")\", 0)\n"
-        "      21:== null\n"
-        "      22:eval_strstr_level(\"abc\", \"=~\", \"(\", \")\", 0)\n"
-        "      22:== null\n"
-        "      23:eval_strstr_level(\"abc\", \"!~\", \"(\", \")\", 0)\n"
-        "      23:== null\n"
-        "      24:eval_strstr_level(\"abc\", \"==*\", \"(\", \")\", 0)\n"
-        "      24:== null\n"
-        "      25:eval_strstr_level(\"abc\", \"!!*\", \"(\", \")\", 0)\n"
-        "      25:== null\n"
-        "      26:eval_strstr_level(\"abc\", \"=*\", \"(\", \")\", 0)\n"
-        "      26:== null\n"
-        "      27:eval_strstr_level(\"abc\", \"!*\", \"(\", \")\", 0)\n"
-        "      27:== null\n"
-        "      28:eval_strstr_level(\"abc\", \"==-\", \"(\", \")\", 0)\n"
-        "      28:== null\n"
-        "      29:eval_strstr_level(\"abc\", \"!!-\", \"(\", \")\", 0)\n"
-        "      29:== null\n"
-        "      30:eval_strstr_level(\"abc\", \"=-\", \"(\", \")\", 0)\n"
-        "      30:== null\n"
-        "      31:eval_strstr_level(\"abc\", \"!-\", \"(\", \")\", 0)\n"
-        "      31:== null\n"
-        "      32:eval_strstr_level(\"abc\", \"==\", \"(\", \")\", 0)\n"
-        "      32:== null\n"
-        "      33:eval_strstr_level(\"abc\", \"!=\", \"(\", \")\", 0)\n"
-        "      33:== null\n"
-        "      34:eval_strstr_level(\"abc\", \"<=\", \"(\", \")\", 0)\n"
-        "      34:== null\n"
-        "      35:eval_strstr_level(\"abc\", \"<\", \"(\", \")\", 0)\n"
-        "      35:== null\n"
-        "      36:eval_strstr_level(\"abc\", \">=\", \"(\", \")\", 0)\n"
-        "      36:== null\n"
-        "      37:eval_strstr_level(\"abc\", \">\", \"(\", \")\", 0)\n"
-        "      37:== null\n"
-        "      38:eval_replace_vars(\"abc\")\n"
-        "      38:== \"abc\"\n"
-        "    19:== \"abc\"\n"
-        "    39:eval_expression_condition(\"def\")\n"
-        "      40:eval_strstr_level(\"def\", \"||\", \"(\", \")\", 0)\n"
-        "      40:== null\n"
-        "      41:eval_strstr_level(\"def\", \"&&\", \"(\", \")\", 0)\n"
-        "      41:== null\n"
-        "      42:eval_strstr_level(\"def\", \"=~\", \"(\", \")\", 0)\n"
-        "      42:== null\n"
-        "      43:eval_strstr_level(\"def\", \"!~\", \"(\", \")\", 0)\n"
-        "      43:== null\n"
-        "      44:eval_strstr_level(\"def\", \"==*\", \"(\", \")\", 0)\n"
-        "      44:== null\n"
-        "      45:eval_strstr_level(\"def\", \"!!*\", \"(\", \")\", 0)\n"
-        "      45:== null\n"
-        "      46:eval_strstr_level(\"def\", \"=*\", \"(\", \")\", 0)\n"
-        "      46:== null\n"
-        "      47:eval_strstr_level(\"def\", \"!*\", \"(\", \")\", 0)\n"
-        "      47:== null\n"
-        "      48:eval_strstr_level(\"def\", \"==-\", \"(\", \")\", 0)\n"
-        "      48:== null\n"
-        "      49:eval_strstr_level(\"def\", \"!!-\", \"(\", \")\", 0)\n"
-        "      49:== null\n"
-        "      50:eval_strstr_level(\"def\", \"=-\", \"(\", \")\", 0)\n"
-        "      50:== null\n"
-        "      51:eval_strstr_level(\"def\", \"!-\", \"(\", \")\", 0)\n"
-        "      51:== null\n"
-        "      52:eval_strstr_level(\"def\", \"==\", \"(\", \")\", 0)\n"
-        "      52:== null\n"
-        "      53:eval_strstr_level(\"def\", \"!=\", \"(\", \")\", 0)\n"
-        "      53:== null\n"
-        "      54:eval_strstr_level(\"def\", \"<=\", \"(\", \")\", 0)\n"
-        "      54:== null\n"
-        "      55:eval_strstr_level(\"def\", \"<\", \"(\", \")\", 0)\n"
-        "      55:== null\n"
-        "      56:eval_strstr_level(\"def\", \">=\", \"(\", \")\", 0)\n"
-        "      56:== null\n"
-        "      57:eval_strstr_level(\"def\", \">\", \"(\", \")\", 0)\n"
-        "      57:== null\n"
-        "      58:eval_replace_vars(\"def\")\n"
-        "      58:== \"def\"\n"
-        "    39:== \"def\"\n"
-        "    59:eval_compare(\"abc\", \"<\", \"def\")\n"
-        "    59:== \"1\"\n"
+        "    3:eval_search_operator(\"abc < def\")\n"
+        "    3:== \"< def\"\n"
+        "    4:eval_expression_condition(\"abc\")\n"
+        "      5:eval_search_operator(\"abc\")\n"
+        "      5:== null\n"
+        "      6:eval_replace_vars(\"abc\")\n"
+        "      6:== \"abc\"\n"
+        "    4:== \"abc\"\n"
+        "    7:eval_expression_condition(\"def\")\n"
+        "      8:eval_search_operator(\"def\")\n"
+        "      8:== null\n"
+        "      9:eval_replace_vars(\"def\")\n"
+        "      9:== \"def\"\n"
+        "    7:== \"def\"\n"
+        "    10:eval_compare(\"abc\", \"<\", \"def\")\n"
+        "    10:== \"1\"\n"
         "  2:== \"1\"\n"
         "1:== \"1\"",
         ptr_debug_output);
