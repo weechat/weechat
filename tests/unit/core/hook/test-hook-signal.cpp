@@ -13,11 +13,32 @@
 extern "C"
 {
 #include "src/core/weechat.h"
+#include "src/core/core-hook.h"
 #include "src/core/hook/hook-signal.h"
+#include "src/plugins/weechat-plugin.h"
+
+extern int hook_signal_match (const char *signal, struct t_hook *hook);
 }
 
 TEST_GROUP(HookSignal)
 {
+    /*
+     * Callback for the signal hooks (never called in tests).
+     */
+
+    static int
+    test_signal_cb (const void *pointer, void *data, const char *signal,
+                    const char *type_data, void *signal_data)
+    {
+        /* Make C++ compiler happy. */
+        (void) pointer;
+        (void) data;
+        (void) signal;
+        (void) type_data;
+        (void) signal_data;
+
+        return WEECHAT_RC_OK;
+    }
 };
 
 /*
@@ -47,7 +68,37 @@ TEST(HookSignal, Signal)
 
 TEST(HookSignal, Match)
 {
-    /* TODO: write tests */
+    struct t_hook *hook;
+
+    /* Masks without wildcard (exact name) and with wildcards. */
+    hook = hook_signal (NULL, "test_signal;Test_Upper;irc_in_*;*_end",
+                        &test_signal_cb, NULL, NULL);
+    CHECK(hook);
+
+    LONGS_EQUAL(0, hook_signal_match ("", hook));
+    LONGS_EQUAL(0, hook_signal_match ("test", hook));
+    LONGS_EQUAL(0, hook_signal_match ("test_signal2", hook));
+    LONGS_EQUAL(0, hook_signal_match ("xtest_signal", hook));
+    LONGS_EQUAL(0, hook_signal_match ("irc_out_privmsg", hook));
+    LONGS_EQUAL(0, hook_signal_match ("end_buffer", hook));
+
+    LONGS_EQUAL(1, hook_signal_match ("test_signal", hook));
+    LONGS_EQUAL(1, hook_signal_match ("TEST_SIGNAL", hook));
+    LONGS_EQUAL(1, hook_signal_match ("test_upper", hook));
+    LONGS_EQUAL(1, hook_signal_match ("irc_in_privmsg", hook));
+    LONGS_EQUAL(1, hook_signal_match ("IRC_IN_PRIVMSG", hook));
+    LONGS_EQUAL(1, hook_signal_match ("buffer_end", hook));
+
+    unhook (hook);
+
+    /* Mask matching any signal. */
+    hook = hook_signal (NULL, "*", &test_signal_cb, NULL, NULL);
+    CHECK(hook);
+
+    LONGS_EQUAL(1, hook_signal_match ("test", hook));
+    LONGS_EQUAL(1, hook_signal_match ("irc_in_privmsg", hook));
+
+    unhook (hook);
 }
 
 /*

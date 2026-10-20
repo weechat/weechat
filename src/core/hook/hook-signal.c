@@ -102,8 +102,16 @@ hook_signal_match (const char *signal, struct t_hook *hook)
 
     for (i = 0; i < HOOK_SIGNAL(hook, num_signals); i++)
     {
-        if (string_match (signal, HOOK_SIGNAL(hook, signals)[i], 0))
+        /* Fast path for a mask without wildcard: compare strings. */
+        if (!strchr (HOOK_SIGNAL(hook, signals)[i], '*'))
+        {
+            if (string_strcasecmp (signal, HOOK_SIGNAL(hook, signals)[i]) == 0)
+                return 1;
+        }
+        else if (string_match (signal, HOOK_SIGNAL(hook, signals)[i], 0))
+        {
             return 1;
+        }
     }
 
     return 0;
