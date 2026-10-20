@@ -857,7 +857,7 @@ TEST(CoreString, MemcmpConstantTime)
 
 TEST(CoreString, Search)
 {
-    const char *str = "test";
+    const char *str = "test", *str2;
 
     /* Case-insensitive search of string in a string. */
     STRCMP_EQUAL(NULL, string_strcasestr (NULL, NULL));
@@ -867,6 +867,19 @@ TEST(CoreString, Search)
     STRCMP_EQUAL(NULL, string_strcasestr (str, "zz"));
     STRCMP_EQUAL(str + 1, string_strcasestr (str, "est"));
     STRCMP_EQUAL(str + 1, string_strcasestr (str, "EST"));
+    str2 = "aXbxcX";
+    POINTERS_EQUAL(str2 + 1, string_strcasestr (str2, "x"));
+    POINTERS_EQUAL(str2 + 1, string_strcasestr (str2, "X"));
+    POINTERS_EQUAL(str2 + 3, string_strcasestr (str2, "XC"));
+    str2 = "aaab";
+    POINTERS_EQUAL(str2 + 2, string_strcasestr (str2, "AB"));
+    str2 = "[_]";
+    POINTERS_EQUAL(str2 + 1, string_strcasestr (str2, "_"));
+    str2 = "éÉaB";
+    POINTERS_EQUAL(str2 + 4, string_strcasestr (str2, "ab"));
+    POINTERS_EQUAL(str2, string_strcasestr (str2, "É"));
+    POINTERS_EQUAL(str2 + 2, string_strcasestr (str2, "éa"));
+    POINTERS_EQUAL(NULL, string_strcasestr (str2, "ba"));
 }
 
 /*

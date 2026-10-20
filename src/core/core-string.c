@@ -1069,15 +1069,39 @@ string_memcmp_constant_time (const void *area1, const void *area2, size_t size)
 const char *
 string_strcasestr (const char *string, const char *search)
 {
-    int length_search;
+    int length_search, first_char, char1;
 
     length_search = utf8_strlen (search);
 
     if (!string || !search || (length_search == 0))
         return NULL;
 
+    /* First char of search in lowercase if single-byte, otherwise -1. */
+    first_char = (unsigned char)search[0];
+    if (first_char & 0x80)
+        first_char = -1;
+    else if ((first_char >= 'A') && (first_char <= 'Z'))
+        first_char += ('a' - 'A');
+
     while (string && string[0])
     {
+        /*
+         * Optimization for single-byte chars: skip quickly the chars which
+         * are different from the first char of search; this is faster than
+         * calling string_strncasecmp on each char.
+         */
+        char1 = (unsigned char)string[0];
+        if ((first_char >= 0) && !(char1 & 0x80))
+        {
+            if ((char1 >= 'A') && (char1 <= 'Z'))
+                char1 += ('a' - 'A');
+            if (char1 != first_char)
+            {
+                string++;
+                continue;
+            }
+        }
+
         if (string_strncasecmp (string, search, length_search) == 0)
             return (char *)string;
 

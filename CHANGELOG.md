@@ -36,6 +36,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: search text in strings faster when case is ignored, for example to detect highlights
 - core: convert strings to lowercase and uppercase faster
 - core: duplicate part of long strings faster
 - core: replace text in long strings faster
