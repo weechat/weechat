@@ -359,12 +359,18 @@ string_repeat (const char *string, int count)
 
 /*
  * Convert string to lowercase (locale dependent).
+ *
+ * Note: result must be freed after use.
+ *
+ * Return NULL if error.
  */
 
 char *
 string_tolower (const char *string)
 {
     char **result, utf_char[5];
+    const char *ptr_start;
+    int length, length_run, i;
 
     if (!string)
         return NULL;
@@ -373,41 +379,63 @@ string_tolower (const char *string)
     if (!result)
         return NULL;
 
+    length = 0;
     while (string && string[0])
     {
         if (!((unsigned char)(string[0]) & 0x80))
         {
             /*
-             * Optimization for single-byte char: only letters A-Z must be
-             * converted to lowercase; this is faster than calling `towlower`.
+             * Optimization for single-byte chars: copy all consecutive
+             * single-byte chars at once, then convert only letters A-Z
+             * to lowercase in the result; this is faster than calling
+             * `towlower`.
              */
-            if ((string[0] >= 'A') && (string[0] <= 'Z'))
-                utf_char[0] = string[0] + ('a' - 'A');
-            else
-                utf_char[0] = string[0];
-            utf_char[1] = '\0';
-            string_dyn_concat (result, utf_char, -1);
-            string++;
+            ptr_start = string;
+            while (string[0] && !((unsigned char)(string[0]) & 0x80))
+            {
+                string++;
+            }
+            length_run = string - ptr_start;
+            if (!string_dyn_concat (result, ptr_start, length_run))
+                goto error;
+            for (i = length; i < length + length_run; i++)
+            {
+                if (((*result)[i] >= 'A') && ((*result)[i] <= 'Z'))
+                    (*result)[i] += ('a' - 'A');
+            }
+            length += length_run;
         }
         else
         {
             /* Char ≥ 2 bytes, use `towlower`. */
             utf8_int_string (towlower (utf8_char_int (string)), utf_char);
-            string_dyn_concat (result, utf_char, -1);
+            if (!string_dyn_concat (result, utf_char, -1))
+                goto error;
+            length += strlen (utf_char);
             string = (char *)utf8_next_char (string);
         }
     }
     return string_dyn_free (result, 0);
+
+error:
+    string_dyn_free (result, 1);
+    return NULL;
 }
 
 /*
  * Convert string to uppercase (locale dependent).
+ *
+ * Note: result must be freed after use.
+ *
+ * Return NULL if error.
  */
 
 char *
 string_toupper (const char *string)
 {
     char **result, utf_char[5];
+    const char *ptr_start;
+    int length, length_run, i;
 
     if (!string)
         return NULL;
@@ -416,31 +444,47 @@ string_toupper (const char *string)
     if (!result)
         return NULL;
 
+    length = 0;
     while (string && string[0])
     {
         if (!((unsigned char)(string[0]) & 0x80))
         {
             /*
-             * Optimization for single-byte char: only letters a-z must be
-             * converted to uppercase; this is faster than calling `towupper`.
+             * Optimization for single-byte chars: copy all consecutive
+             * single-byte chars at once, then convert only letters a-z
+             * to uppercase in the result; this is faster than calling
+             * `towupper`.
              */
-            if ((string[0] >= 'a') && (string[0] <= 'z'))
-                utf_char[0] = string[0] - ('a' - 'A');
-            else
-                utf_char[0] = string[0];
-            utf_char[1] = '\0';
-            string_dyn_concat (result, utf_char, -1);
-            string++;
+            ptr_start = string;
+            while (string[0] && !((unsigned char)(string[0]) & 0x80))
+            {
+                string++;
+            }
+            length_run = string - ptr_start;
+            if (!string_dyn_concat (result, ptr_start, length_run))
+                goto error;
+            for (i = length; i < length + length_run; i++)
+            {
+                if (((*result)[i] >= 'a') && ((*result)[i] <= 'z'))
+                    (*result)[i] -= ('a' - 'A');
+            }
+            length += length_run;
         }
         else
         {
             /* Char ≥ 2 bytes, use `towupper`. */
             utf8_int_string (towupper (utf8_char_int (string)), utf_char);
-            string_dyn_concat (result, utf_char, -1);
+            if (!string_dyn_concat (result, utf_char, -1))
+                goto error;
+            length += strlen (utf_char);
             string = (char *)utf8_next_char (string);
         }
     }
     return string_dyn_free (result, 0);
+
+error:
+    string_dyn_free (result, 1);
+    return NULL;
 }
 
 /*
