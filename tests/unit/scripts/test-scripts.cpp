@@ -114,6 +114,12 @@ test_scripts_wait_tests (int timeout)
     while (api_tests_ok + api_tests_errors < api_tests_count)
     {
         hook_timer_exec ();
+        /*
+         * Stop now if the last tests were done in a timer callback:
+         * hook_fd_exec would wait in poll() until the next timer.
+         */
+        if (api_tests_ok + api_tests_errors >= api_tests_count)
+            break;
         hook_fd_exec ();
         hook_process_exec ();
         gettimeofday (&time_now, NULL);
