@@ -2070,8 +2070,8 @@ char *
 string_replace (const char *string, const char *search, const char *replace)
 {
     const char *pos;
-    char *new_string;
-    int length1, length2, length_new, count;
+    char *new_string, *ptr_new_string;
+    int length1, length2, length_new, length, count;
 
     if (!string || !search || !replace)
         return NULL;
@@ -2103,21 +2103,31 @@ string_replace (const char *string, const char *search, const char *replace)
     if (!new_string)
         return strdup (string);
 
-    /* Replace all occurrences. */
-    new_string[0] = '\0';
+    /*
+     * Replace all occurrences (the new string is built with a pointer to
+     * its end, which is much faster than strcat on a long string).
+     */
+    ptr_new_string = new_string;
     while (string && string[0])
     {
         pos = strstr (string, search);
         if (pos)
         {
-            strncat (new_string, string, pos - string);
-            strcat (new_string, replace);
+            memcpy (ptr_new_string, string, pos - string);
+            ptr_new_string += pos - string;
+            memcpy (ptr_new_string, replace, length2);
+            ptr_new_string += length2;
             pos += length1;
         }
         else
-            strcat (new_string, string);
+        {
+            length = strlen (string);
+            memcpy (ptr_new_string, string, length);
+            ptr_new_string += length;
+        }
         string = pos;
     }
+    ptr_new_string[0] = '\0';
     return new_string;
 }
 

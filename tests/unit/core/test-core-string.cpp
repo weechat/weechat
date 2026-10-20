@@ -1505,7 +1505,8 @@ test_replace_cb (void *data,
 
 TEST(CoreString, Replace)
 {
-    char *str;
+    char *str, *long_str;
+    int i;
 
     WEE_TEST_STR(NULL, string_replace (NULL, NULL, NULL));
     WEE_TEST_STR(NULL, string_replace ("string", NULL, NULL));
@@ -1521,6 +1522,27 @@ TEST(CoreString, Replace)
     WEE_TEST_STR("test xxx def", string_replace("test abc def", "abc", "xxx"));
     WEE_TEST_STR("xxx test xxx def xxx",
                  string_replace("abc test abc def abc", "abc", "xxx"));
+    WEE_TEST_STR("test  def", string_replace("test abc def", "abc", ""));
+    WEE_TEST_STR("", string_replace("abcabc", "abc", ""));
+    WEE_TEST_STR("bba", string_replace("aaaaa", "aa", "b"));
+    WEE_TEST_STR("éxé", string_replace("éaé", "a", "x"));
+
+    /* Long string with many occurrences. */
+    long_str = (char *)malloc ((10000 * 2) + 1);
+    CHECK(long_str);
+    for (i = 0; i < 10000; i++)
+    {
+        long_str[i * 2] = 'a';
+        long_str[(i * 2) + 1] = 'b';
+    }
+    long_str[10000 * 2] = '\0';
+    str = string_replace (long_str, "b", "xyz");
+    CHECK(str);
+    LONGS_EQUAL(10000 * 4, strlen (str));
+    CHECK(strncmp (str, "axyzaxyz", 8) == 0);
+    STRCMP_EQUAL("axyz", str + (10000 * 4) - 4);
+    free (str);
+    free (long_str);
 }
 
 /*
