@@ -1962,6 +1962,83 @@ string_regcomp (void *preg, const char *regex, int default_flags)
 }
 
 /*
+ * Execute a regex on a string, starting the search at a given offset.
+ *
+ * Unlike regexec on "string + offset", the anchor "^" does not match at the
+ * offset (if offset > 0), unless the regex was compiled with REG_NEWLINE and
+ * the char before the offset is a newline.
+ *
+ * Limitation: if the char before the offset is a newline and the regex
+ * matches at this newline, "^" never matches at the offset.
+ *
+ * All the "nmatch" items in "pmatch" are initialized (rm_so set to -1 if not
+ * matching) and offsets are relative to the beginning of string.
+ *
+ * Return the value returned by regexec.
+ */
+
+int
+string_regexec_offset (regex_t *regex, const char *string, int offset,
+                       size_t nmatch, regmatch_t *pmatch)
+{
+    size_t i;
+    int rc, start;
+
+    if (!pmatch)
+        nmatch = 0;
+
+    start = offset;
+    for (i = 0; i < nmatch; i++)
+    {
+        pmatch[i].rm_so = -1;
+    }
+
+    if (offset <= 0)
+    {
+        start = 0;
+        rc = regexec (regex, string, nmatch, pmatch, 0);
+    }
+    else if ((nmatch > 0) && (string[offset - 1] == '\n'))
+    {
+        /*
+         * Search from the newline before the offset, so that "^" matches at
+         * the offset if REG_NEWLINE is set; a match starting at the newline
+         * is not allowed, so in this case the search is done again from the
+         * offset.
+         */
+        start = offset - 1;
+        rc = regexec (regex, string + start, nmatch, pmatch, REG_NOTBOL);
+        if ((rc == 0) && (pmatch[0].rm_so == 0))
+        {
+            start = offset;
+            for (i = 0; i < nmatch; i++)
+            {
+                pmatch[i].rm_so = -1;
+            }
+            rc = regexec (regex, string + start, nmatch, pmatch, REG_NOTBOL);
+        }
+    }
+    else
+    {
+        rc = regexec (regex, string + start, nmatch, pmatch, REG_NOTBOL);
+    }
+
+    if ((rc == 0) && (start > 0))
+    {
+        for (i = 0; i < nmatch; i++)
+        {
+            if (pmatch[i].rm_so >= 0)
+            {
+                pmatch[i].rm_so += start;
+                pmatch[i].rm_eo += start;
+            }
+        }
+    }
+
+    return rc;
+}
+
+/*
  * Check if a string has a highlight (using list of words to highlight).
  *
  * Return:
@@ -2076,41 +2153,46 @@ string_has_highlight (const char *string, const char *highlight_words)
 int
 string_has_highlight_regex_compiled (const char *string, regex_t *regex)
 {
-    int rc, startswith, endswith;
+    int rc, startswith, endswith, offset;
     regmatch_t regex_match;
     const char *match_pre;
 
     if (!string || !regex)
         return 0;
 
-    while (string && string[0])
+    offset = 0;
+    while (string[offset])
     {
-        rc = regexec (regex, string,  1, &regex_match, 0);
+        rc = string_regexec_offset (regex, string, offset, 1, &regex_match);
 
         /*
-         * No match found: exit the loop (if rm_eo == 0, it is an empty match
-         * at beginning of string: we consider there is no match, to prevent an
-         * infinite loop).
+         * No match found: exit the loop (if rm_eo == offset, it is an empty
+         * match at the search position: we consider there is no match, to
+         * prevent an infinite loop).
          */
-        if ((rc != 0) || (regex_match.rm_so < 0) || (regex_match.rm_eo <= 0))
+        if ((rc != 0) || (regex_match.rm_so < 0)
+            || (regex_match.rm_eo <= offset))
+        {
             break;
+        }
 
-        startswith = (regex_match.rm_so == 0);
+        startswith = (regex_match.rm_so == offset);
         if (!startswith)
         {
-            match_pre = utf8_prev_char (string, string + regex_match.rm_so);
+            match_pre = utf8_prev_char (string + offset,
+                                        string + regex_match.rm_so);
             startswith = !string_is_word_char_highlight (match_pre);
         }
         endswith = 0;
         if (startswith)
         {
-            endswith = ((regex_match.rm_eo == (int)strlen (string))
+            endswith = (!string[regex_match.rm_eo]
                         || !string_is_word_char_highlight (string + regex_match.rm_eo));
         }
         if (startswith && endswith)
             return 1;
 
-        string += regex_match.rm_eo;
+        offset = regex_match.rm_eo;
     }
 
     /* No highlight found */
@@ -2417,90 +2499,70 @@ string_replace_regex (const char *string, void *regex, const char *replace,
                       char *(*callback)(void *data, const char *text),
                       void *callback_data)
 {
-    char *result, *result2, *str_replace;
-    int length, length_replace, start_offset, i, rc, end, last_match;
+    char **result, *str_replace;
+    int offset, i, rc, last_match;
     regmatch_t regex_match[100];
 
     if (!string || !regex)
         return NULL;
 
-    result = strdup (string);
+    result = string_dyn_alloc (strlen (string) + 1);
+    if (!result)
+        return NULL;
 
-    start_offset = 0;
-    while (result && result[start_offset])
+    /* Matches are searched in the original string, not in the result. */
+    offset = 0;
+    while (string[offset])
     {
-        for (i = 0; i < 100; i++)
-        {
-            regex_match[i].rm_so = -1;
-        }
-
-        rc = regexec ((regex_t *)regex, result + start_offset, 100, regex_match,
-                      0);
+        rc = string_regexec_offset ((regex_t *)regex, string, offset,
+                                    100, regex_match);
         /*
-         * No match found: exit the loop (if rm_eo == 0, it is an empty match
-         * at beginning of string: we consider there is no match, to prevent an
-         * infinite loop).
+         * No match found: exit the loop (if rm_eo == offset, it is an empty
+         * match at the search position: we consider there is no match, to
+         * prevent an infinite loop).
          */
         if ((rc != 0)
-            || (regex_match[0].rm_so < 0) || (regex_match[0].rm_eo <= 0))
+            || (regex_match[0].rm_so < 0) || (regex_match[0].rm_eo <= offset))
         {
             break;
         }
 
-        /* Adjust the start/end offsets. */
         last_match = 0;
         for (i = 0; i < 100; i++)
         {
             if (regex_match[i].rm_so >= 0)
-            {
                 last_match = i;
-                regex_match[i].rm_so += start_offset;
-                regex_match[i].rm_eo += start_offset;
-            }
         }
 
-        /* Check if the regex matched the end of string. */
-        end = !result[regex_match[0].rm_eo];
-
-        str_replace = string_replace_regex_get_replace (result,
+        str_replace = string_replace_regex_get_replace (string,
                                                         regex_match,
                                                         last_match,
                                                         replace,
                                                         reference_char,
                                                         callback,
                                                         callback_data);
-        length_replace = (str_replace) ? strlen (str_replace) : 0;
 
-        length = regex_match[0].rm_so + length_replace +
-            strlen (result + regex_match[0].rm_eo) + 1;
-        result2 = malloc (length);
-        if (!result2)
+        if (!string_dyn_concat (result, string + offset,
+                                regex_match[0].rm_so - offset)
+            || (str_replace && !string_dyn_concat (result, str_replace, -1)))
         {
-            free (result);
+            free (str_replace);
+            string_dyn_free (result, 1);
             return NULL;
         }
-        result2[0] = '\0';
-        if (regex_match[0].rm_so > 0)
-        {
-            memcpy (result2, result, regex_match[0].rm_so);
-            result2[regex_match[0].rm_so] = '\0';
-        }
-        if (str_replace)
-            strcat (result2, str_replace);
-        strcat (result2, result + regex_match[0].rm_eo);
-
-        free (result);
-        result = result2;
 
         free (str_replace);
 
-        if (end)
-            break;
-
-        start_offset = regex_match[0].rm_so + length_replace;
+        offset = regex_match[0].rm_eo;
     }
 
-    return result;
+    if (!string_dyn_concat (result, string + offset, -1))
+    {
+        string_dyn_free (result, 1);
+        return NULL;
+    }
+
+    return string_dyn_free (result, 0);
 }
 
 /*

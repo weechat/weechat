@@ -1466,6 +1466,74 @@ TEST(CoreString, Regex)
 
 /*
  * Test functions:
+ *   string_regexec_offset
+ */
+
+TEST(CoreString, RegexecOffset)
+{
+    regex_t regex;
+    regmatch_t match[3];
+
+    /* Offsets are relative to the beginning of string. */
+    LONGS_EQUAL(0, string_regcomp (&regex, "(b)(c)", REG_EXTENDED));
+    LONGS_EQUAL(0, string_regexec_offset (&regex, "abcbc", 2, 3, match));
+    LONGS_EQUAL(3, match[0].rm_so);
+    LONGS_EQUAL(5, match[0].rm_eo);
+    LONGS_EQUAL(3, match[1].rm_so);
+    LONGS_EQUAL(4, match[1].rm_eo);
+    LONGS_EQUAL(4, match[2].rm_so);
+    LONGS_EQUAL(5, match[2].rm_eo);
+    LONGS_EQUAL(REG_NOMATCH,
+                string_regexec_offset (&regex, "abcbc", 4, 3, match));
+    regfree (&regex);
+
+    /* Groups not matching are initialized. */
+    LONGS_EQUAL(0, string_regcomp (&regex, "a|(b)", REG_EXTENDED));
+    match[1].rm_so = 0;
+    LONGS_EQUAL(0, string_regexec_offset (&regex, "a", 0, 2, match));
+    LONGS_EQUAL(0, match[0].rm_so);
+    LONGS_EQUAL(1, match[0].rm_eo);
+    LONGS_EQUAL(-1, match[1].rm_so);
+    regfree (&regex);
+
+    /* "^" matches only at the beginning of string. */
+    LONGS_EQUAL(0, string_regcomp (&regex, "^a", REG_EXTENDED));
+    LONGS_EQUAL(0, string_regexec_offset (&regex, "aa", 0, 1, match));
+    LONGS_EQUAL(0, match[0].rm_so);
+    LONGS_EQUAL(1, match[0].rm_eo);
+    LONGS_EQUAL(0, string_regexec_offset (&regex, "aa", 0, 0, NULL));
+    LONGS_EQUAL(REG_NOMATCH,
+                string_regexec_offset (&regex, "aa", 1, 1, match));
+    LONGS_EQUAL(REG_NOMATCH,
+                string_regexec_offset (&regex, "aa", 1, 0, NULL));
+    LONGS_EQUAL(REG_NOMATCH,
+                string_regexec_offset (&regex, "a\na", 2, 1, match));
+    regfree (&regex);
+
+    /* "^" matches after a newline with REG_NEWLINE. */
+    LONGS_EQUAL(0, string_regcomp (&regex, "^a", REG_EXTENDED | REG_NEWLINE));
+    LONGS_EQUAL(REG_NOMATCH,
+                string_regexec_offset (&regex, "aa", 1, 1, match));
+    LONGS_EQUAL(0, string_regexec_offset (&regex, "a\na", 1, 1, match));
+    LONGS_EQUAL(2, match[0].rm_so);
+    LONGS_EQUAL(3, match[0].rm_eo);
+    LONGS_EQUAL(0, string_regexec_offset (&regex, "a\na", 2, 1, match));
+    LONGS_EQUAL(2, match[0].rm_so);
+    LONGS_EQUAL(3, match[0].rm_eo);
+    regfree (&regex);
+
+    /* Match at the newline before the offset is not allowed. */
+    LONGS_EQUAL(0, string_regcomp (&regex, "\n|b", REG_EXTENDED));
+    LONGS_EQUAL(0, string_regexec_offset (&regex, "a\nb", 2, 1, match));
+    LONGS_EQUAL(2, match[0].rm_so);
+    LONGS_EQUAL(3, match[0].rm_eo);
+    LONGS_EQUAL(REG_NOMATCH,
+                string_regexec_offset (&regex, "a\nc", 2, 1, match));
+    regfree (&regex);
+}
+
+/*
+ * Test functions:
  *   string_has_highlight
  *   string_has_highlight_regex_compiled
  *   string_has_highlight_regex
@@ -1511,6 +1579,8 @@ TEST(CoreString, Highlight)
     WEE_HAS_HL_REGEX(0, 1, "tested here", "test.*");
     WEE_HAS_HL_REGEX(0, 0, "this is a test", "teste.*");
     WEE_HAS_HL_REGEX(0, 0, "test here", "teste.*");
+    WEE_HAS_HL_REGEX(0, 1, "test here", "^test");
+    WEE_HAS_HL_REGEX(0, 0, "testtest", "^test");
 }
 
 /*
@@ -1610,6 +1680,13 @@ TEST(CoreString, ReplaceRegex)
                       "^(test +)(.*)", "$1/ $.*2", '$', NULL);
     WEE_REPLACE_REGEX(0, "%%%", "test foo",
                       "^(test +)(.*)", "$.%+", '$', NULL);
+    WEE_REPLACE_REGEX(0, "cb", "ab", "^(a|b)", "c", '$', NULL);
+    WEE_REPLACE_REGEX(0, "ca va", "allo ca va", "^[^ ]+ ", "", '$', NULL);
+    WEE_REPLACE_REGEX(0, "ab", "aab", "^a", "", '$', NULL);
+    WEE_REPLACE_REGEX(0, "X\nX\n", "ab\ncd\n", "(?n)^[a-z]+$", "X", '$',
+                      NULL);
+    WEE_REPLACE_REGEX(0, "X\ncd\n", "ab\ncd\n", "^[a-z]+", "X", '$', NULL);
+    WEE_REPLACE_REGEX(0, "XX", "ab\ncd\n", "(?n)^[a-z]+\n", "X", '$', NULL);
 }
 
 /*

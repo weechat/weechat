@@ -1731,7 +1731,7 @@ gui_color_emphasize (const char *string,
     char *result, *result2, *string_no_color;
     const char *ptr_string, *ptr_no_color, *color_emphasis, *pos;
     int rc, length_search, length_emphasis, length_result;
-    int pos1, pos2, real_pos1, real_pos2, count_emphasis;
+    int pos1, pos2, real_pos1, real_pos2, count_emphasis, offset;
 
     /* String is required. */
     if (!string)
@@ -1781,21 +1781,23 @@ gui_color_emphasize (const char *string,
         if (regex)
         {
             /* Search next match using the regex. */
-            regex_match.rm_so = -1;
-            rc = regexec (regex, ptr_no_color, 1, &regex_match, 0);
+            offset = ptr_no_color - string_no_color;
+            rc = string_regexec_offset (regex, string_no_color, offset,
+                                        1, &regex_match);
 
             /*
-             * No match found: exit the loop (if rm_no == 0, it is an empty
-             * match at beginning of string: we consider there is no match, to
-             * prevent an infinite loop).
+             * No match found: exit the loop (if rm_eo == offset, it is an
+             * empty match at the search position: we consider there is no
+             * match, to prevent an infinite loop).
              */
-            if ((rc != 0) || (regex_match.rm_so < 0) || (regex_match.rm_eo <= 0))
+            if ((rc != 0) || (regex_match.rm_so < 0)
+                || (regex_match.rm_eo <= offset))
             {
                 strcat (result, ptr_string);
                 break;
             }
-            pos1 = regex_match.rm_so;
-            pos2 = regex_match.rm_eo;
+            pos1 = regex_match.rm_so - offset;
+            pos2 = regex_match.rm_eo - offset;
         }
         else
         {

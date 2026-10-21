@@ -2641,9 +2641,8 @@ char *
 eval_replace_regex (const char *string, regex_t *regex, const char *replace,
                     struct t_eval_context *eval_context)
 {
-    char *result, *result2, *str_replace;
-    int length, length_replace, start_offset, i, rc, end, debug_id;
-    int empty_replace_allowed;
+    char **result_dyn, *result, *str_replace;
+    int offset, i, rc, debug_id, empty_replace_allowed;
     struct t_eval_regex eval_regex;
 
     result = NULL;
@@ -2654,97 +2653,75 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
     if (!string || !regex || !replace)
         goto end;
 
-    result = strdup (string);
-    if (!result)
+    result_dyn = string_dyn_alloc (strlen (string) + 1);
+    if (!result_dyn)
         goto end;
 
+    /* Matches are searched in the original string, not in the result. */
+    eval_regex.result = string;
     eval_context->regex = &eval_regex;
     eval_context->regex_replacement_index = 1;
 
-    start_offset = 0;
+    offset = 0;
 
     /* We allow one empty replace if input string is empty. */
-    empty_replace_allowed = (result[0]) ? 0 : 1;
+    empty_replace_allowed = (string[0]) ? 0 : 1;
 
-    while (result)
+    while (1)
     {
-        for (i = 0; i < 100; i++)
-        {
-            eval_regex.match[i].rm_so = -1;
-        }
-
-        rc = regexec (regex, result + start_offset, 100, eval_regex.match, 0);
+        rc = string_regexec_offset (regex, string, offset,
+                                    100, eval_regex.match);
 
         /* No match found: exit the loop. */
         if ((rc != 0) || (eval_regex.match[0].rm_so < 0))
             break;
 
         /*
-         * If empty string is matching, continue only if empty replace is
-         * still allowed (to prevent infinite loop).
+         * If empty string is matching at the search position, continue only
+         * if empty replace is still allowed (to prevent infinite loop).
          */
-        if (eval_regex.match[0].rm_eo <= 0)
+        if (eval_regex.match[0].rm_eo <= offset)
         {
             if (!empty_replace_allowed)
                 break;
             empty_replace_allowed = 0;
         }
 
-        /* Adjust the start/end offsets. */
         eval_regex.last_match = 0;
         for (i = 0; i < 100; i++)
         {
             if (eval_regex.match[i].rm_so >= 0)
-            {
                 eval_regex.last_match = i;
-                eval_regex.match[i].rm_so += start_offset;
-                eval_regex.match[i].rm_eo += start_offset;
-            }
         }
-
-        /* Check if the regex matched the end of string. */
-        end = !result[eval_regex.match[0].rm_eo];
-
-        eval_regex.result = result;
 
         str_replace = eval_replace_vars (replace, eval_context);
 
-        length_replace = (str_replace) ? strlen (str_replace) : 0;
-
-        length = eval_regex.match[0].rm_so + length_replace +
-            strlen (result + eval_regex.match[0].rm_eo) + 1;
-        result2 = malloc (length);
-        if (!result2)
+        if (!string_dyn_concat (result_dyn, string + offset,
+                                eval_regex.match[0].rm_so - offset)
+            || (str_replace && !string_dyn_concat (result_dyn, str_replace, -1)))
         {
-            free (result);
-            result = NULL;
+            free (str_replace);
+            string_dyn_free (result_dyn, 1);
             goto end;
         }
-        result2[0] = '\0';
-        if (eval_regex.match[0].rm_so > 0)
-        {
-            memcpy (result2, result, eval_regex.match[0].rm_so);
-            result2[eval_regex.match[0].rm_so] = '\0';
-        }
-        if (str_replace)
-            strcat (result2, str_replace);
-        strcat (result2, result + eval_regex.match[0].rm_eo);
-
-        free (result);
-        result = result2;
 
         free (str_replace);
 
-        if (end)
-            break;
+        offset = eval_regex.match[0].rm_eo;
 
-        start_offset = eval_regex.match[0].rm_so + length_replace;
-
-        if (!result[start_offset])
+        if (!string[offset])
             break;
 
         (eval_context->regex_replacement_index)++;
     }
+
+    if (!string_dyn_concat (result_dyn, string + offset, -1))
+    {
+        string_dyn_free (result_dyn, 1);
+        goto end;
+    }
+
+    result = string_dyn_free (result_dyn, 0);
 
 end:
     EVAL_DEBUG_RESULT(1, result);

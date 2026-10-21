@@ -1309,6 +1309,24 @@ TEST(CoreEval, EvalReplaceRegex)
     hashtable_set (options, "regex_replace", "${re:repl_index}");
     WEE_CHECK_EVAL("1234", "test");
 
+    /* Anchor "^" matches only at the beginning of string. */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "^(a|b)");
+    hashtable_set (options, "regex_replace", "c");
+    WEE_CHECK_EVAL("cb", "ab");
+
+    /* Anchor "^" matches only at the beginning of string (empty replace). */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "^[^ ]+ ");
+    hashtable_set (options, "regex_replace", "");
+    WEE_CHECK_EVAL("ca va", "allo ca va");
+
+    /* Anchor "^" matches after a newline with flag "n". */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "(?n)^[a-z]+\n");
+    hashtable_set (options, "regex_replace", "${re:repl_index}");
+    WEE_CHECK_EVAL("12", "ab\ncd\n");
+
     hashtable_free (pointers);
     hashtable_free (extra_vars);
     hashtable_free (options);
