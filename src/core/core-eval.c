@@ -2642,7 +2642,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
                     struct t_eval_context *eval_context)
 {
     char **result_dyn, *result, *str_replace;
-    int offset, i, rc, debug_id, empty_replace_allowed;
+    int offset, offset_copy, i, rc, debug_id, empty_replace_allowed;
     struct t_eval_regex eval_regex;
 
     result = NULL;
@@ -2663,6 +2663,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
     eval_context->regex_replacement_index = 1;
 
     offset = 0;
+    offset_copy = 0;
 
     /* We allow one empty replace if input string is empty. */
     empty_replace_allowed = (string[0]) ? 0 : 1;
@@ -2677,13 +2678,19 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
             break;
 
         /*
-         * If empty string is matching at the search position, continue only
-         * if empty replace is still allowed (to prevent infinite loop).
+         * If empty string is matching at the search position, it is replaced
+         * only if empty replace is still allowed, otherwise it is ignored and
+         * the search continues on next char (to prevent infinite loop).
          */
         if (eval_regex.match[0].rm_eo <= offset)
         {
             if (!empty_replace_allowed)
-                break;
+            {
+                offset = utf8_next_char (string + offset) - string;
+                if (!string[offset])
+                    break;
+                continue;
+            }
             empty_replace_allowed = 0;
         }
 
@@ -2696,8 +2703,8 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
 
         str_replace = eval_replace_vars (replace, eval_context);
 
-        if (!string_dyn_concat (result_dyn, string + offset,
-                                eval_regex.match[0].rm_so - offset)
+        if (!string_dyn_concat (result_dyn, string + offset_copy,
+                                eval_regex.match[0].rm_so - offset_copy)
             || (str_replace && !string_dyn_concat (result_dyn, str_replace, -1)))
         {
             free (str_replace);
@@ -2708,6 +2715,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
         free (str_replace);
 
         offset = eval_regex.match[0].rm_eo;
+        offset_copy = offset;
 
         if (!string[offset])
             break;
@@ -2715,7 +2723,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
         (eval_context->regex_replacement_index)++;
     }
 
-    if (!string_dyn_concat (result_dyn, string + offset, -1))
+    if (!string_dyn_concat (result_dyn, string + offset_copy, -1))
     {
         string_dyn_free (result_dyn, 1);
         goto end;

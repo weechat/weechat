@@ -1327,6 +1327,17 @@ TEST(CoreEval, EvalReplaceRegex)
     hashtable_set (options, "regex_replace", "${re:repl_index}");
     WEE_CHECK_EVAL("12", "ab\ncd\n");
 
+    /* Empty match at the search position is ignored. */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "(?n).*");
+    hashtable_set (options, "regex_replace", "${re:0}!");
+    WEE_CHECK_EVAL("MY!\nTEST!", "MY\nTEST");
+    hashtable_set (options, "regex", "b*");
+    hashtable_set (options, "regex_replace", "X");
+    WEE_CHECK_EVAL("aXc", "abc");
+    hashtable_set (options, "regex", "x*");
+    WEE_CHECK_EVAL("abc", "abc");
+
     hashtable_free (pointers);
     hashtable_free (extra_vars);
     hashtable_free (options);

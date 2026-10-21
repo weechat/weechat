@@ -1687,6 +1687,10 @@ TEST(CoreString, ReplaceRegex)
                       NULL);
     WEE_REPLACE_REGEX(0, "X\ncd\n", "ab\ncd\n", "^[a-z]+", "X", '$', NULL);
     WEE_REPLACE_REGEX(0, "XX", "ab\ncd\n", "(?n)^[a-z]+\n", "X", '$', NULL);
+    WEE_REPLACE_REGEX(0, "MY!\nTEST!", "MY\nTEST", "(?n).*", "$0!", '$', NULL);
+    WEE_REPLACE_REGEX(0, "aXc", "abc", "b*", "X", '$', NULL);
+    WEE_REPLACE_REGEX(0, "éXé", "é-é", "-*", "X", '$', NULL);
+    WEE_REPLACE_REGEX(0, "abc", "abc", "x*", "X", '$', NULL);
 }
 
 /*

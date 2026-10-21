@@ -2500,7 +2500,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
                       void *callback_data)
 {
     char **result, *str_replace;
-    int offset, i, rc, last_match;
+    int offset, offset_copy, i, rc, last_match;
     regmatch_t regex_match[100];
 
     if (!string || !regex)
@@ -2512,19 +2512,24 @@ string_replace_regex (const char *string, void *regex, const char *replace,
 
     /* Matches are searched in the original string, not in the result. */
     offset = 0;
+    offset_copy = 0;
     while (string[offset])
     {
         rc = string_regexec_offset ((regex_t *)regex, string, offset,
                                     100, regex_match);
-        /*
-         * No match found: exit the loop (if rm_eo == offset, it is an empty
-         * match at the search position: we consider there is no match, to
-         * prevent an infinite loop).
-         */
-        if ((rc != 0)
-            || (regex_match[0].rm_so < 0) || (regex_match[0].rm_eo <= offset))
-        {
+
+        /* No match found: exit the loop. */
+        if ((rc != 0) || (regex_match[0].rm_so < 0))
             break;
+
+        /*
+         * Empty match at the search position: it is ignored and the search
+         * continues on next char (to prevent an infinite loop).
+         */
+        if (regex_match[0].rm_eo <= offset)
+        {
+            offset = utf8_next_char (string + offset) - string;
+            continue;
         }
 
         last_match = 0;
@@ -2542,8 +2547,8 @@ string_replace_regex (const char *string, void *regex, const char *replace,
                                                         callback,
                                                         callback_data);
 
-        if (!string_dyn_concat (result, string + offset,
-                                regex_match[0].rm_so - offset)
+        if (!string_dyn_concat (result, string + offset_copy,
+                                regex_match[0].rm_so - offset_copy)
             || (str_replace && !string_dyn_concat (result, str_replace, -1)))
         {
             free (str_replace);
@@ -2554,9 +2559,10 @@ string_replace_regex (const char *string, void *regex, const char *replace,
         free (str_replace);
 
         offset = regex_match[0].rm_eo;
+        offset_copy = offset;
     }
 
-    if (!string_dyn_concat (result, string + offset, -1))
+    if (!string_dyn_concat (result, string + offset_copy, -1))
     {
         string_dyn_free (result, 1);
         return NULL;
