@@ -153,6 +153,13 @@ enum t_irc_server_option
 #define IRC_SERVER_RECV_MSG_MAX_LENGTH (64 * 1024)
 #define IRC_SERVER_ISUPPORT_MAX_LENGTH (64 * 1024)
 
+/*
+ * maximum number of prefix modes in PREFIX of "005" (ISUPPORT); this limit
+ * protects against a server sending a huge PREFIX, which would allocate a
+ * huge prefix in every nick and many nicklist groups in every channel
+ */
+#define IRC_SERVER_PREFIX_MAX_MODES 32
+
 /* casemapping (string comparisons for nicks/channels) */
 enum t_irc_server_casemapping
 {

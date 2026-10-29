@@ -660,6 +660,9 @@ TEST(IrcServer, SetPrefixModesChars)
     struct t_irc_server *server;
     struct t_irc_channel *channel;
     struct t_irc_nick *nick;
+    char modes[IRC_SERVER_PREFIX_MAX_MODES * 2 + 1];
+    char chars[IRC_SERVER_PREFIX_MAX_MODES * 2 + 1];
+    char prefix[IRC_SERVER_PREFIX_MAX_MODES * 4 + 8];
 
     irc_server_set_prefix_modes_chars (NULL, NULL);
     irc_server_set_prefix_modes_chars (NULL, "(ov)@+");
@@ -703,6 +706,22 @@ TEST(IrcServer, SetPrefixModesChars)
     STRCMP_EQUAL("ohv", server->prefix_modes);
     STRCMP_EQUAL("@  ", server->prefix_chars);
     STRCMP_EQUAL("@  ", nick->prefixes);
+
+    /* too many prefix modes: extra modes and chars are ignored */
+    memset (modes, 'a', sizeof (modes) - 1);
+    modes[sizeof (modes) - 1] = '\0';
+    memset (chars, '!', sizeof (chars) - 1);
+    chars[sizeof (chars) - 1] = '\0';
+    snprintf (prefix, sizeof (prefix), "(%s)%s", modes, chars);
+    irc_server_set_prefix_modes_chars (server, prefix);
+    LONGS_EQUAL(IRC_SERVER_PREFIX_MAX_MODES, strlen (server->prefix_modes));
+    LONGS_EQUAL(IRC_SERVER_PREFIX_MAX_MODES, strlen (server->prefix_chars));
+    LONGS_EQUAL(IRC_SERVER_PREFIX_MAX_MODES, strlen (nick->prefixes));
+    LONGS_EQUAL(IRC_SERVER_PREFIX_MAX_MODES,
+                strspn (server->prefix_modes, "a"));
+    LONGS_EQUAL(IRC_SERVER_PREFIX_MAX_MODES,
+                strspn (server->prefix_chars, "!"));
+    CHECK(nick->prefixes[0] == '@');
 
     /* no prefix at all */
     irc_server_set_prefix_modes_chars (server, "()");
