@@ -172,6 +172,11 @@ curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e
 Le TOTP doit contenir exactement 6 chiffres, y compris les zéros initiaux (par
 exemple `012345`), sinon il est refusé.
 
+// TRANSLATION MISSING
+Browser clients can't set this header, so they send the TOTP in a websocket
+sub-protocol instead _(WeeChat ≥ 5.0.0)_, see
+<<authentication_sec_websocket_protocol,Sec-WebSocket-Protocol>>.
+
 En cas d'erreur, une réponse `401 Unauthorized` est retournée avec un champ
 `error` dans les données JSON qui décrit l'erreur.
 
@@ -303,6 +308,23 @@ const ws = new WebSocket("wss://localhost:9000/api", [
 ])
 ----
 
+// TRANSLATION MISSING
+If TOTP is enabled (option `relay.network.totp_secret` is set), browser clients
+can't send the `x-weechat-totp` header either: they must add the sub-protocol
+`totp.weechat.<code>` _(WeeChat ≥ 5.0.0)_, where `<code>` is the TOTP value.
+The relay checks it like the header. Two TOTP sub-protocols in one request are
+rejected, and so is a request where the header and the sub-protocol carry
+different codes. Only `api.weechat` is selected in the response, so the TOTP is
+never sent back.
+
+// TRANSLATION MISSING
+If a reverse proxy sits in front of WeeChat, check its logging. Proxies and
+load balancers may log request headers, `Sec-WebSocket-Protocol` included, and
+that header carries the password as well as the TOTP. The TOTP expires within
+30 seconds with the default value of option `relay.network.totp_window`, but the
+password stays valid until you change it, so disable header logging for the
+relay.
+
 [[compression]]
 == Compression
 
@@ -412,8 +434,10 @@ La réponse a les champs suivants :
   (`null` si aucun algorithme n'est compatible)
 * `password_hash_iterations` (entier) : le nombre d'itérations à utiliser si le
   hachage PBKDF2 est utilisé
-* `totp` (booléen) : `true` si le TOTP est activé dans WeeChat (le client doit
-  alors envoyer le TOTP dans un en-tête spécifique), `false` sinon
+// TRANSLATION MISSING
+* `totp` (boolean): `true` if TOTP is enabled in WeeChat (then the client must
+  send TOTP in header `x-weechat-totp` or in websocket sub-protocol
+  `totp.weechat.<code>`), `false` otherwise
 
 Exemple de requête :
 

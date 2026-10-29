@@ -167,6 +167,10 @@ curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e
 The TOTP must contain exactly 6 digits, including leading zeros (for example
 `012345`), otherwise it is rejected.
 
+Browser clients can't set this header, so they send the TOTP in a websocket
+sub-protocol instead _(WeeChat ≥ 5.0.0)_, see
+<<authentication_sec_websocket_protocol,Sec-WebSocket-Protocol>>.
+
 In case of error, a response `401 Unauthorized` is returned with a field `error`
 in JSON data that describes the error.
 
@@ -298,6 +302,21 @@ const ws = new WebSocket("wss://localhost:9000/api", [
 ])
 ----
 
+If TOTP is enabled (option `relay.network.totp_secret` is set), browser clients
+can't send the `x-weechat-totp` header either: they must add the sub-protocol
+`totp.weechat.<code>` _(WeeChat ≥ 5.0.0)_, where `<code>` is the TOTP value.
+The relay checks it like the header. Two TOTP sub-protocols in one request are
+rejected, and so is a request where the header and the sub-protocol carry
+different codes. Only `api.weechat` is selected in the response, so the TOTP is
+never sent back.
+
+If a reverse proxy sits in front of WeeChat, check its logging. Proxies and
+load balancers may log request headers, `Sec-WebSocket-Protocol` included, and
+that header carries the password as well as the TOTP. The TOTP expires within
+30 seconds with the default value of option `relay.network.totp_window`, but the
+password stays valid until you change it, so disable header logging for the
+relay.
+
 [[compression]]
 == Compression
 
@@ -406,7 +425,8 @@ The response has the following fields:
 * `password_hash_iterations` (integer): the number of iterations to use if
   hash PBKDF2 is used
 * `totp` (boolean): `true` if TOTP is enabled in WeeChat (then the client must
-  send TOTP in specific header), `false` otherwise
+  send TOTP in header `x-weechat-totp` or in websocket sub-protocol
+  `totp.weechat.<code>`), `false` otherwise
 
 Request example:
 
