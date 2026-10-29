@@ -30,6 +30,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: escape `${` in server options addresses, nicks, password and autojoin set from an IRC URL (`irc://...`), to prevent evaluation of untrusted values
 - irc: escape `${` in channel names saved in server option autojoin, to prevent evaluation of channel names received from the server (for example on channel forward)
 - irc: fix heap buffer overflow in nick prefixes when the server sends an empty PREFIX in message 005 and the connection is lost before message 001 ([GHSA-xj8h-x2w9-m8m6](https://github.com/weechat/weechat/security/advisories/GHSA-xj8h-x2w9-m8m6))
+- relay: limit size of HTTP headers received from a client to prevent memory exhaustion ([GHSA-h394-85x4-68c7](https://github.com/weechat/weechat/security/advisories/GHSA-h394-85x4-68c7))
 - relay: fix heap buffer overflow in path of hdata sent to clients with "weechat" protocol ([GHSA-8wr2-x42m-7fxv](https://github.com/weechat/weechat/security/advisories/GHSA-8wr2-x42m-7fxv))
 
 ## [4.10.1] - 2026-09-05

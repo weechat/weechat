@@ -41,6 +41,7 @@ enum t_relay_client_http_status
 #define RELAY_HTTP_403_FORBIDDEN              403, "Forbidden"
 #define RELAY_HTTP_404_NOT_FOUND              404, "Not Found"
 #define RELAY_HTTP_405_METHOD_NOT_ALLOWED     405, "Method Not Allowed"
+#define RELAY_HTTP_431_HEADERS_TOO_LARGE      431, "Request Header Fields Too Large"
 #define RELAY_HTTP_500_INTERNAL_SERVER_ERROR  500, "Internal Server Error"
 #define RELAY_HTTP_503_SERVICE_UNAVAILABLE    503, "Service Unavailable"
 
@@ -73,6 +74,14 @@ enum t_relay_client_http_status
  */
 #define RELAY_HTTP_PARTIAL_MESSAGE_MAX_LENGTH (8 * 1024 * 1024)
 
+/*
+ * maximum length of the method line and headers of an HTTP request: once this
+ * limit is exceeded, the client is disconnected; this protects against a
+ * client sending an unlimited number of header lines, which would consume all
+ * the memory
+ */
+#define RELAY_HTTP_HEADERS_MAX_LENGTH (64 * 1024)
+
 struct t_relay_http_request
 {
     enum t_relay_client_http_status status; /* HTTP status                  */
@@ -88,6 +97,7 @@ struct t_relay_http_request
                                        /* and API protocol                  */
     struct t_hashtable *accept_encoding; /* allowed encoding for response   */
     struct t_relay_websocket_deflate *ws_deflate; /* websocket deflate data */
+    int headers_length;                /* length of method + headers read   */
     int content_length;                /* value of header "Content-Length"  */
     int body_size;                     /* size of HTTP body read so far     */
     char *body;                        /* HTTP body (can be NULL)           */
