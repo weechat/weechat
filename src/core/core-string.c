@@ -3134,6 +3134,9 @@ string_free_split_tags (char ***split_tags)
 /*
  * Convert a string to another charset.
  *
+ * Invalid chars are replaced by "?", and an incomplete multibyte sequence
+ * at the end of string is discarded.
+ *
  * Note: result must be freed after use.
  */
 
@@ -3145,8 +3148,8 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
 
 #ifdef HAVE_ICONV
     iconv_t cd;
-    char *inbuf, *ptr_outbuf;
-    const char *ptr_inbuf, *ptr_inbuf_shift, *next_char;
+    char *inbuf, *ptr_outbuf, buffer[4096], **result;
+    const char *ptr_inbuf, *next_char;
     int done;
     size_t err, inbytesleft, outbytesleft;
 #endif /* HAVE_ICONV */
@@ -3165,29 +3168,51 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
         {
             inbuf = strdup (string);
             if (!inbuf)
+            {
+                iconv_close (cd);
                 return NULL;
+            }
             ptr_inbuf = inbuf;
             inbytesleft = strlen (inbuf);
-            outbytesleft = inbytesleft * 4;
-            outbuf = malloc (outbytesleft + 2);
-            if (!outbuf)
+            result = string_dyn_alloc (inbytesleft + 1);
+            if (!result)
+            {
+                iconv_close (cd);
                 return inbuf;
-            ptr_outbuf = outbuf;
-            ptr_inbuf_shift = NULL;
+            }
             done = 0;
             while (!done)
             {
-                err = iconv (cd, (ICONV_CONST char **)(&ptr_inbuf), &inbytesleft,
-                             &ptr_outbuf, &outbytesleft);
+                /*
+                 * Convert into a fixed size buffer, which is then appended to
+                 * the result: there is no assumption on the size of output.
+                 */
+                ptr_outbuf = buffer;
+                outbytesleft = sizeof (buffer);
+                if (inbytesleft > 0)
+                {
+                    err = iconv (cd, (ICONV_CONST char **)(&ptr_inbuf),
+                                 &inbytesleft, &ptr_outbuf, &outbytesleft);
+                }
+                else
+                {
+                    /* Reset the shift state at the end of string. */
+                    err = iconv (cd, NULL, NULL, &ptr_outbuf, &outbytesleft);
+                    done = 1;
+                }
+                string_dyn_concat (result, buffer, ptr_outbuf - buffer);
+                if (done)
+                    break;
                 if (err == (size_t)(-1))
                 {
                     switch (errno)
                     {
                         case EINVAL:
-                            done = 1;
+                            /* Incomplete multibyte sequence at the end. */
+                            inbytesleft = 0;
                             break;
                         case E2BIG:
-                            done = 1;
+                            /* Buffer is full: continue the conversion. */
                             break;
                         case EILSEQ:
                             if (from_utf8)
@@ -3209,27 +3234,15 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
                                 ptr_inbuf++;
                                 inbytesleft--;
                             }
-                            ptr_outbuf[0] = '?';
-                            ptr_outbuf++;
-                            outbytesleft--;
+                            string_dyn_concat (result, "?", -1);
+                            break;
+                        default:
+                            done = 1;
                             break;
                     }
                 }
-                else
-                {
-                    if (!ptr_inbuf_shift)
-                    {
-                        ptr_inbuf_shift = ptr_inbuf;
-                        ptr_inbuf = NULL;
-                        inbytesleft = 0;
-                    }
-                    else
-                        done = 1;
-                }
             }
-            if (ptr_inbuf_shift)
-                ptr_inbuf = ptr_inbuf_shift;
-            ptr_outbuf[0] = '\0';
+            outbuf = string_dyn_free (result, 0);
             free (inbuf);
             iconv_close (cd);
         }
