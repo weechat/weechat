@@ -97,6 +97,7 @@ TEST(RelayHttp, RequestAllocReinitFree)
     LONGS_EQUAL(0, request->ws_deflate->window_bits_inflate);
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_deflate);
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_inflate);
+    LONGS_EQUAL(0, request->headers_length);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     STRCMP_EQUAL(NULL, request->body);
@@ -111,6 +112,7 @@ TEST(RelayHttp, RequestAllocReinitFree)
     hashtable_set (request->headers, "x-test", "value");
     hashtable_set (request->accept_encoding, "gzip", "");
     request->ws_deflate->enabled = 1;
+    request->headers_length = 50;
     request->content_length = 100;
     request->body_size = 16;
     request->body = (char *)malloc (16);
@@ -140,6 +142,7 @@ TEST(RelayHttp, RequestAllocReinitFree)
     LONGS_EQUAL(0, request->ws_deflate->window_bits_inflate);
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_deflate);
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_inflate);
+    LONGS_EQUAL(0, request->headers_length);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     STRCMP_EQUAL(NULL, request->body);
@@ -1066,6 +1069,71 @@ TEST(RelayHttp, RecvLimit)
     LONGS_EQUAL(length1, length2);
 
     free (chunk);
+    relay_client_free (client);
+    relay_server_free (server);
+
+    /* Restore auto-open of relay buffer. */
+    config_file_option_reset (relay_config_look_auto_open_buffer, 1);
+}
+
+/*
+ * Test functions:
+ *   relay_http_recv (method and headers are bounded)
+ *
+ * Check that a client sending an unlimited number of header lines is
+ * disconnected once the maximum length of headers is exceeded.
+ */
+
+TEST(RelayHttp, RecvHeadersLimit)
+{
+    struct t_relay_server *server;
+    struct t_relay_client *client;
+    char line[1024];
+    int i;
+
+    /* Disable auto-open of relay buffer (it would pollute other tests). */
+    config_file_option_set (relay_config_look_auto_open_buffer, "off", 1);
+
+    server = relay_server_new ("weechat", RELAY_PROTOCOL_WEECHAT, NULL,
+                               9000,
+                               NULL,  /* path */
+                               1,  /* ipv4 */
+                               0,  /* ipv6 */
+                               0,  /* tls */
+                               0);  /* unix_socket */
+    CHECK(server);
+    client = relay_client_new (-1, "test", server);
+    CHECK(client);
+
+    /* Header line of 1023 bytes, including "\r\n". */
+    memset (line, 'a', sizeof (line) - 1);
+    memcpy (line, "X-Test: ", 8);
+    line[sizeof (line) - 3] = '\r';
+    line[sizeof (line) - 2] = '\n';
+    line[sizeof (line) - 1] = '\0';
+
+    relay_http_recv (client, "GET /weechat HTTP/1.1\r\n", 23);
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, client->http_req->status);
+    LONGS_EQUAL(22, client->http_req->headers_length);
+
+    /* Headers below the limit: the client is still connected. */
+    for (i = 0; i < 32; i++)
+    {
+        relay_http_recv (client, line, strlen (line));
+    }
+    CHECK(!RELAY_STATUS_HAS_ENDED(client->status));
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, client->http_req->status);
+    LONGS_EQUAL(22 + (32 * 1022), client->http_req->headers_length);
+
+    /* Headers above the limit: the client is disconnected. */
+    for (i = 0; i < 64; i++)
+    {
+        relay_http_recv (client, line, strlen (line));
+    }
+    LONGS_EQUAL(RELAY_STATUS_DISCONNECTED, client->status);
+    POINTERS_EQUAL(NULL, client->partial_message);
+    CHECK(strlen (*(client->http_req->raw)) <= RELAY_HTTP_HEADERS_MAX_LENGTH);
+
     relay_client_free (client);
     relay_server_free (server);
 

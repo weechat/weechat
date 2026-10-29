@@ -54,6 +54,7 @@ relay_http_request_reinit (struct t_relay_http_request *request)
     weechat_hashtable_remove_all (request->accept_encoding);
     relay_websocket_deflate_free (request->ws_deflate);
     request->ws_deflate = relay_websocket_deflate_alloc ();
+    request->headers_length = 0;
     request->content_length = 0;
     request->body_size = 0;
     free (request->body);
@@ -98,6 +99,7 @@ relay_http_request_alloc (void)
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
     new_request->ws_deflate = relay_websocket_deflate_alloc ();
+    new_request->headers_length = 0;
     new_request->content_length = 0;
     new_request->body_size = 0;
     new_request->body = NULL;
@@ -1013,6 +1015,22 @@ relay_http_recv (struct t_relay_client *client, const char *data, int size)
             pos = strchr (client->partial_message, '\r');
             if (!pos)
                 break;
+            /*
+             * Limit the size of method + headers: once the maximum is
+             * exceeded, disconnect the client (protection against a client
+             * sending an unlimited number of header lines, which would
+             * consume all the memory).
+             */
+            client->http_req->headers_length += pos - client->partial_message + 1;
+            if (client->http_req->headers_length > RELAY_HTTP_HEADERS_MAX_LENGTH)
+            {
+                free (client->partial_message);
+                client->partial_message = NULL;
+                relay_http_send (client, RELAY_HTTP_431_HEADERS_TOO_LARGE,
+                                 NULL, NULL, 0);
+                relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                return;
+            }
             pos[0] = '\0';
             if (client->http_req->status == RELAY_HTTP_METHOD)
             {
@@ -1708,6 +1726,7 @@ relay_http_print_log_request (struct t_relay_http_request *request)
                         weechat_hashtable_get_string (request->accept_encoding,
                                                       "keys_values"));
     relay_websocket_deflate_print_log (request->ws_deflate, "  ");
+    weechat_log_printf ("    headers_length. . . . . : %d", request->headers_length);
     weechat_log_printf ("    content_length. . . . . : %d", request->content_length);
     weechat_log_printf ("    body_size . . . . . . . : %d", request->body_size);
     weechat_log_printf ("    body. . . . . . . . . . : '%s'", request->body);
