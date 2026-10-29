@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- core: fix integer overflow in dynamic strings when their size exceeds 4 GiB ([GHSA-h394-85x4-68c7](https://github.com/weechat/weechat/security/advisories/GHSA-h394-85x4-68c7))
 - core: fix heap buffer overflow in charset conversion when the converted string is more than 4 times longer than the input and contains invalid chars, for example with charset TSCII ([GHSA-q32h-5qvq-3936](https://github.com/weechat/weechat/security/advisories/GHSA-q32h-5qvq-3936))
 - core: fix freeze when displaying a very long message, for example a corrupted log file displayed in backlog ([#637](https://github.com/weechat/weechat/issues/637))
 - core: fix buffer overflow in display of time in chat area with a custom time format ([#2342](https://github.com/weechat/weechat/issues/2342))
