@@ -20,6 +20,9 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <regex.h>
+#ifdef HAVE_ICONV
+#include <iconv.h>
+#endif
 #include "src/core/weechat.h"
 #include "src/core/core-config.h"
 #include "src/core/core-string.h"
@@ -2549,8 +2552,13 @@ TEST(CoreString, Iconv)
 {
     const char *noel_utf8 = "no\xc3\xabl";  /* noël */
     const char *noel_iso = "no\xebl";
-    char *str;
+    char *str, input[16384], expected[32768];
+#ifdef HAVE_ICONV
+    const char *tscii_utf8 = "\xe0\xae\x9c\xe0\xaf\x8d";  /* TSCII 0x88 */
+    iconv_t cd;
+#endif
     FILE *f;
+    int i;
 
     /* string_iconv */
     WEE_TEST_STR(NULL, string_iconv (0, NULL, NULL, NULL));
@@ -2559,6 +2567,42 @@ TEST(CoreString, Iconv)
     WEE_TEST_STR("abc", string_iconv (1, "UTF-8", "ISO-8859-15", "abc"));
     WEE_TEST_STR(noel_iso, string_iconv (1, "UTF-8", "ISO-8859-15", noel_utf8));
     WEE_TEST_STR(noel_utf8, string_iconv (0, "ISO-8859-15", "UTF-8", noel_iso));
+
+    /* string_iconv: invalid char (not in ISO-8859-15) */
+    WEE_TEST_STR("ab?c",
+                 string_iconv (1, "UTF-8", "ISO-8859-15", "ab\xe2\x9c\x93" "c"));
+
+    /* string_iconv: incomplete multibyte sequence at the end */
+    WEE_TEST_STR("ab", string_iconv (0, "UTF-8", "ISO-8859-15", "ab\xc3"));
+
+    /* string_iconv: output longer than the internal buffer (4096 bytes) */
+    memset (input, 0xeb, 5000);
+    input[5000] = '\0';
+    expected[0] = '\0';
+    for (i = 0; i < 5000; i++)
+        strcat (expected + (i * 2), "\xc3\xab");
+    WEE_TEST_STR(expected, string_iconv (0, "ISO-8859-15", "UTF-8", input));
+
+    /*
+     * string_iconv: output more than 4 times longer than input, followed by
+     * invalid chars (TSCII: 0x88 is converted to 6 bytes, 0xA0 is invalid)
+     */
+#ifdef HAVE_ICONV
+    cd = iconv_open ("UTF-8", "TSCII");
+    if (cd != (iconv_t)(-1))
+    {
+        iconv_close (cd);
+        memset (input, 0x88, 2000);
+        memset (input + 2000, 0xa0, 1000);
+        input[3000] = '\0';
+        expected[0] = '\0';
+        for (i = 0; i < 2000; i++)
+            strcat (expected + (i * 6), tscii_utf8);
+        memset (expected + 12000, '?', 1000);
+        expected[13000] = '\0';
+        WEE_TEST_STR(expected, string_iconv (0, "TSCII", "UTF-8", input));
+    }
+#endif
 
     /* string_iconv_to_internal */
     WEE_TEST_STR(NULL, string_iconv_to_internal (NULL, NULL));
