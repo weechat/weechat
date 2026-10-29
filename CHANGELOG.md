@@ -28,6 +28,7 @@
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
 - logger: fix path traversal in log file name when a buffer local variable contains the char used internally to protect directory separators ([#2340](https://github.com/weechat/weechat/issues/2340))
+- relay: limit size of HTTP headers received from a client to prevent memory exhaustion ([GHSA-h394-85x4-68c7](https://github.com/weechat/weechat/security/advisories/GHSA-h394-85x4-68c7))
 - relay: fix heap buffer overflow in path of hdata sent to clients with "weechat" protocol ([GHSA-8wr2-x42m-7fxv](https://github.com/weechat/weechat/security/advisories/GHSA-8wr2-x42m-7fxv))
 - relay: limit size of data queued for sending to a client to prevent memory exhaustion ([#2357](https://github.com/weechat/weechat/issues/2357))
 - relay: reject fragmented, compressed or oversized websocket control frames received from a client ([#2356](https://github.com/weechat/weechat/issues/2356))
