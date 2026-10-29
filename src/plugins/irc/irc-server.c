@@ -1111,6 +1111,8 @@ irc_server_get_chantypes (struct t_irc_server *server)
  * If prefix is NULL, prefix_modes and prefix_chars are reset (default values
  * are then used).
  *
+ * Modes after the first IRC_SERVER_PREFIX_MAX_MODES are ignored.
+ *
  * Prefixes of all nicks are reallocated if the number of prefix chars changes.
  */
 
@@ -1144,8 +1146,10 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
     pos = (prefix) ? strchr (prefix, ')') : NULL;
     if (pos)
     {
-        server->prefix_modes = weechat_strndup (prefix + 1,
-                                                pos - prefix - 1);
+        length_modes = pos - prefix - 1;
+        if (length_modes > IRC_SERVER_PREFIX_MAX_MODES)
+            length_modes = IRC_SERVER_PREFIX_MAX_MODES;
+        server->prefix_modes = weechat_strndup (prefix + 1, length_modes);
         if (server->prefix_modes)
         {
             pos++;
