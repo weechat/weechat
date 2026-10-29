@@ -5066,6 +5066,25 @@ string_dyn_alloc (int size_alloc)
 }
 
 /*
+ * Compute the size to allocate when a dynamic string must be extended:
+ * current allocated size + 50%, without exceeding STRING_DYN_SIZE_MAX.
+ *
+ * Return the new allocated size (at least 2).
+ */
+
+string_dyn_size_t
+string_dyn_grow_size (string_dyn_size_t size_alloc)
+{
+    if (size_alloc < 2)
+        return 2;
+
+    if (size_alloc / 2 > STRING_DYN_SIZE_MAX - size_alloc)
+        return STRING_DYN_SIZE_MAX;
+
+    return size_alloc + (size_alloc / 2);
+}
+
+/*
  * Copy "new_string" into a dynamic string and replaces its current content
  * (adjusts its size accordingly).
  *
@@ -5075,7 +5094,7 @@ string_dyn_alloc (int size_alloc)
  *
  * Return:
  *   1: OK
- *   0: error
+ *   0: error (for example if the size would exceed STRING_DYN_SIZE_MAX)
  */
 
 int
@@ -5083,6 +5102,7 @@ string_dyn_copy (char **string, const char *new_string)
 {
     struct t_string_dyn *ptr_string_dyn;
     char *string_realloc;
+    size_t length;
     string_dyn_size_t length_new, new_size_alloc;
 
     if (!string || !*string)
@@ -5090,13 +5110,17 @@ string_dyn_copy (char **string, const char *new_string)
 
     ptr_string_dyn = (struct t_string_dyn *)string;
 
-    length_new = (new_string) ? strlen (new_string) : 0;
+    length = (new_string) ? strlen (new_string) : 0;
+
+    /* The size of string (with the final '\0') must fit in the size type. */
+    if (length >= STRING_DYN_SIZE_MAX)
+        return 0;
+    length_new = length;
 
     if (length_new + 1 > ptr_string_dyn->size_alloc)
     {
         /* Compute new size_alloc for the string + add. */
-        new_size_alloc = (ptr_string_dyn->size_alloc < 2) ?
-            2 : ptr_string_dyn->size_alloc + (ptr_string_dyn->size_alloc / 2);
+        new_size_alloc = string_dyn_grow_size (ptr_string_dyn->size_alloc);
         if (new_size_alloc < length_new + 1)
             new_size_alloc = length_new + 1;
         string_realloc = realloc (ptr_string_dyn->string, new_size_alloc);
@@ -5133,7 +5157,7 @@ string_dyn_copy (char **string, const char *new_string)
  *
  * Return:
  *   1: OK
- *   0: error
+ *   0: error (for example if the size would exceed STRING_DYN_SIZE_MAX)
  */
 
 int
@@ -5141,6 +5165,7 @@ string_dyn_concat (char **string, const char *add, int bytes)
 {
     struct t_string_dyn *ptr_string_dyn;
     char *string_realloc;
+    size_t length;
     string_dyn_size_t length_add, new_size_alloc, new_size;
 
     if (!string || !*string)
@@ -5151,15 +5176,19 @@ string_dyn_concat (char **string, const char *add, int bytes)
 
     ptr_string_dyn = (struct t_string_dyn *)string;
 
-    length_add = (bytes >= 0) ? strnlen (add, bytes) : strlen (add);
+    length = (bytes >= 0) ? strnlen (add, bytes) : strlen (add);
+
+    /* The new size of string must fit in the size type. */
+    if (length > STRING_DYN_SIZE_MAX - ptr_string_dyn->size)
+        return 0;
+    length_add = length;
 
     new_size = ptr_string_dyn->size + length_add;
 
     if (new_size > ptr_string_dyn->size_alloc)
     {
         /* Compute new size_alloc for the string + add. */
-        new_size_alloc = (ptr_string_dyn->size_alloc < 2) ?
-            2 : ptr_string_dyn->size_alloc + (ptr_string_dyn->size_alloc / 2);
+        new_size_alloc = string_dyn_grow_size (ptr_string_dyn->size_alloc);
         if (new_size_alloc < new_size)
             new_size_alloc = new_size;
         string_realloc = realloc (ptr_string_dyn->string, new_size_alloc);
