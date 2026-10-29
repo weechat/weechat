@@ -979,6 +979,9 @@ components:
         The TOTP (Time-based One-Time Password) used in authentication
         if the remote relay has TOTP configured (option
         relay.network.totp_secret is set).
+        For websocket clients unable to set this header (like browsers),
+        the TOTP can be sent instead in the websocket sub-protocol
+        `totp.weechat.<code>` (header `Sec-WebSocket-Protocol`).
     bufferId:
       name: buffer_id
       in: path
@@ -1748,3 +1751,6 @@ components:
         If TOTP is enabled on WeeChat/relay side (option relay.network.totp_secret
         is set), you must send the TOTP value in this header:
         `x-weechat-totp: 123456`.
+        For websocket clients unable to set this header (like browsers),
+        the TOTP can be sent instead in the websocket sub-protocol
+        `totp.weechat.123456` (header `Sec-WebSocket-Protocol`).

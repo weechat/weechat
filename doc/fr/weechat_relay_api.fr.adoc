@@ -172,6 +172,10 @@ curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e
 Le TOTP doit contenir exactement 6 chiffres, y compris les zéros initiaux (par
 exemple `012345`), sinon il est refusé.
 
+L'API WebSocket de JavaScript utilisée dans les navigateurs ne peut pas définir
+cet en-tête, les clients websocket envoient donc le TOTP dans un sous-protocole
+à la place _(WeeChat ≥ 5.0.0)_, voir <<authentication_sec_websocket_protocol,Sec-WebSocket-Protocol>>.
+
 En cas d'erreur, une réponse `401 Unauthorized` est retournée avec un champ
 `error` dans les données JSON qui décrit l'erreur.
 
@@ -303,6 +307,35 @@ const ws = new WebSocket("wss://localhost:9000/api", [
 ])
 ----
 
+Si TOTP est activé (option `relay.network.totp_secret` définie), les clients
+dans un navigateur ne peuvent pas non plus envoyer l'en-tête `x-weechat-totp` :
+ils doivent ajouter le sous-protocole `totp.weechat.<code>` _(WeeChat ≥ 5.0.0)_,
+où `<code>` est la valeur TOTP.
+Le relai le vérifie comme l'en-tête. Deux sous-protocoles TOTP dans une même
+requête sont refusés, de même qu'une requête où l'en-tête et le sous-protocole
+contiennent des codes différents. Seul `api.weechat` est sélectionné dans la
+réponse, donc le TOTP n'est jamais renvoyé.
+
+Par exemple avec le TOTP `123456` :
+
+[source,javascript]
+----
+const ws = new WebSocket("wss://localhost:9000/api", [
+  "api.weechat",
+  "base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk",
+  "totp.weechat.123456",
+])
+----
+
+Si un proxy inverse est placé devant WeeChat, vérifiez sa journalisation. Les
+proxys et répartiteurs de charge peuvent journaliser les en-têtes des requêtes,
+y compris `Sec-WebSocket-Protocol`, et cet en-tête contient le mot de passe
+ainsi que le TOTP. Le TOTP expire en 30 secondes avec la valeur par défaut de
+l'option `relay.network.totp_window` et un mot de passe haché expire selon
+l'option `relay.network.time_window`, mais un mot de passe en clair reste valide
+jusqu'à ce que vous le changiez : préférez un mot de passe haché et désactivez
+la journalisation des en-têtes pour le relai.
+
 [[compression]]
 == Compression
 
@@ -413,7 +446,8 @@ La réponse a les champs suivants :
 * `password_hash_iterations` (entier) : le nombre d'itérations à utiliser si le
   hachage PBKDF2 est utilisé
 * `totp` (booléen) : `true` si le TOTP est activé dans WeeChat (le client doit
-  alors envoyer le TOTP dans un en-tête spécifique), `false` sinon
+  alors envoyer le TOTP dans l'en-tête `x-weechat-totp` ou dans le
+  sous-protocole websocket `totp.weechat.<code>`), `false` sinon
 
 Exemple de requête :
 

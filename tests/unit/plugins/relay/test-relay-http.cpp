@@ -714,7 +714,8 @@ TEST(RelayHttp, GetAuthStatus)
     const char *good_pwd = "secret_password";
     const char *bad_pwd = "test";
     char *totp, *totp2, str_totp[64], salt[1024], salt_pass[1024], hash[1024], hash_hexa[2048];
-    char auth[4096], auth_base64[4096], auth_header[8192];
+    char auth[4096], auth_base64[4096], auth_header[8192], protocols[1024];
+    const char *invalid_totp[] = { "", "12345", "1234567", "12345a", "+12345" };
     time_t time_now;
     int hash_size;
 
@@ -956,9 +957,54 @@ TEST(RelayHttp, GetAuthStatus)
     LONGS_EQUAL(-4, relay_http_get_auth_status (client));
     hashtable_set (client->http_req->headers, "x-weechat-totp", totp);
     LONGS_EQUAL(0, relay_http_get_auth_status (client));
+
+    /* Accept matching header and subprotocol codes, or a subprotocol alone. */
+    snprintf (protocols, sizeof (protocols),
+              "api.weechat, totp.weechat.%s", totp);
+    hashtable_set (client->http_req->headers, "sec-websocket-protocol", protocols);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
+    hashtable_remove (client->http_req->headers, "x-weechat-totp");
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
+
+    /* Ignore an empty header if the subprotocol has a code. */
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "");
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
+
+    /* Reject conflicting codes and duplicate TOTP subprotocols. */
+    hashtable_set (client->http_req->headers, "x-weechat-totp", totp2);
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_remove (client->http_req->headers, "x-weechat-totp");
+    snprintf (protocols, sizeof (protocols),
+              "api.weechat, totp.weechat.%s, totp.weechat.%s", totp, totp);
+    hashtable_set (client->http_req->headers, "sec-websocket-protocol", protocols);
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    /* Reject codes that do not contain exactly six ASCII digits. */
+    for (unsigned int n = 0; n < sizeof (invalid_totp) / sizeof (invalid_totp[0]); n++)
+    {
+        snprintf (protocols, sizeof (protocols),
+                  "api.weechat, totp.weechat.%s", invalid_totp[n]);
+        hashtable_set (client->http_req->headers, "sec-websocket-protocol", protocols);
+        LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    }
+    /* Reject a well-formed code that does not validate against the secret. */
+    snprintf (protocols, sizeof (protocols),
+              "api.weechat, totp.weechat.%s", totp2);
+    hashtable_set (client->http_req->headers, "sec-websocket-protocol", protocols);
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
     free (totp);
     free (totp2);
     config_file_option_reset (relay_config_network_totp_secret, 1);
+    /* Reject a TOTP subprotocol when TOTP is disabled. */
+    hashtable_set (client->http_req->headers, "sec-websocket-protocol",
+                   "api.weechat, totp.weechat.123456");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "sec-websocket-protocol",
+                   "api.weechat, totp.weechat.abc");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "sec-websocket-protocol",
+                   "api.weechat, totp.weechat.");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_remove (client->http_req->headers, "sec-websocket-protocol");
     config_file_option_reset (relay_config_network_totp_window, 1);
     hashtable_remove (client->http_req->headers, "x-weechat-totp");
 

@@ -170,6 +170,12 @@ curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e
 The TOTP must contain exactly 6 digits, including leading zeros (for example
 `012345`), otherwise it is rejected.
 
+// TRANSLATION MISSING
+The JavaScript WebSocket API used in browsers can't set this header, so
+websocket clients send the TOTP in a sub-protocol instead _(WeeChat ≥ 5.0.0)_,
+see
+<<authentication_sec_websocket_protocol,Sec-WebSocket-Protocol>>.
+
 У случају грешке, враћа се одговор `401 Unauthorized` са пољем `error` у
 JSON подацима које описује грешку.
 
@@ -300,6 +306,36 @@ const ws = new WebSocket("wss://localhost:9000/api", [
   "base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk",
 ])
 ----
+
+// TRANSLATION MISSING
+If TOTP is enabled (option `relay.network.totp_secret` is set), browser clients
+can't send the `x-weechat-totp` header either: they must add the sub-protocol
+`totp.weechat.<code>` _(WeeChat ≥ 5.0.0)_, where `<code>` is the TOTP value.
+The relay checks it like the header. Two TOTP sub-protocols in one request are
+rejected, and so is a request where the header and the sub-protocol carry
+different codes. Only `api.weechat` is selected in the response, so the TOTP is
+never sent back.
+
+// TRANSLATION MISSING
+For example with TOTP `123456`:
+
+[source,javascript]
+----
+const ws = new WebSocket("wss://localhost:9000/api", [
+  "api.weechat",
+  "base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk",
+  "totp.weechat.123456",
+])
+----
+
+// TRANSLATION MISSING
+If a reverse proxy sits in front of WeeChat, check its logging. Proxies and
+load balancers may log request headers, `Sec-WebSocket-Protocol` included, and
+that header carries the password as well as the TOTP. The TOTP expires within
+30 seconds with the default value of option `relay.network.totp_window` and a
+hashed password expires according to option `relay.network.time_window`, but a
+plain-text password stays valid until you change it: prefer a hashed password
+and disable header logging for the relay.
 
 [[compression]]
 == Компресија
