@@ -3128,6 +3128,7 @@ TEST(CoreString, Shared)
 /*
  * Test functions:
  *   string_dyn_alloc
+ *   string_dyn_grow_size
  *   string_dyn_copy
  *   string_dyn_concat
  *   string_dyn_free
@@ -3140,6 +3141,14 @@ TEST(CoreString, Dyn)
 
     POINTERS_EQUAL(NULL, string_dyn_alloc (-1));
     POINTERS_EQUAL(NULL, string_dyn_alloc (0));
+
+    LONGS_EQUAL(2, string_dyn_grow_size (0));
+    LONGS_EQUAL(2, string_dyn_grow_size (1));
+    LONGS_EQUAL(3, string_dyn_grow_size (2));
+    LONGS_EQUAL(15, string_dyn_grow_size (10));
+    LONGS_EQUAL(STRING_DYN_SIZE_MAX,
+                string_dyn_grow_size (STRING_DYN_SIZE_MAX - 10));
+    LONGS_EQUAL(STRING_DYN_SIZE_MAX, string_dyn_grow_size (STRING_DYN_SIZE_MAX));
 
     str = string_dyn_alloc (2);
     ptr_string_dyn = (struct t_string_dyn *)str;
@@ -3274,6 +3283,17 @@ TEST(CoreString, Dyn)
     LONGS_EQUAL(13, ptr_string_dyn->size);
     POINTERS_EQUAL(ptr_string_dyn->string, *str);
     STRCMP_EQUAL("abcdxxyxyzxy", ptr_string_dyn->string);
+    STRCMP_EQUAL("abcdxxyxyzxy", *str);
+
+    /*
+     * check concat when the new size would exceed the max size (the size is
+     * faked, the check is done before any memory access)
+     */
+    ptr_string_dyn->size = STRING_DYN_SIZE_MAX - 1;
+    LONGS_EQUAL(0, string_dyn_concat (str, "xy", -1));
+    LONGS_EQUAL(STRING_DYN_SIZE_MAX - 1, ptr_string_dyn->size);
+    LONGS_EQUAL(15, ptr_string_dyn->size_alloc);
+    ptr_string_dyn->size = 13;
     STRCMP_EQUAL("abcdxxyxyzxy", *str);
 
     str_ptr = *str;

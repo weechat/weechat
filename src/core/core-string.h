@@ -32,6 +32,7 @@
 typedef uint32_t string_shared_count_t;
 
 typedef uint32_t string_dyn_size_t;
+#define STRING_DYN_SIZE_MAX UINT32_MAX
 struct t_string_dyn
 {
     char *string;                      /* the string                        */
@@ -166,6 +167,7 @@ extern void string_get_priority_and_name (const char *string,
 extern const char *string_shared_get (const char *string);
 extern void string_shared_free (const char *string);
 extern char **string_dyn_alloc (int size_alloc);
+extern string_dyn_size_t string_dyn_grow_size (string_dyn_size_t size_alloc);
 extern int string_dyn_copy (char **string, const char *new_string);
 extern int string_dyn_concat (char **string, const char *add, int bytes);
 extern char *string_dyn_free (char **string, int free_string);
