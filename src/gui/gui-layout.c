@@ -722,6 +722,10 @@ gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window,
 
 /*
  * Apply current layout for windows.
+ *
+ * The list of visited buffers is not updated by the buffer switches done to
+ * build the windows: if the buffer displayed in the current window changes,
+ * only the old and new buffers are added to the list.
  */
 
 void
@@ -729,9 +733,16 @@ gui_layout_window_apply (struct t_gui_layout *layout,
                          int internal_id_current_window)
 {
     struct t_gui_window *old_window, *ptr_current_window;
+    struct t_gui_buffer *old_buffer;
+    int old_visited_frozen;
 
     if (!layout || !layout->layout_windows)
         return;
+
+    old_visited_frozen = gui_buffers_visited_frozen;
+    gui_buffers_visited_frozen = 1;
+
+    old_buffer = gui_current_window->buffer;
 
     gui_window_merge_all (gui_current_window);
 
@@ -745,6 +756,16 @@ gui_layout_window_apply (struct t_gui_layout *layout,
     gui_layout_window_assign_all_buffers ();
 
     gui_window_switch ((ptr_current_window) ? ptr_current_window : old_window);
+
+    gui_buffers_visited_frozen = old_visited_frozen;
+
+    if (!gui_buffers_visited_frozen
+        && old_buffer && gui_buffer_valid (old_buffer)
+        && (old_buffer->number != gui_current_window->buffer->number))
+    {
+        gui_buffer_visited_add (old_buffer);
+        gui_buffer_visited_add (gui_current_window->buffer);
+    }
 
     (void) hook_signal_send ("layout_windows_applied",
                              WEECHAT_HOOK_SIGNAL_STRING, layout->name);
