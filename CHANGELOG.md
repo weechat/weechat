@@ -102,6 +102,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix plural form in Italian translations, use plural for zero
 - core: fix order of visited buffers after window unzoom and command `/layout apply`, add only the buffer switch in the current window ([#591](https://github.com/weechat/weechat/issues/591))
 - core: fix regex replacements stopped by an empty match, for example with regex `(?n).*` on a string with multiple lines ([#2365](https://github.com/weechat/weechat/issues/2365))
 - core: fix regex anchor `^` matching again after each match in regex replacements (for example in triggers), highlights and emphasized text ([#1521](https://github.com/weechat/weechat/issues/1521))
