@@ -1864,12 +1864,17 @@ gui_window_search_stop (struct t_gui_window *window, int stop_here)
 
 /*
  * Zoom window (maximize it or restore layout before previous zoom).
+ *
+ * When the layout is restored, the zoomed window keeps its buffer, which may
+ * not be the buffer displayed before zooming the window.
  */
 
 void
 gui_window_zoom (struct t_gui_window *window)
 {
     struct t_gui_layout *ptr_layout;
+    struct t_gui_layout_window *ptr_layout_window;
+    char *plugin_name, *buffer_name;
 
     if (!gui_init_ok || !window)
         return;
@@ -1881,6 +1886,29 @@ gui_window_zoom (struct t_gui_window *window)
         (void) hook_signal_send ("window_unzoom",
                                  WEECHAT_HOOK_SIGNAL_POINTER,
                                  gui_current_window);
+        /* Keep the buffer displayed in the zoomed window. */
+        ptr_layout_window = gui_layout_window_search_by_id (
+            ptr_layout->layout_windows,
+            ptr_layout->internal_id_current_window);
+        if (ptr_layout_window
+            && !ptr_layout_window->child1 && !ptr_layout_window->child2)
+        {
+            plugin_name = strdup (
+                gui_buffer_get_plugin_name (gui_current_window->buffer));
+            buffer_name = strdup (gui_current_window->buffer->name);
+            if (plugin_name && buffer_name)
+            {
+                free (ptr_layout_window->plugin_name);
+                ptr_layout_window->plugin_name = plugin_name;
+                free (ptr_layout_window->buffer_name);
+                ptr_layout_window->buffer_name = buffer_name;
+            }
+            else
+            {
+                free (plugin_name);
+                free (buffer_name);
+            }
+        }
         gui_layout_window_apply (ptr_layout,
                                  ptr_layout->internal_id_current_window);
         gui_layout_remove (ptr_layout);

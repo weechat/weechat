@@ -16,6 +16,8 @@ extern "C"
 #include "src/gui/gui-layout.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-window.h"
+
+extern void gui_buffer_visited_remove_all ();
 }
 
 TEST_GROUP(GuiWindow)
@@ -271,6 +273,58 @@ TEST(GuiWindow, GetContextAtXy)
     free (focused_line_end);
     free (beginning);
     free (end);
+}
+
+/*
+ * Test functions:
+ *   gui_window_zoom
+ */
+
+TEST(GuiWindow, Zoom)
+{
+    struct t_gui_buffer *buffer1, *buffer2;
+    struct t_gui_window *ptr_other_window;
+
+    gui_window_zoom (NULL);
+
+    buffer1 = gui_buffer_new (NULL, "test1", NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer1);
+    buffer2 = gui_buffer_new (NULL, "test2", NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer2);
+
+    gui_buffer_visited_remove_all ();
+
+    /* Two windows: test1 in top window (current), weechat in bottom window. */
+    CHECK(gui_window_split_horizontal (gui_current_window, 50));
+    gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
+
+    /* Zoom and switch to test2. */
+    gui_window_zoom (gui_current_window);
+    POINTERS_EQUAL(NULL, gui_windows->next_window);
+    CHECK(gui_layout_search (GUI_LAYOUT_ZOOM));
+    gui_window_switch_to_buffer (gui_current_window, buffer2, 1);
+    LONGS_EQUAL(3, gui_buffers_visited_count);
+    POINTERS_EQUAL(buffer2, last_gui_buffer_visited->buffer);
+    POINTERS_EQUAL(buffer1, last_gui_buffer_visited->prev_buffer->buffer);
+
+    /* Unzoom: test2 is kept in the zoomed window, visited buffers unchanged. */
+    gui_window_zoom (gui_current_window);
+    POINTERS_EQUAL(NULL, gui_layout_search (GUI_LAYOUT_ZOOM));
+    CHECK(gui_windows->next_window);
+    POINTERS_EQUAL(NULL, gui_windows->next_window->next_window);
+    POINTERS_EQUAL(buffer2, gui_current_window->buffer);
+    ptr_other_window = (gui_windows == gui_current_window) ?
+        gui_windows->next_window : gui_windows;
+    POINTERS_EQUAL(gui_buffers, ptr_other_window->buffer);
+    LONGS_EQUAL(3, gui_buffers_visited_count);
+    POINTERS_EQUAL(buffer2, last_gui_buffer_visited->buffer);
+    POINTERS_EQUAL(buffer1, last_gui_buffer_visited->prev_buffer->buffer);
+
+    gui_window_merge_all (gui_current_window);
+    gui_window_switch_to_buffer (gui_current_window, gui_buffers, 1);
+    gui_buffer_close (buffer1);
+    gui_buffer_close (buffer2);
+    gui_buffer_visited_remove_all ();
 }
 
 /*
