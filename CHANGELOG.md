@@ -207,6 +207,31 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - xfer: limit size of partial message received in DCC chat to prevent memory exhaustion ([#2349](https://github.com/weechat/weechat/issues/2349))
 - xfer: remove path from filename received in DCC file transfer to prevent writing the file outside the download directory ([#2348](https://github.com/weechat/weechat/issues/2348))
 
+## [4.10.2] - 2026-10-31
+
+### Fixed
+
+- core: fix freeze when displaying a very long message, for example a corrupted log file displayed in backlog ([#637](https://github.com/weechat/weechat/issues/637))
+- core: fix memory leak when the last buffer is closed
+- api: fix compilation error with macro weechat_file_compare
+- guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- perl: fix wrong arguments error in function nicklist_remove_all
+- relay/api: fix memory leak when a message without body is sent to a client connected with websocket
+- tcl: return 0 instead of raising an error in functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- tcl: add missing function completion_free
+
+### Security
+
+- core: fix integer overflow in dynamic strings when their size exceeds 4 GiB ([GHSA-h394-85x4-68c7](https://github.com/weechat/weechat/security/advisories/GHSA-h394-85x4-68c7))
+- core: fix heap buffer overflow in charset conversion when the converted string is more than 4 times longer than the input and contains invalid chars, for example with charset TSCII ([GHSA-q32h-5qvq-3936](https://github.com/weechat/weechat/security/advisories/GHSA-q32h-5qvq-3936))
+- irc: limit number of prefix modes in PREFIX of message 005 to prevent memory exhaustion
+- irc: escape `${` in values of variables `$nick`, `$channel` and `$server` in commands `/allchan`, `/allpv` and `/allserv`, to prevent evaluation of untrusted values
+- irc: escape `${` in server options addresses, nicks, password and autojoin set from an IRC URL (`irc://...`), to prevent evaluation of untrusted values
+- irc: escape `${` in channel names saved in server option autojoin, to prevent evaluation of channel names received from the server (for example on channel forward)
+- irc: fix heap buffer overflow in nick prefixes when the server sends an empty PREFIX in message 005 and the connection is lost before message 001 ([GHSA-xj8h-x2w9-m8m6](https://github.com/weechat/weechat/security/advisories/GHSA-xj8h-x2w9-m8m6))
+- relay: limit size of HTTP headers received from a client to prevent memory exhaustion ([GHSA-h394-85x4-68c7](https://github.com/weechat/weechat/security/advisories/GHSA-h394-85x4-68c7))
+- relay: fix heap buffer overflow in path of hdata sent to clients with "weechat" protocol ([GHSA-8wr2-x42m-7fxv](https://github.com/weechat/weechat/security/advisories/GHSA-8wr2-x42m-7fxv))
+
 ## [4.10.1] - 2026-09-05
 
 ### Fixed
@@ -4704,6 +4729,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - nicklist can be moved on top, bottom, left or right of window
 
 [Unreleased]: https://github.com/weechat/weechat/compare/v4.10.0...HEAD
+[4.10.2]: https://github.com/weechat/weechat/compare/v4.10.1...v4.10.2
 [4.10.1]: https://github.com/weechat/weechat/compare/v4.10.0...v4.10.1
 [4.10.0]: https://github.com/weechat/weechat/compare/v4.9.0...v4.10.0
 [4.9.5]: https://github.com/weechat/weechat/compare/v4.9.4...v4.9.5
