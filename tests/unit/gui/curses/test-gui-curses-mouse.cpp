@@ -131,6 +131,11 @@ TEST(GuiCursesMouse, EventSize)
     LONGS_EQUAL(12, gui_mouse_event_size ("\x01[[<0;12;34m"));
     LONGS_EQUAL(12, gui_mouse_event_size ("\x01[[<0;12;34MABC"));
     LONGS_EQUAL(12, gui_mouse_event_size ("\x01[[<0;12;34M\x01[[<0;12;34m"));
+    LONGS_EQUAL(0, gui_mouse_event_size ("\x01[[<0;12;-"));
+    LONGS_EQUAL(0, gui_mouse_event_size ("\x01[[<0;12;-1"));
+    LONGS_EQUAL(12, gui_mouse_event_size ("\x01[[<0;12;-1m"));
+    LONGS_EQUAL(12, gui_mouse_event_size ("\x01[[<0;12;-1mABC"));
+    LONGS_EQUAL(8, gui_mouse_event_size ("\x01[[<0;12\x01[[<0;12;34m"));
 
     /* UTF-8 event */
     LONGS_EQUAL(0, gui_mouse_event_size ("\x01[[M"));
@@ -191,6 +196,11 @@ TEST(GuiCursesMouse, EventNameSgr)
     WEE_CHECK_EVENT_SGR(NULL, 0, 0, 0, 0, 0, "");
     WEE_CHECK_EVENT_SGR(NULL, 0, 0, 0, 0, 0, "invalid");
     WEE_CHECK_EVENT_SGR(NULL, 0, 0, 0, 0, 0, "invalid;no;digits");
+    WEE_CHECK_EVENT_SGR(NULL, 0, 0, 0, 0, 0, "0;20;6");
+    WEE_CHECK_EVENT_SGR(NULL, 0, 0, 0, 0, 0, "0;20;6X");
+    WEE_CHECK_EVENT_SGR(NULL, 0, 0, 0, 0, 0, "0;20;-1m");
+    WEE_CHECK_EVENT_SGR(NULL, 0, 0, 0, 0, 0, "0;-20;6M");
+    WEE_CHECK_EVENT_SGR(NULL, 0, 0, 0, 0, 0, "0;20 ;6M");
 
     gui_mouse_event_reset ();
     WEE_CHECK_EVENT_SGR("button1-event-down", 1, 19, 5, 19, 5, "0;20;6M");

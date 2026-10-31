@@ -212,6 +212,7 @@ int
 gui_mouse_event_size (const char *key)
 {
     const char *ptr_key;
+    unsigned char c;
     int i, key_valid_utf8;
 
     if (!key || !key[0])
@@ -222,11 +223,20 @@ gui_mouse_event_size (const char *key)
         /*
          * SGR event: digits separated by ';', ending by 'M' (pressed)
          * or 'm' (released), example: "0;71;21M".
+         *
+         * The whole control sequence is consumed up to its final byte
+         * (0x40-0x7E, see ECMA-48), even if it contains invalid chars,
+         * so that no part of an invalid event is inserted in input;
+         * a char that can not be part of a control sequence ends it
+         * (and is not part of the event).
          */
         for (ptr_key = key + 4; ptr_key[0]; ptr_key++)
         {
-            if ((ptr_key[0] != ';') && !isdigit ((unsigned char)ptr_key[0]))
+            c = (unsigned char)ptr_key[0];
+            if ((c >= 0x40) && (c <= 0x7E))
                 return ptr_key - key + 1;
+            if ((c < 0x20) || (c > 0x3F))
+                return ptr_key - key;
         }
         return 0;
     }
@@ -341,7 +351,7 @@ gui_mouse_event_concat_gesture (char *key)
 const char *
 gui_mouse_event_name_sgr (const char *key)
 {
-    int length, num_items, is_release, button, x, y;
+    int i, length, num_items, is_release, button, x, y;
     char **items;
     static char mouse_key[128];
 
@@ -349,6 +359,16 @@ gui_mouse_event_name_sgr (const char *key)
         return NULL;
 
     mouse_key[0] = '\0';
+
+    /* Event must be digits separated by ';', ending by 'M' or 'm'. */
+    length = (int)strlen (key);
+    if ((key[length - 1] != 'M') && (key[length - 1] != 'm'))
+        return NULL;
+    for (i = 0; i < length - 1; i++)
+    {
+        if ((key[i] != ';') && !isdigit ((unsigned char)key[i]))
+            return NULL;
+    }
 
     items = string_split (key, ";", NULL, 0, 0, &num_items);
     if (!items)
