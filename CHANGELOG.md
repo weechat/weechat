@@ -10,6 +10,10 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ## [Unreleased]
 
+### Fixed
+
+- core: fix plural form in Italian translations, use plural for zero
+
 ### Security
 
 - irc: refuse SASL success with SCRAM mechanisms when the server signature has not been verified, to enforce mutual authentication
