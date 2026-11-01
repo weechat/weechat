@@ -623,13 +623,13 @@ spell_get_suggestions (struct t_spell_speller_buffer *speller_buffer,
 }
 
 /*
- * Skip WeeChat and IRC color codes in *string and adds them to "result".
+ * Skip WeeChat and IRC color codes in *string and add them to "result".
  */
 
 void
 spell_skip_color_codes (char **string, char **result)
 {
-    int color_code_size;
+    int color_code_size, length;
 
     while ((*string)[0])
     {
@@ -642,7 +642,8 @@ spell_skip_color_codes (char **string, char **result)
         }
         else if ((*string)[0] == '\x02' || (*string)[0] == '\x0F'
                  || (*string)[0] == '\x11' || (*string)[0] == '\x16'
-                 || (*string)[0] == '\x1D' || (*string)[0] == '\x1F')
+                 || (*string)[0] == '\x1D' || (*string)[0] == '\x1E'
+                 || (*string)[0] == '\x1F')
         {
             /*
              * IRC attribute:
@@ -651,6 +652,7 @@ spell_skip_color_codes (char **string, char **result)
              *   0x11: monospaced font
              *   0x16: reverse video
              *   0x1D: italic
+             *   0x1E: strikethrough
              *   0x1F: underlined text
              */
             weechat_string_dyn_concat (result, *string, 1);
@@ -685,6 +687,40 @@ spell_skip_color_codes (char **string, char **result)
                         weechat_string_dyn_concat (result, *string, 1);
                         (*string)++;
                     }
+                }
+            }
+        }
+        else if ((*string)[0] == '\x04')
+        {
+            /* IRC hex color code */
+            weechat_string_dyn_concat (result, *string, 1);
+            (*string)++;
+            if (isxdigit ((unsigned char)((*string)[0])))
+            {
+                /* Foreground */
+                length = 1;
+                while ((length < 6)
+                       && isxdigit ((unsigned char)((*string)[length])))
+                {
+                    length++;
+                }
+                weechat_string_dyn_concat (result, *string, length);
+                (*string) += length;
+                /*
+                 * Background (only if a foreground is given, so
+                 * "^D,FF0000" is a color reset followed by text ",FF0000").
+                 */
+                if (((*string)[0] == ',')
+                    && (isxdigit ((unsigned char)((*string)[1]))))
+                {
+                    length = 2;
+                    while ((length < 7)
+                           && isxdigit ((unsigned char)((*string)[length])))
+                    {
+                        length++;
+                    }
+                    weechat_string_dyn_concat (result, *string, length);
+                    (*string) += length;
                 }
             }
         }

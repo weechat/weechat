@@ -50,8 +50,8 @@ TEST(Spell, SkipColorCodes)
     WEE_CHECK_SKIP_COLOR_CODES(gui_color_get_custom ("red"), "word", string);
 
     /* IRC attributes */
-    WEE_CHECK_SKIP_COLOR_CODES("\x02\x0F\x11\x16\x1D\x1F", "word",
-                               "\x02\x0F\x11\x16\x1D\x1Fword");
+    WEE_CHECK_SKIP_COLOR_CODES("\x02\x0F\x11\x16\x1D\x1E\x1F", "word",
+                               "\x02\x0F\x11\x16\x1D\x1E\x1Fword");
 
     /* IRC color: reset */
     WEE_CHECK_SKIP_COLOR_CODES("\x03", "word", "\x03word");
@@ -72,7 +72,33 @@ TEST(Spell, SkipColorCodes)
     /* IRC color: background without foreground (reset + text ",02") */
     WEE_CHECK_SKIP_COLOR_CODES("\x03", ",02word", "\x03" ",02word");
 
+    /* IRC hex color: reset */
+    WEE_CHECK_SKIP_COLOR_CODES("\x04", "word", "\x04word");
+
+    /* IRC hex color: foreground */
+    WEE_CHECK_SKIP_COLOR_CODES("\x04" "F", "word", "\x04" "Fword");
+    WEE_CHECK_SKIP_COLOR_CODES("\x04" "FF7F00", "word", "\x04" "FF7F00word");
+    WEE_CHECK_SKIP_COLOR_CODES("\x04" "FF7F00", "1word",
+                               "\x04" "FF7F001word");
+
+    /* IRC hex color: foreground followed by a comma without background */
+    WEE_CHECK_SKIP_COLOR_CODES("\x04" "FF7F00", ",word",
+                               "\x04" "FF7F00,word");
+
+    /* IRC hex color: foreground and background */
+    WEE_CHECK_SKIP_COLOR_CODES("\x04" "F,8", "word", "\x04" "F,8word");
+    WEE_CHECK_SKIP_COLOR_CODES("\x04" "FFFF00,8B008B", "word",
+                               "\x04" "FFFF00,8B008Bword");
+    WEE_CHECK_SKIP_COLOR_CODES("\x04" "FFFF00,8B008B", "1word",
+                               "\x04" "FFFF00,8B008B1word");
+
+    /* IRC hex color: background without foreground (reset + ",8B008B") */
+    WEE_CHECK_SKIP_COLOR_CODES("\x04", ",8B008Bword", "\x04" ",8B008Bword");
+
     /* multiple color codes */
     WEE_CHECK_SKIP_COLOR_CODES("\x02\x03" "05,02\x1F\x03", "word",
                                "\x02\x03" "05,02\x1F\x03word");
+    WEE_CHECK_SKIP_COLOR_CODES("\x1E\x04" "FFFF00,8B008B\x03" "05\x04",
+                               "word",
+                               "\x1E\x04" "FFFF00,8B008B\x03" "05\x04word");
 }
