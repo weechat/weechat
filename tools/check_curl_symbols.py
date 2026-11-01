@@ -137,19 +137,22 @@ def check_req_symbols(symbols: list[WeechatCurlSymbol]) -> int:
     """
     errors: int = 0
     req_curl = curl_version_to_int(CURL_MIN_VERSION_STR)
+    to_str = curl_version_to_str
     for symbol in symbols:
         if symbol.min_curl and symbol.min_curl <= req_curl:
             print(
-                f"{SRC_PATH}:{symbol.line_no}: min version for "
-                f"symbol {symbol.name} older than minimal required "
-                f"curl {req_curl}. Remove if guard."
+                f"{SRC_PATH}:{symbol.line_no}: min version "
+                f"{to_str(symbol.min_curl)} for symbol {symbol.name} is "
+                f"older than or equal to minimal required curl "
+                f"{CURL_MIN_VERSION_STR}. Remove the if guard."
             )
             errors += 1
-        if symbol.max_curl and symbol.max_curl < req_curl:
+        if symbol.max_curl and symbol.max_curl <= req_curl:
             print(
-                f"{SRC_PATH}:{symbol.line_no}: max version for "
-                f"symbol {symbol.name} older than minimal required "
-                f"curl {req_curl}. Remove the symbol."
+                f"{SRC_PATH}:{symbol.line_no}: max version "
+                f"{to_str(symbol.max_curl)} for symbol {symbol.name} is "
+                f"older than or equal to minimal required curl "
+                f"{CURL_MIN_VERSION_STR}. Remove the symbol."
             )
             errors += 1
     return errors
@@ -261,20 +264,35 @@ def check_symbols(
             print(f"{SRC_PATH}:{symbol.line_no}: symbol {symbol.name} not found in Curl")
             errors += 1
             continue
-        if curl_symbol[0] > req_curl and symbol.min_curl != curl_symbol[0]:
+        curl_min, curl_max = curl_symbol
+        if curl_max and curl_max <= req_curl:
+            if not symbol.max_curl:
+                # If WeeChat has a max version, error is reported by check_req_symbols().
+                print(
+                    f"{SRC_PATH}:{symbol.line_no}: max version "
+                    f"{to_str(curl_max)} in Curl for symbol {symbol.name} is "
+                    f"older than or equal to minimal required curl "
+                    f"{CURL_MIN_VERSION_STR}. Remove the symbol."
+                )
+                errors += 1
+            continue
+        # Min/max versions older than or equal to minimal required curl are
+        # reported by check_req_symbols().
+        expected_min = curl_min if curl_min > req_curl else 0
+        if symbol.min_curl != expected_min and not 0 < symbol.min_curl <= req_curl:
             print(
                 f"{SRC_PATH}:{symbol.line_no}: min version for "
                 f"symbol {symbol.name} differs: "
                 f"{to_str(symbol.min_curl)} in WeeChat, "
-                f"{to_str(curl_symbol[0])} in Curl"
+                f"{to_str(curl_min)} in Curl"
             )
             errors += 1
-        if curl_symbol[1] >= req_curl and symbol.max_curl != curl_symbol[1]:
+        if symbol.max_curl != curl_max and not 0 < symbol.max_curl <= req_curl:
             print(
                 f"{SRC_PATH}:{symbol.line_no}: max version for "
                 f"symbol {symbol.name} differs: "
                 f"{to_str(symbol.max_curl)} in WeeChat, "
-                f"{to_str(curl_symbol[1])} in Curl"
+                f"{to_str(curl_max)} in Curl"
             )
             errors += 1
     return errors
