@@ -566,6 +566,7 @@ WeeChat "core" is located in following directories:
 |          script/                                | Root of unit tests for script plugin.
 |             test-script-repo.cpp                | Tests: script repository.
 |          spell/                                 | Root of unit tests for spell plugin.
+|             test-spell.cpp                      | Tests: spell functions.
 |             test-spell-config.cpp               | Tests: spell configuration.
 |          trigger/                               | Root of unit tests for trigger plugin.
 |             test-trigger.cpp                    | Tests: triggers.

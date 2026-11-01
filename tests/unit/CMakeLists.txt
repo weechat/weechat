@@ -194,6 +194,7 @@ endif()
 
 if(ENABLE_SPELL)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    plugins/spell/test-spell.cpp
     plugins/spell/test-spell-config.cpp
   )
 endif()

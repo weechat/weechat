@@ -671,17 +671,20 @@ spell_skip_color_codes (char **string, char **result)
                     weechat_string_dyn_concat (result, *string, 1);
                     (*string)++;
                 }
-            }
-            if (((*string)[0] == ',')
-                && (isdigit ((unsigned char)((*string)[1]))))
-            {
-                /* Background */
-                weechat_string_dyn_concat (result, *string, 1);
-                (*string)++;
-                if (isdigit ((unsigned char)((*string)[0])))
+                /*
+                 * Background (only if a foreground is given, so "^C,05"
+                 * is a color reset followed by text ",05").
+                 */
+                if (((*string)[0] == ',')
+                    && (isdigit ((unsigned char)((*string)[1]))))
                 {
-                    weechat_string_dyn_concat (result, *string, 1);
-                    (*string)++;
+                    weechat_string_dyn_concat (result, *string, 2);
+                    (*string) += 2;
+                    if (isdigit ((unsigned char)((*string)[0])))
+                    {
+                        weechat_string_dyn_concat (result, *string, 1);
+                        (*string)++;
+                    }
                 }
             }
         }

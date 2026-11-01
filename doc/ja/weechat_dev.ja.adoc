@@ -735,6 +735,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          spell/                                 | Root of unit tests for spell plugin.
 // TRANSLATION MISSING
+|             test-spell.cpp                      | Tests: spell functions.
+// TRANSLATION MISSING
 |             test-spell-config.cpp               | Tests: spell configuration.
 // TRANSLATION MISSING
 |          trigger/                               | Root of unit tests for trigger plugin.
