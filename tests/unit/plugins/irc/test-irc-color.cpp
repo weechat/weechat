@@ -43,6 +43,10 @@ extern int irc_color_convert_term2irc (int color);
 #define STRING_IRC_COLOR_FG_LIGHTCYAN_BG_RED                            \
     "test_" IRC_COLOR_COLOR_STR "11,05" "lightcyan/red"                 \
     IRC_COLOR_COLOR_STR "_end"
+#define STRING_IRC_COLOR_BG_WITHOUT_FG                                  \
+    "test_" IRC_COLOR_COLOR_STR ",05" "_end"
+#define STRING_IRC_COLOR_FG_LIGHTCYAN_COMMA                             \
+    "test_" IRC_COLOR_COLOR_STR "11," "lightcyan_end"
 #define STRING_IRC_ONLY_ATTRS_AND_COLORS                                \
     IRC_COLOR_COLOR_STR                                                 \
     IRC_COLOR_RESET_STR                                                 \
@@ -83,6 +87,10 @@ extern int irc_color_convert_term2irc (int color);
     "test_" IRC_COLOR_HEX_COLOR_STR "FFFF00,8B008B"                     \
     "yellow/darkmagenta"                                                \
     IRC_COLOR_HEX_COLOR_STR "_end"
+#define STRING_IRC_COLOR_HEX_BG_WITHOUT_FG                              \
+    "test_" IRC_COLOR_HEX_COLOR_STR ",8B008B" "_end"
+#define STRING_IRC_COLOR_FG_ORANGE_COMMA                                \
+    "test_" IRC_COLOR_HEX_COLOR_STR "FF7F00," "orange_end"
 #define STRING_IRC_COLOR_TERM_REMAPPED                                  \
     "test_"                                                             \
     IRC_COLOR_HEX_COLOR_STR "FFFF00,8B008B" "remapped"
@@ -114,6 +122,10 @@ extern int irc_color_convert_term2irc (int color);
     "test_" "\x03" "11" "lightcyan" "\x03" "_end"
 #define STRING_USER_FG_LIGHTCYAN_BG_RED                                 \
     "test_" "\x03" "11,05" "lightcyan/red" "\x03" "_end"
+#define STRING_USER_BG_WITHOUT_FG                                       \
+    "test_" "\x03" ",05" "_end"
+#define STRING_USER_FG_LIGHTCYAN_COMMA                                  \
+    "test_" "\x03" "11," "lightcyan_end"
 #define STRING_USER_ONLY_ATTRS_AND_COLORS                               \
     "\x03" "\x0F" "\x02" "\x16" "\x1D" "\x1E" "\x1F" "\x1F" "\x1E"      \
     "\x1D" "\x16" "\x02"
@@ -124,6 +136,10 @@ extern int irc_color_convert_term2irc (int color);
     "test_" "\x04" "FF7F00" "orange" "\x04" "_end"
 #define STRING_USER_FG_YELLOW_BG_DARKMAGENTA                            \
     "test_" "\x04" "FFFF00,8B008B" "yellow/darkmagenta" "\x04" "_end"
+#define STRING_USER_HEX_BG_WITHOUT_FG                                   \
+    "test_" "\x04" ",8B008B" "_end"
+#define STRING_USER_FG_ORANGE_COMMA                                     \
+    "test_" "\x04" "FF7F00," "orange_end"
 
 /* Tests on irc_color_decode_ansi(): ANSI color -> IRC color */
 #define STRING_ANSI_RESET "test_\x1B[mreset"
@@ -312,6 +328,21 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_LIGHTCYAN_BG_RED, 1);
 
+    /* Color: background without foreground (color reset + text ",05") */
+    WEE_CHECK_DECODE("test_,05_end", STRING_IRC_COLOR_BG_WITHOUT_FG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,05_end",
+              gui_color_get_custom ("resetcolor"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_BG_WITHOUT_FG, 1);
+
+    /* Color: lightcyan followed by a comma without background */
+    WEE_CHECK_DECODE("test_,lightcyan_end",
+                     STRING_IRC_COLOR_FG_LIGHTCYAN_COMMA, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,lightcyan_end",
+              gui_color_get_custom ("|lightcyan"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_LIGHTCYAN_COMMA, 1);
+
     /* Color: only attributes and colors */
     WEE_CHECK_DECODE("", STRING_IRC_ONLY_ATTRS_AND_COLORS, 0);
     snprintf (string, sizeof (string),
@@ -394,6 +425,22 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("|11,90"),
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_YELLOW_BG_DARKMAGENTA, 1);
+
+    /* Color: hex background without foreground (reset + text ",8B008B") */
+    WEE_CHECK_DECODE("test_,8B008B_end",
+                     STRING_IRC_COLOR_HEX_BG_WITHOUT_FG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,8B008B_end",
+              gui_color_get_custom ("resetcolor"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_HEX_BG_WITHOUT_FG, 1);
+
+    /* Color: hex 0xFF7F00 (orange / 208) followed by a comma */
+    WEE_CHECK_DECODE("test_,orange_end",
+                     STRING_IRC_COLOR_FG_ORANGE_COMMA, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,orange_end",
+              gui_color_get_custom ("|208"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_ORANGE_COMMA, 1);
 
     /*
      * Color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90)
@@ -516,6 +563,21 @@ TEST(IrcColor, Encode)
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_FG_LIGHTCYAN_BG_RED, 1);
 
+    /* Color: background without foreground (color reset + text ",05") */
+    WEE_CHECK_ENCODE("test_,05_end", STRING_USER_BG_WITHOUT_FG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,05_end",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_BG_WITHOUT_FG, 1);
+
+    /* Color: lightcyan followed by a comma without background */
+    WEE_CHECK_ENCODE("test_,lightcyan_end",
+                     STRING_USER_FG_LIGHTCYAN_COMMA, 0);
+    snprintf (string, sizeof (string),
+              "test_%s11,lightcyan_end",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_FG_LIGHTCYAN_COMMA, 1);
+
     /* Color: only attributes and colors */
     WEE_CHECK_ENCODE("", STRING_USER_ONLY_ATTRS_AND_COLORS, 0);
     snprintf (string, sizeof (string),
@@ -563,6 +625,20 @@ TEST(IrcColor, Encode)
               IRC_COLOR_HEX_COLOR_STR,
               IRC_COLOR_HEX_COLOR_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_FG_YELLOW_BG_DARKMAGENTA, 1);
+
+    /* Color: hex background without foreground (reset + text ",8B008B") */
+    WEE_CHECK_ENCODE("test_,8B008B_end", STRING_USER_HEX_BG_WITHOUT_FG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,8B008B_end",
+              IRC_COLOR_HEX_COLOR_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_HEX_BG_WITHOUT_FG, 1);
+
+    /* Color: hex 0xFF7F00 (orange / 208) followed by a comma */
+    WEE_CHECK_ENCODE("test_,orange_end", STRING_USER_FG_ORANGE_COMMA, 0);
+    snprintf (string, sizeof (string),
+              "test_%sFF7F00,orange_end",
+              IRC_COLOR_HEX_COLOR_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_FG_ORANGE_COMMA, 1);
 }
 
 /*

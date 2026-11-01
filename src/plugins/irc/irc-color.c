@@ -304,19 +304,22 @@ irc_color_decode (const char *string, int keep_colors)
                         str_fg[2] = '\0';
                         ptr_string++;
                     }
-                }
-                if ((ptr_string[0] == ',') && (isdigit (ptr_string[1])))
-                {
-                    /* Background */
-                    ptr_string++;
-                    str_bg[0] = ptr_string[0];
-                    str_bg[1] = '\0';
-                    ptr_string++;
-                    if (isdigit (ptr_string[0]))
+                    /*
+                     * Background (only if a foreground is given, so "^C,05"
+                     * is a color reset followed by text ",05").
+                     */
+                    if ((ptr_string[0] == ',') && (isdigit (ptr_string[1])))
                     {
-                        str_bg[1] = ptr_string[0];
-                        str_bg[2] = '\0';
                         ptr_string++;
+                        str_bg[0] = ptr_string[0];
+                        str_bg[1] = '\0';
+                        ptr_string++;
+                        if (isdigit (ptr_string[0]))
+                        {
+                            str_bg[1] = ptr_string[0];
+                            str_bg[2] = '\0';
+                            ptr_string++;
+                        }
                     }
                 }
                 if (keep_colors)
@@ -396,21 +399,25 @@ irc_color_decode (const char *string, int keep_colors)
                     memcpy (str_fg, ptr_string, length);
                     str_fg[length] = '\0';
                     ptr_string += length;
-                }
-                if ((ptr_string[0] == ',') && (isxdigit (ptr_string[1])))
-                {
-                    /* Background */
-                    ptr_string++;
-                    length = 1;
-                    while (isxdigit (ptr_string[length]))
+                    /*
+                     * Background (only if a foreground is given, so
+                     * "^D,FF0000" is a color reset followed by text
+                     * ",FF0000").
+                     */
+                    if ((ptr_string[0] == ',') && (isxdigit (ptr_string[1])))
                     {
-                        length++;
-                        if (length == 6)
-                            break;
+                        ptr_string++;
+                        length = 1;
+                        while (isxdigit (ptr_string[length]))
+                        {
+                            length++;
+                            if (length == 6)
+                                break;
+                        }
+                        memcpy (str_bg, ptr_string, length);
+                        str_bg[length] = '\0';
+                        ptr_string += length;
                     }
-                    memcpy (str_bg, ptr_string, length);
-                    str_bg[length] = '\0';
-                    ptr_string += length;
                 }
                 if (keep_colors)
                 {
@@ -585,34 +592,20 @@ irc_color_encode (const char *string, int keep_colors)
                         }
                         ptr_string++;
                     }
-                }
-                if (ptr_string[0] == ',')
-                {
-                    /* Background */
-                    if (keep_colors)
-                        weechat_string_dyn_concat (out, ",", -1);
-                    ptr_string++;
-                    if (isdigit (ptr_string[0]))
+                    /* Background (only if a foreground is given) */
+                    if ((ptr_string[0] == ',') && (isdigit (ptr_string[1])))
                     {
+                        ptr_string++;
+                        length = (isdigit (ptr_string[1])) ? 2 : 1;
                         if (keep_colors)
                         {
+                            weechat_string_dyn_concat (out, ",", -1);
                             weechat_string_dyn_concat (
                                 out,
                                 (const char *)ptr_string,
-                                1);
+                                length);
                         }
-                        ptr_string++;
-                        if (isdigit (ptr_string[0]))
-                        {
-                            if (keep_colors)
-                            {
-                                weechat_string_dyn_concat (
-                                    out,
-                                    (const char *)ptr_string,
-                                    1);
-                            }
-                            ptr_string++;
-                        }
+                        ptr_string += length;
                     }
                 }
                 break;
@@ -637,15 +630,10 @@ irc_color_encode (const char *string, int keep_colors)
                                                    length);
                     }
                     ptr_string += length;
-                }
-                if (ptr_string[0] == ',')
-                {
-                    /* Background */
-                    if (keep_colors)
-                        weechat_string_dyn_concat (out, ",", -1);
-                    ptr_string++;
-                    if (isxdigit (ptr_string[0]))
+                    /* Background (only if a foreground is given) */
+                    if ((ptr_string[0] == ',') && (isxdigit (ptr_string[1])))
                     {
+                        ptr_string++;
                         length = 1;
                         while (isxdigit (ptr_string[length]))
                         {
@@ -655,6 +643,7 @@ irc_color_encode (const char *string, int keep_colors)
                         }
                         if (keep_colors)
                         {
+                            weechat_string_dyn_concat (out, ",", -1);
                             weechat_string_dyn_concat (out,
                                                        (const char *)ptr_string,
                                                        length);
