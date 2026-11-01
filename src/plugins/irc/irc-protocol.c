@@ -44,6 +44,7 @@
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
+#include "irc-redirect.h"
 #include "irc-sasl.h"
 #include "irc-server.h"
 #include "irc-tag.h"
@@ -4430,6 +4431,10 @@ IRC_PROTOCOL_CALLBACK(303)
  *
  * Command looks like:
  *   305 mynick :Does this mean you're really back?
+ *
+ * The away message is cleared: the user may have been marked as back by
+ * another client (for example through a bouncer like ZNC), and the message
+ * must not be sent again on next connection.
  */
 
 IRC_PROTOCOL_CALLBACK(305)
@@ -4453,8 +4458,12 @@ IRC_PROTOCOL_CALLBACK(305)
         free (str_away_msg);
     }
 
+    free (ctxt->server->away_message);
+    ctxt->server->away_message = NULL;
     ctxt->server->is_away = 0;
     ctxt->server->away_time = 0;
+
+    irc_server_set_away (ctxt->server, ctxt->server->nick, 0);
 
     weechat_bar_item_update ("away");
 
@@ -4466,6 +4475,8 @@ IRC_PROTOCOL_CALLBACK(305)
  *
  * Command looks like:
  *   306 mynick :We'll miss you
+ *
+ * If the away message is unknown, a WHOIS is sent on own nick to get it.
  */
 
 IRC_PROTOCOL_CALLBACK(306)
@@ -4491,6 +4502,19 @@ IRC_PROTOCOL_CALLBACK(306)
 
     ctxt->server->is_away = 1;
     ctxt->server->away_time = time (NULL);
+
+    /*
+     * If the away message is unknown (away set by another client, or by a
+     * bouncer like ZNC when the client attaches), get it with a WHOIS on
+     * own nick (the away message is in the reply 301).
+     */
+    if (!ctxt->server->away_message && ctxt->server->nick)
+    {
+        irc_redirect_new (ctxt->server, "whois", "away", 1,
+                          ctxt->server->nick, 0, "301");
+        irc_server_sendf (ctxt->server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                          "WHOIS :%s", ctxt->server->nick);
+    }
 
     weechat_bar_item_update ("away");
 

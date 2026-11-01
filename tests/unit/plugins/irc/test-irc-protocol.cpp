@@ -4580,6 +4580,10 @@ TEST(IrcProtocolWithServer, 305_306)
 {
     SRV_INIT;
 
+    /* Disable anti-flood so that all WHOIS are sent immediately. */
+    config_file_option_set (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD],
+                            "0", 1);
+
     RECV(":bob!user@host PRIVMSG alice :hi Alice!");
     CHECK_PV("bob", "bob", "hi Alice!",
              "irc_privmsg,notify_private,prefix_nick_248,nick_bob,"
@@ -4595,20 +4599,59 @@ TEST(IrcProtocolWithServer, 305_306)
 
     RECV(":server 306 alice");  /* Now away */
     CHECK_NO_MSG;
+    CHECK_SENT("WHOIS :alice");
     LONGS_EQUAL(1, ptr_server->is_away);
+    STRCMP_EQUAL(NULL, ptr_server->away_message);
+
+    /* Reply to WHOIS (redirected, not displayed) */
+    RECV(":server 311 alice alice user host * :real name");
+    CHECK_NO_MSG;
+    RECV(":server 301 alice alice :gone for lunch");
+    CHECK_NO_MSG;
+    RECV(":server 318 alice alice :End of /WHOIS list.");
+    CHECK_NO_MSG;
+    LONGS_EQUAL(1, ptr_server->is_away);
+    STRCMP_EQUAL("gone for lunch", ptr_server->away_message);
+    STRCMP_EQUAL("gone for lunch",
+                 (const char *)hashtable_get (
+                     ptr_server->buffer->local_variables, "away"));
+
+    /* Away message known: no WHOIS sent */
+    RECV(":server 306 alice");
+    CHECK_NO_MSG;
+    CHECK_SENT(NULL);
+    LONGS_EQUAL(1, ptr_server->is_away);
+    STRCMP_EQUAL("gone for lunch", ptr_server->away_message);
 
     RECV(":server 305 alice");
     CHECK_NO_MSG;
     LONGS_EQUAL(0, ptr_server->is_away);
+    STRCMP_EQUAL(NULL, ptr_server->away_message);
+    POINTERS_EQUAL(NULL,
+                   hashtable_get (ptr_server->buffer->local_variables, "away"));
 
     RECV(":server 306 alice : \002We'll miss you ");  /* Now away */
     CHECK_SRV("--", " We'll miss you ", "irc_306,irc_numeric,nick_server,log3");
+    CHECK_SENT("WHOIS :alice");
     LONGS_EQUAL(1, ptr_server->is_away);
+
+    /* Reply to WHOIS with away message without colon */
+    RECV(":server 311 alice alice user host * :real name");
+    CHECK_NO_MSG;
+    RECV(":server 301 alice alice lunch");
+    CHECK_NO_MSG;
+    RECV(":server 318 alice alice :End of /WHOIS list.");
+    CHECK_NO_MSG;
+    STRCMP_EQUAL("lunch", ptr_server->away_message);
 
     RECV(":server 305 alice : \002Does this mean you're really back? ");
     CHECK_SRV("--", " Does this mean you're really back? ",
               "irc_305,irc_numeric,nick_server,log3");
     LONGS_EQUAL(0, ptr_server->is_away);
+    STRCMP_EQUAL(NULL, ptr_server->away_message);
+
+    config_file_option_reset (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD],
+                              1);
 }
 
 /*

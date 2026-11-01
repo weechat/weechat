@@ -1758,6 +1758,96 @@ TEST(IrcServer, SetAway)
 
 /*
  * Test functions:
+ *   irc_server_away_whois_hsignal_cb
+ */
+
+TEST(IrcServer, AwayWhoisHsignalCb)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+
+    server = irc_server_alloc ("srv_away");
+    CHECK(server);
+    server->nick = strdup ("alice");
+    server->is_connected = 1;
+    server->is_away = 1;
+
+    hashtable = hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL, NULL);
+    CHECK(hashtable);
+
+    /* Missing server and output */
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_away_whois_hsignal_cb (NULL, NULL, NULL, hashtable));
+    STRCMP_EQUAL(NULL, server->away_message);
+
+    /* Error on redirection */
+    hashtable_set (hashtable, "error", "timeout");
+    hashtable_set (hashtable, "server", "srv_away");
+    hashtable_set (hashtable, "output",
+                   ":server 301 alice alice :gone for lunch");
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_away_whois_hsignal_cb (NULL, NULL, NULL, hashtable));
+    STRCMP_EQUAL(NULL, server->away_message);
+    hashtable_remove (hashtable, "error");
+
+    /* Unknown server */
+    hashtable_set (hashtable, "server", "srv_unknown");
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_away_whois_hsignal_cb (NULL, NULL, NULL, hashtable));
+    STRCMP_EQUAL(NULL, server->away_message);
+    hashtable_set (hashtable, "server", "srv_away");
+
+    /* No reply 301 */
+    hashtable_set (hashtable, "output",
+                   ":server 311 alice alice user host * :real name\n"
+                   ":server 318 alice alice :End of /WHOIS list.");
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_away_whois_hsignal_cb (NULL, NULL, NULL, hashtable));
+    STRCMP_EQUAL(NULL, server->away_message);
+
+    /* Reply 301 for another nick */
+    hashtable_set (hashtable, "output",
+                   ":server 301 alice bob :gone for lunch");
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_away_whois_hsignal_cb (NULL, NULL, NULL, hashtable));
+    STRCMP_EQUAL(NULL, server->away_message);
+
+    /* Not away any more */
+    server->is_away = 0;
+    hashtable_set (hashtable, "output",
+                   ":server 301 alice alice :gone for lunch");
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_away_whois_hsignal_cb (NULL, NULL, NULL, hashtable));
+    STRCMP_EQUAL(NULL, server->away_message);
+    server->is_away = 1;
+
+    /* Away message received */
+    hashtable_set (hashtable, "output",
+                   ":server 311 alice alice user host * :real name\n"
+                   ":server 301 alice ALICE :gone for lunch\n"
+                   ":server 318 alice alice :End of /WHOIS list.");
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_away_whois_hsignal_cb (NULL, NULL, NULL, hashtable));
+    STRCMP_EQUAL("gone for lunch", server->away_message);
+
+    /* Away message already known: not changed */
+    hashtable_set (hashtable, "output",
+                   ":server 301 alice alice :another message");
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_away_whois_hsignal_cb (NULL, NULL, NULL, hashtable));
+    STRCMP_EQUAL("gone for lunch", server->away_message);
+
+    hashtable_free (hashtable);
+
+    server->is_connected = 0;
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
  *   irc_server_xfer_send_ready_cb
  */
 

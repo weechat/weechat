@@ -243,6 +243,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           &irc_redirect_command_hsignal_cb, NULL, NULL);
     weechat_hook_hsignal ("irc_redirection_server_*_list",
                           &irc_list_hsignal_redirect_list_cb, NULL, NULL);
+    weechat_hook_hsignal ("irc_redirection_away_whois",
+                          &irc_server_away_whois_hsignal_cb, NULL, NULL);
 
     /* Modifiers */
     weechat_hook_modifier ("irc_color_decode",

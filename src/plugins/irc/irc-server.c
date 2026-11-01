@@ -6214,6 +6214,113 @@ irc_server_set_away (struct t_irc_server *server, const char *nick, int is_away)
 }
 
 /*
+ * Callback for hsignal "irc_redirection_away_whois": WHOIS on own nick sent
+ * when the away message is unknown (reply to command "306").
+ *
+ * Set the away message with the reply 301 received.
+ */
+
+int
+irc_server_away_whois_hsignal_cb (const void *pointer, void *data,
+                                  const char *signal,
+                                  struct t_hashtable *hashtable)
+{
+    const char *error, *server, *output;
+    char **messages, *command, **params, *away_message;
+    int i, num_messages, num_params;
+    struct t_irc_server *ptr_server;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+
+    error = weechat_hashtable_get (hashtable, "error");
+    server = weechat_hashtable_get (hashtable, "server");
+    output = weechat_hashtable_get (hashtable, "output");
+
+    /* If there is an error on redirection, just ignore result. */
+    if (error && error[0])
+        return WEECHAT_RC_OK;
+
+    if (!server || !output)
+        return WEECHAT_RC_OK;
+
+    ptr_server = irc_server_search (server);
+    if (!ptr_server)
+        return WEECHAT_RC_OK;
+
+    /*
+     * Ignore the reply if the user is not away any more, or if the away
+     * message has been set in the meantime.
+     */
+    if (!ptr_server->is_connected
+        || !ptr_server->is_away
+        || ptr_server->away_message)
+    {
+        return WEECHAT_RC_OK;
+    }
+
+    messages = weechat_string_split (
+        output,
+        "\n",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_messages);
+    if (!messages)
+        return WEECHAT_RC_OK;
+
+    for (i = 0; i < num_messages; i++)
+    {
+        irc_message_parse (ptr_server,
+                           messages[i],
+                           NULL,  /* tags */
+                           NULL,  /* message_without_tags */
+                           NULL,  /* nick */
+                           NULL,  /* user */
+                           NULL,  /* host */
+                           &command,
+                           NULL,  /* channel */
+                           NULL,  /* arguments */
+                           NULL,  /* text */
+                           &params,
+                           &num_params,
+                           NULL,  /* pos_command */
+                           NULL,  /* pos_arguments */
+                           NULL,  /* pos_channel */
+                           NULL);  /* pos_text */
+        /* Reply looks like: 301 mynick mynick :away message */
+        if (command && (strcmp (command, "301") == 0) && params
+            && (num_params >= 3)
+            && (irc_server_strcasecmp (ptr_server,
+                                       params[1], ptr_server->nick) == 0))
+        {
+            away_message = weechat_string_rebuild_split_string (
+                (const char **)params, " ", 2, num_params - 1);
+            if (away_message && away_message[0])
+            {
+                ptr_server->away_message = away_message;
+                away_message = NULL;
+                irc_server_set_away (ptr_server, ptr_server->nick, 1);
+                weechat_bar_item_update ("away");
+            }
+            free (away_message);
+        }
+        free (command);
+        weechat_string_free_split (params);
+        if (ptr_server->away_message)
+            break;
+    }
+
+    weechat_string_free_split (messages);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback called when user sends (file or chat) to someone and that xfer
  * plugin successfully initialized xfer and is ready for sending.
  *
