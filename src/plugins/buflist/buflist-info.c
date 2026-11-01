@@ -5,12 +5,37 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-/* Infolist hook for buflist plugin */
+/* Info and infolist hooks for buflist plugin */
+
+#include <stdio.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "buflist.h"
 #include "buflist-bar-item.h"
 
+
+/*
+ * Return buflist info "buflist_bar_items_count".
+ */
+
+char *
+buflist_info_info_buflist_bar_items_count_cb (const void *pointer, void *data,
+                                              const char *info_name,
+                                              const char *arguments)
+{
+    char str_count[32];
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (str_count, sizeof (str_count), "%d", BUFLIST_BAR_NUM_ITEMS);
+
+    return strdup (str_count);
+}
 
 /*
  * Add a buffer in an infolist.
@@ -97,12 +122,20 @@ buflist_info_infolist_buflist_cb (const void *pointer, void *data,
 }
 
 /*
- * Hook infolist for buflist plugin.
+ * Hook info and infolist for buflist plugin.
  */
 
 void
 buflist_info_init (void)
 {
+    /* Info hooks */
+    weechat_hook_info (
+        "buflist_bar_items_count",
+        N_("number of buflist bar items"),
+        NULL,
+        &buflist_info_info_buflist_bar_items_count_cb, NULL, NULL);
+
+    /* Infolist hooks */
     weechat_hook_infolist (
         "buflist", N_("list of buffers in a buflist bar item"),
         NULL,

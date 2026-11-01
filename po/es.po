@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 21:45+0100\n"
+"POT-Creation-Date: 2026-11-01 22:16+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
@@ -7692,6 +7692,11 @@ msgid ""
 "format for TLS version on an IRC server buffer (note: content is evaluated, "
 "see /help buflist)"
 msgstr "comando ejecutado cuando WeeChat inicia, antes de cargar los plugins"
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "number of buflist bar items"
+msgstr "lista de elementos de barra"
 
 #, fuzzy
 msgid "list of buffers in a buflist bar item"

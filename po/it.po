@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 21:45+0100\n"
+"POT-Creation-Date: 2026-11-01 22:16+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -7701,6 +7701,11 @@ msgid ""
 msgstr ""
 "password per il server (nota: il contenuto viene valutato, consultare /help "
 "eval)"
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "number of buflist bar items"
+msgstr "elenco degli elementi barra"
 
 #, fuzzy
 msgid "list of buffers in a buflist bar item"
