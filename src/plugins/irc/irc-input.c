@@ -42,7 +42,12 @@
  *
  *   Msg(nick) -> @#test: test message for ops
  *   Action -> @#test: nick is testing
- *   Notice(nick) -> @#test: test notice for ops
+ *
+ * A notice is displayed with nick in prefix, and target if it's not the
+ * channel/nick of the buffer, like this:
+ *
+ *   -nick- | test notice
+ *   -nick:@#test- | test notice for ops
  *
  * If decode_colors is 1, colors are stripped if the option
  * irc.network.colors_send is off.
@@ -218,6 +223,34 @@ irc_input_user_message_display (struct t_irc_server *server,
             (ptr_text && ptr_text[0]) ? " " : "",
             IRC_COLOR_MSG(ptr_text));
     }
+    else if (is_notice)
+    {
+        /*
+         * Display the target in prefix only if it is not the channel/nick
+         * of the buffer (for example notice to ops "@#test", or notice
+         * displayed on server buffer).
+         */
+        weechat_printf_datetime_tags (
+            ptr_buffer,
+            date,
+            date_usec,
+            irc_protocol_tags (&ctxt, str_tags),
+            "%s%s",
+            irc_nick_as_notice_prefix (
+                server,
+                ptr_nick,
+                server->nick,
+                IRC_COLOR_CHAT_NICK_SELF,
+                (ptr_channel
+                 && (ptr_buffer == ptr_channel->buffer)
+                 && (irc_server_strcasecmp (server, target,
+                                            ptr_channel->name) == 0)) ?
+                NULL : target,
+                (is_channel) ?
+                IRC_COLOR_CHAT_CHANNEL :
+                irc_nick_color_for_msg (server, 0, NULL, target)),
+            IRC_COLOR_MSG(ptr_text));
+    }
     else if (display_target)
     {
         weechat_printf_datetime_tags (
@@ -225,14 +258,8 @@ irc_input_user_message_display (struct t_irc_server *server,
             date,
             date_usec,
             irc_protocol_tags (&ctxt, str_tags),
-            "%s%s%s%s%s(%s%s%s%s)%s -> %s%s%s: %s",
+            "%sMsg%s(%s%s%s%s)%s -> %s%s%s: %s",
             weechat_prefix ("network"),
-            (is_notice) ? IRC_COLOR_NOTICE : "",
-            (is_notice) ?
-            /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word). */
-            _("Notice") :
-            "Msg",
-            (is_notice) ? IRC_COLOR_RESET : "",
             IRC_COLOR_CHAT_DELIMITERS,
             irc_nick_mode_for_display (server, ptr_nick, 0),
             IRC_COLOR_CHAT_NICK_SELF,

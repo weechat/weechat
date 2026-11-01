@@ -938,7 +938,7 @@ gui_line_has_highlight (struct t_gui_line *line)
 {
     int rc, rc_regex, i, no_highlight, action, length;
     char *msg_no_color, *ptr_msg_no_color, *highlight_words;
-    const char *ptr_nick;
+    const char *ptr_nick, *ptr_host;
     regmatch_t regex_match;
 
     /* Remove color codes from line message. */
@@ -964,17 +964,21 @@ gui_line_has_highlight (struct t_gui_line *line)
     /*
      * Check if highlight is disabled for line; also check if the line is an
      * action message (for example tag "irc_action") and get pointer on the nick
-     * (tag "nick_xxx"), these info will be used later (see below).
+     * (tag "nick_xxx") and host (tag "host_xxx"), these info will be used
+     * later (see below).
      */
     no_highlight = 0;
     action = 0;
     ptr_nick = NULL;
+    ptr_host = NULL;
     for (i = 0; i < line->data->tags_count; i++)
     {
         if (strcmp (line->data->tags_array[i], GUI_CHAT_TAG_NO_HIGHLIGHT) == 0)
             no_highlight = 1;
         else if (strncmp (line->data->tags_array[i], "nick_", 5) == 0)
             ptr_nick = line->data->tags_array[i] + 5;
+        else if (strncmp (line->data->tags_array[i], "host_", 5) == 0)
+            ptr_host = line->data->tags_array[i] + 5;
         else
         {
             length = strlen (line->data->tags_array[i]);
@@ -1009,6 +1013,23 @@ gui_line_has_highlight (struct t_gui_line *line)
         {
             /* Skip prefix and nick at beginning (for example: "@FlashCode"). */
             ptr_msg_no_color += length + 1;
+        }
+    }
+
+    /*
+     * If we know the host and that the message starts with the host between
+     * parentheses, we skip it (to not highlight a message from another user
+     * if his host is in our highlight settings), for example in IRC notices:
+     * "(user@host) message".
+     */
+    if (ptr_host && (ptr_msg_no_color[0] == '('))
+    {
+        length = strlen (ptr_host);
+        if ((strncmp (ptr_msg_no_color + 1, ptr_host, length) == 0)
+            && (ptr_msg_no_color[length + 1] == ')'))
+        {
+            /* Skip host at beginning (for example: "(user@host)"). */
+            ptr_msg_no_color += length + 2;
         }
     }
 

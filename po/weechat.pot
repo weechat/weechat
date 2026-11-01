@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-19 21:01+0200\n"
+"POT-Creation-Date: 2026-11-01 20:24+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8217,10 +8217,6 @@ msgstr ""
 msgid "%s%s: you are not on channel \"%s\""
 msgstr ""
 
-#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word).
-msgid "Notice"
-msgstr ""
-
 msgid "send a CTCP action to a nick or channel"
 msgstr ""
 
@@ -10386,7 +10382,7 @@ msgid ""
 "\"*\" can be used as default color if no mode has been found in list)"
 msgstr ""
 
-msgid "color for text \"Notice\" in notices"
+msgid "color for delimiters around nick and target in notices"
 msgstr ""
 
 msgid "color for reason in kick/kill messages"

@@ -2496,11 +2496,11 @@ IRC_PROTOCOL_CALLBACK(note)
 IRC_PROTOCOL_CALLBACK(notice)
 {
     char *notice_args, end_char, *channel, str_tags[1024];
-    const char *pos, *pos_target, *pos_args, *nick_address;
+    const char *pos, *pos_target, *pos_args, *ptr_target, *ptr_target_color;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    int notify_private, is_channel, is_channel_orig, display_host;
-    int cap_echo_message, msg_already_received;
+    int notify_private, is_channel, is_channel_orig, display_host_msg;
+    int cap_echo_message, msg_already_received, from_server;
     time_t time_now;
     struct t_gui_buffer *ptr_buffer;
 
@@ -2559,6 +2559,14 @@ IRC_PROTOCOL_CALLBACK(notice)
     }
     else
     {
+        /*
+         * Notice is from a server if it has no address and contains a dot
+         * (which is not allowed in nicks).
+         */
+        from_server = (ctxt->nick
+                       && (!ctxt->address || !ctxt->address[0])
+                       && strchr (ctxt->nick, '.'));
+
         channel = NULL;
         is_channel = irc_channel_is_channel (ctxt->server, pos_target);
         is_channel_orig = is_channel;
@@ -2637,28 +2645,70 @@ IRC_PROTOCOL_CALLBACK(notice)
                           "notify_message" :
                           weechat_config_string (irc_config_look_notice_welcome_tags));
             }
-            weechat_printf_datetime_tags (
-                (ptr_channel) ? ptr_channel->buffer : ctxt->server->buffer,
-                ctxt->date,
-                ctxt->date_usec,
-                irc_protocol_tags (ctxt, str_tags),
-                "%s%s%s%s%s(%s%s%s%s)%s%s%s%s%s: %s",
-                weechat_prefix ("network"),
-                IRC_COLOR_NOTICE,
-                (is_channel_orig) ? "" : "Pv",
-                /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word). */
-                _("Notice"),
-                IRC_COLOR_CHAT_DELIMITERS,
-                irc_nick_mode_for_display (ctxt->server, ptr_nick, 0),
-                irc_nick_color_for_msg (ctxt->server, 0, ptr_nick, ctxt->nick),
-                (ctxt->nick && ctxt->nick[0]) ? ctxt->nick : "?",
-                IRC_COLOR_CHAT_DELIMITERS,
-                IRC_COLOR_RESET,
-                (is_channel_orig) ? " -> " : "",
-                (is_channel_orig) ? IRC_COLOR_CHAT_CHANNEL : "",
-                (is_channel_orig) ? ctxt->params[0] : "",  /* channel */
-                (is_channel_orig) ? IRC_COLOR_RESET : "",
-                IRC_COLOR_MSG(pos_args));
+            /*
+             * Display the target in prefix only if it is not the channel
+             * of the buffer: notice to ops (for example "@#test"), notice
+             * sent to us and redirected to channel (welcome notice),
+             * or notice to a channel we are not in (displayed on server
+             * buffer).
+             */
+            if (!is_channel_orig)
+            {
+                ptr_target = pos_target;
+                ptr_target_color = irc_nick_color_for_msg (ctxt->server, 0,
+                                                           NULL, pos_target);
+            }
+            else if (!ptr_channel
+                     || (irc_server_strcasecmp (ctxt->server, ctxt->params[0],
+                                                ptr_channel->name) != 0))
+            {
+                ptr_target = ctxt->params[0];
+                ptr_target_color = IRC_COLOR_CHAT_CHANNEL;
+            }
+            else
+            {
+                ptr_target = NULL;
+                ptr_target_color = NULL;
+            }
+            if (from_server)
+            {
+                /*
+                 * Notice from a server: the server name is displayed in
+                 * message, to keep the prefix short.
+                 */
+                weechat_printf_datetime_tags (
+                    (ptr_channel) ? ptr_channel->buffer : ctxt->server->buffer,
+                    ctxt->date,
+                    ctxt->date_usec,
+                    irc_protocol_tags (ctxt, str_tags),
+                    "%s%s%s%s%s%s%s%s: %s",
+                    weechat_prefix ("network"),
+                    irc_nick_color_for_msg (ctxt->server, 0, NULL, ctxt->nick),
+                    ctxt->nick,
+                    IRC_COLOR_RESET,
+                    (ptr_target) ? " -> " : "",
+                    (ptr_target) ? ptr_target_color : "",
+                    (ptr_target) ? ptr_target : "",
+                    (ptr_target) ? IRC_COLOR_RESET : "",
+                    IRC_COLOR_MSG(pos_args));
+            }
+            else
+            {
+                weechat_printf_datetime_tags (
+                    (ptr_channel) ? ptr_channel->buffer : ctxt->server->buffer,
+                    ctxt->date,
+                    ctxt->date_usec,
+                    irc_protocol_tags (ctxt, str_tags),
+                    "%s%s",
+                    irc_nick_as_notice_prefix (
+                        ctxt->server,
+                        ptr_nick,
+                        ctxt->nick,
+                        NULL,  /* nick_color */
+                        ptr_target,
+                        ptr_target_color),
+                    IRC_COLOR_MSG(pos_args));
+            }
 
             /*
              * Remember that nick has spoken, so that its part/quit is not
@@ -2677,8 +2727,7 @@ IRC_PROTOCOL_CALLBACK(notice)
             notify_private = 0;
             if (ctxt->server->is_connected
                 && ctxt->nick
-                && ((ctxt->address && ctxt->address[0])
-                    || !strchr (ctxt->nick, '.'))
+                && !from_server
                 && irc_config_notice_nick_notify (ctxt->nick))
             {
                 /*
@@ -2737,11 +2786,14 @@ IRC_PROTOCOL_CALLBACK(notice)
                     ctxt->date,
                     ctxt->date_usec,
                     irc_protocol_tags (ctxt, "notify_private"),
-                    "%s%s%s%s: %s",
-                    weechat_prefix ("network"),
-                    irc_nick_color_for_msg (ctxt->server, 0, NULL, ctxt->nick),
-                    ctxt->nick,
-                    IRC_COLOR_RESET,
+                    "%s%s",
+                    irc_nick_as_notice_prefix (
+                        ctxt->server,
+                        NULL,  /* nick */
+                        ctxt->nick,
+                        NULL,  /* nick_color */
+                        NULL,  /* target */
+                        NULL),  /* target_color */
                     IRC_COLOR_MSG(pos_args));
                 if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
                     && ptr_channel->has_quit_server)
@@ -2767,27 +2819,26 @@ IRC_PROTOCOL_CALLBACK(notice)
                         irc_protocol_tags (
                             ctxt,
                             (notify_private) ? "notify_private" : NULL),
-                        "%s%s%s%s -> %s%s%s: %s",
-                        weechat_prefix ("network"),
-                        IRC_COLOR_NOTICE,
-                        /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word). */
-                        _("Notice"),
-                        IRC_COLOR_RESET,
-                        irc_nick_color_for_msg (ctxt->server, 0, NULL, pos_target),
-                        pos_target,
-                        IRC_COLOR_RESET,
+                        "%s%s",
+                        irc_nick_as_notice_prefix (
+                            ctxt->server,
+                            NULL,  /* nick */
+                            ctxt->nick,
+                            NULL,  /* nick_color */
+                            pos_target,
+                            irc_nick_color_for_msg (ctxt->server, 0, NULL,
+                                                    pos_target)),
                         IRC_COLOR_MSG(pos_args));
                 }
                 else
                 {
-                    display_host = weechat_config_boolean (
-                        irc_config_look_display_host_notice);
-                    nick_address = irc_protocol_nick_address (
-                        ctxt->server,
-                        0,  /* server_message */
-                        NULL,  /* nick */
-                        ctxt->nick,
-                        (display_host) ? ctxt->address : NULL);
+                    display_host_msg = (
+                        ctxt->nick
+                        && ctxt->address
+                        && ctxt->address[0]
+                        && (strcmp (ctxt->nick, ctxt->address) != 0)
+                        && weechat_config_boolean (
+                            irc_config_look_display_host_notice));
                     weechat_printf_datetime_tags (
                         ptr_buffer,
                         ctxt->date,
@@ -2795,10 +2846,28 @@ IRC_PROTOCOL_CALLBACK(notice)
                         irc_protocol_tags (
                             ctxt,
                             (notify_private) ? "notify_private" : NULL),
-                        "%s%s%s%s",
+                        "%s%s%s%s%s%s%s%s%s%s%s%s",
+                        (ctxt->nick && !from_server) ?
+                        irc_nick_as_notice_prefix (
+                            ctxt->server,
+                            NULL,  /* nick */
+                            ctxt->nick,
+                            NULL,  /* nick_color */
+                            NULL,  /* target */
+                            NULL) :  /* target_color */
                         weechat_prefix ("network"),
-                        nick_address,
-                        (nick_address[0]) ? ": " : "",
+                        (from_server) ?
+                        irc_nick_color_for_msg (ctxt->server, 0, NULL,
+                                                ctxt->nick) : "",
+                        (from_server) ? ctxt->nick : "",
+                        (from_server) ? IRC_COLOR_RESET : "",
+                        (from_server) ? ": " : "",
+                        (display_host_msg) ? IRC_COLOR_CHAT_DELIMITERS : "",
+                        (display_host_msg) ? "(" : "",
+                        (display_host_msg) ? IRC_COLOR_CHAT_HOST : "",
+                        (display_host_msg) ? IRC_COLOR_MSG(ctxt->address) : "",
+                        (display_host_msg) ? IRC_COLOR_CHAT_DELIMITERS : "",
+                        (display_host_msg) ? ") " : "",
                         IRC_COLOR_MSG(pos_args));
                 }
             }

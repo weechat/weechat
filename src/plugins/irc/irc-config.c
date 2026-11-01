@@ -4039,7 +4039,7 @@ irc_config_init (void)
         irc_config_color_notice = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
             "notice", "color",
-            N_("color for text \"Notice\" in notices"),
+            N_("color for delimiters around nick and target in notices"),
             NULL, -1, 0, "green", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_color_reason_kick = weechat_config_new_option (

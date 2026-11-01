@@ -6783,7 +6783,7 @@ IRC_COMMAND_CALLBACK(voice)
 
 IRC_COMMAND_CALLBACK(wallchops)
 {
-    char *pos_channel;
+    char *pos_channel, str_target[512];
     int pos_args;
     const char *support_wallchops, *support_statusmsg;
     struct t_irc_nick *ptr_nick;
@@ -6834,17 +6834,17 @@ IRC_COMMAND_CALLBACK(wallchops)
         return WEECHAT_RC_ERROR;
     }
 
+    snprintf (str_target, sizeof (str_target), "@%s", ptr_channel->name);
     weechat_printf (
         ptr_channel->buffer,
-        "%s%s%sOp%s -> %s%s%s: %s",
-        weechat_prefix ("network"),
-        IRC_COLOR_NOTICE,
-        /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word). */
-        _("Notice"),
-        IRC_COLOR_RESET,
-        IRC_COLOR_CHAT_CHANNEL,
-        ptr_channel->name,
-        IRC_COLOR_RESET,
+        "%s%s",
+        irc_nick_as_notice_prefix (
+            ptr_server,
+            irc_nick_search (ptr_server, ptr_channel, ptr_server->nick),
+            ptr_server->nick,
+            IRC_COLOR_CHAT_NICK_SELF,
+            str_target,
+            IRC_COLOR_CHAT_CHANNEL),
         argv_eol[pos_args]);
 
     support_wallchops = irc_server_get_isupport_value (ptr_server,

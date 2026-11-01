@@ -776,7 +776,88 @@ TEST(GuiLine, GetNickTag)
 
 TEST(GuiLine, HasHighlight)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *line;
+
+    buffer = gui_buffer_new_user ("test_highlight", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    gui_buffer_set (buffer, "highlight_words", "alice,example");
+
+    /* No highlight */
+    line = gui_line_new (buffer, -1, 0, 0, "nick_bob", "bob", "test", 0, NULL);
+    LONGS_EQUAL(0, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+
+    /* Highlight on a word in message */
+    line = gui_line_new (buffer, -1, 0, 0, "nick_bob", "bob", "hi alice",
+                         0, NULL);
+    LONGS_EQUAL(1, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+
+    /* Highlight disabled with tag "no_highlight" */
+    line = gui_line_new (buffer, -1, 0, 0, "nick_bob,no_highlight", "bob",
+                         "hi alice", 0, NULL);
+    LONGS_EQUAL(0, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+
+    /* Action: nick at beginning of message is skipped */
+    line = gui_line_new (buffer, -1, 0, 0, "irc_action,nick_alice", " *",
+                         "alice is testing", 0, NULL);
+    LONGS_EQUAL(0, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+    line = gui_line_new (buffer, -1, 0, 0, "irc_action,nick_alice", " *",
+                         "@alice is testing", 0, NULL);
+    LONGS_EQUAL(0, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+    line = gui_line_new (buffer, -1, 0, 0, "irc_action,nick_bob", " *",
+                         "bob says hi to alice", 0, NULL);
+    LONGS_EQUAL(1, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+
+    /* Host between parentheses at beginning of message is skipped */
+    line = gui_line_new (buffer, -1, 0, 0,
+                         "irc_notice,nick_bob,host_user@example.com", "-bob-",
+                         "(user@example.com) test", 0, NULL);
+    LONGS_EQUAL(0, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+    line = gui_line_new (buffer, -1, 0, 0,
+                         "irc_notice,nick_bob,host_user@example.com", "-bob-",
+                         "(user@example.com) hi alice", 0, NULL);
+    LONGS_EQUAL(1, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+
+    /* Host not skipped if not at beginning or without parentheses */
+    line = gui_line_new (buffer, -1, 0, 0,
+                         "irc_notice,nick_bob,host_user@example.com", "-bob-",
+                         "test (user@example.com)", 0, NULL);
+    LONGS_EQUAL(1, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+    line = gui_line_new (buffer, -1, 0, 0,
+                         "irc_notice,nick_bob,host_user@example.com", "-bob-",
+                         "user@example.com test", 0, NULL);
+    LONGS_EQUAL(1, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+
+    /* Host skipped once only */
+    line = gui_line_new (buffer, -1, 0, 0,
+                         "irc_notice,nick_bob,host_user@example.com", "-bob-",
+                         "(user@example.com) (user@example.com) test",
+                         0, NULL);
+    LONGS_EQUAL(1, gui_line_has_highlight (line));
+    gui_line_free_data (line);
+    free (line);
+
+    gui_buffer_close (buffer);
 }
 
 /*

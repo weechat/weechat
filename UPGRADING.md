@@ -184,6 +184,48 @@ To display only the highest prefix in nicklist, like in previous versions:
 /set irc.look.multi_prefix_in_nicklist off
 ```
 
+### IRC notices
+
+IRC notices are now displayed with the nick in prefix and only the text in message, so that the
+nick and the target of a notice don't trigger a highlight.
+
+When the host is displayed (option `irc.look.display_host_notice`), it is at the beginning of
+message, between parentheses (`(user@host)`), and it doesn't trigger a highlight either.
+
+The target is displayed in prefix only if it is not the channel or nick of the buffer, for example
+a notice to channel ops (`@#channel`), or a notice sent to you and redirected to a channel
+with option `irc.look.notice_welcome_redirect`.
+
+Examples:
+
+```text
+# Before:
+-- | Notice(bob) -> #channel: text
+-- | Notice(bob) -> @#channel: text
+-- | PvNotice(bob): text
+-- | bob (user@host): text
+
+# Now:
+-bob-           | text
+-bob:@#channel- | text
+-bob:alice-     | text
+-bob-           | (user@host) text
+```
+
+Notices sent by a server (for example `*** Looking up your hostname...`) are still displayed
+with prefix `--` and server name in message, to keep the prefix short:
+
+```text
+-- | irc.example.org: *** Looking up your hostname...
+```
+
+The same format is used for notices sent with commands `/notice` and `/wallchops`.
+
+Triggers and scripts parsing the message of notices (for example to match `Notice(`) must be
+updated: the nick is now in the prefix of the line, and is still available in the tag `nick_xxx`.
+
+The color of delimiters around nick and target is set by option `irc.color.notice`.
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer

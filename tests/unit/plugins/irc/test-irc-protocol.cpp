@@ -25,6 +25,7 @@ extern "C"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
+#include "src/gui/gui-line.h"
 #include "src/gui/gui-nicklist.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-batch.h"
@@ -756,19 +757,19 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
     /* Notice to channel */
     server_input_data (buffer_server, "/notice #test \002notice chan");
     CHECK_SENT("NOTICE #test :\002notice chan");
-    CHECK_CHAN("--", "Notice(alice) -> #test: notice chan",
+    CHECK_CHAN("-alice-", "notice chan",
                "irc_notice,self_msg,notify_none,no_highlight,nick_alice,log1");
 
     /* STATUSMSG notice to channel */
     server_input_data (buffer_server, "/notice @#test \002notice chan ops");
     CHECK_SENT("NOTICE @#test :\002notice chan ops");
-    CHECK_CHAN("--", "Notice(alice) -> @#test: notice chan ops",
+    CHECK_CHAN("-alice:@#test-", "notice chan ops",
                "irc_notice,self_msg,notify_none,no_highlight,nick_alice,log1");
 
     /* Notice to a nick */
     server_input_data (buffer_server, "/notice bob \002notice pv");
     CHECK_SENT("NOTICE bob :\002notice pv");
-    CHECK_PV("bob", "--", "Notice(alice) -> bob: notice pv",
+    CHECK_PV("bob", "-alice-", "notice pv",
              "irc_notice,self_msg,notify_none,no_highlight,nick_alice,log1");
 
     /* Action on channel (with /me) */
@@ -2748,6 +2749,7 @@ TEST(IrcProtocolWithServer, note)
 
 TEST(IrcProtocolWithServer, notice)
 {
+    struct t_gui_buffer *ptr_buffer;
     int echo_message;
 
     SRV_INIT_JOIN;
@@ -2785,60 +2787,95 @@ TEST(IrcProtocolWithServer, notice)
 
         /* Notice to channel/user */
         RECV(":server.address NOTICE #test :\002a notice ");
-        CHECK_CHAN("--", "Notice(server.address) -> #test: a notice ",
+        CHECK_CHAN("--", "server.address: a notice ",
                    "irc_notice,notify_message,nick_server.address,log1");
         RECV(":server.address NOTICE alice :a notice ");
         CHECK_SRV("--", "server.address: a notice ",
                   "irc_notice,nick_server.address,log1");
         RECV(":bob!user@host NOTICE #test :a notice ");
-        CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
+        CHECK_CHAN("-bob-", "a notice ",
                    "irc_notice,notify_message,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :a notice ");
-        CHECK_SRV("--", "bob (user@host): a notice ",
+        CHECK_SRV("-bob-", "(user@host) a notice ",
                   "irc_notice,notify_private,nick_bob,host_user@host,log1");
         RECV(":bob NOTICE alice :a notice ");
-        CHECK_SRV("--", "bob: a notice ",
+        CHECK_SRV("-bob-", "a notice ",
                   "irc_notice,notify_private,nick_bob,log1");
 
         /* Notice to channel/user with color in address */
         RECV(":bob!user_\00304red@host_\00304red NOTICE #test :a notice ");
-        CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
+        CHECK_CHAN("-bob-", "a notice ",
                    "irc_notice,notify_message,nick_bob,host_user_\00304red@host_\00304red,log1");
         RECV(":bob!user_\00304red@host_\00304red NOTICE alice :a notice ");
-        CHECK_SRV("--", "bob (user_red@host_red): a notice ",
+        CHECK_SRV("-bob-", "(user_red@host_red) a notice ",
                   "irc_notice,notify_private,nick_bob,host_user_\00304red@host_\00304red,log1");
 
         /* Notice to channel/user with option irc.look.display_host_notice set to off */
         config_file_option_set (irc_config_look_display_host_notice, "off", 1);
         RECV(":server.address NOTICE #test :\002a notice ");
-        CHECK_CHAN("--", "Notice(server.address) -> #test: a notice ",
+        CHECK_CHAN("--", "server.address: a notice ",
                    "irc_notice,notify_message,nick_server.address,log1");
         RECV(":server.address NOTICE alice :a notice ");
         CHECK_SRV("--", "server.address: a notice ",
                   "irc_notice,nick_server.address,log1");
         RECV(":bob!user@host NOTICE #test :a notice ");
-        CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
+        CHECK_CHAN("-bob-", "a notice ",
                    "irc_notice,notify_message,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :a notice ");
-        CHECK_SRV("--", "bob: a notice ",
+        CHECK_SRV("-bob-", "a notice ",
                   "irc_notice,notify_private,nick_bob,host_user@host,log1");
         config_file_option_reset (irc_config_look_display_host_notice, 1);
+
+        /*
+         * Notice to channel: no highlight on sender nick and target
+         * (issue #845)
+         */
+        ptr_buffer = ptr_server->channels->buffer;
+        gui_buffer_set (ptr_buffer, "highlight_words", "bob,test");
+        RECV(":bob!user@host NOTICE #test :a notice ");
+        CHECK_CHAN("-bob-", "a notice ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
+        LONGS_EQUAL(0, ptr_buffer->own_lines->last_line->data->highlight);
+        RECV(":bob!user@host NOTICE @#test :a notice ");
+        CHECK_CHAN("-bob:@#test-", "a notice ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
+        LONGS_EQUAL(0, ptr_buffer->own_lines->last_line->data->highlight);
+        RECV(":bob!user@host NOTICE #test :a notice for bob ");
+        CHECK_CHAN("-bob-", "a notice for bob ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
+        LONGS_EQUAL(1, ptr_buffer->own_lines->last_line->data->highlight);
+        gui_buffer_set (ptr_buffer, "highlight_words", "");
+
+        /*
+         * Notice to user: no highlight on sender host displayed at
+         * beginning of message
+         */
+        gui_buffer_set (ptr_server->buffer, "highlight_words", "host");
+        RECV(":bob!user@host NOTICE alice :a notice ");
+        CHECK_SRV("-bob-", "(user@host) a notice ",
+                  "irc_notice,notify_private,nick_bob,host_user@host,log1");
+        LONGS_EQUAL(0, ptr_server->buffer->own_lines->last_line->data->highlight);
+        RECV(":bob!user@host NOTICE alice :a notice for host ");
+        CHECK_SRV("-bob-", "(user@host) a notice for host ",
+                  "irc_notice,notify_private,nick_bob,host_user@host,log1");
+        LONGS_EQUAL(1, ptr_server->buffer->own_lines->last_line->data->highlight);
+        gui_buffer_set (ptr_server->buffer, "highlight_words", "");
 
         /*
          * Notice to channel/user from self nick
          * (case of bouncer or if echo-message capability is enabled).
          */
         RECV(":alice!user@host NOTICE #test :\002a notice ");
-        CHECK_CHAN("--", "Notice(alice) -> #test: a notice ",
+        CHECK_CHAN("-alice-", "a notice ",
                    "irc_notice,self_msg,notify_none,no_highlight,nick_alice,"
                    "host_user@host,log1");
 
         /* Notice to ops of channel */
         RECV(":server.address NOTICE @#test :\002a notice ");
-        CHECK_CHAN("--", "Notice(server.address) -> @#test: a notice ",
+        CHECK_CHAN("--", "server.address -> @#test: a notice ",
                    "irc_notice,notify_message,nick_server.address,log1");
         RECV(":bob!user@host NOTICE @#test :a notice ");
-        CHECK_CHAN("--", "Notice(bob) -> @#test: a notice ",
+        CHECK_CHAN("-bob:@#test-", "a notice ",
                    "irc_notice,notify_message,nick_bob,host_user@host,log1");
 
         /*
@@ -2846,7 +2883,7 @@ TEST(IrcProtocolWithServer, notice)
          * (case of bouncer or if echo-message capability is enabled).
          */
         RECV(":alice!user@host NOTICE @#test :\002a notice ");
-        CHECK_CHAN("--", "Notice(alice) -> @#test: a notice ",
+        CHECK_CHAN("-alice:@#test-", "a notice ",
                    "irc_notice,self_msg,notify_none,no_highlight,nick_alice,"
                    "host_user@host,log1");
 
@@ -2855,33 +2892,33 @@ TEST(IrcProtocolWithServer, notice)
          * (case of bouncer or if echo-message capability is enabled).
          */
         RECV(":alice!user@host NOTICE alice :\002a notice ");
-        CHECK_SRV("--", "Notice -> alice: a notice ",
+        CHECK_SRV("-alice:alice-", "a notice ",
                   "irc_notice,notify_private,nick_alice,host_user@host,log1");
 
         /* Notice with channel name at beginning */
         RECV(":server.address NOTICE alice :[#test] \002a notice ");
-        CHECK_CHAN("--", "PvNotice(server.address): a notice ",
+        CHECK_CHAN("--", "server.address -> alice: a notice ",
                    "irc_notice,nick_server.address,log1");
         RECV(":server.address NOTICE alice :(#test) a notice ");
-        CHECK_CHAN("--", "PvNotice(server.address): a notice ",
+        CHECK_CHAN("--", "server.address -> alice: a notice ",
                    "irc_notice,nick_server.address,log1");
         RECV(":server.address NOTICE alice :{#test} a notice ");
-        CHECK_CHAN("--", "PvNotice(server.address): a notice ",
+        CHECK_CHAN("--", "server.address -> alice: a notice ",
                    "irc_notice,nick_server.address,log1");
         RECV(":server.address NOTICE alice :<#test> a notice ");
-        CHECK_CHAN("--", "PvNotice(server.address): a notice ",
+        CHECK_CHAN("--", "server.address -> alice: a notice ",
                    "irc_notice,nick_server.address,log1");
         RECV(":bob!user@host NOTICE alice :[#test] a notice ");
-        CHECK_CHAN("--", "PvNotice(bob): a notice ",
+        CHECK_CHAN("-bob:alice-", "a notice ",
                    "irc_notice,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :(#test) a notice ");
-        CHECK_CHAN("--", "PvNotice(bob): a notice ",
+        CHECK_CHAN("-bob:alice-", "a notice ",
                    "irc_notice,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :{#test} a notice ");
-        CHECK_CHAN("--", "PvNotice(bob): a notice ",
+        CHECK_CHAN("-bob:alice-", "a notice ",
                    "irc_notice,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :<#test> a notice ");
-        CHECK_CHAN("--", "PvNotice(bob): a notice ",
+        CHECK_CHAN("-bob:alice-", "a notice ",
                    "irc_notice,nick_bob,host_user@host,log1");
 
         /*
@@ -2889,7 +2926,7 @@ TEST(IrcProtocolWithServer, notice)
          * (case of a notice sent if echo-message capability is enabled).
          */
         RECV(":alice!user@host NOTICE bob :[#test] \002a notice ");
-        CHECK_SRV("--", "Notice -> bob: [#test] a notice ",
+        CHECK_SRV("-alice:bob-", "[#test] a notice ",
                    "irc_notice,notify_private,nick_alice,host_user@host,log1");
 
         /* Broken CTCP to channel */
@@ -3063,7 +3100,7 @@ TEST(IrcProtocolWithServer, part)
     CHECK_CHAN("-->", "bob (user@host) has joined #test",
                "irc_join,irc_smart_filter,nick_bob,host_user@host,log4");
     RECV(":bob!user@host NOTICE #test :a notice ");
-    CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
+    CHECK_CHAN("-bob-", "a notice ",
                "irc_notice,notify_message,nick_bob,host_user@host,log1");
     RECV(":bob!user@host PART #test :part message ");
     CHECK_CHAN("<--", "bob (user@host) has left #test (part message )",

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-10-19 21:01+0200\n"
-"PO-Revision-Date: 2026-10-20 09:10+0200\n"
+"POT-Creation-Date: 2026-11-01 20:24+0100\n"
+"PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -10411,10 +10411,6 @@ msgstr ""
 msgid "%s%s: you are not on channel \"%s\""
 msgstr "%s%s: Sie befinden sich nicht in einem Kanal \"%s\""
 
-#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word).
-msgid "Notice"
-msgstr "Hinweis"
-
 msgid "send a CTCP action to a nick or channel"
 msgstr "sendet eine CTCP-Aktion an einen Nick oder Kanal"
 
@@ -13240,7 +13236,9 @@ msgstr ""
 "(\"PREFIX\"); wird kein Modus in der Liste gefunden, wird eine Standardfarbe "
 "verwendet die dem Zeichen \"*\" zugeordnet wurde)"
 
-msgid "color for text \"Notice\" in notices"
+#, fuzzy
+#| msgid "color for text \"Notice\" in notices"
+msgid "color for delimiters around nick and target in notices"
 msgstr "Farbe des \"Notice\"-Textes in Notizen"
 
 msgid "color for reason in kick/kill messages"
@@ -16528,7 +16526,6 @@ msgid "relay remotes"
 msgstr "Relay Fernbedienung"
 
 #, c-format
-#| msgid "%s%s: invalid charset: \"%s\""
 msgid "%s%s: invalid network: \"%s\""
 msgstr "%s%s: Ungültiges Netzwerk: \"%s\""
 
