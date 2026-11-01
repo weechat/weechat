@@ -517,6 +517,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       core/                                     | core 向け単体テスト用のルートディレクトリ
 |          test-core-arraylist.cpp                | テスト: 配列リスト
 // TRANSLATION MISSING
+|          test-core-backtrace.cpp                | Tests: backtrace.
+// TRANSLATION MISSING
 |          test-core-calc.cpp                     | Tests: calculation of expressions.
 // TRANSLATION MISSING
 |          test-core-command.cpp                  | Tests: commands.

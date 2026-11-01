@@ -14,6 +14,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 
 #ifndef __USE_GNU
 #define __USE_GNU
@@ -50,6 +54,82 @@ weechat_backtrace_printf (const char *message, ...)
 }
 
 /*
+ * Find the file to give to addr2line, using the file name returned by dladdr.
+ *
+ * If filename contains a "/", it is used as-is, otherwise it is searched
+ * in directories of environment variable PATH (like the shell does to find
+ * a command).
+ *
+ * The full path is stored in "path" (its size is "path_size" bytes).
+ *
+ * No memory is dynamically allocated by this function, because it is called
+ * after a crash.
+ *
+ * Returns:
+ *   1: file found (path is set)
+ *   0: file not found (path is set to empty string if path_size > 0)
+ */
+
+int
+weechat_backtrace_find_file (const char *filename, char *path, int path_size)
+{
+    const char *env_path, *ptr_dir, *pos;
+    int length_dir, length_filename;
+    struct stat st;
+
+    if (!path || (path_size <= 0))
+        return 0;
+
+    path[0] = '\0';
+
+    if (!filename || !filename[0])
+        return 0;
+
+    length_filename = strlen (filename);
+
+    if (strchr (filename, '/'))
+    {
+        if (length_filename >= path_size)
+            return 0;
+        memcpy (path, filename, length_filename + 1);
+        return 1;
+    }
+
+    env_path = getenv ("PATH");
+    if (!env_path || !env_path[0])
+        return 0;
+
+    ptr_dir = env_path;
+    while (ptr_dir)
+    {
+        pos = strchr (ptr_dir, ':');
+        length_dir = (pos) ? (int)(pos - ptr_dir) : (int)strlen (ptr_dir);
+        /* An empty directory in PATH means the current directory. */
+        if (length_dir == 0)
+        {
+            ptr_dir = ".";
+            length_dir = 1;
+        }
+        if (length_dir + 1 + length_filename < path_size)
+        {
+            memcpy (path, ptr_dir, length_dir);
+            path[length_dir] = '/';
+            memcpy (path + length_dir + 1, filename, length_filename + 1);
+            if ((stat (path, &st) == 0)
+                && S_ISREG(st.st_mode)
+                && (access (path, X_OK) == 0))
+            {
+                return 1;
+            }
+        }
+        ptr_dir = (pos) ? pos + 1 : NULL;
+    }
+
+    path[0] = '\0';
+    return 0;
+}
+
+/*
  * Display function name and line with a backtrace address.
  */
 
@@ -57,16 +137,19 @@ void
 weechat_backtrace_addr2line (int number, void *address, const char *symbol)
 {
 #ifdef HAVE_BACKTRACE
-    int rc;
+    int rc, fd_pipe[2], lines_displayed;
+    pid_t pid;
     Dl_info info;
     const void *addr;
     FILE *output;
-    char cmd_line[1024];
+    char path[4096], str_addr[64];
+    char *args[7];
     char line[1024], *ptr_line, *pos;
     char function_name[1024];
 
     rc = dladdr (address, &info);
-    if ((rc == 0) || !info.dli_fname || !info.dli_fname[0])
+    if ((rc == 0) || !info.dli_fname || !info.dli_fname[0]
+        || !weechat_backtrace_find_file (info.dli_fname, path, sizeof (path)))
     {
         weechat_backtrace_printf ("%03d  %s", number, symbol);
         return;
@@ -77,16 +160,54 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
         addr = (void *)((unsigned long)((const char *) addr) -
                         (unsigned long) info.dli_fbase);
 
-    /* Use addr2line to find symbols names. */
-    snprintf (cmd_line, sizeof (cmd_line),
-              "addr2line --functions --demangle -e $(which %s) %p",
-              info.dli_fname, addr);
-    output = popen (cmd_line, "r");
-    if (!output)
+    snprintf (str_addr, sizeof (str_addr), "%p", addr);
+
+    /*
+     * Use addr2line to find symbols names; it is executed without a shell,
+     * so the file name is given as-is, whatever chars it contains.
+     */
+    if (pipe (fd_pipe) < 0)
     {
         weechat_backtrace_printf ("%03d  %s", number, symbol);
         return;
     }
+    pid = fork ();
+    if (pid < 0)
+    {
+        close (fd_pipe[0]);
+        close (fd_pipe[1]);
+        weechat_backtrace_printf ("%03d  %s", number, symbol);
+        return;
+    }
+    if (pid == 0)
+    {
+        /* Child process: execute addr2line with output sent to the pipe. */
+        close (fd_pipe[0]);
+        if (dup2 (fd_pipe[1], STDOUT_FILENO) < 0)
+            _exit (EXIT_FAILURE);
+        close (fd_pipe[1]);
+        args[0] = "addr2line";
+        args[1] = "--functions";
+        args[2] = "--demangle";
+        args[3] = "-e";
+        args[4] = path;
+        args[5] = str_addr;
+        args[6] = NULL;
+        execvp (args[0], args);
+        _exit (EXIT_FAILURE);
+    }
+
+    /* Parent process: read output of addr2line. */
+    close (fd_pipe[1]);
+    output = fdopen (fd_pipe[0], "r");
+    if (!output)
+    {
+        close (fd_pipe[0]);
+        waitpid (pid, NULL, 0);
+        weechat_backtrace_printf ("%03d  %s", number, symbol);
+        return;
+    }
+    lines_displayed = 0;
     function_name[0] = '\0';
     while (!feof (output))
     {
@@ -105,22 +226,34 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
                     (function_name[0]) ? " [function " : "",
                     function_name,
                     (function_name[0]) ? "]" : "");
+                lines_displayed++;
                 function_name[0] = '\0';
             }
             else
             {
                 if (function_name[0])
+                {
                     weechat_backtrace_printf ("%03d  %s",
                                               number, function_name);
+                    lines_displayed++;
+                }
                 snprintf (function_name, sizeof (function_name),
                           "%s", ptr_line);
             }
         }
     }
     if (function_name[0])
+    {
         weechat_backtrace_printf ("%03d  %s",
                                   number, function_name);
-    pclose (output);
+        lines_displayed++;
+    }
+    fclose (output);
+    waitpid (pid, NULL, 0);
+
+    /* Nothing displayed (addr2line not found?): display the symbol. */
+    if (lines_displayed == 0)
+        weechat_backtrace_printf ("%03d  %s", number, symbol);
 #else
     /* Make C compiler happy. */
     (void) number;

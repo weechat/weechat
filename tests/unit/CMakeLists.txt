@@ -52,6 +52,7 @@ endif()
 # Unit tests (core)
 set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   core/test-core-arraylist.cpp
+  core/test-core-backtrace.cpp
   core/test-core-calc.cpp
   core/test-core-command.cpp
   core/test-core-config-file.cpp

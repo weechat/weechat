@@ -9,6 +9,8 @@
 
 #define BACKTRACE_MAX 128
 
+extern int weechat_backtrace_find_file (const char *filename, char *path,
+                                        int path_size);
 extern void weechat_backtrace (void);
 
 #endif /* WEECHAT_BACKTRACE_H */

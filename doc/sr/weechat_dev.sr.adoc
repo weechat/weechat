@@ -447,6 +447,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       tests-record.cpp                          | Бележење и претрага у приказаним порукама.
 |       core/                                     | Корен unit тестова језгра.
 |          test-core-arraylist.cpp                | Тестови: arraylists.
+// TRANSLATION MISSING
+|          test-core-backtrace.cpp                | Tests: backtrace.
 |          test-core-calc.cpp                     | Тестови: калкулација израза.
 |          test-core-command.cpp                  | Тестови: команде.
 |          test-core-config-file.cpp              | Тестови: конфигурациони фајлови.

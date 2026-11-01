@@ -46,6 +46,7 @@ extern "C"
 /* Import tests from libs. */
 /* core */
 IMPORT_TEST_GROUP(CoreArraylist);
+IMPORT_TEST_GROUP(CoreBacktrace);
 IMPORT_TEST_GROUP(CoreCalc);
 IMPORT_TEST_GROUP(CoreCommand);
 IMPORT_TEST_GROUP(CoreConfigFile);

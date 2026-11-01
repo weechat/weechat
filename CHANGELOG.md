@@ -106,6 +106,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix display of backtrace after a crash when command `which` is not installed or when shared libraries are not executable, run `addr2line` without a shell ([#2176](https://github.com/weechat/weechat/issues/2176))
 - core: ignore invalid SGR mouse events and discard the whole control sequence, so that no part of it is inserted in input ([#2249](https://github.com/weechat/weechat/issues/2249))
 - core: fix plural form in Italian translations, use plural for zero
 - core: fix order of visited buffers after window unzoom and command `/layout apply`, add only the buffer switch in the current window ([#591](https://github.com/weechat/weechat/issues/591))
