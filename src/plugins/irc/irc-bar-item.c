@@ -644,6 +644,98 @@ irc_bar_item_focus_buffer_nicklist (const void *pointer, void *data,
 }
 
 /*
+ * Focus on buflist bar items: add pointers "irc_server" and "irc_channel"
+ * (using the buffer pointer set by the buflist plugin in key "pointer").
+ */
+
+struct t_hashtable *
+irc_bar_item_focus_buflist (const void *pointer, void *data,
+                            struct t_hashtable *info)
+{
+    unsigned long value;
+    int rc;
+    struct t_gui_buffer *buffer;
+    struct t_hdata *hdata_buffer;
+    const char *str_buffer;
+    char str_value[128];
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+
+    str_buffer = weechat_hashtable_get (info, "pointer");
+    if (!str_buffer || !str_buffer[0])
+        return NULL;
+
+    rc = sscanf (str_buffer, "%lx", &value);
+    if ((rc == EOF) || (rc == 0) || !value)
+        return NULL;
+    buffer = (struct t_gui_buffer *)value;
+
+    /* Check if buffer pointer is still valid. */
+    hdata_buffer = weechat_hdata_get ("buffer");
+    if (!weechat_hdata_check_pointer (
+            hdata_buffer,
+            weechat_hdata_get_list (hdata_buffer, "gui_buffers"),
+            buffer))
+    {
+        return NULL;
+    }
+
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+
+    if (!ptr_server)
+        return NULL;
+
+    snprintf (str_value, sizeof (str_value),
+              "0x%lx", (unsigned long)ptr_server);
+    weechat_hashtable_set (info, "irc_server", str_value);
+
+    if (ptr_channel)
+    {
+        snprintf (str_value, sizeof (str_value),
+                  "0x%lx", (unsigned long)ptr_channel);
+        weechat_hashtable_set (info, "irc_channel", str_value);
+    }
+
+    return info;
+}
+
+/*
+ * Hook focus on all buflist bar items ("buflist", "buflist2", ...).
+ *
+ * The number of bar items is read in info "buflist_bar_items_count", so the
+ * buflist plugin must be loaded before the irc plugin (this is the case with
+ * the default plugin priorities).
+ */
+
+void
+irc_bar_item_hook_focus_buflist (void)
+{
+    char *info, str_area[64];
+    int i, count;
+
+    info = weechat_info_get ("buflist_bar_items_count", NULL);
+    if (!info)
+        return;
+
+    if (weechat_util_parse_int (info, 10, &count))
+    {
+        for (i = 0; i < count; i++)
+        {
+            if (i == 0)
+                snprintf (str_area, sizeof (str_area), "buflist");
+            else
+                snprintf (str_area, sizeof (str_area), "buflist%d", i + 1);
+            weechat_hook_focus (str_area,
+                                &irc_bar_item_focus_buflist, NULL, NULL);
+        }
+    }
+
+    free (info);
+}
+
+/*
  * Callback for signal "buffer_switch": refreshes irc bar items (for root bars).
  */
 
@@ -719,6 +811,7 @@ irc_bar_item_init (void)
 
     weechat_hook_focus ("buffer_nicklist",
                         &irc_bar_item_focus_buffer_nicklist, NULL, NULL);
+    irc_bar_item_hook_focus_buflist ();
 
     weechat_hook_signal ("buffer_switch",
                          &irc_bar_item_buffer_switch, NULL, NULL);

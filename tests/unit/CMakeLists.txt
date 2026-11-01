@@ -133,6 +133,7 @@ endif()
 
 if(ENABLE_IRC)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    plugins/irc/test-irc-bar-item.cpp
     plugins/irc/test-irc-batch.cpp
     plugins/irc/test-irc-buffer.cpp
     plugins/irc/test-irc-channel.cpp

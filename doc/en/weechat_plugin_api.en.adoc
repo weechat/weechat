@@ -14485,6 +14485,15 @@ Extra info for bar item "buffer_nicklist":
 | weechat      | group    | Group name.
 |===
 
+Extra info for buflist bar items ("buflist", "buflist2", ...):
+
+[width="100%",cols="^1,^1,5",options="header"]
+|===
+| Plugin ^(1)^ | Key         | Description
+| irc          | irc_server  | Pointer to IRC server _(WeeChat ≥ 5.0.0)_.
+| irc          | irc_channel | Pointer to IRC channel _(WeeChat ≥ 5.0.0)_.
+|===
+
 [NOTE]
 ^(1)^ The name of plugin which defines a hook_focus to return info for this bar
 item (so for example if plugin is "irc", such info will be available only on

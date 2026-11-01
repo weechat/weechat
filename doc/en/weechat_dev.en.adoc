@@ -518,6 +518,7 @@ WeeChat "core" is located in following directories:
 |          alias/                                 | Root of unit tests for alias plugin.
 |             test-alias.cpp                      | Tests: aliases.
 |          irc/                                   | Root of unit tests for IRC plugin.
+|             test-irc-bar-item.cpp               | Tests: IRC bar items.
 |             test-irc-batch.cpp                  | Tests: IRC batched events.
 |             test-irc-buffer.cpp                 | Tests: IRC buffers.
 |             test-irc-channel.cpp                | Tests: IRC channels.

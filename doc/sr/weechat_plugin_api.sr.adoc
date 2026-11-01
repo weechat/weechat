@@ -14058,6 +14058,18 @@ struct t_hook *weechat_hook_focus (const char *area,
 | weechat       | group    | Име групе.
 |===
 
+// TRANSLATION MISSING
+Extra info for buflist bar items ("buflist", "buflist2", ...):
+
+[width="100%", cols="^1,^1,5", options="header"]
+|===
+| Додатак ^(1)^ | Кључ        | Опис
+// TRANSLATION MISSING
+| irc           | irc_server  | Pointer to IRC server _(WeeChat ≥ 5.0.0)_.
+// TRANSLATION MISSING
+| irc           | irc_channel | Pointer to IRC channel _(WeeChat ≥ 5.0.0)_.
+|===
+
 [NOTE]
 ^(1)^ Име додатка које дефинише hook_focus за враћање инфо о овој ставки траке (на пример, ако је додатак „irc”, инфо о томе ће бити доступна само за irc бафере).
 

@@ -418,11 +418,17 @@ int
 buflist_mouse_init (void)
 {
     int i;
+    char str_area[128];
 
     for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
     {
-        weechat_hook_focus (buflist_bar_item_get_name (i),
-                            &buflist_focus_cb, NULL, NULL);
+        /*
+         * Priority 2000: run before callbacks of other plugins (like irc)
+         * that use the buffer pointer set by buflist in the hashtable.
+         */
+        snprintf (str_area, sizeof (str_area),
+                  "2000|%s", buflist_bar_item_get_name (i));
+        weechat_hook_focus (str_area, &buflist_focus_cb, NULL, NULL);
     }
 
     weechat_hook_hsignal (BUFLIST_MOUSE_HSIGNAL,

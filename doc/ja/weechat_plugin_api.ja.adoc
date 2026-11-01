@@ -14772,6 +14772,18 @@ free content.
 | irc              | irc_host | ニックネームのホスト名 (判る場合)
 |===
 
+// TRANSLATION MISSING
+Extra info for buflist bar items ("buflist", "buflist2", ...):
+
+[width="100%",cols="^1,^1,5",options="header"]
+|===
+| プラグイン ^(1)^ | キー        | 説明
+// TRANSLATION MISSING
+| irc              | irc_server  | Pointer to IRC server _(WeeChat ≥ 5.0.0)_.
+// TRANSLATION MISSING
+| irc              | irc_channel | Pointer to IRC channel _(WeeChat ≥ 5.0.0)_.
+|===
+
 [NOTE]
 ^(1)^ プラグインの名前は hook_focus
 がどのバー要素に関する情報を渡したかを意味しています (したがって、例えばプラグインが

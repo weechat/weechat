@@ -643,6 +643,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-alias.cpp                      | Tests: aliases.
 |          irc/                                   | IRC プラグインの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
+|             test-irc-bar-item.cpp               | Tests: IRC bar items.
+// TRANSLATION MISSING
 |             test-irc-batch.cpp                  | Tests: IRC batched events.
 // TRANSLATION MISSING
 |             test-irc-buffer.cpp                 | Tests: IRC buffers.

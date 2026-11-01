@@ -519,6 +519,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          alias/                                 | Racine des tests unitaires pour l'extension alias.
 |             test-alias.cpp                      | Tests : alias.
 |          irc/                                   | Racine des tests unitaires pour l'extension IRC.
+|             test-irc-bar-item.cpp               | Tests : objets de barre IRC.
 |             test-irc-batch.cpp                  | Tests : évènements batch IRC.
 |             test-irc-buffer.cpp                 | Tests : tampons IRC.
 |             test-irc-channel.cpp                | Tests : canaux IRC.

@@ -14825,6 +14825,15 @@ Informations additionnelles pour l'objet de barre "buffer_nicklist" :
 | weechat         | group    | Nom du groupe.
 |===
 
+Informations additionnelles pour les objets de barre buflist ("buflist", "buflist2", ...) :
+
+[width="100%",cols="^1,^1,5",options="header"]
+|===
+| Extension ^(1)^ | Clé         | Description
+| irc             | irc_server  | Pointeur vers le serveur IRC _(WeeChat ≥ 5.0.0)_.
+| irc             | irc_channel | Pointeur vers le canal IRC _(WeeChat ≥ 5.0.0)_.
+|===
+
 [NOTE]
 ^(1)^ Le nom de l'extension qui définit un hook_focus pour retourner des infos
 pour cet objet de barre (donc par exemple si l'extension est "irc", ces infos

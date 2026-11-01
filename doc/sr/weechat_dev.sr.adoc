@@ -522,6 +522,7 @@ WeeChat „језгро” се налази у следећим директо�
 |          alias/                                 | Корен unit тестова за alias додатак.
 |             test-alias.cpp                      | Тестови: алијаси.
 |          irc/                                   | Корен unit тестова IRC додатка.
+|             test-irc-bar-item.cpp               | Тестови: IRC ставке траке.
 |             test-irc-batch.cpp                  | Тестови: IRC пакетни догађаји.
 |             test-irc-buffer.cpp                 | Тестови: IRC бафери.
 |             test-irc-channel.cpp                | Тестови: IRC канали.
