@@ -224,7 +224,10 @@ The same format is used for notices sent with commands `/notice` and `/wallchops
 Triggers and scripts parsing the message of notices (for example to match `Notice(`) must be
 updated: the nick is now in the prefix of the line, and is still available in the tag `nick_xxx`.
 
-The color of delimiters around nick and target is set by option `irc.color.notice`.
+The text displayed before nick and after nick/target is set by options
+`irc.look.notice_nick_prefix` and `irc.look.notice_nick_suffix` (default: `-`), the text
+between nick and target is set by option `irc.look.notice_target_separator` (default: `:`),
+and their color is set by option `irc.color.notice`.
 
 ## Version 4.10.0
 

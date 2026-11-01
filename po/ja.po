@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:16+0100\n"
+"POT-Creation-Date: 2026-11-01 22:59+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -12425,10 +12425,31 @@ msgstr ""
 "notice をプライベートメッセージとして表示 (auto の場合、プライベートバッファ"
 "が見つかればそれを使用する)"
 
+#, fuzzy
+#| msgid "text to display before nick in prefix of message, example: \"<\""
+msgid ""
+"text to display before nick in prefix of notices (color is set by option "
+"irc.color.notice)"
+msgstr ""
+"メッセージプレフィックス中のニックネームの前に表示するテキスト、例: \"<\""
+
+msgid ""
+"text to display after nick (and target, if displayed) in prefix of notices "
+"(color is set by option irc.color.notice)"
+msgstr ""
+
 msgid ""
 "comma separated list of nicks for which notifications are disabled in notice "
 "messages (comparison is case-insensitive)"
 msgstr ""
+
+#, fuzzy
+#| msgid "text to display before nick in prefix of message, example: \"<\""
+msgid ""
+"text to display between nick and target in prefix of notices, when the "
+"target is displayed (color is set by option irc.color.notice)"
+msgstr ""
+"メッセージプレフィックス中のニックネームの前に表示するテキスト、例: \"<\""
 
 msgid ""
 "automatically redirect channel welcome notices to the channel buffer; such "
@@ -12694,10 +12715,11 @@ msgstr ""
 "WeeChat はサーバから受け取ったモードの次のものを試す (\"PREFIX\"); モードが見"
 "つからなかった場合は、特殊なモード \"*\" がデフォルト色として使えます)"
 
-#, fuzzy
-#| msgid "color for text \"Notice\" in notices"
-msgid "color for delimiters around nick and target in notices"
-msgstr "notices に含まれるテキスト \"Notice\" の色"
+msgid ""
+"color for text around nick and target in prefix of notices (see options "
+"irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and "
+"irc.look.notice_target_separator)"
+msgstr ""
 
 #, fuzzy
 msgid "color for reason in kick/kill messages"
@@ -18859,6 +18881,11 @@ msgid ""
 msgstr ""
 "%s%s: ファイル \"%s\" のリジュームが承認されませんでした (ポート: %d、開始位"
 "置: %llu): xfer が見つからないか、転送準備が整っていません"
+
+#, fuzzy
+#~| msgid "color for text \"Notice\" in notices"
+#~ msgid "color for delimiters around nick and target in notices"
+#~ msgstr "notices に含まれるテキスト \"Notice\" の色"
 
 #, fuzzy
 #~| msgid "%s%s: error adding notification"

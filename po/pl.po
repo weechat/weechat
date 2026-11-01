@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:16+0100\n"
+"POT-Creation-Date: 2026-11-01 22:59+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -12355,12 +12355,31 @@ msgstr ""
 "wyświetlaj powiadomienia jako prywatne wiadomości (jeśli auto, używa "
 "prywatnego bufora jeśli taki istnieje)"
 
+#, fuzzy
+#| msgid "text to display before nick in prefix of message, example: \"<\""
+msgid ""
+"text to display before nick in prefix of notices (color is set by option "
+"irc.color.notice)"
+msgstr "teks wyświetlany przed nickiem w prefiksie wiadomości, przykład: \"<\""
+
+msgid ""
+"text to display after nick (and target, if displayed) in prefix of notices "
+"(color is set by option irc.color.notice)"
+msgstr ""
+
 msgid ""
 "comma separated list of nicks for which notifications are disabled in notice "
 "messages (comparison is case-insensitive)"
 msgstr ""
 "oddzielona przecinkami lista nicków, dla których powiadomienia są wyłączone "
 "w wiadomościach powiadomień (porównanie nie uwzględnia wielkości liter)"
+
+#, fuzzy
+#| msgid "text to display before nick in prefix of message, example: \"<\""
+msgid ""
+"text to display between nick and target in prefix of notices, when the "
+"target is displayed (color is set by option irc.color.notice)"
+msgstr "teks wyświetlany przed nickiem w prefiksie wiadomości, przykład: \"<\""
 
 msgid ""
 "automatically redirect channel welcome notices to the channel buffer; such "
@@ -12613,10 +12632,11 @@ msgstr ""
 "(\"PREFIX\"); specjalny tryb \"*\" może zostać użyty jako domyślny kolor "
 "jeśli nie znaleziono atrybutu na liście)"
 
-#, fuzzy
-#| msgid "color for text \"Notice\" in notices"
-msgid "color for delimiters around nick and target in notices"
-msgstr "kolor tekstu \"Notice\" w podświetleniach"
+msgid ""
+"color for text around nick and target in prefix of notices (see options "
+"irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and "
+"irc.look.notice_target_separator)"
+msgstr ""
 
 msgid "color for reason in kick/kill messages"
 msgstr "kolor tekstu powodu w wiadomości kick/kill"
@@ -18602,6 +18622,11 @@ msgid ""
 msgstr ""
 "%s%s: nie można zaakceptować wznowienia pliku \"%s\" (port: %d, pozycja "
 "startowa: %llu): xfer nie znaleziony lub nie gotowy do transferu"
+
+#, fuzzy
+#~| msgid "color for text \"Notice\" in notices"
+#~ msgid "color for delimiters around nick and target in notices"
+#~ msgstr "kolor tekstu \"Notice\" w podświetleniach"
 
 #~ msgid "raw[add]: add a notification"
 #~ msgstr "raw[add]: dodaje powiadomienie"

@@ -1312,14 +1312,20 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
 
 /*
  * Return string with nick to display as prefix of a notice (returned string
- * ends by a tab), for example:
+ * ends by a tab), for example with default options:
  *
  *   -bob-
  *   -@bob-
  *   -bob:@#test-
  *
+ * The text before nick, between nick and target, and after nick/target is set
+ * by options irc.look.notice_nick_prefix, irc.look.notice_target_separator
+ * and irc.look.notice_nick_suffix.
+ *
  * Arguments nick_color, target and target_color are optional (can be NULL);
  * target is displayed only if not NULL and not empty.
+ *
+ * Note: the returned string is valid until the next call to this function.
  */
 
 const char *
@@ -1330,24 +1336,34 @@ irc_nick_as_notice_prefix (struct t_irc_server *server,
                            const char *target,
                            const char *target_color)
 {
-    static char result[512];
+    static char *result = NULL;
     int has_target;
 
     has_target = (target && target[0]);
 
-    snprintf (result, sizeof (result),
-              "%s-%s%s%s%s%s%s%s%s-\t",
-              IRC_COLOR_NOTICE,
-              irc_nick_mode_for_display (server, nick, 0),
-              (nick_color) ?
-              nick_color :
-              irc_nick_color_for_msg (server, 0, nick, nickname),
-              (nick) ? nick->name : ((nickname) ? nickname : "?"),
-              (has_target) ? IRC_COLOR_NOTICE : "",
-              (has_target) ? ":" : "",
-              (has_target) ? ((target_color) ? target_color : "") : "",
-              (has_target) ? target : "",
-              IRC_COLOR_NOTICE);
+    free (result);
+    if (weechat_asprintf (
+            &result,
+            "%s%s%s%s%s%s%s%s%s%s%s\t",
+            IRC_COLOR_NOTICE,
+            weechat_config_string (irc_config_look_notice_nick_prefix),
+            irc_nick_mode_for_display (server, nick, 0),
+            (nick_color) ?
+            nick_color :
+            irc_nick_color_for_msg (server, 0, nick, nickname),
+            (nick) ? nick->name : ((nickname) ? nickname : "?"),
+            (has_target) ? IRC_COLOR_NOTICE : "",
+            (has_target) ?
+            weechat_config_string (
+                irc_config_look_notice_target_separator) : "",
+            (has_target) ? ((target_color) ? target_color : "") : "",
+            (has_target) ? target : "",
+            IRC_COLOR_NOTICE,
+            weechat_config_string (irc_config_look_notice_nick_suffix)) < 0)
+    {
+        result = NULL;
+        return "\t";
+    }
 
     return result;
 }

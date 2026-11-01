@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:16+0100\n"
+"POT-Creation-Date: 2026-11-01 22:59+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -11178,10 +11178,27 @@ msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
 msgstr "figyelmeztetések privát üzenetként való mutatása"
 
+#, fuzzy
+msgid ""
+"text to display before nick in prefix of notices (color is set by option "
+"irc.color.notice)"
+msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
+
+msgid ""
+"text to display after nick (and target, if displayed) in prefix of notices "
+"(color is set by option irc.color.notice)"
+msgstr ""
+
 msgid ""
 "comma separated list of nicks for which notifications are disabled in notice "
 "messages (comparison is case-insensitive)"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"text to display between nick and target in prefix of notices, when the "
+"target is displayed (color is set by option irc.color.notice)"
+msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
 
 msgid ""
 "automatically redirect channel welcome notices to the channel buffer; such "
@@ -11388,9 +11405,11 @@ msgid ""
 "\"*\" can be used as default color if no mode has been found in list)"
 msgstr ""
 
-#, fuzzy
-msgid "color for delimiters around nick and target in notices"
-msgstr "új üzenetet tartalmazó ablak színe"
+msgid ""
+"color for text around nick and target in prefix of notices (see options "
+"irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and "
+"irc.look.notice_target_separator)"
+msgstr ""
 
 #, fuzzy
 msgid "color for reason in kick/kill messages"
@@ -17024,6 +17043,10 @@ msgid ""
 msgstr ""
 "%s nem sikerült a(z) \"%s\" fájlra visszatérni (port: %d, indulási pozíció: "
 "%u): DCC nem található vagy véget ért\n"
+
+#, fuzzy
+#~ msgid "color for delimiters around nick and target in notices"
+#~ msgstr "új üzenetet tartalmazó ablak színe"
 
 #, fuzzy
 #~ msgid "raw[add]: add a notification"

@@ -2750,6 +2750,7 @@ TEST(IrcProtocolWithServer, note)
 TEST(IrcProtocolWithServer, notice)
 {
     struct t_gui_buffer *ptr_buffer;
+    char str_long[2048];
     int echo_message;
 
     SRV_INIT_JOIN;
@@ -2860,6 +2861,46 @@ TEST(IrcProtocolWithServer, notice)
                   "irc_notice,notify_private,nick_bob,host_user@host,log1");
         LONGS_EQUAL(1, ptr_server->buffer->own_lines->last_line->data->highlight);
         gui_buffer_set (ptr_server->buffer, "highlight_words", "");
+
+        /*
+         * Notice to channel/user with options irc.look.notice_nick_prefix
+         * and irc.look.notice_nick_suffix
+         */
+        config_file_option_set (irc_config_look_notice_nick_prefix, "<", 1);
+        config_file_option_set (irc_config_look_notice_nick_suffix, ">", 1);
+        config_file_option_set (irc_config_look_notice_target_separator,
+                                " -> ", 1);
+        RECV(":bob!user@host NOTICE #test :a notice ");
+        CHECK_CHAN("<bob>", "a notice ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
+        RECV(":bob!user@host NOTICE @#test :a notice ");
+        CHECK_CHAN("<bob -> @#test>", "a notice ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :a notice ");
+        CHECK_SRV("<bob>", "(user@host) a notice ",
+                  "irc_notice,notify_private,nick_bob,host_user@host,log1");
+        config_file_option_set (irc_config_look_notice_nick_prefix, "", 1);
+        config_file_option_set (irc_config_look_notice_nick_suffix, "", 1);
+        RECV(":bob!user@host NOTICE #test :a notice ");
+        CHECK_CHAN("bob", "a notice ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
+        RECV(":bob!user@host NOTICE @#test :a notice ");
+        CHECK_CHAN("bob -> @#test", "a notice ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
+
+        /* Very long prefix: message is still displayed */
+        memset (str_long, 'x', sizeof (str_long) - 1);
+        str_long[sizeof (str_long) - 1] = '\0';
+        config_file_option_set (irc_config_look_notice_nick_prefix,
+                                str_long, 1);
+        RECV(":bob!user@host NOTICE #test :a notice ");
+        ptr_buffer = ptr_server->channels->buffer;
+        STRCMP_EQUAL("a notice ",
+                     ptr_buffer->own_lines->last_line->data->message);
+
+        config_file_option_reset (irc_config_look_notice_nick_prefix, 1);
+        config_file_option_reset (irc_config_look_notice_nick_suffix, 1);
+        config_file_option_reset (irc_config_look_notice_target_separator, 1);
 
         /*
          * Notice to channel/user from self nick

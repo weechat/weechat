@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:16+0100\n"
+"POT-Creation-Date: 2026-11-01 22:59+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -12501,10 +12501,29 @@ msgstr ""
 "özel iletilerde ihbarları görüntüle (auto ise bulunduğunda özel arabellek "
 "kullan)"
 
+#, fuzzy
+#| msgid "text to display before nick in prefix of message, example: \"<\""
+msgid ""
+"text to display before nick in prefix of notices (color is set by option "
+"irc.color.notice)"
+msgstr "ileti önekinde takma ad öncesinde görüntülenecek metin; örneğin: \"<\""
+
+msgid ""
+"text to display after nick (and target, if displayed) in prefix of notices "
+"(color is set by option irc.color.notice)"
+msgstr ""
+
 msgid ""
 "comma separated list of nicks for which notifications are disabled in notice "
 "messages (comparison is case-insensitive)"
 msgstr ""
+
+#, fuzzy
+#| msgid "text to display before nick in prefix of message, example: \"<\""
+msgid ""
+"text to display between nick and target in prefix of notices, when the "
+"target is displayed (color is set by option irc.color.notice)"
+msgstr "ileti önekinde takma ad öncesinde görüntülenecek metin; örneğin: \"<\""
 
 msgid ""
 "automatically redirect channel welcome notices to the channel buffer; such "
@@ -12765,10 +12784,11 @@ msgstr ""
 "deneyecektir; listede bir kip bulunamazsa özel bir kip olarak \"*\" "
 "öntanımlı renk olarak kullanılabilir)"
 
-#, fuzzy
-#| msgid "color for text \"Notice\" in notices"
-msgid "color for delimiters around nick and target in notices"
-msgstr "İhbarlarda \"İhbar\" metninin rengi"
+msgid ""
+"color for text around nick and target in prefix of notices (see options "
+"irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and "
+"irc.look.notice_target_separator)"
+msgstr ""
 
 msgid "color for reason in kick/kill messages"
 msgstr "kov/öldür iletilerindeki neden rengi"
@@ -19001,6 +19021,11 @@ msgid ""
 msgstr ""
 "%s%s: \"%s\" dosyası sürdürümü kabul edilemiyor (kapı: %d, başlangıç konumu: "
 "%llu): xfer bulunamadı veya aktarım için hazır değil"
+
+#, fuzzy
+#~| msgid "color for text \"Notice\" in notices"
+#~ msgid "color for delimiters around nick and target in notices"
+#~ msgstr "İhbarlarda \"İhbar\" metninin rengi"
 
 #, fuzzy
 #~| msgid "%s%s: error adding notification"

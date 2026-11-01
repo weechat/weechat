@@ -25,6 +25,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"
 - buflist: add info "buflist_bar_items_count"
 - doc: add cheat sheet with all key bindings and mouse actions
+- irc: add options irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and irc.look.notice_target_separator to customize the text displayed around nick and target in prefix of notices
 - irc: add pointers "irc_server" and "irc_channel" in focus hashtable of buflist bar items ([#1543](https://github.com/weechat/weechat/issues/1543))
 - irc: add option irc.look.multi_prefix_in_nicklist to display all nick prefixes in nicklist when capability "multi-prefix" is enabled ([#132](https://github.com/weechat/weechat/issues/132))
 - irc: add option irc.look.multi_prefix_in_names to display all nick prefixes in output of `/names` when capability "multi-prefix" is enabled ([#310](https://github.com/weechat/weechat/issues/310))

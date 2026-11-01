@@ -99,6 +99,9 @@ struct t_config_option *irc_config_look_nick_mode = NULL;
 struct t_config_option *irc_config_look_nick_mode_empty = NULL;
 struct t_config_option *irc_config_look_nicks_hide_password = NULL;
 struct t_config_option *irc_config_look_notice_as_pv = NULL;
+struct t_config_option *irc_config_look_notice_nick_prefix = NULL;
+struct t_config_option *irc_config_look_notice_nick_suffix = NULL;
+struct t_config_option *irc_config_look_notice_target_separator = NULL;
 struct t_config_option *irc_config_look_notice_welcome_redirect = NULL;
 struct t_config_option *irc_config_look_notice_welcome_tags = NULL;
 struct t_config_option *irc_config_look_notice_nicks_disable_notify = NULL;
@@ -3681,6 +3684,20 @@ irc_config_init (void)
                "buffer if found)"),
             "auto|never|always", 0, 0, "auto", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_notice_nick_prefix = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "notice_nick_prefix", "string",
+            N_("text to display before nick in prefix of notices (color is "
+               "set by option irc.color.notice)"),
+            NULL, 0, 0, "-", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_notice_nick_suffix = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "notice_nick_suffix", "string",
+            N_("text to display after nick (and target, if displayed) in "
+               "prefix of notices (color is set by option irc.color.notice)"),
+            NULL, 0, 0, "-", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_notice_nicks_disable_notify = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "notice_nicks_disable_notify", "string",
@@ -3690,6 +3707,14 @@ irc_config_init (void)
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
+        irc_config_look_notice_target_separator = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "notice_target_separator", "string",
+            N_("text to display between nick and target in prefix of notices, "
+               "when the target is displayed (color is set by option "
+               "irc.color.notice)"),
+            NULL, 0, 0, ":", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_notice_welcome_redirect = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "notice_welcome_redirect", "boolean",
@@ -4039,7 +4064,10 @@ irc_config_init (void)
         irc_config_color_notice = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
             "notice", "color",
-            N_("color for delimiters around nick and target in notices"),
+            N_("color for text around nick and target in prefix of notices "
+               "(see options irc.look.notice_nick_prefix, "
+               "irc.look.notice_nick_suffix and "
+               "irc.look.notice_target_separator)"),
             NULL, -1, 0, "green", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_color_reason_kick = weechat_config_new_option (

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:16+0100\n"
+"POT-Creation-Date: 2026-11-01 22:59+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -11689,10 +11689,27 @@ msgstr ""
 "zobrazovat upozornění jako soukromé zprávy (pokud je automaticky, použije se "
 "soukromý buffer, kdy existuje)"
 
+#, fuzzy
+msgid ""
+"text to display before nick in prefix of notices (color is set by option "
+"irc.color.notice)"
+msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
+
+msgid ""
+"text to display after nick (and target, if displayed) in prefix of notices "
+"(color is set by option irc.color.notice)"
+msgstr ""
+
 msgid ""
 "comma separated list of nicks for which notifications are disabled in notice "
 "messages (comparison is case-insensitive)"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"text to display between nick and target in prefix of notices, when the "
+"target is displayed (color is set by option irc.color.notice)"
+msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
 
 msgid ""
 "automatically redirect channel welcome notices to the channel buffer; such "
@@ -11925,10 +11942,11 @@ msgstr ""
 "speciální mód \"*\" může být použit jako výchozí barva pokud nebyl v seznamu "
 "nalezen žádný mód)"
 
-#, fuzzy
-#| msgid "color for text \"Notice\" in notices"
-msgid "color for delimiters around nick and target in notices"
-msgstr "barva textu \"Notice\" v upozorněních"
+msgid ""
+"color for text around nick and target in prefix of notices (see options "
+"irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and "
+"irc.look.notice_target_separator)"
+msgstr ""
 
 #, fuzzy
 msgid "color for reason in kick/kill messages"
@@ -17844,6 +17862,11 @@ msgid ""
 msgstr ""
 "%s%s: nelze akceptovat obnovení souboru \"%s\" (port: %d, počáteční pozice: "
 "%llu): xfer nenalezen nebo není připraven pro přenos"
+
+#, fuzzy
+#~| msgid "color for text \"Notice\" in notices"
+#~ msgid "color for delimiters around nick and target in notices"
+#~ msgstr "barva textu \"Notice\" v upozorněních"
 
 #, fuzzy
 #~| msgid "%s%s: error adding notification"

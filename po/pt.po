@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:16+0100\n"
+"POT-Creation-Date: 2026-11-01 22:59+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <weechat-dev@nongnu.org>\n"
@@ -12357,10 +12357,31 @@ msgstr ""
 "mostrar notices como mensagens privadas (se for auto, usar buffer privado se "
 "encontrado)"
 
+#, fuzzy
+#| msgid "text to display before nick in prefix of message, example: \"<\""
+msgid ""
+"text to display before nick in prefix of notices (color is set by option "
+"irc.color.notice)"
+msgstr ""
+"texto a apresentar antes do nick, no prefixo da mensagem, exemplo: \"<\""
+
+msgid ""
+"text to display after nick (and target, if displayed) in prefix of notices "
+"(color is set by option irc.color.notice)"
+msgstr ""
+
 msgid ""
 "comma separated list of nicks for which notifications are disabled in notice "
 "messages (comparison is case-insensitive)"
 msgstr ""
+
+#, fuzzy
+#| msgid "text to display before nick in prefix of message, example: \"<\""
+msgid ""
+"text to display between nick and target in prefix of notices, when the "
+"target is displayed (color is set by option irc.color.notice)"
+msgstr ""
+"texto a apresentar antes do nick, no prefixo da mensagem, exemplo: \"<\""
 
 #, fuzzy
 msgid ""
@@ -12616,10 +12637,11 @@ msgstr ""
 "servidor (\"PREFIX\"); pode usar o modo especial \"*\" como cor por omissão "
 "se não for encontrado nenhum modo na lista)"
 
-#, fuzzy
-#| msgid "color for text \"Notice\" in notices"
-msgid "color for delimiters around nick and target in notices"
-msgstr "cor do texto \"Notice\" em notices"
+msgid ""
+"color for text around nick and target in prefix of notices (see options "
+"irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and "
+"irc.look.notice_target_separator)"
+msgstr ""
 
 #, fuzzy
 msgid "color for reason in kick/kill messages"
@@ -18762,6 +18784,11 @@ msgstr ""
 "%s%s: não foi possível aceitar o ficheiro a retomar \"%s\" (porto: %d, "
 "posição inicial: %llu): xfer não foi encontrado ou não está pronto para ser "
 "transferido"
+
+#, fuzzy
+#~| msgid "color for text \"Notice\" in notices"
+#~ msgid "color for delimiters around nick and target in notices"
+#~ msgstr "cor do texto \"Notice\" em notices"
 
 #, fuzzy
 #~| msgid "%s%s: error adding notification"
