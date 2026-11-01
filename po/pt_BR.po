@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 20:24+0100\n"
+"POT-Creation-Date: 2026-11-01 21:45+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -9043,9 +9043,9 @@ msgid ""
 "channel"
 msgstr ""
 
-#, c-format
-msgid "%s%s: notify already exists"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: notify already exists for \"%s\""
+msgstr "%sErro: disposição \"%s\" já existe para comando \"%s\""
 
 #, c-format
 msgid "%sMonitor list is full (%d)"
@@ -9059,9 +9059,10 @@ msgstr "%s: desconectado do cliente %s%s%s (%s.%s)"
 msgid "%s: notification added for %s%s%s"
 msgstr "%s%s: falha na autenticação com cliente %s%s%s (%s.%s)"
 
-#, c-format
-msgid "%s%s: error adding notification"
-msgstr ""
+#, fuzzy, c-format
+#| msgid "%s%s: error in function \"%s\""
+msgid "%s%s: error adding notification for \"%s\""
+msgstr "%s%s: erro na função \"%s\""
 
 #, c-format
 msgid "%s: all notifications deleted"
@@ -10186,16 +10187,18 @@ msgstr ""
 #, fuzzy
 #| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgid ""
-"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
-"[<server>]"
+"add|addreplace <nick>[,<nick>...] [<server> [-away]] || del <nick>[,"
+"<nick>...]|-all [<server>]"
 msgstr "list || add [re:]<apelido> [<servidor> [<canal>]] || del <número>|-all"
 
-msgid "raw[add]: add a notification"
+msgid "raw[add]: add notifications (multiple nicks can be separated by commas)"
 msgstr ""
 
 #, fuzzy
 #| msgid "%s%s: failed to add word to personal dictionary"
-msgid "raw[addreplace]: add or replace a notification"
+msgid ""
+"raw[addreplace]: add or replace notifications (multiple nicks can be "
+"separated by commas)"
 msgstr "%s%s: falha ao adicionar palavra no dicionário pessoal"
 
 msgid "server: internal server name (by default current server)"

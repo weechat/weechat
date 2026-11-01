@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 20:24+0100\n"
-"PO-Revision-Date: 2026-11-01 20:49+0100\n"
+"POT-Creation-Date: 2026-11-01 21:45+0100\n"
+"PO-Revision-Date: 2026-11-01 21:50+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -10076,8 +10076,8 @@ msgstr ""
 "un canal irc"
 
 #, c-format
-msgid "%s%s: notify already exists"
-msgstr "%s%s : la notification existe déjà"
+msgid "%s%s: notify already exists for \"%s\""
+msgstr "%s%s : la notification existe déjà pour \"%s\""
 
 #, c-format
 msgid "%sMonitor list is full (%d)"
@@ -10092,8 +10092,8 @@ msgid "%s: notification added for %s%s%s"
 msgstr "%s : notification ajoutée pour %s%s%s"
 
 #, c-format
-msgid "%s%s: error adding notification"
-msgstr "%s%s : erreur d'ajout de la notification"
+msgid "%s%s: error adding notification for \"%s\""
+msgstr "%s%s : erreur d'ajout de la notification pour \"%s\""
 
 #, c-format
 msgid "%s: all notifications deleted"
@@ -11210,17 +11210,23 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
-"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
-"[<server>]"
+"add|addreplace <nick>[,<nick>...] [<server> [-away]] || del <nick>[,"
+"<nick>...]|-all [<server>]"
 msgstr ""
-"add|addreplace <pseudo> [<serveur> [-away]] || del <pseudo>[,<pseudo>...]|-"
-"all [<serveur>]"
+"add|addreplace <pseudo>[,<pseudo>...] [<serveur> [-away]] || del <pseudo>[,"
+"<pseudo>...]|-all [<serveur>]"
 
-msgid "raw[add]: add a notification"
-msgstr "raw[add] : ajouter une notification"
+msgid "raw[add]: add notifications (multiple nicks can be separated by commas)"
+msgstr ""
+"raw[add] : ajouter des notifications (plusieurs pseudos peuvent être séparés "
+"par des virgules)"
 
-msgid "raw[addreplace]: add or replace a notification"
-msgstr "raw[addreplace] : ajouter ou remplacer une notification"
+msgid ""
+"raw[addreplace]: add or replace notifications (multiple nicks can be "
+"separated by commas)"
+msgstr ""
+"raw[addreplace] : ajouter ou remplacer des notifications (plusieurs pseudos "
+"peuvent être séparés par des virgules)"
 
 msgid "server: internal server name (by default current server)"
 msgstr "serveur : nom interne du serveur (par défaut le serveur courant)"
@@ -19115,3 +19121,9 @@ msgid ""
 msgstr ""
 "%s%s : impossible d'accepter de continuer le fichier \"%s\" (port : %d, "
 "position de départ : %llu) : xfer non trouvé ou non prêt pour le transfert"
+
+#~ msgid "raw[add]: add a notification"
+#~ msgstr "raw[add] : ajouter une notification"
+
+#~ msgid "raw[addreplace]: add or replace a notification"
+#~ msgstr "raw[addreplace] : ajouter ou remplacer une notification"

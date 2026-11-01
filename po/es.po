@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 20:24+0100\n"
+"POT-Creation-Date: 2026-11-01 21:45+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
@@ -9177,8 +9177,9 @@ msgstr ""
 "%s%s: el servidor debe ser especificado porque no se encuentra en un "
 "servidor irc o canal"
 
-#, c-format
-msgid "%s%s: notify already exists"
+#, fuzzy, c-format
+#| msgid "%s%s: notify already exists"
+msgid "%s%s: notify already exists for \"%s\""
 msgstr "%s%s: la notificación ya existe"
 
 #, c-format
@@ -9193,8 +9194,9 @@ msgstr "%s: notificación para %s%s agregada"
 msgid "%s: notification added for %s%s%s"
 msgstr "%s: notificación para %s%s agregada"
 
-#, c-format
-msgid "%s%s: error adding notification"
+#, fuzzy, c-format
+#| msgid "%s%s: error adding notification"
+msgid "%s%s: error adding notification for \"%s\""
 msgstr "%s%s: error al agregar la notificación"
 
 #, c-format
@@ -10427,18 +10429,18 @@ msgstr ""
 #, fuzzy
 #| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgid ""
-"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
-"[<server>]"
+"add|addreplace <nick>[,<nick>...] [<server> [-away]] || del <nick>[,"
+"<nick>...]|-all [<server>]"
 msgstr "add <apodo> [<servidor> [-away]] || del <apodo>|-all [<servidor>]"
 
-#, fuzzy
-#| msgid "%s%s: error adding notification"
-msgid "raw[add]: add a notification"
-msgstr "%s%s: error al agregar la notificación"
+msgid "raw[add]: add notifications (multiple nicks can be separated by commas)"
+msgstr ""
 
 #, fuzzy
 #| msgid "%s%s: error adding notification"
-msgid "raw[addreplace]: add or replace a notification"
+msgid ""
+"raw[addreplace]: add or replace notifications (multiple nicks can be "
+"separated by commas)"
 msgstr "%s%s: error al agregar la notificación"
 
 msgid "server: internal server name (by default current server)"
@@ -18148,3 +18150,8 @@ msgid ""
 msgstr ""
 "%s%s: no es posible aceptar la continuación del archivo \"%s\" (puerto: %d, "
 "posición inicial: %llu): xfer encontrado o no está listo para transferir"
+
+#, fuzzy
+#~| msgid "%s%s: error adding notification"
+#~ msgid "raw[add]: add a notification"
+#~ msgstr "%s%s: error al agregar la notificación"

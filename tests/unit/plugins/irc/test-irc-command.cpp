@@ -700,10 +700,36 @@ TEST(IrcCommand, Notify)
     server = irc_server_search ("test_notify");
     CHECK(server);
 
+    /* Add a single nick. */
     run_cmd_quiet ("/mute /notify add nick1 test_notify");
-    run_cmd_quiet ("/mute /notify add nick2 test_notify");
-    run_cmd_quiet ("/mute /notify add nick3 test_notify");
-    run_cmd_quiet ("/mute /notify add nick4 test_notify");
+    LONGS_EQUAL(1, server->notify_count);
+    CHECK(irc_notify_search (server, "nick1"));
+    LONGS_EQUAL(0, irc_notify_search (server, "nick1")->check_away);
+
+    /* Add multiple nicks, including one already existing. */
+    run_cmd_quiet ("/mute /notify add nick2,nick1,nick3 test_notify");
+    LONGS_EQUAL(3, server->notify_count);
+    CHECK(irc_notify_search (server, "nick2"));
+    CHECK(irc_notify_search (server, "nick3"));
+    STRCMP_EQUAL("nick1,nick2,nick3",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_NOTIFY]));
+
+    /* Add multiple nicks with empty items. */
+    run_cmd_quiet ("/mute /notify add ,nick4,, test_notify");
+    LONGS_EQUAL(4, server->notify_count);
+    CHECK(irc_notify_search (server, "nick4"));
+
+    /* Add or replace multiple nicks, including one not existing. */
+    run_cmd_quiet ("/mute /notify addreplace nick1,nick5 test_notify -away");
+    LONGS_EQUAL(5, server->notify_count);
+    LONGS_EQUAL(1, irc_notify_search (server, "nick1")->check_away);
+    LONGS_EQUAL(0, irc_notify_search (server, "nick2")->check_away);
+    LONGS_EQUAL(0, irc_notify_search (server, "nick3")->check_away);
+    LONGS_EQUAL(0, irc_notify_search (server, "nick4")->check_away);
+    LONGS_EQUAL(1, irc_notify_search (server, "nick5")->check_away);
+    STRCMP_EQUAL("nick2,nick3,nick4,nick1 away,nick5 away",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_NOTIFY]));
+    run_cmd_quiet ("/mute /notify del nick5 test_notify");
     LONGS_EQUAL(4, server->notify_count);
 
     /* Delete a single nick. */
