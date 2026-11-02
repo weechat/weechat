@@ -534,25 +534,24 @@ TEST(GuiBarItem, BufferNicklistCb)
     str = gui_bar_item_buffer_nicklist_cb (NULL, NULL, NULL, NULL, buffer,
                                            NULL);
     str_decoded = gui_color_decode (str, NULL);
-    STRCMP_EQUAL("@ alice\n  bob\n@+carol\n  dan", str_decoded);
+    STRCMP_EQUAL(" @alice\n  bob\n@+carol\n  dan", str_decoded);
     free (str_decoded);
-    /* Padding is displayed without the prefix color. */
+    /* Padding is displayed without color, before the prefix. */
     snprintf (str_expected, sizeof (str_expected),
-              "@%s %s%salice",
+              "%s %s@%salice",
               gui_color_get_custom ("reset"),
               gui_color_get_custom ("lightgreen"),
               gui_color_get_custom ("green"));
     CHECK(strstr (str, str_expected));
     free (str);
 
-    /* Nick without color: displayed with the prefix color after padding. */
+    /* Nick without color: displayed with the prefix color. */
     CHECK(gui_nicklist_add_nick (buffer, group, "eve", NULL,
                                  "~", "yellow", 1));
     str = gui_bar_item_buffer_nicklist_cb (NULL, NULL, NULL, NULL, buffer,
                                            NULL);
     snprintf (str_expected, sizeof (str_expected),
-              "%s~%s %seve",
-              gui_color_get_custom ("yellow"),
+              "%s %s~eve",
               gui_color_get_custom ("reset"),
               gui_color_get_custom ("yellow"));
     CHECK(strstr (str, str_expected));

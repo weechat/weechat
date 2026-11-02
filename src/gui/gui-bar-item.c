@@ -1889,25 +1889,23 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                                   gui_color_get_custom (ptr_nick->prefix_color));
                     }
                 }
-                string_dyn_concat (nicklist, str_prefix_color, -1);
-                if (ptr_nick->prefix)
-                    string_dyn_concat (nicklist, ptr_nick->prefix, -1);
+                /*
+                 * Prefix is right-aligned so that it stays next to the nick;
+                 * padding is displayed without color.
+                 */
                 prefix_length = gui_nicklist_get_prefix_length (ptr_nick);
                 if (prefix_length < max_prefix_length)
                 {
-                    /*
-                     * Padding is displayed without the prefix color, then the
-                     * prefix color is set again (used for the nick if it has
-                     * no color).
-                     */
                     string_dyn_concat (nicklist,
                                        gui_color_get_custom ("reset"), -1);
                     for (i = prefix_length; i < max_prefix_length; i++)
                     {
                         string_dyn_concat (nicklist, " ", -1);
                     }
-                    string_dyn_concat (nicklist, str_prefix_color, -1);
                 }
+                string_dyn_concat (nicklist, str_prefix_color, -1);
+                if (ptr_nick->prefix)
+                    string_dyn_concat (nicklist, ptr_nick->prefix, -1);
                 if (ptr_nick->color)
                 {
                     if (strchr (ptr_nick->color, '.'))
