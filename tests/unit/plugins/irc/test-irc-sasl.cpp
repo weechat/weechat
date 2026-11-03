@@ -101,6 +101,32 @@ TEST(IrcSasl, MechanismScram)
     snprintf (nonce_client, sizeof (nonce_client), "%s", str_decoded + 13);
     free (str);
 
+    /* Server-first message with an invalid server nonce. */
+    snprintf (msg, sizeof (msg), "r=invalid,s=c2FsdA==,i=4096");
+    string_base64_encode (0, msg, strlen (msg), msg_base64);
+    error = NULL;
+    POINTERS_EQUAL(NULL, irc_sasl_mechanism_scram (server, "sha256",
+                                                   msg_base64, "user1",
+                                                   "secret", &error));
+    STRCMP_EQUAL("invalid server nonce", error);
+    free (error);
+    snprintf (msg, sizeof (msg), "r=%.10s,s=c2FsdA==,i=4096", nonce_client);
+    string_base64_encode (0, msg, strlen (msg), msg_base64);
+    error = NULL;
+    POINTERS_EQUAL(NULL, irc_sasl_mechanism_scram (server, "sha256",
+                                                   msg_base64, "user1",
+                                                   "secret", &error));
+    STRCMP_EQUAL("invalid server nonce", error);
+    free (error);
+    snprintf (msg, sizeof (msg), "r=%s,s=c2FsdA==,i=4096", nonce_client);
+    string_base64_encode (0, msg, strlen (msg), msg_base64);
+    error = NULL;
+    POINTERS_EQUAL(NULL, irc_sasl_mechanism_scram (server, "sha256",
+                                                   msg_base64, "user1",
+                                                   "secret", &error));
+    STRCMP_EQUAL("invalid server nonce", error);
+    free (error);
+
     /* Server-first message with an iteration count too low. */
     snprintf (msg, sizeof (msg), "r=%sserver,s=c2FsdA==,i=1", nonce_client);
     string_base64_encode (0, msg, strlen (msg), msg_base64);

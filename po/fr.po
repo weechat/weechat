@@ -13905,6 +13905,9 @@ msgstr "%s%s : serveur \"%s\" non trouvé pour la redirection"
 msgid "unable to validate server signature"
 msgstr "impossible de vérifier la signature du serveur"
 
+msgid "invalid server nonce"
+msgstr "nonce du serveur invalide"
+
 #, c-format
 msgid "invalid iteration count: %d (must be between %d and %d)"
 msgstr "nombre d'itérations invalide : %d (doit être entre %d et %d)"

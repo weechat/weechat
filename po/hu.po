@@ -12289,6 +12289,10 @@ msgstr "%s a \"%s\" szerver nem található\n"
 msgid "unable to validate server signature"
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
+#, fuzzy
+msgid "invalid server nonce"
+msgstr "     időkezelők:\n"
+
 #, c-format
 msgid "invalid iteration count: %d (must be between %d and %d)"
 msgstr ""

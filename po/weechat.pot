@@ -11228,6 +11228,9 @@ msgstr ""
 msgid "unable to validate server signature"
 msgstr ""
 
+msgid "invalid server nonce"
+msgstr ""
+
 #, c-format
 msgid "invalid iteration count: %d (must be between %d and %d)"
 msgstr ""

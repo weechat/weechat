@@ -13652,6 +13652,12 @@ msgstr "%s%s: Yeniden yönlendirme için \"%s\" sunucusu bulunamadı"
 msgid "unable to validate server signature"
 msgstr "sunucu imzası doğrulanamıyor"
 
+#, fuzzy
+#| msgid "%d server moved"
+#| msgid_plural "%d servers moved"
+msgid "invalid server nonce"
+msgstr "%d sunucu taşındı"
+
 #, fuzzy, c-format
 #| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
 msgid "invalid iteration count: %d (must be between %d and %d)"

@@ -13506,6 +13506,12 @@ msgstr "%s%s: serwer \"%s\" nie został znaleziony dla przekierowania"
 msgid "unable to validate server signature"
 msgstr "nie można zweryfikować sygnatury serwera"
 
+#, fuzzy
+#| msgid "%d server moved"
+#| msgid_plural "%d servers moved"
+msgid "invalid server nonce"
+msgstr "%d serwer przesunięto"
+
 #, fuzzy, c-format
 #| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
 msgid "invalid iteration count: %d (must be between %d and %d)"
