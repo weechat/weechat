@@ -268,6 +268,28 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             {
                 goto proto_error;
             }
+            /*
+             * Refuse a low iteration count: the client proof is sent before
+             * the server is authenticated, so a malicious server could use
+             * a low count to make an offline dictionary attack cheap.
+             * Refuse a high iteration count: a malicious server could use it
+             * to block WeeChat for a long time while computing the proof.
+             */
+            if ((iterations < IRC_SASL_SCRAM_MIN_ITERATIONS)
+                || (iterations > IRC_SASL_SCRAM_MAX_ITERATIONS))
+            {
+                if (sasl_error)
+                {
+                    weechat_asprintf (
+                        sasl_error,
+                        _("invalid iteration count: %d (must be between %d "
+                          "and %d)"),
+                        iterations,
+                        IRC_SASL_SCRAM_MIN_ITERATIONS,
+                        IRC_SASL_SCRAM_MAX_ITERATIONS);
+                }
+                goto end;
+            }
             /* Decode salt. */
             salt = malloc (strlen (salt_base64) + 1);
             if (!salt)

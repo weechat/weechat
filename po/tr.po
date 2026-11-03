@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:59+0100\n"
+"POT-Creation-Date: 2026-11-03 21:30+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -13766,6 +13766,11 @@ msgstr "%s%s: Yeniden yönlendirme için \"%s\" sunucusu bulunamadı"
 
 msgid "unable to validate server signature"
 msgstr "sunucu imzası doğrulanamıyor"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr "%sGeçersiz renk numarası \"%s\" (%d ve %d arasında olmalı)"
 
 msgid "memory error"
 msgstr "bellek hatası"

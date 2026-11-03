@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:59+0100\n"
+"POT-Creation-Date: 2026-11-03 21:30+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -13615,6 +13615,11 @@ msgstr "%s%s: није пронађен сервер „%s” за преусм�
 
 msgid "unable to validate server signature"
 msgstr "није успело потврђивање серверског потписа"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr "%sНеважећи број боје „%s” (мора да буде између %d и %d)"
 
 msgid "memory error"
 msgstr "меморијска грешка"

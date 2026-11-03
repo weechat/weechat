@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:59+0100\n"
-"PO-Revision-Date: 2026-11-01 23:01+0100\n"
+"POT-Creation-Date: 2026-11-03 21:30+0100\n"
+"PO-Revision-Date: 2026-11-03 21:37+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -13996,6 +13996,10 @@ msgstr "%s%s : serveur \"%s\" non trouvé pour la redirection"
 
 msgid "unable to validate server signature"
 msgstr "impossible de vérifier la signature du serveur"
+
+#, c-format
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr "nombre d'itérations invalide : %d (doit être entre %d et %d)"
 
 msgid "memory error"
 msgstr "erreur de mémoire"

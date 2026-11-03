@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:59+0100\n"
+"POT-Creation-Date: 2026-11-03 21:30+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -12345,6 +12345,10 @@ msgstr "%s a \"%s\" szerver nem található\n"
 #, fuzzy
 msgid "unable to validate server signature"
 msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, c-format
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr ""
 
 #, fuzzy
 msgid "memory error"

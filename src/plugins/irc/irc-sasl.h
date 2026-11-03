@@ -10,6 +10,13 @@
 #define IRC_SASL_SCRAM_CLIENT_KEY "Client Key"
 #define IRC_SASL_SCRAM_SERVER_KEY "Server Key"
 
+/*
+ * Iteration count accepted for SCRAM: minimum is the one recommended by
+ * RFC 7677, maximum prevents the server from blocking WeeChat for a long time
+ */
+#define IRC_SASL_SCRAM_MIN_ITERATIONS 4096
+#define IRC_SASL_SCRAM_MAX_ITERATIONS 1000000
+
 struct t_irc_server;
 
 /* SASL authentication mechanisms */

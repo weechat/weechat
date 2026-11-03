@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-01 22:59+0100\n"
+"POT-Creation-Date: 2026-11-03 21:30+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -14261,6 +14261,12 @@ msgstr "%s%s: Server \"%s\" für eine Weiterleitung wurde nicht gefunden"
 
 msgid "unable to validate server signature"
 msgstr "Serversignatur kann nicht validiert werden"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr ""
+"%sungültige Farbnummer \"%s\" (der Wert muss zwischen %d und %d liegen)"
 
 msgid "memory error"
 msgstr "Speicherfehler"
