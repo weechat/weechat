@@ -4477,10 +4477,53 @@ string_is_command_char (const char *string)
 }
 
 /*
+ * Get buffer number in a command, which is one or more command chars,
+ * each one followed by digits, for example: "/42" or "/12/34" (the string
+ * must not contain anything else, in particular no arguments).
+ *
+ * When multiple numbers are found, the last one is returned, for example
+ * with "/12/34", the pointer to "34" is returned.
+ *
+ * Return pointer to the last number in string, NULL if the string is not
+ * a buffer number command.
+ */
+
+const char *
+string_get_command_buffer_number (const char *string)
+{
+    const char *ptr_name, *ptr_number;
+
+    if (!string || !string[0])
+        return NULL;
+
+    ptr_name = string;
+    ptr_number = NULL;
+
+    while (ptr_name[0])
+    {
+        if (!string_is_command_char (ptr_name))
+            return NULL;
+        ptr_name = utf8_next_char (ptr_name);
+        if ((ptr_name[0] < '0') || (ptr_name[0] > '9'))
+            return NULL;
+        ptr_number = ptr_name;
+        while ((ptr_name[0] >= '0') && (ptr_name[0] <= '9'))
+        {
+            ptr_name++;
+        }
+    }
+
+    return ptr_number;
+}
+
+/*
  * Get pointer to input text for buffer.
  *
  * Return pointer inside "string" argument or NULL if it's a command (by
  * default a command starts with a single '/').
+ *
+ * If option weechat.look.command_buffer_number is enabled, a buffer number
+ * command like "/42" or "/12/34" is a command (NULL is returned).
  */
 
 const char *
@@ -4490,6 +4533,13 @@ string_input_for_buffer (const char *string)
 
     if (!string)
         return NULL;
+
+    /* Buffer number, for example "/42" or "/12/34" (jump to buffer). */
+    if (CONFIG_BOOLEAN(config_look_command_buffer_number)
+        && string_get_command_buffer_number (string))
+    {
+        return NULL;
+    }
 
     /* "/ " Is not a command. */
     if (strncmp (string, "/ ", 2) == 0)

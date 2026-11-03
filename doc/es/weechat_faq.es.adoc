@@ -712,8 +712,13 @@ Puede crear un atajo de teclado, por ejemplo:
 Tiene una lista de las teclas predeterminadas en la
 link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado ^↗^^].
 
-Para saltar a un buffer mayor de 100, podría definir un disparador y después utilizar
-comandos como `/123` para saltar al buffer #123:
+// TRANSLATION MISSING
+With WeeChat ≥ 5.0.0, you can use commands like `/123` to jump to buffer #123
+(this is the same as `/buffer *123`); this can be disabled with option
+link:weechat_user.es.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
+
+// TRANSLATION MISSING
+With older versions, you could define a trigger to get the same behavior:
 
 ----
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"

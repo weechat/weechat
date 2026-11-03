@@ -2687,10 +2687,15 @@ command_char2 = weechat.string_is_command_char("test")   # == 0
 
 ==== string_input_for_buffer
 
-_WeeChat ≥ 0.3.2._
+_WeeChat ≥ 0.3.2, mis à jour dans la 5.0.0._
 
 Retourner un pointeur vers le texte envoyé vers le tampon (pointeur à
 l'intérieur du paramètre "string"), ou NULL si c'est une commande.
+
+Si l'option
+link:weechat_user.fr.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
+est activée, un numéro de tampon comme `/42` ou `/12/34` (saut vers le tampon)
+est une commande, donc NULL est retourné _(WeeChat ≥ 5.0.0)_.
 
 Prototype :
 

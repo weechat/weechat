@@ -175,6 +175,7 @@ extern struct t_config_option *config_look_color_inactive_window;
 extern struct t_config_option *config_look_color_nick_offline;
 extern struct t_config_option *config_look_color_pairs_auto_reset;
 extern struct t_config_option *config_look_color_real_white;
+extern struct t_config_option *config_look_command_buffer_number;
 extern struct t_config_option *config_look_command_chars;
 extern struct t_config_option *config_look_command_incomplete;
 extern struct t_config_option *config_look_config_permissions;

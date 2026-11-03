@@ -132,6 +132,7 @@ extern char *string_hex_dump (const char *data, int data_size,
                               int bytes_per_line,
                               const char *prefix, const char *suffix);
 extern int string_is_command_char (const char *string);
+extern const char *string_get_command_buffer_number (const char *string);
 extern const char *string_input_for_buffer (const char *string);
 extern int string_get_common_bytes_count (const char *string1,
                                           const char *string2);

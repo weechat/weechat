@@ -1121,6 +1121,12 @@ oknie) lub wyświetlany w jednym lub więcej oknach.
 Układy ekranu i powiązania między oknami i buforami mogą być
 <<command_weechat_layout,zapisywane i przywracane>>.
 
+// TRANSLATION MISSING
+You can jump to a buffer by its number with the command `/N`, for example
+`/42` jumps to buffer #42 _(WeeChat ≥ 5.0.0)_: this is the same as
+`/buffer *42` (see option
+<<option_weechat.look.command_buffer_number,weechat.look.command_buffer_number>>).
+
 [[window_split_examples]]
 ==== Przykłady
 

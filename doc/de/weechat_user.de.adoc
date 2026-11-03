@@ -1128,6 +1128,12 @@ angezeigt.
 Bildschirmlayouts und die Zuordnung zwischen Fenstern und Buffern können
 <<command_weechat_layout,gespeichert und wiederhergestellt>> werden.
 
+// TRANSLATION MISSING
+You can jump to a buffer by its number with the command `/N`, for example
+`/42` jumps to buffer #42 _(WeeChat ≥ 5.0.0)_: this is the same as
+`/buffer *42` (see option
+<<option_weechat.look.command_buffer_number,weechat.look.command_buffer_number>>).
+
 [[window_split_examples]]
 ==== Beispiele
 

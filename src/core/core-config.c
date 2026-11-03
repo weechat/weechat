@@ -120,6 +120,7 @@ struct t_config_option *config_look_color_inactive_window = NULL;
 struct t_config_option *config_look_color_nick_offline = NULL;
 struct t_config_option *config_look_color_pairs_auto_reset = NULL;
 struct t_config_option *config_look_color_real_white = NULL;
+struct t_config_option *config_look_command_buffer_number = NULL;
 struct t_config_option *config_look_command_chars = NULL;
 struct t_config_option *config_look_command_incomplete = NULL;
 struct t_config_option *config_look_config_permissions = NULL;
@@ -3591,6 +3592,16 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
+        config_look_command_buffer_number = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "command_buffer_number", "boolean",
+            N_("if set, a command made only of digits jumps to this buffer "
+               "number, for example /42 is the same as /buffer *42; if "
+               "multiple numbers are given, each one after a command char, "
+               "the last one is used, for example /12/34 is the same as "
+               "/buffer *34"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_command_chars = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "command_chars", "string",

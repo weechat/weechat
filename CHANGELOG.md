@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
+- core: add jump to buffer with command `/N` (for example `/42`) and option weechat.look.command_buffer_number ([#762](https://github.com/weechat/weechat/issues/762))
 - core: add option `insert_raw` in command `/input` to insert text without converting escaped chars
 - core: add option `-older` in command `/buffer clear` to clear only lines older than a delay
 - core: add unit `d` (days) for delays in commands `/debug callbacks`, `/repeat` and `/wait`

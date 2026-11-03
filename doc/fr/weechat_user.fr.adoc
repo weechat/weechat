@@ -1138,6 +1138,11 @@ aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
 Les dispositions d'écran et l'association entre les fenêtres et les tampons
 peuvent être <<command_weechat_layout,sauvées et restaurées>>.
 
+Vous pouvez sauter vers un tampon par son numéro avec la commande `/N`, par
+exemple `/42` saute au tampon n°42 _(WeeChat ≥ 5.0.0)_ : c'est équivalent à
+`/buffer *42` (voir l'option
+<<option_weechat.look.command_buffer_number,weechat.look.command_buffer_number>>).
+
 [[window_split_examples]]
 ==== Exemples
 

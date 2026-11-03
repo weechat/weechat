@@ -59,6 +59,11 @@ input_exec_data (struct t_gui_buffer *buffer, const char *data)
 /*
  * Execute a command.
  *
+ * If option weechat.look.command_buffer_number is enabled, a command made
+ * only of command chars followed by digits, without arguments (for example
+ * "/42" or "/12/34") is executed as "/buffer *N", where N is the last number
+ * found ("/buffer *42" or "/buffer *34").
+ *
  * Return:
  *   WEECHAT_RC_OK: command executed
  *   WEECHAT_RC_ERROR: error, command not executed
@@ -73,7 +78,7 @@ input_exec_command (struct t_gui_buffer *buffer,
 {
     char *command, *command_name, *pos;
     char **old_commands_allowed, **new_commands_allowed;
-    const char *ptr_command_name;
+    const char *ptr_command_name, *ptr_buffer_number;
     int rc;
 
     if (!string || (!string[0]))
@@ -116,6 +121,30 @@ input_exec_command (struct t_gui_buffer *buffer,
     {
         rc = WEECHAT_RC_ERROR;
         goto end;
+    }
+
+    /*
+     * Jump to buffer number: "/42" is executed as "/buffer *42" and
+     * "/12/34" as "/buffer *34".
+     */
+    ptr_buffer_number = (!pos
+                         && CONFIG_BOOLEAN(config_look_command_buffer_number)) ?
+        string_get_command_buffer_number (command_name) : NULL;
+    if (ptr_buffer_number)
+    {
+        free (command);
+        if (string_asprintf (&command, "/buffer *%s", ptr_buffer_number) < 0)
+        {
+            rc = WEECHAT_RC_ERROR;
+            goto end;
+        }
+        free (command_name);
+        command_name = strdup ("/buffer");
+        if (!command_name)
+        {
+            rc = WEECHAT_RC_ERROR;
+            goto end;
+        }
     }
 
     ptr_command_name = utf8_next_char (command_name);

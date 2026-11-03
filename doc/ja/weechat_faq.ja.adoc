@@ -711,8 +711,13 @@ wheel (see also questions about <<mouse,mouse>>).
 
 デフォルトキー割り当てのリストはlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^^]を参照してください
 
-番号 100 以上のバッファにジャンプするには、以下のトリガを定義してください。こうすることでコマンド
-`/123` でバッファ #123 にジャンプできるようになります:
+// TRANSLATION MISSING
+With WeeChat ≥ 5.0.0, you can use commands like `/123` to jump to buffer #123
+(this is the same as `/buffer *123`); this can be disabled with option
+link:weechat_user.ja.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
+
+// TRANSLATION MISSING
+With older versions, you could define a trigger to get the same behavior:
 
 ----
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"

@@ -3218,6 +3218,50 @@ TEST(CoreString, IsCommandChar)
 
 /*
  * Test functions:
+ *   string_get_command_buffer_number
+ */
+
+TEST(CoreString, GetCommandBufferNumber)
+{
+    const char *command;
+
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number (NULL));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number (""));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("//"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/a"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/1a"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/a1"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/-1"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/1 2"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/12/"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/12//34"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/12a/34"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("12"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("%12"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("/12%34"));
+
+    STRCMP_EQUAL("0", string_get_command_buffer_number ("/0"));
+    STRCMP_EQUAL("1", string_get_command_buffer_number ("/1"));
+    STRCMP_EQUAL("42", string_get_command_buffer_number ("/42"));
+    STRCMP_EQUAL("123456", string_get_command_buffer_number ("/123456"));
+    command = "/12/34";
+    POINTERS_EQUAL(command + 4, string_get_command_buffer_number (command));
+    STRCMP_EQUAL("56", string_get_command_buffer_number ("/12/34/56"));
+
+    /* Custom command chars. */
+    config_file_option_set (config_look_command_chars, "%é", 1);
+    STRCMP_EQUAL("12", string_get_command_buffer_number ("%12"));
+    STRCMP_EQUAL("34", string_get_command_buffer_number ("%12%34"));
+    STRCMP_EQUAL("34", string_get_command_buffer_number ("/12%34"));
+    STRCMP_EQUAL("56", string_get_command_buffer_number ("é12/34%56"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("%12$34"));
+    POINTERS_EQUAL(NULL, string_get_command_buffer_number ("%%12"));
+    config_file_option_reset (config_look_command_chars, 1);
+}
+
+/*
+ * Test functions:
  *   string_input_for_buffer
  */
 
@@ -3273,6 +3317,23 @@ TEST(CoreString, InputForBuffer)
     STRCMP_EQUAL(NULL, string_input_for_buffer (str));
     free (str);
 
+    /* Buffer numbers */
+    STRCMP_EQUAL(NULL, string_input_for_buffer ("/42"));
+    STRCMP_EQUAL(NULL, string_input_for_buffer ("/12/34"));
+    STRCMP_EQUAL(NULL, string_input_for_buffer ("/12/34/56"));
+    str = strdup ("/12/34 abc");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/12/abc");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    config_file_option_set (config_look_command_buffer_number, "off", 1);
+    STRCMP_EQUAL(NULL, string_input_for_buffer ("/42"));
+    str = strdup ("/12/34");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    config_file_option_reset (config_look_command_buffer_number, 1);
+
     /* Test with custom command chars */
     config_file_option_set (config_look_command_chars, "öï", 1);
 
@@ -3297,6 +3358,8 @@ TEST(CoreString, InputForBuffer)
     str = strdup ("ïï_abc");
     STRCMP_EQUAL(str + 2, string_input_for_buffer (str));
     free (str);
+    STRCMP_EQUAL(NULL, string_input_for_buffer ("ö12ï34"));
+    STRCMP_EQUAL(NULL, string_input_for_buffer ("/12ö34"));
 
     config_file_option_reset (config_look_command_chars, 1);
 }

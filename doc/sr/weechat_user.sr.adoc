@@ -1053,6 +1053,12 @@ _прозор_ је површина екрана која приказује б
 
 Распореди екрана и придруживање бафера прозорима могу да се <<command_weechat_layout,сачувају и обнове>>.
 
+// TRANSLATION MISSING
+You can jump to a buffer by its number with the command `/N`, for example
+`/42` jumps to buffer #42 _(WeeChat ≥ 5.0.0)_: this is the same as
+`/buffer *42` (see option
+<<option_weechat.look.command_buffer_number,weechat.look.command_buffer_number>>).
+
 [[window_split_examples]]
 ==== Примери
 

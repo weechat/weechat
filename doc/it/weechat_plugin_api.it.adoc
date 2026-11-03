@@ -2794,10 +2794,16 @@ command_char2 = weechat.string_is_command_char("test")   # == 0
 
 ==== string_input_for_buffer
 
-_WeeChat ≥ 0.3.2._
+_WeeChat ≥ 0.3.2, updated in 5.0.0._
 
 Restituisce il puntatore al testo in input per il buffer (puntatore all'interno
 dell'argomento "string"), oppure NULL se è un comando.
+
+// TRANSLATION MISSING
+If option
+link:weechat_user.it.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
+is enabled, a buffer number command like `/42` or `/12/34` (jump to buffer) is
+a command, so NULL is returned _(WeeChat ≥ 5.0.0)_.
 
 Prototipo:
 

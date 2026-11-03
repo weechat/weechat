@@ -2552,9 +2552,15 @@ command_char2 = weechat.string_is_command_char("test")   # == 0
 
 ==== string_input_for_buffer
 
-_WeeChat ≥ 0.3.2._
+_WeeChat ≥ 0.3.2, ажурирано у верзији 5.0.0._
 
 Враћа показивач на текст уноса за бафер (показивач унутар „string” аргумента), или NULL ако стринг није команда.
+
+// TRANSLATION MISSING
+If option
+link:weechat_user.sr.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
+is enabled, a buffer number command like `/42` or `/12/34` (jump to buffer) is
+a command, so NULL is returned _(WeeChat ≥ 5.0.0)_.
 
 Прототип:
 

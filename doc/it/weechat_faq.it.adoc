@@ -760,8 +760,12 @@ List of default keys is in
 link:weechat_user.it.html#key_bindings[User's guide / Key bindings ^↗^^].
 
 // TRANSLATION MISSING
-To jump to buffers with number ≥ 100, you could define a trigger and then use
-commands like `/123` to jump to buffer #123:
+With WeeChat ≥ 5.0.0, you can use commands like `/123` to jump to buffer #123
+(this is the same as `/buffer *123`); this can be disabled with option
+link:weechat_user.it.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
+
+// TRANSLATION MISSING
+With older versions, you could define a trigger to get the same behavior:
 
 ----
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
