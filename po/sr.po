@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:41+0100\n"
+"POT-Creation-Date: 2026-11-27 20:42+0100\n"
 "PO-Revision-Date: 2025-02-12 11:16+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13090,6 +13090,11 @@ msgstr "%s%s[%s%s%s] %s%s%s%s је ућуткао %s"
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s је ућуткан"
+
+#, fuzzy
+#| msgid "read - signature not found"
+msgid "server signature not verified"
+msgstr "читање - није пронађен потпис"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""

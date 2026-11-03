@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:41+0100\n"
+"POT-Creation-Date: 2026-11-27 20:42+0100\n"
 "PO-Revision-Date: 2024-12-16 12:01+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13464,6 +13464,11 @@ msgstr "%s%s[%s%s%s] %s%s%s%s uciszony przez %s"
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s uciszony"
+
+#, fuzzy
+#| msgid "read - signature not found"
+msgid "server signature not verified"
+msgstr "odczyt - nie znaleziono sygnatury"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
