@@ -416,12 +416,37 @@ relay_client_recv_text_multi_line (struct t_relay_client *client)
 void
 relay_client_recv_text (struct t_relay_client *client, const char *data)
 {
+    const char *ptr_data, *pos_eol;
     char *new_partial;
-    size_t length_partial, length_data;
+    size_t length_partial, length_data, length_line, length_segment;
 
     length_partial = (client->partial_message) ?
         strlen (client->partial_message) : 0;
     length_data = strlen (data);
+
+    /* Reject oversized IRC messages before appending or parsing them. */
+    if (client->protocol == RELAY_PROTOCOL_IRC)
+    {
+        length_line = length_partial;
+        ptr_data = data;
+        while (ptr_data[0])
+        {
+            pos_eol = strchr (ptr_data, '\n');
+            length_segment = (pos_eol) ?
+                (size_t)(pos_eol - ptr_data) : strlen (ptr_data);
+            if ((length_line > RELAY_IRC_MESSAGE_MAX_LENGTH)
+                || (length_segment > (RELAY_IRC_MESSAGE_MAX_LENGTH
+                                      - length_line)))
+            {
+                relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                return;
+            }
+            if (!pos_eol)
+                break;
+            ptr_data = pos_eol + 1;
+            length_line = 0;
+        }
+    }
 
     /*
      * limit the size of the partial message: ignore extra data (protection
