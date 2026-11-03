@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:39+0100\n"
+"POT-Creation-Date: 2026-11-27 20:41+0100\n"
 "PO-Revision-Date: 2024-12-16 12:01+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13525,6 +13525,12 @@ msgstr "%s%s: serwer \"%s\" nie został znaleziony dla przekierowania"
 
 msgid "unable to validate server signature"
 msgstr "nie można zweryfikować sygnatury serwera"
+
+#, fuzzy
+#| msgid "%d server moved"
+#| msgid_plural "%d servers moved"
+msgid "invalid server nonce"
+msgstr "%d serwer przesunięto"
 
 #, fuzzy, c-format
 #| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"

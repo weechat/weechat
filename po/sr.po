@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:39+0100\n"
+"POT-Creation-Date: 2026-11-27 20:41+0100\n"
 "PO-Revision-Date: 2025-02-12 11:16+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13152,6 +13152,12 @@ msgstr "%s%s: није пронађен сервер „%s” за преусм�
 
 msgid "unable to validate server signature"
 msgstr "није успело потврђивање серверског потписа"
+
+#, fuzzy
+#| msgid "%d server moved"
+#| msgid_plural "%d servers moved"
+msgid "invalid server nonce"
+msgstr "померен је %d сервер"
 
 #, fuzzy, c-format
 #| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"

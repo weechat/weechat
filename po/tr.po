@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:39+0100\n"
+"POT-Creation-Date: 2026-11-27 20:41+0100\n"
 "PO-Revision-Date: 2025-01-04 18:21+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13453,6 +13453,12 @@ msgstr "%s%s: Yeniden yönlendirme için \"%s\" sunucusu bulunamadı"
 
 msgid "unable to validate server signature"
 msgstr "sunucu imzası doğrulanamıyor"
+
+#, fuzzy
+#| msgid "%d server moved"
+#| msgid_plural "%d servers moved"
+msgid "invalid server nonce"
+msgstr "%d sunucu taşındı"
 
 #, fuzzy, c-format
 #| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
