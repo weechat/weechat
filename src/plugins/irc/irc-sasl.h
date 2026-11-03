@@ -33,8 +33,18 @@ enum t_irc_sasl_mechanism
     IRC_NUM_SASL_MECHANISMS,
 };
 
+/* status of SCRAM authentication */
+
+enum t_irc_sasl_scram_status
+{
+    IRC_SASL_SCRAM_STATUS_NONE = 0,    /* no SCRAM authentication          */
+    IRC_SASL_SCRAM_STATUS_PENDING,     /* server not authenticated yet     */
+    IRC_SASL_SCRAM_STATUS_VERIFIED,    /* server signature verified        */
+};
+
 extern char *irc_sasl_mechanism_string[];
 
+extern int irc_sasl_mechanism_is_scram (int sasl_mechanism);
 extern char *irc_sasl_mechanism_plain (const char *sasl_username,
                                        const char *sasl_password);
 extern char *irc_sasl_mechanism_scram (struct t_irc_server *server,

@@ -12343,6 +12343,10 @@ msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
+#, fuzzy
+msgid "server signature not verified"
+msgstr "имя сервера не найдено"
+
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr "%s plugin \"%s\" не найден\n"

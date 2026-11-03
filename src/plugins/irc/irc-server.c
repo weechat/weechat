@@ -1755,6 +1755,7 @@ irc_server_alloc (const char *name)
     new_server->sasl_scram_salted_pwd = NULL;
     new_server->sasl_scram_salted_pwd_size = 0;
     new_server->sasl_scram_auth_message = NULL;
+    new_server->sasl_scram_status = IRC_SASL_SCRAM_STATUS_NONE;
     new_server->sasl_temp_username = NULL;
     new_server->sasl_temp_password = NULL;
     new_server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
@@ -2291,11 +2292,11 @@ irc_server_outqueue_free_all (struct t_irc_server *server, int priority)
 }
 
 /*
- * Free SASL data in server.
+ * Free SASL SCRAM data in server.
  */
 
 void
-irc_server_free_sasl_data (struct t_irc_server *server)
+irc_server_free_sasl_scram_data (struct t_irc_server *server)
 {
     if (server->sasl_scram_client_first)
     {
@@ -2313,6 +2314,16 @@ irc_server_free_sasl_data (struct t_irc_server *server)
         free (server->sasl_scram_auth_message);
         server->sasl_scram_auth_message = NULL;
     }
+}
+
+/*
+ * Free SASL data in server.
+ */
+
+void
+irc_server_free_sasl_data (struct t_irc_server *server)
+{
+    irc_server_free_sasl_scram_data (server);
     if (server->sasl_temp_username)
     {
         free (server->sasl_temp_username);
@@ -4322,6 +4333,7 @@ irc_server_close_connection (struct t_irc_server *server)
     /* Server is now disconnected. */
     server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
     server->sasl_mechanism_used = -1;
+    server->sasl_scram_status = IRC_SASL_SCRAM_STATUS_NONE;
     server->is_connected = 0;
     server->tls_connected = 0;
 
@@ -6613,6 +6625,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_salted_pwd, OTHER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_salted_pwd_size, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_auth_message, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_status, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_username, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_password, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, authentication_method, INTEGER, 0, NULL, NULL);
@@ -7381,6 +7394,7 @@ irc_server_print_log (void)
         weechat_log_printf ("  sasl_scram_salted_pwd . . : (hidden)");
         weechat_log_printf ("  sasl_scram_salted_pwd_size: %d", ptr_server->sasl_scram_salted_pwd_size);
         weechat_log_printf ("  sasl_scram_auth_message . : (hidden)");
+        weechat_log_printf ("  sasl_scram_status . . . . : %d", ptr_server->sasl_scram_status);
         weechat_log_printf ("  sasl_temp_username. . . . : '%s'", ptr_server->sasl_temp_username);
         weechat_log_printf ("  sasl_temp_password. . . . : (hidden)");
         weechat_log_printf ("  authentication_method . . : %d", ptr_server->authentication_method);

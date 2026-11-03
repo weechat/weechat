@@ -1094,6 +1094,9 @@ IRC_COMMAND_CALLBACK(auth)
                                   str_msg_auth_upper);
                 free (str_msg_auth_upper);
             }
+            ptr_server->sasl_scram_status =
+                (irc_sasl_mechanism_is_scram (sasl_mechanism)) ?
+                IRC_SASL_SCRAM_STATUS_PENDING : IRC_SASL_SCRAM_STATUS_NONE;
         }
     }
     else

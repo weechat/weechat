@@ -1248,6 +1248,9 @@ IRC_PROTOCOL_CALLBACK(cap)
                     irc_server_sendf (ctxt->server, 0, NULL, str_msg_auth_upper);
                     free (str_msg_auth_upper);
                 }
+                ctxt->server->sasl_scram_status =
+                    (irc_sasl_mechanism_is_scram (sasl_mechanism)) ?
+                    IRC_SASL_SCRAM_STATUS_PENDING : IRC_SASL_SCRAM_STATUS_NONE;
                 weechat_unhook (ctxt->server->hook_timer_sasl);
                 timeout = IRC_SERVER_OPTION_INTEGER(
                     ctxt->server, IRC_SERVER_OPTION_SASL_TIMEOUT);
@@ -7989,34 +7992,6 @@ IRC_PROTOCOL_CALLBACK(901)
 }
 
 /*
- * Callback for the IRC commands "903" and "907" (SASL OK).
- *
- * Commands look like:
- *   903 nick :Authentication successful
- *   903 * :Authentication successful
- */
-
-IRC_PROTOCOL_CALLBACK(sasl_end_ok)
-{
-    if (ctxt->server->hook_timer_sasl)
-    {
-        weechat_unhook (ctxt->server->hook_timer_sasl);
-        ctxt->server->hook_timer_sasl = NULL;
-    }
-
-    irc_protocol_cb_numeric (ctxt);
-
-    ctxt->server->authentication_method = IRC_SERVER_AUTH_METHOD_SASL;
-
-    if (!ctxt->server->is_connected)
-        irc_server_sendf (ctxt->server, 0, NULL, "CAP END");
-
-    irc_server_free_sasl_data (ctxt->server);
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Callback for the IRC commands "902", "904", "905", "906" (SASL failed).
  *
  * Commands look like:
@@ -8035,6 +8010,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
 
     ctxt->server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
     ctxt->server->sasl_mechanism_used = -1;
+    ctxt->server->sasl_scram_status = IRC_SASL_SCRAM_STATUS_NONE;
 
     irc_protocol_cb_numeric (ctxt);
 
@@ -8048,6 +8024,53 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
             (sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT) ? 1 : 0);
         return WEECHAT_RC_OK;
     }
+
+    if (!ctxt->server->is_connected)
+        irc_server_sendf (ctxt->server, 0, NULL, "CAP END");
+
+    irc_server_free_sasl_data (ctxt->server);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC commands "903" and "907" (SASL OK).
+ *
+ * Commands look like:
+ *   903 nick :Authentication successful
+ *   903 * :Authentication successful
+ */
+
+IRC_PROTOCOL_CALLBACK(sasl_end_ok)
+{
+    /*
+     * With SCRAM, the server must prove it knows the password (server
+     * signature) before the success is accepted, otherwise it is considered
+     * as a failure; a "907" (already authenticated) received when connected
+     * does not change the current authentication.
+     */
+    if ((ctxt->server->sasl_scram_status == IRC_SASL_SCRAM_STATUS_PENDING)
+        && (!ctxt->server->is_connected || (strcmp (ctxt->command, "907") != 0)))
+    {
+        weechat_printf (ctxt->server->buffer,
+                        _("%s%s: SASL error: %s"),
+                        weechat_prefix ("error"),
+                        IRC_PLUGIN_NAME,
+                        _("server signature not verified"));
+        return irc_protocol_cb_sasl_end_fail (ctxt);
+    }
+
+    ctxt->server->sasl_scram_status = IRC_SASL_SCRAM_STATUS_NONE;
+
+    if (ctxt->server->hook_timer_sasl)
+    {
+        weechat_unhook (ctxt->server->hook_timer_sasl);
+        ctxt->server->hook_timer_sasl = NULL;
+    }
+
+    irc_protocol_cb_numeric (ctxt);
+
+    ctxt->server->authentication_method = IRC_SERVER_AUTH_METHOD_SASL;
 
     if (!ctxt->server->is_connected)
         irc_server_sendf (ctxt->server, 0, NULL, "CAP END");

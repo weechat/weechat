@@ -217,6 +217,7 @@ struct t_irc_server
     char *sasl_scram_salted_pwd;    /* salted password for SASL SCRAM        */
     int sasl_scram_salted_pwd_size; /* size of salted password for SASL SCRAM*/
     char *sasl_scram_auth_message;  /* auth message for SASL SCRAM           */
+    int sasl_scram_status;          /* status of SCRAM auth (server proof)   */
     char *sasl_temp_username;       /* temp SASL username (set by /auth cmd) */
     char *sasl_temp_password;       /* temp SASL password (set by /auth cmd) */
     int authentication_method;      /* authentication method used to login   */
@@ -452,6 +453,7 @@ extern void irc_server_disconnect (struct t_irc_server *server,
                                    int switch_address, int reconnect);
 extern void irc_server_disconnect_all (void);
 extern void irc_server_execute_command (struct t_irc_server *server);
+extern void irc_server_free_sasl_scram_data (struct t_irc_server *server);
 extern void irc_server_free_sasl_data (struct t_irc_server *server);
 extern void irc_server_free (struct t_irc_server *server);
 extern int irc_server_xfer_send_ready_cb (const void *pointer, void *data,

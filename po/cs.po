@@ -12843,6 +12843,11 @@ msgstr "%s%s%s %s(%s%s%s)%s se zpet na serveru"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%sMód %s%s %s[%s%s%s]"
 
+#, fuzzy
+#| msgid "read - signature not found"
+msgid "server signature not verified"
+msgstr "čtení - podpis nenalezen"
+
 #, fuzzy, c-format
 #| msgid "%s%s: command \"%s\" not found:"
 msgid "%s%s: command \"%s\" not found: \"%s\""

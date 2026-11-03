@@ -12289,6 +12289,10 @@ msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
+#, fuzzy
+msgid "server signature not verified"
+msgstr "a szerver neve nem található"
+
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr "%s a \"%s\" modul nem található\n"

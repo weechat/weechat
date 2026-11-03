@@ -14199,6 +14199,11 @@ msgstr "%s%s[%s%s%s] %s%s%s%s wurde durch %s das Wort entzogen"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s wurde das Wort entzogen"
 
+#, fuzzy
+#| msgid "read - signature not found"
+msgid "server signature not verified"
+msgstr "lese - Signatur nicht gefunden"
+
 #, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr "%s%s: Befehl \"%s\" nicht gefunden: \"%s\""

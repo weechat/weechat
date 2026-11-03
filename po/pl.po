@@ -13538,6 +13538,11 @@ msgstr "%s%s[%s%s%s] %s%s%s%s uciszony przez %s"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s uciszony"
 
+#, fuzzy
+#| msgid "read - signature not found"
+msgid "server signature not verified"
+msgstr "odczyt - nie znaleziono sygnatury"
+
 #, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr "%s%s: komenda \"%s\" nie została znaleziona: \"%s\""

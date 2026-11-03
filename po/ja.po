@@ -13646,6 +13646,11 @@ msgstr "%1$s%2$s[%3$s%4$s%5$s] %10$s が %6$s%7$s%8$s%9$s の発言を禁止し�
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s の発言を禁止しました"
 
+#, fuzzy
+#| msgid "read - signature not found"
+msgid "server signature not verified"
+msgstr "読み込み - 署名が見つかりません"
+
 #, fuzzy, c-format
 #| msgid "%s%s: command \"%s\" not found:"
 msgid "%s%s: command \"%s\" not found: \"%s\""

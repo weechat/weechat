@@ -13554,6 +13554,11 @@ msgstr "%s%s[%s%s%s] %s%s%s%s је ућуткао %s"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s је ућуткан"
 
+#, fuzzy
+#| msgid "read - signature not found"
+msgid "server signature not verified"
+msgstr "читање - није пронађен потпис"
+
 #, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr "%s%s: команда „%s” није пронађена: „%s”"
