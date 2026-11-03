@@ -16,6 +16,9 @@ enum t_relay_status;
 #define RELAY_IRC_CAPAB_FOLLOW_SERVER                            \
     (1 << RELAY_IRC_CAPAB_ECHO_MESSAGE)
 
+/* Maximum length of an IRC message received from a relay client. */
+#define RELAY_IRC_MESSAGE_MAX_LENGTH 4096
+
 struct t_relay_irc_data
 {
     char *address;                     /* client address (used when sending */
