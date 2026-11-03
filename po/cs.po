@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-05 12:20+0200\n"
+"POT-Creation-Date: 2026-11-03 22:10+0100\n"
 "PO-Revision-Date: 2026-07-05 12:29+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -12836,6 +12836,11 @@ msgstr "%s%s: server \"%s\" pro přesměrování nenalezen"
 #, fuzzy
 msgid "unable to validate server signature"
 msgstr "%s%s: nemohu přidat server"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr "%sNekorektní číslo barvy \"%s\" (musí být mezi %d a %d)"
 
 #, fuzzy
 msgid "memory error"

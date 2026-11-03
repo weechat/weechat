@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-05 12:20+0200\n"
+"POT-Creation-Date: 2026-11-03 22:10+0100\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -13505,6 +13505,11 @@ msgstr "%s%s: serwer \"%s\" nie został znaleziony dla przekierowania"
 
 msgid "unable to validate server signature"
 msgstr "nie można zweryfikować sygnatury serwera"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr "%sNiewłaściwy numer koloru \"%s\" (musi się zawierać pomiędzy %d a %d)"
 
 msgid "memory error"
 msgstr "błąd pamięci"

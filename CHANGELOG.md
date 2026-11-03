@@ -8,6 +8,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 _The file [UPGRADING.md](UPGRADING.md) contains important information about upgrades, for example manual actions to perform when upgrading from a version to another one (most changes are automated, but some of them cannot be)._
 
+## [Unreleased]
+
+### Security
+
+- irc: refuse SCRAM iteration count lower than 4096 received from the server, to prevent offline dictionary attacks on the client proof, or greater than 1000000, to prevent blocking WeeChat for a long time
+
 ## [4.10.2] - 2026-10-31
 
 ### Fixed
