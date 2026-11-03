@@ -13203,6 +13203,10 @@ msgstr "%s%s: servidor \"%s\" no encontrado para la redirección"
 msgid "unable to validate server signature"
 msgstr "%s%s: no es posible crear el servidor"
 
+#, fuzzy
+msgid "invalid server nonce"
+msgstr "%d modificadores regulares removidos"
+
 #, fuzzy, c-format
 #| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
 msgid "invalid iteration count: %d (must be between %d and %d)"

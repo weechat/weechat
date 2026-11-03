@@ -13634,6 +13634,12 @@ msgstr "%s%s: servidor \"%s\" não encontrado para redirecionar"
 msgid "unable to validate server signature"
 msgstr "%s%s: não é possível adicionar servidor"
 
+#, fuzzy
+#| msgid "%d server moved"
+#| msgid_plural "%d servers moved"
+msgid "invalid server nonce"
+msgstr "%d servidor removido"
+
 #, fuzzy, c-format
 #| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
 msgid "invalid iteration count: %d (must be between %d and %d)"

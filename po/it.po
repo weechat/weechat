@@ -13253,6 +13253,10 @@ msgstr "%s%s: server \"%s\" non trovato per la redirezione"
 msgid "unable to validate server signature"
 msgstr "%s%s: impossibile creare il server"
 
+#, fuzzy
+msgid "invalid server nonce"
+msgstr "%d rmodifier eliminati"
+
 #, fuzzy, c-format
 #| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
 msgid "invalid iteration count: %d (must be between %d and %d)"

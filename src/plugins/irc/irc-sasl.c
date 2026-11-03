@@ -98,11 +98,12 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
     char nonce_client[18], nonce_client_base64[24 + 1], *nonce_server;
     char *salt_base64, *salt, *verifier_base64, *verifier, *attr_error;
     char *auth_no_proof, *auth_message;
+    const char *pos_nonce_client;
     char salted_password[512 / 8], client_key[512 / 8], stored_key[512 / 8];
     char client_signature[512 / 8], client_proof[512 / 8];
     char client_proof_base64[((512 / 8) * 4) + 1], server_key[512 / 8];
     char server_signature[512 / 8];
-    int i, rc, length, num_attrs, iterations, number;
+    int i, rc, length, num_attrs, iterations, number, length_nonce_client;
     int salt_size, salted_password_size;
     int client_key_size, stored_key_size, client_signature_size;
     int server_key_size, server_signature_size, verifier_size;
@@ -267,6 +268,23 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
                 || !salt_base64 || (iterations <= 0))
             {
                 goto proto_error;
+            }
+            /*
+             * The server nonce must start with the client nonce, followed by
+             * the nonce part added by the server (RFC 5802).
+             */
+            pos_nonce_client = strstr (server->sasl_scram_client_first, ",r=");
+            if (!pos_nonce_client)
+                goto proto_error;
+            pos_nonce_client += 3;
+            length_nonce_client = strlen (pos_nonce_client);
+            if ((strncmp (nonce_server, pos_nonce_client,
+                          length_nonce_client) != 0)
+                || ((int)strlen (nonce_server) <= length_nonce_client))
+            {
+                if (sasl_error)
+                    *sasl_error = strdup (_("invalid server nonce"));
+                goto end;
             }
             /*
              * Refuse a low iteration count: the client proof is sent before

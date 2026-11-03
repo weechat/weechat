@@ -12907,6 +12907,12 @@ msgstr "%s%s: server \"%s\" pro přesměrování nenalezen"
 msgid "unable to validate server signature"
 msgstr "%s%s: nemohu přidat server"
 
+#, fuzzy
+#| msgid "%d server moved"
+#| msgid_plural "%d servers moved"
+msgid "invalid server nonce"
+msgstr "%d server přesunut"
+
 #, fuzzy, c-format
 #| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
 msgid "invalid iteration count: %d (must be between %d and %d)"
