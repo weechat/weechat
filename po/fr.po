@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-03-16 14:47+0100\n"
+"POT-Creation-Date: 2026-11-27 20:39+0100\n"
 "PO-Revision-Date: 2025-03-16 14:48+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7087,15 +7087,12 @@ msgstr "La souris est désactivée"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', taille : %dx%d"
 
-#, c-format
 msgid "Running WeeChat in background..."
 msgstr "Lancement de WeeChat en tâche de fond..."
 
-#, c-format
 msgid "fork error"
 msgstr "erreur de fork"
 
-#, c-format
 msgid "OK"
 msgstr "OK"
 
@@ -13560,6 +13557,10 @@ msgstr "%s%s : serveur \"%s\" non trouvé pour la redirection"
 
 msgid "unable to validate server signature"
 msgstr "impossible de vérifier la signature du serveur"
+
+#, c-format
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr "nombre d'itérations invalide : %d (doit être entre %d et %d)"
 
 msgid "memory error"
 msgstr "erreur de mémoire"

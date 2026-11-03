@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-03-16 14:47+0100\n"
+"POT-Creation-Date: 2026-11-27 20:39+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6073,15 +6073,13 @@ msgstr "Сокращения не заданы.\n"
 msgid "  TERM='%s', size: %dx%d"
 msgstr ""
 
-#, c-format
 msgid "Running WeeChat in background..."
 msgstr ""
 
-#, fuzzy, c-format
+#, fuzzy
 msgid "fork error"
 msgstr "%sСервер: %s%s\n"
 
-#, c-format
 msgid "OK"
 msgstr "OK"
 
@@ -12025,6 +12023,11 @@ msgstr "%s сервер \"%s\" не найден\n"
 #, fuzzy
 msgid "unable to validate server signature"
 msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr "%sОшибочный код цвета \"%s\" (должен быть в диапазоне от %d до %d)"
 
 #, fuzzy
 msgid "memory error"

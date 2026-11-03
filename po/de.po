@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-03-16 14:47+0100\n"
+"POT-Creation-Date: 2026-11-27 20:39+0100\n"
 "PO-Revision-Date: 2025-03-17 11:02+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -7226,15 +7226,12 @@ msgstr "Maus ist inaktiv"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', Größe: %dx%d"
 
-#, c-format
 msgid "Running WeeChat in background..."
 msgstr "WeeChat wird im Hintergrund ausgeführt..."
 
-#, c-format
 msgid "fork error"
 msgstr "Fork-Fehler"
 
-#, c-format
 msgid "OK"
 msgstr "OK"
 
@@ -13837,6 +13834,12 @@ msgstr "%s%s: Server \"%s\" für eine Weiterleitung wurde nicht gefunden"
 msgid "unable to validate server signature"
 msgstr "Serversignatur kann nicht validiert werden"
 
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr ""
+"%sungültige Farbnummer \"%s\" (der Wert muss zwischen %d und %d liegen)"
+
 msgid "memory error"
 msgstr "Speicherfehler"
 
@@ -18955,4 +18958,3 @@ msgstr ""
 
 #~ msgid "ETA"
 #~ msgstr "ETA"
-

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-03-16 14:47+0100\n"
+"POT-Creation-Date: 2026-11-27 20:39+0100\n"
 "PO-Revision-Date: 2025-01-04 18:21+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6754,15 +6754,12 @@ msgstr "Fare devre dışı"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', boyut: %dx%d"
 
-#, c-format
 msgid "Running WeeChat in background..."
 msgstr "WeeChat arka planda çalışıyor..."
 
-#, c-format
 msgid "fork error"
 msgstr "çatal hatası"
 
-#, c-format
 msgid "OK"
 msgstr "TAMAM"
 
@@ -13456,6 +13453,11 @@ msgstr "%s%s: Yeniden yönlendirme için \"%s\" sunucusu bulunamadı"
 
 msgid "unable to validate server signature"
 msgstr "sunucu imzası doğrulanamıyor"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr "%sGeçersiz renk numarası \"%s\" (%d ve %d arasında olmalı)"
 
 msgid "memory error"
 msgstr "bellek hatası"

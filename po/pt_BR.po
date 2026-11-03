@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-03-16 14:47+0100\n"
+"POT-Creation-Date: 2026-11-27 20:39+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6402,15 +6402,13 @@ msgstr "Mouse está desabilitado"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', tamanho: %dx%d"
 
-#, c-format
 msgid "Running WeeChat in background..."
 msgstr ""
 
-#, fuzzy, c-format
+#, fuzzy
 msgid "fork error"
 msgstr "%s%s: erro: %s"
 
-#, c-format
 msgid "OK"
 msgstr "OK"
 
@@ -12354,6 +12352,11 @@ msgstr "%s%s: servidor \"%s\" não encontrado para redirecionamento"
 #, fuzzy
 msgid "unable to validate server signature"
 msgstr "%s%s: não foi possível redirecionar saída de erro (stderr)"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid iteration count: %d (must be between %d and %d)"
+msgstr "%sNúmero de cor inválido \"%s\" (precisa ser entre %d e %d)"
 
 #, fuzzy
 msgid "memory error"
