@@ -13843,6 +13843,9 @@ msgstr "%s%s[%s%s%s] %s%s%s%s rendu silencieux par %s"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s rendu silencieux"
 
+msgid "server signature not verified"
+msgstr "signature du serveur non vérifiée"
+
 #, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr "%s%s : commande \"%s\" non trouvée : \"%s\""

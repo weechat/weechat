@@ -11172,6 +11172,9 @@ msgstr ""
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr ""
 
+msgid "server signature not verified"
+msgstr ""
+
 #, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr ""

@@ -47,6 +47,24 @@ char *irc_sasl_mechanism_string[IRC_NUM_SASL_MECHANISMS] =
 
 
 /*
+ * Check if a SASL mechanism is SCRAM ("SCRAM-SHA-1", "SCRAM-SHA-256" or
+ * "SCRAM-SHA-512").
+ *
+ * Return:
+ *   1: mechanism is SCRAM
+ *   0: mechanism is not SCRAM
+ */
+
+int
+irc_sasl_mechanism_is_scram (int sasl_mechanism)
+{
+    return ((sasl_mechanism == IRC_SASL_MECHANISM_SCRAM_SHA_1)
+            || (sasl_mechanism == IRC_SASL_MECHANISM_SCRAM_SHA_256)
+            || (sasl_mechanism == IRC_SASL_MECHANISM_SCRAM_SHA_512)) ? 1 : 0;
+}
+
+
+/*
  * Build answer for SASL authentication, using mechanism "PLAIN".
  *
  * Note: result must be freed after use.
@@ -148,6 +166,9 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
 
     if (strcmp (data_base64, "+") == 0)
     {
+        /* discard data of a previous exchange (if not completed) */
+        irc_server_free_sasl_scram_data (server);
+        server->sasl_scram_status = IRC_SASL_SCRAM_STATUS_PENDING;
         /* send username and nonce with form: "n,,n=username,r=nonce" */
         gcry_create_nonce (nonce_client, sizeof (nonce_client));
         length = weechat_string_base_encode (
@@ -272,6 +293,8 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
                 length = strlen (string);
                 goto end;
             }
+            /* server is authenticated: SASL success can be accepted */
+            server->sasl_scram_status = IRC_SASL_SCRAM_STATUS_VERIFIED;
             string = strdup ("+");
             if (!string)
                 goto memory_error;

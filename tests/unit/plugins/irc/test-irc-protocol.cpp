@@ -47,6 +47,7 @@ extern "C"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-nick.h"
+#include "src/plugins/irc/irc-sasl.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/logger/logger-config.h"
 #include "src/plugins/typing/typing-config.h"
@@ -7707,6 +7708,57 @@ TEST(IrcProtocolWithServer, 903_907)
     RECV(":server 907 alice : \002SASL authentication successful ");
     CHECK_SRV("--", " SASL authentication successful ",
               "irc_907,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Test functions:
+ *   irc_protocol_cb_903 (SASL OK with SCRAM)
+ *   irc_protocol_cb_907 (SASL OK with SCRAM)
+ */
+
+TEST(IrcProtocolWithServer, 903_907_scram)
+{
+    SRV_INIT;
+
+    /* SCRAM: server signature not verified: success is refused */
+    ptr_server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    ptr_server->sasl_mechanism_used = IRC_SASL_MECHANISM_SCRAM_SHA_256;
+    ptr_server->sasl_scram_status = IRC_SASL_SCRAM_STATUS_PENDING;
+    RECV(":server 903 alice ok");
+    CHECK_SRV("=!=", "irc: SASL error: server signature not verified", "");
+    CHECK_SRV("--", "ok", "irc_903,irc_numeric,nick_server,log3");
+    LONGS_EQUAL(IRC_SERVER_AUTH_METHOD_NONE,
+                ptr_server->authentication_method);
+    LONGS_EQUAL(-1, ptr_server->sasl_mechanism_used);
+    LONGS_EQUAL(IRC_SASL_SCRAM_STATUS_NONE, ptr_server->sasl_scram_status);
+
+    /* SCRAM: "907" received when connected: authentication unchanged */
+    ptr_server->sasl_mechanism_used = IRC_SASL_MECHANISM_SCRAM_SHA_256;
+    ptr_server->sasl_scram_status = IRC_SASL_SCRAM_STATUS_PENDING;
+    RECV(":server 907 alice ok");
+    CHECK_SRV("--", "ok", "irc_907,irc_numeric,nick_server,log3");
+    LONGS_EQUAL(IRC_SERVER_AUTH_METHOD_SASL,
+                ptr_server->authentication_method);
+    LONGS_EQUAL(IRC_SASL_MECHANISM_SCRAM_SHA_256,
+                ptr_server->sasl_mechanism_used);
+    LONGS_EQUAL(IRC_SASL_SCRAM_STATUS_NONE, ptr_server->sasl_scram_status);
+
+    /* SCRAM: server signature verified, "900" then "903": success */
+    ptr_server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    ptr_server->sasl_mechanism_used = IRC_SASL_MECHANISM_SCRAM_SHA_256;
+    ptr_server->sasl_scram_status = IRC_SASL_SCRAM_STATUS_VERIFIED;
+    RECV(":server 900 alice alice!user@host alice :logged in");
+    CHECK_SRV("--", "logged in (alice!user@host)",
+              "irc_900,irc_numeric,nick_server,log3");
+    LONGS_EQUAL(IRC_SASL_SCRAM_STATUS_VERIFIED,
+                ptr_server->sasl_scram_status);
+    RECV(":server 903 alice ok");
+    CHECK_SRV("--", "ok", "irc_903,irc_numeric,nick_server,log3");
+    LONGS_EQUAL(IRC_SERVER_AUTH_METHOD_SASL,
+                ptr_server->authentication_method);
+    LONGS_EQUAL(IRC_SASL_MECHANISM_SCRAM_SHA_256,
+                ptr_server->sasl_mechanism_used);
+    LONGS_EQUAL(IRC_SASL_SCRAM_STATUS_NONE, ptr_server->sasl_scram_status);
 }
 
 /*

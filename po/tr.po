@@ -13591,6 +13591,11 @@ msgstr "%s%s[%s%s%s] %s%s%s%s, %s tarafından sessize alındı"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s sessize alındı"
 
+#, fuzzy
+#| msgid "read - signature not found"
+msgid "server signature not verified"
+msgstr "oku - imza bulunamadı"
+
 #, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
 msgstr "%s%s: \"%s\" komutu bulunamadı: \"%s\""

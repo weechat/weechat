@@ -46,6 +46,23 @@ TEST_GROUP(IrcSasl)
 
 /*
  * Test functions:
+ *   irc_sasl_mechanism_is_scram
+ */
+
+TEST(IrcSasl, MechanismIsScram)
+{
+    LONGS_EQUAL(0, irc_sasl_mechanism_is_scram (-1));
+    LONGS_EQUAL(0, irc_sasl_mechanism_is_scram (IRC_SASL_MECHANISM_PLAIN));
+    LONGS_EQUAL(1, irc_sasl_mechanism_is_scram (IRC_SASL_MECHANISM_SCRAM_SHA_1));
+    LONGS_EQUAL(1, irc_sasl_mechanism_is_scram (IRC_SASL_MECHANISM_SCRAM_SHA_256));
+    LONGS_EQUAL(1, irc_sasl_mechanism_is_scram (IRC_SASL_MECHANISM_SCRAM_SHA_512));
+    LONGS_EQUAL(0, irc_sasl_mechanism_is_scram (IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE));
+    LONGS_EQUAL(0, irc_sasl_mechanism_is_scram (IRC_SASL_MECHANISM_EXTERNAL));
+    LONGS_EQUAL(0, irc_sasl_mechanism_is_scram (IRC_NUM_SASL_MECHANISMS));
+}
+
+/*
+ * Test functions:
  *   irc_sasl_mechanism_plain
  */
 
@@ -190,6 +207,7 @@ TEST(IrcSasl, MechanismScram)
     CHECK(server->sasl_scram_auth_message);
 
     /* Server-final message with an invalid server signature. */
+    LONGS_EQUAL(IRC_SASL_SCRAM_STATUS_PENDING, server->sasl_scram_status);
     snprintf (msg, sizeof (msg),
               "v=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=");
     string_base64_encode (0, msg, strlen (msg), msg_base64);
@@ -199,6 +217,7 @@ TEST(IrcSasl, MechanismScram)
                                                 "secret", &error));
     STRCMP_EQUAL("unable to validate server signature", error);
     free (error);
+    LONGS_EQUAL(IRC_SASL_SCRAM_STATUS_PENDING, server->sasl_scram_status);
 
     /* Server-final message with a valid server signature. */
     CHECK(weecrypto_hmac (server->sasl_scram_salted_pwd,
@@ -220,6 +239,7 @@ TEST(IrcSasl, MechanismScram)
                                                 server_final_base64, "user1",
                                                 "secret", &error));
     STRCMP_EQUAL(NULL, error);
+    LONGS_EQUAL(IRC_SASL_SCRAM_STATUS_VERIFIED, server->sasl_scram_status);
 
     /* Error sent by the server. */
     snprintf (msg, sizeof (msg), "e=invalid-proof");
@@ -230,6 +250,31 @@ TEST(IrcSasl, MechanismScram)
                                                    "secret", &error));
     STRCMP_EQUAL("invalid-proof", error);
     free (error);
+
+    /* New exchange: data of previous exchange is discarded. */
+    CHECK(server->sasl_scram_salted_pwd);
+    CHECK(server->sasl_scram_auth_message);
+    error = NULL;
+    str = irc_sasl_mechanism_scram (server, "sha256", "+",
+                                    "user1", "secret", &error);
+    STRCMP_EQUAL(NULL, error);
+    CHECK(str);
+    free (str);
+    CHECK(server->sasl_scram_client_first);
+    POINTERS_EQUAL(NULL, server->sasl_scram_salted_pwd);
+    LONGS_EQUAL(0, server->sasl_scram_salted_pwd_size);
+    POINTERS_EQUAL(NULL, server->sasl_scram_auth_message);
+    LONGS_EQUAL(IRC_SASL_SCRAM_STATUS_PENDING, server->sasl_scram_status);
+
+    /* Server-final message of previous exchange is refused. */
+    error = NULL;
+    POINTERS_EQUAL(NULL, irc_sasl_mechanism_scram (server, "sha256",
+                                                   server_final_base64,
+                                                   "user1", "secret",
+                                                   &error));
+    STRCMP_EQUAL("protocol error", error);
+    free (error);
+    LONGS_EQUAL(IRC_SASL_SCRAM_STATUS_PENDING, server->sasl_scram_status);
 
     irc_server_free (server);
 }

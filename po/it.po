@@ -13105,6 +13105,11 @@ msgstr "%s%s[%s%s%s] %s%s%s messo a tacere da %s%s %s(%s%s%s)"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s invitato"
 
+#, fuzzy
+#| msgid "read - signature not found"
+msgid "server signature not verified"
+msgstr "lettura - firma non trovata"
+
 #, fuzzy, c-format
 #| msgid "%s%s: command \"%s\" not found:"
 msgid "%s%s: command \"%s\" not found: \"%s\""

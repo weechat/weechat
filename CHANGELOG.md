@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Security
 
+- irc: refuse SASL success with SCRAM mechanisms when the server signature has not been verified, to enforce mutual authentication
 - irc: refuse SCRAM server nonce that does not start with the client nonce
 - irc: refuse SCRAM iteration count lower than 4096 received from the server, to prevent offline dictionary attacks on the client proof, or greater than 1000000, to prevent blocking WeeChat for a long time
 

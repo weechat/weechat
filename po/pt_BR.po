@@ -12613,6 +12613,11 @@ msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
 
+#, fuzzy
+#| msgid "register a new service"
+msgid "server signature not verified"
+msgstr "registrar um novo serviço"
+
 #, fuzzy, c-format
 #| msgid "%s%s: command \"%s\" not found:"
 msgid "%s%s: command \"%s\" not found: \"%s\""
