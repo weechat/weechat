@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-03 22:10+0100\n"
+"POT-Creation-Date: 2026-11-04 09:21+0100\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -18753,6 +18753,11 @@ msgstr "%s%s: xfer 用に利用できるポートが見つかりません"
 #, c-format
 msgid "%s%s: error creating xfer"
 msgstr "%s%s: xfer の作成中にエラー"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid post action \"%s\""
+msgid "%s%s: invalid resume position \"%s\""
+msgstr "%s%s: トリガ実行後処理の設定値が間違っています: \"%s\""
 
 #, c-format
 msgid ""

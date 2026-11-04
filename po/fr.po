@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-03 22:10+0100\n"
-"PO-Revision-Date: 2026-11-03 22:12+0100\n"
+"POT-Creation-Date: 2026-11-04 09:21+0100\n"
+"PO-Revision-Date: 2026-11-04 09:50+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -19031,6 +19031,10 @@ msgstr "%s%s : impossible de trouver un port disponible pour le xfer"
 #, c-format
 msgid "%s%s: error creating xfer"
 msgstr "%s%s : erreur de création du xfer"
+
+#, c-format
+msgid "%s%s: invalid resume position \"%s\""
+msgstr "%s%s : position de reprise invalide : \"%s\""
 
 #, c-format
 msgid ""

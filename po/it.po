@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-03 22:10+0100\n"
+"POT-Creation-Date: 2026-11-04 09:21+0100\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -18168,6 +18168,10 @@ msgstr "%s%s: impossibile trovare una porta disponibile per xfer"
 #, c-format
 msgid "%s%s: error creating xfer"
 msgstr "%s%s: errore nella creazione di xfer"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid resume position \"%s\""
+msgstr "%sErrore: impossibile rimuovere la combinazione del tasto \"%s\""
 
 #, c-format
 msgid ""

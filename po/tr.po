@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-03 22:10+0100\n"
+"POT-Creation-Date: 2026-11-04 09:21+0100\n"
 "PO-Revision-Date: 2026-07-05 12:29+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -18875,6 +18875,11 @@ msgstr "%s%s: xfer için kullanılabilir kapı bulunamıyor"
 #, c-format
 msgid "%s%s: error creating xfer"
 msgstr "%s%s: xfer oluşturulurken hata"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid post action \"%s\""
+msgid "%s%s: invalid resume position \"%s\""
+msgstr "%s%s: Geçersiz gönderme eylemi \"%s\""
 
 #, c-format
 msgid ""
