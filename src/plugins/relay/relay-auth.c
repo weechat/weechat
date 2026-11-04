@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <sys/time.h>
 #include <gcrypt.h>
 
 #include "../weechat-plugin.h"
@@ -27,6 +28,92 @@
  */
 char *relay_auth_password_hash_algo_name[RELAY_NUM_PASSWORD_HASH_ALGOS] =
 { "plain", "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512" };
+
+#define RELAY_AUTH_PBKDF2_GLOBAL_INTERVAL (5 * 1000000)
+#define RELAY_AUTH_PBKDF2_SOURCE_INTERVAL (30 * 1000000)
+/* This covers all sources admitted during the source interval. */
+#define RELAY_AUTH_PBKDF2_NUM_SOURCES 16
+
+struct t_relay_auth_pbkdf2_source
+{
+    char address[128];
+    struct timeval last_attempt;
+};
+
+static struct timeval relay_auth_pbkdf2_last_attempt = { 0, 0 };
+static struct t_relay_auth_pbkdf2_source
+relay_auth_pbkdf2_sources[RELAY_AUTH_PBKDF2_NUM_SOURCES];
+
+
+/*
+ * Check if PBKDF2 work is allowed for a client.
+ *
+ * Return:
+ *   1: work is allowed
+ *   0: work is rate limited
+ */
+
+static int
+relay_auth_pbkdf2_work_allowed (struct t_relay_client *client)
+{
+    const char *address;
+    struct timeval now;
+    long long elapsed;
+    int i, index, oldest;
+
+    if (!client)
+        return 0;
+    if (!client->address || !client->address[0])
+        return 1;
+
+    if (gettimeofday (&now, NULL) != 0)
+        return 0;
+    if (relay_auth_pbkdf2_last_attempt.tv_sec != 0)
+    {
+        elapsed = weechat_util_timeval_diff (
+            &relay_auth_pbkdf2_last_attempt, &now);
+        if ((elapsed >= 0) && (elapsed < RELAY_AUTH_PBKDF2_GLOBAL_INTERVAL))
+            return 0;
+    }
+    address = client->address;
+    index = -1;
+    oldest = -1;
+    for (i = 0; i < RELAY_AUTH_PBKDF2_NUM_SOURCES; i++)
+    {
+        if (relay_auth_pbkdf2_sources[i].last_attempt.tv_sec)
+        {
+            if (strcmp (relay_auth_pbkdf2_sources[i].address, address) == 0)
+            {
+                elapsed = weechat_util_timeval_diff (
+                    &relay_auth_pbkdf2_sources[i].last_attempt, &now);
+                if ((elapsed >= 0)
+                    && (elapsed < RELAY_AUTH_PBKDF2_SOURCE_INTERVAL))
+                {
+                    return 0;
+                }
+                index = i;
+                break;
+            }
+            if ((oldest < 0)
+                || (weechat_util_timeval_cmp (
+                        &relay_auth_pbkdf2_sources[i].last_attempt,
+                        &relay_auth_pbkdf2_sources[oldest].last_attempt) < 0))
+            {
+                oldest = i;
+            }
+        }
+        else if (index < 0)
+            index = i;
+    }
+    if (index < 0)
+        index = oldest;
+    snprintf (relay_auth_pbkdf2_sources[index].address,
+              sizeof (relay_auth_pbkdf2_sources[index].address),
+              "%s", address);
+    relay_auth_pbkdf2_sources[index].last_attempt = now;
+    relay_auth_pbkdf2_last_attempt = now;
+    return 1;
+}
 
 
 /*
@@ -493,11 +580,13 @@ relay_auth_check_hash_pbkdf2 (const char *hash_pbkdf2_algo,
  *   -2: invalid salt
  *   -3: invalid number of iterations
  *   -4: invalid password (hash)
+ *   -5: PBKDF2 work is rate limited
  */
 
 int
 relay_auth_password_hash (struct t_relay_client *client,
-                          const char *hashed_password, const char *relay_password)
+                          const char *hashed_password,
+                          const char *relay_password)
 {
     const char *pos_hash;
     char *str_hash_algo;
@@ -616,6 +705,10 @@ relay_auth_password_hash (struct t_relay_client *client,
             else if (!relay_auth_check_salt (client, salt_hexa, salt, salt_size))
             {
                 rc = -2;
+            }
+            else if (!relay_auth_pbkdf2_work_allowed (client))
+            {
+                rc = -5;
             }
             else if (!relay_auth_check_hash_pbkdf2 (hash_pbkdf2_algo, salt,
                                                     salt_size, iterations,
