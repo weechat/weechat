@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:46+0100\n"
+"POT-Creation-Date: 2026-11-27 20:47+0100\n"
 "PO-Revision-Date: 2025-02-12 11:16+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14847,6 +14847,11 @@ msgstr "%sудаљени[%s]: усаглашавање са URL %s није ус
 #, c-format
 msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
 msgstr "%sудаљени[%s]: усаглашавање са URL %s није успело, грешка: %s"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid number of hash iterations: %lld (must be between %d and %d)"
+msgstr "%sНеважећи број боје „%s” (мора да буде између %d и %d)"
 
 msgid "hash algorithm not found"
 msgstr "није пронађен хеш алгоритам"
