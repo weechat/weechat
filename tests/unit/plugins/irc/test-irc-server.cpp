@@ -797,10 +797,29 @@ TEST(IrcServer, SetIndexCurrentAddress)
     LONGS_EQUAL(0, server->current_retry);
     LONGS_EQUAL(5, server->retry_array[1]);
 
-    /* Index modulo number of addresses. */
+    /* Index modulo number of addresses, retry of the address is restored. */
     irc_server_set_index_current_address (server, 4);
     LONGS_EQUAL(1, server->index_current_address);
     STRCMP_EQUAL("host2", server->current_address);
+    LONGS_EQUAL(5, server->current_retry);
+
+    /* Retries of all addresses are kept when switching addresses. */
+    server->current_retry = 7;
+    irc_server_set_index_current_address (server, 0);
+    LONGS_EQUAL(0, server->current_retry);
+    irc_server_set_index_current_address (server, 2);
+    irc_server_set_index_current_address (server, 1);
+    LONGS_EQUAL(7, server->current_retry);
+
+    /* TLS changed: ports are updated, retries are kept. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_TLS], "on", 1);
+    irc_server_set_index_current_address (server, 2);
+    LONGS_EQUAL(6697, server->current_port);
+    LONGS_EQUAL(7, server->retry_array[1]);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_TLS], "off", 1);
+    irc_server_set_index_current_address (server, 1);
+    LONGS_EQUAL(1002, server->current_port);
+    LONGS_EQUAL(7, server->current_retry);
 
     /* Evaluated addresses changed: index is reset to 0. */
     setenv ("WEECHAT_TEST_IRC_ADDRESSES", "host1,host2", 1);

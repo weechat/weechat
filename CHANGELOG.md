@@ -151,6 +151,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: keep the number of connection retries of each server address when switching to the next address, so that the next IP of an address is tried on next connection
 - irc: fix display of messages sent to the server in raw buffer, displayed twice and marked as modified even when no modifier changed them
 - irc: do not consume the comma in color codes `^C,NN` and `^D,RRGGBB` without foreground, display it as text after a color reset like mIRC and irssi do ([#1623](https://github.com/weechat/weechat/issues/1623))
 - irc: restore away status and message when connecting to a bouncer (like ZNC) on which the user is already away, get the away message with a WHOIS on own nick, clear the away message when the user is marked as back by the server ([#1059](https://github.com/weechat/weechat/issues/1059))

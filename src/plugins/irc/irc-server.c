@@ -652,16 +652,19 @@ irc_server_get_short_description (struct t_irc_server *server)
  *   - 6697 if tls is 1
  *   - 6667 if tls is 0
  *
+ * If the evaluated addresses are unchanged, the number of retries of each
+ * address is kept.
+ *
  * Return:
  *   1: addresses have been set (changed)
- *   0: nothing set (addresses unchanged)
+ *   0: addresses unchanged (ports are updated)
  */
 
 int
 irc_server_set_addresses (struct t_irc_server *server, const char *addresses,
                           int tls)
 {
-    int rc, i, default_port, number;
+    int rc, i, default_port, number, *old_retry_array, old_addresses_count;
     char *pos, *addresses_eval;
     const char *ptr_addresses;
 
@@ -695,6 +698,18 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses,
         }
     }
 
+    /*
+     * Keep the retries of addresses if they are unchanged (the arrays are
+     * rebuilt anyway, because the default port depends on the TLS option).
+     */
+    old_retry_array = NULL;
+    old_addresses_count = server->addresses_count;
+    if ((rc == 0) && server->retry_array)
+    {
+        old_retry_array = server->retry_array;
+        server->retry_array = NULL;
+    }
+
     /* Free data. */
     if (server->addresses_eval)
     {
@@ -721,7 +736,10 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses,
     /* Set new addresses/ports. */
     server->addresses_eval = addresses_eval;
     if (!addresses_eval)
+    {
+        free (old_retry_array);
         return rc;
+    }
     server->addresses_array = weechat_string_split (
         addresses_eval,
         ",",
@@ -746,8 +764,12 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses,
             if (weechat_util_parse_int (pos, 10, &number))
                 server->ports_array[i] = number;
         }
-        server->retry_array[i] = 0;
+        server->retry_array[i] = (old_retry_array
+                                  && (i < old_addresses_count)) ?
+            old_retry_array[i] : 0;
     }
+
+    free (old_retry_array);
 
     return rc;
 }
