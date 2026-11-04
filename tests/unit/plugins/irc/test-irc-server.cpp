@@ -13,11 +13,16 @@
 extern "C"
 {
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
+#include "src/core/core-arraylist.h"
 #include "src/core/core-config-file.h"
 #include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
+#include "src/core/core-string.h"
+#include "src/core/hook/hook-timer.h"
 #include "src/gui/gui-buffer.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-channel.h"
@@ -35,6 +40,33 @@ extern int irc_server_connect_cb (const void *pointer, void *data,
 extern int irc_server_compare_fingerprints (const char *fingerprint,
                                             const unsigned char *fingerprint_server,
                                             ssize_t fingerprint_size);
+extern struct t_irc_server *last_irc_server;
+extern int irc_server_get_nick_index (struct t_irc_server *server);
+extern int irc_server_send (struct t_irc_server *server, const char *buffer,
+                            int size_buf);
+extern char *irc_server_get_tags_to_send (const char *tags);
+extern int irc_server_outqueue_all_empty (struct t_irc_server *server);
+extern void irc_server_outqueue_add (struct t_irc_server *server,
+                                     int priority, const char *command,
+                                     const char *msg1, const char *msg2,
+                                     int modified, const char *tags,
+                                     struct t_irc_redirect *redirect);
+extern void irc_server_outqueue_free (struct t_irc_server *server,
+                                      int priority,
+                                      struct t_irc_outqueue *outqueue);
+extern int irc_server_outqueue_timer_cb (const void *pointer, void *data,
+                                         int remaining_calls);
+extern void irc_server_outqueue_send_one_msg (struct t_irc_server *server,
+                                              struct t_irc_outqueue *message);
+extern void irc_server_outqueue_send (struct t_irc_server *server);
+extern void irc_server_send_one_msg (struct t_irc_server *server, int flags,
+                                     const char *message, const char *nick,
+                                     const char *command, const char *channel,
+                                     const char *tags);
+extern void irc_server_msgq_add_msg (struct t_irc_server *server,
+                                     const char *msg);
+extern void irc_server_msgq_add_unterminated (struct t_irc_server *server,
+                                              const char *string);
 extern int irc_server_check_certificate_fingerprint (struct t_irc_server *server,
                                                      gnutls_x509_crt_t certificate,
                                                      const char *good_fingerprints);
@@ -63,6 +95,119 @@ extern int irc_server_check_certificate_fingerprint (struct t_irc_server *server
 #define IRC_TEST_CERT_SHA512                                            \
     "dee9a796f2a78031834ea060186bb242c3da42776235c8982e7f792c5a1c7c05"  \
     "b2ddaac1af607b1b27c4d4a97467a547d79f8d523082982ff3f9b5588318f89f"
+
+int test_irc_server_signal_count = 0;
+char test_irc_server_signal[256];
+char test_irc_server_signal_data[1024];
+char test_irc_server_signal_commands[1024];
+
+/*
+ * Reset data of signals received.
+ */
+
+void
+test_irc_server_signal_reset ()
+{
+    test_irc_server_signal_count = 0;
+    test_irc_server_signal[0] = '\0';
+    test_irc_server_signal_data[0] = '\0';
+    test_irc_server_signal_commands[0] = '\0';
+}
+
+/*
+ * Callback for IRC signals: store the last signal and its data, and the
+ * list of commands (the part after the last "_" in signal name).
+ */
+
+int
+test_irc_server_signal_cb (const void *pointer, void *data,
+                           const char *signal, const char *type_data,
+                           void *signal_data)
+{
+    const char *pos;
+
+    /* Make C++ compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) type_data;
+
+    test_irc_server_signal_count++;
+    snprintf (test_irc_server_signal, sizeof (test_irc_server_signal),
+              "%s", signal);
+    snprintf (test_irc_server_signal_data,
+              sizeof (test_irc_server_signal_data),
+              "%s", (signal_data) ? (const char *)signal_data : "");
+    pos = strrchr (signal, '_');
+    if (test_irc_server_signal_commands[0])
+    {
+        strncat (test_irc_server_signal_commands, ",",
+                 sizeof (test_irc_server_signal_commands)
+                 - strlen (test_irc_server_signal_commands) - 1);
+    }
+    strncat (test_irc_server_signal_commands, (pos) ? pos + 1 : signal,
+             sizeof (test_irc_server_signal_commands)
+             - strlen (test_irc_server_signal_commands) - 1);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for IRC modifiers: drop the message if it contains "drop",
+ * otherwise add " (modified)" at the end.
+ */
+
+char *
+test_irc_server_modifier_cb (const void *pointer, void *data,
+                             const char *modifier, const char *modifier_data,
+                             const char *string)
+{
+    char *result;
+
+    /* Make C++ compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+    (void) modifier_data;
+
+    if (strstr (string, "drop"))
+        return strdup ("");
+
+    string_asprintf (&result, "%s (modified)", string);
+    return result;
+}
+
+/*
+ * Search an option by its full name.
+ */
+
+struct t_config_option *
+test_irc_server_search_option (const char *option_name)
+{
+    struct t_config_option *ptr_option;
+
+    config_file_search_with_string (option_name, NULL, NULL, &ptr_option,
+                                    NULL);
+    return ptr_option;
+}
+
+/*
+ * Free the queue of messages received.
+ */
+
+void
+test_irc_server_msgq_free ()
+{
+    struct t_irc_message *next_message;
+
+    while (irc_recv_msgq)
+    {
+        next_message = irc_recv_msgq->next_message;
+        free (irc_recv_msgq->data);
+        free (irc_recv_msgq);
+        irc_recv_msgq = next_message;
+    }
+    irc_msgq_last_msg = NULL;
+}
 
 TEST_GROUP(IrcServer)
 {
@@ -409,7 +554,48 @@ TEST(IrcServer, EvalFingerprint)
 
 TEST(IrcServer, SaslGetCreds)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    char *username, *password, *key;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    /* Options not set. */
+    irc_server_sasl_get_creds (server, &username, &password, &key);
+    STRCMP_EQUAL("", username);
+    STRCMP_EQUAL("", password);
+    STRCMP_EQUAL("", key);
+    free (username);
+    free (password);
+    free (key);
+
+    /* Options set and evaluated. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_USERNAME],
+                            "user_${server}", 1);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_PASSWORD],
+                            "pass_${server}", 1);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_KEY],
+                            "/path/key.pem", 1);
+    irc_server_sasl_get_creds (server, &username, &password, &key);
+    STRCMP_EQUAL("user_server1", username);
+    STRCMP_EQUAL("pass_server1", password);
+    STRCMP_EQUAL("/path/key.pem", key);
+    free (username);
+    free (password);
+    free (key);
+
+    /* Temporary username/password (set by /auth) take precedence. */
+    server->sasl_temp_username = strdup ("temp_user");
+    server->sasl_temp_password = strdup ("temp_pass");
+    irc_server_sasl_get_creds (server, &username, &password, &key);
+    STRCMP_EQUAL("temp_user", username);
+    STRCMP_EQUAL("temp_pass", password);
+    STRCMP_EQUAL("temp_pass", key);
+    free (username);
+    free (password);
+    free (key);
+
+    irc_server_free (server);
 }
 
 /*
@@ -419,7 +605,49 @@ TEST(IrcServer, SaslGetCreds)
 
 TEST(IrcServer, SaslEnabled)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    /* Default mechanism (plain): username and password required. */
+    LONGS_EQUAL(0, irc_server_sasl_enabled (server));
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_USERNAME],
+                            "alice", 1);
+    LONGS_EQUAL(0, irc_server_sasl_enabled (server));
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_PASSWORD],
+                            "secret", 1);
+    LONGS_EQUAL(1, irc_server_sasl_enabled (server));
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_USERNAME],
+                            "", 1);
+    LONGS_EQUAL(0, irc_server_sasl_enabled (server));
+
+    /* Mechanism "external": always enabled. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_MECHANISM],
+                            "external", 1);
+    LONGS_EQUAL(1, irc_server_sasl_enabled (server));
+
+    /* Mechanism "ecdsa-nist256p-challenge": username and key required. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_MECHANISM],
+                            "ecdsa-nist256p-challenge", 1);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_PASSWORD],
+                            "", 1);
+    LONGS_EQUAL(0, irc_server_sasl_enabled (server));
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_USERNAME],
+                            "alice", 1);
+    LONGS_EQUAL(0, irc_server_sasl_enabled (server));
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_KEY],
+                            "/path/key.pem", 1);
+    LONGS_EQUAL(1, irc_server_sasl_enabled (server));
+
+    /* Mechanism "scram-sha-256": username and password required. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_MECHANISM],
+                            "scram-sha-256", 1);
+    LONGS_EQUAL(0, irc_server_sasl_enabled (server));
+    server->sasl_temp_password = strdup ("temp");
+    LONGS_EQUAL(1, irc_server_sasl_enabled (server));
+
+    irc_server_free (server);
 }
 
 /*
@@ -540,7 +768,52 @@ TEST(IrcServer, SetAddresses)
 
 TEST(IrcServer, SetIndexCurrentAddress)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    config_file_option_set (server->options[IRC_SERVER_OPTION_TLS], "off", 1);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ADDRESSES],
+                            "host1/1001,host2/1002,host3", 1);
+
+    irc_server_set_index_current_address (server, 1);
+    LONGS_EQUAL(3, server->addresses_count);
+    LONGS_EQUAL(1, server->index_current_address);
+    STRCMP_EQUAL("host2", server->current_address);
+    LONGS_EQUAL(1002, server->current_port);
+
+    /* Current retry is saved for the previous address. */
+    server->current_retry = 5;
+    irc_server_set_index_current_address (server, 2);
+    LONGS_EQUAL(2, server->index_current_address);
+    STRCMP_EQUAL("host3", server->current_address);
+    LONGS_EQUAL(6667, server->current_port);
+    LONGS_EQUAL(0, server->current_retry);
+    LONGS_EQUAL(5, server->retry_array[1]);
+
+    /* Index modulo number of addresses. */
+    irc_server_set_index_current_address (server, 4);
+    LONGS_EQUAL(1, server->index_current_address);
+    STRCMP_EQUAL("host2", server->current_address);
+
+    /* Evaluated addresses changed: index is reset to 0. */
+    setenv ("WEECHAT_TEST_IRC_ADDRESSES", "host1,host2", 1);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ADDRESSES],
+                            "${env:WEECHAT_TEST_IRC_ADDRESSES}", 1);
+    irc_server_set_index_current_address (server, 1);
+    LONGS_EQUAL(2, server->addresses_count);
+    LONGS_EQUAL(1, server->index_current_address);
+    STRCMP_EQUAL("host2", server->current_address);
+    setenv ("WEECHAT_TEST_IRC_ADDRESSES", "other1,other2,other3", 1);
+    irc_server_set_index_current_address (server, 1);
+    LONGS_EQUAL(3, server->addresses_count);
+    LONGS_EQUAL(0, server->index_current_address);
+    STRCMP_EQUAL("other1", server->current_address);
+    LONGS_EQUAL(0, server->current_retry);
+    unsetenv ("WEECHAT_TEST_IRC_ADDRESSES");
+
+    irc_server_free (server);
 }
 
 /*
@@ -550,7 +823,29 @@ TEST(IrcServer, SetIndexCurrentAddress)
 
 TEST(IrcServer, SetNicks)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    /* NULL or empty value: default nicks. */
+    irc_server_set_nicks (server, NULL);
+    LONGS_EQUAL(5, server->nicks_count);
+    STRCMP_EQUAL("weechat1", server->nicks_array[0]);
+    STRCMP_EQUAL("weechat5", server->nicks_array[4]);
+
+    irc_server_set_nicks (server, "alice");
+    LONGS_EQUAL(1, server->nicks_count);
+    STRCMP_EQUAL("alice", server->nicks_array[0]);
+
+    /* Separators are stripped and collapsed, value is evaluated. */
+    irc_server_set_nicks (server, ",alice,bob,,${server},");
+    LONGS_EQUAL(3, server->nicks_count);
+    STRCMP_EQUAL("alice", server->nicks_array[0]);
+    STRCMP_EQUAL("bob", server->nicks_array[1]);
+    STRCMP_EQUAL("server1", server->nicks_array[2]);
+
+    irc_server_free (server);
 }
 
 /*
@@ -560,7 +855,36 @@ TEST(IrcServer, SetNicks)
 
 TEST(IrcServer, SetNick)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+
+    run_cmd_quiet ("/mute /server add test_nick fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_nick");
+    server = irc_server_search ("test_nick");
+    CHECK(server);
+    CHECK(server->buffer);
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    irc_server_set_nick (server, "alice");
+    STRCMP_EQUAL("alice", server->nick);
+    STRCMP_EQUAL("alice", gui_buffer_get_string (server->buffer, "localvar_nick"));
+    STRCMP_EQUAL("alice", gui_buffer_get_string (channel->buffer, "localvar_nick"));
+
+    /* Same nick: no change. */
+    irc_server_set_nick (server, "alice");
+    STRCMP_EQUAL("alice", server->nick);
+
+    irc_server_set_nick (server, "bob");
+    STRCMP_EQUAL("bob", server->nick);
+    STRCMP_EQUAL("bob", gui_buffer_get_string (server->buffer, "localvar_nick"));
+    STRCMP_EQUAL("bob", gui_buffer_get_string (channel->buffer, "localvar_nick"));
+
+    irc_server_set_nick (server, NULL);
+    POINTERS_EQUAL(NULL, server->nick);
+
+    run_cmd_quiet ("/mute /disconnect test_nick");
+    run_cmd_quiet ("/mute /server del test_nick");
 }
 
 /*
@@ -570,7 +894,35 @@ TEST(IrcServer, SetNick)
 
 TEST(IrcServer, SetHost)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+
+    run_cmd_quiet ("/mute /server add test_host fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_host");
+    server = irc_server_search ("test_host");
+    CHECK(server);
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    irc_server_set_host (server, NULL);
+    POINTERS_EQUAL(NULL, server->host);
+
+    irc_server_set_host (server, "user@host");
+    STRCMP_EQUAL("user@host", server->host);
+    STRCMP_EQUAL("user@host",
+                 gui_buffer_get_string (server->buffer, "localvar_host"));
+    STRCMP_EQUAL("user@host",
+                 gui_buffer_get_string (channel->buffer, "localvar_host"));
+
+    /* Same host: no change. */
+    irc_server_set_host (server, "user@host");
+    STRCMP_EQUAL("user@host", server->host);
+
+    irc_server_set_host (server, NULL);
+    POINTERS_EQUAL(NULL, server->host);
+
+    run_cmd_quiet ("/mute /disconnect test_host");
+    run_cmd_quiet ("/mute /server del test_host");
 }
 
 /*
@@ -580,7 +932,24 @@ TEST(IrcServer, SetHost)
 
 TEST(IrcServer, GetNickIndex)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    irc_server_set_nicks (server, "alice,bob,carol");
+
+    LONGS_EQUAL(-1, irc_server_get_nick_index (server));
+    server->nick = strdup ("bob");
+    LONGS_EQUAL(1, irc_server_get_nick_index (server));
+    free (server->nick);
+    server->nick = strdup ("carol");
+    LONGS_EQUAL(2, irc_server_get_nick_index (server));
+    free (server->nick);
+    server->nick = strdup ("Alice");
+    LONGS_EQUAL(-1, irc_server_get_nick_index (server));
+
+    irc_server_free (server);
 }
 
 /*
@@ -590,7 +959,85 @@ TEST(IrcServer, GetNickIndex)
 
 TEST(IrcServer, GetAlternateNick)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    const char *nick;
+    char expected[64];
+    int i;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    /* Simulate the login: first nick is the one tried first. */
+    irc_server_set_nicks (server, "abcde,fghi,jkl");
+    server->nick = strdup ("abcde");
+    server->nick_first_tried = 0;
+    server->nick_alternate_number = -1;
+
+#define WEE_NEXT_NICK(__expected)                                       \
+    nick = irc_server_get_alternate_nick (server);                      \
+    STRCMP_EQUAL(__expected, nick);                                     \
+    if (nick)                                                           \
+    {                                                                   \
+        free (server->nick);                                            \
+        server->nick = strdup (nick);                                   \
+    }
+
+    /* Other nicks of the list. */
+    WEE_NEXT_NICK("fghi");
+    WEE_NEXT_NICK("jkl");
+
+    /* Then "_" added to the first nick, until 9 chars. */
+    WEE_NEXT_NICK("abcde_");
+    WEE_NEXT_NICK("abcde__");
+    WEE_NEXT_NICK("abcde___");
+    WEE_NEXT_NICK("abcde____");
+
+    /* Then a number at the end, from 1 to 99. */
+    for (i = 1; i <= 99; i++)
+    {
+        snprintf (expected, sizeof (expected), "abcde%s%d",
+                  (i < 10) ? "___" : "__", i);
+        WEE_NEXT_NICK(expected);
+    }
+
+    /* No more nicks. */
+    WEE_NEXT_NICK(NULL);
+
+    /* Alternate nicks disabled: stop after the list of nicks. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_NICKS_ALTERNATE],
+                            "off", 1);
+    free (server->nick);
+    server->nick = strdup ("abcde");
+    server->nick_first_tried = 0;
+    server->nick_alternate_number = -1;
+    WEE_NEXT_NICK("fghi");
+    WEE_NEXT_NICK("jkl");
+    WEE_NEXT_NICK(NULL);
+
+    /* Nick not in the list: all nicks of the list are tried. */
+    config_file_option_reset (server->options[IRC_SERVER_OPTION_NICKS_ALTERNATE],
+                              1);
+    free (server->nick);
+    server->nick = strdup ("other");
+    server->nick_first_tried = -1;
+    server->nick_alternate_number = -1;
+    WEE_NEXT_NICK("abcde");
+    WEE_NEXT_NICK("fghi");
+    WEE_NEXT_NICK("jkl");
+    WEE_NEXT_NICK("abcde_");
+
+    /* First nick longer than 9 chars: truncated, with a number. */
+    irc_server_set_nicks (server, "averylongnick");
+    free (server->nick);
+    server->nick = strdup ("averylongnick");
+    server->nick_first_tried = 0;
+    server->nick_alternate_number = -1;
+    WEE_NEXT_NICK("averylon1");
+    WEE_NEXT_NICK("averylon2");
+
+#undef WEE_NEXT_NICK
+
+    irc_server_free (server);
 }
 
 /*
@@ -841,7 +1288,46 @@ TEST(IrcServer, SetClienttagdeny)
 
 TEST(IrcServer, SetLag)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+
+    run_cmd_quiet ("/mute /server add test_lag fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_lag");
+    server = irc_server_search ("test_lag");
+    CHECK(server);
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    /* Lag below the minimum to show (500 ms by default). */
+    server->lag = 100;
+    irc_server_set_lag (server);
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (server->buffer, "localvar_lag"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (channel->buffer, "localvar_lag"));
+
+    /* Lag with milliseconds. */
+    server->lag = 1234;
+    server->lag_check_time.tv_sec = 0;
+    irc_server_set_lag (server);
+    STRCMP_EQUAL("1.234", gui_buffer_get_string (server->buffer, "localvar_lag"));
+    STRCMP_EQUAL("1.234", gui_buffer_get_string (channel->buffer, "localvar_lag"));
+
+    /* Lag check in progress: seconds only. */
+    server->lag_check_time.tv_sec = 1;
+    irc_server_set_lag (server);
+    STRCMP_EQUAL("1", gui_buffer_get_string (server->buffer, "localvar_lag"));
+    server->lag = 800;
+    irc_server_set_lag (server);
+    STRCMP_EQUAL("0.800", gui_buffer_get_string (server->buffer, "localvar_lag"));
+
+    /* Back to no lag. */
+    server->lag = 0;
+    server->lag_check_time.tv_sec = 0;
+    irc_server_set_lag (server);
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (server->buffer, "localvar_lag"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (channel->buffer, "localvar_lag"));
+
+    run_cmd_quiet ("/mute /disconnect test_lag");
+    run_cmd_quiet ("/mute /server del test_lag");
 }
 
 /*
@@ -851,7 +1337,16 @@ TEST(IrcServer, SetLag)
 
 TEST(IrcServer, GetPrefixModes)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    STRCMP_EQUAL("ov", irc_server_get_prefix_modes (NULL));
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    STRCMP_EQUAL("ov", irc_server_get_prefix_modes (server));
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    STRCMP_EQUAL("qaohv", irc_server_get_prefix_modes (server));
+    irc_server_free (server);
 }
 
 /*
@@ -861,7 +1356,16 @@ TEST(IrcServer, GetPrefixModes)
 
 TEST(IrcServer, GetPrefixChars)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    STRCMP_EQUAL("@+", irc_server_get_prefix_chars (NULL));
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    STRCMP_EQUAL("@+", irc_server_get_prefix_chars (server));
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    STRCMP_EQUAL("~&@%+", irc_server_get_prefix_chars (server));
+    irc_server_free (server);
 }
 
 /*
@@ -871,7 +1375,21 @@ TEST(IrcServer, GetPrefixChars)
 
 TEST(IrcServer, GetPrefixModeIndex)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    LONGS_EQUAL(-1, irc_server_get_prefix_mode_index (NULL, 'o'));
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    LONGS_EQUAL(0, irc_server_get_prefix_mode_index (server, 'o'));
+    LONGS_EQUAL(1, irc_server_get_prefix_mode_index (server, 'v'));
+    LONGS_EQUAL(-1, irc_server_get_prefix_mode_index (server, 'h'));
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    LONGS_EQUAL(0, irc_server_get_prefix_mode_index (server, 'q'));
+    LONGS_EQUAL(3, irc_server_get_prefix_mode_index (server, 'h'));
+    LONGS_EQUAL(4, irc_server_get_prefix_mode_index (server, 'v'));
+    LONGS_EQUAL(-1, irc_server_get_prefix_mode_index (server, 'x'));
+    irc_server_free (server);
 }
 
 /*
@@ -881,7 +1399,20 @@ TEST(IrcServer, GetPrefixModeIndex)
 
 TEST(IrcServer, GetPrefixCharIndex)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    LONGS_EQUAL(-1, irc_server_get_prefix_char_index (NULL, '@'));
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    LONGS_EQUAL(0, irc_server_get_prefix_char_index (server, '@'));
+    LONGS_EQUAL(1, irc_server_get_prefix_char_index (server, '+'));
+    LONGS_EQUAL(-1, irc_server_get_prefix_char_index (server, '%'));
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    LONGS_EQUAL(0, irc_server_get_prefix_char_index (server, '~'));
+    LONGS_EQUAL(3, irc_server_get_prefix_char_index (server, '%'));
+    LONGS_EQUAL(-1, irc_server_get_prefix_char_index (server, '!'));
+    irc_server_free (server);
 }
 
 /*
@@ -891,7 +1422,20 @@ TEST(IrcServer, GetPrefixCharIndex)
 
 TEST(IrcServer, GetPrefixModeForChar)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    BYTES_EQUAL(' ', irc_server_get_prefix_mode_for_char (NULL, '@'));
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    BYTES_EQUAL('o', irc_server_get_prefix_mode_for_char (server, '@'));
+    BYTES_EQUAL('v', irc_server_get_prefix_mode_for_char (server, '+'));
+    BYTES_EQUAL(' ', irc_server_get_prefix_mode_for_char (server, '%'));
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    BYTES_EQUAL('q', irc_server_get_prefix_mode_for_char (server, '~'));
+    BYTES_EQUAL('h', irc_server_get_prefix_mode_for_char (server, '%'));
+    BYTES_EQUAL(' ', irc_server_get_prefix_mode_for_char (server, '!'));
+    irc_server_free (server);
 }
 
 /*
@@ -901,7 +1445,20 @@ TEST(IrcServer, GetPrefixModeForChar)
 
 TEST(IrcServer, GetPrefixCharForMode)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    BYTES_EQUAL(' ', irc_server_get_prefix_char_for_mode (NULL, 'o'));
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    BYTES_EQUAL('@', irc_server_get_prefix_char_for_mode (server, 'o'));
+    BYTES_EQUAL('+', irc_server_get_prefix_char_for_mode (server, 'v'));
+    BYTES_EQUAL(' ', irc_server_get_prefix_char_for_mode (server, 'h'));
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    BYTES_EQUAL('~', irc_server_get_prefix_char_for_mode (server, 'q'));
+    BYTES_EQUAL('%', irc_server_get_prefix_char_for_mode (server, 'h'));
+    BYTES_EQUAL(' ', irc_server_get_prefix_char_for_mode (server, 'x'));
+    irc_server_free (server);
 }
 
 /*
@@ -939,7 +1496,17 @@ TEST(IrcServer, CapMultiPrefixEnabled)
 
 TEST(IrcServer, GetChanmodes)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    STRCMP_EQUAL("beI,k,l", irc_server_get_chanmodes (NULL));
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    STRCMP_EQUAL("beI,k,l", irc_server_get_chanmodes (server));
+    server->chanmodes = strdup ("eIbq,k,flj,CFLMPQScgimnprstuz");
+    STRCMP_EQUAL("eIbq,k,flj,CFLMPQScgimnprstuz",
+                 irc_server_get_chanmodes (server));
+    irc_server_free (server);
 }
 
 /*
@@ -949,7 +1516,25 @@ TEST(IrcServer, GetChanmodes)
 
 TEST(IrcServer, PrefixCharStatusmsg)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    /* No STATUSMSG: prefix chars are used. */
+    LONGS_EQUAL(1, irc_server_prefix_char_statusmsg (server, '@'));
+    LONGS_EQUAL(1, irc_server_prefix_char_statusmsg (server, '+'));
+    LONGS_EQUAL(0, irc_server_prefix_char_statusmsg (server, '%'));
+    LONGS_EQUAL(0, irc_server_prefix_char_statusmsg (server, '#'));
+
+    /* STATUSMSG is used if defined. */
+    free (server->isupport);
+    server->isupport = strdup ("CHANTYPES=# STATUSMSG=@% PREFIX=(ov)@+");
+    LONGS_EQUAL(1, irc_server_prefix_char_statusmsg (server, '@'));
+    LONGS_EQUAL(1, irc_server_prefix_char_statusmsg (server, '%'));
+    LONGS_EQUAL(0, irc_server_prefix_char_statusmsg (server, '+'));
+
+    irc_server_free (server);
 }
 
 /*
@@ -959,7 +1544,35 @@ TEST(IrcServer, PrefixCharStatusmsg)
 
 TEST(IrcServer, GetMaxModes)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+#define WEE_CHECK_MAX_MODES(__expected, __isupport)                     \
+    free (server->isupport);                                            \
+    server->isupport = strdup (__isupport);                             \
+    LONGS_EQUAL(__expected, irc_server_get_max_modes (server));
+
+    /* Default is 4. */
+    WEE_CHECK_MAX_MODES(4, "");
+    WEE_CHECK_MAX_MODES(4, "MODES");
+    WEE_CHECK_MAX_MODES(4, "MODES=");
+    WEE_CHECK_MAX_MODES(4, "MODES=abc");
+
+    WEE_CHECK_MAX_MODES(1, "MODES=1");
+    WEE_CHECK_MAX_MODES(6, "CHANTYPES=# MODES=6 NETWORK=test");
+    WEE_CHECK_MAX_MODES(128, "MODES=128");
+
+    /* Min is 1, max is 128. */
+    WEE_CHECK_MAX_MODES(1, "MODES=0");
+    WEE_CHECK_MAX_MODES(1, "MODES=-5");
+    WEE_CHECK_MAX_MODES(128, "MODES=129");
+    WEE_CHECK_MAX_MODES(128, "MODES=99999");
+
+#undef WEE_CHECK_MAX_MODES
+
+    irc_server_free (server);
 }
 
 /*
@@ -969,7 +1582,40 @@ TEST(IrcServer, GetMaxModes)
 
 TEST(IrcServer, GetDefaultMsg)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    char *str, *version, expected[256];
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    server->nick = strdup ("alice");
+
+    WEE_TEST_STR("", irc_server_get_default_msg ("", server, NULL, NULL));
+    WEE_TEST_STR("bye", irc_server_get_default_msg ("bye", server, NULL, NULL));
+
+    /* Deprecated "%v": replaced by WeeChat version. */
+    version = hook_info_get (NULL, "version", "");
+    CHECK(version);
+    snprintf (expected, sizeof (expected), "WeeChat %s", version);
+    WEE_TEST_STR(expected,
+                 irc_server_get_default_msg ("WeeChat %v", server, NULL, NULL));
+    free (version);
+
+    /* "%v" not replaced if there is an expression. */
+    WEE_TEST_STR("%v server1",
+                 irc_server_get_default_msg ("%v ${server}", server,
+                                             NULL, NULL));
+
+    /* Variables: server, channel, nick, target. */
+    WEE_TEST_STR("server1//alice/",
+                 irc_server_get_default_msg (
+                     "${server}/${channel}/${nick}/${target}", server,
+                     NULL, NULL));
+    WEE_TEST_STR("server1/#test/alice/bob",
+                 irc_server_get_default_msg (
+                     "${server}/${channel}/${nick}/${target}", server,
+                     "#test", "bob"));
+
+    irc_server_free (server);
 }
 
 /*
@@ -979,7 +1625,26 @@ TEST(IrcServer, GetDefaultMsg)
 
 TEST(IrcServer, HasChannels)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    LONGS_EQUAL(0, irc_server_has_channels (NULL));
+
+    run_cmd_quiet ("/mute /server add test_channels fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_channels");
+    server = irc_server_search ("test_channels");
+    CHECK(server);
+
+    LONGS_EQUAL(0, irc_server_has_channels (server));
+
+    /* A private buffer is not a channel. */
+    CHECK(irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "bob", 0, 0));
+    LONGS_EQUAL(0, irc_server_has_channels (server));
+
+    CHECK(irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0));
+    LONGS_EQUAL(1, irc_server_has_channels (server));
+
+    run_cmd_quiet ("/mute /disconnect test_channels");
+    run_cmd_quiet ("/mute /server del test_channels");
 }
 
 /*
@@ -989,7 +1654,44 @@ TEST(IrcServer, HasChannels)
 
 TEST(IrcServer, Alloc)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    int i;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    /* Another server with same name is not allowed. */
+    POINTERS_EQUAL(NULL, irc_server_alloc ("server1"));
+
+    POINTERS_EQUAL(server, irc_server_search ("server1"));
+    POINTERS_EQUAL(server, last_irc_server);
+    STRCMP_EQUAL("server1", server->name);
+    LONGS_EQUAL(0, server->fake_server);
+    LONGS_EQUAL(-1, server->sock);
+    LONGS_EQUAL(0, server->is_connected);
+    LONGS_EQUAL(0, server->addresses_count);
+    POINTERS_EQUAL(NULL, server->nick);
+    LONGS_EQUAL(-1, server->nick_alternate_number);
+    CHECK(server->cap_ls);
+    CHECK(server->cap_list);
+    LONGS_EQUAL(IRC_SERVER_CASEMAPPING_RFC1459, server->casemapping);
+    POINTERS_EQUAL(NULL, server->buffer);
+    POINTERS_EQUAL(NULL, server->channels);
+    for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
+    {
+        POINTERS_EQUAL(NULL, server->outqueue[i]);
+    }
+
+    /* Options are created, without value (inherited from defaults). */
+    for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
+    {
+        CHECK(server->options[i]);
+    }
+    LONGS_EQUAL(1, config_file_option_is_null (
+                    server->options[IRC_SERVER_OPTION_NICKS]));
+
+    irc_server_free (server);
+    POINTERS_EQUAL(NULL, irc_server_search ("server1"));
 }
 
 /*
@@ -1191,7 +1893,29 @@ TEST(IrcServer, AllocWithUrl)
 
 TEST(IrcServer, ApplyCommandLineOptions)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    char *argv[] = { (char *)"-tls", (char *)"-noautoconnect",
+                     (char *)"-nicks=alice,bob", (char *)"not_an_option",
+                     (char *)"-unknown", (char *)"-nounknown",
+                     (char *)"-autojoin_delay=invalid", NULL };
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    config_file_option_set (server->options[IRC_SERVER_OPTION_TLS], "off", 1);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_AUTOCONNECT],
+                            "on", 1);
+
+    irc_server_apply_command_line_options (server, 0, argv);
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+
+    irc_server_apply_command_line_options (server, 7, argv);
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_AUTOCONNECT]));
+    STRCMP_EQUAL("alice,bob",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+
+    irc_server_free (server);
 }
 
 /*
@@ -1201,7 +1925,40 @@ TEST(IrcServer, ApplyCommandLineOptions)
 
 TEST(IrcServer, OutqueueAdd)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_outqueue *ptr_outqueue;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    irc_server_outqueue_add (server, 1, "PRIVMSG", "PRIVMSG #a :1",
+                             "PRIVMSG #a :1 (modified)\r\n", 1, "tag1", NULL);
+    irc_server_outqueue_add (server, 1, NULL, NULL, "TEST\r\n", 0, NULL, NULL);
+
+    ptr_outqueue = server->outqueue[1];
+    CHECK(ptr_outqueue);
+    STRCMP_EQUAL("PRIVMSG", ptr_outqueue->command);
+    STRCMP_EQUAL("PRIVMSG #a :1", ptr_outqueue->message_before_mod);
+    STRCMP_EQUAL("PRIVMSG #a :1 (modified)\r\n",
+                 ptr_outqueue->message_after_mod);
+    LONGS_EQUAL(1, ptr_outqueue->modified);
+    STRCMP_EQUAL("tag1", ptr_outqueue->tags);
+    POINTERS_EQUAL(NULL, ptr_outqueue->prev_outqueue);
+
+    /* Unknown command. */
+    ptr_outqueue = ptr_outqueue->next_outqueue;
+    CHECK(ptr_outqueue);
+    STRCMP_EQUAL("unknown", ptr_outqueue->command);
+    POINTERS_EQUAL(NULL, ptr_outqueue->message_before_mod);
+    POINTERS_EQUAL(NULL, ptr_outqueue->tags);
+    POINTERS_EQUAL(ptr_outqueue, server->last_outqueue[1]);
+    POINTERS_EQUAL(NULL, ptr_outqueue->next_outqueue);
+
+    /* Other queues are empty. */
+    POINTERS_EQUAL(NULL, server->outqueue[0]);
+    POINTERS_EQUAL(NULL, server->outqueue[2]);
+
+    irc_server_free (server);
 }
 
 /*
@@ -1211,7 +1968,39 @@ TEST(IrcServer, OutqueueAdd)
 
 TEST(IrcServer, OutqueueFree)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_outqueue *msg1, *msg2, *msg3;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    irc_server_outqueue_free (NULL, 0, NULL);
+    irc_server_outqueue_free (server, 0, NULL);
+
+    irc_server_outqueue_add (server, 2, "A", NULL, "A\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 2, "B", NULL, "B\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 2, "C", NULL, "C\r\n", 0, NULL, NULL);
+    msg1 = server->outqueue[2];
+    msg2 = msg1->next_outqueue;
+    msg3 = msg2->next_outqueue;
+
+    /* Free message in the middle. */
+    irc_server_outqueue_free (server, 2, msg2);
+    POINTERS_EQUAL(msg1, server->outqueue[2]);
+    POINTERS_EQUAL(msg3, msg1->next_outqueue);
+    POINTERS_EQUAL(msg1, msg3->prev_outqueue);
+
+    /* Free last message. */
+    irc_server_outqueue_free (server, 2, msg3);
+    POINTERS_EQUAL(msg1, server->last_outqueue[2]);
+    POINTERS_EQUAL(NULL, msg1->next_outqueue);
+
+    /* Free first (and only) message. */
+    irc_server_outqueue_free (server, 2, msg1);
+    POINTERS_EQUAL(NULL, server->outqueue[2]);
+    POINTERS_EQUAL(NULL, server->last_outqueue[2]);
+
+    irc_server_free (server);
 }
 
 /*
@@ -1221,7 +2010,22 @@ TEST(IrcServer, OutqueueFree)
 
 TEST(IrcServer, OutqueueFreeAll)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    irc_server_outqueue_free_all (server, 0);
+
+    irc_server_outqueue_add (server, 0, "A", NULL, "A\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 0, "B", NULL, "B\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 1, "C", NULL, "C\r\n", 0, NULL, NULL);
+    irc_server_outqueue_free_all (server, 0);
+    POINTERS_EQUAL(NULL, server->outqueue[0]);
+    POINTERS_EQUAL(NULL, server->last_outqueue[0]);
+    CHECK(server->outqueue[1]);
+
+    irc_server_free (server);
 }
 
 /*
@@ -1261,7 +2065,39 @@ TEST(IrcServer, FreeAll)
 
 TEST(IrcServer, Copy)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server, *server2;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    server->fake_server = 1;
+    config_file_option_set (server->options[IRC_SERVER_OPTION_NICKS],
+                            "alice,bob", 1);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANTI_FLOOD],
+                            "500", 1);
+
+    /* Copy to an existing server: not allowed. */
+    POINTERS_EQUAL(NULL, irc_server_copy (server, "server1"));
+
+    server2 = irc_server_copy (server, "server2");
+    CHECK(server2);
+    STRCMP_EQUAL("server2", server2->name);
+    LONGS_EQUAL(1, server2->fake_server);
+    STRCMP_EQUAL("alice,bob",
+                 CONFIG_STRING(server2->options[IRC_SERVER_OPTION_NICKS]));
+    LONGS_EQUAL(500, CONFIG_INTEGER(server2->options[IRC_SERVER_OPTION_ANTI_FLOOD]));
+
+    /* Options not set are not copied (still inherited from defaults). */
+    LONGS_EQUAL(1, config_file_option_is_null (
+                    server2->options[IRC_SERVER_OPTION_PASSWORD]));
+
+    /* Options are independent. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_NICKS],
+                            "carol", 1);
+    STRCMP_EQUAL("alice,bob",
+                 CONFIG_STRING(server2->options[IRC_SERVER_OPTION_NICKS]));
+
+    irc_server_free (server2);
+    irc_server_free (server);
 }
 
 /*
@@ -1271,7 +2107,54 @@ TEST(IrcServer, Copy)
 
 TEST(IrcServer, Rename)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server, *server2;
+    struct t_irc_channel *channel;
+
+    server2 = irc_server_alloc ("test_rename2");
+    CHECK(server2);
+
+    run_cmd_quiet ("/mute /server add test_rename fake:127.0.0.1 "
+                   "-nicks=alice");
+    run_cmd_quiet ("/connect test_rename");
+    server = irc_server_search ("test_rename");
+    CHECK(server);
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    /* Rename to an existing server: not allowed. */
+    LONGS_EQUAL(0, irc_server_rename (server, "test_rename2"));
+    STRCMP_EQUAL("test_rename", server->name);
+
+    LONGS_EQUAL(1, irc_server_rename (server, "test_renamed"));
+    STRCMP_EQUAL("test_renamed", server->name);
+    POINTERS_EQUAL(server, irc_server_search ("test_renamed"));
+    POINTERS_EQUAL(NULL, irc_server_search ("test_rename"));
+
+    /* Options are renamed. */
+    POINTERS_EQUAL(NULL, test_irc_server_search_option ("irc.server.test_rename.nicks"));
+    POINTERS_EQUAL(server->options[IRC_SERVER_OPTION_NICKS],
+                   test_irc_server_search_option ("irc.server.test_renamed.nicks"));
+    STRCMP_EQUAL("alice",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+
+    /* Buffers are renamed. */
+    STRCMP_EQUAL("server.test_renamed",
+                 gui_buffer_get_string (server->buffer, "name"));
+    STRCMP_EQUAL("test_renamed",
+                 gui_buffer_get_string (server->buffer, "short_name"));
+    STRCMP_EQUAL("test_renamed",
+                 gui_buffer_get_string (server->buffer, "localvar_server"));
+    STRCMP_EQUAL("irc.test_renamed",
+                 gui_buffer_get_string (server->buffer,
+                                        "localvar_charset_modifier"));
+    STRCMP_EQUAL("test_renamed.#test",
+                 gui_buffer_get_string (channel->buffer, "name"));
+    STRCMP_EQUAL("test_renamed",
+                 gui_buffer_get_string (channel->buffer, "localvar_server"));
+
+    run_cmd_quiet ("/mute /disconnect test_renamed");
+    run_cmd_quiet ("/mute /server del test_renamed");
+    irc_server_free (server2);
 }
 
 /*
@@ -1281,7 +2164,45 @@ TEST(IrcServer, Rename)
 
 TEST(IrcServer, Reorder)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server1, *server2, *server3;
+    const char *servers1[] = { "test_reorder3", "test_reorder1" };
+    const char *servers2[] = { "unknown", "test_reorder2" };
+
+    /* Servers added in the tests are freed, so the list is empty. */
+    POINTERS_EQUAL(NULL, irc_servers);
+
+    server1 = irc_server_alloc ("test_reorder1");
+    server2 = irc_server_alloc ("test_reorder2");
+    server3 = irc_server_alloc ("test_reorder3");
+    CHECK(server1 && server2 && server3);
+
+    LONGS_EQUAL(0, irc_server_reorder (NULL, 0));
+    LONGS_EQUAL(0, irc_server_reorder (servers1, 0));
+
+    /* Move server3 to first position, server1 is then the second one. */
+    LONGS_EQUAL(1, irc_server_reorder (servers1, 2));
+    POINTERS_EQUAL(server3, irc_servers);
+    POINTERS_EQUAL(server1, server3->next_server);
+    POINTERS_EQUAL(server2, server1->next_server);
+    POINTERS_EQUAL(NULL, server2->next_server);
+    POINTERS_EQUAL(server2, last_irc_server);
+    POINTERS_EQUAL(NULL, server3->prev_server);
+    POINTERS_EQUAL(server3, server1->prev_server);
+    POINTERS_EQUAL(server1, server2->prev_server);
+
+    /* Same order: nothing moved. */
+    LONGS_EQUAL(0, irc_server_reorder (servers1, 2));
+
+    /* Unknown server is ignored. */
+    LONGS_EQUAL(1, irc_server_reorder (servers2, 2));
+    POINTERS_EQUAL(server2, irc_servers);
+    POINTERS_EQUAL(server3, server2->next_server);
+    POINTERS_EQUAL(server1, server3->next_server);
+    POINTERS_EQUAL(server1, last_irc_server);
+
+    irc_server_free (server1);
+    irc_server_free (server2);
+    irc_server_free (server3);
 }
 
 /*
@@ -1291,7 +2212,33 @@ TEST(IrcServer, Reorder)
 
 TEST(IrcServer, SendSignal)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_hook *hook;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    hook = hook_signal (NULL, "server1,irc_*", &test_irc_server_signal_cb,
+                        NULL, NULL);
+    CHECK(hook);
+
+    test_irc_server_signal_reset ();
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_send_signal (server, "irc_out", "PRIVMSG",
+                                        "PRIVMSG #test :hello", NULL));
+    STRCMP_EQUAL("server1,irc_out_PRIVMSG", test_irc_server_signal);
+    STRCMP_EQUAL("PRIVMSG #test :hello", test_irc_server_signal_data);
+
+    /* With tags. */
+    test_irc_server_signal_reset ();
+    irc_server_send_signal (server, "irc_outtags", "PRIVMSG",
+                            "PRIVMSG #test :hello", "tag1,tag2");
+    STRCMP_EQUAL("server1,irc_outtags_PRIVMSG", test_irc_server_signal);
+    STRCMP_EQUAL("tag1,tag2;PRIVMSG #test :hello",
+                 test_irc_server_signal_data);
+
+    unhook (hook);
+    irc_server_free (server);
 }
 
 /*
@@ -1301,7 +2248,24 @@ TEST(IrcServer, SendSignal)
 
 TEST(IrcServer, Send)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    /* Fake server: data is not sent, but considered as sent. */
+    server->fake_server = 1;
+    LONGS_EQUAL(4, irc_server_send (server, "test", 4));
+
+    /* Empty buffer: nothing sent. */
+    server->fake_server = 0;
+    LONGS_EQUAL(0, irc_server_send (server, "test", 0));
+    LONGS_EQUAL(0, irc_server_send (server, "test", -1));
+
+    /* Invalid socket: error. */
+    LONGS_EQUAL(-1, irc_server_send (server, "test", 4));
+
+    irc_server_free (server);
 }
 
 /*
@@ -1311,7 +2275,14 @@ TEST(IrcServer, Send)
 
 TEST(IrcServer, SetSendDefaultTags)
 {
-    /* TODO: write tests */
+    char *str;
+
+    POINTERS_EQUAL(NULL, irc_server_get_tags_to_send (NULL));
+
+    irc_server_set_send_default_tags ("default1,default2");
+    WEE_TEST_STR("default1,default2", irc_server_get_tags_to_send (NULL));
+    irc_server_set_send_default_tags (NULL);
+    POINTERS_EQUAL(NULL, irc_server_get_tags_to_send (NULL));
 }
 
 /*
@@ -1321,7 +2292,17 @@ TEST(IrcServer, SetSendDefaultTags)
 
 TEST(IrcServer, GetTagsToSend)
 {
-    /* TODO: write tests */
+    char *str;
+
+    irc_server_set_send_default_tags (NULL);
+    POINTERS_EQUAL(NULL, irc_server_get_tags_to_send (NULL));
+    WEE_TEST_STR("", irc_server_get_tags_to_send (""));
+    WEE_TEST_STR("tag1,tag2", irc_server_get_tags_to_send ("tag1,tag2"));
+
+    irc_server_set_send_default_tags ("default");
+    WEE_TEST_STR("default", irc_server_get_tags_to_send (NULL));
+    WEE_TEST_STR("tag1,default", irc_server_get_tags_to_send ("tag1"));
+    irc_server_set_send_default_tags (NULL);
 }
 
 /*
@@ -1331,7 +2312,23 @@ TEST(IrcServer, GetTagsToSend)
 
 TEST(IrcServer, OutqueueAllEmpty)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    int i;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    LONGS_EQUAL(1, irc_server_outqueue_all_empty (server));
+    for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
+    {
+        irc_server_outqueue_add (server, i, "PING", NULL, "PING :x\r\n",
+                                 0, NULL, NULL);
+        LONGS_EQUAL(0, irc_server_outqueue_all_empty (server));
+        irc_server_outqueue_free_all (server, i);
+        LONGS_EQUAL(1, irc_server_outqueue_all_empty (server));
+    }
+
+    irc_server_free (server);
 }
 
 /*
@@ -1341,7 +2338,18 @@ TEST(IrcServer, OutqueueAllEmpty)
 
 TEST(IrcServer, OutqueueTimerCb)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    server->fake_server = 1;
+
+    irc_server_outqueue_add (server, 1, "A", NULL, "A\r\n", 0, NULL, NULL);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_server_outqueue_timer_cb (server, NULL, 0));
+    POINTERS_EQUAL(NULL, server->outqueue[1]);
+
+    irc_server_free (server);
 }
 
 /*
@@ -1351,7 +2359,22 @@ TEST(IrcServer, OutqueueTimerCb)
 
 TEST(IrcServer, OutqueueTimerRemove)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    irc_server_outqueue_timer_remove (NULL);
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    irc_server_outqueue_timer_remove (server);
+    POINTERS_EQUAL(NULL, server->hook_timer_anti_flood);
+
+    irc_server_outqueue_timer_add (server);
+    CHECK(server->hook_timer_anti_flood);
+    irc_server_outqueue_timer_remove (server);
+    POINTERS_EQUAL(NULL, server->hook_timer_anti_flood);
+
+    irc_server_free (server);
 }
 
 /*
@@ -1361,7 +2384,29 @@ TEST(IrcServer, OutqueueTimerRemove)
 
 TEST(IrcServer, OutqueueTimerAdd)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_hook *ptr_hook;
+
+    irc_server_outqueue_timer_add (NULL);
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANTI_FLOOD],
+                            "1500", 1);
+    irc_server_outqueue_timer_add (server);
+    ptr_hook = server->hook_timer_anti_flood;
+    CHECK(ptr_hook);
+    LONGS_EQUAL(1500, HOOK_TIMER(ptr_hook, interval));
+
+    /* Timer is replaced. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANTI_FLOOD],
+                            "300", 1);
+    irc_server_outqueue_timer_add (server);
+    CHECK(server->hook_timer_anti_flood);
+    LONGS_EQUAL(300, HOOK_TIMER(server->hook_timer_anti_flood, interval));
+
+    irc_server_free (server);
 }
 
 /*
@@ -1371,7 +2416,44 @@ TEST(IrcServer, OutqueueTimerAdd)
 
 TEST(IrcServer, OutqueueSendOneMsg)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_hook *hook;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    server->fake_server = 1;
+
+    hook = hook_signal (NULL, "server1,irc_out*", &test_irc_server_signal_cb,
+                        NULL, NULL);
+    CHECK(hook);
+
+    irc_server_outqueue_send_one_msg (NULL, NULL);
+    irc_server_outqueue_send_one_msg (server, NULL);
+
+    irc_server_outqueue_add (server, 1, "PRIVMSG", "PRIVMSG #a :hi",
+                             "PRIVMSG #a :hello\r\n", 1, "tag1", NULL);
+
+    test_irc_server_signal_reset ();
+    irc_server_outqueue_send_one_msg (server, server->outqueue[1]);
+    LONGS_EQUAL(2, test_irc_server_signal_count);
+
+    /* Signals are sent without the final "\r\n". */
+    STRCMP_EQUAL("server1,irc_outtags_PRIVMSG", test_irc_server_signal);
+    STRCMP_EQUAL("tag1;PRIVMSG #a :hello", test_irc_server_signal_data);
+
+    /* Message is unchanged. */
+    STRCMP_EQUAL("PRIVMSG #a :hello\r\n",
+                 server->outqueue[1]->message_after_mod);
+
+    /* Message without content after modifier: nothing sent. */
+    irc_server_outqueue_add (server, 2, "PING", "PING :x", NULL,
+                             1, NULL, NULL);
+    test_irc_server_signal_reset ();
+    irc_server_outqueue_send_one_msg (server, server->outqueue[2]);
+    LONGS_EQUAL(0, test_irc_server_signal_count);
+
+    unhook (hook);
+    irc_server_free (server);
 }
 
 /*
@@ -1381,7 +2463,68 @@ TEST(IrcServer, OutqueueSendOneMsg)
 
 TEST(IrcServer, OutqueueSend)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_hook *hook;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    server->fake_server = 1;
+
+    hook = hook_signal (NULL, "server1,irc_out_*", &test_irc_server_signal_cb,
+                        NULL, NULL);
+    CHECK(hook);
+
+    /* Empty queues: timer is removed. */
+    irc_server_outqueue_timer_add (server);
+    irc_server_outqueue_send (server);
+    POINTERS_EQUAL(NULL, server->hook_timer_anti_flood);
+
+    /*
+     * Anti-flood enabled: one message with immediate priority, then one
+     * message with high priority.
+     */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANTI_FLOOD],
+                            "2000", 1);
+    irc_server_outqueue_add (server, 0, "A", NULL, "A\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 0, "B", NULL, "B\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 1, "C", NULL, "C\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 1, "D", NULL, "D\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 2, "E", NULL, "E\r\n", 0, NULL, NULL);
+    test_irc_server_signal_reset ();
+    irc_server_outqueue_send (server);
+    STRCMP_EQUAL("A,C", test_irc_server_signal_commands);
+    CHECK(server->hook_timer_anti_flood);
+
+    /* Next call (from timer): next immediate and high priority messages. */
+    test_irc_server_signal_reset ();
+    irc_server_outqueue_send (server);
+    STRCMP_EQUAL("B,D", test_irc_server_signal_commands);
+
+    /* Then one message with low priority. */
+    test_irc_server_signal_reset ();
+    irc_server_outqueue_send (server);
+    STRCMP_EQUAL("E", test_irc_server_signal_commands);
+    CHECK(server->hook_timer_anti_flood);
+
+    /* Queues empty: timer is removed. */
+    irc_server_outqueue_send (server);
+    POINTERS_EQUAL(NULL, server->hook_timer_anti_flood);
+
+    /* Anti-flood disabled: all messages are sent, without timer. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANTI_FLOOD],
+                            "0", 1);
+    irc_server_outqueue_add (server, 2, "A", NULL, "A\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 1, "B", NULL, "B\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 2, "C", NULL, "C\r\n", 0, NULL, NULL);
+    irc_server_outqueue_add (server, 0, "D", NULL, "D\r\n", 0, NULL, NULL);
+    test_irc_server_signal_reset ();
+    irc_server_outqueue_send (server);
+    STRCMP_EQUAL("D,B,A,C", test_irc_server_signal_commands);
+    LONGS_EQUAL(1, irc_server_outqueue_all_empty (server));
+    POINTERS_EQUAL(NULL, server->hook_timer_anti_flood);
+
+    unhook (hook);
+    irc_server_free (server);
 }
 
 /*
@@ -1391,7 +2534,71 @@ TEST(IrcServer, OutqueueSend)
 
 TEST(IrcServer, SendOneMsg)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_hook *hook;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    server->fake_server = 1;
+
+    /* Not connected: immediate priority. */
+    irc_server_send_one_msg (server, 0, "PING :1", NULL, "PING", NULL, NULL);
+    CHECK(server->outqueue[0]);
+    STRCMP_EQUAL("PING", server->outqueue[0]->command);
+    STRCMP_EQUAL("PING :1\r\n", server->outqueue[0]->message_after_mod);
+    irc_server_outqueue_free_all (server, 0);
+
+    /* Connected: low priority by default. */
+    server->is_connected = 1;
+    irc_server_send_one_msg (server, 0, "PING :2", NULL, "PING", NULL, NULL);
+    CHECK(server->outqueue[2]);
+    irc_server_outqueue_free_all (server, 2);
+
+    /* Priority given in flags. */
+    irc_server_send_one_msg (server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE,
+                             "PING :3", NULL, "PING", NULL, NULL);
+    CHECK(server->outqueue[0]);
+    irc_server_send_one_msg (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
+                             "PING :4", NULL, "PING", NULL, NULL);
+    CHECK(server->outqueue[1]);
+    irc_server_send_one_msg (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW,
+                             "PING :5", NULL, "PING", NULL, "tag1");
+    CHECK(server->outqueue[2]);
+    STRCMP_EQUAL("tag1", server->outqueue[2]->tags);
+    irc_server_outqueue_free_all (server, 0);
+    irc_server_outqueue_free_all (server, 1);
+    irc_server_outqueue_free_all (server, 2);
+
+    /* Multiple lines: one message queued per line. */
+    irc_server_send_one_msg (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
+                             "PING :a\nPING :b", NULL, "PING", NULL, NULL);
+    CHECK(server->outqueue[1]);
+    STRCMP_EQUAL("PING :a\r\n", server->outqueue[1]->message_after_mod);
+    CHECK(server->outqueue[1]->next_outqueue);
+    STRCMP_EQUAL("PING :b\r\n",
+                 server->outqueue[1]->next_outqueue->message_after_mod);
+    irc_server_outqueue_free_all (server, 1);
+
+    /* Message modified by a modifier. */
+    hook = hook_modifier (NULL, "irc_out_PING", &test_irc_server_modifier_cb,
+                          NULL, NULL);
+    CHECK(hook);
+    irc_server_send_one_msg (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
+                             "PING :x", NULL, "PING", NULL, NULL);
+    CHECK(server->outqueue[1]);
+    STRCMP_EQUAL("PING :x", server->outqueue[1]->message_before_mod);
+    STRCMP_EQUAL("PING :x (modified)\r\n",
+                 server->outqueue[1]->message_after_mod);
+    LONGS_EQUAL(1, server->outqueue[1]->modified);
+    irc_server_outqueue_free_all (server, 1);
+
+    /* Message dropped by a modifier. */
+    irc_server_send_one_msg (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
+                             "PING :drop", NULL, "PING", NULL, NULL);
+    POINTERS_EQUAL(NULL, server->outqueue[1]);
+    unhook (hook);
+
+    irc_server_free (server);
 }
 
 /*
@@ -1401,7 +2608,96 @@ TEST(IrcServer, SendOneMsg)
 
 TEST(IrcServer, Sendf)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_hook *hook_out1, *hook_out, *hook_mod;
+    struct t_arraylist *list;
+    char long_text[1024];
+
+    POINTERS_EQUAL(NULL, irc_server_sendf (NULL, 0, NULL, "PING :x"));
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+    server->fake_server = 1;
+
+    hook_out1 = hook_signal (NULL, "server1,irc_out1_*",
+                             &test_irc_server_signal_cb, NULL, NULL);
+    hook_out = hook_signal (NULL, "server1,irc_out_*",
+                            &test_irc_server_signal_cb, NULL, NULL);
+    CHECK(hook_out1 && hook_out);
+
+    /* Not connected: message sent immediately. */
+    test_irc_server_signal_reset ();
+    POINTERS_EQUAL(NULL, irc_server_sendf (server, 0, NULL,
+                                           "PRIVMSG %s :%s", "#test", "hello"));
+    STRCMP_EQUAL("PRIVMSG,PRIVMSG", test_irc_server_signal_commands);
+    STRCMP_EQUAL("PRIVMSG #test :hello", test_irc_server_signal_data);
+    LONGS_EQUAL(1, irc_server_outqueue_all_empty (server));
+
+    /* List of messages returned. */
+    test_irc_server_signal_reset ();
+    list = irc_server_sendf (server, IRC_SERVER_SEND_RETURN_LIST, NULL,
+                             "PRIVMSG #test :hello");
+    CHECK(list);
+    LONGS_EQUAL(1, arraylist_size (list));
+    STRCMP_EQUAL("hello", (const char *)arraylist_get (list, 0));
+    arraylist_free (list);
+
+    /* Multiline not allowed: only the first line is sent. */
+    test_irc_server_signal_reset ();
+    irc_server_sendf (server, 0, NULL, "PRIVMSG #test :line1\nline2");
+    STRCMP_EQUAL("PRIVMSG,PRIVMSG", test_irc_server_signal_commands);
+    STRCMP_EQUAL("PRIVMSG #test :line1", test_irc_server_signal_data);
+    test_irc_server_signal_reset ();
+    irc_server_sendf (server, 0, NULL, "PRIVMSG #test :line1\rline2");
+    STRCMP_EQUAL("PRIVMSG #test :line1", test_irc_server_signal_data);
+
+    /* Long message: split in multiple messages. */
+    memset (long_text, 'a', 600);
+    long_text[600] = '\0';
+    test_irc_server_signal_reset ();
+    list = irc_server_sendf (server, IRC_SERVER_SEND_RETURN_LIST, NULL,
+                             "PRIVMSG #test :%s", long_text);
+    CHECK(list);
+    LONGS_EQUAL(2, arraylist_size (list));
+    STRCMP_EQUAL("PRIVMSG,PRIVMSG,PRIVMSG", test_irc_server_signal_commands);
+    arraylist_free (list);
+
+    /* Message dropped by modifier "irc_out1_xxx". */
+    hook_mod = hook_modifier (NULL, "irc_out1_PRIVMSG",
+                              &test_irc_server_modifier_cb, NULL, NULL);
+    CHECK(hook_mod);
+    test_irc_server_signal_reset ();
+    irc_server_sendf (server, 0, NULL, "PRIVMSG #test :drop");
+    LONGS_EQUAL(0, test_irc_server_signal_count);
+
+    /* Message modified by modifier "irc_out1_xxx". */
+    test_irc_server_signal_reset ();
+    irc_server_sendf (server, 0, NULL, "PRIVMSG #test :hello");
+    STRCMP_EQUAL("PRIVMSG #test :hello (modified)",
+                 test_irc_server_signal_data);
+    unhook (hook_mod);
+
+    /* Connected, with anti-flood: next messages are queued. */
+    server->is_connected = 1;
+    test_irc_server_signal_reset ();
+    irc_server_sendf (server, 0, NULL, "PRIVMSG #test :msg1");
+    irc_server_sendf (server, 0, NULL, "PRIVMSG #test :msg2");
+    STRCMP_EQUAL("PRIVMSG,PRIVMSG,PRIVMSG", test_irc_server_signal_commands);
+    CHECK(server->outqueue[2]);
+    STRCMP_EQUAL("PRIVMSG #test :msg2\r\n",
+                 server->outqueue[2]->message_after_mod);
+    CHECK(server->hook_timer_anti_flood);
+
+    /* Messages with immediate priority are sent anyway. */
+    test_irc_server_signal_reset ();
+    irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
+                      "PING :now");
+    STRCMP_EQUAL("PING,PING", test_irc_server_signal_commands);
+    CHECK(server->outqueue[2]);
+
+    unhook (hook_out);
+    unhook (hook_out1);
+    irc_server_free (server);
 }
 
 /*
@@ -1411,7 +2707,37 @@ TEST(IrcServer, Sendf)
 
 TEST(IrcServer, MsgqAddMsg)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    POINTERS_EQUAL(NULL, irc_recv_msgq);
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    /* Empty message: ignored. */
+    irc_server_msgq_add_msg (server, "");
+    POINTERS_EQUAL(NULL, irc_recv_msgq);
+
+    irc_server_msgq_add_msg (server, "PING :1");
+    irc_server_msgq_add_msg (server, "PING :2");
+    CHECK(irc_recv_msgq);
+    POINTERS_EQUAL(server, irc_recv_msgq->server);
+    STRCMP_EQUAL("PING :1", irc_recv_msgq->data);
+    CHECK(irc_recv_msgq->next_message);
+    STRCMP_EQUAL("PING :2", irc_recv_msgq->next_message->data);
+    POINTERS_EQUAL(irc_recv_msgq->next_message, irc_msgq_last_msg);
+
+    /* Unterminated message is prepended (even if message is empty). */
+    server->unterminated_message = strdup ("PING :");
+    irc_server_msgq_add_msg (server, "3");
+    STRCMP_EQUAL("PING :3", irc_msgq_last_msg->data);
+    POINTERS_EQUAL(NULL, server->unterminated_message);
+    server->unterminated_message = strdup ("PING :4");
+    irc_server_msgq_add_msg (server, "");
+    STRCMP_EQUAL("PING :4", irc_msgq_last_msg->data);
+
+    test_irc_server_msgq_free ();
+    irc_server_free (server);
 }
 
 /*
@@ -1421,7 +2747,22 @@ TEST(IrcServer, MsgqAddMsg)
 
 TEST(IrcServer, MsgqAddUnterminated)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    irc_server_msgq_add_unterminated (server, "");
+    POINTERS_EQUAL(NULL, server->unterminated_message);
+
+    irc_server_msgq_add_unterminated (server, "PING");
+    STRCMP_EQUAL("PING", server->unterminated_message);
+    irc_server_msgq_add_unterminated (server, "");
+    STRCMP_EQUAL("PING", server->unterminated_message);
+    irc_server_msgq_add_unterminated (server, " :test");
+    STRCMP_EQUAL("PING :test", server->unterminated_message);
+
+    irc_server_free (server);
 }
 
 /*
@@ -1431,7 +2772,34 @@ TEST(IrcServer, MsgqAddUnterminated)
 
 TEST(IrcServer, MsgqAddBuffer)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    char buffer[256];
+
+    POINTERS_EQUAL(NULL, irc_recv_msgq);
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    /* "\r\n", "\n" and "\r" alone ("\r" is ignored). */
+    snprintf (buffer, sizeof (buffer),
+              "PING :1\r\nPING :2\nPI\rNG :3\r\n\r\nPING :4");
+    irc_server_msgq_add_buffer (server, buffer);
+    CHECK(irc_recv_msgq);
+    STRCMP_EQUAL("PING :1", irc_recv_msgq->data);
+    STRCMP_EQUAL("PING :2", irc_recv_msgq->next_message->data);
+    STRCMP_EQUAL("PING :3", irc_recv_msgq->next_message->next_message->data);
+    POINTERS_EQUAL(irc_recv_msgq->next_message->next_message,
+                   irc_msgq_last_msg);
+    STRCMP_EQUAL("PING :4", server->unterminated_message);
+
+    /* End of unterminated message. */
+    snprintf (buffer, sizeof (buffer), "2\r\n");
+    irc_server_msgq_add_buffer (server, buffer);
+    STRCMP_EQUAL("PING :42", irc_msgq_last_msg->data);
+    POINTERS_EQUAL(NULL, server->unterminated_message);
+
+    test_irc_server_msgq_free ();
+    irc_server_free (server);
 }
 
 /*
@@ -1827,7 +3195,24 @@ TEST(IrcServer, AutojoinChannels)
 
 TEST(IrcServer, GetChannelCount)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    run_cmd_quiet ("/mute /server add test_count fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_count");
+    server = irc_server_search ("test_count");
+    CHECK(server);
+
+    LONGS_EQUAL(0, irc_server_get_channel_count (server));
+    LONGS_EQUAL(0, irc_server_get_pv_count (server));
+
+    CHECK(irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test1", 0, 0));
+    CHECK(irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "bob", 0, 0));
+    CHECK(irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test2", 0, 0));
+    LONGS_EQUAL(2, irc_server_get_channel_count (server));
+    LONGS_EQUAL(1, irc_server_get_pv_count (server));
+
+    run_cmd_quiet ("/mute /disconnect test_count");
+    run_cmd_quiet ("/mute /server del test_count");
 }
 
 /*
@@ -1837,7 +3222,21 @@ TEST(IrcServer, GetChannelCount)
 
 TEST(IrcServer, GetPvCount)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    run_cmd_quiet ("/mute /server add test_pv fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_pv");
+    server = irc_server_search ("test_pv");
+    CHECK(server);
+
+    LONGS_EQUAL(0, irc_server_get_pv_count (server));
+    CHECK(irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "bob", 0, 0));
+    CHECK(irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0));
+    CHECK(irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "carol", 0, 0));
+    LONGS_EQUAL(2, irc_server_get_pv_count (server));
+
+    run_cmd_quiet ("/mute /disconnect test_pv");
+    run_cmd_quiet ("/mute /server del test_pv");
 }
 
 /*
@@ -1847,7 +3246,35 @@ TEST(IrcServer, GetPvCount)
 
 TEST(IrcServer, RemoveAway)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *nick;
+
+    run_cmd_quiet ("/mute /server add test_away fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_away");
+    server = irc_server_search ("test_away");
+    CHECK(server);
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+    nick = irc_nick_new (server, channel, "bob", "user@host", NULL, 1,
+                         NULL, NULL);
+    CHECK(nick);
+    LONGS_EQUAL(1, nick->away);
+
+    /* Not connected: nothing done. */
+    server->last_away_check = 123;
+    irc_server_remove_away (server);
+    LONGS_EQUAL(1, nick->away);
+    LONGS_EQUAL(123, server->last_away_check);
+
+    server->is_connected = 1;
+    irc_server_remove_away (server);
+    LONGS_EQUAL(0, nick->away);
+    LONGS_EQUAL(0, server->last_away_check);
+
+    server->is_connected = 0;
+    run_cmd_quiet ("/mute /disconnect test_away");
+    run_cmd_quiet ("/mute /server del test_away");
 }
 
 /*
@@ -1857,7 +3284,51 @@ TEST(IrcServer, RemoveAway)
 
 TEST(IrcServer, CheckAway)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_hook *hook;
+
+    run_cmd_quiet ("/mute /server add test_away fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_away");
+    server = irc_server_search ("test_away");
+    CHECK(server);
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+    CHECK(irc_nick_new (server, channel, "bob", "user@host", NULL, 0,
+                        NULL, NULL));
+
+    hook = hook_signal (NULL, "test_away,irc_out_*",
+                        &test_irc_server_signal_cb, NULL, NULL);
+    CHECK(hook);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANTI_FLOOD],
+                            "0", 1);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_AWAY_CHECK],
+                            "5", 1);
+
+    /* Not connected: nothing done. */
+    test_irc_server_signal_reset ();
+    irc_server_check_away (server);
+    LONGS_EQUAL(0, test_irc_server_signal_count);
+    LONGS_EQUAL(0, server->last_away_check);
+
+    /* Connected: WHO sent on channels. */
+    server->is_connected = 1;
+    irc_server_check_away (server);
+    STRCMP_EQUAL("WHO #test", test_irc_server_signal_data);
+    CHECK(server->last_away_check > 0);
+    LONGS_EQUAL(1, channel->checking_whox);
+
+    /* WHOX supported. */
+    free (server->isupport);
+    server->isupport = strdup ("WHOX");
+    test_irc_server_signal_reset ();
+    irc_server_check_away (server);
+    STRCMP_EQUAL("WHO #test %cuhsnfdar", test_irc_server_signal_data);
+
+    unhook (hook);
+    server->is_connected = 0;
+    run_cmd_quiet ("/mute /disconnect test_away");
+    run_cmd_quiet ("/mute /server del test_away");
 }
 
 /*
@@ -1867,7 +3338,50 @@ TEST(IrcServer, CheckAway)
 
 TEST(IrcServer, SetAway)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel, *channel_pv;
+    struct t_irc_nick *nick;
+
+    run_cmd_quiet ("/mute /server add test_away fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_away");
+    server = irc_server_search ("test_away");
+    CHECK(server);
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+    channel_pv = irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "bob", 0, 0);
+    CHECK(channel_pv);
+    nick = irc_nick_new (server, channel, "alice", "user@host", NULL, 0,
+                         NULL, NULL);
+    CHECK(nick);
+    server->away_message = strdup ("gone");
+
+    /* Not connected: nothing done. */
+    irc_server_set_away (server, "alice", 1);
+    LONGS_EQUAL(0, nick->away);
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (server->buffer, "localvar_away"));
+
+    server->is_connected = 1;
+    irc_server_set_away (server, "alice", 1);
+    LONGS_EQUAL(1, nick->away);
+    STRCMP_EQUAL("gone", gui_buffer_get_string (server->buffer, "localvar_away"));
+    STRCMP_EQUAL("gone", gui_buffer_get_string (channel->buffer, "localvar_away"));
+    STRCMP_EQUAL("gone",
+                 gui_buffer_get_string (channel_pv->buffer, "localvar_away"));
+
+    /* Unknown nick: only local variables are set. */
+    irc_server_set_away (server, "unknown", 0);
+    LONGS_EQUAL(1, nick->away);
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (server->buffer, "localvar_away"));
+
+    irc_server_set_away (server, "alice", 0);
+    LONGS_EQUAL(0, nick->away);
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (channel->buffer, "localvar_away"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (channel_pv->buffer, "localvar_away"));
+
+    server->is_connected = 0;
+    run_cmd_quiet ("/mute /disconnect test_away");
+    run_cmd_quiet ("/mute /server del test_away");
 }
 
 /*
