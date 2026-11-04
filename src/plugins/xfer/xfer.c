@@ -1561,6 +1561,7 @@ xfer_accept_resume_cb (const void *pointer, void *data,
     struct t_xfer *ptr_xfer;
     const char *plugin_name, *plugin_id, *filename, *str_start_resume;
     int port;
+    long long parsed_start_resume;
     unsigned long long start_resume;
 
     /* make C compiler happy */
@@ -1604,10 +1605,28 @@ xfer_accept_resume_cb (const void *pointer, void *data,
         goto error;
     }
 
-    sscanf (str_start_resume, "%llu", &start_resume);
+    if (!weechat_util_parse_longlong (str_start_resume, 10,
+                                      &parsed_start_resume)
+        || (parsed_start_resume < 0))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: invalid resume position \"%s\""),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        str_start_resume);
+        goto error;
+    }
+    start_resume = (unsigned long long)parsed_start_resume;
 
     ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_SEND_PASSIVE,
                             XFER_STATUS_CONNECTING, port);
+    if (ptr_xfer && (start_resume >= ptr_xfer->size))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: invalid resume position \"%s\""),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        str_start_resume);
+        goto error;
+    }
     if (ptr_xfer)
     {
         ptr_xfer->pos = start_resume;
