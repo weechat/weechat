@@ -1176,7 +1176,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
     struct t_config_option *proxy_type, *proxy_ipv6, *proxy_address, *proxy_port;
     const char *ptr_output, *ptr_resp_code, *ptr_error;
     const char *proxy, *str_proxy_type, *str_proxy_address;
-    char *option_name;
+    char *option_name, str_error[256];
     struct t_relay_json *json_body, *json_hash_algo, *json_hash_iterations;
     struct t_relay_json *json_totp;
     long long number;
@@ -1234,10 +1234,35 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                 remote->password_hash_algo = relay_auth_password_hash_algo_search (
                     relay_json_get_string (json_hash_algo));
             }
-            /* Hash iterations */
+            /*
+             * Hash iterations: refuse a number outside the range allowed on
+             * the remote, so that a malicious remote can not block WeeChat
+             * for a long time while computing the hash with PBKDF2.
+             */
             json_hash_iterations = relay_json_object_get (json_body, "password_hash_iterations");
             if (relay_json_get_number (json_hash_iterations, &number))
+            {
+                if ((number < RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MIN)
+                    || (number > RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MAX))
+                {
+                    snprintf (str_error, sizeof (str_error),
+                              _("invalid number of hash iterations: %lld "
+                                "(must be between %d and %d)"),
+                              number,
+                              RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MIN,
+                              RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MAX);
+                    weechat_printf (
+                        NULL,
+                        _("%sremote[%s]: handshake failed with URL %s, error: %s"),
+                        weechat_prefix ("error"),
+                        remote->name,
+                        weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
+                        str_error);
+                    relay_remote_network_disconnect (remote);
+                    goto end;
+                }
                 remote->password_hash_iterations = (int)number;
+            }
             /* TOTP */
             json_totp = relay_json_object_get (json_body, "totp");
             if (relay_json_is_bool (json_totp))

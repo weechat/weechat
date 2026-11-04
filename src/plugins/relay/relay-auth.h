@@ -7,6 +7,9 @@
 #ifndef WEECHAT_PLUGIN_RELAY_AUTH_H
 #define WEECHAT_PLUGIN_RELAY_AUTH_H
 
+#define RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MIN 1
+#define RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MAX 1000000
+
 struct t_relay_client;
 
 enum t_relay_auth_password_hash_algo

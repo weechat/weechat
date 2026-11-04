@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 09:16+0100\n"
+"POT-Creation-Date: 2026-11-04 23:46+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -15067,6 +15067,11 @@ msgstr "%s%s: handshake TLS fallito per il client %s%s%s: errore %d %s"
 #| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
 msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
 msgstr "%s%s: handshake TLS fallito per il client %s%s%s: errore %d %s"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid number of hash iterations: %lld (must be between %d and %d)"
+msgstr "%sNumero colore \"%s\" non valido (deve essere compresto tra %d e %d)"
 
 #, fuzzy
 #| msgid "%s%s: ignore not found"

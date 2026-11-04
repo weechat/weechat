@@ -927,6 +927,35 @@ TEST(RelayRemoteNetworkWithSocket, UrlHandshakeCb)
     WEE_CHECK_HANDSHAKE_ERROR(
         "200", NULL,
         "{\"password_hash_algo\": \"sha256\", \"totp\": false}");
+
+    /*
+     * Number of iterations out of range (1 to 1000000): refused (values that
+     * do not fit in an integer must not be truncated).
+     */
+    WEE_CHECK_HANDSHAKE_ERROR(
+        "200", NULL,
+        "{\"password_hash_algo\": \"pbkdf2+sha512\", "
+        "\"password_hash_iterations\": 0, \"totp\": false}");
+    WEE_CHECK_HANDSHAKE_ERROR(
+        "200", NULL,
+        "{\"password_hash_algo\": \"pbkdf2+sha512\", "
+        "\"password_hash_iterations\": -1, \"totp\": false}");
+    WEE_CHECK_HANDSHAKE_ERROR(
+        "200", NULL,
+        "{\"password_hash_algo\": \"pbkdf2+sha512\", "
+        "\"password_hash_iterations\": 1000001, \"totp\": false}");
+    WEE_CHECK_HANDSHAKE_ERROR(
+        "200", NULL,
+        "{\"password_hash_algo\": \"pbkdf2+sha512\", "
+        "\"password_hash_iterations\": 2147483647, \"totp\": false}");
+    WEE_CHECK_HANDSHAKE_ERROR(
+        "200", NULL,
+        "{\"password_hash_algo\": \"pbkdf2+sha512\", "
+        "\"password_hash_iterations\": 4294967396, \"totp\": false}");
+    WEE_CHECK_HANDSHAKE_ERROR(
+        "200", NULL,
+        "{\"password_hash_algo\": \"sha256\", "
+        "\"password_hash_iterations\": 99999999999, \"totp\": false}");
     WEE_CHECK_HANDSHAKE_ERROR(
         "200", NULL,
         "{\"password_hash_algo\": \"sha256\", "
@@ -949,20 +978,37 @@ TEST(RelayRemoteNetworkWithSocket, UrlHandshakeCb)
 #undef WEE_CHECK_HANDSHAKE_ERROR
 
     /* Successful handshake: connection to remote. */
-    hashtable_remove_all (output);
-    hashtable_set (output, "response_code", "200");
-    hashtable_set (output, "output",
-                   "{\"password_hash_algo\": \"sha512\", "
-                   "\"password_hash_iterations\": 0, \"totp\": false}");
-    relay_remote_set_status (remote, RELAY_STATUS_CONNECTING);
-    LONGS_EQUAL(WEECHAT_RC_OK,
-                relay_remote_network_url_handshake_cb (
-                    remote, NULL, "url", NULL, output));
-    LONGS_EQUAL(RELAY_STATUS_CONNECTING, remote->status);
-    LONGS_EQUAL(RELAY_AUTH_PASSWORD_HASH_SHA512, remote->password_hash_algo);
-    LONGS_EQUAL(0, remote->password_hash_iterations);
-    LONGS_EQUAL(0, remote->totp);
+#define WEE_CHECK_HANDSHAKE_OK(__algo, __iterations, __output)          \
+    hashtable_remove_all (output);                                      \
+    hashtable_set (output, "response_code", "200");                     \
+    hashtable_set (output, "output", __output);                         \
+    relay_remote_network_close_connection (remote);                     \
+    relay_remote_set_status (remote, RELAY_STATUS_CONNECTING);          \
+    LONGS_EQUAL(WEECHAT_RC_OK,                                          \
+                relay_remote_network_url_handshake_cb (                 \
+                    remote, NULL, "url", NULL, output));                \
+    LONGS_EQUAL(RELAY_STATUS_CONNECTING, remote->status);               \
+    LONGS_EQUAL(__algo, remote->password_hash_algo);                    \
+    LONGS_EQUAL(__iterations, remote->password_hash_iterations);        \
+    LONGS_EQUAL(0, remote->totp);                                       \
     CHECK(remote->hook_connect);
+
+    WEE_CHECK_HANDSHAKE_OK(
+        RELAY_AUTH_PASSWORD_HASH_SHA512, 100000,
+        "{\"password_hash_algo\": \"sha512\", "
+        "\"password_hash_iterations\": 100000, \"totp\": false}");
+
+    /* Min and max number of iterations. */
+    WEE_CHECK_HANDSHAKE_OK(
+        RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA512, 1,
+        "{\"password_hash_algo\": \"pbkdf2+sha512\", "
+        "\"password_hash_iterations\": 1, \"totp\": false}");
+    WEE_CHECK_HANDSHAKE_OK(
+        RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA512, 1000000,
+        "{\"password_hash_algo\": \"pbkdf2+sha512\", "
+        "\"password_hash_iterations\": 1000000, \"totp\": false}");
+
+#undef WEE_CHECK_HANDSHAKE_OK
 
     hashtable_free (output);
 }

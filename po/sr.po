@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 09:16+0100\n"
+"POT-Creation-Date: 2026-11-04 23:46+0100\n"
 "PO-Revision-Date: 2026-11-04 14:34+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -15336,6 +15336,11 @@ msgstr "%sудаљени[%s]: усаглашавање са URL %s није ус
 #, c-format
 msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
 msgstr "%sудаљени[%s]: усаглашавање са URL %s није успело, грешка: %s"
+
+#, fuzzy, c-format
+#| msgid "invalid iteration count: %d (must be between %d and %d)"
+msgid "invalid number of hash iterations: %lld (must be between %d and %d)"
+msgstr "неважећи број понављања: %d (мора да буде између %d и %d)"
 
 msgid "hash algorithm not found"
 msgstr "није пронађен хеш алгоритам"

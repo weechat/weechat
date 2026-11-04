@@ -19,6 +19,7 @@
 
 #include "../weechat-plugin.h"
 #include "relay.h"
+#include "relay-auth.h"
 #include "relay-client.h"
 #include "relay-config.h"
 #include "relay-buffer.h"
@@ -1855,7 +1856,10 @@ relay_config_init (void)
                "authentication; more iterations is better in term of security "
                "but is slower to compute; this number should not be too high "
                "if your CPU is slow"),
-            NULL, 1, 1000000, "100000", NULL, 0,
+            NULL,
+            RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MIN,
+            RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MAX,
+            "100000", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         relay_config_network_time_window = weechat_config_new_option (
             relay_config_file, relay_config_section_network,
