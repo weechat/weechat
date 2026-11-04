@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:42+0100\n"
+"POT-Creation-Date: 2026-11-27 20:45+0100\n"
 "PO-Revision-Date: 2025-02-12 11:16+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -18046,6 +18046,11 @@ msgstr "%s%s: не може да се пронађе доступни порт �
 #, c-format
 msgid "%s%s: error creating xfer"
 msgstr "%s%s: грешка при креирању xfer"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid post action \"%s\""
+msgid "%s%s: invalid resume position \"%s\""
+msgstr "%s%s: неважећа пост акција „%s”"
 
 #, c-format
 msgid ""

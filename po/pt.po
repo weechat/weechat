@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:42+0100\n"
+"POT-Creation-Date: 2026-11-27 20:45+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -18226,6 +18226,11 @@ msgstr "%s%s: não é possível encontrar uma porta disponível para xfer"
 #, c-format
 msgid "%s%s: error creating xfer"
 msgstr "%s%s: erro ao criar xfer"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid post action \"%s\""
+msgid "%s%s: invalid resume position \"%s\""
+msgstr "%s%s: ação posterior inválida \"%s\""
 
 #, c-format
 msgid ""

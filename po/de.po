@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:42+0100\n"
+"POT-Creation-Date: 2026-11-27 20:45+0100\n"
 "PO-Revision-Date: 2025-03-17 11:02+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -18945,6 +18945,11 @@ msgstr "%s%s: Es konnte kein Port für den Transfer ermitteln werden"
 #, c-format
 msgid "%s%s: error creating xfer"
 msgstr "%s%s: Fehler bei Transfererstellung"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid post action \"%s\""
+msgid "%s%s: invalid resume position \"%s\""
+msgstr "%s%s: ungültige nachfolgende Aktion: \"%s\""
 
 #, c-format
 msgid ""
