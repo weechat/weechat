@@ -904,10 +904,20 @@ TEST(IrcServer, SetNick)
     STRCMP_EQUAL("bob", gui_buffer_get_string (server->buffer, "localvar_nick"));
     STRCMP_EQUAL("bob", gui_buffer_get_string (channel->buffer, "localvar_nick"));
 
+    /* No nick: local variable removed. */
     irc_server_set_nick (server, NULL);
     POINTERS_EQUAL(NULL, server->nick);
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (server->buffer, "localvar_nick"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (channel->buffer, "localvar_nick"));
 
-    run_cmd_quiet ("/mute /disconnect test_nick");
+    /* Local variable removed on disconnection. */
+    irc_server_set_nick (server, "alice");
+    STRCMP_EQUAL("alice", gui_buffer_get_string (server->buffer, "localvar_nick"));
+    irc_server_disconnect (server, 0, 0);
+    POINTERS_EQUAL(NULL, server->nick);
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (server->buffer, "localvar_nick"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (channel->buffer, "localvar_nick"));
+
     run_cmd_quiet ("/mute /server del test_nick");
 }
 
@@ -942,10 +952,25 @@ TEST(IrcServer, SetHost)
     irc_server_set_host (server, "user@host");
     STRCMP_EQUAL("user@host", server->host);
 
+    /* No host: local variable removed. */
     irc_server_set_host (server, NULL);
     POINTERS_EQUAL(NULL, server->host);
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (server->buffer, "localvar_host"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (channel->buffer, "localvar_host"));
 
-    run_cmd_quiet ("/mute /disconnect test_host");
+    /* Local variable removed on disconnection. */
+    irc_server_set_host (server, "user@host");
+    STRCMP_EQUAL("user@host",
+                 gui_buffer_get_string (server->buffer, "localvar_host"));
+    irc_server_disconnect (server, 0, 0);
+    POINTERS_EQUAL(NULL, server->host);
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (server->buffer, "localvar_host"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (channel->buffer, "localvar_host"));
+
     run_cmd_quiet ("/mute /server del test_host");
 }
 
