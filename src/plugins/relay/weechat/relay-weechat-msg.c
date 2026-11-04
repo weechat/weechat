@@ -856,6 +856,18 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
                                                             weechat_infolist_time (ptr_infolist,
                                                                                    list_fields[i] + 2));
                                 break;
+                            case 'l':
+                                relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_LONG);
+                                relay_weechat_msg_add_long (msg,
+                                                            weechat_infolist_long (ptr_infolist,
+                                                                                   list_fields[i] + 2));
+                                break;
+                            case 'L':
+                                relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_LONG);
+                                relay_weechat_msg_add_longlong (msg,
+                                                                weechat_infolist_longlong (ptr_infolist,
+                                                                                           list_fields[i] + 2));
+                                break;
                         }
                     }
                 }
