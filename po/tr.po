@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 09:22+0100\n"
+"POT-Creation-Date: 2026-11-04 23:47+0100\n"
 "PO-Revision-Date: 2026-07-05 12:29+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -15514,6 +15514,11 @@ msgstr "%s%s: %s%s%s istemcisi için TLS el sıkışması başarısız: %d %s ha
 #| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
 msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
 msgstr "%s%s: %s%s%s istemcisi için TLS el sıkışması başarısız: %d %s hatası"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid number of hash iterations: %lld (must be between %d and %d)"
+msgstr "%sGeçersiz renk numarası \"%s\" (%d ve %d arasında olmalı)"
 
 #, fuzzy
 #| msgid "%s%s: ignore not found"

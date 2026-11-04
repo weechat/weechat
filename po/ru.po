@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 09:22+0100\n"
+"POT-Creation-Date: 2026-11-04 23:47+0100\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -14033,6 +14033,11 @@ msgstr "%s ошибка при отправке данных IRC серверу\
 #, fuzzy, c-format
 msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
 msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgid "invalid number of hash iterations: %lld (must be between %d and %d)"
+msgstr "%sОшибочный код цвета \"%s\" (должен быть в диапазоне от %d до %d)"
 
 #, fuzzy
 msgid "hash algorithm not found"
