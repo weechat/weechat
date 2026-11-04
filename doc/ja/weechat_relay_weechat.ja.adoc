@@ -304,7 +304,7 @@ htb: {
 === init
 
 // TRANSLATION MISSING
-_Updated in versions 2.4, 2.8, 2.9, 3.5._
+_Updated in versions 2.4, 2.8, 2.9, 3.5, 5.0.0._
 
 // TRANSLATION MISSING
 Authenticate with _relay_.
@@ -337,6 +337,11 @@ _handshake_), without warning.
 [NOTE]
 WeeChat バージョン 1.6 以上の場合、コンマをエスケープすることで value にコンマを設定可能です。例えば
 "foo,bar" というパスワードを送信するには `+init password=foo\,bar+` のように設定してください。
+
+// TRANSLATION MISSING
+[NOTE]
+Only the first password (_password_ or _password_hash_) and the first _totp_
+are checked, the next ones are ignored _(WeeChat ≥ 5.0.0)_.
 
 // TRANSLATION MISSING
 Format of hashed password is one of the following, where _hash_ is the hashed

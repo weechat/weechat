@@ -339,6 +339,10 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
  *   totp           time-based one time password used as secondary
  *                  authentication factor
  *
+ * Only the first password ("password" or "password_hash") and the first TOTP
+ * are checked, the next ones are ignored: this prevents a client from forcing
+ * many expensive checks (like PBKDF2) with a single message.
+ *
  * Message looks like:
  *   init password=mypass
  *   init password_hash=sha256:71c480df93d6ae2f1efad1447c66c9…,totp=123456
@@ -374,7 +378,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
             {
                 pos[0] = '\0';
                 pos++;
-                if (strcmp (*ptr_option, "password") == 0)
+                /* Only the first password and the first TOTP are checked. */
+                if ((strcmp (*ptr_option, "password") == 0)
+                    && !password_received)
                 {
                     password_received = 1;
                     if ((client->password_hash_algo == RELAY_AUTH_PASSWORD_HASH_PLAIN)
@@ -383,13 +389,15 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                         RELAY_WEECHAT_DATA(client, password_ok) = 1;
                     }
                 }
-                else if (strcmp (*ptr_option, "password_hash") == 0)
+                else if ((strcmp (*ptr_option, "password_hash") == 0)
+                         && !password_received)
                 {
                     password_received = 1;
                     if (relay_auth_password_hash (client, pos, relay_password) == 0)
                         RELAY_WEECHAT_DATA(client, password_ok) = 1;
                 }
-                else if (strcmp (*ptr_option, "totp") == 0)
+                else if ((strcmp (*ptr_option, "totp") == 0)
+                         && !totp_received)
                 {
                     totp_received = 1;
                     if (totp_secret)

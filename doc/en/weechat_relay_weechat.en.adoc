@@ -294,7 +294,7 @@ htb: {
 [[command_init]]
 === init
 
-_Updated in versions 2.4, 2.8, 2.9, 3.5._
+_Updated in versions 2.4, 2.8, 2.9, 3.5, 5.0.0._
 
 Authenticate with _relay_.
 
@@ -325,6 +325,10 @@ Arguments:
 [NOTE]
 With WeeChat ≥ 1.6, commas can be escaped in the value, for example
 `+init password=foo\,bar+` to send the password "foo,bar".
+
+[NOTE]
+Only the first password (_password_ or _password_hash_) and the first _totp_
+are checked, the next ones are ignored _(WeeChat ≥ 5.0.0)_.
 
 Format of hashed password is one of the following, where _hash_ is the hashed
 password as hexadecimal:

@@ -563,6 +563,7 @@ WeeChat „језгро” се налази у следећим директо�
 |                test-relay-irc.cpp               | Тестови: Релеј „irc” протокол.
 |             weechat/                            | Корен unit тестова за Relay „weechat” протокол.
 |                test-relay-weechat-msg.cpp       | Тестови: Релеј „weechat” протокол: поруке.
+|                test-relay-weechat-protocol.cpp  | Тестови: Релеј „weechat” протокол: протокол.
 |          script/                                | Корен unit тестова за script додатак.
 |             test-script-repo.cpp                | Тестови: script репозиторијум.
 |          spell/                                 | Корен unit тестова за spell додатак.

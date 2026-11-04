@@ -183,6 +183,7 @@ if (ENABLE_RELAY)
     plugins/relay/api/remote/test-relay-remote-network.cpp
     plugins/relay/irc/test-relay-irc.cpp
     plugins/relay/weechat/test-relay-weechat-msg.cpp
+    plugins/relay/weechat/test-relay-weechat-protocol.cpp
   )
 endif()
 
