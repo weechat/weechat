@@ -2750,9 +2750,6 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
 {
     int rc;
 
-    if (server->fake_server)
-        return size_buf;
-
     if (!server)
     {
         weechat_printf (
@@ -2762,6 +2759,9 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
             weechat_prefix ("error"), IRC_PLUGIN_NAME);
         return 0;
     }
+
+    if (server->fake_server)
+        return size_buf;
 
     if (size_buf <= 0)
     {

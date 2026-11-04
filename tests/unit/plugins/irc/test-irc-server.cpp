@@ -2274,6 +2274,8 @@ TEST(IrcServer, Send)
 {
     struct t_irc_server *server;
 
+    LONGS_EQUAL(0, irc_server_send (NULL, "test", 4));
+
     server = irc_server_alloc ("server1");
     CHECK(server);
 
