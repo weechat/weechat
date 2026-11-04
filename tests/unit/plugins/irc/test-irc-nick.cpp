@@ -478,7 +478,47 @@ TEST(IrcNick, SetHost)
 
 TEST(IrcNick, IsOpOrHigher)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_nick nick;
+    char prefix[2];
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    memset (&nick, 0, sizeof (nick));
+    nick.name = (char *)"alice";
+    nick.prefix = prefix;
+
+    /* default prefixes: "(ov)@+" */
+    strcpy (prefix, " ");
+    LONGS_EQUAL(0, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "+");
+    LONGS_EQUAL(0, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "@");
+    LONGS_EQUAL(1, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "%");
+    LONGS_EQUAL(0, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "~");
+    LONGS_EQUAL(0, irc_nick_is_op_or_higher (server, &nick));
+
+    /* prefixes: "(qaohv)~&@%+" */
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    strcpy (prefix, " ");
+    LONGS_EQUAL(0, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "+");
+    LONGS_EQUAL(0, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "%");
+    LONGS_EQUAL(0, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "@");
+    LONGS_EQUAL(1, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "&");
+    LONGS_EQUAL(1, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "~");
+    LONGS_EQUAL(1, irc_nick_is_op_or_higher (server, &nick));
+    strcpy (prefix, "!");
+    LONGS_EQUAL(0, irc_nick_is_op_or_higher (server, &nick));
+
+    irc_server_free (server);
 }
 
 /*
@@ -1111,7 +1151,58 @@ TEST(IrcNick, ColorForPv)
 
 TEST(IrcNick, DefaultBanMask)
 {
-    /* TODO: write tests */
+    struct t_irc_nick nick;
+    char *str, host[512];
+
+    POINTERS_EQUAL(NULL, irc_nick_default_ban_mask (NULL));
+
+    memset (&nick, 0, sizeof (nick));
+    nick.name = (char *)"alice";
+
+    /* no host or host without "@" */
+    POINTERS_EQUAL(NULL, irc_nick_default_ban_mask (&nick));
+    nick.host = (char *)"";
+    POINTERS_EQUAL(NULL, irc_nick_default_ban_mask (&nick));
+    nick.host = (char *)"user.example.com";
+    POINTERS_EQUAL(NULL, irc_nick_default_ban_mask (&nick));
+
+    /* user too long */
+    memset (host, 'a', 200);
+    snprintf (host + 200, sizeof (host) - 200, "@host.example.com");
+    nick.host = host;
+    POINTERS_EQUAL(NULL, irc_nick_default_ban_mask (&nick));
+
+    /* default ban mask: "*!$ident@$host" */
+    nick.host = (char *)"user@host.example.com";
+    WEE_TEST_STR("*!user@host.example.com", irc_nick_default_ban_mask (&nick));
+    nick.host = (char *)"~user@host.example.com";
+    WEE_TEST_STR("*!*@host.example.com", irc_nick_default_ban_mask (&nick));
+    nick.host = (char *)"@host.example.com";
+    WEE_TEST_STR("*!@host.example.com", irc_nick_default_ban_mask (&nick));
+    nick.host = (char *)"user@";
+    WEE_TEST_STR("*!user@", irc_nick_default_ban_mask (&nick));
+
+    /* custom ban mask with all variables */
+    config_file_option_set (irc_config_network_ban_mask_default,
+                            "$nick!$user@$host ($ident)", 1);
+    nick.host = (char *)"user@host.example.com";
+    WEE_TEST_STR("alice!user@host.example.com (user)",
+                 irc_nick_default_ban_mask (&nick));
+    nick.host = (char *)"~user@host.example.com";
+    WEE_TEST_STR("alice!~user@host.example.com (*)",
+                 irc_nick_default_ban_mask (&nick));
+
+    /* variables used multiple times */
+    config_file_option_set (irc_config_network_ban_mask_default,
+                            "$nick $nick $host $host", 1);
+    WEE_TEST_STR("alice alice host.example.com host.example.com",
+                 irc_nick_default_ban_mask (&nick));
+
+    /* empty ban mask */
+    config_file_option_set (irc_config_network_ban_mask_default, "", 1);
+    POINTERS_EQUAL(NULL, irc_nick_default_ban_mask (&nick));
+
+    config_file_option_reset (irc_config_network_ban_mask_default, 1);
 }
 
 /*
