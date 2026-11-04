@@ -438,7 +438,7 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
     }
 
     /* Split fingerprint. */
-    fingerprints = weechat_string_split (fingerprint_eval, ",", NULL,
+    fingerprints = weechat_string_split (fingerprint_eval, ",", " ",
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -4954,9 +4954,12 @@ irc_server_fingerprint_str_sizes (void)
  * Compare two fingerprints: one hexadecimal (given by user), the second binary
  * (received from IRC server).
  *
+ * The hexadecimal fingerprint must contain only hexadecimal digits (lower or
+ * upper case).
+ *
  * Return:
  *    0: fingerprints are the same
- *   -1: fingerprints are different
+ *   -1: fingerprints are different (or hexadecimal fingerprint is invalid)
  */
 
 int
@@ -4964,22 +4967,27 @@ irc_server_compare_fingerprints (const char *fingerprint,
                                  const unsigned char *fingerprint_server,
                                  ssize_t fingerprint_size)
 {
-    ssize_t i;
-    unsigned int value;
+    char *fingerprint_bin;
+    int rc;
+
+    if (!fingerprint || !fingerprint_server || (fingerprint_size <= 0))
+        return -1;
 
     if ((ssize_t)strlen (fingerprint) != fingerprint_size * 2)
         return -1;
 
-    for (i = 0; i < fingerprint_size; i++)
-    {
-        if (sscanf (&fingerprint[i * 2], "%02x", &value) != 1)
-            return -1;
-        if (value != fingerprint_server[i])
-            return -1;
-    }
+    fingerprint_bin = malloc (fingerprint_size + 1);
+    if (!fingerprint_bin)
+        return -1;
 
-    /* Fingerprints are the same */
-    return 0;
+    rc = ((weechat_string_base_decode ("16", fingerprint,
+                                       fingerprint_bin) == fingerprint_size)
+          && (memcmp (fingerprint_bin, fingerprint_server,
+                      fingerprint_size) == 0)) ? 0 : -1;
+
+    free (fingerprint_bin);
+
+    return rc;
 }
 
 /*
@@ -5006,7 +5014,7 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
     }
 
     /* Split good_fingerprints. */
-    fingerprints = weechat_string_split (good_fingerprints, ",", NULL,
+    fingerprints = weechat_string_split (good_fingerprints, ",", " ",
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

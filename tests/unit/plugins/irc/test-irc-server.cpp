@@ -549,6 +549,21 @@ TEST(IrcServer, EvalFingerprint)
         "6a52951b8c2541c82bf11c83534631447dbae36b6576fe79fa6a5d3467eb3af9",
         irc_server_eval_fingerprint (server));
 
+    /* Valid fingerprints, with spaces around the comma */
+    config_file_option_set (
+        server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT],
+        " 340b0aeb5ebce80ad5c201ebc358d616904ca84e , "
+        "6a52951b8c2541c82bf11c83534631447dbae36b6576fe79fa6a5d3467eb3af9 ", 1);
+    WEE_TEST_STR(
+        " 340b0aeb5ebce80ad5c201ebc358d616904ca84e , "
+        "6a52951b8c2541c82bf11c83534631447dbae36b6576fe79fa6a5d3467eb3af9 ",
+        irc_server_eval_fingerprint (server));
+
+    /* Invalid: space inside a fingerprint */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT],
+                            "340b0aeb5ebce80ad5c2 01ebc358d616904ca84e", 1);
+    STRCMP_EQUAL(NULL, irc_server_eval_fingerprint (server));
+
     irc_server_free (server);
 }
 
@@ -3073,9 +3088,21 @@ TEST(IrcServer, CompareFingerprints)
     LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcdef00", fp, 4));
     LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcdef", fp, 3));
 
+    /* Invalid arguments. */
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints (NULL, fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcdef", NULL, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("", fp, 0));
+
     /* invalid hexadecimal */
     LONGS_EQUAL(-1, irc_server_compare_fingerprints ("zzabcdef", fp, 4));
     LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcdzz", fp, 4));
+
+    /* Only hexadecimal digits are allowed (no space, sign or prefix). */
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints (" 1abcdef", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("+1abcdef", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcd-f", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("0xabcdef", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("0gabcdef", fp, 4));
 
     /* different fingerprint */
     LONGS_EQUAL(-1, irc_server_compare_fingerprints ("00abcdef", fp, 4));
@@ -3153,6 +3180,14 @@ TEST(IrcServer, CheckCertificateFingerprint)
         irc_server_check_certificate_fingerprint (
             server, cert,
             ",," IRC_TEST_CERT_SHA512 ",," IRC_TEST_CERT_SHA1 ","));
+
+    /* Spaces around commas are ignored. */
+    LONGS_EQUAL(
+        1,
+        irc_server_check_certificate_fingerprint (
+            server, cert,
+            " 0000000000000000000000000000000000000000 , "
+            IRC_TEST_CERT_SHA256 " "));
 
     gnutls_x509_crt_deinit (cert);
 
