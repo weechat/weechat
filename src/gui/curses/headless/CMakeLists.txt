@@ -26,6 +26,7 @@ set(LIB_GUI_CURSES_SRC
 include_directories(. .. ../../core ../../plugins)
 
 add_library(weechat_gui_headless STATIC ${LIB_GUI_CURSES_SRC})
+target_link_libraries(weechat_gui_headless coverage_config)
 
 set(WEECHAT_CURSES_MAIN_HEADLESS_SRC main.c)
 

@@ -31,6 +31,7 @@ endif()
 include_directories(.. ../../core ../../plugins ${NCURSES_INCLUDE_PATH})
 
 add_library(weechat_gui_curses_normal STATIC ${LIB_GUI_CURSES_SRC})
+target_link_libraries(weechat_gui_curses_normal coverage_config)
 
 set(EXECUTABLE weechat)
 
