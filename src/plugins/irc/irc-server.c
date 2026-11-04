@@ -2508,7 +2508,10 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
 
     /* duplicate options */
     if (weechat_asprintf (&mask, "irc.server.%s.*", server->name) < 0)
-        return 0;
+    {
+        irc_server_free (new_server);
+        return NULL;
+    }
     infolist = weechat_infolist_get ("option", NULL, mask);
     free (mask);
     if (infolist)
