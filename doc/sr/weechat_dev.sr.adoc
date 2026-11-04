@@ -447,8 +447,7 @@ WeeChat „језгро” се налази у следећим директо�
 |       tests-record.cpp                          | Бележење и претрага у приказаним порукама.
 |       core/                                     | Корен unit тестова језгра.
 |          test-core-arraylist.cpp                | Тестови: arraylists.
-// TRANSLATION MISSING
-|          test-core-backtrace.cpp                | Tests: backtrace.
+|          test-core-backtrace.cpp                | Тестови: backtrace.
 |          test-core-calc.cpp                     | Тестови: калкулација израза.
 |          test-core-command.cpp                  | Тестови: команде.
 |          test-core-config-file.cpp              | Тестови: конфигурациони фајлови.
@@ -467,10 +466,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-string.cpp                   | Тестови: стрингови.
 |          test-core-sys.cpp                      | Тестови: системске функције.
 |          test-core-theme.cpp                    | Тестови: теме.
-// TRANSLATION MISSING
-|          test-core-upgrade.cpp                  | Tests: upgrade of WeeChat core.
-// TRANSLATION MISSING
-|          test-core-upgrade-file.cpp             | Tests: internal upgrade system.
+|          test-core-upgrade.cpp                  | Тестови: ажурирање WeeChat језгра.
+|          test-core-upgrade-file.cpp             | Тестови: интерни систем ажурирања.
 |          test-core-url.cpp                      | Тестови: URL адресе.
 |          test-core-utf8.cpp                     | Тестови: UTF-8.
 |          test-core-util.cpp                     | Тестови: помоћне функције.
@@ -502,8 +499,7 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-gui-buffer.cpp                    | Тестови: бафер функције.
 |          test-gui-chat.cpp                      | Тестови: чет функције.
 |          test-gui-color.cpp                     | Тестови: боје.
-// TRANSLATION MISSING
-|          test-gui-completion.cpp                | Tests: completion functions.
+|          test-gui-completion.cpp                | Тестови: функције довршавања.
 |          test-gui-filter.cpp                    | Тестови: филтери.
 |          test-gui-hotlist.cpp                   | Тестови: функције врућих листи.
 |          test-gui-input.cpp                     | Тестови: улазне функције.
@@ -512,8 +508,7 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-gui-line.cpp                      | Тестови: линије.
 |          test-gui-nick.cpp                      | Тестови: надимци.
 |          test-gui-nicklist.cpp                  | Тестови: функције листе надимака.
-// TRANSLATION MISSING
-|          test-gui-window.cpp                    | Tests: window functions.
+|          test-gui-window.cpp                    | Тестови: функције прозора.
 |          curses/                                | Корен unit тестова за Curses интерфејс.
 |             test-gui-curses-mouse.cpp           | Тестови: миш (Curses интерфејс).
 |             test-gui-curses-term.cpp            | Тестови: функције терминала (Curses интерфејс).
@@ -530,8 +525,7 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-irc-channel.cpp                | Тестови: IRC канали.
 |             test-irc-color.cpp                  | Тестови: IRC боје.
 |             test-irc-command.cpp                | Тестови: IRC команде.
-// TRANSLATION MISSING
-|             test-irc-completion.cpp             | Tests: IRC completions.
+|             test-irc-completion.cpp             | Тестови: IRC довршавања.
 |             test-irc-config.cpp                 | Тестови: IRC конфигурација.
 |             test-irc-ctcp.cpp                   | Тестови: IRC CTCP.
 |             test-irc-ignore.cpp                 | Тестови: IRC игнорисања.
@@ -567,22 +561,16 @@ WeeChat „језгро” се налази у следећим директо�
 |                   test-relay-remote-network.cpp | Тестови: Релеј „api” протокол: удаљена мрежа.
 |             irc/                                | Корен unit тестова за Релеј „irc” протокол.
 |                test-relay-irc.cpp               | Тестови: Релеј „irc” протокол.
-// TRANSLATION MISSING
-|             weechat/                            | Root of unit tests for Relay "weechat" protocol.
-// TRANSLATION MISSING
-|                test-relay-weechat-msg.cpp       | Tests: Relay "weechat" protocol: messages.
+|             weechat/                            | Корен unit тестова за Relay „weechat” протокол.
+|                test-relay-weechat-msg.cpp       | Тестови: Релеј "weechat" протокол: поруке.
 |          script/                                | Корен unit тестова за script додатак.
 |             test-script-repo.cpp                | Тестови: script репозиторијум.
-// TRANSLATION MISSING
-|          spell/                                 | Root of unit tests for spell plugin.
-// TRANSLATION MISSING
-|             test-spell.cpp                      | Tests: spell functions.
-// TRANSLATION MISSING
-|             test-spell-config.cpp               | Tests: spell configuration.
+|          spell/                                 | Корен unit тестова за spell додатак.
+|             test-spell.cpp                      | Тестови: spell функције.
+|             test-spell-config.cpp               | Тестови: spell конфигурација.
 |          trigger/                               | Корен unit тестова за окидач додатак.
 |             test-trigger.cpp                    | Тестови: окидачи.
-// TRANSLATION MISSING
-|             test-trigger-command.cpp            | Tests: trigger commands.
+|             test-trigger-command.cpp            | Тестови: команде окидача.
 |             test-trigger-config.cpp             | Тестови: конфигурација окидача.
 |          typing/                                | Корен unit тестова за typing додатак.
 |             test-typing.cpp                     | Тестови: typing.
@@ -644,14 +632,12 @@ WeeChat „језгро” се налази у следећим директо�
 [[coding_general_rules]]
 === Општа правила
 
-* Ваши коментари, имена променљивих, ... у изворном коду морају бити написани *само* на енглеском језику (није дозвољена употреба ниједног другог језика).
-// TRANSLATION MISSING
-* Code must compile without any warning, and all tests must pass.
-// TRANSLATION MISSING
-* Add unit tests in directory _tests/unit/_ for any non-trivial change.
-// TRANSLATION MISSING
-* Add any new source or test file in chapter <<sources,Sources>> of this
-  document, in all languages.
+* Ваши коментари, имена променљивих, ... у изворном коду морају бити написани *само* на
+  енглеском језику (није дозвољена употреба ниједног другог језика).
+* Кôд мора да се компајлира без било каквих упозорења, и сви тестови морају да прођу.
+* У случају било какве нетривијалне измене, додајте unit тестове у директоријум _tests/unit/_.
+* Додајте било које нове фајлове извора или теста у поглавље <<sources,Извори>>
+  овог документа, на свим језицима.
 * Употребите заглавље ауторских права у сваком новом изворном фајлу са:
 ** датумом
 ** именом
@@ -663,7 +649,7 @@ WeeChat „језгро” се налази у следећим директо�
 следећи најбољу праксу у REUSE Software
 (погледајте https://reuse.software/spec/[REUSE спецификацију ^↗^^]).
 
-Сви фајлови у репозиторијуу морају да имају исправне информације о ауторским правима
+Сви фајлови у репозиторијуму морају да имају исправне информације о ауторским правима
 и лиценцирању. +
 Када информације не могу да се поставе у сам фајл, можете да употребите REUSE.toml фајл
 у корену стабла пројекта.
@@ -695,12 +681,10 @@ WeeChat „језгро” се налази у следећим директо�
 ** Комплетна реченица мора да се заврши тачком.
 ** Коментари који описују поља у struct могу да буду исписани само малим словима.
 * Испред сваке функције додајте коментар који објашњава шта она ради (увек користите вишелинијски коментар, чак и ако је опис кратак).
-// TRANSLATION MISSING
-** Use the imperative mood, for example "Check if ..." instead of
-   "Checks if ...".
-// TRANSLATION MISSING
-** When the behavior of a function changes, update its comment (parameters,
-   return value, units, ...).
+** Користите императивни начин, на пример „Провери да ли...” уместо
+   „Проверава да ли...".
+** Када се промени понашање функције, ажурирајте њен коментар (параметри,
+   повратна вредност, јединице, ...).
 
 Пример:
 
@@ -864,9 +848,8 @@ struct t_hook_fd *new_hook_fd;
 new_hook_fd = malloc (sizeof (*new_hook_fd));
 ----
 
-// TRANSLATION MISSING
-* Do not declare functions `static`, so that they can be used in unit tests
-  (declared with `extern`).
+* Немојте да декларишете функције као `static`, тако да би могле да се користе у unit тестовима
+  (декларисаним са `extern`).
 * Ако користите Emacs као текст едитор, за исправно увлачење можете у свом _~/.emacs.el_ употребити Lisp кôд који следи:
 
 [source,lisp]
@@ -1353,14 +1336,11 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 * Користите само енглески језик.
 * Користите глагол у инфинитиву.
 * Ако је комит у вези са GitHub проблемом, напишите га у заградама након поруке, у формату: `(issue #123)` или `(closes #123)` да га затворите.
-// TRANSLATION MISSING
-* Each commit of a series must build and pass tests on its own.
-// TRANSLATION MISSING
-* Each user-visible change must include its entry in _CHANGELOG.md_ in the
-  same commit (see <<changelog,Changelog>>).
-// TRANSLATION MISSING
-* Do not refer to other commits ("next commit", "previous commit", ...),
-  neither in commit messages nor in code comments.
+* Сваки комит у низу мора да се изгради и прође тестове сам за себе.
+* Свака измена која је видљива кориснику мора да има свој унос у _CHANGELOG.md_ у истом
+  комиту (погледајте <<changelog,Дневник измена>>).
+* Немојте да указујете на остале комите („наредни комит”, „претходни комит”, ...),
+  нити на комит поруке или коментаре у коду.
 
 Примери комит порука:
 
@@ -1372,38 +1352,28 @@ python: fix crash when unloading a script without pointer to interpreter
 ruby: add detection of ruby version 1.9.3 in CMake
 ----
 
-// TRANSLATION MISSING
 [[changelog]]
-=== Changelog
+=== Дневник измена
 
-// TRANSLATION MISSING
-The file _CHANGELOG.md_ must be updated for every user-visible change, in the
-section `[Unreleased]`.
+Фајл _CHANGELOG.md_ мора да се ажурира за сваку измену која је видљива кориснику, у одељку
+`[Unreleased]`.
 
-// TRANSLATION MISSING
-* Do not add an entry to fix or change a feature that is already listed in the
-  section `[Unreleased]` (not yet released): update the existing entry if needed.
-// TRANSLATION MISSING
-* The format is based on https://keepachangelog.com/[Keep a Changelog ^↗^^],
-  with sections in this order: Added, Changed, Deprecated, Removed, Fixed,
-  Security; only sections with entries are present.
-// TRANSLATION MISSING
-* Each entry starts with the component (same as in commit messages) and ends
-  with the GitHub issue if any.
-// TRANSLATION MISSING
-* Entries are grouped by component: core first, then api, then other components
-  (doc, plugins, ...) sorted alphabetically; a new entry is added at the top of
-  the entries of its component.
-// TRANSLATION MISSING
-* Use backticks for literal input (commands, keys, resources), double quotes for
-  names of identifiers or values, and nothing for option names.
-// TRANSLATION MISSING
-* Breaking changes are marked with a leading bold tag `+**breaking:**+`.
-// TRANSLATION MISSING
-* Purely internal changes (refactoring, tests, CI, ...) don't have any entry.
+* Немојте да додајете ставку ако поправљате функционалност која је већ наведена у одељку
+  `[Unreleased]` (још увек необјављено): ако је потребно, ажурирајте постојећу ставку.
+* Формат је заснован на https://keepachangelog.com/[Keep a Changelog ^↗^^],
+  са одељцима у следећем редоследу: Added, Changed, Deprecated, Removed, Fixed,
+  Security; присутни су само одељци са ставкама.
+* Свака ставка почиње са компонентом (исто као у комит порукама) и завршава се са
+  GitHub проблемом, ако постоји.
+* Ставке су груписане по компонентама: најпре core, затим api, па онда остале компоненте
+  (doc, plugins, ...) сортирано по абецеди; нова ставка се додаје на врх ставки
+  своје компоненте.
+* Користите краткоузлазне акценте за дословни унос (команде, тастере, ресурсе), знаке
+  навода за имена идентификатора или вредности, и ништа за имена опција.
+* Измене које мењају раније понашање су означене са подебљаном ознаком `+**breaking:**+`.
+* Чисто интерне измене (рефакторисање, тестови, CI, ...) немају никакву ставку.
 
-// TRANSLATION MISSING
-Examples of entries:
+Примери ставки:
 
 ----
 - core: add option `insert_raw` in command `/input` to insert text without converting escaped chars
@@ -1481,12 +1451,9 @@ Asciidoc фајлови се налазе у директоријуму _doc/XX/
 <<име_линка,овај текст мора да се преведе>>
 ----
 
-// TRANSLATION MISSING
-When the documentation is updated, all languages must be updated:
+Када се ажурира документација, морају да се ажурирају сви језици:
 
-// TRANSLATION MISSING
-* English: this is the reference.
-// TRANSLATION MISSING
-* Other languages: English text, with the line `// TRANSLATION MISSING` above each
-  untranslated text (paragraph, heading, table row, example caption, ...),
-  translators update it later.
+* Енглески: он је референца.
+* Остали језици: енглески текст, са линијом `// TRANSLATION MISSING` изнад
+  сваког непреведеног текста (пасус, наслов, ред табеле, наслов примера, ...),
+  преводиоци га касније ажурирају.
