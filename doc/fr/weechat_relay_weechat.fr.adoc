@@ -305,7 +305,7 @@ htb: {
 [[command_init]]
 === init
 
-_Mis à jour dans les versions 2.4, 2.8, 2.9, 3.5._
+_Mis à jour dans les versions 2.4, 2.8, 2.9, 3.5, 4.10.4._
 
 S'authentifier avec _relay_.
 
@@ -336,6 +336,10 @@ Paramètres :
 [NOTE]
 Avec WeeChat ≥ 1.6, les virgules peuvent être échappées dans la valeur,
 par exemple `+init password=foo\,bar+` pour envoyer le mot de passe "foo,bar".
+
+[NOTE]
+Seuls le premier mot de passe (_password_ ou _password_hash_) et le premier
+_totp_ sont vérifiés, les suivants sont ignorés _(WeeChat ≥ 4.10.4)_.
 
 Le format du mot de passe haché est l'un des suivants, où _hash_ est le mot
 de passe haché en hexadécimal :

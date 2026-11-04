@@ -542,6 +542,7 @@ WeeChat "core" is located in following directories:
 |                test-relay-irc.cpp               | Tests: Relay "irc" protocol.
 |             weechat/                            | Root of unit tests for Relay "weechat" protocol.
 |                test-relay-weechat-msg.cpp       | Tests: Relay "weechat" protocol: messages.
+|                test-relay-weechat-protocol.cpp  | Tests: Relay "weechat" protocol: protocol.
 |          trigger/                               | Root of unit tests for trigger plugin.
 |             test-trigger.cpp                    | Tests: triggers.
 |             test-trigger-config.cpp             | Tests: trigger configuration.

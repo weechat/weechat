@@ -542,6 +542,7 @@ WeeChat „језгро” се налази у следећим директо�
 |             weechat/                            | Root of unit tests for Relay "weechat" protocol.
 // TRANSLATION MISSING
 |                test-relay-weechat-msg.cpp       | Tests: Relay "weechat" protocol: messages.
+|                test-relay-weechat-protocol.cpp  | Тестови: Релеј „weechat” протокол: протокол.
 |          trigger/                               | Корен unit тестова за окидач додатак.
 |             test-trigger.cpp                    | Тестови: окидачи.
 |             test-trigger-config.cpp             | Тестови: конфигурација окидача.
