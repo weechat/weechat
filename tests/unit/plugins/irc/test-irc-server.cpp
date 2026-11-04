@@ -14,6 +14,8 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
+#include <gnutls/gnutls.h>
+#include <gnutls/x509.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-hashtable.h"
 #include "src/gui/gui-buffer.h"
@@ -30,9 +32,37 @@ extern void irc_server_set_index_current_address (struct t_irc_server *server,
 extern int irc_server_connect_cb (const void *pointer, void *data,
                                   int status, int gnutls_rc, int sock,
                                   const char *error, const char *ip_address);
+extern int irc_server_compare_fingerprints (const char *fingerprint,
+                                            const unsigned char *fingerprint_server,
+                                            ssize_t fingerprint_size);
+extern int irc_server_check_certificate_fingerprint (struct t_irc_server *server,
+                                                     gnutls_x509_crt_t certificate,
+                                                     const char *good_fingerprints);
 }
 
 #define IRC_FAKE_SERVER "fake"
+
+/* self-signed certificate (EC P-256, CN=weechat.test), used for fingerprints */
+#define IRC_TEST_CERT                                                   \
+    "-----BEGIN CERTIFICATE-----\n"                                     \
+    "MIIBhDCCASugAwIBAgIUFV/1wDW8MZC8yAaFkAtGtqDKitUwCgYIKoZIzj0EAwIw\n" \
+    "FzEVMBMGA1UEAwwMd2VlY2hhdC50ZXN0MCAXDTI2MTEwNDIwMzcxMloYDzIxMjYx\n" \
+    "MDExMjAzNzEyWjAXMRUwEwYDVQQDDAx3ZWVjaGF0LnRlc3QwWTATBgcqhkjOPQIB\n" \
+    "BggqhkjOPQMBBwNCAATYSec4mq4mTKXVrEKBEHKxiD2ptHgmeSVr57qATeci/Ivr\n" \
+    "dIPhoI0mrBFUwdOzjnHwHtKerQR1Eobrxub/b0hvo1MwUTAdBgNVHQ4EFgQUZrh/\n" \
+    "OVFjfDjYpGP3lfjlYXqcVvEwHwYDVR0jBBgwFoAUZrh/OVFjfDjYpGP3lfjlYXqc\n" \
+    "VvEwDwYDVR0TAQH/BAUwAwEB/zAKBggqhkjOPQQDAgNHADBEAiARL0WkLAD1JZON\n" \
+    "nSvJm2xpJyxjrYx6n9SHj959rbWlvwIgG1SYsjdSsZqTnyz3FIkdl9B7hR8ulkJa\n" \
+    "XlUUmOWG29E=\n"                                                     \
+    "-----END CERTIFICATE-----\n"
+
+/* fingerprints of the certificate above */
+#define IRC_TEST_CERT_SHA1 "e2e262c92ffb004a4554b889864a0e6b1c99d6c5"
+#define IRC_TEST_CERT_SHA256                                            \
+    "214a2b3083b38dae6c305647958a6d7bca79b9819fb4b19d048f683ee32436ef"
+#define IRC_TEST_CERT_SHA512                                            \
+    "dee9a796f2a78031834ea060186bb242c3da42776235c8982e7f792c5a1c7c05"  \
+    "b2ddaac1af607b1b27c4d4a97467a547d79f8d523082982ff3f9b5588318f89f"
 
 TEST_GROUP(IrcServer)
 {
@@ -1583,7 +1613,10 @@ TEST(IrcServer, CreateBuffer)
 
 TEST(IrcServer, FingerprintStrSizes)
 {
-    /* TODO: write tests */
+    char *str;
+
+    WEE_TEST_STR("128=SHA-512, 64=SHA-256, 40=SHA-1",
+                 irc_server_fingerprint_str_sizes ());
 }
 
 /*
@@ -1593,7 +1626,27 @@ TEST(IrcServer, FingerprintStrSizes)
 
 TEST(IrcServer, CompareFingerprints)
 {
-    /* TODO: write tests */
+    const unsigned char fp[4] = { 0x01, 0xab, 0xcd, 0xef };
+
+    /* size mismatch */
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcd", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcdef00", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcdef", fp, 3));
+
+    /* invalid hexadecimal */
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("zzabcdef", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcdzz", fp, 4));
+
+    /* different fingerprint */
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("00abcdef", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("01abcdee", fp, 4));
+    LONGS_EQUAL(-1, irc_server_compare_fingerprints ("efcdab01", fp, 4));
+
+    /* same fingerprint */
+    LONGS_EQUAL(0, irc_server_compare_fingerprints ("01abcdef", fp, 4));
+    LONGS_EQUAL(0, irc_server_compare_fingerprints ("01ABCDEF", fp, 4));
+    LONGS_EQUAL(0, irc_server_compare_fingerprints ("01AbCdEf", fp, 4));
 }
 
 /*
@@ -1603,7 +1656,68 @@ TEST(IrcServer, CompareFingerprints)
 
 TEST(IrcServer, CheckCertificateFingerprint)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    gnutls_x509_crt_t cert;
+    gnutls_datum_t data;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    LONGS_EQUAL(GNUTLS_E_SUCCESS, gnutls_x509_crt_init (&cert));
+    data.data = (unsigned char *)IRC_TEST_CERT;
+    data.size = strlen (IRC_TEST_CERT);
+    LONGS_EQUAL(GNUTLS_E_SUCCESS,
+                gnutls_x509_crt_import (cert, &data, GNUTLS_X509_FMT_PEM));
+
+    /* no fingerprint or invalid size */
+    LONGS_EQUAL(0, irc_server_check_certificate_fingerprint (server, cert, ""));
+    LONGS_EQUAL(0, irc_server_check_certificate_fingerprint (server, cert,
+                                                             ","));
+    LONGS_EQUAL(0, irc_server_check_certificate_fingerprint (server, cert,
+                                                             "abcd"));
+    LONGS_EQUAL(
+        0,
+        irc_server_check_certificate_fingerprint (
+            server, cert, "e2e262c92ffb004a4554b889864a0e6b1c99d6"));
+
+    /* wrong fingerprints */
+    LONGS_EQUAL(
+        0,
+        irc_server_check_certificate_fingerprint (
+            server, cert, "e2e262c92ffb004a4554b889864a0e6b1c99d6c6"));
+    LONGS_EQUAL(
+        0,
+        irc_server_check_certificate_fingerprint (
+            server, cert,
+            "0000000000000000000000000000000000000000,"
+            "214a2b3083b38dae6c305647958a6d7bca79b9819fb4b19d048f683ee32436e0"));
+
+    /* good fingerprint: SHA-1, SHA-256, SHA-512 */
+    LONGS_EQUAL(1, irc_server_check_certificate_fingerprint (
+                    server, cert, IRC_TEST_CERT_SHA1));
+    LONGS_EQUAL(1, irc_server_check_certificate_fingerprint (
+                    server, cert, IRC_TEST_CERT_SHA256));
+    LONGS_EQUAL(1, irc_server_check_certificate_fingerprint (
+                    server, cert, IRC_TEST_CERT_SHA512));
+    LONGS_EQUAL(1, irc_server_check_certificate_fingerprint (
+                    server, cert, "E2E262C92FFB004A4554B889864A0E6B1C99D6C5"));
+
+    /* good fingerprint among other ones */
+    LONGS_EQUAL(
+        1,
+        irc_server_check_certificate_fingerprint (
+            server, cert,
+            "abcd,0000000000000000000000000000000000000000,"
+            IRC_TEST_CERT_SHA256));
+    LONGS_EQUAL(
+        1,
+        irc_server_check_certificate_fingerprint (
+            server, cert,
+            ",," IRC_TEST_CERT_SHA512 ",," IRC_TEST_CERT_SHA1 ","));
+
+    gnutls_x509_crt_deinit (cert);
+
+    irc_server_free (server);
 }
 
 /*
