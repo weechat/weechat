@@ -1252,7 +1252,6 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                 weechat_infolist_new_var_string (item, "plugin_id", ctxt->server->name);
                 weechat_infolist_new_var_string (item, "type_string", "file_recv_active");
-                weechat_infolist_new_var_string (item, "remote_nick", ctxt->nick);
                 weechat_infolist_new_var_string (item, "filename",
                                                  (filename) ? filename : pos_file);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
