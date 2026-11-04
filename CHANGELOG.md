@@ -14,6 +14,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 - core: fix completion of command and command arguments when there is text with spaces after the cursor
 - core: fix plural form in Italian translations, use plural for zero
+- irc: remove local variables "nick" and "host" in server and channel buffers on disconnection
 - irc, relay: display error code 0 instead of the last error code when the connection is closed by the peer
 - irc: keep the number of connection retries of each server address when switching to the next address, so that the next IP of an address is tried on next connection
 - irc: fix display of messages sent to the server in raw buffer, displayed twice and marked as modified even when no modifier changed them

@@ -870,12 +870,16 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
 
 /*
  * Set nickname for server.
+ *
+ * If nick is NULL, the local variable "nick" is removed from server and
+ * channels/pv buffers.
  */
 
 void
 irc_server_set_nick (struct t_irc_server *server, const char *nick)
 {
     struct t_irc_channel *ptr_channel;
+    const char *property;
 
     /* if nick is the same, just return */
     if (weechat_strcmp (server->nick, nick) == 0)
@@ -885,12 +889,13 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
     free (server->nick);
     server->nick = (nick) ? strdup (nick) : NULL;
 
-    /* set local variable "nick" for server and all channels/pv */
-    weechat_buffer_set (server->buffer, "localvar_set_nick", nick);
+    /* set (or remove) local variable "nick" for server and all channels/pv */
+    property = (nick) ? "localvar_set_nick" : "localvar_del_nick";
+    weechat_buffer_set (server->buffer, property, (nick) ? nick : "");
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        weechat_buffer_set (ptr_channel->buffer, "localvar_set_nick", nick);
+        weechat_buffer_set (ptr_channel->buffer, property, (nick) ? nick : "");
     }
 
     irc_server_set_buffer_input_prompt (server);
@@ -900,12 +905,16 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
 
 /*
  * Set host for server.
+ *
+ * If host is NULL, the local variable "host" is removed from server and
+ * channels/pv buffers.
  */
 
 void
 irc_server_set_host (struct t_irc_server *server, const char *host)
 {
     struct t_irc_channel *ptr_channel;
+    const char *property;
 
     /* if host is the same, just return */
     if ((!server->host && !host)
@@ -918,13 +927,13 @@ irc_server_set_host (struct t_irc_server *server, const char *host)
     free (server->host);
     server->host = (host) ? strdup (host) : NULL;
 
-    /* set local variable "host" for server and all channels/pv */
-    weechat_buffer_set (server->buffer, "localvar_set_host", host);
+    /* set (or remove) local variable "host" for server and all channels/pv */
+    property = (host) ? "localvar_set_host" : "localvar_del_host";
+    weechat_buffer_set (server->buffer, property, (host) ? host : "");
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        weechat_buffer_set (ptr_channel->buffer,
-                            "localvar_set_host", host);
+        weechat_buffer_set (ptr_channel->buffer, property, (host) ? host : "");
     }
 
     weechat_bar_item_update ("irc_host");
@@ -5774,13 +5783,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         irc_server_set_buffer_input_prompt (server);
         weechat_bar_item_update ("irc_nick_modes");
     }
-    if (server->host)
-    {
-        free (server->host);
-        server->host = NULL;
-        weechat_bar_item_update ("irc_host");
-        weechat_bar_item_update ("irc_nick_host");
-    }
+    irc_server_set_host (server, NULL);
     server->checking_cap_ls = 0;
     weechat_hashtable_remove_all (server->cap_ls);
     server->checking_cap_list = 0;
