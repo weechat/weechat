@@ -94,11 +94,11 @@ extern void relay_remote_set_url (struct t_relay_remote *remote,
 extern struct t_relay_remote *relay_remote_new_with_options (const char *name,
                                                              struct t_config_option **options);
 extern struct t_relay_remote *relay_remote_new (const char *name,
+                                                const char *url,
                                                 const char *autoconnect,
                                                 const char *autoreconnect_delay,
                                                 const char *proxy,
                                                 const char *tls_verify,
-                                                const char *url,
                                                 const char *password,
                                                 const char *totp_secret);
 extern struct t_relay_remote *relay_remote_new_with_infolist (struct t_infolist *infolist);
