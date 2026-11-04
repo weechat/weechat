@@ -4943,6 +4943,30 @@ commande :
 /relay tlscertkey
 ----
 
+[[relay_protection]]
+=== Protection contre les abus
+
+L'authentification est faite dans la boucle principale de WeeChat : avec un mot
+de passe haché avec PBKDF2, chaque tentative calcule le hachage avec le nombre
+d'itérations défini dans l'option
+<<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>>,
+donc un client qui envoie de nombreuses tentatives d'authentification peut
+ralentir WeeChat.
+
+Lorsque le relai est accessible depuis Internet, il est recommandé de :
+
+* restreindre les connexions à certaines adresses IP avec l'option <<option_relay.network.allowed_ips,relay.network.allowed_ips>>
+* ne pas exposer directement le port du relai : se connecter via un VPN ou un
+  tunnel SSH, ou utiliser un proxy inverse ou des règles de pare-feu qui
+  limitent le nombre de requêtes ou de connexions
+* activer TOTP (voir <<relay_totp,TOTP>>) : avec le protocole _api_, le TOTP est
+  vérifié avant le mot de passe, donc les tentatives sans TOTP valide ne
+  calculent jamais le hachage PBKDF2
+* garder un nombre raisonnable d'itérations dans l'option
+  <<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>> :
+  une valeur plus élevée rend les attaques par force brute plus difficiles,
+  mais chaque tentative d'authentification utilise plus de CPU.
+
 [[relay_irc_proxy]]
 === Proxy IRC
 

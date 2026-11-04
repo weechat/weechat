@@ -4870,6 +4870,32 @@ Schlüssel mittels folgendem Befehl nachträglich geladen werden:
 /relay tlscertkey
 ----
 
+[[relay_protection]]
+// TRANSLATION MISSING
+=== Protection against abuse
+
+// TRANSLATION MISSING
+Authentication is done in the WeeChat main loop: with a password hashed with
+PBKDF2, each attempt computes the hash with the number of iterations set in
+option <<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>>,
+so a client sending many authentication attempts can slow down WeeChat.
+
+// TRANSLATION MISSING
+When the relay can be reached from the Internet, it is recommended to:
+
+// TRANSLATION MISSING
+* restrict connections to some IP addresses with option <<option_relay.network.allowed_ips,relay.network.allowed_ips>>
+* not expose the relay port directly: connect through a VPN or an SSH tunnel,
+  or use a reverse proxy or firewall rules limiting the number of requests or
+  connections
+* enable TOTP (see <<relay_totp,TOTP>>): with _api_ protocol, the TOTP is
+  checked before the password, so attempts without a valid TOTP never compute
+  the PBKDF2 hash
+* keep a reasonable number of iterations in option
+  <<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>>:
+  a higher value makes brute force attacks harder, but each authentication
+  attempt uses more CPU.
+
 [[relay_irc_proxy]]
 === IRC Proxy
 
