@@ -167,6 +167,7 @@ if (ENABLE_RELAY)
     unit/plugins/relay/test-relay-websocket.cpp
     unit/plugins/relay/irc/test-relay-irc.cpp
     unit/plugins/relay/weechat/test-relay-weechat-msg.cpp
+    unit/plugins/relay/weechat/test-relay-weechat-protocol.cpp
   )
   if (ENABLE_CJSON)
     list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
