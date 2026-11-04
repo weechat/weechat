@@ -14,6 +14,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 - core: fix completion of command and command arguments when there is text with spaces after the cursor
 - core: fix plural form in Italian translations, use plural for zero
+- irc: fix display of messages sent to the server in raw buffer, displayed twice and marked as modified even when no modifier changed them
 - relay: fix memory leak when relay clients are restored after `/upgrade`
 
 ### Security

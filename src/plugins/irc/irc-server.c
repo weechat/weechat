@@ -3028,7 +3028,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
     const char *ptr_chan_nick;
     char *new_msg, *ptr_msg, *pos, *tags_to_send, *msg_encoded;
     char str_modifier[128], modifier_data[1024];
-    int first_message, queue_msg, pos_channel, pos_text, pos_encode;
+    int first_message, queue_msg, pos_channel, pos_text, pos_encode, modified;
     struct t_irc_redirect *ptr_redirect;
 
     /* run modifier "irc_out_xxx" */
@@ -3039,6 +3039,13 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                                           server->name,
                                           message);
 
+    /* no changes in new message */
+    if (new_msg && (strcmp (message, new_msg) == 0))
+    {
+        free (new_msg);
+        new_msg = NULL;
+    }
+
     /* message dropped? */
     if (new_msg && !new_msg[0])
     {
@@ -3047,6 +3054,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
         free (new_msg);
         return;
     }
+
+    modified = (new_msg) ? 1 : 0;
 
     if (!new_msg)
         new_msg = strdup (message);
@@ -3157,9 +3166,9 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
         irc_server_outqueue_add (server,
                                  queue_msg,
                                  command,
-                                 (new_msg && first_message) ? message : NULL,
+                                 (modified && first_message) ? message : NULL,
                                  buffer,
-                                 (new_msg) ? 1 : 0,
+                                 modified,
                                  tags_to_send,
                                  ptr_redirect);
 
