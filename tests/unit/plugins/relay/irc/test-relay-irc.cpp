@@ -1088,6 +1088,70 @@ TEST(RelayIrcWithClient, Recv)
 
 /*
  * Test functions:
+ *   relay_irc_recv (message too long)
+ */
+
+TEST(RelayIrcWithClient, RecvTooLong)
+{
+    char *message;
+    size_t size;
+
+    size = RELAY_IRC_MESSAGE_MAX_LENGTH + 2;
+    message = (char *)malloc (size);
+    CHECK(message);
+
+    relay_client_set_status (ptr_relay_client, RELAY_STATUS_CONNECTING);
+
+    /* NICK too long, before any nick is set: ignored, reply 417 with "*" */
+    memcpy (message, "NICK ", 5);
+    memset (message + 5, 'a', RELAY_IRC_MESSAGE_MAX_LENGTH - 4);
+    message[RELAY_IRC_MESSAGE_MAX_LENGTH + 1] = '\0';
+    LONGS_EQUAL(RELAY_IRC_MESSAGE_MAX_LENGTH + 1, strlen (message));
+    CLIENT_RECV(message);
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_relay_client, nick));
+    CHECK_SENT_CLIENT(":weechat.relay.irc 417 * :Input line was too long");
+    LONGS_EQUAL(RELAY_STATUS_CONNECTING, ptr_relay_client->status);
+
+    /* NICK with max length: accepted */
+    message[RELAY_IRC_MESSAGE_MAX_LENGTH] = '\0';
+    CLIENT_RECV(message);
+    STRCMP_EQUAL(message + 5, RELAY_IRC_DATA(ptr_relay_client, nick));
+    CHECK_SENT_CLIENT(NULL);
+
+    /* NICK too long, nick already set: ignored, reply 417 with nick */
+    CLIENT_RECV("NICK alice");
+    STRCMP_EQUAL("alice", RELAY_IRC_DATA(ptr_relay_client, nick));
+    message[RELAY_IRC_MESSAGE_MAX_LENGTH] = 'a';
+    CLIENT_RECV(message);
+    STRCMP_EQUAL("alice", RELAY_IRC_DATA(ptr_relay_client, nick));
+    CHECK_SENT_CLIENT(":weechat.relay.irc 417 alice "
+                      ":Input line was too long");
+    LONGS_EQUAL(RELAY_STATUS_CONNECTING, ptr_relay_client->status);
+
+    /* PASS too long: ignored */
+    memcpy (message, "PASS secret ", 12);
+    CLIENT_RECV(message);
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, password_ok));
+    LONGS_EQUAL(RELAY_STATUS_CONNECTING, ptr_relay_client->status);
+
+    /* Connect the client */
+    CLIENT_RECV("PASS secret");
+    CLIENT_RECV("USER alice 0 * :alice");
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, connected));
+
+    /* PRIVMSG too long: not sent to IRC server, reply 417 */
+    memcpy (message, "PRIVMSG #test :", 15);
+    CLIENT_RECV(message);
+    CHECK_SENT_IRC(NULL);
+    CHECK_SENT_CLIENT(":weechat.relay.irc 417 alice "
+                      ":Input line was too long");
+    LONGS_EQUAL(RELAY_STATUS_CONNECTED, ptr_relay_client->status);
+
+    free (message);
+}
+
+/*
+ * Test functions:
  *   relay_irc_close_connection
  */
 
