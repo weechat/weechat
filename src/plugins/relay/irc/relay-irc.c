@@ -1715,13 +1715,17 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     params = NULL;
 
     /*
-     * Reject oversized message before parsing it (protection against a client
+     * Ignore oversized message before parsing it (protection against a client
      * sending a huge message with lot of parameters, which would block
      * WeeChat and consume a lot of memory).
      */
     if (strlen (data) > RELAY_IRC_MESSAGE_MAX_LENGTH)
     {
-        relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+        relay_irc_sendf (client,
+                         ":%s 417 %s :Input line was too long",
+                         RELAY_IRC_DATA(client, address),
+                         (RELAY_IRC_DATA(client, nick)) ?
+                         RELAY_IRC_DATA(client, nick) : "*");
         return;
     }
 
