@@ -1721,10 +1721,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         str = weechat_infolist_string (infolist, "partial_message");
         new_client->partial_message = (str) ? strdup (str) : NULL;
 
-        str = weechat_infolist_string (infolist, "desc");
-        if (str)
-            new_client->desc = strdup (str);
-        else
+        if (!new_client->desc)
             relay_client_set_desc (new_client);
 
         switch (new_client->protocol)

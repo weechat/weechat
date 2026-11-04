@@ -1003,4 +1003,19 @@ TEST(RelayClientWithSocket, Infolist)
     LONGS_EQUAL(RELAY_STATUS_DISCONNECTED, client2->status);
     relay_client_free (client2);
     infolist_free (infolist);
+
+    /* Client saved without description: description is computed. */
+    infolist = infolist_new (NULL);
+    CHECK(infolist);
+    free (client->desc);
+    client->desc = NULL;
+    LONGS_EQUAL(1, relay_client_add_to_infolist (infolist, client, 1));
+    CHECK(infolist_next (infolist));
+    POINTERS_EQUAL(NULL, infolist_string (infolist, "desc"));
+    client2 = relay_client_new_with_infolist (infolist);
+    CHECK(client2);
+    relay_client_set_desc (client);
+    STRCMP_EQUAL(client->desc, client2->desc);
+    relay_client_free (client2);
+    infolist_free (infolist);
 }
