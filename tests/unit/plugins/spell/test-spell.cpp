@@ -7,15 +7,24 @@
 /* Test spell functions */
 
 #include "CppUTest/TestHarness.h"
+#include "CppUTest/MemoryLeakWarningPlugin.h"
+
+#include "tests.h"
 
 extern "C"
 {
 #include <stdlib.h>
 #include <string.h>
 #include "src/core/core-string.h"
+#include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
+#include "src/gui/gui-nicklist.h"
 #include "src/plugins/spell/spell.h"
 
+extern int spell_command_authorized (const char *command);
+extern int spell_string_is_url (const char *word);
+extern int spell_string_is_nick (struct t_gui_buffer *buffer, char *word);
+extern int spell_string_is_simili_number (const char *word);
 extern void spell_skip_color_codes (char **string, char **result);
 }
 
@@ -29,9 +38,259 @@ extern void spell_skip_color_codes (char **string, char **result);
     string_dyn_free (result, 1);                                        \
     free (str);
 
+#define WEE_CHECK_IS_NICK(__result, __buffer, __word)                  \
+    snprintf (word, sizeof (word), "%s", __word);                       \
+    LONGS_EQUAL(__result, spell_string_is_nick (__buffer, word));       \
+    STRCMP_EQUAL(__word, word);
+
+#define TEST_BUFFER_NAME "test"
+
 TEST_GROUP(Spell)
 {
+    /*
+     * Run a command that sets a dictionary option, without memory leak
+     * detection: the spell library checks if dictionaries exist, and keeps
+     * some memory allocated by this check.
+     */
+
+    static void
+    run_cmd_dict (const char *command)
+    {
+        MemoryLeakWarningPlugin::saveAndDisableNewDeleteOverloads();
+        run_cmd_quiet (command);
+        MemoryLeakWarningPlugin::restoreNewDeleteOverloads();
+    }
 };
+
+/*
+ * Test functions:
+ *   spell_build_option_name
+ *   spell_get_dict
+ */
+
+TEST(Spell, BuildOptionNameGetDict)
+{
+    struct t_gui_buffer *buffer;
+    char *str;
+
+    POINTERS_EQUAL(NULL, spell_build_option_name (NULL));
+    POINTERS_EQUAL(NULL, spell_get_dict (NULL));
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    WEE_TEST_STR("core." TEST_BUFFER_NAME, spell_build_option_name (buffer));
+
+    POINTERS_EQUAL(NULL, spell_get_dict (buffer));
+
+    run_cmd_quiet ("/set spell.check.default_dict \"en\"");
+    STRCMP_EQUAL("en", spell_get_dict (buffer));
+
+    run_cmd_dict ("/set spell.dict.core." TEST_BUFFER_NAME " \"en,de\"");
+    STRCMP_EQUAL("en,de", spell_get_dict (buffer));
+
+    run_cmd_dict ("/unset spell.dict.core." TEST_BUFFER_NAME);
+    run_cmd_quiet ("/unset spell.check.default_dict");
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
+ *   spell_get_dict_with_buffer_name
+ */
+
+TEST(Spell, GetDictWithBufferName)
+{
+    POINTERS_EQUAL(NULL, spell_get_dict_with_buffer_name (NULL));
+    POINTERS_EQUAL(NULL, spell_get_dict_with_buffer_name (""));
+    POINTERS_EQUAL(NULL, spell_get_dict_with_buffer_name ("plugtest"));
+    POINTERS_EQUAL(NULL,
+                   spell_get_dict_with_buffer_name ("plugtest.srv.#chan"));
+
+    /* default dictionary */
+    run_cmd_quiet ("/set spell.check.default_dict \"en\"");
+    STRCMP_EQUAL("en", spell_get_dict_with_buffer_name (""));
+    STRCMP_EQUAL("en", spell_get_dict_with_buffer_name ("plugtest.srv.#chan"));
+
+    /* dictionary for a plugin */
+    run_cmd_dict ("/set spell.dict.plugtest \"de\"");
+    STRCMP_EQUAL("en", spell_get_dict_with_buffer_name ("other.srv.#chan"));
+    STRCMP_EQUAL("de", spell_get_dict_with_buffer_name ("plugtest"));
+    STRCMP_EQUAL("de", spell_get_dict_with_buffer_name ("plugtest.srv"));
+    STRCMP_EQUAL("de", spell_get_dict_with_buffer_name ("plugtest.srv.#chan"));
+
+    /* dictionary for a server: more specific than the plugin */
+    run_cmd_dict ("/set spell.dict.plugtest.srv \"de,en\"");
+    STRCMP_EQUAL("de", spell_get_dict_with_buffer_name ("plugtest"));
+    STRCMP_EQUAL("de", spell_get_dict_with_buffer_name ("plugtest.srv2"));
+    STRCMP_EQUAL("de,en", spell_get_dict_with_buffer_name ("plugtest.srv"));
+    STRCMP_EQUAL("de,en",
+                 spell_get_dict_with_buffer_name ("plugtest.srv.#chan"));
+
+    /* name with a dot in the channel */
+    STRCMP_EQUAL("de,en",
+                 spell_get_dict_with_buffer_name ("plugtest.srv.#a.b.c"));
+
+    run_cmd_dict ("/unset spell.dict.plugtest.srv");
+    run_cmd_dict ("/unset spell.dict.plugtest");
+    run_cmd_quiet ("/unset spell.check.default_dict");
+
+    POINTERS_EQUAL(NULL,
+                   spell_get_dict_with_buffer_name ("plugtest.srv.#chan"));
+}
+
+/*
+ * Test functions:
+ *   spell_command_authorized
+ */
+
+TEST(Spell, CommandAuthorized)
+{
+    /* no command: authorized */
+    LONGS_EQUAL(1, spell_command_authorized (NULL));
+
+    /* commands in the default list */
+    LONGS_EQUAL(1, spell_command_authorized ("msg"));
+    LONGS_EQUAL(1, spell_command_authorized ("me"));
+    LONGS_EQUAL(1, spell_command_authorized ("topic"));
+
+    /* commands not in the default list (case sensitive, exact match) */
+    LONGS_EQUAL(0, spell_command_authorized (""));
+    LONGS_EQUAL(0, spell_command_authorized ("m"));
+    LONGS_EQUAL(0, spell_command_authorized ("ms"));
+    LONGS_EQUAL(0, spell_command_authorized ("msgx"));
+    LONGS_EQUAL(0, spell_command_authorized ("MSG"));
+    LONGS_EQUAL(0, spell_command_authorized ("join"));
+
+    /* custom list */
+    run_cmd_quiet ("/set spell.check.commands \"join,msg\"");
+    LONGS_EQUAL(1, spell_command_authorized ("join"));
+    LONGS_EQUAL(1, spell_command_authorized ("msg"));
+    LONGS_EQUAL(0, spell_command_authorized ("me"));
+
+    /* empty list */
+    run_cmd_quiet ("/set spell.check.commands \"\"");
+    LONGS_EQUAL(1, spell_command_authorized (NULL));
+    LONGS_EQUAL(0, spell_command_authorized ("msg"));
+
+    run_cmd_quiet ("/unset spell.check.commands");
+    LONGS_EQUAL(1, spell_command_authorized ("me"));
+    LONGS_EQUAL(0, spell_command_authorized ("join"));
+}
+
+/*
+ * Test functions:
+ *   spell_string_is_url
+ */
+
+TEST(Spell, StringIsUrl)
+{
+    LONGS_EQUAL(0, spell_string_is_url (""));
+    LONGS_EQUAL(0, spell_string_is_url ("word"));
+    LONGS_EQUAL(0, spell_string_is_url ("http"));
+    LONGS_EQUAL(0, spell_string_is_url ("https//example.com"));
+    LONGS_EQUAL(0, spell_string_is_url ("www.example.com"));
+    LONGS_EQUAL(0, spell_string_is_url ("mailto:user@example.com"));
+    LONGS_EQUAL(0, spell_string_is_url (" https://example.com"));
+
+    LONGS_EQUAL(1, spell_string_is_url ("http:"));
+    LONGS_EQUAL(1, spell_string_is_url ("http://example.com"));
+    LONGS_EQUAL(1, spell_string_is_url ("https://example.com/path?a=b"));
+    LONGS_EQUAL(1, spell_string_is_url ("HTTPS://EXAMPLE.COM"));
+    LONGS_EQUAL(1, spell_string_is_url ("ftp://example.com"));
+    LONGS_EQUAL(1, spell_string_is_url ("ircs://irc.libera.chat:6697"));
+    LONGS_EQUAL(1, spell_string_is_url ("irc6s://irc.example.com"));
+    LONGS_EQUAL(1, spell_string_is_url ("svn+ssh://example.com/repo"));
+    LONGS_EQUAL(1, spell_string_is_url ("git://example.com/repo.git"));
+    LONGS_EQUAL(1, spell_string_is_url ("file:///tmp/test"));
+}
+
+/*
+ * Test functions:
+ *   spell_string_is_nick
+ */
+
+TEST(Spell, StringIsNick)
+{
+    struct t_gui_buffer *buffer;
+    char word[256];
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    CHECK(gui_nicklist_add_nick (buffer, NULL, "alice", NULL,
+                                 NULL, NULL, 1));
+    CHECK(gui_nicklist_add_nick (buffer, NULL, "bob", NULL,
+                                 NULL, NULL, 1));
+
+    /* not a nick */
+    WEE_CHECK_IS_NICK(0, buffer, "");
+    WEE_CHECK_IS_NICK(0, buffer, "carol");
+    WEE_CHECK_IS_NICK(0, buffer, "ali");
+    WEE_CHECK_IS_NICK(0, buffer, "alicex");
+    WEE_CHECK_IS_NICK(0, buffer, "alice:x");
+    WEE_CHECK_IS_NICK(0, buffer, "alice,");
+
+    /* nick */
+    WEE_CHECK_IS_NICK(1, buffer, "alice");
+    WEE_CHECK_IS_NICK(1, buffer, "bob");
+
+    /* nick followed by nick completer and/or space */
+    WEE_CHECK_IS_NICK(1, buffer, "alice:");
+    WEE_CHECK_IS_NICK(1, buffer, "alice: ");
+    WEE_CHECK_IS_NICK(1, buffer, "alice: hello");
+    WEE_CHECK_IS_NICK(1, buffer, "alice hello");
+    WEE_CHECK_IS_NICK(1, buffer, "bob :x");
+
+    /* self and remote nick are checked only in a private buffer */
+    gui_buffer_set (buffer, "localvar_set_nick", "me");
+    gui_buffer_set (buffer, "localvar_set_channel", "carol");
+    WEE_CHECK_IS_NICK(0, buffer, "me");
+    WEE_CHECK_IS_NICK(0, buffer, "carol");
+
+    gui_buffer_set (buffer, "localvar_set_type", "private");
+    WEE_CHECK_IS_NICK(1, buffer, "me");
+    WEE_CHECK_IS_NICK(1, buffer, "ME");
+    WEE_CHECK_IS_NICK(1, buffer, "me:");
+    WEE_CHECK_IS_NICK(1, buffer, "carol");
+    WEE_CHECK_IS_NICK(1, buffer, "Carol: hi");
+    WEE_CHECK_IS_NICK(1, buffer, "alice");
+    WEE_CHECK_IS_NICK(0, buffer, "dave");
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
+ *   spell_string_is_simili_number
+ */
+
+TEST(Spell, StringIsSimiliNumber)
+{
+    LONGS_EQUAL(0, spell_string_is_simili_number (NULL));
+    LONGS_EQUAL(0, spell_string_is_simili_number (""));
+    LONGS_EQUAL(0, spell_string_is_simili_number ("a"));
+    LONGS_EQUAL(0, spell_string_is_simili_number ("123a"));
+    LONGS_EQUAL(0, spell_string_is_simili_number ("a123"));
+    LONGS_EQUAL(0, spell_string_is_simili_number ("12 34"));
+    LONGS_EQUAL(0, spell_string_is_simili_number ("1é"));
+
+    LONGS_EQUAL(1, spell_string_is_simili_number ("0"));
+    LONGS_EQUAL(1, spell_string_is_simili_number ("1234567890"));
+    LONGS_EQUAL(1, spell_string_is_simili_number ("3.14"));
+    LONGS_EQUAL(1, spell_string_is_simili_number ("-42"));
+    LONGS_EQUAL(1, spell_string_is_simili_number ("1,000,000"));
+    LONGS_EQUAL(1, spell_string_is_simili_number ("12:30"));
+    LONGS_EQUAL(1, spell_string_is_simili_number ("2026-11-04"));
+    LONGS_EQUAL(1, spell_string_is_simili_number ("(555)"));
+    LONGS_EQUAL(1, spell_string_is_simili_number ("!?"));
+    LONGS_EQUAL(1, spell_string_is_simili_number ("50%"));
+}
 
 /*
  * Test functions:
