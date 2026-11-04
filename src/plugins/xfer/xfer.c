@@ -290,12 +290,12 @@ xfer_search (const char *plugin_name, const char *plugin_id,
 
 struct t_xfer *
 xfer_search_resume (const char *plugin_name, const char *plugin_id,
-                    enum t_xfer_type type, int port, const char *remote_nick,
-                    const char *token, unsigned long long start_resume)
+                    enum t_xfer_type type, int port, const char *token,
+                    unsigned long long start_resume)
 {
     struct t_xfer *ptr_xfer;
 
-    if (!plugin_name || !plugin_id || !remote_nick)
+    if (!plugin_name || !plugin_id)
         return NULL;
 
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
@@ -305,7 +305,6 @@ xfer_search_resume (const char *plugin_name, const char *plugin_id,
             && (ptr_xfer->type == type)
             && (ptr_xfer->status == XFER_STATUS_CONNECTING)
             && (ptr_xfer->port == port)
-            && (strcmp (ptr_xfer->remote_nick, remote_nick) == 0)
             && ((!ptr_xfer->token && !token)
                 || (ptr_xfer->token && token
                     && (strcmp (ptr_xfer->token, token) == 0)))
@@ -1451,8 +1450,7 @@ xfer_start_resume_cb (const void *pointer, void *data,
 {
     struct t_infolist *infolist;
     struct t_xfer *ptr_xfer;
-    const char *plugin_name, *plugin_id, *remote_nick, *filename;
-    const char *str_start_resume, *token;
+    const char *plugin_name, *plugin_id, *filename, *str_start_resume, *token;
     int port;
     long long parsed_start_resume;
     unsigned long long start_resume;
@@ -1485,14 +1483,12 @@ xfer_start_resume_cb (const void *pointer, void *data,
 
     plugin_name = weechat_infolist_string (infolist, "plugin_name");
     plugin_id = weechat_infolist_string (infolist, "plugin_id");
-    remote_nick = weechat_infolist_string (infolist, "remote_nick");
     filename = weechat_infolist_string (infolist, "filename");
     port = weechat_infolist_integer (infolist, "port");
     str_start_resume = weechat_infolist_string (infolist, "start_resume");
     token = weechat_infolist_string (infolist, "token");
 
-    if (!plugin_name || !plugin_id || !remote_nick || !filename
-        || !str_start_resume)
+    if (!plugin_name || !plugin_id || !filename || !str_start_resume)
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
@@ -1516,7 +1512,7 @@ xfer_start_resume_cb (const void *pointer, void *data,
     ptr_xfer = xfer_search_resume (
         plugin_name, plugin_id,
         (!token) ? XFER_TYPE_FILE_RECV_ACTIVE : XFER_TYPE_FILE_RECV_PASSIVE,
-        port, remote_nick, token, start_resume);
+        port, token, start_resume);
     if (ptr_xfer)
     {
         ptr_xfer->ack = ptr_xfer->start_resume;
