@@ -46,7 +46,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 09:21+0100\n"
+"POT-Creation-Date: 2026-11-04 09:22+0100\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -17557,6 +17557,18 @@ msgstr "%s%s: erro ao criar transferência"
 #, fuzzy, c-format
 msgid "%s%s: invalid resume position \"%s\""
 msgstr "%sErro: não foi possível desassociar a tecla de atalho \"%s\""
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+#| "not found or not ready for transfer"
+msgid ""
+"%s%s: unable to resume file \"%s\": invalid start position received: %llu "
+"(expected: %llu)"
+msgstr ""
+"%s%s: não foi possível retomar transferência do arquivo \"%s\" (porta: %d, "
+"posição inicial: %llu): transferência não encontrada ou não está pronto para "
+"transferir"
 
 #, c-format
 msgid ""

@@ -290,8 +290,7 @@ xfer_search (const char *plugin_name, const char *plugin_id,
 
 struct t_xfer *
 xfer_search_resume (const char *plugin_name, const char *plugin_id,
-                    enum t_xfer_type type, int port, const char *token,
-                    unsigned long long start_resume)
+                    enum t_xfer_type type, int port, const char *token)
 {
     struct t_xfer *ptr_xfer;
 
@@ -309,8 +308,7 @@ xfer_search_resume (const char *plugin_name, const char *plugin_id,
                 || (ptr_xfer->token && token
                     && (strcmp (ptr_xfer->token, token) == 0)))
             && (ptr_xfer->start_resume > 0)
-            && (ptr_xfer->start_resume < ptr_xfer->size)
-            && (ptr_xfer->start_resume == start_resume))
+            && (ptr_xfer->start_resume < ptr_xfer->size))
         {
             return ptr_xfer;
         }
@@ -1512,11 +1510,25 @@ xfer_start_resume_cb (const void *pointer, void *data,
     ptr_xfer = xfer_search_resume (
         plugin_name, plugin_id,
         (!token) ? XFER_TYPE_FILE_RECV_ACTIVE : XFER_TYPE_FILE_RECV_PASSIVE,
-        port, token, start_resume);
+        port, token);
     if (ptr_xfer)
     {
-        ptr_xfer->ack = ptr_xfer->start_resume;
-        xfer_network_connect_init (ptr_xfer);
+        if (start_resume == ptr_xfer->start_resume)
+        {
+            ptr_xfer->ack = ptr_xfer->start_resume;
+            xfer_network_connect_init (ptr_xfer);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            _("%s%s: unable to resume file \"%s\": invalid "
+                              "start position received: %llu (expected: %llu)"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            ptr_xfer->filename, start_resume,
+                            ptr_xfer->start_resume);
+            xfer_close (ptr_xfer, XFER_STATUS_FAILED);
+            xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+        }
     }
     else
     {
