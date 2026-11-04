@@ -19,7 +19,29 @@ extern "C"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-completion.h"
 #include "src/plugins/plugin.h"
+
+extern void gui_completion_find_context (struct t_gui_completion *completion,
+                                         const char *data, int pos);
 }
+
+#define WEE_CHECK_CONTEXT(__context, __arg_index, __base_word,          \
+                          __position_replace, __args, __data, __pos)    \
+    completion = gui_completion_new (NULL, gui_buffers);                \
+    CHECK(completion);                                                  \
+    gui_completion_find_context (completion, __data, __pos);            \
+    LONGS_EQUAL(__context, completion->context);                        \
+    LONGS_EQUAL(__arg_index, completion->base_command_arg_index);       \
+    STRCMP_EQUAL(__base_word, completion->base_word);                   \
+    LONGS_EQUAL(__position_replace, completion->position_replace);      \
+    STRCMP_EQUAL(__args, completion->args);                             \
+    gui_completion_free (completion);
+
+#define WEE_CHECK_SEARCH(__word_found, __data, __pos)                   \
+    completion = gui_completion_new (NULL, gui_buffers);                \
+    CHECK(completion);                                                  \
+    gui_completion_search (completion, __data, __pos, 1);               \
+    STRCMP_EQUAL(__word_found, completion->word_found);                 \
+    gui_completion_free (completion);
 
 TEST_GROUP(GuiCompletion)
 {
@@ -224,4 +246,78 @@ TEST(GuiCompletion, SearchCustomCompletion)
     unhook (hook_cmd);
 
     config_file_option_reset (config_completion_default_template, 1);
+}
+
+/*
+ * Test functions:
+ *   gui_completion_find_context
+ */
+
+TEST(GuiCompletion, FindContext)
+{
+    struct t_gui_completion *completion;
+
+    /* No command (auto completion is disabled with an empty base word). */
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_NULL, 0, "", 0, NULL, "", 0);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_AUTO, 0, "hel", 0, NULL, "hel", 3);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_AUTO, 0, "wor", 6, NULL,
+                      "hello wor xyz", 9);
+
+    /* Command, cursor at end. */
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND, 0, "hel", 1, NULL, "/hel", 4);
+
+    /* Command, cursor in the word, text after the cursor. */
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND, 0, "he", 1, NULL, "/hel", 3);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND, 0, "he", 1, NULL,
+                      "/hel xyz", 3);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND, 0, "hel", 1, NULL,
+                      "/hel xyz", 4);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND, 0, "hel", 1, NULL,
+                      "/hel  x y z", 4);
+
+    /* Command argument, cursor at end. */
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 1, "", 6, "",
+                      "/help ", 6);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 1, "filte", 6, "filte",
+                      "/help filte", 11);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 1, "filte", 8, "filte",
+                      "/help   filte", 13);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 2, "b", 8, "a b",
+                      "/help a b", 9);
+
+    /* Command argument, text after the cursor. */
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 1, "filte", 6,
+                      "filte xyz", "/help filte xyz", 11);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 1, "fil", 6,
+                      "filte xyz", "/help filte xyz", 9);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 1, "filte", 6,
+                      "filte  x y z", "/help filte  x y z", 11);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 2, "b", 8, "a b c",
+                      "/help a b c", 9);
+
+    /* Cursor after a space, before text. */
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 1, "", 6, "xyz",
+                      "/help xyz", 6);
+    WEE_CHECK_CONTEXT(GUI_COMPLETION_COMMAND_ARG, 2, "", 8, "a xyz",
+                      "/help a xyz", 8);
+}
+
+/*
+ * Test functions:
+ *   gui_completion_search (text after the cursor)
+ */
+
+TEST(GuiCompletion, SearchTextAfterCursor)
+{
+    struct t_gui_completion *completion;
+
+    /* Command. */
+    WEE_CHECK_SEARCH("help", "/hel", 4);
+    WEE_CHECK_SEARCH("help", "/hel xyz", 4);
+    WEE_CHECK_SEARCH("help", "/he xyz", 3);
+
+    /* Command argument. */
+    WEE_CHECK_SEARCH("filter", "/help filte", 11);
+    WEE_CHECK_SEARCH("filter", "/help filte xyz", 11);
+    WEE_CHECK_SEARCH("filter", "/help filte  x y z", 11);
 }
