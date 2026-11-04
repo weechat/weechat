@@ -962,12 +962,15 @@ gui_completion_find_context (struct t_gui_completion *completion,
 
     if (ptr_command)
     {
-        /* search argument number and string with arguments */
+        /*
+         * search argument number and string with arguments (only spaces
+         * before the cursor separate arguments)
+         */
         ptr_data = ptr_command;
         while (ptr_data < data + pos)
         {
             ptr_data = strchr (ptr_data, ' ');
-            if (!ptr_data)
+            if (!ptr_data || (ptr_data >= data + pos))
                 break;
             command_arg++;
             while ((ptr_data < data + pos) && (ptr_data[0] == ' '))
