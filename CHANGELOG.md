@@ -15,6 +15,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: refuse SASL success with SCRAM mechanisms when the server signature has not been verified, to enforce mutual authentication
 - irc: refuse SCRAM server nonce that does not start with the client nonce
 - irc: refuse SCRAM iteration count lower than 4096 received from the server, to prevent offline dictionary attacks on the client proof, or greater than 1000000, to prevent blocking WeeChat for a long time
+- relay: ignore IRC messages longer than 4096 bytes received from a client and reply with numeric 417 (ERR_INPUTTOOLONG), to prevent blocking WeeChat and consuming a lot of memory when parsing huge messages ([#2367](https://github.com/weechat/weechat/issues/2367))
 
 ## [4.10.2] - 2026-10-31
 
