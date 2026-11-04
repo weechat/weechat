@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-03 23:46+0100\n"
+"POT-Creation-Date: 2026-11-04 09:14+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -17042,6 +17042,10 @@ msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
 #, fuzzy, c-format
 msgid "%s%s: error creating xfer"
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid resume position \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
 
 #, fuzzy, c-format
 msgid ""
