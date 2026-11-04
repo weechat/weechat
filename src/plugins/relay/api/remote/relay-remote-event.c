@@ -352,7 +352,8 @@ relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, long long id)
 
     snprintf (str_tag_id, sizeof (str_tag_id), "relay_remote_line_id_%lld", id);
 
-    while (ptr_line)
+    for (; ptr_line;
+         ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, -1))
     {
         ptr_line_data = weechat_hdata_pointer (relay_hdata_line, ptr_line, "data");
         if (!ptr_line_data)
@@ -366,7 +367,6 @@ relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, long long id)
                     return ptr_line;
             }
         }
-        ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, -1);
     }
 
     /* Line not found */
