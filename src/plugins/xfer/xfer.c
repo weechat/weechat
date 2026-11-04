@@ -269,6 +269,47 @@ xfer_search (const char *plugin_name, const char *plugin_id,
 }
 
 /*
+ * Search for a xfer waiting for a resume acknowledgement.
+ *
+ * Return pointer to xfer found, NULL if not found.
+ */
+
+static struct t_xfer *
+xfer_search_resume (const char *plugin_name, const char *plugin_id,
+                    enum t_xfer_type type, int port, const char *remote_nick,
+                    const char *filename, const char *token,
+                    unsigned long long start_resume)
+{
+    struct t_xfer *ptr_xfer;
+
+    if (!plugin_name || !plugin_id || !remote_nick || !filename)
+        return NULL;
+
+    for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
+    {
+        if ((strcmp (ptr_xfer->plugin_name, plugin_name) == 0)
+            && (strcmp (ptr_xfer->plugin_id, plugin_id) == 0)
+            && (ptr_xfer->type == type)
+            && (ptr_xfer->status == XFER_STATUS_CONNECTING)
+            && (ptr_xfer->port == port)
+            && (strcmp (ptr_xfer->remote_nick, remote_nick) == 0)
+            && (strcmp (ptr_xfer->filename, filename) == 0)
+            && ((!ptr_xfer->token && !token)
+                || (ptr_xfer->token && token
+                    && (strcmp (ptr_xfer->token, token) == 0)))
+            && (ptr_xfer->start_resume > 0)
+            && (ptr_xfer->start_resume < ptr_xfer->size)
+            && (ptr_xfer->start_resume == start_resume))
+        {
+            return ptr_xfer;
+        }
+    }
+
+    /* xfer not found */
+    return NULL;
+}
+
+/*
  * Search for a xfer by number (first xfer is 0).
  *
  * Return pointer to xfer found, NULL if not found.
@@ -1398,8 +1439,10 @@ xfer_start_resume_cb (const void *pointer, void *data,
 {
     struct t_infolist *infolist;
     struct t_xfer *ptr_xfer;
-    const char *plugin_name, *plugin_id, *filename, *str_start_resume, *token;
+    const char *plugin_name, *plugin_id, *remote_nick, *filename;
+    const char *str_start_resume, *token;
     int port;
+    long long parsed_start_resume;
     unsigned long long start_resume;
 
     /* Make C compiler happy. */
@@ -1430,12 +1473,14 @@ xfer_start_resume_cb (const void *pointer, void *data,
 
     plugin_name = weechat_infolist_string (infolist, "plugin_name");
     plugin_id = weechat_infolist_string (infolist, "plugin_id");
+    remote_nick = weechat_infolist_string (infolist, "remote_nick");
     filename = weechat_infolist_string (infolist, "filename");
     port = weechat_infolist_integer (infolist, "port");
     str_start_resume = weechat_infolist_string (infolist, "start_resume");
     token = weechat_infolist_string (infolist, "token");
 
-    if (!plugin_name || !plugin_id || !filename || !str_start_resume)
+    if (!plugin_name || !plugin_id || !remote_nick || !filename
+        || !str_start_resume)
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
@@ -1444,17 +1489,25 @@ xfer_start_resume_cb (const void *pointer, void *data,
         goto error;
     }
 
-    sscanf (str_start_resume, "%llu", &start_resume);
+    if (!weechat_util_parse_longlong (str_start_resume, 10,
+                                      &parsed_start_resume)
+        || (parsed_start_resume < 0))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: invalid resume position \"%s\""),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        str_start_resume);
+        goto error;
+    }
+    start_resume = (unsigned long long)parsed_start_resume;
 
-    ptr_xfer = xfer_search (plugin_name, plugin_id,
-                            (!token) ? XFER_TYPE_FILE_RECV_ACTIVE : XFER_TYPE_FILE_RECV_PASSIVE,
-                            XFER_STATUS_CONNECTING, port);
+    ptr_xfer = xfer_search_resume (
+        plugin_name, plugin_id,
+        (!token) ? XFER_TYPE_FILE_RECV_ACTIVE : XFER_TYPE_FILE_RECV_PASSIVE,
+        port, remote_nick, filename, token, start_resume);
     if (ptr_xfer)
     {
-        ptr_xfer->pos = start_resume;
-        ptr_xfer->ack = start_resume;
-        ptr_xfer->start_resume = start_resume;
-        ptr_xfer->last_check_pos = start_resume;
+        ptr_xfer->ack = ptr_xfer->start_resume;
         xfer_network_connect_init (ptr_xfer);
     }
     else
