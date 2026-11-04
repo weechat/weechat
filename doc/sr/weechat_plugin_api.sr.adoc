@@ -1090,11 +1090,10 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 
 _WeeChat ≥ 4.10.0._
 
-// TRANSLATION MISSING
-Compare two memory areas of the same size in constant time: the execution
-time depends only on _size_, not on the content of the areas, so this function
-can be used to compare secrets (for example password hashes or MACs) without
-leaking information through the comparison time.
+Пореди две области меморије исте величину у константном времену: време
+извршавања зависи само од _size_, а не од садржаја области, тако да се ова
+функција може користити за поређење тајни (на пример, хешева лозинки или
+MAC-ова) без цурења информација кроз време потребно за поређење.
 
 Прототип:
 
@@ -1106,22 +1105,19 @@ int weechat_string_memcmp_constant_time (const void *area1, const void *area2,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _area1_: first memory area
-* _area2_: second memory area
-* _size_: number of bytes to compare (both areas must have at least _size_
-  bytes)
+* _area1_: прва област меморије
+* _area2_: друга област меморије
+* _size_: број бајтова који се пореди (обе области морају да имају барем _size_
+  бајтова)
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* 0 if areas are equal (or if both pointers are NULL)
-* 1 if areas are different (or if only one pointer is NULL)
+* 0 ако су области исте (или ако су оба показивача NULL)
+* 1 ако су области различите (или ако је само један показивач NULL)
 
 [NOTE]
-// TRANSLATION MISSING
-Unlike function `memcmp`, the return value is not an ordering: it only tells
-if the areas are equal or not.
+За разлику од функције `memcmp`, повратна вредност није редослед: она само говори
+да ли су области исте или нису.
 
 C пример:
 
@@ -2556,11 +2552,10 @@ _WeeChat ≥ 0.3.2, ажурирано у верзији 5.0.0._
 
 Враћа показивач на текст уноса за бафер (показивач унутар „string” аргумента), или NULL ако стринг није команда.
 
-// TRANSLATION MISSING
-If option
+Ако је опција
 link:weechat_user.sr.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
-is enabled, a buffer number command like `/42` or `/12/34` (jump to buffer) is
-a command, so NULL is returned _(WeeChat ≥ 5.0.0)_.
+укључена, команда броја бафера као што је `/42` или `/12/34` (скок на бафер) је
+команда, тако да се враћа NULL _(WeeChat ≥ 5.0.0)_.
 
 Прототип:
 
@@ -3321,13 +3316,12 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 | `+${hdata.пром1.пром2...}+` +
   `+${hdata[листа].пром1.пром2...}+` |
-// TRANSLATION MISSING
 | Hdata вредност (показивачи `window` и `buffer` се подразумевано постављају на текући
   прозор/бафер), `листа` може бити име листе (пример: „gui_buffers”), показивач
   (пример: „0x1234abcd”) или име показивача (пример: „my_pointer”). +
   Када је `var1` хеш табела, могу да се позову методе `keys()`, `values()`, `keys_sorted()`,
   `keys_values()` и `keys_values_sorted()`. +
-  For name of hdata and variables, see function <<_hdata_get,hdata_get>>.
+  За име hdata и променљивих, погледајте функцију <<_hdata_get,hdata_get>>.
 | >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +
@@ -6288,9 +6282,8 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 
 _WeeChat ≥ 4.11.0._
 
-// TRANSLATION MISSING
-Call a function on all hashtable entries, sorted by key (with the compare
-function on keys given when the hashtable was created).
+Позива функцију над свим ставкама хеш табеле, сортирано по кључу (при
+чему је функција поређења кључева наведена приликом креирања хеш табеле).
 
 Прототип:
 
@@ -6311,11 +6304,10 @@ void weechat_hashtable_map_sorted (struct t_hashtable *hashtable,
 * _callback_map_data_: показивач који се прослеђује функцији повратног позива мапирања када се позове
 
 [NOTE]
-// TRANSLATION MISSING
-The list of entries is built before the first call to the callback: entries
-added by the callback are not sent to it, and the callback must not remove an
-entry that has not been sent to it yet (removing the entry received or an entry
-already received is safe).
+Листа ставки се изграђује пре првог позива функције повратног позива: ставке
+које додаје повратни позив се не шаљу у њу, и функција повратног позива не сме
+да уклони ставку која јој још увек није послата (уклањање ставке која се прима,
+или ставке која је раније примљен је безбедно).
 
 C пример:
 
@@ -12337,10 +12329,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Промењени су режими бафера.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_notify_changed]] buffer_notify_changed | 5.0.0
-| Pointer: buffer.
-| Notify level of buffer changed.
+| Показивач: бафер.
+| Ниво обавештавања за бафер је промењен.
 
 | weechat | [[hook_signal_buffer_time_for_each_line_changed]] buffer_time_for_each_line_changed | 4.4.0
 | Показивач: бафер.
@@ -12350,10 +12341,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Приказује префикс за сваку линију која је промењена.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_day_change_changed]] buffer_day_change_changed | 5.0.0
-| Pointer: buffer.
-| Display of day change message has been changed.
+| Показивач: бафер.
+| Промењен је приказ поруке о промени дана.
 
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Показивач: бафер.
@@ -12710,11 +12700,10 @@ int rc2 = weechat_hook_signal_send ("[flags:stop_on_error,ignore_eat]my_signal2"
                                     WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-In scripts, with type _int_, the signal data can be an integer or a string
-with an integer; if it is not a valid integer, the signal is not sent and
-_WEECHAT_RC_ERROR_ is returned _(WeeChat ≥ 5.0.0)_.
+У скриптама, са типом _int_, подаци сигнала могу да буду цели број или стринг
+са целим бројем; ако то није исправан цео број, сигнал се не шаље и враћа се
+_WEECHAT_RC_ERROR_ _(WeeChat ≥ 5.0.0)_.
 
 Скрипта (Python):
 
@@ -14064,16 +14053,13 @@ struct t_hook *weechat_hook_focus (const char *area,
 | weechat       | group    | Име групе.
 |===
 
-// TRANSLATION MISSING
-Extra info for buflist bar items ("buflist", "buflist2", ...):
+Додатне инфо за ставке buflist траке („buflist”, „buflist2”, ...):
 
 [width="100%", cols="^1,^1,5", options="header"]
 |===
 | Додатак ^(1)^ | Кључ        | Опис
-// TRANSLATION MISSING
-| irc           | irc_server  | Pointer to IRC server _(WeeChat ≥ 5.0.0)_.
-// TRANSLATION MISSING
-| irc           | irc_channel | Pointer to IRC channel _(WeeChat ≥ 5.0.0)_.
+| irc           | irc_server  | Показивач на IRC сервер _(WeeChat ≥ 5.0.0)_.
+| irc           | irc_channel | Показивач на IRC канал _(WeeChat ≥ 5.0.0)_.
 |===
 
 [NOTE]
@@ -14917,8 +14903,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _old_full_name_: старо пуно име бафера („додатак.име”), постављено пре промене имена бафера _(WeeChat ≥ 2.8)_
 ** _short_name_: кратко име бафера (напомена: користи се само за приказ и корисник може да га промени, ово не сме да се употребљава за проналажење имена бафера, уместо њега употребите _name_, _full_name_ или локалну променљиву _channel_)
 ** _type_: тип бафера: „formatted” или „free” _(WeeChat ≥ 4.2.0)_
-// TRANSLATION MISSING
-** _notify_: notify level of buffer: "none", "highlight", "message" or "all" _(WeeChat ≥ 5.0.0)_
+** _notify_: ниво обавештавања бафера: „none”, „highlight”, „message” или „all” _(WeeChat ≥ 5.0.0)_
 ** _title_: наслов бафера
 ** _modes_: режими _(WeeChat ≥ 4.3.0)_
 ** _nicklist_last_id_assigned_: последњи јединствени идентификатор употребљен у овом баферу за групу или надимак _(WeeChat ≥ 4.3.0)_

@@ -1244,12 +1244,10 @@ HTTP/1.1 200 OK
 ]
 ----
 
-// TRANSLATION MISSING
 [[resource_options]]
-=== Options
+=== Опције
 
-// TRANSLATION MISSING
-Return a configuration option.
+Враћа опцију конфигурације.
 
 Крајња тачка:
 
@@ -1259,39 +1257,27 @@ GET /api/options/{option_name}
 
 Параметри путање:
 
-// TRANSLATION MISSING
-* `option_name` (string, required): option full name: configuration file,
-  section and option, separated by dots (example: `weechat.look.buffer_time_format`)
+* `option_name` (стринг, обавезан): пуно име опције: конфигурациони фајл,
+  одељак и опција, раздвојени тачкама (пример: `weechat.look.buffer_time_format`)
 
-// TRANSLATION MISSING
-The value is returned as it is stored in the option, like the command `/set`
-displays it: it is not evaluated (for example `${sec.data.xxx}` is returned as-is).
+Вредност се враћа онаква каква је сачувана у опцији, како је приказује команда
+`/set`: не израчунава се (на пример `${sec.data.xxx}` се враћа онакво какво је).
 
-// TRANSLATION MISSING
-Fields returned:
+Поља која се враћају:
 
-// TRANSLATION MISSING
-* `name` (string): option full name
-// TRANSLATION MISSING
-* `type` (string): option type: `boolean`, `integer`, `string`, `color` or `enum`
-// TRANSLATION MISSING
-* `value` (boolean, integer, string or null): option value: boolean for type
-  `boolean`, integer for type `integer`, string for types `string`, `color` and
-  `enum`, `null` if the value is null
-// TRANSLATION MISSING
-* `default_value` (boolean, integer, string or null): option default value
-  (same types as `value`)
-// TRANSLATION MISSING
-* `description` (string): option description (in English)
-// TRANSLATION MISSING
-* `min` (integer): minimum value (only for type `integer`)
-// TRANSLATION MISSING
-* `max` (integer): maximum value (only for type `integer`)
-// TRANSLATION MISSING
-* `string_values` (array of strings): allowed values (only for type `enum`)
+* `name` (стринг): пуно име опције
+* `type` (стринг): тип опције: `boolean`, `integer`, `string`, `color` или `enum`
+* `value` (логичка, целобројна, стринг или null): вредност опције: логичка за тип
+  `boolean`, целобројна за тип `integer`, стринг за типове `string`, `color` и
+  `enum`, `null` ако је вредност null
+* `default_value` (логичка, целобројна, стринг или null): подразумевана вредност
+  опције (исти типови као за `value`)
+* `description` (стринг): опис опције (на енглеском)
+* `min` (целобројна): минимална вредност (само за тип `integer`)
+* `max` (целобројна): максимална вредност (само за тип `integer`)
+* `string_values` (низ стрингова): дозвољене вредности (само за тип `enum`)
 
-// TRANSLATION MISSING
-Request example: get an integer option:
+Пример захтева: враћање целобројне опције:
 
 [source,shell]
 ----
@@ -1318,8 +1304,7 @@ HTTP/1.1 200 OK
 }
 ----
 
-// TRANSLATION MISSING
-Request example: get a color option:
+Пример захтева: враћање опције боје:
 
 [source,shell]
 ----
@@ -1344,8 +1329,7 @@ HTTP/1.1 200 OK
 }
 ----
 
-// TRANSLATION MISSING
-Request example: get an enum option:
+Пример захтева: враћање enum опције:
 
 [source,shell]
 ----
@@ -1376,8 +1360,7 @@ HTTP/1.1 200 OK
 }
 ----
 
-// TRANSLATION MISSING
-Request example: get a boolean option:
+Пример захтева: враћање логичке опције:
 
 [source,shell]
 ----
@@ -1402,8 +1385,7 @@ HTTP/1.1 200 OK
 }
 ----
 
-// TRANSLATION MISSING
-Request example: get an unknown option:
+Пример захтева: враћање непознате опције:
 
 [source,shell]
 ----
@@ -2096,8 +2078,7 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
 }
 ----
 
-// TRANSLATION MISSING
-Example: the day has changed:
+Пример: променио се дан:
 
 [source,json]
 ----
