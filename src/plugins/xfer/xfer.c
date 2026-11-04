@@ -277,12 +277,11 @@ xfer_search (const char *plugin_name, const char *plugin_id,
 struct t_xfer *
 xfer_search_resume (const char *plugin_name, const char *plugin_id,
                     enum t_xfer_type type, int port, const char *remote_nick,
-                    const char *filename, const char *token,
-                    unsigned long long start_resume)
+                    const char *token, unsigned long long start_resume)
 {
     struct t_xfer *ptr_xfer;
 
-    if (!plugin_name || !plugin_id || !remote_nick || !filename)
+    if (!plugin_name || !plugin_id || !remote_nick)
         return NULL;
 
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
@@ -293,7 +292,6 @@ xfer_search_resume (const char *plugin_name, const char *plugin_id,
             && (ptr_xfer->status == XFER_STATUS_CONNECTING)
             && (ptr_xfer->port == port)
             && (strcmp (ptr_xfer->remote_nick, remote_nick) == 0)
-            && (strcmp (ptr_xfer->filename, filename) == 0)
             && ((!ptr_xfer->token && !token)
                 || (ptr_xfer->token && token
                     && (strcmp (ptr_xfer->token, token) == 0)))
@@ -1504,7 +1502,7 @@ xfer_start_resume_cb (const void *pointer, void *data,
     ptr_xfer = xfer_search_resume (
         plugin_name, plugin_id,
         (!token) ? XFER_TYPE_FILE_RECV_ACTIVE : XFER_TYPE_FILE_RECV_PASSIVE,
-        port, remote_nick, filename, token, start_resume);
+        port, remote_nick, token, start_resume);
     if (ptr_xfer)
     {
         ptr_xfer->ack = ptr_xfer->start_resume;
