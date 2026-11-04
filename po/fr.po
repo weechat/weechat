@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:45+0100\n"
+"POT-Creation-Date: 2026-11-27 20:46+0100\n"
 "PO-Revision-Date: 2025-03-16 14:48+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -18589,6 +18589,14 @@ msgstr "%s%s : erreur de création du xfer"
 #, c-format
 msgid "%s%s: invalid resume position \"%s\""
 msgstr "%s%s : position de reprise invalide : \"%s\""
+
+#, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\": invalid start position received: %llu "
+"(expected: %llu)"
+msgstr ""
+"%s%s : impossible de continuer le fichier \"%s\" : position de départ reçue "
+"invalide : %llu (attendue : %llu)"
 
 #, c-format
 msgid ""

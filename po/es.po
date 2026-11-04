@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 20:45+0100\n"
+"POT-Creation-Date: 2026-11-27 20:46+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -17680,6 +17680,17 @@ msgstr "%s%s: error al crear la transferencia"
 #, fuzzy, c-format
 msgid "%s%s: invalid resume position \"%s\""
 msgstr "%sError: no se pudo deshacer el atajo \"%s\""
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+#| "not found or not ready for transfer"
+msgid ""
+"%s%s: unable to resume file \"%s\": invalid start position received: %llu "
+"(expected: %llu)"
+msgstr ""
+"%s%s: no es posible resumir el archivo \"%s\" (puerto: %d, posición inicial: "
+"%llu): xfer no encontrado o no está listo para transferir"
 
 #, c-format
 msgid ""
