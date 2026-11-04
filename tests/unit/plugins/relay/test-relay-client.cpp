@@ -9,9 +9,11 @@
 #include "CppUTest/TestHarness.h"
 
 #include "tests.h"
+#include "tests-record.h"
 
 extern "C"
 {
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -570,11 +572,21 @@ TEST(RelayClientWithSocket, RecvCb)
     LONGS_EQUAL(31, client->bytes_recv);
     peer_recv (buffer, sizeof (buffer));
 
-    /* Connection closed by the remote client: client is disconnected. */
+    /*
+     * Connection closed by the remote client: client is disconnected (the
+     * error code displayed is 0, not the last value of errno).
+     */
     close (sock_peer);
     sock_peer = -1;
     sock = client->sock;
+    errno = EAGAIN;
+    record_start ();
     relay_client_recv_cb (client, NULL, sock);
+    record_stop ();
+    CHECK(record_search_msg_regex (
+              "core.weechat",
+              "reading data on socket for client .*: error 0 "
+              "\\(connection closed by peer\\)"));
     LONGS_EQUAL(RELAY_STATUS_DISCONNECTED, client->status);
     LONGS_EQUAL(-1, client->sock);
     POINTERS_EQUAL(NULL, client->hook_fd);

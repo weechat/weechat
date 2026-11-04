@@ -696,7 +696,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
                         RELAY_COLOR_CHAT_CLIENT,
                         client->desc,
                         RELAY_COLOR_CHAT,
-                        errno,
+                        (num_read == 0) ? 0 : errno,
                         (num_read == 0) ? _("(connection closed by peer)") :
                         strerror (errno));
                 }
