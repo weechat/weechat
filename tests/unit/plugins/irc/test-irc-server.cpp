@@ -27,6 +27,7 @@ extern "C"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-nick.h"
+#include "src/plugins/irc/irc-raw.h"
 #include "src/plugins/irc/irc-server.h"
 
 extern int irc_server_fingerprint_search_algo_with_size (int size);
@@ -153,7 +154,8 @@ test_irc_server_signal_cb (const void *pointer, void *data,
 
 /*
  * Callback for IRC modifiers: drop the message if it contains "drop",
- * otherwise add " (modified)" at the end.
+ * return the same message if it contains "same", otherwise add
+ * " (modified)" at the end.
  */
 
 char *
@@ -171,6 +173,9 @@ test_irc_server_modifier_cb (const void *pointer, void *data,
 
     if (strstr (string, "drop"))
         return strdup ("");
+
+    if (strstr (string, "same"))
+        return strdup (string);
 
     string_asprintf (&result, "%s (modified)", string);
     return result;
@@ -2546,6 +2551,17 @@ TEST(IrcServer, SendOneMsg)
     CHECK(server->outqueue[0]);
     STRCMP_EQUAL("PING", server->outqueue[0]->command);
     STRCMP_EQUAL("PING :1\r\n", server->outqueue[0]->message_after_mod);
+    POINTERS_EQUAL(NULL, server->outqueue[0]->message_before_mod);
+    LONGS_EQUAL(0, server->outqueue[0]->modified);
+
+    /* Message not modified: displayed only once in raw buffer. */
+    irc_server_outqueue_send_one_msg (server, server->outqueue[0]);
+    CHECK(last_irc_raw_message);
+    STRCMP_EQUAL("PING :1", last_irc_raw_message->message);
+    LONGS_EQUAL(IRC_RAW_FLAG_SEND, last_irc_raw_message->flags);
+    CHECK(!last_irc_raw_message->prev_message
+          || (strcmp (last_irc_raw_message->prev_message->message,
+                      "PING :1") != 0));
     irc_server_outqueue_free_all (server, 0);
 
     /* Connected: low priority by default. */
@@ -2590,6 +2606,15 @@ TEST(IrcServer, SendOneMsg)
     STRCMP_EQUAL("PING :x (modified)\r\n",
                  server->outqueue[1]->message_after_mod);
     LONGS_EQUAL(1, server->outqueue[1]->modified);
+    irc_server_outqueue_free_all (server, 1);
+
+    /* Modifier returning the same message: not modified. */
+    irc_server_send_one_msg (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
+                             "PING :same", NULL, "PING", NULL, NULL);
+    CHECK(server->outqueue[1]);
+    POINTERS_EQUAL(NULL, server->outqueue[1]->message_before_mod);
+    STRCMP_EQUAL("PING :same\r\n", server->outqueue[1]->message_after_mod);
+    LONGS_EQUAL(0, server->outqueue[1]->modified);
     irc_server_outqueue_free_all (server, 1);
 
     /* Message dropped by a modifier. */
