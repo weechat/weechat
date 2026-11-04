@@ -638,7 +638,7 @@ relay_remote_network_recv_cb (const void *pointer, void *data, int fd)
                         _("%sremote[%s]: reading data on socket: error %d %s"),
                         weechat_prefix ("error"),
                         remote->name,
-                        errno,
+                        (num_read == 0) ? 0 : errno,
                         (num_read == 0) ? _("(connection closed by peer)") :
                         strerror (errno));
                     relay_remote_network_disconnect (remote);

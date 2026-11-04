@@ -3887,7 +3887,7 @@ irc_server_recv_cb (const void *pointer, void *data, int fd)
                         server->buffer,
                         _("%s%s: reading data on socket: error %d %s"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        errno,
+                        (num_read == 0) ? 0 : errno,
                         (num_read == 0) ? _("(connection closed by peer)") :
                         strerror (errno));
                     weechat_printf (
