@@ -579,6 +579,7 @@ relay_http_add_to_body (struct t_relay_http_request *request,
  *   -6: invalid timestamp (used as salt)
  *   -7: invalid number of iterations (PBKDF2)
  *   -8: out of memory
+ *   -9: authentication is rate limited
  */
 
 int
@@ -762,6 +763,9 @@ relay_http_get_auth_status (struct t_relay_client *client)
                 case -3: /* Invalid iterations */
                     rc = -7;
                     goto end;
+                case -5: /* Authentication is rate limited */
+                    rc = -9;
+                    goto end;
                 case -4: /* Invalid password */
                 default:
                     rc = -2;
@@ -840,6 +844,11 @@ relay_http_check_auth (struct t_relay_client *client)
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
                                         RELAY_HTTP_ERROR_OUT_OF_MEMORY);
+            break;
+        case -9: /* Authentication is rate limited */
+            relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
+                                        NULL,
+                                        RELAY_HTTP_ERROR_AUTH_RATE_LIMITED);
             break;
     }
     return (rc == 0) ? 1 : 0;

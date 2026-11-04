@@ -38,6 +38,7 @@ enum t_relay_client_http_status
     "(not found or not supported)"
 #define RELAY_HTTP_ERROR_INVALID_TIMESTAMP    "Invalid timestamp"
 #define RELAY_HTTP_ERROR_INVALID_ITERATIONS   "Invalid number of iterations"
+#define RELAY_HTTP_ERROR_AUTH_RATE_LIMITED    "Authentication is rate limited"
 #define RELAY_HTTP_ERROR_BAD_REQUEST          "Bad request"
 #define RELAY_HTTP_ERROR_NOT_FOUND            "Resource not found"
 #define RELAY_HTTP_ERROR_METHOD_NOT_ALLOWED   "Method Not Allowed"
