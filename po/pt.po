@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 23:46+0100\n"
+"POT-Creation-Date: 2026-11-05 22:39+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <weechat-dev@nongnu.org>\n"
@@ -18778,6 +18778,11 @@ msgstr "%s%s: protocolo xfer \"%s\" desconhecido"
 #, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: não é possível aceder ao ficheiro \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgid "%s%s: cannot get local address for xfer: error %d %s"
+msgstr "%s%s: não é possível criar o socket para xfer: erro %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"

@@ -1273,6 +1273,11 @@ xfer_add_cb (const void *pointer, void *data,
             server_sock = weechat_infolist_integer (infolist, "socket");
             if (getsockname (server_sock, (struct sockaddr *)&local_addr_storage, &local_addr_length))
             {
+                weechat_printf (NULL,
+                                _("%s%s: cannot get local address for xfer: "
+                                  "error %d %s"),
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                                errno, strerror (errno));
                 goto error;
             }
             bind_addr.ss_family = local_addr_storage.ss_family;

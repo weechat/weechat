@@ -782,6 +782,8 @@ TEST(XferAdd, AddCbErrors)
                           "type_string", "chat_send",
                           "remote_nick", "alice", "local_nick", "bob",
                           "socket", "-1", NULL));
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "cannot get local address for xfer: error");
 
     POINTERS_EQUAL(saved_xfer_list, xfer_list);
 }

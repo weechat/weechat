@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 23:46+0100\n"
+"POT-Creation-Date: 2026-11-05 22:39+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -17034,6 +17034,10 @@ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot get local address for xfer: error %d %s"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
