@@ -343,6 +343,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
                         strerror (errno));
         xfer_close (xfer, XFER_STATUS_FAILED);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+        return;
     }
 
     switch (pid = fork ())
