@@ -620,6 +620,29 @@ TEST(XferDcc, RecvFileChildHashMismatch)
     WEE_TEST_STR("20 78 30", pipe_messages ());
 }
 
+TEST(XferDcc, RecvFileChildTooMuchData)
+{
+    char *str;
+
+    xfer.type = XFER_TYPE_FILE_RECV_PASSIVE;
+    xfer.file = open (filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+    CHECK(xfer.file >= 0);
+    xfer.size = 5;
+
+    /* CRC32 of "hello". */
+    init_hash ("3610A686");
+
+    /* Sender sends more data than the file size: extra data is ignored. */
+    send (peer.sock, "hello world", 11, 0);
+    shutdown (peer.sock, SHUT_WR);
+    xfer_dcc_recv_file_child (&xfer);
+
+    LONGS_EQUAL(5, xfer.pos);
+    WEE_TEST_STR("hello", file_content ());
+    LONGS_EQUAL(5, read_last_ack ());
+    WEE_TEST_STR("20 70 30", pipe_messages ());
+}
+
 TEST(XferDcc, RecvFileChildResume)
 {
     FILE *file;

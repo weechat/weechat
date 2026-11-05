@@ -206,6 +206,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - tcl: return 0 instead of raising an error in functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
 - tcl: add missing function completion_free
 - trigger: escape backslashes in arguments displayed by commands `/trigger input|output|recreate` ([#729](https://github.com/weechat/weechat/issues/729))
+- xfer: ignore data received beyond the file size in DCC file transfer
 - xfer: fix infinite loop in child process when resuming a file shorter than the resume position
 - xfer: do not start the transfer when the file to send cannot be opened
 - build: use ncurses library and headers given with PKG_CONFIG_PATH or CMake options NCURSESW_LIBRARY and NCURSES_INCLUDE_PATH instead of the system ones ([#921](https://github.com/weechat/weechat/issues/921))

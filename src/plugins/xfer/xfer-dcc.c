@@ -305,6 +305,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     static char buffer[XFER_BLOCKSIZE_MAX];
     time_t last_sent, last_second, new_time;
     unsigned long long blocksize, pos_last_ack, speed_limit, recv_last_second;
+    unsigned long long to_read;
     struct pollfd poll_fd;
     ssize_t written, total_written;
     unsigned char *bin_hash;
@@ -399,7 +400,12 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
             }
             else
             {
-                num_read = recv (xfer->sock, buffer, blocksize, 0);
+                /* Do not read beyond the end of file. */
+                to_read = (xfer->pos < xfer->size) ?
+                    xfer->size - xfer->pos : 0;
+                if (to_read > blocksize)
+                    to_read = blocksize;
+                num_read = recv (xfer->sock, buffer, to_read, 0);
                 if (num_read == -1)
                 {
                     if ((errno != EAGAIN) && (errno != EWOULDBLOCK) && (errno != EINTR))
