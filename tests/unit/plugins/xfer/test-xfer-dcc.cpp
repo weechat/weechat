@@ -30,6 +30,8 @@ extern "C"
 #include "src/plugins/xfer/xfer.h"
 #include "src/plugins/xfer/xfer-dcc.h"
 
+extern unsigned long long xfer_dcc_ack_to_position (unsigned long long pos,
+                                                    uint32_t ack);
 extern int xfer_dcc_recv_file_send_ack (struct t_xfer *xfer);
 extern int xfer_dcc_resume_hash (struct t_xfer *xfer);
 }
@@ -51,7 +53,7 @@ struct t_test_dcc_peer
     size_t chunk;                      /* size of chunks sent (sender)      */
     char received[8192];               /* data received (receiver)          */
     size_t received_size;              /* size of data received             */
-    size_t ack_offset;                 /* offset added to ACKs (receiver)   */
+    unsigned long long ack_offset;     /* offset added to ACKs (receiver)   */
     int acks;                          /* number of ACKs sent/received      */
     uint32_t last_ack;                 /* last ACK received (sender)        */
 };
@@ -105,7 +107,8 @@ test_dcc_peer_receiver (void *arg)
         if (num_read <= 0)
             break;
         peer->received_size += num_read;
-        ack = htonl ((uint32_t)(peer->ack_offset + peer->received_size));
+        ack = htonl ((uint32_t)((peer->ack_offset + peer->received_size)
+                                & 0xFFFFFFFFULL));
         if (send (peer->sock, &ack, 4, MSG_NOSIGNAL) == 4)
             peer->acks++;
     }
@@ -286,6 +289,26 @@ TEST_GROUP(XferDcc)
         CHECK(xfer.file >= 0);
     }
 
+    /*
+     * Create a sparse file of 4 GiB + size of content, with content at the
+     * end (at offset 4 GiB), and open it for reading.
+     */
+    void open_big_file (const char *content)
+    {
+        int fd;
+        size_t length;
+
+        length = strlen (content);
+        fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+        CHECK(fd >= 0);
+        LONGS_EQUAL(0, ftruncate (fd, (off_t)0x100000000LL + length));
+        LONGS_EQUAL(length, pwrite (fd, content, length,
+                                    (off_t)0x100000000LL));
+        close (fd);
+        xfer.file = open (filename, O_RDONLY);
+        CHECK(xfer.file >= 0);
+    }
+
     /* Return content of file (must be freed after use). */
     char *file_content ()
     {
@@ -357,6 +380,31 @@ TEST_GROUP(XferDcc)
         xfer.hash_target = strdup (target);
     }
 };
+
+/*
+ * Test functions:
+ *   xfer_dcc_ack_to_position
+ */
+
+TEST(XferDcc, AckToPosition)
+{
+    /* File smaller than 4 GiB. */
+    CHECK(xfer_dcc_ack_to_position (0, 0) == 0);
+    CHECK(xfer_dcc_ack_to_position (100, 100) == 100);
+    CHECK(xfer_dcc_ack_to_position (100, 50) == 50);
+    CHECK(xfer_dcc_ack_to_position (100, 200) == 200);
+    CHECK(xfer_dcc_ack_to_position (0xFFFFFFFFULL, 0xFFFFFFFFUL) == 0xFFFFFFFFULL);
+
+    /* File greater than 4 GiB: only low 32 bits are received. */
+    CHECK(xfer_dcc_ack_to_position (0x100000000ULL, 0) == 0x100000000ULL);
+    CHECK(xfer_dcc_ack_to_position (0x10000000AULL, 10) == 0x10000000AULL);
+    CHECK(xfer_dcc_ack_to_position (0x10000000AULL, 5) == 0x100000005ULL);
+    CHECK(xfer_dcc_ack_to_position (0x10000000AULL, 0xFFFFFFF0UL)
+          == 0xFFFFFFF0ULL);
+    CHECK(xfer_dcc_ack_to_position (0x200000003ULL, 1) == 0x200000001ULL);
+    CHECK(xfer_dcc_ack_to_position (0x200000003ULL, 0xFFFFFFFFUL)
+          == 0x1FFFFFFFFULL);
+}
 
 /*
  * Test functions:
@@ -441,6 +489,58 @@ TEST(XferDcc, SendFileChildResume)
     MEMCMP_EQUAL("world", peer.received, 5);
     LONGS_EQUAL(11, xfer.ack);
     WEE_TEST_STR("20 30", pipe_messages ());
+}
+
+TEST(XferDcc, SendFileChildBigFile)
+{
+    char *str;
+
+    /* File greater than 4 GiB (sparse), send only the end of file. */
+    open_big_file ("hello world, this is a DCC test");
+    xfer.size = 0x100000000ULL + 31;
+    xfer.pos = 0x100000000ULL;
+    xfer.ack = 0x100000000ULL;
+    peer.size = 31;
+    peer.ack_offset = 0x100000000ULL;
+
+    /* Receiver sends ACKs (32 bits) and closes the connection at the end. */
+    start_peer (&test_dcc_peer_receiver);
+    xfer_dcc_send_file_child (&xfer);
+    wait_peer ();
+
+    CHECK(xfer.pos == 0x100000000ULL + 31);
+    CHECK(xfer.ack == 0x100000000ULL + 31);
+    LONGS_EQUAL(31, peer.received_size);
+    MEMCMP_EQUAL("hello world, this is a DCC test", peer.received, 31);
+    WEE_TEST_STR("20 30", pipe_messages ());
+}
+
+TEST(XferDcc, SendFileChildBigFileBlocks)
+{
+    char *str;
+
+    /* Same with small blocks, wait for ACK before sending next block. */
+    open_big_file ("hello world, this is a DCC test");
+    xfer.size = 0x100000000ULL + 31;
+    xfer.pos = 0x100000000ULL;
+    xfer.ack = 0x100000000ULL;
+    xfer.blocksize = 8;
+    xfer.fast_send = 0;
+    peer.size = 31;
+    peer.ack_offset = 0x100000000ULL;
+
+    start_peer (&test_dcc_peer_receiver);
+    xfer_dcc_send_file_child (&xfer);
+    wait_peer ();
+
+    CHECK(xfer.pos == 0x100000000ULL + 31);
+    CHECK(xfer.ack == 0x100000000ULL + 31);
+    LONGS_EQUAL(31, peer.received_size);
+    LONGS_EQUAL(4, peer.acks);
+    str = pipe_messages ();
+    CHECK(strncmp (str, "20", 2) == 0);
+    CHECK(strcmp (str + strlen (str) - 2, "30") == 0);
+    free (str);
 }
 
 TEST(XferDcc, SendFileChildErrors)

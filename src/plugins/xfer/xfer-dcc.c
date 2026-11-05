@@ -30,6 +30,27 @@
 
 
 /*
+ * Convert an ACK received from the receiver to a position in file.
+ *
+ * The ACK is the number of bytes received, on 32 bits: for files greater than
+ * 4 GiB, only the low 32 bits of the position are received, so the position
+ * is the greatest one lower than or equal to "pos" (position in file sent)
+ * with these low 32 bits.
+ */
+
+unsigned long long
+xfer_dcc_ack_to_position (unsigned long long pos, uint32_t ack)
+{
+    unsigned long long position;
+
+    position = (pos & ~0xFFFFFFFFULL) | (unsigned long long)ack;
+    if ((position > pos) && (position >= 0x100000000ULL))
+        position -= 0x100000000ULL;
+
+    return position;
+}
+
+/*
  * Child process for sending file with DCC protocol.
  */
 
@@ -80,7 +101,8 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
                 if (num_read == 4)
                 {
                     recv (xfer->sock, (char *) &ack, 4, 0);
-                    xfer->ack = ntohl (ack);
+                    xfer->ack = xfer_dcc_ack_to_position (xfer->pos,
+                                                          ntohl (ack));
 
                     /* DCC send OK? */
                     if ((xfer->pos >= xfer->size)
