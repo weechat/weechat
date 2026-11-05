@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:39+0100\n"
+"POT-Creation-Date: 2026-11-05 22:42+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -17740,6 +17740,10 @@ msgstr "%s%s: nemůžu zapsat log soubor \"%s\""
 msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: nemohu vytvořit soket pro odesílání souboru"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for receiving file: error %d %s"
+msgstr "%s%s: nemohu vytvořit soket pro odesílání souboru"
+
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s%s: nemohu nastavit \"nonblock\" volbu pro soket: chyba %d %s"
@@ -17748,6 +17752,10 @@ msgstr "%s%s: nemohu nastavit \"nonblock\" volbu pro soket: chyba %d %s"
 #| msgid "%s%s: unable to connect: unexpected error (%d)"
 msgid "%s%s: encountered unexpected xfer type (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for chat: error %d %s"
+msgstr "%s%s: nemohu vytvořit soket pro odesílání souboru"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

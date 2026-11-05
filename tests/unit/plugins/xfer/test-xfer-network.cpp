@@ -606,6 +606,16 @@ TEST(XferNetworkWithXfer, FdCbErrors)
     RECORD_CHECK_MSG_REGEX("core.weechat", "unable to create socket for "
                            "sending file: error");
 
+    xfer->type = XFER_TYPE_FILE_RECV_PASSIVE;
+    xfer->status = XFER_STATUS_CONNECTING;
+    xfer->sock = socket (AF_INET, SOCK_STREAM, 0);
+    CHECK(xfer->sock >= 0);
+    LONGS_EQUAL(WEECHAT_RC_OK, xfer_network_fd_cb (xfer, NULL, 0));
+    LONGS_EQUAL(XFER_STATUS_FAILED, xfer->status);
+    LONGS_EQUAL(-1, xfer->sock);
+    RECORD_CHECK_MSG_REGEX("core.weechat", "unable to create socket for "
+                           "receiving file: error");
+
     xfer->type = XFER_TYPE_CHAT_SEND;
     xfer->status = XFER_STATUS_WAITING;
     xfer->sock = socket (AF_INET, SOCK_STREAM, 0);
@@ -614,6 +624,8 @@ TEST(XferNetworkWithXfer, FdCbErrors)
     LONGS_EQUAL(XFER_STATUS_FAILED, xfer->status);
     LONGS_EQUAL(-1, xfer->sock);
     POINTERS_EQUAL(NULL, xfer->buffer);
+    RECORD_CHECK_MSG_REGEX("core.weechat", "unable to create socket for "
+                           "chat: error");
 }
 
 /*

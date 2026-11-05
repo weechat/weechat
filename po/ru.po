@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:39+0100\n"
+"POT-Creation-Date: 2026-11-05 22:42+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -16964,12 +16964,20 @@ msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s DCC: не могу создать сокет для отправки файла\n"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to create socket for receiving file: error %d %s"
+msgstr "%s DCC: не могу создать сокет для отправки файла\n"
+
+#, fuzzy, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
 
 #, fuzzy, c-format
 msgid "%s%s: encountered unexpected xfer type (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for chat: error %d %s"
+msgstr "%s DCC: не могу создать сокет для отправки файла\n"
 
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

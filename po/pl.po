@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:39+0100\n"
+"POT-Creation-Date: 2026-11-05 22:42+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -18500,6 +18500,11 @@ msgstr "%s%s: nie można zapisać pliku \"%s\": %s"
 msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: nie można otworzyć gniazda do wysłania pliku: błąd %d %s"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgid "%s%s: unable to create socket for receiving file: error %d %s"
+msgstr "%s%s: nie można otworzyć gniazda do wysłania pliku: błąd %d %s"
+
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
@@ -18507,6 +18512,11 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
 #, c-format
 msgid "%s%s: encountered unexpected xfer type (%d)"
 msgstr "%s%s: napotkano niespodziewany typ xfer (%d)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgid "%s%s: unable to create socket for chat: error %d %s"
+msgstr "%s%s: nie można otworzyć gniazda do wysłania pliku: błąd %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

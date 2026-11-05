@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:39+0100\n"
+"POT-Creation-Date: 2026-11-05 22:42+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -18142,6 +18142,11 @@ msgstr "%s%s: impossibile scrivere il file di log \"%s\": %s"
 msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: impossibile creare il socket per inviare il file: errore %d %s"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgid "%s%s: unable to create socket for receiving file: error %d %s"
+msgstr "%s%s: impossibile creare il socket per inviare il file: errore %d %s"
+
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr ""
@@ -18151,6 +18156,11 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: encountered unexpected xfer type (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgid "%s%s: unable to create socket for chat: error %d %s"
+msgstr "%s%s: impossibile creare il socket per inviare il file: errore %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:39+0100\n"
+"POT-Creation-Date: 2026-11-05 22:42+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -18759,6 +18759,11 @@ msgstr "%s%s: ログファイル \"%s\" の書き込みに失敗: %s"
 msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: ファイル送信用にソケットを作れません: エラー %d %s"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgid "%s%s: unable to create socket for receiving file: error %d %s"
+msgstr "%s%s: ファイル送信用にソケットを作れません: エラー %d %s"
+
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できません: エラー %d %s"
@@ -18767,6 +18772,11 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #| msgid "%s%s: unable to connect: unexpected error (%d)"
 msgid "%s%s: encountered unexpected xfer type (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgid "%s%s: unable to create socket for chat: error %d %s"
+msgstr "%s%s: ファイル送信用にソケットを作れません: エラー %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

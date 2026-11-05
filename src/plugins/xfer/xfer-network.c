@@ -525,7 +525,10 @@ xfer_network_fd_cb (const void *pointer, void *data, int fd)
             if (sock < 0)
             {
                 weechat_printf (NULL,
+                                (xfer->type == XFER_TYPE_FILE_SEND_PASSIVE) ?
                                 _("%s%s: unable to create socket for sending "
+                                  "file: error %d %s") :
+                                _("%s%s: unable to create socket for receiving "
                                   "file: error %d %s"),
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME,
                                 error, strerror (error));
@@ -593,8 +596,8 @@ xfer_network_fd_cb (const void *pointer, void *data, int fd)
             if (sock < 0)
             {
                 weechat_printf (NULL,
-                                _("%s%s: unable to create socket for sending "
-                                  "file: error %d %s"),
+                                _("%s%s: unable to create socket for chat: "
+                                  "error %d %s"),
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME,
                                 error, strerror (error));
                 xfer_close (xfer, XFER_STATUS_FAILED);

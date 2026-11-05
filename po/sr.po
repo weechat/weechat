@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:39+0100\n"
+"POT-Creation-Date: 2026-11-05 22:42+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -18454,6 +18454,11 @@ msgstr "%s%s: не може да се упише у фајл „%s”: %s"
 msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: није могао да се креира сокет за слање фајла: грешка %d %s"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgid "%s%s: unable to create socket for receiving file: error %d %s"
+msgstr "%s%s: није могао да се креира сокет за слање фајла: грешка %d %s"
+
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s%s: није успело постављање опције „nonblock” за сокет: грешка %d %s"
@@ -18461,6 +18466,11 @@ msgstr "%s%s: није успело постављање опције „nonbloc
 #, c-format
 msgid "%s%s: encountered unexpected xfer type (%d)"
 msgstr "%s%s: наишло се на неочекивани xfer тип (%d)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgid "%s%s: unable to create socket for chat: error %d %s"
+msgstr "%s%s: није могао да се креира сокет за слање фајла: грешка %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

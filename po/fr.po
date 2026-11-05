@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:39+0100\n"
-"PO-Revision-Date: 2026-11-05 22:45+0100\n"
+"POT-Creation-Date: 2026-11-05 22:42+0100\n"
+"PO-Revision-Date: 2026-11-05 23:05+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -19026,6 +19026,12 @@ msgstr ""
 "%s%s : impossible de créer le socket pour l'envoi du fichier : erreur %d %s"
 
 #, c-format
+msgid "%s%s: unable to create socket for receiving file: error %d %s"
+msgstr ""
+"%s%s : impossible de créer le socket pour la réception du fichier : erreur "
+"%d %s"
+
+#, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr ""
 "%s%s : impossible de positionner l'option \"nonblock\" pour le socket : "
@@ -19034,6 +19040,10 @@ msgstr ""
 #, c-format
 msgid "%s%s: encountered unexpected xfer type (%d)"
 msgstr "%s%s : type de xfer inattendu (%d)"
+
+#, c-format
+msgid "%s%s: unable to create socket for chat: error %d %s"
+msgstr "%s%s : impossible de créer le socket pour la discussion : erreur %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
