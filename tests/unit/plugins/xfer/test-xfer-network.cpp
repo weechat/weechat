@@ -338,6 +338,12 @@ TEST(XferNetworkWithXfer, ChildReadCb)
     LONGS_EQUAL(WEECHAT_RC_OK, xfer_network_child_read_cb (xfer, NULL, 0));
     LONGS_EQUAL(XFER_STATUS_CONNECTING, xfer->status);
 
+    /* Incomplete message: ignored. */
+    LONGS_EQUAL(5, write (xfer->child_write, "20123", 5));
+    LONGS_EQUAL(WEECHAT_RC_OK, xfer_network_child_read_cb (xfer, NULL, 0));
+    LONGS_EQUAL(XFER_STATUS_CONNECTING, xfer->status);
+    LONGS_EQUAL(0, xfer->pos);
+
     /* Connecting -> active: transfer starts. */
     xfer->pos = 1024;
     xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE, XFER_NO_ERROR);

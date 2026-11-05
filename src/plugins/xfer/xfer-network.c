@@ -200,8 +200,11 @@ xfer_network_child_read_cb (const void *pointer, void *data, int fd)
     xfer = (struct t_xfer *)pointer;
 
     num_read = read (xfer->child_read, bufpipe, sizeof (bufpipe));
-    if (num_read > 0)
+
+    /* Message sent by child is always complete (ignore incomplete message). */
+    if (num_read == (int)sizeof (bufpipe))
     {
+        bufpipe[sizeof (bufpipe) - 1] = '\0';
         sscanf (bufpipe + 2, "%llu", &xfer->pos);
         xfer->last_activity = time (NULL);
         xfer_file_calculate_speed (xfer, 0);
