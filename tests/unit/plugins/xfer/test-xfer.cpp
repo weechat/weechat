@@ -1144,6 +1144,12 @@ TEST(XferAdd, NickAutoAccepted)
     LONGS_EQUAL(1, xfer_nick_auto_accepted ("LIBERA", "Bob"));
     LONGS_EQUAL(0, xfer_nick_auto_accepted ("oftc", "bob"));
     LONGS_EQUAL(0, xfer_nick_auto_accepted ("libera", "carol"));
+
+    /* The whole server name must match. */
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("libera2", "bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("liberatest", "bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("liber", "bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("", "bob"));
 }
 
 /*
