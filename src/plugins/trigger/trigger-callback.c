@@ -1373,7 +1373,7 @@ trigger_callback_focus_cb (const void *pointer, void *data,
     ctx.extra_vars = weechat_hashtable_dup (info);
 
     /* add data in hashtables used for conditions/replace/command */
-    trigger_callback_set_common_vars (trigger, info);
+    trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     ptr_value = weechat_hashtable_get (info, "_window");
     if (ptr_value && ptr_value[0] && (strncmp (ptr_value, "0x", 2) == 0))
     {
