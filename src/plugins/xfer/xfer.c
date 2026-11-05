@@ -684,6 +684,9 @@ xfer_nick_auto_accepted (const char *server, const char *nick)
 /*
  * Add a xfer to list.
  *
+ * The socket "sock" (if >= 0) is used by the new xfer, or closed in case of
+ * error.
+ *
  * Return pointer to new xfer, NULL if error.
  */
 
@@ -708,6 +711,8 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         weechat_printf (NULL,
                         _("%s%s: not enough memory for new xfer"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME);
+        if (sock >= 0)
+            close (sock);
         return NULL;
     }
 
@@ -1427,10 +1432,10 @@ xfer_add_cb (const void *pointer, void *data,
 
     if (!ptr_xfer)
     {
+        /* socket already closed by xfer_new */
         weechat_printf (NULL,
                         _("%s%s: error creating xfer"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME);
-        close (sock);
         goto error;
     }
 

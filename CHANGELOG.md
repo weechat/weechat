@@ -22,6 +22,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: keep the number of connection retries of each server address when switching to the next address, so that the next IP of an address is tried on next connection
 - irc: fix display of messages sent to the server in raw buffer, displayed twice and marked as modified even when no modifier changed them
 - relay: fix memory leak when relay clients are restored after `/upgrade`
+- xfer: fix socket closed twice when a transfer cannot be created
 - xfer: fix crash when the size of a received file is missing in signal "xfer_add"
 - xfer: ignore data received beyond the file size in DCC file transfer
 - xfer: fix infinite loop in child process when resuming a file shorter than the resume position
