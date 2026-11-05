@@ -49,6 +49,7 @@
 - relay: limit size of partial message received while reading an HTTP request to prevent memory exhaustion
 - relay: fix out-of-bounds read in dump of data ([#2324](https://github.com/weechat/weechat/issues/2324))
 - script: reject script names containing path separators in the scripts repository file to prevent writing files outside the scripts directory ([#2351](https://github.com/weechat/weechat/issues/2351))
+- xfer: compare the whole server name in option xfer.file.auto_accept_nicks, so that a nick is not auto-accepted on another server whose name starts with the same chars
 - xfer: validate resume position received in DCC RESUME and DCC ACCEPT, to prevent a remote peer from completing a file transfer with a truncated file ([#2369](https://github.com/weechat/weechat/pull/2369))
 - xfer: fix comparison of status in search of transfers, preventing a remote peer from starting a file transfer that was not accepted by the user ([#2352](https://github.com/weechat/weechat/issues/2352))
 - xfer: limit size of partial message received in DCC chat to prevent memory exhaustion ([#2349](https://github.com/weechat/weechat/issues/2349))
