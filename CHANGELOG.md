@@ -206,6 +206,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - tcl: return 0 instead of raising an error in functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
 - tcl: add missing function completion_free
 - trigger: escape backslashes in arguments displayed by commands `/trigger input|output|recreate` ([#729](https://github.com/weechat/weechat/issues/729))
+- xfer: fix timeout of transfers when option xfer.network.timeout is greater than 2147483 seconds
 - xfer: fix error displayed when a connection cannot be accepted for a passive file receive or a DCC chat
 - xfer: display an error when the local address cannot be found for a DCC send or chat
 - xfer: fix socket closed twice when a transfer cannot be created

@@ -26,12 +26,15 @@ extern "C"
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include "src/core/core-config-file.h"
 #include "src/core/core-hook.h"
 #include "src/core/core-string.h"
 #include "src/core/hook/hook-signal.h"
+#include "src/core/hook/hook-timer.h"
 #include "src/gui/gui-buffer.h"
 #include "src/plugins/weechat-plugin.h"
 #include "src/plugins/xfer/xfer.h"
+#include "src/plugins/xfer/xfer-config.h"
 #include "src/plugins/xfer/xfer-network.h"
 
 extern struct t_xfer *xfer_alloc (void);
@@ -145,6 +148,8 @@ TEST_GROUP(XferNetworkWithXfer)
         unlink (temp_filename);
         free (filename);
         free (temp_filename);
+
+        config_file_option_reset (xfer_config_network_timeout, 1);
 
     }
 
@@ -757,6 +762,17 @@ TEST(XferNetworkWithXfer, ConnectChatSend)
     CHECK(xfer->sock >= 0);
     CHECK(xfer->hook_fd);
     CHECK(xfer->hook_timer);
+}
+
+TEST(XferNetworkWithXfer, ConnectTimeout)
+{
+    xfer->type = XFER_TYPE_CHAT_SEND;
+
+    /* Timeout of 3000000 seconds: interval does not fit in an integer. */
+    config_file_option_set (xfer_config_network_timeout, "3000000", 1);
+    LONGS_EQUAL(1, xfer_network_connect (xfer));
+    CHECK(xfer->hook_timer);
+    CHECK(HOOK_TIMER(xfer->hook_timer, interval) == 3000000000L);
 }
 
 TEST(XferNetworkWithXfer, ConnectFileRecvPassive)
