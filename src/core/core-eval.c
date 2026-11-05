@@ -181,7 +181,8 @@ eval_strstr_level (const char *string, const char *search,
                    int escape)
 {
     const char *ptr_string;
-    int level, length_search, debug_id;
+    int level, debug_id;
+    size_t length_search;
     int length_prefix2, length_suffix2;
 
     ptr_string = NULL;
