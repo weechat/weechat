@@ -633,8 +633,8 @@ xfer_alloc (void)
 int
 xfer_nick_auto_accepted (const char *server, const char *nick)
 {
-    int rc, i, num_nicks, num_chars;
-    char **nicks, *pos;
+    int rc, i, num_nicks;
+    char **nicks, *pos, *nick_server;
 
     rc = 0;
 
@@ -654,13 +654,17 @@ xfer_nick_auto_accepted (const char *server, const char *nick)
             pos = strrchr (nicks[i], '.');
             if (pos)
             {
-                num_chars = weechat_utf8_pos (nicks[i], pos - nicks[i]);
-                if ((weechat_strncasecmp (server, nicks[i], num_chars) == 0)
+                /* the whole server name must match (not only a prefix) */
+                nick_server = weechat_strndup (nicks[i], pos - nicks[i]);
+                if (nick_server
+                    && (weechat_strcasecmp (server, nick_server) == 0)
                     && (weechat_strcasecmp (nick, pos + 1) == 0))
                 {
                     rc = 1;
-                    break;
                 }
+                free (nick_server);
+                if (rc)
+                    break;
             }
             else
             {
