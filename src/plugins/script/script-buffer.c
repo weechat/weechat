@@ -941,6 +941,10 @@ script_buffer_window_scrolled_cb (const void *pointer, void *data,
 
     script_buffer_get_window_info (signal_data, &start_line_y, &chat_height);
 
+    /* Chat area not displayed (window too small). */
+    if (chat_height <= 0)
+        return WEECHAT_RC_OK;
+
     line = script_buffer_selected_line;
     while (line < start_line_y)
     {

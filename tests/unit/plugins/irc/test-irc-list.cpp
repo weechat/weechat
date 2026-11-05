@@ -620,7 +620,7 @@ TEST(IrcListWithServer, MoveLine)
 TEST(IrcListWithServer, Window)
 {
     struct t_gui_buffer *old_buffer;
-    int start_line_y, chat_height;
+    int start_line_y, chat_height, old_chat_height;
 
     create_list (NULL);
     irc_list_buffer_refresh (server, 1);
@@ -651,6 +651,16 @@ TEST(IrcListWithServer, Window)
                                              WEECHAT_HOOK_SIGNAL_POINTER,
                                              gui_current_window));
     LONGS_EQUAL(3, server->list->selected_line);
+
+    /* Chat area not displayed (window too small): nothing done. */
+    old_chat_height = gui_current_window->win_chat_height;
+    gui_current_window->win_chat_height = 0;
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_list_window_scrolled_cb (NULL, NULL, "window_scrolled",
+                                             WEECHAT_HOOK_SIGNAL_POINTER,
+                                             gui_current_window));
+    LONGS_EQUAL(3, server->list->selected_line);
+    gui_current_window->win_chat_height = old_chat_height;
 
     gui_window_switch_to_buffer (gui_current_window, old_buffer, 1);
 }

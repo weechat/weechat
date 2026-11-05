@@ -694,6 +694,10 @@ irc_list_window_scrolled_cb (const void *pointer, void *data,
 
     irc_list_get_window_info (signal_data, &start_line_y, &chat_height);
 
+    /* Chat area not displayed (window too small). */
+    if (chat_height <= 0)
+        return WEECHAT_RC_OK;
+
     line = ptr_server->list->selected_line;
     while (line < start_line_y)
     {
