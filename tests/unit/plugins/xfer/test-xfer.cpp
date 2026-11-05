@@ -18,6 +18,7 @@ extern "C"
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <netinet/in.h>
@@ -1100,6 +1101,34 @@ TEST(XferAdd, NewInvalidAddress)
     CHECK(ptr_xfer);
     STRCMP_EQUAL("?", ptr_xfer->remote_address_str);
     RECORD_CHECK_MSG_REGEX("core.weechat", "unable to interpret address");
+}
+
+/*
+ * Test functions:
+ *   xfer_new (socket closed on error)
+ */
+
+TEST(XferAdd, NewSocketClosedOnError)
+{
+    struct sockaddr_in addr;
+    struct t_xfer *ptr_xfer;
+    int fd_pipe[2];
+
+    memset (&addr, 0, sizeof (addr));
+    addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = htonl (INADDR_LOOPBACK);
+
+    /* Not a socket: listen fails, xfer fails and the socket is closed. */
+    LONGS_EQUAL(0, pipe (fd_pipe));
+    close (fd_pipe[1]);
+    ptr_xfer = xfer_new ("irc", "libera", XFER_TYPE_CHAT_SEND,
+                         XFER_NO_PROTOCOL, "alice", "bob", NULL, NULL, 0,
+                         NULL, NULL, 0, (struct sockaddr *)&addr,
+                         sizeof (addr), 5000, fd_pipe[0], NULL, NULL);
+    POINTERS_EQUAL(NULL, ptr_xfer);
+    LONGS_EQUAL(-1, fcntl (fd_pipe[0], F_GETFD));
+    LONGS_EQUAL(XFER_STATUS_FAILED, xfer_list->status);
+    LONGS_EQUAL(-1, xfer_list->sock);
 }
 
 /*
