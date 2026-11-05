@@ -761,6 +761,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-xfer-chat.cpp                  | Tests: DCC chat.
 // TRANSLATION MISSING
+|             test-xfer-dcc.cpp                   | Tests: DCC file transfer.
+// TRANSLATION MISSING
 |             test-xfer-file.cpp                  | Tests: file functions.
 // TRANSLATION MISSING
 |             test-xfer-network.cpp               | Tests: network functions.

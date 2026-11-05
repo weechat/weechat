@@ -579,6 +579,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          xfer/                                  | Корен unit тестова за Xfer додатак.
 |             test-xfer.cpp                       | Тестови: xfer функције.
 |             test-xfer-chat.cpp                  | Тестови: DCC чет.
+// TRANSLATION MISSING
+|             test-xfer-dcc.cpp                   | Tests: DCC file transfer.
 |             test-xfer-file.cpp                  | Тестови: фајл функције.
 |             test-xfer-network.cpp               | Тестови: мрежне функције.
 |       scripts/                                  | Корен тестова за API скриптовања.
