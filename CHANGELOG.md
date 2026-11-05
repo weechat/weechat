@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix send of uninitialized data to socks4 proxy when the username has 127 chars or more, or when the address can not be resolved
 - core: fix completion of command and command arguments when there is text with spaces after the cursor
 - core: fix plural form in Italian translations, use plural for zero
 - irc: remove local variables "nick" and "host" in server and channel buffers on disconnection

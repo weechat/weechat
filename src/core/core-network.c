@@ -537,13 +537,22 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
     if (!username)
         return 0;
 
+    if (strlen (username) >= sizeof (socks4.user))
+    {
+        free (username);
+        return 0;
+    }
+
+    memset (&socks4, 0, sizeof (socks4));
     socks4.version = 4;
     socks4.method = 1;
     socks4.port = htons (port);
-    network_resolve (address, ip_addr, NULL);
-    strncpy (socks4.user, username, sizeof (socks4.user) - 1);
+    strcpy (socks4.user, username);
 
     free (username);
+
+    if (!network_resolve (address, ip_addr, NULL))
+        return 0;
 
     if (inet_pton (AF_INET, ip_addr, &socks4.address) != 1)
         return 0;
