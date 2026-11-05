@@ -8,12 +8,58 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests.h"
+#include "tests-record.h"
+
 extern "C"
 {
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include "src/core/core-config-file.h"
+#include "src/core/core-hook.h"
 #include "src/core/core-infolist.h"
+#include "src/core/core-string.h"
+#include "src/core/hook/hook-signal.h"
+#include "src/gui/gui-buffer.h"
 #include "src/plugins/weechat-plugin.h"
 #include "src/plugins/xfer/xfer.h"
+#include "src/plugins/xfer/xfer-config.h"
+
+extern int xfer_search_type (const char *type);
+extern int xfer_search_protocol (const char *protocol);
+extern int xfer_port_in_use (int port);
+extern int xfer_nick_auto_accepted (const char *server, const char *nick);
+extern struct t_xfer *xfer_new (const char *plugin_name,
+                                const char *plugin_id,
+                                enum t_xfer_type type,
+                                enum t_xfer_protocol protocol,
+                                const char *remote_nick,
+                                const char *local_nick,
+                                const char *charset_modifier,
+                                const char *filename,
+                                unsigned long long size, const char *proxy,
+                                struct sockaddr *remote_address,
+                                socklen_t remote_address_length,
+                                struct sockaddr *local_address,
+                                socklen_t local_address_length,
+                                int port, int sock,
+                                const char *local_filename,
+                                const char *token);
+extern void xfer_disconnect_all (void);
+extern int xfer_add_cb (const void *pointer, void *data,
+                        const char *signal, const char *type_data,
+                        void *signal_data);
+extern int xfer_signal_upgrade_cb (const void *pointer, void *data,
+                                   const char *signal, const char *type_data,
+                                   void *signal_data);
+extern void xfer_print_log (void);
 
 extern struct t_xfer *xfer_search (const char *plugin_name,
                                    const char *plugin_id,
@@ -460,4 +506,699 @@ TEST(XferResume, AcceptResumeCb)
     CHECK(xfer_send.start_resume == 0);
     CHECK(xfer_send.pos == 0);
     CHECK(xfer_send.ack == 0);
+}
+
+TEST_GROUP(XferAdd)
+{
+    struct t_xfer *saved_xfer_list;
+    int sock_server;
+    char *filename, *rel_filename;
+    int count_signals;
+    struct t_hook *hook_signals;
+
+    static int signal_cb (const void *pointer, void *data,
+                          const char *signal, const char *type_data,
+                          void *signal_data)
+    {
+        (void) data;
+        (void) signal;
+        (void) type_data;
+        (void) signal_data;
+
+        (*((int *)pointer))++;
+
+        return WEECHAT_RC_OK;
+    }
+
+    void setup ()
+    {
+        struct sockaddr_in addr;
+
+        saved_xfer_list = xfer_list;
+
+        config_file_option_set (xfer_config_look_auto_open_buffer, "off", 1);
+
+        /* Socket of IRC server (used to find the local address). */
+        sock_server = socket (AF_INET, SOCK_STREAM, 0);
+        CHECK(sock_server >= 0);
+        memset (&addr, 0, sizeof (addr));
+        addr.sin_family = AF_INET;
+        addr.sin_addr.s_addr = htonl (INADDR_LOOPBACK);
+        LONGS_EQUAL(0, bind (sock_server, (struct sockaddr *)&addr,
+                             sizeof (addr)));
+
+        /* File to send (absolute path). */
+        rel_filename = string_eval_path_home (
+            "${weechat_data_dir}/test_xfer_upload.txt", NULL, NULL, NULL);
+        CHECK(rel_filename);
+        if (rel_filename[0] == '/')
+        {
+            filename = strdup (rel_filename);
+        }
+        else
+        {
+            char cwd[4096];
+            CHECK(getcwd (cwd, sizeof (cwd)));
+            string_asprintf (&filename, "%s/%s", cwd, rel_filename);
+        }
+        unlink (filename);
+
+        count_signals = 0;
+        hook_signals = hook_signal (NULL, "xfer_send_ready", &signal_cb,
+                                    &count_signals, NULL);
+
+        record_start ();
+    }
+
+    void teardown ()
+    {
+        struct t_xfer *ptr_xfer;
+
+        record_stop ();
+
+        unhook (hook_signals);
+
+        /* Free xfers created by the test (added at the beginning). */
+        while (xfer_list && (xfer_list != saved_xfer_list))
+        {
+            ptr_xfer = xfer_list;
+            if (ptr_xfer->sock >= 0)
+                close (ptr_xfer->sock);
+            xfer_free (ptr_xfer);
+        }
+
+        close (sock_server);
+
+        unlink (filename);
+        free (filename);
+        free (rel_filename);
+
+        config_file_option_reset (xfer_config_look_auto_open_buffer, 1);
+        config_file_option_reset (xfer_config_file_auto_accept_nicks, 1);
+        config_file_option_reset (xfer_config_file_auto_check_crc32, 1);
+        config_file_option_reset (xfer_config_file_convert_spaces, 1);
+        config_file_option_reset (xfer_config_file_upload_path, 1);
+        config_file_option_reset (xfer_config_network_own_ip, 1);
+        config_file_option_reset (xfer_config_network_port_range, 1);
+    }
+
+    /*
+     * Send signal "xfer_add" with an infolist built with the given
+     * key/value pairs (ending with NULL); keys "port" and "socket" are
+     * integers.
+     */
+    int add_xfer (const char *key, ...)
+    {
+        struct t_infolist *infolist;
+        struct t_infolist_item *item;
+        const char *ptr_key, *ptr_value;
+        va_list args;
+        int rc;
+
+        infolist = infolist_new (NULL);
+        item = infolist_new_item (infolist);
+        va_start (args, key);
+        for (ptr_key = key; ptr_key; ptr_key = va_arg (args, const char *))
+        {
+            ptr_value = va_arg (args, const char *);
+            if ((strcmp (ptr_key, "port") == 0)
+                || (strcmp (ptr_key, "socket") == 0))
+            {
+                infolist_new_var_integer (item, ptr_key, atoi (ptr_value));
+            }
+            else
+            {
+                infolist_new_var_string (item, ptr_key, ptr_value);
+            }
+        }
+        va_end (args);
+        rc = xfer_add_cb (NULL, NULL, "xfer_add",
+                          WEECHAT_HOOK_SIGNAL_POINTER, infolist);
+        infolist_free (infolist);
+        return rc;
+    }
+
+    /* Return the server socket as string. */
+    const char *str_sock_server ()
+    {
+        static char str_sock[32];
+
+        snprintf (str_sock, sizeof (str_sock), "%d", sock_server);
+        return str_sock;
+    }
+
+    /* Create a file with content. */
+    void create_file (const char *path, const char *content)
+    {
+        FILE *file;
+
+        file = fopen (path, "w");
+        CHECK(file);
+        fputs (content, file);
+        fclose (file);
+    }
+
+    /* Return a free TCP port. */
+    int free_port ()
+    {
+        struct sockaddr_in addr;
+        socklen_t length;
+        int sock, port;
+
+        sock = socket (AF_INET, SOCK_STREAM, 0);
+        memset (&addr, 0, sizeof (addr));
+        addr.sin_family = AF_INET;
+        addr.sin_addr.s_addr = INADDR_ANY;
+        bind (sock, (struct sockaddr *)&addr, sizeof (addr));
+        length = sizeof (addr);
+        getsockname (sock, (struct sockaddr *)&addr, &length);
+        port = ntohs (addr.sin_port);
+        close (sock);
+        return port;
+    }
+};
+
+/*
+ * Test functions:
+ *   xfer_add_cb (errors)
+ */
+
+TEST(XferAdd, AddCbErrors)
+{
+    struct t_infolist *infolist;
+
+    /* No infolist. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                xfer_add_cb (NULL, NULL, "xfer_add",
+                             WEECHAT_HOOK_SIGNAL_POINTER, NULL));
+    RECORD_CHECK_MSG_REGEX("core.weechat", "missing arguments \\(xfer_add\\)");
+
+    /* Empty infolist. */
+    infolist = infolist_new (NULL);
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                xfer_add_cb (NULL, NULL, "xfer_add",
+                             WEECHAT_HOOK_SIGNAL_POINTER, infolist));
+    infolist_free (infolist);
+
+    /* Missing arguments. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "chat_recv",
+                          "remote_nick", "alice", NULL));
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_active",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "protocol_string", "dcc", NULL));
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_active",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test.txt", NULL));
+
+    /* Unknown type and protocol. */
+    record_start ();
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "xxx",
+                          "remote_nick", "alice", "local_nick", "bob", NULL));
+    RECORD_CHECK_MSG_REGEX("core.weechat", "unknown xfer type \"xxx\"");
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_active",
+                          "protocol_string", "xxx",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test.txt", NULL));
+    RECORD_CHECK_MSG_REGEX("core.weechat", "unknown xfer protocol \"xxx\"");
+
+    /* Invalid remote address. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_active",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test.txt", "size", "10",
+                          "remote_address", "abc", "port", "5000", NULL));
+    RECORD_CHECK_MSG_REGEX("core.weechat", "invalid address \"abc\"");
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test.txt", "size", "10",
+                          "remote_address", "abc", NULL));
+
+    /* File to send not found. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_send_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "/nonexistent_dir/file.txt", NULL));
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "cannot access file \"/nonexistent_dir/file.txt\"");
+
+    /* Invalid socket of IRC server (local address not found). */
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "chat_send",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "socket", "-1", NULL));
+
+    POINTERS_EQUAL(saved_xfer_list, xfer_list);
+}
+
+/*
+ * Test functions:
+ *   xfer_add_cb (file received, active)
+ *   xfer_new
+ */
+
+TEST(XferAdd, AddCbFileRecvActive)
+{
+    struct t_xfer *ptr_xfer;
+
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_active",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "my file.txt", "size", "1000",
+                          "remote_address", "3232235778", "port", "5000",
+                          NULL));
+    ptr_xfer = xfer_list;
+    CHECK(ptr_xfer != saved_xfer_list);
+    STRCMP_EQUAL("irc", ptr_xfer->plugin_name);
+    STRCMP_EQUAL("libera", ptr_xfer->plugin_id);
+    LONGS_EQUAL(XFER_TYPE_FILE_RECV_ACTIVE, ptr_xfer->type);
+    LONGS_EQUAL(XFER_PROTOCOL_DCC, ptr_xfer->protocol);
+    LONGS_EQUAL(XFER_STATUS_WAITING, ptr_xfer->status);
+    STRCMP_EQUAL("alice", ptr_xfer->remote_nick);
+    STRCMP_EQUAL("bob", ptr_xfer->local_nick);
+    STRCMP_EQUAL("my_file.txt", ptr_xfer->filename);
+    LONGS_EQUAL(1000, ptr_xfer->size);
+    STRCMP_EQUAL("192.168.1.2", ptr_xfer->remote_address_str);
+    STRCMP_EQUAL("", ptr_xfer->local_address_str);
+    LONGS_EQUAL(5000, ptr_xfer->port);
+    LONGS_EQUAL(-1, ptr_xfer->sock);
+    CHECK(ptr_xfer->local_filename);
+    CHECK(strstr (ptr_xfer->local_filename, "/xfer/alice.my_file.txt"));
+    POINTERS_EQUAL(NULL, ptr_xfer->hash_handle);
+    LONGS_EQUAL(0, count_signals);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "incoming file from alice \\(192.168.1.2, "
+                           "irc.libera\\), name: my_file.txt, 1000 bytes "
+                           "\\(protocol: dcc\\)");
+
+    /* Keep spaces in filename, check CRC32 found in filename. */
+    config_file_option_set (xfer_config_file_convert_spaces, "off", 1);
+    config_file_option_set (xfer_config_file_auto_check_crc32, "on", 1);
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_active",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "my file_1A2B3C4D.txt", "size", "1000",
+                          "remote_address", "127.0.0.1", "port", "5001",
+                          NULL));
+    ptr_xfer = xfer_list;
+    STRCMP_EQUAL("my file_1A2B3C4D.txt", ptr_xfer->filename);
+    CHECK(ptr_xfer->hash_handle);
+    STRCMP_EQUAL("1A2B3C4D", ptr_xfer->hash_target);
+    LONGS_EQUAL(XFER_HASH_STATUS_IN_PROGRESS, ptr_xfer->hash_status);
+}
+
+TEST(XferAdd, AddCbFileRecvActiveResume)
+{
+    struct t_xfer *ptr_xfer;
+    char *local_filename, *temp_filename;
+
+    /* Partial file already received (temporary file). */
+    local_filename = string_eval_path_home (
+        "${weechat_data_dir}/xfer/alice.resume.txt", NULL, NULL, NULL);
+    string_asprintf (&temp_filename, "%s.part", local_filename);
+    create_file (temp_filename, "0123456789");
+
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_active",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "resume.txt", "size", "100",
+                          "remote_address", "127.0.0.1", "port", "5000",
+                          NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(10, ptr_xfer->start_resume);
+    STRCMP_EQUAL(local_filename, ptr_xfer->local_filename);
+    STRCMP_EQUAL(temp_filename, ptr_xfer->temp_local_filename);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "file resume.txt \\(local filename: .*"
+                           "alice.resume.txt\\) will be resumed at "
+                           "position 10");
+
+    unlink (temp_filename);
+    free (temp_filename);
+    free (local_filename);
+}
+
+/*
+ * Test functions:
+ *   xfer_add_cb (file received, passive)
+ *   xfer_new
+ */
+
+TEST(XferAdd, AddCbFileRecvPassive)
+{
+    struct t_xfer *ptr_xfer;
+
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test.txt", "size", "10",
+                          "remote_address", "127.0.0.1",
+                          "socket", str_sock_server (), "token", "42",
+                          NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(XFER_TYPE_FILE_RECV_PASSIVE, ptr_xfer->type);
+    LONGS_EQUAL(XFER_STATUS_WAITING, ptr_xfer->status);
+    STRCMP_EQUAL("127.0.0.1", ptr_xfer->remote_address_str);
+    STRCMP_EQUAL("127.0.0.1", ptr_xfer->local_address_str);
+    STRCMP_EQUAL("42", ptr_xfer->token);
+    CHECK(ptr_xfer->sock >= 0);
+    CHECK(ptr_xfer->port > 0);
+    LONGS_EQUAL(0, count_signals);
+
+    /* Nick auto-accepted: xfer accepted, listening socket. */
+    config_file_option_set (xfer_config_file_auto_accept_nicks,
+                            "libera.alice", 1);
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test2.txt", "size", "10",
+                          "remote_address", "127.0.0.1",
+                          "socket", str_sock_server (), "token", "43",
+                          NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(XFER_STATUS_CONNECTING, ptr_xfer->status);
+    CHECK(ptr_xfer->hook_fd);
+    CHECK(ptr_xfer->hook_timer);
+    LONGS_EQUAL(1, count_signals);
+}
+
+/*
+ * Test functions:
+ *   xfer_add_cb (file sent, passive)
+ *   xfer_new
+ */
+
+TEST(XferAdd, AddCbFileSendPassive)
+{
+    struct t_xfer *ptr_xfer;
+    char *path;
+
+    create_file (filename, "hello");
+
+    /* Absolute path. */
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_send_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", filename,
+                          "socket", str_sock_server (), NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(XFER_TYPE_FILE_SEND_PASSIVE, ptr_xfer->type);
+    LONGS_EQUAL(XFER_STATUS_CONNECTING, ptr_xfer->status);
+    STRCMP_EQUAL("test_xfer_upload.txt", ptr_xfer->filename);
+    STRCMP_EQUAL(filename, ptr_xfer->local_filename);
+    LONGS_EQUAL(5, ptr_xfer->size);
+    STRCMP_EQUAL("", ptr_xfer->remote_address_str);
+    STRCMP_EQUAL("127.0.0.1", ptr_xfer->local_address_str);
+    CHECK(ptr_xfer->sock >= 0);
+    CHECK(ptr_xfer->port > 0);
+    CHECK(ptr_xfer->hook_fd);
+    CHECK(ptr_xfer->hook_timer);
+    /* Signal sent twice: by xfer_network_connect and xfer_add_cb. */
+    CHECK(count_signals >= 1);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "offering file to alice \\(irc.libera\\), "
+                           "name: test_xfer_upload.txt \\(local filename: "
+                           ".*test_xfer_upload.txt\\), 5 bytes "
+                           "\\(protocol: dcc\\)");
+
+    /* Path relative to upload directory. */
+    path = string_eval_path_home ("${weechat_data_dir}", NULL, NULL, NULL);
+    config_file_option_set (xfer_config_file_upload_path, path, 1);
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_send_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test_xfer_upload.txt",
+                          "socket", str_sock_server (), NULL));
+    ptr_xfer = xfer_list;
+    STRCMP_EQUAL(rel_filename, ptr_xfer->local_filename);
+    free (path);
+
+    /* Path relative to home. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_send_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "~/weechat_nonexistent_file.txt",
+                          "socket", str_sock_server (), NULL));
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "cannot access file \".*/"
+                           "weechat_nonexistent_file.txt\"");
+}
+
+/*
+ * Test functions:
+ *   xfer_add_cb (chat)
+ *   xfer_new
+ */
+
+TEST(XferAdd, AddCbChat)
+{
+    struct t_xfer *ptr_xfer;
+
+    /* Chat received. */
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "chat_recv",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "remote_address", "127.0.0.1", "port", "5000",
+                          NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(XFER_TYPE_CHAT_RECV, ptr_xfer->type);
+    LONGS_EQUAL(XFER_STATUS_WAITING, ptr_xfer->status);
+    STRCMP_EQUAL("xfer chat", ptr_xfer->filename);
+    STRCMP_EQUAL("127.0.0.1", ptr_xfer->remote_address_str);
+    POINTERS_EQUAL(NULL, ptr_xfer->local_filename);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "incoming chat request from alice \\(127.0.0.1, "
+                           "irc.libera\\)");
+
+    /* Chat sent, with own IP. */
+    config_file_option_set (xfer_config_network_own_ip, "127.0.0.1", 1);
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "chat_send",
+                          "remote_nick", "alice", "local_nick", "bob", NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(XFER_TYPE_CHAT_SEND, ptr_xfer->type);
+    LONGS_EQUAL(XFER_STATUS_WAITING, ptr_xfer->status);
+    STRCMP_EQUAL("127.0.0.1", ptr_xfer->local_address_str);
+    CHECK(ptr_xfer->sock >= 0);
+    CHECK(ptr_xfer->port > 0);
+    CHECK(ptr_xfer->hook_fd);
+    LONGS_EQUAL(1, count_signals);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "sending chat request to alice \\(irc.libera\\)");
+}
+
+/*
+ * Test functions:
+ *   xfer_add_cb (port range)
+ *   xfer_port_in_use
+ */
+
+TEST(XferAdd, AddCbPortRange)
+{
+    struct t_xfer *ptr_xfer;
+    char str_range[64];
+    int port;
+
+    port = free_port ();
+    CHECK(port > 0);
+
+    /* Single port. */
+    snprintf (str_range, sizeof (str_range), "%d", port);
+    config_file_option_set (xfer_config_network_port_range, str_range, 1);
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "chat_send",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "socket", str_sock_server (), NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(port, ptr_xfer->port);
+    LONGS_EQUAL(1, xfer_port_in_use (port));
+
+    /* Port already used by the xfer: no port available. */
+    snprintf (str_range, sizeof (str_range), "%d-%d", port, port);
+    config_file_option_set (xfer_config_network_port_range, str_range, 1);
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "chat_send",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "socket", str_sock_server (), NULL));
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "cannot find available port for xfer");
+
+    /* Port not in use any more when the xfer has ended. */
+    xfer_close (ptr_xfer, XFER_STATUS_ABORTED);
+    LONGS_EQUAL(0, xfer_port_in_use (port));
+}
+
+/*
+ * Test functions:
+ *   xfer_new (invalid address)
+ */
+
+TEST(XferAdd, NewInvalidAddress)
+{
+    struct t_xfer *ptr_xfer;
+    struct sockaddr_storage addr;
+
+    memset (&addr, 0, sizeof (addr));
+    ptr_xfer = xfer_new ("irc", "libera", XFER_TYPE_CHAT_RECV,
+                         XFER_NO_PROTOCOL, "alice", "bob", NULL, NULL, 0,
+                         NULL, (struct sockaddr *)&addr, 0, NULL, 0,
+                         5000, -1, NULL, NULL);
+    CHECK(ptr_xfer);
+    STRCMP_EQUAL("?", ptr_xfer->remote_address_str);
+    RECORD_CHECK_MSG_REGEX("core.weechat", "unable to interpret address");
+}
+
+/*
+ * Test functions:
+ *   xfer_valid
+ *   xfer_search_type
+ *   xfer_search_protocol
+ *   xfer_search_by_number
+ *   xfer_search_by_buffer
+ */
+
+TEST(XferAdd, ValidSearch)
+{
+    struct t_xfer *ptr_xfer, xfer_stack;
+
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "chat_recv",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "remote_address", "127.0.0.1", "port", "5000",
+                          NULL));
+    ptr_xfer = xfer_list;
+
+    LONGS_EQUAL(0, xfer_valid (NULL));
+    LONGS_EQUAL(0, xfer_valid (&xfer_stack));
+    LONGS_EQUAL(1, xfer_valid (ptr_xfer));
+
+    LONGS_EQUAL(-1, xfer_search_type (NULL));
+    LONGS_EQUAL(-1, xfer_search_type ("xxx"));
+    LONGS_EQUAL(XFER_TYPE_CHAT_SEND, xfer_search_type ("chat_send"));
+    LONGS_EQUAL(-1, xfer_search_protocol (NULL));
+    LONGS_EQUAL(-1, xfer_search_protocol ("xxx"));
+    LONGS_EQUAL(XFER_PROTOCOL_DCC, xfer_search_protocol ("dcc"));
+
+    POINTERS_EQUAL(ptr_xfer, xfer_search_by_number (0));
+    POINTERS_EQUAL(NULL, xfer_search_by_number (xfer_count));
+
+    POINTERS_EQUAL(NULL, xfer_search_by_buffer (NULL));
+    POINTERS_EQUAL(NULL, xfer_search_by_buffer (gui_buffers));
+    ptr_xfer->buffer = gui_buffers;
+    POINTERS_EQUAL(ptr_xfer, xfer_search_by_buffer (gui_buffers));
+    ptr_xfer->buffer = NULL;
+}
+
+/*
+ * Test functions:
+ *   xfer_nick_auto_accepted
+ */
+
+TEST(XferAdd, NickAutoAccepted)
+{
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("libera", "alice"));
+
+    config_file_option_set (xfer_config_file_auto_accept_nicks,
+                            "alice,libera.bob", 1);
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("libera", "alice"));
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("oftc", "ALICE"));
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("libera", "bob"));
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("LIBERA", "Bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("oftc", "bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("libera", "carol"));
+}
+
+/*
+ * Test functions:
+ *   xfer_disconnect_all
+ *   xfer_signal_upgrade_cb
+ *   xfer_print_log
+ */
+
+TEST(XferAdd, DisconnectAllUpgrade)
+{
+    struct t_xfer *ptr_xfer_chat, *ptr_xfer_file;
+    char *upgrade_filename;
+
+    create_file (filename, "hello");
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_send_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", filename,
+                          "socket", str_sock_server (), NULL));
+    ptr_xfer_file = xfer_list;
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "chat_send",
+                          "remote_nick", "carol", "local_nick", "bob",
+                          "socket", str_sock_server (), NULL));
+    ptr_xfer_chat = xfer_list;
+    ptr_xfer_chat->status = XFER_STATUS_ACTIVE;
+
+    xfer_print_log ();
+
+    upgrade_filename = string_eval_path_home (
+        "${weechat_data_dir}/xfer.upgrade", NULL, NULL, NULL);
+
+    /* Save only: xfers are not disconnected. */
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                xfer_signal_upgrade_cb (NULL, NULL, "upgrade",
+                                        WEECHAT_HOOK_SIGNAL_STRING,
+                                        (void *)"save"));
+    LONGS_EQUAL(XFER_STATUS_ACTIVE, ptr_xfer_chat->status);
+    LONGS_EQUAL(XFER_STATUS_CONNECTING, ptr_xfer_file->status);
+
+    /* Upgrade: all xfers are disconnected. */
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                xfer_signal_upgrade_cb (NULL, NULL, "upgrade",
+                                        WEECHAT_HOOK_SIGNAL_STRING, NULL));
+    LONGS_EQUAL(XFER_STATUS_ABORTED, ptr_xfer_chat->status);
+    LONGS_EQUAL(-1, ptr_xfer_chat->sock);
+    LONGS_EQUAL(XFER_STATUS_FAILED, ptr_xfer_file->status);
+    LONGS_EQUAL(-1, ptr_xfer_file->sock);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "aborting active xfer: \"xfer chat\" from carol");
+
+    unlink (upgrade_filename);
+    free (upgrade_filename);
 }
