@@ -528,7 +528,7 @@ irc_list_display_line (struct t_irc_server *server, int line)
         ptr_channel->name,
         str_spaces,
         ptr_channel->users,
-        ptr_channel->topic);
+        (ptr_channel->topic) ? ptr_channel->topic : "");
 }
 
 /*
