@@ -861,7 +861,7 @@ xfer_network_connect (struct t_xfer *xfer)
         /* add timeout */
         if (weechat_config_integer (xfer_config_network_timeout) > 0)
         {
-            xfer->hook_timer = weechat_hook_timer (weechat_config_integer (xfer_config_network_timeout) * 1000,
+            xfer->hook_timer = weechat_hook_timer ((long)weechat_config_integer (xfer_config_network_timeout) * 1000,
                                                    0, 1,
                                                    &xfer_network_timer_cb,
                                                    xfer, NULL);
