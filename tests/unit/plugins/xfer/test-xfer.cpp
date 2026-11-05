@@ -716,6 +716,23 @@ TEST(XferAdd, AddCbErrors)
                           "remote_nick", "alice", "local_nick", "bob",
                           "filename", "test.txt", NULL));
 
+    /* File received without size. */
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_active",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test.txt",
+                          "remote_address", "127.0.0.1", "port", "5000",
+                          NULL));
+    LONGS_EQUAL(WEECHAT_RC_ERROR,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test.txt",
+                          "remote_address", "127.0.0.1", NULL));
+
     /* Unknown type and protocol. */
     record_start ();
     LONGS_EQUAL(WEECHAT_RC_ERROR,
