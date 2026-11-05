@@ -1041,7 +1041,7 @@ xfer_add_cb (const void *pointer, void *data,
     struct t_infolist *infolist;
     const char *plugin_name, *plugin_id, *str_type, *str_protocol;
     const char *remote_nick, *local_nick, *charset_modifier, *filename, *proxy;
-    const char *str_address, *str_port, *token;
+    const char *str_address, *str_port, *str_size, *token;
     int type, protocol, args, port_start, port_end, sock, server_sock, port, rc;
     char *path, *filename2, *short_filename, *pos, str_port_temp[16], *eval_own_ip;
     struct stat st;
@@ -1139,8 +1139,17 @@ xfer_add_cb (const void *pointer, void *data,
     if ((type == XFER_TYPE_FILE_RECV_ACTIVE)
         || (type == XFER_TYPE_FILE_RECV_PASSIVE))
     {
+        str_size = weechat_infolist_string (infolist, "size");
+        if (!str_size)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: missing arguments (%s)"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            "xfer_add");
+            goto error;
+        }
         filename2 = strdup (filename);
-        sscanf (weechat_infolist_string (infolist, "size"), "%llu", &file_size);
+        sscanf (str_size, "%llu", &file_size);
     }
 
     if (type == XFER_TYPE_FILE_SEND_PASSIVE)
