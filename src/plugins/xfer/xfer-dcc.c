@@ -289,6 +289,12 @@ xfer_dcc_resume_hash (struct t_xfer *xfer)
                 ret = 0;
                 break;
             }
+            else
+            {
+                /* end of file before the resume position */
+                ret = 0;
+                break;
+            }
         }
 
         while (close (fd) < 0)
