@@ -15,6 +15,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: fix send of uninitialized data to socks4 proxy when the username has 127 chars or more, or when the address can not be resolved
 - core: fix completion of command and command arguments when there is text with spaces after the cursor
 - core: fix plural form in Italian translations, use plural for zero
+- fset, irc, script: fix freeze when the fset, script or `/list` buffer is scrolled in a window too small to display the chat area
 - irc: fix display of channels without topic in `/list` buffer
 - irc: remove local variables "nick" and "host" in server and channel buffers on disconnection
 - irc, relay: display error code 0 instead of the last error code when the connection is closed by the peer

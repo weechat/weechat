@@ -1283,7 +1283,7 @@ fset_buffer_window_scrolled_cb (const void *pointer, void *data,
                                 void *signal_data)
 {
     int start_line_y, chat_height, line, num_options;
-    int format_number, lines_per_option;
+    int format_number, lines_per_option, options_per_page;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1299,14 +1299,20 @@ fset_buffer_window_scrolled_cb (const void *pointer, void *data,
 
     format_number = weechat_config_integer (fset_config_look_format_number);
     lines_per_option = fset_config_format_option_num_lines[format_number - 1];
+
+    /* chat area not displayed or too small for one option */
+    options_per_page = chat_height / lines_per_option;
+    if (options_per_page <= 0)
+        return WEECHAT_RC_OK;
+
     line = fset_buffer_selected_line;
     while (line * lines_per_option < start_line_y)
     {
-        line += chat_height / lines_per_option;
+        line += options_per_page;
     }
     while (line * lines_per_option >= start_line_y + chat_height)
     {
-        line -= chat_height / lines_per_option;
+        line -= options_per_page;
     }
     if (line * lines_per_option < start_line_y)
         line = (start_line_y / lines_per_option) + 1;
