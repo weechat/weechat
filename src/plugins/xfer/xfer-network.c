@@ -847,13 +847,10 @@ xfer_network_connect (struct t_xfer *xfer)
                                          xfer, NULL);
 
         /* Add timeout. */
-        if (weechat_config_integer (xfer_config_network_timeout) > 0)
-        {
-            xfer->hook_timer = weechat_hook_timer ((long)weechat_config_integer (xfer_config_network_timeout) * 1000,
-                                                   0, 1,
-                                                   &xfer_network_timer_cb,
-                                                   xfer, NULL);
-        }
+        xfer->hook_timer = weechat_hook_timer ((long)weechat_config_integer (xfer_config_network_timeout) * 1000,
+                                               0, 1,
+                                               &xfer_network_timer_cb,
+                                               xfer, NULL);
 
         /* Send signal if type is file or chat "send". */
         if ((xfer->type == XFER_TYPE_FILE_RECV_PASSIVE) && !XFER_HAS_ENDED(xfer->status))
