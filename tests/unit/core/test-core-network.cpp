@@ -477,6 +477,47 @@ TEST(CoreNetworkWithSocket, PassSocks4proxyIpv6)
     LONGS_EQUAL(0, data_sent_size);
 }
 
+TEST(CoreNetworkWithSocket, PassSocks4proxyUsernameMaxLength)
+{
+    const unsigned char reply_ok[8] = { 0, 90, 0, 0, 0, 0, 0, 0 };
+    char username[256];
+
+    /* Username with 127 chars: OK (max length). */
+    memset (username, 'a', 127);
+    username[127] = '\0';
+    new_proxy ("socks4", username, "");
+    peer_reply (reply_ok, sizeof (reply_ok));
+    LONGS_EQUAL(1, network_pass_socks4proxy (proxy, sock, "127.0.0.1", 6667));
+    peer_read ();
+    LONGS_EQUAL(8 + 127 + 1, data_sent_size);
+    MEMCMP_EQUAL(username, data_sent + 8, 128);
+}
+
+TEST(CoreNetworkWithSocket, PassSocks4proxyUsernameTooLong)
+{
+    char username[256];
+
+    /* Username with 128 chars: too long, nothing sent. */
+    memset (username, 'a', 128);
+    username[128] = '\0';
+    new_proxy ("socks4", username, "");
+    peer_reply (NULL, 0);
+    LONGS_EQUAL(0, network_pass_socks4proxy (proxy, sock, "127.0.0.1", 6667));
+    peer_read ();
+    LONGS_EQUAL(0, data_sent_size);
+}
+
+TEST(CoreNetworkWithSocket, PassSocks4proxyResolveError)
+{
+    new_proxy ("socks4", "", "");
+
+    /* Address can not be resolved: nothing sent. */
+    peer_reply (NULL, 0);
+    LONGS_EQUAL(0, network_pass_socks4proxy (proxy, sock, "", 6667));
+    peer_read ();
+    LONGS_EQUAL(0, data_sent_size);
+}
+
 /*
  * Test functions:
  *   network_pass_socks5proxy

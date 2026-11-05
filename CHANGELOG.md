@@ -108,6 +108,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix send of uninitialized data to socks4 proxy when the username has 127 chars or more, or when the address can not be resolved
 - core: fix completion of command and command arguments when there is text with spaces after the cursor
 - core: fix display of backtrace after a crash when command `which` is not installed or when shared libraries are not executable, run `addr2line` without a shell ([#2176](https://github.com/weechat/weechat/issues/2176))
 - core: ignore invalid SGR mouse events and discard the whole control sequence, so that no part of it is inserted in input ([#2249](https://github.com/weechat/weechat/issues/2249))
