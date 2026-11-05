@@ -541,6 +541,10 @@ TEST(XferDcc, ResumeHash)
     BYTES_EQUAL(0x87, bin_hash[1]);
     BYTES_EQUAL(0xD8, bin_hash[2]);
     BYTES_EQUAL(0x65, bin_hash[3]);
+
+    /* File shorter than the resume position. */
+    xfer.start_resume = 10;
+    LONGS_EQUAL(0, xfer_dcc_resume_hash (&xfer));
 }
 
 /*
