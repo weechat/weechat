@@ -4130,30 +4130,26 @@ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay
 ----
 
 [[relay_protection]]
-// TRANSLATION MISSING
-=== Protection against abuse
+=== Заштита против злоупотребе
 
-// TRANSLATION MISSING
-Authentication is done in the WeeChat main loop: with a password hashed with
-PBKDF2, each attempt computes the hash with the number of iterations set in
-option <<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>>,
-so a client sending many authentication attempts can slow down WeeChat.
+Аутентификација се врши у главној петљи програма WeeChat: са лозинком хешираном са
+PBKDF2, сваки покушај израчунава хеш са бројем итерација постављеним у опцији
+<<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>>,
+тако да клијент који шаље много покушаја аутентификације може да успори WeeChat.
 
-// TRANSLATION MISSING
-When the relay can be reached from the Internet, it is recommended to:
+Када је релеј доступан са Интернета, препоручује се:
 
-// TRANSLATION MISSING
-* restrict connections to some networks (see <<relay_allowed_networks,Allowed networks>>)
-* not expose the relay port directly: connect through a VPN or an SSH tunnel,
-  or use a reverse proxy or firewall rules limiting the number of requests or
-  connections
-* enable TOTP (see <<relay_totp,TOTP>>): with _api_ protocol, the TOTP is
-  checked before the password, so attempts without a valid TOTP never compute
-  the PBKDF2 hash
-* keep a reasonable number of iterations in option
+* да се везе ограниче само на одређене мреже (погледајте <<relay_allowed_networks,Дозвољене мреже>>)
+* да се порт релеја не изложи директно: повежите се кроз VPN или кроз SSH тунел,
+  или употребите реверзни прокси или правила заштитног зида која ограничавају број
+  захтева или веза
+* да укључите TOTP (погледајте <<relay_totp,TOTP>>): са _api_ протоколом, TOTP се
+  проверава пре лозинке, тако да захтеви без исправне TOTP никада не израчунавају
+  PBKDF2 хеш
+* да се одржава разуман број итерација у опцији
   <<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>>:
-  a higher value makes brute force attacks harder, but each authentication
-  attempt uses more CPU.
+  већа вредност отежава нападе сировом силом, али сваки покушај аутентификације
+  троши више CPU ресурса.
 
 [[relay_irc_proxy]]
 === IRC прокси
@@ -4702,7 +4698,7 @@ s/regex1/replace1/var1 y/abcdef/ABDDEF/var2
 Регуларни израз је POSIX проширени регуларни израз: обрнута коса црта није
 означавајући карактер унутар угластих заграда, на пример `+[^\]]+` хвата било
 који карактер осим обрнуте косе црте, након којег следи `+]+`. Ако желите да се
-искључи `+]+`, он мора да буде први карактер унутар великих заграда: `+[^]]+`.
+искључи `+]+`, он мора да буде први карактер унутар угластих заграда: `+[^]]+`.
 Слично, `+[^\s]+` искључује обрнуту косу црту и `s`, а не празан простор:
 уместо тога употребите `+[^[:space:]]+`.
 
