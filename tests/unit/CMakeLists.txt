@@ -150,6 +150,7 @@ if(ENABLE_IRC)
     plugins/irc/test-irc-message.cpp
     plugins/irc/test-irc-mode.cpp
     plugins/irc/test-irc-nick.cpp
+    plugins/irc/test-irc-notify.cpp
     plugins/irc/test-irc-protocol.cpp
     plugins/irc/test-irc-sasl.cpp
     plugins/irc/test-irc-server.cpp

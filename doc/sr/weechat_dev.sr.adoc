@@ -535,6 +535,8 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-irc-message.cpp                | Тестови: IRC поруке.
 |             test-irc-mode.cpp                   | Тестови: IRC режими.
 |             test-irc-nick.cpp                   | Тестови: IRC надимци.
+// TRANSLATION MISSING
+|             test-irc-notify.cpp                 | Tests: IRC notify lists.
 |             test-irc-protocol.cpp               | Тестови: IRC протокол.
 |             test-irc-sasl.cpp                   | Тестови: SASL аутентификација са IRC протоколом.
 |             test-irc-server.cpp                 | Тестови: IRC сервер.
