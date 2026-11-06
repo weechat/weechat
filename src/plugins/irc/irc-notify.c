@@ -508,7 +508,7 @@ irc_notify_display (struct t_irc_server *server, struct t_gui_buffer *buffer,
     {
         weechat_printf (
             buffer,
-            "  %s%s%s @ %s%s%s: %s%s %s%s%s%s%s%s",
+            "  %s%s%s @ %s%s%s: %s%s%s%s%s%s%s%s",
             irc_nick_color_for_msg (server, 1, NULL, notify->nick),
             notify->nick,
             IRC_COLOR_RESET,
