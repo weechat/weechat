@@ -6224,6 +6224,8 @@ IRC_COMMAND_CALLBACK(server)
         WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         IRC_COMMAND_CHECK_SERVER("server fakerecv", 0, 1);
         msg_no_quotes = weechat_string_remove_quotes (argv_eol[2], "\"");
+        if (!msg_no_quotes)
+            WEECHAT_COMMAND_ERROR;
         length = strlen (msg_no_quotes);
         if (length > 0)
         {
@@ -6234,6 +6236,7 @@ IRC_COMMAND_CALLBACK(server)
                 free (message);
             }
         }
+        free (msg_no_quotes);
         return WEECHAT_RC_OK;
     }
 
