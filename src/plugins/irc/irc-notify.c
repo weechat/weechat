@@ -838,7 +838,10 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
                 0,
                 &num_nicks_sent);
             if (!nicks_sent)
+            {
+                weechat_string_free_split (messages);
                 return WEECHAT_RC_OK;
+            }
             for (ptr_notify = ptr_server->notify_list;
                  ptr_notify;
                  ptr_notify = ptr_notify->next_notify)
@@ -935,6 +938,7 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
                 }
 
             }
+            weechat_string_free_split (nicks_sent);
             weechat_string_free_split (messages);
         }
     }

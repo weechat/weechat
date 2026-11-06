@@ -154,6 +154,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: fix memory leak when receiving the reply to ISON command sent for notify list
 - irc: fix display of channels without topic in `/list` buffer
 - irc: remove local variables "nick" and "host" in server and channel buffers on disconnection
 - irc, relay: display error code 0 instead of the last error code when the connection is closed by the peer
