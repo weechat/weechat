@@ -30,6 +30,13 @@
 
 
 /*
+ * Delay (in microseconds) before sending the last ACK when a file is received
+ * (it can be changed by tests).
+ */
+int xfer_dcc_recv_last_ack_delay = 100000;
+
+
+/*
  * Convert an ACK received from the receiver to a position in file.
  *
  * The ACK is the number of bytes received, on 32 bits: for files greater than
@@ -516,7 +523,8 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                          * Extra delay before sending ACK, otherwise the send of ACK
                          * may fail.
                          */
-                        usleep (100000);
+                        if (xfer_dcc_recv_last_ack_delay > 0)
+                            usleep (xfer_dcc_recv_last_ack_delay);
 
                         /* Send ACK to sender without checking return code (file OK). */
                         xfer_dcc_recv_file_send_ack (xfer);

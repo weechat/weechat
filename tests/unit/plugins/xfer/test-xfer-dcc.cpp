@@ -157,7 +157,7 @@ test_dcc_peer_sender (void *arg)
             break;
         }
         pos += length;
-        usleep (20000);
+        usleep (5000);
     }
     shutdown (peer->sock, SHUT_WR);
 
@@ -213,6 +213,9 @@ TEST_GROUP(XferDcc)
 
         /* Sending data to a closed socket must not kill the tests. */
         old_sigpipe = signal (SIGPIPE, SIG_IGN);
+
+        /* No delay before the last ACK sent when a file is received. */
+        xfer_dcc_recv_last_ack_delay = 0;
     }
 
     void teardown ()
@@ -221,6 +224,8 @@ TEST_GROUP(XferDcc)
             pthread_join (thread, NULL);
 
         signal (SIGPIPE, old_sigpipe);
+
+        xfer_dcc_recv_last_ack_delay = 100000;
 
         if (xfer.hash_handle)
         {
