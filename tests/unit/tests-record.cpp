@@ -72,6 +72,7 @@ record_hook_line_cb (const void *pointer, void *data, struct t_hashtable *line)
 {
     struct t_hashtable *hashtable;
     const char *ptr_string;
+    char *string_no_color;
 
     /* Make C++ compiler happy. */
     (void) pointer;
@@ -80,16 +81,14 @@ record_hook_line_cb (const void *pointer, void *data, struct t_hashtable *line)
     hashtable = hashtable_dup (line);
 
     ptr_string = (const char *)hashtable_get (hashtable, "prefix");
-    hashtable_set (
-        hashtable,
-        "prefix_no_color",
-        (ptr_string) ? gui_color_decode (ptr_string, NULL) : NULL);
+    string_no_color = (ptr_string) ? gui_color_decode (ptr_string, NULL) : NULL;
+    hashtable_set (hashtable, "prefix_no_color", string_no_color);
+    free (string_no_color);
 
     ptr_string = (const char *)hashtable_get (hashtable, "message");
-    hashtable_set (
-        hashtable,
-        "message_no_color",
-        (ptr_string) ? gui_color_decode (ptr_string, NULL) : NULL);
+    string_no_color = (ptr_string) ? gui_color_decode (ptr_string, NULL) : NULL;
+    hashtable_set (hashtable, "message_no_color", string_no_color);
+    free (string_no_color);
 
     arraylist_add (recorded_messages, hashtable);
 
