@@ -706,6 +706,7 @@ TEST(CoreNetwork, Resolve)
 {
     char ip[NI_MAXHOST];
     int version;
+    struct addrinfo *res;
 
     /* Numeric addresses only (no DNS query). */
     ip[0] = '\0';
@@ -713,9 +714,22 @@ TEST(CoreNetwork, Resolve)
     STRCMP_EQUAL("127.0.0.1", ip);
     LONGS_EQUAL(4, version);
 
-    LONGS_EQUAL(1, network_resolve ("::1", ip, &version));
-    STRCMP_EQUAL("::1", ip);
-    LONGS_EQUAL(6, version);
+    /*
+     * IPv6 address: checked only if the system can resolve it (without hints,
+     * getaddrinfo ignores IPv6 addresses if no IPv6 address is configured).
+     */
+    res = NULL;
+    if (getaddrinfo ("::1", NULL, NULL, &res) == 0)
+    {
+        freeaddrinfo (res);
+        LONGS_EQUAL(1, network_resolve ("::1", ip, &version));
+        STRCMP_EQUAL("::1", ip);
+        LONGS_EQUAL(6, version);
+    }
+    else
+    {
+        LONGS_EQUAL(0, network_resolve ("::1", ip, &version));
+    }
 
     LONGS_EQUAL(1, network_resolve ("10.1.2.3", ip, NULL));
     STRCMP_EQUAL("10.1.2.3", ip);
