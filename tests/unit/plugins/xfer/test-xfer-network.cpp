@@ -18,6 +18,7 @@ extern "C"
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <poll.h>
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -191,6 +192,7 @@ TEST_GROUP(XferNetworkWithXfer)
     {
         struct sockaddr_in addr;
         socklen_t length;
+        struct pollfd poll_fd;
 
         xfer->sock = socket (AF_INET, SOCK_STREAM, 0);
         CHECK(xfer->sock >= 0);
@@ -209,6 +211,15 @@ TEST_GROUP(XferNetworkWithXfer)
         CHECK(sock_client >= 0);
         LONGS_EQUAL(0, connect (sock_client, (struct sockaddr *)&addr,
                                 sizeof (addr)));
+
+        /*
+         * Wait for the pending connection on the listening socket (on macOS
+         * it is not immediately available after the connect).
+         */
+        poll_fd.fd = xfer->sock;
+        poll_fd.events = POLLIN;
+        poll_fd.revents = 0;
+        LONGS_EQUAL(1, poll (&poll_fd, 1, 5000));
     }
 };
 
