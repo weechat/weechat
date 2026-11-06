@@ -876,7 +876,11 @@ TEST(XferDcc, RecvFileChildErrors)
     LONGS_EQUAL(0, xfer.pos);
     WEE_TEST_STR("20 46", pipe_messages ());
 
-    /* Unable to connect to sender (port closed). */
+    /*
+     * Unable to connect to sender (port closed): the socket is closed before
+     * connecting, otherwise on macOS the connection is not refused and the
+     * connect waits until timeout.
+     */
     sock_closed = socket (AF_INET, SOCK_STREAM, 0);
     CHECK(sock_closed >= 0);
     memset (&addr, 0, sizeof (addr));
@@ -887,6 +891,7 @@ TEST(XferDcc, RecvFileChildErrors)
     length = sizeof (addr);
     LONGS_EQUAL(0, getsockname (sock_closed, (struct sockaddr *)&addr,
                                 &length));
+    close (sock_closed);
     xfer.type = XFER_TYPE_FILE_RECV_ACTIVE;
     xfer.remote_address = (struct sockaddr *)&addr;
     xfer.remote_address_length = length;
@@ -895,5 +900,4 @@ TEST(XferDcc, RecvFileChildErrors)
     WEE_TEST_STR("44", pipe_messages ());
     xfer.remote_address = NULL;
     xfer.sock = sock[0];
-    close (sock_closed);
 }
