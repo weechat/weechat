@@ -825,7 +825,7 @@ TEST(XferNetworkWithXfer, ConnectErrors)
 
     /* Invalid address family: socket can not be created. */
     memset (&addr6, 0, sizeof (addr6));
-    addr6.sin6_family = 9999;
+    addr6.sin6_family = 255;
     xfer_set_local_address (xfer, (struct sockaddr *)&addr6, sizeof (addr6),
                             "?");
     LONGS_EQUAL(0, xfer_network_connect (xfer));
