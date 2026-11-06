@@ -643,9 +643,20 @@ fichiers sont dans le répertoire _po/_ :
 * Le code doit compiler sans aucun avertissement, et tous les tests doivent
   passer.
 * Ajoutez des tests unitaires dans le répertoire _tests/unit/_ pour tout
-  changement non trivial.
+  changement non trivial :
+** Un nouveau fichier de test doit être ajouté dans _tests/unit/CMakeLists.txt_,
+   et son groupe de tests importé dans _tests/unit/tests.cpp_
+   (`IMPORT_TEST_GROUP`).
+** Les fonctions utilitaires dans les tests doivent avoir un nom unique, préfixé
+   par le nom du fichier de test (tous les tests des extensions sont liés dans
+   une seule bibliothèque).
+** Les tests doivent être rapides : évitez toute pause ou délai d'attente, la
+   durée de la suite de tests ne doit augmenter que de quelques millisecondes.
 * Ajoutez tout nouveau fichier source ou de test dans le chapitre
-  <<sources,Sources>> de ce document, dans toutes les langues.
+  <<sources,Sources>> de ce document, dans toutes les langues ; dans les
+  tableaux, l'indentation de l'arborescence est faite avec des espaces
+  insécables (U+00A0), nécessaires pour l'alignement : copiez-les depuis une
+  ligne existante.
 * Utilisez un en-tête de copyright dans chaque nouveau fichier source avec :
 ** la date
 ** le nom
@@ -1013,6 +1024,32 @@ extensions et les scripts).
 
 Si pour une raison quelconque vous devez attendre un peu, utilisez `hook_timer`
 avec une fonction de rappel.
+
+[[upgrade]]
+=== Mise à jour
+
+La commande `/upgrade` sauvegarde la session (tampons, lignes, données des
+extensions, ...) dans des fichiers de mise à jour, puis lance le nouveau binaire,
+qui restaure la session depuis ces fichiers.
+
+La mise à jour est supportée avec la même version et d'une version plus
+ancienne vers une plus récente. Le retour à une version antérieure (fichiers de
+mise à jour écrits par une version plus récente et lus par une plus ancienne)
+n'est pas supporté.
+
+Lorsque les données sauvegardées dans les fichiers de mise à jour sont
+modifiées :
+
+* Ne changez jamais la constante `UPGRADE_SIGNATURE` (dans
+  _src/core/core-upgrade-file.h_) : les fichiers de mise à jour avec une autre
+  signature sont rejetés et toute la session est perdue.
+* Ajoutez les nouvelles valeurs d'une énumération sauvegardée dans les fichiers
+  de mise à jour à la fin, avant le nombre de valeurs (par exemple
+  `INFOLIST_NUM_TYPES` dans `enum t_infolist_type`).
+* Conservez la restauration des données sauvegardées par les versions plus
+  anciennes : vérifiez la présence ou le type d'une variable avec
+  `infolist_search_var` avant de la lire (voir par exemple la fonction
+  `upgrade_weechat_read_buffer` dans _src/core/core-upgrade.c_).
 
 [[doubly_linked_lists]]
 === Listes doublement chaînées
@@ -1384,12 +1421,21 @@ Où _composant_ est :
 | src/plugins/<name>/*
 | Extension
 
+| relay/api +
+  relay/irc +
+  relay/weechat
+| src/plugins/relay/<protocol>/*
+| Protocole relay
+
 |===
 
 Quelques règles à suivre :
 
 * Utilisez seulement l'anglais.
 * Utilisez des verbes à l'infinitif.
+* Gardez le message court : un titre d'environ 70 caractères (un résumé, pas
+  une copie de l'entrée du CHANGELOG), et un corps seulement s'il apporte une
+  information utile.
 * Si le commit est relatif à un bug GitHub, écrivez-le entre parenthèses après
   le message, avec ce format : `(issue #123)` ou `(closes #123)` pour le fermer.
 * Chaque commit d'une série doit compiler et passer les tests à lui seul.
@@ -1429,8 +1475,13 @@ par l'utilisateur, dans la section `[Unreleased]`.
 * Utilisez des backticks pour les saisies littérales (commandes, touches,
   ressources), des guillemets doubles pour les noms d'identifiants ou les
   valeurs, et rien pour les noms d'options.
+* La section "Fixed" est réservée aux bugs : une modification d'un
+  comportement qui était intentionnel (par exemple l'ajout de vérifications sur
+  les pointeurs reçus dans les fonctions de l'API) est listée dans la section
+  "Changed".
 * Les changements cassants sont marqués par la balise en gras `+**breaking:**+`
-  au début de l'entrée.
+  au début de l'entrée ; lorsque les utilisateurs doivent intervenir, ils sont
+  aussi décrits dans _UPGRADING.md_.
 * Les changements purement internes (refactorisation, tests, CI, ...) n'ont
   pas d'entrée.
 
@@ -1445,6 +1496,9 @@ Exemples d'entrées :
 
 [[translations]]
 === Traductions
+
+En français, une espace insécable (U+00A0) est utilisée avant les caractères
+`:`, `?`, `!` et `;`.
 
 [[gettext]]
 ==== Gettext
@@ -1527,3 +1581,8 @@ Lorsque la documentation est mise à jour, toutes les langues doivent être mise
 * Autres langues : texte en anglais, avec la ligne `// TRANSLATION MISSING` au-dessus
   de chaque texte non traduit (paragraphe, titre, ligne de tableau, légende
   d'exemple, ...), les traducteurs le mettent à jour plus tard.
+
+Une nouvelle fonctionnalité (commande, option, fonction de l'API, ...) est
+documentée avec la version où elle apparaît, par exemple
+`+_(WeeChat ≥ X.Y.Z)_+`, où X.Y.Z est la version en développement (variable
+`weechat_devel` dans _version.sh_, sans le suffixe `-dev`).

@@ -642,9 +642,22 @@ WeeChat „језгро” се налази у следећим директо�
 * Ваши коментари, имена променљивих, ... у изворном коду морају бити написани *само* на
   енглеском језику (није дозвољена употреба ниједног другог језика).
 * Кôд мора да се компајлира без било каквих упозорења, и сви тестови морају да прођу.
-* У случају било какве нетривијалне измене, додајте unit тестове у директоријум _tests/unit/_.
-* Додајте било које нове фајлове извора или теста у поглавље <<sources,Извори>>
-  овог документа, на свим језицима.
+// TRANSLATION MISSING
+* Add unit tests in directory _tests/unit/_ for any non-trivial change:
+// TRANSLATION MISSING
+** A new test file must be added in _tests/unit/CMakeLists.txt_, and its test
+   group imported in _tests/unit/tests.cpp_ (`IMPORT_TEST_GROUP`).
+// TRANSLATION MISSING
+** Helper functions in tests must have a unique name, prefixed by the name of
+   the test file (all plugin tests are linked in a single library).
+// TRANSLATION MISSING
+** Tests must be fast: do not sleep or wait for a timeout, the duration of
+   the test suite must increase by a few milliseconds only.
+// TRANSLATION MISSING
+* Add any new source or test file in chapter <<sources,Извори>> of this
+  document, in all languages; in the tables, the tree indentation is made with
+  non-breaking spaces (U+00A0), required for alignment: copy them from an
+  existing line.
 * Употребите заглавље ауторских права у сваком новом изворном фајлу са:
 ** датумом
 ** именом
@@ -985,6 +998,35 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
 Програм WeeChat се извршава у једној нити. То значи да би сваки део кода требало да се извршава веома брзо и да су позиви функција као што је `sleep` *стриктно забрањени* (то је тачно за WeeChat језгро, али и за C додатке и скрипте).
 
 Ако из неког разлога морате да одспавате накратко, употребите `hook_timer` са функцијом повратног позива.
+
+// TRANSLATION MISSING
+[[upgrade]]
+=== Upgrade
+
+// TRANSLATION MISSING
+The command `/upgrade` saves the session (buffers, lines, plugins data, ...) in
+upgrade files, then runs the new binary, which restores the session from these
+files.
+
+// TRANSLATION MISSING
+Upgrade is supported with the same version and from an older version to a newer
+one. Downgrade (upgrade files written by a newer version and read by an older
+one) is not supported.
+
+// TRANSLATION MISSING
+When the data saved in upgrade files is changed:
+
+// TRANSLATION MISSING
+* Never change the constant `UPGRADE_SIGNATURE` (in
+  _src/core/core-upgrade-file.h_): upgrade files with another signature are
+  rejected and the whole session is lost.
+// TRANSLATION MISSING
+* Add new values of an enum saved in upgrade files at the end, before the number
+  of values (for example `INFOLIST_NUM_TYPES` in `enum t_infolist_type`).
+// TRANSLATION MISSING
+* Keep restoring data saved by older versions: check the presence or type of
+  a variable with `infolist_search_var` before reading it (see for example
+  function `upgrade_weechat_read_buffer` in _src/core/core-upgrade.c_).
 
 [[doubly_linked_lists]]
 === Двоструко уланчане листе
@@ -1336,12 +1378,22 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 | src/plugins/<име>/*
 | Додатак
 
+| relay/api +
+  relay/irc +
+  relay/weechat
+| src/plugins/relay/<протокол>/*
+// TRANSLATION MISSING
+| Relay protocol
+
 |===
 
 Нека правила која треба да поштујете:
 
 * Користите само енглески језик.
 * Користите глагол у инфинитиву.
+// TRANSLATION MISSING
+* Keep the message short: a title of about 70 chars (a summary, not a copy of
+  the CHANGELOG entry), and a body only when it brings useful info.
 * Ако је комит у вези са GitHub проблемом, напишите га у заградама након поруке, у формату: `(issue #123)` или `(closes #123)` да га затворите.
 * Сваки комит у низу мора да се изгради и прође тестове сам за себе.
 * Свака измена која је видљива кориснику мора да има свој унос у _CHANGELOG.md_ у истом
@@ -1377,7 +1429,13 @@ ruby: add detection of ruby version 1.9.3 in CMake
   своје компоненте.
 * Користите краткоузлазне акценте за дословни унос (команде, тастере, ресурсе), знаке
   навода за имена идентификатора или вредности, и ништа за имена опција.
-* Измене које мењају раније понашање су означене са подебљаном ознаком `+**breaking:**+`.
+// TRANSLATION MISSING
+* Section "Fixed" is only for bugs: a change of a behavior that was
+  intentional (for example adding checks on pointers received in API
+  functions) is listed in section "Changed".
+// TRANSLATION MISSING
+* Breaking changes are marked with a leading bold tag `+**breaking:**+`; when
+  users must take action, they are also described in _UPGRADING.md_.
 * Чисто интерне измене (рефакторисање, тестови, CI, ...) немају никакву ставку.
 
 Примери ставки:
@@ -1391,6 +1449,10 @@ ruby: add detection of ruby version 1.9.3 in CMake
 
 [[translations]]
 === Преводи
+
+// TRANSLATION MISSING
+In French, a non-breaking space (U+00A0) is used before the chars `:`, `?`,
+`!` and `;`.
 
 [[gettext]]
 ==== Gettext
@@ -1464,3 +1526,9 @@ Asciidoc фајлови се налазе у директоријуму _doc/XX/
 * Остали језици: енглески текст, са линијом `// TRANSLATION MISSING` изнад
   сваког непреведеног текста (пасус, наслов, ред табеле, наслов примера, ...),
   преводиоци га касније ажурирају.
+
+// TRANSLATION MISSING
+A new feature (command, option, API function, ...) is documented with the
+version where it appears, for example `+_(WeeChat ≥ X.Y.Z)_+`, where X.Y.Z is
+the version in development (variable `weechat_devel` in _version.sh_, without
+the suffix `-dev`).

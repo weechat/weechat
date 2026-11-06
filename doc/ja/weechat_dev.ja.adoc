@@ -835,10 +835,21 @@ WeeChat とプラグインの翻訳は gettext で行います、ファイルは
 // TRANSLATION MISSING
 * Code must compile without any warning, and all tests must pass.
 // TRANSLATION MISSING
-* Add unit tests in directory _tests/unit/_ for any non-trivial change.
+* Add unit tests in directory _tests/unit/_ for any non-trivial change:
+// TRANSLATION MISSING
+** A new test file must be added in _tests/unit/CMakeLists.txt_, and its test
+   group imported in _tests/unit/tests.cpp_ (`IMPORT_TEST_GROUP`).
+// TRANSLATION MISSING
+** Helper functions in tests must have a unique name, prefixed by the name of
+   the test file (all plugin tests are linked in a single library).
+// TRANSLATION MISSING
+** Tests must be fast: do not sleep or wait for a timeout, the duration of
+   the test suite must increase by a few milliseconds only.
 // TRANSLATION MISSING
 * Add any new source or test file in chapter <<sources,Sources>> of this
-  document, in all languages.
+  document, in all languages; in the tables, the tree indentation is made with
+  non-breaking spaces (U+00A0), required for alignment: copy them from an
+  existing line.
 * 新しいファイルにはコピーライトヘッダを入れ、以下の情報を含めてください:
 ** 日付
 ** 名前
@@ -1205,6 +1216,35 @@ WeeChat はシングルスレッドです。これはつまり、コードの全
 WeeChat コアだけでなく、C 言語プラグインとスクリプトでも同じことが言えます)。
 
 何らかの理由でしばらく sleep したい場合は、`hook_timer` をコールバックと併せて使ってください。
+
+// TRANSLATION MISSING
+[[upgrade]]
+=== Upgrade
+
+// TRANSLATION MISSING
+The command `/upgrade` saves the session (buffers, lines, plugins data, ...) in
+upgrade files, then runs the new binary, which restores the session from these
+files.
+
+// TRANSLATION MISSING
+Upgrade is supported with the same version and from an older version to a newer
+one. Downgrade (upgrade files written by a newer version and read by an older
+one) is not supported.
+
+// TRANSLATION MISSING
+When the data saved in upgrade files is changed:
+
+// TRANSLATION MISSING
+* Never change the constant `UPGRADE_SIGNATURE` (in
+  _src/core/core-upgrade-file.h_): upgrade files with another signature are
+  rejected and the whole session is lost.
+// TRANSLATION MISSING
+* Add new values of an enum saved in upgrade files at the end, before the number
+  of values (for example `INFOLIST_NUM_TYPES` in `enum t_infolist_type`).
+// TRANSLATION MISSING
+* Keep restoring data saved by older versions: check the presence or type of
+  a variable with `infolist_search_var` before reading it (see for example
+  function `upgrade_weechat_read_buffer` in _src/core/core-upgrade.c_).
 
 [[doubly_linked_lists]]
 === 双方向連結リスト
@@ -1601,12 +1641,22 @@ _component_ には以下から 1 つ選んで記入してください:
 // TRANSLATION MISSING
 | Plugin
 
+| relay/api +
+  relay/irc +
+  relay/weechat
+| src/plugins/relay/<protocol>/*
+// TRANSLATION MISSING
+| Relay protocol
+
 |===
 
 以下のルールに従ってください:
 
 * 英語を使ってください
 * 動詞の原形を使ってください
+// TRANSLATION MISSING
+* Keep the message short: a title of about 70 chars (a summary, not a copy of
+  the CHANGELOG entry), and a body only when it brings useful info.
 // TRANSLATION MISSING
 * If commit is related to a GitHub issue, write it in parenthesis after
   the message, with this format: `(issue #123)` or `(closes #123)` to close it.
@@ -1655,7 +1705,12 @@ section `[Unreleased]`.
 * Use backticks for literal input (commands, keys, resources), double quotes for
   names of identifiers or values, and nothing for option names.
 // TRANSLATION MISSING
-* Breaking changes are marked with a leading bold tag `+**breaking:**+`.
+* Section "Fixed" is only for bugs: a change of a behavior that was
+  intentional (for example adding checks on pointers received in API
+  functions) is listed in section "Changed".
+// TRANSLATION MISSING
+* Breaking changes are marked with a leading bold tag `+**breaking:**+`; when
+  users must take action, they are also described in _UPGRADING.md_.
 // TRANSLATION MISSING
 * Purely internal changes (refactoring, tests, CI, ...) don't have any entry.
 
@@ -1671,6 +1726,10 @@ Examples of entries:
 
 [[translations]]
 === 翻訳
+
+// TRANSLATION MISSING
+In French, a non-breaking space (U+00A0) is used before the chars `:`, `?`,
+`!` and `;`.
 
 [[gettext]]
 ==== Gettext
@@ -1753,3 +1812,9 @@ When the documentation is updated, all languages must be updated:
 * Other languages: English text, with the line `// TRANSLATION MISSING` above each
   untranslated text (paragraph, heading, table row, example caption, ...),
   translators update it later.
+
+// TRANSLATION MISSING
+A new feature (command, option, API function, ...) is documented with the
+version where it appears, for example `+_(WeeChat ≥ X.Y.Z)_+`, where X.Y.Z is
+the version in development (variable `weechat_devel` in _version.sh_, without
+the suffix `-dev`).
