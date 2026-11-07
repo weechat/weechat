@@ -288,6 +288,13 @@ Log files written by older versions with option `logger.file.color_lines` used c
 22 to remove dim only: in backlog, text which was both bold and dim may be displayed
 without bold after the end of dim.
 
+### Info color_ansi_regex
+
+The POSIX extended regular expression returned by info `color_ansi_regex` has changed: it
+now matches all ANSI control sequences, following the ECMA-48 grammar (parameter bytes,
+intermediate bytes and final byte), for example the cursor style `\e[2 q`; only SGR
+sequences (ending with `m`) are colors.
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer

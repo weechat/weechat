@@ -1666,10 +1666,19 @@ gui_color_ansi_parse_sequence (const char *sequence,
     if (!sequence || !sequence[0])
         return strdup ("");
 
-    /* Only sequences ending with 'm' are used, the others are discarded. */
+    /*
+     * Only SGR sequences are used: "\33[" + parameters + "m", where parameters
+     * contain only digits, ";" and ":" (no private marker like "<", "=", ">"
+     * or "?" and no intermediate bytes); the others are discarded.
+     */
     length = strlen (sequence);
-    if (sequence[length - 1] != 'm')
+    if ((length < 3)
+        || (sequence[1] != '[')
+        || (sequence[length - 1] != 'm')
+        || ((int)strspn (sequence + 2, "0123456789:;") != length - 3))
+    {
         return strdup ("");
+    }
 
     output = string_dyn_alloc (32);
     if (!output)
@@ -1701,6 +1710,9 @@ gui_color_ansi_parse_sequence (const char *sequence,
 
     for (i = 0; i < num_items; i++)
     {
+        /* Parameters with sub-parameters (separated by ":") are ignored. */
+        if (strchr (items[i], ':'))
+            continue;
         value = atoi (items[i]);
         /* Invalid value (for example a number too large): ignored. */
         if (value < 0)

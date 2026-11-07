@@ -160,11 +160,26 @@ enum t_gui_color_enum
 /* Size of cache for downgrade of RGB colors (power of 2) */
 #define GUI_COLOR_DOWNGRADE_CACHE_SIZE        64
 
-#define GUI_COLOR_REGEX_ANSI_DECODE             \
-    "\33("                                      \
-    "([()].)|"                                  \
-    "([<>])|"                                   \
-    "(\\[[0-9;?]*[A-Za-z]))"
+/*
+ * Regex to search ANSI escape sequences: "\33(" or "\33)" followed by a char,
+ * "\33<", "\33>", or a control sequence (CSI): "\33[", then parameter bytes
+ * (0x30-0x3F), intermediate bytes (0x20-0x2F) and a final byte (0x40-0x7E).
+ * Chars are listed one by one instead of ranges like "[0-?]", which are
+ * invalid in some locales (for example "en_US.UTF-8"); the final bytes "[",
+ * "\\" and "]" are outside brackets and "/" is escaped, so that the regex
+ * (returned by info "color_ansi_regex") can be used in other regex engines
+ * (for example in JavaScript, Ruby, and PHP with "/" as delimiter).
+ */
+#define GUI_COLOR_REGEX_ANSI_DECODE                                      \
+    "\33("                                                               \
+    "([()].)|"                                                           \
+    "([<>])|"                                                            \
+    "(\\["                                                               \
+    "[0123456789:;<=>?]*"                                                \
+    "([ !\"#$%&'()*+,.-]|\\/)*"                                          \
+    "([@ABCDEFGHIJKLMNOPQRSTUVWXYZ^_`abcdefghijklmnopqrstuvwxyz{|}~]|"   \
+    "\\[|\\\\|\\]"                                                       \
+    ")))"
 
 /* RGB color in the result of ANSI color parsing: flag + 0xRRGGBB */
 #define GUI_COLOR_ANSI_RGB_FLAG               0x1000000

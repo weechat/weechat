@@ -1822,6 +1822,50 @@ TEST(GuiColor, DecodeAnsi)
         string,
         "test_" "\x1B[4;58;5;1;34;59;1m" "ul_blue",
         1);
+
+    /* Other escape sequences (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B(B" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B(B" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B(m" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B(m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B>" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B>" "B", 1);
+
+    /* Control sequences other than SGR (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[2 q" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[2 q" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[=5u" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[=5u" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[3~" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[3~" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[@" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[@" "B", 1);
+
+    /* Private control sequences ending with "m" (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[>4;2m" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[>4;2m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[?4m" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[?4m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[<m" "B", 1);
+
+    /* Private bytes after the first parameter (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1;>4m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1<m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[5=m" "B", 1);
+
+    /* Control sequence ending with "m" with intermediate bytes (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 1);
+
+    /* Parameters with sub-parameters (ignored) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[38:2::255:0:0m" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[38:2::255:0:0m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[4:0m" "B", 1);
+    snprintf (string, sizeof (string),
+              "A" "%s" "%s" "B",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("|blue"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;4:3;34m" "B", 1);
 }
 
 /*

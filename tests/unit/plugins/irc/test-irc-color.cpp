@@ -220,6 +220,8 @@ extern void irc_color_decode_ansi_sequence (char **output,
     "test_\x1B[4m\x1B[38;2;0;128;128m\x1B[58;2;255;0;0mul_color10"
 #define STRING_ANSI_UNDERLINE_COLOR_MIXED                               \
     "test_\x1B[4;58;5;1;34;59;1mul_blue"
+#define STRING_ANSI_SUB_PARAMS                                          \
+    "test_\x1B[1;4:3;38:2::255:0:0;34mbold_blue"
 
 #define WEE_CHECK_DECODE(__result, __string, __keep_colors)             \
     decoded = irc_color_decode (__string, __keep_colors);               \
@@ -1294,6 +1296,48 @@ TEST(IrcColor, DecodeAnsi)
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_BOLD_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_UNDERLINE_COLOR_MIXED, 1);
+
+    /* Other escape sequences (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B(BB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B(BB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B(mB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B(mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B>B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B>B", 1);
+
+    /* Control sequences other than SGR (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[2 qB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[2 qB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[=5uB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[=5uB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[3~B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[3~B", 1);
+
+    /* Private control sequences ending with "m" (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[>4;2mB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[>4;2mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[?4mB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[?4mB", 1);
+
+    /* Private bytes after the first parameter (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1;>4mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1<mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[5=mB", 1);
+
+    /* Control sequence ending with "m" with intermediate bytes (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 1);
+
+    /* Parameters with sub-parameters (ignored) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[38:2::255:0:0mB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[38:2::255:0:0mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[4:0mB", 1);
+    WEE_CHECK_DECODE_ANSI("test_bold_blue", STRING_ANSI_SUB_PARAMS, 0);
+    snprintf (string, sizeof (string),
+              "test_%s%s02bold_blue",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_SUB_PARAMS, 1);
 }
 
 /*
