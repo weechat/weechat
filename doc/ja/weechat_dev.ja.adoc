@@ -1565,6 +1565,11 @@ _component_ には以下から 1 つ選んで記入してください:
 // TRANSLATION MISSING
 |  Build
 
+| build/container
+| tools/container/*
+// TRANSLATION MISSING
+| Container images
+
 | ci
 | .github/workflows/*
 // TRANSLATION MISSING

@@ -1331,6 +1331,10 @@ Where _component_ is one of following:
   weechat.cygport.in
 | Build
 
+| build/container
+| tools/container/*
+| Container images
+
 | ci
 | .github/workflows/*
 | Continuous integration
