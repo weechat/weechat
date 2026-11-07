@@ -878,8 +878,6 @@ upgrade_weechat_read_cb (const void *pointer, void *data,
     (void) data;
     (void) upgrade_file;
 
-    gui_buffer_last_id_assigned = -1;
-
     infolist_reset_item_cursor (infolist);
     while (infolist_next (infolist))
     {
@@ -954,6 +952,9 @@ upgrade_weechat_load (void)
         upgrade_file_close (upgrade_file);
         return 0;
     }
+
+    /* buffer ids are restored from the upgrade file */
+    gui_buffer_last_id_assigned = -1;
 
     rc = upgrade_file_read (upgrade_file);
 
