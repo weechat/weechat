@@ -554,7 +554,8 @@ gui_color_convert_term_to_rgb (int color)
  *
  * Argument "limit" is the number of colors to check in the table of terminal
  * colors (starting from 0). So for example 256 will return any of the 256
- * colors, 16 will return a color between 0 and 15.
+ * colors, 16 will return a color between 0 and 15. A limit greater than 256
+ * is the same as 256, and a limit lower than 1 returns 0.
  *
  * Return the closest terminal color (0-255).
  */
@@ -563,6 +564,9 @@ int
 gui_color_convert_rgb_to_term (int rgb, int limit)
 {
     int i, r1, g1, b1, r2, g2, b2, diff, best_diff, best_color;
+
+    if (limit > 256)
+        limit = 256;
 
     r1 = rgb >> 16;
     g1 = (rgb >> 8) & 0xFF;

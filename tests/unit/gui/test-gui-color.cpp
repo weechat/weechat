@@ -277,6 +277,25 @@ TEST(GuiColor, GetCustom)
 
 /*
  * Test functions:
+ *   gui_color_convert_rgb_to_term
+ */
+
+TEST(GuiColor, ConvertRgbToTerm)
+{
+    LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x000000, 256));
+    LONGS_EQUAL(8, gui_color_convert_rgb_to_term (0x808080, 256));
+    LONGS_EQUAL(154, gui_color_convert_rgb_to_term (0xafff00, 256));
+    LONGS_EQUAL(11, gui_color_convert_rgb_to_term (0xafff00, 64));
+
+    /* invalid limit */
+    LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x808080, 0));
+    LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x808080, -1));
+    LONGS_EQUAL(8, gui_color_convert_rgb_to_term (0x808080, 257));
+    LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x010203, 100000000));
+}
+
+/*
+ * Test functions:
  *   gui_color_code_size
  */
 

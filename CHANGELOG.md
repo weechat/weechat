@@ -14,6 +14,10 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 - build/container: add files to build container images (Debian and Alpine) from the local sources, moved from repository [weechat-container](https://github.com/weechat/weechat-container)
 
+### Fixed
+
+- core: fix crash in info "color_rgb2term" when the limit is greater than 256
+
 ## [4.10.3] - 2026-11-07
 
 ### Fixed
