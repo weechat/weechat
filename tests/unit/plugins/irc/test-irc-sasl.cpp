@@ -101,7 +101,8 @@ TEST(IrcSasl, MechanismScram)
     CHECK(string_base64_decode (0, str, str_decoded) > 0);
     CHECK(strncmp (str_decoded, "n,,n=user1,r=", 13) == 0);
     CHECK(strlen (str_decoded + 13) < sizeof (nonce_client));
-    snprintf (nonce_client, sizeof (nonce_client), "%.255s", str_decoded + 13);
+    snprintf (nonce_client, sizeof (nonce_client), "%.*s",
+              (int)sizeof (nonce_client) - 1, str_decoded + 13);
     free (str);
 
     /* Server-first message with an invalid server nonce. */
