@@ -2199,7 +2199,14 @@ TEST(GuiColor, EncodeAnsi)
     snprintf (string, sizeof (string),
               "test_" "%s" "bar_delim",
               gui_color_get_custom ("bar_delim"));
-    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[48;5;22m" "bar_delim", string);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[38;5;22m" "bar_delim", string);
+    config_file_option_set (config_color_chat_delimiters, "lightred", 1);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[91m" "bar_delim", string);
+    config_file_option_set (config_color_chat_delimiters, "red", 1);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[31m" "bar_delim", string);
+    config_file_option_set (config_color_chat_delimiters, "*green", 1);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[1m" "\x1B[32m" "bar_delim", string);
+    config_file_option_reset (config_color_chat_delimiters, 1);
 
     /* Text color */
     snprintf (string, sizeof (string),
@@ -2384,14 +2391,14 @@ TEST(GuiColor, EncodeAnsi)
               GUI_COLOR_COLOR_CHAR, GUI_COLOR_BAR_CHAR, GUI_COLOR_BAR_DELIM_CHAR);
     encoded = gui_color_encode_ansi (string);
     CHECK(strstr (encoded, "\x1B[38;2;255;136;0m"));
-    CHECK(strstr (encoded, "\x1B[48;2;0;255;128m" "delim"));
+    CHECK(strstr (encoded, "\x1B[38;2;0;255;128m" "delim"));
     CHECK(!strstr (encoded, ";5;1000"));
     free (encoded);
     encoded = gui_color_encode_ansi_rgb (string, 0);
     snprintf (expected, sizeof (expected), "\x1B[38;5;%dm",
               gui_color_convert_rgb_to_term_display (0xff8800, 256));
     CHECK(strstr (encoded, expected));
-    snprintf (expected, sizeof (expected), "\x1B[48;5;%dm" "delim",
+    snprintf (expected, sizeof (expected), "\x1B[38;5;%dm" "delim",
               gui_color_convert_rgb_to_term_display (0x00ff80, 256));
     CHECK(strstr (encoded, expected));
     CHECK(!strstr (encoded, ";2;"));

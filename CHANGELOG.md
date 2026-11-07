@@ -126,6 +126,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: convert bar delimiter color to an ANSI text color instead of a background color (relay "api" protocol with colors "ansi", option logger.file.color_lines)
 - core, irc: ignore invalid colors in ANSI colors (incomplete color, unknown type of color, terminal color greater than 255) and numbers out of range, instead of decoding the remaining parameters as attributes
 - core, irc: fix conversion of ANSI RGB colors (for example in output of `/exec`) when a red, green or blue component is greater than 255, use 255 instead
 - core, irc: remove ANSI control sequences (CSI) other than colors when decoding ANSI colors (for example cursor style), decode as colors only SGR sequences with parameters made of digits, ";" and ":" (not private sequences ending with "m")

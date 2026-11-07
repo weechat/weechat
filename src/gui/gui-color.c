@@ -2269,6 +2269,90 @@ gui_color_encode_ansi_color (char *buffer, int size, int color,
 }
 
 /*
+ * Add ANSI color codes for the attribute flags of a WeeChat color (integer
+ * with flags like GUI_COLOR_EXTENDED_BOLD_FLAG), and update flags bold/dim
+ * enabled in output of gui_color_encode_ansi.
+ */
+
+void
+gui_color_add_ansi_attrs (char **output, int color, int *intensity)
+{
+    int flags[] = { GUI_COLOR_EXTENDED_BLINK_FLAG, GUI_COLOR_EXTENDED_DIM_FLAG,
+                    GUI_COLOR_EXTENDED_BOLD_FLAG, GUI_COLOR_EXTENDED_REVERSE_FLAG,
+                    GUI_COLOR_EXTENDED_ITALIC_FLAG,
+                    GUI_COLOR_EXTENDED_UNDERLINE_FLAG, 0 };
+    int i;
+
+    for (i = 0; flags[i]; i++)
+    {
+        if (color & flags[i])
+            gui_color_add_ansi_flag (output, flags[i]);
+    }
+    gui_color_ansi_update_intensity (intensity, color);
+}
+
+/*
+ * Add ANSI color code for a WeeChat color, text color or background:
+ * extended color (with flag GUI_COLOR_EXTENDED_FLAG, terminal color or RGB
+ * color number) or basic WeeChat color; attribute flags in color are ignored.
+ *
+ * If "rgb_colors" is 0, a RGB color is replaced by the nearest color of the
+ * 256-color palette.
+ */
+
+void
+gui_color_add_ansi_color (char **output, int color, int background,
+                          int rgb_colors)
+{
+    char str_concat[64];
+    int ansi_color, base;
+
+    if ((color >= 0) && (color & GUI_COLOR_EXTENDED_FLAG))
+    {
+        gui_color_encode_ansi_color (str_concat, sizeof (str_concat),
+                                     color & GUI_COLOR_EXTENDED_MASK,
+                                     background, rgb_colors);
+    }
+    else
+    {
+        /* Basic colors: 30-37 or 90-97 (text), 40-47 or 100-107 (background). */
+        base = (background) ? 40 : 30;
+        ansi_color = gui_color_weechat_to_ansi (
+            color & GUI_COLOR_EXTENDED_MASK);
+        snprintf (str_concat, sizeof (str_concat),
+                  "\x1B[%dm",
+                  (ansi_color < 0) ?
+                  ((background) ?
+                   GUI_COLOR_ANSI_DEFAULT_BG : GUI_COLOR_ANSI_DEFAULT_FG) :
+                  ((ansi_color < 8) ?
+                   base + ansi_color : base + 60 + ansi_color - 8));
+    }
+    string_dyn_concat (output, str_concat, -1);
+}
+
+/*
+ * Add ANSI color code for a WeeChat text color (see function
+ * gui_color_add_ansi_color).
+ */
+
+void
+gui_color_add_ansi_fg (char **output, int color, int rgb_colors)
+{
+    gui_color_add_ansi_color (output, color, 0, rgb_colors);
+}
+
+/*
+ * Add ANSI color code for a WeeChat background color (see function
+ * gui_color_add_ansi_color).
+ */
+
+void
+gui_color_add_ansi_bg (char **output, int color, int rgb_colors)
+{
+    gui_color_add_ansi_color (output, color, 1, rgb_colors);
+}
+
+/*
  * Add an ANSI color code for a terminal color (0-255, or -1 for the default
  * color), text color or background.
  */
@@ -2306,7 +2390,7 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
 {
     const unsigned char *ptr_string;
     char **out, str_concat[128], str_color[8];
-    int color, length, ansi_color, fg, bg, attrs, intensity;
+    int color, length, fg, bg, attrs, intensity;
 
     if (!string)
         return NULL;
@@ -2349,16 +2433,8 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                 memcpy (str_color, ptr_string, 2);
                                 str_color[2] = '\0';
                                 if (util_parse_int (str_color, 10, &color))
-                                {
-                                    ansi_color = gui_color_weechat_to_ansi (color);
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[%dm",
-                                              (ansi_color < 0) ?
-                                              GUI_COLOR_ANSI_DEFAULT_FG :
-                                              ((ansi_color < 8) ?
-                                               ansi_color + 30 : ansi_color - 8 + 90));
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
+                                    gui_color_add_ansi_fg (out, color,
+                                                           rgb_colors);
                                 ptr_string += 2;
                             }
                         }
@@ -2378,16 +2454,8 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                 memcpy (str_color, ptr_string, 2);
                                 str_color[2] = '\0';
                                 if (util_parse_int (str_color, 10, &color))
-                                {
-                                    ansi_color = gui_color_weechat_to_ansi (color);
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[%dm",
-                                              (ansi_color < 0) ?
-                                              GUI_COLOR_ANSI_DEFAULT_BG :
-                                              ((ansi_color < 8) ?
-                                               ansi_color + 40 : ansi_color - 8 + 100));
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
+                                    gui_color_add_ansi_bg (out, color,
+                                                           rgb_colors);
                                 ptr_string += 2;
                             }
                         }
@@ -2411,16 +2479,8 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                 memcpy (str_color, ptr_string, 2);
                                 str_color[2] = '\0';
                                 if (util_parse_int (str_color, 10, &color))
-                                {
-                                    ansi_color = gui_color_weechat_to_ansi (color);
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[%dm",
-                                              (ansi_color < 0) ?
-                                              GUI_COLOR_ANSI_DEFAULT_FG :
-                                              ((ansi_color < 8) ?
-                                               ansi_color + 30 : ansi_color - 8 + 90));
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
+                                    gui_color_add_ansi_fg (out, color,
+                                                           rgb_colors);
                                 ptr_string += 2;
                             }
                         }
@@ -2447,16 +2507,8 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                     memcpy (str_color, ptr_string, 2);
                                     str_color[2] = '\0';
                                     if (util_parse_int (str_color, 10, &color))
-                                    {
-                                        ansi_color = gui_color_weechat_to_ansi (color);
-                                        snprintf (str_concat, sizeof (str_concat),
-                                                  "\x1B[%dm",
-                                                  (ansi_color < 0) ?
-                                                  GUI_COLOR_ANSI_DEFAULT_BG :
-                                                  ((ansi_color < 8) ?
-                                                   ansi_color + 40 : ansi_color - 8 + 100));
-                                        string_dyn_concat (out, str_concat, -1);
-                                    }
+                                        gui_color_add_ansi_bg (out, color,
+                                                               rgb_colors);
                                     ptr_string += 2;
                                 }
                             }
@@ -2507,26 +2559,14 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                 ptr_string++;
                                 break;
                             case GUI_COLOR_BAR_DELIM_CHAR:
+                                /*
+                                 * The delimiter is a text color, with the
+                                 * attributes of its color.
+                                 */
                                 color = CONFIG_COLOR(config_color_chat_delimiters);
-                                if (color & GUI_COLOR_EXTENDED_FLAG)
-                                {
-                                    gui_color_encode_ansi_color (
-                                        str_concat, sizeof (str_concat),
-                                        color & GUI_COLOR_EXTENDED_MASK, 1,
-                                        rgb_colors);
-                                }
-                                else
-                                {
-                                    ansi_color = gui_color_weechat_to_ansi (
-                                        CONFIG_COLOR(config_color_chat_delimiters));
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[%dm",
-                                              (ansi_color < 0) ?
-                                              GUI_COLOR_ANSI_DEFAULT_FG :
-                                              ((ansi_color < 8) ?
-                                               ansi_color + 40 : ansi_color - 8 + 100));
-                                }
-                                string_dyn_concat (out, str_concat, -1);
+                                gui_color_add_ansi_attrs (out, color,
+                                                          &intensity);
+                                gui_color_add_ansi_fg (out, color, rgb_colors);
                                 ptr_string++;
                                 break;
                             case GUI_COLOR_BAR_START_INPUT_CHAR:
@@ -2567,20 +2607,8 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                     fg += 8;
                                 }
                                 string_dyn_concat (out, "\x1B[0m", -1);
-                                intensity = attrs & (GUI_COLOR_EXTENDED_BOLD_FLAG
-                                                     | GUI_COLOR_EXTENDED_DIM_FLAG);
-                                if (attrs & GUI_COLOR_EXTENDED_BLINK_FLAG)
-                                    string_dyn_concat (out, "\x1B[5m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_DIM_FLAG)
-                                    string_dyn_concat (out, "\x1B[2m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_BOLD_FLAG)
-                                    string_dyn_concat (out, "\x1B[1m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_REVERSE_FLAG)
-                                    string_dyn_concat (out, "\x1B[7m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_ITALIC_FLAG)
-                                    string_dyn_concat (out, "\x1B[3m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
-                                    string_dyn_concat (out, "\x1B[4m", -1);
+                                intensity = 0;
+                                gui_color_add_ansi_attrs (out, attrs, &intensity);
                                 if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
                                     fg &= GUI_COLOR_EXTENDED_MASK;
                                 if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
