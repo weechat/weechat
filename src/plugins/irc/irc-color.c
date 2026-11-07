@@ -196,7 +196,7 @@ irc_color_decode (const char *string, int keep_colors)
     const char *remapped_color;
     unsigned char *ptr_string;
     int length, fg, bg, fg_term, bg_term, current_bg_irc, current_bg_term;
-    int bold, reverse, italic, strikethrough, underline;
+    int bold, reverse, italic, strikethrough, underline, term_remap;
     long fg_rgb, bg_rgb;
 
     if (!string)
@@ -439,20 +439,30 @@ irc_color_decode (const char *string, int keep_colors)
                         str_bg[0] = '\0';
                         fg_term = -1;
                         bg_term = -1;
+                        /*
+                         * The RGB color is kept as-is (WeeChat displays it
+                         * with the nearest terminal color if the terminal
+                         * does not support direct colors); the terminal
+                         * color is used only to search remapped colors
+                         * (option irc.color.term_remap), so it is computed
+                         * only if there are remapped colors.
+                         */
+                        term_remap = (weechat_hashtable_get_integer (
+                                          irc_config_hashtable_color_term_remap,
+                                          "items_count") > 0);
                         if (fg_rgb >= 0)
                         {
-                            fg_term = irc_color_convert_rgb2term (fg_rgb);
-                            if (fg_term >= 0)
-                                snprintf (str_fg, sizeof (str_fg), "%d", fg_term);
+                            if (term_remap)
+                                fg_term = irc_color_convert_rgb2term (fg_rgb);
+                            snprintf (str_fg, sizeof (str_fg), "#%06lx",
+                                      fg_rgb & 0xFFFFFF);
                         }
                         if (bg_rgb >= 0)
                         {
-                            bg_term = irc_color_convert_rgb2term (bg_rgb);
-                            if (bg_term >= 0)
-                                snprintf (str_bg, sizeof (str_bg), "%d", bg_term);
-                        }
-                        if (bg_term >= 0)
-                        {
+                            if (term_remap)
+                                bg_term = irc_color_convert_rgb2term (bg_rgb);
+                            snprintf (str_bg, sizeof (str_bg), "#%06lx",
+                                      bg_rgb & 0xFFFFFF);
                             current_bg_irc = -2;
                             current_bg_term = bg_term;
                         }
@@ -461,12 +471,17 @@ irc_color_decode (const char *string, int keep_colors)
                          * colors (with the current background if bg_term is
                          * not given).
                          */
-                        snprintf (str_key, sizeof (str_key), "%d,%d",
-                                  fg_term,
-                                  (bg_term >= 0) ? bg_term : current_bg_term);
-                        remapped_color = weechat_hashtable_get (
-                            irc_config_hashtable_color_term_remap,
-                            str_key);
+                        remapped_color = NULL;
+                        if (term_remap)
+                        {
+                            snprintf (str_key, sizeof (str_key), "%d,%d",
+                                      fg_term,
+                                      (bg_term >= 0) ?
+                                      bg_term : current_bg_term);
+                            remapped_color = weechat_hashtable_get (
+                                irc_config_hashtable_color_term_remap,
+                                str_key);
+                        }
                         if (remapped_color)
                         {
                             snprintf (str_color, sizeof (str_color),

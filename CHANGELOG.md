@@ -94,6 +94,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - buflist: display only the first char of nick prefix in variable `${nick_prefix}`, so that buffers stay aligned when a nick has multiple prefixes in nicklist
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: accept a number or a string with a number as integer data in function hook_signal_send, return an error if the data is not a valid integer
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
+- **breaking:** irc: keep the RGB value of hex colors (`^D`) (color code "@#rrggbb") instead of using the nearest terminal color ([#1364](https://github.com/weechat/weechat/issues/1364))
 - irc: allow spaces around commas in server option tls_fingerprint
 - irc: allow multiple nicks separated by commas in commands `/notify add`, `/notify addreplace` and `/notify del` ([#689](https://github.com/weechat/weechat/issues/689))
 - **breaking:** irc: display all nick prefixes in nicklist when capability "multi-prefix" is enabled (option irc.look.multi_prefix_in_nicklist), the nick prefix in nicklist can now have more than one char

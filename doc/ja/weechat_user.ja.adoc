@@ -1818,7 +1818,7 @@ terminal).
 
 // TRANSLATION MISSING
 RGB colors received in ANSI escape codes (for example in output of command
-`/exec`) are kept as-is too.
+`/exec`) and IRC hex colors are kept as-is too.
 
 // TRANSLATION MISSING
 For example:

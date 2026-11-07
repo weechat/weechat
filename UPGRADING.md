@@ -261,8 +261,8 @@ WeeChat color codes can now contain RGB colors: `@` + optional attributes + `#rr
 [color codes in strings](https://weechat.org/doc/weechat/dev/#color_codes_in_strings).
 
 RGB colors received in ANSI escape codes (`38;2;r;g;b` and `48;2;r;g;b`, for example in output of
-command `/exec`) are now kept as RGB colors instead of being converted to the nearest color of the
-256-color palette.
+command `/exec`) and in IRC hex colors (`^D`, for example `^DFF7F00`) are now kept as RGB colors
+instead of being converted to the nearest color of the 256-color palette.
 
 On a terminal with 256 colors and without direct colors (for example `TERM=xterm-256color`),
 these RGB colors are displayed with the nearest color among colors 16-255: colors 0-15 are not

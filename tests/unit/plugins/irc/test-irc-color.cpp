@@ -403,26 +403,26 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("|darkgray"),
               gui_color_get_custom ("|black,default"),
               gui_color_get_custom ("|darkgray"),
-              gui_color_get_custom ("|11,90"),
+              gui_color_get_custom ("|#ffff00,#8b008b"),
               gui_color_get_custom ("|black"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_MIRC_REMAPPED_CURRENT_BG, 1);
     config_file_option_unset (irc_config_color_mirc_remap);
 
-    /* Color: hex 0xFF7F00 (orange / 208) */
+    /* Color: hex 0xFF7F00 (orange, RGB kept) */
     WEE_CHECK_DECODE("test_orange_end",
                      STRING_IRC_COLOR_FG_ORANGE, 0);
     snprintf (string, sizeof (string),
               "test_%sorange%s_end",
-              gui_color_get_custom ("|208"),
+              gui_color_get_custom ("|#ff7f00"),
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_ORANGE, 1);
 
-    /* Color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90) */
+    /* Color: hex 0xFFFF00 (yellow) on 0x8B008B (dark magenta), RGB kept */
     WEE_CHECK_DECODE("test_yellow/darkmagenta_end",
                      STRING_IRC_COLOR_FG_YELLOW_BG_DARKMAGENTA, 0);
     snprintf (string, sizeof (string),
               "test_%syellow/darkmagenta%s_end",
-              gui_color_get_custom ("|11,90"),
+              gui_color_get_custom ("|#ffff00,#8b008b"),
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_YELLOW_BG_DARKMAGENTA, 1);
 
@@ -434,12 +434,12 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_HEX_BG_WITHOUT_FG, 1);
 
-    /* Color: hex 0xFF7F00 (orange / 208) followed by a comma */
+    /* Color: hex 0xFF7F00 (orange, RGB kept) followed by a comma */
     WEE_CHECK_DECODE("test_,orange_end",
                      STRING_IRC_COLOR_FG_ORANGE_COMMA, 0);
     snprintf (string, sizeof (string),
               "test_%s,orange_end",
-              gui_color_get_custom ("|208"));
+              gui_color_get_custom ("|#ff7f00"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_ORANGE_COMMA, 1);
 
     /*
@@ -466,15 +466,15 @@ TEST(IrcColor, Decode)
     snprintf (string, sizeof (string),
               "test_%sblack/darkmagenta_%sblack_%s%sremapped1_"
               "%sblack/darkmagenta_%s%sremapped2_%sblack/red_%sblack",
-              gui_color_get_custom ("|0,90"),
-              gui_color_get_custom ("|0"),
+              gui_color_get_custom ("|#000000,#8b008b"),
+              gui_color_get_custom ("|#000000"),
               gui_color_get_custom ("resetcolor"),
               gui_color_get_custom ("|darkgray"),
-              gui_color_get_custom ("|0,90"),
+              gui_color_get_custom ("|#000000,#8b008b"),
               gui_color_get_custom ("reset"),
               gui_color_get_custom ("|darkgray"),
               gui_color_get_custom ("|black,red"),
-              gui_color_get_custom ("|0"));
+              gui_color_get_custom ("|#000000"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_TERM_REMAPPED_CURRENT_BG, 1);
     config_file_option_unset (irc_config_color_term_remap);
 }
@@ -609,7 +609,7 @@ TEST(IrcColor, Encode)
               IRC_COLOR_UNDERLINE_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_ATTRS_AND_COLORS, 1);
 
-    /* Color: hex 0xFF7F00 (orange / 208) */
+    /* Color: hex 0xFF7F00 (orange, RGB kept) */
     WEE_CHECK_ENCODE("test_orange_end", STRING_USER_FG_ORANGE, 0);
     snprintf (string, sizeof (string),
               "test_%sFF7F00orange%s_end",
@@ -617,7 +617,7 @@ TEST(IrcColor, Encode)
               IRC_COLOR_HEX_COLOR_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_FG_ORANGE, 1);
 
-    /* Color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90) */
+    /* Color: hex 0xFFFF00 (yellow) on 0x8B008B (dark magenta), RGB kept */
     WEE_CHECK_ENCODE("test_yellow/darkmagenta_end",
                      STRING_USER_FG_YELLOW_BG_DARKMAGENTA, 0);
     snprintf (string, sizeof (string),
@@ -633,7 +633,7 @@ TEST(IrcColor, Encode)
               IRC_COLOR_HEX_COLOR_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_HEX_BG_WITHOUT_FG, 1);
 
-    /* Color: hex 0xFF7F00 (orange / 208) followed by a comma */
+    /* Color: hex 0xFF7F00 (orange, RGB kept) followed by a comma */
     WEE_CHECK_ENCODE("test_,orange_end", STRING_USER_FG_ORANGE_COMMA, 0);
     snprintf (string, sizeof (string),
               "test_%sFF7F00,orange_end",

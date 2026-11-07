@@ -4085,14 +4085,14 @@ irc_config_init (void)
         irc_config_color_term_remap = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
             "term_remap", "string|themable",
-            N_("remap terminal color numbers in messages using a hashtable "
-               "(used only for RGB colors as hexadecimal, which are first "
-               "translated to terminal color numbers): keys are \"fg,bg\" as "
-               "integers between -1 and 255 (-1 for fg: not specified, -1 for "
-               "bg: default background; if a color code has no background, "
-               "the current background in message is used), values are "
-               "WeeChat color names or numbers (format is: "
-               "\"1,-1:color1;2,7:color2\"), "
+            N_("remap RGB colors (hexadecimal) in messages using a "
+               "hashtable: keys are \"fg,bg\" with the nearest terminal color "
+               "numbers, as integers between -1 and 255 (-1 for fg: not "
+               "specified, -1 for bg: default background; if a color code has "
+               "no background, the current background in message is used), "
+               "values are WeeChat color names or numbers (format is: "
+               "\"1,-1:color1;2,7:color2\"); RGB colors which are not "
+               "remapped are kept as-is, "
                "example: \"0,-1:darkgray;0,90:white,blue\" to remap black to "
                "\"darkgray\" and black on dark magenta to \"white,blue\""),
             NULL, 0, 0, "0,-1:darkgray", NULL, 0,
