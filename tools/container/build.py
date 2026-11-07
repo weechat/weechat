@@ -14,6 +14,8 @@ The WeeChat version (used for the image tags) is read from file version.sh.
 
 # ruff: noqa: T201
 
+from __future__ import annotations
+
 import argparse
 import shlex
 import subprocess
@@ -186,20 +188,30 @@ def run_command(command: list[str], *, dry_run: bool) -> bool:
     return True
 
 
-def main() -> int:
-    """Build the container images, and push them if asked."""
-    parser = get_parser()
-    args = parser.parse_args()
-    if args.all and (args.distro or args.slim or args.tag):
-        parser.error("option -a/--all is not compatible with -d/--distro, -s/--slim and -t/--tag")
+def get_treeish() -> str | None:
+    """Get the git tree-ish to build: commit with uncommitted changes in tracked files, or HEAD.
+
+    :return: tree-ish, None if git failed (for example if not in a git repository)
+    """
+    try:
+        return run_git("stash", "create") or "HEAD"
+    except OSError as exc:
+        print(f"ERROR: unable to run git: {exc}", file=sys.stderr)
+    except subprocess.CalledProcessError as exc:
+        print("ERROR: this script must be run from the WeeChat git repository", file=sys.stderr)
+        print(exc.stderr.strip(), file=sys.stderr)
+    return None
+
+
+def build_images(args: argparse.Namespace, version: str, treeish: str) -> list[str] | None:
+    """Build the container images.
+
+    :param args: command line arguments
+    :param version: WeeChat version
+    :param treeish: git tree-ish to build
+    :return: tags to push, None if an error occurred
+    """
     images = ALL_IMAGES if args.all else ((args.distro or DISTROS[0], args.slim),)
-    version = get_version()
-    print(f"WeeChat version: {version}")
-    # commit with uncommitted changes in tracked files, or HEAD if no changes
-    treeish = run_git("stash", "create") or "HEAD"
-    if args.push and treeish != "HEAD":
-        print("ERROR: uncommitted changes in tracked files, images can not be pushed", file=sys.stderr)
-        return 1
     push_tags = []
     with tempfile.TemporaryDirectory(prefix="weechat-container-") as context_dir:
         archive_cmd = [
@@ -213,7 +225,7 @@ def main() -> int:
             treeish,
         ]
         if not run_command(archive_cmd, dry_run=args.dry_run):
-            return 1
+            return None
         for distro, slim in images:
             tags = get_tags(version, distro, slim=slim, latest=args.latest)
             build_cmd = [
@@ -226,8 +238,28 @@ def main() -> int:
                 context_dir,
             ]
             if not run_command(build_cmd, dry_run=args.dry_run):
-                return 1
+                return None
             push_tags.extend(tag for tag in tags if tag.startswith(f"{PUSH_REPOSITORY}:"))
+    return push_tags
+
+
+def main() -> int:
+    """Build the container images, and push them if asked."""
+    parser = get_parser()
+    args = parser.parse_args()
+    if args.all and (args.distro or args.slim or args.tag):
+        parser.error("option -a/--all is not compatible with -d/--distro, -s/--slim and -t/--tag")
+    version = get_version()
+    print(f"WeeChat version: {version}")
+    treeish = get_treeish()
+    if treeish is None:
+        return 1
+    if args.push and treeish != "HEAD":
+        print("ERROR: uncommitted changes in tracked files, images can not be pushed", file=sys.stderr)
+        return 1
+    push_tags = build_images(args, version, treeish)
+    if push_tags is None:
+        return 1
     if args.push:
         for tag in push_tags:
             if not run_command(get_push_command(args.builder, tag), dry_run=args.dry_run):
