@@ -16,6 +16,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix memory leak in input of buffers restored by command `/upgrade`
 - core: fix crash in info "color_rgb2term" when the limit is greater than 256
 - irc: fix use after free of a deleted server in raw messages, which could cause a crash in raw buffer or on `/upgrade`
 

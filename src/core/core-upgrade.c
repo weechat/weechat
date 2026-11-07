@@ -410,8 +410,8 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     struct t_gui_buffer *ptr_buffer;
     const char *key, *var_name, *name, *plugin_name, *ptr_id;
     const char *str;
-    char option_name[64], *option_key, *option_var;
-    int index, main_buffer;
+    char option_name[64], *option_key, *option_var, *new_input_buffer;
+    int index, main_buffer, input_buffer_alloc;
     long long id;
 
     /* "id" is new in WeeChat 4.3.0 */
@@ -553,12 +553,16 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     ptr_buffer->input_multiline =
         infolist_integer (infolist, "input_multiline");
 
-    if (infolist_integer (infolist, "input_buffer_alloc") > 0)
+    input_buffer_alloc = infolist_integer (infolist, "input_buffer_alloc");
+    if (input_buffer_alloc > 0)
     {
-        ptr_buffer->input_buffer =
-            malloc (infolist_integer (infolist, "input_buffer_alloc"));
-        if (ptr_buffer->input_buffer)
+        new_input_buffer = malloc (input_buffer_alloc);
+        if (new_input_buffer)
         {
+            /* replace the input buffer allocated on buffer creation */
+            free (ptr_buffer->input_buffer);
+            ptr_buffer->input_buffer = new_input_buffer;
+            ptr_buffer->input_buffer_alloc = input_buffer_alloc;
             ptr_buffer->input_buffer_size =
                 infolist_integer (infolist, "input_buffer_size");
             ptr_buffer->input_buffer_length =
