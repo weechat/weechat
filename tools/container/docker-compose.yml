@@ -46,11 +46,13 @@ services:
     # Run once before first start:
     #   mkdir -p ~/.weechat-container && chmod 777 ~/.weechat-container
     #
-    # NOTE: the image's entrypoint leaves the top-level ~/.weechat directory
-    # owned by root with mode 775 on creation (unlike the XDG layout, which
-    # sets 777 correctly on all its subdirs). This causes "unable to
-    # create/append to log file (weechat.log)" errors. If you hit that,
-    # stop the container first (it must not be running), then fix perms:
+    # NOTE: WeeChat runs as "user" (uid 1000) in the container. If a host
+    # directory does not exist when the container starts, Docker creates it
+    # owned by root with mode 755, so WeeChat cannot write in it, which
+    # causes "unable to create/append to log file (weechat.log)" errors.
+    # This applies to both layouts: create the directories before the first
+    # start (see commands above). If you hit that, stop the container first
+    # (it must not be running), then fix perms:
     #   docker compose stop weechat
     #   docker run --rm -v ${HOME}/.weechat-container:/home/user/.weechat --user root alpine chmod -R 777 /home/user/.weechat
     #   docker compose up -d
