@@ -537,6 +537,7 @@ WeeChat "core" is located in following directories:
 |             test-irc-nick.cpp                   | Tests: IRC nicks.
 |             test-irc-notify.cpp                 | Tests: IRC notify lists.
 |             test-irc-protocol.cpp               | Tests: IRC protocol.
+|             test-irc-raw.cpp                    | Tests: IRC raw data.
 |             test-irc-sasl.cpp                   | Tests: SASL authentication with IRC protocol.
 |             test-irc-server.cpp                 | Tests: IRC server.
 |             test-irc-tag.cpp                    | Tests: IRC message tags.
