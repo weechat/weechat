@@ -671,6 +671,7 @@ TEST(CoreUpgrade, ReadBuffer)
 {
     struct t_gui_buffer *buffer, *ptr_buffer;
     struct t_infolist *infolist;
+    char str_input[301];
     long long id;
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
@@ -693,7 +694,10 @@ TEST(CoreUpgrade, ReadBuffer)
     gui_buffer_set (buffer, "input_get_unknown_commands", "1");
     gui_buffer_set (buffer, "input_get_empty", "1");
     gui_buffer_set (buffer, "input_multiline", "1");
-    gui_buffer_set (buffer, "input", "hello");
+    /* Long input: the input buffer is bigger than the default size. */
+    memset (str_input, 'a', sizeof (str_input) - 1);
+    str_input[sizeof (str_input) - 1] = '\0';
+    gui_buffer_set (buffer, "input", str_input);
     gui_buffer_set (buffer, "input_pos", "2");
     gui_buffer_set (buffer, "highlight_words", "word");
     gui_buffer_set (buffer, "highlight_disable_regex", "nohl");
@@ -750,9 +754,11 @@ TEST(CoreUpgrade, ReadBuffer)
     LONGS_EQUAL(1, ptr_buffer->input_get_unknown_commands);
     LONGS_EQUAL(1, ptr_buffer->input_get_empty);
     LONGS_EQUAL(1, ptr_buffer->input_multiline);
-    STRCMP_EQUAL("hello", ptr_buffer->input_buffer);
-    LONGS_EQUAL(5, ptr_buffer->input_buffer_size);
-    LONGS_EQUAL(5, ptr_buffer->input_buffer_length);
+    STRCMP_EQUAL(str_input, ptr_buffer->input_buffer);
+    LONGS_EQUAL(2 * GUI_BUFFER_INPUT_BLOCK_SIZE,
+                ptr_buffer->input_buffer_alloc);
+    LONGS_EQUAL(300, ptr_buffer->input_buffer_size);
+    LONGS_EQUAL(300, ptr_buffer->input_buffer_length);
     LONGS_EQUAL(2, ptr_buffer->input_buffer_pos);
     STRCMP_EQUAL("word", ptr_buffer->highlight_words);
     STRCMP_EQUAL("nohl", ptr_buffer->highlight_disable_regex);
