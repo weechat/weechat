@@ -232,6 +232,7 @@ extern int gui_color_convert_rgb_to_term_range (int rgb, int first,
 extern int gui_color_convert_term_to_direct (int color);
 extern int gui_color_rgb_to_direct (int rgb);
 extern int gui_color_rgb_parse (const char *string);
+extern int gui_color_rgb_parse_exact (const char *string);
 extern unsigned long long gui_color_hash_key_cb (struct t_hashtable *hashtable,
                                                 const void *key);
 extern int gui_color_rgb_table_add (struct t_gui_color_rgb_table *table,
@@ -257,6 +258,8 @@ extern char *gui_color_downgrade_rgb_name (const char *name);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);
 extern int gui_color_encode_ansi_extended (char **output, const char *string,
                                            int background, int rgb_colors);
+extern void gui_color_encode_ansi_color (char *buffer, int size, int color,
+                                         int background, int rgb_colors);
 extern char *gui_color_encode_ansi_rgb (const char *string, int rgb_colors);
 extern char *gui_color_encode_ansi (const char *string);
 extern char *gui_color_emphasize (const char *string, const char *search,

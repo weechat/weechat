@@ -456,9 +456,9 @@ TEST(GuiColor, RgbTables)
     LONGS_EQUAL(GUI_COLOR_RGB_LAST, number);
     LONGS_EQUAL(GUI_COLOR_RGB_DISPLAY_MAX, gui_color_rgb_display.count);
     LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
-    LONGS_EQUAL(gui_color_convert_rgb_to_term_display (0xff8800,
+    LONGS_EQUAL(gui_color_convert_rgb_to_term_display (0xabc123,
                                                        gui_color_term_colors),
-                gui_color_rgb_to_number (0xff8800));
+                gui_color_rgb_to_number (0xabc123));
     LONGS_EQUAL(1, gui_color_rgb_display_reset_needed);
     /*
      * terminal with 88 colors: nearest color of the 88-color palette, colors
@@ -532,6 +532,83 @@ TEST(GuiColor, Extended)
     LONGS_EQUAL(214, color);
     LONGS_EQUAL(7, gui_color_extended_parse ("#123456", &color));
     LONGS_EQUAL(gui_color_rgb_to_number (0x123456), color);
+}
+
+/*
+ * Test functions:
+ *   gui_color_get_custom (RGB colors)
+ *   gui_color_assign (RGB colors)
+ *   gui_color_get_name (RGB colors)
+ */
+
+TEST(GuiColor, GetCustomAssignRgb)
+{
+    char string[64];
+    int color, count, old_max;
+
+    /* foreground */
+    snprintf (string, sizeof (string), "%c%c%c#ff8800",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("#ff8800"));
+    STRCMP_EQUAL(string, gui_color_get_custom ("#FF8800"));
+
+    /* foreground with attributes */
+    snprintf (string, sizeof (string), "%c%c%c*_#ff8800",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("*_#ff8800"));
+
+    /* background */
+    snprintf (string, sizeof (string), "%c%c%c#000080",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_BG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom (",#000080"));
+
+    /* foreground + background (RGB and mixed) */
+    snprintf (string, sizeof (string), "%c%c%c#ff8800~%c#000080",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_BG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR, GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("#ff8800,#000080"));
+    snprintf (string, sizeof (string), "%c%c%c00214~%c#000080",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_BG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR, GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("214,#000080"));
+
+    /* invalid RGB colors */
+    STRCMP_EQUAL("", gui_color_get_custom ("#ff88"));
+    STRCMP_EQUAL("", gui_color_get_custom ("#ff880000"));
+
+    /* assign / get name */
+    color = 0;
+    LONGS_EQUAL(1, gui_color_assign (&color, "#ff8800"));
+    CHECK(color & GUI_COLOR_EXTENDED_FLAG);
+    LONGS_EQUAL(0xff8800,
+                gui_color_rgb_from_number (color & GUI_COLOR_EXTENDED_MASK));
+    STRCMP_EQUAL("#ff8800", gui_color_get_name (color));
+    LONGS_EQUAL(1, gui_color_assign (&color, "*_#FF8800"));
+    CHECK(color & GUI_COLOR_EXTENDED_BOLD_FLAG);
+    CHECK(color & GUI_COLOR_EXTENDED_UNDERLINE_FLAG);
+    STRCMP_EQUAL("*_#ff8800", gui_color_get_name (color));
+    LONGS_EQUAL(0, gui_color_assign (&color, "#ff88"));
+    LONGS_EQUAL(0, gui_color_assign (&color, "#ff880000"));
+
+    /* RGB colors in strings are not added to the table of RGB colors */
+    count = gui_color_rgb_display.count;
+    gui_color_get_custom ("#abcdef,#fedcba");
+    LONGS_EQUAL(count, gui_color_rgb_display.count);
+
+    /* RGB colors in options: table of options */
+    LONGS_EQUAL(1, gui_color_assign (&color, "#123abc"));
+    CHECK((color & GUI_COLOR_EXTENDED_MASK) >= GUI_COLOR_RGB_OPTIONS_FIRST);
+    CHECK((color & GUI_COLOR_EXTENDED_MASK) < GUI_COLOR_RGB_DISPLAY_FIRST);
+
+    /* table of options full: error */
+    old_max = gui_color_rgb_options.max;
+    gui_color_rgb_options.max = gui_color_rgb_options.count;
+    LONGS_EQUAL(1, gui_color_assign (&color, "#123abc"));
+    LONGS_EQUAL(0, gui_color_assign (&color, "#cba321"));
+    gui_color_rgb_options.max = old_max;
 }
 
 /*
@@ -1543,6 +1620,29 @@ TEST(GuiColor, EncodeAnsi)
     encoded = hook_modifier_exec (NULL, "color_encode_ansi", NULL, string);
     CHECK(strstr (encoded, "\x1B[38;2;255;136;0m"));
     free (encoded);
+
+    /* option color and bar delimiter with RGB colors */
+    config_file_option_set (config_color_chat_nick_self, "#ff8800", 1);
+    config_file_option_set (config_color_chat_delimiters, "#00ff80", 1);
+    snprintf (string, sizeof (string), "%s" "nick" "%c%c%c" "delim",
+              GUI_COLOR(GUI_COLOR_CHAT_NICK_SELF),
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_BAR_CHAR, GUI_COLOR_BAR_DELIM_CHAR);
+    encoded = gui_color_encode_ansi (string);
+    CHECK(strstr (encoded, "\x1B[38;2;255;136;0m"));
+    CHECK(strstr (encoded, "\x1B[48;2;0;255;128m" "delim"));
+    CHECK(!strstr (encoded, ";5;1000"));
+    free (encoded);
+    encoded = gui_color_encode_ansi_rgb (string, 0);
+    snprintf (expected, sizeof (expected), "\x1B[38;5;%dm",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+    CHECK(strstr (encoded, expected));
+    snprintf (expected, sizeof (expected), "\x1B[48;5;%dm" "delim",
+              gui_color_convert_rgb_to_term_display (0x00ff80, 256));
+    CHECK(strstr (encoded, expected));
+    CHECK(!strstr (encoded, ";2;"));
+    free (encoded);
+    config_file_option_reset (config_color_chat_nick_self, 1);
+    config_file_option_reset (config_color_chat_delimiters, 1);
 }
 
 /*

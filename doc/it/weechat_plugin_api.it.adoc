@@ -10492,6 +10492,8 @@ Esempi:
 * `+*214+` : arancione grassetto
 * `+yellow,red+` : giallo su rosso
 * `+|cyan+` : ciano (e mantiene qualsiasi attributo impostato in precedenza)
+// TRANSLATION MISSING
+* `+#ff8800+`: orange (RGB color) _(WeeChat ≥ 5.0.0)_
 
 Valore restituito:
 

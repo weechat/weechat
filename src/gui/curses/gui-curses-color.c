@@ -212,7 +212,7 @@ gui_color_get_extended_flags (int attrs)
 int
 gui_color_assign (int *color, const char *color_name)
 {
-    int flag, extra_attr, color_index, number;
+    int flag, extra_attr, color_index, number, rgb;
 
     /* Read extended attributes. */
     extra_attr = 0;
@@ -226,6 +226,25 @@ gui_color_assign (int *color, const char *color_name)
     number = gui_color_palette_get_alias (color_name);
     if (number >= 0)
     {
+        *color = number | GUI_COLOR_EXTENDED_FLAG | extra_attr;
+        return 1;
+    }
+
+    /* Is it a RGB color ("#RRGGBB")? */
+    rgb = gui_color_rgb_parse_exact (color_name);
+    if (rgb >= 0)
+    {
+        number = gui_color_rgb_to_number_option (rgb);
+        if (number < 0)
+        {
+            gui_chat_printf (NULL,
+                             _("%sToo many different RGB colors used in "
+                               "options (limit: %d), restart WeeChat or use "
+                               "/upgrade to use new RGB colors"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             GUI_COLOR_RGB_OPTIONS_MAX);
+            return 0;
+        }
         *color = number | GUI_COLOR_EXTENDED_FLAG | extra_attr;
         return 1;
     }
@@ -688,6 +707,7 @@ gui_color_get_name (int num_color)
     static int index_color = 0;
     char str_attr[8];
     struct t_gui_color_palette *ptr_color_palette;
+    int rgb;
 
     /* Init color string. */
     index_color = (index_color + 1) % 16;
@@ -700,7 +720,14 @@ gui_color_get_name (int num_color)
     {
         /* Search alias. */
         ptr_color_palette = gui_color_palette_get (num_color & GUI_COLOR_EXTENDED_MASK);
-        if (ptr_color_palette && ptr_color_palette->alias)
+        rgb = gui_color_rgb_from_number (num_color & GUI_COLOR_EXTENDED_MASK);
+        if (rgb >= 0)
+        {
+            /* RGB color */
+            snprintf (color[index_color], sizeof (color[index_color]),
+                      "%s%c%06x", str_attr, GUI_COLOR_EXTENDED_RGB_CHAR, rgb);
+        }
+        else if (ptr_color_palette && ptr_color_palette->alias)
         {
             /* Alias */
             snprintf (color[index_color], sizeof (color[index_color]),

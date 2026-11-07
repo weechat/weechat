@@ -10122,6 +10122,7 @@ Examples:
 * `+*214+`: bold orange
 * `+yellow,red+`: yellow on red
 * `+|cyan+`: cyan (and keep any attribute which was set previously)
+* `+#ff8800+`: orange (RGB color) _(WeeChat ≥ 5.0.0)_
 
 Return value:
 

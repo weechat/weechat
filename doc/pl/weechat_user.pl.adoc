@@ -1690,6 +1690,58 @@ Lub jeśli chcesz mocno ciemno zielonego tła dla pasku statusu:
 /set weechat.bar.status.color_bg 22
 ----
 
+// TRANSLATION MISSING
+[[colors_rgb]]
+==== RGB colors
+
+_WeeChat ≥ 5.0.0._
+
+// TRANSLATION MISSING
+Colors can also be RGB values with format `#rrggbb` (hexadecimal), anywhere
+a color is allowed: in color options and in `+${color:...}+` in evaluated
+strings.
+
+// TRANSLATION MISSING
+At most 100000 different RGB colors can be used in color options since the
+start of WeeChat (including the colors replaced since then): after this limit,
+new RGB colors are refused in options until WeeChat is restarted or upgraded
+with command `/upgrade`.
+
+// TRANSLATION MISSING
+RGB colors are displayed as-is if the terminal supports direct colors: _TERM_
+must then be set to a value with direct colors, for example _xterm-direct256_
+(outside screen/tmux) or _tmux-direct_ (under tmux); otherwise the nearest
+color of the terminal is used (on a terminal with more than 16 colors, among
+colors 16-255 only, because colors 0-15 are defined by the theme of your
+terminal).
+
+// TRANSLATION MISSING
+For example:
+
+----
+/set weechat.color.chat_nick_self #ff8800
+/set weechat.bar.status.color_bg #1e1e2e
+----
+
+// TRANSLATION MISSING
+Terminfo entries with direct colors are provided by ncurses for many terminals,
+with suffix `-direct`, for example: _xterm-direct_, _tmux-direct_,
+_kitty-direct_, _foot-direct_, _alacritty-direct_, _konsole-direct_,
+_vte-direct_ (terminals based on VTE, like GNOME Terminal), _iterm2-direct_,
+_mintty-direct_, _st-direct_ and _vscode-direct_.
+
+// TRANSLATION MISSING
+You can list the entries installed on your system with this command (you may
+have to install package "ncurses-term"):
+
+----
+toe -a | grep -- -direct
+----
+
+// TRANSLATION MISSING
+If there is no entry for your terminal, _xterm-direct256_ may work if your
+terminal is compatible with xterm.
+
 [[colors_aliases]]
 ==== Aliasy
 

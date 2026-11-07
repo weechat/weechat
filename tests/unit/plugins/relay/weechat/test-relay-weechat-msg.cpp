@@ -20,6 +20,8 @@ extern "C"
 #include "src/core/core-infolist.h"
 #include "src/core/core-string.h"
 #include "src/core/hook/hook-infolist.h"
+#include "src/core/core-config-file.h"
+#include "src/gui/gui-bar.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
@@ -369,6 +371,7 @@ TEST(RelayWeechatMsg, AddHdataInfolistRgbColors)
 {
     struct t_relay_weechat_msg *msg;
     struct t_gui_buffer *buffer;
+    struct t_gui_bar *bar;
     char path[128];
     int rgb_colors;
 
@@ -413,6 +416,23 @@ TEST(RelayWeechatMsg, AddHdataInfolistRgbColors)
     }
 
     gui_buffer_close (buffer);
+
+    /* Bars: infolist "bar". */
+    bar = gui_bar_search ("status");
+    CHECK(bar);
+    config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_BG], "#ff8800", 1);
+    for (rgb_colors = 0; rgb_colors <= 1; rgb_colors++)
+    {
+        msg = relay_weechat_msg_new (NULL, "test");
+        CHECK(msg);
+        msg->rgb_colors = rgb_colors;
+        relay_weechat_msg_add_infolist (msg, "bar", bar, NULL);
+        CHECK(memmem (msg->data, msg->data_size, "color_bg", 8));
+        LONGS_EQUAL(rgb_colors,
+                    (memmem (msg->data, msg->data_size, "#ff8800", 7)) ? 1 : 0);
+        relay_weechat_msg_free (msg);
+    }
+    config_file_option_reset (bar->options[GUI_BAR_OPTION_COLOR_BG], 1);
 }
 
 /*
