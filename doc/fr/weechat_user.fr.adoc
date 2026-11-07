@@ -112,7 +112,7 @@ Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 | compilateur C (gcc / clang) |
 | Compilation des sources en C.
 
-| cmake | ≥ 3.0
+| cmake | ≥ 3.18
 | Construction.
 
 | pkgconf / pkg-config |
@@ -121,13 +121,13 @@ Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 | libncurses-dev |
 | Interface ncurses.
 
-| libcurl4-gnutls-dev |
+| libcurl4-gnutls-dev | ≥ 7.68.0
 | Transfert d'URL.
 
-| libgcrypt20-dev |
+| libgcrypt20-dev | ≥ 1.8.0
 | Données sécurisées, authentification IRC SASL.
 
-| libgnutls28-dev | ≥ 2.2.0 ^(2)^
+| libgnutls28-dev | ≥ 3.6.3
 | Extension IRC : support des connexions TLS, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE). +
   Extension Relay : support des connexions TLS.
 
@@ -140,9 +140,7 @@ Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 
 [NOTE]
 ^(1)^ Le nom provient de la distribution GNU/Linux Debian Trixie, la version
-et le nom peuvent être différents dans les autres distributions. +
-^(2)^ GnuTLS ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
-ECDSA-NIST256P-CHALLENGE.
+et le nom peuvent être différents dans les autres distributions.
 
 [[optional_dependencies]]
 ==== Dépendances optionnelles
@@ -162,12 +160,12 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | ca-certificates |
 | Certificats pour les connexions TLS.
 
-| libzstd-dev | ≥ 0.8.1
+| libzstd-dev | ≥ 1.4.0
 | Extension Logger : compression des fichiers de log qui tournent (zstandard). +
   Extension Relay : compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (protocoles api et weechat).
 
-| libaspell-dev / libenchant-dev |
+| libaspell-dev / libenchant-2-dev |
 | Extension spell.
 
 | python3-dev | ≥ 3.0
@@ -179,7 +177,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | ruby3.3, ruby3.3-dev | ≥ 1.9.1
 | Extension ruby.
 
-| liblua5.4-dev |
+| liblua5.4-dev | ≥ 5.3
 | Extension lua.
 
 | tcl-dev | ≥ 8.5

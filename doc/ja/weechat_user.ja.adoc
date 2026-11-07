@@ -124,7 +124,7 @@ WeeChat:
 | C コンパイラ (gcc / clang) |
 | Compile C sources.
 
-| cmake | ≥ 3.0
+| cmake | ≥ 3.18
 | ビルド
 
 | pkgconf / pkg-config |
@@ -133,14 +133,14 @@ WeeChat:
 | libncurses-dev |
 | ncurses インターフェース
 
-| libcurl4-gnutls-dev |
+| libcurl4-gnutls-dev | ≥ 7.68.0
 | URL 転送
 
-| libgcrypt20-dev |
+| libgcrypt20-dev | ≥ 1.8.0
 | 保護データ、IRC SASL 認証
 
 // TRANSLATION MISSING
-| libgnutls28-dev | ≥ 2.2.0 ^(2)^
+| libgnutls28-dev | ≥ 3.6.3
 | IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
   Relay plugin: support of TLS connections.
 
@@ -155,9 +155,7 @@ WeeChat:
 [NOTE]
 // TRANSLATION MISSING
 ^(1)^ Name comes from the Debian GNU/Linux Trixie distribution, version and
-name can be different in other distributions. +
-^(2)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、GnuTLS
-バージョン 3.0.21 以上が必要です。
+name can be different in other distributions.
 
 // TRANSLATION MISSING
 [[optional_dependencies]]
@@ -183,12 +181,12 @@ WeeChat:
 
 // TRANSLATION MISSING
 // TRANSLATION MISSING
-| libzstd-dev | ≥ 0.8.1
+| libzstd-dev | ≥ 1.4.0
 | Logger plugin: compression of rotated log files (zstandard). +
   Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (api and weechat protocols).
 
-| libaspell-dev / libenchant-dev |
+| libaspell-dev / libenchant-2-dev |
 | spell プラグイン
 
 | python3-dev | 3.0 以上
@@ -200,7 +198,7 @@ WeeChat:
 | ruby3.3, ruby3.3-dev | 1.9.1 以上
 | ruby プラグイン
 
-| liblua5.4-dev |
+| liblua5.4-dev | ≥ 5.3
 | lua プラグイン
 
 | tcl-dev | 8.5 以上

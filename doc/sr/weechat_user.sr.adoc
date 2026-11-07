@@ -108,7 +108,7 @@ WeeChat мора да се изгради са CMake.
 | C компајлер (gcc / clang) |
 | Превођење C изворних фајлова.
 
-| cmake | ≥ 3.0
+| cmake | ≥ 3.18
 | Изградњу.
 
 | pkgconf / pkg-config |
@@ -117,13 +117,13 @@ WeeChat мора да се изгради са CMake.
 | libncurses-dev |
 | Ncurses интерфејс.
 
-| libcurl4-gnutls-dev |
+| libcurl4-gnutls-dev | ≥ 7.68.0
 | URL пренос.
 
-| libgcrypt20-dev |
+| libgcrypt20-dev | ≥ 1.8.0
 | Обезбеђени подаци, IRC SASL аутентификација.
 
-| libgnutls28-dev | ≥ 2.2.0 ^(2)^
+| libgnutls28-dev | ≥ 3.6.3
 | IRC додатак: подршка за TLS везе, IRC SASL аутентификацију (ECDSA-NIST256P-CHALLENGE). +
   Relay додатак: подршка за TLS везе.
 
@@ -136,8 +136,7 @@ WeeChat мора да се изгради са CMake.
 
 [NOTE]
 ^(1)^ Име долази из Debian GNU/Linux Trixie дистрибуције, верзија и
-име могу да буду другачији у осталим дистрибуцијама. +
-^(2)^ GnuTLS ≥ 3.0.21 је неопходан за IRC SASL аутентификацију механизмом ECDSA-NIST256P-CHALLENGE.
+име могу да буду другачији у осталим дистрибуцијама.
 
 [[optional_dependencies]]
 ==== Необавезне зависности
@@ -157,12 +156,12 @@ WeeChat мора да се изгради са CMake.
 | ca-certificates |
 | Сертификати за TLS везе.
 
-| libzstd-dev | ≥ 0.8.1
+| libzstd-dev | ≥ 1.4.0
 | Logger додатак: компресија ротирајућих лог фајлова (zstandard). +
   Релеј додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (api и weechat протоколи).
 
-| libaspell-dev / libenchant-dev |
+| libaspell-dev / libenchant-2-dev |
 | Spell додатак.
 
 | python3-dev | ≥ 3.0
@@ -174,7 +173,7 @@ WeeChat мора да се изгради са CMake.
 | ruby3.3, ruby3.3-dev | ≥ 1.9.1
 | Ruby додатак.
 
-| liblua5.4-dev |
+| liblua5.4-dev | ≥ 5.3
 | Lua додатак.
 
 | tcl-dev | ≥ 8.5
