@@ -198,6 +198,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: convert ANSI reverse video (codes 7 and 27) to IRC reverse video (for example with `/exec -o`)
 - irc: fix ANSI colors converted to IRC colors (for example with `/exec -o`): a background color is sent with the text color (it was displayed as text like ",04"), text starting with a comma and digits after a text color is not lost any more, colors are sent only when they change, use IRC color 99 for default colors
 - irc: decode ANSI colors like WeeChat core when converting them to IRC colors (for example in output of `/exec -o`): code `\e[m` resets the attributes of the next sequences too, a RGB component greater than 255 is read as 255
 - irc: read alone a byte which is not valid UTF-8 when decoding or encoding IRC colors, so that a color code after it is not ignored

@@ -1464,6 +1464,22 @@ TEST(IrcColor, DecodeAnsi)
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_FG_BG, 1);
 
+    /* Reverse video */
+    WEE_CHECK_DECODE_ANSI("test_rev_normal",
+                          "test_\x1B[7mrev\x1B[27m_normal", 0);
+    snprintf (string, sizeof (string),
+              "test_%srev%s_normal",
+              IRC_COLOR_REVERSE_STR,
+              IRC_COLOR_REVERSE_STR);
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[7mrev\x1B[27m_normal", 1);
+    snprintf (string, sizeof (string),
+              "test_%srev%s_normal_%srev",
+              IRC_COLOR_REVERSE_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_REVERSE_STR);
+    WEE_CHECK_DECODE_ANSI(string,
+                          "test_\x1B[7;7mrev\x1B[m_normal_\x1B[7mrev", 1);
+
     /* Separator after a foreground only, with sequences adding nothing. */
     snprintf (string, sizeof (string),
               "%s05%s%s,5 apples",
