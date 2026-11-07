@@ -195,6 +195,8 @@ struct t_gui_color
     int foreground;                /* foreground color                      */
     int background;                /* background color                      */
     int attributes;                /* attributes (bold, ..)                 */
+    int bold_light;                /* 1 if bold is used to display a light  */
+                                   /* color (terminal with < 16 colors)     */
     char *string;                  /* WeeChat color: "\x19??", ?? is #color */
 };
 

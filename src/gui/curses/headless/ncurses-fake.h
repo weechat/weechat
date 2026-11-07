@@ -58,6 +58,7 @@ struct _window
     int _cury, _curx;
     int _maxy, _maxx;
     int _begy, _begx;
+    int _attrs;                         /* attributes (used by tests)       */
 };
 typedef struct _window WINDOW;
 
