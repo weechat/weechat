@@ -1719,6 +1719,56 @@ TEST(GuiColor, DecodeAnsi)
         string,
         "test_\x1B[38;2;255;0;255m" "\x1B[48;2;0;0;128m" "fg_13_bg_04",
         1);
+
+    /* Empty parameters (reset) */
+    WEE_CHECK_DECODE_ANSI("AXB", "A" "\x1B[1m" "X" "\x1B[;m" "B", 0);
+    snprintf (string, sizeof (string),
+              "A" "%s" "X" "%s" "%s" "B",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1m" "X" "\x1B[;m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[;1m" "B", 0);
+    snprintf (string, sizeof (string),
+              "A" "%s" "%s" "B",
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[;1m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1;;4m" "B", 0);
+    snprintf (string, sizeof (string),
+              "A" "%s" "%s" "%s" "B",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("underline"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;;4m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1;m" "B", 0);
+    snprintf (string, sizeof (string),
+              "A" "%s" "%s" "B",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;m" "B", 1);
+
+    /* Empty arguments in text/background colors (0) */
+    WEE_CHECK_DECODE_ANSI("test_0", "test_" "\x1B[38;5;m" "0", 0);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "0",
+              gui_color_get_custom ("|0"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[38;5;m" "0", 1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "%s" "0",
+              gui_color_get_custom ("|,0"),
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[48;5;;1m" "0", 1);
+    WEE_CHECK_DECODE_ANSI("test_13", "test_" "\x1B[38;2;255;;255m" "13", 0);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "13",
+              gui_color_get_custom ("|#ff00ff"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[38;2;255;;255m" "13", 1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "%s" "bg_13",
+              gui_color_get_custom ("|,#ff00ff"),
+              gui_color_get_custom ("underline"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[48;2;255;;255;4m" "bg_13", 1);
 }
 
 /*

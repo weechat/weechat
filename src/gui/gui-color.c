@@ -1691,11 +1691,11 @@ gui_color_ansi_parse_sequence (const char *sequence,
     if (!text2)
         goto end;
 
-    items = string_split (text2, ";", NULL,
-                          WEECHAT_STRING_SPLIT_STRIP_LEFT
-                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                          0, &num_items);
+    /*
+     * Keep empty parameters: an empty parameter is 0 (atoi returns 0),
+     * for example "\33[;1m" is "\33[0;1m".
+     */
+    items = string_split (text2, ";", NULL, 0, 0, &num_items);
     if (!items)
         goto end;
 
