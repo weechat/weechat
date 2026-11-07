@@ -862,7 +862,6 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
-- irc: don't return pointer to irc server if the channel or nick is not found in info "irc_buffer"
 - irc: close /list buffer when the server buffer is closed ([#2121](https://github.com/weechat/weechat/issues/2121))
 - xfer: fix send of data on the DCC chat buffer after `/upgrade` if the buffer was opened before the upgrade ([#2092](https://github.com/weechat/weechat/issues/2092))
 - php: fix return value of function hdata_longlong
