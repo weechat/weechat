@@ -30,6 +30,7 @@ extern int gui_color_pairs_auto_reset;
 extern int gui_color_pairs_auto_reset_pending;
 extern time_t gui_color_pairs_auto_reset_last;
 extern int gui_color_buffer_refresh_needed;
+extern int gui_color_buffer_sample_rgb;
 
 extern int gui_color_get_gui_attrs (int color);
 extern void gui_color_init_pair (int number, int fg, int bg);
