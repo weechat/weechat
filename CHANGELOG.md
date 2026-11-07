@@ -125,6 +125,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core, irc: ignore underline color in ANSI colors (SGR 58), instead of decoding its arguments as other attributes
 - core, irc: fix decoding of empty parameters in ANSI colors, use value 0 (for example reset) instead of ignoring them
 - core, irc: fix slow decoding of ANSI colors with many parameters
 - core: use the palette of terminals with 88 colors (for example rxvt-unicode) to find the nearest terminal color of a RGB color, for example with info "color_rgb2term" ([#1364](https://github.com/weechat/weechat/issues/1364))

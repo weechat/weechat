@@ -210,6 +210,16 @@ extern void irc_color_decode_ansi_sequence (char **output,
     "test_\x1B[38;2;255;;255mcolor13"
 #define STRING_ANSI_BG_RGB_EMPTY                                        \
     "test_\x1B[48;2;255;;255;4mcolor13"
+#define STRING_ANSI_UNDERLINE_COLOR_TERM                                \
+    "test_\x1B[58;5;1mul_1"
+#define STRING_ANSI_UNDERLINE_COLOR_RGB                                 \
+    "test_\x1B[58;2;255;0;0mul_red"
+#define STRING_ANSI_UNDERLINE_COLOR_DEFAULT                             \
+    "test_\x1B[59mul_default"
+#define STRING_ANSI_UNDERLINE_FG_RGB_UNDERLINE_COLOR_RGB                \
+    "test_\x1B[4m\x1B[38;2;0;128;128m\x1B[58;2;255;0;0mul_color10"
+#define STRING_ANSI_UNDERLINE_COLOR_MIXED                               \
+    "test_\x1B[4;58;5;1;34;59;1mul_blue"
 
 #define WEE_CHECK_DECODE(__result, __string, __keep_colors)             \
     decoded = irc_color_decode (__string, __keep_colors);               \
@@ -1248,6 +1258,42 @@ TEST(IrcColor, DecodeAnsi)
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_UNDERLINE_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_RGB_EMPTY, 1);
+
+    /* Underline terminal color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_1", STRING_ANSI_UNDERLINE_COLOR_TERM, 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_1", STRING_ANSI_UNDERLINE_COLOR_TERM, 1);
+
+    /* Underline RGB color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_red", STRING_ANSI_UNDERLINE_COLOR_RGB, 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_red", STRING_ANSI_UNDERLINE_COLOR_RGB, 1);
+
+    /* Default underline color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_default",
+                          STRING_ANSI_UNDERLINE_COLOR_DEFAULT, 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_default",
+                          STRING_ANSI_UNDERLINE_COLOR_DEFAULT, 1);
+
+    /*
+     * Underline + RGB "008080" (IRC 10 -> cyan)
+     * + underline RGB color (ignored)
+     */
+    WEE_CHECK_DECODE_ANSI("test_ul_color10",
+                          STRING_ANSI_UNDERLINE_FG_RGB_UNDERLINE_COLOR_RGB, 0);
+    snprintf (string, sizeof (string),
+              "test_%s%s10ul_color10",
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string,
+                          STRING_ANSI_UNDERLINE_FG_RGB_UNDERLINE_COLOR_RGB, 1);
+
+    /* Underline + underline colors (ignored) + blue + bold */
+    WEE_CHECK_DECODE_ANSI("test_ul_blue", STRING_ANSI_UNDERLINE_COLOR_MIXED, 0);
+    snprintf (string, sizeof (string),
+              "test_%s%s02%sul_blue",
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_UNDERLINE_COLOR_MIXED, 1);
 }
 
 /*

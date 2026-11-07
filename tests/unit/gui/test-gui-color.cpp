@@ -1769,6 +1769,41 @@ TEST(GuiColor, DecodeAnsi)
               gui_color_get_custom ("|,#ff00ff"),
               gui_color_get_custom ("underline"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[48;2;255;;255;4m" "bg_13", 1);
+
+    /* Underline terminal color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_1", "test_" "\x1B[58;5;1m" "ul_1", 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_1", "test_" "\x1B[58;5;1m" "ul_1", 1);
+
+    /* Underline RGB color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_red", "test_" "\x1B[58;2;255;0;0m" "ul_red", 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_red", "test_" "\x1B[58;2;255;0;0m" "ul_red", 1);
+
+    /* Default underline color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_default", "test_" "\x1B[59m" "ul_default", 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_default", "test_" "\x1B[59m" "ul_default", 1);
+
+    /* Underline + underline color + text color */
+    WEE_CHECK_DECODE_ANSI(
+        "test_ul_blue",
+        "test_" "\x1B[4m" "\x1B[38;5;12m" "\x1B[58;2;255;0;0m" "ul_blue",
+        0);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "%s" "ul_blue",
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("|12"));
+    WEE_CHECK_DECODE_ANSI(
+        string,
+        "test_" "\x1B[4m" "\x1B[38;5;12m" "\x1B[58;2;255;0;0m" "ul_blue",
+        1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "%s" "%s" "ul_blue",
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(
+        string,
+        "test_" "\x1B[4;58;5;1;34;59;1m" "ul_blue",
+        1);
 }
 
 /*

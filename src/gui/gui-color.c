@@ -1706,7 +1706,7 @@ gui_color_ansi_parse_sequence (const char *sequence,
         if (value < 0)
             continue;
         color = -1;
-        if ((value == 38) || (value == 48))
+        if ((value == 38) || (value == 48) || (value == 58))
         {
             if (i + 1 >= num_items)
                 continue;
@@ -1730,6 +1730,9 @@ gui_color_ansi_parse_sequence (const char *sequence,
                 default:
                     continue;
             }
+            /* Underline color (not supported, ignored). */
+            if (value == 58)
+                continue;
         }
         (callback) (output, value, color);
     }
