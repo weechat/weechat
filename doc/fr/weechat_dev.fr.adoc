@@ -1279,6 +1279,10 @@ Où _composant_ est :
   weechat.cygport.in
 | Construction
 
+| build/container
+| tools/container/*
+| Images de conteneurs
+
 | ci
 | .github/workflows/*
 | Intégration continue
