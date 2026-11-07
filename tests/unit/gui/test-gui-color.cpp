@@ -2328,6 +2328,12 @@ TEST(GuiColor, EncodeAnsi)
               gui_color_get_custom ("-underline"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[4m" "underline" "\x1B[24m" "_end", string);
 
+    /* Set/remove attribute followed by an invalid attribute: the char is kept */
+    WEE_CHECK_ENCODE_ANSI("a1" "a2", "a1" "\x1A" "a2");
+    WEE_CHECK_ENCODE_ANSI("a1" "\x1B[1m" "a2", "a1" "\x1B" "\x1A" "\x01" "a2");
+    WEE_CHECK_ENCODE_ANSI("a1" "\x1B[0m", "a1" "\x1B" "\x1C");
+    WEE_CHECK_ENCODE_ANSI("a1", "a1" "\x1A");
+
     /* Text color: WeeChat: "default" -> ANSI: 39 (default fg color) */
     snprintf (string, sizeof (string),
               "test_" "%s" "default",

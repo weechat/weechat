@@ -2842,6 +2842,9 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                         case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                             string_dyn_concat (out, "\x1B[4m", -1);
                             break;
+                        default:
+                            /* Not an attribute: the char is kept */
+                            continue;
                     }
                     ptr_string++;
                 }
@@ -2876,6 +2879,9 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                         case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                             string_dyn_concat (out, "\x1B[24m", -1);
                             break;
+                        default:
+                            /* Not an attribute: the char is kept */
+                            continue;
                     }
                     ptr_string++;
                 }
