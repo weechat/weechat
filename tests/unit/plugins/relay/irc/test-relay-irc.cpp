@@ -18,6 +18,7 @@ extern "C"
 #include "src/core/core-config-file.h"
 #include "src/core/core-hashtable.h"
 #include "src/core/core-hook.h"
+#include "src/core/core-infolist.h"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
@@ -62,6 +63,34 @@ extern int relay_irc_cap_enabled (struct t_relay_client *client,
                                   const char *capability);
 extern int relay_irc_get_supported_caps (struct t_relay_client *client);
 extern struct t_arraylist *relay_irc_get_list_caps ();
+extern int relay_irc_signal_irc_in2_cb (const void *pointer, void *data,
+                                        const char *signal,
+                                        const char *type_data,
+                                        void *signal_data);
+extern int relay_irc_signal_irc_outtags_cb (const void *pointer, void *data,
+                                            const char *signal,
+                                            const char *type_data,
+                                            void *signal_data);
+extern int relay_irc_signal_irc_disc_cb (const void *pointer, void *data,
+                                         const char *signal,
+                                         const char *type_data,
+                                         void *signal_data);
+extern int relay_irc_hsignal_irc_redir_cb (const void *pointer, void *data,
+                                           const char *signal,
+                                           struct t_hashtable *hashtable);
+extern void relay_irc_send_channel_backlog (struct t_relay_client *client,
+                                            const char *channel,
+                                            struct t_gui_buffer *buffer);
+extern void relay_irc_send_join (struct t_relay_client *client,
+                                 const char *channel);
+extern void relay_irc_send_join_channels (struct t_relay_client *client);
+extern void relay_irc_hook_signals (struct t_relay_client *client);
+extern int relay_irc_capability_compare_cb (void *data,
+                                            struct t_arraylist *arraylist,
+                                            void *pointer1, void *pointer2);
+extern void relay_irc_capability_free_db (void *data,
+                                          struct t_arraylist *arraylist,
+                                          void *pointer);
 }
 
 #define CLIENT_RECV(__irc_msg)                                          \
@@ -359,6 +388,11 @@ TEST_GROUP(RelayIrcWithClient)
 
         /* Restore relay password. */
         config_file_option_reset (relay_config_network_password, 1);
+
+        /* Restore backlog options. */
+        config_file_option_reset (relay_config_irc_backlog_max_number, 1);
+        config_file_option_reset (relay_config_irc_backlog_tags, 1);
+        config_file_option_reset (relay_config_irc_backlog_time_format, 1);
     }
 };
 
@@ -541,9 +575,56 @@ TEST(RelayIrcWithClient, ParseCapMessage)
  *   relay_irc_signal_irc_in2_cb
  */
 
-TEST(RelayIrc, SignalIrcIn2Cb)
+TEST(RelayIrcWithClient, SignalIrcIn2Cb)
 {
-    /* TODO: write tests */
+    RELAY_IRC_DATA(ptr_relay_client, nick) = strdup ("alice");
+
+    /* Message relayed to client. */
+    arraylist_clear (sent_messages_client);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                relay_irc_signal_irc_in2_cb (
+                    ptr_relay_client, NULL, "test,irc_in2_privmsg",
+                    WEECHAT_HOOK_SIGNAL_STRING,
+                    (void *)":bob!user@host PRIVMSG #test :hello"));
+    CHECK_SENT_CLIENT(":bob!user@host PRIVMSG #test :hello");
+
+    /* Message without host: address of relay is used. */
+    arraylist_clear (sent_messages_client);
+    relay_irc_signal_irc_in2_cb (ptr_relay_client, NULL, "test,irc_in2_join",
+                                 WEECHAT_HOOK_SIGNAL_STRING,
+                                 (void *)"JOIN #test");
+    CHECK_SENT_CLIENT(":weechat.relay.irc JOIN #test");
+
+    /* PING and PONG are not relayed. */
+    arraylist_clear (sent_messages_client);
+    relay_irc_signal_irc_in2_cb (ptr_relay_client, NULL, "test,irc_in2_ping",
+                                 WEECHAT_HOOK_SIGNAL_STRING,
+                                 (void *)"PING :server");
+    relay_irc_signal_irc_in2_cb (ptr_relay_client, NULL, "test,irc_in2_pong",
+                                 WEECHAT_HOOK_SIGNAL_STRING,
+                                 (void *)":server PONG server :123");
+    CHECK_SENT_CLIENT(NULL);
+
+    /* Self nick changed: nick updated in client. */
+    arraylist_clear (sent_messages_client);
+    relay_irc_signal_irc_in2_cb (ptr_relay_client, NULL, "test,irc_in2_nick",
+                                 WEECHAT_HOOK_SIGNAL_STRING,
+                                 (void *)":ALICE!user@host NICK :alice2");
+    STRCMP_EQUAL("alice2", RELAY_IRC_DATA(ptr_relay_client, nick));
+    CHECK_SENT_CLIENT(":ALICE!user@host NICK :alice2");
+
+    /* Nick changed for another nick: client nick unchanged. */
+    relay_irc_signal_irc_in2_cb (ptr_relay_client, NULL, "test,irc_in2_nick",
+                                 WEECHAT_HOOK_SIGNAL_STRING,
+                                 (void *)":bob!user@host NICK :bob2");
+    STRCMP_EQUAL("alice2", RELAY_IRC_DATA(ptr_relay_client, nick));
+
+    /* Capability "echo-message" enabled on server. */
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, irc_cap_echo_message));
+    relay_irc_signal_irc_in2_cb (ptr_relay_client, NULL, "test,irc_in2_cap",
+                                 WEECHAT_HOOK_SIGNAL_STRING,
+                                 (void *)":server CAP alice2 ACK :echo-message");
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, irc_cap_echo_message));
 }
 
 /*
@@ -567,9 +648,53 @@ TEST(RelayIrc, TagRelayClientId)
  *   relay_irc_signal_irc_outtags_cb
  */
 
-TEST(RelayIrc, SignalIrcOuttagsCb)
+TEST(RelayIrcWithClient, SignalIrcOuttagsCb)
 {
-    /* TODO: write tests */
+    char str_tags[128];
+
+    RELAY_IRC_DATA(ptr_relay_client, nick) = strdup ("alice");
+
+    /* Message sent by another client (or WeeChat): relayed. */
+    arraylist_clear (sent_messages_client);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                relay_irc_signal_irc_outtags_cb (
+                    ptr_relay_client, NULL, "test,irc_outtags_privmsg",
+                    WEECHAT_HOOK_SIGNAL_STRING,
+                    (void *)"relay_client_9999;PRIVMSG #test :hello\r\n"));
+    CHECK_SENT_CLIENT(":alice PRIVMSG #test :hello");
+
+    /* Message without tags. */
+    arraylist_clear (sent_messages_client);
+    relay_irc_signal_irc_outtags_cb (ptr_relay_client, NULL,
+                                     "test,irc_outtags_notice",
+                                     WEECHAT_HOOK_SIGNAL_STRING,
+                                     (void *)";NOTICE bob :a notice");
+    CHECK_SENT_CLIENT(":alice NOTICE bob :a notice");
+
+    /* Message sent by this client: not relayed (already displayed). */
+    arraylist_clear (sent_messages_client);
+    snprintf (str_tags, sizeof (str_tags),
+              "relay_client_%d;PRIVMSG #test :hello", ptr_relay_client->id);
+    relay_irc_signal_irc_outtags_cb (ptr_relay_client, NULL,
+                                     "test,irc_outtags_privmsg",
+                                     WEECHAT_HOOK_SIGNAL_STRING,
+                                     (void *)str_tags);
+    CHECK_SENT_CLIENT(NULL);
+
+    /* Command not relayed. */
+    relay_irc_signal_irc_outtags_cb (ptr_relay_client, NULL,
+                                     "test,irc_outtags_mode",
+                                     WEECHAT_HOOK_SIGNAL_STRING,
+                                     (void *)";MODE #test +o bob");
+    CHECK_SENT_CLIENT(NULL);
+
+    /* Capability "echo-message" enabled: not relayed. */
+    RELAY_IRC_DATA(ptr_relay_client, irc_cap_echo_message) = 1;
+    relay_irc_signal_irc_outtags_cb (ptr_relay_client, NULL,
+                                     "test,irc_outtags_privmsg",
+                                     WEECHAT_HOOK_SIGNAL_STRING,
+                                     (void *)";PRIVMSG #test :hello");
+    CHECK_SENT_CLIENT(NULL);
 }
 
 /*
@@ -577,9 +702,30 @@ TEST(RelayIrc, SignalIrcOuttagsCb)
  *   relay_irc_signal_irc_disc_cb
  */
 
-TEST(RelayIrc, SignalIrcDiscCb)
+TEST(RelayIrcWithClient, SignalIrcDiscCb)
 {
-    /* TODO: write tests */
+    relay_client_set_status (ptr_relay_client, RELAY_STATUS_CONNECTED);
+
+    /* Another server disconnected: nothing done. */
+    arraylist_clear (sent_messages_client);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                relay_irc_signal_irc_disc_cb (ptr_relay_client, NULL,
+                                              "irc_server_disconnected",
+                                              WEECHAT_HOOK_SIGNAL_STRING,
+                                              (void *)"other"));
+    CHECK_SENT_CLIENT(NULL);
+    LONGS_EQUAL(RELAY_STATUS_CONNECTED, ptr_relay_client->status);
+
+    /* Server of client disconnected: client is disconnected. */
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                relay_irc_signal_irc_disc_cb (ptr_relay_client, NULL,
+                                              "irc_server_disconnected",
+                                              WEECHAT_HOOK_SIGNAL_STRING,
+                                              (void *)"test"));
+    CHECK_SENT_CLIENT(":weechat.relay.irc ERROR :WeeChat: disconnected from "
+                      "server \"test\"");
+    CHECK_SENT_CLIENT(":weechat.relay.irc ERROR :Closing Link");
+    LONGS_EQUAL(RELAY_STATUS_DISCONNECTED, ptr_relay_client->status);
 }
 
 /*
@@ -670,9 +816,52 @@ TEST(RelayIrcWithClient, RemoveTagsNotNegotiated)
  *   relay_irc_hsignal_irc_redir_cb
  */
 
-TEST(RelayIrc, HsignalIrcRedirCb)
+TEST(RelayIrcWithClient, HsignalIrcRedirCb)
 {
-    /* TODO: write tests */
+    struct t_hashtable *hashtable;
+    char signal[128];
+
+    hashtable = hashtable_new (32, WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING, NULL, NULL);
+    hashtable_set (hashtable, "output",
+                   ":server 311 alice bob user host * :Bob\n"
+                   "@time=2026-01-01T00:00:00.000Z;msgid=abc "
+                   ":server 318 alice bob :End of /WHOIS list.");
+
+    /* Invalid signal or unknown client: nothing sent. */
+    arraylist_clear (sent_messages_client);
+    relay_irc_hsignal_irc_redir_cb (ptr_relay_client, NULL,
+                                    "irc_redirection_relay_xxx", hashtable);
+    relay_irc_hsignal_irc_redir_cb (ptr_relay_client, NULL,
+                                    "irc_redirection_relay_9999_whois",
+                                    hashtable);
+    CHECK_SENT_CLIENT(NULL);
+
+    /* Messages sent to client, without tags not negotiated. */
+    snprintf (signal, sizeof (signal), "irc_redirection_relay_%d_whois",
+              ptr_relay_client->id);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                relay_irc_hsignal_irc_redir_cb (ptr_relay_client, NULL,
+                                                signal, hashtable));
+    LONGS_EQUAL(2, arraylist_size (sent_messages_client));
+    CHECK_SENT_CLIENT(":server 311 alice bob user host * :Bob");
+    CHECK_SENT_CLIENT(":server 318 alice bob :End of /WHOIS list.");
+
+    /* Capability "server-time" negotiated: tag "time" kept. */
+    arraylist_clear (sent_messages_client);
+    RELAY_IRC_DATA(ptr_relay_client, server_capabilities) |=
+        1 << RELAY_IRC_CAPAB_SERVER_TIME;
+    relay_irc_hsignal_irc_redir_cb (ptr_relay_client, NULL, signal, hashtable);
+    CHECK_SENT_CLIENT("@time=2026-01-01T00:00:00.000Z "
+                      ":server 318 alice bob :End of /WHOIS list.");
+
+    /* No output: nothing sent. */
+    arraylist_clear (sent_messages_client);
+    hashtable_remove (hashtable, "output");
+    relay_irc_hsignal_irc_redir_cb (ptr_relay_client, NULL, signal, hashtable);
+    CHECK_SENT_CLIENT(NULL);
+
+    hashtable_free (hashtable);
 }
 
 /*
@@ -734,9 +923,70 @@ TEST(RelayIrcWithClient, GetLineInfo)
  *   relay_irc_send_channel_backlog
  */
 
-TEST(RelayIrc, SendChannelBacklog)
+TEST(RelayIrcWithClient, SendChannelBacklog)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    RELAY_IRC_DATA(ptr_relay_client, nick) = strdup ("alice");
+    config_file_option_set (relay_config_irc_backlog_time_format, "", 1);
+    config_file_option_set (relay_config_irc_backlog_tags, "*", 1);
+
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":alice!user_a@host_a JOIN #test\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":bob!user_b@host_b JOIN #test\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":bob!user_b@host_b PRIVMSG #test :hello\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":bob!user_b@host_b PRIVMSG #test :\001ACTION waves\001\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":bob!user_b@host_b NICK :bob2\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":bob2!user_b@host_b PART #test\"");
+    buffer = gui_buffer_search_by_full_name ("irc.test.#test");
+    CHECK(buffer);
+
+    /* All IRC messages sent to client (except join/part/quit of self nick). */
+    arraylist_clear (sent_messages_client);
+    relay_irc_send_channel_backlog (ptr_relay_client, "#test", buffer);
+    LONGS_EQUAL(5, arraylist_size (sent_messages_client));
+    CHECK(!arraylist_search (sent_messages_client,
+                             (void *)":alice!user_a@host_a JOIN :#test",
+                             NULL, NULL));
+    CHECK_SENT_CLIENT(":bob!user_b@host_b JOIN :#test");
+    CHECK_SENT_CLIENT(":bob!user_b@host_b PRIVMSG #test :hello");
+    CHECK_SENT_CLIENT(":bob!user_b@host_b PRIVMSG #test :\001ACTION waves\001");
+    CHECK_SENT_CLIENT(":bob NICK :bob2");
+    CHECK_SENT_CLIENT(":bob2!user_b@host_b PART #test");
+
+    /* Max number of messages. */
+    arraylist_clear (sent_messages_client);
+    config_file_option_set (relay_config_irc_backlog_max_number, "1", 1);
+    relay_irc_send_channel_backlog (ptr_relay_client, "#test", buffer);
+    LONGS_EQUAL(1, arraylist_size (sent_messages_client));
+    CHECK_SENT_CLIENT(":bob2!user_b@host_b PART #test");
+    config_file_option_reset (relay_config_irc_backlog_max_number, 1);
+
+    /* Only private messages, with server-time. */
+    arraylist_clear (sent_messages_client);
+    config_file_option_set (relay_config_irc_backlog_tags, "irc_privmsg", 1);
+    RELAY_IRC_DATA(ptr_relay_client, server_capabilities) |=
+        1 << RELAY_IRC_CAPAB_SERVER_TIME;
+    relay_irc_send_channel_backlog (ptr_relay_client, "#test", buffer);
+    LONGS_EQUAL(2, arraylist_size (sent_messages_client));
+    CHECK(strncmp ((const char *)arraylist_get (sent_messages_client, 0),
+                   "@time=", 6) == 0);
+    CHECK(strstr ((const char *)arraylist_get (sent_messages_client, 0),
+                  ".000Z :bob!user_b@host_b PRIVMSG #test :hello"));
+
+    /* Empty buffer: nothing sent. */
+    arraylist_clear (sent_messages_client);
+    gui_buffer_clear (buffer);
+    relay_irc_send_channel_backlog (ptr_relay_client, "#test", buffer);
+    CHECK_SENT_CLIENT(NULL);
+
+    config_file_option_reset (relay_config_irc_backlog_time_format, 1);
+    config_file_option_reset (relay_config_irc_backlog_tags, 1);
 }
 
 /*
@@ -744,9 +994,40 @@ TEST(RelayIrc, SendChannelBacklog)
  *   relay_irc_send_join
  */
 
-TEST(RelayIrc, SendJoin)
+TEST(RelayIrcWithClient, SendJoin)
 {
-    /* TODO: write tests */
+    RELAY_IRC_DATA(ptr_relay_client, nick) = strdup ("alice");
+    config_file_option_set (relay_config_irc_backlog_time_format, "", 1);
+
+    /* Unknown channel: default host, no topic, empty list of nicks. */
+    arraylist_clear (sent_messages_client);
+    relay_irc_send_join (ptr_relay_client, "#unknown");
+    CHECK_SENT_CLIENT(":alice!weechat@proxy JOIN #unknown");
+    CHECK_SENT_CLIENT(":weechat.relay.irc 366 alice #unknown "
+                      ":End of /NAMES list.");
+
+    /* Channel joined, with topic, nicks and backlog. */
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":alice!user_a@host_a JOIN #test\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":server 332 alice #test :the topic\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":server 353 alice = #test :@alice +bob carol\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":server 366 alice #test :End of /NAMES list\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":bob!user_b@host_b PRIVMSG #test :hello\"");
+    arraylist_clear (sent_messages_client);
+    relay_irc_send_join (ptr_relay_client, "#test");
+    CHECK_SENT_CLIENT(":alice!user_a@host_a JOIN #test");
+    CHECK_SENT_CLIENT(":weechat.relay.irc 332 alice #test :the topic");
+    CHECK_SENT_CLIENT(":weechat.relay.irc 353 alice = #test "
+                      ":@alice +bob carol");
+    CHECK_SENT_CLIENT(":weechat.relay.irc 366 alice #test "
+                      ":End of /NAMES list.");
+    CHECK_SENT_CLIENT(":bob!user_b@host_b PRIVMSG #test :hello");
+
+    config_file_option_reset (relay_config_irc_backlog_time_format, 1);
 }
 
 /*
@@ -754,9 +1035,34 @@ TEST(RelayIrc, SendJoin)
  *   relay_irc_send_join_channels
  */
 
-TEST(RelayIrc, SendJoinChannels)
+TEST(RelayIrcWithClient, SendJoinChannels)
 {
-    /* TODO: write tests */
+    RELAY_IRC_DATA(ptr_relay_client, nick) = strdup ("alice");
+    config_file_option_set (relay_config_irc_backlog_time_format, "", 1);
+
+    /* No channels. */
+    arraylist_clear (sent_messages_client);
+    relay_irc_send_join_channels (ptr_relay_client);
+    CHECK_SENT_CLIENT(NULL);
+
+    /* Channel with nicks, channel without nicks, private buffer. */
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":alice!user_a@host_a JOIN #test\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":alice!user_a@host_a JOIN #empty\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":alice!user_a@host_a PART #empty\"");
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":bob!user_b@host_b PRIVMSG alice :private\"");
+    arraylist_clear (sent_messages_client);
+    relay_irc_send_join_channels (ptr_relay_client);
+    CHECK_SENT_CLIENT(":alice!user_a@host_a JOIN #test");
+    CHECK_SENT_CLIENT(":bob!user_b@host_b PRIVMSG bob :private");
+    CHECK(!arraylist_search (sent_messages_client,
+                             (void *)":alice!user_a@host_a JOIN #empty",
+                             NULL, NULL));
+
+    config_file_option_reset (relay_config_irc_backlog_time_format, 1);
 }
 
 /*
@@ -775,11 +1081,41 @@ TEST(RelayIrcWithClient, InputSend)
 /*
  * Test functions:
  *   relay_irc_hook_signals
+ *   relay_irc_close_connection
  */
 
-TEST(RelayIrc, HookSignals)
+TEST(RelayIrcWithClient, HookSignals)
 {
-    /* TODO: write tests */
+    char *protocol_args;
+
+    /* No IRC server: no hooks. */
+    protocol_args = ptr_relay_client->protocol_args;
+    ptr_relay_client->protocol_args = NULL;
+    relay_irc_hook_signals (ptr_relay_client);
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_relay_client, hook_signal_irc_in2));
+    ptr_relay_client->protocol_args = protocol_args;
+
+    relay_irc_hook_signals (ptr_relay_client);
+    CHECK(RELAY_IRC_DATA(ptr_relay_client, hook_signal_irc_in2));
+    CHECK(RELAY_IRC_DATA(ptr_relay_client, hook_signal_irc_outtags));
+    CHECK(RELAY_IRC_DATA(ptr_relay_client, hook_signal_irc_disc));
+    CHECK(RELAY_IRC_DATA(ptr_relay_client, hook_hsignal_irc_redir));
+
+    /* Message received from IRC server relayed to client. */
+    arraylist_clear (sent_messages_client);
+    run_cmd_quiet ("/command -buffer irc.server.test irc /server fakerecv "
+                   "\":bob!user_b@host_b PRIVMSG alice :hi\"");
+    CHECK_SENT_CLIENT(":bob!user_b@host_b PRIVMSG alice :hi");
+
+    /* Close connection: hooks are removed. */
+    RELAY_IRC_DATA(ptr_relay_client, connected) = 1;
+    relay_irc_close_connection (ptr_relay_client);
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, connected));
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_relay_client, hook_signal_irc_in2));
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_relay_client, hook_signal_irc_outtags));
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_relay_client, hook_signal_irc_disc));
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_relay_client, hook_hsignal_irc_redir));
+    relay_irc_close_connection (ptr_relay_client);
 }
 
 /*
@@ -789,7 +1125,15 @@ TEST(RelayIrc, HookSignals)
 
 TEST(RelayIrc, CapabilityCompareCb)
 {
-    /* TODO: write tests */
+    LONGS_EQUAL(0, relay_irc_capability_compare_cb (NULL, NULL,
+                                                    (void *)"abc",
+                                                    (void *)"abc"));
+    CHECK(relay_irc_capability_compare_cb (NULL, NULL,
+                                           (void *)"abc",
+                                           (void *)"abd") < 0);
+    CHECK(relay_irc_capability_compare_cb (NULL, NULL,
+                                           (void *)"abd",
+                                           (void *)"abc") > 0);
 }
 
 /*
@@ -799,7 +1143,8 @@ TEST(RelayIrc, CapabilityCompareCb)
 
 TEST(RelayIrc, CapabilityFreeDb)
 {
-    /* TODO: write tests */
+    relay_irc_capability_free_db (NULL, NULL, NULL);
+    relay_irc_capability_free_db (NULL, NULL, strdup ("server-time"));
 }
 
 /*
@@ -1152,22 +1497,38 @@ TEST(RelayIrcWithClient, RecvTooLong)
 
 /*
  * Test functions:
- *   relay_irc_close_connection
- */
-
-TEST(RelayIrc, CloseConnection)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   relay_irc_alloc
+ *   relay_irc_get_initial_status
+ *   relay_irc_free
  */
 
-TEST(RelayIrc, Alloc)
+TEST(RelayIrcWithClient, Alloc)
 {
-    /* TODO: write tests */
+    struct t_relay_client client, *ptr_client;
+
+    memset (&client, 0, sizeof (client));
+    ptr_client = &client;
+
+    /* Password set: password expected. */
+    relay_irc_alloc (&client);
+    CHECK(client.protocol_data);
+    STRCMP_EQUAL("weechat.relay.irc", RELAY_IRC_DATA(ptr_client, address));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_client, password_ok));
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_client, nick));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_client, connected));
+    LONGS_EQUAL(RELAY_STATUS_AUTHENTICATING,
+                relay_irc_get_initial_status (&client));
+    relay_irc_free (&client);
+    POINTERS_EQUAL(NULL, client.protocol_data);
+    relay_irc_free (&client);
+    relay_irc_free (NULL);
+
+    /* No password: no password expected. */
+    config_file_option_set (relay_config_network_password, "", 1);
+    relay_irc_alloc (&client);
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_client, password_ok));
+    LONGS_EQUAL(RELAY_STATUS_CONNECTED, relay_irc_get_initial_status (&client));
+    relay_irc_free (&client);
 }
 
 /*
@@ -1175,29 +1536,58 @@ TEST(RelayIrc, Alloc)
  *   relay_irc_alloc_with_infolist
  */
 
-TEST(RelayIrc, AllocWithInfolist)
+TEST(RelayIrcWithClient, AllocWithInfolist)
 {
-    /* TODO: write tests */
-}
+    struct t_relay_client client, *ptr_client;
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
 
-/*
- * Test functions:
- *   relay_irc_get_initial_status
- */
+    memset (&client, 0, sizeof (client));
+    ptr_client = &client;
+    client.protocol_args = (char *)"test";
 
-TEST(RelayIrc, GetInitialStatus)
-{
-    /* TODO: write tests */
-}
+    /* Client connected: signals are hooked. */
+    infolist = infolist_new (NULL);
+    item = infolist_new_item (infolist);
+    infolist_new_var_string (item, "address", "my.address");
+    infolist_new_var_integer (item, "password_ok", 1);
+    infolist_new_var_string (item, "nick", "alice");
+    infolist_new_var_integer (item, "user_received", 1);
+    infolist_new_var_integer (item, "cap_ls_received", 1);
+    infolist_new_var_integer (item, "cap_end_received", 1);
+    infolist_new_var_integer (item, "connected", 1);
+    infolist_new_var_integer (item, "irc_cap_echo_message", 1);
+    infolist_new_var_integer (item, "server_capabilities", 3);
+    CHECK(infolist_next (infolist));
+    relay_irc_alloc_with_infolist (&client, infolist);
+    CHECK(client.protocol_data);
+    STRCMP_EQUAL("my.address", RELAY_IRC_DATA(ptr_client, address));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_client, password_ok));
+    STRCMP_EQUAL("alice", RELAY_IRC_DATA(ptr_client, nick));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_client, user_received));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_client, cap_ls_received));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_client, cap_end_received));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_client, connected));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_client, irc_cap_echo_message));
+    LONGS_EQUAL(3, RELAY_IRC_DATA(ptr_client, server_capabilities));
+    CHECK(RELAY_IRC_DATA(ptr_client, hook_signal_irc_in2));
+    CHECK(RELAY_IRC_DATA(ptr_client, hook_hsignal_irc_redir));
+    relay_irc_free (&client);
+    infolist_free (infolist);
 
-/*
- * Test functions:
- *   relay_irc_free
- */
-
-TEST(RelayIrc, Free)
-{
-    /* TODO: write tests */
+    /* Client not connected, without nick: no hooks. */
+    infolist = infolist_new (NULL);
+    item = infolist_new_item (infolist);
+    infolist_new_var_string (item, "address", "my.address");
+    infolist_new_var_integer (item, "connected", 0);
+    CHECK(infolist_next (infolist));
+    relay_irc_alloc_with_infolist (&client, infolist);
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_client, nick));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_client, connected));
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_client, hook_signal_irc_in2));
+    POINTERS_EQUAL(NULL, RELAY_IRC_DATA(ptr_client, hook_hsignal_irc_redir));
+    relay_irc_free (&client);
+    infolist_free (infolist);
 }
 
 /*
@@ -1205,9 +1595,36 @@ TEST(RelayIrc, Free)
  *   relay_irc_add_to_infolist
  */
 
-TEST(RelayIrc, AddToInfolist)
+TEST(RelayIrcWithClient, AddToInfolist)
 {
-    /* TODO: write tests */
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
+
+    RELAY_IRC_DATA(ptr_relay_client, nick) = strdup ("alice");
+    RELAY_IRC_DATA(ptr_relay_client, connected) = 1;
+    relay_client_set_status (ptr_relay_client, RELAY_STATUS_CONNECTED);
+
+    infolist = infolist_new (NULL);
+    item = infolist_new_item (infolist);
+    LONGS_EQUAL(0, relay_irc_add_to_infolist (NULL, ptr_relay_client, 0));
+    LONGS_EQUAL(0, relay_irc_add_to_infolist (item, NULL, 0));
+
+    LONGS_EQUAL(1, relay_irc_add_to_infolist (item, ptr_relay_client, 0));
+    CHECK(infolist_next (infolist));
+    LONGS_EQUAL(1, infolist_integer (infolist, "connected"));
+    STRCMP_EQUAL("weechat.relay.irc", infolist_string (infolist, "address"));
+    LONGS_EQUAL(0, infolist_integer (infolist, "password_ok"));
+    STRCMP_EQUAL("alice", infolist_string (infolist, "nick"));
+    infolist_free (infolist);
+
+    /* Force disconnected state. */
+    infolist = infolist_new (NULL);
+    item = infolist_new_item (infolist);
+    LONGS_EQUAL(1, relay_irc_add_to_infolist (item, ptr_relay_client, 1));
+    CHECK(infolist_next (infolist));
+    LONGS_EQUAL(0, infolist_integer (infolist, "connected"));
+    infolist_free (infolist);
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, connected));
 }
 
 /*
@@ -1215,7 +1632,12 @@ TEST(RelayIrc, AddToInfolist)
  *   relay_irc_print_log
  */
 
-TEST(RelayIrc, PrintLog)
+TEST(RelayIrcWithClient, PrintLog)
 {
-    /* TODO: write tests */
+    struct t_relay_client client, *ptr_client;
+
+    memset (&client, 0, sizeof (client));
+    ptr_client = &client;
+    relay_irc_print_log (ptr_client);
+    relay_irc_print_log (ptr_relay_client);
 }
