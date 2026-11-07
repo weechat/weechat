@@ -127,7 +127,13 @@ struct t_irc_color_formatting
 /* State of ANSI colors converted to IRC colors */
 struct t_irc_color_ansi_state
 {
-    struct t_irc_color_formatting formatting; /* IRC formatting sent        */
+    struct t_irc_color_formatting formatting; /* formatting of ANSI colors  */
+                                       /* (like on a terminal), colors are  */
+                                       /* IRC_COLOR_DEFAULT (99) by default */
+    int irc_fg;                        /* colors displayed by IRC client:   */
+    int irc_bg;                        /* also changed by IRC codes in text */
+    char fg_only;                      /* last code has only a fg:          */
+                                       /* 1 = "^Cfg", 2 = "^Dfg" (hex)      */
 };
 
 extern int irc_color_is_hex_color (const unsigned char *string);

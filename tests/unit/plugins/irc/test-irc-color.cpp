@@ -228,6 +228,22 @@ extern void irc_color_decode_ansi_sequence (char **output,
     "test_\x1B[38;2;40000;0;0mcolor04"
 #define STRING_ANSI_BG_RGB_COMPONENTS_TOO_BIG                           \
     "test_\x1B[48;2;0;256;99999999999mcolor11"
+#define STRING_ANSI_FG_RED_COMMA                                        \
+    "grep: \x1B[01;31m\x1B[K,5\x1B[m\x1B[K total"
+#define STRING_ANSI_FG_TERM_IRC_12_COMMA                                \
+    "test_\x1B[38;5;21m,5_\x1B[38;5;21m,55_\x1B[38;5;21m,555"
+#define STRING_ANSI_BG_TERM_IRC_04                                      \
+    "A\x1B[48;5;196mB"
+#define STRING_ANSI_FG_TERM_IRC_12_BG_TERM_IRC_04                       \
+    "A\x1B[38;5;21;48;5;196mB"
+#define STRING_ANSI_BG_RED_COMMA                                        \
+    "test_\x1B[41m,5_\x1B[101m,5"
+#define STRING_ANSI_DEFAULT_FG_BG                                       \
+    "test_\x1B[31m\x1B[42mred/green_\x1B[39mdefault/green_"          \
+    "\x1B[34mblue/green_\x1B[49mblue/default_"                         \
+    "\x1B[0m\x1B[44mdefault/blue_\x1B[m\x1B[33mbrown/default"
+#define STRING_ANSI_RESET_ATTRS                                         \
+    "test_\x1B[1mbold\x1B[m_normal_\x1B[1mbold"
 
 #define WEE_CHECK_DECODE(__result, __string, __keep_colors)             \
     decoded = irc_color_decode (__string, __keep_colors);               \
@@ -243,6 +259,12 @@ extern void irc_color_decode_ansi_sequence (char **output,
     decoded = irc_color_decode_ansi (__string, __keep_colors);          \
     STRCMP_EQUAL(__result, decoded);                                    \
     free (decoded);
+
+#define WEE_CHECK_DECODE_ANSI_DECODE(__result, __string)                \
+    decoded_ansi = irc_color_decode_ansi (__string, 1);                 \
+    CHECK(decoded_ansi);                                                \
+    WEE_CHECK_DECODE(__result, decoded_ansi, 1);                        \
+    free (decoded_ansi);
 
 TEST_GROUP(IrcColor)
 {
@@ -1147,7 +1169,7 @@ TEST(IrcColor, DecodeAnsi)
     /* Color: blue on red */
     WEE_CHECK_DECODE_ANSI("test_blue/red", STRING_ANSI_FG_BLUE_BG_RED, 0);
     snprintf (string, sizeof (string),
-              "test_%s02%s,05blue/red",
+              "test_%s02%s02,05blue/red",
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_BLUE_BG_RED, 1);
@@ -1156,7 +1178,7 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_lightcyan/lightblue",
                           STRING_ANSI_FG_LIGHTCYAN_BG_LIGHTBLUE, 0);
     snprintf (string, sizeof (string),
-              "test_%s11%s,12lightcyan/lightblue",
+              "test_%s11%s11,12lightcyan/lightblue",
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_LIGHTCYAN_BG_LIGHTBLUE, 1);
@@ -1182,7 +1204,7 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_color13/02",
                           STRING_ANSI_FG_RGB_IRC_13_BG_RGB_IRC_02, 0);
     snprintf (string, sizeof (string),
-              "test_%s13%s,02color13/02",
+              "test_%s13%s13,02color13/02",
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string,
@@ -1195,7 +1217,7 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_color13/02",
                           STRING_ANSI_FG_TERM_IRC_13_BG_TERM_IRC_02, 0);
     snprintf (string, sizeof (string),
-              "test_%s13%s,02color13/02",
+              "test_%s13%s13,02color13/02",
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string,
@@ -1203,17 +1225,11 @@ TEST(IrcColor, DecodeAnsi)
 
     /* Default text color */
     WEE_CHECK_DECODE_ANSI("test_default_fg", STRING_ANSI_DEFAULT_FG, 0);
-    snprintf (string, sizeof (string),
-              "test_%s15default_fg",
-              IRC_COLOR_COLOR_STR);
-    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_FG, 1);
+    WEE_CHECK_DECODE_ANSI("test_default_fg", STRING_ANSI_DEFAULT_FG, 1);
 
     /* Default background color */
     WEE_CHECK_DECODE_ANSI("test_default_bg", STRING_ANSI_DEFAULT_BG, 0);
-    snprintf (string, sizeof (string),
-              "test_%s,01default_bg",
-              IRC_COLOR_COLOR_STR);
-    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_BG, 1);
+    WEE_CHECK_DECODE_ANSI("test_default_bg", STRING_ANSI_DEFAULT_BG, 1);
 
     /* Empty parameters (reset) */
     WEE_CHECK_DECODE_ANSI("AXB", STRING_ANSI_EMPTY_PARAM_ONLY, 0);
@@ -1250,9 +1266,9 @@ TEST(IrcColor, DecodeAnsi)
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_TERM_EMPTY, 1);
     snprintf (string, sizeof (string),
-              "test_%s,01%scolor01",
-              IRC_COLOR_COLOR_STR,
-              IRC_COLOR_BOLD_STR);
+              "test_%s%s99,01color01",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_TERM_EMPTY, 1);
 
     /* Empty arguments in RGB colors: "FF00FF" (IRC 13 -> lightmagenta) */
@@ -1262,9 +1278,9 @@ TEST(IrcColor, DecodeAnsi)
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_RGB_EMPTY, 1);
     snprintf (string, sizeof (string),
-              "test_%s,13%scolor13",
-              IRC_COLOR_COLOR_STR,
-              IRC_COLOR_UNDERLINE_STR);
+              "test_%s%s99,13color13",
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_RGB_EMPTY, 1);
 
     /* Underline terminal color (ignored) */
@@ -1297,10 +1313,10 @@ TEST(IrcColor, DecodeAnsi)
     /* Underline + underline colors (ignored) + blue + bold */
     WEE_CHECK_DECODE_ANSI("test_ul_blue", STRING_ANSI_UNDERLINE_COLOR_MIXED, 0);
     snprintf (string, sizeof (string),
-              "test_%s%s02%sul_blue",
+              "test_%s%s%s02ul_blue",
               IRC_COLOR_UNDERLINE_STR,
-              IRC_COLOR_COLOR_STR,
-              IRC_COLOR_BOLD_STR);
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_UNDERLINE_COLOR_MIXED, 1);
 
     /* Other escape sequences (removed) */
@@ -1329,6 +1345,10 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1;>4mB", 1);
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1<mB", 1);
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[5=mB", 1);
+
+    /* IRC colors in text change the colors of the IRC client. */
+    WEE_CHECK_DECODE_ANSI("\x03" "05red\x03" "04x\x03" "05,03y",
+                          "\x1B[31mred\x03" "04x\x1B[42my", 1);
 
     /* Control sequence ending with "m" with intermediate bytes (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 0);
@@ -1361,9 +1381,206 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_color11",
                           STRING_ANSI_BG_RGB_COMPONENTS_TOO_BIG, 0);
     snprintf (string, sizeof (string),
-              "test_%s,11color11",
+              "test_%s99,11color11",
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_RGB_COMPONENTS_TOO_BIG, 1);
+
+    /* Foreground color followed by text starting with comma and digits */
+    WEE_CHECK_DECODE_ANSI("grep: ,5 total", STRING_ANSI_FG_RED_COMMA, 0);
+    snprintf (string, sizeof (string),
+              "grep: %s%s05%s%s,5%s total",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_RESET_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_RED_COMMA, 1);
+    snprintf (string, sizeof (string),
+              "test_%s12%s%s,5_,55_,555",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_TERM_IRC_12_COMMA, 1);
+
+    /* Background color without foreground color */
+    WEE_CHECK_DECODE_ANSI("AB", STRING_ANSI_BG_TERM_IRC_04, 0);
+    snprintf (string, sizeof (string),
+              "A%s99,04B",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_TERM_IRC_04, 1);
+    snprintf (string, sizeof (string),
+              "test_%s99,05,5_%s99,04,5",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_RED_COMMA, 1);
+
+    /* Foreground and background colors in the same sequence */
+    WEE_CHECK_DECODE_ANSI("AB", STRING_ANSI_FG_TERM_IRC_12_BG_TERM_IRC_04, 0);
+    snprintf (string, sizeof (string),
+              "A%s12,04B",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_TERM_IRC_12_BG_TERM_IRC_04,
+                          1);
+
+    /* Default foreground/background colors and reset */
+    snprintf (string, sizeof (string),
+              "test_%s05%s05,03red/green_%s99default/green_"
+              "%s02blue/green_%s%s02blue/default_"
+              "%s%s99,02default/blue_%s%s07brown/default",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_FG_BG, 1);
+
+    /* Separator after a foreground only, with sequences adding nothing. */
+    snprintf (string, sizeof (string),
+              "%s05%s%s,5 apples",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31m\x1B[2m,5 apples", 1);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31m\x1B[49m,5 apples", 1);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31m,\x1B[K5 apples", 1);
+
+    /* IRC codes and new lines in text: colors are sent again. */
+    snprintf (string, sizeof (string),
+              "%s05C%sD%s05E",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31mC\x0F" "D\x1B[31mE", 1);
+    snprintf (string, sizeof (string),
+              "%s05A\n%s05B",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31mA\n\x1B[31mB", 1);
+    snprintf (string, sizeof (string),
+              "%s05A%s04B%s05C",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31mA\x03" "04B\x1B[31mC", 1);
+
+    /* Colors not changed: not sent again. */
+    snprintf (string, sizeof (string),
+              "A%s05B" "C%s05,03D" "E",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(
+        string,
+        "A\x1B[31mB\x1B[31mC\x1B[42mD\x1B[31;42mE",
+        1);
+
+    /* Attributes after a reset */
+    snprintf (string, sizeof (string),
+              "test_%sbold%s_normal_%sbold",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_RESET_ATTRS, 1);
+}
+
+/*
+ * Test functions:
+ *   irc_color_decode_ansi
+ *   irc_color_decode
+ */
+
+TEST(IrcColor, DecodeAnsiDecode)
+{
+    char string[1024], *decoded_ansi, *decoded;
+
+    /* Foreground color followed by text starting with comma and digits */
+    snprintf (string, sizeof (string),
+              "grep: %s%s%s%s,5%s total",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("|red"),
+              gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_FG_RED_COMMA);
+    snprintf (string, sizeof (string),
+              "test_%s%s%s,5_,55_,555",
+              gui_color_get_custom ("|lightblue"),
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_FG_TERM_IRC_12_COMMA);
+
+    /* Background color without foreground color */
+    snprintf (string, sizeof (string),
+              "A%sB",
+              gui_color_get_custom ("|default,lightred"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_BG_TERM_IRC_04);
+    snprintf (string, sizeof (string),
+              "test_%s,5_%s,5",
+              gui_color_get_custom ("|default,red"),
+              gui_color_get_custom ("|default,lightred"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_BG_RED_COMMA);
+
+    /* Foreground and background colors in the same sequence */
+    snprintf (string, sizeof (string),
+              "A%sB",
+              gui_color_get_custom ("|lightblue,lightred"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string,
+                                 STRING_ANSI_FG_TERM_IRC_12_BG_TERM_IRC_04);
+
+    /* Default foreground/background colors and reset */
+    snprintf (string, sizeof (string),
+              "test_%s%sred/green_%sdefault/green_"
+              "%sblue/green_%s%sblue/default_"
+              "%s%sdefault/blue_%s%sbrown/default",
+              gui_color_get_custom ("|red"),
+              gui_color_get_custom ("|red,green"),
+              gui_color_get_custom ("|default"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("resetcolor"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|default,blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|brown"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_DEFAULT_FG_BG);
+
+    /*
+     * Black text: sent without background, so the default remapped color
+     * of option irc.color.mirc_remap ("1,-1:darkgray") is used
+     */
+    snprintf (string, sizeof (string),
+              "test_%sblack",
+              gui_color_get_custom ("|darkgray"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, "test_\x1B[30mblack");
+
+    /*
+     * Black text after the end of a background: the default remapped color
+     * of option irc.color.mirc_remap ("1,-1:darkgray") is used
+     */
+    snprintf (string, sizeof (string),
+              "%s WARN %s%s message",
+              gui_color_get_custom ("|black,brown"),
+              gui_color_get_custom ("resetcolor"),
+              gui_color_get_custom ("|darkgray"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string,
+                                 "\x1B[30;43m WARN \x1B[49m message");
+
+    /*
+     * IRC text color in the text (the same as the ANSI color), then an
+     * escape sequence which adds nothing: text starting with comma and digits
+     * is not read as a background.
+     */
+    WEE_CHECK_DECODE_ANSI("\x03" "05" "red" "\x03" "05" "\x02\x02" ",12",
+                          "\x1B[31m" "red" "\x03" "05" "\x1B[22m" ",12", 1);
+    WEE_CHECK_DECODE_ANSI("\x03" "05,03" "x" "\x03" "05,03" ",12",
+                          "\x1B[31;42m" "x" "\x03" "05,03" "\x1B[22m" ",12",
+                          1);
+    WEE_CHECK_DECODE_ANSI("\x03" "05" "\x03" "05" "x" ",12",
+                          "\x1B[31m" "\x03" "05" "x" "\x1B[22m" ",12", 1);
 }
 
 /*

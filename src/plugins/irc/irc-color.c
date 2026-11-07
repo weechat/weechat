@@ -1081,6 +1081,22 @@ irc_color_ansi_next_color (const char **ptr_param, const char *ptr_end)
 }
 
 /*
+ * Reset state of ANSI colors: no attribute and default colors (like an IRC
+ * client at the beginning of a message or after "^O").
+ */
+
+void
+irc_color_decode_ansi_reset_state (struct t_irc_color_ansi_state *ansi_state)
+{
+    irc_color_formatting_init (&ansi_state->formatting);
+    ansi_state->formatting.fg = IRC_COLOR_DEFAULT;
+    ansi_state->formatting.bg = IRC_COLOR_DEFAULT;
+    ansi_state->irc_fg = IRC_COLOR_DEFAULT;
+    ansi_state->irc_bg = IRC_COLOR_DEFAULT;
+    ansi_state->fg_only = 0;
+}
+
+/*
  * Set an attribute of ANSI state: if it changes, the IRC code of the
  * attribute (which toggles it) is added in output.
  */
@@ -1107,12 +1123,24 @@ irc_color_decode_ansi_sequence (char **output,
                                 struct t_irc_color_ansi_state *ansi_state,
                                 const char *params, int length)
 {
-    struct t_irc_color_formatting *formatting;
+    struct t_irc_color_formatting *formatting, formatting_start;
     const char *ptr_param, *ptr_end;
-    char str_color[32];
-    int value, color;
+    char **codes;
+    int value, color, fg_only;
+
+    codes = weechat_string_dyn_alloc (32);
+    if (!codes)
+        return;
 
     formatting = &ansi_state->formatting;
+
+    /*
+     * Formatting before this sequence, with the colors displayed by the IRC
+     * client (to send only colors which change).
+     */
+    formatting_start = *formatting;
+    formatting_start.fg = ansi_state->irc_fg;
+    formatting_start.bg = ansi_state->irc_bg;
 
     ptr_param = params;
     ptr_end = params + length;
@@ -1121,42 +1149,44 @@ irc_color_decode_ansi_sequence (char **output,
         switch (value)
         {
             case 0: /* Reset */
-                weechat_string_dyn_concat (output, IRC_COLOR_RESET_STR, -1);
-                irc_color_formatting_init (formatting);
+                weechat_string_dyn_concat (codes, IRC_COLOR_RESET_STR, -1);
+                irc_color_decode_ansi_reset_state (ansi_state);
+                /* Colors are reset in IRC clients too. */
+                formatting_start = *formatting;
                 break;
             case 1: /* Bold */
-                irc_color_decode_ansi_set_attr (output, &formatting->bold, 1,
+                irc_color_decode_ansi_set_attr (codes, &formatting->bold, 1,
                                                 IRC_COLOR_BOLD_STR);
                 break;
             case 2: /* Remove bold */
             case 21:
             case 22:
-                irc_color_decode_ansi_set_attr (output, &formatting->bold, 0,
+                irc_color_decode_ansi_set_attr (codes, &formatting->bold, 0,
                                                 IRC_COLOR_BOLD_STR);
                 break;
             case 3: /* Italic */
-                irc_color_decode_ansi_set_attr (output, &formatting->italic, 1,
+                irc_color_decode_ansi_set_attr (codes, &formatting->italic, 1,
                                                 IRC_COLOR_ITALIC_STR);
                 break;
             case 4: /* Underline */
-                irc_color_decode_ansi_set_attr (output, &formatting->underline,
+                irc_color_decode_ansi_set_attr (codes, &formatting->underline,
                                                 1, IRC_COLOR_UNDERLINE_STR);
                 break;
             case 9: /* Strikethrough */
-                irc_color_decode_ansi_set_attr (output,
+                irc_color_decode_ansi_set_attr (codes,
                                                 &formatting->strikethrough, 1,
                                                 IRC_COLOR_STRIKETHROUGH_STR);
                 break;
             case 23: /* Remove italic */
-                irc_color_decode_ansi_set_attr (output, &formatting->italic, 0,
+                irc_color_decode_ansi_set_attr (codes, &formatting->italic, 0,
                                                 IRC_COLOR_ITALIC_STR);
                 break;
             case 24: /* Remove underline */
-                irc_color_decode_ansi_set_attr (output, &formatting->underline,
+                irc_color_decode_ansi_set_attr (codes, &formatting->underline,
                                                 0, IRC_COLOR_UNDERLINE_STR);
                 break;
             case 29: /* Remove strikethrough */
-                irc_color_decode_ansi_set_attr (output,
+                irc_color_decode_ansi_set_attr (codes,
                                                 &formatting->strikethrough, 0,
                                                 IRC_COLOR_STRIKETHROUGH_STR);
                 break;
@@ -1168,11 +1198,7 @@ irc_color_decode_ansi_sequence (char **output,
             case 35:
             case 36:
             case 37:
-                snprintf (str_color, sizeof (str_color),
-                          "%c%02d",
-                          IRC_COLOR_COLOR_CHAR,
-                          irc_color_term2irc[value - 30]);
-                weechat_string_dyn_concat (output, str_color, -1);
+                formatting->fg = irc_color_term2irc[value - 30];
                 break;
             case 38: /* Text color */
             case 48: /* Background color */
@@ -1184,19 +1210,14 @@ irc_color_decode_ansi_sequence (char **output,
                     irc_color_convert_term2irc (color);
                 if (color >= 0)
                 {
-                    snprintf (str_color, sizeof (str_color),
-                              "%c%s%02d",
-                              IRC_COLOR_COLOR_CHAR,
-                              (value == 38) ? "" : ",",
-                              color);
-                    weechat_string_dyn_concat (output, str_color, -1);
+                    if (value == 38)
+                        formatting->fg = color;
+                    else
+                        formatting->bg = color;
                 }
                 break;
             case 39: /* Default text color */
-                snprintf (str_color, sizeof (str_color),
-                          "%c15",
-                          IRC_COLOR_COLOR_CHAR);
-                weechat_string_dyn_concat (output, str_color, -1);
+                formatting->fg = IRC_COLOR_DEFAULT;
                 break;
             case 40: /* Background color */
             case 41:
@@ -1206,17 +1227,10 @@ irc_color_decode_ansi_sequence (char **output,
             case 45:
             case 46:
             case 47:
-                snprintf (str_color, sizeof (str_color),
-                          "%c,%02d",
-                          IRC_COLOR_COLOR_CHAR,
-                          irc_color_term2irc[value - 40]);
-                weechat_string_dyn_concat (output, str_color, -1);
+                formatting->bg = irc_color_term2irc[value - 40];
                 break;
             case 49: /* Default background color */
-                snprintf (str_color, sizeof (str_color),
-                          "%c,01",
-                          IRC_COLOR_COLOR_CHAR);
-                weechat_string_dyn_concat (output, str_color, -1);
+                formatting->bg = IRC_COLOR_DEFAULT;
                 break;
             case 90: /* Text color (bright) */
             case 91:
@@ -1226,11 +1240,7 @@ irc_color_decode_ansi_sequence (char **output,
             case 95:
             case 96:
             case 97:
-                snprintf (str_color, sizeof (str_color),
-                          "%c%02d",
-                          IRC_COLOR_COLOR_CHAR,
-                          irc_color_term2irc[value - 90 + 8]);
-                weechat_string_dyn_concat (output, str_color, -1);
+                formatting->fg = irc_color_term2irc[value - 90 + 8];
                 break;
             case 100: /* Background color (bright) */
             case 101:
@@ -1240,14 +1250,104 @@ irc_color_decode_ansi_sequence (char **output,
             case 105:
             case 106:
             case 107:
-                snprintf (str_color, sizeof (str_color),
-                          "%c,%02d",
-                          IRC_COLOR_COLOR_CHAR,
-                          irc_color_term2irc[value - 100 + 8]);
-                weechat_string_dyn_concat (output, str_color, -1);
+                formatting->bg = irc_color_term2irc[value - 100 + 8];
                 break;
         }
     }
+
+    /*
+     * Send colors only if they have changed, and the background only if it
+     * has changed: "^Cfg" keeps the background (and the remapped colors with
+     * the default background in option irc.color.mirc_remap still apply);
+     * the foreground is always sent with a background, because "^C,bg" is a
+     * color reset followed by text ",bg".
+     */
+    fg_only = irc_color_formatting_transition (
+        codes, &formatting_start, formatting,
+        1);
+    ansi_state->irc_fg = formatting->fg;
+    ansi_state->irc_bg = formatting->bg;
+
+    /*
+     * Text after a foreground only ("^Cfg") may need a separator; the state
+     * is not changed if this sequence adds nothing.
+     */
+    if ((*codes)[0])
+    {
+        weechat_string_dyn_concat (output, *codes, -1);
+        ansi_state->fg_only = fg_only;
+    }
+    weechat_string_dyn_free (codes, 1);
+}
+
+/*
+ * Add text (not an ANSI escape sequence) in output of irc_color_decode_ansi.
+ *
+ * If the last color code added has only a foreground ("^Cfg"), "^B^B" is
+ * added before the text if needed, otherwise the text would be read as a
+ * background of the color code (see function
+ * irc_color_formatting_add_separator).
+ *
+ * IRC codes in text change the state of the IRC client: a reset ("^O") or a
+ * new line (sent in another message) resets attributes and colors, and a
+ * color code ("^C" or "^D") changes the colors displayed by the IRC client
+ * (but not the ANSI colors), so that the next ANSI colors are sent according
+ * to them.
+ */
+
+void
+irc_color_decode_ansi_add_text (char **output, const char *text, int length,
+                                struct t_irc_color_ansi_state *ansi_state)
+{
+    int i, size, fg, bg, end_code, fg_only;
+
+    if (length <= 0)
+        return;
+
+    irc_color_formatting_add_separator (output, ansi_state->fg_only, text,
+                                        length);
+    weechat_string_dyn_concat (output, text, length);
+
+    end_code = -1;
+    fg_only = 0;
+    for (i = 0; i < length; i++)
+    {
+        switch (text[i])
+        {
+            case '\n':
+            case IRC_COLOR_RESET_CHAR:
+                irc_color_decode_ansi_reset_state (ansi_state);
+                break;
+            case IRC_COLOR_COLOR_CHAR:
+            case IRC_COLOR_HEX_COLOR_CHAR:
+                /*
+                 * Colors of the code (a code without color resets the colors,
+                 * a text color alone keeps the background); the code ends
+                 * before the next escape sequence.
+                 */
+                size = irc_color_code_parse (text + i, &fg, &bg);
+                irc_color_formatting_set_colors (&ansi_state->irc_fg,
+                                                 &ansi_state->irc_bg, fg, bg,
+                                                 IRC_COLOR_DEFAULT);
+                /*
+                 * A text color alone ("^Cfg" or "^Dfg"): text starting with
+                 * "," and a color after it would be read as a background.
+                 */
+                fg_only = ((fg != IRC_COLOR_FORMATTING_NONE)
+                           && (bg == IRC_COLOR_FORMATTING_NONE)) ?
+                    ((text[i] == IRC_COLOR_COLOR_CHAR) ? 1 : 2) : 0;
+                end_code = i + ((size > 0) ? size : 1);
+                if (size > 1)
+                    i += size - 1;
+                break;
+        }
+    }
+
+    /*
+     * If the text ends with a text color alone, the next text (after an
+     * escape sequence which adds nothing) may need a separator.
+     */
+    ansi_state->fg_only = (end_code == length) ? fg_only : 0;
 }
 
 /*
@@ -1313,7 +1413,7 @@ irc_color_decode_ansi (const char *string, int keep_colors)
         return NULL;
     }
 
-    irc_color_formatting_init (&ansi_state.formatting);
+    irc_color_decode_ansi_reset_state (&ansi_state);
 
     ptr_text = normalized;
     ptr_string = strchr (normalized, '\33');
@@ -1322,15 +1422,17 @@ irc_color_decode_ansi (const char *string, int keep_colors)
         size = irc_color_ansi_sequence_size (ptr_string);
         if (size > 0)
         {
-            weechat_string_dyn_concat (output, ptr_text,
-                                       ptr_string - ptr_text);
+            irc_color_decode_ansi_add_text (output, ptr_text,
+                                            ptr_string - ptr_text,
+                                            &ansi_state);
             irc_color_decode_ansi_sequence (output, &ansi_state,
                                             ptr_string + 2, size - 3);
             ptr_text = ptr_string + size;
         }
         ptr_string = strchr (ptr_string + ((size > 0) ? size : 1), '\33');
     }
-    weechat_string_dyn_concat (output, ptr_text, -1);
+    irc_color_decode_ansi_add_text (output, ptr_text, strlen (ptr_text),
+                                    &ansi_state);
 
     free (normalized);
 
