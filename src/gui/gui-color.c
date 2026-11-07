@@ -1647,7 +1647,7 @@ gui_color_ansi_rgb_component (const char *item)
 
 /*
  * Get the value of a parameter of an ANSI escape sequence (an empty parameter
- * is 0).
+ * is 0); sub-parameters after the value (separated by ":") are ignored.
  *
  * Return the value, -1 if the parameter is not a number or is greater than
  * 65535.
@@ -1663,10 +1663,67 @@ gui_color_ansi_param_value (const char *param)
         return 0;
 
     value = strtol (param, &error, 10);
-    if (error[0] || (value < 0) || (value > 65535))
+    if ((error[0] && (error[0] != ':')) || (value < 0) || (value > 65535))
         return -1;
 
     return (int)value;
+}
+
+/*
+ * Get a color in arguments of a color of an ANSI escape sequence: type of
+ * color and its values: 5 and N (terminal color) or 2 and R, G, B (RGB color).
+ *
+ * Return the terminal color (0-255), the RGB color with flag
+ * GUI_COLOR_ANSI_RGB_FLAG (GUI_COLOR_ANSI_RGB_FLAG | 0xRRGGBB), -1 if the
+ * color is invalid, -2 if the color is incomplete or has an unknown type.
+ */
+
+int
+gui_color_ansi_color (int type, char **values, int num_values)
+{
+    int color;
+
+    switch (type)
+    {
+        case 2: /* RGB color */
+            if (num_values < 3)
+                return -2;
+            return GUI_COLOR_ANSI_RGB_FLAG
+                | (gui_color_ansi_rgb_component (values[0]) << 16)
+                | (gui_color_ansi_rgb_component (values[1]) << 8)
+                | gui_color_ansi_rgb_component (values[2]);
+        case 5: /* Terminal color (0-255) */
+            if (num_values < 1)
+                return -2;
+            color = gui_color_ansi_param_value (values[0]);
+            return ((color >= 0) && (color <= 255)) ? color : -1;
+    }
+
+    return -2;
+}
+
+/*
+ * Parse the color in sub-parameters of a parameter 38 (text color), 48
+ * (background color) or 58 (underline color) of an ANSI escape sequence
+ * (sub-parameters are separated by ":"): "38:5:N" (terminal color),
+ * "38:2:R:G:B" or "38:2:<color space>:R:G:B" (RGB color).
+ *
+ * Return the color (see function gui_color_ansi_color), -1 if the color is
+ * invalid or incomplete.
+ */
+
+int
+gui_color_ansi_parse_color_sub_params (char **sub_params, int num_sub_params)
+{
+    int type, first_value, color;
+
+    type = (num_sub_params >= 2) ?
+        gui_color_ansi_param_value (sub_params[1]) : -1;
+    first_value = ((type == 2) && (num_sub_params >= 6)) ? 3 : 2;
+    color = gui_color_ansi_color (type, sub_params + first_value,
+                                  num_sub_params - first_value);
+
+    return (color >= 0) ? color : -1;
 }
 
 /*
@@ -1686,35 +1743,21 @@ gui_color_ansi_param_value (const char *param)
 int
 gui_color_ansi_parse_color (char **items, int num_items, int *index)
 {
-    int i, color;
+    int type, color;
 
-    i = *index;
-
-    switch ((i + 1 < num_items) ? gui_color_ansi_param_value (items[i + 1]) : -1)
+    type = (*index + 1 < num_items) ?
+        gui_color_ansi_param_value (items[*index + 1]) : -1;
+    color = gui_color_ansi_color (type, items + *index + 2,
+                                  num_items - *index - 2);
+    if (color == -2)
     {
-        case 2: /* RGB color */
-            if (i + 4 < num_items)
-            {
-                *index = i + 4;
-                return GUI_COLOR_ANSI_RGB_FLAG
-                    | (gui_color_ansi_rgb_component (items[i + 2]) << 16)
-                    | (gui_color_ansi_rgb_component (items[i + 3]) << 8)
-                    | gui_color_ansi_rgb_component (items[i + 4]);
-            }
-            break;
-        case 5: /* Terminal color (0-255) */
-            if (i + 2 < num_items)
-            {
-                *index = i + 2;
-                color = gui_color_ansi_param_value (items[i + 2]);
-                return ((color >= 0) && (color <= 255)) ? color : -1;
-            }
-            break;
+        /* Incomplete color or unknown type: ignore remaining parameters. */
+        *index = num_items - 1;
+        return -1;
     }
+    *index += (type == 2) ? 4 : 2;
 
-    /* Incomplete color or unknown type: ignore the remaining parameters. */
-    *index = num_items - 1;
-    return -1;
+    return color;
 }
 
 /*
@@ -1754,8 +1797,8 @@ char *
 gui_color_ansi_parse_sequence (const char *sequence,
                                t_gui_color_ansi_param_cb *callback)
 {
-    char *text2, **items, **output;
-    int i, length, num_items, value, color;
+    char *text2, **items, **sub_params, **output;
+    int i, length, num_items, num_sub_params, value, color;
 
     if (!sequence || !sequence[0])
         return strdup ("");
@@ -1804,22 +1847,41 @@ gui_color_ansi_parse_sequence (const char *sequence,
 
     for (i = 0; i < num_items; i++)
     {
-        /* Parameters with sub-parameters (separated by ":") are ignored. */
+        /*
+         * Sub-parameters (separated by ":"): at most 6 are used, for example
+         * "38:2:<color space>:R:G:B".
+         */
+        sub_params = NULL;
+        num_sub_params = 0;
         if (strchr (items[i], ':'))
-            continue;
+        {
+            sub_params = string_split (items[i], ":", NULL, 0, 7,
+                                       &num_sub_params);
+            if (!sub_params)
+                continue;
+        }
         value = gui_color_ansi_param_value (items[i]);
-        /* Invalid value (not a number or out of range): ignored. */
-        if (value < 0)
-            continue;
         color = -1;
         if ((value == 38) || (value == 48) || (value == 58))
         {
-            color = gui_color_ansi_parse_color (items, num_items, &i);
+            color = (sub_params) ?
+                gui_color_ansi_parse_color_sub_params (sub_params,
+                                                       num_sub_params) :
+                gui_color_ansi_parse_color (items, num_items, &i);
             /* Invalid color, or underline color (not supported): ignored. */
             if ((color < 0) || (value == 58))
-                continue;
+                value = -1;
         }
-        (callback) (output, value, color);
+        else if ((value == 4) && sub_params && (num_sub_params >= 2)
+                 && (gui_color_ansi_param_value (sub_params[1]) == 0))
+        {
+            /* "4:0" is no underline. */
+            value = 24;
+        }
+        /* Invalid value (not a number or out of range) is ignored. */
+        if (value >= 0)
+            (callback) (output, value, color);
+        string_free_split (sub_params);
     }
     (callback) (output, GUI_COLOR_ANSI_PARAM_END, -1);
 

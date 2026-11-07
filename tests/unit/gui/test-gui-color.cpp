@@ -12,6 +12,7 @@
 
 extern "C"
 {
+#include <stdlib.h>
 #include <string.h>
 #include "src/core/core-config.h"
 #include "src/core/core-config-file.h"
@@ -1872,16 +1873,75 @@ TEST(GuiColor, DecodeAnsi)
     /* Control sequence ending with "m" with intermediate bytes (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 0);
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 1);
+}
 
-    /* Parameters with sub-parameters (ignored) */
-    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[38:2::255:0:0m" "B", 0);
-    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[38:2::255:0:0m" "B", 1);
-    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[4:0m" "B", 1);
-    snprintf (string, sizeof (string),
-              "A" "%s" "%s" "B",
-              gui_color_get_custom ("bold"),
-              gui_color_get_custom ("|blue"));
-    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;4:3;34m" "B", 1);
+/*
+ * Test functions:
+ *   gui_color_ansi_parse_color_sub_params
+ *   gui_color_decode_ansi (sub-parameters separated by colons)
+ */
+
+TEST(GuiColor, DecodeAnsiColons)
+{
+    const char *colons[][2] = {
+        { "\x1B[38:2::255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2:255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2:1:255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[48:2::0:0:128m", "\x1B[48;2;0;0;128m" },
+        { "\x1B[38:5:214m", "\x1B[38;5;214m" },
+        { "\x1B[48:5:17m", "\x1B[48;5;17m" },
+        { "\x1B[1;38:2::255:136:0;48:5:17m", "\x1B[1;38;2;255;136;0;48;5;17m" },
+        { "\x1B[38:2::255::0m", "\x1B[38;2;255;0;0m" },
+        { "\x1B[38:2::255:136:0:m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2::255:136:0:1:2:3m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:5:;1m", "\x1B[38;5;0;1m" },
+        { "\x1B[38;5;1:2m", "\x1B[38;5;1m" },
+        { "\x1B[38;5;4:0m", "\x1B[38;5;4m" },
+        { "\x1B[38:5;1m", "\x1B[1m" },
+        { "\x1B[38:3:1:2:3;1m", "\x1B[1m" },
+        { "\x1B[1:2m", "\x1B[1m" },
+        { "\x1B[58:2::255:0:0;1m", "\x1B[1m" },
+        { "\x1B[58:5:1;1m", "\x1B[1m" },
+        { "\x1B[4:3m", "\x1B[4m" },
+        { "\x1B[4:4294967296m", "\x1B[4m" },
+        { "\x1B[4m" "A" "\x1B[4:0m", "\x1B[4m" "A" "\x1B[24m" },
+        { "\x1B[4m" "A" "\x1B[4:m", "\x1B[4m" "A" "\x1B[24m" },
+        { "\x1B[1m" "A" "\x1B[:3m", "\x1B[1m" "A" "\x1B[0m" },
+        { NULL, NULL },
+    };
+    char string1[128], string2[128], *decoded, *decoded1, *decoded2;
+    char *long_string;
+    int i;
+
+    for (i = 0; colons[i][0]; i++)
+    {
+        snprintf (string1, sizeof (string1), "test_%stext", colons[i][0]);
+        snprintf (string2, sizeof (string2), "test_%stext", colons[i][1]);
+        /* Colors removed: no ANSI code left in string. */
+        decoded1 = gui_color_decode_ansi (string1, 0);
+        decoded2 = gui_color_decode_ansi (string2, 0);
+        STRCMP_EQUAL(decoded2, decoded1);
+        CHECK(!strchr (decoded1, '\x1B'));
+        free (decoded1);
+        free (decoded2);
+        /* Colors kept: same as parameters separated by semicolons. */
+        decoded1 = gui_color_decode_ansi (string1, 1);
+        decoded2 = gui_color_decode_ansi (string2, 1);
+        STRCMP_EQUAL(decoded2, decoded1);
+        free (decoded1);
+        free (decoded2);
+    }
+
+    /* Many colons: only the first sub-parameters are used. */
+    long_string = (char *)malloc (100000 + 16);
+    CHECK(long_string);
+    strcpy (long_string, "A\x1B[1");
+    memset (long_string + 4, ':', 100000);
+    strcpy (long_string + 4 + 100000, "mB");
+    snprintf (string2, sizeof (string2),
+              "A" "%s" "B", gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string2, long_string, 1);
+    free (long_string);
 }
 
 /*
@@ -1948,6 +2008,8 @@ TEST(GuiColor, AnsiParamValue)
     LONGS_EQUAL(-1, gui_color_ansi_param_value ("4294967297"));
     LONGS_EQUAL(-1, gui_color_ansi_param_value ("99999999999999999999999"));
     LONGS_EQUAL(-1, gui_color_ansi_param_value ("1x"));
+    LONGS_EQUAL(4, gui_color_ansi_param_value ("4:0"));
+    LONGS_EQUAL(0, gui_color_ansi_param_value (":3"));
 }
 
 /*

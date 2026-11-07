@@ -12,6 +12,7 @@ extern "C"
 {
 #include <string.h>
 #include <stdio.h>
+#include <string.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-hook.h"
 #include "src/core/core-infolist.h"
@@ -220,8 +221,6 @@ extern void irc_color_decode_ansi_sequence (char **output,
     "test_\x1B[4m\x1B[38;2;0;128;128m\x1B[58;2;255;0;0mul_color10"
 #define STRING_ANSI_UNDERLINE_COLOR_MIXED                               \
     "test_\x1B[4;58;5;1;34;59;1mul_blue"
-#define STRING_ANSI_SUB_PARAMS                                          \
-    "test_\x1B[1;4:3;38:2::255:0:0;34mbold_blue"
 #define STRING_ANSI_FG_RGB_COMPONENT_256                                \
     "test_\x1B[38;2;0;256;0mcolor09"
 #define STRING_ANSI_FG_RGB_COMPONENT_40000                              \
@@ -1078,6 +1077,61 @@ TEST(IrcColor, IsHexColor)
 
 /*
  * Test functions:
+ *   irc_color_ansi_parse_color_sub_params
+ *   irc_color_decode_ansi (sub-parameters separated by colons)
+ */
+
+TEST(IrcColor, DecodeAnsiColons)
+{
+    const char *colons[][2] = {
+        { "\x1B[38:2::255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2:255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2:1:255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[48:2::0:0:128m", "\x1B[48;2;0;0;128m" },
+        { "\x1B[38:5:214m", "\x1B[38;5;214m" },
+        { "\x1B[48:5:17m", "\x1B[48;5;17m" },
+        { "\x1B[1;38:2::255:136:0;48:5:17m", "\x1B[1;38;2;255;136;0;48;5;17m" },
+        { "\x1B[38:2::255::0m", "\x1B[38;2;255;0;0m" },
+        { "\x1B[38:2::255:136:0:m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2::255:136:0:1:2:3m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:5:;1m", "\x1B[38;5;0;1m" },
+        { "\x1B[38;5;1:2m", "\x1B[38;5;1m" },
+        { "\x1B[38;5;4:0m", "\x1B[38;5;4m" },
+        { "\x1B[38:5;1m", "\x1B[1m" },
+        { "\x1B[38:3:1:2:3;1m", "\x1B[1m" },
+        { "\x1B[1:2m", "\x1B[1m" },
+        { "\x1B[58:2::255:0:0;1m", "\x1B[1m" },
+        { "\x1B[58:5:1;1m", "\x1B[1m" },
+        { "\x1B[4:3m", "\x1B[4m" },
+        { "\x1B[4:4294967296m", "\x1B[4m" },
+        { "\x1B[4m" "A" "\x1B[4:0m", "\x1B[4m" "A" "\x1B[24m" },
+        { "\x1B[4m" "A" "\x1B[4:3m", "\x1B[4m" "A" "\x1B[4m" },
+        { NULL, NULL },
+    };
+    char string1[128], string2[128], *decoded1, *decoded2;
+    int i;
+
+    for (i = 0; colons[i][0]; i++)
+    {
+        snprintf (string1, sizeof (string1), "test_%stext", colons[i][0]);
+        snprintf (string2, sizeof (string2), "test_%stext", colons[i][1]);
+        /* Colors removed and kept: same as parameters separated by ";". */
+        decoded1 = irc_color_decode_ansi (string1, 0);
+        decoded2 = irc_color_decode_ansi (string2, 0);
+        STRCMP_EQUAL(decoded2, decoded1);
+        CHECK(!strchr (decoded1, '\x1B'));
+        free (decoded1);
+        free (decoded2);
+        decoded1 = irc_color_decode_ansi (string1, 1);
+        decoded2 = irc_color_decode_ansi (string2, 1);
+        STRCMP_EQUAL(decoded2, decoded1);
+        free (decoded1);
+        free (decoded2);
+    }
+}
+
+/*
+ * Test functions:
  *   irc_color_decode_ansi (invalid parameters)
  */
 
@@ -1390,17 +1444,6 @@ TEST(IrcColor, DecodeAnsi)
     /* Control sequence ending with "m" with intermediate bytes (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 0);
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 1);
-
-    /* Parameters with sub-parameters (ignored) */
-    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[38:2::255:0:0mB", 0);
-    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[38:2::255:0:0mB", 1);
-    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[4:0mB", 1);
-    WEE_CHECK_DECODE_ANSI("test_bold_blue", STRING_ANSI_SUB_PARAMS, 0);
-    snprintf (string, sizeof (string),
-              "test_%s%s02bold_blue",
-              IRC_COLOR_BOLD_STR,
-              IRC_COLOR_COLOR_STR);
-    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_SUB_PARAMS, 1);
 
     /* RGB color with components greater than 255 (clamped to 255) */
     WEE_CHECK_DECODE_ANSI("test_color09",
