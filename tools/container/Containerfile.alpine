@@ -118,10 +118,10 @@ RUN set -eux ; \
     # install runtime dependencies
     apk add --no-cache \
         ca-certificates \
-        gettext \
         gnutls \
         libcurl \
         libgcrypt \
+        libintl \
         ncurses-libs \
         ncurses-terminfo \
         tzdata \

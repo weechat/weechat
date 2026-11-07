@@ -24,8 +24,8 @@ Images are based on Debian or Alpine (smaller size, with same features):
   - `debian` (~ 434 MB)
   - `debian-slim`: slim version (~ 125 MB)
 - Alpine:
-  - `alpine` (~ 295 MB)
-  - `alpine-slim`: slim version (~ 41 MB)
+  - `alpine` (~ 282 MB)
+  - `alpine-slim`: slim version (~ 37 MB)
 
 The slim version includes all plugins except these ones:
 
