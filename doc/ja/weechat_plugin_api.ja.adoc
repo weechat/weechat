@@ -2726,7 +2726,7 @@ _WeeChat バージョン 0.3.2 以上で利用可、バージョン 5.0.0 で更
 
 // TRANSLATION MISSING
 If option
-link:weechat_user.ja.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
+link:weechat_user.ja.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
 is enabled, a buffer number command like `/42` or `/12/34` (jump to buffer) is
 a command, so NULL is returned _(WeeChat ≥ 5.0.0)_.
 

@@ -605,7 +605,7 @@ Documentation files:
 |    docinfo.html                               | Asciidoctor style.
 |    XX/                                        | Documentation for language XX (languages: en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Man page (`man weechat`).
-|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.en.html[Cheat sheet ^↗^^].
+|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.en.html[Cheat sheet ^↗^^].
 |       weechat_dev.XX.adoc                     | link:weechat_dev.en.html[Developer's guide ^↗^^] (this document).
 |       weechat_faq.XX.adoc                     | link:weechat_faq.en.html[FAQ ^↗^^].
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.en.html[Plugin API reference ^↗^^].
@@ -1438,7 +1438,7 @@ section `[Unreleased]`.
 
 * Do not add an entry to fix or change a feature that is already listed in the
   section `[Unreleased]` (not yet released): update the existing entry if needed.
-* The format is based on https://keepachangelog.com/[Keep a Changelog ^↗^^],
+* The format is based on https://keepachangelog.com/[Keep a Changelog ^↗^^],
   with sections in this order: Added, Changed, Deprecated, Removed, Fixed,
   Security; only sections with entries are present.
 * Each entry starts with the component (same as in commit messages) and ends

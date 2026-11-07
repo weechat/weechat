@@ -721,7 +721,7 @@ link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier pa
 Avec WeeChat ≥ 5.0.0, vous pouvez utiliser les commandes comme `/123` pour
 sauter au tampon n°123 (c'est équivalent à `/buffer *123`) ; cela peut être
 désactivé avec l'option
-link:weechat_user.fr.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
+link:weechat_user.fr.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
 
 Avec les versions plus anciennes, vous pouvez définir un trigger pour obtenir le
 même comportement :

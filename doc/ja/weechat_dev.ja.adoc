@@ -793,7 +793,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    XX/                                        | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
 |       weechat.1.XX.adoc                       | man ページ (`man weechat`)
 // TRANSLATION MISSING
-|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.ja.html[Cheat sheet ^↗^^].
+|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.ja.html[Cheat sheet ^↗^^].
 |       weechat_dev.XX.adoc                     | link:weechat_dev.ja.html[開発者リファレンス ^↗^^] (この文書)
 |       weechat_faq.XX.adoc                     | link:weechat_faq.ja.html[FAQ ^↗^^]
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.ja.html[プラグイン API リファレンス ^↗^^]
@@ -1696,7 +1696,7 @@ section `[Unreleased]`.
 * Do not add an entry to fix or change a feature that is already listed in the
   section `[Unreleased]` (not yet released): update the existing entry if needed.
 // TRANSLATION MISSING
-* The format is based on https://keepachangelog.com/[Keep a Changelog ^↗^^],
+* The format is based on https://keepachangelog.com/[Keep a Changelog ^↗^^],
   with sections in this order: Added, Changed, Deprecated, Removed, Fixed,
   Security; only sections with entries are present.
 // TRANSLATION MISSING

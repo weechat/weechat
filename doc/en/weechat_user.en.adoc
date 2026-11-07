@@ -2226,7 +2226,7 @@ That means you can have masks specific for some IRC servers
 ===== Log files by date
 
 To have log files by date, you can use date/time specifiers in mask (see
-`man strftime` for formats, extra specifiers are supported, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]),
+`man strftime` for formats, extra specifiers are supported, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]),
 for example:
 
 ----

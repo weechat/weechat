@@ -2644,7 +2644,7 @@ Return pointer to input text for buffer (pointer inside "string" argument), or
 NULL if it's a command.
 
 If option
-link:weechat_user.en.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
+link:weechat_user.en.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
 is enabled, a buffer number command like `/42` or `/12/34` (jump to buffer) is
 a command, so NULL is returned _(WeeChat ≥ 5.0.0)_.
 

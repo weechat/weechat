@@ -608,7 +608,7 @@ WeeChat „језгро” се налази у следећим директо�
 |    docinfo.html                               | Asciidoctor стил.
 |    XX/                                        | Документација за језик XX (језици: en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Man страница(`man weechat`).
-|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.sr.html[Пушкице ^↗^^].
+|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.sr.html[Пушкице ^↗^^].
 |       weechat_dev.XX.adoc                     | link:weechat_dev.sr.html[Водич за програмере ^↗^^] (овај документ).
 |       weechat_faq.XX.adoc                     | link:weechat_faq.sr.html[ЧПП ^↗^^].
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.sr.html[Референца за API додатака ^↗^^].
@@ -1424,7 +1424,7 @@ ruby: add detection of ruby version 1.9.3 in CMake
 
 * Немојте да додајете ставку ако поправљате или мењате функционалност која је већ наведена у одељку
   `[Unreleased]` (још увек необјављено): ако је потребно, ажурирајте постојећу ставку.
-* Формат је заснован на https://keepachangelog.com/[Keep a Changelog ^↗^^],
+* Формат је заснован на https://keepachangelog.com/[Keep a Changelog ^↗^^],
   са одељцима у следећем редоследу: Added, Changed, Deprecated, Removed, Fixed,
   Security; присутни су само одељци са ставкама.
 * Свака ставка почиње са компонентом (исто као у комит порукама) и завршава се са

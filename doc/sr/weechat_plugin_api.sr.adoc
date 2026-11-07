@@ -2553,7 +2553,7 @@ _WeeChat ≥ 0.3.2, ажурирано у верзији 5.0.0._
 Враћа показивач на текст уноса за бафер (показивач унутар „string” аргумента), или NULL ако стринг није команда.
 
 Ако је опција
-link:weechat_user.sr.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
+link:weechat_user.sr.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^]
 укључена, команда броја бафера као што је `/42` или `/12/34` (скок на бафер) је
 команда, тако да се враћа NULL _(WeeChat ≥ 5.0.0)_.
 

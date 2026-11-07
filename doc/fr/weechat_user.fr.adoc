@@ -2298,7 +2298,7 @@ serveurs IRC ("logger.mask.irc.libera") ou pour une extension
 
 Pour avoir des fichiers de log par date, vous pouvez utiliser des marqueurs
 dans le masque (voir `man strftime` pour le format, des marqueurs
-supplémentaires sont supportés, voir la link:weechat_plugin_api.fr.html#_util_strftimeval[Référence API extension WeeChat / util_strftimeval ^↗^^]),
+supplémentaires sont supportés, voir la link:weechat_plugin_api.fr.html#_util_strftimeval[Référence API extension WeeChat / util_strftimeval ^↗^^]),
 par exemple :
 
 ----

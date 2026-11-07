@@ -65,7 +65,7 @@ API верзију враћа <<resource_version,version>> ресурс.
 [[api_schema]]
 === API схема
 
-API можете да прегледате и тестирате на мрежи: https://weechat.org/api/[WeeChat API релеј ^↗^^].
+API можете да прегледате и тестирате на мрежи: https://weechat.org/api/[WeeChat API релеј ^↗^^].
 
 [[response_codes]]
 === Кодови одговора

@@ -715,7 +715,7 @@ link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado ^�
 // TRANSLATION MISSING
 With WeeChat ≥ 5.0.0, you can use commands like `/123` to jump to buffer #123
 (this is the same as `/buffer *123`); this can be disabled with option
-link:weechat_user.es.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
+link:weechat_user.es.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
 
 // TRANSLATION MISSING
 With older versions, you could define a trigger to get the same behavior:

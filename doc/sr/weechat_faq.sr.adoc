@@ -626,7 +626,7 @@ UXTerm*metaSendsEscape: true
 
 Са WeeChat ≥ 5.0.0, можете да користите команде као што је `/123` да скочите на бафер #123
 (ово је исто као и `/buffer *123`); ово може да се искључи опцијом
-link:weechat_user.sr.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
+link:weechat_user.sr.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
 
 На старијим верзијама, можете да дефинишете окидач којим добијате исто понашање:
 

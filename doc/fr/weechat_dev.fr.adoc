@@ -606,7 +606,7 @@ Fichiers de documentation :
 |    docinfo.html                               | Style Asciidoctor.
 |    XX/                                        | Documentation pour la langue XX (langues : en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Page de manuel (`man weechat`).
-|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.fr.html[Aide-mémoire ^↗^^].
+|       weechat_cheatsheet.XX.adoc              | link:weechat_cheatsheet.fr.html[Aide-mémoire ^↗^^].
 |       weechat_dev.XX.adoc                     | link:weechat_dev.fr.html[Guide du développeur ^↗^^] (ce document).
 |       weechat_faq.XX.adoc                     | link:weechat_faq.fr.html[FAQ ^↗^^] (questions fréquemment posées).
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.fr.html[Référence API extension ^↗^^].
@@ -1468,7 +1468,7 @@ par l'utilisateur, dans la section `[Unreleased]`.
 * N'ajoutez pas d'entrée pour corriger ou modifier une fonctionnalité qui est
   déjà listée dans la section `[Unreleased]` (pas encore publiée) : mettez à
   jour l'entrée existante si besoin.
-* Le format est basé sur https://keepachangelog.com/[Keep a Changelog ^↗^^],
+* Le format est basé sur https://keepachangelog.com/[Keep a Changelog ^↗^^],
   avec les sections dans cet ordre : Added, Changed, Deprecated, Removed,
   Fixed, Security ; seules les sections avec des entrées sont présentes.
 * Chaque entrée commence par le composant (le même que dans les messages de
