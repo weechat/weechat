@@ -125,6 +125,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: keep light colors displayed with bold (terminal with less than 16 colors or option weechat.look.color_basic_force_bold) when the bold attribute is removed, and remove this bold when another color is used
 - core: fix reverse video removed after a control char displayed in text with reverse video, when an attribute was removed before
 - core, irc: ignore underline color in ANSI colors (SGR 58), instead of decoding its arguments as other attributes
 - core, irc: fix decoding of empty parameters in ANSI colors, use value 0 (for example reset) instead of ignoring them

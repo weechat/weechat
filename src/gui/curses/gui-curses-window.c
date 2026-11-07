@@ -55,6 +55,8 @@
 int gui_window_current_style_fg;       /* current foreground color          */
 int gui_window_current_style_bg;       /* current background color          */
 int gui_window_current_color_attr;     /* attr sum of last color(s) used    */
+int gui_window_current_color_bold = 0; /* 1 if bold is set only to display  */
+                                       /* a light color (< 16 colors)       */
 int gui_window_current_emphasis;       /* 1 if text emphasis is enabled     */
 struct t_gui_window_saved_style gui_window_saved_style[GUI_WINDOW_MAX_SAVED_STYLES];
                                        /* circular list of saved styles     */
@@ -233,6 +235,7 @@ gui_window_save_style (WINDOW *window)
     ptr_saved_style->style_fg = gui_window_current_style_fg;
     ptr_saved_style->style_bg = gui_window_current_style_bg;
     ptr_saved_style->color_attr = gui_window_current_color_attr;
+    ptr_saved_style->color_bold = gui_window_current_color_bold;
     ptr_saved_style->emphasis = gui_window_current_emphasis;
     ptr_attrs = &ptr_saved_style->attrs;
     ptr_pair = &ptr_saved_style->pair;
@@ -265,6 +268,7 @@ gui_window_restore_style (WINDOW *window)
     gui_window_current_style_fg = ptr_saved_style->style_fg;
     gui_window_current_style_bg = ptr_saved_style->style_bg;
     gui_window_current_color_attr = ptr_saved_style->color_attr;
+    gui_window_current_color_bold = ptr_saved_style->color_bold;
     gui_window_current_emphasis = ptr_saved_style->emphasis;
     wattr_set (window, ptr_saved_style->attrs, ptr_saved_style->pair, NULL);
     /*
@@ -276,6 +280,17 @@ gui_window_restore_style (WINDOW *window)
 }
 
 /*
+ * Get the attributes to display a WeeChat color: attributes of the color and
+ * bold used to display a light color (terminal with less than 16 colors).
+ */
+
+int
+gui_window_color_display_attrs (struct t_gui_color *color)
+{
+    return color->attributes | ((color->bold_light) ? A_BOLD : 0);
+}
+
+/*
  * Reset style (color and attr) with a WeeChat color for a window.
  */
 
@@ -284,9 +299,11 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
 {
     gui_window_current_style_fg = -1;
     gui_window_current_style_bg = -1;
-    gui_window_current_color_attr = 0;
+    gui_window_current_color_bold = gui_color[weechat_color]->bold_light;
+    gui_window_current_color_attr = gui_color[weechat_color]->attributes;
 
-    wattr_set (window, gui_color[weechat_color]->attributes,
+    wattr_set (window,
+               gui_window_color_display_attrs (gui_color[weechat_color]),
                gui_color_weechat_get_pair (weechat_color), NULL);
 }
 
@@ -300,7 +317,8 @@ gui_window_reset_color (WINDOW *window, int weechat_color)
     gui_window_current_style_fg = gui_color[weechat_color]->foreground;
     gui_window_current_style_bg = gui_color[weechat_color]->background;
 
-    wattron (window, gui_color[weechat_color]->attributes);
+    gui_window_set_color_bold (window, gui_color[weechat_color]->bold_light);
+    gui_window_set_color_style (window, gui_color[weechat_color]->attributes);
     wcolor_set (window, gui_color_weechat_get_pair (weechat_color), NULL);
 }
 
@@ -323,7 +341,55 @@ void
 gui_window_remove_color_style (WINDOW *window, int style)
 {
     gui_window_current_color_attr &= ~style;
+
+    /* Keep bold used to display a light color. */
+    if (gui_window_current_color_bold)
+        style &= ~A_BOLD;
+
     wattroff (window, style);
+}
+
+/*
+ * Set or remove bold used only to display a light color, on a terminal with
+ * less than 16 colors (or with option weechat.look.color_basic_force_bold).
+ *
+ * This bold is kept when the bold attribute is removed, and it is removed
+ * when another color is used (unless the bold attribute is set).
+ */
+
+void
+gui_window_set_color_bold (WINDOW *window, int bold)
+{
+    int old_bold;
+
+    old_bold = gui_window_current_color_bold;
+    gui_window_current_color_bold = bold;
+
+    if (bold)
+        wattron (window, A_BOLD);
+    else if (old_bold && !(gui_window_current_color_attr & A_BOLD))
+        wattroff (window, A_BOLD);
+}
+
+/*
+ * Set attributes of a basic WeeChat color (for example "lightred") used as
+ * foreground: attributes of the color (like "*" for bold) and bold used only
+ * to display a light color.
+ *
+ * Return all the attributes set (including bold of a light color).
+ */
+
+int
+gui_window_set_basic_color_attributes (WINDOW *window, int fg)
+{
+    int attributes, bold_light;
+
+    attributes = gui_color_get_gui_attrs (fg);
+    bold_light = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].bold_light;
+    gui_window_set_color_style (window, attributes);
+    gui_window_set_color_bold (window, bold_light);
+
+    return attributes | ((bold_light) ? A_BOLD : 0);
 }
 
 /*
@@ -359,7 +425,9 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
          * white if bold attribute is set.
          */
         if (((fg == COLOR_WHITE + 8)
-             || ((fg == COLOR_WHITE) && (gui_color[num_color]->attributes & A_BOLD)))
+             || ((fg == COLOR_WHITE)
+                 && (gui_window_color_display_attrs (gui_color[num_color])
+                     & A_BOLD)))
             && !CONFIG_BOOLEAN(config_look_color_real_white))
         {
             fg = -1;
@@ -412,6 +480,7 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
                 gui_window_set_color_style (window, A_UNDERLINE);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_UNDERLINE);
+            gui_window_set_color_bold (window, 0);
             gui_window_set_color (window,
                                   fg & GUI_COLOR_EXTENDED_MASK,
                                   current_bg);
@@ -420,9 +489,7 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
         {
             if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_ALL_ATTR);
-            attributes = gui_color_get_gui_attrs (fg) |
-                gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
-            gui_window_set_color_style (window, attributes);
+            attributes = gui_window_set_basic_color_attributes (window, fg);
             fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
 
             /*
@@ -508,15 +575,14 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
                 gui_window_set_color_style (window, A_UNDERLINE);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_UNDERLINE);
+            gui_window_set_color_bold (window, 0);
             fg &= GUI_COLOR_EXTENDED_MASK;
         }
         else if ((fg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
             if (reset_attributes && !(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_ALL_ATTR);
-            attributes = gui_color_get_gui_attrs (fg) |
-                gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
-            gui_window_set_color_style (window, attributes);
+            attributes = gui_window_set_basic_color_attributes (window, fg);
             fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
 
             /*
@@ -566,6 +632,7 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
     if ((pair >= 0) && (pair <= gui_color_num_pairs))
     {
         gui_window_remove_color_style (window, A_ALL_ATTR);
+        gui_window_set_color_bold (window, 0);
         wcolor_set (window, pair, NULL);
     }
 }
@@ -598,7 +665,7 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
     {
         /* Use color for emphasis (from config). */
         mvwchgat (window, y, x, count,
-                  gui_color[GUI_COLOR_EMPHASIS]->attributes,
+                  gui_window_color_display_attrs (gui_color[GUI_COLOR_EMPHASIS]),
                   gui_color_weechat_get_pair (GUI_COLOR_EMPHASIS), NULL);
     }
     else

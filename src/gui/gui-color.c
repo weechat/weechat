@@ -2446,6 +2446,8 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                 bg = gui_color[color]->background;
                                 attrs = gui_color_get_extended_flags (
                                     gui_color[color]->attributes);
+                                if (gui_color[color]->bold_light)
+                                    attrs |= GUI_COLOR_EXTENDED_BOLD_FLAG;
                                 string_dyn_concat (out, "\x1B[0m", -1);
                                 if (attrs & GUI_COLOR_EXTENDED_BLINK_FLAG)
                                     string_dyn_concat (out, "\x1B[5m", -1);

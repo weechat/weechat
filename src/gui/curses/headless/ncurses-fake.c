@@ -10,7 +10,7 @@
 
 
 /* Simulate 80x25 terminal. */
-WINDOW _stdscr = { 0, 0, 24, 79, 0, 0 };
+WINDOW _stdscr = { 0, 0, 24, 79, 0, 0, 0 };
 WINDOW *stdscr = &_stdscr;
 chtype acs_map[256];
 
@@ -68,9 +68,10 @@ wmove (WINDOW *win, int y, int x)
 int
 wattr_on (WINDOW *win, attr_t attrs, void *opts)
 {
-    (void) win;
-    (void) attrs;
     (void) opts;
+
+    if (win)
+        win->_attrs |= attrs;
 
     return OK;
 }
@@ -78,9 +79,10 @@ wattr_on (WINDOW *win, attr_t attrs, void *opts)
 int
 wattr_off (WINDOW *win, attr_t attrs, void *opts)
 {
-    (void) win;
-    (void) attrs;
     (void) opts;
+
+    if (win)
+        win->_attrs &= ~attrs;
 
     return OK;
 }
@@ -88,10 +90,12 @@ wattr_off (WINDOW *win, attr_t attrs, void *opts)
 int
 wattr_get (WINDOW *win, attr_t *attrs, short *pair, void *opts)
 {
-    (void) win;
-    (void) attrs;
-    (void) pair;
     (void) opts;
+
+    if (attrs)
+        *attrs = (win) ? win->_attrs : 0;
+    if (pair)
+        *pair = 0;
 
     return OK;
 }
@@ -99,10 +103,11 @@ wattr_get (WINDOW *win, attr_t *attrs, short *pair, void *opts)
 int
 wattr_set (WINDOW *win, attr_t attrs, short pair, void *opts)
 {
-    (void) win;
-    (void) attrs;
     (void) pair;
     (void) opts;
+
+    if (win)
+        win->_attrs = attrs;
 
     return OK;
 }
@@ -110,19 +115,13 @@ wattr_set (WINDOW *win, attr_t attrs, short pair, void *opts)
 int
 wattron (WINDOW *win, int attrs)
 {
-    (void) win;
-    (void) attrs;
-
-    return OK;
+    return wattr_on (win, attrs, NULL);
 }
 
 int
 wattroff (WINDOW *win, int attrs)
 {
-    (void) win;
-    (void) attrs;
-
-    return OK;
+    return wattr_off (win, attrs, NULL);
 }
 
 int

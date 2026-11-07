@@ -35,44 +35,44 @@
 #define GUI_COLOR_TIMER_TERM_COLORS 10
 
 struct t_gui_color gui_weechat_colors_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
-{ { -1,                -1,                0,      "default"      },
-  { COLOR_BLACK,       COLOR_BLACK,       0,      "black"        },
-  { COLOR_BLACK,       COLOR_BLACK + 8,   A_BOLD, "darkgray"     },
-  { COLOR_RED,         COLOR_RED,         0,      "red"          },
-  { COLOR_RED,         COLOR_RED + 8,     A_BOLD, "lightred"     },
-  { COLOR_GREEN,       COLOR_GREEN,       0,      "green"        },
-  { COLOR_GREEN,       COLOR_GREEN + 8,   A_BOLD, "lightgreen"   },
-  { COLOR_YELLOW,      COLOR_YELLOW,      0,      "brown"        },
-  { COLOR_YELLOW,      COLOR_YELLOW + 8,  A_BOLD, "yellow"       },
-  { COLOR_BLUE,        COLOR_BLUE,        0,      "blue"         },
-  { COLOR_BLUE,        COLOR_BLUE + 8,    A_BOLD, "lightblue"    },
-  { COLOR_MAGENTA,     COLOR_MAGENTA,     0,      "magenta"      },
-  { COLOR_MAGENTA,     COLOR_MAGENTA + 8, A_BOLD, "lightmagenta" },
-  { COLOR_CYAN,        COLOR_CYAN,        0,      "cyan"         },
-  { COLOR_CYAN,        COLOR_CYAN + 8,    A_BOLD, "lightcyan"    },
-  { COLOR_WHITE,       COLOR_WHITE,       0,      "gray"         },
-  { COLOR_WHITE,       COLOR_WHITE + 8,   A_BOLD, "white"        },
-  { 0,                 0,                 0,      NULL           }
+{ { -1,                -1,                0, 0, "default"      },
+  { COLOR_BLACK,       COLOR_BLACK,       0, 0, "black"        },
+  { COLOR_BLACK,       COLOR_BLACK + 8,   0, 1, "darkgray"     },
+  { COLOR_RED,         COLOR_RED,         0, 0, "red"          },
+  { COLOR_RED,         COLOR_RED + 8,     0, 1, "lightred"     },
+  { COLOR_GREEN,       COLOR_GREEN,       0, 0, "green"        },
+  { COLOR_GREEN,       COLOR_GREEN + 8,   0, 1, "lightgreen"   },
+  { COLOR_YELLOW,      COLOR_YELLOW,      0, 0, "brown"        },
+  { COLOR_YELLOW,      COLOR_YELLOW + 8,  0, 1, "yellow"       },
+  { COLOR_BLUE,        COLOR_BLUE,        0, 0, "blue"         },
+  { COLOR_BLUE,        COLOR_BLUE + 8,    0, 1, "lightblue"    },
+  { COLOR_MAGENTA,     COLOR_MAGENTA,     0, 0, "magenta"      },
+  { COLOR_MAGENTA,     COLOR_MAGENTA + 8, 0, 1, "lightmagenta" },
+  { COLOR_CYAN,        COLOR_CYAN,        0, 0, "cyan"         },
+  { COLOR_CYAN,        COLOR_CYAN + 8,    0, 1, "lightcyan"    },
+  { COLOR_WHITE,       COLOR_WHITE,       0, 0, "gray"         },
+  { COLOR_WHITE,       COLOR_WHITE + 8,   0, 1, "white"        },
+  { 0,                 0,                 0, 0, NULL           }
 };
 struct t_gui_color gui_weechat_colors_no_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
-{ { -1,                -1,                0,      "default"      },
-  { COLOR_BLACK,       COLOR_BLACK,       0,      "black"        },
-  { COLOR_BLACK + 8,   COLOR_BLACK + 8,   0,      "darkgray"     },
-  { COLOR_RED,         COLOR_RED,         0,      "red"          },
-  { COLOR_RED + 8,     COLOR_RED + 8,     0,      "lightred"     },
-  { COLOR_GREEN,       COLOR_GREEN,       0,      "green"        },
-  { COLOR_GREEN + 8,   COLOR_GREEN + 8,   0,      "lightgreen"   },
-  { COLOR_YELLOW,      COLOR_YELLOW,      0,      "brown"        },
-  { COLOR_YELLOW + 8,  COLOR_YELLOW + 8,  0,      "yellow"       },
-  { COLOR_BLUE,        COLOR_BLUE,        0,      "blue"         },
-  { COLOR_BLUE + 8,    COLOR_BLUE + 8,    0,      "lightblue"    },
-  { COLOR_MAGENTA,     COLOR_MAGENTA,     0,      "magenta"      },
-  { COLOR_MAGENTA + 8, COLOR_MAGENTA + 8, 0,      "lightmagenta" },
-  { COLOR_CYAN,        COLOR_CYAN,        0,      "cyan"         },
-  { COLOR_CYAN + 8,    COLOR_CYAN + 8,    0,      "lightcyan"    },
-  { COLOR_WHITE,       COLOR_WHITE,       0,      "gray"         },
-  { COLOR_WHITE + 8,   COLOR_WHITE + 8,   0,      "white"        },
-  { 0,                 0,                 0,      NULL           }
+{ { -1,                -1,                0, 0, "default"      },
+  { COLOR_BLACK,       COLOR_BLACK,       0, 0, "black"        },
+  { COLOR_BLACK + 8,   COLOR_BLACK + 8,   0, 0, "darkgray"     },
+  { COLOR_RED,         COLOR_RED,         0, 0, "red"          },
+  { COLOR_RED + 8,     COLOR_RED + 8,     0, 0, "lightred"     },
+  { COLOR_GREEN,       COLOR_GREEN,       0, 0, "green"        },
+  { COLOR_GREEN + 8,   COLOR_GREEN + 8,   0, 0, "lightgreen"   },
+  { COLOR_YELLOW,      COLOR_YELLOW,      0, 0, "brown"        },
+  { COLOR_YELLOW + 8,  COLOR_YELLOW + 8,  0, 0, "yellow"       },
+  { COLOR_BLUE,        COLOR_BLUE,        0, 0, "blue"         },
+  { COLOR_BLUE + 8,    COLOR_BLUE + 8,    0, 0, "lightblue"    },
+  { COLOR_MAGENTA,     COLOR_MAGENTA,     0, 0, "magenta"      },
+  { COLOR_MAGENTA + 8, COLOR_MAGENTA + 8, 0, 0, "lightmagenta" },
+  { COLOR_CYAN,        COLOR_CYAN,        0, 0, "cyan"         },
+  { COLOR_CYAN + 8,    COLOR_CYAN + 8,    0, 0, "lightcyan"    },
+  { COLOR_WHITE,       COLOR_WHITE,       0, 0, "gray"         },
+  { COLOR_WHITE + 8,   COLOR_WHITE + 8,   0, 0, "white"        },
+  { 0,                 0,                 0, 0, NULL           }
 };
 struct t_gui_color *gui_weechat_colors = gui_weechat_colors_bold;
 
@@ -808,18 +808,18 @@ gui_color_build (int number, int foreground, int background)
             return;
     }
 
-    /* Set foreground and attributes. */
+    /* Set foreground, attributes and bold used to display a light color. */
     if (foreground & GUI_COLOR_EXTENDED_FLAG)
     {
         gui_color[number]->foreground = foreground & GUI_COLOR_EXTENDED_MASK;
-        gui_color[number]->attributes = 0;
+        gui_color[number]->bold_light = 0;
     }
     else
     {
         gui_color[number]->foreground = gui_weechat_colors[foreground & GUI_COLOR_EXTENDED_MASK].foreground;
-        gui_color[number]->attributes = gui_weechat_colors[foreground & GUI_COLOR_EXTENDED_MASK].attributes;
+        gui_color[number]->bold_light = gui_weechat_colors[foreground & GUI_COLOR_EXTENDED_MASK].bold_light;
     }
-    gui_color[number]->attributes |= gui_color_get_gui_attrs (foreground);
+    gui_color[number]->attributes = gui_color_get_gui_attrs (foreground);
 
     /* Set background. */
     if (background & GUI_COLOR_EXTENDED_FLAG)

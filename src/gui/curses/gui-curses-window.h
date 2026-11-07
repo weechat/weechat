@@ -10,11 +10,14 @@
 #define GUI_WINDOW_OBJECTS(window)                                      \
     ((struct t_gui_window_curses_objects *)(window->gui_objects))
 
+struct t_gui_color;
+
 struct t_gui_window_saved_style
 {
     int style_fg;
     int style_bg;
     int color_attr;
+    int color_bold;
     int emphasis;
     attr_t attrs;
     short pair;
@@ -28,6 +31,7 @@ struct t_gui_window_curses_objects
 };
 
 extern int gui_window_current_color_attr;
+extern int gui_window_current_color_bold;
 extern int gui_window_current_emphasis;
 
 extern void gui_window_read_terminal_size (void);
@@ -39,6 +43,9 @@ extern void gui_window_reset_style (WINDOW *window, int num_color);
 extern void gui_window_reset_color (WINDOW *window, int num_color);
 extern void gui_window_set_color_style (WINDOW *window, int style);
 extern void gui_window_remove_color_style (WINDOW *window, int style);
+extern void gui_window_set_color_bold (WINDOW *window, int bold);
+extern int gui_window_color_display_attrs (struct t_gui_color *color);
+extern int gui_window_set_basic_color_attributes (WINDOW *window, int fg);
 extern void gui_window_set_color (WINDOW *window, int fg, int bg);
 extern void gui_window_set_weechat_color (WINDOW *window, int num_color);
 extern void gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
