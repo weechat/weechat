@@ -276,6 +276,18 @@ can be used to get strings with a color number instead of the RGB colors: it use
 color among colors 16-255 (like on screen), so the result can differ from the previous versions;
 info `color_rgb2term` gives the nearest of all 256 colors, like the previous versions.
 
+### ANSI codes 21 and 22
+
+The ANSI code 22 (normal intensity) now removes both bold and dim when ANSI colors
+are decoded (for example in output of command `/exec` and in log files displayed in
+backlog), and it is used instead of code 21 to remove bold when WeeChat colors are
+converted to ANSI colors (relay "api" protocol with colors `ansi`, option
+`logger.file.color_lines`).
+
+Log files written by older versions with option `logger.file.color_lines` used code
+22 to remove dim only: in backlog, text which was both bold and dim may be displayed
+without bold after the end of dim.
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer

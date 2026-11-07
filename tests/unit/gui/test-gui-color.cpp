@@ -1592,21 +1592,31 @@ TEST(GuiColor, DecodeAnsi)
               gui_color_get_custom ("-blink"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[5m" "blink" "\x1B[25m" "_end", 1);
 
-    /* dim */
+    /* Dim (22 = normal intensity: remove bold and dim) */
     WEE_CHECK_DECODE_ANSI("test_dim_end", "test_" "\x1B[2m" "dim" "\x1B[22m" "_end", 0);
     snprintf (string, sizeof (string),
-              "test_" "%s" "dim" "%s" "_end",
+              "test_" "%s" "dim" "%s%s" "_end",
               gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-bold"),
               gui_color_get_custom ("-dim"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[2m" "dim" "\x1B[22m" "_end", 1);
 
-    /* bold */
+    /* Bold (21 = remove bold) */
     WEE_CHECK_DECODE_ANSI("test_bold_end", "test_" "\x1B[1m" "bold" "\x1B[21m" "_end", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "bold" "%s" "_end",
               gui_color_get_custom ("bold"),
               gui_color_get_custom ("-bold"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[1m" "bold" "\x1B[21m" "_end", 1);
+
+    /* Bold (22 = normal intensity: remove bold and dim) */
+    WEE_CHECK_DECODE_ANSI("test_bold_end", "test_" "\x1B[1m" "bold" "\x1B[22m" "_end", 0);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bold" "%s%s" "_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[1m" "bold" "\x1B[22m" "_end", 1);
 
     /* reverse */
     WEE_CHECK_DECODE_ANSI("test_reverse_end",
@@ -1892,7 +1902,54 @@ TEST(GuiColor, EncodeAnsi)
               "test_" "%s" "bold" "%s" "_end",
               gui_color_get_custom ("bold"),
               gui_color_get_custom ("-bold"));
-    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[1m" "bold" "\x1B[21m" "_end", string);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[1m" "bold" "\x1B[22m" "_end", string);
+
+    /* Bold + dim, remove bold: dim is set again. */
+    snprintf (string, sizeof (string),
+              "test_" "%s%s" "bold_dim" "%s" "dim" "%s" "_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_" "\x1B[1m" "\x1B[2m" "bold_dim" "\x1B[22m" "\x1B[2m" "dim"
+        "\x1B[22m" "_end",
+        string);
+
+    /* Bold + dim, remove dim: bold is set again. */
+    snprintf (string, sizeof (string),
+              "test_" "%s%s" "bold_dim" "%s" "bold" "%s" "_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"),
+              gui_color_get_custom ("-bold"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_" "\x1B[1m" "\x1B[2m" "bold_dim" "\x1B[22m" "\x1B[1m" "bold"
+        "\x1B[22m" "_end",
+        string);
+
+    /* Bold, reset, dim, remove dim: bold is not set again. */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bold" "%s" "reset" "%s" "dim" "%s" "_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_" "\x1B[1m" "bold" "\x1B[0m" "reset" "\x1B[2m" "dim"
+        "\x1B[22m" "_end",
+        string);
+
+    /* Bold in text color, dim, remove dim: bold is set again. */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bold_red" "%s" "dim" "%s" "_end",
+              gui_color_get_custom ("*red"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_" "\x1B[1m" "\x1B[31m" "bold_red" "\x1B[2m" "dim"
+        "\x1B[22m" "\x1B[1m" "_end",
+        string);
 
     /* reverse */
     snprintf (string, sizeof (string),
@@ -2010,6 +2067,42 @@ TEST(GuiColor, EncodeAnsi)
         string);
     config_file_option_reset (config_color_chat_host, 1);
 
+    /* WeeChat color with bold, dim, remove dim: bold is set again. */
+    config_file_option_set (config_color_chat_host, "*green", 1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bold_green" "%s" "dim" "%s" "_end",
+              GUI_COLOR(GUI_COLOR_CHAT_HOST),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_\x1B[0m" "\x1B[1m" "\x1B[38;5;2m" "\x1B[49m" "bold_green"
+        "\x1B[2m" "dim" "\x1B[22m" "\x1B[1m" "_end",
+        string);
+    config_file_option_reset (config_color_chat_host, 1);
+
+    /*
+     * WeeChat light color displayed with bold (terminal with less than 16
+     * colors): light color, removing bold attribute keeps it.
+     */
+    config_file_option_set (config_look_color_basic_force_bold, "on", 1);
+    config_file_option_set (config_color_chat_host, "lightred", 1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "light" "%s" "b" "%s" "_end",
+              GUI_COLOR(GUI_COLOR_CHAT_HOST),
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_\x1B[0m" "\x1B[38;5;9m" "\x1B[49m" "light"
+        "\x1B[1m" "b" "\x1B[22m" "_end",
+        string);
+    config_file_option_set (config_color_chat_host, "*lightred", 1);
+    WEE_CHECK_ENCODE_ANSI(
+        "test_\x1B[0m" "\x1B[1m" "\x1B[38;5;9m" "\x1B[49m" "light"
+        "\x1B[1m" "b" "\x1B[22m" "_end",
+        string);
+    config_file_option_reset (config_color_chat_host, 1);
+    config_file_option_reset (config_look_color_basic_force_bold, 1);
+
     /*
      * Color pair: colors of the pair (not the pair number), no color for an
      * unknown pair.
@@ -2042,7 +2135,7 @@ TEST(GuiColor, EncodeAnsi)
               gui_color_get_custom ("reset"),
               gui_color_get_custom ("yellow,red"));
     WEE_CHECK_ENCODE_ANSI(
-        "\x1B[44m" "hello, \x1B[1m" "this is" "\x1B[21m \x1B[5m" "blink"
+        "\x1B[44m" "hello, \x1B[1m" "this is" "\x1B[22m \x1B[5m" "blink"
         "\x1B[25m \x1B[2m" "dim" "\x1B[22m a test \x1B[34m" "blue \x1B[0m"
         "reset \x1B[93m" "\x1B[41m" "yellow,red here!",
         string);
@@ -2100,6 +2193,31 @@ TEST(GuiColor, EncodeAnsi)
     free (encoded);
     config_file_option_reset (config_color_chat_nick_self, 1);
     config_file_option_reset (config_color_chat_delimiters, 1);
+
+    /*
+     * Text color without "keep attributes": bold is removed on screen, so it
+     * is not enabled again after the end of dim
+     */
+    snprintf (string, sizeof (string),
+              "%s" "A" "%s" "B" "%s" "C" "%s" "D",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("red"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[1m" "A" "\x1B[31m" "B" "\x1B[2m" "C" "\x1B[22m" "D",
+        string);
+
+    /* Text color with "keep attributes": bold is enabled again. */
+    snprintf (string, sizeof (string),
+              "%s" "A" "%s" "B" "%s" "C" "%s" "D",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("|red"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[1m" "A" "\x1B[31m" "B" "\x1B[2m" "C" "\x1B[22m\x1B[1m" "D",
+        string);
 }
 
 /*

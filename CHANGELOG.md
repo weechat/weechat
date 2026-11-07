@@ -125,6 +125,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- **breaking:** core: fix ANSI code 22 (normal intensity), remove both bold and dim when decoding ANSI colors, use it instead of 21 (double underline) to remove bold when encoding ANSI colors
 - core: keep light colors displayed with bold (terminal with less than 16 colors or option weechat.look.color_basic_force_bold) when the bold attribute is removed, and remove this bold when another color is used
 - core: fix reverse video removed after a control char displayed in text with reverse video, when an attribute was removed before
 - core, irc: ignore underline color in ANSI colors (SGR 58), instead of decoding its arguments as other attributes
