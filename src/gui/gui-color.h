@@ -161,25 +161,38 @@ enum t_gui_color_enum
 #define GUI_COLOR_DOWNGRADE_CACHE_SIZE        64
 
 /*
- * Regex to search ANSI escape sequences: "\33(" or "\33)" followed by a char,
- * "\33<", "\33>", or a control sequence (CSI): "\33[", then parameter bytes
- * (0x30-0x3F), intermediate bytes (0x20-0x2F) and a final byte (0x40-0x7E).
+ * Regex to search ANSI escape sequences:
+ *   - control sequence (CSI): "\33[", then parameter bytes (0x30-0x3F),
+ *     intermediate bytes (0x20-0x2F) and a final byte (0x40-0x7E);
+ *   - operating system command (OSC): "\33]" and text until BEL or "\33\\";
+ *   - device control string (DCS) and other strings: "\33P", "\33X", "\33^"
+ *     or "\33_" and text until "\33\\";
+ *   - other escape sequences: "\33", then intermediate bytes (0x20-0x2F) and
+ *     a final byte (0x30-0x7E), for example "\337", "\33=" or "\33#8";
+ *   - "\33(" or "\33)" followed by any char.
  * Chars are listed one by one instead of ranges like "[0-?]", which are
  * invalid in some locales (for example "en_US.UTF-8"); the final bytes "[",
  * "\\" and "]" are outside brackets and "/" is escaped, so that the regex
  * (returned by info "color_ansi_regex") can be used in other regex engines
- * (for example in JavaScript, Ruby, and PHP with "/" as delimiter).
+ * (for example in JavaScript, Ruby, and PHP with "/" as delimiter); the
+ * alternatives are ordered so that regex engines which use the first
+ * matching alternative find the same match.
  */
 #define GUI_COLOR_REGEX_ANSI_DECODE                                      \
     "\33("                                                               \
-    "([()].)|"                                                           \
-    "([<>])|"                                                            \
     "(\\["                                                               \
     "[0123456789:;<=>?]*"                                                \
     "([ !\"#$%&'()*+,.-]|\\/)*"                                          \
     "([@ABCDEFGHIJKLMNOPQRSTUVWXYZ^_`abcdefghijklmnopqrstuvwxyz{|}~]|"   \
-    "\\[|\\\\|\\]"                                                       \
-    ")))"
+    "\\[|\\\\|\\])"                                                      \
+    ")|"                                                                 \
+    "(\\][^\a\33]*(\a|\33\\\\))|"                                        \
+    "([PX^_][^\33]*\33\\\\)|"                                            \
+    "(([ !\"#$%&'()*+,.-]|\\/)*"                                         \
+    "([0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ^_`abcdefghijklmnopqr" \
+    "stuvwxyz{|}~]|\\[|\\\\|\\]))|"                                      \
+    "([()].)"                                                            \
+    ")"
 
 /* RGB color in the result of ANSI color parsing: flag + 0xRRGGBB */
 #define GUI_COLOR_ANSI_RGB_FLAG               0x1000000
