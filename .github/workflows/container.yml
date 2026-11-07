@@ -1,0 +1,69 @@
+# SPDX-FileCopyrightText: 2021-2026 Sébastien Helleu <flashcode@flashtux.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+name: Container
+
+on:
+  push:
+    paths:
+      - ".github/workflows/container.yml"
+      - "CMakeLists.txt"
+      - "cmake/**"
+      - "src/**/CMakeLists.txt"
+      - "tools/container/**"
+      - "version.sh"
+  pull_request:
+    paths:
+      - ".github/workflows/container.yml"
+      - "CMakeLists.txt"
+      - "cmake/**"
+      - "src/**/CMakeLists.txt"
+      - "tools/container/**"
+      - "version.sh"
+  schedule:
+    - cron: '22 9 * * 2'
+
+concurrency:
+  group: container-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+
+  build:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-26.04
+        builder:
+          - docker
+          - podman
+        image:
+          - name: "debian"
+            args: "--distro debian"
+          - name: "debian-slim"
+            args: "--distro debian --slim"
+          - name: "alpine"
+            args: "--distro alpine"
+          - name: "alpine-slim"
+            args: "--distro alpine --slim"
+
+    name: "${{ matrix.builder }}: ${{ matrix.image.name }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: "Build image"
+        run: ./tools/container/build.py --builder ${{ matrix.builder }} ${{ matrix.image.args }} --tag weechat-ci
+
+      - name: "Run WeeChat in image"
+        run: |
+          ${{ matrix.builder }} run --rm weechat-ci weechat --version
+          ${{ matrix.builder }} run --rm weechat-ci weechat-headless --version

@@ -85,11 +85,12 @@ wie man Pakete installiert.
 [[containers]]
 === Container
 
-Container mit WeeChat können direkt erstellt oder installiert werden von
+// TRANSLATION MISSING
+Containers with WeeChat can be built or installed directly from the
 https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^^]. +
-Weitere Informationen finden Sie in der README in dem
-https://github.com/weechat/weechat-container[weechat-container ^↗^^]
-Repositorium.
+For more information, see the
+https://github.com/weechat/weechat/blob/main/tools/container/README.md[README ^↗^^]
+in directory _tools/container_ of the sources.
 
 [[source_package]]
 === Quellpakete

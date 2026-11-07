@@ -1,0 +1,73 @@
+# SPDX-FileCopyrightText: 2026 TehPeGaSuS <25697531+TehPeGaSuS@users.noreply.github.com>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# docker-compose.yml for weechat/weechat
+# https://github.com/weechat/weechat/tree/main/tools/container
+#
+# Usage:
+#   docker compose up -d
+#   docker compose attach weechat      # re-attach to the terminal
+#   docker compose pull && docker compose up -d   # update
+#
+# Two volume layouts are provided; uncomment the one you want.
+# Default: XDG layout (WeeChat ≥ 3.2, recommended).
+# Alternative: single ~/.weechat directory (any version), see comments below.
+
+services:
+  weechat:
+    image: weechat/weechat:latest   # or :latest-alpine, :4.10.3, etc.
+    container_name: weechat
+
+    # WeeChat needs an interactive terminal.
+    stdin_open: true
+    tty: true
+
+    restart: unless-stopped
+
+    environment:
+      # Set your timezone so logs/timestamps are correct.
+      TZ: Europe/Paris
+      TERM: xterm-256color
+      LANG: C.UTF-8
+
+    # ── XDG layout (recommended, WeeChat ≥ 3.2) ──────────────────────────
+    # Config, data and cache land in separate host directories.
+    # Run once before first start:
+    #   mkdir -p ~/.weechat-container/{config,data,cache}
+    #   chmod 777 ~/.weechat-container/{config,data,cache}
+    volumes:
+      - ${HOME}/.weechat-container/config:/home/user/.config/weechat
+      - ${HOME}/.weechat-container/data:/home/user/.local/share/weechat
+      - ${HOME}/.weechat-container/cache:/home/user/.cache/weechat
+
+    # ── Single-directory layout (legacy / any WeeChat version) ───────────
+    # Uncomment the block below and comment out the XDG volumes above.
+    # Run once before first start:
+    #   mkdir -p ~/.weechat-container && chmod 777 ~/.weechat-container
+    #
+    # NOTE: the image's entrypoint leaves the top-level ~/.weechat directory
+    # owned by root with mode 775 on creation (unlike the XDG layout, which
+    # sets 777 correctly on all its subdirs). This causes "unable to
+    # create/append to log file (weechat.log)" errors. If you hit that,
+    # stop the container first (it must not be running), then fix perms:
+    #   docker compose stop weechat
+    #   docker run --rm -v ${HOME}/.weechat-container:/home/user/.weechat --user root alpine chmod -R 777 /home/user/.weechat
+    #   docker compose up -d
+    #
+    # volumes:
+    #   - ${HOME}/.weechat-container:/home/user/.weechat
+    # command: ["weechat", "-d", "/home/user/.weechat"]
+
+    # ── Optional: expose the WeeChat relay port ───────────────────────────
+    # Useful if you connect with a remote client (glowing-bear, TheLounge
+    # relay mode, etc.). Adjust the port and enable SSL inside WeeChat.
+    #
+    # ports:
+    #   - "9001:9001"
+
+    # ── Optional: pass extra scripts/files into the container ────────────
+    # e.g. a pre-seeded weechat.conf or notify_tunnel.py
+    #
+    # volumes:
+    #   - ./scripts:/home/user/.local/share/weechat/python/autoload:ro

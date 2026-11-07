@@ -1,0 +1,161 @@
+# SPDX-FileCopyrightText: 2021-2026 Sébastien Helleu <flashcode@flashtux.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# WeeChat container based on Debian.
+#
+# The build context must contain the file "weechat.tar", which is an archive
+# of WeeChat sources with a top directory "weechat/"; it is created by the
+# script build.py.
+#
+# Supported arguments:
+#    SLIM  1 for a slim version (without plugins: script, scripts and spell)
+
+ARG SLIM=""
+
+# ==== base for all stages ====
+
+FROM debian:trixie-slim AS base
+LABEL stage=base
+
+LABEL maintainer="Sébastien Helleu <flashcode@flashtux.org>"
+
+ARG HOME="/home/user"
+ENV HOME="${HOME}"
+
+ENV LANG="C.UTF-8"
+ENV TERM="xterm-256color"
+
+# create a user
+RUN set -eux ; \
+    useradd --create-home --home-dir "$HOME" user ; \
+    mkdir -p "$HOME/.weechat" ; \
+    mkdir -p "$HOME/.config/weechat" ; \
+    mkdir -p "$HOME/.local/share/weechat" ; \
+    mkdir -p "$HOME/.cache/weechat" ; \
+    chown -R user:user "$HOME"
+
+# ==== build ====
+
+FROM base AS build
+LABEL stage=build
+
+ARG SLIM
+
+RUN set -eux ; \
+    \
+    # install build dependencies
+    apt-get update ; \
+    apt-get install -y --no-install-recommends \
+        asciidoctor \
+        cmake \
+        g++ \
+        gcc \
+        gettext \
+        libcurl3-gnutls-dev \
+        libgcrypt20-dev \
+        libgnutls28-dev \
+        libncurses-dev \
+        libzstd-dev \
+        make \
+        pkg-config \
+        ruby-pygments.rb \
+        zlib1g-dev \
+    ; \
+    if [ -z "$SLIM" ] ; then \
+        apt-get install -y --no-install-recommends \
+            gem2deb \
+            guile-3.0-dev \
+            libargon2-dev \
+            libaspell-dev \
+            liblua5.3-dev \
+            libnode-dev \
+            libperl-dev \
+            libphp-embed \
+            libsodium-dev \
+            libxml2-dev \
+            php-dev \
+            python3-dev \
+            tcl-dev \
+        ; \
+    fi
+
+# WeeChat sources (archive extracted in /tmp/weechat)
+ADD weechat.tar /tmp/
+
+RUN set -eux ; \
+    \
+    # build WeeChat
+    mkdir -p /tmp/weechat/build ; \
+    cd /tmp/weechat/build ; \
+    if [ -z "$SLIM" ] ; then \
+        cmake \
+            .. \
+            -DCMAKE_INSTALL_PREFIX=/opt/weechat \
+            -DENABLE_MAN=ON \
+            -DENABLE_HEADLESS=ON \
+        ; \
+    else \
+        cmake \
+            .. \
+            -DCMAKE_INSTALL_PREFIX=/opt/weechat \
+            -DENABLE_MAN=ON \
+            -DENABLE_SCRIPT=OFF \
+            -DENABLE_SCRIPTS=OFF \
+            -DENABLE_SPELL=OFF \
+            -DENABLE_HEADLESS=ON \
+        ; \
+    fi ; \
+    make -j "$(nproc)" ; \
+    make install
+
+# ==== final image ====
+
+FROM base
+
+ARG SLIM
+
+RUN set -eux ; \
+    \
+    # install runtime dependencies
+    apt-get update ; \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        libcurl3-gnutls \
+        libgcrypt20 \
+        libgnutls30t64 \
+        libncursesw6 \
+        libzstd1 \
+        locales \
+        ncurses-term \
+        tzdata \
+        zlib1g \
+    ; \
+    if [ -z "$SLIM" ] ; then \
+        apt-get install -y --no-install-recommends \
+            aspell-en \
+            guile-3.0-libs \
+            libaspell15 \
+            liblua5.3-0 \
+            libnode115 \
+            libperl5.40 \
+            libphp-embed \
+            libpython3.13 \
+            libruby3.3 \
+            libtcl8.6 \
+        ; \
+    fi ; \
+    # cleaning
+    apt-get clean ; \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /opt/weechat /opt/weechat
+
+RUN ln -sf /opt/weechat/bin/weechat /usr/bin/weechat
+RUN ln -sf /opt/weechat/bin/weechat-headless /usr/bin/weechat-headless
+
+WORKDIR $HOME
+
+USER user
+
+CMD ["weechat"]
