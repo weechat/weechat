@@ -1296,11 +1296,12 @@ irc_color_decode_ansi_sequence (char **output,
  * background of the color code (see function
  * irc_color_formatting_add_separator).
  *
- * IRC codes in text change the state of the IRC client: a reset ("^O") or a
- * new line (sent in another message) resets attributes and colors, and a
- * color code ("^C" or "^D") changes the colors displayed by the IRC client
- * (but not the ANSI colors), so that the next ANSI colors are sent according
- * to them.
+ * IRC codes in text change the state of the IRC client: a new line (sent in
+ * another message) resets attributes and colors, and a color code ("^C" or
+ * "^D") changes the colors displayed by the IRC client (but not the ANSI
+ * colors, kept after char SI), so that the next ANSI colors are sent
+ * according to them; attribute codes in text are not tracked ("^O" is also
+ * the char SI, see function irc_color_decode_ansi_add_shift_in).
  */
 
 void
@@ -1323,7 +1324,6 @@ irc_color_decode_ansi_add_text (char **output, const char *text, int length,
         switch (text[i])
         {
             case '\n':
-            case IRC_COLOR_RESET_CHAR:
                 irc_color_decode_ansi_reset_state (ansi_state);
                 break;
             case IRC_COLOR_COLOR_CHAR:
@@ -1331,7 +1331,7 @@ irc_color_decode_ansi_add_text (char **output, const char *text, int length,
                 /*
                  * Colors of the code (a code without color resets the colors,
                  * a text color alone keeps the background); the code ends
-                 * before the next escape sequence.
+                 * before the next escape sequence or char SI.
                  */
                 size = irc_color_code_parse (text + i, &fg, &bg);
                 irc_color_formatting_set_colors (&ansi_state->irc_fg,
@@ -1356,6 +1356,30 @@ irc_color_decode_ansi_add_text (char **output, const char *text, int length,
      * escape sequence which adds nothing) may need a separator.
      */
     ansi_state->fg_only = (end_code == length) ? fg_only : 0;
+}
+
+/*
+ * Add char SI (shift in, which selects the standard character set): it is
+ * also the IRC code to reset attributes and colors ("^O"), and text already
+ * formatted for IRC can contain it, so it is kept; the attributes and colors
+ * of ANSI escape sequences, which a terminal keeps after SI, are sent again
+ * after it.
+ */
+
+void
+irc_color_decode_ansi_add_shift_in (char **output,
+                                    struct t_irc_color_ansi_state *ansi_state)
+{
+    struct t_irc_color_ansi_state ansi_state_reset;
+
+    weechat_string_dyn_concat (output, IRC_COLOR_RESET_STR, -1);
+
+    /* Attributes and colors are default in IRC clients after the reset. */
+    irc_color_decode_ansi_reset_state (&ansi_state_reset);
+    ansi_state->fg_only = irc_color_formatting_transition (
+        output, &ansi_state_reset.formatting, &ansi_state->formatting, 0);
+    ansi_state->irc_fg = ansi_state->formatting.fg;
+    ansi_state->irc_bg = ansi_state->formatting.bg;
 }
 
 /*
@@ -1404,15 +1428,20 @@ irc_color_decode_ansi (const char *string, int keep_colors)
     if (!string)
         return NULL;
 
-    /* Without ESC, there is nothing to decode. */
-    if (!strchr (string, '\33'))
+    /* Without ESC, SI and SO, there is nothing to decode. */
+    if (!strpbrk (string, "\33\16\17"))
         return strdup (string);
 
-    normalized = weechat_hook_modifier_exec ("color_normalize_ansi",
-                                             (keep_colors) ? "1" : "0",
-                                             string);
-    if (!normalized || !keep_colors)
-        return normalized;
+    /*
+     * Escape sequences and SO are removed or normalized by WeeChat core (SI
+     * is kept), a string with only SI is used as-is.
+     */
+    normalized = (strpbrk (string, "\33\16")) ?
+        weechat_hook_modifier_exec ("color_normalize_ansi",
+                                    (keep_colors) ? "1" : "0", string) :
+        strdup (string);
+    if (!normalized)
+        return NULL;
 
     output = weechat_string_dyn_alloc (strlen (normalized) + 1);
     if (!output)
@@ -1423,21 +1452,35 @@ irc_color_decode_ansi (const char *string, int keep_colors)
 
     irc_color_decode_ansi_reset_state (&ansi_state);
 
+    /*
+     * Replace each normalized ANSI escape sequence and char SI: the text
+     * after each sequence is needed to add a separator after a color code
+     * with only a foreground.
+     */
     ptr_text = normalized;
-    ptr_string = strchr (normalized, '\33');
+    ptr_string = strpbrk (normalized, "\33\17");
     while (ptr_string)
     {
-        size = irc_color_ansi_sequence_size (ptr_string);
+        size = (ptr_string[0] == '\33') ?
+            irc_color_ansi_sequence_size (ptr_string) : 1;
         if (size > 0)
         {
             irc_color_decode_ansi_add_text (output, ptr_text,
                                             ptr_string - ptr_text,
                                             &ansi_state);
-            irc_color_decode_ansi_sequence (output, &ansi_state,
-                                            ptr_string + 2, size - 3);
+            if (ptr_string[0] == '\17')
+            {
+                irc_color_decode_ansi_add_shift_in (output, &ansi_state);
+            }
+            else
+            {
+                irc_color_decode_ansi_sequence (output, &ansi_state,
+                                                ptr_string + 2, size - 3);
+            }
             ptr_text = ptr_string + size;
         }
-        ptr_string = strchr (ptr_string + ((size > 0) ? size : 1), '\33');
+        ptr_string = strpbrk (ptr_string + ((size > 0) ? size : 1),
+                              "\33\17");
     }
     irc_color_decode_ansi_add_text (output, ptr_text, strlen (ptr_text),
                                     &ansi_state);

@@ -162,6 +162,8 @@ enum t_gui_color_enum
 
 /*
  * Regex to search ANSI escape sequences:
+ *   - chars SI and SO (shift in/out, select a character set): "\17" and
+ *     "\16";
  *   - control sequence (CSI): "\33[", then parameter bytes (0x30-0x3F),
  *     intermediate bytes (0x20-0x2F) and a final byte (0x40-0x7E);
  *   - operating system command (OSC): "\33]" and text until BEL or "\33\\";
@@ -179,6 +181,7 @@ enum t_gui_color_enum
  * matching alternative find the same match.
  */
 #define GUI_COLOR_REGEX_ANSI_DECODE                                      \
+    "\16|\17|"                                                           \
     "\33("                                                               \
     "(\\["                                                               \
     "[0123456789:;<=>?]*"                                                \
