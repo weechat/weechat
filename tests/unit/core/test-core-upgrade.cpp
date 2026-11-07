@@ -1378,6 +1378,7 @@ TEST(CoreUpgrade, Load)
     /* No upgrade file. */
     test_core_upgrade_remove_file (WEECHAT_UPGRADE_FILENAME);
     LONGS_EQUAL(0, upgrade_weechat_load ());
+    POINTERS_EQUAL(NULL, upgrade_layout);
 
     /* Upgrade file with global history and misc info. */
     upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME,

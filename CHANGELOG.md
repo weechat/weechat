@@ -109,6 +109,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix memory leak when the upgrade file can not be read on startup with option `--upgrade`
 - core: fix memory leak in input of buffers restored by command `/upgrade`
 - core: fix crash in info "color_rgb2term" when the limit is greater than 256
 - core: fix send of uninitialized data to socks4 proxy when the username has 127 chars or more, or when the address can not be resolved
