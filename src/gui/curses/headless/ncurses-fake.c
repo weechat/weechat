@@ -234,6 +234,22 @@ init_extended_pair (int pair, int f, int b)
     return OK;
 }
 
+char *
+tigetstr (const char *capname)
+{
+    (void) capname;
+
+    return NULL;
+}
+
+char *
+tiparm (const char *str, ...)
+{
+    (void) str;
+
+    return NULL;
+}
+
 bool
 has_colors (void)
 {

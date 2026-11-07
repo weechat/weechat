@@ -229,7 +229,8 @@ extern int gui_color_convert_rgb_to_term (int rgb, int limit);
 extern int gui_color_convert_rgb_to_term_display (int rgb, int limit);
 extern int gui_color_convert_rgb_to_term_range (int rgb, int first,
                                                 int limit);
-extern int gui_color_convert_term_to_direct (int color);
+extern int gui_color_ansi_is_indexed (const char *sequence);
+extern int gui_color_convert_term_to_direct (int color, int num_indexed);
 extern int gui_color_rgb_to_direct (int rgb);
 extern int gui_color_rgb_parse (const char *string);
 extern int gui_color_rgb_parse_exact (const char *string);

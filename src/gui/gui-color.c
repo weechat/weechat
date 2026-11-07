@@ -681,23 +681,45 @@ gui_color_convert_rgb_to_term_range (int rgb, int first, int limit)
 }
 
 /*
+ * Check if an ANSI escape sequence (for example built with terminfo
+ * capability "setaf") sets a terminal palette color, and not a RGB color.
+ *
+ * Return:
+ *   1: sequence sets a palette color (for example "\e[97m" or "\e[38;5;214m")
+ *   0: sequence sets a RGB color (for example "\e[38:2::0:0:255m") or is NULL
+ */
+
+int
+gui_color_ansi_is_indexed (const char *sequence)
+{
+    if (!sequence)
+        return 0;
+
+    return (strstr (sequence, "38:2") || strstr (sequence, "38;2")
+            || strstr (sequence, "48:2") || strstr (sequence, "48;2")) ?
+        0 : 1;
+}
+
+/*
  * Convert a terminal color (0-255) to a color for a terminal with direct
  * colors (like "xterm-direct", where COLORS is 16777216).
  *
- * With such terminals, colors 0-7 are the basic ANSI colors and any other
- * value is a RGB color (0xRRGGBB).
+ * With such terminals, the first "num_indexed" colors are palette colors
+ * (8 with "xterm-direct", 16 with "xterm-direct16", 256 with
+ * "xterm-direct256") and any other value is a RGB color (0xRRGGBB).
  *
  * Return:
- *   - color unchanged if < 8 (including -1 for default color) or > 255
+ *   - color unchanged if < num_indexed (including -1 for default color)
+ *     or > 255
  *   - RGB value of color otherwise (see function gui_color_rgb_to_direct)
  */
 
 int
-gui_color_convert_term_to_direct (int color)
+gui_color_convert_term_to_direct (int color, int num_indexed)
 {
     int rgb;
 
-    if ((color < 8) || (color > 255))
+    if ((color < num_indexed) || (color > 255))
         return color;
 
     rgb = gui_color_term256[color];

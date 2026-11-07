@@ -96,6 +96,8 @@ extern int wclrtoeol (WINDOW *win);
 extern int mvwprintw (WINDOW *win, int y, int x, const char *fmt, ...);
 extern int init_pair (short pair, short f, short b);
 extern int init_extended_pair (int pair, int f, int b);
+extern char *tigetstr (const char *capname);
+extern char *tiparm (const char *str, ...);
 extern bool has_colors (void);
 extern int cbreak (void);
 extern int start_color (void);

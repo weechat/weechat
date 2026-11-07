@@ -23,6 +23,7 @@ extern "C"
 extern int gui_color_hash_seed_set;
 extern int gui_color_term_colors;
 extern int gui_color_term_direct_colors;
+extern int gui_color_term_direct_indexed;
 extern int gui_color_pairs_used;
 extern int gui_color_get_pair (int fg, int bg);
 extern void gui_color_pair_direct_key_get_colors (const void *key, int *fg,
@@ -324,29 +325,92 @@ TEST(GuiColor, ConvertRgbToTerm)
 TEST(GuiColor, ConvertTermToDirect)
 {
     /* default color and basic ANSI colors: unchanged */
-    LONGS_EQUAL(-1, gui_color_convert_term_to_direct (-1));
-    LONGS_EQUAL(0, gui_color_convert_term_to_direct (0));
-    LONGS_EQUAL(1, gui_color_convert_term_to_direct (1));
-    LONGS_EQUAL(7, gui_color_convert_term_to_direct (7));
+    LONGS_EQUAL(-1, gui_color_convert_term_to_direct (-1, 8));
+    LONGS_EQUAL(0, gui_color_convert_term_to_direct (0, 8));
+    LONGS_EQUAL(1, gui_color_convert_term_to_direct (1, 8));
+    LONGS_EQUAL(7, gui_color_convert_term_to_direct (7, 8));
 
     /* out of range: unchanged */
-    LONGS_EQUAL(-2, gui_color_convert_term_to_direct (-2));
-    LONGS_EQUAL(256, gui_color_convert_term_to_direct (256));
-    LONGS_EQUAL(0x123456, gui_color_convert_term_to_direct (0x123456));
+    LONGS_EQUAL(-2, gui_color_convert_term_to_direct (-2, 8));
+    LONGS_EQUAL(256, gui_color_convert_term_to_direct (256, 8));
+    LONGS_EQUAL(0x123456, gui_color_convert_term_to_direct (0x123456, 8));
 
     /* colors converted to RGB */
-    LONGS_EQUAL(0x808080, gui_color_convert_term_to_direct (8));
-    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (9));
-    LONGS_EQUAL(0xffffff, gui_color_convert_term_to_direct (15));
-    LONGS_EQUAL(0x00015f, gui_color_convert_term_to_direct (17));
-    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (196));
-    LONGS_EQUAL(0xeeeeee, gui_color_convert_term_to_direct (255));
+    LONGS_EQUAL(0x808080, gui_color_convert_term_to_direct (8, 8));
+    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (9, 8));
+    LONGS_EQUAL(0xffffff, gui_color_convert_term_to_direct (15, 8));
+    LONGS_EQUAL(0x00015f, gui_color_convert_term_to_direct (17, 8));
+    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (196, 8));
+    LONGS_EQUAL(0xeeeeee, gui_color_convert_term_to_direct (255, 8));
 
     /*
      * RGB values < 256 (blue only, including black): green set to 1 so that
      * it is not a palette index ("xterm-direct256" uses indexes 0-255)
      */
-    LONGS_EQUAL(0x000100, gui_color_convert_term_to_direct (16));
+    LONGS_EQUAL(0x000100, gui_color_convert_term_to_direct (16, 8));
+
+    /* 16 palette colors (like "xterm-direct16") */
+    LONGS_EQUAL(8, gui_color_convert_term_to_direct (8, 16));
+    LONGS_EQUAL(15, gui_color_convert_term_to_direct (15, 16));
+    LONGS_EQUAL(0x000100, gui_color_convert_term_to_direct (16, 16));
+    LONGS_EQUAL(0xeeeeee, gui_color_convert_term_to_direct (255, 16));
+
+    /* 256 palette colors (like "xterm-direct256") */
+    LONGS_EQUAL(-1, gui_color_convert_term_to_direct (-1, 256));
+    LONGS_EQUAL(8, gui_color_convert_term_to_direct (8, 256));
+    LONGS_EQUAL(16, gui_color_convert_term_to_direct (16, 256));
+    LONGS_EQUAL(255, gui_color_convert_term_to_direct (255, 256));
+    LONGS_EQUAL(256, gui_color_convert_term_to_direct (256, 256));
+}
+
+/*
+ * Test functions:
+ *   gui_color_info_term_colors
+ */
+
+TEST(GuiColor, InfoTermColors)
+{
+    char str_info_no_direct[1024], str_info_256[1024], str_info_8[1024];
+    int old_direct_colors, old_direct_indexed;
+
+    old_direct_colors = gui_color_term_direct_colors;
+    old_direct_indexed = gui_color_term_direct_indexed;
+
+    gui_color_term_direct_colors = 0;
+    gui_color_info_term_colors (str_info_no_direct, sizeof (str_info_no_direct));
+    gui_color_term_direct_colors = 1;
+    gui_color_term_direct_indexed = 256;
+    gui_color_info_term_colors (str_info_256, sizeof (str_info_256));
+    gui_color_term_direct_indexed = 8;
+    gui_color_info_term_colors (str_info_8, sizeof (str_info_8));
+
+    gui_color_term_direct_colors = old_direct_colors;
+    gui_color_term_direct_indexed = old_direct_indexed;
+
+    /* note: $TERM is in the string, it can contain "direct" */
+    CHECK(strstr (str_info_no_direct, "COLORS: "));
+    CHECK(!strstr (str_info_no_direct, " (direct, palette:"));
+    CHECK(strstr (str_info_256, " (direct, palette: 256), "));
+    CHECK(strstr (str_info_8, " (direct, palette: 8), "));
+}
+
+/*
+ * Test functions:
+ *   gui_color_ansi_is_indexed
+ */
+
+TEST(GuiColor, AnsiIsIndexed)
+{
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed (NULL));
+    LONGS_EQUAL(1, gui_color_ansi_is_indexed (""));
+    LONGS_EQUAL(1, gui_color_ansi_is_indexed ("\x1B[37m"));
+    LONGS_EQUAL(1, gui_color_ansi_is_indexed ("\x1B[97m"));
+    LONGS_EQUAL(1, gui_color_ansi_is_indexed ("\x1B[38;5;255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[38:2::0:0:255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[38:2:0:0:255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[38;2;0;0;255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[48:2::0:0:255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[48;2;0;0;255m"));
 }
 
 /*

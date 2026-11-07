@@ -1743,6 +1743,17 @@ colors 16-255 only, because colors 0-15 are defined by the theme of your
 terminal).
 
 // TRANSLATION MISSING
+With _xterm-direct256_, colors 0-255 keep using the terminal palette, that is
+to say the colors defined by the theme of your terminal; with _xterm-direct16_
+only colors 0-15 do, and with most other direct _TERM_ values (like
+_xterm-direct_ or _tmux-direct_) only colors 0-7 do: other colors are displayed
+with their standard RGB value, ignoring the terminal theme.
+
+// TRANSLATION MISSING
+Command `/color` (or `weechat --colors`) shows if direct colors are used and
+how many palette colors are kept, for example: `COLORS: 256 (direct, palette: 256)`.
+
+// TRANSLATION MISSING
 RGB colors received in ANSI escape codes (for example in output of command
 `/exec`) and IRC hex colors are kept as-is too.
 
@@ -1772,6 +1783,26 @@ toe -a | grep -- -direct
 // TRANSLATION MISSING
 If there is no entry for your terminal, _xterm-direct256_ may work if your
 terminal is compatible with xterm.
+
+// TRANSLATION MISSING
+If the entry for your terminal keeps only the 8 basic palette colors (like
+_tmux-direct_), you can build your own entry with 256 palette colors, by
+combining the building block _xterm+direct256_ with the entry of your
+terminal. For example for tmux, create a file _tmux-direct256.src_ with this
+content:
+
+----
+tmux-direct256|tmux with direct colors and 256 palette colors,
+    use=xterm+direct256, use=tmux-256color,
+----
+
+// TRANSLATION MISSING
+Then compile it in your home directory and use it to start WeeChat:
+
+----
+tic -x -o ~/.terminfo tmux-direct256.src
+TERM=tmux-direct256 weechat
+----
 
 [[colors_aliases]]
 ==== Alias

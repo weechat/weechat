@@ -82,6 +82,7 @@ int gui_color_term_colors = 0;           /* number of colors in terminal    */
 int gui_color_term_color_pairs = 0;      /* number of pairs in terminal     */
 int gui_color_term_can_change_color = 0; /* change color allowed in term?   */
 int gui_color_term_direct_colors = 0;    /* direct colors (RGB) in term?    */
+int gui_color_term_direct_indexed = 8;   /* palette colors with direct col. */
 int gui_color_use_term_colors = 0;       /* temp. use of terminal colors?   */
 short *gui_color_term_color_content = NULL; /* content of colors (r/b/g)    */
 
@@ -438,9 +439,37 @@ gui_color_timer_warning_pairs_full (const void *pointer, void *data,
 }
 
 /*
+ * Get the number of palette colors on a terminal with direct colors: the
+ * first colors are palette colors and the other ones are RGB values.
+ *
+ * Return 256 (like "xterm-direct256"), 16 (like "xterm-direct16") or
+ * 8 (like "xterm-direct", default).
+ */
+
+int
+gui_color_get_term_direct_indexed (void)
+{
+#if defined(NCURSES_EXT_COLORS) && (NCURSES_EXT_COLORS >= 20180127)
+    char *setaf;
+
+    setaf = tigetstr ("setaf");
+    if (!setaf || (setaf == (char *)-1))
+        return 8;
+    if (gui_color_ansi_is_indexed (tiparm (setaf, 255)))
+        return 256;
+    if (gui_color_ansi_is_indexed (tiparm (setaf, 15)))
+        return 16;
+#endif /* NCURSES_EXT_COLORS >= 20180127 */
+
+    return 8;
+}
+
+/*
  * Initialize a color pair with given foreground/background colors.
  *
- * With a terminal using direct colors, colors are converted to RGB values.
+ * With a terminal using direct colors, the palette colors kept by the
+ * terminal (see function gui_color_get_term_direct_indexed) are used as-is,
+ * and other colors are converted to their RGB value.
  */
 
 void
@@ -449,9 +478,10 @@ gui_color_init_pair (int number, int fg, int bg)
 #if defined(NCURSES_EXT_COLORS) && (NCURSES_EXT_COLORS >= 20180127)
     if (gui_color_term_direct_colors)
     {
-        init_extended_pair (number,
-                            gui_color_convert_term_to_direct (fg),
-                            gui_color_convert_term_to_direct (bg));
+        init_extended_pair (
+            number,
+            gui_color_convert_term_to_direct (fg, gui_color_term_direct_indexed),
+            gui_color_convert_term_to_direct (bg, gui_color_term_direct_indexed));
         return;
     }
 #endif /* NCURSES_EXT_COLORS >= 20180127 */
@@ -530,7 +560,8 @@ gui_color_get_direct_color (int color)
         return gui_color_rgb_to_direct (rgb);
 
     return gui_color_convert_term_to_direct (
-        gui_color_get_valid_term_color (color));
+        gui_color_get_valid_term_color (color),
+        gui_color_term_direct_indexed);
 }
 
 /*
@@ -815,6 +846,7 @@ gui_color_init_vars (void)
     gui_color_term_color_pairs = 0;
     gui_color_term_can_change_color = 0;
     gui_color_term_direct_colors = 0;
+    gui_color_term_direct_indexed = 8;
     gui_color_num_pairs = 63;
     if (gui_color_pairs)
     {
@@ -841,6 +873,7 @@ gui_color_init_vars (void)
         {
 #if defined(NCURSES_EXT_COLORS) && (NCURSES_EXT_COLORS >= 20180127)
             gui_color_term_direct_colors = 1;
+            gui_color_term_direct_indexed = gui_color_get_term_direct_indexed ();
             gui_color_term_colors = 256;
 #else
             gui_color_term_colors = 8;
@@ -1087,12 +1120,22 @@ gui_color_buffer_display_timer (void)
 void
 gui_color_info_term_colors (char *buffer, int size)
 {
+    char str_direct[64];
+
+    str_direct[0] = '\0';
+    if (gui_color_term_direct_colors)
+    {
+        snprintf (str_direct, sizeof (str_direct),
+                  " (direct, palette: %d)",
+                  gui_color_term_direct_indexed);
+    }
+
     snprintf (buffer, size,
               "$TERM=%s  COLORS: %d%s, COLOR_PAIRS: %d, "
               "can_change_color: %s",
               getenv ("TERM"),
               gui_color_term_colors,
-              (gui_color_term_direct_colors) ? " (direct)" : "",
+              str_direct,
               gui_color_term_color_pairs,
               (gui_color_term_can_change_color) ? "yes" : "no");
 }
