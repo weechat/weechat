@@ -255,6 +255,7 @@ extern char *gui_color_decode (const char *string, const char *replacement);
 extern int gui_color_downgrade_rgb_term (int rgb);
 extern char *gui_color_downgrade_rgb (const char *string);
 extern char *gui_color_downgrade_rgb_name (const char *name);
+extern int gui_color_ansi_rgb_component (const char *item);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);
 extern int gui_color_encode_ansi_extended (char **output, const char *string,
                                            int background, int rgb_colors);

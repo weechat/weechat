@@ -1701,6 +1701,9 @@ color of the terminal is used (on a terminal with more than 16 colors, among
 colors 16-255 only, because colors 0-15 are defined by the theme of your
 terminal).
 
+RGB colors received in ANSI escape codes (for example in output of command
+`/exec`) are kept as-is too.
+
 For example:
 
 ----

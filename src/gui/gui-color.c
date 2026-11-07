@@ -1642,6 +1642,23 @@ gui_color_downgrade_rgb_name (const char *name)
 }
 
 /*
+ * Get a RGB component (0-255) from an ANSI color code item.
+ */
+
+int
+gui_color_ansi_rgb_component (const char *item)
+{
+    int value;
+
+    value = atoi (item);
+    if (value < 0)
+        return 0;
+    if (value > 255)
+        return 255;
+    return value;
+}
+
+/*
  * Convert ANSI color codes to WeeChat colors (or removes them).
  *
  * This callback is called by gui_color_decode_ansi, it must not be called
@@ -1757,12 +1774,10 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                             if (i + 4 < num_items)
                             {
                                 snprintf (str_color, sizeof (str_color),
-                                          "|%d",
-                                          gui_color_convert_rgb_to_term (
-                                              (atoi (items[i + 2]) << 16) |
-                                              (atoi (items[i + 3]) << 8) |
-                                              atoi (items[i + 4]),
-                                              256));
+                                          "|#%02x%02x%02x",
+                                          gui_color_ansi_rgb_component (items[i + 2]),
+                                          gui_color_ansi_rgb_component (items[i + 3]),
+                                          gui_color_ansi_rgb_component (items[i + 4]));
                                 strcat (output, gui_color_get_custom (str_color));
                                 i += 4;
                             }
@@ -1804,12 +1819,10 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                             if (i + 4 < num_items)
                             {
                                 snprintf (str_color, sizeof (str_color),
-                                          "|,%d",
-                                          gui_color_convert_rgb_to_term (
-                                              (atoi (items[i + 2]) << 16) |
-                                              (atoi (items[i + 3]) << 8) |
-                                              atoi (items[i + 4]),
-                                              256));
+                                          "|,#%02x%02x%02x",
+                                          gui_color_ansi_rgb_component (items[i + 2]),
+                                          gui_color_ansi_rgb_component (items[i + 3]),
+                                          gui_color_ansi_rgb_component (items[i + 4]));
                                 strcat (output, gui_color_get_custom (str_color));
                                 i += 4;
                             }

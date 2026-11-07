@@ -254,6 +254,28 @@ The text displayed before nick and after nick/target is set by options
 between nick and target is set by option `irc.look.notice_target_separator` (default: `:`),
 and their color is set by option `irc.color.notice`.
 
+### RGB colors in color codes
+
+WeeChat color codes can now contain RGB colors: `@` + optional attributes + `#rrggbb`, for example
+`\x19F@#ff8800`, instead of a color number on 5 digits (`\x19F@00208`); see
+[color codes in strings](https://weechat.org/doc/weechat/dev/#color_codes_in_strings).
+
+RGB colors received in ANSI escape codes (`38;2;r;g;b` and `48;2;r;g;b`, for example in output of
+command `/exec`) are now kept as RGB colors instead of being converted to the nearest color of the
+256-color palette.
+
+On a terminal with 256 colors and without direct colors (for example `TERM=xterm-256color`),
+these RGB colors are displayed with the nearest color among colors 16-255: colors 0-15 are not
+used, because they are defined by the theme of the terminal. Previous versions used the nearest
+of all 256 colors, so a RGB color can be displayed with another color than before (for example
+`#000080` is displayed with color 18 instead of 4).
+
+Scripts and plugins parsing WeeChat color codes themselves must accept `#` followed by 6
+hexadecimal digits after `@` and the optional attributes. The modifier `color_downgrade_rgb`
+can be used to get strings with a color number instead of the RGB colors: it uses the nearest
+color among colors 16-255 (like on screen), so the result can differ from the previous versions;
+info `color_rgb2term` gives the nearest of all 256 colors, like the previous versions.
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer
