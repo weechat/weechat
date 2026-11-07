@@ -1853,6 +1853,22 @@ TEST(GuiColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1<m" "B", 1);
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[5=m" "B", 1);
 
+    /* Other escape sequences: OSC, DCS, ESC + char (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;title\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AlinkB",
+                          "A" "\x1B]8;;http://example.com\x1B\\" "link"
+                          "\x1B]8;;\x1B\\" "B",
+                          1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1BP1$r0m\x1B\\" "B", 1);
+    WEE_CHECK_DECODE_ANSI("ABC", "A" "\x1B" "7" "B" "\x1B" "8" "C", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B=" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B" "c" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B#8" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;title\x07" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1BP1$r0m\x1B\\" "B", 0);
+    /* Unterminated OSC: only "\33]" is removed. */
+    WEE_CHECK_DECODE_ANSI("A0;title", "A" "\x1B]0;title", 1);
+
     /* Control sequence ending with "m" with intermediate bytes (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 0);
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 1);

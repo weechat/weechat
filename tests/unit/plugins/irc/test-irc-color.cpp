@@ -1375,6 +1375,18 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("\x03" "05red\x03" "04x\x03" "05,03y",
                           "\x1B[31mred\x03" "04x\x1B[42my", 1);
 
+    /* Other escape sequences: OSC, DCS, ESC + char (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B]0;title\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AlinkB",
+                          "A\x1B]8;;http://example.com\x1B\\link"
+                          "\x1B]8;;\x1B\\" "B",
+                          1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1BP1$r0m\x1B\\" "B", 1);
+    WEE_CHECK_DECODE_ANSI("ABC", "A\x1B" "7B\x1B" "8C", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B=B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B" "cB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B#8B", 1);
+
     /* Control sequence ending with "m" with intermediate bytes (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 0);
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 1);

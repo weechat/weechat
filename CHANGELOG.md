@@ -78,7 +78,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: save secured data in sec.conf and display them on secured data buffer sorted by name
 - **breaking:** core: use the current date/time with microseconds as line identifier, replace buffer property "next_line_id" by "lines_last_id_assigned"
 - **breaking:** core: remove fields "date_printed" and "date_usec_printed" in lines, replaced by the line identifier
-- **breaking:** api: info "color_ansi_regex" matches all ANSI control sequences, not only colors
+- **breaking:** api: info "color_ansi_regex" matches all ANSI control sequences and other escape sequences (for example OSC and DCS strings), not only colors
 - **breaking:** api: add optional argument "digits" in info "totp_validate" (6 by default), the one-time password must have exactly this number of digits
 - api: check completion pointer in functions completion_search, completion_get_string, completion_set, completion_list_add, completion_free, hook_completion_get_string and hook_completion_list_add to prevent a crash when a freed completion is used
 - api: check bar and bar item pointers in functions bar_set, bar_remove and bar_item_remove to prevent a crash when a removed bar or bar item is used
@@ -126,6 +126,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core, irc: remove other ANSI escape sequences when decoding ANSI colors: operating system commands (OSC, for example window title and hyperlinks), device control strings (DCS) and escape sequences like `\e7` or `\e=`
 - core: convert bar delimiter color to an ANSI text color instead of a background color (relay "api" protocol with colors "ansi", option logger.file.color_lines)
 - core, irc: ignore invalid colors in ANSI colors (incomplete color, unknown type of color, terminal color greater than 255) and numbers out of range, instead of decoding the remaining parameters as attributes
 - core, irc: fix conversion of ANSI RGB colors (for example in output of `/exec`) when a red, green or blue component is greater than 255, use 255 instead
