@@ -2470,6 +2470,9 @@ irc_server_free (struct t_irc_server *server)
     if (server->next_server)
         (server->next_server)->prev_server = server->prev_server;
 
+    /* remove raw messages of this server (they have a pointer to server) */
+    irc_raw_message_free_server (server);
+
     irc_server_free_data (server);
     free (server);
     irc_servers = new_irc_servers;

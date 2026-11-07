@@ -66,6 +66,7 @@ extern struct t_irc_raw_message *irc_raw_message_add_to_list (time_t date,
                                                               struct t_irc_server *server,
                                                               int flags,
                                                               const char *message);
+extern void irc_raw_message_free_server (struct t_irc_server *server);
 extern void irc_raw_print (struct t_irc_server *server, int flags,
                            const char *message);
 extern int irc_raw_add_to_infolist (struct t_infolist *infolist,

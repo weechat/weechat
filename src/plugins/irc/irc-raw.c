@@ -500,6 +500,28 @@ irc_raw_message_free_all (void)
 }
 
 /*
+ * Free all raw messages of a server (called when the server is freed).
+ */
+
+void
+irc_raw_message_free_server (struct t_irc_server *server)
+{
+    struct t_irc_raw_message *ptr_raw_message, *ptr_next_raw_message;
+
+    if (!server)
+        return;
+
+    ptr_raw_message = irc_raw_messages;
+    while (ptr_raw_message)
+    {
+        ptr_next_raw_message = ptr_raw_message->next_message;
+        if (ptr_raw_message->server == server)
+            irc_raw_message_free (ptr_raw_message);
+        ptr_raw_message = ptr_next_raw_message;
+    }
+}
+
+/*
  * Remove old raw messages if limit has been reached.
  */
 
