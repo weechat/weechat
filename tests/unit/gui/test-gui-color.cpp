@@ -1882,8 +1882,36 @@ TEST(GuiColor, DecodeAnsi)
                           "\xC3\xA9" "\x1B]0;t\xC3\xAFtle\x07" "\xE9"
                           "\x1B" "7" "\xC3\xA9",
                           1);
-    /* Unterminated OSC: only "\33]" is removed. */
-    WEE_CHECK_DECODE_ANSI("A0;title", "A" "\x1B]0;title", 1);
+    /* Unterminated or cancelled sequences (removed). */
+    WEE_CHECK_DECODE_ANSI("A", "A" "\x1B]0;title", 1);
+    WEE_CHECK_DECODE_ANSI("a1", "a1" "\x1B[1;2", 1);
+    WEE_CHECK_DECODE_ANSI("X", "\x1B[123" "\x1B" "9X", 1);
+    WEE_CHECK_DECODE_ANSI("X", "\x1B]Something" "\x1B" "9X", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "\x1B[12" "\x18" "AB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "\x1B]12" "\x1A" "AB", 0);
+    WEE_CHECK_DECODE_ANSI("X", "\x1BPHello" "\x07" "X", 1);
+    WEE_CHECK_DECODE_ANSI("", "\x1B(" "\x1B)Z", 1);
+    WEE_CHECK_DECODE_ANSI("A" "\xC3\xA9", "A" "\x1B(" "\xC3\xA9", 1);
+    WEE_CHECK_DECODE_ANSI("A\nB", "A" "\x1B(" "\nB", 1);
+    /* An unterminated string ends at the end of the line. */
+    WEE_CHECK_DECODE_ANSI("A\nB\nC", "A" "\x1B]0;title" "\nB\nC", 1);
+    WEE_CHECK_DECODE_ANSI("A\nB", "A" "\x1BPq" "\nB", 1);
+    WEE_CHECK_DECODE_ANSI("ab", "a" "\x1B(" "\x18" "b", 1);
+    WEE_CHECK_DECODE_ANSI("ab", "a" "\x1B" "\x1A" "b", 0);
+
+    /* DEL is ignored inside a control sequence (removed). */
+    WEE_CHECK_DECODE_ANSI("X", "\x1B[12" "\x7F" "3mX", 1);
+    snprintf (string, sizeof (string),
+              "%s" "X", gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[1" "\x7F" "mX", 1);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B" "\x7F" "[1mX", 1);
+    WEE_CHECK_DECODE_ANSI("a1", "a1" "\x1B" "\x7F", 1);
+
+    /* Lone ESC (removed). */
+    WEE_CHECK_DECODE_ANSI("a1", "a1" "\x1B", 1);
+    snprintf (string, sizeof (string),
+              "a1" "%s" "a2", gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "a1" "\x1B" "\x1B[1m" "a2", 1);
 
     /* Control sequence ending with "m" with intermediate bytes (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 0);

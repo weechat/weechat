@@ -1465,6 +1465,18 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("\x03" "05red\x03" "04x\x0F\x03" "05y",
                           "\x1B[31mred\x03" "04x\x0Fy", 1);
 
+    /* Unterminated or cancelled sequences, lone ESC (removed). */
+    WEE_CHECK_DECODE_ANSI("a1", "a1\x1B]0;title", 1);
+    WEE_CHECK_DECODE_ANSI("a1", "a1\x1B[1;2", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "\x1B[12\x18" "AB", 1);
+    WEE_CHECK_DECODE_ANSI("X", "\x1BPHello\x07X", 1);
+    WEE_CHECK_DECODE_ANSI("A\xC3\xA9", "A\x1B(" "\xC3\xA9", 1);
+    snprintf (string, sizeof (string), "%sX", IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[1\x7F" "mX", 1);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B\x7F" "[1mX", 1);
+    snprintf (string, sizeof (string), "a1%sa2", IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "a1\x1B\x1B[1ma2", 1);
+
     /* Other escape sequences: OSC, DCS, ESC + char (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B]0;title\x07" "B", 1);
     WEE_CHECK_DECODE_ANSI("AlinkB",

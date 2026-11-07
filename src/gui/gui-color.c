@@ -1797,11 +1797,22 @@ char *
 gui_color_ansi_parse_sequence (const char *sequence,
                                t_gui_color_ansi_param_cb *callback)
 {
-    char *text2, **items, **sub_params, **output;
+    char *text2, **items, **sub_params, **output, *result;
     int i, length, num_items, num_sub_params, value, color;
 
     if (!sequence || !sequence[0])
         return strdup ("");
+
+    /* DEL is ignored inside a control sequence. */
+    if (strchr (sequence, '\177'))
+    {
+        text2 = string_replace (sequence, "\177", "");
+        result = (text2) ?
+            gui_color_ansi_parse_sequence (text2, callback) :
+            strdup ("");
+        free (text2);
+        return result;
+    }
 
     /*
      * Only SGR sequences are used: "\33[" + parameters + "m", where parameters
