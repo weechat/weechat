@@ -53,6 +53,9 @@ extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
 extern char *gui_color_buffer_rgb_line (const int *colors, int count);
 extern int gui_color_buffer_display_rgb (int y);
+extern char *gui_color_buffer_palette_line (const char *label,
+                                            int label_width, int rgb);
+extern int gui_color_buffer_display_palette_rgb (int y);
 extern void gui_color_alloc (void);
 
 #endif /* WEECHAT_GUI_CURSES_COLOR_H */

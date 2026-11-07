@@ -33,6 +33,8 @@ extern void gui_color_pair_direct_key_get_colors (const void *key, int *fg,
                                                   int *bg);
 extern void gui_color_direct_color_string (int color, char *buffer, int size);
 extern char *gui_color_buffer_rgb_line (const int *colors, int count);
+extern char *gui_color_buffer_palette_line (const char *label,
+                                            int label_width, int rgb);
 }
 
 /*
@@ -476,6 +478,47 @@ TEST(GuiColor, BufferRgb)
                                           "\x19" "B@#ffffff"));
     gui_buffer_close (gui_color_buffer);
     POINTERS_EQUAL(NULL, gui_color_buffer);
+}
+
+/*
+ * Test functions:
+ *   gui_color_buffer_palette_line
+ *   gui_color_buffer_display_palette_rgb
+ */
+
+TEST(GuiColor, BufferPaletteRgb)
+{
+    char *str;
+    int old_direct_colors;
+
+    /* palette indexes, label padded */
+    str = gui_color_buffer_palette_line ("ab", 4, 0);
+    CHECK(strncmp (str, " ab   ", 6) == 0);
+    CHECK(strstr (str, "\x19" "B@00000   "));
+    CHECK(strstr (str, "\x19" "B@00015   "));
+    CHECK(!strstr (str, "#"));
+    free (str);
+
+    /* standard RGB values */
+    str = gui_color_buffer_palette_line ("ab", 2, 1);
+    CHECK(strncmp (str, " ab ", 4) == 0);
+    CHECK(strstr (str, "\x19" "B@#000000   "));
+    CHECK(strstr (str, "\x19" "B@#800000   "));
+    CHECK(strstr (str, "\x19" "B@#ffffff   "));
+    free (str);
+
+    /* displayed in color buffer only with direct colors */
+    old_direct_colors = gui_color_term_direct_colors;
+    gui_color_buffer_open ();
+    CHECK(gui_color_buffer);
+    gui_color_term_direct_colors = 0;
+    gui_color_buffer_display ();
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer, "\x19" "B@#800000"));
+    gui_color_term_direct_colors = 1;
+    gui_color_buffer_display ();
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer, "\x19" "B@#800000"));
+    gui_color_term_direct_colors = old_direct_colors;
+    gui_buffer_close (gui_color_buffer);
 }
 
 /*

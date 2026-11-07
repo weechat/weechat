@@ -1262,6 +1262,119 @@ gui_color_buffer_display_rgb (int y)
 }
 
 /*
+ * Build a line with the first 16 terminal colors used as background, to
+ * display in color buffer: with their palette index if "rgb" is 0 (colors of
+ * terminal theme), or with their standard RGB value if "rgb" is 1.
+ *
+ * The line starts with "label", padded to "label_width" chars on screen.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_buffer_palette_line (const char *label, int label_width, int rgb)
+{
+    char **line, str_color[32];
+    int i, padding;
+
+    line = string_dyn_alloc (256);
+    if (!line)
+        return NULL;
+
+    string_dyn_concat (line, " ", -1);
+    string_dyn_concat (line, label, -1);
+    padding = label_width - gui_chat_strlen_screen (label);
+    for (i = 0; i < padding; i++)
+    {
+        string_dyn_concat (line, " ", -1);
+    }
+    string_dyn_concat (line, " ", -1);
+
+    for (i = 0; i < 16; i++)
+    {
+        if (rgb)
+        {
+            snprintf (str_color, sizeof (str_color),
+                      ",#%06x", gui_color_term256[i] & 0xFFFFFF);
+        }
+        else
+        {
+            snprintf (str_color, sizeof (str_color), ",%d", i);
+        }
+        string_dyn_concat (line, gui_color_get_custom (str_color), -1);
+        string_dyn_concat (line, "   ", -1);
+    }
+    string_dyn_concat (line, GUI_NO_COLOR, -1);
+
+    return string_dyn_free (line, 0);
+}
+
+/*
+ * Display the first 16 terminal colors in color buffer, with palette index
+ * (colors of terminal theme) and with their standard RGB value, starting at
+ * line "y" (called only on a terminal with direct colors: otherwise both are
+ * displayed with the same terminal colors).
+ *
+ * Return the next line to use in buffer.
+ */
+
+int
+gui_color_buffer_display_palette_rgb (int y)
+{
+    const char *label_palette, *label_rgb;
+    char *line, **numbers, str_number[16];
+    int i, width, width_rgb;
+
+    label_palette = _("palette:");
+    label_rgb = _("RGB:");
+    width = gui_chat_strlen_screen (label_palette);
+    width_rgb = gui_chat_strlen_screen (label_rgb);
+    if (width_rgb > width)
+        width = width_rgb;
+
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       _("Terminal colors 0-15 with palette (terminal theme) "
+                         "and with standard RGB values:"));
+
+    numbers = string_dyn_alloc (128);
+    if (numbers)
+    {
+        for (i = 0; i < width + 2; i++)
+        {
+            string_dyn_concat (numbers, " ", -1);
+        }
+        for (i = 0; i < 16; i++)
+        {
+            snprintf (str_number, sizeof (str_number), "%2d ", i);
+            string_dyn_concat (numbers, str_number, -1);
+        }
+        gui_chat_printf_y (gui_color_buffer, y++, "%s", *numbers);
+        string_dyn_free (numbers, 1);
+    }
+
+    line = gui_color_buffer_palette_line (label_palette, width, 0);
+    if (line)
+    {
+        gui_chat_printf_y (gui_color_buffer, y++, "%s", line);
+        free (line);
+    }
+    line = gui_color_buffer_palette_line (label_rgb, width, 1);
+    if (line)
+    {
+        gui_chat_printf_y (gui_color_buffer, y++, "%s", line);
+        free (line);
+    }
+
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       _("(palette colors kept by terminal: 0-%d, other "
+                         "colors are always sent with their standard RGB "
+                         "value)"),
+                       gui_color_term_direct_indexed - 1);
+
+    return y;
+}
+
+/*
  * Display content of color buffer.
  */
 
@@ -1366,6 +1479,11 @@ gui_color_buffer_display (void)
     {
         y++;
         y = gui_color_buffer_display_rgb (y);
+        if (gui_color_term_direct_colors)
+        {
+            y++;
+            y = gui_color_buffer_display_palette_rgb (y);
+        }
     }
 
     if (gui_color_buffer_extra_info)
