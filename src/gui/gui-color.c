@@ -2052,6 +2052,37 @@ gui_color_normalize_ansi_param_cb (char **output, int value, int color)
 }
 
 /*
+ * Get a copy of a string to search ANSI escape sequences in: chars which are
+ * not ASCII are replaced by "\x01" (the copy has the same length).
+ *
+ * Escape sequences contain only ASCII chars and the text between them is
+ * copied from the original string, so this does not change the result, but
+ * the regex then matches with any locale and any C library, even when the
+ * string contains bytes which are not valid UTF-8 (for example a window title
+ * in ISO-8859-1).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_ansi_string_ascii (const char *string)
+{
+    char *result, *ptr_result;
+
+    result = strdup (string);
+    if (!result)
+        return NULL;
+
+    for (ptr_result = result; ptr_result[0]; ptr_result++)
+    {
+        if ((unsigned char)ptr_result[0] >= 0x80)
+            ptr_result[0] = '\x01';
+    }
+
+    return result;
+}
+
+/*
  * Search for an ANSI escape sequence in a string of the given length.
  *
  * If possible (flag REG_STARTEND), the length is given to regexec, so that
@@ -2088,8 +2119,8 @@ char *
 gui_color_ansi_replace (const char *string, int keep_colors,
                         t_gui_color_ansi_param_cb *callback)
 {
-    char **output, *sequence, *code;
-    const char *ptr_string;
+    char **output, *sequence, *code, *string_ascii;
+    const char *ptr_string, *ptr_ascii;
     regmatch_t regex_match;
     size_t length;
 
@@ -2116,15 +2147,31 @@ gui_color_ansi_replace (const char *string, int keep_colors,
     if (!strchr (string, '\33'))
         return strdup (string);
 
+    /*
+     * Sequences are searched in a copy with only ASCII chars, if the string
+     * has other chars.
+     */
+    string_ascii = NULL;
+    if (utf8_has_8bits (string))
+    {
+        string_ascii = gui_color_ansi_string_ascii (string);
+        if (!string_ascii)
+            return NULL;
+    }
+
     length = strlen (string);
     output = string_dyn_alloc (length + 1);
     if (!output)
+    {
+        free (string_ascii);
         return NULL;
+    }
 
     /* Replace each ANSI escape sequence. */
     ptr_string = string;
+    ptr_ascii = (string_ascii) ? string_ascii : string;
     while ((length > 0)
-           && (gui_color_ansi_regexec (gui_color_regex_ansi, ptr_string,
+           && (gui_color_ansi_regexec (gui_color_regex_ansi, ptr_ascii,
                                        length, &regex_match) == 0)
            && (regex_match.rm_eo > regex_match.rm_so))
     {
@@ -2146,9 +2193,12 @@ gui_color_ansi_replace (const char *string, int keep_colors,
             }
         }
         ptr_string += regex_match.rm_eo;
+        ptr_ascii += regex_match.rm_eo;
         length -= regex_match.rm_eo;
     }
     string_dyn_concat (output, ptr_string, -1);
+
+    free (string_ascii);
 
     return string_dyn_free (output, 0);
 }

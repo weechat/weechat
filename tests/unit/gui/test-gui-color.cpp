@@ -1867,12 +1867,44 @@ TEST(GuiColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B#8" "B", 1);
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;title\x07" "B", 0);
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1BP1$r0m\x1B\\" "B", 0);
+    /* Sequences with bytes which are not valid UTF-8 (removed). */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;t\xE9tle\x07" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;t\xE9tle\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1BP\xE9\x1B\\" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;\xF4\x90\x80\x80\x07" "B", 1);
+    /* Chars which are not ASCII in text (kept). */
+    WEE_CHECK_DECODE_ANSI("\xC3\xA9" "\xE9" "\xC3\xA9",
+                          "\xC3\xA9" "\x1B]0;t\xC3\xAFtle\x07" "\xE9"
+                          "\x1B" "7" "\xC3\xA9",
+                          1);
     /* Unterminated OSC: only "\33]" is removed. */
     WEE_CHECK_DECODE_ANSI("A0;title", "A" "\x1B]0;title", 1);
 
     /* Control sequence ending with "m" with intermediate bytes (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 0);
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 1);
+}
+
+/*
+ * Test functions:
+ *   gui_color_ansi_string_ascii
+ */
+
+TEST(GuiColor, AnsiStringAscii)
+{
+    char *str;
+
+    str = gui_color_ansi_string_ascii ("");
+    STRCMP_EQUAL("", str);
+    free (str);
+
+    str = gui_color_ansi_string_ascii ("abc \x1B[1m\x7F");
+    STRCMP_EQUAL("abc \x1B[1m\x7F", str);
+    free (str);
+
+    str = gui_color_ansi_string_ascii ("\xC3\xA9" "a" "\xE9");
+    STRCMP_EQUAL("\x01\x01" "a" "\x01", str);
+    free (str);
 }
 
 /*

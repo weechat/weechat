@@ -307,6 +307,7 @@ extern int gui_color_ansi_parse_color_sub_params (char **sub_params,
 extern int gui_color_ansi_parse_color (char **items, int num_items, int *index);
 extern void gui_color_ansi_color_name (char *buffer, int size,
                                        const char *prefix, int color);
+extern char *gui_color_ansi_string_ascii (const char *string);
 extern int gui_color_ansi_regexec (regex_t *regex, const char *string,
                                    size_t length, regmatch_t *regex_match);
 extern char *gui_color_ansi_parse_sequence (const char *sequence,

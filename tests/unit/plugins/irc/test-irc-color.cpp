@@ -1440,6 +1440,10 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B=B", 1);
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B" "cB", 1);
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B#8B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B]0;t\xE9tle\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B]0;\xF4\x90\x80\x80\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("\xC3\xA9" "\xE9",
+                          "\xC3\xA9" "\x1B]0;t\xC3\xAFtle\x07" "\xE9", 1);
 
     /* Control sequence ending with "m" with intermediate bytes (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 0);
