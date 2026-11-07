@@ -18,6 +18,7 @@
 extern struct t_gui_color *gui_weechat_colors;
 extern int gui_color_term_colors;
 extern int gui_color_term_direct_colors;
+extern int gui_color_term_direct_indexed;
 extern int gui_color_use_term_colors;
 extern int gui_color_pairs_used;
 extern struct t_hashtable *gui_color_pairs_direct;
