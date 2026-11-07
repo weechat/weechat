@@ -680,6 +680,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-irc-raw.cpp                    | Tests: IRC raw data.
 // TRANSLATION MISSING
+|             test-irc-redirect.cpp               | Tests: redirection of IRC command output.
+// TRANSLATION MISSING
 |             test-irc-sasl.cpp                   | Tests: SASL authentication with IRC protocol.
 // TRANSLATION MISSING
 |             test-irc-server.cpp                 | Tests: IRC server.

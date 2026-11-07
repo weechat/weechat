@@ -153,6 +153,7 @@ if(ENABLE_IRC)
     plugins/irc/test-irc-notify.cpp
     plugins/irc/test-irc-protocol.cpp
     plugins/irc/test-irc-raw.cpp
+    plugins/irc/test-irc-redirect.cpp
     plugins/irc/test-irc-sasl.cpp
     plugins/irc/test-irc-server.cpp
     plugins/irc/test-irc-tag.cpp
