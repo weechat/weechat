@@ -66,6 +66,53 @@ Rules:
 See chapter "General rules" in the Developer's guide for other rules (unit
 tests, copyright headers…).
 
+## Dependencies
+
+When a dependency is added or removed, becomes required or optional, or its
+minimum version changes (same for the default value of a CMake option
+`ENABLE_xxx`), update in the same commit all the places that list it:
+
+- **Build:** [CMakeLists.txt](CMakeLists.txt) (options, `pkg_check_modules` and
+  `find_package` with the minimum version), `cmake/Find*.cmake`,
+  `src/plugins/*/CMakeLists.txt`, [config.h.cmake](config.h.cmake)
+  (`HAVE_xxx`), `tests/unit/CMakeLists.txt` (tests built only with the
+  dependency), [doc/CMakeLists.txt](doc/CMakeLists.txt) (plugins documented
+  according to the CMake options).
+- **Code:** remove the compatibility code for versions older than the new
+  minimum (for example `#if LIBCURL_VERSION_NUM`); keep the Curl minimum
+  version in [tools/check_curl_symbols.py](tools/check_curl_symbols.py) in
+  sync; update the library versions displayed by `/debug libs`
+  ([src/core/core-debug.c](src/core/core-debug.c)), and if translatable
+  strings change, the files `po/*` and the dictionaries `.poexam/*.dic`.
+- **Documentation:** the main dependencies in [README.md](README.md); in the
+  User's guide, in all languages, the tables of required and optional
+  dependencies (package, version, features) and the table of CMake options
+  (default value).
+- **Debian packaging:** in both `debian-devel/` and `debian-stable/`: `control`
+  (`Build-Depends`, packages), `rules` (CMake options), `*.install` and
+  `*.dirs` files of a new package; the patches for old Debian/Ubuntu versions
+  in `tools/debian/patches/` (applied by `tools/build_debian.sh`).
+- **Cygwin:** [weechat.cygport.in](weechat.cygport.in) (`BUILD_REQUIRES`, CMake
+  options).
+- **CI:** [.github/workflows/ci.yml](.github/workflows/ci.yml): the package
+  lists `WEECHAT_DEPS_*` (Ubuntu, Red Hat, FreeBSD, macOS) and the CMake options
+  of jobs where the dependency is not available or too old.
+- **Fuzzing:** [tests/fuzz/ossfuzz.sh](tests/fuzz/ossfuzz.sh) (CMake options of
+  the OSS-Fuzz build).
+- **Containers:** `tools/container/Containerfile.debian` and
+  `tools/container/Containerfile.alpine`: build and runtime packages (runtime
+  package names often contain the library version), the slim images excluding
+  the scripting languages, script manager and spell plugins; the image sizes in
+  [tools/container/README.md](tools/container/README.md) if they change
+  significantly. Build the images with `tools/container/build.py --all`.
+- **Changelog:** an entry in section "Changed" (for example
+  `build: require Curl ≥ 7.68.0`), marked as breaking when a dependency or a
+  CMake option is removed, and described in [UPGRADING.md](UPGRADING.md) when
+  users or packagers must take action.
+
+Dependencies differ between the main branch and the maintenance branches: when
+backporting, keep the dependencies of the target branch.
+
 ## Project structure
 
 See chapter "Sources" in the Developer's guide
@@ -134,6 +181,8 @@ When reviewing changes, check:
 - **Documentation:** updated in all languages (with `// TRANSLATION MISSING`),
   new files listed in chapter "Sources" of the Developer's guide, version
   markers correct.
+- **Dependencies:** a dependency change updates all the places listed in
+  chapter "Dependencies" (build, docs, Debian packaging, CI, containers…).
 - **Translatable strings:** new or changed strings (`_("...")`, `N_("...")`)
   are needed and consistent with existing messages.
 - **Changelog:** a user-visible change has its entry in the same commit, in the
