@@ -1649,8 +1649,16 @@ TEST(GuiColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_default", "test_" "\x1B[39m" "default", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "default",
-              gui_color_get_custom ("default"));
+              gui_color_get_custom ("|default"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[39m" "default", 1);
+    WEE_CHECK_DECODE_ANSI("test_" "\x19" "F|00" "default",
+                          "test_" "\x1B[39m" "default", 1);
+
+    /* Default text color keeps attributes, like other text colors. */
+    WEE_CHECK_DECODE_ANSI("A B C",
+                          "\x1B[1m" "A " "\x1B[31m" "B" "\x1B[39m" " C", 0);
+    WEE_CHECK_DECODE_ANSI("\x1A\x01" "A " "\x19" "F|03" "B" "\x19" "F|00" " C",
+                          "\x1B[1m" "A " "\x1B[31m" "B" "\x1B[39m" " C", 1);
 
     /* Default text color */
     WEE_CHECK_DECODE_ANSI("test_bg_default", "test_" "\x1B[49m" "bg_default", 0);

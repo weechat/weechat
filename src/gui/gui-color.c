@@ -1829,7 +1829,7 @@ gui_color_decode_ansi_param_cb (char **output, int value, int color)
             string_dyn_concat (output, gui_color_get_custom (str_color), -1);
             break;
         case 39: /* Default text color */
-            string_dyn_concat (output, gui_color_get_custom ("default"), -1);
+            string_dyn_concat (output, gui_color_get_custom ("|default"), -1);
             break;
         case 40: /* Background color */
         case 41:
