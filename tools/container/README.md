@@ -154,6 +154,12 @@ Build an Alpine-based image, slim version, with Podman:
 tools/container/build.py --builder podman --distro alpine --slim
 ```
 
+Build all images (Debian, Debian slim, Alpine, Alpine slim):
+
+```bash
+tools/container/build.py --all
+```
+
 Display the commands without running them:
 
 ```bash
@@ -161,6 +167,24 @@ tools/container/build.py --dry-run
 ```
 
 See `tools/container/build.py --help` for all options.
+
+## Publish images
+
+To publish images of a stable release on the Docker Hub, build all images
+from the release tag (with option `--latest` if it is the latest stable
+release) and push them with option `--push`.
+
+Only the tags `weechat/weechat:*` of the images built are pushed, after all
+images are built successfully; the push is refused if there are uncommitted
+changes in tracked files.
+
+Example for the release 4.10.4 (a login to the Docker Hub is required):
+
+```bash
+git switch --detach v4.10.4
+docker login
+tools/container/build.py --all --latest --push
+```
 
 ## Update image
 
