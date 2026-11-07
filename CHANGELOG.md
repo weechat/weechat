@@ -12,7 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
-- core: display support of RGB colors in `/color` buffer and output of `weechat --colors`, with a suggested value of `TERM` if RGB colors are not displayed as-is ([#1364](https://github.com/weechat/weechat/issues/1364))
+- core: display support of RGB colors in `/color` buffer and output of `weechat --colors`, with a suggested value of `TERM` if RGB colors are not displayed as-is, and RGB color samples in `/color` buffer ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: add RGB colors "#rrggbb" in color options, function color and `${color:...}`, displayed as-is on terminals with direct colors (for example with `TERM=xterm-direct256` or `TERM=tmux-direct`) ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: add jump to buffer with command `/N` (for example `/42`) and option weechat.look.command_buffer_number ([#762](https://github.com/weechat/weechat/issues/762))
 - core: add option `insert_raw` in command `/input` to insert text without converting escaped chars

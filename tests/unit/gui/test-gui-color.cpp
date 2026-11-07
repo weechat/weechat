@@ -18,8 +18,11 @@ extern "C"
 #include "src/core/core-hook.h"
 #include "src/plugins/weechat-plugin.h"
 #include "src/core/core-string.h"
+#include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
+#include "src/gui/gui-line.h"
 
+extern struct t_gui_buffer *gui_color_buffer;
 extern int gui_color_hash_seed_set;
 extern int gui_color_term_colors;
 extern int gui_color_term_direct_colors;
@@ -29,6 +32,37 @@ extern int gui_color_get_pair (int fg, int bg);
 extern void gui_color_pair_direct_key_get_colors (const void *key, int *fg,
                                                   int *bg);
 extern void gui_color_direct_color_string (int color, char *buffer, int size);
+extern char *gui_color_buffer_rgb_line (const int *colors, int count);
+}
+
+/*
+ * Check if a line of a buffer contains a string.
+ *
+ * Return:
+ *   1: string found in a line
+ *   0: string not found
+ */
+
+int
+test_gui_color_buffer_contains (struct t_gui_buffer *buffer,
+                                const char *string)
+{
+    struct t_gui_line *ptr_line;
+
+    if (!buffer)
+        return 0;
+
+    for (ptr_line = buffer->own_lines->first_line; ptr_line;
+         ptr_line = ptr_line->next_line)
+    {
+        if (ptr_line->data->message
+            && strstr (ptr_line->data->message, string))
+        {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 #define WEE_CHECK_DECODE(__result, __string, __replacement)             \
@@ -393,6 +427,55 @@ TEST(GuiColor, InfoTermColors)
     CHECK(!strstr (str_info_no_direct, " (direct, palette:"));
     CHECK(strstr (str_info_256, " (direct, palette: 256), "));
     CHECK(strstr (str_info_8, " (direct, palette: 8), "));
+}
+
+/*
+ * Test functions:
+ *   gui_color_hue_to_rgb
+ */
+
+TEST(GuiColor, HueToRgb)
+{
+    LONGS_EQUAL(0xff0000, gui_color_hue_to_rgb (0));
+    LONGS_EQUAL(0xff7f00, gui_color_hue_to_rgb (30));
+    LONGS_EQUAL(0xffff00, gui_color_hue_to_rgb (60));
+    LONGS_EQUAL(0x00ff00, gui_color_hue_to_rgb (120));
+    LONGS_EQUAL(0x00ffff, gui_color_hue_to_rgb (180));
+    LONGS_EQUAL(0x0000ff, gui_color_hue_to_rgb (240));
+    LONGS_EQUAL(0xff00ff, gui_color_hue_to_rgb (300));
+    LONGS_EQUAL(0xff0000, gui_color_hue_to_rgb (360));
+    LONGS_EQUAL(0xff00ff, gui_color_hue_to_rgb (-60));
+}
+
+/*
+ * Test functions:
+ *   gui_color_buffer_rgb_line
+ *   gui_color_buffer_display (RGB colors)
+ */
+
+TEST(GuiColor, BufferRgb)
+{
+    int colors[2] = { 0xff0000, 0x000080 };
+    char expected[128], *str;
+
+    /* line with 2 RGB colors as background */
+    snprintf (expected, sizeof (expected), " %s %s %s",
+              "\x19" "B@#ff0000", "\x19" "B@#000080", GUI_NO_COLOR);
+    WEE_TEST_STR(expected, gui_color_buffer_rgb_line (colors, 2));
+    snprintf (expected, sizeof (expected), " %s", GUI_NO_COLOR);
+    WEE_TEST_STR(expected, gui_color_buffer_rgb_line (colors, 0));
+
+    /* color buffer: rainbow (starts with red) and gray ramp (black, white) */
+    gui_color_buffer_open ();
+    CHECK(gui_color_buffer);
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer,
+                                          "\x19" "B@#ff0000"));
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer,
+                                          "\x19" "B@#000000"));
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer,
+                                          "\x19" "B@#ffffff"));
+    gui_buffer_close (gui_color_buffer);
+    POINTERS_EQUAL(NULL, gui_color_buffer);
 }
 
 /*

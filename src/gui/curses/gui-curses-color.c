@@ -1191,6 +1191,77 @@ gui_color_info_rgb (char *buffer, int size)
 }
 
 /*
+ * Build a line with RGB colors used as background (one space for each color),
+ * to display in color buffer.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_buffer_rgb_line (const int *colors, int count)
+{
+    char **line, str_color[32];
+    int i;
+
+    line = string_dyn_alloc (256);
+    if (!line)
+        return NULL;
+
+    string_dyn_concat (line, " ", -1);
+    for (i = 0; i < count; i++)
+    {
+        snprintf (str_color, sizeof (str_color), ",#%06x", colors[i] & 0xFFFFFF);
+        string_dyn_concat (line, gui_color_get_custom (str_color), -1);
+        string_dyn_concat (line, " ", -1);
+    }
+    string_dyn_concat (line, GUI_NO_COLOR, -1);
+
+    return string_dyn_free (line, 0);
+}
+
+/*
+ * Display RGB colors in color buffer: a rainbow (all hues) and a gray ramp,
+ * starting at line "y".
+ *
+ * Return the next line to use in buffer.
+ */
+
+int
+gui_color_buffer_display_rgb (int y)
+{
+    int colors[GUI_COLOR_BUFFER_RGB_COUNT], i, gray;
+    char *line;
+
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       _("RGB colors (#rrggbb), smooth if displayed as-is:"));
+
+    for (i = 0; i < GUI_COLOR_BUFFER_RGB_COUNT; i++)
+    {
+        colors[i] = gui_color_hue_to_rgb ((i * 360) / GUI_COLOR_BUFFER_RGB_COUNT);
+    }
+    line = gui_color_buffer_rgb_line (colors, GUI_COLOR_BUFFER_RGB_COUNT);
+    if (line)
+    {
+        gui_chat_printf_y (gui_color_buffer, y++, "%s", line);
+        free (line);
+    }
+
+    for (i = 0; i < GUI_COLOR_BUFFER_RGB_COUNT; i++)
+    {
+        gray = (i * 255) / (GUI_COLOR_BUFFER_RGB_COUNT - 1);
+        colors[i] = (gray << 16) | (gray << 8) | gray;
+    }
+    line = gui_color_buffer_rgb_line (colors, GUI_COLOR_BUFFER_RGB_COUNT);
+    if (line)
+    {
+        gui_chat_printf_y (gui_color_buffer, y++, "%s", line);
+        free (line);
+    }
+
+    return y;
+}
+
+/*
  * Display content of color buffer.
  */
 
@@ -1289,6 +1360,13 @@ gui_color_buffer_display (void)
                        (gui_color_use_term_colors) ?
                        "" : _("(press alt-c to see the colors you can use "
                               "in options)"));
+
+    /* Display RGB colors (not possible with terminal colors). */
+    if (!gui_color_use_term_colors)
+    {
+        y++;
+        y = gui_color_buffer_display_rgb (y);
+    }
 
     if (gui_color_buffer_extra_info)
     {

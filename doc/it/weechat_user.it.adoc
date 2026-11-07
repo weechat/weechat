@@ -1861,6 +1861,8 @@ with their standard RGB value, ignoring the terminal theme.
 Command `/color` (or `weechat --colors`) shows if direct colors are used and
 how many palette colors are kept, for example: `COLORS: 256 (direct, palette: 256)`;
 if direct colors are not used, it suggests a value of _TERM_ with direct colors.
+The `/color` buffer also displays a rainbow and a gray ramp with RGB colors:
+they are smooth when RGB colors are displayed as-is.
 
 // TRANSLATION MISSING
 RGB colors received in ANSI escape codes (for example in output of command

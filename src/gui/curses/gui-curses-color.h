@@ -9,6 +9,9 @@
 
 #define GUI_CURSES_NUM_WEECHAT_COLORS 17
 
+/* Number of RGB colors displayed on each line of color buffer */
+#define GUI_COLOR_BUFFER_RGB_COUNT 64
+
 #ifndef A_ITALIC /* A_ITALIC is defined in ncurses >= 5.9 patch 20130831 */
 #define A_ITALIC 0
 #endif /* A_ITALIC */
@@ -48,6 +51,8 @@ extern void gui_color_dump_pair_direct_map_cb (void *data,
                                                const void *value);
 extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
+extern char *gui_color_buffer_rgb_line (const int *colors, int count);
+extern int gui_color_buffer_display_rgb (int y);
 extern void gui_color_alloc (void);
 
 #endif /* WEECHAT_GUI_CURSES_COLOR_H */

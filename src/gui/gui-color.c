@@ -746,6 +746,49 @@ gui_color_rgb_to_direct (int rgb)
 }
 
 /*
+ * Convert a hue (angle in degrees, 0 = red, 120 = green, 240 = blue) to a
+ * RGB color with full saturation and brightness.
+ *
+ * Return the RGB value (0xRRGGBB).
+ */
+
+int
+gui_color_hue_to_rgb (int hue)
+{
+    int remainder, r, g, b;
+
+    hue %= 360;
+    if (hue < 0)
+        hue += 360;
+
+    remainder = ((hue % 60) * 255) / 60;
+
+    switch (hue / 60)
+    {
+        case 0:
+            r = 255; g = remainder; b = 0;
+            break;
+        case 1:
+            r = 255 - remainder; g = 255; b = 0;
+            break;
+        case 2:
+            r = 0; g = 255; b = remainder;
+            break;
+        case 3:
+            r = 0; g = 255 - remainder; b = 255;
+            break;
+        case 4:
+            r = remainder; g = 0; b = 255;
+            break;
+        default:
+            r = 255; g = 0; b = 255 - remainder;
+            break;
+    }
+
+    return (r << 16) | (g << 8) | b;
+}
+
+/*
  * Suggest a value of TERM with direct colors (RGB colors displayed as-is),
  * using the current value of TERM: the name before the first "-" is used to
  * find a terminfo entry with direct colors provided by ncurses.
