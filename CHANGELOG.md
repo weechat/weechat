@@ -126,6 +126,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core, irc: fix slow decoding of ANSI colors in a line with many escape sequences
 - core, irc: decode ANSI colors with sub-parameters separated by colons, for example `38:2::255:136:0` in output of `/exec` ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core, irc: remove other ANSI escape sequences when decoding ANSI colors: operating system commands (OSC, for example window title and hyperlinks), device control strings (DCS) and escape sequences like `\e7` or `\e=`
 - core: convert bar delimiter color to an ANSI text color instead of a background color (relay "api" protocol with colors "ansi", option logger.file.color_lines)

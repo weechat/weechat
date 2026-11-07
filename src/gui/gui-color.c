@@ -2052,24 +2052,28 @@ gui_color_normalize_ansi_param_cb (char **output, int value, int color)
 }
 
 /*
- * Callback for each ANSI escape sequence found in a string (see function
- * gui_color_ansi_replace).
+ * Search for an ANSI escape sequence in a string of the given length.
  *
- * Note: result must be freed after use.
+ * If possible (flag REG_STARTEND), the length is given to regexec, so that
+ * regexec does not compute the length of the string at each call (a string
+ * with many escape sequences is decoded in a linear time).
+ *
+ * Return the value returned by regexec.
  */
 
-char *
-gui_color_ansi_replace_cb (void *data, const char *text)
+int
+gui_color_ansi_regexec (regex_t *regex, const char *string, size_t length,
+                        regmatch_t *regex_match)
 {
-    struct t_gui_color_ansi_replace *ansi_replace;
-
-    ansi_replace = (struct t_gui_color_ansi_replace *)data;
-
-    /* If colors are not kept, the sequence is removed. */
-    if (!ansi_replace->keep_colors)
-        return strdup ("");
-
-    return gui_color_ansi_parse_sequence (text, ansi_replace->callback);
+#ifdef REG_STARTEND
+    regex_match->rm_so = 0;
+    regex_match->rm_eo = (regoff_t)length;
+    return regexec (regex, string, 1, regex_match, REG_STARTEND);
+#else
+    /* Make C compiler happy. */
+    (void) length;
+    return regexec (regex, string, 1, regex_match, 0);
+#endif
 }
 
 /*
@@ -2084,7 +2088,10 @@ char *
 gui_color_ansi_replace (const char *string, int keep_colors,
                         t_gui_color_ansi_param_cb *callback)
 {
-    struct t_gui_color_ansi_replace ansi_replace;
+    char **output, *sequence, *code;
+    const char *ptr_string;
+    regmatch_t regex_match;
+    size_t length;
 
     if (!string)
         return NULL;
@@ -2105,13 +2112,45 @@ gui_color_ansi_replace (const char *string, int keep_colors,
         }
     }
 
-    ansi_replace.keep_colors = keep_colors;
-    ansi_replace.callback = callback;
+    /* Without ESC, there is no escape sequence to replace. */
+    if (!strchr (string, '\33'))
+        return strdup (string);
 
-    return string_replace_regex (string, gui_color_regex_ansi,
-                                 "$0", '$',
-                                 &gui_color_ansi_replace_cb,
-                                 &ansi_replace);
+    length = strlen (string);
+    output = string_dyn_alloc (length + 1);
+    if (!output)
+        return NULL;
+
+    /* Replace each ANSI escape sequence. */
+    ptr_string = string;
+    while ((length > 0)
+           && (gui_color_ansi_regexec (gui_color_regex_ansi, ptr_string,
+                                       length, &regex_match) == 0)
+           && (regex_match.rm_eo > regex_match.rm_so))
+    {
+        string_dyn_concat (output, ptr_string, regex_match.rm_so);
+        /* Only SGR sequences (ending with "m") are used. */
+        if (keep_colors && (ptr_string[regex_match.rm_eo - 1] == 'm'))
+        {
+            sequence = string_strndup (ptr_string + regex_match.rm_so,
+                                       regex_match.rm_eo - regex_match.rm_so);
+            if (sequence)
+            {
+                code = gui_color_ansi_parse_sequence (sequence, callback);
+                if (code)
+                {
+                    string_dyn_concat (output, code, -1);
+                    free (code);
+                }
+                free (sequence);
+            }
+        }
+        ptr_string += regex_match.rm_eo;
+        length -= regex_match.rm_eo;
+    }
+    string_dyn_concat (output, ptr_string, -1);
+
+    return string_dyn_free (output, 0);
 }
 
 /*

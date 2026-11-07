@@ -209,13 +209,6 @@ enum t_gui_color_enum
 typedef void (t_gui_color_ansi_param_cb)(char **output, int value,
                                          int color);
 
-/* Data for function gui_color_ansi_replace */
-struct t_gui_color_ansi_replace
-{
-    int keep_colors;                     /* 1 to keep colors               */
-    t_gui_color_ansi_param_cb *callback; /* callback for each parameter    */
-};
-
 /* Color structure */
 
 struct t_gui_color
@@ -314,6 +307,8 @@ extern int gui_color_ansi_parse_color_sub_params (char **sub_params,
 extern int gui_color_ansi_parse_color (char **items, int num_items, int *index);
 extern void gui_color_ansi_color_name (char *buffer, int size,
                                        const char *prefix, int color);
+extern int gui_color_ansi_regexec (regex_t *regex, const char *string,
+                                   size_t length, regmatch_t *regex_match);
 extern char *gui_color_ansi_parse_sequence (const char *sequence,
                                             t_gui_color_ansi_param_cb *callback);
 extern char *gui_color_ansi_replace (const char *string, int keep_colors,
