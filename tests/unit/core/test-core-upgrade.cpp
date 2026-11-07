@@ -1201,6 +1201,7 @@ TEST(CoreUpgrade, ReadCb)
     struct t_infolist *infolist;
     struct t_infolist_item *ptr_item;
     struct t_gui_layout_window *ptr_root;
+    long long last_id_assigned;
     time_t old_first_start_time;
     int old_upgrade_count;
 
@@ -1225,6 +1226,9 @@ TEST(CoreUpgrade, ReadCb)
     CHECK(buffer);
     POINTERS_EQUAL(buffer, upgrade_current_buffer);
 
+    /* Reading an object does not reset the last buffer id assigned. */
+    CHECK(gui_buffer_last_id_assigned >= buffer->id);
+    last_id_assigned = gui_buffer_last_id_assigned;
     infolist = infolist_new (NULL);
     CHECK(infolist);
     test_infolist_add_line_new_format (infolist, 1786886000000000LL, "line 1");
@@ -1233,6 +1237,7 @@ TEST(CoreUpgrade, ReadCb)
                                          UPGRADE_WEECHAT_TYPE_BUFFER_LINE,
                                          infolist));
     infolist_free (infolist);
+    CHECK(gui_buffer_last_id_assigned == last_id_assigned);
     CHECK(buffer->own_lines->last_line);
     STRCMP_EQUAL("line 1", buffer->own_lines->last_line->data->message);
 
@@ -1369,11 +1374,13 @@ TEST(CoreUpgrade, Load)
     struct t_upgrade_file *upgrade_file;
     struct t_infolist *infolist;
     struct t_infolist_item *ptr_item;
+    long long old_last_id_assigned;
     time_t old_first_start_time;
     int old_upgrade_count;
 
     old_first_start_time = weechat_first_start_time;
     old_upgrade_count = weechat_upgrade_count;
+    old_last_id_assigned = gui_buffer_last_id_assigned;
 
     /* No upgrade file. */
     test_core_upgrade_remove_file (WEECHAT_UPGRADE_FILENAME);
@@ -1409,6 +1416,8 @@ TEST(CoreUpgrade, Load)
 
     LONGS_EQUAL(1, upgrade_weechat_load ());
     POINTERS_EQUAL(NULL, upgrade_layout);
+    /* No buffer in upgrade file: last buffer id assigned is reset. */
+    CHECK(gui_buffer_last_id_assigned == -1);
     LONGS_EQUAL(TEST_DATE, weechat_first_start_time);
     LONGS_EQUAL(42, weechat_upgrade_count);
     CHECK(gui_history);
@@ -1417,6 +1426,7 @@ TEST(CoreUpgrade, Load)
     gui_history_global_free ();
     weechat_first_start_time = old_first_start_time;
     weechat_upgrade_count = old_upgrade_count;
+    gui_buffer_last_id_assigned = old_last_id_assigned;
     test_core_upgrade_remove_file (WEECHAT_UPGRADE_FILENAME);
 }
 
