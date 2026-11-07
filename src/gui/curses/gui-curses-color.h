@@ -9,6 +9,9 @@
 
 #define GUI_CURSES_NUM_WEECHAT_COLORS 17
 
+/* Number of RGB colors displayed on each line of color buffer */
+#define GUI_COLOR_BUFFER_RGB_COUNT 64
+
 #ifndef A_ITALIC /* A_ITALIC is defined in ncurses >= 5.9 patch 20130831 */
 #define A_ITALIC 0
 #endif /* A_ITALIC */
