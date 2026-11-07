@@ -15,7 +15,7 @@ ARG SLIM=""
 
 # ==== base for all stages ====
 
-FROM alpine:3.22 AS base
+FROM alpine:3.24 AS base
 LABEL stage=base
 
 LABEL maintainer="Sébastien Helleu <flashcode@flashtux.org>"
