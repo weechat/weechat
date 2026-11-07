@@ -100,9 +100,9 @@ installazione.
 // TRANSLATION MISSING
 Containers with WeeChat can be built or installed directly from the
 https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^^]. +
-For more information, see the README in the
-https://github.com/weechat/weechat-container[weechat-container ^↗^^]
-repository.
+For more information, see the
+https://github.com/weechat/weechat/blob/main/tools/container/README.md[README ^↗^^]
+in directory _tools/container_ of the sources.
 
 [[source_package]]
 === Sorgenti

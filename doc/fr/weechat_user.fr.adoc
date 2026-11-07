@@ -87,8 +87,9 @@ la distribution pour la méthode d'installation.
 
 Des conteneurs avec WeeChat peuvent être construits ou installés directement
 depuis le https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^^]. +
-Pour plus d'informations, voire le README dans le dépôt
-https://github.com/weechat/weechat-container[weechat-container ^↗^^].
+Pour plus d'informations, voir le
+https://github.com/weechat/weechat/blob/main/tools/container/README.md[README ^↗^^]
+dans le répertoire _tools/container_ des sources.
 
 [[source_package]]
 === Paquet source

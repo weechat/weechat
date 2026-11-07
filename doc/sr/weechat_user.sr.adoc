@@ -80,11 +80,12 @@ https://weechat.org/about/features/[овој страници ^↗^^].
 [[containers]]
 === Контејнери
 
-Можете да изградите контејнере са WeeChat или да их инсталирате директно са
+// TRANSLATION MISSING
+Containers with WeeChat can be built or installed directly from the
 https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^^]. +
-За више информација, погледајте README фајл у
-https://github.com/weechat/weechat-container[weechat-container ^↗^^]
-репозиторијуму.
+For more information, see the
+https://github.com/weechat/weechat/blob/main/tools/container/README.md[README ^↗^^]
+in directory _tools/container_ of the sources.
 
 [[source_package]]
 === Пакет са изворним кодом

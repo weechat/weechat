@@ -8,6 +8,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 _The file [UPGRADING.md](UPGRADING.md) contains important information about upgrades, for example manual actions to perform when upgrading from a version to another one (most changes are automated, but some of them cannot be)._
 
+## [Unreleased]
+
+### Added
+
+- build/container: add files to build container images (Debian and Alpine) from the local sources, moved from repository [weechat-container](https://github.com/weechat/weechat-container)
+
 ## [4.10.3] - 2026-11-07
 
 ### Fixed
