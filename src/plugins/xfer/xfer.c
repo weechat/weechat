@@ -985,6 +985,7 @@ xfer_free (struct t_xfer *xfer)
     free (xfer->local_address_str);
     free (xfer->remote_address);
     free (xfer->remote_address_str);
+    free (xfer->token);
     free (xfer->remote_nick_color);
     weechat_unhook (xfer->hook_fd);
     weechat_unhook (xfer->hook_timer);
