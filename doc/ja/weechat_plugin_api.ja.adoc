@@ -10312,6 +10312,13 @@ const char *weechat_color (const char *color_name);
 // TRANSLATION MISSING
 * `+#ff8800+`: orange (RGB color) _(WeeChat ≥ 5.0.0)_
 
+// TRANSLATION MISSING
+[NOTE]
+_WeeChat ≥ 5.0.0._ RGB colors (for example `+#ff8800+`) can be used directly,
+there is no need to convert them to terminal colors with info "color_rgb2term":
+they are displayed as-is on terminals with direct colors, and with the nearest
+terminal color otherwise.
+
 戻り値:
 
 * 色コードを収めた文字列、色が見つからない場合は空文字列
