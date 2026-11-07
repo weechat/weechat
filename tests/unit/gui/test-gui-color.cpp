@@ -1855,6 +1855,10 @@ TEST(GuiColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1<m" "B", 1);
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[5=m" "B", 1);
 
+    /* Chars SI and SO (removed). */
+    WEE_CHECK_DECODE_ANSI("ABC", "A" "\x0F" "B" "\x0E" "C", 0);
+    WEE_CHECK_DECODE_ANSI("ABC", "A" "\x0F" "B" "\x0E" "C", 1);
+
     /* Other escape sequences: OSC, DCS, ESC + char (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;title\x07" "B", 1);
     WEE_CHECK_DECODE_ANSI("AlinkB",
@@ -2011,6 +2015,14 @@ TEST(GuiColor, NormalizeAnsi)
     WEE_TEST_STR("test",
                  gui_color_normalize_ansi (
                      "\x1B[38;5;99999999999999999999mtest", 1));
+
+    /* Char SI is kept (also without colors), SO is removed. */
+    WEE_TEST_STR("\x1B[1m" "test" "\x0F",
+                 gui_color_normalize_ansi ("\x0E" "\x1B[1m" "test" "\x0F", 1));
+    WEE_TEST_STR("test" "\x0F",
+                 gui_color_normalize_ansi ("\x0E" "\x1B[1m" "test" "\x0F", 0));
+    WEE_TEST_STR("A" "\x0F" "B",
+                 gui_color_normalize_ansi ("A" "\x0F" "B" "\x0E", 1));
 
     /* Other escape sequences are removed. */
     WEE_TEST_STR("test", gui_color_normalize_ansi ("\x1B[2Jtest", 1));

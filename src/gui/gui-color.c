@@ -2113,11 +2113,16 @@ gui_color_ansi_regexec (regex_t *regex, const char *string, size_t length,
  * the output of the callback called for each of its parameters (if
  * keep_colors is 1), the other escape sequences are removed.
  *
+ * The char SI (shift in) is kept if keep_shift_in is 1 (it is also the IRC
+ * reset code), otherwise it is removed; the char SO (shift out) is always
+ * removed.
+ *
  * Note: result must be freed after use.
  */
 
 char *
 gui_color_ansi_replace (const char *string, int keep_colors,
+                        int keep_shift_in,
                         t_gui_color_ansi_param_cb *callback)
 {
     char **output, *sequence, *code, *string_ascii;
@@ -2144,8 +2149,8 @@ gui_color_ansi_replace (const char *string, int keep_colors,
         }
     }
 
-    /* Without ESC, there is no escape sequence to replace. */
-    if (!strchr (string, '\33'))
+    /* Without ESC, SI and SO, there is nothing to replace. */
+    if (!strpbrk (string, "\33\16\17"))
         return strdup (string);
 
     /*
@@ -2177,8 +2182,14 @@ gui_color_ansi_replace (const char *string, int keep_colors,
            && (regex_match.rm_eo > regex_match.rm_so))
     {
         string_dyn_concat (output, ptr_string, regex_match.rm_so);
+        if ((ptr_string[regex_match.rm_so] == '\16')
+            || (ptr_string[regex_match.rm_so] == '\17'))
+        {
+            if (keep_shift_in && (ptr_string[regex_match.rm_so] == '\17'))
+                string_dyn_concat (output, ptr_string + regex_match.rm_so, 1);
+        }
         /* Only SGR sequences (ending with "m") are used. */
-        if (keep_colors && (ptr_string[regex_match.rm_eo - 1] == 'm'))
+        else if (keep_colors && (ptr_string[regex_match.rm_eo - 1] == 'm'))
         {
             sequence = string_strndup (ptr_string + regex_match.rm_so,
                                        regex_match.rm_eo - regex_match.rm_so);
@@ -2216,7 +2227,7 @@ gui_color_ansi_replace (const char *string, int keep_colors,
 char *
 gui_color_decode_ansi (const char *string, int keep_colors)
 {
-    return gui_color_ansi_replace (string, keep_colors,
+    return gui_color_ansi_replace (string, keep_colors, 0,
                                    &gui_color_decode_ansi_param_cb);
 }
 
@@ -2227,9 +2238,10 @@ gui_color_decode_ansi (const char *string, int keep_colors)
  * number, and colors are "38;5;N", "48;5;N" (terminal color) or
  * "38;2;R;G;B", "48;2;R;G;B" (RGB color, components in range 0-255); a
  * sequence without parameter used is removed, and the other escape sequences
- * are removed.
+ * are removed, like char SO (shift out); char SI (shift in) is kept, because
+ * it is also the IRC reset code ("^O") in text already formatted for IRC.
  *
- * If keep_colors == 0, all escape sequences are removed.
+ * If keep_colors == 0, all escape sequences are removed (SI is kept).
  *
  * Note: result must be freed after use.
  */
@@ -2237,7 +2249,7 @@ gui_color_decode_ansi (const char *string, int keep_colors)
 char *
 gui_color_normalize_ansi (const char *string, int keep_colors)
 {
-    return gui_color_ansi_replace (string, keep_colors,
+    return gui_color_ansi_replace (string, keep_colors, 1,
                                    &gui_color_normalize_ansi_param_cb);
 }
 

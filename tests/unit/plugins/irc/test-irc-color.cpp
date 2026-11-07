@@ -1425,9 +1425,45 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1<mB", 1);
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B[5=mB", 1);
 
-    /* IRC colors in text change the colors of the IRC client. */
+    /*
+     * Char SI: kept (IRC reset), then attributes and colors are sent again;
+     * char SO: removed.
+     */
+    snprintf (string, sizeof (string),
+              "%s%s%s%sbold text",
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[0;1m\x0F" "bold\x0E text", 1);
+    snprintf (string, sizeof (string),
+              "%s05,03A%s%s05,03B",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31;42mA\x0F" "B", 1);
+    snprintf (string, sizeof (string),
+              "%s05A%s%s05%s%s,5",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31mA\x0F" ",5", 1);
+    WEE_CHECK_DECODE_ANSI("A\x0F" "B", "A\x0F" "B\x0E", 0);
+    /* Text formatted for IRC: kept. */
+    WEE_CHECK_DECODE_ANSI("\x02" "bold\x0F" " normal",
+                          "\x02" "bold\x0F" " normal", 1);
+    WEE_CHECK_DECODE_ANSI("\x03" "04,01red\x0F" " normal",
+                          "\x03" "04,01red\x0F" " normal", 1);
+    /*
+     * IRC colors in text change the colors of the IRC client, not the ANSI
+     * colors (kept after SI).
+     */
     WEE_CHECK_DECODE_ANSI("\x03" "05red\x03" "04x\x03" "05,03y",
                           "\x1B[31mred\x03" "04x\x1B[42my", 1);
+    WEE_CHECK_DECODE_ANSI("\x03" "05red\x03" "04x\x0F\x03" "05y",
+                          "\x1B[31mred\x03" "04x\x0Fy", 1);
 
     /* Other escape sequences: OSC, DCS, ESC + char (removed) */
     WEE_CHECK_DECODE_ANSI("AB", "A\x1B]0;title\x07" "B", 1);
@@ -1550,12 +1586,6 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI(string, "\x1B[31m,\x1B[K5 apples", 1);
 
     /* IRC codes and new lines in text: colors are sent again. */
-    snprintf (string, sizeof (string),
-              "%s05C%sD%s05E",
-              IRC_COLOR_COLOR_STR,
-              IRC_COLOR_RESET_STR,
-              IRC_COLOR_COLOR_STR);
-    WEE_CHECK_DECODE_ANSI(string, "\x1B[31mC\x0F" "D\x1B[31mE", 1);
     snprintf (string, sizeof (string),
               "%s05A\n%s05B",
               IRC_COLOR_COLOR_STR,

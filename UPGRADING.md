@@ -294,8 +294,8 @@ The POSIX extended regular expression returned by info `color_ansi_regex` has ch
 now matches all ANSI control sequences, following the ECMA-48 grammar (parameter bytes,
 intermediate bytes and final byte), for example the cursor style `\e[2 q`, and also
 operating system commands (OSC, for example window title and hyperlinks), device control
-strings (DCS) and other escape sequences like `\e7`; only SGR sequences (ending with `m`)
-are colors.
+strings (DCS) and other escape sequences like `\e7`, and the chars SI and SO (shift in/out);
+only SGR sequences (ending with `m`) are colors.
 
 ## Version 4.10.0
 

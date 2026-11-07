@@ -78,7 +78,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: save secured data in sec.conf and display them on secured data buffer sorted by name
 - **breaking:** core: use the current date/time with microseconds as line identifier, replace buffer property "next_line_id" by "lines_last_id_assigned"
 - **breaking:** core: remove fields "date_printed" and "date_usec_printed" in lines, replaced by the line identifier
-- **breaking:** api: info "color_ansi_regex" matches all ANSI control sequences and other escape sequences (for example OSC and DCS strings), not only colors
+- **breaking:** api: info "color_ansi_regex" matches all ANSI control sequences and other escape sequences (for example OSC and DCS strings) and the chars SI and SO, not only colors
 - **breaking:** api: add optional argument "digits" in info "totp_validate" (6 by default), the one-time password must have exactly this number of digits
 - api: check completion pointer in functions completion_search, completion_get_string, completion_set, completion_list_add, completion_free, hook_completion_get_string and hook_completion_list_add to prevent a crash when a freed completion is used
 - api: check bar and bar item pointers in functions bar_set, bar_remove and bar_item_remove to prevent a crash when a removed bar or bar item is used
@@ -126,6 +126,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core, irc: remove chars SI and SO (shift in/out) when decoding ANSI colors, except SI on IRC, which is the IRC reset: the attributes and colors are now sent again after it (for example with `TERM=screen`, in output of `tput`)
 - core: decode ANSI rapid blink (code 6) as blink
 - core, irc: remove ANSI escape sequences containing bytes which are not valid UTF-8 when decoding ANSI colors, for example a window title in ISO-8859-1
 - core, irc: fix slow decoding of ANSI colors in a line with many escape sequences
