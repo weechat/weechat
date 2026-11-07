@@ -100,6 +100,7 @@ time_t gui_color_pairs_auto_reset_last = 0; /* time of last auto reset      */
 struct t_gui_buffer *gui_color_buffer = NULL; /* buffer with colors         */
 int gui_color_buffer_extra_info = 0;          /* display extra info?        */
 int gui_color_buffer_refresh_needed = 0;      /* refresh needed on buffer?  */
+int gui_color_buffer_sample_rgb = -1;         /* RGB color to display       */
 struct t_hook *gui_color_hook_timer = NULL;   /* timer for terminal colors  */
 int gui_color_timer = 0;                      /* timer in seconds           */
 
@@ -1375,6 +1376,37 @@ gui_color_buffer_display_palette_rgb (int y)
 }
 
 /*
+ * Display a RGB color in color buffer (color entered by user), with the
+ * nearest terminal color, starting at line "y".
+ *
+ * Return the next line to use in buffer.
+ */
+
+int
+gui_color_buffer_display_sample (int y, int rgb)
+{
+    char str_rgb[32], str_sample_rgb[64], str_term[32], str_sample_term[64];
+    int term;
+
+    snprintf (str_rgb, sizeof (str_rgb), ",#%06x", rgb & 0xFFFFFF);
+    snprintf (str_sample_rgb, sizeof (str_sample_rgb), "%s      %s",
+              gui_color_get_custom (str_rgb), GUI_NO_COLOR);
+
+    term = gui_color_convert_rgb_to_term_display (
+        rgb & 0xFFFFFF,
+        (gui_color_term_colors > 0) ? gui_color_term_colors : 256);
+    snprintf (str_term, sizeof (str_term), ",%d", term);
+    snprintf (str_sample_term, sizeof (str_sample_term), "%s      %s",
+              gui_color_get_custom (str_term), GUI_NO_COLOR);
+
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       _("Color %s: %s  nearest terminal color: %d %s"),
+                       str_rgb + 1, str_sample_rgb, term, str_sample_term);
+
+    return y;
+}
+
+/*
  * Display content of color buffer.
  */
 
@@ -1394,7 +1426,8 @@ gui_color_buffer_display (void)
     gui_buffer_set_title (gui_color_buffer,
                           _("WeeChat colors | Actions: "
                             "[e] Display extra infos [r] Refresh "
-                            "[z] Reset colors [q] Close buffer | "
+                            "[z] Reset colors [q] Close buffer "
+                            "[#rrggbb] Display a RGB color | "
                             "Keys: [alt-c] Temporarily switch to terminal "
                             "colors"));
 
@@ -1483,6 +1516,11 @@ gui_color_buffer_display (void)
         {
             y++;
             y = gui_color_buffer_display_palette_rgb (y);
+        }
+        if (gui_color_buffer_sample_rgb >= 0)
+        {
+            y++;
+            y = gui_color_buffer_display_sample (y, gui_color_buffer_sample_rgb);
         }
     }
 
@@ -1780,6 +1818,8 @@ gui_color_buffer_input_cb (const void *pointer, void *data,
                            struct t_gui_buffer *buffer,
                            const char *input_data)
 {
+    int rgb;
+
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
@@ -1801,6 +1841,15 @@ gui_color_buffer_input_cb (const void *pointer, void *data,
     {
         gui_color_reset_pairs ();
     }
+    else
+    {
+        rgb = gui_color_rgb_parse_exact (input_data);
+        if (rgb >= 0)
+        {
+            gui_color_buffer_sample_rgb = rgb;
+            gui_color_buffer_display ();
+        }
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -1819,6 +1868,7 @@ gui_color_buffer_close_cb (const void *pointer, void *data,
     (void) buffer;
 
     gui_color_buffer = NULL;
+    gui_color_buffer_sample_rgb = -1;
 
     return WEECHAT_RC_OK;
 }

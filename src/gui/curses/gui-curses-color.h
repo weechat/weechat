@@ -30,6 +30,7 @@ extern int gui_color_pairs_auto_reset;
 extern int gui_color_pairs_auto_reset_pending;
 extern time_t gui_color_pairs_auto_reset_last;
 extern int gui_color_buffer_refresh_needed;
+extern int gui_color_buffer_sample_rgb;
 
 extern int gui_color_get_gui_attrs (int color);
 extern int gui_color_get_term_direct_indexed (void);
@@ -56,6 +57,7 @@ extern int gui_color_buffer_display_rgb (int y);
 extern char *gui_color_buffer_palette_line (const char *label,
                                             int label_width, int rgb);
 extern int gui_color_buffer_display_palette_rgb (int y);
+extern int gui_color_buffer_display_sample (int y, int rgb);
 extern void gui_color_alloc (void);
 
 #endif /* WEECHAT_GUI_CURSES_COLOR_H */

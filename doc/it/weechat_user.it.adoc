@@ -1864,7 +1864,9 @@ if direct colors are not used, it suggests a value of _TERM_ with direct colors.
 The `/color` buffer also displays a rainbow and a gray ramp with RGB colors:
 they are smooth when RGB colors are displayed as-is; with direct colors, it
 displays colors 0-15 both with the palette (terminal theme) and with their
-standard RGB values, to compare them.
+standard RGB values, to compare them. You can also type a RGB color (for
+example `#ff8800`) in the `/color` buffer to display it with the nearest
+terminal color.
 
 // TRANSLATION MISSING
 RGB colors received in ANSI escape codes (for example in output of command

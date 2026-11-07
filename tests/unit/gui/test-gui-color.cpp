@@ -35,6 +35,10 @@ extern void gui_color_direct_color_string (int color, char *buffer, int size);
 extern char *gui_color_buffer_rgb_line (const int *colors, int count);
 extern char *gui_color_buffer_palette_line (const char *label,
                                             int label_width, int rgb);
+extern int gui_color_buffer_sample_rgb;
+extern int gui_color_buffer_input_cb (const void *pointer, void *data,
+                                      struct t_gui_buffer *buffer,
+                                      const char *input_data);
 }
 
 /*
@@ -519,6 +523,44 @@ TEST(GuiColor, BufferPaletteRgb)
     CHECK(test_gui_color_buffer_contains (gui_color_buffer, "\x19" "B@#800000"));
     gui_color_term_direct_colors = old_direct_colors;
     gui_buffer_close (gui_color_buffer);
+}
+
+/*
+ * Test functions:
+ *   gui_color_buffer_input_cb (RGB color)
+ *   gui_color_buffer_display_sample
+ */
+
+TEST(GuiColor, BufferSample)
+{
+    char str_nearest[64];
+
+    gui_color_buffer_open ();
+    CHECK(gui_color_buffer);
+    LONGS_EQUAL(-1, gui_color_buffer_sample_rgb);
+
+    /* invalid RGB colors: ignored */
+    gui_color_buffer_input_cb (NULL, NULL, gui_color_buffer, "#ff88");
+    gui_color_buffer_input_cb (NULL, NULL, gui_color_buffer, "#ff880000");
+    gui_color_buffer_input_cb (NULL, NULL, gui_color_buffer, "ff8800");
+    LONGS_EQUAL(-1, gui_color_buffer_sample_rgb);
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer, "Color #ff8800"));
+
+    /* valid RGB color: displayed with nearest terminal color */
+    gui_color_buffer_input_cb (NULL, NULL, gui_color_buffer, "#FF8800");
+    LONGS_EQUAL(0xff8800, gui_color_buffer_sample_rgb);
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer, "Color #ff8800"));
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer,
+                                          "\x19" "B@#ff8800      "));
+    snprintf (str_nearest, sizeof (str_nearest),
+              "nearest terminal color: %d ",
+              gui_color_convert_rgb_to_term_display (0xff8800,
+                                                    gui_color_term_colors));
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer, str_nearest));
+
+    /* closing the buffer resets the color */
+    gui_buffer_close (gui_color_buffer);
+    LONGS_EQUAL(-1, gui_color_buffer_sample_rgb);
 }
 
 /*
