@@ -943,12 +943,17 @@ upgrade_weechat_load (void)
     int rc;
     struct t_upgrade_file *upgrade_file;
 
-    upgrade_layout = gui_layout_alloc (GUI_LAYOUT_UPGRADE);
-
     upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME,
                                      &upgrade_weechat_read_cb, NULL, NULL);
     if (!upgrade_file)
         return 0;
+
+    upgrade_layout = gui_layout_alloc (GUI_LAYOUT_UPGRADE);
+    if (!upgrade_layout)
+    {
+        upgrade_file_close (upgrade_file);
+        return 0;
+    }
 
     rc = upgrade_file_read (upgrade_file);
 
