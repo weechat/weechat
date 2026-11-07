@@ -1158,8 +1158,8 @@ irc_color_decode_ansi_sequence (char **output,
                 irc_color_decode_ansi_set_attr (codes, &formatting->bold, 1,
                                                 IRC_COLOR_BOLD_STR);
                 break;
-            case 2: /* Remove bold */
-            case 21:
+            case 2: /* Dim (not in IRC): remove bold */
+            case 21: /* Remove bold */
             case 22:
                 irc_color_decode_ansi_set_attr (codes, &formatting->bold, 0,
                                                 IRC_COLOR_BOLD_STR);
@@ -1171,6 +1171,10 @@ irc_color_decode_ansi_sequence (char **output,
             case 4: /* Underline */
                 irc_color_decode_ansi_set_attr (codes, &formatting->underline,
                                                 1, IRC_COLOR_UNDERLINE_STR);
+                break;
+            case 7: /* Reverse */
+                irc_color_decode_ansi_set_attr (codes, &formatting->reverse,
+                                                1, IRC_COLOR_REVERSE_STR);
                 break;
             case 9: /* Strikethrough */
                 irc_color_decode_ansi_set_attr (codes,
@@ -1184,6 +1188,10 @@ irc_color_decode_ansi_sequence (char **output,
             case 24: /* Remove underline */
                 irc_color_decode_ansi_set_attr (codes, &formatting->underline,
                                                 0, IRC_COLOR_UNDERLINE_STR);
+                break;
+            case 27: /* Remove reverse */
+                irc_color_decode_ansi_set_attr (codes, &formatting->reverse,
+                                                0, IRC_COLOR_REVERSE_STR);
                 break;
             case 29: /* Remove strikethrough */
                 irc_color_decode_ansi_set_attr (codes,
