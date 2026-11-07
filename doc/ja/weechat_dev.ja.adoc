@@ -684,6 +684,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-irc-tag.cpp                    | Tests: IRC message tags.
 // TRANSLATION MISSING
+|             test-irc-upgrade.cpp                | Tests: upgrade of IRC plugin.
+// TRANSLATION MISSING
 |          logger/                                | Root of unit tests for logger plugin.
 // TRANSLATION MISSING
 |             test-logger.cpp                     | Tests: logger.

@@ -541,6 +541,8 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-irc-sasl.cpp                   | Тестови: SASL аутентификација са IRC протоколом.
 |             test-irc-server.cpp                 | Тестови: IRC сервер.
 |             test-irc-tag.cpp                    | Тестови: IRC ознаке порука.
+// TRANSLATION MISSING
+|             test-irc-upgrade.cpp                | Tests: upgrade of IRC plugin.
 |          logger/                                | Корен unit тестова за logger додатак.
 |             test-logger.cpp                     | Тестови: logger.
 |             test-logger-backlog.cpp             | Тестови: logger заостатак.
