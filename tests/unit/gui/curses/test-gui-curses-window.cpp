@@ -14,6 +14,9 @@ extern "C"
 #include "src/gui/curses/headless/ncurses-fake.h"
 #include "src/gui/gui-color.h"
 
+extern int gui_window_current_color_attr;
+extern void gui_window_set_color_style (WINDOW *window, int style);
+extern void gui_window_remove_color_style (WINDOW *window, int style);
 extern void gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
                                                int reset_attributes);
 extern void gui_window_string_apply_color_bg (unsigned char **str,
@@ -27,6 +30,35 @@ extern int gui_window_current_style_bg;
 TEST_GROUP(GuiCursesWindow)
 {
 };
+
+/*
+ * Test functions:
+ *   gui_window_set_color_style
+ *   gui_window_remove_color_style
+ */
+
+TEST(GuiCursesWindow, SetRemoveColorStyle)
+{
+    int old_color_attr;
+
+    old_color_attr = gui_window_current_color_attr;
+    gui_window_current_color_attr = 0;
+
+    gui_window_set_color_style (NULL, A_REVERSE | A_BOLD);
+    LONGS_EQUAL(A_REVERSE | A_BOLD, gui_window_current_color_attr);
+
+    /* Removing an attribute which is not set keeps the other ones. */
+    gui_window_remove_color_style (NULL, A_ITALIC);
+    LONGS_EQUAL(A_REVERSE | A_BOLD, gui_window_current_color_attr);
+
+    gui_window_remove_color_style (NULL, A_BOLD);
+    LONGS_EQUAL(A_REVERSE, gui_window_current_color_attr);
+
+    gui_window_remove_color_style (NULL, A_REVERSE);
+    LONGS_EQUAL(0, gui_window_current_color_attr);
+
+    gui_window_current_color_attr = old_color_attr;
+}
 
 /*
  * Test functions:

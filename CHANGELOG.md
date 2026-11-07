@@ -125,6 +125,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix reverse video removed after a control char displayed in text with reverse video, when an attribute was removed before
 - core, irc: ignore underline color in ANSI colors (SGR 58), instead of decoding its arguments as other attributes
 - core, irc: fix decoding of empty parameters in ANSI colors, use value 0 (for example reset) instead of ignoring them
 - core, irc: fix slow decoding of ANSI colors with many parameters

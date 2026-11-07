@@ -322,7 +322,7 @@ gui_window_set_color_style (WINDOW *window, int style)
 void
 gui_window_remove_color_style (WINDOW *window, int style)
 {
-    gui_window_current_color_attr &= !style;
+    gui_window_current_color_attr &= ~style;
     wattroff (window, style);
 }
 
