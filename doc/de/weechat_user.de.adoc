@@ -114,7 +114,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 | C Kompiler (gcc / clang) |
 | kompiliert C Quelldaten.
 
-| cmake | ≥ 3.0
+| cmake | ≥ 3.18
 | bauen.
 
 | pkgconf / pkg-config |
@@ -123,13 +123,13 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 | libncurses-dev |
 | Ncurses Oberfläche.
 
-| libcurl4-gnutls-dev |
+| libcurl4-gnutls-dev | ≥ 7.68.0
 | URL Transfer.
 
-| libgcrypt20-dev |
+| libgcrypt20-dev | ≥ 1.8.0
 | Geschützte Daten, IRC SASL Authentifikation.
 
-| libgnutls28-dev | ≥ 2.2.0 ^(2)^
+| libgnutls28-dev | ≥ 3.6.3
 | IRC-Erweiterung: Unterstützung von TLS Verbindungen, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE). +
   Relay-Erweiterung: Untersützung von TLS Verbindungen.
 
@@ -142,9 +142,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 
 [NOTE]
 ^(1)^ Der Name stammt von der Debian GNU/Linux Bookworm-Distribution,
-Version und Name können in anderen Distributionen anders lauten. +
-^(2)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
-ECDSA-NIST256P-CHALLENGE durchzuführen.
+Version und Name können in anderen Distributionen anders lauten.
 
 Die folgende Tabelle zeigt die Liste der Pakete, die zum Kompilieren von
 WeeChat optional sind:
@@ -165,13 +163,13 @@ WeeChat optional sind:
 | libcjson-dev |
 | Relay-Erweiterung: Protokoll "api" (HTTP REST API).
 
-| libzstd-dev | ≥ 0.8.1
+| libzstd-dev | ≥ 1.4.0
 // TRANLSATION MISSING
 | Logger-Erweiterung: Kompression von rotierenden Protokolldateien (zstandard). +
   Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (api and weechat protocols).
 
-| libaspell-dev / libenchant-dev |
+| libaspell-dev / libenchant-2-dev |
 | Spell Erweiterung.
 
 | python3-dev | ≥ 3.0
@@ -183,7 +181,7 @@ WeeChat optional sind:
 | ruby3.1, ruby3.1-dev | ≥ 1.9.1
 | Ruby Erweiterung.
 
-| liblua5.4-dev |
+| liblua5.4-dev | ≥ 5.3
 | Lua Erweiterung.
 
 | tcl-dev | ≥ 8.5

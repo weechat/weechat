@@ -112,7 +112,7 @@ WeeChat:
 | C compiler (gcc / clang) |
 | Compile C sources.
 
-| cmake | ≥ 3.0
+| cmake | ≥ 3.18
 | Build.
 
 | pkgconf / pkg-config |
@@ -121,13 +121,13 @@ WeeChat:
 | libncurses-dev |
 | Ncurses interface.
 
-| libcurl4-gnutls-dev |
+| libcurl4-gnutls-dev | ≥ 7.68.0
 | URL transfer.
 
-| libgcrypt20-dev |
+| libgcrypt20-dev | ≥ 1.8.0
 | Secured data, IRC SASL authentication.
 
-| libgnutls28-dev | ≥ 2.2.0 ^(2)^
+| libgnutls28-dev | ≥ 3.6.3
 | IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
   Relay plugin: support of TLS connections.
 
@@ -140,9 +140,7 @@ WeeChat:
 
 [NOTE]
 ^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
-name can be different in other distributions. +
-^(2)^ GnuTLS ≥ 3.0.21 is required for IRC SASL authentication with mechanism
-ECDSA-NIST256P-CHALLENGE.
+name can be different in other distributions.
 
 The following table shows the list of packages that are optional to compile
 WeeChat:
@@ -163,12 +161,12 @@ WeeChat:
 | libcjson-dev |
 | Relay plugin: protocol "api" (HTTP REST API).
 
-| libzstd-dev | ≥ 0.8.1
+| libzstd-dev | ≥ 1.4.0
 | Logger plugin: compression of rotated log files (zstandard). +
   Relay plugin: compression of messages with https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (api and weechat protocols).
 
-| libaspell-dev / libenchant-dev |
+| libaspell-dev / libenchant-2-dev |
 | Spell plugin.
 
 | python3-dev | ≥ 3.0
@@ -180,7 +178,7 @@ WeeChat:
 | ruby3.1, ruby3.1-dev | ≥ 1.9.1
 | Ruby plugin.
 
-| liblua5.4-dev |
+| liblua5.4-dev | ≥ 5.3
 | Lua plugin.
 
 | tcl-dev | ≥ 8.5
