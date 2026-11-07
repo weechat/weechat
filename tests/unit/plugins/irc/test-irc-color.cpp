@@ -1078,6 +1078,31 @@ TEST(IrcColor, IsHexColor)
 
 /*
  * Test functions:
+ *   irc_color_decode_ansi (invalid parameters)
+ */
+
+TEST(IrcColor, DecodeAnsiInvalid)
+{
+    char string[256], *decoded;
+
+    /* Incomplete colors: remaining parameters are ignored. */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[58;2;1;0mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[38;2;255mB", 1);
+    snprintf (string, sizeof (string), "A%sB", IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "A\x1B[1;58;5mB", 1);
+    WEE_CHECK_DECODE_ANSI(string, "A\x1B[1;48;3;1;2;3mB", 1);
+
+    /* Invalid terminal color: ignored */
+    WEE_CHECK_DECODE_ANSI(string, "A\x1B[38;5;300;1mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[48;5;300mB", 1);
+
+    /* Numbers out of range: ignored */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[4294967297mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[38;4294967298;0;255;0mB", 1);
+}
+
+/*
+ * Test functions:
  *   irc_color_decode_ansi
  */
 

@@ -1646,6 +1646,99 @@ gui_color_ansi_rgb_component (const char *item)
 }
 
 /*
+ * Get the value of a parameter of an ANSI escape sequence (an empty parameter
+ * is 0).
+ *
+ * Return the value, -1 if the parameter is not a number or is greater than
+ * 65535.
+ */
+
+int
+gui_color_ansi_param_value (const char *param)
+{
+    char *error;
+    long value;
+
+    if (!param || !param[0])
+        return 0;
+
+    value = strtol (param, &error, 10);
+    if (error[0] || (value < 0) || (value > 65535))
+        return -1;
+
+    return (int)value;
+}
+
+/*
+ * Parse the color after a parameter 38 (text color), 48 (background color)
+ * or 58 (underline color) of an ANSI escape sequence: "5;N" (terminal color)
+ * or "2;R;G;B" (RGB color).
+ *
+ * On input, *index is the index of parameter 38/48/58 in items; on output, it
+ * is the index of the last parameter of the color. If the color is incomplete
+ * or has an unknown type, all the remaining parameters are ignored.
+ *
+ * Return the terminal color (0-255), the RGB color with flag
+ * GUI_COLOR_ANSI_RGB_FLAG (GUI_COLOR_ANSI_RGB_FLAG | 0xRRGGBB), -1 if the
+ * color is invalid.
+ */
+
+int
+gui_color_ansi_parse_color (char **items, int num_items, int *index)
+{
+    int i, color;
+
+    i = *index;
+
+    switch ((i + 1 < num_items) ? gui_color_ansi_param_value (items[i + 1]) : -1)
+    {
+        case 2: /* RGB color */
+            if (i + 4 < num_items)
+            {
+                *index = i + 4;
+                return GUI_COLOR_ANSI_RGB_FLAG
+                    | (gui_color_ansi_rgb_component (items[i + 2]) << 16)
+                    | (gui_color_ansi_rgb_component (items[i + 3]) << 8)
+                    | gui_color_ansi_rgb_component (items[i + 4]);
+            }
+            break;
+        case 5: /* Terminal color (0-255) */
+            if (i + 2 < num_items)
+            {
+                *index = i + 2;
+                color = gui_color_ansi_param_value (items[i + 2]);
+                return ((color >= 0) && (color <= 255)) ? color : -1;
+            }
+            break;
+    }
+
+    /* Incomplete color or unknown type: ignore the remaining parameters. */
+    *index = num_items - 1;
+    return -1;
+}
+
+/*
+ * Build the name of a color returned by function gui_color_ansi_parse_color,
+ * with a prefix (for example "|" or "|,"): terminal color ("|208") or RGB
+ * color ("|#ff8800").
+ */
+
+void
+gui_color_ansi_color_name (char *buffer, int size, const char *prefix,
+                           int color)
+{
+    if (color & GUI_COLOR_ANSI_RGB_FLAG)
+    {
+        snprintf (buffer, size, "%s#%06x",
+                  prefix, color & 0xFFFFFF);
+    }
+    else
+    {
+        snprintf (buffer, size, "%s%d", prefix, color);
+    }
+}
+
+/*
  * Parse an ANSI escape sequence: for each parameter of a SGR sequence
  * ("\33[" + parameters + "m"), call the callback with the value of the
  * parameter and its color (for 38 and 48: terminal color 0-255, or RGB color
@@ -1702,8 +1795,8 @@ gui_color_ansi_parse_sequence (const char *sequence,
         goto end;
 
     /*
-     * Keep empty parameters: an empty parameter is 0 (atoi returns 0),
-     * for example "\33[;1m" is "\33[0;1m".
+     * Keep empty parameters: an empty parameter is 0 (see function
+     * gui_color_ansi_param_value), for example "\33[;1m" is "\33[0;1m".
      */
     items = string_split (text2, ";", NULL, 0, 0, &num_items);
     if (!items)
@@ -1714,37 +1807,16 @@ gui_color_ansi_parse_sequence (const char *sequence,
         /* Parameters with sub-parameters (separated by ":") are ignored. */
         if (strchr (items[i], ':'))
             continue;
-        value = atoi (items[i]);
-        /* Invalid value (for example a number too large): ignored. */
+        value = gui_color_ansi_param_value (items[i]);
+        /* Invalid value (not a number or out of range): ignored. */
         if (value < 0)
             continue;
         color = -1;
         if ((value == 38) || (value == 48) || (value == 58))
         {
-            if (i + 1 >= num_items)
-                continue;
-            switch (atoi (items[i + 1]))
-            {
-                case 2: /* RGB color */
-                    if (i + 4 >= num_items)
-                        continue;
-                    color = GUI_COLOR_ANSI_RGB_FLAG
-                        | (gui_color_ansi_rgb_component (items[i + 2]) << 16)
-                        | (gui_color_ansi_rgb_component (items[i + 3]) << 8)
-                        | gui_color_ansi_rgb_component (items[i + 4]);
-                    i += 4;
-                    break;
-                case 5: /* Terminal color (0-255) */
-                    if (i + 2 >= num_items)
-                        continue;
-                    color = atoi (items[i + 2]);
-                    i += 2;
-                    break;
-                default:
-                    continue;
-            }
-            /* Underline color (not supported, ignored). */
-            if (value == 58)
+            color = gui_color_ansi_parse_color (items, num_items, &i);
+            /* Invalid color, or underline color (not supported): ignored. */
+            if ((color < 0) || (value == 58))
                 continue;
         }
         (callback) (output, value, color);
@@ -1825,20 +1897,8 @@ gui_color_decode_ansi_param_cb (char **output, int value, int color)
             break;
         case 38: /* Text color */
         case 48: /* Background color */
-            if (color & GUI_COLOR_ANSI_RGB_FLAG)
-            {
-                snprintf (str_color, sizeof (str_color),
-                          "%s#%06x",
-                          (value == 38) ? "|" : "|,",
-                          color & 0xFFFFFF);
-            }
-            else
-            {
-                snprintf (str_color, sizeof (str_color),
-                          "%s%d",
-                          (value == 38) ? "|" : "|,",
-                          color);
-            }
+            gui_color_ansi_color_name (str_color, sizeof (str_color),
+                                       (value == 38) ? "|" : "|,", color);
             string_dyn_concat (output, gui_color_get_custom (str_color), -1);
             break;
         case 39: /* Default text color */
@@ -1905,10 +1965,6 @@ gui_color_normalize_ansi_param_cb (char **output, int value, int color)
             string_dyn_concat (output, "m", -1);
         return;
     }
-
-    /* Invalid color (for example a number too large): ignored. */
-    if (((value == 38) || (value == 48)) && (color < 0))
-        return;
 
     if ((value == 38) || (value == 48))
     {

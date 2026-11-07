@@ -294,6 +294,10 @@ extern int gui_color_downgrade_rgb_term (int rgb);
 extern char *gui_color_downgrade_rgb (const char *string);
 extern char *gui_color_downgrade_rgb_name (const char *name);
 extern int gui_color_ansi_rgb_component (const char *item);
+extern int gui_color_ansi_param_value (const char *param);
+extern int gui_color_ansi_parse_color (char **items, int num_items, int *index);
+extern void gui_color_ansi_color_name (char *buffer, int size,
+                                       const char *prefix, int color);
 extern char *gui_color_ansi_parse_sequence (const char *sequence,
                                             t_gui_color_ansi_param_cb *callback);
 extern char *gui_color_ansi_replace (const char *string, int keep_colors,

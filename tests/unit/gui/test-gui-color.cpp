@@ -1918,6 +1918,113 @@ TEST(GuiColor, NormalizeAnsi)
 
 /*
  * Test functions:
+ *   gui_color_ansi_param_value
+ */
+
+TEST(GuiColor, AnsiParamValue)
+{
+    LONGS_EQUAL(0, gui_color_ansi_param_value (NULL));
+    LONGS_EQUAL(0, gui_color_ansi_param_value (""));
+    LONGS_EQUAL(0, gui_color_ansi_param_value ("0"));
+    LONGS_EQUAL(38, gui_color_ansi_param_value ("38"));
+    LONGS_EQUAL(65535, gui_color_ansi_param_value ("65535"));
+    LONGS_EQUAL(-1, gui_color_ansi_param_value ("65536"));
+    LONGS_EQUAL(-1, gui_color_ansi_param_value ("4294967297"));
+    LONGS_EQUAL(-1, gui_color_ansi_param_value ("99999999999999999999999"));
+    LONGS_EQUAL(-1, gui_color_ansi_param_value ("1x"));
+}
+
+/*
+ * Test functions:
+ *   gui_color_ansi_parse_color
+ */
+
+TEST(GuiColor, AnsiParseColor)
+{
+    char **items;
+    int num_items, index;
+
+    /* Terminal color */
+    items = string_split ("38;5;214;1", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(214, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(2, index);
+    string_free_split (items);
+
+    /* RGB color */
+    items = string_split ("1;48;2;255;0;0;4", ";", NULL, 0, 0, &num_items);
+    index = 1;
+    LONGS_EQUAL(GUI_COLOR_ANSI_RGB_FLAG | 0xff0000,
+                gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(5, index);
+    string_free_split (items);
+
+    /* Invalid terminal color: color is ignored. */
+    items = string_split ("38;5;300;1", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(2, index);
+    string_free_split (items);
+
+    /* Incomplete colors: the remaining parameters are ignored. */
+    items = string_split ("58;2;1;0", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(3, index);
+    string_free_split (items);
+    items = string_split ("38;5", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(1, index);
+    string_free_split (items);
+    items = string_split ("38", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(0, index);
+    string_free_split (items);
+
+    /* Unknown type of color: the remaining parameters are ignored. */
+    items = string_split ("38;3;1;2;3;1", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(5, index);
+    string_free_split (items);
+    items = string_split ("38;4294967298;0;255;0", ";", NULL, 0, 0,
+                          &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(4, index);
+    string_free_split (items);
+}
+
+/*
+ * Test functions:
+ *   gui_color_decode_ansi (invalid parameters)
+ */
+
+TEST(GuiColor, DecodeAnsiInvalid)
+{
+    char string[256], *decoded;
+
+    /* Incomplete colors: remaining parameters are ignored. */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[58;2;1;0m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[38;2;255m" "B", 1);
+    snprintf (string, sizeof (string),
+              "A" "%s" "B", gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;58;5m" "B", 1);
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;48;3;1;2;3m" "B", 1);
+
+    /* Invalid terminal color: ignored */
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[38;5;300;1m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[48;5;300m" "B", 1);
+
+    /* Numbers out of range: ignored */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[4294967297m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[38;4294967298;0;255;0m" "B", 1);
+}
+
+/*
+ * Test functions:
  *   gui_color_ansi_rgb_component
  */
 
