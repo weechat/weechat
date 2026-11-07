@@ -221,11 +221,11 @@ irc_raw_message_print (struct t_irc_raw_message *raw_message)
     else
     {
         buf = weechat_iconv_to_internal (NULL, raw_message->message);
-        buf2 = malloc ((strlen (buf) * 4) + 1);
+        ptr_buf = (buf) ?
+            (unsigned char *)buf : (unsigned char *)(raw_message->message);
+        buf2 = malloc ((strlen ((const char *)ptr_buf) * 4) + 1);
         if (buf2)
         {
-            ptr_buf = (buf) ?
-                (unsigned char *)buf : (unsigned char *)(raw_message->message);
             pos_buf = 0;
             pos_buf2 = 0;
             while (ptr_buf[pos_buf])
