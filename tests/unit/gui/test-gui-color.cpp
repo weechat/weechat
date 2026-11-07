@@ -48,6 +48,7 @@ extern int gui_color_extended_value (const char *string, int *rgb,
 extern int gui_color_downgrade_rgb_term (int rgb);
 extern int gui_color_code_size_number (const char *string, int with_attr,
                                        int *number);
+extern void gui_color_info_rgb (char *buffer, int size);
 }
 
 #define WEE_CHECK_DECODE(__result, __string, __replacement)             \
@@ -429,6 +430,89 @@ TEST(GuiColor, InfoTermColors)
     CHECK(!strstr (str_info_no_direct, " (direct, palette:"));
     CHECK(strstr (str_info_256, " (direct, palette: 256), "));
     CHECK(strstr (str_info_8, " (direct, palette: 8), "));
+}
+
+/*
+ * Test functions:
+ *   gui_color_suggest_term_direct
+ */
+
+TEST(GuiColor, SuggestTermDirect)
+{
+    STRCMP_EQUAL("xterm-direct256", gui_color_suggest_term_direct (NULL, 0));
+    STRCMP_EQUAL("xterm-direct256", gui_color_suggest_term_direct ("", 0));
+    STRCMP_EQUAL("xterm-direct256", gui_color_suggest_term_direct ("xterm", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("xterm-256color", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("xterm-ghostty", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("unknown-term", 0));
+    STRCMP_EQUAL("tmux-direct", gui_color_suggest_term_direct ("tmux", 0));
+    STRCMP_EQUAL("tmux-direct",
+                 gui_color_suggest_term_direct ("tmux-256color", 0));
+    STRCMP_EQUAL("kitty-direct", gui_color_suggest_term_direct ("kitty", 0));
+    STRCMP_EQUAL("foot-direct", gui_color_suggest_term_direct ("foot", 0));
+    STRCMP_EQUAL("st-direct",
+                 gui_color_suggest_term_direct ("st-256color", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("stterm-256color", 0));
+
+    /* GNU screen and Linux console: no TERM with direct colors */
+    POINTERS_EQUAL(NULL, gui_color_suggest_term_direct ("screen", 0));
+    POINTERS_EQUAL(NULL,
+                   gui_color_suggest_term_direct ("screen-256color", 0));
+    POINTERS_EQUAL(NULL,
+                   gui_color_suggest_term_direct ("screen.xterm-256color", 0));
+    POINTERS_EQUAL(NULL, gui_color_suggest_term_direct ("linux", 0));
+
+    /* running under tmux: always "tmux-direct" */
+    STRCMP_EQUAL("tmux-direct",
+                 gui_color_suggest_term_direct ("screen-256color", 1));
+    STRCMP_EQUAL("tmux-direct",
+                 gui_color_suggest_term_direct ("xterm-256color", 1));
+}
+
+/*
+ * Test functions:
+ *   gui_color_info_rgb
+ */
+
+TEST(GuiColor, InfoRgb)
+{
+    char str_info[1024], *old_term, *old_tmux;
+    const char *ptr_term;
+    int old_direct_colors;
+
+    old_direct_colors = gui_color_term_direct_colors;
+
+    gui_color_term_direct_colors = 1;
+    gui_color_info_rgb (str_info, sizeof (str_info));
+    CHECK(strstr (str_info, "displayed as-is"));
+
+    gui_color_term_direct_colors = 0;
+    gui_color_info_rgb (str_info, sizeof (str_info));
+    CHECK(strstr (str_info, "nearest terminal color"));
+
+    /* No value of TERM with direct colors for this terminal (not in tmux). */
+    ptr_term = getenv ("TERM");
+    old_term = (ptr_term) ? strdup (ptr_term) : NULL;
+    ptr_term = getenv ("TMUX");
+    old_tmux = (ptr_term) ? strdup (ptr_term) : NULL;
+    setenv ("TERM", "linux", 1);
+    unsetenv ("TMUX");
+    gui_color_info_rgb (str_info, sizeof (str_info));
+    CHECK(strstr (str_info, "use a terminal with direct colors"));
+    if (old_term)
+        setenv ("TERM", old_term, 1);
+    else
+        unsetenv ("TERM");
+    if (old_tmux)
+        setenv ("TMUX", old_tmux, 1);
+    free (old_term);
+    free (old_tmux);
+
+    gui_color_term_direct_colors = old_direct_colors;
 }
 
 /*

@@ -228,6 +228,8 @@ extern int gui_color_convert_rgb_to_term_display (int rgb, int limit);
 extern int gui_color_ansi_is_indexed (const char *sequence);
 extern int gui_color_convert_term_to_direct (int color, int num_indexed);
 extern int gui_color_rgb_to_direct (int rgb);
+extern const char *gui_color_suggest_term_direct (const char *term,
+                                                  int tmux);
 extern int gui_color_rgb_parse_exact (const char *string);
 extern unsigned long long gui_color_hash_key_cb (struct t_hashtable *hashtable,
                                                 const void *key);
