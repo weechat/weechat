@@ -1708,7 +1708,8 @@ _xterm-direct_ or _tmux-direct_) only colors 0-7 do: other colors are displayed
 with their standard RGB value, ignoring the terminal theme.
 
 Command `/color` (or `weechat --colors`) shows if direct colors are used and
-how many palette colors are kept, for example: `COLORS: 256 (direct, palette: 256)`.
+how many palette colors are kept, for example: `COLORS: 256 (direct, palette: 256)`;
+if direct colors are not used, it suggests a value of _TERM_ with direct colors.
 
 RGB colors received in ANSI escape codes (for example in output of command
 `/exec`) and IRC hex colors are kept as-is too.

@@ -746,6 +746,56 @@ gui_color_rgb_to_direct (int rgb)
 }
 
 /*
+ * Suggest a value of TERM with direct colors (RGB colors displayed as-is),
+ * using the current value of TERM: the name before the first "-" is used to
+ * find a terminfo entry with direct colors provided by ncurses.
+ *
+ * If "tmux" is 1 (WeeChat is running under tmux), "tmux-direct" is returned
+ * whatever the value of TERM.
+ *
+ * Return a TERM value, NULL if no value is known (for example with
+ * GNU screen or the Linux console, which have no terminfo entry with direct
+ * colors).
+ */
+
+const char *
+gui_color_suggest_term_direct (const char *term, int tmux)
+{
+    static char str_term[64];
+    const char *terms_direct[] = {
+        "alacritty", "contour", "foot", "iterm2", "kitty", "konsole",
+        "mintty", "mlterm", "rio", "st", "tmux", "vscode", "vte", NULL,
+    };
+    const char *pos;
+    int i, length;
+
+    if (tmux)
+        return "tmux-direct";
+
+    if (!term || !term[0])
+        return "xterm-direct256";
+
+    if ((strncmp (term, "screen", 6) == 0) || (strcmp (term, "linux") == 0))
+        return NULL;
+
+    pos = strchr (term, '-');
+    length = (pos) ? pos - term : (int)strlen (term);
+
+    for (i = 0; terms_direct[i]; i++)
+    {
+        if (((int)strlen (terms_direct[i]) == length)
+            && (strncmp (term, terms_direct[i], length) == 0))
+        {
+            snprintf (str_term, sizeof (str_term),
+                      "%s-direct", terms_direct[i]);
+            return str_term;
+        }
+    }
+
+    return "xterm-direct256";
+}
+
+/*
  * Parse a RGB color at the beginning of a string: "#" followed by exactly
  * 6 hexadecimal digits (other chars may follow).
  *

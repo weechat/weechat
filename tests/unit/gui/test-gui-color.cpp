@@ -397,6 +397,70 @@ TEST(GuiColor, InfoTermColors)
 
 /*
  * Test functions:
+ *   gui_color_suggest_term_direct
+ */
+
+TEST(GuiColor, SuggestTermDirect)
+{
+    STRCMP_EQUAL("xterm-direct256", gui_color_suggest_term_direct (NULL, 0));
+    STRCMP_EQUAL("xterm-direct256", gui_color_suggest_term_direct ("", 0));
+    STRCMP_EQUAL("xterm-direct256", gui_color_suggest_term_direct ("xterm", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("xterm-256color", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("xterm-ghostty", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("unknown-term", 0));
+    STRCMP_EQUAL("tmux-direct", gui_color_suggest_term_direct ("tmux", 0));
+    STRCMP_EQUAL("tmux-direct",
+                 gui_color_suggest_term_direct ("tmux-256color", 0));
+    STRCMP_EQUAL("kitty-direct", gui_color_suggest_term_direct ("kitty", 0));
+    STRCMP_EQUAL("foot-direct", gui_color_suggest_term_direct ("foot", 0));
+    STRCMP_EQUAL("st-direct",
+                 gui_color_suggest_term_direct ("st-256color", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("stterm-256color", 0));
+
+    /* GNU screen and Linux console: no TERM with direct colors */
+    POINTERS_EQUAL(NULL, gui_color_suggest_term_direct ("screen", 0));
+    POINTERS_EQUAL(NULL,
+                   gui_color_suggest_term_direct ("screen-256color", 0));
+    POINTERS_EQUAL(NULL,
+                   gui_color_suggest_term_direct ("screen.xterm-256color", 0));
+    POINTERS_EQUAL(NULL, gui_color_suggest_term_direct ("linux", 0));
+
+    /* running under tmux: always "tmux-direct" */
+    STRCMP_EQUAL("tmux-direct",
+                 gui_color_suggest_term_direct ("screen-256color", 1));
+    STRCMP_EQUAL("tmux-direct",
+                 gui_color_suggest_term_direct ("xterm-256color", 1));
+}
+
+/*
+ * Test functions:
+ *   gui_color_info_rgb
+ */
+
+TEST(GuiColor, InfoRgb)
+{
+    char str_info[1024];
+    int old_direct_colors;
+
+    old_direct_colors = gui_color_term_direct_colors;
+
+    gui_color_term_direct_colors = 1;
+    gui_color_info_rgb (str_info, sizeof (str_info));
+    CHECK(strstr (str_info, "displayed as-is"));
+
+    gui_color_term_direct_colors = 0;
+    gui_color_info_rgb (str_info, sizeof (str_info));
+    CHECK(strstr (str_info, "nearest terminal color"));
+
+    gui_color_term_direct_colors = old_direct_colors;
+}
+
+/*
+ * Test functions:
  *   gui_color_ansi_is_indexed
  */
 

@@ -232,6 +232,8 @@ extern int gui_color_convert_rgb_to_term_range (int rgb, int first,
 extern int gui_color_ansi_is_indexed (const char *sequence);
 extern int gui_color_convert_term_to_direct (int color, int num_indexed);
 extern int gui_color_rgb_to_direct (int rgb);
+extern const char *gui_color_suggest_term_direct (const char *term,
+                                                  int tmux);
 extern int gui_color_rgb_parse (const char *string);
 extern int gui_color_rgb_parse_exact (const char *string);
 extern unsigned long long gui_color_hash_key_cb (struct t_hashtable *hashtable,
@@ -292,6 +294,7 @@ extern void gui_color_free_vars (void);
 extern void gui_color_init_weechat (void);
 extern void gui_color_display_terminal_colors (void);
 extern void gui_color_info_term_colors (char *buffer, int size);
+extern void gui_color_info_rgb (char *buffer, int size);
 extern void gui_color_buffer_display (void);
 extern void gui_color_switch_colors (void);
 extern void gui_color_reset_pairs (void);

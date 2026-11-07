@@ -1060,6 +1060,8 @@ gui_color_display_terminal_colors (void)
     gui_color_info_term_colors (str_line, sizeof (str_line));
     printf ("\n");
     printf ("%s %s\n", _("Terminal infos:"), str_line);
+    gui_color_info_rgb (str_line, sizeof (str_line));
+    printf ("%s\n", str_line);
     if (gui_color_term_colors == 0)
     {
         printf ("%s\n", _("No color support in terminal."));
@@ -1105,7 +1107,8 @@ gui_color_buffer_display_timer (void)
 {
     if (gui_color_buffer && gui_color_use_term_colors)
     {
-        gui_chat_printf_y (gui_color_buffer, 2,
+        /* Line 3: after terminal infos, RGB infos and an empty line. */
+        gui_chat_printf_y (gui_color_buffer, 3,
                            "%s  (%d)",
                            _("Terminal colors:"),
                            gui_color_timer);
@@ -1141,6 +1144,53 @@ gui_color_info_term_colors (char *buffer, int size)
 }
 
 /*
+ * Build a string with the support of RGB colors ("#rrggbb") in terminal:
+ * displayed as-is (terminal with direct colors) or with the nearest terminal
+ * color, with a suggestion of TERM value in this case.
+ */
+
+void
+gui_color_info_rgb (char *buffer, int size)
+{
+    const char *ptr_term;
+
+    if (gui_color_term_direct_colors)
+    {
+        snprintf (buffer, size, "%s",
+                  _("RGB colors (#rrggbb): displayed as-is (terminal with "
+                    "direct colors)"));
+        return;
+    }
+
+#if !defined(NCURSES_EXT_COLORS) || (NCURSES_EXT_COLORS < 20180127)
+    /* Direct colors can not be used without extended colors in ncurses. */
+    snprintf (buffer, size, "%s",
+              _("RGB colors (#rrggbb): displayed with the nearest terminal "
+                "color (direct colors are not supported by the ncurses "
+                "library used by WeeChat)"));
+    return;
+#endif /* NCURSES_EXT_COLORS < 20180127 */
+
+    ptr_term = gui_color_suggest_term_direct (getenv ("TERM"),
+                                              (getenv ("TMUX")) ? 1 : 0);
+    if (ptr_term)
+    {
+        snprintf (buffer, size,
+                  _("RGB colors (#rrggbb): displayed with the nearest "
+                    "terminal color; to display them as-is, set TERM to a "
+                    "value with direct colors, for example \"%s\""),
+                  ptr_term);
+    }
+    else
+    {
+        snprintf (buffer, size, "%s",
+                  _("RGB colors (#rrggbb): displayed with the nearest "
+                    "terminal color; to display them as-is, use a terminal "
+                    "with direct colors"));
+    }
+}
+
+/*
  * Display content of color buffer.
  */
 
@@ -1167,6 +1217,8 @@ gui_color_buffer_display (void)
     /* Display terminal/colors infos. */
     y = 0;
     gui_color_info_term_colors (str_line, sizeof (str_line));
+    gui_chat_printf_y (gui_color_buffer, y++, "%s", str_line);
+    gui_color_info_rgb (str_line, sizeof (str_line));
     gui_chat_printf_y (gui_color_buffer, y++, "%s", str_line);
 
     /* Display palette of colors. */
