@@ -8,7 +8,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 _The file [UPGRADING.md](UPGRADING.md) contains important information about upgrades, for example manual actions to perform when upgrading from a version to another one (most changes are automated, but some of them cannot be)._
 
-## [Unreleased]
+## [4.10.3] - 2026-11-07
 
 ### Fixed
 
@@ -4565,7 +4565,8 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - log file (~/.weechat/weechat.log)
 - nicklist can be moved on top, bottom, left or right of window
 
-[Unreleased]: https://github.com/weechat/weechat/compare/v4.10.2...4.10
+[Unreleased]: https://github.com/weechat/weechat/compare/v4.10.3...4.10
+[4.10.3]: https://github.com/weechat/weechat/compare/v4.10.2...v4.10.3
 [4.10.2]: https://github.com/weechat/weechat/compare/v4.10.1...v4.10.2
 [4.10.1]: https://github.com/weechat/weechat/compare/v4.10.0...v4.10.1
 [4.10.0]: https://github.com/weechat/weechat/compare/v4.9.0...v4.10.0
