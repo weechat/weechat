@@ -25,6 +25,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: fix display of messages sent to the server in raw buffer, displayed twice and marked as modified even when no modifier changed them
 - relay: fix memory leak when relay clients are restored after `/upgrade`
 - trigger: set variables "tg_trigger_name" and "tg_hook_type" in focus triggers, do not add them in the hashtable returned
+- xfer: fix memory leak of token in passive DCC transfers
 - xfer: fix send of files greater than 4 GiB with DCC, the transfer failed or stalled after 4 GiB
 - xfer: fix timeout of transfers when option xfer.network.timeout is greater than 2147483 seconds
 - xfer: fix socket closed twice when a transfer cannot be created
