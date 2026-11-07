@@ -126,6 +126,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: decode ANSI rapid blink (code 6) as blink
 - core, irc: remove ANSI escape sequences containing bytes which are not valid UTF-8 when decoding ANSI colors, for example a window title in ISO-8859-1
 - core, irc: fix slow decoding of ANSI colors in a line with many escape sequences
 - core, irc: decode ANSI colors with sub-parameters separated by colons, for example `38:2::255:136:0` in output of `/exec` ([#1364](https://github.com/weechat/weechat/issues/1364))

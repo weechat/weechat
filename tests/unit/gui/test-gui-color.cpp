@@ -1592,6 +1592,7 @@ TEST(GuiColor, DecodeAnsi)
               gui_color_get_custom ("blink"),
               gui_color_get_custom ("-blink"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[5m" "blink" "\x1B[25m" "_end", 1);
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[6m" "blink" "\x1B[25m" "_end", 1);
 
     /* Dim (22 = normal intensity: remove bold and dim) */
     WEE_CHECK_DECODE_ANSI("test_dim_end", "test_" "\x1B[2m" "dim" "\x1B[22m" "_end", 0);

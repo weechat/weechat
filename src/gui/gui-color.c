@@ -1920,6 +1920,7 @@ gui_color_decode_ansi_param_cb (char **output, int value, int color)
             string_dyn_concat (output, gui_color_get_custom ("underline"), -1);
             break;
         case 5: /* Blink */
+        case 6: /* Rapid blink */
             string_dyn_concat (output, gui_color_get_custom ("blink"), -1);
             break;
         case 7: /* Reverse */
