@@ -649,7 +649,9 @@ relay_api_protocol_config_option_cb (const void *pointer, void *data,
     if (ptr_option)
     {
         relay_json_object_add (json, "value",
-                               relay_api_msg_option_value_to_json (ptr_option, 0));
+                               relay_api_msg_option_value_to_json (
+                                   ptr_option, 0,
+                                   RELAY_API_DATA(ptr_client, sync_rgb_colors)));
     }
 
     relay_api_msg_send_event (ptr_client,
@@ -1295,6 +1297,16 @@ RELAY_API_PROTOCOL_CALLBACK(options)
 {
     struct t_relay_json *json;
     struct t_config_option *ptr_option;
+    int rgb_colors;
+
+    if (!relay_http_get_param_boolean (client->http_req, "rgb_colors", 0,
+                                       &rgb_colors))
+    {
+        relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL,
+                                       "Invalid parameter \"%s\"",
+                                       "rgb_colors");
+        return RELAY_API_PROTOCOL_RC_OK;
+    }
 
     ptr_option = weechat_config_get (client->http_req->path_items[2]);
     if (!ptr_option)
@@ -1305,7 +1317,7 @@ RELAY_API_PROTOCOL_CALLBACK(options)
         return RELAY_API_PROTOCOL_RC_OK;
     }
 
-    json = relay_api_msg_option_to_json (ptr_option);
+    json = relay_api_msg_option_to_json (ptr_option, rgb_colors);
     if (!json)
         return RELAY_API_PROTOCOL_RC_MEMORY;
 

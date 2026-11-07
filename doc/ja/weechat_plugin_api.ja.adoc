@@ -10309,6 +10309,8 @@ const char *weechat_color (const char *color_name);
 * `+*214+` : テキストを太字でオレンジ色に
 * `+yellow,red+` : テキストを黄色に、背景色を赤に
 * `+|cyan+` : テキストをシアンに (これよりも前に設定した属性は変えない)
+// TRANSLATION MISSING
+* `+#ff8800+`: orange (RGB color) _(WeeChat ≥ 5.0.0)_
 
 戻り値:
 

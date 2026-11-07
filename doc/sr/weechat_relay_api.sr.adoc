@@ -1518,6 +1518,15 @@ GET /api/options/{option_name}
 * `option_name` (стринг, обавезан): пуно име опције: конфигурациони фајл,
   одељак и опција, раздвојени тачкама (пример: `weechat.look.buffer_time_format`)
 
+Параметри упита:
+
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors in the
+  values of color options (for example `#ff8800`); if `false`, RGB colors are
+  replaced by the nearest color of the 256-color palette (colors 16-255, for
+  example `208`)
+  _(WeeChat ≥ 5.0.0)_
+
 Вредност се враћа онаква каква је сачувана у опцији, како је приказује команда
 `/set`: не израчунава се (на пример `${sec.data.xxx}` се враћа онакво какво је).
 
@@ -1936,8 +1945,9 @@ POST /api/sync
 * `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
   ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
   with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
-  color names of nicks and groups, and in the color of nick in tags of lines,
-  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  color names of nicks and groups, in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`, and in the values of color options sent
+  in events `option_changed`) are replaced by the nearest color of the
   256-color palette (colors 16-255)
   _(WeeChat ≥ 5.0.0)_
 // TRANSLATION MISSING

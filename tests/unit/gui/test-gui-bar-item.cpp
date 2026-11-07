@@ -19,6 +19,7 @@ extern "C"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
 #include "src/gui/gui-nicklist.h"
+#include "src/gui/gui-window.h"
 
 extern char *gui_bar_item_buffer_name_cb (const void *pointer, void *data,
                                           struct t_gui_bar_item *item,
@@ -155,6 +156,33 @@ TEST(GuiBarItem, GetVars)
 TEST(GuiBarItem, GetValue)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   gui_bar_item_get_value (RGB colors)
+ */
+
+TEST(GuiBarItem, GetValueRgbColors)
+{
+    struct t_gui_bar *bar;
+    char *value;
+
+    bar = gui_bar_search ("status");
+    CHECK(bar);
+    CHECK(bar->items_prefix[0][0]);
+
+    /* Text and delimiters of bar with RGB colors. */
+    config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_FG], "#ff8800", 1);
+    config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_DELIM],
+                            "*#00ff80", 1);
+    value = gui_bar_item_get_value (bar, gui_windows, 0, 0);
+    CHECK(value);
+    CHECK(strstr (value, "\x19" "F@#ff8800"));
+    CHECK(strstr (value, "\x19" "F@*#00ff80"));
+    free (value);
+    config_file_option_reset (bar->options[GUI_BAR_OPTION_COLOR_FG], 1);
+    config_file_option_reset (bar->options[GUI_BAR_OPTION_COLOR_DELIM], 1);
 }
 
 /*

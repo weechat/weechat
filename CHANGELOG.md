@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
+- core: add RGB colors "#rrggbb" in color options, function color and `${color:...}`, displayed as-is on terminals with direct colors (for example with `TERM=xterm-direct256` or `TERM=tmux-direct`) ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: add RGB color codes `@#rrggbb` in strings with WeeChat colors, displayed as-is on terminals with direct colors (for example with `TERM=xterm-direct256` or `TERM=tmux-direct`) and with the nearest terminal color otherwise ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: add signal "buffer_lines_filtered"
 - core: add jump to buffer with command `/N` (for example `/42`) and option weechat.look.command_buffer_number ([#762](https://github.com/weechat/weechat/issues/762))
@@ -42,7 +43,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
 - javascript, php, tcl: add `eval` option in script commands and info "xxx_eval" ([#128](https://github.com/weechat/weechat/issues/128))
 - relay: add option relay.network.allowed_networks to restrict connections to IPv4/IPv6 networks in CIDR notation ([#2364](https://github.com/weechat/weechat/issues/2364))
-- relay/api: add parameter "rgb_colors" in resources `GET /api/buffers` and `POST /api/sync` to receive RGB colors with colors "ansi" or "weechat", RGB colors are replaced by the nearest terminal color if it is not enabled ([#1364](https://github.com/weechat/weechat/issues/1364))
+- relay/api: add parameter "rgb_colors" in resources `GET /api/buffers`, `GET /api/options` and `POST /api/sync` to receive RGB colors with colors "ansi" or "weechat" and in values of color options, RGB colors are replaced by the nearest terminal color if it is not enabled ([#1364](https://github.com/weechat/weechat/issues/1364))
 - relay/api: add resource `POST /api/typing` and option "typing" in resource `POST /api/sync` to receive typing notifications
 - relay/api: add option "filtered_lines" in resource `POST /api/sync` to not receive lines filtered with `/filter`
 - relay/api: add parameter "filtered" in resource `GET /api/buffers` to count and return only lines not filtered with `/filter`

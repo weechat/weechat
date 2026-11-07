@@ -1237,6 +1237,27 @@ TEST(RelayApiProtocolWithClient, CbOptions)
     json_obj = relay_json_object_get (json, "string_values");
     CHECK(json_obj);
     LONGS_EQUAL(4, relay_json_array_size (json_obj));
+
+    /* Color option with a RGB value (parameter "rgb_colors") */
+    run_cmd_quiet ("/mute /set weechat.color.chat_nick_self #ff8800");
+    test_client_recv_http ("GET /api/options/weechat.color.chat_nick_self",
+                           NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("208", json, "value");
+    test_client_recv_http ("GET /api/options/weechat.color.chat_nick_self"
+                           "?rgb_colors=true",
+                           NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("#ff8800", json, "value");
+    test_client_recv_http ("GET /api/options/weechat.color.chat_nick_self"
+                           "?rgb_colors=",
+                           NULL, NULL);
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+    run_cmd_quiet ("/mute /unset weechat.color.chat_nick_self");
 }
 
 /*

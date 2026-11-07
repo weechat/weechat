@@ -692,6 +692,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/optionName'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -699,6 +700,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Option'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:

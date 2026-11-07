@@ -142,8 +142,9 @@ Arguments:
    `208`), in the colors of infolists _hotlist_ and _bar_, in the result of
    infos _nick_color_name_, _nick_color_name_ignore_case_ and
    _irc_nick_color_name_ and in the color of nick in tags of lines, also in infolist _buffer_lines_ (for example
-   `prefix_nick_#ff8800` is sent as `prefix_nick_208`); other values (for
-   example options) are sent as-is
+   `prefix_nick_#ff8800` is sent as `prefix_nick_208`) and in the values of
+   color options of infolist _option_; other values (for example other options)
+   are sent as-is
    _(WeeChat ≥ 5.0.0)_
 
 Notes about option _password_hash_algo_:

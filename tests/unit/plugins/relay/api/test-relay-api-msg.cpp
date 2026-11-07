@@ -1195,14 +1195,14 @@ TEST(RelayApiMsg, OptionToJson)
     CHECK(opt_null);
 
     /* No option */
-    json = relay_api_msg_option_to_json (NULL);
+    json = relay_api_msg_option_to_json (NULL, 1);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     POINTERS_EQUAL(NULL, relay_json_object_get (json, "name"));
     relay_json_free (json);
 
     /* Boolean */
-    json = relay_api_msg_option_to_json (opt_bool);
+    json = relay_api_msg_option_to_json (opt_bool, 1);
     CHECK(json);
     WEE_CHECK_OBJ_STR("testoptjson.sec.opt_bool", json, "name");
     WEE_CHECK_OBJ_STR("boolean", json, "type");
@@ -1214,7 +1214,7 @@ TEST(RelayApiMsg, OptionToJson)
     relay_json_free (json);
 
     /* Integer */
-    json = relay_api_msg_option_to_json (opt_int);
+    json = relay_api_msg_option_to_json (opt_int, 1);
     CHECK(json);
     WEE_CHECK_OBJ_STR("testoptjson.sec.opt_int", json, "name");
     WEE_CHECK_OBJ_STR("integer", json, "type");
@@ -1226,7 +1226,7 @@ TEST(RelayApiMsg, OptionToJson)
     relay_json_free (json);
 
     /* String */
-    json = relay_api_msg_option_to_json (opt_str);
+    json = relay_api_msg_option_to_json (opt_str, 1);
     CHECK(json);
     WEE_CHECK_OBJ_STR("string", json, "type");
     WEE_CHECK_OBJ_STR("def", json, "value");
@@ -1235,15 +1235,32 @@ TEST(RelayApiMsg, OptionToJson)
     relay_json_free (json);
 
     /* Color */
-    json = relay_api_msg_option_to_json (opt_color);
+    json = relay_api_msg_option_to_json (opt_color, 1);
     CHECK(json);
     WEE_CHECK_OBJ_STR("color", json, "type");
     WEE_CHECK_OBJ_STR("blue", json, "value");
     WEE_CHECK_OBJ_STR("red", json, "default_value");
     relay_json_free (json);
 
+    /* Color with a RGB value: kept with RGB colors, nearest color otherwise */
+    config_file_option_set (opt_color, "*#ff8800", 1);
+    json = relay_api_msg_option_to_json (opt_color, 1);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("*#ff8800", json, "value");
+    relay_json_free (json);
+    json = relay_api_msg_option_to_json (opt_color, 0);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("*208", json, "value");
+    WEE_CHECK_OBJ_STR("red", json, "default_value");
+    relay_json_free (json);
+    config_file_option_set (opt_str, "#ff8800", 1);
+    json = relay_api_msg_option_to_json (opt_str, 0);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("#ff8800", json, "value");
+    relay_json_free (json);
+
     /* Enum */
-    json = relay_api_msg_option_to_json (opt_enum);
+    json = relay_api_msg_option_to_json (opt_enum, 1);
     CHECK(json);
     WEE_CHECK_OBJ_STR("enum", json, "type");
     WEE_CHECK_OBJ_STR("v3", json, "value");
@@ -1259,7 +1276,7 @@ TEST(RelayApiMsg, OptionToJson)
     relay_json_free (json);
 
     /* Null value and default value */
-    json = relay_api_msg_option_to_json (opt_null);
+    json = relay_api_msg_option_to_json (opt_null, 1);
     CHECK(json);
     WEE_CHECK_OBJ_STR("string", json, "type");
     json_obj = relay_json_object_get (json, "value");

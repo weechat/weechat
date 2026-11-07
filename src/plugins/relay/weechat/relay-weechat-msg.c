@@ -37,7 +37,8 @@
  * (WeeChat color codes are converted in all strings, see function
  * relay_weechat_msg_add_string); the variable name is a mask (see function
  * string_match), "*" for infos.
- * Values of options are sent as-is.
+ * Values of color options in infolist "option" are converted too (see
+ * function relay_weechat_msg_add_infolist).
  */
 
 struct t_relay_weechat_msg_color_var relay_weechat_msg_color_vars[] =
@@ -909,7 +910,7 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
     const char *fields;
     char **list_fields;
     void *buf_ptr;
-    int num_fields, i, buf_size;
+    int num_fields, i, buf_size, color_option;
     int pos_count_items, count_items, pos_count_vars, count_vars;
     uint32_t count32;
 
@@ -928,6 +929,10 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
 
     while (weechat_infolist_next (ptr_infolist))
     {
+        /* Option of type color: its values are color names. */
+        color_option = (strcmp (name, "option") == 0)
+            && (weechat_strcmp (weechat_infolist_string (ptr_infolist, "type"),
+                                "color") == 0);
         fields = weechat_infolist_fields (ptr_infolist);
         if (fields)
         {
@@ -962,11 +967,24 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
                                 break;
                             case 's':
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
-                                relay_weechat_msg_add_var_string (
-                                    msg, RELAY_WEECHAT_MSG_VAR_INFOLIST, name,
-                                    list_fields[i] + 2,
-                                    weechat_infolist_string (ptr_infolist,
-                                                             list_fields[i] + 2));
+                                if (color_option
+                                    && ((strcmp (list_fields[i] + 2, "value") == 0)
+                                        || (strcmp (list_fields[i] + 2, "default_value") == 0)
+                                        || (strcmp (list_fields[i] + 2, "parent_value") == 0)))
+                                {
+                                    relay_weechat_msg_add_color_name (
+                                        msg,
+                                        weechat_infolist_string (ptr_infolist,
+                                                                 list_fields[i] + 2));
+                                }
+                                else
+                                {
+                                    relay_weechat_msg_add_var_string (
+                                        msg, RELAY_WEECHAT_MSG_VAR_INFOLIST, name,
+                                        list_fields[i] + 2,
+                                        weechat_infolist_string (ptr_infolist,
+                                                                 list_fields[i] + 2));
+                                }
                                 break;
                             case 'p':
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);

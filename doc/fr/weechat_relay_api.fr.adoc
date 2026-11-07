@@ -1509,6 +1509,15 @@ Paramètres de chemin :
   configuration, section et option, séparés par des points (exemple :
   `weechat.look.buffer_time_format`)
 
+Paramètres de requête :
+
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors in the
+  values of color options (for example `#ff8800`); if `false`, RGB colors are
+  replaced by the nearest color of the 256-color palette (colors 16-255, for
+  example `208`)
+  _(WeeChat ≥ 5.0.0)_
+
 La valeur est retournée telle qu'elle est stockée dans l'option, comme la
 commande `/set` l'affiche : elle n'est pas évaluée (par exemple `${sec.data.xxx}`
 est retourné tel quel).
@@ -1926,8 +1935,9 @@ Paramètres du corps :
 * `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
   ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
   with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
-  color names of nicks and groups, and in the color of nick in tags of lines,
-  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  color names of nicks and groups, in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`, and in the values of color options sent
+  in events `option_changed`) are replaced by the nearest color of the
   256-color palette (colors 16-255)
   _(WeeChat ≥ 5.0.0)_
 * `options` (tableau de chaînes, facultatif, par défaut : `[]`) : options

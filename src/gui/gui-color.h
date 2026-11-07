@@ -147,8 +147,12 @@ enum t_gui_color_enum
  */
 #define GUI_COLOR_EXTENDED_RGB_CHAR           '#'
 #define GUI_COLOR_RGB_FIRST                   (GUI_COLOR_EXTENDED_MAX + 1)
+/* RGB colors used in options: numbers never change */
+#define GUI_COLOR_RGB_OPTIONS_FIRST           GUI_COLOR_RGB_FIRST
+#define GUI_COLOR_RGB_OPTIONS_MAX             100000
 /* RGB colors used in strings: numbers are reset with color pairs */
-#define GUI_COLOR_RGB_DISPLAY_FIRST           GUI_COLOR_RGB_FIRST
+#define GUI_COLOR_RGB_DISPLAY_FIRST                                     \
+    (GUI_COLOR_RGB_OPTIONS_FIRST + GUI_COLOR_RGB_OPTIONS_MAX)
 #define GUI_COLOR_RGB_DISPLAY_MAX             32768
 #define GUI_COLOR_RGB_LAST                                              \
     (GUI_COLOR_RGB_DISPLAY_FIRST + GUI_COLOR_RGB_DISPLAY_MAX - 1)
@@ -206,6 +210,7 @@ extern struct t_hashtable *gui_color_hash_palette_color;
 extern struct t_hashtable *gui_color_hash_palette_alias;
 extern struct t_weelist *gui_color_list_with_alias;
 extern int gui_color_term256[];
+extern struct t_gui_color_rgb_table gui_color_rgb_options;
 extern struct t_gui_color_rgb_table gui_color_rgb_display;
 extern int gui_color_rgb_display_reset_needed;
 extern time_t gui_color_rgb_display_reset_last;
@@ -222,11 +227,14 @@ extern int gui_color_convert_rgb_to_term (int rgb, int limit);
 extern int gui_color_convert_rgb_to_term_display (int rgb, int limit);
 extern int gui_color_convert_term_to_direct (int color);
 extern int gui_color_rgb_to_direct (int rgb);
+extern int gui_color_rgb_parse_exact (const char *string);
 extern unsigned long long gui_color_hash_key_cb (struct t_hashtable *hashtable,
                                                 const void *key);
+extern int gui_color_rgb_to_number_option (int rgb);
 extern void gui_color_rgb_display_reset (void);
 extern int gui_color_rgb_from_number (int number);
 extern int gui_color_rgb_to_term_cached (int number, int limit);
+extern const char *gui_color_extended_string (int number);
 extern int gui_color_parse_digits (const char *string, int max_digits,
                                    int *number);
 extern int gui_color_code_size_number_rgb (const char *string, int with_attr,

@@ -1012,14 +1012,20 @@ relay_api_msg_script_to_json (struct t_hdata *hdata, void *script, const char *e
  * Create a JSON value with the value (or default value if default_value == 1)
  * of a configuration option, according to the option type.
  *
+ * If "rgb_colors" is 0 (the client did not ask for RGB colors), a RGB color in
+ * the value of a color option is replaced by the nearest color of the
+ * 256-color palette.
+ *
  * Return a JSON null if the value is null.
  */
 
 struct t_relay_json *
 relay_api_msg_option_value_to_json (struct t_config_option *option,
-                                    int default_value)
+                                    int default_value, int rgb_colors)
 {
-    const char *ptr_type;
+    struct t_relay_json *json;
+    const char *ptr_type, *ptr_value;
+    char *color_name;
 
     if (!option)
         return relay_json_new_null ();
@@ -1049,18 +1055,27 @@ relay_api_msg_option_value_to_json (struct t_config_option *option,
     }
 
     /* String, color and enum: value as string. */
-    return relay_json_new_string (
-        (default_value) ?
+    ptr_value = (default_value) ?
         weechat_config_string_default (option) :
-        weechat_config_string (option));
+        weechat_config_string (option);
+    color_name = (weechat_strcmp (ptr_type, "color") == 0) ?
+        relay_api_msg_convert_color_name (ptr_value, rgb_colors) : NULL;
+    json = relay_json_new_string ((color_name) ? color_name : ptr_value);
+    free (color_name);
+
+    return json;
 }
 
 /*
  * Create a JSON object with a configuration option.
+ *
+ * If "rgb_colors" is 0 (the client did not ask for RGB colors), RGB colors in
+ * values of a color option are replaced by the nearest color of the 256-color
+ * palette.
  */
 
 struct t_relay_json *
-relay_api_msg_option_to_json (struct t_config_option *option)
+relay_api_msg_option_to_json (struct t_config_option *option, int rgb_colors)
 {
     struct t_relay_json *json, *json_values;
     const char *ptr_type, *ptr_string;
@@ -1083,9 +1098,11 @@ relay_api_msg_option_to_json (struct t_config_option *option)
     ptr_type = weechat_config_option_get_string (option, "type");
     MSG_ADD_STR_PTR("type", ptr_type);
     relay_json_object_add (json, "value",
-                           relay_api_msg_option_value_to_json (option, 0));
+                           relay_api_msg_option_value_to_json (option, 0,
+                                                              rgb_colors));
     relay_json_object_add (json, "default_value",
-                           relay_api_msg_option_value_to_json (option, 1));
+                           relay_api_msg_option_value_to_json (option, 1,
+                                                              rgb_colors));
     ptr_string = weechat_config_option_get_string (option, "description");
     MSG_ADD_STR_PTR("description", ptr_string);
 

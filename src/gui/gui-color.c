@@ -44,6 +44,9 @@ struct t_hashtable *gui_color_hash_palette_alias = NULL;
 struct t_weelist *gui_color_list_with_alias = NULL;
 
 /* RGB colors (interned, see GUI_COLOR_RGB_FIRST in gui-color.h) */
+struct t_gui_color_rgb_table gui_color_rgb_options =   /* used in options    */
+{ GUI_COLOR_RGB_OPTIONS_FIRST, GUI_COLOR_RGB_OPTIONS_MAX,
+  NULL, NULL, 0, 0, 0, NULL };
 struct t_gui_color_rgb_table gui_color_rgb_display =   /* used in strings    */
 { GUI_COLOR_RGB_DISPLAY_FIRST, GUI_COLOR_RGB_DISPLAY_MAX,
   NULL, NULL, 0, 0, 0, NULL };
@@ -272,13 +275,70 @@ gui_color_attr_build_string (int color, char *str_attr)
 }
 
 /*
+ * Build a part of a custom color code, for a text color (with attributes) or a
+ * background (attributes NULL): RGB color ("@" + attributes + "#rrggbb"),
+ * terminal color or alias ("@" + attributes + "00123") or WeeChat color
+ * (attributes + "01"); an empty string if the color is not found.
+ */
+
+void
+gui_color_get_custom_part (char *buffer, int size, const char *name,
+                           const char *attributes)
+{
+    int term_color, rgb, color;
+
+    buffer[0] = '\0';
+
+    if (!name)
+        return;
+
+    if (!attributes)
+        attributes = "";
+
+    rgb = -1;
+    term_color = gui_color_palette_get_alias (name);
+    if (term_color < 0)
+    {
+        rgb = gui_color_rgb_parse_exact (name);
+        if ((rgb < 0) && util_parse_int (name, 10, &term_color))
+        {
+            if (term_color < 0)
+                term_color = 0;
+            else if (term_color > GUI_COLOR_EXTENDED_MAX)
+                term_color = GUI_COLOR_EXTENDED_MAX;
+        }
+        else
+        {
+            term_color = -1;
+        }
+    }
+
+    if (rgb >= 0)
+    {
+        snprintf (buffer, size, "%c%s%c%06x",
+                  GUI_COLOR_EXTENDED_CHAR, attributes,
+                  GUI_COLOR_EXTENDED_RGB_CHAR, rgb);
+    }
+    else if (term_color >= 0)
+    {
+        snprintf (buffer, size, "%c%s%05d",
+                  GUI_COLOR_EXTENDED_CHAR, attributes, term_color);
+    }
+    else
+    {
+        color = gui_color_search (name);
+        if (color >= 0)
+            snprintf (buffer, size, "%s%02d", attributes, color);
+    }
+}
+
+/*
  * Get a custom color with a name.
  */
 
 const char *
 gui_color_get_custom (const char *color_name)
 {
-    int fg, bg, fg_term, bg_term, term_color;
     static char color[32][96];
     static int index_color = 0;
     char color_fg[32], color_bg[32];
@@ -436,13 +496,6 @@ gui_color_get_custom (const char *color_name)
     else
     {
         /* Custom color name (GUI dependent) */
-        fg_term = -1;
-        bg_term = -1;
-        fg = -1;
-        bg = -1;
-        color_fg[0] = '\0';
-        color_bg[0] = '\0';
-
         pos_delim = strchr (ptr_color_name, ',');
         if (!pos_delim)
             pos_delim = strchr (ptr_color_name, ':');
@@ -461,66 +514,9 @@ gui_color_get_custom (const char *color_name)
             pos_bg = NULL;
         }
 
-        if (str_fg)
-        {
-            fg_term = gui_color_palette_get_alias (str_fg);
-            if (fg_term < 0)
-            {
-                if (util_parse_int (str_fg, 10, &term_color))
-                {
-                    fg_term = term_color;
-                    if (fg_term < 0)
-                        fg_term = 0;
-                    else if (fg_term > GUI_COLOR_EXTENDED_MAX)
-                        fg_term = GUI_COLOR_EXTENDED_MAX;
-                }
-                else
-                    fg = gui_color_search (str_fg);
-            }
-        }
-        if (pos_bg)
-        {
-            bg_term = gui_color_palette_get_alias (pos_bg);
-            if (bg_term < 0)
-            {
-                if (util_parse_int (pos_bg, 10, &term_color))
-                {
-                    bg_term = term_color;
-                    if (bg_term < 0)
-                        bg_term = 0;
-                    else if (bg_term > GUI_COLOR_EXTENDED_MAX)
-                        bg_term = GUI_COLOR_EXTENDED_MAX;
-                }
-                else
-                    bg = gui_color_search (pos_bg);
-            }
-        }
-
-        if (fg_term >= 0)
-        {
-            snprintf (color_fg, sizeof (color_fg), "%c%s%05d",
-                      GUI_COLOR_EXTENDED_CHAR,
-                      (color_attr) ? color_attr : "",
-                      fg_term);
-        }
-        else if (fg >= 0)
-        {
-            snprintf (color_fg, sizeof (color_fg), "%s%02d",
-                      (color_attr) ? color_attr : "",
-                      fg);
-        }
-
-        if (bg_term >= 0)
-        {
-            snprintf (color_bg, sizeof (color_bg), "%c%05d",
-                      GUI_COLOR_EXTENDED_CHAR,
-                      bg_term);
-        }
-        else if (bg >= 0)
-        {
-            snprintf (color_bg, sizeof (color_bg), "%02d",
-                      bg);
-        }
+        gui_color_get_custom_part (color_fg, sizeof (color_fg), str_fg,
+                                   color_attr);
+        gui_color_get_custom_part (color_bg, sizeof (color_bg), pos_bg, NULL);
 
         if (color_fg[0] && color_bg[0])
         {
@@ -882,11 +878,19 @@ gui_color_rgb_table_add (struct t_gui_color_rgb_table *table, int rgb)
 struct t_gui_color_rgb_table *
 gui_color_rgb_table_search (int number, int *index)
 {
-    if ((number >= gui_color_rgb_display.first)
-        && (number < gui_color_rgb_display.first + gui_color_rgb_display.count))
+    struct t_gui_color_rgb_table *tables[2];
+    int i;
+
+    tables[0] = &gui_color_rgb_options;
+    tables[1] = &gui_color_rgb_display;
+    for (i = 0; i < 2; i++)
     {
-        *index = number - gui_color_rgb_display.first;
-        return &gui_color_rgb_display;
+        if ((number >= tables[i]->first)
+            && (number < tables[i]->first + tables[i]->count))
+        {
+            *index = number - tables[i]->first;
+            return tables[i];
+        }
     }
 
     return NULL;
@@ -911,14 +915,32 @@ gui_color_rgb_table_free (struct t_gui_color_rgb_table *table)
 }
 
 /*
+ * Parse a string which is exactly a RGB color ("#" followed by 6 hexadecimal
+ * digits, without any other char).
+ *
+ * Return the RGB value (0x000000 to 0xFFFFFF), -1 if the string is not
+ * exactly a RGB color.
+ */
+
+int
+gui_color_rgb_parse_exact (const char *string)
+{
+    int rgb;
+
+    rgb = gui_color_rgb_parse (string);
+
+    return ((rgb >= 0) && !string[7]) ? rgb : -1;
+}
+
+/*
  * Get color number for a RGB value used in a string (for display).
  *
- * The RGB value is added to the table of displayed RGB colors if needed.
- * This table is emptied when color pairs are reset; when it is full, the
- * nearest color in the 256-color palette is returned, and a reset is
- * requested (at most once per second), unless the automatic reset is disabled
- * (option weechat.look.color_pairs_auto_reset set to -1): then a manual
- * "/color reset" is needed.
+ * The RGB value is added to the table of displayed RGB colors if needed
+ * (unless it is already used in an option). This table is emptied when color
+ * pairs are reset; when it is full, the nearest color in the 256-color palette
+ * is returned, and a reset is requested (at most once per second), unless the
+ * automatic reset is disabled (option weechat.look.color_pairs_auto_reset set
+ * to -1): then a manual "/color reset" is needed.
  *
  * Return a number between GUI_COLOR_RGB_FIRST and GUI_COLOR_RGB_LAST, or a
  * number between 0 and 255.
@@ -927,12 +949,19 @@ gui_color_rgb_table_free (struct t_gui_color_rgb_table *table)
 int
 gui_color_rgb_to_number (int rgb)
 {
-    int number;
+    int *ptr_index, number;
     time_t now;
 
     if (rgb < 0)
         rgb = 0;
     rgb &= 0xFFFFFF;
+
+    if (gui_color_rgb_options.index)
+    {
+        ptr_index = hashtable_get (gui_color_rgb_options.index, &rgb);
+        if (ptr_index)
+            return gui_color_rgb_options.first + *ptr_index;
+    }
 
     number = gui_color_rgb_table_add (&gui_color_rgb_display, rgb);
     if (number >= 0)
@@ -955,7 +984,25 @@ gui_color_rgb_to_number (int rgb)
 }
 
 /*
- * Remove RGB colors used for display.
+ * Get color number for a RGB value used in an option (this number never
+ * changes).
+ *
+ * Return a number between GUI_COLOR_RGB_FIRST and GUI_COLOR_RGB_LAST, -1 if
+ * there are too many RGB colors in options.
+ */
+
+int
+gui_color_rgb_to_number_option (int rgb)
+{
+    if (rgb < 0)
+        rgb = 0;
+    rgb &= 0xFFFFFF;
+
+    return gui_color_rgb_table_add (&gui_color_rgb_options, rgb);
+}
+
+/*
+ * Remove RGB colors used for display (not the ones used in options).
  *
  * It must be called only when color pairs are reset, because color numbers
  * of these RGB colors are not valid any more.
@@ -1047,6 +1094,36 @@ gui_color_extended_value (const char *string, int *rgb, int *color)
     }
 
     return gui_color_parse_digits (string, 5, color);
+}
+
+/*
+ * Return the string for an extended color number, used in WeeChat color codes
+ * after the extended char: "#RRGGBB" for a RGB color, "00123" for other
+ * colors.
+ */
+
+const char *
+gui_color_extended_string (int number)
+{
+    static char str_color[16][16];
+    static int index_color = 0;
+    int rgb;
+
+    index_color = (index_color + 1) % 16;
+
+    rgb = gui_color_rgb_from_number (number);
+    if (rgb >= 0)
+    {
+        snprintf (str_color[index_color], sizeof (str_color[index_color]),
+                  "%c%06x", GUI_COLOR_EXTENDED_RGB_CHAR, rgb);
+    }
+    else
+    {
+        snprintf (str_color[index_color], sizeof (str_color[index_color]),
+                  "%05d", number);
+    }
+
+    return str_color[index_color];
 }
 
 /*
@@ -1770,6 +1847,36 @@ gui_color_weechat_to_ansi (int color)
 }
 
 /*
+ * Build an ANSI color code for a RGB color (if "rgb" >= 0) or a terminal
+ * color "term" (0-255), for foreground or background.
+ *
+ * If "rgb_colors" is 0, a RGB color is replaced by the nearest color of the
+ * 256-color palette (otherwise a 24-bit ANSI color code is used).
+ */
+
+void
+gui_color_encode_ansi_rgb_term (char *buffer, int size, int rgb, int term,
+                                int background, int rgb_colors)
+{
+    if ((rgb >= 0) && rgb_colors)
+    {
+        snprintf (buffer, size,
+                  "\x1B[%d;2;%d;%d;%dm",
+                  (background) ? 48 : 38,
+                  (rgb >> 16) & 0xFF,
+                  (rgb >> 8) & 0xFF,
+                  rgb & 0xFF);
+    }
+    else
+    {
+        snprintf (buffer, size,
+                  "\x1B[%d;5;%dm",
+                  (background) ? 48 : 38,
+                  (rgb >= 0) ? gui_color_downgrade_rgb_term (rgb) : term);
+    }
+}
+
+/*
  * Convert a WeeChat color number at the beginning of "string" to an ANSI
  * color, and add it to "output": as foreground color with attributes if
  * "foreground" is 1, otherwise as background color. A RGB color "@#rrggbb"
@@ -1818,27 +1925,10 @@ gui_color_encode_ansi_number (char **output, const char *string,
 
     value = color & GUI_COLOR_EXTENDED_MASK;
 
-    if ((rgb >= 0) && !rgb_colors)
+    if ((rgb >= 0) || (color & GUI_COLOR_EXTENDED_FLAG))
     {
-        snprintf (str_concat, sizeof (str_concat),
-                  "\x1B[%d;5;%dm",
-                  (foreground) ? 38 : 48,
-                  gui_color_downgrade_rgb_term (rgb));
-    }
-    else if (rgb >= 0)
-    {
-        snprintf (str_concat, sizeof (str_concat),
-                  "\x1B[%d;2;%d;%d;%dm",
-                  (foreground) ? 38 : 48,
-                  (rgb >> 16) & 0xFF,
-                  (rgb >> 8) & 0xFF,
-                  rgb & 0xFF);
-    }
-    else if (color & GUI_COLOR_EXTENDED_FLAG)
-    {
-        snprintf (str_concat, sizeof (str_concat),
-                  (foreground) ? "\x1B[38;5;%dm" : "\x1B[48;5;%dm",
-                  value);
+        gui_color_encode_ansi_rgb_term (str_concat, sizeof (str_concat),
+                                        rgb, value, !foreground, rgb_colors);
     }
     else
     {
@@ -1865,6 +1955,23 @@ gui_color_encode_ansi_number (char **output, const char *string,
     string_dyn_concat (output, str_concat, -1);
 
     return size;
+}
+
+/*
+ * Build an ANSI color code for a terminal color (0-255) or a RGB color
+ * number (24-bit ANSI color code), for foreground or background.
+ *
+ * If "rgb_colors" is 0, a RGB color is replaced by the nearest color of the
+ * 256-color palette.
+ */
+
+void
+gui_color_encode_ansi_color (char *buffer, int size, int color,
+                             int background, int rgb_colors)
+{
+    gui_color_encode_ansi_rgb_term (buffer, size,
+                                    gui_color_rgb_from_number (color), color,
+                                    background, rgb_colors);
 }
 
 /*
@@ -1992,9 +2099,10 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                 color = CONFIG_COLOR(config_color_chat_delimiters);
                                 if (color & GUI_COLOR_EXTENDED_FLAG)
                                 {
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[48;5;%dm",
-                                              color & GUI_COLOR_EXTENDED_MASK);
+                                    gui_color_encode_ansi_color (
+                                        str_concat, sizeof (str_concat),
+                                        color & GUI_COLOR_EXTENDED_MASK, 1,
+                                        rgb_colors);
                                 }
                                 else
                                 {
@@ -2056,9 +2164,9 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                             }
                             else
                             {
-                                snprintf (str_concat, sizeof (str_concat),
-                                          "\x1B[38;5;%dm",
-                                          fg);
+                                gui_color_encode_ansi_color (
+                                    str_concat, sizeof (str_concat), fg, 0,
+                                    rgb_colors);
                                 string_dyn_concat (out, str_concat, -1);
                             }
                             if (bg < 0)
@@ -2067,9 +2175,9 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                             }
                             else
                             {
-                                snprintf (str_concat, sizeof (str_concat),
-                                          "\x1B[48;5;%dm",
-                                          bg);
+                                gui_color_encode_ansi_color (
+                                    str_concat, sizeof (str_concat), bg, 1,
+                                    rgb_colors);
                                 string_dyn_concat (out, str_concat, -1);
                             }
                         }
@@ -2514,6 +2622,7 @@ gui_color_end (void)
     gui_color_palette_free_structs ();
     gui_color_free_vars ();
 
+    gui_color_rgb_table_free (&gui_color_rgb_options);
     gui_color_rgb_table_free (&gui_color_rgb_display);
 
     if (gui_color_regex_ansi)
