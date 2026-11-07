@@ -2105,11 +2105,49 @@ TEST(IrcServer, FreeData)
 /*
  * Test functions:
  *   irc_server_free
+ *   irc_raw_message_free_server
  */
 
 TEST(IrcServer, Free)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server1, *server2;
+    struct t_irc_raw_message *ptr_raw_message, *raw_msg1, *raw_msg2;
+    int count;
+
+    irc_server_free (NULL);
+
+    server1 = irc_server_alloc ("server1");
+    CHECK(server1);
+    server2 = irc_server_alloc ("server2");
+    CHECK(server2);
+
+    /* Raw messages of the server are freed with the server. */
+    count = irc_raw_messages_count;
+    raw_msg1 = irc_raw_message_add_to_list (time (NULL), 0, server1,
+                                            IRC_RAW_FLAG_RECV, "PING :a");
+    CHECK(raw_msg1);
+    raw_msg2 = irc_raw_message_add_to_list (time (NULL), 0, server2,
+                                            IRC_RAW_FLAG_RECV, "PING :b");
+    CHECK(raw_msg2);
+    CHECK(irc_raw_message_add_to_list (time (NULL), 0, server1,
+                                       IRC_RAW_FLAG_SEND, "PONG :a"));
+    LONGS_EQUAL(count + 3, irc_raw_messages_count);
+
+    irc_raw_message_free_server (NULL);
+    LONGS_EQUAL(count + 3, irc_raw_messages_count);
+
+    irc_server_free (server1);
+    LONGS_EQUAL(count + 1, irc_raw_messages_count);
+    for (ptr_raw_message = irc_raw_messages; ptr_raw_message;
+         ptr_raw_message = ptr_raw_message->next_message)
+    {
+        CHECK(ptr_raw_message->server != server1);
+    }
+    POINTERS_EQUAL(raw_msg2, last_irc_raw_message);
+    POINTERS_EQUAL(server2, last_irc_raw_message->server);
+
+    irc_server_free (server2);
+    LONGS_EQUAL(count, irc_raw_messages_count);
 }
 
 /*
