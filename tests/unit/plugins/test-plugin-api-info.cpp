@@ -538,6 +538,7 @@ TEST(PluginApiInfo, ColorRgb2termCb)
     WEE_TEST_STR("8", hook_info_get (NULL, "color_rgb2term", "8421504"));
     WEE_TEST_STR("154", hook_info_get (NULL, "color_rgb2term", "11534080"));
     WEE_TEST_STR("11", hook_info_get (NULL, "color_rgb2term", "11534080,64"));
+    WEE_TEST_STR("0", hook_info_get (NULL, "color_rgb2term", "66051,100000000"));
 }
 
 /*
