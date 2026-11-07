@@ -56,6 +56,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- **breaking:** core: keep the RGB value of ANSI colors `38;2` and `48;2` (color code "@#rrggbb") instead of using the nearest terminal color ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: display a color 16-255 which is not supported by the terminal (for example on a terminal with 88 colors) with the nearest terminal color other than colors 0-15, which are defined by the theme of the terminal ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: accept only numbers between 0 and 99999 in palette options (weechat.palette.*), greater numbers are used for RGB colors
 - core, plugins: use plural forms or reword messages displaying a count
