@@ -136,7 +136,8 @@ image with it.
 
 The WeeChat version is read from file `version.sh` and used for the image tags:
 
-- development version (like `5.0.0-dev`): tag `devel`
+- development version: tag with the full version (like `5.0.0-dev`), plus `devel`
+  for the main branch (patch version 0)
 - release candidate (like `5.0.0-rc1`): tag with the full version
 - stable version (like `4.10.3`): tags `4.10.3`, `4.10` and `4`, plus `latest`
   with option `--latest`

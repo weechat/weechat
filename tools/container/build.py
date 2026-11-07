@@ -99,10 +99,17 @@ def get_version() -> str:
 def get_tags(version: str, distro: str, *, slim: bool, latest: bool) -> list[str]:
     """Get tags to apply on the container image.
 
-    :param version: WeeChat version, like "4.10.3", "5.0.0-rc1" or "5.0.0-dev"
+    A development version is tagged with its full version, and also with
+    "devel" if it is the development version of the main branch (patch
+    version 0, like "5.0.0-dev"): a development version of a maintenance
+    branch (like "4.10.4-dev") is not tagged "devel".
+
+    :param version: WeeChat version, like "4.10.3", "5.0.0-rc1", "5.0.0-dev"
+        or "4.10.4-dev"
     :param distro: "debian" or "alpine"
     :param slim: slim version
-    :param latest: add tag "latest" (ignored for a development version)
+    :param latest: add tag "latest" (ignored for a development version or
+        a release candidate)
     :return: list of tag arguments for command line, for example with
         version "4.10.3", distro "alpine" and no slim/latest:
         ['-t', 'weechat:4-alpine', '-t', 'weechat/weechat:4-alpine',
@@ -112,7 +119,9 @@ def get_tags(version: str, distro: str, *, slim: bool, latest: bool) -> list[str
     str_slim = "-slim" if slim else ""
     suffixes = [str_slim, f"-{distro}{str_slim}"] if distro == "debian" else [f"-{distro}{str_slim}"]
     if version.endswith("-dev"):
-        tags = ["devel"]
+        tags = [version]
+        if version.split("-", maxsplit=1)[0].split(".")[2:] == ["0"]:
+            tags.append("devel")
     elif "-" in version:
         tags = [version]
     else:
