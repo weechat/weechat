@@ -165,13 +165,21 @@ enum t_gui_color_enum
  *   - chars SI and SO (shift in/out, select a character set): "\17" and
  *     "\16";
  *   - control sequence (CSI): "\33[", then parameter bytes (0x30-0x3F),
- *     intermediate bytes (0x20-0x2F) and a final byte (0x40-0x7E);
- *   - operating system command (OSC): "\33]" and text until BEL or "\33\\";
+ *     intermediate bytes (0x20-0x2F) and a final byte (0x40-0x7E) or the
+ *     char CAN or SUB, which cancel the sequence; the final byte is optional
+ *     (sequence cut or cancelled by another escape sequence), and DEL is
+ *     ignored inside the sequence;
+ *   - operating system command (OSC): "\33]" and text until BEL, "\33\\",
+ *     CAN or SUB (optional: an unterminated string ends at the end of the
+ *     line);
  *   - device control string (DCS) and other strings: "\33P", "\33X", "\33^"
- *     or "\33_" and text until "\33\\";
+ *     or "\33_" and text until BEL, "\33\\", CAN or SUB (optional: an
+ *     unterminated string ends at the end of the line);
  *   - other escape sequences: "\33", then intermediate bytes (0x20-0x2F) and
- *     a final byte (0x30-0x7E), for example "\337", "\33=" or "\33#8";
- *   - "\33(" or "\33)" followed by any char.
+ *     a final byte (0x30-0x7E), for example "\337", "\33=", "\33#8" or
+ *     "\33(B"; the final byte is optional (sequence cut), so that "\33"
+ *     alone is matched too.
+ * DEL after "\33" is ignored too, for example "\33\177[1m" is "\33[1m".
  * Chars are listed one by one instead of ranges like "[0-?]", which are
  * invalid in some locales (for example "en_US.UTF-8"); the final bytes "[",
  * "\\" and "]" are outside brackets and "/" is escaped, so that the regex
@@ -182,19 +190,18 @@ enum t_gui_color_enum
  */
 #define GUI_COLOR_REGEX_ANSI_DECODE                                      \
     "\16|\17|"                                                           \
-    "\33("                                                               \
+    "\33\177*("                                                          \
     "(\\["                                                               \
-    "[0123456789:;<=>?]*"                                                \
-    "([ !\"#$%&'()*+,.-]|\\/)*"                                          \
-    "([@ABCDEFGHIJKLMNOPQRSTUVWXYZ^_`abcdefghijklmnopqrstuvwxyz{|}~]|"   \
-    "\\[|\\\\|\\])"                                                      \
+    "[0123456789:;<=>?\177]*"                                            \
+    "([ !\"#$%&'()*+,.\177-]|\\/)*"                                      \
+    "(([@ABCDEFGHIJKLMNOPQRSTUVWXYZ^_`abcdefghijklmnopqrstuvwxyz{|}~]|"  \
+    "\\[|\\\\|\\])|\30|\32)?"                                            \
     ")|"                                                                 \
-    "(\\][^\a\33]*(\a|\33\\\\))|"                                        \
-    "([PX^_][^\33]*\33\\\\)|"                                            \
-    "(([ !\"#$%&'()*+,.-]|\\/)*"                                         \
+    "(\\][^\a\n\30\32\33]*(\a|\30|\32|\33\\\\)?)|"                       \
+    "([PX^_][^\a\n\30\32\33]*(\a|\30|\32|\33\\\\)?)|"                    \
+    "(([ !\"#$%&'()*+,.\177-]|\\/)*"                                     \
     "([0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ^_`abcdefghijklmnopqr" \
-    "stuvwxyz{|}~]|\\[|\\\\|\\]))|"                                      \
-    "([()].)"                                                            \
+    "stuvwxyz{|}~]|\\[|\\\\|\\]|\30|\32)?)"                              \
     ")"
 
 /* RGB color in the result of ANSI color parsing: flag + 0xRRGGBB */
