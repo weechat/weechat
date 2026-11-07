@@ -1918,6 +1918,52 @@ TEST(GuiColor, NormalizeAnsi)
 
 /*
  * Test functions:
+ *   gui_color_ansi_rgb_component
+ */
+
+TEST(GuiColor, AnsiRgbComponent)
+{
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component (""));
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component ("abc"));
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component ("-99999999999"));
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component ("-5"));
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component ("0"));
+    LONGS_EQUAL(128, gui_color_ansi_rgb_component ("128"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("255"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("256"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("40000"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("99999999999"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("4294967296"));
+}
+
+/*
+ * Test functions:
+ *   gui_color_decode_ansi (RGB components greater than 255)
+ */
+
+TEST(GuiColor, DecodeAnsiRgbClamp)
+{
+    char string[256], *decoded;
+
+    /* Green 256 is 255: #00ff00, not black. */
+    snprintf (string, sizeof (string),
+              "test_%sgreen", gui_color_get_custom ("|#00ff00"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[38;2;0;256;0mgreen", 1);
+    snprintf (string, sizeof (string),
+              "test_%sgreen", gui_color_get_custom ("|,#00ff00"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[48;2;0;256;0mgreen", 1);
+
+    /* Red 40000 is 255: #ff0000. */
+    snprintf (string, sizeof (string),
+              "test_%sred", gui_color_get_custom ("|#ff0000"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[38;2;40000;0;0mred", 1);
+    snprintf (string, sizeof (string),
+              "test_%sred", gui_color_get_custom ("|,#ff0000"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[48;2;99999999999;0;0mred", 1);
+}
+
+/*
+ * Test functions:
  *   gui_color_encode_ansi
  */
 

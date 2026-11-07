@@ -126,6 +126,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core, irc: fix conversion of ANSI RGB colors (for example in output of `/exec`) when a red, green or blue component is greater than 255, use 255 instead
 - core, irc: remove ANSI control sequences (CSI) other than colors when decoding ANSI colors (for example cursor style), decode as colors only SGR sequences with parameters made of digits, ";" and ":" (not private sequences ending with "m")
 - core: keep attributes when decoding ANSI code 39 (default text color), like other text colors
 - **breaking:** core: fix ANSI code 22 (normal intensity), remove both bold and dim when decoding ANSI colors, use it instead of 21 (double underline) to remove bold when encoding ANSI colors

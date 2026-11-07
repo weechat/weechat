@@ -222,6 +222,12 @@ extern void irc_color_decode_ansi_sequence (char **output,
     "test_\x1B[4;58;5;1;34;59;1mul_blue"
 #define STRING_ANSI_SUB_PARAMS                                          \
     "test_\x1B[1;4:3;38:2::255:0:0;34mbold_blue"
+#define STRING_ANSI_FG_RGB_COMPONENT_256                                \
+    "test_\x1B[38;2;0;256;0mcolor09"
+#define STRING_ANSI_FG_RGB_COMPONENT_40000                              \
+    "test_\x1B[38;2;40000;0;0mcolor04"
+#define STRING_ANSI_BG_RGB_COMPONENTS_TOO_BIG                           \
+    "test_\x1B[48;2;0;256;99999999999mcolor11"
 
 #define WEE_CHECK_DECODE(__result, __string, __keep_colors)             \
     decoded = irc_color_decode (__string, __keep_colors);               \
@@ -1338,6 +1344,26 @@ TEST(IrcColor, DecodeAnsi)
               IRC_COLOR_BOLD_STR,
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_SUB_PARAMS, 1);
+
+    /* RGB color with components greater than 255 (clamped to 255) */
+    WEE_CHECK_DECODE_ANSI("test_color09",
+                          STRING_ANSI_FG_RGB_COMPONENT_256, 0);
+    snprintf (string, sizeof (string),
+              "test_%s09color09",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_RGB_COMPONENT_256, 1);
+    WEE_CHECK_DECODE_ANSI("test_color04",
+                          STRING_ANSI_FG_RGB_COMPONENT_40000, 0);
+    snprintf (string, sizeof (string),
+              "test_%s04color04",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_RGB_COMPONENT_40000, 1);
+    WEE_CHECK_DECODE_ANSI("test_color11",
+                          STRING_ANSI_BG_RGB_COMPONENTS_TOO_BIG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,11color11",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_RGB_COMPONENTS_TOO_BIG, 1);
 }
 
 /*

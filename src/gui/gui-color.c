@@ -1628,20 +1628,21 @@ gui_color_downgrade_rgb_name (const char *name)
 }
 
 /*
- * Get a RGB component (0-255) from an ANSI color code item.
+ * Get a RGB component (0-255) from an ANSI color code item: values lower
+ * than 0 are replaced by 0 and values greater than 255 are replaced by 255.
  */
 
 int
 gui_color_ansi_rgb_component (const char *item)
 {
-    int value;
+    long value;
 
-    value = atoi (item);
+    value = strtol (item, NULL, 10);
     if (value < 0)
         return 0;
     if (value > 255)
         return 255;
-    return value;
+    return (int)value;
 }
 
 /*
