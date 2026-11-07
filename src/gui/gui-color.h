@@ -209,13 +209,6 @@ enum t_gui_color_enum
 typedef void (t_gui_color_ansi_param_cb)(char **output, int value,
                                          int color);
 
-/* Data for function gui_color_ansi_replace */
-struct t_gui_color_ansi_replace
-{
-    int keep_colors;                     /* 1 to keep colors               */
-    t_gui_color_ansi_param_cb *callback; /* callback for each parameter    */
-};
-
 /* Color structure */
 
 struct t_gui_color
