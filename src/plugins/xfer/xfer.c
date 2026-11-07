@@ -563,6 +563,7 @@ xfer_alloc (void)
     new_xfer->remote_address_length = 0;
     new_xfer->remote_address_str = NULL;
     new_xfer->port = 0;
+    new_xfer->token = NULL;
     new_xfer->status = 0;
     new_xfer->buffer = NULL;
     new_xfer->remote_nick_color = NULL;
