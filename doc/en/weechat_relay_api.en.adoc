@@ -2169,3 +2169,104 @@ Example: upgrade of WeeChat is done:
     "body": null
 }
 ----
+
+[[websocket_websocat]]
+=== Testing with websocat
+
+The command line tool https://github.com/vi/websocat[websocat ^↗^^] can be used
+to test the websocket connection and send requests to WeeChat by hand: each line
+read on standard input is sent as a websocket frame and each frame received is
+displayed on a single line.
+
+Connection with a plain text password:
+
+[source,shell]
+----
+websocat --basic-auth 'plain:secret_password' wss://localhost:9000/api
+----
+
+[NOTE]
+Use `ws://` instead of `wss://` if the relay does not use TLS, and add the
+option `-k` (`--insecure`) if the relay uses a self-signed certificate.
+
+Connection with a hashed password (SHA256) and a TOTP value
+(see <<authentication,authentication>>):
+
+[source,shell]
+----
+websocat --basic-auth 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" wss://localhost:9000/api
+----
+
+Once connected, a request is sent by typing the JSON object on a single line
+(a JSON object written on multiple lines would be sent as multiple invalid
+frames), for example:
+
+[source,json]
+----
+{"request": "GET /api/version"}
+----
+
+The response is displayed on a single line:
+
+[source,json]
+----
+{"code":200,"message":"OK","request":"GET /api/version","request_body":null,"request_id":null,"body_type":"version","body":{"weechat_version":"5.0.0-dev","weechat_version_git":"v4.10.0-576-gb86e0c0b7","weechat_version_number":83886080,"relay_api_version":"0.7.0","relay_api_version_number":1792}}
+----
+
+To send a single request and exit as soon as the response is received, the
+options `-n` (`--no-close`) and `-1` (`--one-message`) can be used; the output
+can be formatted with https://jqlang.org/[jq ^↗^^]:
+
+[source,shell]
+----
+echo '{"request": "GET /api/version"}' \
+  | websocat -n -1 --basic-auth 'plain:secret_password' wss://localhost:9000/api \
+  | jq
+----
+
+Output:
+
+[source,json]
+----
+{
+  "code": 200,
+  "message": "OK",
+  "request": "GET /api/version",
+  "request_body": null,
+  "request_id": null,
+  "body_type": "version",
+  "body": {
+    "weechat_version": "5.0.0-dev",
+    "weechat_version_git": "v4.10.0-576-gb86e0c0b7",
+    "weechat_version_number": 83886080,
+    "relay_api_version": "0.7.0",
+    "relay_api_version_number": 1792
+  }
+}
+----
+
+Example of interactive session: synchronize the options with name matching
+`weechat.look.day_change*`, then change two options with the resource
+<<resource_input,input>>; the requests typed are:
+
+[source,json]
+----
+{"request": "POST /api/sync", "body": {"options": ["weechat.look.day_change*"]}}
+{"request": "POST /api/input", "body": {"buffer_name": "core.weechat", "command": "/set weechat.look.day_change off"}}
+{"request": "POST /api/input", "body": {"buffer_name": "core.weechat", "command": "/set weechat.look.buffer_time_format \"%H:%M\""}}
+----
+
+Frames received (the events `buffer_line_added` sent for the messages displayed
+by `/set` in the core buffer are not displayed here):
+
+[source,json]
+----
+{"code":204,"message":"No Content","request":"POST /api/sync","request_body":{"options":["weechat.look.day_change*"]},"request_id":null,"body_type":null,"body":null}
+{"code":204,"message":"No Content","request":"POST /api/input","request_body":{"buffer_name":"core.weechat","command":"/set weechat.look.day_change off"},"request_id":null,"body_type":null,"body":null}
+{"code":204,"message":"No Content","request":"POST /api/input","request_body":{"buffer_name":"core.weechat","command":"/set weechat.look.buffer_time_format \"%H:%M\""},"request_id":null,"body_type":null,"body":null}
+{"code":0,"message":"Event","event_name":"option_changed","buffer_id":-1,"body_type":"option","body":{"name":"weechat.look.day_change","value":false}}
+----
+
+The event `option_changed` is received only for the option
+`weechat.look.day_change`, because the option `weechat.look.buffer_time_format`
+does not match the name given in the resource <<resource_sync,sync>>.

@@ -2200,3 +2200,104 @@ Exemple : la mise à jour de WeeChat est terminée :
     "body": null
 }
 ----
+
+[[websocket_websocat]]
+=== Tests avec websocat
+
+L'outil en ligne de commande https://github.com/vi/websocat[websocat ^↗^^] peut
+être utilisé pour tester la connexion websocket et envoyer des requêtes à WeeChat
+manuellement : chaque ligne lue sur l'entrée standard est envoyée dans une "frame"
+websocket et chaque "frame" reçue est affichée sur une seule ligne.
+
+Connexion avec un mot de passe en clair :
+
+[source,shell]
+----
+websocat --basic-auth 'plain:secret_password' wss://localhost:9000/api
+----
+
+[NOTE]
+Utilisez `ws://` au lieu de `wss://` si le relai n'utilise pas TLS, et ajoutez
+l'option `-k` (`--insecure`) si le relai utilise un certificat auto-signé.
+
+Connexion avec un mot de passe haché (SHA256) et une valeur TOTP
+(voir <<authentication,authentification>>) :
+
+[source,shell]
+----
+websocat --basic-auth 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" wss://localhost:9000/api
+----
+
+Une fois connecté, une requête est envoyée en tapant l'objet JSON sur une seule
+ligne (un objet JSON écrit sur plusieurs lignes serait envoyé dans plusieurs
+"frames" invalides), par exemple :
+
+[source,json]
+----
+{"request": "GET /api/version"}
+----
+
+La réponse est affichée sur une seule ligne :
+
+[source,json]
+----
+{"code":200,"message":"OK","request":"GET /api/version","request_body":null,"request_id":null,"body_type":"version","body":{"weechat_version":"5.0.0-dev","weechat_version_git":"v4.10.0-576-gb86e0c0b7","weechat_version_number":83886080,"relay_api_version":"0.7.0","relay_api_version_number":1792}}
+----
+
+Pour envoyer une seule requête et quitter dès que la réponse est reçue, les
+options `-n` (`--no-close`) et `-1` (`--one-message`) peuvent être utilisées ;
+la sortie peut être formatée avec https://jqlang.org/[jq ^↗^^] :
+
+[source,shell]
+----
+echo '{"request": "GET /api/version"}' \
+  | websocat -n -1 --basic-auth 'plain:secret_password' wss://localhost:9000/api \
+  | jq
+----
+
+Sortie :
+
+[source,json]
+----
+{
+  "code": 200,
+  "message": "OK",
+  "request": "GET /api/version",
+  "request_body": null,
+  "request_id": null,
+  "body_type": "version",
+  "body": {
+    "weechat_version": "5.0.0-dev",
+    "weechat_version_git": "v4.10.0-576-gb86e0c0b7",
+    "weechat_version_number": 83886080,
+    "relay_api_version": "0.7.0",
+    "relay_api_version_number": 1792
+  }
+}
+----
+
+Exemple de session interactive : synchronisation des options dont le nom
+correspond à `weechat.look.day_change*`, puis modification de deux options avec
+la ressource <<resource_input,input>> ; les requêtes tapées sont :
+
+[source,json]
+----
+{"request": "POST /api/sync", "body": {"options": ["weechat.look.day_change*"]}}
+{"request": "POST /api/input", "body": {"buffer_name": "core.weechat", "command": "/set weechat.look.day_change off"}}
+{"request": "POST /api/input", "body": {"buffer_name": "core.weechat", "command": "/set weechat.look.buffer_time_format \"%H:%M\""}}
+----
+
+"Frames" reçues (les évènements `buffer_line_added` envoyés pour les messages
+affichés par `/set` dans le tampon core ne sont pas affichés ici) :
+
+[source,json]
+----
+{"code":204,"message":"No Content","request":"POST /api/sync","request_body":{"options":["weechat.look.day_change*"]},"request_id":null,"body_type":null,"body":null}
+{"code":204,"message":"No Content","request":"POST /api/input","request_body":{"buffer_name":"core.weechat","command":"/set weechat.look.day_change off"},"request_id":null,"body_type":null,"body":null}
+{"code":204,"message":"No Content","request":"POST /api/input","request_body":{"buffer_name":"core.weechat","command":"/set weechat.look.buffer_time_format \"%H:%M\""},"request_id":null,"body_type":null,"body":null}
+{"code":0,"message":"Event","event_name":"option_changed","buffer_id":-1,"body_type":"option","body":{"name":"weechat.look.day_change","value":false}}
+----
+
+L'évènement `option_changed` est reçu seulement pour l'option
+`weechat.look.day_change`, car l'option `weechat.look.buffer_time_format` ne
+correspond pas au nom donné dans la ressource <<resource_sync,sync>>.
