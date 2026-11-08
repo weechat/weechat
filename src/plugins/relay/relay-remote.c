@@ -589,7 +589,13 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
     new_remote->version_ok = weechat_infolist_integer (infolist, "version_ok");
     new_remote->synced = weechat_infolist_integer (infolist, "synced");
     new_remote->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
-    new_remote->reconnect_start = weechat_infolist_integer (infolist, "reconnect_start");
+    new_remote->reconnect_start = weechat_infolist_time (infolist, "reconnect_start");
+    /*
+     * "reconnect_start" was saved as integer in WeeChat < 5.0.0;
+     * infolist getters return 0 if the type differs
+     */
+    if (new_remote->reconnect_start == 0)
+        new_remote->reconnect_start = weechat_infolist_integer (infolist, "reconnect_start");
     ptr_ws_frame = weechat_infolist_buffer (infolist, "partial_ws_frame", &ws_frame_size);
     if (ptr_ws_frame && (ws_frame_size > 0))
     {
@@ -1074,7 +1080,7 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", remote->reconnect_delay))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_start", remote->reconnect_start))
+    if (!weechat_infolist_new_var_time (ptr_item, "reconnect_start", remote->reconnect_start))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "synced", remote->synced))
         return 0;
@@ -1131,7 +1137,7 @@ relay_remote_print_log (void)
         relay_websocket_deflate_print_log (ptr_remote->ws_deflate, "");
         weechat_log_printf ("  version_ok. . . . . . . : %d", ptr_remote->version_ok);
         weechat_log_printf ("  reconnect_delay . . . . : %d", ptr_remote->reconnect_delay);
-        weechat_log_printf ("  reconnect_start . . . . : %d", ptr_remote->reconnect_start);
+        weechat_log_printf ("  reconnect_start . . . . : %lld", (long long)ptr_remote->reconnect_start);
         weechat_log_printf ("  synced. . . . . . . . . : %d", ptr_remote->synced);
         weechat_log_printf ("  partial_ws_frame. . . . : %p (%d bytes)",
                             ptr_remote->partial_ws_frame,
