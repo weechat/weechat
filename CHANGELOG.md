@@ -159,6 +159,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: fix issue with year ≥ 2038 in reconnection after `/upgrade`
 - irc: fix use after free of a deleted server in raw messages, which could cause a crash in raw buffer or on `/upgrade`
 - irc: remove extra spaces after "online" in notify list
 - irc: fix memory leak when receiving the reply to ISON command sent for notify list
