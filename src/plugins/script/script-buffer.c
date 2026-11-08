@@ -764,7 +764,7 @@ script_buffer_refresh (int clear)
     else
     {
         snprintf (str_title, sizeof (str_title),
-                  _("%d/%d scripts | Filter: %s | Sort: %s | "
+                  _("Scripts: %d/%d | Filter: %s | Sort: %s | "
                     "Alt+key/input: i=install, r=remove, l=load, L=reload, "
                     "u=unload, A=autoload, h=(un)hold, v=view script | "
                     "Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, "
