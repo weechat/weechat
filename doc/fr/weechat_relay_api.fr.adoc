@@ -1609,13 +1609,27 @@ Paramètres du corps :
   recevoir seulement les nouvelles lignes avec un highlight ou un message privé
   (niveau de notification supérieur ou égal à 2) et les évènements `upgrade`,
   `upgrade_ended` et `quit`, tous les autres évènements ne sont pas envoyés et
-  les paramètres `nicks` et `input` sont ignorés (utilisé seulement si `sync`
-  vaut `true`) ; ceci est utile pour un client mobile en arrière-plan
+  les paramètres `nicks`, `input` et `options` sont ignorés (utilisé seulement
+  si `sync` vaut `true`) ; ceci est utile pour un client mobile en
+  arrière-plan
 * `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
   des couleurs sont retournées :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+* `options` (tableau de chaînes, facultatif, par défaut : `[]`) : options
+  à synchroniser : les évènements `option_changed` et `option_removed` sont
+  envoyés lorsqu'une option correspondant à l'un de ces noms est ajoutée,
+  modifiée ou supprimée ; le caractère joker `*` est autorisé dans les noms,
+  par exemple `weechat.look.day_change*` correspond à `weechat.look.day_change`,
+  `weechat.look.day_change_message_1date` et
+  `weechat.look.day_change_message_2dates` ; le nom `*` seul correspond à
+  toutes les options, ce qui n'est pas recommandé car cela peut générer beaucoup
+  de trafic ; seuls le nom et la valeur de l'option sont envoyés : pour
+  une option inconnue du client (par exemple une nouvelle option créée avec
+  `/set`), les autres champs (type, valeur par défaut, description, etc.)
+  peuvent être récupérés avec la ressource <<resource_options,options>>
+  (utilisé seulement si `sync` vaut `true` et `notify_only` vaut `false`)
 
 Chaque requête réinitialise tous les paramètres à leur valeur par défaut avant
 d'appliquer le corps, donc le client doit envoyer de nouveau tous les paramètres
@@ -1973,6 +1987,8 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `nicklist_nick_removing`              | id tampon | `nick`        | pseudo
 | `nicklist_nick_changed`               | id tampon | `nick`        | pseudo
 | `day_changed`                         | -1        | null          | null
+| `option_changed`                      | -1        | `option`      | option (seulement les champs `name` et `value`)
+| `option_removed`                      | -1        | `option`      | option (seulement le champ `name`)
 | `upgrade` ^(1)^                       | -1        | null          | null
 | `upgrade_ended` ^(1)^                 | -1        | null          | null
 | `quit`                                | -1        | null          | null
@@ -2121,6 +2137,39 @@ Exemple : le jour a changé :
     "buffer_id": -1,
     "body_type": null,
     "body": null
+}
+----
+
+Exemple : l'option `weechat.look.day_change` a été modifiée :
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "option_changed",
+    "buffer_id": -1,
+    "body_type": "option",
+    "body": {
+        "name": "weechat.look.day_change",
+        "value": false
+    }
+}
+----
+
+Exemple : l'option `plugins.var.python.test.option` a été supprimée :
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "option_removed",
+    "buffer_id": -1,
+    "body_type": "option",
+    "body": {
+        "name": "plugins.var.python.test.option"
+    }
 }
 ----
 

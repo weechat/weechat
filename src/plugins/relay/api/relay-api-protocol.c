@@ -396,6 +396,54 @@ relay_api_protocol_signal_day_changed_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for changes on config options.
+ *
+ * Event "option_changed" is sent with the option name and value if the option
+ * exists (option added or changed), otherwise event "option_removed" is sent
+ * with the option name only.
+ */
+
+int
+relay_api_protocol_config_option_cb (const void *pointer, void *data,
+                                     const char *option, const char *value)
+{
+    struct t_relay_client *ptr_client;
+    struct t_config_option *ptr_option;
+    struct t_relay_json *json;
+
+    /* Make C compiler happy. */
+    (void) data;
+    (void) value;
+
+    ptr_client = (struct t_relay_client *)pointer;
+    if (!ptr_client || !relay_client_valid (ptr_client) || !option)
+        return WEECHAT_RC_OK;
+
+    json = relay_json_new_object ();
+    if (!json)
+        return WEECHAT_RC_OK;
+
+    relay_json_object_add (json, "name", relay_json_new_string (option));
+
+    ptr_option = weechat_config_get (option);
+    if (ptr_option)
+    {
+        relay_json_object_add (json, "value",
+                               relay_api_msg_option_value_to_json (ptr_option, 0));
+    }
+
+    relay_api_msg_send_event (ptr_client,
+                              (ptr_option) ? "option_changed" : "option_removed",
+                              -1,
+                              "option",
+                              json);
+
+    relay_json_free (json);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the OPTIONS preflight request.
  *
  * Routes:
@@ -1215,7 +1263,8 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
 RELAY_API_PROTOCOL_CALLBACK(sync)
 {
     struct t_relay_json *json_body, *json_sync, *json_nicks, *json_input;
-    struct t_relay_json *json_notify_only, *json_colors;
+    struct t_relay_json *json_notify_only, *json_colors, *json_options;
+    int i, size;
 
     if (client->websocket != RELAY_CLIENT_WEBSOCKET_READY)
     {
@@ -1232,6 +1281,10 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     RELAY_API_DATA(client, sync_input) = 1;
     RELAY_API_DATA(client, sync_notify_only) = 0;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
+
+    /* Hooks on options must be removed before options are freed. */
+    relay_api_unhook_signals (client);
+    relay_api_free_sync_options (client);
 
     json_body = relay_json_parse (client->http_req->body);
     if (json_body)
@@ -1256,10 +1309,24 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
             if (RELAY_API_DATA(client, sync_colors) < 0)
                 RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
         }
+        json_options = relay_json_object_get (json_body, "options");
+        if (relay_json_is_array (json_options))
+        {
+            size = relay_json_array_size (json_options);
+            for (i = 0; i < size; i++)
+            {
+                relay_api_add_sync_option (
+                    client,
+                    relay_json_get_string (
+                        relay_json_array_get (json_options, i)));
+            }
+        }
     }
 
-    /* Hooks are created again because they depend on "notify_only". */
-    relay_api_unhook_signals (client);
+    /*
+     * Hooks are created again because they depend on "notify_only"
+     * and "options".
+     */
     if (RELAY_API_DATA(client, sync_enabled))
         relay_api_hook_signals (client);
 

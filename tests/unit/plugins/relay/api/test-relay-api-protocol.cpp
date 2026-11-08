@@ -16,6 +16,7 @@ extern "C"
 #include <unistd.h>
 #include <limits.h>
 #include <string.h>
+#include "src/core/core-config.h"
 #include "src/core/core-config-file.h"
 #include "src/core/core-hook.h"
 #include "src/core/core-string.h"
@@ -26,6 +27,7 @@ extern "C"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
+#include "src/plugins/plugin-config.h"
 #include "src/plugins/weechat-plugin.h"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-client.h"
@@ -1137,6 +1139,73 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_input));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_upgrade));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_day_changed));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, sync_options));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, num_sync_options));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_config_options));
+
+    /* Options: invalid type (not an array). */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"options\": \"weechat.look.*\"}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync",
+                   "{\"options\":\"weechat.look.*\"}", "null");
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, sync_options));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, num_sync_options));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_config_options));
+
+    /* Options: invalid items, empty strings and duplicates are ignored. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"options\": [\"weechat.look.day_change*\", "
+                           "123, \"\", \"a\\nb\", \"weechat.look.day_change*\", "
+                           "\"weechat.look.highlight\"]}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync",
+                   "{\"options\":[\"weechat.look.day_change*\",123,\"\",\"a\\nb\","
+                   "\"weechat.look.day_change*\",\"weechat.look.highlight\"]}",
+                   "null");
+    LONGS_EQUAL(2, RELAY_API_DATA(ptr_relay_client, num_sync_options));
+    STRCMP_EQUAL("weechat.look.day_change*",
+                 RELAY_API_DATA(ptr_relay_client, sync_options)[0]);
+    STRCMP_EQUAL("weechat.look.highlight",
+                 RELAY_API_DATA(ptr_relay_client, sync_options)[1]);
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, sync_options)[2]);
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_config_options));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_config_options)[0]);
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_config_options)[1]);
+
+    /* Options are kept but not hooked with "notify_only". */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"notify_only\": true, "
+                           "\"options\": [\"weechat.look.*\"]}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync",
+                   "{\"notify_only\":true,\"options\":[\"weechat.look.*\"]}",
+                   "null");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, num_sync_options));
+    STRCMP_EQUAL("weechat.look.*",
+                 RELAY_API_DATA(ptr_relay_client, sync_options)[0]);
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_config_options));
+
+    /* Options are hooked without "notify_only". */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"options\": [\"weechat.look.*\"]}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync",
+                   "{\"options\":[\"weechat.look.*\"]}", "null");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, num_sync_options));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_config_options));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_config_options)[0]);
+
+    /* Options are not hooked when sync is disabled. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"sync\": false, \"options\": [\"weechat.look.*\"]}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync",
+                   "{\"sync\":false,\"options\":[\"weechat.look.*\"]}", "null");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, num_sync_options));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_config_options));
+
+    /* Options are reset when not given. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, sync_options));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, num_sync_options));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_config_options));
 }
 
 /*
@@ -1308,6 +1377,99 @@ TEST(RelayApiProtocolWithClient, SignalDayChangedCb)
     (void) hook_signal_send ("day_changed",
                              WEECHAT_HOOK_SIGNAL_STRING, (void *)"2026-10-05");
     POINTERS_EQUAL(NULL, data_sent[0]);
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_config_option_cb
+ */
+
+TEST(RelayApiProtocolWithClient, ConfigOptionCb)
+{
+    struct t_config_option *ptr_option;
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    /* No event sent if the client is not synchronized. */
+    free_data_sent ();
+    config_file_option_set (config_look_day_change, "off", 1);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+    config_file_option_reset (config_look_day_change, 1);
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"options\": [\"weechat.look.day_change*\", "
+                           "\"plugins.var.relay.test_*\"]}}");
+
+    /* No event sent for an option not synchronized. */
+    free_data_sent ();
+    config_file_option_set (config_look_highlight, "test", 1);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+    config_file_option_reset (config_look_highlight, 1);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* No event sent if the value does not change. */
+    free_data_sent ();
+    config_file_option_set (config_look_day_change, "on", 1);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* Event sent for a changed option. */
+    free_data_sent ();
+    config_file_option_set (config_look_day_change, "off", 1);
+    STRCMP_EQUAL("{\"code\":0,"
+                 "\"message\":\"Event\","
+                 "\"event_name\":\"option_changed\","
+                 "\"buffer_id\":-1,"
+                 "\"body_type\":\"option\","
+                 "\"body\":{\"name\":\"weechat.look.day_change\",\"value\":false}}",
+                 data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    config_file_option_reset (config_look_day_change, 1);
+
+    /* Event sent for a new option, then for the removed option. */
+    free_data_sent ();
+    plugin_config_set ("relay", "test_option", "value");
+    STRCMP_EQUAL("{\"code\":0,"
+                 "\"message\":\"Event\","
+                 "\"event_name\":\"option_changed\","
+                 "\"buffer_id\":-1,"
+                 "\"body_type\":\"option\","
+                 "\"body\":{\"name\":\"plugins.var.relay.test_option\","
+                 "\"value\":\"value\"}}",
+                 data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    free_data_sent ();
+    config_file_search_with_string ("plugins.var.relay.test_option",
+                                    NULL, NULL, &ptr_option, NULL);
+    CHECK(ptr_option);
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED,
+                config_file_option_unset (ptr_option));
+    STRCMP_EQUAL("{\"code\":0,"
+                 "\"message\":\"Event\","
+                 "\"event_name\":\"option_removed\","
+                 "\"buffer_id\":-1,"
+                 "\"body_type\":\"option\","
+                 "\"body\":{\"name\":\"plugins.var.relay.test_option\"}}",
+                 data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+
+    /* No event sent after the client is desynchronized. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"sync\": false, "
+                           "\"options\": [\"weechat.look.day_change*\"]}}");
+    free_data_sent ();
+    config_file_option_set (config_look_day_change, "off", 1);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+    config_file_option_reset (config_look_day_change, 1);
 }
 
 /*

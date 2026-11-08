@@ -1589,13 +1589,26 @@ Body parameters:
 * `notify_only` (boolean, optional, default: `false`): `true` to receive only
   new lines with a highlight or a private message (notify level greater than or
   equal to 2) and the events `upgrade`, `upgrade_ended` and `quit`, all other
-  events are not sent and parameters `nicks` and `input` are ignored (used only
-  if `sync` is `true`); this is useful for a mobile client in background
+  events are not sent and parameters `nicks`, `input` and `options` are ignored
+  (used only if `sync` is `true`); this is useful for a mobile client in
+  background
 * `colors` (string, optional, default: `ansi`): how to return strings with
   color codes (used only if `sync` is `true`):
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+* `options` (array of strings, optional, default: `[]`): options to
+  synchronize: the events `option_changed` and `option_removed` are sent when
+  an option matching one of these names is added, changed or removed; the
+  wildcard `*` is allowed in names, for example `weechat.look.day_change*`
+  matches `weechat.look.day_change`, `weechat.look.day_change_message_1date`
+  and `weechat.look.day_change_message_2dates`; the name `*` alone matches all
+  options, which is not recommended as it can cause a lot of traffic; only the
+  option name and value are sent: for an option unknown by the client (for
+  example a new option created with `/set`), the other fields (type, default
+  value, description, etc.) can be retrieved with the resource
+  <<resource_options,options>> (used only if `sync` is `true` and
+  `notify_only` is `false`)
 
 Each request resets all parameters to their default value before applying the
 body, so the client must send again all parameters with a non-default value.
@@ -1943,6 +1956,8 @@ The following events are sent to the client, according to synchronization option
 | `nicklist_nick_removing`              | buffer id | `nick`        | nick
 | `nicklist_nick_changed`               | buffer id | `nick`        | nick
 | `day_changed`                         | -1        | null          | null
+| `option_changed`                      | -1        | `option`      | option (only fields `name` and `value`)
+| `option_removed`                      | -1        | `option`      | option (only field `name`)
 | `upgrade` ^(1)^                       | -1        | null          | null
 | `upgrade_ended` ^(1)^                 | -1        | null          | null
 | `quit`                                | -1        | null          | null
@@ -2091,6 +2106,39 @@ Example: the day has changed:
     "buffer_id": -1,
     "body_type": null,
     "body": null
+}
+----
+
+Example: option `weechat.look.day_change` has been changed:
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "option_changed",
+    "buffer_id": -1,
+    "body_type": "option",
+    "body": {
+        "name": "weechat.look.day_change",
+        "value": false
+    }
+}
+----
+
+Example: option `plugins.var.python.test.option` has been removed:
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "option_removed",
+    "buffer_id": -1,
+    "body_type": "option",
+    "body": {
+        "name": "plugins.var.python.test.option"
+    }
 }
 ----
 

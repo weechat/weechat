@@ -48,6 +48,8 @@ struct t_relay_api_data
                                           /* and "quit"                     */
     struct t_hook *hook_signal_day_changed; /* hook for signal              */
                                           /* "day_changed"                  */
+    struct t_hook **hook_config_options;  /* hooks for config options       */
+                                          /* (one per item in sync_options) */
     struct t_hashtable *buffers_closing;  /* ptr -> "id" of buffers closing */
     int sync_enabled;                     /* 1 if sync is enabled           */
     int sync_nicks;                       /* 1 if nicks are synchronized    */
@@ -56,9 +58,16 @@ struct t_relay_api_data
     int sync_notify_only;                 /* 1 to sync only highlights and  */
                                           /* private messages               */
     enum t_relay_api_colors sync_colors;  /* colors to send with sync       */
+    char **sync_options;                  /* options to sync (masks with    */
+                                          /* "*"), NULL-terminated array    */
+    int num_sync_options;                 /* number of options to sync      */
 };
 
 extern int relay_api_search_colors (const char *colors);
+extern void relay_api_add_sync_option (struct t_relay_client *client,
+                                       const char *option);
+extern void relay_api_free_sync_options (struct t_relay_client *client);
+extern void relay_api_unhook_config_options (struct t_relay_client *client);
 extern void relay_api_hook_signals (struct t_relay_client *client);
 extern void relay_api_unhook_signals (struct t_relay_client *client);
 extern void relay_api_recv_http (struct t_relay_client *client);

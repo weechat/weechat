@@ -855,7 +855,7 @@ paths:
                     Receive only new lines with highlight or private message
                     (notify level >= 2), and events `upgrade`, `upgrade_ended`
                     and `quit`; all other events are not sent, and options
-                    `nicks` and `input` are ignored
+                    `nicks`, `input` and `options` are ignored
                   example: false
                 colors:
                   type: string
@@ -869,6 +869,19 @@ paths:
                     * `ansi`: return ANSI color codes
                     * `weechat`: return WeeChat internal color codes
                     * `strip`: strip colors
+                options:
+                  type: array
+                  items:
+                    type: string
+                  default: []
+                  description: |
+                    Options to synchronize (wildcard `*` is allowed): events
+                    `option_changed` (name and value) and `option_removed`
+                    (name) are sent when a matching option is added, changed
+                    or removed; ignored if `notify_only` is enabled
+                  example:
+                    - weechat.look.day_change*
+                    - weechat.look.highlight
       responses:
         '204':
           description: Successful operation
