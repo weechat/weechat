@@ -460,7 +460,7 @@ irc_list_buffer_set_title (struct t_irc_server *server)
         weechat_arraylist_size (server->list->channels) : 0;
 
     snprintf (str_title, sizeof (str_title),
-              _("%d channels (total: %d) | Filter: %s | Sort: %s | "
+              _("Channels: %d (total: %d) | Filter: %s | Sort: %s | "
                 "Keys: ctrl+j=join channel | "
                 "Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, "
                 "q=close buffer"),

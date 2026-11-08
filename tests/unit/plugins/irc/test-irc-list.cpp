@@ -522,7 +522,7 @@ TEST(IrcListWithServer, BufferRefresh)
     irc_list_buffer_refresh (server, 0);
     WEE_TEST_STR("Empty list of channels, try \"$\" to refresh list",
                  buffer_line (1));
-    STRCMP_EQUAL("0 channels (total: 0) | Filter: * | Sort:  | "
+    STRCMP_EQUAL("Channels: 0 (total: 0) | Filter: * | Sort:  | "
                  "Keys: ctrl+j=join channel | "
                  "Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, "
                  "q=close buffer",
@@ -533,7 +533,7 @@ TEST(IrcListWithServer, BufferRefresh)
     irc_list_set_filter (server, "u:>4");
     irc_list_filter_channels (server);
     irc_list_buffer_refresh (server, 1);
-    STRCMP_EQUAL("3 channels (total: 5) | Filter: u:>4 | Sort: -users | "
+    STRCMP_EQUAL("Channels: 3 (total: 5) | Filter: u:>4 | Sort: -users | "
                  "Keys: ctrl+j=join channel | "
                  "Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, "
                  "q=close buffer",
