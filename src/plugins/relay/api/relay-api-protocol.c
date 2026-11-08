@@ -1493,7 +1493,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
                     NULL,
                     _("%s%s: too few arguments received from client "
                       "%s%s%s for resource \"%s\" "
-                      "(received: %d arguments, expected: at least %d)"),
+                      "(received: %d, expected: at least %d)"),
                     weechat_prefix ("error"),
                     RELAY_PLUGIN_NAME,
                     RELAY_COLOR_CHAT_CLIENT,
@@ -1521,7 +1521,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
                     NULL,
                     _("%s%s: too many arguments received from client "
                       "%s%s%s for resource \"%s\" "
-                      "(received: %d arguments, expected: at most %d)"),
+                      "(received: %d, expected: at most %d)"),
                     weechat_prefix ("error"),
                     RELAY_PLUGIN_NAME,
                     RELAY_COLOR_CHAT_CLIENT,

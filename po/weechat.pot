@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 20:09+0100\n"
+"POT-Creation-Date: 2026-11-08 20:12+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12689,13 +12689,13 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: too few arguments received from client %s%s%s for resource \"%s\" "
-"(received: %d arguments, expected: at least %d)"
+"(received: %d, expected: at least %d)"
 msgstr ""
 
 #, c-format
 msgid ""
 "%s%s: too many arguments received from client %s%s%s for resource \"%s\" "
-"(received: %d arguments, expected: at most %d)"
+"(received: %d, expected: at most %d)"
 msgstr ""
 
 #, c-format
@@ -13845,7 +13845,7 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: too few arguments received from client %s%s%s for command \"%s\" "
-"(received: %d arguments, expected: at least %d)"
+"(received: %d, expected: at least %d)"
 msgstr ""
 
 msgid "Support of ruby scripts"

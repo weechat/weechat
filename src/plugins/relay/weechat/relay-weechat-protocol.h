@@ -44,8 +44,7 @@
             weechat_printf (NULL,                                       \
                             _("%s%s: too few arguments received from "  \
                               "client %s%s%s for command \"%s\" "       \
-                              "(received: %d arguments, expected: at "  \
-                              "least %d)"),                             \
+                              "(received: %d, expected: at least %d)"), \
                             weechat_prefix ("error"),                   \
                             RELAY_PLUGIN_NAME,                          \
                             RELAY_COLOR_CHAT_CLIENT,                    \
