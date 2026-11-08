@@ -146,15 +146,25 @@ jobs:
           pipx install "ruff==$RUFF_VERSION"
           pipx install "ty==$TY_VERSION"
 
-      - name: Install poexam
+      - name: Cache poexam
+        id: cache-poexam
+        uses: actions/cache@v6
+        with:
+          path: ${{ runner.temp }}/poexam-linux-x86_64
+          key: poexam-${{ env.POEXAM_VERSION }}-linux-x86_64
+
+      - name: Download poexam
+        if: steps.cache-poexam.outputs.cache-hit != 'true'
         run: |
           cd "$RUNNER_TEMP"
-          curl --silent --show-error --fail --location --remote-name-all \
+          curl --silent --show-error --fail --location --retry 5 --remote-name-all \
             "https://github.com/poexam/poexam/releases/download/v$POEXAM_VERSION/poexam-linux-x86_64.tar.gz" \
             "https://github.com/poexam/poexam/releases/download/v$POEXAM_VERSION/poexam-linux-x86_64.sha256"
           sha256sum --check poexam-linux-x86_64.sha256
           tar --extract --file poexam-linux-x86_64.tar.gz
-          sudo install -m 0755 poexam-linux-x86_64/poexam /usr/local/bin/poexam
+
+      - name: Install poexam
+        run: sudo install -m 0755 "$RUNNER_TEMP/poexam-linux-x86_64/poexam" /usr/local/bin/poexam
 
       - name: Check REUSE compliance
         run: reuse lint
