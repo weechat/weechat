@@ -8349,7 +8349,14 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
 
 ==== config_option_rename
 
+_WeeChat バージョン 5.0.0 で更新。_
+
 オプションをリネーム。
+
+// TRANSLATION MISSING
+Config hooks (see <<_hook_config,hook_config>>) are called with the old
+name and a NULL value (as if the option was removed), then with the new name
+and the option value _(WeeChat ≥ 5.0.0)_.
 
 プロトタイプ:
 

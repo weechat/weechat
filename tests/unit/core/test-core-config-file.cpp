@@ -2672,6 +2672,7 @@ TEST(CoreConfigFileWithTestConfig, OptionUnset)
 TEST(CoreConfigFileWithTestConfig, OptionRename)
 {
     struct t_config_option *opt_aaa, *opt_ccc, *opt_child;
+    struct t_hook *hook_old, *hook_all;
 
     config_file_option_rename (NULL, NULL);
     config_file_option_rename (NULL, "test");
@@ -2689,6 +2690,10 @@ TEST(CoreConfigFileWithTestConfig, OptionRename)
     POINTERS_EQUAL(opt_aaa, section_test->options);
     POINTERS_EQUAL(opt_child, section_test->last_option);
 
+    hook_old = hook_config (NULL, TEST_CONFIG_NAME ".sec.aaa",
+                            &test_hook_config_cb, NULL, NULL);
+    CHECK(hook_old);
+
     /* Invalid new name or option already existing: nothing is done. */
     config_file_option_rename (opt_aaa, NULL);
     STRCMP_EQUAL("aaa", opt_aaa->name);
@@ -2697,10 +2702,16 @@ TEST(CoreConfigFileWithTestConfig, OptionRename)
     config_file_option_rename (opt_aaa, "ccc");
     STRCMP_EQUAL("aaa", opt_aaa->name);
     STRCMP_EQUAL("ccc", opt_ccc->name);
+    LONGS_EQUAL(0, test_hook_config_cb_count);
 
     /* Rename option: it is moved in section and parent name is updated. */
     config_file_option_rename (opt_aaa, "zzz");
     STRCMP_EQUAL("zzz", opt_aaa->name);
+    /* Hook on old name is called with a NULL value (option removed). */
+    LONGS_EQUAL(1, test_hook_config_cb_count);
+    STRCMP_EQUAL(TEST_CONFIG_NAME ".sec.aaa", test_hook_config_cb_option);
+    POINTERS_EQUAL(NULL, test_hook_config_cb_value);
+    unhook (hook_old);
     POINTERS_EQUAL(NULL, config_file_search_option (config_test,
                                                     section_test, "aaa"));
     POINTERS_EQUAL(opt_aaa, config_file_search_option (config_test,
@@ -2715,6 +2726,18 @@ TEST(CoreConfigFileWithTestConfig, OptionRename)
     POINTERS_EQUAL(NULL, opt_aaa->next_option);
     STRCMP_EQUAL(TEST_CONFIG_NAME ".sec.zzz", opt_child->parent_name);
     POINTERS_EQUAL(opt_aaa, config_file_get_parent_option (opt_child));
+
+    /* Hooks are called with the old name, then with the new name. */
+    hook_all = hook_config (NULL, TEST_CONFIG_NAME ".sec.*",
+                            &test_hook_config_cb, NULL, NULL);
+    CHECK(hook_all);
+    test_hook_config_cb_count = 0;
+    config_file_option_rename (opt_aaa, "zzz2");
+    LONGS_EQUAL(2, test_hook_config_cb_count);
+    STRCMP_EQUAL(TEST_CONFIG_NAME ".sec.zzz2", test_hook_config_cb_option);
+    STRCMP_EQUAL("value", test_hook_config_cb_value);
+    config_file_option_rename (opt_aaa, "zzz");
+    unhook (hook_all);
 
     /* Rename option in the middle of section (order: ccc, child, zzz) */
     config_file_option_rename (opt_child, "aab");

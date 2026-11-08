@@ -1447,10 +1447,30 @@ TEST(RelayApiProtocolWithClient, ConfigOptionCb)
                  "\"value\":\"value\"}}",
                  data_sent[0]);
     POINTERS_EQUAL(NULL, data_sent[1]);
+
+    /* Events sent for a renamed option: old name removed, new name changed. */
     free_data_sent ();
     config_file_search_with_string ("plugins.var.relay.test_option",
                                     NULL, NULL, &ptr_option, NULL);
     CHECK(ptr_option);
+    config_file_option_rename (ptr_option, "relay.test_option2");
+    STRCMP_EQUAL("{\"code\":0,"
+                 "\"message\":\"Event\","
+                 "\"event_name\":\"option_removed\","
+                 "\"buffer_id\":-1,"
+                 "\"body_type\":\"option\","
+                 "\"body\":{\"name\":\"plugins.var.relay.test_option\"}}",
+                 data_sent[0]);
+    STRCMP_EQUAL("{\"code\":0,"
+                 "\"message\":\"Event\","
+                 "\"event_name\":\"option_changed\","
+                 "\"buffer_id\":-1,"
+                 "\"body_type\":\"option\","
+                 "\"body\":{\"name\":\"plugins.var.relay.test_option2\","
+                 "\"value\":\"value\"}}",
+                 data_sent[1]);
+    POINTERS_EQUAL(NULL, data_sent[2]);
+    free_data_sent ();
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED,
                 config_file_option_unset (ptr_option));
     STRCMP_EQUAL("{\"code\":0,"
@@ -1458,7 +1478,7 @@ TEST(RelayApiProtocolWithClient, ConfigOptionCb)
                  "\"event_name\":\"option_removed\","
                  "\"buffer_id\":-1,"
                  "\"body_type\":\"option\","
-                 "\"body\":{\"name\":\"plugins.var.relay.test_option\"}}",
+                 "\"body\":{\"name\":\"plugins.var.relay.test_option2\"}}",
                  data_sent[0]);
     POINTERS_EQUAL(NULL, data_sent[1]);
 

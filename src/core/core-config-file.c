@@ -2236,6 +2236,9 @@ config_file_option_unset (struct t_config_option *option)
 
 /*
  * Rename an option.
+ *
+ * Config hooks are called with the old name and a NULL value (option removed),
+ * then with the new name and the option value.
  */
 
 void
@@ -2302,6 +2305,9 @@ config_file_option_rename (struct t_config_option *option,
             }
         }
     }
+
+    if (str_new_name && full_old_name)
+        hook_config_exec (full_old_name, NULL);
 
     free (full_old_name);
     free (full_new_name);

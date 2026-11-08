@@ -111,6 +111,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: call config hooks with the old option name when an option is renamed, so that the old name is seen as removed
 - core: fix memory leak when the upgrade file can not be read on startup with option `--upgrade`
 - core: fix memory leak in input of buffers restored by command `/upgrade`
 - core: fix crash in info "color_rgb2term" when the limit is greater than 256

@@ -8183,7 +8183,13 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
 
 ==== config_option_rename
 
+_Updated in 5.0.0._
+
 Rename an option.
+
+Config hooks (see <<_hook_config,hook_config>>) are called with the old
+name and a NULL value (as if the option was removed), then with the new name
+and the option value _(WeeChat ≥ 5.0.0)_.
 
 Prototype:
 
