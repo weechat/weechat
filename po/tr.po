@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:11+0100\n"
+"POT-Creation-Date: 2026-11-08 19:55+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -845,8 +845,9 @@ msgstr ""
 "%sGüvenli veri veya parola üzerinde işlem yapabilmek için öncelikle tüm "
 "verinin şifresi çözülmelidir"
 
-#, c-format
-msgid "%sPassphrase is too long (max: %d chars)"
+#, fuzzy, c-format
+#| msgid "%sPassphrase is too long (max: %d chars)"
+msgid "%sPassphrase is too long (max length: %d)"
 msgstr "%sParola çok uzun (en çok %d karakter)"
 
 msgid "Passphrase deleted"

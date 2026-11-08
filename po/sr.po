@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:11+0100\n"
+"POT-Creation-Date: 2026-11-08 19:55+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -845,8 +845,9 @@ msgstr ""
 "%sПре него што обавите било какву операцију над обезбеђеним подацима или "
 "тајној реченици, морате дешифровати податке који су још увек шифровани"
 
-#, c-format
-msgid "%sPassphrase is too long (max: %d chars)"
+#, fuzzy, c-format
+#| msgid "%sPassphrase is too long (max: %d chars)"
+msgid "%sPassphrase is too long (max length: %d)"
 msgstr "%sТајна реченица је предугачка (макс: %d карактера)"
 
 msgid "Passphrase deleted"

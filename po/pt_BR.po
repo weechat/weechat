@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:11+0100\n"
+"POT-Creation-Date: 2026-11-08 19:55+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -896,7 +896,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sPassphrase is too long (max: %d chars)"
+msgid "%sPassphrase is too long (max length: %d)"
 msgstr ""
 
 msgid "Passphrase deleted"

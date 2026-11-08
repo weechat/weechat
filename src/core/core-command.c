@@ -6618,7 +6618,7 @@ COMMAND_CALLBACK(secure)
             && (strlen (argv_eol[2]) > SECURE_PASSPHRASE_MAX_LENGTH))
         {
             gui_chat_printf (NULL,
-                             _("%sPassphrase is too long (max: %d chars)"),
+                             _("%sPassphrase is too long (max length: %d)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              SECURE_PASSPHRASE_MAX_LENGTH);
             return WEECHAT_RC_ERROR;
