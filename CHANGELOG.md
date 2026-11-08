@@ -41,6 +41,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core, plugins: use plural forms or reword messages displaying a count
 - core: keep the current buffer in the zoomed window when the window is unzoomed ([#1372](https://github.com/weechat/weechat/issues/1372))
 - core: format strings faster in function string_asprintf
 - core: evaluate expressions faster when they contain text outside variables
