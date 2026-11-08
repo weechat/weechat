@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:09+0100\n"
+"POT-Creation-Date: 2026-11-08 12:10+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -14020,9 +14020,13 @@ msgstr "%s%s: nie można wykonać kodu źródłowego"
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: nie można wykonać pliku \"%s\""
 
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s========== Koniec backloga (%d linii) =========="
+#, fuzzy, c-format
+#| msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgid "%s===\t%s========== End of backlog (%d line) =========="
+msgid_plural "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr[0] "%s===\t%s========== Koniec backloga (%d linii) =========="
+msgstr[1] "%s===\t%s========== Koniec backloga (%d linii) =========="
+msgstr[2] "%s===\t%s========== Koniec backloga (%d linii) =========="
 
 #, c-format
 msgid ""

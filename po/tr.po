@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:09+0100\n"
+"POT-Creation-Date: 2026-11-08 12:10+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -14209,9 +14209,12 @@ msgstr "%s%s: Kaynak kod yürütülemiyor"
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: \"%s\" dosyası yürütülemiyor"
 
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s========== Biriken günlük sonu (%d satır) =========="
+#, fuzzy, c-format
+#| msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgid "%s===\t%s========== End of backlog (%d line) =========="
+msgid_plural "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr[0] "%s===\t%s========== Biriken günlük sonu (%d satır) =========="
+msgstr[1] "%s===\t%s========== Biriken günlük sonu (%d satır) =========="
 
 #, c-format
 msgid ""

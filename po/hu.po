@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:09+0100\n"
+"POT-Creation-Date: 2026-11-08 12:10+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -12743,8 +12743,10 @@ msgid "%s%s: unable to execute file \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr ""
+msgid "%s===\t%s========== End of backlog (%d line) =========="
+msgid_plural "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid ""

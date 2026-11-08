@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:09+0100\n"
+"POT-Creation-Date: 2026-11-08 12:10+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -13986,9 +13986,13 @@ msgstr "%s%s: није успело извршавање изворног код
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: фајл „%s” не може да се изврши"
 
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s========== Крај старијих уноса (%d линија) =========="
+#, fuzzy, c-format
+#| msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgid "%s===\t%s========== End of backlog (%d line) =========="
+msgid_plural "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr[0] "%s===\t%s========== Крај старијих уноса (%d линија) =========="
+msgstr[1] "%s===\t%s========== Крај старијих уноса (%d линија) =========="
+msgstr[2] "%s===\t%s========== Крај старијих уноса (%d линија) =========="
 
 #, c-format
 msgid ""

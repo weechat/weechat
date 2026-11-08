@@ -290,7 +290,9 @@ logger_backlog_file (struct t_gui_buffer *buffer, const char *filename,
     {
         weechat_printf_date_tags (buffer, 0,
                                   "no_highlight,notify_none,logger_backlog_end",
-                                  _("%s===\t%s========== End of backlog (%d lines) =========="),
+                                  NG_("%s===\t%s========== End of backlog (%d line) ==========",
+                                      "%s===\t%s========== End of backlog (%d lines) ==========",
+                                      num_msgs),
                                   weechat_color (weechat_config_string (logger_config_color_backlog_end)),
                                   weechat_color (weechat_config_string (logger_config_color_backlog_end)),
                                   num_msgs);

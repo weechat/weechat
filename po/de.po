@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:09+0100\n"
+"POT-Creation-Date: 2026-11-08 12:10+0100\n"
 "PO-Revision-Date: 2026-11-08 13:41+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -14690,9 +14690,14 @@ msgstr "%s%s: Quelltext kann nicht ausgeführt werden"
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
 
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
+#, fuzzy, c-format
+#| msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgid "%s===\t%s========== End of backlog (%d line) =========="
+msgid_plural "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr[0] ""
+"%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
+msgstr[1] ""
+"%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
 
 #, c-format
 msgid ""

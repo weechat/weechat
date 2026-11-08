@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:09+0100\n"
+"POT-Creation-Date: 2026-11-08 12:10+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -13671,9 +13671,12 @@ msgstr "%s%s: impossibile eseguire il file \"%s\""
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: impossibile eseguire il file \"%s\""
 
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s========== Fine della cronologia (%d righe) =========="
+#, fuzzy, c-format
+#| msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgid "%s===\t%s========== End of backlog (%d line) =========="
+msgid_plural "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr[0] "%s===\t%s========== Fine della cronologia (%d righe) =========="
+msgstr[1] "%s===\t%s========== Fine della cronologia (%d righe) =========="
 
 #, c-format
 msgid ""
