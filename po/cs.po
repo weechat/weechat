@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:42+0100\n"
+"POT-Creation-Date: 2026-11-08 12:00+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -830,7 +830,7 @@ msgstr "%sReset všech nastavení není povolen"
 
 #, fuzzy, c-format
 #| msgid "Option reset: "
-msgid "%d option(s) reset"
+msgid "Options reset: %d"
 msgstr "Volba resetována: "
 
 #, c-format
@@ -1049,8 +1049,9 @@ msgstr "%sSelhalo odnastavení volby \"%s\""
 msgid "Option removed: %s"
 msgstr "Volba odebrána: %s"
 
-#, c-format
-msgid "%d option(s) reset, %d option(s) removed"
+#, fuzzy, c-format
+#| msgid "%d option(s) reset, %d option(s) removed"
+msgid "Options reset: %d, options removed: %d"
 msgstr "%d volba/volby resetovány, %d volba/volby smazány"
 
 #. TRANSLATORS: "%d %s" is number of times, eg: "2 times".

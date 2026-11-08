@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:42+0100\n"
+"POT-Creation-Date: 2026-11-08 12:00+0100\n"
 "PO-Revision-Date: 2026-11-05 23:05+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
@@ -811,8 +811,8 @@ msgid "%sReset of all options is not allowed"
 msgstr "%sLa réinitialisation de toutes les options n'est pas autorisée"
 
 #, c-format
-msgid "%d option(s) reset"
-msgstr "%d option(s) réinitialisée(s)"
+msgid "Options reset: %d"
+msgstr "Options réinitialisées : %d"
 
 #, c-format
 msgid "Options saved to %s"
@@ -1026,8 +1026,8 @@ msgid "Option removed: %s"
 msgstr "Option supprimée : %s"
 
 #, c-format
-msgid "%d option(s) reset, %d option(s) removed"
-msgstr "%d option(s) réinitialisée(s), %d option(s) supprimée(s)"
+msgid "Options reset: %d, options removed: %d"
+msgstr "Options réinitialisées : %d, options supprimées : %d"
 
 #. TRANSLATORS: "%d %s" is number of times, eg: "2 times".
 #, c-format
@@ -19182,8 +19182,8 @@ msgid ""
 "%s%s: unable to resume file \"%s\": invalid start position received: %llu "
 "(expected: %llu)"
 msgstr ""
-"%s%s : impossible de continuer le fichier \"%s\" : position de départ "
-"reçue invalide : %llu (attendue : %llu)"
+"%s%s : impossible de continuer le fichier \"%s\" : position de départ reçue "
+"invalide : %llu (attendue : %llu)"
 
 #, c-format
 msgid ""

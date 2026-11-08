@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:42+0100\n"
+"POT-Creation-Date: 2026-11-08 12:00+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -824,7 +824,7 @@ msgstr "%sIl ripristino di tutte le opzioni non è consentito"
 
 #, fuzzy, c-format
 #| msgid "Option reset: "
-msgid "%d option(s) reset"
+msgid "Options reset: %d"
 msgstr "Reset dell'opzione: "
 
 #, c-format
@@ -1042,8 +1042,9 @@ msgstr "%sImpossibile disabilitare l'opzione \"%s\""
 msgid "Option removed: %s"
 msgstr "Opzione rimossa: %s"
 
-#, c-format
-msgid "%d option(s) reset, %d option(s) removed"
+#, fuzzy, c-format
+#| msgid "%d option(s) reset, %d option(s) removed"
+msgid "Options reset: %d, options removed: %d"
 msgstr "%d opzione(i) ripristinata(e), %d opzione(i) rimossa(e)"
 
 #. TRANSLATORS: "%d %s" is number of times, eg: "2 times".

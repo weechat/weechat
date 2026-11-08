@@ -6446,7 +6446,7 @@ COMMAND_CALLBACK(reset)
             command_reset_option (ptr_option, ptr_name, &number_reset);
     }
 
-    gui_chat_printf (NULL, _("%d option(s) reset"), number_reset);
+    gui_chat_printf (NULL, _("Options reset: %d"), number_reset);
 
     return WEECHAT_RC_OK;
 }
@@ -7691,7 +7691,7 @@ COMMAND_CALLBACK(unset)
     }
 
     gui_chat_printf (NULL,
-                     _("%d option(s) reset, %d option(s) removed"),
+                     _("Options reset: %d, options removed: %d"),
                      number_reset,
                      number_removed);
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-05 22:42+0100\n"
+"POT-Creation-Date: 2026-11-08 12:00+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -795,9 +795,10 @@ msgstr "Seçenek sıfırlandı: "
 msgid "%sReset of all options is not allowed"
 msgstr "%sTüm seçeneklerin sıfırlanmasına izin verilmiyor"
 
-#, c-format
-msgid "%d option(s) reset"
-msgstr "%d seçenek sıfırlandı"
+#, fuzzy, c-format
+#| msgid "Option reset: "
+msgid "Options reset: %d"
+msgstr "Seçenek sıfırlandı: "
 
 #, c-format
 msgid "Options saved to %s"
@@ -1016,8 +1017,9 @@ msgstr "%s\"%s\" seçeneği kaldırılamadı"
 msgid "Option removed: %s"
 msgstr "Seçenek kaldırıldı: %s"
 
-#, c-format
-msgid "%d option(s) reset, %d option(s) removed"
+#, fuzzy, c-format
+#| msgid "%d option(s) reset, %d option(s) removed"
+msgid "Options reset: %d, options removed: %d"
 msgstr "%d seçenek sıfırlandı, %d seçenek kaldırıldı"
 
 #. TRANSLATORS: "%d %s" is number of times, eg: "2 times".
