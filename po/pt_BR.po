@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:07+0100\n"
+"POT-Creation-Date: 2026-11-08 12:09+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -7726,8 +7726,10 @@ msgid "%s%s: failed to run command \"%s\""
 msgstr "%s%s: flaha na execução do comando \"%s\""
 
 #, fuzzy, c-format
-msgid "%d commands removed"
-msgstr "%d comandos removidos"
+msgid "%d command removed"
+msgid_plural "%d commands removed"
+msgstr[0] "%d comandos removidos"
+msgstr[1] "%d comandos removidos"
 
 #, fuzzy, c-format
 msgid "%s%s: command with id \"%s\" is still running"

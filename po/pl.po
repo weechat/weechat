@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:07+0100\n"
+"POT-Creation-Date: 2026-11-08 12:09+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -8303,9 +8303,13 @@ msgstr "%s%s: nieprawidłowe parametry opcji exec.command.default_options"
 msgid "%s%s: failed to run command \"%s\""
 msgstr "%s%s: nie udało się wykonać komendy \"%s\""
 
-#, c-format
-msgid "%d commands removed"
-msgstr "%d komend usunięto"
+#, fuzzy, c-format
+#| msgid "%d commands removed"
+msgid "%d command removed"
+msgid_plural "%d commands removed"
+msgstr[0] "%d komend usunięto"
+msgstr[1] "%d komend usunięto"
+msgstr[2] "%d komend usunięto"
 
 #, c-format
 msgid "%s%s: command with id \"%s\" is still running"

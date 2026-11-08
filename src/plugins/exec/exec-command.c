@@ -756,7 +756,11 @@ exec_command_exec (const void *pointer, void *data,
                 }
                 ptr_exec_cmd = ptr_next_exec_cmd;
             }
-            weechat_printf (NULL, _("%d commands removed"), count);
+            weechat_printf (NULL,
+                            NG_("%d command removed",
+                                "%d commands removed",
+                                count),
+                            count);
         }
         else
         {

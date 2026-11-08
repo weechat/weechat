@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:07+0100\n"
+"POT-Creation-Date: 2026-11-08 12:09+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -8302,9 +8302,13 @@ msgstr "%s%s: неважеће вредности у опцији exec.command.d
 msgid "%s%s: failed to run command \"%s\""
 msgstr "%s%s: команда „%s” није успела да се покрене"
 
-#, c-format
-msgid "%d commands removed"
-msgstr "Уклоњено је %d команди"
+#, fuzzy, c-format
+#| msgid "%d commands removed"
+msgid "%d command removed"
+msgid_plural "%d commands removed"
+msgstr[0] "Уклоњено је %d команди"
+msgstr[1] "Уклоњено је %d команди"
+msgstr[2] "Уклоњено је %d команди"
 
 #, c-format
 msgid "%s%s: command with id \"%s\" is still running"

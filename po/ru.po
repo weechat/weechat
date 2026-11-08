@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:07+0100\n"
+"POT-Creation-Date: 2026-11-08 12:09+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -7338,8 +7338,11 @@ msgid "%s%s: failed to run command \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%d commands removed"
-msgstr "     обработчики команд:\n"
+msgid "%d command removed"
+msgid_plural "%d commands removed"
+msgstr[0] "     обработчики команд:\n"
+msgstr[1] "     обработчики команд:\n"
+msgstr[2] "     обработчики команд:\n"
 
 #, fuzzy, c-format
 msgid "%s%s: command with id \"%s\" is still running"

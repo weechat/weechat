@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:07+0100\n"
+"POT-Creation-Date: 2026-11-08 12:09+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -7850,8 +7850,10 @@ msgid "%s%s: failed to run command \"%s\""
 msgstr "%s%s: impossibile eseguire la funzione \"%s\""
 
 #, fuzzy, c-format
-msgid "%d commands removed"
-msgstr "    hook sui comandi:"
+msgid "%d command removed"
+msgid_plural "%d commands removed"
+msgstr[0] "    hook sui comandi:"
+msgstr[1] "    hook sui comandi:"
 
 #, fuzzy, c-format
 msgid "%s%s: command with id \"%s\" is still running"

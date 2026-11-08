@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:07+0100\n"
+"POT-Creation-Date: 2026-11-08 12:09+0100\n"
 "PO-Revision-Date: 2026-11-08 13:41+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -8716,9 +8716,12 @@ msgstr ""
 msgid "%s%s: failed to run command \"%s\""
 msgstr "%s%s: Befehl \"%s\" konnte nicht ausgeführt werden"
 
-#, c-format
-msgid "%d commands removed"
-msgstr "%d Befehle entfernt"
+#, fuzzy, c-format
+#| msgid "%d commands removed"
+msgid "%d command removed"
+msgid_plural "%d commands removed"
+msgstr[0] "%d Befehle entfernt"
+msgstr[1] "%d Befehle entfernt"
 
 #, c-format
 msgid "%s%s: command with id \"%s\" is still running"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:07+0100\n"
+"POT-Creation-Date: 2026-11-08 12:09+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -8117,9 +8117,11 @@ msgstr "%s%s: オプション exec.command.default_options では無効なオプ
 msgid "%s%s: failed to run command \"%s\""
 msgstr "%s%s: コマンド \"%s\" の実行に失敗しました"
 
-#, c-format
-msgid "%d commands removed"
-msgstr "%d 個のコマンドを削除"
+#, fuzzy, c-format
+#| msgid "%d commands removed"
+msgid "%d command removed"
+msgid_plural "%d commands removed"
+msgstr[0] "%d 個のコマンドを削除"
 
 #, c-format
 msgid "%s%s: command with id \"%s\" is still running"
