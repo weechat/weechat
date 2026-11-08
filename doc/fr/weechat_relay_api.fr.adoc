@@ -492,6 +492,117 @@ HTTP/1.1 200 OK
 }
 ----
 
+[[resource_info]]
+=== Info
+
+Retourner des infos sur WeeChat.
+
+Il s'agit d'une liste fixe d'infos, choisies pour être utiles aux clients :
+ce n'est pas un accès générique aux infos de WeeChat (fonction `info_get` de
+l'API extension).
+
+Points de terminaison :
+
+----
+GET /api/info
+GET /api/info/{info_name}
+----
+
+Paramètres de chemin :
+
+* `info_name` (chaîne, facultatif) : nom de l'info ; s'il n'est pas donné, la
+  liste des infos disponibles est retournée, sans leurs valeurs
+
+Infos disponibles :
+
+[width="100%",cols="2,2,6",options="header"]
+|===
+| Nom | Type | Description
+
+| `locale` | chaîne ou null
+| Locale de WeeChat utilisée pour les messages traduits, par exemple
+  `fr_FR.UTF-8` (catégorie `LC_MESSAGES`) ; la langue des messages peut être
+  différente si la variable d'environnement `LANGUAGE` est définie
+|===
+
+Champs retournés dans la liste des infos :
+
+* `name` (chaîne) : nom de l'info
+* `description` (chaîne) : description de l'info (en anglais)
+
+Champs retournés pour une seule info :
+
+* `name` (chaîne) : nom de l'info
+* `value` (booléen, entier, chaîne ou null) : valeur de l'info, son type
+  dépend de l'info (voir le tableau ci-dessus)
+
+Exemple de requête : obtenir la liste des infos :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "name": "locale",
+        "description": "WeeChat locale used for translated messages"
+    }
+]
+----
+
+Exemple de requête : obtenir la locale de WeeChat :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info/locale'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "locale",
+    "value": "fr_FR.UTF-8"
+}
+----
+
+Exemple de requête : obtenir une info inconnue :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info/xxx'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 404 Not Found
+----
+
+[source,json]
+----
+{
+    "error": "Info \"xxx\" not found"
+}
+----
+
 [[resource_buffers]]
 === Tampons
 
@@ -1790,6 +1901,8 @@ Les types de corps qui peuvent être retournés :
 
 * `handshake` (objet)
 * `version` (objet)
+* `infos` (tableau)
+* `info` (objet)
 * `buffers` (tableau)
 * `buffer` (objet)
 * `lines` (tableau)

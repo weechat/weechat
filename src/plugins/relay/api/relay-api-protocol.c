@@ -26,6 +26,14 @@
 
 int relay_api_protocol_command_delay = 1; /* delay to execute command       */
 
+/* infos returned by resource "info" (no pointer must ever be returned) */
+struct t_relay_api_protocol_info relay_api_protocol_infos[] =
+{
+    { "locale", "WeeChat locale used for translated messages",
+      &relay_api_protocol_info_locale },
+    { NULL, NULL, NULL },
+};
+
 
 /*
  * Search buffer by id or full name.
@@ -616,6 +624,112 @@ RELAY_API_PROTOCOL_CALLBACK(version)
 
     relay_json_free (json);
 
+    return RELAY_API_PROTOCOL_RC_OK;
+}
+
+/*
+ * Return value of info "locale": the WeeChat locale used for translated
+ * messages (JSON null if unknown).
+ *
+ * Return NULL if not enough memory.
+ */
+
+struct t_relay_json *
+relay_api_protocol_info_locale (struct t_relay_client *client)
+{
+    struct t_relay_json *json;
+    char *locale;
+
+    /* Make C compiler happy. */
+    (void) client;
+
+    locale = weechat_info_get ("locale", NULL);
+    json = (locale) ?
+        relay_json_new_string (locale) : relay_json_new_null ();
+    free (locale);
+
+    return json;
+}
+
+/*
+ * Callback for resource "info".
+ *
+ * Routes:
+ *   GET /api/info
+ *   GET /api/info/{info_name}
+ */
+
+RELAY_API_PROTOCOL_CALLBACK(info)
+{
+    struct t_relay_json *json, *json_info, *json_value;
+    const char *ptr_name;
+    int i;
+
+    if (client->http_req->num_path_items < 3)
+    {
+        /* List of infos (only names and descriptions, no value). */
+        json = relay_json_new_array ();
+        if (!json)
+            return RELAY_API_PROTOCOL_RC_MEMORY;
+        for (i = 0; relay_api_protocol_infos[i].name; i++)
+        {
+            json_info = relay_json_new_object ();
+            if (!json_info)
+            {
+                relay_json_free (json);
+                return RELAY_API_PROTOCOL_RC_MEMORY;
+            }
+            relay_json_object_add (
+                json_info, "name",
+                relay_json_new_string (relay_api_protocol_infos[i].name));
+            relay_json_object_add (
+                json_info, "description",
+                relay_json_new_string (relay_api_protocol_infos[i].description));
+            relay_json_array_add (json, json_info);
+        }
+        relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "infos",
+                                 json);
+        relay_json_free (json);
+        return RELAY_API_PROTOCOL_RC_OK;
+    }
+
+    /* Value of a single info. */
+    ptr_name = client->http_req->path_items[2];
+    if (!ptr_name)
+        return RELAY_API_PROTOCOL_RC_MEMORY;
+    for (i = 0; relay_api_protocol_infos[i].name; i++)
+    {
+        if (strcmp (relay_api_protocol_infos[i].name, ptr_name) == 0)
+            break;
+    }
+    if (!relay_api_protocol_infos[i].name)
+    {
+        relay_api_msg_send_error_json (client, RELAY_HTTP_404_NOT_FOUND, NULL,
+                                       "Info \"%s\" not found", ptr_name);
+        return RELAY_API_PROTOCOL_RC_OK;
+    }
+
+    json_value = (relay_api_protocol_infos[i].callback) (client);
+    if (!json_value)
+        return RELAY_API_PROTOCOL_RC_MEMORY;
+
+    json = relay_json_new_object ();
+    if (!json)
+    {
+        relay_json_free (json_value);
+        return RELAY_API_PROTOCOL_RC_MEMORY;
+    }
+    relay_json_object_add (json, "name",
+                           relay_json_new_string (relay_api_protocol_infos[i].name));
+    if (!relay_json_object_add (json, "value", json_value))
+    {
+        relay_json_free (json_value);
+        relay_json_free (json);
+        return RELAY_API_PROTOCOL_RC_MEMORY;
+    }
+
+    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "info", json);
+    relay_json_free (json);
     return RELAY_API_PROTOCOL_RC_OK;
 }
 
@@ -1492,6 +1606,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
         { "OPTIONS", "*",          0,    0, -1,  RELAY_API_CB(preflight)  },
         { "POST",    "handshake",  0,    0,  0,  RELAY_API_CB(handshake)  },
         { "GET",     "version",    1,    0,  0,  RELAY_API_CB(version)    },
+        { "GET",     "info",       1,    0,  1,  RELAY_API_CB(info)       },
         { "GET",     "buffers",    1,    0,  3,  RELAY_API_CB(buffers)    },
         { "GET",     "hotlist",    1,    0,  3,  RELAY_API_CB(hotlist)    },
         { "GET",     "scripts",    1,    0,  0,  RELAY_API_CB(scripts)    },

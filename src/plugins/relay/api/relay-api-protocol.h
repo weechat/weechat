@@ -35,6 +35,17 @@ struct t_relay_api_protocol_cb
     t_relay_api_cmd_func *cmd_function; /* callback                         */
 };
 
+struct t_relay_api_protocol_info
+{
+    char *name;                         /* info name (eg: "locale")         */
+    char *description;                  /* info description                 */
+    struct t_relay_json *(*callback)(struct t_relay_client *client);
+                                        /* callback returning info value    */
+};
+
+extern struct t_relay_api_protocol_info relay_api_protocol_infos[];
+
+extern struct t_relay_json *relay_api_protocol_info_locale (struct t_relay_client *client);
 extern int relay_api_protocol_signal_buffer_cb (const void *pointer,
                                                 void *data,
                                                 const char *signal,

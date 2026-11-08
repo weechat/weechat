@@ -485,6 +485,116 @@ HTTP/1.1 200 OK
 }
 ----
 
+[[resource_info]]
+=== Info
+
+Return infos about WeeChat.
+
+This is a fixed list of infos, chosen to be useful for clients: it is not
+a generic access to WeeChat infos (function `info_get` of the plugin API).
+
+Endpoints:
+
+----
+GET /api/info
+GET /api/info/{info_name}
+----
+
+Path parameters:
+
+* `info_name` (string, optional): info name; if not given, the list of
+  available infos is returned, without their values
+
+Available infos:
+
+[width="100%",cols="2,2,6",options="header"]
+|===
+| Name | Type | Description
+
+| `locale` | string or null
+| WeeChat locale used for translated messages, for example `fr_FR.UTF-8`
+  (category `LC_MESSAGES`); the language of messages can be different if the
+  environment variable `LANGUAGE` is set
+|===
+
+Fields returned in the list of infos:
+
+* `name` (string): info name
+* `description` (string): info description (in English)
+
+Fields returned for a single info:
+
+* `name` (string): info name
+* `value` (boolean, integer, string or null): info value, its type depends on
+  the info (see the table above)
+
+Request example: get the list of infos:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "name": "locale",
+        "description": "WeeChat locale used for translated messages"
+    }
+]
+----
+
+Request example: get the WeeChat locale:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info/locale'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "locale",
+    "value": "fr_FR.UTF-8"
+}
+----
+
+Request example: get an unknown info:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info/xxx'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 404 Not Found
+----
+
+[source,json]
+----
+{
+    "error": "Info \"xxx\" not found"
+}
+----
+
 [[resource_buffers]]
 === Buffers
 
@@ -1761,6 +1871,8 @@ Body types that can be returned:
 
 * `handshake` (object)
 * `version` (object)
+* `infos` (array)
+* `info` (object)
 * `buffers` (array)
 * `buffer` (object)
 * `lines` (array)

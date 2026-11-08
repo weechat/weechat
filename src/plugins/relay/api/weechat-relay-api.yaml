@@ -30,6 +30,7 @@ servers:
 tags:
   - name: handshake
   - name: version
+  - name: info
   - name: buffers
   - name: hotlist
   - name: scripts
@@ -111,6 +112,74 @@ paths:
                 $ref: '#/components/schemas/Version'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - password: []
+  /info:
+    get:
+      tags:
+        - info
+      description: >-
+        Get the list of available infos (name and description, without value).
+      parameters:
+        - $ref: '#/components/parameters/totp'
+      operationId: getInfos
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InfoDescription'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - password: []
+  /info/{info_name}:
+    get:
+      tags:
+        - info
+      description: Get the value of a single info by name.
+      operationId: getInfo
+      parameters:
+        - $ref: '#/components/parameters/totp'
+        - $ref: '#/components/parameters/infoName'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Info'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Info not found
           content:
             application/json:
               schema:
@@ -934,6 +1003,15 @@ components:
       description: >-
         Buffer full name
       example: 'irc.libera.#weechat'
+    infoName:
+      name: info_name
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        Info name
+      example: 'locale'
     optionName:
       name: option_name
       in: path
@@ -1075,6 +1153,38 @@ components:
         - weechat_version_number
         - relay_api_version
         - relay_api_version_number
+    InfoDescription:
+      type: object
+      properties:
+        name:
+          type: string
+          description: info name
+          example: 'locale'
+        description:
+          type: string
+          description: info description
+          example: 'WeeChat locale used for translated messages'
+      required:
+        - name
+        - description
+    Info:
+      type: object
+      properties:
+        name:
+          type: string
+          description: info name
+          example: 'locale'
+        value:
+          type:
+            - boolean
+            - integer
+            - string
+            - 'null'
+          description: info value (type depends on the info)
+          example: 'fr_FR.UTF-8'
+      required:
+        - name
+        - value
     Buffer:
       type: object
       properties:

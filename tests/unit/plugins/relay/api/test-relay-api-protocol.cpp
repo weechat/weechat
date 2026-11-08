@@ -14,6 +14,7 @@
 extern "C"
 {
 #include <unistd.h>
+#include <locale.h>
 #include <limits.h>
 #include <string.h>
 #include "src/core/core-config.h"
@@ -379,6 +380,113 @@ TEST(RelayApiProtocolWithClient, CbVersion)
                       json, "weechat_version_number");
     WEE_CHECK_OBJ_STR(RELAY_API_VERSION_STR, json, "relay_api_version");
     WEE_CHECK_OBJ_NUM(RELAY_API_VERSION_NUMBER, json, "relay_api_version_number");
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_info_locale
+ *   relay_api_protocol_cb_info
+ */
+
+TEST(RelayApiProtocolWithClient, CbInfo)
+{
+    struct t_relay_json *json, *json_obj, *json_info;
+    const char *locale;
+
+    /* List of infos */
+    test_client_recv_http ("GET /api/info", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    CHECK(relay_json_is_array (json));
+    LONGS_EQUAL(1, relay_json_array_size (json));
+    json_info = relay_json_array_get (json, 0);
+    CHECK(json_info);
+    WEE_CHECK_OBJ_STR("locale", json_info, "name");
+    WEE_CHECK_OBJ_STR("WeeChat locale used for translated messages",
+                      json_info, "description");
+    POINTERS_EQUAL(NULL, relay_json_object_get (json_info, "value"));
+
+    /* Info "locale" */
+    test_client_recv_http ("GET /api/info/locale", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("locale", json, "name");
+    locale = setlocale (LC_MESSAGES, NULL);
+    if (locale)
+    {
+        WEE_CHECK_OBJ_STR(locale, json, "value");
+    }
+    else
+    {
+        json_obj = relay_json_object_get (json, "value");
+        CHECK(json_obj);
+        CHECK(relay_json_is_null (json_obj));
+    }
+
+    /* Error: unknown info */
+    test_client_recv_http ("GET /api/info/xxx", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(404, "Not Found");
+    WEE_CHECK_OBJ_STR("Info \"xxx\" not found", json_body_sent[0], "error");
+
+    /* Error: info name is case-sensitive */
+    test_client_recv_http ("GET /api/info/LOCALE", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(404, "Not Found");
+
+    /* Error: too many path parameters */
+    test_client_recv_http ("GET /api/info/locale/xxx", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: method not allowed */
+    test_client_recv_http ("POST /api/info/locale", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(405, "Method Not Allowed");
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_cb_info (websocket)
+ */
+
+TEST(RelayApiProtocolWithClient, CbInfoWebsocket)
+{
+    struct t_relay_json *json, *json_obj, *json_body;
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    /* List of infos */
+    test_client_recv_text ("{\"request\": \"GET /api/info\"}");
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_NUM(200, json, "code");
+    WEE_CHECK_OBJ_STR("infos", json, "body_type");
+    json_body = relay_json_object_get (json, "body");
+    CHECK(json_body);
+    CHECK(relay_json_is_array (json_body));
+    LONGS_EQUAL(1, relay_json_array_size (json_body));
+    relay_json_free (json);
+
+    /* Info "locale" */
+    test_client_recv_text ("{\"request\": \"GET /api/info/locale\"}");
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_NUM(200, json, "code");
+    WEE_CHECK_OBJ_STR("info", json, "body_type");
+    json_body = relay_json_object_get (json, "body");
+    CHECK(json_body);
+    WEE_CHECK_OBJ_STR("locale", json_body, "name");
+    CHECK(relay_json_object_get (json_body, "value"));
+    relay_json_free (json);
 }
 
 /*
