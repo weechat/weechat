@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:10+0100\n"
+"POT-Creation-Date: 2026-11-08 12:11+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -15746,8 +15746,11 @@ msgid "%s%s: error reading list of scripts"
 msgstr "%s ошибка при отправке данных IRC серверу\n"
 
 #, fuzzy, c-format
-msgid "%s: %d scripts for WeeChat %s"
-msgstr "не на канале"
+msgid "%s: %d script for WeeChat %s"
+msgid_plural "%s: %d scripts for WeeChat %s"
+msgstr[0] "не на канале"
+msgstr[1] "не на канале"
+msgstr[2] "не на канале"
 
 #, c-format
 msgid ""

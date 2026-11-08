@@ -1369,7 +1369,9 @@ script_repo_file_read (int quiet)
     {
         version = weechat_info_get ("version", NULL);
         weechat_printf (NULL,
-                        _("%s: %d scripts for WeeChat %s"),
+                        NG_("%s: %d script for WeeChat %s",
+                            "%s: %d scripts for WeeChat %s",
+                            script_repo_count),
                         SCRIPT_PLUGIN_NAME, script_repo_count,
                         version);
         free (version);

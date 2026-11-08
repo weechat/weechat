@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:10+0100\n"
+"POT-Creation-Date: 2026-11-08 12:11+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -17445,9 +17445,11 @@ msgstr "アップデートが必要"
 msgid "%s%s: error reading list of scripts"
 msgstr "%s%s: スクリプトリストの読み込み中にエラー"
 
-#, c-format
-msgid "%s: %d scripts for WeeChat %s"
-msgstr "%1$s: WeeChat %3$s には %2$d 個のスクリプトがあります"
+#, fuzzy, c-format
+#| msgid "%s: %d scripts for WeeChat %s"
+msgid "%s: %d script for WeeChat %s"
+msgid_plural "%s: %d scripts for WeeChat %s"
+msgstr[0] "%1$s: WeeChat %3$s には %2$d 個のスクリプトがあります"
 
 #, c-format
 msgid ""

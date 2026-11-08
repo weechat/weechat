@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:10+0100\n"
+"POT-Creation-Date: 2026-11-08 12:11+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -17599,9 +17599,12 @@ msgstr "eskimiş"
 msgid "%s%s: error reading list of scripts"
 msgstr "%s%s: Betik listesi okunurken hata"
 
-#, c-format
-msgid "%s: %d scripts for WeeChat %s"
-msgstr "%s: %d betik, WeeChat %s için"
+#, fuzzy, c-format
+#| msgid "%s: %d scripts for WeeChat %s"
+msgid "%s: %d script for WeeChat %s"
+msgid_plural "%s: %d scripts for WeeChat %s"
+msgstr[0] "%s: %d betik, WeeChat %s için"
+msgstr[1] "%s: %d betik, WeeChat %s için"
 
 #, c-format
 msgid ""

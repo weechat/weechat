@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:10+0100\n"
+"POT-Creation-Date: 2026-11-08 12:11+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -16863,9 +16863,12 @@ msgstr "obsoleto"
 msgid "%s%s: error reading list of scripts"
 msgstr "%s%s: errore durante la lettura dell'elenco degli script"
 
-#, c-format
-msgid "%s: %d scripts for WeeChat %s"
-msgstr "%s: %d script per WeeChat %s"
+#, fuzzy, c-format
+#| msgid "%s: %d scripts for WeeChat %s"
+msgid "%s: %d script for WeeChat %s"
+msgid_plural "%s: %d scripts for WeeChat %s"
+msgstr[0] "%s: %d script per WeeChat %s"
+msgstr[1] "%s: %d script per WeeChat %s"
 
 #, c-format
 msgid ""

@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:10+0100\n"
+"POT-Creation-Date: 2026-11-08 12:11+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -16259,8 +16259,10 @@ msgid "%s%s: error reading list of scripts"
 msgstr "%s%s: erro ao criar transferência"
 
 #, fuzzy, c-format
-msgid "%s: %d scripts for WeeChat %s"
-msgstr "%s: script removido: %s"
+msgid "%s: %d script for WeeChat %s"
+msgid_plural "%s: %d scripts for WeeChat %s"
+msgstr[0] "%s: script removido: %s"
+msgstr[1] "%s: script removido: %s"
 
 #, c-format
 msgid ""
