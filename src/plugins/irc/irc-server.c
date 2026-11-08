@@ -6777,7 +6777,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
                             int force_disconnected_state)
 {
     struct t_infolist_item *ptr_item;
-    int reconnect_delay, reconnect_start;
+    int reconnect_delay;
+    time_t reconnect_start;
     struct timeval lag_check_time;
     time_t lag_next_check;
 

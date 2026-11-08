@@ -94,7 +94,7 @@ typing_status_self_free_value_cb (struct t_hashtable *hashtable,
  */
 
 struct t_typing_status *
-typing_status_self_add (struct t_gui_buffer *buffer, int state, int last_typed)
+typing_status_self_add (struct t_gui_buffer *buffer, int state, time_t last_typed)
 {
     struct t_typing_status *ptr_typing_status;
 
@@ -222,7 +222,7 @@ typing_status_nick_free_value_cb (struct t_hashtable *hashtable,
 
 struct t_typing_status *
 typing_status_nick_add (struct t_gui_buffer *buffer, const char *nick,
-                        int state, int last_typed)
+                        int state, time_t last_typed)
 {
     struct t_hashtable *ptr_nicks;
     struct t_typing_status *ptr_typing_status;
