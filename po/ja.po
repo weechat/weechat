@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 19:55+0100\n"
+"POT-Creation-Date: 2026-11-08 20:09+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -6935,9 +6935,12 @@ msgstr "%sエラー: hook_fd で不正なファイルディスクリプタ (%d) 
 msgid "End of command '%s', timeout reached (%.3fs)"
 msgstr "コマンド '%s' の終了、タイムアウトになりました (%.1fs)"
 
-#, c-format
-msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
-msgstr ""
+#, fuzzy, c-format
+#| msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgid "System clock skew detected (%+ld second), reinitializing all timers"
+msgid_plural ""
+"System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr[0] ""
 "システムクロックスキューを検出しました (%+ld 秒)、全てのタイマーを再初期化し"
 "ています"
 

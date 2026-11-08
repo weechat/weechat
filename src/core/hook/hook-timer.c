@@ -189,8 +189,11 @@ hook_timer_check_system_clock (void)
         if (weechat_debug_core >= 1)
         {
             gui_chat_printf (NULL,
-                             _("System clock skew detected (%+ld seconds), "
-                               "reinitializing all timers"),
+                             NG_("System clock skew detected (%+ld second), "
+                                 "reinitializing all timers",
+                                 "System clock skew detected (%+ld seconds), "
+                                 "reinitializing all timers",
+                                 labs (diff_time)),
                              diff_time);
         }
 

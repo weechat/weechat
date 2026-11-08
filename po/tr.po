@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 19:55+0100\n"
+"POT-Creation-Date: 2026-11-08 20:09+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -6922,9 +6922,14 @@ msgstr "%sHatalı dosya açıklayıcısı (%d) hook_fd içinde kullanılmış"
 msgid "End of command '%s', timeout reached (%.3fs)"
 msgstr "\"%s\" komutunun sonu; zaman aşımına ulaşıldı (%.3fs)"
 
-#, c-format
-msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
-msgstr ""
+#, fuzzy, c-format
+#| msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgid "System clock skew detected (%+ld second), reinitializing all timers"
+msgid_plural ""
+"System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr[0] ""
+"Sistem saati hatalı (%+ld saniye), tüm zamanlayıcılar yeniden başlatılıyor"
+msgstr[1] ""
 "Sistem saati hatalı (%+ld saniye), tüm zamanlayıcılar yeniden başlatılıyor"
 
 #, c-format
