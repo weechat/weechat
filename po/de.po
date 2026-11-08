@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-08 20:26+0100\n"
-"PO-Revision-Date: 2026-11-08 13:41+0100\n"
+"PO-Revision-Date: 2026-11-08 22:22+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -823,10 +823,9 @@ msgstr "Einstellung wieder hergestellt: "
 msgid "%sReset of all options is not allowed"
 msgstr "%sDas Zurücksetzen aller Einstellungen ist nicht zulässig"
 
-#, fuzzy, c-format
-#| msgid "Option reset: "
+#, c-format
 msgid "Options reset: %d"
-msgstr "Einstellung wieder hergestellt: "
+msgstr "Optionen zurückgesetzt: %d"
 
 #, c-format
 msgid "Options saved to %s"
@@ -872,10 +871,9 @@ msgid ""
 msgstr ""
 "%sDie Daten müssen zuerst entschlüsselt werden, bevor man diese nutzen kann"
 
-#, fuzzy, c-format
-#| msgid "%sPassphrase is too long (max: %d chars)"
+#, c-format
 msgid "%sPassphrase is too long (max length: %d)"
-msgstr "%sDie Passphrase ist zu lang (Max: %d Zeichen)"
+msgstr "%sPassphrase ist zu lang (maximale Länge: %d)"
 
 msgid "Passphrase deleted"
 msgstr "Passphrase gelöscht"
@@ -1040,10 +1038,9 @@ msgstr "%sEinstellung \"%s\" konnte nicht zurück gesetzt werden"
 msgid "Option removed: %s"
 msgstr "Einstellung gelöscht: %s"
 
-#, fuzzy, c-format
-#| msgid "%d option(s) reset, %d option(s) removed"
+#, c-format
 msgid "Options reset: %d, options removed: %d"
-msgstr "%d Einstellung(en) wieder hergestellt, %d Einstellung(en) entfernt"
+msgstr "Optionen zurückgesetzt: %d, Optionen entfernt: %d"
 
 #. TRANSLATORS: "%d %s" is number of times, eg: "2 times".
 #, c-format
@@ -5355,6 +5352,11 @@ msgid ""
 "one after a command char, the last one is used, for example /12/34 is the "
 "same as /buffer *34"
 msgstr ""
+"Falls aktiviert, bewirkt ein Befehl, der ausschließlich aus Ziffern besteht, "
+"einen Sprung zu der entsprechenden Buffernummer; so entspricht "
+"beispielsweise /42 dem Befehl /buffer *42. Werden mehrere Zahlen angegeben – "
+"jeweils nach einem Befehlszeichen –, so wird die letzte davon verwendet; /"
+"12/34 entspricht beispielsweise /buffer *34"
 
 msgid ""
 "chars used to determine if input string is a command or not: input must "
@@ -7447,13 +7449,13 @@ msgstr "%sBad file descriptor, (%d) wurde in Funktion hook_fd genutzt"
 msgid "End of command '%s', timeout reached (%.3fs)"
 msgstr "Befehl '%s' beendet, Zeitüberschreitung erreicht (%.3fs)"
 
-#, fuzzy, c-format
-#| msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+#, c-format
 msgid "System clock skew detected (%+ld second), reinitializing all timers"
 msgid_plural ""
 "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr[0] ""
-"Die Systemzeit ist nicht korrekt (%+ld Sekunden), reinitialisiere alle Uhren"
+"Abweichung der Systemuhr festgestellt (%+ld Sekunden), alle Timer neu "
+"initialisieren"
 msgstr[1] ""
 "Die Systemzeit ist nicht korrekt (%+ld Sekunden), reinitialisiere alle Uhren"
 
@@ -8332,10 +8334,9 @@ msgid "buflist bar items used (according to option buflist.look.use_items)"
 msgstr ""
 "Verwendete Elemente der Buflist-Item (gemäß Option buflist.look.use_items)"
 
-#, fuzzy, c-format
-#| msgid "%s: %d signals hooked"
+#, c-format
 msgid "%s: signals hooked: %d"
-msgstr "%s: %d Signale hooked"
+msgstr "%s: Signale eingebunden: %d"
 
 msgid ""
 "add newline between the buffers displayed, so each buffer is displayed on a "
@@ -8580,10 +8581,8 @@ msgstr ""
 "Format für die TLS-Version für einen IRC-Serverbuffer (Hinweis: Inhalt wird "
 "evaluiert, siehe /help buflist)"
 
-#, fuzzy
-#| msgid "buflist bar items"
 msgid "number of buflist bar items"
-msgstr "Buflist Bar-Items"
+msgstr "Anzahl der Elemente in der Buflist-Bar"
 
 msgid "list of buffers in a buflist bar item"
 msgstr "Liste der Buffer in buflist Bar-Item"
@@ -8722,11 +8721,10 @@ msgstr ""
 msgid "%s%s: failed to run command \"%s\""
 msgstr "%s%s: Befehl \"%s\" konnte nicht ausgeführt werden"
 
-#, fuzzy, c-format
-#| msgid "%d commands removed"
+#, c-format
 msgid "%d command removed"
 msgid_plural "%d commands removed"
-msgstr[0] "%d Befehle entfernt"
+msgstr[0] "%d Befehl entfernt"
 msgstr[1] "%d Befehle entfernt"
 
 #, c-format
@@ -10261,10 +10259,9 @@ msgstr ""
 "%s%s: es muss ein Server angegeben werden, da der Befehl weder in einem "
 "Server- noch in einem Kanal-Buffer ausgeführt wurde"
 
-#, fuzzy, c-format
-#| msgid "%s%s: notify already exists"
+#, c-format
 msgid "%s%s: notify already exists for \"%s\""
-msgstr "%s%s: Benachrichtigung existiert schon"
+msgstr "%s%s: Benachrichtigung für \"%s\" existiert bereits"
 
 #, c-format
 msgid "%sMonitor list is full (%d)"
@@ -10278,10 +10275,9 @@ msgstr "%s: Benachrichtigung aktualisiert für %s%s%s"
 msgid "%s: notification added for %s%s%s"
 msgstr "%s: Benachrichtigung für %s%s%s hinzugefügt"
 
-#, fuzzy, c-format
-#| msgid "%s%s: error adding notification"
+#, c-format
 msgid "%s%s: error adding notification for \"%s\""
-msgstr "%s%s: Fehler beim Erstellen der Benachrichtigung"
+msgstr "%s%s: Fehler beim Hinzufügen einer Benachrichtigung für \"%s\""
 
 #, c-format
 msgid "%s: all notifications deleted"
@@ -11414,7 +11410,6 @@ msgstr ""
 "hinzu"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
-#, fuzzy
 #| msgid ""
 #| "add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
 #| "[<server>]"
@@ -11422,26 +11417,20 @@ msgid ""
 "add|addreplace <nick>[,<nick>...] [<server> [-away]] || del <nick>[,"
 "<nick>...]|-all [<server>]"
 msgstr ""
-"add|addreplace <nick> [<server> [-away]] || del <nick>[,<nick>...]|-all "
-"[<server>]"
+"add|addreplace <nick>[,<nick>...] [<server> [-away]] || del <nick>[,"
+"<nick>...]|-all [<server>]"
 
-#, fuzzy
-#| msgid ""
-#| "raw[del]: delete notifications (multiple nicks can be separated by commas)"
 msgid "raw[add]: add notifications (multiple nicks can be separated by commas)"
 msgstr ""
-"raw[del]: Benachrichtigungen löschen (mehrere Nicknamen können durch Kommas "
-"getrennt werden)"
+"raw[add]: Benachrichtigungen hinzufügen (mehrere Nicknamen können durch "
+"Kommata getrennt werden)"
 
-#, fuzzy
-#| msgid ""
-#| "raw[del]: delete notifications (multiple nicks can be separated by commas)"
 msgid ""
 "raw[addreplace]: add or replace notifications (multiple nicks can be "
 "separated by commas)"
 msgstr ""
-"raw[del]: Benachrichtigungen löschen (mehrere Nicknamen können durch Kommas "
-"getrennt werden)"
+"raw[addreplace]: Benachrichtigungen hinzufügen oder ersetzen (mehrere "
+"Nicknamen können durch Kommas getrennt werden)"
 
 msgid "server: internal server name (by default current server)"
 msgstr "Server: interner Servername (standardmäßig aktueller Server)"
@@ -12992,17 +12981,20 @@ msgstr ""
 "zeigt Notizen als private Nachricht an (wird die auto-Einstellung verwendet "
 "dann wird ein privater Buffer genutzt, falls vorhanden)"
 
-#, fuzzy
-#| msgid "text to display before nick in prefix of message, example: \"<\""
 msgid ""
 "text to display before nick in prefix of notices (color is set by option "
 "irc.color.notice)"
-msgstr "Text, der vor dem Nick dargestellt werden soll, Beispiel: \"<\""
+msgstr ""
+"Text, der vor dem Nicknamen im Präfix von Notizen angezeigt wird (die Farbe "
+"wird über die Option irc.color.notice festgelegt)"
 
 msgid ""
 "text to display after nick (and target, if displayed) in prefix of notices "
 "(color is set by option irc.color.notice)"
 msgstr ""
+"Text, der nach dem Nicknamen (und ggf. dem Ziel, falls dieses angezeigt "
+"wird) im Präfix von Notices erscheint (die Farbe wird über die Option "
+"irc.color.notice festgelegt)"
 
 msgid ""
 "comma separated list of nicks for which notifications are disabled in notice "
@@ -13301,6 +13293,9 @@ msgid ""
 "irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and "
 "irc.look.notice_target_separator)"
 msgstr ""
+"Farbe für den Text um Nickname und Ziel im Präfix von Notizen (siehe "
+"Optionen irc.look.notice_nick_prefix, irc.look.notice_nick_suffix und "
+"irc.look.notice_target_separator)"
 
 msgid "color for reason in kick/kill messages"
 msgstr ""
@@ -13742,18 +13737,14 @@ msgstr "%s%s: Es besteht keine Verbindung zum Server"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: Dieser Buffer ist kein Kanal!"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%d channels (total: %d) | Filter: %s | Sort: %s | Keys: ctrl+j=join "
-#| "channel | Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, "
-#| "q=close buffer"
+#, c-format
 msgid ""
 "Channels: %d (total: %d) | Filter: %s | Sort: %s | Keys: ctrl+j=join channel "
 "| Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, q=close buffer"
 msgstr ""
-"%d Kanäle (Total: %d) | Filter: %s | Sortierung: %s | Tastenbefehl: "
-"ctrl+j=Kanal betreten | Eingabezeile: $=Aktualisierung, s:x,y=Sortierung, "
-"Text=Filter, *= Filter zurücksetzen, q=Buffer schließen"
+"Kanäle: %d (gesamt: %d) | Filter: %s | Sortierung: %s | Tasten: Strg+j=Kanal "
+"beitreten | Eingabe: $=aktualisieren, s:x,y=sortieren, Wörter=filtern, "
+"*=Filter zurücksetzen, q=Buffer schließen"
 
 msgid "Empty list of channels, try \"$\" to refresh list"
 msgstr "Liste der Kanäle leeren, nutze \"$\" um die Liste zu aktualisieren"
@@ -14700,12 +14691,10 @@ msgstr "%s%s: Quelltext kann nicht ausgeführt werden"
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
 
-#, fuzzy, c-format
-#| msgid "%s===\t%s========== End of backlog (%d lines) =========="
+#, c-format
 msgid "%s===\t%s========== End of backlog (%d line) =========="
 msgid_plural "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr[0] ""
-"%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
+msgstr[0] "%s===\t%s========== Ende des Verlaufspeichers (%d Zeile) =========="
 msgstr[1] ""
 "%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
 
@@ -15917,27 +15906,21 @@ msgstr "Liste der Skript-API-Konstanten"
 msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: Interpreter kann nicht freigeben werden"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: too few arguments received from client %s%s%s for resource \"%s\" "
-#| "(received: %d arguments, expected: at least %d)"
+#, c-format
 msgid ""
 "%s%s: too few arguments received from client %s%s%s for resource \"%s\" "
 "(received: %d, expected: at least %d)"
 msgstr ""
-"%s%s: Zu wenige Argumente von Client %s%s%s für die Ressource \"%s\" "
-"erhalten (Empfangen: %d Argumente, mindestens erwartet: %d)"
+"%s%s: Zu wenige Argumente vom Client %s%s%s für die Ressource \"%s\" "
+"erhalten (erhalten: %d, erwartet: mindestens %d)"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: too many arguments received from client %s%s%s for resource \"%s\" "
-#| "(received: %d arguments, expected: at most %d)"
+#, c-format
 msgid ""
 "%s%s: too many arguments received from client %s%s%s for resource \"%s\" "
 "(received: %d, expected: at most %d)"
 msgstr ""
-"%s%s: Zu viele Argumente von Client erhalten %s%s%s für die Ressource \"%s\" "
-"(Empfangen: %d Argumente, höchstens erwartet: %d)"
+"%s%s: Zu viele Argumente vom Client %s%s%s für die Ressource \"%s\" erhalten "
+"(erhalten: %d, erwartet: höchstens %d)"
 
 #, c-format
 msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
@@ -17326,16 +17309,13 @@ msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
 msgstr ""
 "%s%s: Der Befehl \"%s\" kann für den Client %s%s%s nicht ausgeführt werden"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: too few arguments received from client %s%s%s for command \"%s\" "
-#| "(received: %d arguments, expected: at least %d)"
+#, c-format
 msgid ""
 "%s%s: too few arguments received from client %s%s%s for command \"%s\" "
 "(received: %d, expected: at least %d)"
 msgstr ""
-"%s%s: Zu wenige Argumente von Client %s%s%s für den Befehl \"%s\" erhalten "
-"(Empfangen: %d Argumente, mindestens Erwartet: %d)"
+"%s%s: Zu wenige Argumente vom Client %s%s%s für den Befehl \"%s\" erhalten "
+"(erhalten: %d, erwartet: mindestens %d)"
 
 msgid "Support of ruby scripts"
 msgstr "Unterstützung von Ruby-Skripten"
@@ -17518,23 +17498,18 @@ msgstr "(nichts)"
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr "Alt+Taste/Eingabezeile: v=zurück zur Auswahl d=zeigt Unterschiede an"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%d/%d scripts | Filter: %s | Sort: %s | Alt+key/input: i=install, "
-#| "r=remove, l=load, L=reload, u=unload, A=autoload, h=(un)hold, v=view "
-#| "script | Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, "
-#| "q=close buffer | Mouse: left=select, right=install/remove"
+#, c-format
 msgid ""
 "Scripts: %d/%d | Filter: %s | Sort: %s | Alt+key/input: i=install, r=remove, "
 "l=load, L=reload, u=unload, A=autoload, h=(un)hold, v=view script | Input: "
 "$=refresh, s:x,y=sort, words=filter, *=reset filter, q=close buffer | Mouse: "
 "left=select, right=install/remove"
 msgstr ""
-"%d/%d Skripts | Filter: %s | Sortierung: %s | Alt+Taste/Eingabe: "
-"i=installieren, r=entfernen, l=starten, L=erneut starten, u=beenden, "
-"A=Autoload, h=(nicht)halten, v=Skript anzeigen | Eingabe: $=aktualisieren, "
-"s:x,y=Art der Sortierung, Text=Filterung, *=Filter zurücksetzen, q=Buffer "
-"schließen | Maus: links=Skript anwählen, rechts=installieren/entfernen"
+"Skripte: %d/%d | Filter: %s | Sortierung: %s | Alt+Taste/Eingabe: "
+"i=installieren, r=entfernen, l=laden, L=neu laden, u=entladen, A=automatisch "
+"laden, h=fixieren/freigeben, v=Skript anzeigen | Eingabe: $=aktualisieren, "
+"s:x,y=sortieren, Suchbegriffe=filtern, *=Filter zurücksetzen, q=Buffer "
+"schließen | Maus: links=auswählen, rechts=installieren/entfernen"
 
 msgid "Scripts"
 msgstr "Skripten"
@@ -17990,12 +17965,11 @@ msgstr "obsolete"
 msgid "%s%s: error reading list of scripts"
 msgstr "%s%s: die Liste der Skripten kann nicht gelesen werden"
 
-#, fuzzy, c-format
-#| msgid "%s: %d scripts for WeeChat %s"
+#, c-format
 msgid "%s: %d script for WeeChat %s"
 msgid_plural "%s: %d scripts for WeeChat %s"
-msgstr[0] "%s: %d Skripten für WeeChat %s"
-msgstr[1] "%s: %d Skripten für WeeChat %s"
+msgstr[0] "%s: %d Skript für WeeChat %s"
+msgstr[1] "%s: %d Skripte für WeeChat %s"
 
 #, c-format
 msgid ""
@@ -19111,15 +19085,12 @@ msgstr ""
 "%3d. %s, Der Chat mit %s (lokaler Nick: %s), wurde am %s gestartet, Status: "
 "%s%s"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
-#| "(port %d)"
+#, c-format
 msgid ""
 "     plugin: %s (id: %s), size: %llu (position: %llu), address: %s (port %d)"
 msgstr ""
-"     Erweiterung: %s (id: %s), Datei: %llu Bytes (Position: %llu), Addresse: "
-"%s (Port %d)"
+"     Erweiterung: %s (ID: %s), Größe: %llu (Position: %llu), Adresse: %s "
+"(Port %d)"
 
 #. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
@@ -19378,16 +19349,13 @@ msgstr "%s%s: Datei \"%s\" kann nicht gelesen werden: %s"
 msgid "%s%s: unable to fork (%s)"
 msgstr "%s%s: ein Fork kann nicht erstellt werden (%s)"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
-#| "bytes (protocol: %s)"
+#, c-format
 msgid ""
 "%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), size: "
 "%llu (protocol: %s)"
 msgstr ""
-"%s: sende Datei an %s (%s, %s.%s), Name: %s (lokaler Dateiname: %s), %llu "
-"Bytes (Protokoll: %s)"
+"%s: Sende Datei an %s (%s, %s.%s), Name: %s (lokaler Dateiname: %s), Größe: "
+"%llu (Protokoll: %s)"
 
 #, c-format
 msgid "%s%s: unable to write file \"%s\": %s"
@@ -19488,24 +19456,20 @@ msgstr "%s%s: Adresse kann nicht ausgewertet werden: Fehler %d %s"
 msgid "%s%s: hashing error"
 msgstr "%s%s: Fehler beim hashing"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
+#, c-format
 msgid ""
 "%s: incoming file from %s (%s, %s.%s), name: %s, size: %llu (protocol: %s)"
 msgstr ""
-"%s: eingehende Datei von %s (%s, %s.%s), Name: %s, %llu Bytes (Protokoll: %s)"
+"%s: eingehende Datei von %s (%s, %s.%s), Name: %s, Größe: %llu (Protokoll: "
+"%s)"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu "
-#| "bytes (protocol: %s)"
+#, c-format
 msgid ""
 "%s: offering file to %s (%s.%s), name: %s (local filename: %s), size: %llu "
 "(protocol: %s)"
 msgstr ""
-"%s: sende Datei an %s (%s.%s), Name: %s (lokaler Dateiname: %s), %llu Bytes "
-"(Protokoll: %s)"
+"%s: Datei wird %s (%s.%s) angeboten, Name: %s (lokaler Dateiname: %s), "
+"Größe: %llu (Protokoll: %s)"
 
 #, c-format
 msgid "%s: incoming chat request from %s (%s, %s.%s)"
