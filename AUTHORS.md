@@ -38,6 +38,7 @@ Alphabetically:
 - Asakura
 - Bazerka
 - Benoit Papillault (benoit)
+- Bernhard M. Wiedemann
 - Brad Smith
 - Caleb Josue Ruiz Torres
 - Chris Hills
