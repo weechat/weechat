@@ -262,6 +262,42 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - xfer: limit size of partial message received in DCC chat to prevent memory exhaustion ([#2349](https://github.com/weechat/weechat/issues/2349))
 - xfer: remove path from filename received in DCC file transfer to prevent writing the file outside the download directory ([#2348](https://github.com/weechat/weechat/issues/2348))
 
+## [4.10.3] - 2026-11-07
+
+### Fixed
+
+- core: fix send of uninitialized data to socks4 proxy when the username has 127 chars or more, or when the address can not be resolved
+- core: fix completion of command and command arguments when there is text with spaces after the cursor
+- core: fix plural form in Italian translations, use plural for zero
+- fset, irc, script: fix freeze when the fset, script or `/list` buffer is scrolled in a window too small to display the chat area
+- irc: remove extra spaces after "online" in notify list
+- irc: fix memory leak when receiving the reply to ISON command sent for notify list
+- irc: fix display of channels without topic in `/list` buffer
+- irc: remove local variables "nick" and "host" in server and channel buffers on disconnection
+- irc, relay: display error code 0 instead of the last error code when the connection is closed by the peer
+- irc: keep the number of connection retries of each server address when switching to the next address, so that the next IP of an address is tried on next connection
+- irc: fix display of messages sent to the server in raw buffer, displayed twice and marked as modified even when no modifier changed them
+- relay: fix memory leak when relay clients are restored after `/upgrade`
+- trigger: set variables "tg_trigger_name" and "tg_hook_type" in focus triggers, do not add them in the hashtable returned
+- xfer: fix memory leak of token in passive DCC transfers
+- xfer: fix send of files greater than 4 GiB with DCC, the transfer failed or stalled after 4 GiB
+- xfer: fix timeout of transfers when option xfer.network.timeout is greater than 2147483 seconds
+- xfer: fix socket closed twice when a transfer cannot be created
+- xfer: fix crash when the size of a received file is missing in signal "xfer_add"
+- xfer: ignore data received beyond the file size in DCC file transfer
+- xfer: fix infinite loop in child process when resuming a file shorter than the resume position
+- xfer: do not start the transfer when the file to send cannot be opened
+
+### Security
+
+- irc: refuse SASL success with SCRAM mechanisms when the server signature has not been verified, to enforce mutual authentication
+- irc: refuse SCRAM server nonce that does not start with the client nonce
+- irc: refuse SCRAM iteration count lower than 4096 received from the server, to prevent offline dictionary attacks on the client proof, or greater than 1000000, to prevent blocking WeeChat for a long time
+- relay/api: refuse number of hash iterations lower than 1 or greater than 1000000 received from the remote relay, to prevent blocking WeeChat for a long time
+- relay: ignore IRC messages longer than 4096 bytes received from a client and reply with numeric 417 (ERR_INPUTTOOLONG), to prevent blocking WeeChat and consuming a lot of memory when parsing huge messages ([#2367](https://github.com/weechat/weechat/issues/2367))
+- xfer: compare the whole server name in option xfer.file.auto_accept_nicks, so that a nick is not auto-accepted on another server whose name starts with the same chars
+- xfer: validate resume position received in DCC RESUME and DCC ACCEPT, to prevent a remote peer from completing a file transfer with a truncated file ([#2369](https://github.com/weechat/weechat/pull/2369))
+
 ## [4.10.2] - 2026-10-31
 
 ### Fixed
@@ -4783,6 +4819,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - nicklist can be moved on top, bottom, left or right of window
 
 [Unreleased]: https://github.com/weechat/weechat/compare/v4.10.0...HEAD
+[4.10.3]: https://github.com/weechat/weechat/compare/v4.10.2...v4.10.3
 [4.10.2]: https://github.com/weechat/weechat/compare/v4.10.1...v4.10.2
 [4.10.1]: https://github.com/weechat/weechat/compare/v4.10.0...v4.10.1
 [4.10.0]: https://github.com/weechat/weechat/compare/v4.9.0...v4.10.0
