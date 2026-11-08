@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:00+0100\n"
+"POT-Creation-Date: 2026-11-08 12:07+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -7391,7 +7391,7 @@ msgid "buflist bar items used (according to option buflist.look.use_items)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s: %d signals hooked"
+msgid "%s: signals hooked: %d"
 msgstr "    sinais relacionados:"
 
 msgid ""

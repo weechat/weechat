@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:00+0100\n"
+"POT-Creation-Date: 2026-11-08 12:07+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -7926,8 +7926,9 @@ msgstr ""
 "ставке buflist траке које се користе (сагласно са опцијом "
 "buflist.look.use_items)"
 
-#, c-format
-msgid "%s: %d signals hooked"
+#, fuzzy, c-format
+#| msgid "%s: %d signals hooked"
+msgid "%s: signals hooked: %d"
 msgstr "%s: прикачено је %d сигнала"
 
 msgid ""

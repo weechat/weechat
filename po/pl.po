@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:00+0100\n"
+"POT-Creation-Date: 2026-11-08 12:07+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -7928,8 +7928,9 @@ msgstr "elementy paska buflist"
 msgid "buflist bar items used (according to option buflist.look.use_items)"
 msgstr "użyte elementy paska buflist (zgodnie z opcją buflist.look.use_items)"
 
-#, c-format
-msgid "%s: %d signals hooked"
+#, fuzzy, c-format
+#| msgid "%s: %d signals hooked"
+msgid "%s: signals hooked: %d"
 msgstr "%s: %d powiązanych sygnałów"
 
 msgid ""

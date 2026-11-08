@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 12:00+0100\n"
+"POT-Creation-Date: 2026-11-08 12:07+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -7723,8 +7723,9 @@ msgstr "バー要素のリスト"
 msgid "buflist bar items used (according to option buflist.look.use_items)"
 msgstr ""
 
-#, c-format
-msgid "%s: %d signals hooked"
+#, fuzzy, c-format
+#| msgid "%s: %d signals hooked"
+msgid "%s: signals hooked: %d"
 msgstr "%s: %d 個のシグナルがフックされました"
 
 #, fuzzy

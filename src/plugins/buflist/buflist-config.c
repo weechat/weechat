@@ -216,7 +216,7 @@ buflist_config_hook_signals_refresh (void)
                 }
                 if (weechat_buflist_plugin->debug >= 1)
                 {
-                    weechat_printf (NULL, _("%s: %d signals hooked"),
+                    weechat_printf (NULL, _("%s: signals hooked: %d"),
                                     BUFLIST_PLUGIN_NAME, list_size);
                 }
             }
