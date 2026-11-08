@@ -365,7 +365,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
 
     weechat_printf (NULL,
                     _("%s: sending file to %s (%s, %s.%s), "
-                      "name: %s (local filename: %s), %llu bytes (protocol: %s)"),
+                      "name: %s (local filename: %s), size: %llu (protocol: %s)"),
                     XFER_PLUGIN_NAME,
                     xfer->remote_nick,
                     xfer->remote_address_str,

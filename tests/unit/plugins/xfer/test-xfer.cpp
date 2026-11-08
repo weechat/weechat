@@ -827,7 +827,7 @@ TEST(XferAdd, AddCbFileRecvActive)
     LONGS_EQUAL(0, count_signals);
     RECORD_CHECK_MSG_REGEX("core.weechat",
                            "incoming file from alice \\(192.168.1.2, "
-                           "irc.libera\\), name: my_file.txt, 1000 bytes "
+                           "irc.libera\\), name: my_file.txt, size: 1000 "
                            "\\(protocol: dcc\\)");
 
     /* Keep spaces in filename, check CRC32 found in filename. */
@@ -967,7 +967,7 @@ TEST(XferAdd, AddCbFileSendPassive)
     RECORD_CHECK_MSG_REGEX("core.weechat",
                            "offering file to alice \\(irc.libera\\), "
                            "name: test_xfer_upload.txt \\(local filename: "
-                           ".*test_xfer_upload.txt\\), 5 bytes "
+                           ".*test_xfer_upload.txt\\), size: 5 "
                            "\\(protocol: dcc\\)");
 
     /* Path relative to upload directory. */

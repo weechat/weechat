@@ -147,8 +147,8 @@ xfer_command_xfer_list (int full)
                 if (XFER_IS_FILE(ptr_xfer->type))
                 {
                     weechat_printf (NULL,
-                                    _("     plugin: %s (id: %s), file: %llu "
-                                      "bytes (position: %llu), address: "
+                                    _("     plugin: %s (id: %s), size: %llu "
+                                      "(position: %llu), address: "
                                       "%s (port %d)"),
                                     ptr_xfer->plugin_name,
                                     ptr_xfer->plugin_id,

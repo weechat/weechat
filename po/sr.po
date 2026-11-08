@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 20:12+0100\n"
+"POT-Creation-Date: 2026-11-08 20:13+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -18222,10 +18222,12 @@ msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
 "%3d. %s, разговор са %s (локални надимак: %s), покренут у %s, статус: %s%s"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
+#| "(port %d)"
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
-"(port %d)"
+"     plugin: %s (id: %s), size: %llu (position: %llu), address: %s (port %d)"
 msgstr ""
 "     додатак: %s (id: %s), фајл: %llu бајтова (позиција: %llu), адреса: %s "
 "(порт %d)"
@@ -18472,10 +18474,13 @@ msgstr "%s%s: фајл „%s” не може да се прочита: %s"
 msgid "%s%s: unable to fork (%s)"
 msgstr "%s%s: није могуће рачвање (%s)"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
+#| "bytes (protocol: %s)"
 msgid ""
-"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
-"bytes (protocol: %s)"
+"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), size: "
+"%llu (protocol: %s)"
 msgstr ""
 "%s: слање фајла за %s (%s, %s.%s), име: %s (локално име фајла: %s), %llu "
 "бајтова (протокол: %s)"
@@ -18574,15 +18579,20 @@ msgstr "%s%s: адреса не може да се интерпретира: г�
 msgid "%s%s: hashing error"
 msgstr "%s%s: грешка у хеширању"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgid ""
-"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
+"%s: incoming file from %s (%s, %s.%s), name: %s, size: %llu (protocol: %s)"
 msgstr ""
 "%s: долазни фајл од %s (%s, %s.%s), име: %s, %llu бајтова (протокол: %s)"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu "
+#| "bytes (protocol: %s)"
 msgid ""
-"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), size: %llu "
 "(protocol: %s)"
 msgstr ""
 "%s: нуди се фајл %s (%s.%s), име: %s (локално име фајла: %s), %llu бајтова "

@@ -3421,7 +3421,7 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_SENT(NULL);
         CHECK_CORE("",
                    "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
-                   "), name: file.txt, 3 bytes (protocol: dcc)");
+                   "), name: file.txt, size: 3 (protocol: dcc)");
 
         /* Broken CTCP to user */
         RECV(":bob!user@host PRIVMSG alice :\001");
@@ -3471,7 +3471,7 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_SENT(NULL);
         CHECK_CORE("",
                    "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
-                   "), name: file.txt, 3 bytes (protocol: dcc)");
+                   "), name: file.txt, size: 3 (protocol: dcc)");
 
         /* Valid CTCP to channel */
         RECV("@time=2023-12-25T10:29:09.456789Z "
@@ -3683,7 +3683,7 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_SENT(NULL);
         CHECK_CORE("",
                    "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
-                   "), name: file.txt, 3 bytes (protocol: dcc)");
+                   "), name: file.txt, size: 3 (protocol: dcc)");
         CHECK_SENT(NULL);
 
         /*

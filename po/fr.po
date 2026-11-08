@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 20:12+0100\n"
+"POT-Creation-Date: 2026-11-08 20:13+0100\n"
 "PO-Revision-Date: 2026-11-05 23:05+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
@@ -18759,11 +18759,10 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
-"(port %d)"
+"     plugin: %s (id: %s), size: %llu (position: %llu), address: %s (port %d)"
 msgstr ""
-"     extension : %s (id : %s), fichier : %llu octets (position : %llu), "
-"adresse : %s (port %d)"
+"     extension : %s (id : %s), taille : %llu (position : %llu), adresse : %s "
+"(port %d)"
 
 #. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
@@ -19021,11 +19020,11 @@ msgstr "%s%s : impossible de créer un processus (%s)"
 
 #, c-format
 msgid ""
-"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
-"bytes (protocol: %s)"
+"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), size: "
+"%llu (protocol: %s)"
 msgstr ""
-"%s : offre de fichier pour %s (%s, %s.%s), nom : %s (nom local : %s), %llu "
-"octets (protocole : %s)"
+"%s : envoi du fichier à %s (%s, %s.%s), nom : %s (nom local : %s), taille : "
+"%llu (protocole : %s)"
 
 #, c-format
 msgid "%s%s: unable to write file \"%s\": %s"
@@ -19126,18 +19125,18 @@ msgstr "%s%s : erreur de hash"
 
 #, c-format
 msgid ""
-"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
+"%s: incoming file from %s (%s, %s.%s), name: %s, size: %llu (protocol: %s)"
 msgstr ""
-"%s : réception fichier de %s (%s, %s.%s), nom : %s, %llu octets (protocole : "
-"%s)"
+"%s : réception fichier de %s (%s, %s.%s), nom : %s, taille : %llu "
+"(protocole : %s)"
 
 #, c-format
 msgid ""
-"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), size: %llu "
 "(protocol: %s)"
 msgstr ""
-"%s : offre de fichier pour %s (%s.%s), nom : %s (nom local : %s), %llu "
-"octets (protocole : %s)"
+"%s : offre de fichier pour %s (%s.%s), nom : %s (nom local : %s), taille : "
+"%llu (protocole : %s)"
 
 #, c-format
 msgid "%s: incoming chat request from %s (%s, %s.%s)"

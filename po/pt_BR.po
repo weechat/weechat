@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 20:12+0100\n"
+"POT-Creation-Date: 2026-11-08 20:13+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -17263,8 +17263,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
-"(port %d)"
+"     plugin: %s (id: %s), size: %llu (position: %llu), address: %s (port %d)"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is a date.
@@ -17521,8 +17520,8 @@ msgstr "%s%s: não foi possível efetuar o fork"
 
 #, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
-"bytes (protocol: %s)"
+"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), size: "
+"%llu (protocol: %s)"
 msgstr ""
 "%s: enviando arquivo para %s (%s.%s): %s (arquivo local: %s), %llu bytes "
 "(protocolo: %s)"
@@ -17622,14 +17621,14 @@ msgstr "%s%s: erro de inicialização do TLS"
 
 #, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
+"%s: incoming file from %s (%s, %s.%s), name: %s, size: %llu (protocol: %s)"
 msgstr ""
 "%s: recebendo arquivo de %s (%s.%s), ip: %d.%d.%d.%d, nome: %s, %llu bytes "
 "(protocolo: %s)"
 
 #, fuzzy, c-format
 msgid ""
-"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), size: %llu "
 "(protocol: %s)"
 msgstr ""
 "%s: enviando arquivo para %s (%s.%s): %s (arquivo local: %s), %llu bytes "

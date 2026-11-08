@@ -811,7 +811,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         case XFER_TYPE_FILE_RECV_PASSIVE:
             weechat_printf (NULL,
                             _("%s: incoming file from %s "
-                              "(%s, %s.%s), name: %s, %llu bytes "
+                              "(%s, %s.%s), name: %s, size: %llu "
                               "(protocol: %s)"),
                             XFER_PLUGIN_NAME,
                             remote_nick,
@@ -827,7 +827,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         case XFER_TYPE_FILE_SEND_PASSIVE:
             weechat_printf (NULL,
                             _("%s: offering file to %s (%s.%s), name: %s "
-                              "(local filename: %s), %llu bytes (protocol: %s)"),
+                              "(local filename: %s), size: %llu (protocol: %s)"),
                             XFER_PLUGIN_NAME,
                             remote_nick,
                             plugin_name,

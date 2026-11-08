@@ -485,7 +485,7 @@ TEST(XferNetworkWithXfer, SendFileFork)
     RECORD_CHECK_MSG_REGEX("core.weechat",
                            "sending file to alice \\(127.0.0.1, irc.test\\), "
                            "name: file.txt \\(local filename: .*"
-                           "test_xfer_send.txt\\), 5 bytes");
+                           "test_xfer_send.txt\\), size: 5");
 }
 
 /*
