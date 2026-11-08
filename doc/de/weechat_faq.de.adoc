@@ -722,13 +722,12 @@ Es kann auch eine neue Taste eingebunden werden um zu einem Buffer zu wechseln:
 Eine Auflistung der Standardtastenbelegung findet man in
 link:weechat_user.de.html#key_bindings[Benutzerhandbuch / Standard Tastenbelegung ^↗^^].
 
-// TRANSLATION MISSING
-With WeeChat ≥ 5.0.0, you can use commands like `/123` to jump to buffer #123
-(this is the same as `/buffer *123`); this can be disabled with option
+Ab WeeChat ≥ 5.0.0 können Sie Befehle wie `/123` verwenden, um zum Buffer mit
+der Nummer 123 zu springen (dies entspricht dem Befehl `/buffer *123`); dieses
+Verhalten lässt sich über eine Option deaktivieren.
 link:weechat_user.de.html#option_weechat.look.command_buffer_number[_weechat.look.command_buffer_number_ ^↗^^].
 
-// TRANSLATION MISSING
-With older versions, you could define a trigger to get the same behavior:
+Bei älteren Versionen kann man einen Trigger definieren, um das gleiche Verhalten zu erzielen:
 
 ----
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"

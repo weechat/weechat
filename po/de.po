@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-05 22:42+0100\n"
-"PO-Revision-Date: 2026-11-01 20:49+0100\n"
+"PO-Revision-Date: 2026-11-08 13:41+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -13000,12 +13000,13 @@ msgstr ""
 "notice-Nachrichten deaktiviert sind (auf Groß- und Kleinschreibung wird "
 "nicht geachtet)"
 
-#, fuzzy
-#| msgid "text to display before nick in prefix of message, example: \"<\""
 msgid ""
 "text to display between nick and target in prefix of notices, when the "
 "target is displayed (color is set by option irc.color.notice)"
-msgstr "Text, der vor dem Nick dargestellt werden soll, Beispiel: \"<\""
+msgstr ""
+"Text, der im Präfix von Notizen zwischen Nickname und Ziel angezeigt wird, "
+"sofern das Ziel angezeigt wird (die Farbe wird über die Option "
+"irc.color.notice festgelegt)"
 
 msgid ""
 "automatically redirect channel welcome notices to the channel buffer; such "
@@ -14206,10 +14207,8 @@ msgstr "%s%s[%s%s%s] %s%s%s%s wurde durch %s das Wort entzogen"
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s%s wurde das Wort entzogen"
 
-#, fuzzy
-#| msgid "read - signature not found"
 msgid "server signature not verified"
-msgstr "lese - Signatur nicht gefunden"
+msgstr "Serversignatur nicht verifiziert"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found: \"%s\""
@@ -14274,17 +14273,12 @@ msgstr "%s%s: Server \"%s\" für eine Weiterleitung wurde nicht gefunden"
 msgid "unable to validate server signature"
 msgstr "Serversignatur kann nicht validiert werden"
 
-#, fuzzy
-#| msgid "%d server moved"
-#| msgid_plural "%d servers moved"
 msgid "invalid server nonce"
-msgstr "%d Server verschoben"
+msgstr "Ungültige Server-Nonce"
 
-#, fuzzy, c-format
-#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+#, c-format
 msgid "invalid iteration count: %d (must be between %d and %d)"
-msgstr ""
-"%sungültige Farbnummer \"%s\" (der Wert muss zwischen %d und %d liegen)"
+msgstr "Ungültige Iterationsanzahl: %d (muss zwischen %d und %d liegen)"
 
 msgid "memory error"
 msgstr "Speicherfehler"
@@ -16096,11 +16090,10 @@ msgstr "%sremote[%s]: Handshake mit URL %s fehlgeschlagen, Rückgabewert: %s"
 msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
 msgstr "%sremote[%s]: Handshake mit URL %s fehlgeschlagen, Fehler: %s"
 
-#, fuzzy, c-format
-#| msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+#, c-format
 msgid "invalid number of hash iterations: %lld (must be between %d and %d)"
 msgstr ""
-"%sungültige Farbnummer \"%s\" (der Wert muss zwischen %d und %d liegen)"
+"Ungültige Anzahl an Hash-Iterationen: %lld (muss zwischen %d und %d liegen)"
 
 msgid "hash algorithm not found"
 msgstr "Hash-Algorithmus nicht gefunden"
@@ -19362,11 +19355,11 @@ msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr ""
 "%s%s: für den Dateiversand kann kein Socket erstellt werden. Fehler %d %s"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+#, c-format
 msgid "%s%s: unable to create socket for receiving file: error %d %s"
 msgstr ""
-"%s%s: für den Dateiversand kann kein Socket erstellt werden. Fehler %d %s"
+"%s%s: Socket zum Empfangen der Datei konnte nicht erstellt werden: Fehler %d "
+"%s"
 
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
@@ -19378,11 +19371,9 @@ msgstr ""
 msgid "%s%s: encountered unexpected xfer type (%d)"
 msgstr "%s%s: unerwarteter xfer Typ festgestellt (%d)"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to create socket for sending file: error %d %s"
+#, c-format
 msgid "%s%s: unable to create socket for chat: error %d %s"
-msgstr ""
-"%s%s: für den Dateiversand kann kein Socket erstellt werden. Fehler %d %s"
+msgstr "%s%s: Socket für Chat konnte nicht erstellt werden: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
@@ -19496,10 +19487,11 @@ msgstr "%s%s: unbekanntes Transferprotokoll \"%s\""
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: auf die Datei \"%s\" kann nicht zugegriffen werden"
 
-#, fuzzy, c-format
-#| msgid "%s%s: cannot create socket for xfer: error %d %s"
+#, c-format
 msgid "%s%s: cannot get local address for xfer: error %d %s"
-msgstr "%s%s: Socket kann für xfer nicht erstellt werden: Fehler %d %s"
+msgstr ""
+"%s%s: lokale Adresse für xfer-Übertragung konnte nicht ermittelt werden: "
+"Fehler %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -19513,21 +19505,17 @@ msgstr "%s%s: Es konnte kein Port für den Transfer ermitteln werden"
 msgid "%s%s: error creating xfer"
 msgstr "%s%s: Fehler bei Transfererstellung"
 
-#, fuzzy, c-format
-#| msgid "%s%s: invalid post action \"%s\""
+#, c-format
 msgid "%s%s: invalid resume position \"%s\""
-msgstr "%s%s: ungültige nachfolgende Aktion: \"%s\""
+msgstr "%s%s: ungültige Fortsetzungsposition \"%s\""
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
-#| "not found or not ready for transfer"
+#, c-format
 msgid ""
 "%s%s: unable to resume file \"%s\": invalid start position received: %llu "
 "(expected: %llu)"
 msgstr ""
-"%s%s: Datei \"%s\" kann nicht fortsetzt werden (Port: %d, Startposition: "
-"%llu): xfer nicht gefunden oder nicht bereit für Transfer"
+"%s%s: Fortsetzen der Datei \"%s\" nicht möglich: ungültige Startposition "
+"erhalten: %llu (erwartet: %llu)"
 
 #, c-format
 msgid ""

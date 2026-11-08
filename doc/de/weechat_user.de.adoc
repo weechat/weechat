@@ -85,12 +85,11 @@ wie man Pakete installiert.
 [[containers]]
 === Container
 
-// TRANSLATION MISSING
-Containers with WeeChat can be built or installed directly from the
+Container mit WeeChat können direkt erstellt oder installiert werden über
 https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^^]. +
-For more information, see the
+Für weitere Informationen, siehe
 https://github.com/weechat/weechat/blob/main/tools/container/README.md[README ^↗^^]
-in directory _tools/container_ of the sources.
+im Verzeichnis _tools/container_ der entsprechenden Quellen.
 
 [[source_package]]
 === Quellpakete
@@ -1127,10 +1126,9 @@ angezeigt.
 Bildschirmlayouts und die Zuordnung zwischen Fenstern und Buffern können
 <<command_weechat_layout,gespeichert und wiederhergestellt>> werden.
 
-// TRANSLATION MISSING
-You can jump to a buffer by its number with the command `/N`, for example
-`/42` jumps to buffer #42 _(WeeChat ≥ 5.0.0)_: this is the same as
-`/buffer *42` (see option
+Mit dem Kurzbefehl `/N` können Sie direkt zu einem Buffer wechseln. Zum
+Beispiel: `/42` wechselt zum Buffer mit der Nummer 42 _(WeeChat ≥ 5.0.0)_:
+Dies entspricht dem Befehl `/buffer *42` (siehe Option
 <<option_weechat.look.command_buffer_number,weechat.look.command_buffer_number>>).
 
 [[window_split_examples]]
@@ -4399,21 +4397,18 @@ sind erlaubt, zum Beispiel:
 ----
 
 [[relay_allowed_networks]]
-// TRANSLATION MISSING
-=== Allowed networks
+=== Zulässige Netzwerke
 
-// TRANSLATION MISSING
-Connections to relay can be restricted to some networks, with a comma-separated
-list of IPv4 or IPv6 networks in CIDR notation; an address without prefix length
-allows only this address, for example:
+Verbindungen zum Relay können auf bestimmte Netzwerke beschränkt werden – mittels einer durch
+Kommata getrennten Liste von IPv4- oder IPv6-Netzwerken in CIDR-Notation; eine Adresse ohne
+Präfixlänge lässt nur diese eine Adresse zu, zum Beispiel:
 
 ----
 /set relay.network.allowed_networks "127.0.0.1,192.168.1.0/24,2001:db8::/48"
 ----
 
-// TRANSLATION MISSING
-If the option <<option_relay.network.allowed_ips,relay.network.allowed_ips>>
-is also set, the IP address must match both options.
+Falls zusätzlich die Option <<option_relay.network.allowed_ips,relay.network.allowed_ips>>
+gesetzt ist, muss die IP-Adresse mit beiden Optionen übereinstimmen.
 
 [[relay_tls]]
 === TLS
@@ -4447,30 +4442,25 @@ Schlüssel mittels folgendem Befehl nachträglich geladen werden:
 ----
 
 [[relay_protection]]
-// TRANSLATION MISSING
-=== Protection against abuse
+=== Schutz vor Missbrauch
 
-// TRANSLATION MISSING
-Authentication is done in the WeeChat main loop: with a password hashed with
-PBKDF2, each attempt computes the hash with the number of iterations set in
-option <<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>>,
-so a client sending many authentication attempts can slow down WeeChat.
+Die Authentifizierung erfolgt in der Hauptschleife von WeeChat: Bei jedem Versuch wird ein
+Passwort mittels PBKDF2 gehasht, wobei die Anzahl der Iterationen durch die Option
+<<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>>
+festgelegt wird. Ein Client, der eine Vielzahl von Authentifizierungsversuchen sendet,
+kann daher WeeChat verlangsamen.
 
-// TRANSLATION MISSING
-When the relay can be reached from the Internet, it is recommended to:
+Wenn das Relay aus dem Internet erreichbar ist, wird folgendes empfohlen:
 
-// TRANSLATION MISSING
-* restrict connections to some networks (see <<relay_allowed_networks,Allowed networks>>)
-* not expose the relay port directly: connect through a VPN or an SSH tunnel,
-  or use a reverse proxy or firewall rules limiting the number of requests or
-  connections
-* enable TOTP (see <<relay_totp,TOTP>>): with _api_ protocol, the TOTP is
-  checked before the password, so attempts without a valid TOTP never compute
-  the PBKDF2 hash
-* keep a reasonable number of iterations in option
+* Beschränken Sie Verbindungen auf bestimmte Netzwerke (siehe <<relay_allowed_networks,Allowed networks>>).
+* Geben Sie den Relay-Port nicht direkt frei: Stellen Sie eine Verbindung über ein VPN oder einen SSH-Tunnel her,
+  oder verwenden Sie einen Reverse-Proxy beziehungsweise Firewall-Regeln, um die Anzahl der Anfragen oder
+  Verbindungen zu begrenzen.
+* Aktivieren Sie TOTP (siehe <<relay_totp,TOTP>>): Beim _api_-Protokoll wird das TOTP vor dem Passwort
+  überprüft; bei Versuchen ohne gültiges TOTP wird daher der PBKDF2-Hash gar nicht erst berechnet.
+* Wählen Sie eine angemessene Anzahl an Iterationen für die Option
   <<option_relay.network.password_hash_iterations,relay.network.password_hash_iterations>>:
-  a higher value makes brute force attacks harder, but each authentication
-  attempt uses more CPU.
+  Ein höherer Wert erschwert Brute-Force-Angriffe, erhöht jedoch den CPU-Aufwand bei jedem Authentifizierungsversuch.
 
 [[relay_irc_proxy]]
 === IRC Proxy
