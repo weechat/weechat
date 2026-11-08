@@ -34,12 +34,12 @@ extern struct t_hashtable *typing_status_nicks;
 extern int typing_status_search_state (const char *state);
 extern struct t_typing_status *typing_status_self_add (struct t_gui_buffer *buffer,
                                                        int state,
-                                                       int last_typed);
+                                                       time_t last_typed);
 extern struct t_typing_status *typing_status_self_search (struct t_gui_buffer *buffer);
 extern struct t_typing_status *typing_status_nick_add (struct t_gui_buffer *buffer,
                                                        const char *nick,
                                                        int state,
-                                                       int last_typed);
+                                                       time_t last_typed);
 extern struct t_typing_status *typing_status_nick_search (struct t_gui_buffer *buffer,
                                                           const char *nick);
 extern void typing_status_nick_remove (struct t_gui_buffer *buffer,
