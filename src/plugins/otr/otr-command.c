@@ -767,23 +767,24 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
 }
 
 /*
- * Check if a name is a known OTR policy (case insensitive).
+ * Search an OTR policy by name (case insensitive).
  *
- * Return 1 if the policy is known, 0 otherwise.
+ * Return the name of the policy as used in options (lower case), NULL if the
+ * policy is unknown.
  */
 
-int
-otr_command_policy_known (const char *name)
+const char *
+otr_command_get_policy_name (const char *name)
 {
     int i;
 
     for (i = 0; i < OTR_CONFIG_NUM_POLICIES; i++)
     {
         if (weechat_strcasecmp (otr_config_policies[i].name, name) == 0)
-            return 1;
+            return otr_config_policies[i].name;
     }
 
-    return 0;
+    return NULL;
 }
 
 /*
@@ -837,7 +838,8 @@ int
 otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
 {
     struct t_otr_peer_ref peer_ref;
-    char *account, *peer, *text, *command, nick[128];
+    char *account, *peer, *text, *command, nick[128], option_name[640];
+    const char *ptr_policy, *ptr_value;
 
     if ((num_args == 1)
         || ((num_args == 2) && (weechat_strcasecmp (args[1], "default") == 0)))
@@ -868,7 +870,7 @@ otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
         return WEECHAT_RC_OK;
     }
 
-    if ((num_args == 3) && otr_command_policy_known (args[1])
+    if ((num_args == 3) && otr_command_get_policy_name (args[1])
         && otr_command_value_ok (args[2]))
     {
         if (!otr_command_peer_args (buffer, NULL, 0, &peer_ref)
@@ -876,9 +878,25 @@ otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
         {
             return WEECHAT_RC_ERROR;
         }
+        ptr_policy = otr_command_get_policy_name (args[1]);
         otr_irc_account_nick (account, nick, sizeof (nick));
-        weechat_asprintf (&command, "/set otr.policy.%s.%s.%s.%s %s",
-                          peer_ref.server, nick, peer, args[1], args[2]);
+        snprintf (option_name, sizeof (option_name), "%s.%s.%s.%s",
+                  otr_irc_account_server (account), nick, peer, ptr_policy);
+        ptr_value = args[2];
+        if ((weechat_strcasecmp (ptr_value, "toggle") == 0)
+            && !weechat_config_search_option (otr_config_file,
+                                              otr_config_section_policy,
+                                              option_name))
+        {
+            /*
+             * The option of the peer does not exist yet: toggle the value
+             * inherited from the nick, server or default policy.
+             */
+            ptr_value = (otr_policy_for (account, peer, ptr_policy)) ?
+                "off" : "on";
+        }
+        weechat_asprintf (&command, "/set otr.policy.%s %s",
+                          option_name, ptr_value);
         if (command)
         {
             weechat_command (NULL, command);
@@ -897,11 +915,11 @@ otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
     }
 
     if ((num_args == 4) && (weechat_strcasecmp (args[1], "default") == 0)
-        && otr_command_policy_known (args[2])
+        && otr_command_get_policy_name (args[2])
         && otr_command_value_ok (args[3]))
     {
         weechat_asprintf (&command, "/set otr.policy.default.%s %s",
-                          args[2], args[3]);
+                          otr_command_get_policy_name (args[2]), args[3]);
         if (command)
         {
             weechat_command (NULL, command);
