@@ -18,7 +18,6 @@ mkdir -p "${build_dir}"
 cd "${build_dir}"
 cmake \
     -DCMAKE_BUILD_TYPE=Debug \
-    -DENABLE_COVERAGE=ON \
     -DENABLE_FUZZ=ON \
     -DENABLE_JAVASCRIPT=OFF \
     -DENABLE_OTR=OFF \
