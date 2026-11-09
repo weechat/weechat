@@ -19,6 +19,12 @@
 #include "otr-util.h"
 
 
+/*
+ * Check if a buffer is currently logged to disk.
+ *
+ * Return 1 if the buffer is logged, 0 otherwise.
+ */
+
 int
 otr_log_buffer_is_logged (struct t_gui_buffer *buf)
 {
@@ -42,6 +48,13 @@ otr_log_buffer_is_logged (struct t_gui_buffer *buf)
     return res;
 }
 
+/*
+ * Build the name of the logger level option for a buffer:
+ * "logger.level.<plugin>.<name>".
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_log_logger_option_name (struct t_gui_buffer *buf)
 {
@@ -51,6 +64,13 @@ otr_log_logger_option_name (struct t_gui_buffer *buf)
     return otr_util_strf ("logger.level.%s.%s", plugin ? plugin : "",
                           name ? name : "");
 }
+
+/*
+ * Get the logger level of a buffer.
+ *
+ * Return OTR_LOG_DEFAULT if the buffer has no specific logger level option,
+ * otherwise the current logger level of the buffer.
+ */
 
 int
 otr_log_buffer_log_level (struct t_gui_buffer *buf)
@@ -83,6 +103,12 @@ otr_log_buffer_log_level (struct t_gui_buffer *buf)
     return res;
 }
 
+/*
+ * Disable logging of the private buffer with the peer of a libotr context
+ * during the OTR session; the previous logger level is saved in per-peer data,
+ * to be restored at the end of the session.
+ */
+
 void
 otr_log_disable (ConnContext *c, struct t_otr_peer_data *pd)
 {
@@ -103,6 +129,11 @@ otr_log_disable (ConnContext *c, struct t_otr_peer_data *pd)
                               "the OTR session."));
     }
 }
+
+/*
+ * Restore the logger level of the private buffer with the peer of a libotr
+ * context, saved when the OTR session started.
+ */
 
 void
 otr_log_restore (ConnContext *c, struct t_otr_peer_data *pd)
@@ -140,6 +171,11 @@ otr_log_restore (ConnContext *c, struct t_otr_peer_data *pd)
     }
     pd->prev_log = OTR_LOG_UNTOUCHED;
 }
+
+/*
+ * Callback for changes on logger level options of IRC buffers: update the OTR
+ * bar item.
+ */
 
 int
 otr_log_logger_level_update_cb (const void *pointer, void *data,
