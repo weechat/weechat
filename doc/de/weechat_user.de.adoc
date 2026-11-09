@@ -168,6 +168,10 @@ WeeChat optional sind:
   Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (api and weechat protocols).
 
+// TRANSLATION MISSING
+| libotr5-dev | ≥ 4.0.0
+| OTR plugin.
+
 | libaspell-dev / libenchant-2-dev |
 | Spell Erweiterung.
 
@@ -330,6 +334,10 @@ Liste der verfügbaren Optionen:
 
 | BUILD_PLUGIN_LUA | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Lua Erweiterung>>.
+
+// TRANSLATION MISSING
+| BUILD_PLUGIN_OTR | `ON`, `OFF` | ON
+| Compile OTR plugin.
 
 | BUILD_PLUGIN_PERL | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Perl Erweiterung>>.

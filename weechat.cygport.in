@@ -44,11 +44,13 @@ zlib-devel"
 # CMake compilation of WeeChat:
 #   1. set prefix to /usr
 #   2. disable JavaScript plugin (no Node.js or V8 package in Cygwin)
-#   3. enable build of man pages and documentation (incomplete, without
-#      JavaScript plugin)
+#   3. disable OTR plugin (libotr is not available in Cygwin)
+#   4. enable build of man pages and documentation (incomplete, without
+#      JavaScript and OTR plugins)
 #
 CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr \
 -DBUILD_PLUGIN_JAVASCRIPT=OFF \
+-DBUILD_PLUGIN_OTR=OFF \
 -DBUILD_MAN=ON \
 -DBUILD_DOC=ON \
 -DBUILD_DOC_ALLOW_INCOMPLETE=ON"

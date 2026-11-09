@@ -20,6 +20,7 @@ cmake \
     -DCMAKE_BUILD_TYPE=Debug \
     -DBUILD_FUZZERS=ON \
     -DBUILD_PLUGIN_JAVASCRIPT=OFF \
+    -DBUILD_PLUGIN_OTR=OFF \
     "${src_dir}"
 make -j "$(nproc)"
 

@@ -61,6 +61,11 @@ Copyright: 2006, Emmanuel Bouthenot <kolter@openics.org>
            2012, Nils Görs <weechatter@arcor.de>
 License: GPL-3+
 
+Files: src/plugins/otr/*
+Copyright: 2026, Nils Görs <weechatter@arcor.de>
+           2026, Sébastien Helleu <flashcode@flashtux.org>
+License: GPL-3+
+
 Files: src/plugins/guile/weechat-guile-api.c
        src/plugins/irc/irc-server.h
        src/plugins/plugin-script-api.c
