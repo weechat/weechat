@@ -19,10 +19,12 @@
 #include "otr-util.h"
 
 
-/* With the IRCv3 capability echo-message the server sends our own messages
+/*
+ * With the IRCv3 capability echo-message the server sends our own messages
  * back to us. That echo carries the ciphertext. We remember what we sent
  * (cipher line + the plaintext the user typed) and swap them back; echoes
- * of pure protocol traffic (query, AKE, fragments) are hidden. */
+ * of pure protocol traffic (query, AKE, fragments) are hidden.
+ */
 
 #define OTR_ECHO_PENDING_MAX 32
 #define OTR_ECHO_PENDING_TTL 60

@@ -65,7 +65,7 @@ otr_irc_target_is_channel (const char *server, const char *target)
     }
     if (!res)
     {
-        /* status message prefix, e.g. "@#channel" */
+        /* Status message prefix, for example "@#channel" */
         args = otr_util_strf ("%s,STATUSMSG", server);
         if (args)
         {

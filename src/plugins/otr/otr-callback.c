@@ -101,7 +101,7 @@ otr_callback_is_logged_in (void *opdata, const char *accountname,
                            const char *recipient)
 {
     (void)opdata; (void)accountname; (void)protocol; (void)recipient;
-    return -1; /* unknown */
+    return -1; /* Unknown */
 }
 
 /*
@@ -230,7 +230,7 @@ otr_callback_gone_secure (void *opdata, ConnContext *ctx)
 
     (void)opdata;
 
-    /* disable logging before anything decrypted can be printed */
+    /* Disable logging before anything decrypted can be printed. */
     if (!otr_policy_ctx (ctx, "log"))
         otr_log_disable (ctx, pd);
     else
@@ -369,7 +369,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent ev, ConnContext *ctx,
                 (unsigned)progress);
             break;
         case OTRL_SMPEVENT_SUCCESS:
-            /* make sure the fingerprint is remembered as SMP verified */
+            /* Make sure the fingerprint is remembered as SMP verified. */
             if (ctx->active_fingerprint
                 && !otrl_context_is_fingerprint_trusted (
                        ctx->active_fingerprint))
@@ -491,7 +491,7 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent ev,
                                   "client instance of yours; ignored."));
             break;
         case OTRL_MSGEVENT_RCVDMSG_UNENCRYPTED:
-            /* reported with a message prefix in otr_modifier_in_cb */
+            /* Reported with a message prefix in otr_modifier_in_cb. */
             break;
         default:
             otr_buffer_debug ("msg event %d", (int)ev);
