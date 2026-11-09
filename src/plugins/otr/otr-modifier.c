@@ -275,11 +275,17 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     if (tlvs)
     {
         /*
-         * The peer has ended the OTR session: libotr does not call the
-         * callback "gone_insecure", so it is called here.
+         * The peer has ended the OTR session (libotr does not call the
+         * callback "gone_insecure"): ask the user to do the same.
          */
         if (ptr_context && otrl_tlv_find (tlvs, OTRL_TLV_DISCONNECTED))
-            otr_callback_gone_insecure (NULL, ptr_context);
+        {
+            otr_buffer_ctx_print (
+                ptr_context, OTR_CONFIG_LEVEL_INFO,
+                _("%s has ended the private conversation. You should do the "
+                  "same:\n/otr finish"),
+                ptr_context->username);
+        }
         otrl_tlv_free (tlvs);
     }
 

@@ -10,6 +10,4 @@
 
 extern const OtrlMessageAppOps otr_callback_ops;
 
-extern void otr_callback_gone_insecure (void *opdata, ConnContext *context);
-
 #endif /* WEECHAT_PLUGIN_OTR_CALLBACK_H */

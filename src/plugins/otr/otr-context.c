@@ -157,7 +157,8 @@ otr_context_end_session (const char *account, const char *peer, int display,
             otr_buffer_ctx_print (ptr_context, OTR_CONFIG_LEVEL_INFO,
                                   _("Private conversation ended."));
         }
-        otr_log_restore (ptr_context, otr_context_peer_data_ctx (ptr_context),
+        otr_log_restore (ptr_context,
+                         (struct t_otr_peer_data *)ptr_context->app_data,
                          buffer_closing);
     }
 
