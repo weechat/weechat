@@ -169,8 +169,8 @@ int
 otr_command_resolve (const struct t_otr_peer_ref *peer_ref, char **account,
                      char **peer)
 {
-    *account = otr_irc_make_account (peer_ref->server);
     *peer = weechat_string_tolower (peer_ref->nick);
+    *account = (*peer) ? otr_irc_peer_account (peer_ref->server, *peer) : NULL;
     if (!*account || !*peer)
     {
         otr_buffer_error_core (_("not connected to server \"%s\""),
@@ -354,7 +354,6 @@ otr_command_start (struct t_gui_buffer *buffer,
 {
     char *account, *peer, *message;
     const char *ptr_query;
-    int allow_v2, allow_v3;
 
     /* Make C compiler happy. */
     (void) buffer;
@@ -362,22 +361,14 @@ otr_command_start (struct t_gui_buffer *buffer,
     if (!otr_command_resolve (peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;
 
-    allow_v2 = otr_policy_for (account, peer, "allow_v2");
-    allow_v3 = otr_policy_for (account, peer, "allow_v3");
-    if (!allow_v2 && !allow_v3)
+    ptr_query = otr_policy_query (account, peer);
+    if (!ptr_query)
     {
         otr_buffer_peer_print (peer_ref->server, peer, OTR_CONFIG_LEVEL_ERROR,
                                _("OTR is disabled by policy (allow_v2 and "
                                  "allow_v3 are both off)."));
         goto end;
     }
-
-    if (allow_v2 && allow_v3)
-        ptr_query = "?OTRv23?";
-    else if (allow_v3)
-        ptr_query = "?OTRv3?";
-    else
-        ptr_query = "?OTRv2?";
 
     otr_buffer_peer_hint (
         peer_ref->server, peer,

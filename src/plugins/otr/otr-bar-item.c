@@ -16,6 +16,7 @@
 #include "otr-buffer.h"
 #include "otr-config.h"
 #include "otr-context.h"
+#include "otr-irc.h"
 #include "otr-log.h"
 
 
@@ -68,8 +69,8 @@ otr_bar_item_cb (const void *pointer, void *data, struct t_gui_bar_item *item,
                  struct t_hashtable *extra_info)
 {
     struct t_gui_buffer *ptr_buffer;
-    const char *ptr_own_nick, *ptr_server, *ptr_peer, *ptr_separator;
-    char *own_nick, *account, *peer, **states, **result;
+    const char *ptr_server, *ptr_peer, *ptr_separator;
+    char *account, *peer, **states, **result;
     ConnContext *ptr_context;
     int first, encrypted, verified, logged;
 
@@ -85,20 +86,13 @@ otr_bar_item_cb (const void *pointer, void *data, struct t_gui_bar_item *item,
     if (!otr_us || !otr_buffer_is_private (ptr_buffer))
         return strdup ("");
 
-    ptr_own_nick = weechat_buffer_get_string (ptr_buffer, "localvar_nick");
     ptr_server = weechat_buffer_get_string (ptr_buffer, "localvar_server");
     ptr_peer = weechat_buffer_get_string (ptr_buffer, "localvar_channel");
-    if (!ptr_own_nick || !ptr_server || !ptr_peer)
+    if (!ptr_server || !ptr_peer)
         return strdup ("");
 
-    account = NULL;
-    own_nick = weechat_string_tolower (ptr_own_nick);
-    if (own_nick)
-    {
-        weechat_asprintf (&account, "%s@%s", own_nick, ptr_server);
-        free (own_nick);
-    }
     peer = weechat_string_tolower (ptr_peer);
+    account = (peer) ? otr_irc_peer_account (ptr_server, peer) : NULL;
     if (!account || !peer)
     {
         free (account);

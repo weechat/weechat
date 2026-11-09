@@ -80,6 +80,31 @@ otr_policy_ctx (ConnContext *context, const char *name)
 }
 
 /*
+ * Get the OTR query to send to a peer to start an OTR session, according to the
+ * policies "allow_v2" and "allow_v3".
+ *
+ * Return the OTR query, NULL if OTR versions 2 and 3 are both disabled.
+ */
+
+const char *
+otr_policy_query (const char *account, const char *peer)
+{
+    int allow_v2, allow_v3;
+
+    allow_v2 = otr_policy_for (account, peer, "allow_v2");
+    allow_v3 = otr_policy_for (account, peer, "allow_v3");
+
+    if (allow_v2 && allow_v3)
+        return "?OTRv23?";
+    if (allow_v3)
+        return "?OTRv3?";
+    if (allow_v2)
+        return "?OTRv2?";
+
+    return NULL;
+}
+
+/*
  * Check if the whitespace tag must not be sent to a peer (nick matching the
  * regex of option otr.general.no_send_tag_regex).
  *

@@ -11,6 +11,7 @@
 extern int otr_policy_for (const char *account, const char *peer,
                            const char *name);
 extern int otr_policy_ctx (ConnContext *context, const char *name);
+extern const char *otr_policy_query (const char *account, const char *peer);
 extern int otr_policy_no_send_tag (const char *peer);
 extern char *otr_policy_format_default (void);
 extern char *otr_policy_format_peer (const char *account, const char *peer);
