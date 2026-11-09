@@ -81,6 +81,8 @@ qweechat::
 |       javascript/  | javascript スクリプト用 API
 |       logger/      | logger プラグイン (表示されたメッセージをファイルに書き込む)
 |       lua/         | lua スクリプト用 API
+// TRANSLATION MISSING
+|       otr/         | OTR plugin (Off-the-Record messaging for IRC private conversations).
 |       perl/        | perl スクリプト用 API
 |       php/         | php スクリプト用 API
 |       python/      | python スクリプト用 API
@@ -365,6 +367,38 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    lua/                            | lua プラグイン
 |       weechat-lua.c                | lua の主要関数 (スクリプトのロード/アンロード、lua コードの実行)
 |       weechat-lua-api.c            | lua スクリプト作成 API 関数
+// TRANSLATION MISSING
+|    otr/                            | OTR plugin.
+// TRANSLATION MISSING
+|       otr.c                        | Main OTR functions.
+// TRANSLATION MISSING
+|       otr-bar-item.c               | OTR bar item.
+// TRANSLATION MISSING
+|       otr-buffer.c                 | OTR display and buffer functions.
+// TRANSLATION MISSING
+|       otr-callback.c               | libotr callbacks.
+// TRANSLATION MISSING
+|       otr-command.c                | OTR commands.
+// TRANSLATION MISSING
+|       otr-completion.c             | OTR completions.
+// TRANSLATION MISSING
+|       otr-config.c                 | OTR config options (file otr.conf).
+// TRANSLATION MISSING
+|       otr-context.c                | Per-peer data attached to libotr contexts.
+// TRANSLATION MISSING
+|       otr-echo.c                   | Support of IRCv3 echo-message.
+// TRANSLATION MISSING
+|       otr-irc.c                    | OTR IRC functions.
+// TRANSLATION MISSING
+|       otr-log.c                    | Control of buffer logging during OTR sessions.
+// TRANSLATION MISSING
+|       otr-message.c                | Conversion of OTR message text.
+// TRANSLATION MISSING
+|       otr-modifier.c               | Modifiers for incoming and outgoing IRC private messages.
+// TRANSLATION MISSING
+|       otr-policy.c                 | OTR policies.
+// TRANSLATION MISSING
+|       otr-util.c                   | OTR utility functions.
 |    perl/                           | perl プラグイン
 |       weechat-perl.c               | perl の主要関数 (スクリプトのロード/アンロード、perl コードの実行)
 |       weechat-perl-api.c           | perl スクリプト作成 API 関数

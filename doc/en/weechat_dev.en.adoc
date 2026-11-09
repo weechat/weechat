@@ -79,6 +79,7 @@ The main WeeChat directories are:
 |       javascript/  | JavaScript scripting API.
 |       logger/      | Logger plugin (write messages displayed to files).
 |       lua/         | Lua scripting API.
+|       otr/         | OTR plugin (Off-the-Record messaging for IRC private conversations).
 |       perl/        | Perl scripting API.
 |       php/         | PHP scripting API.
 |       python/      | Python scripting API.
@@ -330,6 +331,22 @@ WeeChat "core" is located in following directories:
 |    lua/                            | Lua plugin.
 |       weechat-lua.c                | Main lua functions (load/unload scripts, execute lua code).
 |       weechat-lua-api.c            | Lua scripting API functions.
+|    otr/                            | OTR plugin.
+|       otr.c                        | Main OTR functions.
+|       otr-bar-item.c               | OTR bar item.
+|       otr-buffer.c                 | OTR display and buffer functions.
+|       otr-callback.c               | libotr callbacks.
+|       otr-command.c                | OTR commands.
+|       otr-completion.c             | OTR completions.
+|       otr-config.c                 | OTR config options (file otr.conf).
+|       otr-context.c                | Per-peer data attached to libotr contexts.
+|       otr-echo.c                   | Support of IRCv3 echo-message.
+|       otr-irc.c                    | OTR IRC functions.
+|       otr-log.c                    | Control of buffer logging during OTR sessions.
+|       otr-message.c                | Conversion of OTR message text.
+|       otr-modifier.c               | Modifiers for incoming and outgoing IRC private messages.
+|       otr-policy.c                 | OTR policies.
+|       otr-util.c                   | OTR utility functions.
 |    perl/                           | Perl plugin.
 |       weechat-perl.c               | Main perl functions (load/unload scripts, execute perl code).
 |       weechat-perl-api.c           | Perl scripting API functions.
