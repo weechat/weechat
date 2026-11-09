@@ -149,7 +149,8 @@ otr_config_init (void)
 {
     int i;
 
-    otr_config_file = weechat_config_new ("otr", NULL, NULL, NULL);
+    otr_config_file = weechat_config_new (OTR_CONFIG_PRIO_NAME, NULL, NULL,
+                                          NULL);
     if (!otr_config_file)
         return 0;
 
