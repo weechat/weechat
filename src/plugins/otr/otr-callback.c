@@ -345,46 +345,6 @@ otr_callback_gone_secure (void *opdata, ConnContext *context)
 }
 
 /*
- * Callback for libotr: the OTR session with a peer is not encrypted any more.
- *
- * Note: libotr does not call this callback, so it is called by the incoming
- * modifier when the peer ends the session.
- *
- * If the peer ended the session, the user is asked to do the same, otherwise
- * the logger level is restored.
- */
-
-void
-otr_callback_gone_insecure (void *opdata, ConnContext *context)
-{
-    /* Make C compiler happy. */
-    (void) opdata;
-
-    if (otr_shutdown)
-    {
-        otr_log_restore (context, otr_context_peer_data_ctx (context), 0);
-        return;
-    }
-
-    if (context->msgstate == OTRL_MSGSTATE_FINISHED)
-    {
-        otr_buffer_ctx_print (
-            context, OTR_CONFIG_LEVEL_INFO,
-            _("%s has ended the private conversation. You should do the "
-              "same:\n/otr finish"),
-            context->username);
-    }
-    else
-    {
-        otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_INFO,
-                              _("Private conversation ended."));
-        otr_log_restore (context, otr_context_peer_data_ctx (context), 0);
-    }
-
-    weechat_bar_item_update (OTR_BAR_ITEM);
-}
-
-/*
  * Callback for libotr: the OTR session with a peer has been refreshed.
  */
 
@@ -637,7 +597,6 @@ const OtrlMessageAppOps otr_callback_ops = {
     .new_fingerprint = &otr_callback_new_fingerprint,
     .write_fingerprints = &otr_callback_write_fingerprints,
     .gone_secure = &otr_callback_gone_secure,
-    .gone_insecure = &otr_callback_gone_insecure,
     .still_secure = &otr_callback_still_secure,
     .max_message_size = &otr_callback_max_message_size,
     .resent_msg_prefix = &otr_callback_resent_msg_prefix,
