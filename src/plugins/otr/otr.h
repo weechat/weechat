@@ -9,7 +9,7 @@
 #define WEECHAT_PLUGIN_OTR_H
 
 #include <gcrypt.h>
-/* order matters: message.h needs the types from proto.h, tlv.h, context.h */
+/* Order matters: message.h needs the types from proto.h, tlv.h, context.h. */
 #include <libotr/version.h>
 #include <libotr/proto.h>
 #include <libotr/tlv.h>
@@ -22,8 +22,8 @@
 #define OTR_PROTOCOL           "irc"
 #define OTR_BAR_ITEM           "otr"
 #define OTR_MAX_ASSEMBLY       (64 * 1024)
-#define OTR_LOG_UNTOUCHED      (-2)   /* we have not changed the log level */
-#define OTR_LOG_DEFAULT        (-1)   /* buffer used the default log level */
+#define OTR_LOG_UNTOUCHED      (-2)   /* We have not changed the log level. */
+#define OTR_LOG_DEFAULT        (-1)   /* Buffer used the default log level. */
 #define OTR_ACTION_PREFIX      "/me "
 #define OTR_UNENCRYPTED_PREFIX _("Unencrypted message received: ")
 

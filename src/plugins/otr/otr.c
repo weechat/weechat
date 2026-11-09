@@ -56,12 +56,14 @@ char *otr_instagfile = NULL;
 
 struct t_gui_bar_item *otr_bar_item = NULL;
 
-/* >0 while we inject our own protocol messages through /quote, so that the
- * outgoing modifier lets them through untouched */
+/*
+ * >0 while we inject our own protocol messages through /quote, so that the
+ * outgoing modifier lets them through untouched.
+ */
 int otr_injecting = 0;
-/* >0 while sending CTCP, which must not receive a whitespace tag */
+/* >0 while sending CTCP, which must not receive a whitespace tag. */
 int otr_no_tag = 0;
-/* set while the plugin unloads: no UI work from libotr callbacks */
+/* Set while the plugin unloads: no UI work from libotr callbacks. */
 int otr_shutdown = 0;
 
 /*
@@ -121,7 +123,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
      */
     if (dladdr ((void *)weechat_plugin_init, &dli) && dli.dli_fname)
         dlopen (dli.dli_fname, RTLD_NOW | RTLD_NODELETE);
-    /* the dependency libotr is not pinned by the line above: do it directly */
+    /* The dependency libotr is not pinned by the line above: do it directly. */
     if (dladdr ((void *)otrl_init, &dli) && dli.dli_fname)
         dlopen (dli.dli_fname, RTLD_NOW | RTLD_NODELETE);
 
@@ -205,8 +207,10 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     if (otr_us)
     {
-        /* end all sessions politely. Collect names first: the callbacks
-         * must not run while we walk libotr's context list. */
+        /*
+         * End all sessions politely. Collect names first: the callbacks
+         * must not run while we walk libotr's context list.
+         */
         for (c = otr_us->context_root; c; c = c->next)
         {
             if (c->msgstate == OTRL_MSGSTATE_PLAINTEXT)

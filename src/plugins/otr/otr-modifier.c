@@ -173,12 +173,12 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     own = weechat_info_get ("irc_nick", server);
     if (own && strcasecmp (own, nick) == 0)
     {
-        /* echo-message: the server returns our own outgoing message */
+        /* echo-message: the server returns our own outgoing message. */
         result = otr_echo_replace (server, string, host, target, text);
         goto done;
     }
 
-    /* CTCP: only a plaintext ACTION inside an encrypted session is flagged */
+    /* CTCP: only a plaintext ACTION inside an encrypted session is flagged. */
     account = otr_irc_make_account (server);
     if (!account)
         goto done;
@@ -210,7 +210,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     if (!pd || !otr_modifier_assemble (pd, text, &assembled))
     {
         if (pd)
-            result = strdup (""); /* waiting for more parts */
+            result = strdup (""); /* Waiting for more parts */
         goto done;
     }
 
@@ -235,7 +235,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
 
         if (newmsg && was_otr && encrypted)
         {
-            /* decrypted message */
+            /* Decrypted message */
             if (otr_policy_for (account, peer, "html_filter"))
                 deliver = otr_message_html_filter (newmsg);
             else
@@ -249,7 +249,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
         }
         else if (encrypted && !was_otr)
         {
-            /* plaintext although the session is encrypted */
+            /* Plaintext although the session is encrypted */
             result = otr_message_build_in_privmsgs (tags ? tags : "", host,
                                                     target,
                                                     newmsg ? newmsg : assembled,
@@ -257,7 +257,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
         }
         else if (newmsg)
         {
-            /* e.g. whitespace tag stripped from plaintext */
+            /* For example: whitespace tag stripped from plaintext */
             result = otr_message_build_in_privmsgs (tags ? tags : "", host,
                                                     target,
                                                     newmsg, "", 0);
@@ -268,7 +268,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
                                                     target,
                                                     assembled, "", 0);
         }
-        /* otherwise: unchanged (result == NULL) */
+        /* Otherwise: unchanged (result == NULL) */
     }
     if (newmsg)
         otrl_message_free (newmsg);
@@ -459,13 +459,13 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
             if (shown && strncmp (clean, "?OTR", 4) == 0)
                 otr_echo_pending_add (server, peer, clean, shown);
 
-            /* WeeChat strips trailing spaces; keep whitespace tags intact */
+            /* WeeChat strips trailing spaces; keep whitespace tags intact. */
             result = otr_util_strf ("PRIVMSG %s :%s%s", target, clean,
                                     clean[l - 1] == ' ' ? "\t" : "");
         }
         otrl_message_free (newmsg);
     }
-    /* else: not an OTR message (plaintext allowed): result stays NULL */
+    /* Otherwise: not an OTR message (plaintext allowed), result stays NULL. */
 
     weechat_bar_item_update (OTR_BAR_ITEM);
 
