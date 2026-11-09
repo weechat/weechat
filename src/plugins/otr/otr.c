@@ -36,7 +36,6 @@
 #include "otr-echo.h"
 #include "otr-log.h"
 #include "otr-modifier.h"
-#include "otr-util.h"
 
 
 WEECHAT_PLUGIN_NAME(OTR_PLUGIN_NAME);
@@ -61,10 +60,13 @@ struct t_gui_bar_item *otr_bar_item = NULL;
  * outgoing modifier lets them through untouched.
  */
 int otr_injecting = 0;
+
 /* >0 while sending CTCP, which must not receive a whitespace tag. */
 int otr_no_tag = 0;
+
 /* Set while the plugin unloads: no UI work from libotr callbacks. */
 int otr_shutdown = 0;
+
 
 /*
  * Check if a file exists.
@@ -77,7 +79,7 @@ otr_file_exists (const char *path)
 {
     struct stat st;
 
-    return stat (path, &st) == 0;
+    return (stat (path, &st) == 0) ? 1 : 0;
 }
 
 /*
@@ -107,11 +109,13 @@ otr_debug_libs_cb (const void *pointer, void *data, const char *signal,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    const char *base;
+    const char *ptr_base_dir;
+    Dl_info dl_info;
 
-    Dl_info dli;
+    /* Make C compiler happy. */
+    (void) argc;
+    (void) argv;
 
-    (void)argc; (void)argv;
     weechat_plugin = plugin;
 
     /*
@@ -121,11 +125,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
      * dependencies in memory. Consequence: a rebuilt otr.so is only picked up
      * after restarting WeeChat, and static state must be reset on every init.
      */
-    if (dladdr ((void *)weechat_plugin_init, &dli) && dli.dli_fname)
-        dlopen (dli.dli_fname, RTLD_NOW | RTLD_NODELETE);
+    if (dladdr ((void *)weechat_plugin_init, &dl_info) && dl_info.dli_fname)
+        dlopen (dl_info.dli_fname, RTLD_NOW | RTLD_NODELETE);
     /* The dependency libotr is not pinned by the line above: do it directly. */
-    if (dladdr ((void *)otrl_init, &dli) && dli.dli_fname)
-        dlopen (dli.dli_fname, RTLD_NOW | RTLD_NODELETE);
+    if (dladdr ((void *)otrl_init, &dl_info) && dl_info.dli_fname)
+        dlopen (dl_info.dli_fname, RTLD_NOW | RTLD_NODELETE);
 
     otr_shutdown = 0;
     otr_injecting = 0;
@@ -135,28 +139,30 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     if (otrl_init (OTRL_VERSION_MAJOR, OTRL_VERSION_MINOR, OTRL_VERSION_SUB))
     {
-        weechat_printf (NULL, "%sotr: libotr version mismatch",
-                        weechat_prefix ("error"));
+        weechat_printf (NULL, "%s%s: libotr version mismatch",
+                        weechat_prefix ("error"), OTR_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
 
     if (!otr_config_init ())
     {
-        weechat_printf (NULL, "%sotr: could not create configuration",
-                        weechat_prefix ("error"));
+        weechat_printf (NULL, "%s%s: could not create configuration",
+                        weechat_prefix ("error"), OTR_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
 
-    base = weechat_info_get ("weechat_data_dir", "");
-    if (!base || !*base)
-        base = weechat_info_get ("weechat_dir", "");
-    if (!base || !*base)
+    ptr_base_dir = weechat_info_get ("weechat_data_dir", "");
+    if (!ptr_base_dir || !ptr_base_dir[0])
+        ptr_base_dir = weechat_info_get ("weechat_dir", "");
+    if (!ptr_base_dir || !ptr_base_dir[0])
         return WEECHAT_RC_ERROR;
-    otr_dir = otr_util_strf ("%s/otr", base);
-    otr_keyfile = otr_util_strf ("%s/otr.private_key", otr_dir);
-    otr_fprfile = otr_util_strf ("%s/otr.fingerprints", otr_dir);
-    otr_instagfile = otr_util_strf ("%s/otr.instag", otr_dir);
-    if (!otr_dir || !otr_keyfile || !otr_fprfile || !otr_instagfile)
+    weechat_asprintf (&otr_dir, "%s/otr", ptr_base_dir);
+    if (!otr_dir)
+        return WEECHAT_RC_ERROR;
+    weechat_asprintf (&otr_keyfile, "%s/otr.private_key", otr_dir);
+    weechat_asprintf (&otr_fprfile, "%s/otr.fingerprints", otr_dir);
+    weechat_asprintf (&otr_instagfile, "%s/otr.instag", otr_dir);
+    if (!otr_keyfile || !otr_fprfile || !otr_instagfile)
         return WEECHAT_RC_ERROR;
     weechat_mkdir_parents (otr_dir, 0700);
 
@@ -176,15 +182,15 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     otr_command_init ();
 
     otr_completion_init ();
-    weechat_hook_config ("logger.level.irc.*", &otr_log_logger_level_update_cb,
-                         NULL,
-                         NULL);
+
+    weechat_hook_config ("logger.level.irc.*",
+                         &otr_log_logger_level_update_cb, NULL, NULL);
     weechat_hook_signal ("buffer_switch", &otr_buffer_switch_cb, NULL, NULL);
     weechat_hook_signal ("buffer_closing", &otr_buffer_closing_cb, NULL, NULL);
     weechat_hook_signal ("debug_libs", &otr_debug_libs_cb, NULL, NULL);
 
-    otr_bar_item = weechat_bar_item_new (OTR_BAR_ITEM, &otr_bar_item_cb, NULL,
-                                         NULL);
+    otr_bar_item = weechat_bar_item_new (OTR_BAR_ITEM,
+                                         &otr_bar_item_cb, NULL, NULL);
     weechat_bar_item_update (OTR_BAR_ITEM);
 
     return WEECHAT_RC_OK;
@@ -198,11 +204,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    ConnContext *c;
-    char **accts = NULL, **users = NULL, **t1, **t2;
-    int n = 0, cap = 0, i;
+    ConnContext *ptr_context;
+    char **accounts, **usernames, **new_accounts, **new_usernames;
+    int num_sessions, size_alloc, i;
 
-    (void)plugin;
+    /* Make C compiler happy. */
+    (void) plugin;
+
     otr_shutdown = 1;
 
     if (otr_us)
@@ -211,57 +219,74 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
          * End all sessions politely. Collect names first: the callbacks
          * must not run while we walk libotr's context list.
          */
-        for (c = otr_us->context_root; c; c = c->next)
+        accounts = NULL;
+        usernames = NULL;
+        num_sessions = 0;
+        size_alloc = 0;
+        for (ptr_context = otr_us->context_root; ptr_context;
+             ptr_context = ptr_context->next)
         {
-            if (c->msgstate == OTRL_MSGSTATE_PLAINTEXT)
+            if (ptr_context->msgstate == OTRL_MSGSTATE_PLAINTEXT)
                 continue;
-            if (n == cap)
+            if (num_sessions == size_alloc)
             {
-                cap = cap ? cap * 2 : 8;
-                t1 = realloc (accts, (size_t)cap * sizeof (char *));
-                if (!t1)
+                size_alloc = (size_alloc) ? size_alloc * 2 : 8;
+                new_accounts = realloc (accounts,
+                                        (size_t)size_alloc * sizeof (char *));
+                if (!new_accounts)
                     break;
-                accts = t1;
-                t2 = realloc (users, (size_t)cap * sizeof (char *));
-                if (!t2)
+                accounts = new_accounts;
+                new_usernames = realloc (usernames,
+                                         (size_t)size_alloc * sizeof (char *));
+                if (!new_usernames)
                     break;
-                users = t2;
+                usernames = new_usernames;
             }
-            accts[n] = strdup (c->accountname);
-            users[n] = strdup (c->username);
-            n++;
+            accounts[num_sessions] = strdup (ptr_context->accountname);
+            usernames[num_sessions] = strdup (ptr_context->username);
+            num_sessions++;
         }
-        for (i = 0; i < n; i++)
+        for (i = 0; i < num_sessions; i++)
         {
-            if (accts[i] && users[i])
+            if (accounts[i] && usernames[i])
+            {
                 otrl_message_disconnect_all_instances (
-                    otr_us, &otr_callback_ops, NULL, accts[i], OTR_PROTOCOL,
-                    users[i]);
-            free (accts[i]);
-            free (users[i]);
+                    otr_us, &otr_callback_ops, NULL,
+                    accounts[i], OTR_PROTOCOL, usernames[i]);
+            }
+            free (accounts[i]);
+            free (usernames[i]);
         }
-        free (accts);
-        free (users);
+        free (accounts);
+        free (usernames);
+
         otr_echo_pending_clear_all ();
         otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
         otrl_userstate_free (otr_us);
         otr_us = NULL;
     }
+
     if (otr_bar_item)
     {
         weechat_bar_item_remove (otr_bar_item);
         otr_bar_item = NULL;
     }
+
     if (otr_config_file)
     {
         weechat_config_write (otr_config_file);
         weechat_config_free (otr_config_file);
         otr_config_file = NULL;
     }
+
     free (otr_dir);
+    otr_dir = NULL;
     free (otr_keyfile);
+    otr_keyfile = NULL;
     free (otr_fprfile);
+    otr_fprfile = NULL;
     free (otr_instagfile);
-    otr_dir = otr_keyfile = otr_fprfile = otr_instagfile = NULL;
+    otr_instagfile = NULL;
+
     return WEECHAT_RC_OK;
 }

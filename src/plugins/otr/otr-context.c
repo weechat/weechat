@@ -19,14 +19,17 @@
  */
 
 void
-otr_context_peer_data_free (void *p)
+otr_context_peer_data_free (void *data)
 {
-    struct t_otr_peer_data *pd = p;
+    struct t_otr_peer_data *peer_data;
 
-    if (!pd)
+    if (!data)
         return;
-    free (pd->asm_buf);
-    free (pd);
+
+    peer_data = (struct t_otr_peer_data *)data;
+
+    free (peer_data->assembly);
+    free (peer_data);
 }
 
 /*
@@ -39,23 +42,25 @@ otr_context_peer_data_free (void *p)
 struct t_otr_peer_data *
 otr_context_peer_data_for (const char *account, const char *peer)
 {
-    ConnContext *m;
-    struct t_otr_peer_data *pd;
+    ConnContext *ptr_context;
+    struct t_otr_peer_data *new_peer_data;
 
-    m = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
-                           OTRL_INSTAG_MASTER, 1, NULL, NULL, NULL);
-    if (!m)
+    ptr_context = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
+                                     OTRL_INSTAG_MASTER, 1, NULL, NULL, NULL);
+    if (!ptr_context)
         return NULL;
-    if (!m->app_data)
+
+    if (!ptr_context->app_data)
     {
-        pd = calloc (1, sizeof (*pd));
-        if (!pd)
+        new_peer_data = calloc (1, sizeof (*new_peer_data));
+        if (!new_peer_data)
             return NULL;
-        pd->prev_log = OTR_LOG_UNTOUCHED;
-        m->app_data = pd;
-        m->app_data_free = otr_context_peer_data_free;
+        new_peer_data->prev_log = OTR_LOG_UNTOUCHED;
+        ptr_context->app_data = new_peer_data;
+        ptr_context->app_data_free = &otr_context_peer_data_free;
     }
-    return m->app_data;
+
+    return (struct t_otr_peer_data *)ptr_context->app_data;
 }
 
 /*
@@ -65,9 +70,9 @@ otr_context_peer_data_for (const char *account, const char *peer)
  */
 
 struct t_otr_peer_data *
-otr_context_peer_data_ctx (ConnContext *c)
+otr_context_peer_data_ctx (ConnContext *context)
 {
-    return otr_context_peer_data_for (c->accountname, c->username);
+    return otr_context_peer_data_for (context->accountname, context->username);
 }
 
 /*
@@ -91,9 +96,9 @@ otr_context_find (const char *account, const char *peer)
  */
 
 int
-otr_context_encrypted (ConnContext *c)
+otr_context_encrypted (ConnContext *context)
 {
-    return c && c->msgstate == OTRL_MSGSTATE_ENCRYPTED;
+    return (context && (context->msgstate == OTRL_MSGSTATE_ENCRYPTED)) ? 1 : 0;
 }
 
 /*
@@ -103,8 +108,9 @@ otr_context_encrypted (ConnContext *c)
  */
 
 int
-otr_context_verified (ConnContext *c)
+otr_context_verified (ConnContext *context)
 {
-    return otr_context_encrypted (c) && c->active_fingerprint
-        && otrl_context_is_fingerprint_trusted (c->active_fingerprint);
+    return (otr_context_encrypted (context) && context->active_fingerprint
+            && otrl_context_is_fingerprint_trusted (
+                context->active_fingerprint)) ? 1 : 0;
 }

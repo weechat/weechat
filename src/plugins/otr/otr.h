@@ -25,7 +25,7 @@
 #define OTR_LOG_UNTOUCHED      (-2)   /* We have not changed the log level. */
 #define OTR_LOG_DEFAULT        (-1)   /* Buffer used the default log level. */
 #define OTR_ACTION_PREFIX      "/me "
-#define OTR_UNENCRYPTED_PREFIX _("Unencrypted message received: ")
+#define OTR_UNENCRYPTED_PREFIX _("Unencrypted message received:")
 
 #define weechat_plugin weechat_otr_plugin
 #define OTR_PLUGIN_NAME "otr"

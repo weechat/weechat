@@ -10,10 +10,12 @@
 
 struct t_otr_peer_data;
 
-extern int otr_log_buffer_is_logged (struct t_gui_buffer *buf);
-extern int otr_log_buffer_log_level (struct t_gui_buffer *buf);
-extern void otr_log_disable (ConnContext *c, struct t_otr_peer_data *pd);
-extern void otr_log_restore (ConnContext *c, struct t_otr_peer_data *pd);
+extern int otr_log_buffer_is_logged (struct t_gui_buffer *buffer);
+extern int otr_log_buffer_log_level (struct t_gui_buffer *buffer);
+extern void otr_log_disable (ConnContext *context,
+                             struct t_otr_peer_data *peer_data);
+extern void otr_log_restore (ConnContext *context,
+                             struct t_otr_peer_data *peer_data);
 extern int otr_log_logger_level_update_cb (const void *pointer, void *data,
                                            const char *option,
                                            const char *value);

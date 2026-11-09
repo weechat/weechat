@@ -7,8 +7,6 @@
 
 /* Display and buffer functions for OTR plugin */
 
-#include <stdarg.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -29,29 +27,35 @@
  */
 
 void
-otr_buffer_debug (const char *fmt, ...)
+otr_buffer_debug (const char *format, ...)
 {
-    struct t_gui_buffer *b;
-    va_list ap;
-    char tmp[1024];
+    struct t_gui_buffer *ptr_buffer;
 
     if (!otr_config_general_debug
         || !weechat_config_boolean (otr_config_general_debug))
-        return;
-    b = weechat_buffer_search ("otr", "OTR Debug");
-    if (!b)
     {
-        b = weechat_buffer_new ("OTR Debug", NULL, NULL, NULL, NULL, NULL,
-                                NULL);
-        if (!b)
-            return;
-        weechat_buffer_set (b, "title", "OTR Debug");
-        weechat_buffer_set (b, "localvar_set_no_log", "1");
+        return;
     }
-    va_start (ap, fmt);
-    vsnprintf (tmp, sizeof (tmp), fmt, ap);
-    va_end (ap);
-    weechat_printf (b, "otr debug\t%s", tmp);
+
+    ptr_buffer = weechat_buffer_search (OTR_PLUGIN_NAME, "OTR Debug");
+    if (!ptr_buffer)
+    {
+        ptr_buffer = weechat_buffer_new ("OTR Debug",
+                                         NULL, NULL, NULL,
+                                         NULL, NULL, NULL);
+        if (!ptr_buffer)
+            return;
+        weechat_buffer_set (ptr_buffer, "title", "OTR Debug");
+        weechat_buffer_set (ptr_buffer, "localvar_set_no_log", "1");
+    }
+
+    weechat_va_format (format);
+    if (!vbuffer)
+        return;
+
+    weechat_printf (ptr_buffer, "otr debug\t%s", vbuffer);
+
+    free (vbuffer);
 }
 
 /*
@@ -60,34 +64,35 @@ otr_buffer_debug (const char *fmt, ...)
  */
 
 void
-otr_buffer_print_str (struct t_gui_buffer *buf, int col, const char *msg)
+otr_buffer_print_str (struct t_gui_buffer *buffer, int color,
+                      const char *message)
 {
-    char *prefix, *copy, *line, *nl;
-    char colorbuf[64];
-    const char *c;
+    char *prefix, *message2, *ptr_line, *ptr_newline;
+    const char *ptr_color;
+
+    message2 = otr_util_dupstr (message);
+    if (!message2)
+        return;
 
     prefix = weechat_string_eval_expression (
-        weechat_config_string (otr_config_look[OTR_CONFIG_LOOK_PREFIX]), NULL,
-        NULL, NULL);
-    c = weechat_color (weechat_config_color (otr_config_color[col]));
-    snprintf (colorbuf, sizeof (colorbuf), "%s", c ? c : "");
-    copy = otr_util_dupstr (msg);
-    if (!copy)
+        weechat_config_string (otr_config_look[OTR_CONFIG_LOOK_PREFIX]),
+        NULL, NULL, NULL);
+    ptr_color = weechat_color (weechat_config_color (otr_config_color[color]));
+
+    ptr_line = message2;
+    while (ptr_line)
     {
-        free (prefix);
-        return;
+        ptr_newline = strchr (ptr_line, '\n');
+        if (ptr_newline)
+            ptr_newline[0] = '\0';
+        weechat_printf (buffer, "%s\t%s%s",
+                        (prefix) ? prefix : OTR_PLUGIN_NAME,
+                        (ptr_color) ? ptr_color : "",
+                        ptr_line);
+        ptr_line = (ptr_newline) ? ptr_newline + 1 : NULL;
     }
-    line = copy;
-    while (line)
-    {
-        nl = strchr (line, '\n');
-        if (nl)
-            *nl = '\0';
-        weechat_printf (buf, "%s\t%s%s", prefix ? prefix : "otr", colorbuf,
-                        line);
-        line = nl ? nl + 1 : NULL;
-    }
-    free (copy);
+
+    free (message2);
     free (prefix);
 }
 
@@ -96,15 +101,16 @@ otr_buffer_print_str (struct t_gui_buffer *buf, int col, const char *msg)
  */
 
 void
-otr_buffer_error_core (const char *fmt, ...)
+otr_buffer_error_core (const char *format, ...)
 {
-    char tmp[1024];
-    va_list ap;
+    weechat_va_format (format);
+    if (!vbuffer)
+        return;
 
-    va_start (ap, fmt);
-    vsnprintf (tmp, sizeof (tmp), fmt, ap);
-    va_end (ap);
-    weechat_printf (NULL, "%sotr: %s", weechat_prefix ("error"), tmp);
+    weechat_printf (NULL, "%s%s: %s",
+                    weechat_prefix ("error"), OTR_PLUGIN_NAME, vbuffer);
+
+    free (vbuffer);
 }
 
 /*
@@ -114,14 +120,16 @@ otr_buffer_error_core (const char *fmt, ...)
  */
 
 int
-otr_buffer_is_private (struct t_gui_buffer *buf)
+otr_buffer_is_private (struct t_gui_buffer *buffer)
 {
-    const char *t;
+    const char *ptr_type;
 
-    if (!buf)
+    if (!buffer)
         return 0;
-    t = weechat_buffer_get_string (buf, "localvar_type");
-    return t && strcmp (t, "private") == 0;
+
+    ptr_type = weechat_buffer_get_string (buffer, "localvar_type");
+
+    return (ptr_type && (strcmp (ptr_type, "private") == 0)) ? 1 : 0;
 }
 
 /*
@@ -133,23 +141,25 @@ otr_buffer_is_private (struct t_gui_buffer *buf)
  */
 
 void
-otr_buffer_peer_print (const char *server, const char *nick, int col,
-                       const char *msg)
+otr_buffer_peer_print (const char *server, const char *nick, int color,
+                       const char *message)
 {
-    struct t_gui_buffer *buf = otr_irc_buffer (server, nick);
-    char *tmp = NULL;
+    struct t_gui_buffer *ptr_buffer;
+    char *message_with_nick;
 
     if (otr_shutdown)
         return;
 
-    if (nick && *nick && !otr_buffer_is_private (buf))
-    {
-        tmp = otr_util_strf ("[%s] %s", nick, msg);
-        if (tmp)
-            msg = tmp;
-    }
-    otr_buffer_print_str (buf, col, msg);
-    free (tmp);
+    ptr_buffer = otr_irc_buffer (server, nick);
+    message_with_nick = NULL;
+
+    if (nick && nick[0] && !otr_buffer_is_private (ptr_buffer))
+        weechat_asprintf (&message_with_nick, "[%s] %s", nick, message);
+
+    otr_buffer_print_str (ptr_buffer, color,
+                          (message_with_nick) ? message_with_nick : message);
+
+    free (message_with_nick);
 }
 
 /*
@@ -157,30 +167,16 @@ otr_buffer_peer_print (const char *server, const char *nick, int col,
  */
 
 void
-otr_buffer_ctx_print (ConnContext *c, int col, const char *fmt, ...)
+otr_buffer_ctx_print (ConnContext *context, int color, const char *format, ...)
 {
-    va_list ap, ap2;
-    int n;
-    char *s;
-
-    va_start (ap, fmt);
-    va_copy (ap2, ap);
-    n = vsnprintf (NULL, 0, fmt, ap);
-    va_end (ap);
-    if (n < 0)
-    {
-        va_end (ap2);
+    weechat_va_format (format);
+    if (!vbuffer)
         return;
-    }
-    s = malloc ((size_t)n + 1);
-    if (s)
-    {
-        vsnprintf (s, (size_t)n + 1, fmt, ap2);
-        otr_buffer_peer_print (otr_irc_account_server (c->accountname),
-                               c->username, col, s);
-        free (s);
-    }
-    va_end (ap2);
+
+    otr_buffer_peer_print (otr_irc_account_server (context->accountname),
+                           context->username, color, vbuffer);
+
+    free (vbuffer);
 }
 
 /*
@@ -189,10 +185,10 @@ otr_buffer_ctx_print (ConnContext *c, int col, const char *fmt, ...)
  */
 
 void
-otr_buffer_ctx_hint (ConnContext *c, const char *msg)
+otr_buffer_ctx_hint (ConnContext *context, const char *message)
 {
     if (weechat_config_boolean (otr_config_general_hints))
-        otr_buffer_ctx_print (c, OTR_CONFIG_LEVEL_HINT, "%s", msg);
+        otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_HINT, "%s", message);
 }
 
 /*
@@ -200,10 +196,11 @@ otr_buffer_ctx_hint (ConnContext *c, const char *msg)
  */
 
 void
-otr_buffer_peer_hint (const char *server, const char *nick, const char *msg)
+otr_buffer_peer_hint (const char *server, const char *nick,
+                      const char *message)
 {
     if (weechat_config_boolean (otr_config_general_hints))
-        otr_buffer_peer_print (server, nick, OTR_CONFIG_LEVEL_HINT, msg);
+        otr_buffer_peer_print (server, nick, OTR_CONFIG_LEVEL_HINT, message);
 }
 
 /*
@@ -214,9 +211,15 @@ int
 otr_buffer_switch_cb (const void *pointer, void *data, const char *signal,
                       const char *type_data, void *signal_data)
 {
-    (void)pointer; (void)data; (void)signal; (void)type_data;
-    (void)signal_data;
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
     weechat_bar_item_update (OTR_BAR_ITEM);
+
     return WEECHAT_RC_OK;
 }
 
@@ -229,23 +232,34 @@ int
 otr_buffer_closing_cb (const void *pointer, void *data, const char *signal,
                        const char *type_data, void *signal_data)
 {
-    struct t_gui_buffer *buf = signal_data;
-    struct t_otr_peer_ref p;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_otr_peer_ref peer_ref;
     char *account, *peer;
+    ConnContext *ptr_context;
 
-    (void)pointer; (void)data; (void)signal; (void)type_data;
-    if (otr_command_peer_args (buf, NULL, 0, &p)
-        && otr_command_resolve (&p, &account, &peer))
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+
+    ptr_buffer = (struct t_gui_buffer *)signal_data;
+
+    if (!otr_command_peer_args (ptr_buffer, NULL, 0, &peer_ref)
+        || !otr_command_resolve (&peer_ref, &account, &peer))
     {
-        ConnContext *ctx = otr_context_find (account, peer);
-
-        if (ctx && ctx->msgstate != OTRL_MSGSTATE_PLAINTEXT)
-            otrl_message_disconnect_all_instances (otr_us, &otr_callback_ops,
-                                                   NULL,
-                                                   account, OTR_PROTOCOL,
-                                                   peer);
-        free (account);
-        free (peer);
+        return WEECHAT_RC_OK;
     }
+
+    ptr_context = otr_context_find (account, peer);
+    if (ptr_context && (ptr_context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
+    {
+        otrl_message_disconnect_all_instances (otr_us, &otr_callback_ops, NULL,
+                                               account, OTR_PROTOCOL, peer);
+    }
+
+    free (account);
+    free (peer);
+
     return WEECHAT_RC_OK;
 }
