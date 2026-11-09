@@ -39,7 +39,7 @@
 #include "otr-util.h"
 
 
-WEECHAT_PLUGIN_NAME("otr");
+WEECHAT_PLUGIN_NAME(OTR_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION(N_("Off-the-Record messaging for IRC (libotr)"));
 WEECHAT_PLUGIN_AUTHOR("otr-c");
 WEECHAT_PLUGIN_VERSION("0.1.0");
@@ -70,6 +70,26 @@ otr_file_exists (const char *path)
     struct stat st;
 
     return stat (path, &st) == 0;
+}
+
+/*
+ * Display infos about external libraries used.
+ */
+
+int
+otr_debug_libs_cb (const void *pointer, void *data, const char *signal,
+                   const char *type_data, void *signal_data)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    weechat_printf (NULL, "  %s: libotr %s", OTR_PLUGIN_NAME, OTRL_VERSION);
+
+    return WEECHAT_RC_OK;
 }
 
 int
@@ -149,6 +169,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                          NULL);
     weechat_hook_signal ("buffer_switch", &otr_buffer_switch_cb, NULL, NULL);
     weechat_hook_signal ("buffer_closing", &otr_buffer_closing_cb, NULL, NULL);
+    weechat_hook_signal ("debug_libs", &otr_debug_libs_cb, NULL, NULL);
 
     otr_bar_item = weechat_bar_item_new (OTR_BAR_ITEM, &otr_bar_item_cb, NULL,
                                          NULL);

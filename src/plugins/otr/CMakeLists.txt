@@ -3,6 +3,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+pkg_check_modules(LIBOTR REQUIRED libotr>=4.0.0)
+
 add_library(otr MODULE
   otr.c otr.h
   otr-bar-item.c otr-bar-item.h
@@ -21,10 +23,8 @@ add_library(otr MODULE
   otr-util.c otr-util.h
 )
 set_target_properties(otr PROPERTIES PREFIX "" LINK_FLAGS "-Wl,-z,nodelete")
-find_package(PkgConfig REQUIRED)
 
-find_library(LIBOTR_LIB NAMES otr REQUIRED)
-find_library(GCRYPT_LIB NAMES gcrypt REQUIRED)
-target_link_libraries(otr ${LIBOTR_LIB} ${GCRYPT_LIB} ${CMAKE_DL_LIBS} coverage_config)
+include_directories(${LIBOTR_INCLUDE_DIRS} ${LIBGCRYPT_INCLUDE_DIRS})
+target_link_libraries(otr ${LIBOTR_LDFLAGS} ${LIBGCRYPT_LDFLAGS} ${CMAKE_DL_LIBS} coverage_config)
 
 install(TARGETS otr LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

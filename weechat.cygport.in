@@ -44,10 +44,13 @@ zlib-devel"
 # CMake compilation of WeeChat:
 #   1. set prefix to /usr
 #   2. enable build of man pages and documentation
+#   3. disable OTR plugin (libotr is not available in Cygwin)
 #
 CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr \
 -DENABLE_MAN=ON \
--DENABLE_DOC=ON"
+-DENABLE_DOC=ON \
+-DENABLE_DOC_INCOMPLETE=ON \
+-DENABLE_OTR=OFF"
 
 PKG_IGNORE="
     etc/postinstall/weechat.sh

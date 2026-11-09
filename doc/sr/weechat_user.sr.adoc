@@ -161,6 +161,10 @@ WeeChat мора да се изгради са CMake.
   Релеј додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (api и weechat протоколи).
 
+// TRANSLATION MISSING
+| libotr5-dev | ≥ 4.0.0
+| OTR plugin.
+
 | libaspell-dev / libenchant-2-dev |
 | Spell додатак.
 
@@ -325,6 +329,10 @@ make install
 
 | ENABLE_NLS | `ON`, `OFF` | ON
 | Укључује NLS (преводе).
+
+// TRANSLATION MISSING
+| ENABLE_OTR | `ON`, `OFF` | ON
+| Compile OTR plugin.
 
 | ENABLE_PERL | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,Perl додатак>>.

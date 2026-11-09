@@ -56,6 +56,7 @@ RUN set -eux ; \
         libgcrypt20-dev \
         libgnutls28-dev \
         libncurses-dev \
+        libotr5-dev \
         libzstd-dev \
         make \
         pkg-config \
@@ -125,6 +126,7 @@ RUN set -eux ; \
         libgcrypt20 \
         libgnutls30t64 \
         libncursesw6 \
+        libotr5t64 \
         libzstd1 \
         locales \
         ncurses-term \

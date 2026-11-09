@@ -44,6 +44,7 @@ env:
     libgnutls28-dev
     liblua5.4-dev
     libncurses-dev
+    libotr5-dev
     libperl-dev
     libphp-embed
     libnode-dev
@@ -70,6 +71,7 @@ env:
     guile30-devel
     libcurl-devel
     libgcrypt-devel
+    libotr-devel
     libzstd-devel
     lua-devel
     ncurses-devel
@@ -94,6 +96,7 @@ env:
     libargon2
     libgcrypt
     libiconv
+    libotr
     llvm
     lua54
     ncurses
@@ -111,6 +114,7 @@ env:
     aspell
     cpputest
     guile
+    libotr
     lua
     pkg-config
     ruby
@@ -340,9 +344,14 @@ jobs:
             # Pin a working ruby stream (ruby:4.0 has broken module metadata on Rocky 9.8).
             # Default nodejs stream is too old for the JavaScript plugin (V8 >= 11.3 required).
             modules: "ruby:3.3 nodejs:24"
+            skip_deps: ""
+            extra_buildargs: ""
           - version: "10"
             image: "rockylinux/rockylinux:10"
             modules: ""
+            # OTR disabled: libotr is not available in Rocky Linux 10.
+            skip_deps: "libotr-devel"
+            extra_buildargs: "-DENABLE_OTR=OFF -DENABLE_DOC_INCOMPLETE=ON"
         config:
           - name: "gcc"
             cc: "gcc"
@@ -369,13 +378,17 @@ jobs:
           if [ -n "${{ matrix.rockylinux.modules }}" ]; then
             dnf module enable -y ${{ matrix.rockylinux.modules }}
           fi
-          dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }} nodejs-devel
+          deps="${{ env.WEECHAT_DEPS_REDHAT }}"
+          for pkg in ${{ matrix.rockylinux.skip_deps }}; do
+            deps="$(echo "${deps}" | tr ' ' '\n' | grep -vx "${pkg}" | tr '\n' ' ')"
+          done
+          dnf install -y ${deps} nodejs-devel
 
       - name: Build and run tests
         env:
           CC: ${{ matrix.config.cc }}
           CXX: ${{ matrix.config.cxx }}
-        run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
+        run: ./tools/build_test.sh ${{ matrix.config.buildargs }} ${{ matrix.rockylinux.extra_buildargs }}
 
       - name: Run WeeChat
         env:

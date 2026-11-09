@@ -28,6 +28,7 @@
 #define OTR_UNENCRYPTED_PREFIX _("Unencrypted message received: ")
 
 #define weechat_plugin weechat_otr_plugin
+#define OTR_PLUGIN_NAME "otr"
 #define OTR_PLUGIN_PRIORITY 5500
 
 extern struct t_weechat_plugin *weechat_otr_plugin;

@@ -21,6 +21,7 @@ Build-Depends:
     libcurl4-gnutls-dev,
     libgcrypt20-dev,
     libgnutls28-dev,
+    libotr5-dev,
     libzstd-dev,
     zlib1g-dev
 Standards-Version: 4.7.3
@@ -149,6 +150,7 @@ Description: Fast, light and extensible chat client - plugins
   - script manager
   - Spell checking (thanks to aspell)
   - FIFO pipe for remote control
+  - OTR (Off-the-Record messaging)
   - Relay (IRC proxy and WeeChat protocol)
   - Trigger
   - Typing

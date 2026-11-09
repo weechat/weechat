@@ -23,6 +23,7 @@ cmake \
     -DCMAKE_BUILD_TYPE=Debug \
     -DENABLE_COVERAGE=ON \
     -DENABLE_FUZZ=ON \
+    -DENABLE_OTR=OFF \
     "${src_dir}"
 make -j "$(nproc)"
 

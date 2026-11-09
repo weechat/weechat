@@ -186,6 +186,10 @@ WeeChat:
   Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (api and weechat protocols).
 
+// TRANSLATION MISSING
+| libotr5-dev | ≥ 4.0.0
+| OTR plugin.
+
 | libaspell-dev / libenchant-2-dev |
 | spell プラグイン
 
@@ -360,6 +364,10 @@ List of available options:
 
 | ENABLE_NLS | `ON`, `OFF` | ON
 | NLS の有効化 (多言語サポート)。
+
+// TRANSLATION MISSING
+| ENABLE_OTR | `ON`, `OFF` | ON
+| Compile OTR plugin.
 
 | ENABLE_PERL | `ON`, `OFF` | ON
 | <<scripting_plugins,Perl プラグイン>>のコンパイル。
