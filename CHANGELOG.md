@@ -264,6 +264,24 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - xfer: limit size of partial message received in DCC chat to prevent memory exhaustion ([#2349](https://github.com/weechat/weechat/issues/2349))
 - xfer: remove path from filename received in DCC file transfer to prevent writing the file outside the download directory ([#2348](https://github.com/weechat/weechat/issues/2348))
 
+## [4.10.4] - 2026-11-09
+
+### Added
+
+- build/container: add files to build container images (Debian and Alpine) from the local sources, moved from repository [weechat-container](https://github.com/weechat/weechat-container)
+
+### Fixed
+
+- core: fix memory leak when the upgrade file can not be read on startup with option `--upgrade`
+- core: fix memory leak in input of buffers restored by command `/upgrade`
+- core: fix crash in info "color_rgb2term" when the limit is greater than 256
+- irc: fix use after free of a deleted server in raw messages, which could cause a crash in raw buffer or on `/upgrade`
+
+### Security
+
+- relay: require exactly 6 digits in TOTP received from a client with "api" and "weechat" protocols
+- relay: check only the first password and TOTP received in command "init" of "weechat" protocol, to prevent a client from blocking WeeChat with many password checks (like PBKDF2) in a single message ([#2368](https://github.com/weechat/weechat/pull/2368))
+
 ## [4.10.3] - 2026-11-07
 
 ### Fixed
@@ -4821,6 +4839,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - nicklist can be moved on top, bottom, left or right of window
 
 [Unreleased]: https://github.com/weechat/weechat/compare/v4.10.0...HEAD
+[4.10.4]: https://github.com/weechat/weechat/compare/v4.10.3...v4.10.4
 [4.10.3]: https://github.com/weechat/weechat/compare/v4.10.2...v4.10.3
 [4.10.2]: https://github.com/weechat/weechat/compare/v4.10.1...v4.10.2
 [4.10.1]: https://github.com/weechat/weechat/compare/v4.10.0...v4.10.1
