@@ -107,20 +107,28 @@ otr_callback_create_instag (void *opdata, const char *accountname,
 /*
  * Callback for libotr: check if a recipient is logged in.
  *
- * Return -1 (unknown).
+ * On IRC, we can not know if the recipient is online, so the recipient is
+ * considered logged in if we are connected to the server (this allows libotr
+ * to notify the recipient when the OTR session is ended).
+ *
+ * Return 1 if we are connected to the server, 0 otherwise.
  */
 
 int
 otr_callback_is_logged_in (void *opdata, const char *accountname,
                            const char *protocol, const char *recipient)
 {
+    const char *ptr_nick;
+
     /* Make C compiler happy. */
     (void) opdata;
-    (void) accountname;
     (void) protocol;
     (void) recipient;
 
-    return -1;
+    ptr_nick = weechat_info_get ("irc_nick",
+                                 otr_irc_account_server (accountname));
+
+    return (ptr_nick && ptr_nick[0]) ? 1 : 0;
 }
 
 /*
@@ -336,6 +344,9 @@ otr_callback_gone_secure (void *opdata, ConnContext *context)
 /*
  * Callback for libotr: the OTR session with a peer is not encrypted any more.
  *
+ * Note: libotr does not call this callback, so it is called by the incoming
+ * modifier when the peer ends the session.
+ *
  * If the peer ended the session, the user is asked to do the same, otherwise
  * the logger level is restored.
  */
@@ -348,7 +359,7 @@ otr_callback_gone_insecure (void *opdata, ConnContext *context)
 
     if (otr_shutdown)
     {
-        otr_log_restore (context, otr_context_peer_data_ctx (context));
+        otr_log_restore (context, otr_context_peer_data_ctx (context), 0);
         return;
     }
 
@@ -364,7 +375,7 @@ otr_callback_gone_insecure (void *opdata, ConnContext *context)
     {
         otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_INFO,
                               _("Private conversation ended."));
-        otr_log_restore (context, otr_context_peer_data_ctx (context));
+        otr_log_restore (context, otr_context_peer_data_ctx (context), 0);
     }
 
     weechat_bar_item_update (OTR_BAR_ITEM);

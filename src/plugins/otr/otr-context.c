@@ -11,7 +11,11 @@
 
 #include "../weechat-plugin.h"
 #include "otr.h"
+#include "otr-buffer.h"
+#include "otr-callback.h"
+#include "otr-config.h"
 #include "otr-context.h"
+#include "otr-log.h"
 
 
 /*
@@ -113,4 +117,51 @@ otr_context_verified (ConnContext *context)
     return (otr_context_encrypted (context) && context->active_fingerprint
             && otrl_context_is_fingerprint_trusted (
                 context->active_fingerprint)) ? 1 : 0;
+}
+
+/*
+ * End the OTR session with a peer: libotr notifies the peer if the session is
+ * encrypted, then the logger level of the private buffer is restored.
+ *
+ * If display is 1, a message is displayed for the peer.
+ *
+ * If buffer_closing is 1, the private buffer with the peer is being closed (see
+ * function otr_log_restore).
+ *
+ * Return 1 if a session was ended, 0 if there was no session with the peer.
+ */
+
+int
+otr_context_end_session (const char *account, const char *peer, int display,
+                         int buffer_closing)
+{
+    ConnContext *ptr_context;
+
+    ptr_context = otr_context_find (account, peer);
+    if (!ptr_context || (ptr_context->msgstate == OTRL_MSGSTATE_PLAINTEXT))
+        return 0;
+
+    otrl_message_disconnect_all_instances (otr_us, &otr_callback_ops, NULL,
+                                           account, OTR_PROTOCOL, peer);
+
+    /*
+     * libotr does not call the callback "gone_insecure" when the session is
+     * ended locally, so the end of session is handled here.
+     */
+    ptr_context = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
+                                     OTRL_INSTAG_MASTER, 0, NULL, NULL, NULL);
+    if (ptr_context)
+    {
+        if (display)
+        {
+            otr_buffer_ctx_print (ptr_context, OTR_CONFIG_LEVEL_INFO,
+                                  _("Private conversation ended."));
+        }
+        otr_log_restore (ptr_context, otr_context_peer_data_ctx (ptr_context),
+                         buffer_closing);
+    }
+
+    weechat_bar_item_update (OTR_BAR_ITEM);
+
+    return 1;
 }

@@ -280,7 +280,15 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
                                      &new_message, &tlvs, &ptr_context,
                                      NULL, NULL);
     if (tlvs)
+    {
+        /*
+         * The peer has ended the OTR session: libotr does not call the
+         * callback "gone_insecure", so it is called here.
+         */
+        if (ptr_context && otrl_tlv_find (tlvs, OTRL_TLV_DISCONNECTED))
+            otr_callback_gone_insecure (NULL, ptr_context);
         otrl_tlv_free (tlvs);
+    }
 
     tags = otr_modifier_get_tags (string);
 

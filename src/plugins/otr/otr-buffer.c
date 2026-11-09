@@ -13,7 +13,6 @@
 #include "../weechat-plugin.h"
 #include "otr.h"
 #include "otr-buffer.h"
-#include "otr-callback.h"
 #include "otr-command.h"
 #include "otr-config.h"
 #include "otr-context.h"
@@ -235,7 +234,6 @@ otr_buffer_closing_cb (const void *pointer, void *data, const char *signal,
     struct t_gui_buffer *ptr_buffer;
     struct t_otr_peer_ref peer_ref;
     char *account, *peer;
-    ConnContext *ptr_context;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -251,12 +249,7 @@ otr_buffer_closing_cb (const void *pointer, void *data, const char *signal,
         return WEECHAT_RC_OK;
     }
 
-    ptr_context = otr_context_find (account, peer);
-    if (ptr_context && (ptr_context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
-    {
-        otrl_message_disconnect_all_instances (otr_us, &otr_callback_ops, NULL,
-                                               account, OTR_PROTOCOL, peer);
-    }
+    otr_context_end_session (account, peer, 0, 1);
 
     free (account);
     free (peer);

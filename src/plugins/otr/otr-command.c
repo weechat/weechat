@@ -414,24 +414,16 @@ int
 otr_command_finish (const struct t_otr_peer_ref *peer_ref)
 {
     char *account, *peer;
-    ConnContext *ptr_context;
 
     if (!otr_command_resolve (peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;
 
-    ptr_context = otr_context_find (account, peer);
-    if (ptr_context && (ptr_context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
-    {
-        otrl_message_disconnect_all_instances (otr_us, &otr_callback_ops, NULL,
-                                               account, OTR_PROTOCOL, peer);
-    }
-    else
+    if (!otr_context_end_session (account, peer, 1, 0))
     {
         otr_buffer_peer_print (
             peer_ref->server, peer, OTR_CONFIG_LEVEL_INFO,
             _("There is no private conversation to finish."));
     }
-    weechat_bar_item_update (OTR_BAR_ITEM);
 
     free (account);
     free (peer);
