@@ -33,10 +33,10 @@ struct t_otr_echo_pending
     time_t t;
 };
 
-static struct t_otr_echo_pending otr_echo_pending_queue[OTR_ECHO_PENDING_MAX];
-static int otr_echo_pending_count = 0;
+struct t_otr_echo_pending otr_echo_pending_queue[OTR_ECHO_PENDING_MAX];
+int otr_echo_pending_count = 0;
 
-static void
+void
 otr_echo_pending_drop (int i)
 {
     free (otr_echo_pending_queue[i].server);
@@ -58,7 +58,7 @@ otr_echo_pending_clear_all (void)
         otr_echo_pending_drop (0);
 }
 
-static void
+void
 otr_echo_pending_purge (void)
 {
     time_t now = time (NULL);
@@ -100,7 +100,7 @@ otr_echo_pending_add (const char *server, const char *peer, const char *cipher,
     }
 }
 
-static size_t
+size_t
 otr_echo_trimmed_len (const char *s)
 {
     size_t l = strlen (s);
@@ -111,7 +111,7 @@ otr_echo_trimmed_len (const char *s)
 }
 
 /* returns the plaintext (caller frees) or NULL if nothing matches */
-static char *
+char *
 otr_echo_pending_take (const char *server, const char *target,
                        const char *cipher)
 {

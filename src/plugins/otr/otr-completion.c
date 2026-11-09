@@ -14,7 +14,7 @@
 #include "otr-config.h"
 
 
-static int
+int
 otr_completion_policy_cb (const void *pointer, void *data,
                           const char *completion_item,
                           struct t_gui_buffer *buffer,

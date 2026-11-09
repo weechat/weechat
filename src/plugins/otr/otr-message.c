@@ -64,7 +64,7 @@ otr_message_html_escape (const char *in)
     return otr_util_sb_take (&b);
 }
 
-static void
+void
 otr_message_utf8_append (struct t_otr_sbuf *b, unsigned long cp)
 {
     char t[4];
@@ -232,7 +232,7 @@ otr_message_html_filter (const char *in)
 
 /* Add one decrypted line as an IRC protocol line to out. Removes CTCP
  * markers a peer could smuggle in; only a well-formed /me becomes ACTION. */
-static void
+void
 otr_message_add_decrypted_line (struct t_otr_sbuf *out, const char *tags,
                                 const char *from, const char *target,
                                 const char *line, size_t len)

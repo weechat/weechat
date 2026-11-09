@@ -27,7 +27,7 @@
 
 
 /* shlex-like splitting; returns count or -1 on error. Caller frees tokens. */
-static int
+int
 otr_command_split_args (const char *s, char **out, int max)
 {
     const char *p = s;
@@ -152,7 +152,7 @@ struct t_otr_table
     size_t w[4];
 };
 
-static void
+void
 otr_command_table_add (struct t_otr_table *t, const char *a, const char *b,
                        const char *c,
                        const char *d)
@@ -179,7 +179,7 @@ otr_command_table_add (struct t_otr_table *t, const char *a, const char *b,
     t->n++;
 }
 
-static void
+void
 otr_command_table_print_free (struct t_otr_table *t, int cols)
 {
     int r, c;
@@ -209,7 +209,7 @@ otr_command_table_print_free (struct t_otr_table *t, int cols)
     free (t->rows);
 }
 
-static void
+void
 otr_command_show_account_fingerprints (void)
 {
     struct t_otr_table t = { NULL, 0, 0, { 0, 0, 0, 0 } };
@@ -226,7 +226,7 @@ otr_command_show_account_fingerprints (void)
     otr_command_table_print_free (&t, 2);
 }
 
-static void
+void
 otr_command_show_peer_fingerprints (const char *grep)
 {
     struct t_otr_table t = { NULL, 0, 0, { 0, 0, 0, 0 } };
@@ -259,7 +259,7 @@ otr_command_show_peer_fingerprints (const char *grep)
     otr_command_table_print_free (&t, 4);
 }
 
-static int
+int
 otr_command_start (struct t_gui_buffer *buf, const struct t_otr_peer_ref *p)
 {
     char *account, *peer;
@@ -302,7 +302,7 @@ otr_command_start (struct t_gui_buffer *buf, const struct t_otr_peer_ref *p)
     return WEECHAT_RC_OK;
 }
 
-static int
+int
 otr_command_finish (const struct t_otr_peer_ref *p)
 {
     char *account, *peer;
@@ -325,7 +325,7 @@ otr_command_finish (const struct t_otr_peer_ref *p)
     return WEECHAT_RC_OK;
 }
 
-static int
+int
 otr_command_status (const struct t_otr_peer_ref *p)
 {
     char *account, *peer;
@@ -371,7 +371,7 @@ otr_command_status (const struct t_otr_peer_ref *p)
     return WEECHAT_RC_OK;
 }
 
-static int
+int
 otr_command_trust (const struct t_otr_peer_ref *p, int trust)
 {
     char *account, *peer;
@@ -402,7 +402,7 @@ otr_command_trust (const struct t_otr_peer_ref *p, int trust)
     return WEECHAT_RC_OK;
 }
 
-static int
+int
 otr_command_smp (struct t_gui_buffer *buf, char **tok, int n)
 {
     struct t_otr_peer_ref p;
@@ -513,7 +513,7 @@ done:
     return rc;
 }
 
-static int
+int
 otr_command_log (struct t_gui_buffer *buf, char **tok, int n)
 {
     struct t_otr_peer_ref p;
@@ -574,7 +574,7 @@ otr_command_log (struct t_gui_buffer *buf, char **tok, int n)
     return WEECHAT_RC_OK;
 }
 
-static int
+int
 otr_command_policy_known (const char *name)
 {
     int i;
@@ -585,14 +585,14 @@ otr_command_policy_known (const char *name)
     return 0;
 }
 
-static int
+int
 otr_command_value_ok (const char *v)
 {
     return strcasecmp (v, "on") == 0 || strcasecmp (v, "off") == 0
         || strcasecmp (v, "toggle") == 0;
 }
 
-static void
+void
 otr_command_print_policies_here (struct t_gui_buffer *buf, const char *text)
 {
     struct t_otr_peer_ref p;
@@ -609,7 +609,7 @@ otr_command_print_policies_here (struct t_gui_buffer *buf, const char *text)
         otr_buffer_print_str (NULL, OTR_CONFIG_LEVEL_INFO, text);
 }
 
-static int
+int
 otr_command_policy (struct t_gui_buffer *buf, char **tok, int n)
 {
     struct t_otr_peer_ref p;
@@ -679,7 +679,7 @@ otr_command_policy (struct t_gui_buffer *buf, char **tok, int n)
     return WEECHAT_RC_ERROR;
 }
 
-static int
+int
 otr_command_otr (const void *pointer, void *data, struct t_gui_buffer *buffer,
                  int argc, char **argv, char **argv_eol)
 {

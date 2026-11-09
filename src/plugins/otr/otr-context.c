@@ -14,7 +14,7 @@
 #include "otr-context.h"
 
 
-static void
+void
 otr_context_peer_data_free (void *p)
 {
     struct t_otr_peer_data *pd = p;

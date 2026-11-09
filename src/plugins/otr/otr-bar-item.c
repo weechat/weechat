@@ -21,7 +21,7 @@
 #include "otr-util.h"
 
 
-static void
+void
 otr_bar_item_part (struct t_otr_sbuf *b, const char *sep, int *first,
                    int color_idx, int look_idx)
 {

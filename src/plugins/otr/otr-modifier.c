@@ -26,7 +26,7 @@
 #include "otr-util.h"
 
 
-static int
+int
 otr_modifier_is_otr_query (const char *s)
 {
     const char *p = s, *q;
@@ -49,7 +49,7 @@ otr_modifier_is_otr_query (const char *s)
     return 0;
 }
 
-static int
+int
 otr_modifier_has_otr_end (const char *s)
 {
     size_t l = strlen (s);
@@ -59,7 +59,7 @@ otr_modifier_has_otr_end (const char *s)
 
 /* Add the line to the peer's assembly buffer; return 1 if a complete
  * message is now available (copied to *out, malloc'd). */
-static int
+int
 otr_modifier_assemble (struct t_otr_peer_data *pd, const char *line, char **out)
 {
     size_t l = strlen (line);
@@ -259,7 +259,7 @@ done:
 }
 
 /* "PRIVMSG target :text" */
-static int
+int
 otr_modifier_parse_out_privmsg (const char *s, char **target, const char **text)
 {
     const char *sp;
@@ -285,7 +285,7 @@ otr_modifier_parse_out_privmsg (const char *s, char **target, const char **text)
 }
 
 /* 1 = all comma separated targets are channels */
-static int
+int
 otr_modifier_all_targets_channels (const char *server, const char *list)
 {
     char *copy = otr_util_dupstr (list), *save = NULL, *t;
