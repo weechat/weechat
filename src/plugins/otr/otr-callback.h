@@ -8,6 +8,6 @@
 #ifndef WEECHAT_PLUGIN_OTR_CALLBACK_H
 #define WEECHAT_PLUGIN_OTR_CALLBACK_H
 
-extern const OtrlMessageAppOps otr_ops;
+extern const OtrlMessageAppOps otr_callback_ops;
 
 #endif /* WEECHAT_PLUGIN_OTR_CALLBACK_H */

@@ -8,15 +8,17 @@
 #ifndef WEECHAT_PLUGIN_OTR_COMMAND_H
 #define WEECHAT_PLUGIN_OTR_COMMAND_H
 
-struct peer_ref
+struct t_otr_peer_ref
 {
     char nick[128];
     char server[128];
 };
 
-extern int peer_args (struct t_gui_buffer *buf, char **args, int nargs,
-                      struct peer_ref *p);
-extern int resolve (const struct peer_ref *p, char **account, char **peer);
+extern int otr_command_peer_args (struct t_gui_buffer *buf, char **args,
+                                  int nargs,
+                                  struct t_otr_peer_ref *p);
+extern int otr_command_resolve (const struct t_otr_peer_ref *p, char **account,
+                                char **peer);
 extern void otr_command_init (void);
 
 #endif /* WEECHAT_PLUGIN_OTR_COMMAND_H */

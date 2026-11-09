@@ -8,28 +8,43 @@
 #ifndef WEECHAT_PLUGIN_OTR_CONFIG_H
 #define WEECHAT_PLUGIN_OTR_CONFIG_H
 
-enum
+enum t_otr_config_color
 {
-    COL_STATUS_DEFAULT, COL_STATUS_ENCRYPTED, COL_STATUS_UNENCRYPTED,
-    COL_STATUS_AUTHENTICATED, COL_STATUS_UNAUTHENTICATED,
-    COL_STATUS_LOGGED, COL_STATUS_NOTLOGGED,
-    COL_BUF_HINT, COL_BUF_INFO, COL_BUF_SUCCESS, COL_BUF_WARNING,
-    COL_BUF_ERROR,
-    COL_COUNT
+    OTR_CONFIG_COLOR_STATUS_DEFAULT = 0,
+    OTR_CONFIG_COLOR_STATUS_ENCRYPTED,
+    OTR_CONFIG_COLOR_STATUS_UNENCRYPTED,
+    OTR_CONFIG_COLOR_STATUS_AUTHENTICATED,
+    OTR_CONFIG_COLOR_STATUS_UNAUTHENTICATED,
+    OTR_CONFIG_COLOR_STATUS_LOGGED,
+    OTR_CONFIG_COLOR_STATUS_NOTLOGGED,
+    OTR_CONFIG_COLOR_BUFFER_HINT,
+    OTR_CONFIG_COLOR_BUFFER_INFO,
+    OTR_CONFIG_COLOR_BUFFER_SUCCESS,
+    OTR_CONFIG_COLOR_BUFFER_WARNING,
+    OTR_CONFIG_COLOR_BUFFER_ERROR,
+    /* number of color options */
+    OTR_CONFIG_NUM_COLOR_OPTIONS,
 };
 
-#define LVL_HINT    COL_BUF_HINT
-#define LVL_INFO    COL_BUF_INFO
-#define LVL_SUCCESS COL_BUF_SUCCESS
-#define LVL_WARNING COL_BUF_WARNING
-#define LVL_ERROR   COL_BUF_ERROR
+#define OTR_CONFIG_LEVEL_HINT    OTR_CONFIG_COLOR_BUFFER_HINT
+#define OTR_CONFIG_LEVEL_INFO    OTR_CONFIG_COLOR_BUFFER_INFO
+#define OTR_CONFIG_LEVEL_SUCCESS OTR_CONFIG_COLOR_BUFFER_SUCCESS
+#define OTR_CONFIG_LEVEL_WARNING OTR_CONFIG_COLOR_BUFFER_WARNING
+#define OTR_CONFIG_LEVEL_ERROR   OTR_CONFIG_COLOR_BUFFER_ERROR
 
-enum
+enum t_otr_config_look
 {
-    LOOK_BAR_PREFIX, LOOK_BAR_ENCRYPTED, LOOK_BAR_UNENCRYPTED,
-    LOOK_BAR_AUTHENTICATED, LOOK_BAR_UNAUTHENTICATED, LOOK_BAR_LOGGED,
-    LOOK_BAR_NOTLOGGED, LOOK_BAR_SEPARATOR, LOOK_PREFIX,
-    LOOK_COUNT
+    OTR_CONFIG_LOOK_BAR_PREFIX = 0,
+    OTR_CONFIG_LOOK_BAR_ENCRYPTED,
+    OTR_CONFIG_LOOK_BAR_UNENCRYPTED,
+    OTR_CONFIG_LOOK_BAR_AUTHENTICATED,
+    OTR_CONFIG_LOOK_BAR_UNAUTHENTICATED,
+    OTR_CONFIG_LOOK_BAR_LOGGED,
+    OTR_CONFIG_LOOK_BAR_NOTLOGGED,
+    OTR_CONFIG_LOOK_BAR_SEPARATOR,
+    OTR_CONFIG_LOOK_PREFIX,
+    /* number of look options */
+    OTR_CONFIG_NUM_LOOK_OPTIONS,
 };
 
 struct t_otr_policy
@@ -37,19 +52,19 @@ struct t_otr_policy
     const char *name, *desc;
 };
 
-#define N_POLICIES policies_count
+#define OTR_CONFIG_NUM_POLICIES otr_config_policies_count
 
-extern const struct t_otr_policy policies[];
-extern const int policies_count;
+extern const struct t_otr_policy otr_config_policies[];
+extern const int otr_config_policies_count;
 
-extern struct t_config_file *cfg_file;
-extern struct t_config_section *cfg_sec_policy;
-extern struct t_config_option *opt_debug;
-extern struct t_config_option *opt_hints;
-extern struct t_config_option *opt_no_send_tag_regex;
-extern struct t_config_option *opt_color[COL_COUNT];
-extern struct t_config_option *opt_look[LOOK_COUNT];
+extern struct t_config_file *otr_config_file;
+extern struct t_config_section *otr_config_section_policy;
+extern struct t_config_option *otr_config_general_debug;
+extern struct t_config_option *otr_config_general_hints;
+extern struct t_config_option *otr_config_general_no_send_tag_regex;
+extern struct t_config_option *otr_config_color[OTR_CONFIG_NUM_COLOR_OPTIONS];
+extern struct t_config_option *otr_config_look[OTR_CONFIG_NUM_LOOK_OPTIONS];
 
-extern int config_init (void);
+extern int otr_config_init (void);
 
 #endif /* WEECHAT_PLUGIN_OTR_CONFIG_H */

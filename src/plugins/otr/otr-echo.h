@@ -8,11 +8,11 @@
 #ifndef WEECHAT_PLUGIN_OTR_ECHO_H
 #define WEECHAT_PLUGIN_OTR_ECHO_H
 
-extern void pending_clear_all (void);
-extern void pending_add (const char *server, const char *peer,
-                         const char *cipher, const char *plain);
-extern char *echo_replace (const char *server, const char *string,
-                           const char *host, const char *target,
-                           const char *text);
+extern void otr_echo_pending_clear_all (void);
+extern void otr_echo_pending_add (const char *server, const char *peer,
+                                  const char *cipher, const char *plain);
+extern char *otr_echo_replace (const char *server, const char *string,
+                               const char *host, const char *target,
+                               const char *text);
 
 #endif /* WEECHAT_PLUGIN_OTR_ECHO_H */
