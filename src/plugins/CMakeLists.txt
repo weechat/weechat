@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 # SPDX-FileCopyrightText: 2009 Emmanuel Bouthenot <kolter@openics.org>
+# SPDX-FileCopyrightText: 2026 Nils Görs <weechatter@arcor.de>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -71,6 +72,12 @@ if(ENABLE_LOGGER)
   add_subdirectory(logger)
 else()
   add_custom_target(logger COMMAND true)
+endif()
+
+if(ENABLE_OTR)
+  add_subdirectory(otr)
+else()
+  add_custom_target(otr COMMAND true)
 endif()
 
 if(ENABLE_RELAY)
