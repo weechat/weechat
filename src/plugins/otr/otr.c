@@ -5,16 +5,18 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+/* Off-the-Record (OTR) Messaging protocol for WeeChat */
+
 /*
- * otr.c - Off-the-Record (OTR) messaging for WeeChat, written in C on top of
- *         libotr.
+ * This plugin is based on the Python script "otr.py"
+ * (https://github.com/mmb/weechat-otr), written by:
+ *   - Matthew M. Boedicker <matthewm@boedicker.org>
+ *   - Nils Görs <weechatter@arcor.de>
+ *   - Daniel "koolfy" Faucon <koolfy@koolfy.be>
+ *   - Felix Eckhofer <felix@tribut.de>
  *
- * C port of the feature set of the Python script "otr.py" (weechat-otr by
- * Matthew M. Boedicker, Nils Goers, Daniel Faucon, Felix Eckhofer), which
- * was built on the "potr" library. This plugin uses libotr instead, so it
- * speaks OTR protocol versions 2 and 3.
- *
- * DISCLAIMER: no guarantee of any kind. Review before relying on it.
+ * Only the IRC plugin is supported for now (private messages), and the OTR
+ * protocol versions 2 and 3 are supported.
  */
 
 #define _GNU_SOURCE
