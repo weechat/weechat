@@ -27,22 +27,23 @@
 struct t_gui_buffer *
 otr_irc_buffer (const char *server, const char *nick)
 {
-    char *info_args;
-    const char *ptr_info;
+    char *info_args, *info;
     void *ptr_buffer;
 
     weechat_asprintf (&info_args, "%s,%s", server, nick);
     if (!info_args)
         return NULL;
 
-    ptr_info = weechat_info_get ("irc_buffer", info_args);
+    info = weechat_info_get ("irc_buffer", info_args);
     free (info_args);
 
     ptr_buffer = NULL;
-    if (ptr_info && ptr_info[0] && (sscanf (ptr_info, "%p", &ptr_buffer) == 1))
-        return (struct t_gui_buffer *)ptr_buffer;
+    if (info && info[0] && (sscanf (info, "%p", &ptr_buffer) != 1))
+        ptr_buffer = NULL;
 
-    return NULL;
+    free (info);
+
+    return (struct t_gui_buffer *)ptr_buffer;
 }
 
 /*
@@ -55,8 +56,7 @@ otr_irc_buffer (const char *server, const char *nick)
 int
 otr_irc_target_is_channel (const char *server, const char *target)
 {
-    char *info_args;
-    const char *ptr_info, *ptr_statusmsg;
+    char *info_args, *info, *statusmsg;
     int is_channel;
 
     if (!target || !target[0])
@@ -67,33 +67,35 @@ otr_irc_target_is_channel (const char *server, const char *target)
     weechat_asprintf (&info_args, "%s,%s", server, target);
     if (info_args)
     {
-        ptr_info = weechat_info_get ("irc_is_channel", info_args);
-        is_channel = (ptr_info && (strcmp (ptr_info, "1") == 0)) ? 1 : 0;
+        info = weechat_info_get ("irc_is_channel", info_args);
+        is_channel = (info && (strcmp (info, "1") == 0)) ? 1 : 0;
+        free (info);
         free (info_args);
     }
 
-    if (!is_channel)
+    if (!is_channel && target[1])
     {
         /* Status message prefix, for example "@#channel" */
+        statusmsg = NULL;
         weechat_asprintf (&info_args, "%s,STATUSMSG", server);
         if (info_args)
         {
-            ptr_statusmsg = weechat_info_get ("irc_server_isupport_value",
-                                              info_args);
-            if (ptr_statusmsg && ptr_statusmsg[0]
-                && strchr (ptr_statusmsg, target[0]) && target[1])
-            {
-                free (info_args);
-                weechat_asprintf (&info_args, "%s,%s", server, target + 1);
-                if (info_args)
-                {
-                    ptr_info = weechat_info_get ("irc_is_channel", info_args);
-                    is_channel = (ptr_info && (strcmp (ptr_info, "1") == 0)) ?
-                        1 : 0;
-                }
-            }
+            statusmsg = weechat_info_get ("irc_server_isupport_value",
+                                          info_args);
             free (info_args);
         }
+        if (statusmsg && statusmsg[0] && strchr (statusmsg, target[0]))
+        {
+            weechat_asprintf (&info_args, "%s,%s", server, target + 1);
+            if (info_args)
+            {
+                info = weechat_info_get ("irc_is_channel", info_args);
+                is_channel = (info && (strcmp (info, "1") == 0)) ? 1 : 0;
+                free (info);
+                free (info_args);
+            }
+        }
+        free (statusmsg);
     }
 
     return is_channel;
@@ -111,21 +113,24 @@ otr_irc_target_is_channel (const char *server, const char *target)
 char *
 otr_irc_make_account (const char *server)
 {
-    const char *ptr_nick;
-    char *nick, *account;
+    char *info_nick, *nick, *account;
 
-    ptr_nick = weechat_info_get ("irc_nick", server);
-    if (!ptr_nick || !ptr_nick[0])
-        return NULL;
+    account = NULL;
 
-    nick = weechat_string_tolower (ptr_nick);
+    info_nick = weechat_info_get ("irc_nick", server);
+    if (!info_nick || !info_nick[0])
+        goto end;
+
+    nick = weechat_string_tolower (info_nick);
     if (!nick)
-        return NULL;
+        goto end;
 
     weechat_asprintf (&account, "%s@%s", nick, server);
 
     free (nick);
 
+end:
+    free (info_nick);
     return account;
 }
 

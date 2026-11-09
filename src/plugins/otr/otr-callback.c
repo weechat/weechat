@@ -118,17 +118,20 @@ int
 otr_callback_is_logged_in (void *opdata, const char *accountname,
                            const char *protocol, const char *recipient)
 {
-    const char *ptr_nick;
+    char *info_nick;
+    int logged_in;
 
     /* Make C compiler happy. */
     (void) opdata;
     (void) protocol;
     (void) recipient;
 
-    ptr_nick = weechat_info_get ("irc_nick",
-                                 otr_irc_account_server (accountname));
+    info_nick = weechat_info_get ("irc_nick",
+                                  otr_irc_account_server (accountname));
+    logged_in = (info_nick && info_nick[0]) ? 1 : 0;
+    free (info_nick);
 
-    return (ptr_nick && ptr_nick[0]) ? 1 : 0;
+    return logged_in;
 }
 
 /*

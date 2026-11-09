@@ -169,9 +169,9 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     struct t_hashtable *hashtable_in, *hashtable_out;
     struct t_otr_peer_data *ptr_peer_data;
     const char *ptr_command, *ptr_nick, *ptr_host, *ptr_args, *ptr_space;
-    const char *ptr_text, *ptr_own_nick, *ptr_server;
+    const char *ptr_text, *ptr_server;
     char *result, *target, *account, *peer, *assembled, *new_message, *tags;
-    char *message, *plain;
+    char *message, *plain, *own_nick;
     OtrlTLV *tlvs;
     ConnContext *ptr_context;
     int ignore, was_otr, encrypted;
@@ -206,6 +206,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     new_message = NULL;
     tags = NULL;
     message = NULL;
+    own_nick = NULL;
     tlvs = NULL;
     ptr_context = NULL;
 
@@ -229,8 +230,8 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     if (!target || otr_irc_target_is_channel (ptr_server, target))
         goto end;
 
-    ptr_own_nick = weechat_info_get ("irc_nick", ptr_server);
-    if (ptr_own_nick && (weechat_strcasecmp (ptr_own_nick, ptr_nick) == 0))
+    own_nick = weechat_info_get ("irc_nick", ptr_server);
+    if (own_nick && (weechat_strcasecmp (own_nick, ptr_nick) == 0))
     {
         /* echo-message: the server returns our own outgoing message. */
         result = otr_echo_replace (ptr_server, string, ptr_host, target,
@@ -344,6 +345,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
 
 end:
     free (message);
+    free (own_nick);
     free (tags);
     free (assembled);
     free (target);
