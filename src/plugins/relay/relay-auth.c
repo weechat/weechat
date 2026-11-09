@@ -163,6 +163,32 @@ relay_auth_password_equals (const char *password1, const char *password2)
 }
 
 /*
+ * Check if a Time-based One-Time Password (TOTP) received from a client has
+ * a valid format: exactly 6 digits (from 0 to 9).
+ *
+ * Return:
+ *   1: TOTP has a valid format
+ *   0: TOTP has an invalid format
+ */
+
+int
+relay_auth_check_totp_format (const char *totp)
+{
+    int i;
+
+    if (!totp)
+        return 0;
+
+    for (i = 0; i < RELAY_AUTH_TOTP_DIGITS; i++)
+    {
+        if ((totp[i] < '0') || (totp[i] > '9'))
+            return 0;
+    }
+
+    return (totp[RELAY_AUTH_TOTP_DIGITS] == '\0') ? 1 : 0;
+}
+
+/*
  * Check if password received as plain text is valid.
  *
  * Return:

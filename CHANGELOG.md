@@ -23,6 +23,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Security
 
+- relay: require exactly 6 digits in TOTP received from a client with "api" and "weechat" protocols
 - relay: check only the first password and TOTP received in command "init" of "weechat" protocol, to prevent a client from blocking WeeChat with many password checks (like PBKDF2) in a single message ([#2368](https://github.com/weechat/weechat/pull/2368))
 
 ## [4.10.3] - 2026-11-07

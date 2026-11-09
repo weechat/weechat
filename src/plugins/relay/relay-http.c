@@ -605,7 +605,6 @@ relay_http_get_auth_status (struct t_relay_client *client)
     char *relay_password, *totp_secret, *info_totp_args, *info_totp;
     char *user_pass, **protocol_array;
     int rc, i, length, protocol_count, use_base64url, totp_ok;
-    long number;
 
     rc = 0;
     relay_password = NULL;
@@ -623,8 +622,7 @@ relay_http_get_auth_status (struct t_relay_client *client)
             rc = -4;
             goto end;
         }
-        if (!weechat_util_parse_long (client_totp, 10, &number)
-            || (number < 0) || (number > 999999))
+        if (!relay_auth_check_totp_format (client_totp))
         {
             rc = -4;
             goto end;

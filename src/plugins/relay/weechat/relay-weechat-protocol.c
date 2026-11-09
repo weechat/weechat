@@ -415,7 +415,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                          && !totp_received)
                 {
                     totp_received = 1;
-                    if (totp_secret)
+                    if (totp_secret && relay_auth_check_totp_format (pos))
                     {
                         /* validate the OTP received from the client */
                         if (weechat_asprintf (

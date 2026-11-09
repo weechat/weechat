@@ -25,6 +25,8 @@
 #define RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MIN 1
 #define RELAY_AUTH_PASSWORD_HASH_ITERATIONS_MAX 1000000
 
+#define RELAY_AUTH_TOTP_DIGITS 6
+
 struct t_relay_client;
 
 enum t_relay_auth_password_hash_algo
@@ -44,6 +46,7 @@ extern int relay_auth_password_hash_algo_search (const char *name);
 extern char *relay_auth_generate_nonce (int size);
 extern int relay_auth_password_equals (const char *password1,
                                        const char *password2);
+extern int relay_auth_check_totp_format (const char *totp);
 extern int relay_auth_check_password_plain (struct t_relay_client *client,
                                             const char *password,
                                             const char *relay_password);
