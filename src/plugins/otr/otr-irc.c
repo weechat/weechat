@@ -14,7 +14,9 @@
 #include "../weechat-plugin.h"
 #include "otr.h"
 #include "otr-buffer.h"
+#include "otr-context.h"
 #include "otr-irc.h"
+#include "otr-policy.h"
 #include "otr-util.h"
 
 
@@ -135,6 +137,45 @@ end:
 }
 
 /*
+ * Get the OTR account name to use with a peer (nick in lower case) on a
+ * server: if an OTR session is active with this peer, the account of this
+ * session is returned (so that the session continues after a change of our
+ * own nick), otherwise the account built with the current nick
+ * ("ownnick@server").
+ *
+ * Return NULL if there is no active session and if not connected to the
+ * server.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+otr_irc_peer_account (const char *server, const char *peer)
+{
+    ConnContext *ptr_context;
+
+    if (otr_us)
+    {
+        for (ptr_context = otr_us->context_root; ptr_context;
+             ptr_context = ptr_context->next)
+        {
+            if ((ptr_context->msgstate != OTRL_MSGSTATE_PLAINTEXT)
+                && ptr_context->username && ptr_context->accountname
+                && ptr_context->protocol
+                && (strcmp (ptr_context->protocol, OTR_PROTOCOL) == 0)
+                && (strcmp (ptr_context->username, peer) == 0)
+                && (strcmp (otr_irc_account_server (ptr_context->accountname),
+                            server) == 0))
+            {
+                return strdup (ptr_context->accountname);
+            }
+        }
+    }
+
+    return otr_irc_make_account (server);
+}
+
+/*
  * Get the server part of an OTR account name ("nick@server").
  *
  * Return pointer to the server in the account name, an empty string if there is
@@ -205,4 +246,105 @@ end:
     free (server2);
     free (nick2);
     free (text2);
+}
+
+/*
+ * Callback for signal "xxx,irc_in2_nick": when our own nick changes, send an
+ * OTR query to each peer with an encrypted OTR session on this server, so that
+ * the peer restarts the session with our new nick (our side of the session is
+ * kept, see function otr_irc_peer_account).
+ */
+
+int
+otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
+                 const char *type_data, void *signal_data)
+{
+    struct t_hashtable *hashtable_in, *hashtable_out;
+    ConnContext *ptr_context;
+    const char *ptr_old_nick, *ptr_new_nick, *ptr_query;
+    char *server, *info_nick, *old_nick, *old_account;
+    const char *ptr_comma;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) type_data;
+
+    if (!otr_us || !signal_data)
+        return WEECHAT_RC_OK;
+
+    ptr_comma = strchr (signal, ',');
+    if (!ptr_comma)
+        return WEECHAT_RC_OK;
+    server = weechat_strndup (signal, ptr_comma - signal);
+    if (!server)
+        return WEECHAT_RC_OK;
+
+    hashtable_out = NULL;
+    info_nick = NULL;
+    old_nick = NULL;
+    old_account = NULL;
+
+    hashtable_in = weechat_hashtable_new (8,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          NULL, NULL);
+    if (!hashtable_in)
+        goto end;
+    weechat_hashtable_set (hashtable_in, "server", server);
+    weechat_hashtable_set (hashtable_in, "message", (const char *)signal_data);
+    hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
+                                                hashtable_in);
+    weechat_hashtable_free (hashtable_in);
+    if (!hashtable_out)
+        goto end;
+
+    ptr_old_nick = weechat_hashtable_get (hashtable_out, "nick");
+    ptr_new_nick = weechat_hashtable_get (hashtable_out, "param1");
+    if (!ptr_old_nick || !ptr_old_nick[0] || !ptr_new_nick || !ptr_new_nick[0])
+        goto end;
+
+    /* Only our own nick change is handled. */
+    info_nick = weechat_info_get ("irc_nick", server);
+    if (!info_nick || (weechat_strcasecmp (info_nick, ptr_new_nick) != 0))
+        goto end;
+
+    old_nick = weechat_string_tolower (ptr_old_nick);
+    if (!old_nick)
+        goto end;
+    weechat_asprintf (&old_account, "%s@%s", old_nick, server);
+    if (!old_account)
+        goto end;
+
+    for (ptr_context = otr_us->context_root; ptr_context;
+         ptr_context = ptr_context->next)
+    {
+        if ((ptr_context->their_instance != OTRL_INSTAG_MASTER)
+            || !ptr_context->accountname || !ptr_context->username
+            || (strcmp (ptr_context->accountname, old_account) != 0))
+        {
+            continue;
+        }
+        if (!otr_context_encrypted (
+                otr_context_find (old_account, ptr_context->username)))
+        {
+            continue;
+        }
+        ptr_query = otr_policy_query (old_account, ptr_context->username);
+        if (!ptr_query)
+            continue;
+        otr_buffer_peer_hint (
+            server, ptr_context->username,
+            _("Sending OTR query... Please await confirmation of the OTR "
+              "session being started before sending a message."));
+        otr_irc_send_raw (server, ptr_context->username, ptr_query);
+    }
+
+end:
+    free (server);
+    free (info_nick);
+    free (old_nick);
+    free (old_account);
+    weechat_hashtable_free (hashtable_out);
+    return WEECHAT_RC_OK;
 }
