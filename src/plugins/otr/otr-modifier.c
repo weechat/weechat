@@ -26,59 +26,44 @@
 
 
 /*
- * Check if a string contains an OTR query ("?OTR?" or "?OTRv...?").
+ * Check if a line is the continuation of an OTR encoded message split over
+ * several IRC lines: only base64 chars, optionally followed by "." (end of the
+ * OTR message).
  *
- * Return 1 if the string contains an OTR query, 0 otherwise.
+ * Return 1 if the line is a continuation of an OTR encoded message, 0
+ * otherwise.
  */
 
 int
-otr_modifier_is_otr_query (const char *string)
+otr_modifier_is_base64_part (const char *line)
 {
-    const char *ptr_string, *ptr_query;
+    const char *ptr_line;
 
-    ptr_string = string;
-    while ((ptr_string = strstr (ptr_string, "?OTR")) != NULL)
+    if (!line[0])
+        return 0;
+
+    for (ptr_line = line; ptr_line[0]; ptr_line++)
     {
-        ptr_query = ptr_string + 4;
-        if (ptr_query[0] == '?')
-            return 1;
-        if (ptr_query[0] == 'v')
+        if (isalnum ((unsigned char)ptr_line[0]) || (ptr_line[0] == '+')
+            || (ptr_line[0] == '/') || (ptr_line[0] == '='))
         {
-            ptr_query++;
-            while (isalnum ((unsigned char)ptr_query[0]))
-            {
-                ptr_query++;
-            }
-            if (ptr_query[0] == '?')
-                return 1;
+            continue;
         }
-        ptr_string += 4;
+        if ((ptr_line[0] == '.') && !ptr_line[1] && (ptr_line > line))
+            continue;
+        return 0;
     }
 
-    return 0;
+    return 1;
 }
 
 /*
- * Check if a string ends like an OTR message (with "." or ",").
+ * Add a received line to the assembly buffer of a peer: an OTR encoded message
+ * ("?OTR:...") that does not end with "." has been split over several IRC
+ * lines, and the next lines (only base64 chars) are added until the final ".".
  *
- * Return 1 if the string ends like an OTR message, 0 otherwise.
- */
-
-int
-otr_modifier_has_otr_end (const char *string)
-{
-    size_t length;
-
-    length = strlen (string);
-
-    return ((length > 0)
-            && ((string[length - 1] == '.')
-                || (string[length - 1] == ','))) ? 1 : 0;
-}
-
-/*
- * Add a received line to the assembly buffer of a peer (OTR messages can be
- * split over several IRC lines).
+ * Any other line (plain text, OTR query, OTR fragment, OTR error) is returned
+ * as-is; if an OTR message was being assembled, it is dropped.
  *
  * Return 1 if a complete message is available (copied in *message, which must
  * be freed after use), 0 if more lines are expected or if an allocation error
@@ -94,41 +79,48 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
 
     length = strlen (line);
 
-    if (!peer_data->assembly && (strncmp (line, "?OTR", 4) != 0))
+    if (peer_data->assembly)
     {
-        *message = otr_util_dupstr (line);
-        return 1;
-    }
-
-    if (peer_data->assembly_length + length + 1 > OTR_MAX_ASSEMBLY)
-    {
+        if (otr_modifier_is_base64_part (line)
+            && (peer_data->assembly_length + length + 1 <= OTR_MAX_ASSEMBLY))
+        {
+            new_assembly = realloc (peer_data->assembly,
+                                    peer_data->assembly_length + length + 1);
+            if (!new_assembly)
+                return 0;
+            peer_data->assembly = new_assembly;
+            memcpy (peer_data->assembly + peer_data->assembly_length, line,
+                    length + 1);
+            peer_data->assembly_length += length;
+            if (line[length - 1] != '.')
+                return 0;
+            *message = peer_data->assembly;
+            peer_data->assembly = NULL;
+            peer_data->assembly_length = 0;
+            return 1;
+        }
+        /* Not a continuation: drop the incomplete OTR message. */
+        otr_buffer_debug ("incomplete OTR message dropped (length %d)",
+                          (int)peer_data->assembly_length);
         free (peer_data->assembly);
         peer_data->assembly = NULL;
         peer_data->assembly_length = 0;
-        *message = otr_util_dupstr (line);
-        return 1;
     }
 
-    new_assembly = realloc (peer_data->assembly,
-                            peer_data->assembly_length + length + 1);
-    if (!new_assembly)
-        return 0;
-    peer_data->assembly = new_assembly;
-    memcpy (peer_data->assembly + peer_data->assembly_length, line,
-            length + 1);
-    peer_data->assembly_length += length;
-
-    if (otr_modifier_is_otr_query (peer_data->assembly)
-        || otr_modifier_has_otr_end (peer_data->assembly)
-        || (strncmp (peer_data->assembly, "?OTR", 4) != 0))
+    if ((strncmp (line, "?OTR:", 5) == 0) && (line[length - 1] != '.')
+        && (length + 1 <= OTR_MAX_ASSEMBLY))
     {
-        *message = peer_data->assembly;
-        peer_data->assembly = NULL;
-        peer_data->assembly_length = 0;
-        return 1;
+        /* Start of an OTR encoded message split over several IRC lines. */
+        peer_data->assembly = otr_util_dupstr (line);
+        if (!peer_data->assembly)
+            return 0;
+        peer_data->assembly_length = length;
+        return 0;
     }
 
-    return 0;
+    *message = otr_util_dupstr (line);
+
+    return (*message) ? 1 : 0;
 }
 
 /*
