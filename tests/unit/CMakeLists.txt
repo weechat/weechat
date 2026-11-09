@@ -178,6 +178,21 @@ if(BUILD_PLUGIN_LOGGER)
   )
 endif()
 
+if(BUILD_PLUGIN_OTR)
+  pkg_check_modules(LIBOTR REQUIRED libotr>=4.0.0)
+  include_directories(${LIBOTR_INCLUDE_DIRS})
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    plugins/otr/test-otr-command.cpp
+    plugins/otr/test-otr-config.cpp
+    plugins/otr/test-otr-echo.cpp
+    plugins/otr/test-otr-irc.cpp
+    plugins/otr/test-otr-message.cpp
+    plugins/otr/test-otr-modifier.cpp
+    plugins/otr/test-otr-policy.cpp
+    plugins/otr/test-otr-util.cpp
+  )
+endif()
+
 if (BUILD_PLUGIN_RELAY)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/relay/test-relay-auth.cpp
