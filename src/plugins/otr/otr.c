@@ -283,6 +283,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         weechat_config_free (otr_config_file);
         otr_config_file = NULL;
     }
+    otr_config_free_regex_no_send_tag ();
 
     free (otr_dir);
     otr_dir = NULL;
