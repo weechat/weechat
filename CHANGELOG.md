@@ -21,6 +21,10 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: fix crash in info "color_rgb2term" when the limit is greater than 256
 - irc: fix use after free of a deleted server in raw messages, which could cause a crash in raw buffer or on `/upgrade`
 
+### Security
+
+- relay: check only the first password and TOTP received in command "init" of "weechat" protocol, to prevent a client from blocking WeeChat with many password checks (like PBKDF2) in a single message ([#2368](https://github.com/weechat/weechat/pull/2368))
+
 ## [4.10.3] - 2026-11-07
 
 ### Fixed
