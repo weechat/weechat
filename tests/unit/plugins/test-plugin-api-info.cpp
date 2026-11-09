@@ -643,6 +643,10 @@ TEST(PluginApiInfo, TotpGenerateCb)
                                       "secretpasswordbase32,123456,abc"));
     STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_validate",
                                       "secretpasswordbase32,123456,1540624066,abc"));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_validate",
+                                      "secretpasswordbase32,123456,1540624066,0,abc"));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_validate",
+                                      "secretpasswordbase32,123456,1540624066,0,-1"));
 
     WEE_TEST_STR("065486",
                  hook_info_get (NULL,
@@ -657,6 +661,38 @@ TEST(PluginApiInfo, TotpGenerateCb)
                  hook_info_get (NULL,
                                 "totp_validate",
                                 "secretpasswordbase32,123456,1540624066,30"));
+
+    /* Default number of digits is 6 */
+    WEE_TEST_STR("0",
+                 hook_info_get (NULL,
+                                "totp_validate",
+                                "secretpasswordbase32,65486,1540624066"));
+    WEE_TEST_STR("0",
+                 hook_info_get (NULL,
+                                "totp_validate",
+                                "secretpasswordbase32,5486,1540624066"));
+    WEE_TEST_STR("0",
+                 hook_info_get (NULL,
+                                "totp_validate",
+                                "secretpasswordbase32,40065486,1540624066"));
+
+    /* Explicit number of digits */
+    WEE_TEST_STR("1",
+                 hook_info_get (NULL,
+                                "totp_validate",
+                                "secretpasswordbase32,065486,1540624066,0,6"));
+    WEE_TEST_STR("0",
+                 hook_info_get (NULL,
+                                "totp_validate",
+                                "secretpasswordbase32,065486,1540624066,0,8"));
+    WEE_TEST_STR("1",
+                 hook_info_get (NULL,
+                                "totp_validate",
+                                "secretpasswordbase32,5486,1540624066,0,4"));
+    WEE_TEST_STR("1",
+                 hook_info_get (NULL,
+                                "totp_validate",
+                                "secretpasswordbase32,40065486,1540624066,0,8"));
 }
 
 /*

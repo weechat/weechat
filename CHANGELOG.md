@@ -67,6 +67,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: save secured data in sec.conf and display them on secured data buffer sorted by name
 - **breaking:** core: use the current date/time with microseconds as line identifier, replace buffer property "next_line_id" by "lines_last_id_assigned"
 - **breaking:** core: remove fields "date_printed" and "date_usec_printed" in lines, replaced by the line identifier
+- **breaking:** api: add optional argument "digits" in info "totp_validate" (6 by default), the one-time password must have exactly this number of digits
 - api: check completion pointer in functions completion_search, completion_get_string, completion_set, completion_list_add, completion_free, hook_completion_get_string and hook_completion_list_add to prevent a crash when a freed completion is used
 - api: check bar and bar item pointers in functions bar_set, bar_remove and bar_item_remove to prevent a crash when a removed bar or bar item is used
 - api: check window pointer in functions window_get_integer and window_get_pointer to prevent a crash when a closed window is used
@@ -248,6 +249,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: fix heap buffer overflow in nick prefixes when the server sends an empty PREFIX in message 005 and the connection is lost before message 001 ([GHSA-xj8h-x2w9-m8m6](https://github.com/weechat/weechat/security/advisories/GHSA-xj8h-x2w9-m8m6))
 - irc: fix crash on invalid SASL challenge received with mechanism "ecdsa-nist256p-challenge" ([#2350](https://github.com/weechat/weechat/issues/2350))
 - relay/api: refuse number of hash iterations lower than 1 or greater than 1000000 received from the remote relay, to prevent blocking WeeChat for a long time
+- relay: require exactly 6 digits in TOTP received from a client with "api" and "weechat" protocols
 - relay: check only the first password and TOTP received in command "init" of "weechat" protocol, to prevent a client from blocking WeeChat with many password checks (like PBKDF2) in a single message ([#2368](https://github.com/weechat/weechat/pull/2368))
 - relay: ignore IRC messages longer than 4096 bytes received from a client and reply with numeric 417 (ERR_INPUTTOOLONG), to prevent blocking WeeChat and consuming a lot of memory when parsing huge messages ([#2367](https://github.com/weechat/weechat/issues/2367))
 - relay: limit size of HTTP headers received from a client to prevent memory exhaustion ([GHSA-h394-85x4-68c7](https://github.com/weechat/weechat/security/advisories/GHSA-h394-85x4-68c7))

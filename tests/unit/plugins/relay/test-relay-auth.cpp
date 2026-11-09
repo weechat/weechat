@@ -124,6 +124,33 @@ TEST(RelayAuth, PasswordEquals)
 
 /*
  * Test functions:
+ *   relay_auth_check_totp_format
+ */
+
+TEST(RelayAuth, CheckTotpFormat)
+{
+    LONGS_EQUAL(0, relay_auth_check_totp_format (NULL));
+    LONGS_EQUAL(0, relay_auth_check_totp_format (""));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("1234"));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("12345"));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("1234567"));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("12345678"));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("abcdef"));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("12345a"));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("+12345"));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("-12345"));
+    LONGS_EQUAL(0, relay_auth_check_totp_format (" 12345"));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("12345 "));
+    LONGS_EQUAL(0, relay_auth_check_totp_format ("1234,0,1,4"));
+
+    LONGS_EQUAL(1, relay_auth_check_totp_format ("000000"));
+    LONGS_EQUAL(1, relay_auth_check_totp_format ("001234"));
+    LONGS_EQUAL(1, relay_auth_check_totp_format ("123456"));
+    LONGS_EQUAL(1, relay_auth_check_totp_format ("999999"));
+}
+
+/*
+ * Test functions:
  *   relay_auth_check_password_plain
  */
 

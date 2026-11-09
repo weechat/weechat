@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 20:26+0100\n"
+"POT-Creation-Date: 2026-11-09 09:01+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -13263,7 +13263,8 @@ msgstr ""
 
 msgid ""
 "secret (in base32), one-time password, timestamp (optional, current time by "
-"default), number of passwords before/after to test (optional, 0 by default)"
+"default), number of passwords before/after to test (optional, 0 by default), "
+"number of digits (optional, between 4 and 10, 6 by default)"
 msgstr ""
 
 #, fuzzy

@@ -56,6 +56,19 @@ compatibility: they are derived from the new key `_chat_line_id`.
 
 In triggers, `${date_printed}` becomes `${calc:${id}/1000000}`.
 
+### Info totp_validate
+
+The info `totp_validate` has a new optional argument with the number of digits of the
+one-time password (between 4 and 10, 6 by default), and the one-time password must have exactly
+this number of digits.
+
+Scripts validating one-time passwords that do not have 6 digits must now give the number of digits,
+for example with 8 digits:
+
+```python
+weechat.info_get("totp_validate", "secretpasswordbase32,12345678,0,0,8")
+```
+
 ### Relay
 
 In the "api" protocol, the API version has been bumped to 0.7.0: the line identifier can now be

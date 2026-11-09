@@ -28,6 +28,6 @@ extern int weecrypto_hmac (const void *key, int key_size,
 extern char *weecrypto_totp_generate (const char *secret, time_t totp_time,
                                       int digits);
 extern int weecrypto_totp_validate (const char *secret, time_t totp_time,
-                                    int window, const char *otp);
+                                    int window, int digits, const char *otp);
 
 #endif /* WEECHAT_CRYPTO_H */

@@ -713,7 +713,7 @@ TEST(RelayHttp, GetAuthStatus)
     struct t_relay_client *client;
     const char *good_pwd = "secret_password";
     const char *bad_pwd = "test";
-    char *totp, *totp2, salt[1024], salt_pass[1024], hash[1024], hash_hexa[2048];
+    char *totp, *totp2, str_totp[64], salt[1024], salt_pass[1024], hash[1024], hash_hexa[2048];
     char auth[4096], auth_base64[4096], auth_header[8192];
     time_t time_now;
     int hash_size;
@@ -936,6 +936,23 @@ TEST(RelayHttp, GetAuthStatus)
     totp2 = strdup (totp);
     totp2[0] = (totp2[0] == '1') ? '2' : '1';
     hashtable_set (client->http_req->headers, "x-weechat-totp", totp2);
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "abcdef");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "1234567");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "+12345");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    /* Extra arguments for info "totp_validate" are rejected */
+    snprintf (str_totp, sizeof (str_totp), "%s,0,1,4", totp + 2);
+    hashtable_set (client->http_req->headers, "x-weechat-totp", str_totp);
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    /* Last 4 or 5 digits of the valid TOTP are rejected */
+    hashtable_set (client->http_req->headers, "x-weechat-totp", totp + 2);
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", totp + 1);
     LONGS_EQUAL(-4, relay_http_get_auth_status (client));
     hashtable_set (client->http_req->headers, "x-weechat-totp", totp);
     LONGS_EQUAL(0, relay_http_get_auth_status (client));
