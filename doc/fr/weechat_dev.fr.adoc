@@ -104,6 +104,7 @@ Les répertoires principaux de WeeChat sont :
 |          alias/    | Tests unitaires pour l'extension alias.
 |          irc/      | Tests unitaires pour l'extension IRC.
 |          logger/   | Tests unitaires pour l'extension logger.
+|          otr/      | Tests unitaires pour l'extension OTR.
 |          relay/    | Tests unitaires pour l'extension relay.
 |          script/   | Tests unitaires pour l'extension script.
 |          trigger/  | Tests unitaires pour l'extension trigger.
@@ -566,6 +567,15 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-logger.cpp                     | Tests : logger.
 |             test-logger-backlog.cpp             | Tests : backlog logger.
 |             test-logger-tail.cpp                | Tests : fonctions "tail".
+|          otr/                                   | Racine des tests unitaires pour l'extension OTR.
+|             test-otr-command.cpp                | Tests : commandes OTR.
+|             test-otr-config.cpp                 | Tests : options de configuration OTR.
+|             test-otr-echo.cpp                   | Tests : support de echo-message (IRCv3) pour OTR.
+|             test-otr-irc.cpp                    | Tests : fonctions IRC pour OTR.
+|             test-otr-message.cpp                | Tests : conversion du texte des messages OTR.
+|             test-otr-modifier.cpp               | Tests : modificateurs OTR.
+|             test-otr-policy.cpp                 | Tests : politiques OTR.
+|             test-otr-util.cpp                   | Tests : fonctions utilitaires pour OTR.
 |          relay/                                 | Racine des tests unitaires pour l'extension Relay.
 |             test-relay-auth.cpp                 | Tests : authentification des clients.
 |             test-relay-bar-item.cpp             | Tests : objets de barre pour l'extension Relay.

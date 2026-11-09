@@ -104,6 +104,8 @@ qweechat::
 |          alias/    | Unit тестови за alias додатак.
 |          irc/      | Unit тестови за IRC додатак.
 |          logger/   | Unit тестови за logger додатак.
+// TRANSLATION MISSING
+|          otr/      | Unit tests for OTR plugin.
 |          relay/    | Unit тестови за relay додатак.
 |          script/   | Unit тестови за script додатак.
 |          trigger/  | Unit тестови за trigger додатак.
@@ -587,6 +589,24 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-logger.cpp                     | Тестови: logger.
 |             test-logger-backlog.cpp             | Тестови: logger заостатак.
 |             test-logger-tail.cpp                | Тестови: logger tail функције.
+// TRANSLATION MISSING
+|          otr/                                   | Root of unit tests for OTR plugin.
+// TRANSLATION MISSING
+|             test-otr-command.cpp                | Tests: OTR commands.
+// TRANSLATION MISSING
+|             test-otr-config.cpp                 | Tests: OTR config options.
+// TRANSLATION MISSING
+|             test-otr-echo.cpp                   | Tests: OTR support of IRCv3 echo-message.
+// TRANSLATION MISSING
+|             test-otr-irc.cpp                    | Tests: OTR IRC functions.
+// TRANSLATION MISSING
+|             test-otr-message.cpp                | Tests: conversion of OTR message text.
+// TRANSLATION MISSING
+|             test-otr-modifier.cpp               | Tests: OTR modifiers.
+// TRANSLATION MISSING
+|             test-otr-policy.cpp                 | Tests: OTR policies.
+// TRANSLATION MISSING
+|             test-otr-util.cpp                   | Tests: OTR utility functions.
 |          relay/                                 | Корен unit тестова за Релеј додатак.
 |             test-relay-auth.cpp                 | Тестови: аутентификација клијената.
 |             test-relay-bar-item.cpp             | Тестови: ставке траке за Релеј додатак.

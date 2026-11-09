@@ -103,6 +103,7 @@ The main WeeChat directories are:
 |          alias/    | Unit tests for alias plugin.
 |          irc/      | Unit tests for IRC plugin.
 |          logger/   | Unit tests for logger plugin.
+|          otr/      | Unit tests for OTR plugin.
 |          relay/    | Unit tests for relay plugin.
 |          script/   | Unit tests for script plugin.
 |          trigger/  | Unit tests for trigger plugin.
@@ -565,6 +566,15 @@ WeeChat "core" is located in following directories:
 |             test-logger.cpp                     | Tests: logger.
 |             test-logger-backlog.cpp             | Tests: logger backlog.
 |             test-logger-tail.cpp                | Tests: logger tail functions.
+|          otr/                                   | Root of unit tests for OTR plugin.
+|             test-otr-command.cpp                | Tests: OTR commands.
+|             test-otr-config.cpp                 | Tests: OTR config options.
+|             test-otr-echo.cpp                   | Tests: OTR support of IRCv3 echo-message.
+|             test-otr-irc.cpp                    | Tests: OTR IRC functions.
+|             test-otr-message.cpp                | Tests: conversion of OTR message text.
+|             test-otr-modifier.cpp               | Tests: OTR modifiers.
+|             test-otr-policy.cpp                 | Tests: OTR policies.
+|             test-otr-util.cpp                   | Tests: OTR utility functions.
 |          relay/                                 | Root of unit tests for Relay plugin.
 |             test-relay-auth.cpp                 | Tests: clients authentication.
 |             test-relay-bar-item.cpp             | Tests: bar items for Relay plugin.

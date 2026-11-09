@@ -113,6 +113,8 @@ qweechat::
 // TRANSLATION MISSING
 |          logger/   | Unit tests for logger plugin.
 // TRANSLATION MISSING
+|          otr/      | Unit tests for OTR plugin.
+// TRANSLATION MISSING
 |          relay/    | Unit tests for relay plugin.
 // TRANSLATION MISSING
 |          script/   | Unit tests for script plugin.
@@ -733,6 +735,24 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-logger-backlog.cpp             | Tests: logger backlog.
 // TRANSLATION MISSING
 |             test-logger-tail.cpp                | Tests: logger tail functions.
+// TRANSLATION MISSING
+|          otr/                                   | Root of unit tests for OTR plugin.
+// TRANSLATION MISSING
+|             test-otr-command.cpp                | Tests: OTR commands.
+// TRANSLATION MISSING
+|             test-otr-config.cpp                 | Tests: OTR config options.
+// TRANSLATION MISSING
+|             test-otr-echo.cpp                   | Tests: OTR support of IRCv3 echo-message.
+// TRANSLATION MISSING
+|             test-otr-irc.cpp                    | Tests: OTR IRC functions.
+// TRANSLATION MISSING
+|             test-otr-message.cpp                | Tests: conversion of OTR message text.
+// TRANSLATION MISSING
+|             test-otr-modifier.cpp               | Tests: OTR modifiers.
+// TRANSLATION MISSING
+|             test-otr-policy.cpp                 | Tests: OTR policies.
+// TRANSLATION MISSING
+|             test-otr-util.cpp                   | Tests: OTR utility functions.
 // TRANSLATION MISSING
 |          relay/                                 | Root of unit tests for Relay plugin.
 // TRANSLATION MISSING
