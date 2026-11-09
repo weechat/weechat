@@ -169,6 +169,9 @@ vous devez envoyer la valeur TOTP dans l'en-tête `x-weechat-totp` comme ceci :
 curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" 'https://localhost:9000/api/version'
 ----
 
+Le TOTP doit contenir exactement 6 chiffres, y compris les zéros initiaux (par
+exemple `012345`), sinon il est refusé.
+
 En cas d'erreur, une réponse `401 Unauthorized` est retournée avec un champ
 `error` dans les données JSON qui décrit l'erreur.
 
