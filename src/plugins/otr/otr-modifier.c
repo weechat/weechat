@@ -231,11 +231,11 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
         goto end;
     }
 
-    account = otr_irc_make_account (ptr_server);
-    if (!account)
-        goto end;
     peer = weechat_string_tolower (ptr_nick);
     if (!peer)
+        goto end;
+    account = otr_irc_peer_account (ptr_server, peer);
+    if (!account)
         goto end;
 
     /* CTCP: only a plaintext ACTION inside an encrypted session is flagged. */
@@ -492,8 +492,8 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         return NULL;
     }
 
-    account = otr_irc_make_account (ptr_server);
     peer = weechat_string_tolower (target);
+    account = (peer) ? otr_irc_peer_account (ptr_server, peer) : NULL;
     if (!account || !peer)
     {
         otr_buffer_error_core (

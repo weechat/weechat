@@ -34,6 +34,7 @@
 #include "otr-config.h"
 #include "otr-context.h"
 #include "otr-echo.h"
+#include "otr-irc.h"
 #include "otr-log.h"
 #include "otr-modifier.h"
 
@@ -195,6 +196,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("buffer_switch", &otr_buffer_switch_cb, NULL, NULL);
     weechat_hook_signal ("buffer_closing", &otr_buffer_closing_cb, NULL, NULL);
     weechat_hook_signal ("debug_libs", &otr_debug_libs_cb, NULL, NULL);
+    weechat_hook_signal ("*,irc_in2_nick", &otr_irc_nick_cb, NULL, NULL);
 
     otr_bar_item = weechat_bar_item_new (OTR_BAR_ITEM,
                                          &otr_bar_item_cb, NULL, NULL);
