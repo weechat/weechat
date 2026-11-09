@@ -330,6 +330,10 @@ With WeeChat ≥ 1.6, commas can be escaped in the value, for example
 Only the first password (_password_ or _password_hash_) and the first _totp_
 are checked, the next ones are ignored _(WeeChat ≥ 5.0.0)_.
 
+[NOTE]
+The TOTP must contain exactly 6 digits, including leading zeros (for example
+`012345`), otherwise it is rejected.
+
 Format of hashed password is one of the following, where _hash_ is the hashed
 password as hexadecimal:
 
