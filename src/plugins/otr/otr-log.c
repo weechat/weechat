@@ -146,12 +146,35 @@ otr_log_disable (ConnContext *context, struct t_otr_peer_data *peer_data)
 }
 
 /*
+ * Callback of timer used to restore the logger level after a buffer is closed:
+ * run the command given in data.
+ */
+
+int
+otr_log_restore_timer_cb (const void *pointer, void *data, int remaining_calls)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) remaining_calls;
+
+    if (data)
+        weechat_command (NULL, (const char *)data);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Restore the logger level of the private buffer with the peer of a libotr
  * context, saved when the OTR session started.
+ *
+ * If buffer_closing is 1, the private buffer is being closed: nothing is
+ * displayed and the logger level is restored after the buffer is closed (the
+ * logger must not start logging again on a buffer being closed).
  */
 
 void
-otr_log_restore (ConnContext *context, struct t_otr_peer_data *peer_data)
+otr_log_restore (ConnContext *context, struct t_otr_peer_data *peer_data,
+                 int buffer_closing)
 {
     struct t_gui_buffer *ptr_buffer;
     char *command, *option_name;
@@ -159,39 +182,53 @@ otr_log_restore (ConnContext *context, struct t_otr_peer_data *peer_data)
     if (!peer_data || (peer_data->prev_log == OTR_LOG_UNTOUCHED))
         return;
 
+    command = NULL;
+
     ptr_buffer = otr_irc_buffer (otr_irc_account_server (context->accountname),
                                  context->username);
     if (otr_buffer_is_private (ptr_buffer))
     {
-        if ((peer_data->prev_log >= 0) && (peer_data->prev_log < 10))
+        option_name = otr_log_logger_option_name (ptr_buffer);
+        if (option_name)
         {
-            otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_WARNING,
-                                  _("Restoring buffer logging value to: %d"),
-                                  peer_data->prev_log);
-            weechat_asprintf (&command, "/mute logger set %d",
-                              peer_data->prev_log);
-            if (command)
+            if ((peer_data->prev_log >= 0) && (peer_data->prev_log < 10))
             {
-                weechat_command (ptr_buffer, command);
-                free (command);
-            }
-        }
-        else if (peer_data->prev_log == OTR_LOG_DEFAULT)
-        {
-            otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_WARNING,
-                                  _("Restoring buffer logging value to "
-                                    "default"));
-            option_name = otr_log_logger_option_name (ptr_buffer);
-            if (option_name)
-            {
-                weechat_asprintf (&command, "/mute unset %s", option_name);
-                if (command)
+                if (!buffer_closing)
                 {
-                    weechat_command (ptr_buffer, command);
-                    free (command);
+                    otr_buffer_ctx_print (
+                        context, OTR_CONFIG_LEVEL_WARNING,
+                        _("Restoring buffer logging value to: %d"),
+                        peer_data->prev_log);
                 }
-                free (option_name);
+                weechat_asprintf (&command, "/mute set %s %d",
+                                  option_name, peer_data->prev_log);
             }
+            else if (peer_data->prev_log == OTR_LOG_DEFAULT)
+            {
+                if (!buffer_closing)
+                {
+                    otr_buffer_ctx_print (
+                        context, OTR_CONFIG_LEVEL_WARNING,
+                        _("Restoring buffer logging value to default"));
+                }
+                weechat_asprintf (&command, "/mute unset %s", option_name);
+            }
+            free (option_name);
+        }
+    }
+
+    if (command)
+    {
+        if (buffer_closing)
+        {
+            /* Command is freed by WeeChat when the timer is removed. */
+            weechat_hook_timer (1, 0, 1,
+                                &otr_log_restore_timer_cb, NULL, command);
+        }
+        else
+        {
+            weechat_command (NULL, command);
+            free (command);
         }
     }
 

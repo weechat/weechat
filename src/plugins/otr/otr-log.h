@@ -15,7 +15,8 @@ extern int otr_log_buffer_log_level (struct t_gui_buffer *buffer);
 extern void otr_log_disable (ConnContext *context,
                              struct t_otr_peer_data *peer_data);
 extern void otr_log_restore (ConnContext *context,
-                             struct t_otr_peer_data *peer_data);
+                             struct t_otr_peer_data *peer_data,
+                             int buffer_closing);
 extern int otr_log_logger_level_update_cb (const void *pointer, void *data,
                                            const char *option,
                                            const char *value);
