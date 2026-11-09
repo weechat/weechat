@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 
 #include "../weechat-plugin.h"
 #include "otr.h"
@@ -28,117 +27,134 @@
 
 /*
  * Split a string into arguments, like a shell (quotes and backslash escapes are
- * supported); at most max arguments are stored in out.
+ * supported); at most max_args arguments are stored in args.
  *
  * Return number of arguments, -1 if error (unterminated quote, too many
  * arguments or allocation error).
  *
- * Note: arguments stored in out must be freed after use.
+ * Note: arguments stored in args must be freed after use.
  */
 
 int
-otr_command_split_args (const char *s, char **out, int max)
+otr_command_split_args (const char *string, char **args, int max_args)
 {
-    const char *p = s;
-    int n = 0, i;
+    const char *ptr_string;
+    char *arg, *ptr_arg, quote;
+    int num_args, i;
 
-    while (*p)
+    ptr_string = string;
+    num_args = 0;
+
+    while (ptr_string[0])
     {
-        char *tok, *w, q = 0;
-
-        while (isspace ((unsigned char)*p))
-            p++;
-        if (!*p)
+        while (isspace ((unsigned char)ptr_string[0]))
+            ptr_string++;
+        if (!ptr_string[0])
             break;
-        if (n >= max)
-            goto fail;
-        tok = malloc (strlen (p) + 1);
-        if (!tok)
-            goto fail;
-        w = tok;
-        while (*p && (q || !isspace ((unsigned char)*p)))
+        if (num_args >= max_args)
+            goto error;
+        arg = malloc (strlen (ptr_string) + 1);
+        if (!arg)
+            goto error;
+        ptr_arg = arg;
+        quote = 0;
+        while (ptr_string[0]
+               && (quote || !isspace ((unsigned char)ptr_string[0])))
         {
-            if (q == '\'')
+            if (quote == '\'')
             {
-                if (*p == '\'')
-                    q = 0;
+                if (ptr_string[0] == '\'')
+                    quote = 0;
                 else
-                    *w++ = *p;
-                p++;
+                    *ptr_arg++ = ptr_string[0];
+                ptr_string++;
             }
-            else if (q == '"')
+            else if (quote == '"')
             {
-                if (*p == '"')
+                if (ptr_string[0] == '"')
                 {
-                    q = 0;
-                    p++;
+                    quote = 0;
+                    ptr_string++;
                 }
-                else if (*p == '\\' && (p[1] == '"' || p[1] == '\\'))
+                else if ((ptr_string[0] == '\\')
+                         && ((ptr_string[1] == '"')
+                             || (ptr_string[1] == '\\')))
                 {
-                    *w++ = p[1];
-                    p += 2;
+                    *ptr_arg++ = ptr_string[1];
+                    ptr_string += 2;
                 }
                 else
-                    *w++ = *p++;
+                {
+                    *ptr_arg++ = *ptr_string++;
+                }
             }
-            else if (*p == '\'' || *p == '"')
+            else if ((ptr_string[0] == '\'') || (ptr_string[0] == '"'))
             {
-                q = *p;
-                p++;
+                quote = ptr_string[0];
+                ptr_string++;
             }
-            else if (*p == '\\' && p[1])
+            else if ((ptr_string[0] == '\\') && ptr_string[1])
             {
-                *w++ = p[1];
-                p += 2;
+                *ptr_arg++ = ptr_string[1];
+                ptr_string += 2;
             }
             else
-                *w++ = *p++;
+            {
+                *ptr_arg++ = *ptr_string++;
+            }
         }
-        if (q)
+        if (quote)
         {
-            free (tok);
-            goto fail;
+            free (arg);
+            goto error;
         }
-        *w = '\0';
-        out[n++] = tok;
+        ptr_arg[0] = '\0';
+        args[num_args++] = arg;
     }
-    return n;
-fail:
-    for (i = 0; i < n; i++)
-        free (out[i]);
+
+    return num_args;
+
+error:
+    for (i = 0; i < num_args; i++)
+    {
+        free (args[i]);
+    }
     return -1;
 }
 
 /*
- * Get the peer from command arguments "<nick> <server>" (if nargs is 2) or,
+ * Get the peer from command arguments "<nick> <server>" (if num_args is 2) or,
  * without arguments, from the current private buffer.
  *
  * Return 1 if OK, 0 if error.
  */
 
 int
-otr_command_peer_args (struct t_gui_buffer *buf, char **args, int nargs,
-                       struct t_otr_peer_ref *p)
+otr_command_peer_args (struct t_gui_buffer *buffer, char **args, int num_args,
+                       struct t_otr_peer_ref *peer_ref)
 {
-    const char *n, *s;
+    const char *ptr_nick, *ptr_server;
 
-    if (nargs == 2)
+    if (num_args == 2)
     {
-        snprintf (p->nick, sizeof (p->nick), "%s", args[0]);
-        snprintf (p->server, sizeof (p->server), "%s", args[1]);
+        snprintf (peer_ref->nick, sizeof (peer_ref->nick), "%s", args[0]);
+        snprintf (peer_ref->server, sizeof (peer_ref->server), "%s", args[1]);
         return 1;
     }
-    if (nargs == 0 && otr_buffer_is_private (buf))
+
+    if ((num_args == 0) && otr_buffer_is_private (buffer))
     {
-        n = weechat_buffer_get_string (buf, "localvar_channel");
-        s = weechat_buffer_get_string (buf, "localvar_server");
-        if (n && s)
+        ptr_nick = weechat_buffer_get_string (buffer, "localvar_channel");
+        ptr_server = weechat_buffer_get_string (buffer, "localvar_server");
+        if (ptr_nick && ptr_server)
         {
-            snprintf (p->nick, sizeof (p->nick), "%s", n);
-            snprintf (p->server, sizeof (p->server), "%s", s);
+            snprintf (peer_ref->nick, sizeof (peer_ref->nick), "%s", ptr_nick);
+            snprintf (peer_ref->server, sizeof (peer_ref->server),
+                      "%s", ptr_server);
             return 1;
         }
     }
+
     return 0;
 }
 
@@ -150,93 +166,106 @@ otr_command_peer_args (struct t_gui_buffer *buf, char **args, int nargs,
  */
 
 int
-otr_command_resolve (const struct t_otr_peer_ref *p, char **account,
+otr_command_resolve (const struct t_otr_peer_ref *peer_ref, char **account,
                      char **peer)
 {
-    *account = otr_irc_make_account (p->server);
-    *peer = otr_util_lc_dup (p->nick);
+    *account = otr_irc_make_account (peer_ref->server);
+    *peer = weechat_string_tolower (peer_ref->nick);
     if (!*account || !*peer)
     {
-        otr_buffer_error_core (_("not connected to server \"%s\""), p->server);
+        otr_buffer_error_core (_("not connected to server \"%s\""),
+                               peer_ref->server);
         free (*account);
         free (*peer);
-        *account = *peer = NULL;
+        *account = NULL;
+        *peer = NULL;
         return 0;
     }
+
     return 1;
 }
-
-struct t_otr_table
-{
-    char *(*rows)[4];
-    int n, cap;
-    size_t w[4];
-};
 
 /*
  * Add a row with 4 columns to a table (for display).
  */
 
 void
-otr_command_table_add (struct t_otr_table *t, const char *a, const char *b,
-                       const char *c,
-                       const char *d)
+otr_command_table_add (struct t_otr_table *table, const char *column1,
+                       const char *column2, const char *column3,
+                       const char *column4)
 {
-    const char *v[4];
+    const char *columns[4];
+    char *(*new_rows)[4];
+    size_t length;
     int i;
-    void *nr;
 
-    v[0] = a; v[1] = b; v[2] = c; v[3] = d;
-    if (t->n == t->cap)
+    columns[0] = column1;
+    columns[1] = column2;
+    columns[2] = column3;
+    columns[3] = column4;
+
+    if (table->num_rows == table->size_alloc)
     {
-        t->cap = t->cap ? t->cap * 2 : 8;
-        nr = realloc (t->rows, (size_t)t->cap * sizeof (t->rows[0]));
-        if (!nr)
+        new_rows = realloc (
+            table->rows,
+            (size_t)((table->size_alloc) ? table->size_alloc * 2 : 8)
+            * sizeof (table->rows[0]));
+        if (!new_rows)
             return;
-        t->rows = nr;
+        table->rows = new_rows;
+        table->size_alloc = (table->size_alloc) ? table->size_alloc * 2 : 8;
     }
+
     for (i = 0; i < 4; i++)
     {
-        t->rows[t->n][i] = otr_util_dupstr (v[i]);
-        if (t->rows[t->n][i] && strlen (t->rows[t->n][i]) > t->w[i])
-            t->w[i] = strlen (t->rows[t->n][i]);
+        table->rows[table->num_rows][i] = otr_util_dupstr (columns[i]);
+        if (table->rows[table->num_rows][i])
+        {
+            length = strlen (table->rows[table->num_rows][i]);
+            if (length > table->column_width[i])
+                table->column_width[i] = length;
+        }
     }
-    t->n++;
+    table->num_rows++;
 }
 
 /*
- * Display the first cols columns of a table with aligned columns, then free the
- * table.
+ * Display the first num_columns columns of a table with aligned columns, then
+ * free the table.
  */
 
 void
-otr_command_table_print_free (struct t_otr_table *t, int cols)
+otr_command_table_print_free (struct t_otr_table *table, int num_columns)
 {
-    int r, c;
-    struct t_otr_sbuf b;
-    char *line;
+    char **line;
+    size_t length;
+    int row, column;
 
-    for (r = 0; r < t->n; r++)
+    for (row = 0; row < table->num_rows; row++)
     {
-        otr_util_sb_init (&b);
-        for (c = 0; c < cols; c++)
-        {
-            size_t l = strlen (t->rows[r][c]);
-
-            if (c)
-                otr_util_sb_adds (&b, " |");
-            otr_util_sb_adds (&b, t->rows[r][c]);
-            while (l++ < t->w[c])
-                otr_util_sb_addc (&b, ' ');
-        }
-        line = otr_util_sb_take (&b);
+        line = weechat_string_dyn_alloc (256);
         if (line)
-            otr_buffer_print_str (NULL, OTR_CONFIG_LEVEL_INFO, line);
-        free (line);
-        for (c = 0; c < 4; c++)
-            free (t->rows[r][c]);
+        {
+            for (column = 0; column < num_columns; column++)
+            {
+                if (column > 0)
+                    weechat_string_dyn_concat (line, " |", -1);
+                weechat_string_dyn_concat (line, table->rows[row][column], -1);
+                for (length = strlen (table->rows[row][column]);
+                     length < table->column_width[column]; length++)
+                {
+                    weechat_string_dyn_concat (line, " ", -1);
+                }
+            }
+            otr_buffer_print_str (NULL, OTR_CONFIG_LEVEL_INFO, *line);
+            weechat_string_dyn_free (line, 1);
+        }
+        for (column = 0; column < 4; column++)
+        {
+            free (table->rows[row][column]);
+        }
     }
-    free (t->rows);
+    free (table->rows);
 }
 
 /*
@@ -246,56 +275,71 @@ otr_command_table_print_free (struct t_otr_table *t, int cols)
 void
 otr_command_show_account_fingerprints (void)
 {
-    struct t_otr_table t = { NULL, 0, 0, { 0, 0, 0, 0 } };
-    OtrlPrivKey *k;
-    char human[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
+    struct t_otr_table table;
+    OtrlPrivKey *ptr_privkey;
+    char fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
 
-    for (k = otr_us->privkey_root; k; k = k->next)
+    memset (&table, 0, sizeof (table));
+
+    for (ptr_privkey = otr_us->privkey_root; ptr_privkey;
+         ptr_privkey = ptr_privkey->next)
     {
-        if (!otrl_privkey_fingerprint (otr_us, human, k->accountname,
-                                       k->protocol))
+        if (!otrl_privkey_fingerprint (otr_us, fingerprint,
+                                       ptr_privkey->accountname,
+                                       ptr_privkey->protocol))
+        {
             continue;
-        otr_command_table_add (&t, k->accountname, human, "", "");
+        }
+        otr_command_table_add (&table, ptr_privkey->accountname, fingerprint,
+                               "", "");
     }
-    otr_command_table_print_free (&t, 2);
+
+    otr_command_table_print_free (&table, 2);
 }
 
 /*
- * Display fingerprints of known peers; if grep is not NULL, only peers whose
- * nick contains grep are displayed.
+ * Display fingerprints of known peers; if search is not NULL, only peers whose
+ * nick contains search are displayed.
  */
 
 void
-otr_command_show_peer_fingerprints (const char *grep)
+otr_command_show_peer_fingerprints (const char *search)
 {
-    struct t_otr_table t = { NULL, 0, 0, { 0, 0, 0, 0 } };
-    ConnContext *c;
-    Fingerprint *f;
-    char human[OTRL_PRIVKEY_FPRINT_HUMAN_LEN], peerfull[256];
-    const char *trust;
+    struct t_otr_table table;
+    ConnContext *ptr_context;
+    Fingerprint *ptr_fingerprint;
+    char fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN], peer[256];
+    const char *ptr_trust;
 
-    for (c = otr_us->context_root; c; c = c->next)
+    memset (&table, 0, sizeof (table));
+
+    for (ptr_context = otr_us->context_root; ptr_context;
+         ptr_context = ptr_context->next)
     {
-        if (c->their_instance != OTRL_INSTAG_MASTER)
+        if (ptr_context->their_instance != OTRL_INSTAG_MASTER)
             continue;
-        snprintf (peerfull, sizeof (peerfull), "%s", c->username);
-        if (grep && !strstr (peerfull, grep))
+        snprintf (peer, sizeof (peer), "%s", ptr_context->username);
+        if (search && !strstr (peer, search))
             continue;
-        for (f = c->fingerprint_root.next; f; f = f->next)
+        for (ptr_fingerprint = ptr_context->fingerprint_root.next;
+             ptr_fingerprint; ptr_fingerprint = ptr_fingerprint->next)
         {
-            otrl_privkey_hash_to_human (human, f->fingerprint);
-            if (!f->trust || !*f->trust)
-                trust = _("unverified");
-            else if (strcmp (f->trust, "smp") == 0)
-                trust = _("SMP verified");
-            else if (strcmp (f->trust, "verified") == 0)
-                trust = _("verified");
+            otrl_privkey_hash_to_human (fingerprint,
+                                        ptr_fingerprint->fingerprint);
+            if (!ptr_fingerprint->trust || !ptr_fingerprint->trust[0])
+                ptr_trust = _("unverified");
+            else if (strcmp (ptr_fingerprint->trust, "smp") == 0)
+                ptr_trust = _("SMP verified");
+            else if (strcmp (ptr_fingerprint->trust, "verified") == 0)
+                ptr_trust = _("verified");
             else
-                trust = f->trust;
-            otr_command_table_add (&t, peerfull, c->accountname, human, trust);
+                ptr_trust = ptr_fingerprint->trust;
+            otr_command_table_add (&table, peer, ptr_context->accountname,
+                                   fingerprint, ptr_trust);
         }
     }
-    otr_command_table_print_free (&t, 4);
+
+    otr_command_table_print_free (&table, 4);
 }
 
 /*
@@ -305,43 +349,56 @@ otr_command_show_peer_fingerprints (const char *grep)
  */
 
 int
-otr_command_start (struct t_gui_buffer *buf, const struct t_otr_peer_ref *p)
+otr_command_start (struct t_gui_buffer *buffer,
+                   const struct t_otr_peer_ref *peer_ref)
 {
-    char *account, *peer;
-    int v2, v3;
-    const char *q;
+    char *account, *peer, *message;
+    const char *ptr_query;
+    int allow_v2, allow_v3;
 
-    (void)buf;
-    if (!otr_command_resolve (p, &account, &peer))
+    /* Make C compiler happy. */
+    (void) buffer;
+
+    if (!otr_command_resolve (peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;
-    v2 = otr_policy_for (account, peer, "allow_v2");
-    v3 = otr_policy_for (account, peer, "allow_v3");
-    if (!v2 && !v3)
+
+    allow_v2 = otr_policy_for (account, peer, "allow_v2");
+    allow_v3 = otr_policy_for (account, peer, "allow_v3");
+    if (!allow_v2 && !allow_v3)
     {
-        otr_buffer_peer_print (p->server, peer, OTR_CONFIG_LEVEL_ERROR,
+        otr_buffer_peer_print (peer_ref->server, peer, OTR_CONFIG_LEVEL_ERROR,
                                _("OTR is disabled by policy (allow_v2 and "
-                               "allow_v3 are both off)."));
-        free (account);
-        free (peer);
-        return WEECHAT_RC_OK;
+                                 "allow_v3 are both off)."));
+        goto end;
     }
-    q = (v2 && v3) ? "?OTRv23?" : (v3 ? "?OTRv3?" : "?OTRv2?");
+
+    if (allow_v2 && allow_v3)
+        ptr_query = "?OTRv23?";
+    else if (allow_v3)
+        ptr_query = "?OTRv3?";
+    else
+        ptr_query = "?OTRv2?";
+
     otr_buffer_peer_hint (
-        p->server, peer,
+        peer_ref->server, peer,
         _("Sending OTR query... Please await confirmation of the OTR session "
-        "being started before sending a message."));
+          "being started before sending a message."));
     if (!otr_policy_for (account, peer, "send_tag"))
     {
-        char *m = otr_util_strf (
+        weechat_asprintf (
+            &message,
             _("To try OTR on all conversations with %s@%s: /otr policy "
-            "send_tag on"),
-            peer, p->server);
-
-        if (m)
-            otr_buffer_peer_hint (p->server, peer, m);
-        free (m);
+              "send_tag on"),
+            peer, peer_ref->server);
+        if (message)
+        {
+            otr_buffer_peer_hint (peer_ref->server, peer, message);
+            free (message);
+        }
     }
-    otr_irc_send_raw (p->server, peer, q);
+    otr_irc_send_raw (peer_ref->server, peer, ptr_query);
+
+end:
     free (account);
     free (peer);
     return WEECHAT_RC_OK;
@@ -354,23 +411,28 @@ otr_command_start (struct t_gui_buffer *buf, const struct t_otr_peer_ref *p)
  */
 
 int
-otr_command_finish (const struct t_otr_peer_ref *p)
+otr_command_finish (const struct t_otr_peer_ref *peer_ref)
 {
     char *account, *peer;
-    ConnContext *ctx;
+    ConnContext *ptr_context;
 
-    if (!otr_command_resolve (p, &account, &peer))
+    if (!otr_command_resolve (peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;
-    ctx = otr_context_find (account, peer);
-    if (ctx && ctx->msgstate != OTRL_MSGSTATE_PLAINTEXT)
+
+    ptr_context = otr_context_find (account, peer);
+    if (ptr_context && (ptr_context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
+    {
         otrl_message_disconnect_all_instances (otr_us, &otr_callback_ops, NULL,
-                                               account,
-                                               OTR_PROTOCOL, peer);
+                                               account, OTR_PROTOCOL, peer);
+    }
     else
+    {
         otr_buffer_peer_print (
-            p->server, peer, OTR_CONFIG_LEVEL_INFO,
+            peer_ref->server, peer, OTR_CONFIG_LEVEL_INFO,
             _("There is no private conversation to finish."));
+    }
     weechat_bar_item_update (OTR_BAR_ITEM);
+
     free (account);
     free (peer);
     return WEECHAT_RC_OK;
@@ -384,46 +446,63 @@ otr_command_finish (const struct t_otr_peer_ref *p)
  */
 
 int
-otr_command_status (const struct t_otr_peer_ref *p)
+otr_command_status (const struct t_otr_peer_ref *peer_ref)
 {
-    char *account, *peer;
-    ConnContext *ctx;
-    char own[OTRL_PRIVKEY_FPRINT_HUMAN_LEN], theirs[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
-    char *m;
+    char *account, *peer, *message;
+    char own_fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
+    char peer_fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
+    ConnContext *ptr_context;
 
-    if (!otr_command_resolve (p, &account, &peer))
+    if (!otr_command_resolve (peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;
-    ctx = otr_context_find (account, peer);
-    if (otr_context_encrypted (ctx))
+
+    ptr_context = otr_context_find (account, peer);
+    if (!otr_context_encrypted (ptr_context))
     {
-        otr_buffer_peer_print (p->server, peer, OTR_CONFIG_LEVEL_SUCCESS,
-                               _("This conversation is encrypted."));
-        strcpy (own, "?");
-        strcpy (theirs, "?");
-        otrl_privkey_fingerprint (otr_us, own, account, OTR_PROTOCOL);
-        if (ctx->active_fingerprint)
-            otrl_privkey_hash_to_human (theirs,
-                                        ctx->active_fingerprint->fingerprint);
-        m = otr_util_strf (_("Your fingerprint is: %s"), own);
-        if (m)
-            otr_buffer_peer_print (p->server, peer, OTR_CONFIG_LEVEL_INFO, m);
-        free (m);
-        m = otr_util_strf (_("Your peer's fingerprint is: %s"), theirs);
-        if (m)
-            otr_buffer_peer_print (p->server, peer, OTR_CONFIG_LEVEL_INFO, m);
-        free (m);
-        if (otr_context_verified (ctx))
-            otr_buffer_peer_print (p->server, peer, OTR_CONFIG_LEVEL_SUCCESS,
-                                   _("The peer's identity has been verified."));
-        else
-            otr_buffer_peer_print (
-                p->server, peer, OTR_CONFIG_LEVEL_WARNING,
-                _("You have not verified the peer's identity yet."));
+        otr_buffer_peer_print (
+            peer_ref->server, peer, OTR_CONFIG_LEVEL_WARNING,
+            _("This current conversation is not encrypted."));
+        goto end;
+    }
+
+    otr_buffer_peer_print (peer_ref->server, peer, OTR_CONFIG_LEVEL_SUCCESS,
+                           _("This conversation is encrypted."));
+    snprintf (own_fingerprint, sizeof (own_fingerprint), "?");
+    snprintf (peer_fingerprint, sizeof (peer_fingerprint), "?");
+    otrl_privkey_fingerprint (otr_us, own_fingerprint, account, OTR_PROTOCOL);
+    if (ptr_context->active_fingerprint)
+    {
+        otrl_privkey_hash_to_human (
+            peer_fingerprint, ptr_context->active_fingerprint->fingerprint);
+    }
+    weechat_asprintf (&message, _("Your fingerprint is: %s"), own_fingerprint);
+    if (message)
+    {
+        otr_buffer_peer_print (peer_ref->server, peer, OTR_CONFIG_LEVEL_INFO,
+                               message);
+        free (message);
+    }
+    weechat_asprintf (&message, _("Your peer's fingerprint is: %s"),
+                      peer_fingerprint);
+    if (message)
+    {
+        otr_buffer_peer_print (peer_ref->server, peer, OTR_CONFIG_LEVEL_INFO,
+                               message);
+        free (message);
+    }
+    if (otr_context_verified (ptr_context))
+    {
+        otr_buffer_peer_print (peer_ref->server, peer, OTR_CONFIG_LEVEL_SUCCESS,
+                               _("The peer's identity has been verified."));
     }
     else
+    {
         otr_buffer_peer_print (
-            p->server, peer, OTR_CONFIG_LEVEL_WARNING,
-            _("This current conversation is not encrypted."));
+            peer_ref->server, peer, OTR_CONFIG_LEVEL_WARNING,
+            _("You have not verified the peer's identity yet."));
+    }
+
+end:
     free (account);
     free (peer);
     return WEECHAT_RC_OK;
@@ -437,31 +516,40 @@ otr_command_status (const struct t_otr_peer_ref *p)
  */
 
 int
-otr_command_trust (const struct t_otr_peer_ref *p, int trust)
+otr_command_trust (const struct t_otr_peer_ref *peer_ref, int trust)
 {
-    char *account, *peer;
-    ConnContext *ctx;
-    char *m;
+    char *account, *peer, *message;
+    ConnContext *ptr_context;
 
-    if (!otr_command_resolve (p, &account, &peer))
+    if (!otr_command_resolve (peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;
-    ctx = otr_context_find (account, peer);
-    if (otr_context_encrypted (ctx) && ctx->active_fingerprint)
+
+    ptr_context = otr_context_find (account, peer);
+    if (otr_context_encrypted (ptr_context) && ptr_context->active_fingerprint)
     {
-        otrl_context_set_trust (ctx->active_fingerprint,
-                                trust ? "verified" : "");
+        otrl_context_set_trust (ptr_context->active_fingerprint,
+                                (trust) ? "verified" : "");
         otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
-        m = otr_util_strf (trust ? _("%s@%s is now authenticated.")
-                        : _("%s@%s is now de-authenticated."), peer, p->server);
-        if (m)
-            otr_buffer_peer_print (p->server, peer, OTR_CONFIG_LEVEL_INFO, m);
-        free (m);
+        weechat_asprintf (&message,
+                          (trust) ?
+                          _("%s@%s is now authenticated.") :
+                          _("%s@%s is now de-authenticated."),
+                          peer, peer_ref->server);
+        if (message)
+        {
+            otr_buffer_peer_print (peer_ref->server, peer,
+                                   OTR_CONFIG_LEVEL_INFO, message);
+            free (message);
+        }
         weechat_bar_item_update (OTR_BAR_ITEM);
     }
     else
-        otr_buffer_peer_print (p->server, peer, OTR_CONFIG_LEVEL_ERROR,
+    {
+        otr_buffer_peer_print (peer_ref->server, peer, OTR_CONFIG_LEVEL_ERROR,
                                _("No active fingerprint. Start an OTR "
-                               "conversation first: /otr start"));
+                                 "conversation first: /otr start"));
+    }
+
     free (account);
     free (peer);
     return WEECHAT_RC_OK;
@@ -475,114 +563,147 @@ otr_command_trust (const struct t_otr_peer_ref *p, int trust)
  */
 
 int
-otr_command_smp (struct t_gui_buffer *buf, char **tok, int n)
+otr_command_smp (struct t_gui_buffer *buffer, char **args, int num_args)
 {
-    struct t_otr_peer_ref p;
-    char *account = NULL, *peer = NULL;
-    const char *secret = NULL, *question = NULL, *action = tok[1];
-    ConnContext *ctx;
-    int rc = WEECHAT_RC_ERROR;
-    struct t_otr_peer_data *pd;
+    struct t_otr_peer_ref peer_ref;
+    struct t_otr_peer_data *ptr_peer_data;
+    char *account, *peer, *message;
+    const char *ptr_secret, *ptr_question, *ptr_action;
+    ConnContext *ptr_context;
+    int peer_ok;
 
-    if (strcmp (action, "respond") == 0)
+    ptr_action = args[1];
+    ptr_secret = NULL;
+    ptr_question = NULL;
+    peer_ok = 0;
+
+    if (strcmp (ptr_action, "respond") == 0)
     {
-        if (n == 3 && otr_command_peer_args (buf, tok + 2, 0, &p))
-            secret = tok[2];
-        else if (n == 5 && otr_command_peer_args (buf, tok + 2, 2, &p))
-            secret = tok[4];
-        else
-            return WEECHAT_RC_ERROR;
-    }
-    else if (strcmp (action, "ask") == 0)
-    {
-        if (n == 3 && otr_command_peer_args (buf, tok + 2, 0, &p))
-            secret = tok[2];
-        else if (n == 4 && otr_command_peer_args (buf, tok + 2, 0, &p))
+        if ((num_args == 3)
+            && otr_command_peer_args (buffer, args + 2, 0, &peer_ref))
         {
-            question = tok[2];
-            secret = tok[3];
+            ptr_secret = args[2];
+            peer_ok = 1;
         }
-        else if (n == 5 && otr_command_peer_args (buf, tok + 2, 2, &p))
-            secret = tok[4];
-        else if (n == 6 && otr_command_peer_args (buf, tok + 2, 2, &p))
+        else if ((num_args == 5)
+                 && otr_command_peer_args (buffer, args + 2, 2, &peer_ref))
         {
-            question = tok[4];
-            secret = tok[5];
+            ptr_secret = args[4];
+            peer_ok = 1;
         }
-        else
-            return WEECHAT_RC_ERROR;
     }
-    else if (strcmp (action, "abort") == 0)
+    else if (strcmp (ptr_action, "ask") == 0)
     {
-        if (n == 2 && otr_command_peer_args (buf, tok + 2, 0, &p))
-            ;
-        else if (n == 4 && otr_command_peer_args (buf, tok + 2, 2, &p))
-            ;
-        else
-            return WEECHAT_RC_ERROR;
+        if ((num_args == 3)
+            && otr_command_peer_args (buffer, args + 2, 0, &peer_ref))
+        {
+            ptr_secret = args[2];
+            peer_ok = 1;
+        }
+        else if ((num_args == 4)
+                 && otr_command_peer_args (buffer, args + 2, 0, &peer_ref))
+        {
+            ptr_question = args[2];
+            ptr_secret = args[3];
+            peer_ok = 1;
+        }
+        else if ((num_args == 5)
+                 && otr_command_peer_args (buffer, args + 2, 2, &peer_ref))
+        {
+            ptr_secret = args[4];
+            peer_ok = 1;
+        }
+        else if ((num_args == 6)
+                 && otr_command_peer_args (buffer, args + 2, 2, &peer_ref))
+        {
+            ptr_question = args[4];
+            ptr_secret = args[5];
+            peer_ok = 1;
+        }
     }
-    else
+    else if (strcmp (ptr_action, "abort") == 0)
+    {
+        if ((num_args == 2)
+            && otr_command_peer_args (buffer, args + 2, 0, &peer_ref))
+        {
+            peer_ok = 1;
+        }
+        else if ((num_args == 4)
+                 && otr_command_peer_args (buffer, args + 2, 2, &peer_ref))
+        {
+            peer_ok = 1;
+        }
+    }
+
+    if (!peer_ok)
         return WEECHAT_RC_ERROR;
 
-    if (!otr_command_resolve (&p, &account, &peer))
+    if (!otr_command_resolve (&peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;
-    ctx = otr_context_find (account, peer);
-    if (!otr_context_encrypted (ctx))
-    {
-        char *m = otr_util_strf (
-            _("There is currently no encrypted session with %s@%s."), peer,
-            p.server);
 
-        if (m)
-            otr_buffer_peer_print (p.server, peer, OTR_CONFIG_LEVEL_ERROR, m);
-        free (m);
-        rc = WEECHAT_RC_OK;
-        goto done;
-    }
-    pd = otr_context_peer_data_for (account, peer);
-
-    if (strcmp (action, "respond") == 0)
-        otrl_message_respond_smp (otr_us, &otr_callback_ops, NULL, ctx,
-                                  (const unsigned char *)secret,
-                                  strlen (secret));
-    else if (strcmp (action, "ask") == 0)
+    ptr_context = otr_context_find (account, peer);
+    if (!otr_context_encrypted (ptr_context))
     {
-        if (question)
+        weechat_asprintf (
+            &message,
+            _("There is currently no encrypted session with %s@%s."),
+            peer, peer_ref.server);
+        if (message)
         {
-            otrl_message_initiate_smp_q (otr_us, &otr_callback_ops, NULL, ctx,
-                                         question,
-                                         (const unsigned char *)secret,
-                                         strlen (secret));
-            otr_buffer_peer_print (p.server, peer, OTR_CONFIG_LEVEL_INFO,
+            otr_buffer_peer_print (peer_ref.server, peer,
+                                   OTR_CONFIG_LEVEL_ERROR, message);
+            free (message);
+        }
+        goto end;
+    }
+
+    ptr_peer_data = otr_context_peer_data_for (account, peer);
+
+    if (strcmp (ptr_action, "respond") == 0)
+    {
+        otrl_message_respond_smp (otr_us, &otr_callback_ops, NULL, ptr_context,
+                                  (const unsigned char *)ptr_secret,
+                                  strlen (ptr_secret));
+    }
+    else if (strcmp (ptr_action, "ask") == 0)
+    {
+        if (ptr_question)
+        {
+            otrl_message_initiate_smp_q (otr_us, &otr_callback_ops, NULL,
+                                         ptr_context, ptr_question,
+                                         (const unsigned char *)ptr_secret,
+                                         strlen (ptr_secret));
+            otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
                                    _("SMP question sent..."));
         }
         else
         {
-            otrl_message_initiate_smp (otr_us, &otr_callback_ops, NULL, ctx,
-                                       (const unsigned char *)secret,
-                                       strlen (secret));
-            otr_buffer_peer_print (p.server, peer, OTR_CONFIG_LEVEL_INFO,
+            otrl_message_initiate_smp (otr_us, &otr_callback_ops, NULL,
+                                       ptr_context,
+                                       (const unsigned char *)ptr_secret,
+                                       strlen (ptr_secret));
+            otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
                                    _("SMP challenge sent..."));
         }
-        if (pd)
-            pd->in_smp = 1;
+        if (ptr_peer_data)
+            ptr_peer_data->in_smp = 1;
     }
     else
     {
-        otrl_message_abort_smp (otr_us, &otr_callback_ops, NULL, ctx);
-        if (pd)
+        otrl_message_abort_smp (otr_us, &otr_callback_ops, NULL, ptr_context);
+        if (ptr_peer_data)
         {
-            pd->in_smp = 0;
-            pd->smp_question = 0;
+            ptr_peer_data->in_smp = 0;
+            ptr_peer_data->smp_question = 0;
         }
-        otr_buffer_peer_print (
-            p.server, peer, OTR_CONFIG_LEVEL_INFO, _("SMP aborted."));
+        otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
+                               _("SMP aborted."));
     }
-    rc = WEECHAT_RC_OK;
-done:
+
+end:
     free (account);
     free (peer);
-    return rc;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -592,61 +713,71 @@ done:
  */
 
 int
-otr_command_log (struct t_gui_buffer *buf, char **tok, int n)
+otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
 {
-    struct t_otr_peer_ref p;
+    struct t_otr_peer_ref peer_ref;
+    struct t_otr_peer_data *ptr_peer_data;
     char *account, *peer;
-    ConnContext *ctx;
-    struct t_otr_peer_data *pd;
+    ConnContext *ptr_context;
 
-    if (!otr_command_peer_args (buf, tok + 1, 0, &p))
+    if (!otr_command_peer_args (buffer, args + 1, 0, &peer_ref))
     {
         otr_buffer_print_str (NULL, OTR_CONFIG_LEVEL_ERROR,
                               _("OTR LOG: Not in an OTR session"));
         return WEECHAT_RC_OK;
     }
-    if (!otr_command_resolve (&p, &account, &peer))
-        return WEECHAT_RC_ERROR;
-    ctx = otr_context_find (account, peer);
-    pd = otr_context_peer_data_for (account, peer);
 
-    if (!otr_context_encrypted (ctx))
-        otr_buffer_peer_print (
-            p.server, peer, OTR_CONFIG_LEVEL_ERROR,
-            _("OTR LOG: Not in an OTR session"));
-    else if (n == 1)
+    if (!otr_command_resolve (&peer_ref, &account, &peer))
+        return WEECHAT_RC_ERROR;
+
+    ptr_context = otr_context_find (account, peer);
+    ptr_peer_data = otr_context_peer_data_for (account, peer);
+
+    if (!otr_context_encrypted (ptr_context))
     {
-        if (otr_log_buffer_is_logged (buf))
+        otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_ERROR,
+                               _("OTR LOG: Not in an OTR session"));
+    }
+    else if (num_args == 1)
+    {
+        if (otr_log_buffer_is_logged (buffer))
+        {
             otr_buffer_peer_print (
-                p.server, peer, OTR_CONFIG_LEVEL_WARNING,
+                peer_ref.server, peer, OTR_CONFIG_LEVEL_WARNING,
                 _("This conversation is currently being logged."));
+        }
         else
+        {
             otr_buffer_peer_print (
-                p.server, peer, OTR_CONFIG_LEVEL_INFO,
+                peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
                 _("This conversation is currently NOT being logged."));
+        }
     }
-    else if (strcmp (tok[1], "start") == 0 && !otr_log_buffer_is_logged (buf))
+    else if ((strcmp (args[1], "start") == 0)
+             && !otr_log_buffer_is_logged (buffer))
     {
-        if (pd && pd->prev_log == OTR_LOG_UNTOUCHED)
-            pd->prev_log = otr_log_buffer_log_level (buf);
-        otr_buffer_peer_print (p.server, peer, OTR_CONFIG_LEVEL_WARNING,
+        if (ptr_peer_data && (ptr_peer_data->prev_log == OTR_LOG_UNTOUCHED))
+            ptr_peer_data->prev_log = otr_log_buffer_log_level (buffer);
+        otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_WARNING,
                                _("From this point on, this conversation will "
-                               "be logged. Please keep in mind that by doing "
-                               "so you are potentially putting yourself and "
-                               "your interlocutor at risk. You can disable "
-                               "this by doing /otr log stop"));
-        weechat_command (buf, "/mute logger set 9");
+                                 "be logged. Please keep in mind that by doing "
+                                 "so you are potentially putting yourself and "
+                                 "your interlocutor at risk. You can disable "
+                                 "this by doing /otr log stop"));
+        weechat_command (buffer, "/mute logger set 9");
     }
-    else if (strcmp (tok[1], "stop") == 0 && otr_log_buffer_is_logged (buf))
+    else if ((strcmp (args[1], "stop") == 0)
+             && otr_log_buffer_is_logged (buffer))
     {
-        if (pd && pd->prev_log == OTR_LOG_UNTOUCHED)
-            pd->prev_log = otr_log_buffer_log_level (buf);
-        weechat_command (buf, "/mute logger set 0");
-        otr_buffer_peer_print (p.server, peer, OTR_CONFIG_LEVEL_INFO,
+        if (ptr_peer_data && (ptr_peer_data->prev_log == OTR_LOG_UNTOUCHED))
+            ptr_peer_data->prev_log = otr_log_buffer_log_level (buffer);
+        weechat_command (buffer, "/mute logger set 0");
+        otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
                                _("From this point on, this conversation will "
-                               "NOT be logged ANYMORE."));
+                                 "NOT be logged ANYMORE."));
     }
     weechat_bar_item_update (OTR_BAR_ITEM);
+
     free (account);
     free (peer);
     return WEECHAT_RC_OK;
@@ -664,8 +795,11 @@ otr_command_policy_known (const char *name)
     int i;
 
     for (i = 0; i < OTR_CONFIG_NUM_POLICIES; i++)
-        if (strcasecmp (otr_config_policies[i].name, name) == 0)
+    {
+        if (weechat_strcasecmp (otr_config_policies[i].name, name) == 0)
             return 1;
+    }
+
     return 0;
 }
 
@@ -677,10 +811,11 @@ otr_command_policy_known (const char *name)
  */
 
 int
-otr_command_value_ok (const char *v)
+otr_command_value_ok (const char *value)
 {
-    return strcasecmp (v, "on") == 0 || strcasecmp (v, "off") == 0
-        || strcasecmp (v, "toggle") == 0;
+    return ((weechat_strcasecmp (value, "on") == 0)
+            || (weechat_strcasecmp (value, "off") == 0)
+            || (weechat_strcasecmp (value, "toggle") == 0)) ? 1 : 0;
 }
 
 /*
@@ -689,20 +824,23 @@ otr_command_value_ok (const char *v)
  */
 
 void
-otr_command_print_policies_here (struct t_gui_buffer *buf, const char *text)
+otr_command_print_policies_here (struct t_gui_buffer *buffer, const char *text)
 {
-    struct t_otr_peer_ref p;
+    struct t_otr_peer_ref peer_ref;
     char *account, *peer;
 
-    if (otr_command_peer_args (buf, NULL, 0, &p)
-        && otr_command_resolve (&p, &account, &peer))
+    if (otr_command_peer_args (buffer, NULL, 0, &peer_ref)
+        && otr_command_resolve (&peer_ref, &account, &peer))
     {
-        otr_buffer_peer_print (p.server, peer, OTR_CONFIG_LEVEL_INFO, text);
+        otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
+                               text);
         free (account);
         free (peer);
     }
     else
+    {
         otr_buffer_print_str (NULL, OTR_CONFIG_LEVEL_INFO, text);
+    }
 }
 
 /*
@@ -713,21 +851,25 @@ otr_command_print_policies_here (struct t_gui_buffer *buf, const char *text)
  */
 
 int
-otr_command_policy (struct t_gui_buffer *buf, char **tok, int n)
+otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
 {
-    struct t_otr_peer_ref p;
-    char *account, *peer, *text, *cmd;
+    struct t_otr_peer_ref peer_ref;
+    char *account, *peer, *text, *command, nick[128];
 
-    if (n == 1 || (n == 2 && strcasecmp (tok[1], "default") == 0))
+    if ((num_args == 1)
+        || ((num_args == 2) && (weechat_strcasecmp (args[1], "default") == 0)))
     {
-        if (n == 1 && otr_command_peer_args (buf, NULL, 0, &p)
-            && otr_command_resolve (&p, &account, &peer))
+        if ((num_args == 1)
+            && otr_command_peer_args (buffer, NULL, 0, &peer_ref)
+            && otr_command_resolve (&peer_ref, &account, &peer))
         {
             text = otr_policy_format_peer (account, peer);
             if (text)
-                otr_buffer_peer_print (
-                    p.server, peer, OTR_CONFIG_LEVEL_INFO, text);
-            free (text);
+            {
+                otr_buffer_peer_print (peer_ref.server, peer,
+                                       OTR_CONFIG_LEVEL_INFO, text);
+                free (text);
+            }
             free (account);
             free (peer);
         }
@@ -735,50 +877,62 @@ otr_command_policy (struct t_gui_buffer *buf, char **tok, int n)
         {
             text = otr_policy_format_default ();
             if (text)
-                otr_command_print_policies_here (buf, text);
-            free (text);
+            {
+                otr_command_print_policies_here (buffer, text);
+                free (text);
+            }
         }
         return WEECHAT_RC_OK;
     }
-    if (n == 3 && otr_command_policy_known (tok[1])
-        && otr_command_value_ok (tok[2]))
-    {
-        if (!otr_command_peer_args (buf, NULL, 0, &p)
-            || !otr_command_resolve (&p, &account, &peer))
-            return WEECHAT_RC_ERROR;
-        {
-            char nick[128];
 
-            otr_irc_account_nick (account, nick, sizeof (nick));
-            cmd = otr_util_strf ("/set otr.policy.%s.%s.%s.%s %s", p.server,
-                                 nick,
-                                 peer, tok[1], tok[2]);
+    if ((num_args == 3) && otr_command_policy_known (args[1])
+        && otr_command_value_ok (args[2]))
+    {
+        if (!otr_command_peer_args (buffer, NULL, 0, &peer_ref)
+            || !otr_command_resolve (&peer_ref, &account, &peer))
+        {
+            return WEECHAT_RC_ERROR;
         }
-        if (cmd)
-            weechat_command (NULL, cmd);
-        free (cmd);
+        otr_irc_account_nick (account, nick, sizeof (nick));
+        weechat_asprintf (&command, "/set otr.policy.%s.%s.%s.%s %s",
+                          peer_ref.server, nick, peer, args[1], args[2]);
+        if (command)
+        {
+            weechat_command (NULL, command);
+            free (command);
+        }
         text = otr_policy_format_peer (account, peer);
         if (text)
-            otr_buffer_peer_print (p.server, peer, OTR_CONFIG_LEVEL_INFO, text);
-        free (text);
+        {
+            otr_buffer_peer_print (peer_ref.server, peer,
+                                   OTR_CONFIG_LEVEL_INFO, text);
+            free (text);
+        }
         free (account);
         free (peer);
         return WEECHAT_RC_OK;
     }
-    if (n == 4 && strcasecmp (tok[1], "default") == 0
-        && otr_command_policy_known (tok[2])
-        && otr_command_value_ok (tok[3]))
+
+    if ((num_args == 4) && (weechat_strcasecmp (args[1], "default") == 0)
+        && otr_command_policy_known (args[2])
+        && otr_command_value_ok (args[3]))
     {
-        cmd = otr_util_strf ("/set otr.policy.default.%s %s", tok[2], tok[3]);
-        if (cmd)
-            weechat_command (NULL, cmd);
-        free (cmd);
+        weechat_asprintf (&command, "/set otr.policy.default.%s %s",
+                          args[2], args[3]);
+        if (command)
+        {
+            weechat_command (NULL, command);
+            free (command);
+        }
         text = otr_policy_format_default ();
         if (text)
-            otr_command_print_policies_here (buf, text);
-        free (text);
+        {
+            otr_command_print_policies_here (buffer, text);
+            free (text);
+        }
         return WEECHAT_RC_OK;
     }
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -790,67 +944,97 @@ int
 otr_command_otr (const void *pointer, void *data, struct t_gui_buffer *buffer,
                  int argc, char **argv, char **argv_eol)
 {
-    char *tok[16];
-    int n = 0, i, rc = WEECHAT_RC_ERROR;
-    struct t_otr_peer_ref p;
-    const char *c;
+    struct t_otr_peer_ref peer_ref;
+    char *args[16];
+    const char *ptr_command;
+    int num_args, rc, i;
 
-    (void)pointer; (void)data; (void)argv;
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) argv;
+
+    num_args = 0;
+    rc = WEECHAT_RC_ERROR;
 
     if (argc > 1)
-        n = otr_command_split_args (argv_eol[1], tok, 16);
-    if (n <= 0)
+        num_args = otr_command_split_args (argv_eol[1], args, 16);
+    if (num_args <= 0)
     {
         otr_buffer_error_core (_("invalid arguments, see /help otr"));
         return WEECHAT_RC_ERROR;
     }
-    c = tok[0];
 
-    if ((n == 1 || n == 3)
-        && (strcmp (c, "start") == 0 || strcmp (c, "refresh") == 0))
+    ptr_command = args[0];
+
+    if (((num_args == 1) || (num_args == 3))
+        && ((strcmp (ptr_command, "start") == 0)
+            || (strcmp (ptr_command, "refresh") == 0)))
     {
-        if (otr_command_peer_args (buffer, tok + 1, n - 1, &p))
-            rc = otr_command_start (buffer, &p);
+        if (otr_command_peer_args (buffer, args + 1, num_args - 1, &peer_ref))
+            rc = otr_command_start (buffer, &peer_ref);
     }
-    else if ((n == 1 || n == 3)
-             && (strcmp (c, "finish") == 0 || strcmp (c, "end") == 0))
+    else if (((num_args == 1) || (num_args == 3))
+             && ((strcmp (ptr_command, "finish") == 0)
+                 || (strcmp (ptr_command, "end") == 0)))
     {
-        if (otr_command_peer_args (buffer, tok + 1, n - 1, &p))
-            rc = otr_command_finish (&p);
+        if (otr_command_peer_args (buffer, args + 1, num_args - 1, &peer_ref))
+            rc = otr_command_finish (&peer_ref);
     }
-    else if ((n == 1 || n == 3) && strcmp (c, "status") == 0)
+    else if (((num_args == 1) || (num_args == 3))
+             && (strcmp (ptr_command, "status") == 0))
     {
-        if (otr_command_peer_args (buffer, tok + 1, n - 1, &p))
-            rc = otr_command_status (&p);
+        if (otr_command_peer_args (buffer, args + 1, num_args - 1, &peer_ref))
+            rc = otr_command_status (&peer_ref);
     }
-    else if (n >= 2 && n <= 6 && strcmp (c, "smp") == 0)
-        rc = otr_command_smp (buffer, tok, n);
-    else if ((n == 1 || n == 3)
-             && (strcmp (c, "trust") == 0 || strcmp (c, "distrust") == 0))
+    else if ((num_args >= 2) && (num_args <= 6)
+             && (strcmp (ptr_command, "smp") == 0))
     {
-        if (otr_command_peer_args (buffer, tok + 1, n - 1, &p))
-            rc = otr_command_trust (&p, strcmp (c, "trust") == 0);
+        rc = otr_command_smp (buffer, args, num_args);
     }
-    else if ((n == 1 || n == 2) && strcmp (c, "log") == 0)
-        rc = otr_command_log (buffer, tok, n);
-    else if (n >= 1 && n <= 4 && strcmp (c, "policy") == 0)
-        rc = otr_command_policy (buffer, tok, n);
-    else if ((n == 1 || n == 2) && strcmp (c, "fingerprint") == 0)
+    else if (((num_args == 1) || (num_args == 3))
+             && ((strcmp (ptr_command, "trust") == 0)
+                 || (strcmp (ptr_command, "distrust") == 0)))
     {
-        if (n == 1)
+        if (otr_command_peer_args (buffer, args + 1, num_args - 1, &peer_ref))
+        {
+            rc = otr_command_trust (
+                &peer_ref, (strcmp (ptr_command, "trust") == 0) ? 1 : 0);
+        }
+    }
+    else if (((num_args == 1) || (num_args == 2))
+             && (strcmp (ptr_command, "log") == 0))
+    {
+        rc = otr_command_log (buffer, args, num_args);
+    }
+    else if ((num_args >= 1) && (num_args <= 4)
+             && (strcmp (ptr_command, "policy") == 0))
+    {
+        rc = otr_command_policy (buffer, args, num_args);
+    }
+    else if (((num_args == 1) || (num_args == 2))
+             && (strcmp (ptr_command, "fingerprint") == 0))
+    {
+        if (num_args == 1)
             otr_command_show_account_fingerprints ();
-        else if (strcmp (tok[1], "all") == 0)
+        else if (strcmp (args[1], "all") == 0)
             otr_command_show_peer_fingerprints (NULL);
         else
-            otr_command_show_peer_fingerprints (tok[1]);
+            otr_command_show_peer_fingerprints (args[1]);
         rc = WEECHAT_RC_OK;
     }
 
     if (rc == WEECHAT_RC_ERROR)
+    {
         otr_buffer_error_core (_("invalid arguments or not in a private "
-                               "buffer, see /help otr"));
-    for (i = 0; i < n; i++)
-        free (tok[i]);
+                                 "buffer, see /help otr"));
+    }
+
+    for (i = 0; i < num_args; i++)
+    {
+        free (args[i]);
+    }
+
     return rc;
 }
 

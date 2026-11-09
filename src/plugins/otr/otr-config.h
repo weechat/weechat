@@ -50,9 +50,18 @@ enum t_otr_config_look
     OTR_CONFIG_NUM_LOOK_OPTIONS,
 };
 
+struct t_otr_config_option_def
+{
+    const char *name;                  /* option name                       */
+    const char *description;           /* option description                */
+    const char *default_value;         /* default value                     */
+    int update_bar;                    /* 1 to update bar item on change    */
+};
+
 struct t_otr_policy
 {
-    const char *name, *desc;
+    const char *name;                  /* policy name                       */
+    const char *description;           /* policy description                */
 };
 
 #define OTR_CONFIG_NUM_POLICIES otr_config_policies_count
