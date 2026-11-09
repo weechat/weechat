@@ -16,11 +16,13 @@ set(CMAKE_SKIP_RPATH ON)
 
 # Compiler options
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsigned-char -fms-extensions -Wall -Wextra -Werror-implicit-function-declaration -Wformat -Werror=format-security")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -fms-extensions -Wall -Wextra")
+# C++ options are not added to CMAKE_CXX_FLAGS: C++ is not enabled yet, and
+# this would hide the flags from environment variable CXXFLAGS.
+add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:-fsigned-char;-fms-extensions;-Wall;-Wextra>")
 if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
   # Extra options specific to GCC
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wformat-overflow=2 -Wformat-truncation=2")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wformat-overflow=2 -Wformat-truncation=2")
+  add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:-Wformat-overflow=2;-Wformat-truncation=2>")
 endif()
 
 # Version
