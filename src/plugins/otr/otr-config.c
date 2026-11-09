@@ -7,7 +7,9 @@
 
 /* OTR configuration options (file otr.conf) */
 
+#include <stdlib.h>
 #include <string.h>
+#include <regex.h>
 
 #include "../weechat-plugin.h"
 #include "otr.h"
@@ -28,6 +30,10 @@ struct t_config_section *otr_config_section_policy = NULL;
 struct t_config_option *otr_config_general_debug = NULL;
 struct t_config_option *otr_config_general_hints = NULL;
 struct t_config_option *otr_config_general_no_send_tag_regex = NULL;
+
+/* Compiled regex of option otr.general.no_send_tag_regex */
+
+regex_t *otr_config_regex_no_send_tag = NULL;
 
 /* OTR config, color and look sections */
 
@@ -139,6 +145,69 @@ otr_config_change_bar_cb (const void *pointer, void *data,
     (void) option;
 
     weechat_bar_item_update (OTR_BAR_ITEM);
+}
+
+/*
+ * Free the compiled regex of option otr.general.no_send_tag_regex.
+ */
+
+void
+otr_config_free_regex_no_send_tag (void)
+{
+    if (otr_config_regex_no_send_tag)
+    {
+        regfree (otr_config_regex_no_send_tag);
+        free (otr_config_regex_no_send_tag);
+        otr_config_regex_no_send_tag = NULL;
+    }
+}
+
+/*
+ * Compile the regex of option otr.general.no_send_tag_regex (POSIX extended,
+ * case insensitive).
+ *
+ * If the option is empty or if the regex is invalid, there is no compiled
+ * regex (the whitespace tag is not restricted).
+ */
+
+void
+otr_config_compile_regex_no_send_tag (void)
+{
+    const char *ptr_regex;
+
+    otr_config_free_regex_no_send_tag ();
+
+    ptr_regex = weechat_config_string (otr_config_general_no_send_tag_regex);
+    if (!ptr_regex || !ptr_regex[0])
+        return;
+
+    otr_config_regex_no_send_tag = malloc (
+        sizeof (*otr_config_regex_no_send_tag));
+    if (!otr_config_regex_no_send_tag)
+        return;
+
+    if (regcomp (otr_config_regex_no_send_tag, ptr_regex,
+                 REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
+    {
+        free (otr_config_regex_no_send_tag);
+        otr_config_regex_no_send_tag = NULL;
+    }
+}
+
+/*
+ * Callback for changes on option otr.general.no_send_tag_regex.
+ */
+
+void
+otr_config_change_no_send_tag_regex_cb (const void *pointer, void *data,
+                                        struct t_config_option *option)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    otr_config_compile_regex_no_send_tag ();
 }
 
 /*
@@ -309,7 +378,8 @@ otr_config_init (void)
         otr_config_section_general, "no_send_tag_regex", "string",
         N_("do not OTR whitespace tag messages to nicks matching this regex "
            "(POSIX extended, case insensitive)"),
-        "^(alis|chanfix|global|.+serv|\\*.+)$", NULL);
+        "^(alis|chanfix|global|.+serv|\\*.+)$",
+        &otr_config_change_no_send_tag_regex_cb);
 
     /* Colors */
     for (i = 0; i < OTR_CONFIG_NUM_COLOR_OPTIONS; i++)
@@ -348,6 +418,8 @@ otr_config_init (void)
     }
 
     weechat_config_read (otr_config_file);
+
+    otr_config_compile_regex_no_send_tag ();
 
     return 1;
 }

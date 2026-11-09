@@ -8,6 +8,8 @@
 #ifndef WEECHAT_PLUGIN_OTR_CONFIG_H
 #define WEECHAT_PLUGIN_OTR_CONFIG_H
 
+#include <regex.h>
+
 #define OTR_CONFIG_NAME "otr"
 #define OTR_CONFIG_PRIO_NAME (TO_STR(OTR_PLUGIN_PRIORITY) "|" OTR_CONFIG_NAME)
 
@@ -74,9 +76,12 @@ extern struct t_config_section *otr_config_section_policy;
 extern struct t_config_option *otr_config_general_debug;
 extern struct t_config_option *otr_config_general_hints;
 extern struct t_config_option *otr_config_general_no_send_tag_regex;
+
+extern regex_t *otr_config_regex_no_send_tag;
 extern struct t_config_option *otr_config_color[OTR_CONFIG_NUM_COLOR_OPTIONS];
 extern struct t_config_option *otr_config_look[OTR_CONFIG_NUM_LOOK_OPTIONS];
 
+extern void otr_config_free_regex_no_send_tag (void);
 extern int otr_config_init (void);
 
 #endif /* WEECHAT_PLUGIN_OTR_CONFIG_H */
