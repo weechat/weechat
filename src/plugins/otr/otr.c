@@ -29,10 +29,10 @@
 #include "otr.h"
 #include "otr-bar-item.h"
 #include "otr-buffer.h"
-#include "otr-callback.h"
 #include "otr-command.h"
 #include "otr-completion.h"
 #include "otr-config.h"
+#include "otr-context.h"
 #include "otr-echo.h"
 #include "otr-log.h"
 #include "otr-modifier.h"
@@ -249,11 +249,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         for (i = 0; i < num_sessions; i++)
         {
             if (accounts[i] && usernames[i])
-            {
-                otrl_message_disconnect_all_instances (
-                    otr_us, &otr_callback_ops, NULL,
-                    accounts[i], OTR_PROTOCOL, usernames[i]);
-            }
+                otr_context_end_session (accounts[i], usernames[i], 0, 0);
             free (accounts[i]);
             free (usernames[i]);
         }
