@@ -109,7 +109,7 @@ otr_debug_libs_cb (const void *pointer, void *data, const char *signal,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    const char *ptr_base_dir;
+    char *data_dir;
     Dl_info dl_info;
 
     /* Make C compiler happy. */
@@ -151,12 +151,19 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
     }
 
-    ptr_base_dir = weechat_info_get ("weechat_data_dir", "");
-    if (!ptr_base_dir || !ptr_base_dir[0])
-        ptr_base_dir = weechat_info_get ("weechat_dir", "");
-    if (!ptr_base_dir || !ptr_base_dir[0])
+    data_dir = weechat_info_get ("weechat_data_dir", "");
+    if (!data_dir || !data_dir[0])
+    {
+        free (data_dir);
+        data_dir = weechat_info_get ("weechat_dir", "");
+    }
+    if (!data_dir || !data_dir[0])
+    {
+        free (data_dir);
         return WEECHAT_RC_ERROR;
-    weechat_asprintf (&otr_dir, "%s/otr", ptr_base_dir);
+    }
+    weechat_asprintf (&otr_dir, "%s/otr", data_dir);
+    free (data_dir);
     if (!otr_dir)
         return WEECHAT_RC_ERROR;
     weechat_asprintf (&otr_keyfile, "%s/otr.private_key", otr_dir);
