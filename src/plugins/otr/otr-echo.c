@@ -9,7 +9,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <time.h>
 
 #include "../weechat-plugin.h"
@@ -19,38 +18,24 @@
 #include "otr-util.h"
 
 
-/*
- * With the IRCv3 capability echo-message the server sends our own messages
- * back to us. That echo carries the ciphertext. We remember what we sent
- * (cipher line + the plaintext the user typed) and swap them back; echoes
- * of pure protocol traffic (query, AKE, fragments) are hidden.
- */
-
-#define OTR_ECHO_PENDING_MAX 32
-#define OTR_ECHO_PENDING_TTL 60
-
-struct t_otr_echo_pending
-{
-    char *server, *peer, *cipher, *plain;
-    time_t t;
-};
-
 struct t_otr_echo_pending otr_echo_pending_queue[OTR_ECHO_PENDING_MAX];
 int otr_echo_pending_count = 0;
+
 
 /*
  * Remove a pending message (by index) from the queue.
  */
 
 void
-otr_echo_pending_drop (int i)
+otr_echo_pending_drop (int index)
 {
-    free (otr_echo_pending_queue[i].server);
-    free (otr_echo_pending_queue[i].peer);
-    free (otr_echo_pending_queue[i].cipher);
-    free (otr_echo_pending_queue[i].plain);
-    memmove (&otr_echo_pending_queue[i], &otr_echo_pending_queue[i + 1],
-             (size_t)(otr_echo_pending_count - i - 1)
+    free (otr_echo_pending_queue[index].server);
+    free (otr_echo_pending_queue[index].peer);
+    free (otr_echo_pending_queue[index].cipher);
+    free (otr_echo_pending_queue[index].plain);
+    memmove (&otr_echo_pending_queue[index],
+             &otr_echo_pending_queue[index + 1],
+             (size_t)(otr_echo_pending_count - index - 1)
              * sizeof (struct t_otr_echo_pending));
     otr_echo_pending_count--;
     memset (&otr_echo_pending_queue[otr_echo_pending_count], 0,
@@ -65,7 +50,9 @@ void
 otr_echo_pending_clear_all (void)
 {
     while (otr_echo_pending_count > 0)
+    {
         otr_echo_pending_drop (0);
+    }
 }
 
 /*
@@ -75,12 +62,15 @@ otr_echo_pending_clear_all (void)
 void
 otr_echo_pending_purge (void)
 {
-    time_t now = time (NULL);
-    int i = 0;
+    time_t time_now;
+    int i;
 
+    time_now = time (NULL);
+
+    i = 0;
     while (i < otr_echo_pending_count)
     {
-        if (now - otr_echo_pending_queue[i].t > OTR_ECHO_PENDING_TTL)
+        if (time_now - otr_echo_pending_queue[i].date > OTR_ECHO_PENDING_TTL)
             otr_echo_pending_drop (i);
         else
             i++;
@@ -99,26 +89,30 @@ void
 otr_echo_pending_add (const char *server, const char *peer, const char *cipher,
                       const char *plain)
 {
-    struct t_otr_echo_pending *p;
+    struct t_otr_echo_pending *ptr_pending;
 
     otr_echo_pending_purge ();
     if (otr_echo_pending_count == OTR_ECHO_PENDING_MAX)
         otr_echo_pending_drop (0);
-    p = &otr_echo_pending_queue[otr_echo_pending_count];
-    p->server = otr_util_dupstr (server);
-    p->peer = otr_util_lc_dup (peer);
-    p->cipher = otr_util_dupstr (cipher);
-    p->plain = otr_util_dupstr (plain);
-    p->t = time (NULL);
-    if (p->server && p->peer && p->cipher && p->plain)
+
+    ptr_pending = &otr_echo_pending_queue[otr_echo_pending_count];
+    ptr_pending->server = otr_util_dupstr (server);
+    ptr_pending->peer = weechat_string_tolower (peer);
+    ptr_pending->cipher = otr_util_dupstr (cipher);
+    ptr_pending->plain = otr_util_dupstr (plain);
+    ptr_pending->date = time (NULL);
+    if (ptr_pending->server && ptr_pending->peer && ptr_pending->cipher
+        && ptr_pending->plain)
+    {
         otr_echo_pending_count++;
+    }
     else
     {
-        free (p->server);
-        free (p->peer);
-        free (p->cipher);
-        free (p->plain);
-        memset (p, 0, sizeof (*p));
+        free (ptr_pending->server);
+        free (ptr_pending->peer);
+        free (ptr_pending->cipher);
+        free (ptr_pending->plain);
+        memset (ptr_pending, 0, sizeof (*ptr_pending));
     }
 }
 
@@ -127,13 +121,18 @@ otr_echo_pending_add (const char *server, const char *peer, const char *cipher,
  */
 
 size_t
-otr_echo_trimmed_len (const char *s)
+otr_echo_trimmed_len (const char *string)
 {
-    size_t l = strlen (s);
+    size_t length;
 
-    while (l && (s[l - 1] == ' ' || s[l - 1] == '\t'))
-        l--;
-    return l;
+    length = strlen (string);
+    while ((length > 0)
+           && ((string[length - 1] == ' ') || (string[length - 1] == '\t')))
+    {
+        length--;
+    }
+
+    return length;
 }
 
 /*
@@ -149,24 +148,31 @@ char *
 otr_echo_pending_take (const char *server, const char *target,
                        const char *cipher)
 {
+    char *plain;
+    size_t cipher_length;
     int i;
-    size_t cl = otr_echo_trimmed_len (cipher);
-    char *res;
 
     otr_echo_pending_purge ();
+
+    cipher_length = otr_echo_trimmed_len (cipher);
+
     for (i = 0; i < otr_echo_pending_count; i++)
     {
-        if (strcmp (otr_echo_pending_queue[i].server, server) == 0
-            && strcasecmp (otr_echo_pending_queue[i].peer, target) == 0
-            && otr_echo_trimmed_len (otr_echo_pending_queue[i].cipher) == cl
-            && memcmp (otr_echo_pending_queue[i].cipher, cipher, cl) == 0)
+        if ((strcmp (otr_echo_pending_queue[i].server, server) == 0)
+            && (weechat_strcasecmp (otr_echo_pending_queue[i].peer,
+                                    target) == 0)
+            && (otr_echo_trimmed_len (
+                    otr_echo_pending_queue[i].cipher) == cipher_length)
+            && (memcmp (otr_echo_pending_queue[i].cipher, cipher,
+                        cipher_length) == 0))
         {
-            res = otr_echo_pending_queue[i].plain;
+            plain = otr_echo_pending_queue[i].plain;
             otr_echo_pending_queue[i].plain = NULL;
             otr_echo_pending_drop (i);
-            return res;
+            return plain;
         }
     }
+
     return NULL;
 }
 
@@ -182,22 +188,31 @@ otr_echo_pending_take (const char *server, const char *target,
  */
 
 char *
-otr_echo_replace (const char *server, const char *string, const char *host,
+otr_echo_replace (const char *server, const char *message, const char *host,
                   const char *target, const char *text)
 {
-    char *plain, *tags = NULL, *res;
-    const char *sp;
+    char *plain, *tags, *result;
+    const char *ptr_space;
 
     if (strncmp (text, "?OTR", 4) != 0)
         return NULL;
+
     plain = otr_echo_pending_take (server, target, text);
     if (!plain)
         return strdup ("");
-    if (string[0] == '@' && (sp = strchr (string, ' ')) != NULL)
-        tags = strndup (string, (size_t)(sp - string) + 1);
-    res = otr_message_build_in_privmsgs (tags ? tags : "", host, target, plain,
-                                         "", 1);
+
+    tags = NULL;
+    if (message[0] == '@')
+    {
+        ptr_space = strchr (message, ' ');
+        if (ptr_space)
+            tags = weechat_strndup (message, ptr_space - message + 1);
+    }
+    result = otr_message_build_in_privmsgs ((tags) ? tags : "", host, target,
+                                            plain, "", 1);
+
     free (tags);
     free (plain);
-    return res ? res : strdup ("");
+
+    return (result) ? result : strdup ("");
 }

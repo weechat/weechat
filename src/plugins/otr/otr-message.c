@@ -10,7 +10,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 
 #include "../weechat-plugin.h"
 #include "otr.h"
@@ -25,11 +24,14 @@
  */
 
 int
-otr_message_is_ctcp (const char *t)
+otr_message_is_ctcp (const char *message)
 {
-    size_t l = strlen (t);
+    size_t length;
 
-    return l >= 2 && t[0] == '\x01' && t[l - 1] == '\x01';
+    length = strlen (message);
+
+    return ((length >= 2) && (message[0] == '\x01')
+            && (message[length - 1] == '\x01')) ? 1 : 0;
 }
 
 /*
@@ -39,9 +41,10 @@ otr_message_is_ctcp (const char *t)
  */
 
 int
-otr_message_is_action (const char *t)
+otr_message_is_action (const char *message)
 {
-    return otr_message_is_ctcp (t) && strncmp (t, "\x01" "ACTION ", 8) == 0;
+    return (otr_message_is_ctcp (message)
+            && (strncmp (message, "\x01" "ACTION ", 8) == 0)) ? 1 : 0;
 }
 
 /*
@@ -52,14 +55,19 @@ otr_message_is_action (const char *t)
  */
 
 char *
-otr_message_plain_from_irc (const char *t)
+otr_message_plain_from_irc (const char *message)
 {
-    size_t l;
+    char *result;
+    size_t length;
 
-    if (!otr_message_is_action (t))
-        return otr_util_dupstr (t);
-    l = strlen (t);
-    return otr_util_strf (OTR_ACTION_PREFIX "%.*s", (int)(l - 9), t + 8);
+    if (!otr_message_is_action (message))
+        return otr_util_dupstr (message);
+
+    length = strlen (message);
+    weechat_asprintf (&result, OTR_ACTION_PREFIX "%.*s",
+                      (int)(length - 9), message + 8);
+
+    return result;
 }
 
 /*
@@ -69,63 +77,75 @@ otr_message_plain_from_irc (const char *t)
  */
 
 char *
-otr_message_html_escape (const char *in)
+otr_message_html_escape (const char *string)
 {
-    struct t_otr_sbuf b;
+    char **result;
+    const char *ptr_string;
 
-    otr_util_sb_init (&b);
-    for (; *in; in++)
+    result = weechat_string_dyn_alloc (256);
+    if (!result)
+        return NULL;
+
+    for (ptr_string = string; ptr_string[0]; ptr_string++)
     {
-        if (*in == '&')
-            otr_util_sb_adds (&b, "&amp;");
-        else if (*in == '<')
-            otr_util_sb_adds (&b, "&lt;");
-        else if (*in == '>')
-            otr_util_sb_adds (&b, "&gt;");
+        if (ptr_string[0] == '&')
+            weechat_string_dyn_concat (result, "&amp;", -1);
+        else if (ptr_string[0] == '<')
+            weechat_string_dyn_concat (result, "&lt;", -1);
+        else if (ptr_string[0] == '>')
+            weechat_string_dyn_concat (result, "&gt;", -1);
         else
-            otr_util_sb_addc (&b, *in);
+            weechat_string_dyn_concat (result, ptr_string, 1);
     }
-    return otr_util_sb_take (&b);
+
+    return weechat_string_dyn_free (result, 0);
 }
 
 /*
- * Add a Unicode code point encoded in UTF-8 to a string buffer (code point 0
+ * Add a Unicode code point encoded in UTF-8 to a dynamic string (code point 0
  * and invalid code points are ignored).
  */
 
 void
-otr_message_utf8_append (struct t_otr_sbuf *b, unsigned long cp)
+otr_message_utf8_append (char **string, unsigned long code_point)
 {
-    char t[4];
+    char utf_char[5];
 
-    if (cp == 0)
+    if (code_point == 0)
         return;
-    if (cp < 0x80)
+
+    if (code_point < 0x80)
     {
-        t[0] = (char)cp;
-        otr_util_sb_add (b, t, 1);
+        utf_char[0] = (char)code_point;
+        utf_char[1] = '\0';
     }
-    else if (cp < 0x800)
+    else if (code_point < 0x800)
     {
-        t[0] = (char)(0xC0 | (cp >> 6));
-        t[1] = (char)(0x80 | (cp & 0x3F));
-        otr_util_sb_add (b, t, 2);
+        utf_char[0] = (char)(0xC0 | (code_point >> 6));
+        utf_char[1] = (char)(0x80 | (code_point & 0x3F));
+        utf_char[2] = '\0';
     }
-    else if (cp < 0x10000)
+    else if (code_point < 0x10000)
     {
-        t[0] = (char)(0xE0 | (cp >> 12));
-        t[1] = (char)(0x80 | ((cp >> 6) & 0x3F));
-        t[2] = (char)(0x80 | (cp & 0x3F));
-        otr_util_sb_add (b, t, 3);
+        utf_char[0] = (char)(0xE0 | (code_point >> 12));
+        utf_char[1] = (char)(0x80 | ((code_point >> 6) & 0x3F));
+        utf_char[2] = (char)(0x80 | (code_point & 0x3F));
+        utf_char[3] = '\0';
     }
-    else if (cp <= 0x10FFFF)
+    else if (code_point <= 0x10FFFF)
     {
-        t[0] = (char)(0xF0 | (cp >> 18));
-        t[1] = (char)(0x80 | ((cp >> 12) & 0x3F));
-        t[2] = (char)(0x80 | ((cp >> 6) & 0x3F));
-        t[3] = (char)(0x80 | (cp & 0x3F));
-        otr_util_sb_add (b, t, 4);
+        utf_char[0] = (char)(0xF0 | (code_point >> 18));
+        utf_char[1] = (char)(0x80 | ((code_point >> 12) & 0x3F));
+        utf_char[2] = (char)(0x80 | ((code_point >> 6) & 0x3F));
+        utf_char[3] = (char)(0x80 | (code_point & 0x3F));
+        utf_char[4] = '\0';
     }
+    else
+    {
+        return;
+    }
+
+    weechat_string_dyn_concat (string, utf_char, -1);
 }
 
 /*
@@ -137,189 +157,245 @@ otr_message_utf8_append (struct t_otr_sbuf *b, unsigned long cp)
  */
 
 char *
-otr_message_html_filter (const char *in)
+otr_message_html_filter (const char *html)
 {
-    struct t_otr_sbuf b;
-    char link[1024];
-    size_t linkstart = 0;
-    const char *p = in, *gt, *semi, *h;
-    char name[16];
-    int closing, k;
+    char **result, link[1024], tag_name[16], entity[16], *tag, *ptr_end;
+    char quote;
+    const char *ptr_html, *ptr_tag_end, *ptr_semicolon, *ptr_href;
+    const char *ptr_tag_name, *ptr_tag;
+    size_t link_start, link_length, entity_length;
+    unsigned long code_point;
+    int closing, i;
+
+    result = weechat_string_dyn_alloc (256);
+    if (!result)
+        return NULL;
 
     link[0] = '\0';
-    otr_util_sb_init (&b);
-    while (*p)
+    link_start = 0;
+    ptr_html = html;
+
+    while (ptr_html[0])
     {
-        if (*p == '<' && (isalpha ((unsigned char)p[1]) || p[1] == '/'
-                          || p[1] == '!')
-            && (gt = strchr (p, '>')) != NULL)
+        ptr_tag_end = NULL;
+        if ((ptr_html[0] == '<')
+            && (isalpha ((unsigned char)ptr_html[1]) || (ptr_html[1] == '/')
+                || (ptr_html[1] == '!')))
         {
-            const char *t = p + 1;
+            ptr_tag_end = strchr (ptr_html, '>');
+        }
+        ptr_semicolon = NULL;
+        if (!ptr_tag_end && (ptr_html[0] == '&'))
+        {
+            ptr_semicolon = strchr (ptr_html, ';');
+            if (ptr_semicolon
+                && (((ptr_semicolon - ptr_html) > 10)
+                    || ((ptr_semicolon - ptr_html) <= 1)))
+            {
+                ptr_semicolon = NULL;
+            }
+        }
+
+        if (ptr_tag_end)
+        {
+            /* HTML tag. */
+            ptr_tag_name = ptr_html + 1;
             closing = 0;
-            if (*t == '/')
+            if (ptr_tag_name[0] == '/')
             {
                 closing = 1;
-                t++;
+                ptr_tag_name++;
             }
-            for (k = 0; k < (int)sizeof (name) - 1 && isalpha ((unsigned char)t[k]);
-                 k++)
-                name[k] = (char)tolower ((unsigned char)t[k]);
-            name[k] = '\0';
+            for (i = 0; (i < (int)sizeof (tag_name) - 1)
+                     && isalpha ((unsigned char)ptr_tag_name[i]); i++)
+            {
+                tag_name[i] = (char)tolower ((unsigned char)ptr_tag_name[i]);
+            }
+            tag_name[i] = '\0';
 
-            if (!closing && strcmp (name, "br") == 0)
-                otr_util_sb_addc (&b, '\n');
-            else if (!closing && strcmp (name, "a") == 0)
+            if (!closing && (strcmp (tag_name, "br") == 0))
+            {
+                weechat_string_dyn_concat (result, "\n", -1);
+            }
+            else if (!closing && (strcmp (tag_name, "a") == 0))
             {
                 /* Look for href="..." inside the tag. */
-                char *content = strndup (p, (size_t)(gt - p));
-
-                if (content)
+                tag = weechat_strndup (ptr_html, ptr_tag_end - ptr_html);
+                if (tag)
                 {
-                    h = NULL;
-                    for (const char *q = content; *q; q++)
-                        if (strncasecmp (q, "href=", 5) == 0)
+                    ptr_href = NULL;
+                    for (ptr_tag = tag; ptr_tag[0]; ptr_tag++)
+                    {
+                        if (weechat_strncasecmp (ptr_tag, "href=", 5) == 0)
                         {
-                            h = q + 5;
+                            ptr_href = ptr_tag + 5;
                             break;
                         }
-                    if (h)
+                    }
+                    if (ptr_href)
                     {
-                        char quote = (*h == '"' || *h == '\'') ? *h : 0;
-                        size_t n = 0;
-
+                        quote = 0;
+                        if ((ptr_href[0] == '"') || (ptr_href[0] == '\''))
+                            quote = ptr_href[0];
                         if (quote)
-                            h++;
-                        while (h[n] && (quote ? h[n] != quote
-                                              : !isspace ((unsigned char)h[n]))
-                               && n < sizeof (link) - 1)
-                            n++;
-                        memcpy (link, h, n);
-                        link[n] = '\0';
-                        if (n > 0)
+                            ptr_href++;
+                        link_length = 0;
+                        while (ptr_href[link_length]
+                               && (link_length < sizeof (link) - 1))
                         {
-                            otr_util_sb_addc (&b, '[');
-                            linkstart = b.len;
+                            if (quote && (ptr_href[link_length] == quote))
+                                break;
+                            if (!quote
+                                && isspace (
+                                    (unsigned char)ptr_href[link_length]))
+                            {
+                                break;
+                            }
+                            link_length++;
+                        }
+                        memcpy (link, ptr_href, link_length);
+                        link[link_length] = '\0';
+                        if (link_length > 0)
+                        {
+                            weechat_string_dyn_concat (result, "[", -1);
+                            link_start = strlen (*result);
                         }
                     }
-                    free (content);
+                    free (tag);
                 }
             }
-            else if (closing && strcmp (name, "a") == 0 && link[0])
+            else if (closing && (strcmp (tag_name, "a") == 0) && link[0])
             {
-                size_t ll = strlen (link);
-
-                if (b.s && b.len - linkstart == ll
-                    && memcmp (b.s + linkstart, link, ll) == 0)
-                    otr_util_sb_addc (&b, ']');
+                link_length = strlen (link);
+                if ((strlen (*result) - link_start == link_length)
+                    && (memcmp (*result + link_start, link, link_length) == 0))
+                {
+                    weechat_string_dyn_concat (result, "]", -1);
+                }
                 else
                 {
-                    otr_util_sb_adds (&b, "](");
-                    otr_util_sb_adds (&b, link);
-                    otr_util_sb_addc (&b, ')');
+                    weechat_string_dyn_concat (result, "](", -1);
+                    weechat_string_dyn_concat (result, link, -1);
+                    weechat_string_dyn_concat (result, ")", -1);
                 }
                 link[0] = '\0';
             }
-            p = gt + 1;
+            ptr_html = ptr_tag_end + 1;
         }
-        else if (*p == '&' && (semi = strchr (p, ';')) != NULL
-                 && semi - p <= 10 && semi - p > 1)
+        else if (ptr_semicolon)
         {
-            size_t l = (size_t)(semi - p - 1);
-            char ent[16];
-
-            memcpy (ent, p + 1, l);
-            ent[l] = '\0';
-            if (ent[0] == '#')
+            /* HTML entity. */
+            entity_length = ptr_semicolon - ptr_html - 1;
+            memcpy (entity, ptr_html + 1, entity_length);
+            entity[entity_length] = '\0';
+            if (entity[0] == '#')
             {
-                char *end;
-                unsigned long cp = (ent[1] == 'x' || ent[1] == 'X')
-                    ? strtoul (ent + 2, &end, 16) : strtoul (ent + 1, &end, 10);
-
-                if (*end == '\0' && l > 1 && cp > 0)
-                    otr_message_utf8_append (&b, cp);
+                code_point = ((entity[1] == 'x') || (entity[1] == 'X')) ?
+                    strtoul (entity + 2, &ptr_end, 16) :
+                    strtoul (entity + 1, &ptr_end, 10);
+                if (!ptr_end[0] && (entity_length > 1) && (code_point > 0))
+                {
+                    otr_message_utf8_append (result, code_point);
+                }
                 else
-                    otr_util_sb_add (&b, p, (size_t)(semi - p) + 1);
+                {
+                    weechat_string_dyn_concat (
+                        result, ptr_html, ptr_semicolon - ptr_html + 1);
+                }
             }
-            else if (strcmp (ent, "amp") == 0)
-                otr_util_sb_addc (&b, '&');
-            else if (strcmp (ent, "lt") == 0)
-                otr_util_sb_addc (&b, '<');
-            else if (strcmp (ent, "gt") == 0)
-                otr_util_sb_addc (&b, '>');
-            else if (strcmp (ent, "quot") == 0)
-                otr_util_sb_addc (&b, '"');
-            else if (strcmp (ent, "apos") == 0)
-                otr_util_sb_addc (&b, '\'');
-            else if (strcmp (ent, "nbsp") == 0)
-                otr_util_sb_addc (&b, ' ');
+            else if (strcmp (entity, "amp") == 0)
+            {
+                weechat_string_dyn_concat (result, "&", -1);
+            }
+            else if (strcmp (entity, "lt") == 0)
+            {
+                weechat_string_dyn_concat (result, "<", -1);
+            }
+            else if (strcmp (entity, "gt") == 0)
+            {
+                weechat_string_dyn_concat (result, ">", -1);
+            }
+            else if (strcmp (entity, "quot") == 0)
+            {
+                weechat_string_dyn_concat (result, "\"", -1);
+            }
+            else if (strcmp (entity, "apos") == 0)
+            {
+                weechat_string_dyn_concat (result, "'", -1);
+            }
+            else if (strcmp (entity, "nbsp") == 0)
+            {
+                weechat_string_dyn_concat (result, " ", -1);
+            }
             else
-                otr_util_sb_add (&b, p, (size_t)(semi - p) + 1);
-            p = semi + 1;
+            {
+                weechat_string_dyn_concat (
+                    result, ptr_html, ptr_semicolon - ptr_html + 1);
+            }
+            ptr_html = ptr_semicolon + 1;
         }
         else
         {
-            otr_util_sb_addc (&b, *p);
-            p++;
+            weechat_string_dyn_concat (result, ptr_html, 1);
+            ptr_html++;
         }
     }
-    return otr_util_sb_take (&b);
+
+    return weechat_string_dyn_free (result, 0);
 }
 
 /*
- * Add one decrypted line as an IRC PRIVMSG to a string buffer.
+ * Add one decrypted line as an IRC PRIVMSG to a dynamic string.
  *
  * CTCP markers that a peer could smuggle in are removed; only a well-formed
  * "/me" (or CTCP ACTION) becomes a CTCP ACTION.
  */
 
 void
-otr_message_add_decrypted_line (struct t_otr_sbuf *out, const char *tags,
+otr_message_add_decrypted_line (char **messages, const char *tags,
                                 const char *from, const char *target,
-                                const char *line, size_t len)
+                                const char *line, size_t length)
 {
-    struct t_otr_sbuf body;
-    const char *p = line, *end = line + len;
-    int action = 0;
-    char *text;
+    const char *ptr_line, *ptr_end;
+    int action;
 
-    if (len >= 4 && strncmp (line, OTR_ACTION_PREFIX, 4) == 0)
+    ptr_line = line;
+    ptr_end = line + length;
+    action = 0;
+
+    if ((length >= 4) && (strncmp (line, OTR_ACTION_PREFIX, 4) == 0))
     {
         action = 1;
-        p += 4;
+        ptr_line += 4;
     }
-    else if (len >= 9 && strncmp (line, "\x01" "ACTION ", 8) == 0
-             && line[len - 1] == '\x01')
+    else if ((length >= 9) && (strncmp (line, "\x01" "ACTION ", 8) == 0)
+             && (line[length - 1] == '\x01'))
     {
         action = 1;
-        p += 8;
-        end--;
+        ptr_line += 8;
+        ptr_end--;
     }
 
-    otr_util_sb_init (&body);
-    for (; p < end; p++)
-        if (*p != '\x01' && *p != '\r' && *p != '\0')
-            otr_util_sb_addc (&body, *p);
-    text = otr_util_sb_take (&body);
-    if (!text)
+    if ((*messages)[0])
+        weechat_string_dyn_concat (messages, "\r\n", -1);
+    weechat_string_dyn_concat (messages, tags, -1);
+    weechat_string_dyn_concat (messages, ":", -1);
+    weechat_string_dyn_concat (messages, from, -1);
+    weechat_string_dyn_concat (messages, " PRIVMSG ", -1);
+    weechat_string_dyn_concat (messages, target, -1);
+    weechat_string_dyn_concat (messages, " :", -1);
+    if (action)
+        weechat_string_dyn_concat (messages, "\x01" "ACTION ", -1);
+    for (; ptr_line < ptr_end; ptr_line++)
     {
-        out->err = 1;
-        return;
+        if ((ptr_line[0] != '\x01') && (ptr_line[0] != '\r')
+            && (ptr_line[0] != '\0'))
+        {
+            weechat_string_dyn_concat (messages, ptr_line, 1);
+        }
     }
-
-    if (out->len)
-        otr_util_sb_adds (out, "\r\n");
-    otr_util_sb_adds (out, tags);
-    otr_util_sb_addc (out, ':');
-    otr_util_sb_adds (out, from);
-    otr_util_sb_adds (out, " PRIVMSG ");
-    otr_util_sb_adds (out, target);
-    otr_util_sb_adds (out, " :");
     if (action)
-        otr_util_sb_adds (out, "\x01" "ACTION ");
-    otr_util_sb_adds (out, text);
-    if (action)
-        otr_util_sb_addc (out, '\x01');
-    free (text);
+        weechat_string_dyn_concat (messages, "\x01", -1);
 }
 
 /*
@@ -335,48 +411,55 @@ otr_message_add_decrypted_line (struct t_otr_sbuf *out, const char *tags,
 
 char *
 otr_message_build_in_privmsgs (const char *tags, const char *from,
-                               const char *target, const char *msg,
+                               const char *target, const char *message,
                                const char *line_prefix, int decrypted)
 {
-    struct t_otr_sbuf out;
-    const char *p = msg, *nl;
-    size_t l;
+    char **result;
+    const char *ptr_message, *ptr_newline, *ptr_char;
+    size_t length;
 
-    otr_util_sb_init (&out);
-    while (*p)
+    result = weechat_string_dyn_alloc (256);
+    if (!result)
+        return NULL;
+
+    ptr_message = message;
+    while (ptr_message[0])
     {
-        nl = strchr (p, '\n');
-        l = nl ? (size_t)(nl - p) : strlen (p);
-        if (l && p[l - 1] == '\r')
-            l--;
+        ptr_newline = strchr (ptr_message, '\n');
+        length = (ptr_newline) ?
+            (size_t)(ptr_newline - ptr_message) : strlen (ptr_message);
+        if ((length > 0) && (ptr_message[length - 1] == '\r'))
+            length--;
         if (decrypted)
-            otr_message_add_decrypted_line (&out, tags, from, target, p, l);
+        {
+            otr_message_add_decrypted_line (result, tags, from, target,
+                                            ptr_message, length);
+        }
         else
         {
-            struct t_otr_sbuf ln;
-            char *t;
-
-            otr_util_sb_init (&ln);
-            otr_util_sb_adds (&ln, line_prefix);
-            otr_util_sb_add (&ln, p, l);
-            t = otr_util_sb_take (&ln);
-            if (t)
+            if ((*result)[0])
+                weechat_string_dyn_concat (result, "\r\n", -1);
+            weechat_string_dyn_concat (result, tags, -1);
+            weechat_string_dyn_concat (result, ":", -1);
+            weechat_string_dyn_concat (result, from, -1);
+            weechat_string_dyn_concat (result, " PRIVMSG ", -1);
+            weechat_string_dyn_concat (result, target, -1);
+            weechat_string_dyn_concat (result, " :", -1);
+            for (ptr_char = line_prefix; ptr_char[0]; ptr_char++)
             {
-                if (out.len)
-                    otr_util_sb_adds (&out, "\r\n");
-                otr_util_sb_adds (&out, tags);
-                otr_util_sb_addc (&out, ':');
-                otr_util_sb_adds (&out, from);
-                otr_util_sb_adds (&out, " PRIVMSG ");
-                otr_util_sb_adds (&out, target);
-                otr_util_sb_adds (&out, " :");
-                for (char *q = t; *q; q++)
-                    if (*q != '\r')
-                        otr_util_sb_addc (&out, *q);
-                free (t);
+                if (ptr_char[0] != '\r')
+                    weechat_string_dyn_concat (result, ptr_char, 1);
+            }
+            for (ptr_char = ptr_message; ptr_char < ptr_message + length;
+                 ptr_char++)
+            {
+                if ((ptr_char[0] != '\r') && (ptr_char[0] != '\0'))
+                    weechat_string_dyn_concat (result, ptr_char, 1);
             }
         }
-        p = nl ? nl + 1 : p + strlen (p);
+        ptr_message = (ptr_newline) ?
+            ptr_newline + 1 : ptr_message + strlen (ptr_message);
     }
-    return otr_util_sb_take (&out);
+
+    return weechat_string_dyn_free (result, 0);
 }

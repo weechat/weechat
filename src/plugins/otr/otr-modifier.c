@@ -10,7 +10,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 
 #include "../weechat-plugin.h"
 #include "otr.h"
@@ -33,25 +32,29 @@
  */
 
 int
-otr_modifier_is_otr_query (const char *s)
+otr_modifier_is_otr_query (const char *string)
 {
-    const char *p = s, *q;
+    const char *ptr_string, *ptr_query;
 
-    while ((p = strstr (p, "?OTR")) != NULL)
+    ptr_string = string;
+    while ((ptr_string = strstr (ptr_string, "?OTR")) != NULL)
     {
-        q = p + 4;
-        if (*q == '?')
+        ptr_query = ptr_string + 4;
+        if (ptr_query[0] == '?')
             return 1;
-        if (*q == 'v')
+        if (ptr_query[0] == 'v')
         {
-            q++;
-            while (isalnum ((unsigned char)*q))
-                q++;
-            if (*q == '?')
+            ptr_query++;
+            while (isalnum ((unsigned char)ptr_query[0]))
+            {
+                ptr_query++;
+            }
+            if (ptr_query[0] == '?')
                 return 1;
         }
-        p += 4;
+        ptr_string += 4;
     }
+
     return 0;
 }
 
@@ -62,58 +65,93 @@ otr_modifier_is_otr_query (const char *s)
  */
 
 int
-otr_modifier_has_otr_end (const char *s)
+otr_modifier_has_otr_end (const char *string)
 {
-    size_t l = strlen (s);
+    size_t length;
 
-    return l > 0 && (s[l - 1] == '.' || s[l - 1] == ',');
+    length = strlen (string);
+
+    return ((length > 0)
+            && ((string[length - 1] == '.')
+                || (string[length - 1] == ','))) ? 1 : 0;
 }
 
 /*
  * Add a received line to the assembly buffer of a peer (OTR messages can be
  * split over several IRC lines).
  *
- * Return 1 if a complete message is available (copied in *out, which must be
- * freed after use), 0 if more lines are expected or if an allocation error
+ * Return 1 if a complete message is available (copied in *message, which must
+ * be freed after use), 0 if more lines are expected or if an allocation error
  * occurred.
  */
 
 int
-otr_modifier_assemble (struct t_otr_peer_data *pd, const char *line, char **out)
+otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
+                       char **message)
 {
-    size_t l = strlen (line);
-    char *nb;
+    char *new_assembly;
+    size_t length;
 
-    if (!pd->asm_buf && strncmp (line, "?OTR", 4) != 0)
+    length = strlen (line);
+
+    if (!peer_data->assembly && (strncmp (line, "?OTR", 4) != 0))
     {
-        *out = otr_util_dupstr (line);
+        *message = otr_util_dupstr (line);
         return 1;
     }
-    if (pd->asm_len + l + 1 > OTR_MAX_ASSEMBLY)
+
+    if (peer_data->assembly_length + length + 1 > OTR_MAX_ASSEMBLY)
     {
-        free (pd->asm_buf);
-        pd->asm_buf = NULL;
-        pd->asm_len = 0;
-        *out = otr_util_dupstr (line);
+        free (peer_data->assembly);
+        peer_data->assembly = NULL;
+        peer_data->assembly_length = 0;
+        *message = otr_util_dupstr (line);
         return 1;
     }
-    nb = realloc (pd->asm_buf, pd->asm_len + l + 1);
-    if (!nb)
+
+    new_assembly = realloc (peer_data->assembly,
+                            peer_data->assembly_length + length + 1);
+    if (!new_assembly)
         return 0;
-    pd->asm_buf = nb;
-    memcpy (pd->asm_buf + pd->asm_len, line, l + 1);
-    pd->asm_len += l;
+    peer_data->assembly = new_assembly;
+    memcpy (peer_data->assembly + peer_data->assembly_length, line,
+            length + 1);
+    peer_data->assembly_length += length;
 
-    if (otr_modifier_is_otr_query (pd->asm_buf)
-        || otr_modifier_has_otr_end (pd->asm_buf)
-        || strncmp (pd->asm_buf, "?OTR", 4) != 0)
+    if (otr_modifier_is_otr_query (peer_data->assembly)
+        || otr_modifier_has_otr_end (peer_data->assembly)
+        || (strncmp (peer_data->assembly, "?OTR", 4) != 0))
     {
-        *out = pd->asm_buf;
-        pd->asm_buf = NULL;
-        pd->asm_len = 0;
+        *message = peer_data->assembly;
+        peer_data->assembly = NULL;
+        peer_data->assembly_length = 0;
         return 1;
     }
+
     return 0;
+}
+
+/*
+ * Get the IRC tags of a message, with the space after the tags.
+ *
+ * Return NULL if the message has no tags.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+otr_modifier_get_tags (const char *message)
+{
+    const char *ptr_space;
+
+    if (message[0] != '@')
+        return NULL;
+
+    ptr_space = strchr (message, ' ');
+    if (!ptr_space)
+        return NULL;
+
+    return weechat_strndup (message, ptr_space - message + 1);
 }
 
 /*
@@ -128,101 +166,123 @@ char *
 otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
                     const char *modifier_data, const char *string)
 {
-    struct t_hashtable *hin, *hout;
-    const char *command, *nick, *host, *args, *sp, *text, *own;
-    char *result = NULL, *target = NULL, *account = NULL, *peer = NULL;
-    char *assembled = NULL, *newmsg = NULL, *tags = NULL, *deliver = NULL;
-    const char *server = modifier_data;
-    struct t_otr_peer_data *pd;
-    OtrlTLV *tlvs = NULL;
-    ConnContext *ctx = NULL;
+    struct t_hashtable *hashtable_in, *hashtable_out;
+    struct t_otr_peer_data *ptr_peer_data;
+    const char *ptr_command, *ptr_nick, *ptr_host, *ptr_args, *ptr_space;
+    const char *ptr_text, *ptr_own_nick, *ptr_server;
+    char *result, *target, *account, *peer, *assembled, *new_message, *tags;
+    char *message, *plain;
+    OtrlTLV *tlvs;
+    ConnContext *ptr_context;
     int ignore, was_otr, encrypted;
 
-    (void)pointer; (void)data; (void)modifier;
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
 
     if (!otr_us)
         return NULL;
-    hin = weechat_hashtable_new (8, WEECHAT_HASHTABLE_STRING,
-                                 WEECHAT_HASHTABLE_STRING, NULL, NULL);
-    if (!hin)
+
+    hashtable_in = weechat_hashtable_new (8,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          NULL, NULL);
+    if (!hashtable_in)
         return NULL;
-    weechat_hashtable_set (hin, "message", string);
-    hout = weechat_info_get_hashtable ("irc_message_parse", hin);
-    weechat_hashtable_free (hin);
-    if (!hout)
+    weechat_hashtable_set (hashtable_in, "message", string);
+    hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
+                                                hashtable_in);
+    weechat_hashtable_free (hashtable_in);
+    if (!hashtable_out)
         return NULL;
 
-    command = weechat_hashtable_get (hout, "command");
-    nick = weechat_hashtable_get (hout, "nick");
-    host = weechat_hashtable_get (hout, "host");
-    args = weechat_hashtable_get (hout, "arguments");
-    if (!command || strcasecmp (command, "PRIVMSG") != 0 || !nick || !*nick
-        || !host || !*host || !args)
-        goto done;
+    ptr_server = modifier_data;
+    result = NULL;
+    target = NULL;
+    account = NULL;
+    peer = NULL;
+    assembled = NULL;
+    new_message = NULL;
+    tags = NULL;
+    message = NULL;
+    tlvs = NULL;
+    ptr_context = NULL;
 
-    sp = strchr (args, ' ');
-    if (!sp)
-        goto done;
-    target = strndup (args, (size_t)(sp - args));
-    text = sp + 1;
-    if (*text == ':')
-        text++;
-    if (!target || otr_irc_target_is_channel (server, target))
-        goto done;
-
-    own = weechat_info_get ("irc_nick", server);
-    if (own && strcasecmp (own, nick) == 0)
+    ptr_command = weechat_hashtable_get (hashtable_out, "command");
+    ptr_nick = weechat_hashtable_get (hashtable_out, "nick");
+    ptr_host = weechat_hashtable_get (hashtable_out, "host");
+    ptr_args = weechat_hashtable_get (hashtable_out, "arguments");
+    if (!ptr_command || (weechat_strcasecmp (ptr_command, "PRIVMSG") != 0)
+        || !ptr_nick || !ptr_nick[0] || !ptr_host || !ptr_host[0] || !ptr_args)
     {
-        /* echo-message: the server returns our own outgoing message. */
-        result = otr_echo_replace (server, string, host, target, text);
-        goto done;
+        goto end;
     }
 
-    /* CTCP: only a plaintext ACTION inside an encrypted session is flagged. */
-    account = otr_irc_make_account (server);
-    if (!account)
-        goto done;
-    peer = otr_util_lc_dup (nick);
-    if (!peer)
-        goto done;
+    ptr_space = strchr (ptr_args, ' ');
+    if (!ptr_space)
+        goto end;
+    target = weechat_strndup (ptr_args, ptr_space - ptr_args);
+    ptr_text = ptr_space + 1;
+    if (ptr_text[0] == ':')
+        ptr_text++;
+    if (!target || otr_irc_target_is_channel (ptr_server, target))
+        goto end;
 
-    if (otr_message_is_ctcp (text))
+    ptr_own_nick = weechat_info_get ("irc_nick", ptr_server);
+    if (ptr_own_nick && (weechat_strcasecmp (ptr_own_nick, ptr_nick) == 0))
     {
-        if (otr_message_is_action (text)
+        /* echo-message: the server returns our own outgoing message. */
+        result = otr_echo_replace (ptr_server, string, ptr_host, target,
+                                   ptr_text);
+        goto end;
+    }
+
+    account = otr_irc_make_account (ptr_server);
+    if (!account)
+        goto end;
+    peer = weechat_string_tolower (ptr_nick);
+    if (!peer)
+        goto end;
+
+    /* CTCP: only a plaintext ACTION inside an encrypted session is flagged. */
+    if (otr_message_is_ctcp (ptr_text))
+    {
+        if (otr_message_is_action (ptr_text)
             && otr_context_encrypted (otr_context_find (account, peer)))
         {
-            char *plain = otr_message_plain_from_irc (text);
-
+            plain = otr_message_plain_from_irc (ptr_text);
             if (plain)
             {
-                if (string[0] == '@' && (sp = strchr (string, ' ')) != NULL)
-                    tags = strndup (string, (size_t)(sp - string) + 1);
+                tags = otr_modifier_get_tags (string);
                 result = otr_message_build_in_privmsgs (
-                    tags ? tags : "", host, target, plain,
+                    (tags) ? tags : "", ptr_host, target, plain,
                     OTR_UNENCRYPTED_PREFIX, 0);
                 free (plain);
             }
         }
-        goto done;
+        goto end;
     }
 
-    pd = otr_context_peer_data_for (account, peer);
-    if (!pd || !otr_modifier_assemble (pd, text, &assembled))
+    ptr_peer_data = otr_context_peer_data_for (account, peer);
+    if (!ptr_peer_data)
+        goto end;
+    if (!otr_modifier_assemble (ptr_peer_data, ptr_text, &assembled))
     {
-        if (pd)
-            result = strdup (""); /* Waiting for more parts */
-        goto done;
+        /* Waiting for more parts */
+        result = strdup ("");
+        goto end;
     }
 
-    was_otr = (strncmp (assembled, "?OTR", 4) == 0);
+    was_otr = (strncmp (assembled, "?OTR", 4) == 0) ? 1 : 0;
     ignore = otrl_message_receiving (otr_us, &otr_callback_ops, NULL, account,
-                                     OTR_PROTOCOL, peer, assembled, &newmsg,
-                                     &tlvs, &ctx, NULL, NULL);
+                                     OTR_PROTOCOL, peer, assembled,
+                                     &new_message, &tlvs, &ptr_context,
+                                     NULL, NULL);
     if (tlvs)
         otrl_tlv_free (tlvs);
 
-    if (string[0] == '@' && (sp = strchr (string, ' ')) != NULL)
-        tags = strndup (string, (size_t)(sp - string) + 1);
+    tags = otr_modifier_get_tags (string);
 
     if (ignore)
     {
@@ -231,57 +291,57 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     else
     {
         encrypted = otr_context_encrypted (
-            ctx ? ctx : otr_context_find (account, peer));
-
-        if (newmsg && was_otr && encrypted)
+            (ptr_context) ? ptr_context : otr_context_find (account, peer));
+        if (new_message && was_otr && encrypted)
         {
             /* Decrypted message */
             if (otr_policy_for (account, peer, "html_filter"))
-                deliver = otr_message_html_filter (newmsg);
+                message = otr_message_html_filter (new_message);
             else
-                deliver = otr_util_dupstr (newmsg);
-            if (deliver)
-                result = otr_message_build_in_privmsgs (tags ? tags : "", host,
-                                                        target,
-                                                        deliver, "", 1);
+                message = otr_util_dupstr (new_message);
+            if (message)
+            {
+                result = otr_message_build_in_privmsgs (
+                    (tags) ? tags : "", ptr_host, target, message, "", 1);
+            }
             else
+            {
                 result = strdup ("");
+            }
         }
         else if (encrypted && !was_otr)
         {
             /* Plaintext although the session is encrypted */
-            result = otr_message_build_in_privmsgs (tags ? tags : "", host,
-                                                    target,
-                                                    newmsg ? newmsg : assembled,
-                                                    OTR_UNENCRYPTED_PREFIX, 0);
+            result = otr_message_build_in_privmsgs (
+                (tags) ? tags : "", ptr_host, target,
+                (new_message) ? new_message : assembled,
+                OTR_UNENCRYPTED_PREFIX, 0);
         }
-        else if (newmsg)
+        else if (new_message)
         {
             /* For example: whitespace tag stripped from plaintext */
-            result = otr_message_build_in_privmsgs (tags ? tags : "", host,
-                                                    target,
-                                                    newmsg, "", 0);
+            result = otr_message_build_in_privmsgs (
+                (tags) ? tags : "", ptr_host, target, new_message, "", 0);
         }
-        else if (strcmp (assembled, text) != 0)
+        else if (strcmp (assembled, ptr_text) != 0)
         {
-            result = otr_message_build_in_privmsgs (tags ? tags : "", host,
-                                                    target,
-                                                    assembled, "", 0);
+            result = otr_message_build_in_privmsgs (
+                (tags) ? tags : "", ptr_host, target, assembled, "", 0);
         }
         /* Otherwise: unchanged (result == NULL) */
     }
-    if (newmsg)
-        otrl_message_free (newmsg);
+    if (new_message)
+        otrl_message_free (new_message);
     weechat_bar_item_update (OTR_BAR_ITEM);
 
-done:
-    free (deliver);
+end:
+    free (message);
     free (tags);
     free (assembled);
     free (target);
     free (account);
     free (peer);
-    weechat_hashtable_free (hout);
+    weechat_hashtable_free (hashtable_out);
     return result;
 }
 
@@ -293,27 +353,36 @@ done:
  */
 
 int
-otr_modifier_parse_out_privmsg (const char *s, char **target, const char **text)
+otr_modifier_parse_out_privmsg (const char *message, char **target,
+                                const char **text)
 {
-    const char *sp;
+    const char *ptr_message, *ptr_space;
 
-    while (*s == ' ')
-        s++;
-    if (strncasecmp (s, "PRIVMSG ", 8) != 0)
+    ptr_message = message;
+    while (ptr_message[0] == ' ')
+    {
+        ptr_message++;
+    }
+    if (weechat_strncasecmp (ptr_message, "PRIVMSG ", 8) != 0)
         return 0;
-    s += 8;
-    while (*s == ' ')
-        s++;
-    sp = strchr (s, ' ');
-    if (!sp)
+    ptr_message += 8;
+    while (ptr_message[0] == ' ')
+    {
+        ptr_message++;
+    }
+
+    ptr_space = strchr (ptr_message, ' ');
+    if (!ptr_space)
         return 0;
-    *target = strndup (s, (size_t)(sp - s));
+    *target = weechat_strndup (ptr_message, ptr_space - ptr_message);
     if (!*target)
         return 0;
-    sp++;
-    if (*sp == ':')
-        sp++;
-    *text = sp;
+
+    ptr_space++;
+    if (ptr_space[0] == ':')
+        ptr_space++;
+    *text = ptr_space;
+
     return 1;
 }
 
@@ -324,21 +393,32 @@ otr_modifier_parse_out_privmsg (const char *s, char **target, const char **text)
  */
 
 int
-otr_modifier_all_targets_channels (const char *server, const char *list)
+otr_modifier_all_targets_channels (const char *server, const char *targets)
 {
-    char *copy = otr_util_dupstr (list), *save = NULL, *t;
-    int ok = 1;
+    char **list_targets;
+    int num_targets, all_channels, i;
 
-    if (!copy)
+    list_targets = weechat_string_split (targets, ",", NULL,
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &num_targets);
+    if (!list_targets)
         return 0;
-    for (t = strtok_r (copy, ",", &save); t; t = strtok_r (NULL, ",", &save))
-        if (!otr_irc_target_is_channel (server, t))
+
+    all_channels = 1;
+    for (i = 0; i < num_targets; i++)
+    {
+        if (!otr_irc_target_is_channel (server, list_targets[i]))
         {
-            ok = 0;
+            all_channels = 0;
             break;
         }
-    free (copy);
-    return ok;
+    }
+
+    weechat_string_free_split (list_targets);
+
+    return all_channels;
 }
 
 /*
@@ -356,21 +436,35 @@ char *
 otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
                      const char *modifier_data, const char *string)
 {
-    char *target = NULL, *account = NULL, *peer = NULL, *plain = NULL;
-    char *newmsg = NULL, *result = NULL, *clean = NULL, *shown = NULL;
-    const char *text, *server = modifier_data;
-    ConnContext *ctx;
-    gcry_error_t err;
+    char *target, *account, *peer, *plain, *new_message, *result, *clean;
+    char *shown, *converted;
+    const char *ptr_text, *ptr_server;
+    ConnContext *ptr_context;
+    gcry_error_t error;
+    size_t length;
     int ctcp;
 
-    (void)pointer; (void)data; (void)modifier;
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
 
     if (otr_injecting)
         return NULL;
     if (!otr_us)
         return strdup ("");
 
-    if (!otr_modifier_parse_out_privmsg (string, &target, &text))
+    ptr_server = modifier_data;
+    target = NULL;
+    account = NULL;
+    peer = NULL;
+    plain = NULL;
+    new_message = NULL;
+    result = NULL;
+    clean = NULL;
+    shown = NULL;
+
+    if (!otr_modifier_parse_out_privmsg (string, &target, &ptr_text))
     {
         otr_buffer_error_core (
             _("could not parse an outgoing message; it was not sent"));
@@ -379,97 +473,103 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
 
     if (strchr (target, ','))
     {
-        if (otr_modifier_all_targets_channels (server, target))
+        if (otr_modifier_all_targets_channels (ptr_server, target))
         {
             free (target);
             return NULL;
         }
         otr_buffer_error_core (_("messages to several targets including a nick "
-                               "are not supported with OTR; not sent"));
+                                 "are not supported with OTR; not sent"));
         free (target);
         return strdup ("");
     }
-    if (otr_irc_target_is_channel (server, target))
+
+    if (otr_irc_target_is_channel (ptr_server, target))
     {
         free (target);
         return NULL;
     }
 
-    account = otr_irc_make_account (server);
-    peer = otr_util_lc_dup (target);
+    account = otr_irc_make_account (ptr_server);
+    peer = weechat_string_tolower (target);
     if (!account || !peer)
     {
         otr_buffer_error_core (
-            _("not connected to server %s; message not sent"), server);
+            _("not connected to server %s; message not sent"), ptr_server);
         result = strdup ("");
-        goto done;
+        goto end;
     }
 
-    ctx = otr_context_find (account, peer);
-    if (otr_context_encrypted (ctx))
+    ptr_context = otr_context_find (account, peer);
+    if (otr_context_encrypted (ptr_context))
     {
-        char *conv = otr_message_plain_from_irc (text);
-
-        shown = otr_util_dupstr (conv);
-        if (conv && otr_policy_for (account, peer, "html_escape"))
+        converted = otr_message_plain_from_irc (ptr_text);
+        shown = otr_util_dupstr (converted);
+        if (converted && otr_policy_for (account, peer, "html_escape"))
         {
-            plain = otr_message_html_escape (conv);
-            free (conv);
+            plain = otr_message_html_escape (converted);
+            free (converted);
         }
         else
-            plain = conv;
+        {
+            plain = converted;
+        }
     }
     else
-        plain = otr_util_dupstr (text);
+    {
+        plain = otr_util_dupstr (ptr_text);
+    }
     if (!plain)
     {
         result = strdup ("");
-        goto done;
+        goto end;
     }
 
-    ctcp = otr_message_is_ctcp (text);
+    ctcp = otr_message_is_ctcp (ptr_text);
     if (ctcp)
         otr_no_tag++;
-    err = otrl_message_sending (otr_us, &otr_callback_ops, NULL, account,
-                                OTR_PROTOCOL, peer, OTRL_INSTAG_BEST, plain,
-                                NULL, &newmsg, OTRL_FRAGMENT_SEND_ALL_BUT_LAST,
-                                NULL, NULL, NULL);
+    error = otrl_message_sending (otr_us, &otr_callback_ops, NULL, account,
+                                  OTR_PROTOCOL, peer, OTRL_INSTAG_BEST, plain,
+                                  NULL, &new_message,
+                                  OTRL_FRAGMENT_SEND_ALL_BUT_LAST,
+                                  NULL, NULL, NULL);
     if (ctcp)
         otr_no_tag--;
 
-    if (err)
+    if (error)
     {
-        otr_buffer_peer_print (
-            server, peer, OTR_CONFIG_LEVEL_ERROR,
-            _("Failed to send message; it was NOT sent."));
-        otr_buffer_debug ("otrl_message_sending: %s", gcry_strerror (err));
+        otr_buffer_peer_print (ptr_server, peer, OTR_CONFIG_LEVEL_ERROR,
+                               _("Failed to send message; it was NOT sent."));
+        otr_buffer_debug ("otrl_message_sending: %s", gcry_strerror (error));
         result = strdup ("");
-        goto done;
+        goto end;
     }
 
-    if (newmsg)
+    if (new_message)
     {
-        clean = otr_util_irc_sanitize (newmsg);
-        if (!clean || !*clean)
+        clean = otr_util_irc_sanitize (new_message);
+        if (!clean || !clean[0])
+        {
             result = strdup ("");
+        }
         else
         {
-            size_t l = strlen (clean);
-
-            if (shown && strncmp (clean, "?OTR", 4) == 0)
-                otr_echo_pending_add (server, peer, clean, shown);
+            if (shown && (strncmp (clean, "?OTR", 4) == 0))
+                otr_echo_pending_add (ptr_server, peer, clean, shown);
 
             /* WeeChat strips trailing spaces; keep whitespace tags intact. */
-            result = otr_util_strf ("PRIVMSG %s :%s%s", target, clean,
-                                    clean[l - 1] == ' ' ? "\t" : "");
+            length = strlen (clean);
+            weechat_asprintf (&result, "PRIVMSG %s :%s%s",
+                              target, clean,
+                              (clean[length - 1] == ' ') ? "\t" : "");
         }
-        otrl_message_free (newmsg);
+        otrl_message_free (new_message);
     }
     /* Otherwise: not an OTR message (plaintext allowed), result stays NULL. */
 
     weechat_bar_item_update (OTR_BAR_ITEM);
 
-done:
+end:
     free (shown);
     free (clean);
     free (plain);

@@ -16,7 +16,6 @@
 #include "otr-context.h"
 #include "otr-irc.h"
 #include "otr-log.h"
-#include "otr-util.h"
 
 
 /*
@@ -26,26 +25,31 @@
  */
 
 int
-otr_log_buffer_is_logged (struct t_gui_buffer *buf)
+otr_log_buffer_is_logged (struct t_gui_buffer *buffer)
 {
-    struct t_infolist *il;
-    int res = 0;
+    struct t_infolist *ptr_infolist;
+    int logged;
 
-    if (!buf)
+    if (!buffer)
         return 0;
-    il = weechat_infolist_get ("logger_buffer", NULL, NULL);
-    if (!il)
+
+    ptr_infolist = weechat_infolist_get ("logger_buffer", NULL, NULL);
+    if (!ptr_infolist)
         return 0;
-    while (weechat_infolist_next (il))
+
+    logged = 0;
+    while (weechat_infolist_next (ptr_infolist))
     {
-        if (weechat_infolist_pointer (il, "buffer") == buf)
+        if (weechat_infolist_pointer (ptr_infolist, "buffer") == buffer)
         {
-            res = weechat_infolist_integer (il, "log_enabled") ? 1 : 0;
+            logged = (weechat_infolist_integer (ptr_infolist,
+                                                "log_enabled")) ? 1 : 0;
             break;
         }
     }
-    weechat_infolist_free (il);
-    return res;
+    weechat_infolist_free (ptr_infolist);
+
+    return logged;
 }
 
 /*
@@ -56,13 +60,19 @@ otr_log_buffer_is_logged (struct t_gui_buffer *buf)
  */
 
 char *
-otr_log_logger_option_name (struct t_gui_buffer *buf)
+otr_log_logger_option_name (struct t_gui_buffer *buffer)
 {
-    const char *plugin = weechat_buffer_get_string (buf, "plugin");
-    const char *name = weechat_buffer_get_string (buf, "name");
+    const char *ptr_plugin, *ptr_name;
+    char *option_name;
 
-    return otr_util_strf ("logger.level.%s.%s", plugin ? plugin : "",
-                          name ? name : "");
+    ptr_plugin = weechat_buffer_get_string (buffer, "plugin");
+    ptr_name = weechat_buffer_get_string (buffer, "name");
+
+    weechat_asprintf (&option_name, "logger.level.%s.%s",
+                      (ptr_plugin) ? ptr_plugin : "",
+                      (ptr_name) ? ptr_name : "");
+
+    return option_name;
 }
 
 /*
@@ -73,34 +83,36 @@ otr_log_logger_option_name (struct t_gui_buffer *buf)
  */
 
 int
-otr_log_buffer_log_level (struct t_gui_buffer *buf)
+otr_log_buffer_log_level (struct t_gui_buffer *buffer)
 {
-    char *opt = otr_log_logger_option_name (buf);
-    struct t_infolist *il;
-    int res = 0;
+    struct t_infolist *ptr_infolist;
+    char *option_name;
+    int option_exists, level;
 
-    if (!opt)
+    option_name = otr_log_logger_option_name (buffer);
+    if (!option_name)
         return OTR_LOG_DEFAULT;
-    if (!weechat_config_get (opt))
-    {
-        free (opt);
+    option_exists = (weechat_config_get (option_name)) ? 1 : 0;
+    free (option_name);
+    if (!option_exists)
         return OTR_LOG_DEFAULT;
-    }
-    free (opt);
-    il = weechat_infolist_get ("logger_buffer", NULL, NULL);
-    if (il)
+
+    level = 0;
+    ptr_infolist = weechat_infolist_get ("logger_buffer", NULL, NULL);
+    if (ptr_infolist)
     {
-        while (weechat_infolist_next (il))
+        while (weechat_infolist_next (ptr_infolist))
         {
-            if (weechat_infolist_pointer (il, "buffer") == buf)
+            if (weechat_infolist_pointer (ptr_infolist, "buffer") == buffer)
             {
-                res = weechat_infolist_integer (il, "log_level");
+                level = weechat_infolist_integer (ptr_infolist, "log_level");
                 break;
             }
         }
-        weechat_infolist_free (il);
+        weechat_infolist_free (ptr_infolist);
     }
-    return res;
+
+    return level;
 }
 
 /*
@@ -110,23 +122,26 @@ otr_log_buffer_log_level (struct t_gui_buffer *buf)
  */
 
 void
-otr_log_disable (ConnContext *c, struct t_otr_peer_data *pd)
+otr_log_disable (ConnContext *context, struct t_otr_peer_data *peer_data)
 {
-    struct t_gui_buffer *buf;
+    struct t_gui_buffer *ptr_buffer;
 
-    if (!pd || pd->prev_log != OTR_LOG_UNTOUCHED)
+    if (!peer_data || (peer_data->prev_log != OTR_LOG_UNTOUCHED))
         return;
-    buf = otr_irc_buffer (otr_irc_account_server (c->accountname), c->username);
-    if (!otr_buffer_is_private (buf))
+
+    ptr_buffer = otr_irc_buffer (otr_irc_account_server (context->accountname),
+                                 context->username);
+    if (!otr_buffer_is_private (ptr_buffer))
         return;
-    pd->prev_log = otr_log_buffer_log_level (buf);
-    if (otr_log_buffer_is_logged (buf))
+
+    peer_data->prev_log = otr_log_buffer_log_level (ptr_buffer);
+    if (otr_log_buffer_is_logged (ptr_buffer))
     {
-        weechat_command (buf, "/mute logger disable");
-        otr_buffer_ctx_print (c, OTR_CONFIG_LEVEL_INFO,
+        weechat_command (ptr_buffer, "/mute logger disable");
+        otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_INFO,
                               _("Logs have been temporarily disabled for the "
-                              "session. They will be restored upon finishing "
-                              "the OTR session."));
+                                "session. They will be restored upon finishing "
+                                "the OTR session."));
     }
 }
 
@@ -136,40 +151,51 @@ otr_log_disable (ConnContext *c, struct t_otr_peer_data *pd)
  */
 
 void
-otr_log_restore (ConnContext *c, struct t_otr_peer_data *pd)
+otr_log_restore (ConnContext *context, struct t_otr_peer_data *peer_data)
 {
-    struct t_gui_buffer *buf;
-    char *cmd, *opt;
+    struct t_gui_buffer *ptr_buffer;
+    char *command, *option_name;
 
-    if (!pd || pd->prev_log == OTR_LOG_UNTOUCHED)
+    if (!peer_data || (peer_data->prev_log == OTR_LOG_UNTOUCHED))
         return;
-    buf = otr_irc_buffer (otr_irc_account_server (c->accountname), c->username);
-    if (otr_buffer_is_private (buf))
+
+    ptr_buffer = otr_irc_buffer (otr_irc_account_server (context->accountname),
+                                 context->username);
+    if (otr_buffer_is_private (ptr_buffer))
     {
-        if (pd->prev_log >= 0 && pd->prev_log < 10)
+        if ((peer_data->prev_log >= 0) && (peer_data->prev_log < 10))
         {
-            otr_buffer_ctx_print (
-                c, OTR_CONFIG_LEVEL_WARNING,
-                _("Restoring buffer logging value to: %d"), pd->prev_log);
-            cmd = otr_util_strf ("/mute logger set %d", pd->prev_log);
-            if (cmd)
-                weechat_command (buf, cmd);
-            free (cmd);
+            otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_WARNING,
+                                  _("Restoring buffer logging value to: %d"),
+                                  peer_data->prev_log);
+            weechat_asprintf (&command, "/mute logger set %d",
+                              peer_data->prev_log);
+            if (command)
+            {
+                weechat_command (ptr_buffer, command);
+                free (command);
+            }
         }
-        else if (pd->prev_log == OTR_LOG_DEFAULT)
+        else if (peer_data->prev_log == OTR_LOG_DEFAULT)
         {
-            otr_buffer_ctx_print (
-                c, OTR_CONFIG_LEVEL_WARNING,
-                _("Restoring buffer logging value to default"));
-            opt = otr_log_logger_option_name (buf);
-            cmd = opt ? otr_util_strf ("/mute unset %s", opt) : NULL;
-            if (cmd)
-                weechat_command (buf, cmd);
-            free (cmd);
-            free (opt);
+            otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_WARNING,
+                                  _("Restoring buffer logging value to "
+                                    "default"));
+            option_name = otr_log_logger_option_name (ptr_buffer);
+            if (option_name)
+            {
+                weechat_asprintf (&command, "/mute unset %s", option_name);
+                if (command)
+                {
+                    weechat_command (ptr_buffer, command);
+                    free (command);
+                }
+                free (option_name);
+            }
         }
     }
-    pd->prev_log = OTR_LOG_UNTOUCHED;
+
+    peer_data->prev_log = OTR_LOG_UNTOUCHED;
 }
 
 /*
@@ -179,10 +205,15 @@ otr_log_restore (ConnContext *c, struct t_otr_peer_data *pd)
 
 int
 otr_log_logger_level_update_cb (const void *pointer, void *data,
-                                const char *option,
-                                const char *value)
+                                const char *option, const char *value)
 {
-    (void)pointer; (void)data; (void)option; (void)value;
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) option;
+    (void) value;
+
     weechat_bar_item_update (OTR_BAR_ITEM);
+
     return WEECHAT_RC_OK;
 }

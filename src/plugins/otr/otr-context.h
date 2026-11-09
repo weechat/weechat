@@ -10,18 +10,21 @@
 
 struct t_otr_peer_data
 {
-    char *asm_buf;     /* reassembly of OTR messages split over IRC lines */
-    size_t asm_len;
-    int in_smp;
-    int smp_question;
-    int prev_log;      /* OTR_LOG_UNTOUCHED / OTR_LOG_DEFAULT / level */
+    char *assembly;                    /* reassembly of OTR messages split  */
+                                       /* over several IRC lines            */
+    size_t assembly_length;            /* length of assembly                */
+    int in_smp;                        /* 1 if SMP authentication running   */
+    int smp_question;                  /* 1 if peer asked an SMP question   */
+    int prev_log;                      /* logger level before OTR session:  */
+                                       /* OTR_LOG_UNTOUCHED,                */
+                                       /* OTR_LOG_DEFAULT or level          */
 };
 
 extern struct t_otr_peer_data *otr_context_peer_data_for (const char *account,
                                                           const char *peer);
-extern struct t_otr_peer_data *otr_context_peer_data_ctx (ConnContext *c);
+extern struct t_otr_peer_data *otr_context_peer_data_ctx (ConnContext *context);
 extern ConnContext *otr_context_find (const char *account, const char *peer);
-extern int otr_context_encrypted (ConnContext *c);
-extern int otr_context_verified (ConnContext *c);
+extern int otr_context_encrypted (ConnContext *context);
+extern int otr_context_verified (ConnContext *context);
 
 #endif /* WEECHAT_PLUGIN_OTR_CONTEXT_H */
