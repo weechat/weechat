@@ -64,7 +64,7 @@ int otr_no_tag = 0;
 /* set while the plugin unloads: no UI work from libotr callbacks */
 int otr_shutdown = 0;
 
-static int
+int
 otr_file_exists (const char *path)
 {
     struct stat st;

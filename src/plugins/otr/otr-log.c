@@ -42,7 +42,7 @@ otr_log_buffer_is_logged (struct t_gui_buffer *buf)
     return res;
 }
 
-static char *
+char *
 otr_log_logger_option_name (struct t_gui_buffer *buf)
 {
     const char *plugin = weechat_buffer_get_string (buf, "plugin");
