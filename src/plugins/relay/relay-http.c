@@ -724,6 +724,11 @@ relay_http_get_auth_status (struct t_relay_client *client)
             rc = -3;
             goto end;
         }
+        if (!relay_auth_check_totp_format (client_totp))
+        {
+            rc = -4;
+            goto end;
+        }
         /* validate the TOTP received from the client */
         if (weechat_asprintf (
                 &info_totp_args,
