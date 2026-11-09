@@ -192,7 +192,6 @@ otr_echo_replace (const char *server, const char *message, const char *host,
                   const char *target, const char *text)
 {
     char *plain, *tags, *result;
-    const char *ptr_space;
 
     if (strncmp (text, "?OTR", 4) != 0)
         return NULL;
@@ -201,13 +200,7 @@ otr_echo_replace (const char *server, const char *message, const char *host,
     if (!plain)
         return strdup ("");
 
-    tags = NULL;
-    if (message[0] == '@')
-    {
-        ptr_space = strchr (message, ' ');
-        if (ptr_space)
-            tags = weechat_strndup (message, ptr_space - message + 1);
-    }
+    tags = otr_message_get_tags (message);
     result = otr_message_build_in_privmsgs ((tags) ? tags : "", host, target,
                                             plain, "", 1);
 

@@ -13,6 +13,7 @@ extern int otr_message_is_action (const char *message);
 extern char *otr_message_plain_from_irc (const char *message);
 extern char *otr_message_html_escape (const char *string);
 extern char *otr_message_html_filter (const char *html);
+extern char *otr_message_get_tags (const char *message);
 extern char *otr_message_build_in_privmsgs (const char *tags, const char *from,
                                             const char *target,
                                             const char *message,

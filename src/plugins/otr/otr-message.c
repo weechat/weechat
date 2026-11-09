@@ -463,3 +463,26 @@ otr_message_build_in_privmsgs (const char *tags, const char *from,
 
     return weechat_string_dyn_free (result, 0);
 }
+
+/*
+ * Get the IRC tags of a message, with the space after the tags.
+ *
+ * Return NULL if the message has no tags.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+otr_message_get_tags (const char *message)
+{
+    const char *ptr_space;
+
+    if (message[0] != '@')
+        return NULL;
+
+    ptr_space = strchr (message, ' ');
+    if (!ptr_space)
+        return NULL;
+
+    return weechat_strndup (message, ptr_space - message + 1);
+}
