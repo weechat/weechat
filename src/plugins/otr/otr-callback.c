@@ -22,6 +22,13 @@
 #include "otr-util.h"
 
 
+/*
+ * Callback for libotr: get the OTR policy for a context, built from the OTR
+ * policies options.
+ *
+ * Return OTR policy (0 if OTR versions 2 and 3 are both disabled).
+ */
+
 OtrlPolicy
 otr_callback_policy (void *opdata, ConnContext *ctx)
 {
@@ -45,6 +52,11 @@ otr_callback_policy (void *opdata, ConnContext *ctx)
     return p;
 }
 
+/*
+ * Callback for libotr: generate a private key for an account (this blocks
+ * WeeChat a few seconds).
+ */
+
 void
 otr_callback_create_privkey (void *opdata, const char *accountname,
                              const char *protocol)
@@ -65,6 +77,10 @@ otr_callback_create_privkey (void *opdata, const char *accountname,
             NULL, OTR_CONFIG_LEVEL_SUCCESS, _("OTR key generated."));
 }
 
+/*
+ * Callback for libotr: generate an instance tag for an account.
+ */
+
 void
 otr_callback_create_instag (void *opdata, const char *accountname,
                             const char *protocol)
@@ -72,6 +88,12 @@ otr_callback_create_instag (void *opdata, const char *accountname,
     (void)opdata;
     otrl_instag_generate (otr_us, otr_instagfile, accountname, protocol);
 }
+
+/*
+ * Callback for libotr: check if a recipient is logged in.
+ *
+ * Return -1 (unknown).
+ */
 
 int
 otr_callback_is_logged_in (void *opdata, const char *accountname,
@@ -82,6 +104,10 @@ otr_callback_is_logged_in (void *opdata, const char *accountname,
     return -1; /* unknown */
 }
 
+/*
+ * Callback for libotr: send an OTR protocol message to a recipient.
+ */
+
 void
 otr_callback_inject_message (void *opdata, const char *accountname,
                              const char *protocol, const char *recipient,
@@ -91,11 +117,19 @@ otr_callback_inject_message (void *opdata, const char *accountname,
     otr_irc_send_raw (otr_irc_account_server (accountname), recipient, message);
 }
 
+/*
+ * Callback for libotr: update the list of contexts (nothing is done).
+ */
+
 void
 otr_callback_update_context_list (void *opdata)
 {
     (void)opdata;
 }
+
+/*
+ * Callback for libotr: write the fingerprints file.
+ */
 
 void
 otr_callback_write_fingerprints (void *opdata)
@@ -103,6 +137,14 @@ otr_callback_write_fingerprints (void *opdata)
     (void)opdata;
     otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
 }
+
+/*
+ * Callback for libotr: get the max size of an OTR message, according to the max
+ * size of an IRC message and the length of the nick of the peer (libotr
+ * fragments longer messages).
+ *
+ * Return max size of an OTR message (at least 100).
+ */
 
 int
 otr_callback_max_message_size (void *opdata, ConnContext *ctx)
@@ -112,6 +154,13 @@ otr_callback_max_message_size (void *opdata, ConnContext *ctx)
     (void)opdata;
     return r < 100 ? 100 : r;
 }
+
+/*
+ * Build instructions to verify the identity of the peer of a libotr context
+ * (with fingerprints or SMP).
+ *
+ * Note: result must be freed after use.
+ */
 
 char *
 otr_callback_verify_instructions (ConnContext *ctx)
@@ -143,6 +192,10 @@ otr_callback_verify_instructions (ConnContext *ctx)
         ctx->username, server, ctx->username, server);
 }
 
+/*
+ * Callback for libotr: display the new fingerprint of a peer.
+ */
+
 void
 otr_callback_new_fingerprint (void *opdata, OtrlUserState us,
                               const char *accountname,
@@ -159,6 +212,13 @@ otr_callback_new_fingerprint (void *opdata, OtrlUserState us,
                                OTR_CONFIG_LEVEL_WARNING, m);
     free (m);
 }
+
+/*
+ * Callback for libotr: the OTR session with a peer is now encrypted.
+ *
+ * Logging is disabled (unless policy "log" is enabled), and if the peer is not
+ * authenticated, instructions to authenticate it are displayed.
+ */
 
 void
 otr_callback_gone_secure (void *opdata, ConnContext *ctx)
@@ -209,6 +269,13 @@ otr_callback_gone_secure (void *opdata, ConnContext *ctx)
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
 
+/*
+ * Callback for libotr: the OTR session with a peer is not encrypted any more.
+ *
+ * If the peer ended the session, the user is asked to do the same, otherwise
+ * the logger level is restored.
+ */
+
 void
 otr_callback_gone_insecure (void *opdata, ConnContext *ctx)
 {
@@ -233,6 +300,10 @@ otr_callback_gone_insecure (void *opdata, ConnContext *ctx)
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
 
+/*
+ * Callback for libotr: the OTR session with a peer has been refreshed.
+ */
+
 void
 otr_callback_still_secure (void *opdata, ConnContext *ctx, int is_reply)
 {
@@ -242,6 +313,12 @@ otr_callback_still_secure (void *opdata, ConnContext *ctx, int is_reply)
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
 
+/*
+ * Callback for libotr: get the prefix added to resent messages.
+ *
+ * Note: result is freed by function otr_callback_resent_msg_prefix_free.
+ */
+
 const char *
 otr_callback_resent_msg_prefix (void *opdata, ConnContext *ctx)
 {
@@ -249,12 +326,20 @@ otr_callback_resent_msg_prefix (void *opdata, ConnContext *ctx)
     return strdup ("[resent] ");
 }
 
+/*
+ * Callback for libotr: free the prefix added to resent messages.
+ */
+
 void
 otr_callback_resent_msg_prefix_free (void *opdata, const char *prefix)
 {
     (void)opdata;
     free ((void *)prefix);
 }
+
+/*
+ * Callback for libotr: handle an SMP event (Socialist Millionaire Protocol).
+ */
 
 void
 otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent ev, ConnContext *ctx,
@@ -326,6 +411,10 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent ev, ConnContext *ctx,
     }
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
+
+/*
+ * Callback for libotr: handle a message event (display it for the peer).
+ */
 
 void
 otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent ev,

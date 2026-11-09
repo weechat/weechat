@@ -26,7 +26,16 @@
 #include "otr-util.h"
 
 
-/* shlex-like splitting; returns count or -1 on error. Caller frees tokens. */
+/*
+ * Split a string into arguments, like a shell (quotes and backslash escapes are
+ * supported); at most max arguments are stored in out.
+ *
+ * Return number of arguments, -1 if error (unterminated quote, too many
+ * arguments or allocation error).
+ *
+ * Note: arguments stored in out must be freed after use.
+ */
+
 int
 otr_command_split_args (const char *s, char **out, int max)
 {
@@ -100,7 +109,13 @@ fail:
     return -1;
 }
 
-/* [NICK SERVER] arguments or, with none, the current private buffer */
+/*
+ * Get the peer from command arguments "<nick> <server>" (if nargs is 2) or,
+ * without arguments, from the current private buffer.
+ *
+ * Return 1 if OK, 0 if error.
+ */
+
 int
 otr_command_peer_args (struct t_gui_buffer *buf, char **args, int nargs,
                        struct t_otr_peer_ref *p)
@@ -127,7 +142,13 @@ otr_command_peer_args (struct t_gui_buffer *buf, char **args, int nargs,
     return 0;
 }
 
-/* account + lowercased peer for a t_otr_peer_ref; prints an error on failure */
+/*
+ * Get the account and the peer nick (in lower case) for a peer; an error is
+ * displayed if not connected to the server.
+ *
+ * Return 1 if OK (*account and *peer must be freed after use), 0 if error.
+ */
+
 int
 otr_command_resolve (const struct t_otr_peer_ref *p, char **account,
                      char **peer)
@@ -151,6 +172,10 @@ struct t_otr_table
     int n, cap;
     size_t w[4];
 };
+
+/*
+ * Add a row with 4 columns to a table (for display).
+ */
 
 void
 otr_command_table_add (struct t_otr_table *t, const char *a, const char *b,
@@ -178,6 +203,11 @@ otr_command_table_add (struct t_otr_table *t, const char *a, const char *b,
     }
     t->n++;
 }
+
+/*
+ * Display the first cols columns of a table with aligned columns, then free the
+ * table.
+ */
 
 void
 otr_command_table_print_free (struct t_otr_table *t, int cols)
@@ -209,6 +239,10 @@ otr_command_table_print_free (struct t_otr_table *t, int cols)
     free (t->rows);
 }
 
+/*
+ * Display own fingerprints of all accounts.
+ */
+
 void
 otr_command_show_account_fingerprints (void)
 {
@@ -225,6 +259,11 @@ otr_command_show_account_fingerprints (void)
     }
     otr_command_table_print_free (&t, 2);
 }
+
+/*
+ * Display fingerprints of known peers; if grep is not NULL, only peers whose
+ * nick contains grep are displayed.
+ */
 
 void
 otr_command_show_peer_fingerprints (const char *grep)
@@ -258,6 +297,12 @@ otr_command_show_peer_fingerprints (const char *grep)
     }
     otr_command_table_print_free (&t, 4);
 }
+
+/*
+ * Start an OTR session with a peer (send an OTR query).
+ *
+ * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ */
 
 int
 otr_command_start (struct t_gui_buffer *buf, const struct t_otr_peer_ref *p)
@@ -302,6 +347,12 @@ otr_command_start (struct t_gui_buffer *buf, const struct t_otr_peer_ref *p)
     return WEECHAT_RC_OK;
 }
 
+/*
+ * End the OTR session with a peer.
+ *
+ * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ */
+
 int
 otr_command_finish (const struct t_otr_peer_ref *p)
 {
@@ -324,6 +375,13 @@ otr_command_finish (const struct t_otr_peer_ref *p)
     free (peer);
     return WEECHAT_RC_OK;
 }
+
+/*
+ * Display the status of the OTR session with a peer (encryption, fingerprints,
+ * authentication).
+ *
+ * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ */
 
 int
 otr_command_status (const struct t_otr_peer_ref *p)
@@ -371,6 +429,13 @@ otr_command_status (const struct t_otr_peer_ref *p)
     return WEECHAT_RC_OK;
 }
 
+/*
+ * Mark the active fingerprint of a peer as verified (if trust is 1) or not
+ * verified (if trust is 0).
+ *
+ * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ */
+
 int
 otr_command_trust (const struct t_otr_peer_ref *p, int trust)
 {
@@ -401,6 +466,13 @@ otr_command_trust (const struct t_otr_peer_ref *p, int trust)
     free (peer);
     return WEECHAT_RC_OK;
 }
+
+/*
+ * Run subcommand "smp": ask, respond or abort the authentication of a peer with
+ * SMP (Socialist Millionaire Protocol).
+ *
+ * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ */
 
 int
 otr_command_smp (struct t_gui_buffer *buf, char **tok, int n)
@@ -513,6 +585,12 @@ done:
     return rc;
 }
 
+/*
+ * Run subcommand "log": display or change logging of the current OTR session.
+ *
+ * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ */
+
 int
 otr_command_log (struct t_gui_buffer *buf, char **tok, int n)
 {
@@ -574,6 +652,12 @@ otr_command_log (struct t_gui_buffer *buf, char **tok, int n)
     return WEECHAT_RC_OK;
 }
 
+/*
+ * Check if a name is a known OTR policy (case insensitive).
+ *
+ * Return 1 if the policy is known, 0 otherwise.
+ */
+
 int
 otr_command_policy_known (const char *name)
 {
@@ -585,12 +669,24 @@ otr_command_policy_known (const char *name)
     return 0;
 }
 
+/*
+ * Check if a value is valid for a policy: "on", "off" or "toggle" (case
+ * insensitive).
+ *
+ * Return 1 if the value is valid, 0 otherwise.
+ */
+
 int
 otr_command_value_ok (const char *v)
 {
     return strcasecmp (v, "on") == 0 || strcasecmp (v, "off") == 0
         || strcasecmp (v, "toggle") == 0;
 }
+
+/*
+ * Display a text in the private buffer with the current peer, or in core buffer
+ * if the current buffer is not a private buffer.
+ */
 
 void
 otr_command_print_policies_here (struct t_gui_buffer *buf, const char *text)
@@ -608,6 +704,13 @@ otr_command_print_policies_here (struct t_gui_buffer *buf, const char *text)
     else
         otr_buffer_print_str (NULL, OTR_CONFIG_LEVEL_INFO, text);
 }
+
+/*
+ * Run subcommand "policy": display or change OTR policies of the current peer
+ * or default OTR policies.
+ *
+ * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ */
 
 int
 otr_command_policy (struct t_gui_buffer *buf, char **tok, int n)
@@ -678,6 +781,10 @@ otr_command_policy (struct t_gui_buffer *buf, char **tok, int n)
     }
     return WEECHAT_RC_ERROR;
 }
+
+/*
+ * Callback for command "/otr": manage OTR sessions.
+ */
 
 int
 otr_command_otr (const void *pointer, void *data, struct t_gui_buffer *buffer,

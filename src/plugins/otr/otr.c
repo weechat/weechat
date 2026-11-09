@@ -64,6 +64,12 @@ int otr_no_tag = 0;
 /* set while the plugin unloads: no UI work from libotr callbacks */
 int otr_shutdown = 0;
 
+/*
+ * Check if a file exists.
+ *
+ * Return 1 if the file exists, 0 otherwise.
+ */
+
 int
 otr_file_exists (const char *path)
 {
@@ -91,6 +97,10 @@ otr_debug_libs_cb (const void *pointer, void *data, const char *signal,
 
     return WEECHAT_RC_OK;
 }
+
+/*
+ * Initialize OTR plugin.
+ */
 
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
@@ -177,6 +187,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     return WEECHAT_RC_OK;
 }
+
+/*
+ * End OTR plugin: end all OTR sessions, save fingerprints and configuration,
+ * free data.
+ */
 
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)

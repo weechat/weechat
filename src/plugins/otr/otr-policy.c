@@ -19,6 +19,14 @@
 #include "otr-util.h"
 
 
+/*
+ * Get value of an OTR policy for an account and a peer, searching the options
+ * from the most specific to the most general: "server.nick.peer.name",
+ * "server.nick.name", "server.name", "default.name".
+ *
+ * Return 1 if the policy is enabled, 0 if it is disabled or not found.
+ */
+
 int
 otr_policy_for (const char *account, const char *peer, const char *name)
 {
@@ -52,11 +60,24 @@ otr_policy_for (const char *account, const char *peer, const char *name)
     return o ? weechat_config_boolean (o) : 0;
 }
 
+/*
+ * Get value of an OTR policy for the account and the peer of a libotr context.
+ *
+ * Return 1 if the policy is enabled, 0 otherwise.
+ */
+
 int
 otr_policy_ctx (ConnContext *c, const char *name)
 {
     return otr_policy_for (c->accountname, c->username, name);
 }
+
+/*
+ * Check if the whitespace tag must not be sent to a peer (nick matching the
+ * regex of option otr.general.no_send_tag_regex).
+ *
+ * Return 1 if the tag must not be sent, 0 otherwise.
+ */
 
 int
 otr_policy_no_send_tag (const char *peer)
@@ -74,6 +95,12 @@ otr_policy_no_send_tag (const char *peer)
     regfree (&r);
     return m;
 }
+
+/*
+ * Build the list of default OTR policies, for display.
+ *
+ * Note: result must be freed after use.
+ */
 
 char *
 otr_policy_format_default (void)
@@ -102,6 +129,12 @@ otr_policy_format_default (void)
                             "/otr policy default NAME on|off"));
     return otr_util_sb_take (&b);
 }
+
+/*
+ * Build the list of OTR policies for a peer, for display.
+ *
+ * Note: result must be freed after use.
+ */
 
 char *
 otr_policy_format_peer (const char *account, const char *peer)

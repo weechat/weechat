@@ -18,6 +18,12 @@
 #include "otr-util.h"
 
 
+/*
+ * Check if a message is a CTCP (enclosed in chars "\x01").
+ *
+ * Return 1 if the message is a CTCP, 0 otherwise.
+ */
+
 int
 otr_message_is_ctcp (const char *t)
 {
@@ -26,13 +32,25 @@ otr_message_is_ctcp (const char *t)
     return l >= 2 && t[0] == '\x01' && t[l - 1] == '\x01';
 }
 
+/*
+ * Check if a message is a CTCP ACTION ("/me").
+ *
+ * Return 1 if the message is a CTCP ACTION, 0 otherwise.
+ */
+
 int
 otr_message_is_action (const char *t)
 {
     return otr_message_is_ctcp (t) && strncmp (t, "\x01" "ACTION ", 8) == 0;
 }
 
-/* "\x01ACTION text\x01" -> "/me text"; otherwise plain copy */
+/*
+ * Convert an IRC message to the text sent with OTR: a CTCP ACTION ("\x01ACTION
+ * text\x01") becomes "/me text", any other message is copied as-is.
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_message_plain_from_irc (const char *t)
 {
@@ -43,6 +61,12 @@ otr_message_plain_from_irc (const char *t)
     l = strlen (t);
     return otr_util_strf (OTR_ACTION_PREFIX "%.*s", (int)(l - 9), t + 8);
 }
+
+/*
+ * Escape HTML special chars ("&", "<" and ">") in a string.
+ *
+ * Note: result must be freed after use.
+ */
 
 char *
 otr_message_html_escape (const char *in)
@@ -63,6 +87,11 @@ otr_message_html_escape (const char *in)
     }
     return otr_util_sb_take (&b);
 }
+
+/*
+ * Add a Unicode code point encoded in UTF-8 to a string buffer (code point 0
+ * and invalid code points are ignored).
+ */
 
 void
 otr_message_utf8_append (struct t_otr_sbuf *b, unsigned long cp)
@@ -99,8 +128,14 @@ otr_message_utf8_append (struct t_otr_sbuf *b, unsigned long cp)
     }
 }
 
-/* Reduce HTML to IRC text: keep text, <br> -> newline, links -> [text](url),
- * decode a few entities, drop all other tags. */
+/*
+ * Reduce HTML to IRC text: keep text, convert "<br>" to a new line and links to
+ * "[text](url)" (or "[url]" if the text is the URL), decode a few entities and
+ * drop all other tags.
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_message_html_filter (const char *in)
 {
@@ -230,8 +265,13 @@ otr_message_html_filter (const char *in)
     return otr_util_sb_take (&b);
 }
 
-/* Add one decrypted line as an IRC protocol line to out. Removes CTCP
- * markers a peer could smuggle in; only a well-formed /me becomes ACTION. */
+/*
+ * Add one decrypted line as an IRC PRIVMSG to a string buffer.
+ *
+ * CTCP markers that a peer could smuggle in are removed; only a well-formed
+ * "/me" (or CTCP ACTION) becomes a CTCP ACTION.
+ */
+
 void
 otr_message_add_decrypted_line (struct t_otr_sbuf *out, const char *tags,
                                 const char *from, const char *target,
@@ -282,7 +322,17 @@ otr_message_add_decrypted_line (struct t_otr_sbuf *out, const char *tags,
     free (text);
 }
 
-/* msg may have several lines; each becomes its own PRIVMSG */
+/*
+ * Build incoming IRC PRIVMSG messages (separated by "\r\n") with the lines of a
+ * message: each line becomes its own PRIVMSG.
+ *
+ * If decrypted is 1, lines are added with function
+ * otr_message_add_decrypted_line, otherwise they are added as-is after
+ * line_prefix.
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_message_build_in_privmsgs (const char *tags, const char *from,
                                const char *target, const char *msg,

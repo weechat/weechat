@@ -23,6 +23,11 @@
 #include "otr-util.h"
 
 
+/*
+ * Display a debug message in buffer "OTR Debug" (created if needed), only if
+ * option otr.general.debug is enabled.
+ */
+
 void
 otr_buffer_debug (const char *fmt, ...)
 {
@@ -48,6 +53,11 @@ otr_buffer_debug (const char *fmt, ...)
     va_end (ap);
     weechat_printf (b, "otr debug\t%s", tmp);
 }
+
+/*
+ * Display a message in a buffer with the OTR prefix and a color (index in enum
+ * t_otr_config_color); each line of the message is displayed separately.
+ */
 
 void
 otr_buffer_print_str (struct t_gui_buffer *buf, int col, const char *msg)
@@ -81,6 +91,10 @@ otr_buffer_print_str (struct t_gui_buffer *buf, int col, const char *msg)
     free (prefix);
 }
 
+/*
+ * Display an error in core buffer.
+ */
+
 void
 otr_buffer_error_core (const char *fmt, ...)
 {
@@ -93,6 +107,12 @@ otr_buffer_error_core (const char *fmt, ...)
     weechat_printf (NULL, "%sotr: %s", weechat_prefix ("error"), tmp);
 }
 
+/*
+ * Check if a buffer is a private buffer.
+ *
+ * Return 1 if the buffer is private, 0 otherwise.
+ */
+
 int
 otr_buffer_is_private (struct t_gui_buffer *buf)
 {
@@ -103,6 +123,14 @@ otr_buffer_is_private (struct t_gui_buffer *buf)
     t = weechat_buffer_get_string (buf, "localvar_type");
     return t && strcmp (t, "private") == 0;
 }
+
+/*
+ * Display a message for a peer, in the private buffer with the peer if it
+ * exists, otherwise in core buffer with the nick of the peer before the
+ * message.
+ *
+ * Nothing is displayed when the plugin is unloading.
+ */
 
 void
 otr_buffer_peer_print (const char *server, const char *nick, int col,
@@ -123,6 +151,10 @@ otr_buffer_peer_print (const char *server, const char *nick, int col,
     otr_buffer_print_str (buf, col, msg);
     free (tmp);
 }
+
+/*
+ * Display a formatted message for the peer of a libotr context.
+ */
 
 void
 otr_buffer_ctx_print (ConnContext *c, int col, const char *fmt, ...)
@@ -151,6 +183,11 @@ otr_buffer_ctx_print (ConnContext *c, int col, const char *fmt, ...)
     va_end (ap2);
 }
 
+/*
+ * Display a hint for the peer of a libotr context, if option otr.general.hints
+ * is enabled.
+ */
+
 void
 otr_buffer_ctx_hint (ConnContext *c, const char *msg)
 {
@@ -158,12 +195,20 @@ otr_buffer_ctx_hint (ConnContext *c, const char *msg)
         otr_buffer_ctx_print (c, OTR_CONFIG_LEVEL_HINT, "%s", msg);
 }
 
+/*
+ * Display a hint for a peer, if option otr.general.hints is enabled.
+ */
+
 void
 otr_buffer_peer_hint (const char *server, const char *nick, const char *msg)
 {
     if (weechat_config_boolean (otr_config_general_hints))
         otr_buffer_peer_print (server, nick, OTR_CONFIG_LEVEL_HINT, msg);
 }
+
+/*
+ * Callback for signal "buffer_switch": update the OTR bar item.
+ */
 
 int
 otr_buffer_switch_cb (const void *pointer, void *data, const char *signal,
@@ -175,7 +220,11 @@ otr_buffer_switch_cb (const void *pointer, void *data, const char *signal,
     return WEECHAT_RC_OK;
 }
 
-/* end the OTR session when its private buffer is closed */
+/*
+ * Callback for signal "buffer_closing": end the OTR session when its private
+ * buffer is closed.
+ */
+
 int
 otr_buffer_closing_cb (const void *pointer, void *data, const char *signal,
                        const char *type_data, void *signal_data)

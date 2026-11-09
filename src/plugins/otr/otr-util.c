@@ -18,6 +18,14 @@
 #include "otr-util.h"
 
 
+/*
+ * Build a string with a printf-like format.
+ *
+ * Return NULL if error.
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_util_strf (const char *fmt, ...)
 {
@@ -41,11 +49,24 @@ otr_util_strf (const char *fmt, ...)
     return s;
 }
 
+/*
+ * Duplicate a string (NULL is duplicated as an empty string).
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_util_dupstr (const char *s)
 {
     return strdup (s ? s : "");
 }
+
+/*
+ * Duplicate a string with all chars in lower case (NULL is duplicated as an
+ * empty string).
+ *
+ * Note: result must be freed after use.
+ */
 
 char *
 otr_util_lc_dup (const char *s)
@@ -59,6 +80,10 @@ otr_util_lc_dup (const char *s)
     return r;
 }
 
+/*
+ * Initialize a growable string buffer.
+ */
+
 void
 otr_util_sb_init (struct t_otr_sbuf *b)
 {
@@ -66,6 +91,13 @@ otr_util_sb_init (struct t_otr_sbuf *b)
     b->len = b->cap = 0;
     b->err = 0;
 }
+
+/*
+ * Add n bytes to a string buffer.
+ *
+ * On allocation error, the error flag is set in the buffer and next additions
+ * are ignored.
+ */
 
 void
 otr_util_sb_add (struct t_otr_sbuf *b, const char *p, size_t n)
@@ -94,11 +126,19 @@ otr_util_sb_add (struct t_otr_sbuf *b, const char *p, size_t n)
     b->s[b->len] = '\0';
 }
 
+/*
+ * Add a string to a string buffer.
+ */
+
 void
 otr_util_sb_adds (struct t_otr_sbuf *b, const char *s)
 {
     otr_util_sb_add (b, s, strlen (s));
 }
+
+/*
+ * Add a char to a string buffer.
+ */
 
 void
 otr_util_sb_addc (struct t_otr_sbuf *b, char c)
@@ -106,7 +146,15 @@ otr_util_sb_addc (struct t_otr_sbuf *b, char c)
     otr_util_sb_add (b, &c, 1);
 }
 
-/* returns malloc'd string, or NULL on allocation failure */
+/*
+ * Take the content of a string buffer (the buffer is emptied).
+ *
+ * Return an empty string if nothing was added, NULL if an allocation error
+ * occurred (the content is then freed).
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_util_sb_take (struct t_otr_sbuf *b)
 {
@@ -125,7 +173,13 @@ otr_util_sb_take (struct t_otr_sbuf *b)
     return r;
 }
 
-/* replace CR, LF, NUL-ish control characters that could break an IRC line */
+/*
+ * Duplicate a string with CR and LF replaced by spaces, so that it can be sent
+ * in a single IRC line.
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_util_irc_sanitize (const char *s)
 {

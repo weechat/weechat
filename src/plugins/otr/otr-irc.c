@@ -18,6 +18,12 @@
 #include "otr-util.h"
 
 
+/*
+ * Search the IRC buffer for a server and a nick.
+ *
+ * Return pointer to buffer, NULL if not found.
+ */
+
 struct t_gui_buffer *
 otr_irc_buffer (const char *server, const char *nick)
 {
@@ -33,6 +39,13 @@ otr_irc_buffer (const char *server, const char *nick)
         return (struct t_gui_buffer *)p;
     return NULL;
 }
+
+/*
+ * Check if a message target is an IRC channel, including a channel with a
+ * status message prefix (for example "@#channel").
+ *
+ * Return 1 if the target is a channel, 0 otherwise.
+ */
 
 int
 otr_irc_target_is_channel (const char *server, const char *target)
@@ -74,7 +87,15 @@ otr_irc_target_is_channel (const char *server, const char *target)
     return res;
 }
 
-/* "ownnick@server" (nick lowercased); NULL if not connected */
+/*
+ * Build the OTR account name for a server: "ownnick@server" (nick in lower
+ * case).
+ *
+ * Return NULL if not connected to the server.
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_irc_make_account (const char *server)
 {
@@ -91,6 +112,13 @@ otr_irc_make_account (const char *server)
     return r;
 }
 
+/*
+ * Get the server part of an OTR account name ("nick@server").
+ *
+ * Return pointer to the server in the account name, an empty string if there is
+ * no server.
+ */
+
 const char *
 otr_irc_account_server (const char *account)
 {
@@ -99,7 +127,11 @@ otr_irc_account_server (const char *account)
     return at ? at + 1 : "";
 }
 
-/* copy own nick part of account into dst */
+/*
+ * Copy own nick part of an OTR account name ("nick@server") into dst, a buffer
+ * of n bytes (the nick is truncated if needed).
+ */
+
 void
 otr_irc_account_nick (const char *account, char *dst, size_t n)
 {
@@ -111,6 +143,11 @@ otr_irc_account_nick (const char *account, char *dst, size_t n)
     memcpy (dst, account, l);
     dst[l] = '\0';
 }
+
+/*
+ * Send a PRIVMSG to a nick on a server with command /quote; the outgoing
+ * modifier lets it through untouched.
+ */
 
 void
 otr_irc_send_raw (const char *server, const char *nick, const char *text)

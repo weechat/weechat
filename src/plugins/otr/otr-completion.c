@@ -14,6 +14,10 @@
 #include "otr-config.h"
 
 
+/*
+ * Add OTR policies to completion list.
+ */
+
 int
 otr_completion_policy_cb (const void *pointer, void *data,
                           const char *completion_item,

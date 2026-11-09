@@ -26,6 +26,12 @@
 #include "otr-util.h"
 
 
+/*
+ * Check if a string contains an OTR query ("?OTR?" or "?OTRv...?").
+ *
+ * Return 1 if the string contains an OTR query, 0 otherwise.
+ */
+
 int
 otr_modifier_is_otr_query (const char *s)
 {
@@ -49,6 +55,12 @@ otr_modifier_is_otr_query (const char *s)
     return 0;
 }
 
+/*
+ * Check if a string ends like an OTR message (with "." or ",").
+ *
+ * Return 1 if the string ends like an OTR message, 0 otherwise.
+ */
+
 int
 otr_modifier_has_otr_end (const char *s)
 {
@@ -57,8 +69,15 @@ otr_modifier_has_otr_end (const char *s)
     return l > 0 && (s[l - 1] == '.' || s[l - 1] == ',');
 }
 
-/* Add the line to the peer's assembly buffer; return 1 if a complete
- * message is now available (copied to *out, malloc'd). */
+/*
+ * Add a received line to the assembly buffer of a peer (OTR messages can be
+ * split over several IRC lines).
+ *
+ * Return 1 if a complete message is available (copied in *out, which must be
+ * freed after use), 0 if more lines are expected or if an allocation error
+ * occurred.
+ */
+
 int
 otr_modifier_assemble (struct t_otr_peer_data *pd, const char *line, char **out)
 {
@@ -96,6 +115,14 @@ otr_modifier_assemble (struct t_otr_peer_data *pd, const char *line, char **out)
     }
     return 0;
 }
+
+/*
+ * Callback for modifier "irc_in_privmsg": decrypt incoming OTR private messages
+ * and replace the echo of own OTR messages.
+ *
+ * Return new message(s), an empty string to drop the message, NULL to keep it
+ * unchanged.
+ */
 
 char *
 otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
@@ -258,7 +285,13 @@ done:
     return result;
 }
 
-/* "PRIVMSG target :text" */
+/*
+ * Parse an outgoing message "PRIVMSG target :text".
+ *
+ * Return 1 if OK (*target must be freed after use, *text points inside the
+ * message), 0 if error.
+ */
+
 int
 otr_modifier_parse_out_privmsg (const char *s, char **target, const char **text)
 {
@@ -284,7 +317,12 @@ otr_modifier_parse_out_privmsg (const char *s, char **target, const char **text)
     return 1;
 }
 
-/* 1 = all comma separated targets are channels */
+/*
+ * Check if all targets of a comma-separated list are channels.
+ *
+ * Return 1 if all targets are channels, 0 otherwise.
+ */
+
 int
 otr_modifier_all_targets_channels (const char *server, const char *list)
 {
@@ -304,9 +342,16 @@ otr_modifier_all_targets_channels (const char *server, const char *list)
 }
 
 /*
- * Fails closed: any problem returns an empty string, which makes WeeChat
- * drop the message instead of sending it unencrypted.
+ * Callback for modifier "irc_out_privmsg": encrypt outgoing private messages
+ * with OTR.
+ *
+ * Fail closed: any problem returns an empty string, which makes WeeChat drop
+ * the message instead of sending it unencrypted.
+ *
+ * Return new message, NULL to send it unchanged (channel, or plain text allowed
+ * by policies), an empty string to drop it.
  */
+
 char *
 otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
                      const char *modifier_data, const char *string)

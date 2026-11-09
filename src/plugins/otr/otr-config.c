@@ -101,6 +101,11 @@ struct t_config_option *otr_config_general_no_send_tag_regex = NULL;
 struct t_config_option *otr_config_color[OTR_CONFIG_NUM_COLOR_OPTIONS];
 struct t_config_option *otr_config_look[OTR_CONFIG_NUM_LOOK_OPTIONS];
 
+/*
+ * Callback for changes on options displayed in the OTR bar item: update the bar
+ * item.
+ */
+
 void
 otr_config_change_bar_cb (const void *pointer, void *data,
                           struct t_config_option *option)
@@ -108,6 +113,11 @@ otr_config_change_bar_cb (const void *pointer, void *data,
     (void)pointer; (void)data; (void)option;
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
+
+/*
+ * Callback to create an option in section "policy" (boolean, "off" if no value
+ * is given).
+ */
 
 int
 otr_config_policy_create_option_cb (const void *pointer, void *data,
@@ -129,6 +139,13 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
              : WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
+/*
+ * Create an option in OTR configuration file, with the same default and current
+ * value.
+ *
+ * Return pointer to new option, NULL if error.
+ */
+
 struct t_config_option *
 otr_config_new_option (struct t_config_section *sec, const char *name,
                        const char *type,
@@ -143,6 +160,13 @@ otr_config_new_option (struct t_config_section *sec, const char *name,
                                       change_cb, NULL, NULL,
                                       NULL, NULL, NULL);
 }
+
+/*
+ * Initialize OTR configuration file: create sections and options, then read
+ * file otr.conf.
+ *
+ * Return 1 if OK, 0 if error.
+ */
 
 int
 otr_config_init (void)
