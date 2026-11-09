@@ -341,6 +341,10 @@ par exemple `+init password=foo\,bar+` pour envoyer le mot de passe "foo,bar".
 Seuls le premier mot de passe (_password_ ou _password_hash_) et le premier
 _totp_ sont vérifiés, les suivants sont ignorés _(WeeChat ≥ 4.10.4)_.
 
+[NOTE]
+Le TOTP doit contenir exactement 6 chiffres, y compris les zéros initiaux (par
+exemple `012345`), sinon il est refusé.
+
 Le format du mot de passe haché est l'un des suivants, où _hash_ est le mot
 de passe haché en hexadécimal :
 

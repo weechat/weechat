@@ -294,6 +294,11 @@ _Ажурирано у верзијама 2.4, 2.8, 2.9, 3.5, 4.10.4._
 Only the first password (_password_ or _password_hash_) and the first _totp_
 are checked, the next ones are ignored _(WeeChat ≥ 4.10.4)_.
 
+// TRANSLATION MISSING
+[NOTE]
+The TOTP must contain exactly 6 digits, including leading zeros (for example
+`012345`), otherwise it is rejected.
+
 Формат хеширане лозинке је једно од следећег, где је _хеш_ хеширана лозинка као хексадецимална вредност:
 
 * `+sha256:со:хеш+` где је :
