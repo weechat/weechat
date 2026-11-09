@@ -21,6 +21,12 @@
 #include "otr-util.h"
 
 
+/*
+ * Add a state (value of a look option, with a color) to the content of the OTR
+ * bar item, after the separator sep if it is not the first state; nothing is
+ * added if the look option is empty.
+ */
+
 void
 otr_bar_item_part (struct t_otr_sbuf *b, const char *sep, int *first,
                    int color_idx, int look_idx)
@@ -43,6 +49,17 @@ otr_bar_item_part (struct t_otr_sbuf *b, const char *sep, int *first,
     otr_util_sb_adds (b, str);
     otr_util_sb_adds (b, def);
 }
+
+/*
+ * Callback for bar item "otr": OTR state of the private buffer (encrypted,
+ * authenticated, logged).
+ *
+ * The local variables "otr_encrypted", "otr_authenticated" and "otr_logged" are
+ * set in the buffer.
+ *
+ * Return content of bar item (empty string if the buffer is not a private
+ * buffer).
+ */
 
 char *
 otr_bar_item_cb (const void *pointer, void *data, struct t_gui_bar_item *item,

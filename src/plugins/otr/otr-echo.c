@@ -36,6 +36,10 @@ struct t_otr_echo_pending
 struct t_otr_echo_pending otr_echo_pending_queue[OTR_ECHO_PENDING_MAX];
 int otr_echo_pending_count = 0;
 
+/*
+ * Remove a pending message (by index) from the queue.
+ */
+
 void
 otr_echo_pending_drop (int i)
 {
@@ -51,12 +55,20 @@ otr_echo_pending_drop (int i)
             sizeof (struct t_otr_echo_pending));
 }
 
+/*
+ * Remove all pending messages.
+ */
+
 void
 otr_echo_pending_clear_all (void)
 {
     while (otr_echo_pending_count > 0)
         otr_echo_pending_drop (0);
 }
+
+/*
+ * Remove pending messages older than OTR_ECHO_PENDING_TTL seconds.
+ */
 
 void
 otr_echo_pending_purge (void)
@@ -72,6 +84,14 @@ otr_echo_pending_purge (void)
             i++;
     }
 }
+
+/*
+ * Remember a message sent (OTR message and plain text), so that the echo of the
+ * message by the server (IRCv3 capability "echo-message") can be displayed as
+ * plain text.
+ *
+ * If the queue is full, the oldest message is removed.
+ */
 
 void
 otr_echo_pending_add (const char *server, const char *peer, const char *cipher,
@@ -100,6 +120,10 @@ otr_echo_pending_add (const char *server, const char *peer, const char *cipher,
     }
 }
 
+/*
+ * Get the length of a string without trailing spaces and tabs.
+ */
+
 size_t
 otr_echo_trimmed_len (const char *s)
 {
@@ -110,7 +134,15 @@ otr_echo_trimmed_len (const char *s)
     return l;
 }
 
-/* returns the plaintext (caller frees) or NULL if nothing matches */
+/*
+ * Search a pending message by server, target and OTR message, and remove it
+ * from the queue.
+ *
+ * Return the plain text, NULL if not found.
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_echo_pending_take (const char *server, const char *target,
                        const char *cipher)
@@ -136,7 +168,17 @@ otr_echo_pending_take (const char *server, const char *target,
     return NULL;
 }
 
-/* NULL = leave the echoed line alone; "" = hide it */
+/*
+ * Replace the echo of an OTR message sent (IRCv3 capability "echo-message") by
+ * the plain text that was sent.
+ *
+ * Return NULL to leave the echoed message unchanged (not an OTR message), an
+ * empty string to hide it (OTR protocol message or unknown message), otherwise
+ * the new IRC message(s).
+ *
+ * Note: result must be freed after use.
+ */
+
 char *
 otr_echo_replace (const char *server, const char *string, const char *host,
                   const char *target, const char *text)
