@@ -80,6 +80,7 @@ Les répertoires principaux de WeeChat sont :
 |       javascript/  | API script JavaScript.
 |       logger/      | Extension Logger (enregistrer les messages affichés dans des fichiers).
 |       lua/         | API script Lua.
+|       otr/         | Extension OTR (messagerie Off-the-Record pour les conversations privées IRC).
 |       perl/        | API script Perl.
 |       php/         | API script PHP.
 |       python/      | API script Python.
@@ -331,6 +332,22 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    lua/                            | Extension Lua.
 |       weechat-lua.c                | Fonctions principales pour Lua (chargement/déchargement des scripts, exécution de code Lua).
 |       weechat-lua-api.c            | Fonctions de l'API script Lua.
+|    otr/                            | Extension OTR.
+|       otr.c                        | Fonctions principales pour OTR.
+|       otr-bar-item.c               | Objet de barre OTR.
+|       otr-buffer.c                 | Fonctions d'affichage et de tampons pour OTR.
+|       otr-callback.c               | Fonctions de rappel pour libotr.
+|       otr-command.c                | Commandes de OTR.
+|       otr-completion.c             | Complétions de OTR.
+|       otr-config.c                 | Options de configuration pour OTR (fichier otr.conf).
+|       otr-context.c                | Données par correspondant attachées aux contextes libotr.
+|       otr-echo.c                   | Support de echo-message (IRCv3).
+|       otr-irc.c                    | Fonctions IRC pour OTR.
+|       otr-log.c                    | Contrôle de l'enregistrement des tampons pendant les sessions OTR.
+|       otr-message.c                | Conversion du texte des messages OTR.
+|       otr-modifier.c               | Modificateurs pour les messages privés IRC entrants et sortants.
+|       otr-policy.c                 | Politiques OTR.
+|       otr-util.c                   | Fonctions utilitaires pour OTR.
 |    perl/                           | Extension Perl.
 |       weechat-perl.c               | Fonctions principales pour Perl (chargement/déchargement des scripts, exécution de code Perl).
 |       weechat-perl-api.c           | Fonctions de l'API script Perl.

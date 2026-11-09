@@ -79,6 +79,8 @@ qweechat::
 |       javascript/  | API за JavaScript скриптовање.
 |       logger/      | Logger додатак (уписивање порука које се приказују у фајл).
 |       lua/         | API за Lua скриптовање.
+// TRANSLATION MISSING
+|       otr/         | OTR plugin (Off-the-Record messaging for IRC private conversations).
 |       perl/        | API за Perl скриптовање.
 |       php/         | API за PHP скриптовање.
 |       python/      | API за Python скриптовање.
@@ -330,6 +332,38 @@ WeeChat „језгро” се налази у следећим директо�
 |    lua/                            | Lua додатак.
 |       weechat-lua.c                | Главне lua функције (учитавање/уклањање скрипти, извршавање lua кода).
 |       weechat-lua-api.c            | API функције Lua скриптовања.
+// TRANSLATION MISSING
+|    otr/                            | OTR plugin.
+// TRANSLATION MISSING
+|       otr.c                        | Main OTR functions.
+// TRANSLATION MISSING
+|       otr-bar-item.c               | OTR bar item.
+// TRANSLATION MISSING
+|       otr-buffer.c                 | OTR display and buffer functions.
+// TRANSLATION MISSING
+|       otr-callback.c               | libotr callbacks.
+// TRANSLATION MISSING
+|       otr-command.c                | OTR commands.
+// TRANSLATION MISSING
+|       otr-completion.c             | OTR completions.
+// TRANSLATION MISSING
+|       otr-config.c                 | OTR config options (file otr.conf).
+// TRANSLATION MISSING
+|       otr-context.c                | Per-peer data attached to libotr contexts.
+// TRANSLATION MISSING
+|       otr-echo.c                   | Support of IRCv3 echo-message.
+// TRANSLATION MISSING
+|       otr-irc.c                    | OTR IRC functions.
+// TRANSLATION MISSING
+|       otr-log.c                    | Control of buffer logging during OTR sessions.
+// TRANSLATION MISSING
+|       otr-message.c                | Conversion of OTR message text.
+// TRANSLATION MISSING
+|       otr-modifier.c               | Modifiers for incoming and outgoing IRC private messages.
+// TRANSLATION MISSING
+|       otr-policy.c                 | OTR policies.
+// TRANSLATION MISSING
+|       otr-util.c                   | OTR utility functions.
 |    perl/                           | Perl додатак.
 |       weechat-perl.c               | Главне perl функције (учитавање/уклањање скрипти, извршавање perl кода).
 |       weechat-perl-api.c           | API функције Perl скриптовања.
