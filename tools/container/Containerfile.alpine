@@ -55,6 +55,7 @@ RUN set -eux ; \
         gettext-dev \
         gnutls-dev \
         libgcrypt-dev \
+        libotr-dev \
         make \
         ncurses-dev \
         pkgconf \
@@ -122,6 +123,7 @@ RUN set -eux ; \
         libcurl \
         libgcrypt \
         libintl \
+        libotr \
         ncurses-libs \
         ncurses-terminfo \
         tzdata \

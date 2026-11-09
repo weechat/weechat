@@ -165,6 +165,9 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
   Extension Relay : compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (protocoles api et weechat).
 
+| libotr5-dev | ≥ 4.0.0
+| Extension OTR.
+
 | libaspell-dev / libenchant-2-dev |
 | Extension spell.
 
@@ -331,6 +334,9 @@ Liste des options disponibles :
 
 | ENABLE_NLS | `ON`, `OFF` | ON
 | Activer NLS (traductions).
+
+| ENABLE_OTR | `ON`, `OFF` | ON
+| Compiler l'extension OTR.
 
 | ENABLE_PERL | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,l'extension Perl>>.

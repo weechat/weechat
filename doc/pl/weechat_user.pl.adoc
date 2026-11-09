@@ -168,6 +168,10 @@ WeeChat:
   Wtyczka relay: kompresja wiadomości (WeeChat -> klient) za pomocą https://facebook.github.io/zstd/[Zstandard ^↗^^]
   (protokoły api i weechat).
 
+// TRANSLATION MISSING
+| libotr5-dev | ≥ 4.0.0
+| OTR plugin.
+
 | libaspell-dev / libenchant-2-dev |
 | Wtyczka spell.
 
@@ -334,6 +338,10 @@ Lista dostępnych opcji:
 
 | ENABLE_NLS | `ON`, `OFF` | ON
 | Włączenie NLS (tłumaczenia).
+
+// TRANSLATION MISSING
+| ENABLE_OTR | `ON`, `OFF` | ON
+| Compile OTR plugin.
 
 | ENABLE_PERL | `ON`, `OFF` | ON
 | Kompilacja <<scripting_plugins,wtyczki perl>>.
