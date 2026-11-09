@@ -124,29 +124,6 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
 }
 
 /*
- * Get the IRC tags of a message, with the space after the tags.
- *
- * Return NULL if the message has no tags.
- *
- * Note: result must be freed after use.
- */
-
-char *
-otr_modifier_get_tags (const char *message)
-{
-    const char *ptr_space;
-
-    if (message[0] != '@')
-        return NULL;
-
-    ptr_space = strchr (message, ' ');
-    if (!ptr_space)
-        return NULL;
-
-    return weechat_strndup (message, ptr_space - message + 1);
-}
-
-/*
  * Callback for modifier "irc_in_privmsg": decrypt incoming OTR private messages
  * and replace the echo of own OTR messages.
  *
@@ -247,7 +224,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
             plain = otr_message_plain_from_irc (ptr_text);
             if (plain)
             {
-                tags = otr_modifier_get_tags (string);
+                tags = otr_message_get_tags (string);
                 result = otr_message_build_in_privmsgs (
                     (tags) ? tags : "", ptr_host, target, plain,
                     OTR_UNENCRYPTED_PREFIX, 0);
@@ -289,7 +266,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
         otrl_tlv_free (tlvs);
     }
 
-    tags = otr_modifier_get_tags (string);
+    tags = otr_message_get_tags (string);
 
     if (ignore)
     {
