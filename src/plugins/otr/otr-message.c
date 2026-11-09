@@ -170,7 +170,7 @@ otr_message_html_filter (const char *in)
                 otr_util_sb_addc (&b, '\n');
             else if (!closing && strcmp (name, "a") == 0)
             {
-                /* look for href="..." inside the tag */
+                /* Look for href="..." inside the tag. */
                 char *content = strndup (p, (size_t)(gt - p));
 
                 if (content)
