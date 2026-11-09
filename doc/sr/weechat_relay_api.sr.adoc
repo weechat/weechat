@@ -169,6 +169,10 @@ curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e
 curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" 'https://localhost:9000/api/version'
 ----
 
+// TRANSLATION MISSING
+The TOTP must contain exactly 6 digits, including leading zeros (for example
+`012345`), otherwise it is rejected.
+
 У случају грешке, враћа се одговор `401 Unauthorized` са пољем `error` у
 JSON подацима које описује грешку.
 

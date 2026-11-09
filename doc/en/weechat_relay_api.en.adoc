@@ -167,6 +167,9 @@ in the `x-weechat-totp` header like this:
 curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" 'https://localhost:9000/api/version'
 ----
 
+The TOTP must contain exactly 6 digits, including leading zeros (for example
+`012345`), otherwise it is rejected.
+
 In case of error, a response `401 Unauthorized` is returned with a field `error`
 in JSON data that describes the error.
 
