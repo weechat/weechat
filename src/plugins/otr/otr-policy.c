@@ -20,44 +20,49 @@
 
 
 int
-policy_for (const char *account, const char *peer, const char *name)
+otr_policy_for (const char *account, const char *peer, const char *name)
 {
     char nick[128], opt[640];
-    const char *server = account_server (account);
+    const char *server = otr_irc_account_server (account);
     struct t_config_option *o;
 
-    account_nick (account, nick, sizeof (nick));
+    otr_irc_account_nick (account, nick, sizeof (nick));
 
     snprintf (opt, sizeof (opt), "%s.%s.%s.%s", server, nick, peer, name);
-    o = weechat_config_search_option (cfg_file, cfg_sec_policy, opt);
+    o = weechat_config_search_option (otr_config_file,
+                                      otr_config_section_policy, opt);
     if (!o)
     {
         snprintf (opt, sizeof (opt), "%s.%s.%s", server, nick, name);
-        o = weechat_config_search_option (cfg_file, cfg_sec_policy, opt);
+        o = weechat_config_search_option (otr_config_file,
+                                          otr_config_section_policy, opt);
     }
     if (!o)
     {
         snprintf (opt, sizeof (opt), "%s.%s", server, name);
-        o = weechat_config_search_option (cfg_file, cfg_sec_policy, opt);
+        o = weechat_config_search_option (otr_config_file,
+                                          otr_config_section_policy, opt);
     }
     if (!o)
     {
         snprintf (opt, sizeof (opt), "default.%s", name);
-        o = weechat_config_search_option (cfg_file, cfg_sec_policy, opt);
+        o = weechat_config_search_option (otr_config_file,
+                                          otr_config_section_policy, opt);
     }
     return o ? weechat_config_boolean (o) : 0;
 }
 
 int
-policy_ctx (ConnContext *c, const char *name)
+otr_policy_ctx (ConnContext *c, const char *name)
 {
-    return policy_for (c->accountname, c->username, name);
+    return otr_policy_for (c->accountname, c->username, name);
 }
 
 int
-no_send_tag (const char *peer)
+otr_policy_no_send_tag (const char *peer)
 {
-    const char *re = weechat_config_string (opt_no_send_tag_regex);
+    const char *re = weechat_config_string (
+        otr_config_general_no_send_tag_regex);
     regex_t r;
     int m;
 
@@ -71,58 +76,60 @@ no_send_tag (const char *peer)
 }
 
 char *
-format_default_policies (void)
+otr_policy_format_default (void)
 {
-    struct sbuf b;
+    struct t_otr_sbuf b;
     char opt[128];
     struct t_config_option *o;
     int i;
 
-    sb_init (&b);
-    sb_adds (&b, _("Current default OTR policies:\n"));
-    for (i = 0; i < N_POLICIES; i++)
+    otr_util_sb_init (&b);
+    otr_util_sb_adds (&b, _("Current default OTR policies:\n"));
+    for (i = 0; i < OTR_CONFIG_NUM_POLICIES; i++)
     {
-        snprintf (opt, sizeof (opt), "default.%s", policies[i].name);
-        o = weechat_config_search_option (cfg_file, cfg_sec_policy, opt);
-        sb_adds (&b, "  ");
-        sb_adds (&b, policies[i].name);
-        sb_adds (&b, " (");
-        sb_adds (&b, _(policies[i].desc));
-        sb_adds (&b, ") : ");
-        sb_adds (&b, (o && weechat_config_boolean (o)) ? "on" : "off");
-        sb_addc (&b, '\n');
+        snprintf (opt, sizeof (opt), "default.%s", otr_config_policies[i].name);
+        o = weechat_config_search_option (otr_config_file,
+                                          otr_config_section_policy, opt);
+        otr_util_sb_adds (&b, "  ");
+        otr_util_sb_adds (&b, otr_config_policies[i].name);
+        otr_util_sb_adds (&b, " (");
+        otr_util_sb_adds (&b, _(otr_config_policies[i].desc));
+        otr_util_sb_adds (&b, ") : ");
+        otr_util_sb_adds (&b, (o && weechat_config_boolean (o)) ? "on" : "off");
+        otr_util_sb_addc (&b, '\n');
     }
-    sb_adds (&b, _("Change default policies with: "
-                   "/otr policy default NAME on|off"));
-    return sb_take (&b);
+    otr_util_sb_adds (&b, _("Change default policies with: "
+                            "/otr policy default NAME on|off"));
+    return otr_util_sb_take (&b);
 }
 
 char *
-format_peer_policies (const char *account, const char *peer)
+otr_policy_format_peer (const char *account, const char *peer)
 {
-    struct sbuf b;
+    struct t_otr_sbuf b;
     int i;
 
-    sb_init (&b);
+    otr_util_sb_init (&b);
     {
-        char *hdr = strf (_("Current OTR policies for %s@%s:\n"), peer,
-                          account_server (account));
+        char *hdr = otr_util_strf (_("Current OTR policies for %s@%s:\n"), peer,
+                                   otr_irc_account_server (account));
 
         if (hdr)
-            sb_adds (&b, hdr);
+            otr_util_sb_adds (&b, hdr);
         free (hdr);
     }
-    for (i = 0; i < N_POLICIES; i++)
+    for (i = 0; i < OTR_CONFIG_NUM_POLICIES; i++)
     {
-        sb_adds (&b, "  ");
-        sb_adds (&b, policies[i].name);
-        sb_adds (&b, " (");
-        sb_adds (&b, _(policies[i].desc));
-        sb_adds (&b, ") : ");
-        sb_adds (&b, policy_for (account, peer, policies[i].name)
-                 ? "on" : "off");
-        sb_addc (&b, '\n');
+        otr_util_sb_adds (&b, "  ");
+        otr_util_sb_adds (&b, otr_config_policies[i].name);
+        otr_util_sb_adds (&b, " (");
+        otr_util_sb_adds (&b, _(otr_config_policies[i].desc));
+        otr_util_sb_adds (&b, ") : ");
+        otr_util_sb_adds (&b, otr_policy_for (account, peer,
+                                              otr_config_policies[i].name)
+                          ? "on" : "off");
+        otr_util_sb_addc (&b, '\n');
     }
-    sb_adds (&b, _("Change policies with: /otr policy NAME on|off"));
-    return sb_take (&b);
+    otr_util_sb_adds (&b, _("Change policies with: /otr policy NAME on|off"));
+    return otr_util_sb_take (&b);
 }

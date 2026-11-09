@@ -19,13 +19,13 @@
 #include <libotr/instag.h>
 #include <libotr/message.h>
 
-#define OTR_PROTOCOL      "irc"
-#define OTR_BAR_ITEM      "otr"
-#define OTR_MAX_ASSEMBLY  (64 * 1024)
-#define LOG_UNTOUCHED     (-2)   /* we have not changed the log level */
-#define LOG_DEFAULT       (-1)   /* buffer used the default log level */
-#define ACTION_PREFIX     "/me "
-#define UNENCRYPTED_PFX   _("Unencrypted message received: ")
+#define OTR_PROTOCOL           "irc"
+#define OTR_BAR_ITEM           "otr"
+#define OTR_MAX_ASSEMBLY       (64 * 1024)
+#define OTR_LOG_UNTOUCHED      (-2)   /* we have not changed the log level */
+#define OTR_LOG_DEFAULT        (-1)   /* buffer used the default log level */
+#define OTR_ACTION_PREFIX      "/me "
+#define OTR_UNENCRYPTED_PREFIX _("Unencrypted message received: ")
 
 #define weechat_plugin weechat_otr_plugin
 
@@ -37,8 +37,8 @@ extern char *otr_keyfile;
 extern char *otr_fprfile;
 extern char *otr_instagfile;
 extern struct t_gui_bar_item *otr_bar_item;
-extern int g_injecting;
-extern int g_no_tag;
-extern int g_shutdown;
+extern int otr_injecting;
+extern int otr_no_tag;
+extern int otr_shutdown;
 
 #endif /* WEECHAT_PLUGIN_OTR_H */

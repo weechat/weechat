@@ -24,70 +24,72 @@
  * (cipher line + the plaintext the user typed) and swap them back; echoes
  * of pure protocol traffic (query, AKE, fragments) are hidden. */
 
-#define PENDING_MAX 32
-#define PENDING_TTL 60
+#define OTR_ECHO_PENDING_MAX 32
+#define OTR_ECHO_PENDING_TTL 60
 
-struct pending
+struct t_otr_echo_pending
 {
     char *server, *peer, *cipher, *plain;
     time_t t;
 };
 
-static struct pending pending_q[PENDING_MAX];
-static int pending_n = 0;
+static struct t_otr_echo_pending otr_echo_pending_queue[OTR_ECHO_PENDING_MAX];
+static int otr_echo_pending_count = 0;
 
 static void
-pending_drop (int i)
+otr_echo_pending_drop (int i)
 {
-    free (pending_q[i].server);
-    free (pending_q[i].peer);
-    free (pending_q[i].cipher);
-    free (pending_q[i].plain);
-    memmove (&pending_q[i], &pending_q[i + 1],
-             (size_t)(pending_n - i - 1) * sizeof (struct pending));
-    pending_n--;
-    memset (&pending_q[pending_n], 0, sizeof (struct pending));
+    free (otr_echo_pending_queue[i].server);
+    free (otr_echo_pending_queue[i].peer);
+    free (otr_echo_pending_queue[i].cipher);
+    free (otr_echo_pending_queue[i].plain);
+    memmove (&otr_echo_pending_queue[i], &otr_echo_pending_queue[i + 1],
+             (size_t)(otr_echo_pending_count - i - 1)
+             * sizeof (struct t_otr_echo_pending));
+    otr_echo_pending_count--;
+    memset (&otr_echo_pending_queue[otr_echo_pending_count], 0,
+            sizeof (struct t_otr_echo_pending));
 }
 
 void
-pending_clear_all (void)
+otr_echo_pending_clear_all (void)
 {
-    while (pending_n > 0)
-        pending_drop (0);
+    while (otr_echo_pending_count > 0)
+        otr_echo_pending_drop (0);
 }
 
 static void
-pending_purge (void)
+otr_echo_pending_purge (void)
 {
     time_t now = time (NULL);
     int i = 0;
 
-    while (i < pending_n)
+    while (i < otr_echo_pending_count)
     {
-        if (now - pending_q[i].t > PENDING_TTL)
-            pending_drop (i);
+        if (now - otr_echo_pending_queue[i].t > OTR_ECHO_PENDING_TTL)
+            otr_echo_pending_drop (i);
         else
             i++;
     }
 }
 
 void
-pending_add (const char *server, const char *peer, const char *cipher,
-             const char *plain)
+otr_echo_pending_add (const char *server, const char *peer, const char *cipher,
+                      const char *plain)
 {
-    struct pending *p;
+    struct t_otr_echo_pending *p;
 
-    pending_purge ();
-    if (pending_n == PENDING_MAX)
-        pending_drop (0);
-    p = &pending_q[pending_n];
-    p->server = dupstr (server);
-    p->peer = lc_dup (peer);
-    p->cipher = dupstr (cipher);
-    p->plain = dupstr (plain);
+    otr_echo_pending_purge ();
+    if (otr_echo_pending_count == OTR_ECHO_PENDING_MAX)
+        otr_echo_pending_drop (0);
+    p = &otr_echo_pending_queue[otr_echo_pending_count];
+    p->server = otr_util_dupstr (server);
+    p->peer = otr_util_lc_dup (peer);
+    p->cipher = otr_util_dupstr (cipher);
+    p->plain = otr_util_dupstr (plain);
     p->t = time (NULL);
     if (p->server && p->peer && p->cipher && p->plain)
-        pending_n++;
+        otr_echo_pending_count++;
     else
     {
         free (p->server);
@@ -99,7 +101,7 @@ pending_add (const char *server, const char *peer, const char *cipher,
 }
 
 static size_t
-trimmed_len (const char *s)
+otr_echo_trimmed_len (const char *s)
 {
     size_t l = strlen (s);
 
@@ -110,23 +112,24 @@ trimmed_len (const char *s)
 
 /* returns the plaintext (caller frees) or NULL if nothing matches */
 static char *
-pending_take (const char *server, const char *target, const char *cipher)
+otr_echo_pending_take (const char *server, const char *target,
+                       const char *cipher)
 {
     int i;
-    size_t cl = trimmed_len (cipher);
+    size_t cl = otr_echo_trimmed_len (cipher);
     char *res;
 
-    pending_purge ();
-    for (i = 0; i < pending_n; i++)
+    otr_echo_pending_purge ();
+    for (i = 0; i < otr_echo_pending_count; i++)
     {
-        if (strcmp (pending_q[i].server, server) == 0
-            && strcasecmp (pending_q[i].peer, target) == 0
-            && trimmed_len (pending_q[i].cipher) == cl
-            && memcmp (pending_q[i].cipher, cipher, cl) == 0)
+        if (strcmp (otr_echo_pending_queue[i].server, server) == 0
+            && strcasecmp (otr_echo_pending_queue[i].peer, target) == 0
+            && otr_echo_trimmed_len (otr_echo_pending_queue[i].cipher) == cl
+            && memcmp (otr_echo_pending_queue[i].cipher, cipher, cl) == 0)
         {
-            res = pending_q[i].plain;
-            pending_q[i].plain = NULL;
-            pending_drop (i);
+            res = otr_echo_pending_queue[i].plain;
+            otr_echo_pending_queue[i].plain = NULL;
+            otr_echo_pending_drop (i);
             return res;
         }
     }
@@ -135,20 +138,21 @@ pending_take (const char *server, const char *target, const char *cipher)
 
 /* NULL = leave the echoed line alone; "" = hide it */
 char *
-echo_replace (const char *server, const char *string, const char *host,
-              const char *target, const char *text)
+otr_echo_replace (const char *server, const char *string, const char *host,
+                  const char *target, const char *text)
 {
     char *plain, *tags = NULL, *res;
     const char *sp;
 
     if (strncmp (text, "?OTR", 4) != 0)
         return NULL;
-    plain = pending_take (server, target, text);
+    plain = otr_echo_pending_take (server, target, text);
     if (!plain)
         return strdup ("");
     if (string[0] == '@' && (sp = strchr (string, ' ')) != NULL)
         tags = strndup (string, (size_t)(sp - string) + 1);
-    res = build_in_privmsgs (tags ? tags : "", host, target, plain, "", 1);
+    res = otr_message_build_in_privmsgs (tags ? tags : "", host, target, plain,
+                                         "", 1);
     free (tags);
     free (plain);
     return res ? res : strdup ("");

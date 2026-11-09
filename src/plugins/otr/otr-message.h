@@ -8,13 +8,14 @@
 #ifndef WEECHAT_PLUGIN_OTR_MESSAGE_H
 #define WEECHAT_PLUGIN_OTR_MESSAGE_H
 
-extern int is_ctcp (const char *t);
-extern int is_action (const char *t);
-extern char *msg_plain_from_irc (const char *t);
-extern char *html_escape (const char *in);
-extern char *html_filter (const char *in);
-extern char *build_in_privmsgs (const char *tags, const char *from,
-                                const char *target, const char *msg,
-                                const char *line_prefix, int decrypted);
+extern int otr_message_is_ctcp (const char *t);
+extern int otr_message_is_action (const char *t);
+extern char *otr_message_plain_from_irc (const char *t);
+extern char *otr_message_html_escape (const char *in);
+extern char *otr_message_html_filter (const char *in);
+extern char *otr_message_build_in_privmsgs (const char *tags, const char *from,
+                                            const char *target, const char *msg,
+                                            const char *line_prefix,
+                                            int decrypted);
 
 #endif /* WEECHAT_PLUGIN_OTR_MESSAGE_H */

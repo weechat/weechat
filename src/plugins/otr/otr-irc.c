@@ -19,9 +19,9 @@
 
 
 struct t_gui_buffer *
-irc_buffer (const char *server, const char *nick)
+otr_irc_buffer (const char *server, const char *nick)
 {
-    char *args = strf ("%s,%s", server, nick);
+    char *args = otr_util_strf ("%s,%s", server, nick);
     const char *s;
     void *p = NULL;
 
@@ -35,7 +35,7 @@ irc_buffer (const char *server, const char *nick)
 }
 
 int
-target_is_channel (const char *server, const char *target)
+otr_irc_target_is_channel (const char *server, const char *target)
 {
     char *args;
     const char *r, *statusmsg;
@@ -43,7 +43,7 @@ target_is_channel (const char *server, const char *target)
 
     if (!target || !*target)
         return 0;
-    args = strf ("%s,%s", server, target);
+    args = otr_util_strf ("%s,%s", server, target);
     if (args)
     {
         r = weechat_info_get ("irc_is_channel", args);
@@ -53,7 +53,7 @@ target_is_channel (const char *server, const char *target)
     if (!res)
     {
         /* status message prefix, e.g. "@#channel" */
-        args = strf ("%s,STATUSMSG", server);
+        args = otr_util_strf ("%s,STATUSMSG", server);
         if (args)
         {
             statusmsg = weechat_info_get ("irc_server_isupport_value", args);
@@ -61,7 +61,7 @@ target_is_channel (const char *server, const char *target)
                 && target[1])
             {
                 free (args);
-                args = strf ("%s,%s", server, target + 1);
+                args = otr_util_strf ("%s,%s", server, target + 1);
                 if (args)
                 {
                     r = weechat_info_get ("irc_is_channel", args);
@@ -76,23 +76,23 @@ target_is_channel (const char *server, const char *target)
 
 /* "ownnick@server" (nick lowercased); NULL if not connected */
 char *
-make_account (const char *server)
+otr_irc_make_account (const char *server)
 {
     const char *nick = weechat_info_get ("irc_nick", server);
     char *lc, *r;
 
     if (!nick || !*nick)
         return NULL;
-    lc = lc_dup (nick);
+    lc = otr_util_lc_dup (nick);
     if (!lc)
         return NULL;
-    r = strf ("%s@%s", lc, server);
+    r = otr_util_strf ("%s@%s", lc, server);
     free (lc);
     return r;
 }
 
 const char *
-account_server (const char *account)
+otr_irc_account_server (const char *account)
 {
     const char *at = strchr (account, '@');
 
@@ -101,7 +101,7 @@ account_server (const char *account)
 
 /* copy own nick part of account into dst */
 void
-account_nick (const char *account, char *dst, size_t n)
+otr_irc_account_nick (const char *account, char *dst, size_t n)
 {
     const char *at = strchr (account, '@');
     size_t l = at ? (size_t)(at - account) : strlen (account);
@@ -113,20 +113,20 @@ account_nick (const char *account, char *dst, size_t n)
 }
 
 void
-send_raw (const char *server, const char *nick, const char *text)
+otr_irc_send_raw (const char *server, const char *nick, const char *text)
 {
-    char *s = irc_sanitize (server), *n = irc_sanitize (nick),
-         *t = irc_sanitize (text), *cmd = NULL;
+    char *s = otr_util_irc_sanitize (server), *n = otr_util_irc_sanitize (nick),
+         *t = otr_util_irc_sanitize (text), *cmd = NULL;
 
     if (s && n && t)
-        cmd = strf ("/quote -server %s PRIVMSG %s :%s", s, n, t);
+        cmd = otr_util_strf ("/quote -server %s PRIVMSG %s :%s", s, n, t);
     if (cmd)
     {
-        otr_debug ("inject to %s on %s (len %d)", nick, server,
-                   (int)strlen (text));
-        g_injecting++;
+        otr_buffer_debug ("inject to %s on %s (len %d)", nick, server,
+                          (int)strlen (text));
+        otr_injecting++;
         weechat_command (NULL, cmd);
-        g_injecting--;
+        otr_injecting--;
     }
     free (cmd);
     free (s);

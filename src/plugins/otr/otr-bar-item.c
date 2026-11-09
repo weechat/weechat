@@ -22,43 +22,44 @@
 
 
 static void
-bar_part (struct sbuf *b, const char *sep, int *first, int color_idx,
-          int look_idx)
+otr_bar_item_part (struct t_otr_sbuf *b, const char *sep, int *first,
+                   int color_idx, int look_idx)
 {
-    const char *str = weechat_config_string (opt_look[look_idx]);
+    const char *str = weechat_config_string (otr_config_look[look_idx]);
     char col[64], def[64];
 
     if (!str || !*str)
         return;
-    snprintf (col, sizeof (col), "%s",
-              weechat_color (weechat_config_color (opt_color[color_idx])));
+    snprintf (
+        col, sizeof (col), "%s",
+        weechat_color (weechat_config_color (otr_config_color[color_idx])));
     snprintf (def, sizeof (def), "%s",
               weechat_color (weechat_config_color (
-                  opt_color[COL_STATUS_DEFAULT])));
+                  otr_config_color[OTR_CONFIG_COLOR_STATUS_DEFAULT])));
     if (!*first)
-        sb_adds (b, sep);
+        otr_util_sb_adds (b, sep);
     *first = 0;
-    sb_adds (b, col);
-    sb_adds (b, str);
-    sb_adds (b, def);
+    otr_util_sb_adds (b, col);
+    otr_util_sb_adds (b, str);
+    otr_util_sb_adds (b, def);
 }
 
 char *
-bar_item_cb (const void *pointer, void *data, struct t_gui_bar_item *item,
-             struct t_gui_window *window, struct t_gui_buffer *buffer,
-             struct t_hashtable *extra_info)
+otr_bar_item_cb (const void *pointer, void *data, struct t_gui_bar_item *item,
+                 struct t_gui_window *window, struct t_gui_buffer *buffer,
+                 struct t_hashtable *extra_info)
 {
     struct t_gui_buffer *buf = buffer ? buffer : weechat_current_buffer ();
     const char *own, *server, *peer;
     char *account, *peerlc, *res;
     ConnContext *ctx;
-    struct sbuf parts, out;
+    struct t_otr_sbuf parts, out;
     int first = 1, enc, ver, logged;
     char col[64];
 
     (void)pointer; (void)data; (void)item; (void)window; (void)extra_info;
 
-    if (!otr_us || !buf_is_private (buf))
+    if (!otr_us || !otr_buffer_is_private (buf))
         return strdup ("");
 
     own = weechat_buffer_get_string (buf, "localvar_nick");
@@ -67,62 +68,90 @@ bar_item_cb (const void *pointer, void *data, struct t_gui_bar_item *item,
     if (!own || !server || !peer)
         return strdup ("");
     {
-        char *l = lc_dup (own);
+        char *l = otr_util_lc_dup (own);
 
-        account = l ? strf ("%s@%s", l, server) : NULL;
+        account = l ? otr_util_strf ("%s@%s", l, server) : NULL;
         free (l);
     }
-    peerlc = lc_dup (peer);
+    peerlc = otr_util_lc_dup (peer);
     if (!account || !peerlc)
     {
         free (account);
         free (peerlc);
         return strdup ("");
     }
-    ctx = find_ctx (account, peerlc);
-    enc = ctx_encrypted (ctx);
-    ver = ctx_verified (ctx);
-    logged = buf_is_logged (buf);
+    ctx = otr_context_find (account, peerlc);
+    enc = otr_context_encrypted (ctx);
+    ver = otr_context_verified (ctx);
+    logged = otr_log_buffer_is_logged (buf);
 
-    sb_init (&parts);
+    otr_util_sb_init (&parts);
     if (enc)
     {
-        bar_part (&parts, weechat_config_string (opt_look[LOOK_BAR_SEPARATOR]),
-                  &first, COL_STATUS_ENCRYPTED, LOOK_BAR_ENCRYPTED);
+        otr_bar_item_part (
+            &parts,
+            weechat_config_string (
+                otr_config_look[OTR_CONFIG_LOOK_BAR_SEPARATOR]),
+            &first,
+            OTR_CONFIG_COLOR_STATUS_ENCRYPTED,
+            OTR_CONFIG_LOOK_BAR_ENCRYPTED);
         if (ver)
-            bar_part (&parts,
-                      weechat_config_string (opt_look[LOOK_BAR_SEPARATOR]),
-                      &first, COL_STATUS_AUTHENTICATED, LOOK_BAR_AUTHENTICATED);
+            otr_bar_item_part (
+                &parts,
+                weechat_config_string (
+                    otr_config_look[OTR_CONFIG_LOOK_BAR_SEPARATOR]),
+                &first,
+                OTR_CONFIG_COLOR_STATUS_AUTHENTICATED,
+                OTR_CONFIG_LOOK_BAR_AUTHENTICATED);
         else
-            bar_part (&parts,
-                      weechat_config_string (opt_look[LOOK_BAR_SEPARATOR]),
-                      &first, COL_STATUS_UNAUTHENTICATED,
-                      LOOK_BAR_UNAUTHENTICATED);
+            otr_bar_item_part (
+                &parts,
+                weechat_config_string (
+                    otr_config_look[OTR_CONFIG_LOOK_BAR_SEPARATOR]),
+                &first,
+                OTR_CONFIG_COLOR_STATUS_UNAUTHENTICATED,
+                OTR_CONFIG_LOOK_BAR_UNAUTHENTICATED);
         if (logged)
-            bar_part (&parts,
-                      weechat_config_string (opt_look[LOOK_BAR_SEPARATOR]),
-                      &first, COL_STATUS_LOGGED, LOOK_BAR_LOGGED);
+            otr_bar_item_part (
+                &parts,
+                weechat_config_string (
+                    otr_config_look[OTR_CONFIG_LOOK_BAR_SEPARATOR]),
+                &first,
+                OTR_CONFIG_COLOR_STATUS_LOGGED,
+                OTR_CONFIG_LOOK_BAR_LOGGED);
         else
-            bar_part (&parts,
-                      weechat_config_string (opt_look[LOOK_BAR_SEPARATOR]),
-                      &first, COL_STATUS_NOTLOGGED, LOOK_BAR_NOTLOGGED);
+            otr_bar_item_part (
+                &parts,
+                weechat_config_string (
+                    otr_config_look[OTR_CONFIG_LOOK_BAR_SEPARATOR]),
+                &first,
+                OTR_CONFIG_COLOR_STATUS_NOTLOGGED,
+                OTR_CONFIG_LOOK_BAR_NOTLOGGED);
     }
     else
-        bar_part (&parts, weechat_config_string (opt_look[LOOK_BAR_SEPARATOR]),
-                  &first, COL_STATUS_UNENCRYPTED, LOOK_BAR_UNENCRYPTED);
+        otr_bar_item_part (
+            &parts,
+            weechat_config_string (
+                otr_config_look[OTR_CONFIG_LOOK_BAR_SEPARATOR]),
+            &first,
+            OTR_CONFIG_COLOR_STATUS_UNENCRYPTED,
+            OTR_CONFIG_LOOK_BAR_UNENCRYPTED);
 
-    sb_init (&out);
+    otr_util_sb_init (&out);
     if (parts.len)
     {
         snprintf (col, sizeof (col), "%s",
                   weechat_color (weechat_config_color (
-                      opt_color[COL_STATUS_DEFAULT])));
-        sb_adds (&out, col);
-        sb_adds (&out, weechat_config_string (opt_look[LOOK_BAR_PREFIX]));
-        sb_adds (&out, parts.s);
+                      otr_config_color[OTR_CONFIG_COLOR_STATUS_DEFAULT])));
+        otr_util_sb_adds (&out, col);
+        otr_util_sb_adds (
+            &out,
+            weechat_config_string (
+                otr_config_look[OTR_CONFIG_LOOK_BAR_PREFIX]));
+        otr_util_sb_adds (&out, parts.s);
     }
     free (parts.s);
-    res = sb_take (&out);
+    res = otr_util_sb_take (&out);
 
     weechat_buffer_set (buf, "localvar_set_otr_encrypted",
                         enc ? "true" : "false");

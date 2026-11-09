@@ -57,14 +57,14 @@ struct t_gui_bar_item *otr_bar_item = NULL;
 
 /* >0 while we inject our own protocol messages through /quote, so that the
  * outgoing modifier lets them through untouched */
-int g_injecting = 0;
+int otr_injecting = 0;
 /* >0 while sending CTCP, which must not receive a whitespace tag */
-int g_no_tag = 0;
+int otr_no_tag = 0;
 /* set while the plugin unloads: no UI work from libotr callbacks */
-int g_shutdown = 0;
+int otr_shutdown = 0;
 
 static int
-file_exists (const char *path)
+otr_file_exists (const char *path)
 {
     struct stat st;
 
@@ -94,9 +94,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (dladdr ((void *)otrl_init, &dli) && dli.dli_fname)
         dlopen (dli.dli_fname, RTLD_NOW | RTLD_NODELETE);
 
-    g_shutdown = 0;
-    g_injecting = 0;
-    g_no_tag = 0;
+    otr_shutdown = 0;
+    otr_injecting = 0;
+    otr_no_tag = 0;
     otr_us = NULL;
     otr_bar_item = NULL;
 
@@ -107,7 +107,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
     }
 
-    if (!config_init ())
+    if (!otr_config_init ())
     {
         weechat_printf (NULL, "%sotr: could not create configuration",
                         weechat_prefix ("error"));
@@ -119,10 +119,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         base = weechat_info_get ("weechat_dir", "");
     if (!base || !*base)
         return WEECHAT_RC_ERROR;
-    otr_dir = strf ("%s/otr", base);
-    otr_keyfile = strf ("%s/otr.private_key", otr_dir);
-    otr_fprfile = strf ("%s/otr.fingerprints", otr_dir);
-    otr_instagfile = strf ("%s/otr.instag", otr_dir);
+    otr_dir = otr_util_strf ("%s/otr", base);
+    otr_keyfile = otr_util_strf ("%s/otr.private_key", otr_dir);
+    otr_fprfile = otr_util_strf ("%s/otr.fingerprints", otr_dir);
+    otr_instagfile = otr_util_strf ("%s/otr.instag", otr_dir);
     if (!otr_dir || !otr_keyfile || !otr_fprfile || !otr_instagfile)
         return WEECHAT_RC_ERROR;
     weechat_mkdir_parents (otr_dir, 0700);
@@ -130,25 +130,26 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     otr_us = otrl_userstate_create ();
     if (!otr_us)
         return WEECHAT_RC_ERROR;
-    if (file_exists (otr_keyfile))
+    if (otr_file_exists (otr_keyfile))
         otrl_privkey_read (otr_us, otr_keyfile);
-    if (file_exists (otr_fprfile))
+    if (otr_file_exists (otr_fprfile))
         otrl_privkey_read_fingerprints (otr_us, otr_fprfile, NULL, NULL);
-    if (file_exists (otr_instagfile))
+    if (otr_file_exists (otr_instagfile))
         otrl_instag_read (otr_us, otr_instagfile);
 
-    weechat_hook_modifier ("irc_in_privmsg", &modifier_in_cb, NULL, NULL);
-    weechat_hook_modifier ("irc_out_privmsg", &modifier_out_cb, NULL, NULL);
+    weechat_hook_modifier ("irc_in_privmsg", &otr_modifier_in_cb, NULL, NULL);
+    weechat_hook_modifier ("irc_out_privmsg", &otr_modifier_out_cb, NULL, NULL);
 
     otr_command_init ();
 
     otr_completion_init ();
-    weechat_hook_config ("logger.level.irc.*", &logger_level_update_cb, NULL,
+    weechat_hook_config ("logger.level.irc.*", &otr_log_logger_level_update_cb,
+                         NULL,
                          NULL);
-    weechat_hook_signal ("buffer_switch", &buffer_switch_cb, NULL, NULL);
-    weechat_hook_signal ("buffer_closing", &buffer_closing_cb, NULL, NULL);
+    weechat_hook_signal ("buffer_switch", &otr_buffer_switch_cb, NULL, NULL);
+    weechat_hook_signal ("buffer_closing", &otr_buffer_closing_cb, NULL, NULL);
 
-    otr_bar_item = weechat_bar_item_new (OTR_BAR_ITEM, &bar_item_cb, NULL,
+    otr_bar_item = weechat_bar_item_new (OTR_BAR_ITEM, &otr_bar_item_cb, NULL,
                                          NULL);
     weechat_bar_item_update (OTR_BAR_ITEM);
 
@@ -163,7 +164,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     int n = 0, cap = 0, i;
 
     (void)plugin;
-    g_shutdown = 1;
+    otr_shutdown = 1;
 
     if (otr_us)
     {
@@ -193,13 +194,14 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         {
             if (accts[i] && users[i])
                 otrl_message_disconnect_all_instances (
-                    otr_us, &otr_ops, NULL, accts[i], OTR_PROTOCOL, users[i]);
+                    otr_us, &otr_callback_ops, NULL, accts[i], OTR_PROTOCOL,
+                    users[i]);
             free (accts[i]);
             free (users[i]);
         }
         free (accts);
         free (users);
-        pending_clear_all ();
+        otr_echo_pending_clear_all ();
         otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
         otrl_userstate_free (otr_us);
         otr_us = NULL;
@@ -209,11 +211,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         weechat_bar_item_remove (otr_bar_item);
         otr_bar_item = NULL;
     }
-    if (cfg_file)
+    if (otr_config_file)
     {
-        weechat_config_write (cfg_file);
-        weechat_config_free (cfg_file);
-        cfg_file = NULL;
+        weechat_config_write (otr_config_file);
+        weechat_config_free (otr_config_file);
+        otr_config_file = NULL;
     }
     free (otr_dir);
     free (otr_keyfile);
