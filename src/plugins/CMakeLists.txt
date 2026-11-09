@@ -73,6 +73,12 @@ else()
   add_custom_target(logger COMMAND true)
 endif()
 
+if(BUILD_PLUGIN_OTR)
+  add_subdirectory(otr)
+else()
+  add_custom_target(otr COMMAND true)
+endif()
+
 if(BUILD_PLUGIN_RELAY)
   add_subdirectory(relay)
 else()
