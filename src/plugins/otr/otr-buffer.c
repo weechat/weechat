@@ -243,13 +243,17 @@ otr_buffer_closing_cb (const void *pointer, void *data, const char *signal,
 
     ptr_buffer = (struct t_gui_buffer *)signal_data;
 
-    if (!otr_command_peer_args (ptr_buffer, NULL, 0, &peer_ref)
-        || !otr_command_resolve (&peer_ref, &account, &peer))
-    {
+    if (!otr_command_peer_args (ptr_buffer, NULL, 0, &peer_ref))
         return WEECHAT_RC_OK;
-    }
 
-    otr_context_end_session (account, peer, 0, 1);
+    /*
+     * The account is resolved silently: if we are not connected to the server
+     * and there is no OTR session with the peer, there is nothing to do.
+     */
+    peer = weechat_string_tolower (peer_ref.nick);
+    account = (peer) ? otr_irc_peer_account (peer_ref.server, peer) : NULL;
+    if (account)
+        otr_context_end_session (account, peer, 0, 1);
 
     free (account);
     free (peer);
