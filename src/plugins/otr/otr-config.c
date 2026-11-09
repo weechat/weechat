@@ -7,6 +7,8 @@
 
 /* OTR configuration options (file otr.conf) */
 
+#include <string.h>
+
 #include "../weechat-plugin.h"
 #include "otr.h"
 #include "otr-config.h"
@@ -171,6 +173,50 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback to delete an option in section "policy": the default policies
+ * ("default.xxx") are reset to their default value instead of being deleted,
+ * any other option is deleted.
+ */
+
+int
+otr_config_policy_delete_option_cb (const void *pointer, void *data,
+                                    struct t_config_file *config_file,
+                                    struct t_config_section *section,
+                                    struct t_config_option *option)
+{
+    const char *ptr_name;
+    int i, num_policy_defaults;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+    (void) section;
+
+    ptr_name = weechat_config_option_get_string (option, "name");
+    num_policy_defaults = (int)(sizeof (otr_config_policy_defaults)
+                                / sizeof (otr_config_policy_defaults[0]));
+    for (i = 0; ptr_name && (i < num_policy_defaults); i++)
+    {
+        if (strcmp (ptr_name, otr_config_policy_defaults[i].name) != 0)
+            continue;
+        switch (weechat_config_option_reset (option, 1))
+        {
+            case WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+                return WEECHAT_CONFIG_OPTION_UNSET_OK_RESET;
+            case WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
+                return WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET;
+            default:
+                return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
+        }
+    }
+
+    weechat_config_option_free (option);
+
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+}
+
+/*
  * Create an option in OTR configuration file, with the same default and current
  * value.
  *
@@ -242,7 +288,7 @@ otr_config_init (void)
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         &otr_config_policy_create_option_cb, NULL, NULL,
-        NULL, NULL, NULL);
+        &otr_config_policy_delete_option_cb, NULL, NULL);
     if (!otr_config_section_general || !otr_config_section_color
         || !otr_config_section_look || !otr_config_section_policy)
     {
