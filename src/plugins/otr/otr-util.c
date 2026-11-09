@@ -19,7 +19,7 @@
 
 
 char *
-strf (const char *fmt, ...)
+otr_util_strf (const char *fmt, ...)
 {
     va_list ap, ap2;
     int n;
@@ -42,15 +42,15 @@ strf (const char *fmt, ...)
 }
 
 char *
-dupstr (const char *s)
+otr_util_dupstr (const char *s)
 {
     return strdup (s ? s : "");
 }
 
 char *
-lc_dup (const char *s)
+otr_util_lc_dup (const char *s)
 {
-    char *r = dupstr (s), *p;
+    char *r = otr_util_dupstr (s), *p;
 
     if (!r)
         return NULL;
@@ -60,7 +60,7 @@ lc_dup (const char *s)
 }
 
 void
-sb_init (struct sbuf *b)
+otr_util_sb_init (struct t_otr_sbuf *b)
 {
     b->s = NULL;
     b->len = b->cap = 0;
@@ -68,7 +68,7 @@ sb_init (struct sbuf *b)
 }
 
 void
-sb_add (struct sbuf *b, const char *p, size_t n)
+otr_util_sb_add (struct t_otr_sbuf *b, const char *p, size_t n)
 {
     size_t nc;
     char *t;
@@ -95,20 +95,20 @@ sb_add (struct sbuf *b, const char *p, size_t n)
 }
 
 void
-sb_adds (struct sbuf *b, const char *s)
+otr_util_sb_adds (struct t_otr_sbuf *b, const char *s)
 {
-    sb_add (b, s, strlen (s));
+    otr_util_sb_add (b, s, strlen (s));
 }
 
 void
-sb_addc (struct sbuf *b, char c)
+otr_util_sb_addc (struct t_otr_sbuf *b, char c)
 {
-    sb_add (b, &c, 1);
+    otr_util_sb_add (b, &c, 1);
 }
 
 /* returns malloc'd string, or NULL on allocation failure */
 char *
-sb_take (struct sbuf *b)
+otr_util_sb_take (struct t_otr_sbuf *b)
 {
     char *r;
 
@@ -127,9 +127,9 @@ sb_take (struct sbuf *b)
 
 /* replace CR, LF, NUL-ish control characters that could break an IRC line */
 char *
-irc_sanitize (const char *s)
+otr_util_irc_sanitize (const char *s)
 {
-    char *r = dupstr (s), *p;
+    char *r = otr_util_dupstr (s), *p;
 
     if (!r)
         return NULL;

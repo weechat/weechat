@@ -19,7 +19,7 @@
 
 
 int
-is_ctcp (const char *t)
+otr_message_is_ctcp (const char *t)
 {
     size_t l = strlen (t);
 
@@ -27,45 +27,45 @@ is_ctcp (const char *t)
 }
 
 int
-is_action (const char *t)
+otr_message_is_action (const char *t)
 {
-    return is_ctcp (t) && strncmp (t, "\x01" "ACTION ", 8) == 0;
+    return otr_message_is_ctcp (t) && strncmp (t, "\x01" "ACTION ", 8) == 0;
 }
 
 /* "\x01ACTION text\x01" -> "/me text"; otherwise plain copy */
 char *
-msg_plain_from_irc (const char *t)
+otr_message_plain_from_irc (const char *t)
 {
     size_t l;
 
-    if (!is_action (t))
-        return dupstr (t);
+    if (!otr_message_is_action (t))
+        return otr_util_dupstr (t);
     l = strlen (t);
-    return strf (ACTION_PREFIX "%.*s", (int)(l - 9), t + 8);
+    return otr_util_strf (OTR_ACTION_PREFIX "%.*s", (int)(l - 9), t + 8);
 }
 
 char *
-html_escape (const char *in)
+otr_message_html_escape (const char *in)
 {
-    struct sbuf b;
+    struct t_otr_sbuf b;
 
-    sb_init (&b);
+    otr_util_sb_init (&b);
     for (; *in; in++)
     {
         if (*in == '&')
-            sb_adds (&b, "&amp;");
+            otr_util_sb_adds (&b, "&amp;");
         else if (*in == '<')
-            sb_adds (&b, "&lt;");
+            otr_util_sb_adds (&b, "&lt;");
         else if (*in == '>')
-            sb_adds (&b, "&gt;");
+            otr_util_sb_adds (&b, "&gt;");
         else
-            sb_addc (&b, *in);
+            otr_util_sb_addc (&b, *in);
     }
-    return sb_take (&b);
+    return otr_util_sb_take (&b);
 }
 
 static void
-utf8_append (struct sbuf *b, unsigned long cp)
+otr_message_utf8_append (struct t_otr_sbuf *b, unsigned long cp)
 {
     char t[4];
 
@@ -74,20 +74,20 @@ utf8_append (struct sbuf *b, unsigned long cp)
     if (cp < 0x80)
     {
         t[0] = (char)cp;
-        sb_add (b, t, 1);
+        otr_util_sb_add (b, t, 1);
     }
     else if (cp < 0x800)
     {
         t[0] = (char)(0xC0 | (cp >> 6));
         t[1] = (char)(0x80 | (cp & 0x3F));
-        sb_add (b, t, 2);
+        otr_util_sb_add (b, t, 2);
     }
     else if (cp < 0x10000)
     {
         t[0] = (char)(0xE0 | (cp >> 12));
         t[1] = (char)(0x80 | ((cp >> 6) & 0x3F));
         t[2] = (char)(0x80 | (cp & 0x3F));
-        sb_add (b, t, 3);
+        otr_util_sb_add (b, t, 3);
     }
     else if (cp <= 0x10FFFF)
     {
@@ -95,16 +95,16 @@ utf8_append (struct sbuf *b, unsigned long cp)
         t[1] = (char)(0x80 | ((cp >> 12) & 0x3F));
         t[2] = (char)(0x80 | ((cp >> 6) & 0x3F));
         t[3] = (char)(0x80 | (cp & 0x3F));
-        sb_add (b, t, 4);
+        otr_util_sb_add (b, t, 4);
     }
 }
 
 /* Reduce HTML to IRC text: keep text, <br> -> newline, links -> [text](url),
  * decode a few entities, drop all other tags. */
 char *
-html_filter (const char *in)
+otr_message_html_filter (const char *in)
 {
-    struct sbuf b;
+    struct t_otr_sbuf b;
     char link[1024];
     size_t linkstart = 0;
     const char *p = in, *gt, *semi, *h;
@@ -112,7 +112,7 @@ html_filter (const char *in)
     int closing, k;
 
     link[0] = '\0';
-    sb_init (&b);
+    otr_util_sb_init (&b);
     while (*p)
     {
         if (*p == '<' && (isalpha ((unsigned char)p[1]) || p[1] == '/'
@@ -132,7 +132,7 @@ html_filter (const char *in)
             name[k] = '\0';
 
             if (!closing && strcmp (name, "br") == 0)
-                sb_addc (&b, '\n');
+                otr_util_sb_addc (&b, '\n');
             else if (!closing && strcmp (name, "a") == 0)
             {
                 /* look for href="..." inside the tag */
@@ -162,7 +162,7 @@ html_filter (const char *in)
                         link[n] = '\0';
                         if (n > 0)
                         {
-                            sb_addc (&b, '[');
+                            otr_util_sb_addc (&b, '[');
                             linkstart = b.len;
                         }
                     }
@@ -175,12 +175,12 @@ html_filter (const char *in)
 
                 if (b.s && b.len - linkstart == ll
                     && memcmp (b.s + linkstart, link, ll) == 0)
-                    sb_addc (&b, ']');
+                    otr_util_sb_addc (&b, ']');
                 else
                 {
-                    sb_adds (&b, "](");
-                    sb_adds (&b, link);
-                    sb_addc (&b, ')');
+                    otr_util_sb_adds (&b, "](");
+                    otr_util_sb_adds (&b, link);
+                    otr_util_sb_addc (&b, ')');
                 }
                 link[0] = '\0';
             }
@@ -201,47 +201,48 @@ html_filter (const char *in)
                     ? strtoul (ent + 2, &end, 16) : strtoul (ent + 1, &end, 10);
 
                 if (*end == '\0' && l > 1 && cp > 0)
-                    utf8_append (&b, cp);
+                    otr_message_utf8_append (&b, cp);
                 else
-                    sb_add (&b, p, (size_t)(semi - p) + 1);
+                    otr_util_sb_add (&b, p, (size_t)(semi - p) + 1);
             }
             else if (strcmp (ent, "amp") == 0)
-                sb_addc (&b, '&');
+                otr_util_sb_addc (&b, '&');
             else if (strcmp (ent, "lt") == 0)
-                sb_addc (&b, '<');
+                otr_util_sb_addc (&b, '<');
             else if (strcmp (ent, "gt") == 0)
-                sb_addc (&b, '>');
+                otr_util_sb_addc (&b, '>');
             else if (strcmp (ent, "quot") == 0)
-                sb_addc (&b, '"');
+                otr_util_sb_addc (&b, '"');
             else if (strcmp (ent, "apos") == 0)
-                sb_addc (&b, '\'');
+                otr_util_sb_addc (&b, '\'');
             else if (strcmp (ent, "nbsp") == 0)
-                sb_addc (&b, ' ');
+                otr_util_sb_addc (&b, ' ');
             else
-                sb_add (&b, p, (size_t)(semi - p) + 1);
+                otr_util_sb_add (&b, p, (size_t)(semi - p) + 1);
             p = semi + 1;
         }
         else
         {
-            sb_addc (&b, *p);
+            otr_util_sb_addc (&b, *p);
             p++;
         }
     }
-    return sb_take (&b);
+    return otr_util_sb_take (&b);
 }
 
 /* Add one decrypted line as an IRC protocol line to out. Removes CTCP
  * markers a peer could smuggle in; only a well-formed /me becomes ACTION. */
 static void
-add_decrypted_line (struct sbuf *out, const char *tags, const char *from,
-                    const char *target, const char *line, size_t len)
+otr_message_add_decrypted_line (struct t_otr_sbuf *out, const char *tags,
+                                const char *from, const char *target,
+                                const char *line, size_t len)
 {
-    struct sbuf body;
+    struct t_otr_sbuf body;
     const char *p = line, *end = line + len;
     int action = 0;
     char *text;
 
-    if (len >= 4 && strncmp (line, ACTION_PREFIX, 4) == 0)
+    if (len >= 4 && strncmp (line, OTR_ACTION_PREFIX, 4) == 0)
     {
         action = 1;
         p += 4;
@@ -254,11 +255,11 @@ add_decrypted_line (struct sbuf *out, const char *tags, const char *from,
         end--;
     }
 
-    sb_init (&body);
+    otr_util_sb_init (&body);
     for (; p < end; p++)
         if (*p != '\x01' && *p != '\r' && *p != '\0')
-            sb_addc (&body, *p);
-    text = sb_take (&body);
+            otr_util_sb_addc (&body, *p);
+    text = otr_util_sb_take (&body);
     if (!text)
     {
         out->err = 1;
@@ -266,31 +267,32 @@ add_decrypted_line (struct sbuf *out, const char *tags, const char *from,
     }
 
     if (out->len)
-        sb_adds (out, "\r\n");
-    sb_adds (out, tags);
-    sb_addc (out, ':');
-    sb_adds (out, from);
-    sb_adds (out, " PRIVMSG ");
-    sb_adds (out, target);
-    sb_adds (out, " :");
+        otr_util_sb_adds (out, "\r\n");
+    otr_util_sb_adds (out, tags);
+    otr_util_sb_addc (out, ':');
+    otr_util_sb_adds (out, from);
+    otr_util_sb_adds (out, " PRIVMSG ");
+    otr_util_sb_adds (out, target);
+    otr_util_sb_adds (out, " :");
     if (action)
-        sb_adds (out, "\x01" "ACTION ");
-    sb_adds (out, text);
+        otr_util_sb_adds (out, "\x01" "ACTION ");
+    otr_util_sb_adds (out, text);
     if (action)
-        sb_addc (out, '\x01');
+        otr_util_sb_addc (out, '\x01');
     free (text);
 }
 
 /* msg may have several lines; each becomes its own PRIVMSG */
 char *
-build_in_privmsgs (const char *tags, const char *from, const char *target,
-                   const char *msg, const char *line_prefix, int decrypted)
+otr_message_build_in_privmsgs (const char *tags, const char *from,
+                               const char *target, const char *msg,
+                               const char *line_prefix, int decrypted)
 {
-    struct sbuf out;
+    struct t_otr_sbuf out;
     const char *p = msg, *nl;
     size_t l;
 
-    sb_init (&out);
+    otr_util_sb_init (&out);
     while (*p)
     {
         nl = strchr (p, '\n');
@@ -298,33 +300,33 @@ build_in_privmsgs (const char *tags, const char *from, const char *target,
         if (l && p[l - 1] == '\r')
             l--;
         if (decrypted)
-            add_decrypted_line (&out, tags, from, target, p, l);
+            otr_message_add_decrypted_line (&out, tags, from, target, p, l);
         else
         {
-            struct sbuf ln;
+            struct t_otr_sbuf ln;
             char *t;
 
-            sb_init (&ln);
-            sb_adds (&ln, line_prefix);
-            sb_add (&ln, p, l);
-            t = sb_take (&ln);
+            otr_util_sb_init (&ln);
+            otr_util_sb_adds (&ln, line_prefix);
+            otr_util_sb_add (&ln, p, l);
+            t = otr_util_sb_take (&ln);
             if (t)
             {
                 if (out.len)
-                    sb_adds (&out, "\r\n");
-                sb_adds (&out, tags);
-                sb_addc (&out, ':');
-                sb_adds (&out, from);
-                sb_adds (&out, " PRIVMSG ");
-                sb_adds (&out, target);
-                sb_adds (&out, " :");
+                    otr_util_sb_adds (&out, "\r\n");
+                otr_util_sb_adds (&out, tags);
+                otr_util_sb_addc (&out, ':');
+                otr_util_sb_adds (&out, from);
+                otr_util_sb_adds (&out, " PRIVMSG ");
+                otr_util_sb_adds (&out, target);
+                otr_util_sb_adds (&out, " :");
                 for (char *q = t; *q; q++)
                     if (*q != '\r')
-                        sb_addc (&out, *q);
+                        otr_util_sb_addc (&out, *q);
                 free (t);
             }
         }
         p = nl ? nl + 1 : p + strlen (p);
     }
-    return sb_take (&out);
+    return otr_util_sb_take (&out);
 }

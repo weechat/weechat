@@ -27,7 +27,7 @@
 
 
 static int
-is_otr_query (const char *s)
+otr_modifier_is_otr_query (const char *s)
 {
     const char *p = s, *q;
 
@@ -50,7 +50,7 @@ is_otr_query (const char *s)
 }
 
 static int
-has_otr_end (const char *s)
+otr_modifier_has_otr_end (const char *s)
 {
     size_t l = strlen (s);
 
@@ -60,14 +60,14 @@ has_otr_end (const char *s)
 /* Add the line to the peer's assembly buffer; return 1 if a complete
  * message is now available (copied to *out, malloc'd). */
 static int
-assemble (struct peer_data *pd, const char *line, char **out)
+otr_modifier_assemble (struct t_otr_peer_data *pd, const char *line, char **out)
 {
     size_t l = strlen (line);
     char *nb;
 
     if (!pd->asm_buf && strncmp (line, "?OTR", 4) != 0)
     {
-        *out = dupstr (line);
+        *out = otr_util_dupstr (line);
         return 1;
     }
     if (pd->asm_len + l + 1 > OTR_MAX_ASSEMBLY)
@@ -75,7 +75,7 @@ assemble (struct peer_data *pd, const char *line, char **out)
         free (pd->asm_buf);
         pd->asm_buf = NULL;
         pd->asm_len = 0;
-        *out = dupstr (line);
+        *out = otr_util_dupstr (line);
         return 1;
     }
     nb = realloc (pd->asm_buf, pd->asm_len + l + 1);
@@ -85,7 +85,8 @@ assemble (struct peer_data *pd, const char *line, char **out)
     memcpy (pd->asm_buf + pd->asm_len, line, l + 1);
     pd->asm_len += l;
 
-    if (is_otr_query (pd->asm_buf) || has_otr_end (pd->asm_buf)
+    if (otr_modifier_is_otr_query (pd->asm_buf)
+        || otr_modifier_has_otr_end (pd->asm_buf)
         || strncmp (pd->asm_buf, "?OTR", 4) != 0)
     {
         *out = pd->asm_buf;
@@ -97,15 +98,15 @@ assemble (struct peer_data *pd, const char *line, char **out)
 }
 
 char *
-modifier_in_cb (const void *pointer, void *data, const char *modifier,
-                const char *modifier_data, const char *string)
+otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
+                    const char *modifier_data, const char *string)
 {
     struct t_hashtable *hin, *hout;
     const char *command, *nick, *host, *args, *sp, *text, *own;
     char *result = NULL, *target = NULL, *account = NULL, *peer = NULL;
     char *assembled = NULL, *newmsg = NULL, *tags = NULL, *deliver = NULL;
     const char *server = modifier_data;
-    struct peer_data *pd;
+    struct t_otr_peer_data *pd;
     OtrlTLV *tlvs = NULL;
     ConnContext *ctx = NULL;
     int ignore, was_otr, encrypted;
@@ -139,45 +140,47 @@ modifier_in_cb (const void *pointer, void *data, const char *modifier,
     text = sp + 1;
     if (*text == ':')
         text++;
-    if (!target || target_is_channel (server, target))
+    if (!target || otr_irc_target_is_channel (server, target))
         goto done;
 
     own = weechat_info_get ("irc_nick", server);
     if (own && strcasecmp (own, nick) == 0)
     {
         /* echo-message: the server returns our own outgoing message */
-        result = echo_replace (server, string, host, target, text);
+        result = otr_echo_replace (server, string, host, target, text);
         goto done;
     }
 
     /* CTCP: only a plaintext ACTION inside an encrypted session is flagged */
-    account = make_account (server);
+    account = otr_irc_make_account (server);
     if (!account)
         goto done;
-    peer = lc_dup (nick);
+    peer = otr_util_lc_dup (nick);
     if (!peer)
         goto done;
 
-    if (is_ctcp (text))
+    if (otr_message_is_ctcp (text))
     {
-        if (is_action (text) && ctx_encrypted (find_ctx (account, peer)))
+        if (otr_message_is_action (text)
+            && otr_context_encrypted (otr_context_find (account, peer)))
         {
-            char *plain = msg_plain_from_irc (text);
+            char *plain = otr_message_plain_from_irc (text);
 
             if (plain)
             {
                 if (string[0] == '@' && (sp = strchr (string, ' ')) != NULL)
                     tags = strndup (string, (size_t)(sp - string) + 1);
-                result = build_in_privmsgs (tags ? tags : "", host, target,
-                                            plain, UNENCRYPTED_PFX, 0);
+                result = otr_message_build_in_privmsgs (
+                    tags ? tags : "", host, target, plain,
+                    OTR_UNENCRYPTED_PREFIX, 0);
                 free (plain);
             }
         }
         goto done;
     }
 
-    pd = peer_data_for (account, peer);
-    if (!pd || !assemble (pd, text, &assembled))
+    pd = otr_context_peer_data_for (account, peer);
+    if (!pd || !otr_modifier_assemble (pd, text, &assembled))
     {
         if (pd)
             result = strdup (""); /* waiting for more parts */
@@ -185,7 +188,7 @@ modifier_in_cb (const void *pointer, void *data, const char *modifier,
     }
 
     was_otr = (strncmp (assembled, "?OTR", 4) == 0);
-    ignore = otrl_message_receiving (otr_us, &otr_ops, NULL, account,
+    ignore = otrl_message_receiving (otr_us, &otr_callback_ops, NULL, account,
                                      OTR_PROTOCOL, peer, assembled, &newmsg,
                                      &tlvs, &ctx, NULL, NULL);
     if (tlvs)
@@ -200,38 +203,43 @@ modifier_in_cb (const void *pointer, void *data, const char *modifier,
     }
     else
     {
-        encrypted = ctx_encrypted (ctx ? ctx : find_ctx (account, peer));
+        encrypted = otr_context_encrypted (
+            ctx ? ctx : otr_context_find (account, peer));
 
         if (newmsg && was_otr && encrypted)
         {
             /* decrypted message */
-            if (policy_for (account, peer, "html_filter"))
-                deliver = html_filter (newmsg);
+            if (otr_policy_for (account, peer, "html_filter"))
+                deliver = otr_message_html_filter (newmsg);
             else
-                deliver = dupstr (newmsg);
+                deliver = otr_util_dupstr (newmsg);
             if (deliver)
-                result = build_in_privmsgs (tags ? tags : "", host, target,
-                                            deliver, "", 1);
+                result = otr_message_build_in_privmsgs (tags ? tags : "", host,
+                                                        target,
+                                                        deliver, "", 1);
             else
                 result = strdup ("");
         }
         else if (encrypted && !was_otr)
         {
             /* plaintext although the session is encrypted */
-            result = build_in_privmsgs (tags ? tags : "", host, target,
-                                        newmsg ? newmsg : assembled,
-                                        UNENCRYPTED_PFX, 0);
+            result = otr_message_build_in_privmsgs (tags ? tags : "", host,
+                                                    target,
+                                                    newmsg ? newmsg : assembled,
+                                                    OTR_UNENCRYPTED_PREFIX, 0);
         }
         else if (newmsg)
         {
             /* e.g. whitespace tag stripped from plaintext */
-            result = build_in_privmsgs (tags ? tags : "", host, target,
-                                        newmsg, "", 0);
+            result = otr_message_build_in_privmsgs (tags ? tags : "", host,
+                                                    target,
+                                                    newmsg, "", 0);
         }
         else if (strcmp (assembled, text) != 0)
         {
-            result = build_in_privmsgs (tags ? tags : "", host, target,
-                                        assembled, "", 0);
+            result = otr_message_build_in_privmsgs (tags ? tags : "", host,
+                                                    target,
+                                                    assembled, "", 0);
         }
         /* otherwise: unchanged (result == NULL) */
     }
@@ -252,7 +260,7 @@ done:
 
 /* "PRIVMSG target :text" */
 static int
-parse_out_privmsg (const char *s, char **target, const char **text)
+otr_modifier_parse_out_privmsg (const char *s, char **target, const char **text)
 {
     const char *sp;
 
@@ -278,15 +286,15 @@ parse_out_privmsg (const char *s, char **target, const char **text)
 
 /* 1 = all comma separated targets are channels */
 static int
-all_targets_channels (const char *server, const char *list)
+otr_modifier_all_targets_channels (const char *server, const char *list)
 {
-    char *copy = dupstr (list), *save = NULL, *t;
+    char *copy = otr_util_dupstr (list), *save = NULL, *t;
     int ok = 1;
 
     if (!copy)
         return 0;
     for (t = strtok_r (copy, ",", &save); t; t = strtok_r (NULL, ",", &save))
-        if (!target_is_channel (server, t))
+        if (!otr_irc_target_is_channel (server, t))
         {
             ok = 0;
             break;
@@ -300,8 +308,8 @@ all_targets_channels (const char *server, const char *list)
  * drop the message instead of sending it unencrypted.
  */
 char *
-modifier_out_cb (const void *pointer, void *data, const char *modifier,
-                 const char *modifier_data, const char *string)
+otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
+                     const char *modifier_data, const char *string)
 {
     char *target = NULL, *account = NULL, *peer = NULL, *plain = NULL;
     char *newmsg = NULL, *result = NULL, *clean = NULL, *shown = NULL;
@@ -312,90 +320,91 @@ modifier_out_cb (const void *pointer, void *data, const char *modifier,
 
     (void)pointer; (void)data; (void)modifier;
 
-    if (g_injecting)
+    if (otr_injecting)
         return NULL;
     if (!otr_us)
         return strdup ("");
 
-    if (!parse_out_privmsg (string, &target, &text))
+    if (!otr_modifier_parse_out_privmsg (string, &target, &text))
     {
-        otr_error_core (_("could not parse an outgoing message; it was not "
-                        "sent"));
+        otr_buffer_error_core (
+            _("could not parse an outgoing message; it was not sent"));
         return strdup ("");
     }
 
     if (strchr (target, ','))
     {
-        if (all_targets_channels (server, target))
+        if (otr_modifier_all_targets_channels (server, target))
         {
             free (target);
             return NULL;
         }
-        otr_error_core (_("messages to several targets including a nick are "
-                        "not supported with OTR; not sent"));
+        otr_buffer_error_core (_("messages to several targets including a nick "
+                               "are not supported with OTR; not sent"));
         free (target);
         return strdup ("");
     }
-    if (target_is_channel (server, target))
+    if (otr_irc_target_is_channel (server, target))
     {
         free (target);
         return NULL;
     }
 
-    account = make_account (server);
-    peer = lc_dup (target);
+    account = otr_irc_make_account (server);
+    peer = otr_util_lc_dup (target);
     if (!account || !peer)
     {
-        otr_error_core (_("not connected to server %s; message not sent"),
-                        server);
+        otr_buffer_error_core (
+            _("not connected to server %s; message not sent"), server);
         result = strdup ("");
         goto done;
     }
 
-    ctx = find_ctx (account, peer);
-    if (ctx_encrypted (ctx))
+    ctx = otr_context_find (account, peer);
+    if (otr_context_encrypted (ctx))
     {
-        char *conv = msg_plain_from_irc (text);
+        char *conv = otr_message_plain_from_irc (text);
 
-        shown = dupstr (conv);
-        if (conv && policy_for (account, peer, "html_escape"))
+        shown = otr_util_dupstr (conv);
+        if (conv && otr_policy_for (account, peer, "html_escape"))
         {
-            plain = html_escape (conv);
+            plain = otr_message_html_escape (conv);
             free (conv);
         }
         else
             plain = conv;
     }
     else
-        plain = dupstr (text);
+        plain = otr_util_dupstr (text);
     if (!plain)
     {
         result = strdup ("");
         goto done;
     }
 
-    ctcp = is_ctcp (text);
+    ctcp = otr_message_is_ctcp (text);
     if (ctcp)
-        g_no_tag++;
-    err = otrl_message_sending (otr_us, &otr_ops, NULL, account,
+        otr_no_tag++;
+    err = otrl_message_sending (otr_us, &otr_callback_ops, NULL, account,
                                 OTR_PROTOCOL, peer, OTRL_INSTAG_BEST, plain,
                                 NULL, &newmsg, OTRL_FRAGMENT_SEND_ALL_BUT_LAST,
                                 NULL, NULL, NULL);
     if (ctcp)
-        g_no_tag--;
+        otr_no_tag--;
 
     if (err)
     {
-        peer_print (server, peer, LVL_ERROR, _("Failed to send message; it was "
-                    "NOT sent."));
-        otr_debug ("otrl_message_sending: %s", gcry_strerror (err));
+        otr_buffer_peer_print (
+            server, peer, OTR_CONFIG_LEVEL_ERROR,
+            _("Failed to send message; it was NOT sent."));
+        otr_buffer_debug ("otrl_message_sending: %s", gcry_strerror (err));
         result = strdup ("");
         goto done;
     }
 
     if (newmsg)
     {
-        clean = irc_sanitize (newmsg);
+        clean = otr_util_irc_sanitize (newmsg);
         if (!clean || !*clean)
             result = strdup ("");
         else
@@ -403,11 +412,11 @@ modifier_out_cb (const void *pointer, void *data, const char *modifier,
             size_t l = strlen (clean);
 
             if (shown && strncmp (clean, "?OTR", 4) == 0)
-                pending_add (server, peer, clean, shown);
+                otr_echo_pending_add (server, peer, clean, shown);
 
             /* WeeChat strips trailing spaces; keep whitespace tags intact */
-            result = strf ("PRIVMSG %s :%s%s", target, clean,
-                           clean[l - 1] == ' ' ? "\t" : "");
+            result = otr_util_strf ("PRIVMSG %s :%s%s", target, clean,
+                                    clean[l - 1] == ' ' ? "\t" : "");
         }
         otrl_message_free (newmsg);
     }
