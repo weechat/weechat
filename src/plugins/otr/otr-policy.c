@@ -114,20 +114,11 @@ otr_policy_query (const char *account, const char *peer)
 int
 otr_policy_no_send_tag (const char *peer)
 {
-    const char *ptr_regex;
-    regex_t regex;
-    int match;
-
-    ptr_regex = weechat_config_string (otr_config_general_no_send_tag_regex);
-    if (!ptr_regex || !ptr_regex[0])
+    if (!otr_config_regex_no_send_tag)
         return 0;
 
-    if (regcomp (&regex, ptr_regex, REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
-        return 0;
-    match = (regexec (&regex, peer, 0, NULL, 0) == 0) ? 1 : 0;
-    regfree (&regex);
-
-    return match;
+    return (regexec (otr_config_regex_no_send_tag, peer, 0, NULL, 0) == 0) ?
+        1 : 0;
 }
 
 /*
