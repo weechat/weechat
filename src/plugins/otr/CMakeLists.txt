@@ -25,6 +25,6 @@ find_package(PkgConfig REQUIRED)
 
 find_library(LIBOTR_LIB NAMES otr REQUIRED)
 find_library(GCRYPT_LIB NAMES gcrypt REQUIRED)
-target_link_libraries(otr ${LIBOTR_LIB} ${GCRYPT_LIB} ${CMAKE_DL_LIBS})
+target_link_libraries(otr ${LIBOTR_LIB} ${GCRYPT_LIB} ${CMAKE_DL_LIBS} coverage_config)
 
 install(TARGETS otr LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
