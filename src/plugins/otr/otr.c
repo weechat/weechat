@@ -44,6 +44,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Off-the-Record messaging for IRC (libotr)"));
 WEECHAT_PLUGIN_AUTHOR("otr-c");
 WEECHAT_PLUGIN_VERSION("0.1.0");
 WEECHAT_PLUGIN_LICENSE("GPL3");
+WEECHAT_PLUGIN_PRIORITY(OTR_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_otr_plugin = NULL;
 
