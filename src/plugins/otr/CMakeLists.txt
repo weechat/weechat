@@ -22,7 +22,16 @@ add_library(otr MODULE
   otr-policy.c otr-policy.h
   otr-util.c otr-util.h
 )
-set_target_properties(otr PROPERTIES PREFIX "" LINK_FLAGS "-Wl,-z,nodelete")
+set_target_properties(otr PROPERTIES PREFIX "")
+
+# Keep the plugin (and libotr) in memory after /plugin unload: libotr registers
+# handlers in libgcrypt (the plugin also does it at runtime with dlopen, this
+# linker option is not available on all platforms, for example macOS).
+include(CheckLinkerFlag)
+check_linker_flag(C "-Wl,-z,nodelete" HAVE_LINKER_FLAG_Z_NODELETE)
+if(HAVE_LINKER_FLAG_Z_NODELETE)
+  target_link_options(otr PRIVATE "-Wl,-z,nodelete")
+endif()
 
 include_directories(${LIBOTR_INCLUDE_DIRS} ${LIBGCRYPT_INCLUDE_DIRS})
 target_link_libraries(otr ${LIBOTR_LDFLAGS} ${LIBGCRYPT_LDFLAGS} ${CMAKE_DL_LIBS} coverage_config)
