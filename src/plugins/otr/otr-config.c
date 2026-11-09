@@ -12,7 +12,7 @@
 #include "otr-config.h"
 
 
-static const struct
+const struct
 {
     const char *name, *desc, *def;
     int update_bar;
@@ -35,7 +35,7 @@ static const struct
     { "buffer.error", N_("text color for errors"), "lightred", 0 },
 };
 
-static const struct
+const struct
 {
     const char *name, *desc, *def;
     int update_bar;
@@ -76,7 +76,7 @@ const struct t_otr_policy otr_config_policies[] = {
 const int otr_config_policies_count =
     (int)(sizeof (otr_config_policies) / sizeof (otr_config_policies[0]));
 
-static const struct
+const struct
 {
     const char *name, *desc, *def;
 } otr_config_policy_defaults[] = {
@@ -91,9 +91,9 @@ static const struct
 };
 
 struct t_config_file *otr_config_file = NULL;
-static struct t_config_section *otr_config_section_general = NULL;
-static struct t_config_section *otr_config_section_color = NULL;
-static struct t_config_section *otr_config_section_look = NULL;
+struct t_config_section *otr_config_section_general = NULL;
+struct t_config_section *otr_config_section_color = NULL;
+struct t_config_section *otr_config_section_look = NULL;
 struct t_config_section *otr_config_section_policy = NULL;
 struct t_config_option *otr_config_general_debug = NULL;
 struct t_config_option *otr_config_general_hints = NULL;
@@ -101,7 +101,7 @@ struct t_config_option *otr_config_general_no_send_tag_regex = NULL;
 struct t_config_option *otr_config_color[OTR_CONFIG_NUM_COLOR_OPTIONS];
 struct t_config_option *otr_config_look[OTR_CONFIG_NUM_LOOK_OPTIONS];
 
-static void
+void
 otr_config_change_bar_cb (const void *pointer, void *data,
                           struct t_config_option *option)
 {
@@ -109,7 +109,7 @@ otr_config_change_bar_cb (const void *pointer, void *data,
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
 
-static int
+int
 otr_config_policy_create_option_cb (const void *pointer, void *data,
                                     struct t_config_file *config_file,
                                     struct t_config_section *section,
@@ -129,7 +129,7 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
              : WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
-static struct t_config_option *
+struct t_config_option *
 otr_config_new_option (struct t_config_section *sec, const char *name,
                        const char *type,
                        const char *desc, const char *def,

@@ -22,7 +22,7 @@
 #include "otr-util.h"
 
 
-static OtrlPolicy
+OtrlPolicy
 otr_callback_policy (void *opdata, ConnContext *ctx)
 {
     OtrlPolicy p = 0;
@@ -45,7 +45,7 @@ otr_callback_policy (void *opdata, ConnContext *ctx)
     return p;
 }
 
-static void
+void
 otr_callback_create_privkey (void *opdata, const char *accountname,
                              const char *protocol)
 {
@@ -65,7 +65,7 @@ otr_callback_create_privkey (void *opdata, const char *accountname,
             NULL, OTR_CONFIG_LEVEL_SUCCESS, _("OTR key generated."));
 }
 
-static void
+void
 otr_callback_create_instag (void *opdata, const char *accountname,
                             const char *protocol)
 {
@@ -73,7 +73,7 @@ otr_callback_create_instag (void *opdata, const char *accountname,
     otrl_instag_generate (otr_us, otr_instagfile, accountname, protocol);
 }
 
-static int
+int
 otr_callback_is_logged_in (void *opdata, const char *accountname,
                            const char *protocol,
                            const char *recipient)
@@ -82,7 +82,7 @@ otr_callback_is_logged_in (void *opdata, const char *accountname,
     return -1; /* unknown */
 }
 
-static void
+void
 otr_callback_inject_message (void *opdata, const char *accountname,
                              const char *protocol, const char *recipient,
                              const char *message)
@@ -91,20 +91,20 @@ otr_callback_inject_message (void *opdata, const char *accountname,
     otr_irc_send_raw (otr_irc_account_server (accountname), recipient, message);
 }
 
-static void
+void
 otr_callback_update_context_list (void *opdata)
 {
     (void)opdata;
 }
 
-static void
+void
 otr_callback_write_fingerprints (void *opdata)
 {
     (void)opdata;
     otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
 }
 
-static int
+int
 otr_callback_max_message_size (void *opdata, ConnContext *ctx)
 {
     int r = 415 - 10 - (int)strlen (ctx->username);
@@ -113,7 +113,7 @@ otr_callback_max_message_size (void *opdata, ConnContext *ctx)
     return r < 100 ? 100 : r;
 }
 
-static char *
+char *
 otr_callback_verify_instructions (ConnContext *ctx)
 {
     char own[OTRL_PRIVKEY_FPRINT_HUMAN_LEN], theirs[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
@@ -143,7 +143,7 @@ otr_callback_verify_instructions (ConnContext *ctx)
         ctx->username, server, ctx->username, server);
 }
 
-static void
+void
 otr_callback_new_fingerprint (void *opdata, OtrlUserState us,
                               const char *accountname,
                               const char *protocol, const char *username,
@@ -160,7 +160,7 @@ otr_callback_new_fingerprint (void *opdata, OtrlUserState us,
     free (m);
 }
 
-static void
+void
 otr_callback_gone_secure (void *opdata, ConnContext *ctx)
 {
     struct t_otr_peer_data *pd = otr_context_peer_data_ctx (ctx);
@@ -209,7 +209,7 @@ otr_callback_gone_secure (void *opdata, ConnContext *ctx)
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
 
-static void
+void
 otr_callback_gone_insecure (void *opdata, ConnContext *ctx)
 {
     (void)opdata;
@@ -233,7 +233,7 @@ otr_callback_gone_insecure (void *opdata, ConnContext *ctx)
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
 
-static void
+void
 otr_callback_still_secure (void *opdata, ConnContext *ctx, int is_reply)
 {
     (void)opdata; (void)is_reply;
@@ -242,21 +242,21 @@ otr_callback_still_secure (void *opdata, ConnContext *ctx, int is_reply)
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
 
-static const char *
+const char *
 otr_callback_resent_msg_prefix (void *opdata, ConnContext *ctx)
 {
     (void)opdata; (void)ctx;
     return strdup ("[resent] ");
 }
 
-static void
+void
 otr_callback_resent_msg_prefix_free (void *opdata, const char *prefix)
 {
     (void)opdata;
     free ((void *)prefix);
 }
 
-static void
+void
 otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent ev, ConnContext *ctx,
                                unsigned short progress, char *question)
 {
@@ -327,7 +327,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent ev, ConnContext *ctx,
     weechat_bar_item_update (OTR_BAR_ITEM);
 }
 
-static void
+void
 otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent ev,
                                ConnContext *ctx,
                                const char *message, gcry_error_t err)
