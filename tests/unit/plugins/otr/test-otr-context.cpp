@@ -78,3 +78,37 @@ TEST(OtrContext, Smp)
     LONGS_EQUAL(0, peer_data.smp_question);
     LONGS_EQUAL(0, peer_data.smp_asked);
 }
+
+/*
+ * Test functions:
+ *   otr_context_hold_message
+ *   otr_context_clear_held_messages
+ *   otr_context_end_session (messages held removed)
+ */
+
+TEST(OtrContext, HeldMessages)
+{
+    struct t_otr_peer_data *ptr_peer_data;
+
+    LONGS_EQUAL(0, otr_context_hold_message (NULL, "test"));
+    otr_context_clear_held_messages (NULL);
+
+    ptr_peer_data = otr_context_peer_data_for ("alice@srv_otr_ctx_held", "bob");
+    CHECK(ptr_peer_data);
+    POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
+    LONGS_EQUAL(0, otr_context_hold_message (ptr_peer_data, NULL));
+
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 1"));
+    STRCMP_EQUAL("line 1", *(ptr_peer_data->held_messages));
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 2"));
+    STRCMP_EQUAL("line 1\nline 2", *(ptr_peer_data->held_messages));
+
+    otr_context_clear_held_messages (ptr_peer_data);
+    POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
+
+    /* Messages held are removed at the end of session (even if no session). */
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 1"));
+    LONGS_EQUAL(0, otr_context_end_session ("alice@srv_otr_ctx_held", "bob",
+                                            0, 0));
+    POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
+}

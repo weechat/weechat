@@ -459,9 +459,68 @@ otr_modifier_all_targets_channels (const char *server, const char *targets)
 }
 
 /*
+ * Check if messages sent to a peer must be held until the OTR session is
+ * encrypted: policy "require_encryption" is enabled and the session is not
+ * started yet.
+ *
+ * libotr would keep only the last message (and send an OTR query for each
+ * message), so messages are held by the plugin and sent when the session is
+ * encrypted (see function otr_context_send_held_messages).
+ *
+ * Return 1 if messages must be held, 0 otherwise.
+ */
+
+int
+otr_modifier_must_hold (const char *account, const char *peer)
+{
+    ConnContext *ptr_context;
+
+    ptr_context = otr_context_find (account, peer);
+    if (ptr_context && (ptr_context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
+        return 0;
+
+    return (otr_policy_for (account, peer, "require_encryption")
+            && otr_policy_query (account, peer)) ? 1 : 0;
+}
+
+/*
+ * Hold a message sent to a peer until the OTR session is encrypted: a message
+ * is displayed and an OTR query is sent with the first message held.
+ */
+
+void
+otr_modifier_hold_message (const char *server, const char *account,
+                           const char *peer, const char *message)
+{
+    struct t_otr_peer_data *ptr_peer_data;
+    ConnContext *ptr_context;
+    int first;
+
+    ptr_peer_data = otr_context_peer_data_for (account, peer);
+    if (!ptr_peer_data)
+        return;
+
+    first = (ptr_peer_data->held_messages) ? 0 : 1;
+    if (!otr_context_hold_message (ptr_peer_data, message))
+        return;
+
+    ptr_context = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
+                                     OTRL_INSTAG_MASTER, 0, NULL, NULL, NULL);
+    if (ptr_context)
+    {
+        otr_callback_ops.handle_msg_event (
+            NULL, OTRL_MSGEVENT_ENCRYPTION_REQUIRED, ptr_context, NULL, 0);
+    }
+
+    if (first)
+        otr_irc_send_raw (server, peer, otr_policy_query (account, peer));
+}
+
+/*
  * Check a line "BATCH" of an outgoing multiline message (IRCv3 capability
  * "draft/multiline"): the batch is removed if it is sent to a nick with an
- * encrypted OTR session.
+ * encrypted OTR session, or if messages to the nick are held until the session
+ * is encrypted.
  *
  * Servers hold the lines of a batch until its end, while all OTR fragments of
  * a line except the last one are sent immediately (out of the batch): the
@@ -523,8 +582,12 @@ otr_modifier_remove_batch (const char *server, const char *message)
     }
     peer = weechat_string_tolower (items[2]);
     account = (peer) ? otr_irc_peer_account (server, peer) : NULL;
-    if (!account || !otr_context_encrypted (otr_context_find (account, peer)))
+    if (!account
+        || (!otr_context_encrypted (otr_context_find (account, peer))
+            && !otr_modifier_must_hold (account, peer)))
+    {
         goto end;
+    }
     if (!otr_modifier_removed_batches)
     {
         otr_modifier_removed_batches = weechat_hashtable_new (
@@ -726,6 +789,14 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     {
         otr_buffer_error_core (
             _("not connected to server %s; message not sent"), ptr_server);
+        result = strdup ("");
+        goto end;
+    }
+
+    /* Encryption required, no OTR session yet: message held. */
+    if (otr_modifier_must_hold (account, peer))
+    {
+        otr_modifier_hold_message (ptr_server, account, peer, ptr_text);
         result = strdup ("");
         goto end;
     }
