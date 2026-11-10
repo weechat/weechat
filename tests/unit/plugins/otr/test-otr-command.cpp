@@ -24,10 +24,31 @@ extern int otr_command_split_args (const char *string, char **args,
                                    int max_args);
 extern const char *otr_command_get_policy_name (const char *name);
 extern const char *otr_command_get_policy_value (const char *value);
+extern void otr_command_show_peer_fingerprints (const char *search);
 }
 
 TEST_GROUP(OtrCommand)
 {
+    /*
+     * Check if a line containing a string has been displayed in core buffer
+     * after a given line.
+     */
+    int core_line_displayed (struct t_gui_line *after_line, const char *string)
+    {
+        struct t_gui_line *ptr_line;
+
+        for (ptr_line = gui_buffers->own_lines->last_line;
+             ptr_line && (ptr_line != after_line);
+             ptr_line = ptr_line->prev_line)
+        {
+            if (ptr_line->data->message
+                && strstr (ptr_line->data->message, string))
+            {
+                return 1;
+            }
+        }
+        return 0;
+    }
 };
 
 /*
@@ -134,4 +155,41 @@ TEST(OtrCommand, Smp)
     LONGS_EQUAL(0, ptr_peer_data->smp_asked);
 
     ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+}
+
+/*
+ * Test functions:
+ *   otr_command_show_peer_fingerprints
+ */
+
+TEST(OtrCommand, ShowPeerFingerprints)
+{
+    ConnContext *ptr_context;
+    Fingerprint *ptr_fingerprint;
+    struct t_gui_line *ptr_last_line;
+    unsigned char fingerprint[20];
+
+    ptr_context = otrl_context_find (otr_us, "bobfp", "alice@srv_otr_fp",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    memset (fingerprint, 0xCD, sizeof (fingerprint));
+    ptr_fingerprint = otrl_context_find_fingerprint (ptr_context, fingerprint,
+                                                     1, NULL);
+    CHECK(ptr_fingerprint);
+
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    otr_command_show_peer_fingerprints ("bobfp");
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line, "alice@srv_otr_fp"));
+
+    /* Search is case insensitive. */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    otr_command_show_peer_fingerprints ("BobFP");
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line, "alice@srv_otr_fp"));
+
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    otr_command_show_peer_fingerprints ("carol");
+    LONGS_EQUAL(0, core_line_displayed (ptr_last_line, "alice@srv_otr_fp"));
+
+    otrl_context_forget_fingerprint (ptr_fingerprint, 0);
 }
