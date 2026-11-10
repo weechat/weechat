@@ -496,6 +496,12 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
 
 /*
  * Callback for libotr: handle a message event (display it for the peer).
+ *
+ * When receiving a message, opdata is a pointer to a string (char **): for
+ * event OTRL_MSGEVENT_RCVDMSG_UNENCRYPTED (plaintext received while the
+ * session is encrypted or encryption is required), the plaintext message,
+ * which libotr ignores, is copied into this string, to be displayed by the
+ * caller (the string must be freed after use).
  */
 
 void
@@ -503,8 +509,7 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
                                ConnContext *context, const char *message,
                                gcry_error_t error)
 {
-    /* Make C compiler happy. */
-    (void) opdata;
+    char **unencrypted;
 
     if (!context)
         return;
@@ -580,7 +585,13 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
                   "yours; ignored."));
             break;
         case OTRL_MSGEVENT_RCVDMSG_UNENCRYPTED:
-            /* Reported with a message prefix in otr_modifier_in_cb. */
+            /* Displayed with a message prefix by otr_modifier_in_cb. */
+            if (opdata && message)
+            {
+                unencrypted = (char **)opdata;
+                free (*unencrypted);
+                *unencrypted = strdup (message);
+            }
             break;
         default:
             otr_buffer_debug ("msg event %d", (int)event);
