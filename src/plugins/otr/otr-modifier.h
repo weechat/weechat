@@ -8,6 +8,8 @@
 #ifndef WEECHAT_PLUGIN_OTR_MODIFIER_H
 #define WEECHAT_PLUGIN_OTR_MODIFIER_H
 
+extern struct t_hashtable *otr_modifier_removed_batches;
+
 extern char *otr_modifier_in_cb (const void *pointer, void *data,
                                  const char *modifier,
                                  const char *modifier_data,
@@ -16,5 +18,7 @@ extern char *otr_modifier_out_cb (const void *pointer, void *data,
                                   const char *modifier,
                                   const char *modifier_data,
                                   const char *string);
+
+extern void otr_modifier_free_removed_batches (void);
 
 #endif /* WEECHAT_PLUGIN_OTR_MODIFIER_H */
