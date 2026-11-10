@@ -28,6 +28,8 @@ extern struct t_otr_peer_data *otr_context_peer_data_ctx (ConnContext *context);
 extern ConnContext *otr_context_find (const char *account, const char *peer);
 extern int otr_context_encrypted (ConnContext *context);
 extern int otr_context_verified (ConnContext *context);
+extern int otr_context_smp_asked (ConnContext *context);
+extern void otr_context_smp_reset (struct t_otr_peer_data *peer_data);
 extern int otr_context_end_session (const char *account, const char *peer,
                                     int display, int buffer_closing);
 
