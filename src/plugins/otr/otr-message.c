@@ -377,7 +377,7 @@ otr_message_add_decrypted_line (char **messages, const char *tags,
     }
 
     if ((*messages)[0])
-        weechat_string_dyn_concat (messages, "\r\n", -1);
+        weechat_string_dyn_concat (messages, "\n", -1);
     weechat_string_dyn_concat (messages, tags, -1);
     weechat_string_dyn_concat (messages, ":", -1);
     weechat_string_dyn_concat (messages, from, -1);
@@ -399,7 +399,7 @@ otr_message_add_decrypted_line (char **messages, const char *tags,
 }
 
 /*
- * Build incoming IRC PRIVMSG messages (separated by "\r\n") with the lines of a
+ * Build incoming IRC PRIVMSG messages (separated by "\n") with the lines of a
  * message: each line becomes its own PRIVMSG.
  *
  * If decrypted is 1, lines are added with function
@@ -438,7 +438,7 @@ otr_message_build_in_privmsgs (const char *tags, const char *from,
         else
         {
             if ((*result)[0])
-                weechat_string_dyn_concat (result, "\r\n", -1);
+                weechat_string_dyn_concat (result, "\n", -1);
             weechat_string_dyn_concat (result, tags, -1);
             weechat_string_dyn_concat (result, ":", -1);
             weechat_string_dyn_concat (result, from, -1);
