@@ -644,6 +644,25 @@ otr_command_smp (struct t_gui_buffer *buffer, char **args, int num_args)
 
     if (strcmp (ptr_action, "respond") == 0)
     {
+        /*
+         * Respond only to a request of the peer: libotr does not check its
+         * SMP state and crashes if the peer did not start SMP.
+         */
+        if (!ptr_peer_data || !ptr_peer_data->smp_asked)
+        {
+            weechat_asprintf (
+                &message,
+                _("There is no SMP request from %s@%s to respond to."),
+                peer, peer_ref.server);
+            if (message)
+            {
+                otr_buffer_peer_print (peer_ref.server, peer,
+                                       OTR_CONFIG_LEVEL_ERROR, message);
+                free (message);
+            }
+            goto end;
+        }
+        ptr_peer_data->smp_asked = 0;
         otrl_message_respond_smp (otr_us, &otr_callback_ops, NULL, ptr_context,
                                   (const unsigned char *)ptr_secret,
                                   strlen (ptr_secret));
@@ -669,7 +688,10 @@ otr_command_smp (struct t_gui_buffer *buffer, char **args, int num_args)
                                    _("SMP challenge sent..."));
         }
         if (ptr_peer_data)
+        {
             ptr_peer_data->in_smp = 1;
+            ptr_peer_data->smp_asked = 0;
+        }
     }
     else
     {
@@ -678,6 +700,7 @@ otr_command_smp (struct t_gui_buffer *buffer, char **args, int num_args)
         {
             ptr_peer_data->in_smp = 0;
             ptr_peer_data->smp_question = 0;
+            ptr_peer_data->smp_asked = 0;
         }
         otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
                                _("SMP aborted."));

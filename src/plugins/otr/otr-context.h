@@ -15,6 +15,8 @@ struct t_otr_peer_data
     size_t assembly_length;            /* length of assembly                */
     int in_smp;                        /* 1 if SMP authentication running   */
     int smp_question;                  /* 1 if peer asked an SMP question   */
+    int smp_asked;                     /* 1 if peer asked SMP verification, */
+                                       /* waiting for our response          */
     int prev_log;                      /* logger level before OTR session:  */
                                        /* OTR_LOG_UNTOUCHED,                */
                                        /* OTR_LOG_DEFAULT or level          */
