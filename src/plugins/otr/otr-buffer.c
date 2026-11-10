@@ -17,6 +17,8 @@
 #include "otr-config.h"
 #include "otr-context.h"
 #include "otr-irc.h"
+#include "otr-log.h"
+#include "otr-policy.h"
 #include "otr-util.h"
 
 
@@ -218,6 +220,53 @@ otr_buffer_switch_cb (const void *pointer, void *data, const char *signal,
     (void) signal_data;
 
     weechat_bar_item_update (OTR_BAR_ITEM);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for signal "irc_pv_opened": disable logging of a new private buffer
+ * if an encrypted OTR session with the peer is already running (for example a
+ * session started by the peer: the private buffer is opened with the first
+ * decrypted message, after the session started).
+ */
+
+int
+otr_buffer_irc_pv_opened_cb (const void *pointer, void *data,
+                             const char *signal, const char *type_data,
+                             void *signal_data)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_otr_peer_ref peer_ref;
+    ConnContext *ptr_context;
+    char *account, *peer;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+
+    ptr_buffer = (struct t_gui_buffer *)signal_data;
+
+    if (!otr_command_peer_args (ptr_buffer, NULL, 0, &peer_ref))
+        return WEECHAT_RC_OK;
+
+    peer = weechat_string_tolower (peer_ref.nick);
+    account = (peer) ? otr_irc_peer_account (peer_ref.server, peer) : NULL;
+    if (account)
+    {
+        ptr_context = otr_context_find (account, peer);
+        if (otr_context_encrypted (ptr_context)
+            && !otr_policy_ctx (ptr_context, "log"))
+        {
+            otr_log_disable (ptr_context,
+                             otr_context_peer_data_ctx (ptr_context));
+        }
+    }
+
+    free (account);
+    free (peer);
 
     return WEECHAT_RC_OK;
 }
