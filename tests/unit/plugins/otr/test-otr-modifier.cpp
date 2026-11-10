@@ -25,6 +25,10 @@ extern int otr_modifier_parse_out_privmsg (const char *message, char **tags,
                                            char **target, const char **text);
 extern int otr_modifier_all_targets_channels (const char *server,
                                               const char *targets);
+extern int otr_modifier_remove_batch (const char *server,
+                                      const char *message);
+extern char *otr_modifier_remove_batch_tag (const char *server,
+                                            const char *tags);
 }
 
 TEST_GROUP(OtrModifier)
@@ -276,6 +280,83 @@ TEST(OtrModifier, OutCb)
                                         "srv_otr_out",
                                         "@batch=abc PRIVMSG bob :\x01" "DCC "
                                         "SEND file 2130706433 5000 1234\x01"));
+
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+}
+
+/*
+ * Test functions:
+ *   otr_modifier_remove_batch
+ *   otr_modifier_remove_batch_tag
+ *   otr_modifier_free_removed_batches
+ */
+
+TEST(OtrModifier, RemoveBatch)
+{
+    ConnContext *ptr_context;
+    char *str;
+
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_batch",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+
+    /* Not a batch, or batch not removed. */
+    LONGS_EQUAL(0, otr_modifier_remove_batch ("srv_otr_batch", "PING x"));
+    LONGS_EQUAL(0, otr_modifier_remove_batch ("srv_otr_batch", "BATCH"));
+    LONGS_EQUAL(0, otr_modifier_remove_batch ("srv_otr_batch", "BATCH +"));
+    LONGS_EQUAL(0, otr_modifier_remove_batch ("srv_otr_batch", "BATCH -abc"));
+    LONGS_EQUAL(0, otr_modifier_remove_batch (
+                    "srv_otr_batch", "BATCH +abc draft/multiline bob"));
+    LONGS_EQUAL(0, otr_modifier_remove_batch ("srv_otr_batch", "BATCH -abc"));
+    WEE_TEST_STR("@batch=abc;+draft/reply=1 ",
+                 otr_modifier_remove_batch_tag ("srv_otr_batch",
+                                                "@batch=abc;+draft/reply=1 "));
+
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+
+    /* Batch to a channel: not removed. */
+    LONGS_EQUAL(0, otr_modifier_remove_batch (
+                    "srv_otr_batch", "BATCH +abc draft/multiline #chan"));
+    LONGS_EQUAL(0, otr_modifier_remove_batch (
+                    "srv_otr_batch", "BATCH +abc other/type bob"));
+
+    /* Batch to a nick with an encrypted session: removed. */
+    LONGS_EQUAL(1, otr_modifier_remove_batch (
+                    "srv_otr_batch", "BATCH +abc draft/multiline Bob"));
+    WEE_TEST_STR(NULL,
+                 otr_modifier_remove_batch_tag ("srv_otr_batch",
+                                                "@batch=abc "));
+    WEE_TEST_STR("@+draft/reply=1 ",
+                 otr_modifier_remove_batch_tag ("srv_otr_batch",
+                                                "@batch=abc;+draft/reply=1 "));
+    WEE_TEST_STR("@a=1;b ",
+                 otr_modifier_remove_batch_tag ("srv_otr_batch",
+                                                "@a=1;batch=abc;b "));
+    WEE_TEST_STR("@batch=other ",
+                 otr_modifier_remove_batch_tag ("srv_otr_batch",
+                                                "@batch=other "));
+    WEE_TEST_STR("@batch=abc ",
+                 otr_modifier_remove_batch_tag ("other_server",
+                                                "@batch=abc "));
+
+    /* Line of the batch removed and sent unencrypted: batch tag removed. */
+    WEE_TEST_STR("PRIVMSG bob :\x01VERSION\x01",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_batch",
+                                      "@batch=abc PRIVMSG bob "
+                                      ":\x01VERSION\x01"));
+
+    /* End of batch removed. */
+    LONGS_EQUAL(1, otr_modifier_remove_batch ("srv_otr_batch", "BATCH -abc"));
+    LONGS_EQUAL(0, otr_modifier_remove_batch ("srv_otr_batch", "BATCH -abc"));
+
+    /* Free batches removed (end of batch never sent). */
+    LONGS_EQUAL(1, otr_modifier_remove_batch (
+                    "srv_otr_batch", "BATCH +def draft/multiline bob"));
+    CHECK(otr_modifier_removed_batches);
+    otr_modifier_free_removed_batches ();
+    POINTERS_EQUAL(NULL, otr_modifier_removed_batches);
 
     ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
 }

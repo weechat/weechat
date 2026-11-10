@@ -139,6 +139,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     otr_no_tag = 0;
     otr_us = NULL;
     otr_bar_item = NULL;
+    otr_modifier_removed_batches = NULL;
 
     if (otrl_init (OTRL_VERSION_MAJOR, OTRL_VERSION_MINOR, OTRL_VERSION_SUB))
     {
@@ -288,6 +289,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         otr_config_file = NULL;
     }
     otr_config_free_regex_no_send_tag ();
+    otr_modifier_free_removed_batches ();
 
     free (otr_dir);
     otr_dir = NULL;
