@@ -140,7 +140,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     const char *ptr_command, *ptr_nick, *ptr_host, *ptr_args, *ptr_space;
     const char *ptr_text, *ptr_server;
     char *result, *target, *account, *peer, *assembled, *new_message, *tags;
-    char *message, *plain, *own_nick;
+    char *message, *plain, *own_nick, *unencrypted;
     OtrlTLV *tlvs;
     ConnContext *ptr_context;
     int ignore, was_otr, encrypted;
@@ -176,6 +176,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     tags = NULL;
     message = NULL;
     own_nick = NULL;
+    unencrypted = NULL;
     tlvs = NULL;
     ptr_context = NULL;
 
@@ -245,8 +246,8 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     }
 
     was_otr = (strncmp (assembled, "?OTR", 4) == 0) ? 1 : 0;
-    ignore = otrl_message_receiving (otr_us, &otr_callback_ops, NULL, account,
-                                     OTR_PROTOCOL, peer, assembled,
+    ignore = otrl_message_receiving (otr_us, &otr_callback_ops, &unencrypted,
+                                     account, OTR_PROTOCOL, peer, assembled,
                                      &new_message, &tlvs, &ptr_context,
                                      NULL, NULL);
     if (tlvs)
@@ -270,7 +271,17 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
 
     if (ignore)
     {
-        result = strdup ("");
+        if (unencrypted)
+        {
+            /* Plaintext although the session is encrypted. */
+            result = otr_message_build_in_privmsgs (
+                (tags) ? tags : "", ptr_host, target, unencrypted,
+                OTR_UNENCRYPTED_PREFIX, 0);
+        }
+        else
+        {
+            result = strdup ("");
+        }
     }
     else
     {
@@ -293,14 +304,6 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
                 result = strdup ("");
             }
         }
-        else if (encrypted && !was_otr)
-        {
-            /* Plaintext although the session is encrypted */
-            result = otr_message_build_in_privmsgs (
-                (tags) ? tags : "", ptr_host, target,
-                (new_message) ? new_message : assembled,
-                OTR_UNENCRYPTED_PREFIX, 0);
-        }
         else if (new_message)
         {
             /* For example: whitespace tag stripped from plaintext */
@@ -321,6 +324,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
 end:
     free (message);
     free (own_nick);
+    free (unencrypted);
     free (tags);
     free (assembled);
     free (target);

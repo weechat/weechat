@@ -208,3 +208,36 @@ TEST(OtrModifier, AllTargetsChannels)
     LONGS_EQUAL(1, otr_modifier_all_targets_channels ("test", "#a,#b"));
     LONGS_EQUAL(1, otr_modifier_all_targets_channels ("test", ",#a,,#b,"));
 }
+
+/*
+ * Test functions:
+ *   otr_modifier_in_cb
+ */
+
+TEST(OtrModifier, InCb)
+{
+    ConnContext *ptr_context;
+    char *str;
+
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+
+    /* Plaintext without OTR session: unchanged. */
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg", "srv_otr",
+                                       ":bob!u@h PRIVMSG alice :hello"));
+
+    /* Plaintext during an encrypted session: displayed with a prefix. */
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+    WEE_TEST_STR(":bob!u@h PRIVMSG alice :Unencrypted message received: hello",
+                 otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg", "srv_otr",
+                                     ":bob!u@h PRIVMSG alice :hello"));
+    WEE_TEST_STR("@time=2026-01-01T00:00:00.000Z :bob!u@h PRIVMSG alice "
+                 ":Unencrypted message received: hello",
+                 otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg", "srv_otr",
+                                     "@time=2026-01-01T00:00:00.000Z "
+                                     ":bob!u@h PRIVMSG alice :hello"));
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+}
