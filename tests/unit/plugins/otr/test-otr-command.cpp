@@ -13,7 +13,12 @@
 extern "C"
 {
 #include <stdlib.h>
+#include <string.h>
+#include "src/gui/gui-buffer.h"
+#include "src/gui/gui-line.h"
+#include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-command.h"
+#include "src/plugins/otr/otr-context.h"
 
 extern int otr_command_split_args (const char *string, char **args,
                                    int max_args);
@@ -100,4 +105,32 @@ TEST(OtrCommand, ValueOk)
     LONGS_EQUAL(1, otr_command_value_ok ("on"));
     LONGS_EQUAL(1, otr_command_value_ok ("OFF"));
     LONGS_EQUAL(1, otr_command_value_ok ("Toggle"));
+}
+
+/*
+ * Test functions:
+ *   otr_command_smp
+ */
+
+TEST(OtrCommand, Smp)
+{
+    ConnContext *ptr_context;
+    struct t_otr_peer_data *ptr_peer_data;
+
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_cmd_smp",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+    ptr_peer_data = otr_context_peer_data_ctx (ptr_context);
+    CHECK(ptr_peer_data);
+    LONGS_EQUAL(0, ptr_peer_data->smp_asked);
+
+    /* Respond without SMP request of the peer: refused (no crash in libotr). */
+    run_cmd_quiet ("/otr smp respond bob srv_otr_cmd_smp secret");
+    CHECK(strstr (gui_buffers->own_lines->last_line->data->message,
+                  "There is no SMP request from bob@srv_otr_cmd_smp"));
+    LONGS_EQUAL(0, ptr_peer_data->smp_asked);
+
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
 }

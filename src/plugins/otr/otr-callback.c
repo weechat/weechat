@@ -404,22 +404,27 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
                                char *question)
 {
     struct t_otr_peer_data *ptr_peer_data;
-    int in_smp, smp_question;
+    int in_smp, smp_question, smp_asked;
 
     /* Make C compiler happy. */
     (void) opdata;
 
     ptr_peer_data = otr_context_peer_data_ctx (context);
 
-    /* New values for the SMP state of the peer (-1 = unchanged). */
+    /*
+     * New values for the SMP state of the peer (-1 = unchanged); smp_asked is
+     * reset by any event except a request of the peer.
+     */
     in_smp = -1;
     smp_question = -1;
+    smp_asked = 0;
 
     switch (event)
     {
         case OTRL_SMPEVENT_ASK_FOR_SECRET:
             in_smp = 1;
             smp_question = 0;
+            smp_asked = 1;
             otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_INFO,
                                   _("Peer has requested SMP verification.\n"
                                     "Respond with: /otr smp respond <secret>"));
@@ -427,6 +432,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
         case OTRL_SMPEVENT_ASK_FOR_ANSWER:
             in_smp = 1;
             smp_question = 1;
+            smp_asked = 1;
             otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_INFO,
                                   _("Peer has requested SMP verification: %s\n"
                                     "Respond with: /otr smp respond <answer>"),
@@ -490,6 +496,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             ptr_peer_data->in_smp = in_smp;
         if (smp_question >= 0)
             ptr_peer_data->smp_question = smp_question;
+        ptr_peer_data->smp_asked = smp_asked;
     }
 
     weechat_bar_item_update (OTR_BAR_ITEM);
