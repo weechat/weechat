@@ -331,19 +331,35 @@ end:
 }
 
 /*
- * Parse an outgoing message "PRIVMSG target :text".
+ * Parse an outgoing message "PRIVMSG target :text", with optional IRC tags
+ * ("@tags PRIVMSG target :text").
  *
- * Return 1 if OK (*target must be freed after use, *text points inside the
- * message), 0 if error.
+ * Return:
+ *    1: PRIVMSG parsed (*tags is NULL if there are no tags, otherwise it
+ *       includes the space after the tags; *tags and *target must be freed
+ *       after use, *text points inside the message)
+ *    0: not a PRIVMSG (for example "BATCH" of a multiline message, which is
+ *       sent with modifier "irc_out_privmsg")
+ *   -1: invalid PRIVMSG or memory error
  */
 
 int
-otr_modifier_parse_out_privmsg (const char *message, char **target,
-                                const char **text)
+otr_modifier_parse_out_privmsg (const char *message, char **tags,
+                                char **target, const char **text)
 {
     const char *ptr_message, *ptr_space;
 
+    *tags = NULL;
+    *target = NULL;
+
     ptr_message = message;
+    if (ptr_message[0] == '@')
+    {
+        ptr_space = strchr (ptr_message, ' ');
+        if (!ptr_space)
+            return 0;
+        ptr_message = ptr_space + 1;
+    }
     while (ptr_message[0] == ' ')
     {
         ptr_message++;
@@ -351,6 +367,13 @@ otr_modifier_parse_out_privmsg (const char *message, char **target,
     if (weechat_strncasecmp (ptr_message, "PRIVMSG ", 8) != 0)
         return 0;
     ptr_message += 8;
+
+    if (message[0] == '@')
+    {
+        *tags = otr_message_get_tags (message);
+        if (!*tags)
+            return -1;
+    }
     while (ptr_message[0] == ' ')
     {
         ptr_message++;
@@ -358,10 +381,10 @@ otr_modifier_parse_out_privmsg (const char *message, char **target,
 
     ptr_space = strchr (ptr_message, ' ');
     if (!ptr_space)
-        return 0;
+        goto error;
     *target = weechat_strndup (ptr_message, ptr_space - ptr_message);
     if (!*target)
-        return 0;
+        goto error;
 
     ptr_space++;
     if (ptr_space[0] == ':')
@@ -369,6 +392,11 @@ otr_modifier_parse_out_privmsg (const char *message, char **target,
     *text = ptr_space;
 
     return 1;
+
+error:
+    free (*tags);
+    *tags = NULL;
+    return -1;
 }
 
 /*
@@ -421,8 +449,8 @@ char *
 otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
                      const char *modifier_data, const char *string)
 {
-    char *target, *account, *peer, *plain, *new_message, *result, *clean;
-    char *shown, *converted;
+    char *tags, *target, *account, *peer, *plain, *new_message, *result;
+    char *clean, *shown, *converted;
     const char *ptr_text, *ptr_server;
     ConnContext *ptr_context;
     gcry_error_t error;
@@ -440,6 +468,7 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         return strdup ("");
 
     ptr_server = modifier_data;
+    tags = NULL;
     target = NULL;
     account = NULL;
     peer = NULL;
@@ -449,31 +478,33 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     clean = NULL;
     shown = NULL;
 
-    if (!otr_modifier_parse_out_privmsg (string, &target, &ptr_text))
+    switch (otr_modifier_parse_out_privmsg (string, &tags, &target, &ptr_text))
     {
-        otr_buffer_error_core (
-            _("could not parse an outgoing message; it was not sent"));
-        return strdup ("");
+        case 0:
+            /* Not a PRIVMSG (no text to encrypt): leave it unchanged. */
+            return NULL;
+        case 1:
+            break;
+        default:
+            otr_buffer_error_core (
+                _("could not parse an outgoing message; it was not sent"));
+            return strdup ("");
     }
 
     if (strchr (target, ','))
     {
-        if (otr_modifier_all_targets_channels (ptr_server, target))
+        if (!otr_modifier_all_targets_channels (ptr_server, target))
         {
-            free (target);
-            return NULL;
+            otr_buffer_error_core (_("messages to several targets including a "
+                                     "nick are not supported with OTR; not "
+                                     "sent"));
+            result = strdup ("");
         }
-        otr_buffer_error_core (_("messages to several targets including a nick "
-                                 "are not supported with OTR; not sent"));
-        free (target);
-        return strdup ("");
+        goto end;
     }
 
     if (otr_irc_target_is_channel (ptr_server, target))
-    {
-        free (target);
-        return NULL;
-    }
+        goto end;
 
     peer = weechat_string_tolower (target);
     account = (peer) ? otr_irc_peer_account (ptr_server, peer) : NULL;
@@ -544,8 +575,8 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
 
             /* WeeChat strips trailing spaces; keep whitespace tags intact. */
             length = strlen (clean);
-            weechat_asprintf (&result, "PRIVMSG %s :%s%s",
-                              target, clean,
+            weechat_asprintf (&result, "%sPRIVMSG %s :%s%s",
+                              (tags) ? tags : "", target, clean,
                               (clean[length - 1] == ' ') ? "\t" : "");
         }
         otrl_message_free (new_message);
@@ -558,6 +589,7 @@ end:
     free (shown);
     free (clean);
     free (plain);
+    free (tags);
     free (target);
     free (account);
     free (peer);
