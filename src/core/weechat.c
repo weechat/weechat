@@ -387,7 +387,6 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     command_init ();                    /* Initialize WeeChat commands.     */
     completion_init ();                 /* Add core completion hooks.       */
     gui_key_init ();                    /* Initialize keys.                 */
-    network_init_gcrypt ();             /* Initialize gcrypt.               */
     if (!secure_init ())                /* Initialize secured data.         */
         weechat_shutdown (EXIT_FAILURE, 0);
     if (!secure_config_init ())         /* Init secured data options: sec.* */
@@ -397,6 +396,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     if (!config_weechat_init ())        /* Init WeeChat options: weechat.*  */
         weechat_shutdown (EXIT_FAILURE, 0);
     args_parse (argc, argv);            /* Parse command line args.         */
+    network_init_gcrypt ();             /* Initialize gcrypt.               */
     dir_create_home_dirs ();            /* Create WeeChat home directories. */
     log_init ();                        /* Initialize log file.             */
     plugin_api_init ();                 /* Create some hooks.               */
