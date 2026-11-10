@@ -20,6 +20,8 @@ struct t_otr_peer_data
     int prev_log;                      /* logger level before OTR session:  */
                                        /* OTR_LOG_UNTOUCHED,                */
                                        /* OTR_LOG_DEFAULT or level          */
+    char **held_messages;              /* messages held until the session   */
+                                       /* is encrypted (separated by "\n")  */
 };
 
 extern struct t_otr_peer_data *otr_context_peer_data_for (const char *account,
@@ -30,6 +32,10 @@ extern int otr_context_encrypted (ConnContext *context);
 extern int otr_context_verified (ConnContext *context);
 extern int otr_context_smp_asked (ConnContext *context);
 extern void otr_context_smp_reset (struct t_otr_peer_data *peer_data);
+extern int otr_context_hold_message (struct t_otr_peer_data *peer_data,
+                                     const char *message);
+extern void otr_context_clear_held_messages (struct t_otr_peer_data *peer_data);
+extern void otr_context_send_held_messages (ConnContext *context);
 extern int otr_context_end_session (const char *account, const char *peer,
                                     int display, int buffer_closing);
 
