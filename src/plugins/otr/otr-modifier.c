@@ -143,7 +143,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     char *message, *plain, *own_nick, *unencrypted;
     OtrlTLV *tlvs;
     ConnContext *ptr_context;
-    int ignore, was_otr, encrypted;
+    int ignore, was_otr, encrypted, disconnected;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -250,6 +250,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
                                      account, OTR_PROTOCOL, peer, assembled,
                                      &new_message, &tlvs, &ptr_context,
                                      NULL, NULL);
+    disconnected = 0;
     if (tlvs)
     {
         /*
@@ -258,6 +259,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
          */
         if (ptr_context && otrl_tlv_find (tlvs, OTRL_TLV_DISCONNECTED))
         {
+            disconnected = 1;
             otr_buffer_ctx_print (
                 ptr_context, OTR_CONFIG_LEVEL_INFO,
                 _("%s has ended the private conversation. You should do the "
@@ -285,8 +287,13 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     }
     else
     {
-        encrypted = otr_context_encrypted (
-            (ptr_context) ? ptr_context : otr_context_find (account, peer));
+        /*
+         * With the TLV "disconnected", the message has been decrypted but
+         * libotr has already ended the session.
+         */
+        encrypted = disconnected
+            || otr_context_encrypted (
+                (ptr_context) ? ptr_context : otr_context_find (account, peer));
         if (new_message && was_otr && encrypted)
         {
             /* Decrypted message */
