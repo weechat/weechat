@@ -299,7 +299,7 @@ otr_command_show_account_fingerprints (void)
 
 /*
  * Display fingerprints of known peers; if search is not NULL, only peers whose
- * nick contains search are displayed.
+ * nick contains search (case insensitive) are displayed.
  */
 
 void
@@ -319,7 +319,7 @@ otr_command_show_peer_fingerprints (const char *search)
         if (ptr_context->their_instance != OTRL_INSTAG_MASTER)
             continue;
         snprintf (peer, sizeof (peer), "%s", ptr_context->username);
-        if (search && !strstr (peer, search))
+        if (search && !weechat_strcasestr (peer, search))
             continue;
         for (ptr_fingerprint = ptr_context->fingerprint_root.next;
              ptr_fingerprint; ptr_fingerprint = ptr_fingerprint->next)
