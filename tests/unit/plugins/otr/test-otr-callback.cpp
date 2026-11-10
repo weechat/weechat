@@ -60,11 +60,24 @@ TEST(OtrCallback, HandleSmpEvent)
                                    ptr_context, 25, (char *)"question?");
     LONGS_EQUAL(1, ptr_peer_data->in_smp);
     LONGS_EQUAL(1, ptr_peer_data->smp_question);
+    LONGS_EQUAL(1, ptr_peer_data->smp_asked);
     otr_callback_handle_smp_event (NULL, OTRL_SMPEVENT_SUCCESS,
                                    ptr_context, 100, NULL);
     LONGS_EQUAL(0, ptr_peer_data->in_smp);
     LONGS_EQUAL(0, ptr_peer_data->smp_question);
+    LONGS_EQUAL(0, ptr_peer_data->smp_asked);
     LONGS_EQUAL(0, otrl_context_is_fingerprint_trusted (ptr_fingerprint));
+
+    /* Request of the peer, then aborted by the peer. */
+    otr_callback_handle_smp_event (NULL, OTRL_SMPEVENT_ASK_FOR_SECRET,
+                                   ptr_context, 25, NULL);
+    LONGS_EQUAL(1, ptr_peer_data->in_smp);
+    LONGS_EQUAL(0, ptr_peer_data->smp_question);
+    LONGS_EQUAL(1, ptr_peer_data->smp_asked);
+    otr_callback_handle_smp_event (NULL, OTRL_SMPEVENT_ABORT,
+                                   ptr_context, 0, NULL);
+    LONGS_EQUAL(0, ptr_peer_data->in_smp);
+    LONGS_EQUAL(0, ptr_peer_data->smp_asked);
 
     ptr_context->active_fingerprint = NULL;
     otrl_context_forget_fingerprint (ptr_fingerprint, 0);
