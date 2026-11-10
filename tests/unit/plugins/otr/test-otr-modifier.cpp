@@ -241,3 +241,41 @@ TEST(OtrModifier, InCb)
                                      ":bob!u@h PRIVMSG alice :hello"));
     ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
 }
+
+/*
+ * Test functions:
+ *   otr_modifier_out_cb
+ */
+
+TEST(OtrModifier, OutCb)
+{
+    ConnContext *ptr_context;
+
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_out",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+
+    /* Not a PRIVMSG, or channel: unchanged. */
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                        "srv_otr_out", "BATCH -abc"));
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                        "srv_otr_out",
+                                        "PRIVMSG #chan :hello"));
+
+    /* CTCP other than ACTION: sent unencrypted. */
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                        "srv_otr_out",
+                                        "PRIVMSG bob :\x01VERSION\x01"));
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                        "srv_otr_out",
+                                        "@batch=abc PRIVMSG bob :\x01" "DCC "
+                                        "SEND file 2130706433 5000 1234\x01"));
+
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+}
