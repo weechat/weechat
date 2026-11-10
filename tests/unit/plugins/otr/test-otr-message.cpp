@@ -158,7 +158,7 @@ TEST(OtrMessage, BuildInPrivmsgs)
                  otr_message_build_in_privmsgs ("@time=x ", "bob!u@h",
                                                 "alice", "hello", "prefix: ",
                                                 0));
-    WEE_TEST_STR(":bob!u@h PRIVMSG alice :l1\r\n"
+    WEE_TEST_STR(":bob!u@h PRIVMSG alice :l1\n"
                  ":bob!u@h PRIVMSG alice :l2",
                  otr_message_build_in_privmsgs ("", "bob!u@h", "alice",
                                                 "l1\r\nl2", "", 0));
@@ -177,7 +177,7 @@ TEST(OtrMessage, BuildInPrivmsgs)
     WEE_TEST_STR(":bob!u@h PRIVMSG alice :VERSION",
                  otr_message_build_in_privmsgs ("", "bob!u@h", "alice",
                                                 "\x01VERSION\x01", "", 1));
-    WEE_TEST_STR(":bob!u@h PRIVMSG alice :l1\r\n"
+    WEE_TEST_STR(":bob!u@h PRIVMSG alice :l1\n"
                  ":bob!u@h PRIVMSG alice :\x01" "ACTION l2\x01",
                  otr_message_build_in_privmsgs ("", "bob!u@h", "alice",
                                                 "l1\n/me l2", "", 1));
