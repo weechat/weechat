@@ -26,6 +26,13 @@
 
 
 /*
+ * Multiline batches removed from outgoing messages (keys: "server,ref"), see
+ * function otr_modifier_remove_batch.
+ */
+struct t_hashtable *otr_modifier_removed_batches = NULL;
+
+
+/*
  * Check if a line is the continuation of an OTR encoded message split over
  * several IRC lines: only base64 chars, optionally followed by "." (end of the
  * OTR message).
@@ -446,6 +453,171 @@ otr_modifier_all_targets_channels (const char *server, const char *targets)
 }
 
 /*
+ * Check a line "BATCH" of an outgoing multiline message (IRCv3 capability
+ * "draft/multiline"): the batch is removed if it is sent to a nick with an
+ * encrypted OTR session.
+ *
+ * Servers hold the lines of a batch until its end, while all OTR fragments of
+ * a line except the last one are sent immediately (out of the batch): the
+ * fragments would be received in the wrong order. Without the batch, each
+ * line is encrypted and sent as a separate message.
+ *
+ * Return 1 if the line must be dropped (batch removed), 0 otherwise.
+ */
+
+int
+otr_modifier_remove_batch (const char *server, const char *message)
+{
+    char **items, *key, *peer, *account;
+    int num_items, removed;
+
+    if (weechat_strncasecmp (message, "BATCH ", 6) != 0)
+        return 0;
+
+    items = weechat_string_split (message + 6, " ", NULL,
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_items);
+    if (!items)
+        return 0;
+
+    removed = 0;
+    key = NULL;
+    peer = NULL;
+    account = NULL;
+
+    if ((num_items < 1) || !items[0][1]
+        || ((items[0][0] != '+') && (items[0][0] != '-')))
+    {
+        goto end;
+    }
+
+    weechat_asprintf (&key, "%s,%s", server, items[0] + 1);
+    if (!key)
+        goto end;
+
+    if (items[0][0] == '-')
+    {
+        /* End of a batch removed. */
+        if (otr_modifier_removed_batches
+            && weechat_hashtable_has_key (otr_modifier_removed_batches, key))
+        {
+            weechat_hashtable_remove (otr_modifier_removed_batches, key);
+            removed = 1;
+        }
+        goto end;
+    }
+
+    /* Start of a multiline batch sent to a nick. */
+    if ((num_items != 3) || (strcmp (items[1], "draft/multiline") != 0)
+        || otr_irc_target_is_channel (server, items[2]))
+    {
+        goto end;
+    }
+    peer = weechat_string_tolower (items[2]);
+    account = (peer) ? otr_irc_peer_account (server, peer) : NULL;
+    if (!account || !otr_context_encrypted (otr_context_find (account, peer)))
+        goto end;
+    if (!otr_modifier_removed_batches)
+    {
+        otr_modifier_removed_batches = weechat_hashtable_new (
+            8,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (!otr_modifier_removed_batches)
+            goto end;
+    }
+    weechat_hashtable_set (otr_modifier_removed_batches, key, NULL);
+    removed = 1;
+
+end:
+    free (key);
+    free (peer);
+    free (account);
+    weechat_string_free_split (items);
+    return removed;
+}
+
+/*
+ * Remove tag "batch" from IRC tags of an outgoing message if this batch has
+ * been removed (see function otr_modifier_remove_batch).
+ *
+ * Tags are in format "@tag1;tag2 " (with "@" and the space after tags).
+ *
+ * Return new tags (same format), NULL if there are no tags anymore.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+otr_modifier_remove_batch_tag (const char *server, const char *tags)
+{
+    char *tags2, **items, **result, *key;
+    int i, num_items, removed;
+    size_t length;
+
+    if (!tags || (tags[0] != '@'))
+        return NULL;
+
+    /* Copy tags without "@" and the space after tags. */
+    length = strlen (tags + 1);
+    if ((length > 0) && (tags[length] == ' '))
+        length--;
+    tags2 = weechat_strndup (tags + 1, length);
+    if (!tags2)
+        return NULL;
+
+    items = weechat_string_split (tags2, ";", NULL, 0, 0, &num_items);
+    free (tags2);
+    result = weechat_string_dyn_alloc (64);
+    if (!items || !result)
+    {
+        weechat_string_free_split (items);
+        weechat_string_dyn_free (result, 1);
+        return strdup (tags);
+    }
+
+    for (i = 0; i < num_items; i++)
+    {
+        if (strncmp (items[i], "batch=", 6) == 0)
+        {
+            weechat_asprintf (&key, "%s,%s", server, items[i] + 6);
+            removed = (key && otr_modifier_removed_batches
+                       && weechat_hashtable_has_key (
+                           otr_modifier_removed_batches, key)) ? 1 : 0;
+            free (key);
+            if (removed)
+                continue;
+        }
+        weechat_string_dyn_concat (result, ((*result)[0]) ? ";" : "@", -1);
+        weechat_string_dyn_concat (result, items[i], -1);
+    }
+    weechat_string_free_split (items);
+
+    if (!(*result)[0])
+    {
+        weechat_string_dyn_free (result, 1);
+        return NULL;
+    }
+    weechat_string_dyn_concat (result, " ", -1);
+
+    return weechat_string_dyn_free (result, 0);
+}
+
+/*
+ * Free multiline batches removed from outgoing messages.
+ */
+
+void
+otr_modifier_free_removed_batches (void)
+{
+    weechat_hashtable_free (otr_modifier_removed_batches);
+    otr_modifier_removed_batches = NULL;
+}
+
+/*
  * Callback for modifier "irc_out_privmsg": encrypt outgoing private messages
  * with OTR.
  *
@@ -464,12 +636,12 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
                      const char *modifier_data, const char *string)
 {
     char *tags, *target, *account, *peer, *plain, *new_message, *result;
-    char *clean, *shown, *converted;
+    char *clean, *shown, *converted, *new_tags;
     const char *ptr_text, *ptr_server;
     ConnContext *ptr_context;
     gcry_error_t error;
     size_t length;
-    int action;
+    int action, batch_removed;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -495,14 +667,28 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     switch (otr_modifier_parse_out_privmsg (string, &tags, &target, &ptr_text))
     {
         case 0:
-            /* Not a PRIVMSG (no text to encrypt): leave it unchanged. */
-            return NULL;
+            /*
+             * Not a PRIVMSG (no text to encrypt): leave it unchanged, except
+             * a line "BATCH" of a batch removed.
+             */
+            return (otr_modifier_remove_batch (ptr_server, string)) ?
+                strdup ("") : NULL;
         case 1:
             break;
         default:
             otr_buffer_error_core (
                 _("could not parse an outgoing message; it was not sent"));
             return strdup ("");
+    }
+
+    /* Line of a multiline batch removed: remove the tag "batch". */
+    batch_removed = 0;
+    if (tags)
+    {
+        new_tags = otr_modifier_remove_batch_tag (ptr_server, tags);
+        batch_removed = (!new_tags || (strcmp (new_tags, tags) != 0)) ? 1 : 0;
+        free (tags);
+        tags = new_tags;
     }
 
     if (strchr (target, ','))
@@ -605,6 +791,12 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     weechat_bar_item_update (OTR_BAR_ITEM);
 
 end:
+    /* Message sent unchanged: remove the tag of a batch removed. */
+    if (!result && batch_removed)
+    {
+        weechat_asprintf (&result, "%sPRIVMSG %s :%s",
+                          (tags) ? tags : "", target, ptr_text);
+    }
     free (shown);
     free (clean);
     free (plain);
