@@ -212,7 +212,7 @@ otr_config_change_no_send_tag_regex_cb (const void *pointer, void *data,
 
 /*
  * Callback to create an option in section "policy" (boolean, "off" if no value
- * is given).
+ * is given); the option is not created if the value is not a valid boolean.
  */
 
 int
@@ -236,9 +236,21 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
+    if (!ptr_option)
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
 
-    return (ptr_option) ?
-        WEECHAT_CONFIG_OPTION_SET_OK_CHANGED : WEECHAT_CONFIG_OPTION_SET_ERROR;
+    /*
+     * The option is created with "off" if the value is not a valid boolean:
+     * set the value again to check it, and remove the option if invalid.
+     */
+    if (weechat_config_option_set (ptr_option, ptr_value, 0)
+        == WEECHAT_CONFIG_OPTION_SET_ERROR)
+    {
+        weechat_config_option_free (ptr_option);
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
+    }
+
+    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
 }
 
 /*

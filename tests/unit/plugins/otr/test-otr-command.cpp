@@ -23,7 +23,7 @@ extern "C"
 extern int otr_command_split_args (const char *string, char **args,
                                    int max_args);
 extern const char *otr_command_get_policy_name (const char *name);
-extern int otr_command_value_ok (const char *value);
+extern const char *otr_command_get_policy_value (const char *value);
 }
 
 TEST_GROUP(OtrCommand)
@@ -94,17 +94,18 @@ TEST(OtrCommand, GetPolicyName)
 
 /*
  * Test functions:
- *   otr_command_value_ok
+ *   otr_command_get_policy_value
  */
 
-TEST(OtrCommand, ValueOk)
+TEST(OtrCommand, GetPolicyValue)
 {
-    LONGS_EQUAL(0, otr_command_value_ok (""));
-    LONGS_EQUAL(0, otr_command_value_ok ("yes"));
-    LONGS_EQUAL(0, otr_command_value_ok ("1"));
-    LONGS_EQUAL(1, otr_command_value_ok ("on"));
-    LONGS_EQUAL(1, otr_command_value_ok ("OFF"));
-    LONGS_EQUAL(1, otr_command_value_ok ("Toggle"));
+    POINTERS_EQUAL(NULL, otr_command_get_policy_value (""));
+    POINTERS_EQUAL(NULL, otr_command_get_policy_value ("yes"));
+    POINTERS_EQUAL(NULL, otr_command_get_policy_value ("1"));
+    STRCMP_EQUAL("on", otr_command_get_policy_value ("on"));
+    STRCMP_EQUAL("on", otr_command_get_policy_value ("ON"));
+    STRCMP_EQUAL("off", otr_command_get_policy_value ("OFF"));
+    STRCMP_EQUAL("toggle", otr_command_get_policy_value ("Toggle"));
 }
 
 /*

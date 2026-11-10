@@ -811,18 +811,25 @@ otr_command_get_policy_name (const char *name)
 }
 
 /*
- * Check if a value is valid for a policy: "on", "off" or "toggle" (case
- * insensitive).
+ * Search a value for a policy: "on", "off" or "toggle" (case insensitive).
  *
- * Return 1 if the value is valid, 0 otherwise.
+ * Return the value as used in command /set (lower case), NULL if the value is
+ * invalid.
  */
 
-int
-otr_command_value_ok (const char *value)
+const char *
+otr_command_get_policy_value (const char *value)
 {
-    return ((weechat_strcasecmp (value, "on") == 0)
-            || (weechat_strcasecmp (value, "off") == 0)
-            || (weechat_strcasecmp (value, "toggle") == 0)) ? 1 : 0;
+    const char *values[] = { "on", "off", "toggle", NULL };
+    int i;
+
+    for (i = 0; values[i]; i++)
+    {
+        if (weechat_strcasecmp (values[i], value) == 0)
+            return values[i];
+    }
+
+    return NULL;
 }
 
 /*
@@ -894,7 +901,7 @@ otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
     }
 
     if ((num_args == 3) && otr_command_get_policy_name (args[1])
-        && otr_command_value_ok (args[2]))
+        && otr_command_get_policy_value (args[2]))
     {
         if (!otr_command_peer_args (buffer, NULL, 0, &peer_ref)
             || !otr_command_resolve (&peer_ref, &account, &peer))
@@ -905,8 +912,8 @@ otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
         otr_irc_account_nick (account, nick, sizeof (nick));
         snprintf (option_name, sizeof (option_name), "%s.%s.%s.%s",
                   otr_irc_account_server (account), nick, peer, ptr_policy);
-        ptr_value = args[2];
-        if ((weechat_strcasecmp (ptr_value, "toggle") == 0)
+        ptr_value = otr_command_get_policy_value (args[2]);
+        if ((strcmp (ptr_value, "toggle") == 0)
             && !weechat_config_search_option (otr_config_file,
                                               otr_config_section_policy,
                                               option_name))
@@ -939,10 +946,11 @@ otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
 
     if ((num_args == 4) && (weechat_strcasecmp (args[1], "default") == 0)
         && otr_command_get_policy_name (args[2])
-        && otr_command_value_ok (args[3]))
+        && otr_command_get_policy_value (args[3]))
     {
         weechat_asprintf (&command, "/set otr.policy.default.%s %s",
-                          otr_command_get_policy_name (args[2]), args[3]);
+                          otr_command_get_policy_name (args[2]),
+                          otr_command_get_policy_value (args[3]));
         if (command)
         {
             weechat_command (NULL, command);
