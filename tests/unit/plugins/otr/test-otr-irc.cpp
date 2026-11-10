@@ -13,11 +13,36 @@
 extern "C"
 {
 #include <stdlib.h>
+#include <string.h>
+#include "src/gui/gui-buffer.h"
+#include "src/gui/gui-line.h"
+#include "src/plugins/irc/irc-server.h"
+#include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-irc.h"
 }
 
 TEST_GROUP(OtrIrc)
 {
+    /*
+     * Check if a line containing a string has been displayed in core buffer
+     * after a given line.
+     */
+    int core_line_displayed (struct t_gui_line *after_line, const char *string)
+    {
+        struct t_gui_line *ptr_line;
+
+        for (ptr_line = gui_buffers->own_lines->last_line;
+             ptr_line && (ptr_line != after_line);
+             ptr_line = ptr_line->prev_line)
+        {
+            if (ptr_line->data->message
+                && strstr (ptr_line->data->message, string))
+            {
+                return 1;
+            }
+        }
+        return 0;
+    }
 };
 
 /*
@@ -68,4 +93,46 @@ TEST(OtrIrc, AccountServerNick)
     STRCMP_EQUAL("alice", nick);
     otr_irc_account_nick ("alice@libera", nick, 3);
     STRCMP_EQUAL("al", nick);
+}
+
+/*
+ * Test functions:
+ *   otr_irc_nick_cb
+ */
+
+TEST(OtrIrc, NickCb)
+{
+    struct t_irc_server *server;
+    struct t_gui_line *ptr_last_line;
+    ConnContext *ptr_context;
+
+    run_cmd_quiet ("/mute /server add test_otr_nick fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_nick");
+    server = irc_server_search ("test_otr_nick");
+    CHECK(server);
+    irc_server_set_nick (server, "alice3");
+
+    /* Session started with our first nick "alice". */
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@test_otr_nick",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+
+    /* Nick change of another user: no OTR query. */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    otr_irc_nick_cb (NULL, NULL, "test_otr_nick,irc_in2_nick", NULL,
+                     (void *)":carol!u@h NICK :carol2");
+    LONGS_EQUAL(0, core_line_displayed (ptr_last_line, "Sending OTR query"));
+
+    /* Our second nick change ("alice2" -> "alice3"): OTR query sent to bob. */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    otr_irc_nick_cb (NULL, NULL, "test_otr_nick,irc_in2_nick", NULL,
+                     (void *)":alice2!u@h NICK :alice3");
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line, "Sending OTR query"));
+
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+
+    run_cmd_quiet ("/mute /disconnect test_otr_nick");
+    run_cmd_quiet ("/mute /server del test_otr_nick");
 }
