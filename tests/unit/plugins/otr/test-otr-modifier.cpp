@@ -21,8 +21,8 @@ extern "C"
 extern int otr_modifier_is_base64_part (const char *line);
 extern int otr_modifier_assemble (struct t_otr_peer_data *peer_data,
                                   const char *line, char **message);
-extern int otr_modifier_parse_out_privmsg (const char *message, char **target,
-                                           const char **text);
+extern int otr_modifier_parse_out_privmsg (const char *message, char **tags,
+                                           char **target, const char **text);
 extern int otr_modifier_all_targets_channels (const char *server,
                                               const char *targets);
 }
@@ -141,28 +141,57 @@ TEST(OtrModifier, Assemble)
 
 TEST(OtrModifier, ParseOutPrivmsg)
 {
-    char *target;
+    char *tags, *target;
     const char *text;
 
+    tags = NULL;
     target = NULL;
     text = NULL;
-    LONGS_EQUAL(0, otr_modifier_parse_out_privmsg ("", &target, &text));
+    /* Not a PRIVMSG. */
+    LONGS_EQUAL(0, otr_modifier_parse_out_privmsg ("", &tags, &target, &text));
     LONGS_EQUAL(0, otr_modifier_parse_out_privmsg ("NOTICE bob :hello",
-                                                   &target, &text));
-    LONGS_EQUAL(0, otr_modifier_parse_out_privmsg ("PRIVMSG bob",
-                                                   &target, &text));
+                                                   &tags, &target, &text));
+    LONGS_EQUAL(0, otr_modifier_parse_out_privmsg ("@batch=abc",
+                                                   &tags, &target, &text));
+    LONGS_EQUAL(0, otr_modifier_parse_out_privmsg ("@batch=abc NOTICE bob :hi",
+                                                   &tags, &target, &text));
+    LONGS_EQUAL(0, otr_modifier_parse_out_privmsg (
+                    "BATCH +abc draft/multiline #chan", &tags, &target, &text));
+    LONGS_EQUAL(0, otr_modifier_parse_out_privmsg ("BATCH -abc",
+                                                   &tags, &target, &text));
+    POINTERS_EQUAL(NULL, tags);
+    POINTERS_EQUAL(NULL, target);
+
+    /* Invalid PRIVMSG. */
+    LONGS_EQUAL(-1, otr_modifier_parse_out_privmsg ("PRIVMSG bob",
+                                                    &tags, &target, &text));
+    LONGS_EQUAL(-1, otr_modifier_parse_out_privmsg ("@batch=abc PRIVMSG bob",
+                                                    &tags, &target, &text));
+    POINTERS_EQUAL(NULL, tags);
     POINTERS_EQUAL(NULL, target);
 
     LONGS_EQUAL(1, otr_modifier_parse_out_privmsg ("PRIVMSG bob :hello world",
-                                                   &target, &text));
+                                                   &tags, &target, &text));
+    POINTERS_EQUAL(NULL, tags);
     STRCMP_EQUAL("bob", target);
     STRCMP_EQUAL("hello world", text);
     free (target);
 
     LONGS_EQUAL(1, otr_modifier_parse_out_privmsg ("  privmsg  bob hello",
-                                                   &target, &text));
+                                                   &tags, &target, &text));
+    POINTERS_EQUAL(NULL, tags);
     STRCMP_EQUAL("bob", target);
     STRCMP_EQUAL("hello", text);
+    free (target);
+
+    /* Message with IRC tags (for example a multiline batch). */
+    LONGS_EQUAL(1, otr_modifier_parse_out_privmsg (
+                    "@batch=abc;+draft/reply=1 PRIVMSG #chan :line 1",
+                    &tags, &target, &text));
+    STRCMP_EQUAL("@batch=abc;+draft/reply=1 ", tags);
+    STRCMP_EQUAL("#chan", target);
+    STRCMP_EQUAL("line 1", text);
+    free (tags);
     free (target);
 }
 
