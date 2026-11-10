@@ -147,7 +147,8 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     const char *ptr_command, *ptr_nick, *ptr_host, *ptr_args, *ptr_space;
     const char *ptr_text, *ptr_server;
     char *result, *target, *account, *peer, *assembled, *new_message, *tags;
-    char *message, *plain, *own_nick, *unencrypted;
+    char *message, *plain, *own_nick;
+    struct t_otr_callback_data callback_data;
     OtrlTLV *tlvs;
     ConnContext *ptr_context;
     int ignore, was_otr, encrypted, disconnected;
@@ -183,7 +184,8 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     tags = NULL;
     message = NULL;
     own_nick = NULL;
-    unencrypted = NULL;
+    callback_data.unencrypted = NULL;
+    callback_data.last_injected = NULL;
     tlvs = NULL;
     ptr_context = NULL;
 
@@ -253,8 +255,9 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     }
 
     was_otr = (strncmp (assembled, "?OTR", 4) == 0) ? 1 : 0;
-    ignore = otrl_message_receiving (otr_us, &otr_callback_ops, &unencrypted,
-                                     account, OTR_PROTOCOL, peer, assembled,
+    ignore = otrl_message_receiving (otr_us, &otr_callback_ops,
+                                     &callback_data, account, OTR_PROTOCOL,
+                                     peer, assembled,
                                      &new_message, &tlvs, &ptr_context,
                                      NULL, NULL);
     disconnected = 0;
@@ -281,11 +284,12 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
 
     if (ignore)
     {
-        if (unencrypted)
+        if (callback_data.unencrypted)
         {
             /* Plaintext although the session is encrypted. */
             result = otr_message_build_in_privmsgs (
-                (tags) ? tags : "", ptr_host, target, unencrypted,
+                (tags) ? tags : "", ptr_host, target,
+                callback_data.unencrypted,
                 OTR_UNENCRYPTED_PREFIX, 0);
         }
         else
@@ -339,7 +343,8 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
 end:
     free (message);
     free (own_nick);
-    free (unencrypted);
+    free (callback_data.unencrypted);
+    free (callback_data.last_injected);
     free (tags);
     free (assembled);
     free (target);
@@ -643,6 +648,8 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     gcry_error_t error;
     size_t length;
     int action, batch_removed;
+    struct t_otr_callback_data callback_data;
+    OtrlFragmentPolicy fragment_policy;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -664,6 +671,8 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     result = NULL;
     clean = NULL;
     shown = NULL;
+    callback_data.unencrypted = NULL;
+    callback_data.last_injected = NULL;
 
     switch (otr_modifier_parse_out_privmsg (string, &tags, &target, &ptr_text))
     {
@@ -746,15 +755,22 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         goto end;
     }
 
+    /*
+     * Line of a multiline batch removed: the modifier result would be sent
+     * with immediate priority, before the fragments injected with high
+     * priority (anti-flood): all fragments are injected, in order.
+     */
+    fragment_policy = (batch_removed) ?
+        OTRL_FRAGMENT_SEND_ALL : OTRL_FRAGMENT_SEND_ALL_BUT_LAST;
+
     /* No whitespace tag after a CTCP ACTION sent in plain text. */
     action = otr_message_is_action (ptr_text);
     if (action)
         otr_no_tag++;
-    error = otrl_message_sending (otr_us, &otr_callback_ops, NULL, account,
-                                  OTR_PROTOCOL, peer, OTRL_INSTAG_BEST, plain,
-                                  NULL, &new_message,
-                                  OTRL_FRAGMENT_SEND_ALL_BUT_LAST,
-                                  NULL, NULL, NULL);
+    error = otrl_message_sending (otr_us, &otr_callback_ops, &callback_data,
+                                  account, OTR_PROTOCOL, peer,
+                                  OTRL_INSTAG_BEST, plain, NULL, &new_message,
+                                  fragment_policy, NULL, NULL, NULL);
     if (action)
         otr_no_tag--;
 
@@ -767,7 +783,17 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         goto end;
     }
 
-    if (new_message)
+    if (new_message && batch_removed)
+    {
+        /* All fragments have been injected: nothing else to send. */
+        clean = (callback_data.last_injected) ?
+            otr_util_irc_sanitize (callback_data.last_injected) : NULL;
+        if (shown && clean && (strncmp (clean, "?OTR", 4) == 0))
+            otr_echo_pending_add (ptr_server, peer, clean, shown);
+        result = strdup ("");
+        otrl_message_free (new_message);
+    }
+    else if (new_message)
     {
         clean = otr_util_irc_sanitize (new_message);
         if (!clean || !clean[0])
@@ -798,6 +824,8 @@ end:
         weechat_asprintf (&result, "%sPRIVMSG %s :%s",
                           (tags) ? tags : "", target, ptr_text);
     }
+    free (callback_data.unencrypted);
+    free (callback_data.last_injected);
     free (shown);
     free (clean);
     free (plain);

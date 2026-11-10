@@ -18,6 +18,16 @@ extern "C"
 #include "src/plugins/otr/otr-callback.h"
 #include "src/plugins/otr/otr-context.h"
 
+extern void otr_callback_inject_message (void *opdata,
+                                         const char *accountname,
+                                         const char *protocol,
+                                         const char *recipient,
+                                         const char *message);
+extern void otr_callback_handle_msg_event (void *opdata,
+                                           OtrlMessageEvent event,
+                                           ConnContext *context,
+                                           const char *message,
+                                           gcry_error_t error);
 extern void otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
                                            ConnContext *context,
                                            unsigned short progress,
@@ -81,4 +91,46 @@ TEST(OtrCallback, HandleSmpEvent)
 
     ptr_context->active_fingerprint = NULL;
     otrl_context_forget_fingerprint (ptr_fingerprint, 0);
+}
+
+/*
+ * Test functions:
+ *   otr_callback_inject_message
+ *   otr_callback_handle_msg_event
+ */
+
+TEST(OtrCallback, CallbackData)
+{
+    ConnContext *ptr_context;
+    struct t_otr_callback_data callback_data;
+
+    callback_data.unencrypted = NULL;
+    callback_data.last_injected = NULL;
+
+    /* Messages injected (server not found: not sent). */
+    otr_callback_inject_message (NULL, "alice@srv_otr_cb_data", OTR_PROTOCOL,
+                                 "bob", "?OTR:test0.");
+    otr_callback_inject_message (&callback_data, "alice@srv_otr_cb_data",
+                                 OTR_PROTOCOL, "bob", "?OTR:test1.");
+    STRCMP_EQUAL("?OTR:test1.", callback_data.last_injected);
+    otr_callback_inject_message (&callback_data, "alice@srv_otr_cb_data",
+                                 OTR_PROTOCOL, "bob", "?OTR:test2.");
+    STRCMP_EQUAL("?OTR:test2.", callback_data.last_injected);
+
+    /* Plaintext received while the session is encrypted. */
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_cb_data",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    otr_callback_handle_msg_event (NULL, OTRL_MSGEVENT_RCVDMSG_UNENCRYPTED,
+                                   ptr_context, "hello", 0);
+    POINTERS_EQUAL(NULL, callback_data.unencrypted);
+    otr_callback_handle_msg_event (&callback_data,
+                                   OTRL_MSGEVENT_RCVDMSG_UNENCRYPTED,
+                                   ptr_context, "hello", 0);
+    STRCMP_EQUAL("hello", callback_data.unencrypted);
+    STRCMP_EQUAL("?OTR:test2.", callback_data.last_injected);
+
+    free (callback_data.unencrypted);
+    free (callback_data.last_injected);
 }
