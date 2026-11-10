@@ -438,14 +438,11 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
                                   (unsigned int)progress);
             break;
         case OTRL_SMPEVENT_SUCCESS:
-            /* Make sure the fingerprint is remembered as SMP verified. */
-            if (context->active_fingerprint
-                && !otrl_context_is_fingerprint_trusted (
-                    context->active_fingerprint))
-            {
-                otrl_context_set_trust (context->active_fingerprint, "smp");
-                otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
-            }
+            /*
+             * The trust of the fingerprint is set by libotr, except if we
+             * answered a question of the peer: in this case only the peer
+             * has authenticated us, not the opposite.
+             */
             otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_SUCCESS,
                                   _("SMP verification succeeded."));
             if (ptr_peer_data && ptr_peer_data->smp_question)

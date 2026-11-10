@@ -175,6 +175,7 @@ if(ENABLE_OTR)
   include_directories(${LIBOTR_INCLUDE_DIRS})
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/otr/test-otr-buffer.cpp
+    plugins/otr/test-otr-callback.cpp
     plugins/otr/test-otr-command.cpp
     plugins/otr/test-otr-config.cpp
     plugins/otr/test-otr-echo.cpp
