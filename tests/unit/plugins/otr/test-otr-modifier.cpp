@@ -430,3 +430,72 @@ TEST(OtrModifier, HoldMessages)
     run_cmd_quiet ("/mute /disconnect srv_otr_hold");
     run_cmd_quiet ("/mute /server del srv_otr_hold");
 }
+
+/*
+ * Test functions:
+ *   otr_modifier_in_cb (CTCP ACTION received in plain text)
+ */
+
+TEST(OtrModifier, InCbAction)
+{
+    struct t_irc_server *server;
+    ConnContext *ptr_context;
+    char *str;
+
+    run_cmd_quiet ("/mute /server add srv_otr_action fake:127.0.0.1");
+    run_cmd_quiet ("/connect srv_otr_action");
+    server = irc_server_search ("srv_otr_action");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_action",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+
+    /* No OTR session: unchanged. */
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                       "srv_otr_action",
+                                       ":bob!u@h PRIVMSG alice "
+                                       ":\x01" "ACTION waves\x01"));
+
+    /* Other CTCP: unchanged. */
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                       "srv_otr_action",
+                                       ":bob!u@h PRIVMSG alice "
+                                       ":\x01VERSION\x01"));
+
+    /* Encrypted or finished session: flagged. */
+    WEE_TEST_STR(":bob!u@h PRIVMSG alice "
+                 ":Unencrypted message received: /me waves",
+                 otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                     "srv_otr_action",
+                                     ":bob!u@h PRIVMSG alice "
+                                     ":\x01" "ACTION waves\x01"));
+    ptr_context->msgstate = OTRL_MSGSTATE_FINISHED;
+    WEE_TEST_STR(":bob!u@h PRIVMSG alice "
+                 ":Unencrypted message received: /me waves",
+                 otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                     "srv_otr_action",
+                                     ":bob!u@h PRIVMSG alice "
+                                     ":\x01" "ACTION waves\x01"));
+
+    /* No OTR session, but encryption required: flagged. */
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_action.alice.bob.require_encryption", "on");
+    WEE_TEST_STR(":bob!u@h PRIVMSG alice "
+                 ":Unencrypted message received: /me waves",
+                 otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                     "srv_otr_action",
+                                     ":bob!u@h PRIVMSG alice "
+                                     ":\x01" "ACTION waves\x01"));
+    run_cmd_quiet ("/mute /unset "
+                   "otr.policy.srv_otr_action.alice.bob.require_encryption");
+
+    run_cmd_quiet ("/mute /disconnect srv_otr_action");
+    run_cmd_quiet ("/mute /server del srv_otr_action");
+}

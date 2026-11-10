@@ -225,11 +225,18 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     if (!account)
         goto end;
 
-    /* CTCP: only a plaintext ACTION inside an encrypted session is flagged. */
+    /*
+     * CTCP: only a plaintext ACTION is flagged, in the same cases as libotr
+     * does for other plaintext messages: OTR session started (encrypted or
+     * finished) or encryption required by policy.
+     */
     if (otr_message_is_ctcp (ptr_text))
     {
+        ptr_context = otr_context_find (account, peer);
         if (otr_message_is_action (ptr_text)
-            && otr_context_encrypted (otr_context_find (account, peer)))
+            && ((ptr_context
+                 && (ptr_context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
+                || otr_policy_for (account, peer, "require_encryption")))
         {
             plain = otr_message_plain_from_irc (ptr_text);
             if (plain)
