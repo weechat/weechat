@@ -64,7 +64,7 @@ struct t_gui_bar_item *otr_bar_item = NULL;
  */
 int otr_injecting = 0;
 
-/* >0 while sending CTCP, which must not receive a whitespace tag. */
+/* >0 while sending CTCP ACTION, which must not receive a whitespace tag. */
 int otr_no_tag = 0;
 
 /* Set while the plugin unloads: no UI work from libotr callbacks. */

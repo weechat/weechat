@@ -445,8 +445,11 @@ otr_modifier_all_targets_channels (const char *server, const char *targets)
  * Fail closed: any problem returns an empty string, which makes WeeChat drop
  * the message instead of sending it unencrypted.
  *
- * Return new message, NULL to send it unchanged (channel, or plain text allowed
- * by policies), an empty string to drop it.
+ * CTCP other than ACTION (VERSION, DCC...) are sent unencrypted: the IRC
+ * plugin of the peer could not handle them if they were encrypted.
+ *
+ * Return new message, NULL to send it unchanged (channel, CTCP other than
+ * ACTION, or plain text allowed by policies), an empty string to drop it.
  */
 
 char *
@@ -459,7 +462,7 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     ConnContext *ptr_context;
     gcry_error_t error;
     size_t length;
-    int ctcp;
+    int action;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -510,6 +513,10 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     if (otr_irc_target_is_channel (ptr_server, target))
         goto end;
 
+    /* CTCP other than ACTION: sent unencrypted. */
+    if (otr_message_is_ctcp (ptr_text) && !otr_message_is_action (ptr_text))
+        goto end;
+
     peer = weechat_string_tolower (target);
     account = (peer) ? otr_irc_peer_account (ptr_server, peer) : NULL;
     if (!account || !peer)
@@ -545,15 +552,16 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         goto end;
     }
 
-    ctcp = otr_message_is_ctcp (ptr_text);
-    if (ctcp)
+    /* No whitespace tag after a CTCP ACTION sent in plain text. */
+    action = otr_message_is_action (ptr_text);
+    if (action)
         otr_no_tag++;
     error = otrl_message_sending (otr_us, &otr_callback_ops, NULL, account,
                                   OTR_PROTOCOL, peer, OTRL_INSTAG_BEST, plain,
                                   NULL, &new_message,
                                   OTRL_FRAGMENT_SEND_ALL_BUT_LAST,
                                   NULL, NULL, NULL);
-    if (ctcp)
+    if (action)
         otr_no_tag--;
 
     if (error)
