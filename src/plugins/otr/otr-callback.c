@@ -136,6 +136,9 @@ otr_callback_is_logged_in (void *opdata, const char *accountname,
 
 /*
  * Callback for libotr: send an OTR protocol message to a recipient.
+ *
+ * If opdata is not NULL (struct t_otr_callback_data), the message is also
+ * copied in its field "last_injected".
  */
 
 void
@@ -143,9 +146,17 @@ otr_callback_inject_message (void *opdata, const char *accountname,
                              const char *protocol, const char *recipient,
                              const char *message)
 {
+    struct t_otr_callback_data *ptr_data;
+
     /* Make C compiler happy. */
-    (void) opdata;
     (void) protocol;
+
+    if (opdata)
+    {
+        ptr_data = (struct t_otr_callback_data *)opdata;
+        free (ptr_data->last_injected);
+        ptr_data->last_injected = strdup (message);
+    }
 
     otr_irc_send_raw (otr_irc_account_server (accountname), recipient, message);
 }
@@ -509,11 +520,11 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
 /*
  * Callback for libotr: handle a message event (display it for the peer).
  *
- * When receiving a message, opdata is a pointer to a string (char **): for
- * event OTRL_MSGEVENT_RCVDMSG_UNENCRYPTED (plaintext received while the
- * session is encrypted or encryption is required), the plaintext message,
- * which libotr ignores, is copied into this string, to be displayed by the
- * caller (the string must be freed after use).
+ * If opdata is not NULL (struct t_otr_callback_data), for event
+ * OTRL_MSGEVENT_RCVDMSG_UNENCRYPTED (plaintext received while the session is
+ * encrypted or encryption is required), the plaintext message, which libotr
+ * ignores, is copied in its field "unencrypted", to be displayed by the
+ * caller.
  */
 
 void
@@ -521,7 +532,7 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
                                ConnContext *context, const char *message,
                                gcry_error_t error)
 {
-    char **unencrypted;
+    struct t_otr_callback_data *ptr_data;
 
     if (!context)
         return;
@@ -600,9 +611,9 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
             /* Displayed with a message prefix by otr_modifier_in_cb. */
             if (opdata && message)
             {
-                unencrypted = (char **)opdata;
-                free (*unencrypted);
-                *unencrypted = strdup (message);
+                ptr_data = (struct t_otr_callback_data *)opdata;
+                free (ptr_data->unencrypted);
+                ptr_data->unencrypted = strdup (message);
             }
             break;
         default:
