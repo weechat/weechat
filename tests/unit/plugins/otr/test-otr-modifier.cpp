@@ -14,6 +14,8 @@ extern "C"
 {
 #include <stdlib.h>
 #include <string.h>
+#include "src/core/core-config-file.h"
+#include "src/plugins/irc/irc-server.h"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-context.h"
 #include "src/plugins/otr/otr-modifier.h"
@@ -25,6 +27,7 @@ extern int otr_modifier_parse_out_privmsg (const char *message, char **tags,
                                            char **target, const char **text);
 extern int otr_modifier_all_targets_channels (const char *server,
                                               const char *targets);
+extern int otr_modifier_must_hold (const char *account, const char *peer);
 extern int otr_modifier_remove_batch (const char *server,
                                       const char *message);
 extern char *otr_modifier_remove_batch_tag (const char *server,
@@ -359,4 +362,71 @@ TEST(OtrModifier, RemoveBatch)
     POINTERS_EQUAL(NULL, otr_modifier_removed_batches);
 
     ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+}
+
+/*
+ * Test functions:
+ *   otr_modifier_must_hold
+ *   otr_modifier_hold_message
+ */
+
+TEST(OtrModifier, HoldMessages)
+{
+    struct t_irc_server *server;
+    struct t_otr_peer_data *ptr_peer_data;
+    ConnContext *ptr_context;
+    char *str;
+
+    run_cmd_quiet ("/mute /server add srv_otr_hold fake:127.0.0.1");
+    run_cmd_quiet ("/connect srv_otr_hold");
+    server = irc_server_search ("srv_otr_hold");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+
+    ptr_peer_data = otr_context_peer_data_for ("alice@srv_otr_hold", "bob");
+    CHECK(ptr_peer_data);
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_hold",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+
+    /* Encryption not required: messages not held. */
+    LONGS_EQUAL(0, otr_modifier_must_hold ("alice@srv_otr_hold", "bob"));
+
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_hold.alice.bob.require_encryption", "on");
+
+    /* Encryption required and no session: messages held. */
+    LONGS_EQUAL(1, otr_modifier_must_hold ("alice@srv_otr_hold", "bob"));
+    WEE_TEST_STR("",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_hold", "PRIVMSG bob :line 1"));
+    WEE_TEST_STR("",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_hold",
+                                      "@a=1 PRIVMSG bob :line 2"));
+    CHECK(ptr_peer_data->held_messages);
+    STRCMP_EQUAL("line 1\nline 2", *(ptr_peer_data->held_messages));
+
+    /* Multiline batch removed: its lines are held. */
+    LONGS_EQUAL(1, otr_modifier_remove_batch (
+                    "srv_otr_hold", "BATCH +ref draft/multiline bob"));
+    WEE_TEST_STR("",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_hold",
+                                      "@batch=ref PRIVMSG bob :line 3"));
+    LONGS_EQUAL(1, otr_modifier_remove_batch ("srv_otr_hold", "BATCH -ref"));
+    STRCMP_EQUAL("line 1\nline 2\nline 3", *(ptr_peer_data->held_messages));
+
+    /* Session encrypted: messages not held. */
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+    LONGS_EQUAL(0, otr_modifier_must_hold ("alice@srv_otr_hold", "bob"));
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+
+    otr_context_clear_held_messages (ptr_peer_data);
+    run_cmd_quiet ("/mute /unset "
+                   "otr.policy.srv_otr_hold.alice.bob.require_encryption");
+
+    run_cmd_quiet ("/mute /disconnect srv_otr_hold");
+    run_cmd_quiet ("/mute /server del srv_otr_hold");
 }

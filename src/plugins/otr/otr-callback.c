@@ -306,6 +306,9 @@ otr_callback_gone_secure (void *opdata, ConnContext *context)
     /* New session: no SMP in progress (the SMP state of libotr is reset). */
     otr_context_smp_reset (ptr_peer_data);
 
+    /* Messages held until the session is encrypted can now be sent. */
+    otr_context_send_held_messages (context);
+
     verified = (context->active_fingerprint
                 && otrl_context_is_fingerprint_trusted (
                     context->active_fingerprint)) ? 1 : 0;

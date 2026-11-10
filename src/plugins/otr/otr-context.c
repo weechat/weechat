@@ -8,6 +8,7 @@
 /* Per-peer data attached to libotr contexts */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "otr.h"
@@ -15,6 +16,7 @@
 #include "otr-callback.h"
 #include "otr-config.h"
 #include "otr-context.h"
+#include "otr-irc.h"
 #include "otr-log.h"
 
 
@@ -33,6 +35,7 @@ otr_context_peer_data_free (void *data)
     peer_data = (struct t_otr_peer_data *)data;
 
     free (peer_data->assembly);
+    weechat_string_dyn_free (peer_data->held_messages, 1);
     free (peer_data);
 }
 
@@ -161,8 +164,141 @@ otr_context_smp_reset (struct t_otr_peer_data *peer_data)
 }
 
 /*
- * End the OTR session with a peer: libotr notifies the peer if the session is
- * encrypted, then the logger level of the private buffer is restored.
+ * Hold a message (IRC text) sent to a peer, until the OTR session is encrypted.
+ *
+ * Return 1 if OK, 0 if error.
+ */
+
+int
+otr_context_hold_message (struct t_otr_peer_data *peer_data,
+                          const char *message)
+{
+    if (!peer_data || !message)
+        return 0;
+
+    if (!peer_data->held_messages)
+    {
+        peer_data->held_messages = weechat_string_dyn_alloc (256);
+        if (!peer_data->held_messages)
+            return 0;
+    }
+    else if (!weechat_string_dyn_concat (peer_data->held_messages, "\n", -1))
+    {
+        return 0;
+    }
+
+    return weechat_string_dyn_concat (peer_data->held_messages, message, -1);
+}
+
+/*
+ * Remove messages held for a peer.
+ */
+
+void
+otr_context_clear_held_messages (struct t_otr_peer_data *peer_data)
+{
+    if (!peer_data)
+        return;
+
+    weechat_string_dyn_free (peer_data->held_messages, 1);
+    peer_data->held_messages = NULL;
+}
+
+/*
+ * Callback of timer used to send the messages held for a peer: data is
+ * "account peer".
+ */
+
+int
+otr_context_send_held_messages_timer_cb (const void *pointer, void *data,
+                                         int remaining_calls)
+{
+    struct t_otr_peer_data *ptr_peer_data;
+    ConnContext *ptr_context;
+    char *account, **messages, *command;
+    const char *ptr_peer;
+    int i, num_messages;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) remaining_calls;
+
+    if (!otr_us || !data)
+        return WEECHAT_RC_OK;
+
+    ptr_peer = strchr ((const char *)data, ' ');
+    if (!ptr_peer)
+        return WEECHAT_RC_OK;
+    account = weechat_strndup ((const char *)data,
+                               ptr_peer - (const char *)data);
+    if (!account)
+        return WEECHAT_RC_OK;
+    ptr_peer++;
+
+    ptr_context = otrl_context_find (otr_us, ptr_peer, account, OTR_PROTOCOL,
+                                     OTRL_INSTAG_MASTER, 0, NULL, NULL, NULL);
+    ptr_peer_data = (ptr_context) ?
+        (struct t_otr_peer_data *)ptr_context->app_data : NULL;
+    if (!ptr_peer_data || !ptr_peer_data->held_messages
+        || !otr_context_encrypted (otr_context_find (account, ptr_peer)))
+    {
+        free (account);
+        return WEECHAT_RC_OK;
+    }
+
+    messages = weechat_string_split (*(ptr_peer_data->held_messages), "\n",
+                                     NULL, 0, 0, &num_messages);
+    otr_context_clear_held_messages (ptr_peer_data);
+
+    /* Messages are sent again, so they are encrypted by the modifier. */
+    for (i = 0; messages && (i < num_messages); i++)
+    {
+        weechat_asprintf (&command, "/quote -server %s PRIVMSG %s :%s",
+                          otr_irc_account_server (account), ptr_peer,
+                          messages[i]);
+        if (command)
+        {
+            weechat_command (NULL, command);
+            free (command);
+        }
+    }
+
+    weechat_string_free_split (messages);
+    free (account);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Send the messages held for the peer of a libotr context, now that the session
+ * is encrypted.
+ *
+ * Messages are sent with a timer, outside the libotr callbacks.
+ */
+
+void
+otr_context_send_held_messages (ConnContext *context)
+{
+    struct t_otr_peer_data *ptr_peer_data;
+    char *data;
+
+    ptr_peer_data = otr_context_peer_data_ctx (context);
+    if (!ptr_peer_data || !ptr_peer_data->held_messages)
+        return;
+
+    weechat_asprintf (&data, "%s %s", context->accountname, context->username);
+    if (!data)
+        return;
+
+    /* Data is freed by WeeChat when the timer is removed. */
+    weechat_hook_timer (1, 0, 1,
+                        &otr_context_send_held_messages_timer_cb, NULL, data);
+}
+
+/*
+ * End the OTR session with a peer: messages held for the session are removed,
+ * libotr notifies the peer if the session is encrypted, then the logger level
+ * of the private buffer is restored.
  *
  * If display is 1, a message is displayed for the peer.
  *
@@ -177,6 +313,15 @@ otr_context_end_session (const char *account, const char *peer, int display,
                          int buffer_closing)
 {
     ConnContext *ptr_context;
+
+    /* Messages held for the session are not sent anymore. */
+    ptr_context = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
+                                     OTRL_INSTAG_MASTER, 0, NULL, NULL, NULL);
+    if (ptr_context)
+    {
+        otr_context_clear_held_messages (
+            (struct t_otr_peer_data *)ptr_context->app_data);
+    }
 
     ptr_context = otr_context_find (account, peer);
     if (!ptr_context || (ptr_context->msgstate == OTRL_MSGSTATE_PLAINTEXT))
