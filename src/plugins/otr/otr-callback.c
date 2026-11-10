@@ -295,7 +295,11 @@ otr_callback_gone_secure (void *opdata, ConnContext *context)
                 && otrl_context_is_fingerprint_trusted (
                     context->active_fingerprint)) ? 1 : 0;
 
-    /* Disable logging before anything decrypted can be printed. */
+    /*
+     * Disable logging before anything decrypted can be printed (if the
+     * private buffer does not exist yet, logging is disabled when it is
+     * opened, see function otr_buffer_irc_pv_opened_cb).
+     */
     if (!otr_policy_ctx (context, "log"))
     {
         otr_log_disable (context, ptr_peer_data);

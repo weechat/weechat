@@ -196,6 +196,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_config ("logger.level.irc.*",
                          &otr_log_logger_level_update_cb, NULL, NULL);
     weechat_hook_signal ("buffer_switch", &otr_buffer_switch_cb, NULL, NULL);
+    weechat_hook_signal ("irc_pv_opened", &otr_buffer_irc_pv_opened_cb,
+                         NULL, NULL);
     weechat_hook_signal ("buffer_closing", &otr_buffer_closing_cb, NULL, NULL);
     weechat_hook_signal ("debug_libs", &otr_debug_libs_cb, NULL, NULL);
     weechat_hook_signal ("*,irc_in2_nick", &otr_irc_nick_cb, NULL, NULL);

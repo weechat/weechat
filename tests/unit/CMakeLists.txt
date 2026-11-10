@@ -174,6 +174,7 @@ if(ENABLE_OTR)
   pkg_check_modules(LIBOTR REQUIRED libotr>=4.0.0)
   include_directories(${LIBOTR_INCLUDE_DIRS})
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    plugins/otr/test-otr-buffer.cpp
     plugins/otr/test-otr-command.cpp
     plugins/otr/test-otr-config.cpp
     plugins/otr/test-otr-echo.cpp
