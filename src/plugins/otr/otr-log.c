@@ -79,40 +79,24 @@ otr_log_logger_option_name (struct t_gui_buffer *buffer)
  * Get the logger level of a buffer.
  *
  * Return OTR_LOG_DEFAULT if the buffer has no specific logger level option,
- * otherwise the current logger level of the buffer.
+ * otherwise the value of this option (even if the buffer is not logged, for
+ * example if option logger.file.auto_log is off).
  */
 
 int
 otr_log_buffer_log_level (struct t_gui_buffer *buffer)
 {
-    struct t_infolist *ptr_infolist;
+    struct t_config_option *ptr_option;
     char *option_name;
-    int option_exists, level;
 
     option_name = otr_log_logger_option_name (buffer);
     if (!option_name)
         return OTR_LOG_DEFAULT;
-    option_exists = (weechat_config_get (option_name)) ? 1 : 0;
+    ptr_option = weechat_config_get (option_name);
     free (option_name);
-    if (!option_exists)
-        return OTR_LOG_DEFAULT;
 
-    level = 0;
-    ptr_infolist = weechat_infolist_get ("logger_buffer", NULL, NULL);
-    if (ptr_infolist)
-    {
-        while (weechat_infolist_next (ptr_infolist))
-        {
-            if (weechat_infolist_pointer (ptr_infolist, "buffer") == buffer)
-            {
-                level = weechat_infolist_integer (ptr_infolist, "log_level");
-                break;
-            }
-        }
-        weechat_infolist_free (ptr_infolist);
-    }
-
-    return level;
+    return (ptr_option) ?
+        weechat_config_integer (ptr_option) : OTR_LOG_DEFAULT;
 }
 
 /*
