@@ -645,10 +645,13 @@ otr_command_smp (struct t_gui_buffer *buffer, char **args, int num_args)
     if (strcmp (ptr_action, "respond") == 0)
     {
         /*
-         * Respond only to a request of the peer: libotr does not check its
-         * SMP state and crashes if the peer did not start SMP.
+         * Respond only to a request of the peer, still pending in libotr for
+         * the context used: libotr does not check its SMP state and crashes
+         * if the peer did not start SMP (or if the session has ended since
+         * the request).
          */
-        if (!ptr_peer_data || !ptr_peer_data->smp_asked)
+        if (!ptr_peer_data || !ptr_peer_data->smp_asked
+            || !otr_context_smp_asked (ptr_context))
         {
             weechat_asprintf (
                 &message,

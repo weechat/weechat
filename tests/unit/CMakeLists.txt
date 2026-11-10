@@ -178,6 +178,7 @@ if(ENABLE_OTR)
     plugins/otr/test-otr-callback.cpp
     plugins/otr/test-otr-command.cpp
     plugins/otr/test-otr-config.cpp
+    plugins/otr/test-otr-context.cpp
     plugins/otr/test-otr-echo.cpp
     plugins/otr/test-otr-irc.cpp
     plugins/otr/test-otr-log.cpp

@@ -267,6 +267,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
         if (ptr_context && otrl_tlv_find (tlvs, OTRL_TLV_DISCONNECTED))
         {
             disconnected = 1;
+            otr_context_smp_reset (otr_context_peer_data_ctx (ptr_context));
             otr_buffer_ctx_print (
                 ptr_context, OTR_CONFIG_LEVEL_INFO,
                 _("%s has ended the private conversation. You should do the "

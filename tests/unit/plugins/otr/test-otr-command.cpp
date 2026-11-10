@@ -154,6 +154,16 @@ TEST(OtrCommand, Smp)
                   "There is no SMP request from bob@srv_otr_cmd_smp"));
     LONGS_EQUAL(0, ptr_peer_data->smp_asked);
 
+    /*
+     * Request of the peer, but no SMP state in libotr (for example after the
+     * end of the session): refused (no crash in libotr).
+     */
+    ptr_peer_data->smp_asked = 1;
+    run_cmd_quiet ("/otr smp respond bob srv_otr_cmd_smp secret");
+    CHECK(strstr (gui_buffers->own_lines->last_line->data->message,
+                  "There is no SMP request from bob@srv_otr_cmd_smp"));
+    ptr_peer_data->smp_asked = 0;
+
     ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
 }
 

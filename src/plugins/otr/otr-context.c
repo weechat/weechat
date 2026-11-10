@@ -120,6 +120,47 @@ otr_context_verified (ConnContext *context)
 }
 
 /*
+ * Check if the peer of a libotr context has requested SMP verification and is
+ * waiting for our response, according to the SMP state in libotr (the state is
+ * reset by libotr when the session ends, and each instance of the peer has its
+ * own state).
+ *
+ * Return 1 if a response to the peer is expected, 0 otherwise.
+ */
+
+int
+otr_context_smp_asked (ConnContext *context)
+{
+    OtrlSMState *ptr_smstate;
+
+    if (!context || !context->smstate)
+        return 0;
+
+    ptr_smstate = context->smstate;
+
+    return ((ptr_smstate->nextExpected == OTRL_SMP_EXPECT1)
+            && (ptr_smstate->sm_prog_state == OTRL_SMP_PROG_OK)
+            && ptr_smstate->g1 && ptr_smstate->x2
+            && ptr_smstate->x3) ? 1 : 0;
+}
+
+/*
+ * Reset the SMP state of a peer (SMP in progress, question and request of the
+ * peer), for example when the OTR session ends.
+ */
+
+void
+otr_context_smp_reset (struct t_otr_peer_data *peer_data)
+{
+    if (!peer_data)
+        return;
+
+    peer_data->in_smp = 0;
+    peer_data->smp_question = 0;
+    peer_data->smp_asked = 0;
+}
+
+/*
  * End the OTR session with a peer: libotr notifies the peer if the session is
  * encrypted, then the logger level of the private buffer is restored.
  *
@@ -157,6 +198,8 @@ otr_context_end_session (const char *account, const char *peer, int display,
             otr_buffer_ctx_print (ptr_context, OTR_CONFIG_LEVEL_INFO,
                                   _("Private conversation ended."));
         }
+        otr_context_smp_reset (
+            (struct t_otr_peer_data *)ptr_context->app_data);
         otr_log_restore (ptr_context,
                          (struct t_otr_peer_data *)ptr_context->app_data,
                          buffer_closing);
