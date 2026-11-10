@@ -253,6 +253,10 @@ end:
  * OTR query to each peer with an encrypted OTR session on this server, so that
  * the peer restarts the session with our new nick (our side of the session is
  * kept, see function otr_irc_peer_account).
+ *
+ * The account of the session is the one of our nick when the session started,
+ * which can be different from our previous nick (if our nick changed several
+ * times during the session).
  */
 
 int
@@ -262,7 +266,7 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
     struct t_hashtable *hashtable_in, *hashtable_out;
     ConnContext *ptr_context;
     const char *ptr_old_nick, *ptr_new_nick, *ptr_query;
-    char *server, *info_nick, *old_nick, *old_account;
+    char *server, *info_nick, *account;
     const char *ptr_comma;
 
     /* Make C compiler happy. */
@@ -282,8 +286,6 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
 
     hashtable_out = NULL;
     info_nick = NULL;
-    old_nick = NULL;
-    old_account = NULL;
 
     hashtable_in = weechat_hashtable_new (8,
                                           WEECHAT_HASHTABLE_STRING,
@@ -309,28 +311,27 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
     if (!info_nick || (weechat_strcasecmp (info_nick, ptr_new_nick) != 0))
         goto end;
 
-    old_nick = weechat_string_tolower (ptr_old_nick);
-    if (!old_nick)
-        goto end;
-    weechat_asprintf (&old_account, "%s@%s", old_nick, server);
-    if (!old_account)
-        goto end;
-
     for (ptr_context = otr_us->context_root; ptr_context;
          ptr_context = ptr_context->next)
     {
         if ((ptr_context->their_instance != OTRL_INSTAG_MASTER)
             || !ptr_context->accountname || !ptr_context->username
-            || (strcmp (ptr_context->accountname, old_account) != 0))
+            || (strcmp (otr_irc_account_server (ptr_context->accountname),
+                        server) != 0))
         {
             continue;
         }
-        if (!otr_context_encrypted (
-                otr_context_find (old_account, ptr_context->username)))
+        /* Only the account used with the peer (one query per peer). */
+        account = otr_irc_peer_account (server, ptr_context->username);
+        if (!account || (strcmp (account, ptr_context->accountname) != 0)
+            || !otr_context_encrypted (
+                otr_context_find (account, ptr_context->username)))
         {
+            free (account);
             continue;
         }
-        ptr_query = otr_policy_query (old_account, ptr_context->username);
+        ptr_query = otr_policy_query (account, ptr_context->username);
+        free (account);
         if (!ptr_query)
             continue;
         otr_buffer_peer_hint (
@@ -343,8 +344,6 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
 end:
     free (server);
     free (info_nick);
-    free (old_nick);
-    free (old_account);
     weechat_hashtable_free (hashtable_out);
     return WEECHAT_RC_OK;
 }
