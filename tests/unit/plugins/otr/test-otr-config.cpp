@@ -62,6 +62,17 @@ TEST(OtrConfig, PolicyCreateDelete)
     config_file_search_with_string ("otr.policy.test.alice.bob.send_tag",
                                     NULL, NULL, &ptr_option, NULL);
     POINTERS_EQUAL(NULL, ptr_option);
+
+    /* Other policy with an invalid value is not created. */
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_with_string (
+                    "otr.policy.test.alice.bob.send_tag", "invalid"));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_with_string (
+                    "otr.policy.test.alice.bob.send_tag", "ON"));
+    config_file_search_with_string ("otr.policy.test.alice.bob.send_tag",
+                                    NULL, NULL, &ptr_option, NULL);
+    POINTERS_EQUAL(NULL, ptr_option);
 }
 
 /*
