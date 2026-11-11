@@ -22,6 +22,7 @@
 #define OTR_PROTOCOL           "irc"
 #define OTR_BAR_ITEM           "otr"
 #define OTR_MAX_ASSEMBLY       (64 * 1024)
+#define OTR_ASSEMBLY_TIMEOUT   60     /* Seconds to receive all lines.     */
 #define OTR_LOG_UNTOUCHED      (-2)   /* We have not changed the log level. */
 #define OTR_LOG_DEFAULT        (-1)   /* Buffer used the default log level. */
 #define OTR_ACTION_PREFIX      "/me "

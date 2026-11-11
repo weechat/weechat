@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../weechat-plugin.h"
 #include "otr.h"
@@ -30,6 +31,12 @@
  * function otr_modifier_remove_batch.
  */
 struct t_hashtable *otr_modifier_removed_batches = NULL;
+
+/*
+ * Timer used to drop stale OTR messages being assembled (created when an
+ * assembly starts, removed when there is no assembly anymore).
+ */
+struct t_hook *otr_modifier_assembly_timer = NULL;
 
 
 /*
@@ -65,12 +72,94 @@ otr_modifier_is_base64_part (const char *line)
 }
 
 /*
+ * Drop the OTR message being assembled for a peer (incomplete message).
+ */
+
+void
+otr_modifier_drop_assembly (struct t_otr_peer_data *peer_data)
+{
+    if (!peer_data || !peer_data->assembly)
+        return;
+
+    otr_buffer_debug ("incomplete OTR message dropped (length %d)",
+                      (int)peer_data->assembly_length);
+    free (peer_data->assembly);
+    peer_data->assembly = NULL;
+    peer_data->assembly_length = 0;
+    peer_data->assembly_time = 0;
+}
+
+/*
+ * Check if the OTR message being assembled for a peer is stale: its first line
+ * was received more than OTR_ASSEMBLY_TIMEOUT seconds ago.
+ *
+ * Return 1 if the assembly is stale, 0 otherwise (or if there is no assembly).
+ */
+
+int
+otr_modifier_assembly_stale (struct t_otr_peer_data *peer_data, time_t now)
+{
+    return (peer_data && peer_data->assembly
+            && (now - peer_data->assembly_time > OTR_ASSEMBLY_TIMEOUT)) ?
+        1 : 0;
+}
+
+/*
+ * Callback of timer used to drop stale OTR messages being assembled (the peer
+ * never sent the last lines), so that memory is not kept for all peers.
+ *
+ * The timer is removed when there is no OTR message being assembled anymore
+ * (it is created again when an assembly starts).
+ */
+
+int
+otr_modifier_assembly_timer_cb (const void *pointer, void *data,
+                                int remaining_calls)
+{
+    ConnContext *ptr_context;
+    struct t_otr_peer_data *ptr_peer_data;
+    time_t now;
+    int assembly_found;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) remaining_calls;
+
+    assembly_found = 0;
+
+    if (otr_us)
+    {
+        now = time (NULL);
+        for (ptr_context = otr_us->context_root; ptr_context;
+             ptr_context = ptr_context->next)
+        {
+            ptr_peer_data = (struct t_otr_peer_data *)ptr_context->app_data;
+            if (otr_modifier_assembly_stale (ptr_peer_data, now))
+                otr_modifier_drop_assembly (ptr_peer_data);
+            if (ptr_peer_data && ptr_peer_data->assembly)
+                assembly_found = 1;
+        }
+    }
+
+    if (!assembly_found && otr_modifier_assembly_timer)
+    {
+        weechat_unhook (otr_modifier_assembly_timer);
+        otr_modifier_assembly_timer = NULL;
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Add a received line to the assembly buffer of a peer: an OTR encoded message
  * ("?OTR:...") that does not end with "." has been split over several IRC
  * lines, and the next lines (only base64 chars) are added until the final ".".
  *
  * Any other line (plain text, OTR query, OTR fragment, OTR error) is returned
- * as-is; if an OTR message was being assembled, it is dropped.
+ * as-is; if an OTR message was being assembled, it is dropped (it is dropped
+ * too if its first line was received more than OTR_ASSEMBLY_TIMEOUT seconds
+ * ago).
  *
  * Return 1 if a complete message is available (copied in *message, which must
  * be freed after use), 0 if more lines are expected or if an allocation error
@@ -85,6 +174,10 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
     size_t length;
 
     length = strlen (line);
+
+    /* Too late for the next lines: drop the incomplete OTR message. */
+    if (otr_modifier_assembly_stale (peer_data, time (NULL)))
+        otr_modifier_drop_assembly (peer_data);
 
     if (peer_data->assembly)
     {
@@ -104,14 +197,11 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
             *message = peer_data->assembly;
             peer_data->assembly = NULL;
             peer_data->assembly_length = 0;
+            peer_data->assembly_time = 0;
             return 1;
         }
         /* Not a continuation: drop the incomplete OTR message. */
-        otr_buffer_debug ("incomplete OTR message dropped (length %d)",
-                          (int)peer_data->assembly_length);
-        free (peer_data->assembly);
-        peer_data->assembly = NULL;
-        peer_data->assembly_length = 0;
+        otr_modifier_drop_assembly (peer_data);
     }
 
     if ((strncmp (line, "?OTR:", 5) == 0) && (line[length - 1] != '.')
@@ -122,6 +212,13 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
         if (!peer_data->assembly)
             return 0;
         peer_data->assembly_length = length;
+        peer_data->assembly_time = time (NULL);
+        if (!otr_modifier_assembly_timer)
+        {
+            otr_modifier_assembly_timer = weechat_hook_timer (
+                OTR_ASSEMBLY_TIMEOUT * 1000, 0, 0,
+                &otr_modifier_assembly_timer_cb, NULL, NULL);
+        }
         return 0;
     }
 
