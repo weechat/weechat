@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-09 09:01+0100\n"
+"POT-Creation-Date: 2026-11-11 00:15+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -164,6 +164,26 @@ msgstr "Dodatkowe opcje w trybie bez interfejsu:"
 
 msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
 msgstr "Opcje debugujące (dla narzędzi jak valgrind, NIE UŻYWAĆ NA PRODUKCJI):"
+
+#. TRANSLATORS: "%s" is the command used to run WeeChat.
+#, c-format
+msgid "Try \"%s --help\" for more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: ambiguous option \"%s\"\n"
+msgstr "%s%s: błąd: nieznany protokół \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Error: \"%s\" is not a directory\n"
+msgid "Error: option \"--%s\" does not take an argument\n"
+msgstr "Błąd: „%s” nie jest katalogiem\n"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: unknown option \"%s\"\n"
+msgstr "%s%s: błąd: nieznany protokół \"%s\""
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -6843,6 +6863,15 @@ msgstr "Funkcja systemowa \"%s\" nie jest dostępna"
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Zużycie zasobów (zobacz \"man getrusage\"):"
 
+msgid "Running WeeChat in background..."
+msgstr "Uruchamianie WeeChat w tle..."
+
+msgid "fork error"
+msgstr "nie udało się utworzyć procesu"
+
+msgid "OK"
+msgstr "OK"
+
 msgid "WeeChat default theme for light-background terminals"
 msgstr "Domyślny motyw WeeChat dla terminali z jasnym tłem"
 
@@ -7251,15 +7280,6 @@ msgstr "Obsługa myszy wyłączona"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', rozmiar: %dx%d"
-
-msgid "Running WeeChat in background..."
-msgstr "Uruchamianie WeeChat w tle..."
-
-msgid "fork error"
-msgstr "nie udało się utworzyć procesu"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "condition(s) to display the bar item (evaluated, see /help eval)"
 msgstr ""

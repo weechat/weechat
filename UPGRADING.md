@@ -15,6 +15,18 @@ For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.m
 
 ## Unreleased
 
+### Unknown command-line options
+
+WeeChat now exits with an error when an unknown command-line option is given (for example
+`weechat --foo`), instead of ignoring it silently. The options `--daemon` and `--stdout` are
+rejected by `weechat` (they are allowed only by `weechat-headless`), as well as `--doc-gen`.
+
+The exit code is now 2 when the command-line arguments are invalid (unknown option or missing
+argument), instead of 1.
+
+Scripts or wrappers starting WeeChat with an unknown option must be fixed.
+Arguments not starting with `-` (for example `irc://` URLs) are not affected.
+
 ### Line identifiers
 
 The identifier of a line (`id` in hdata `line_data`) is now a `long long` instead of an `int`,

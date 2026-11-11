@@ -10,15 +10,17 @@
 *-c*, *--colors*::
     zeigt die Standardfarben im Terminal an.
 
+// TRANSLATION MISSING
 *--daemon*::
-    startet WeeChat im Hintergrund, als Deamon (funktioniert nur mit
-    dem Befehl *weechat-headless*).
+    Run WeeChat in background, as a daemon (only with the command
+    *weechat-headless*: with *weechat* this option is unknown and an error is
+    displayed).
 
+// TRANSLATION MISSING
 *--stdout*::
-    die Programmausgabe findet in der Standardausgabe an, anstatt sie in die Protokolldatei zu schreiben
     Display log messages on standard output instead of writing them in log file
-    (funktioniert ausschließlich mit *weechat-headless* und ist nicht kompatibel mit Option
-    "--daemon").
+    (only with the command *weechat-headless*: with *weechat* this option is
+    unknown and an error is displayed; ignored if option "--daemon" is given).
 
 *-d*, *--dir* _<path>_::
     Erzwingen Sie ein einzelnes Verzeichnis für alle WeeChat-Dateien (Verzeichnis wird erstellt, wenn es nicht gefunden wird).

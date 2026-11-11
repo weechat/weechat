@@ -48,6 +48,14 @@ include::includes/cmdline_options.fr.adoc[tag=debug]
 
 include::includes/man.fr.adoc[tag=plugin_options]
 
+== CODE DE SORTIE
+
+include::includes/man.fr.adoc[tag=exit_status]
+
+Avec l'option "--daemon", le code de sortie est 0 dès que WeeChat tourne en
+tâche de fond : les erreurs survenant ensuite ne sont pas reportées dans le
+code de sortie.
+
 == FICHIERS
 
 include::includes/man.fr.adoc[tag=files]

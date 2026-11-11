@@ -44,6 +44,10 @@ include::includes/cmdline_options.fr.adoc[tag=debug]
 
 include::includes/man.fr.adoc[tag=plugin_options]
 
+== CODE DE SORTIE
+
+include::includes/man.fr.adoc[tag=exit_status]
+
 == FICHIERS
 
 include::includes/man.fr.adoc[tag=files]

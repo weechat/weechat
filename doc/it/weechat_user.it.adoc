@@ -673,6 +673,12 @@ Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.it.adoc[tag=debug]
 
+[[exit_status]]
+// TRANSLATION MISSING
+==== Exit status
+
+include::includes/man.it.adoc[tag=exit_status]
+
 // TRANSLATION MISSING
 [[environment_variables]]
 === Environment variables

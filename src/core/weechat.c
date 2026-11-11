@@ -62,6 +62,7 @@
 #include "core-secure-config.h"
 #include "core-signal.h"
 #include "core-string.h"
+#include "core-sys.h"
 #include "core-theme.h"
 #include "core-upgrade.h"
 #include "core-url.h"
@@ -365,6 +366,16 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
 {
     int term_theme_light;               /* 1 if a light terminal detected   */
 
+    /*
+     * Parse command line arguments and daemonize (headless mode) before any
+     * other init (the daemon closes all file descriptors).
+     */
+    args_parse (argc, argv);
+    if (weechat_daemon && (args_action == ARGS_ACTION_NONE))
+        sys_daemonize ();
+
+    network_init_gcrypt ();             /* Initialize gcrypt.               */
+
     weechat_first_start_time = time (NULL); /* Initialize start time.       */
     gettimeofday (&weechat_current_start_timeval, NULL);
 
@@ -395,8 +406,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     theme_builtin_init ();              /* Register built-in themes.        */
     if (!config_weechat_init ())        /* Init WeeChat options: weechat.*  */
         weechat_shutdown (EXIT_FAILURE, 0);
-    args_parse (argc, argv);            /* Parse command line args.         */
-    network_init_gcrypt ();             /* Initialize gcrypt.               */
+    args_run_action ();                 /* Run option like --help and exit. */
     dir_create_home_dirs ();            /* Create WeeChat home directories. */
     log_init ();                        /* Initialize log file.             */
     plugin_api_init ();                 /* Create some hooks.               */

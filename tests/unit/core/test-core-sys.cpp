@@ -63,3 +63,13 @@ TEST(CoreSys, DisplayRusage)
 {
     /* TODO: write tests */
 }
+
+/*
+ * Test functions:
+ *   sys_daemonize
+ */
+
+TEST(CoreSys, Daemonize)
+{
+    /* TODO: write tests */
+}

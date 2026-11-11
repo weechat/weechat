@@ -53,6 +53,15 @@ include::includes/cmdline_options.cs.adoc[tag=debug]
 
 include::includes/man.cs.adoc[tag=plugin_options]
 
+// TRANSLATION MISSING
+== EXIT STATUS
+
+include::includes/man.cs.adoc[tag=exit_status]
+
+// TRANSLATION MISSING
+With option "--daemon", the exit status is 0 as soon as WeeChat runs in
+background: errors occurring after are not reported in the exit status.
+
 == SOUBORY
 
 include::includes/man.cs.adoc[tag=files]

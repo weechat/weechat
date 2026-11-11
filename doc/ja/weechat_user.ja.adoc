@@ -647,6 +647,12 @@ Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.ja.adoc[tag=debug]
 
+[[exit_status]]
+// TRANSLATION MISSING
+==== Exit status
+
+include::includes/man.ja.adoc[tag=exit_status]
+
 [[environment_variables]]
 === 環境変数
 

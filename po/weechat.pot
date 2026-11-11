@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-09 09:01+0100\n"
+"POT-Creation-Date: 2026-11-11 00:15+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -144,6 +144,23 @@ msgid "Extra options in headless mode:"
 msgstr ""
 
 msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
+msgstr ""
+
+#. TRANSLATORS: "%s" is the command used to run WeeChat.
+#, c-format
+msgid "Try \"%s --help\" for more information.\n"
+msgstr ""
+
+#, c-format
+msgid "Error: ambiguous option \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "Error: option \"--%s\" does not take an argument\n"
+msgstr ""
+
+#, c-format
+msgid "Error: unknown option \"%s\"\n"
 msgstr ""
 
 #, c-format
@@ -5600,6 +5617,15 @@ msgstr ""
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr ""
 
+msgid "Running WeeChat in background..."
+msgstr ""
+
+msgid "fork error"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
 msgid "WeeChat default theme for light-background terminals"
 msgstr ""
 
@@ -5969,15 +5995,6 @@ msgstr ""
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
-msgstr ""
-
-msgid "Running WeeChat in background..."
-msgstr ""
-
-msgid "fork error"
-msgstr ""
-
-msgid "OK"
 msgstr ""
 
 msgid "condition(s) to display the bar item (evaluated, see /help eval)"

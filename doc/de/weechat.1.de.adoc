@@ -44,6 +44,11 @@ include::includes/cmdline_options.de.adoc[tag=debug]
 
 include::includes/man.de.adoc[tag=plugin_options]
 
+// TRANSLATION MISSING
+== EXIT STATUS
+
+include::includes/man.de.adoc[tag=exit_status]
+
 == DATEIEN
 
 include::includes/man.de.adoc[tag=files]

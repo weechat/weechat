@@ -446,6 +446,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       tests.cpp                                 | Програм који се користи за извршавање свих тестова.
 |       tests-record.cpp                          | Бележење и претрага у приказаним порукама.
 |       core/                                     | Корен unit тестова језгра.
+// TRANSLATION MISSING
+|          test-core-args.cpp                     | Tests: command-line arguments.
 |          test-core-arraylist.cpp                | Тестови: arraylists.
 |          test-core-backtrace.cpp                | Тестови: backtrace.
 |          test-core-calc.cpp                     | Тестови: калкулација израза.

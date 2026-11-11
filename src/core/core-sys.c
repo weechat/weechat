@@ -20,6 +20,8 @@
 #include <sys/resource.h>
 #endif
 #include <sys/wait.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "weechat.h"
 #include "core-config.h"
@@ -347,4 +349,47 @@ sys_waitpid (int number_processes)
     {
         i++;
     }
+}
+
+/*
+ * Daemonize the process (used by weechat-headless with option "--daemon").
+ */
+
+void
+sys_daemonize (void)
+{
+    pid_t pid;
+    int fd, i, rc;
+
+    printf ("%s ", _("Running WeeChat in background..."));
+
+    pid = fork ();
+
+    if (pid < 0)
+    {
+        printf ("%s\n", _("fork error"));
+        exit (EXIT_FAILURE);
+    }
+
+    if (pid > 0)
+    {
+        /* Parent process */
+        printf ("%s\n", _("OK"));
+        exit (EXIT_SUCCESS);
+    }
+
+    /* Child process */
+
+    /* Obtain a new process group. */
+    setsid ();
+
+    /* Close all file descriptors. */
+    for (i = sysconf (_SC_OPEN_MAX); i >= 0; --i)
+    {
+        close (i);
+    }
+    fd = open ("/dev/null", O_RDWR);
+    rc = dup (fd);
+    rc = dup (fd);
+    (void) rc;
 }

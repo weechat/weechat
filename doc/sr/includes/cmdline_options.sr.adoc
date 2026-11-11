@@ -10,11 +10,17 @@
 *-c*, *--colors*::
     Приказује подразумеване боје у терминалу.
 
+// TRANSLATION MISSING
 *--daemon*::
-    Покреће програм WeeChat у позадини, као даемон (функционише само уз команду *weechat-headless*).
+    Run WeeChat in background, as a daemon (only with the command
+    *weechat-headless*: with *weechat* this option is unknown and an error is
+    displayed).
 
+// TRANSLATION MISSING
 *--stdout*::
-    Уместо да лог поруке уписује у фајл, приказује их на стандардни излаз (функционише само уз команду *weechat-headless*, није компатибилно са опцијом „--daemon”).
+    Display log messages on standard output instead of writing them in log file
+    (only with the command *weechat-headless*: with *weechat* this option is
+    unknown and an error is displayed; ignored if option "--daemon" is given).
 
 *-d*, *--dir* _<путања>_::
     Форсира један директоријум за све фајлове програма WeeChat (ако он не постоји, директоријум се креира). Могу да се наведу четири директоријума, раздвојених тачка зарезима (у следећем редоследу: конфигурациони фајлови, подаци, кеш, фајлови време извршавања). Ако се ова опција не наведе, користиће се променљива окружења WEECHAT_HOME (ако није празна).

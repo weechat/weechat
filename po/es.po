@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-09 09:01+0100\n"
+"POT-Creation-Date: 2026-11-11 00:15+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
@@ -187,6 +187,25 @@ msgstr "Opciones extra en el modo de segundo plano:\n"
 
 msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
 msgstr ""
+
+#. TRANSLATORS: "%s" is the command used to run WeeChat.
+#, c-format
+msgid "Try \"%s --help\" for more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: ambiguous option \"%s\"\n"
+msgstr "%s%s: error: protocolo desconocido \"%s\""
+
+#, fuzzy, c-format
+msgid "Error: option \"--%s\" does not take an argument\n"
+msgstr "Error: home (%s) no es un directorio\n"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: unknown option \"%s\"\n"
+msgstr "%s%s: error: protocolo desconocido \"%s\""
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -6504,6 +6523,16 @@ msgstr "%s: error: diccionario \"%s\" no está disponible en tu sistema"
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Uso de memoria (ver en \"man mallinfo\" por ayuda):"
 
+msgid "Running WeeChat in background..."
+msgstr ""
+
+#, fuzzy
+msgid "fork error"
+msgstr "error"
+
+msgid "OK"
+msgstr "OK"
+
 msgid "WeeChat default theme for light-background terminals"
 msgstr ""
 
@@ -6915,16 +6944,6 @@ msgstr "Ratón desactivado"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', tamaño: %dx%d"
-
-msgid "Running WeeChat in background..."
-msgstr ""
-
-#, fuzzy
-msgid "fork error"
-msgstr "error"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "condition(s) to display the bar item (evaluated, see /help eval)"
 msgstr ""

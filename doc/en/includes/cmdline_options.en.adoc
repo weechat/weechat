@@ -10,13 +10,14 @@
     Display default colors in terminal.
 
 *--daemon*::
-    Run WeeChat in background, as a daemon (works only with the command
-    *weechat-headless*).
+    Run WeeChat in background, as a daemon (only with the command
+    *weechat-headless*: with *weechat* this option is unknown and an error is
+    displayed).
 
 *--stdout*::
     Display log messages on standard output instead of writing them in log file
-    (works only with the command *weechat-headless*, not compatible with option
-    "--daemon").
+    (only with the command *weechat-headless*: with *weechat* this option is
+    unknown and an error is displayed; ignored if option "--daemon" is given).
 
 *-d*, *--dir* _<path>_::
     Force a single directory for all WeeChat files (directory is created if not found).

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-09 09:01+0100\n"
+"POT-Creation-Date: 2026-11-11 00:15+0100\n"
 "PO-Revision-Date: 2026-11-08 22:22+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -179,6 +179,26 @@ msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
 msgstr ""
 "Debug Optionen (für Tools wie valgrind, DIESE FUNKTIONEN SOLLTE NICHT IM "
 "PRODUKTIVEM EINSATZ GENUTZT WERDEN):"
+
+#. TRANSLATORS: "%s" is the command used to run WeeChat.
+#, c-format
+msgid "Try \"%s --help\" for more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: ambiguous option \"%s\"\n"
+msgstr "%s%s: Unbekanntes Protokoll \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Error: \"%s\" is not a directory\n"
+msgid "Error: option \"--%s\" does not take an argument\n"
+msgstr "Fehler: \"%s\" ist kein Verzeichnis\n"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: unknown option \"%s\"\n"
+msgstr "%s%s: Unbekanntes Protokoll \"%s\""
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -7202,6 +7222,15 @@ msgstr "Die Systemfunktion \"%s\" ist nicht verfügbar"
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Ressourcennutzung (siehe \"man getrusage\" für Hilfe):"
 
+msgid "Running WeeChat in background..."
+msgstr "WeeChat wird im Hintergrund ausgeführt..."
+
+msgid "fork error"
+msgstr "Fork-Fehler"
+
+msgid "OK"
+msgstr "OK"
+
 msgid "WeeChat default theme for light-background terminals"
 msgstr "WeeChat-Standarddesign für Terminals mit hellem Hintergrund"
 
@@ -7616,15 +7645,6 @@ msgstr "Maus ist inaktiv"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', Größe: %dx%d"
-
-msgid "Running WeeChat in background..."
-msgstr "WeeChat wird im Hintergrund ausgeführt..."
-
-msgid "fork error"
-msgstr "Fork-Fehler"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "condition(s) to display the bar item (evaluated, see /help eval)"
 msgstr "Bedingung(en) um das Bar-Item anzuzeigen (evaluiert, siehe /help eval)"

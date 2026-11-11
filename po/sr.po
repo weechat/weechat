@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-09 09:01+0100\n"
+"POT-Creation-Date: 2026-11-11 00:15+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -166,6 +166,26 @@ msgstr "Додатне опције у режиму без интерфејса:
 msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
 msgstr ""
 "Дибаг опције (за алате као што је valgrind, НЕ КОРИСТИТЕ У ПРОДУКЦИЈИ):"
+
+#. TRANSLATORS: "%s" is the command used to run WeeChat.
+#, c-format
+msgid "Try \"%s --help\" for more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: ambiguous option \"%s\"\n"
+msgstr "%s%s: грешка: непознати протокол „%s”"
+
+#, fuzzy, c-format
+#| msgid "Error: \"%s\" is not a directory\n"
+msgid "Error: option \"--%s\" does not take an argument\n"
+msgstr "Грешка: „%s” није директоријум\n"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: unknown option \"%s\"\n"
+msgstr "%s%s: грешка: непознати протокол „%s”"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -6846,6 +6866,15 @@ msgstr "Системска функција „%s” није доступна"
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Употреба ресурса (за помоћ погледајте „man getrusage”):"
 
+msgid "Running WeeChat in background..."
+msgstr "WeeChat се извршава у позадини..."
+
+msgid "fork error"
+msgstr "грешка при рачвању"
+
+msgid "OK"
+msgstr "ОК"
+
 msgid "WeeChat default theme for light-background terminals"
 msgstr "WeeChat подразумевана тема за терминале са светлом позадином"
 
@@ -7253,15 +7282,6 @@ msgstr "Миш је искључен"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM=’%s’, величина: %dx%d"
-
-msgid "Running WeeChat in background..."
-msgstr "WeeChat се извршава у позадини..."
-
-msgid "fork error"
-msgstr "грешка при рачвању"
-
-msgid "OK"
-msgstr "ОК"
 
 msgid "condition(s) to display the bar item (evaluated, see /help eval)"
 msgstr ""

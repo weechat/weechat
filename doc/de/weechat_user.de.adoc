@@ -612,6 +612,12 @@ Einige zusätzliche Optionen sollten nur für Debug-Zwecke genutzt werden:
 
 include::includes/cmdline_options.de.adoc[tag=debug]
 
+[[exit_status]]
+// TRANSLATION MISSING
+==== Exit status
+
+include::includes/man.de.adoc[tag=exit_status]
+
 [[environment_variables]]
 === Umgebungsvariablen
 

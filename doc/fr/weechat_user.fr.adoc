@@ -612,6 +612,11 @@ N'utilisez *AUCUNE* de ces options in production !
 
 include::includes/cmdline_options.fr.adoc[tag=debug]
 
+[[exit_status]]
+==== Code de sortie
+
+include::includes/man.fr.adoc[tag=exit_status]
+
 [[environment_variables]]
 === Variables d'environnement
 

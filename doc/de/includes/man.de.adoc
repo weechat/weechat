@@ -100,6 +100,23 @@ $HOME/.local/share/weechat/weechat.log::
     WeeChat Protokolldatei
 // end::files[]
 
+// tag::exit_status[]
+// TRANSLATION MISSING
+0::
+    Success: WeeChat was quit normally (for example with the command `/quit`),
+    or an option like "--help" or "--version" was given.
+
+// TRANSLATION MISSING
+1::
+    Error: WeeChat could not start or stopped because of an error, for example
+    if the log file can not be created.
+
+// TRANSLATION MISSING
+2::
+    Invalid command line arguments: unknown or ambiguous option, missing
+    argument, or argument given to an option that does not take one.
+// end::exit_status[]
+
 // tag::copyright[]
 WeeChat wird programmiert von Sébastien Helleu und weiteren Beteiligten (eine vollständige Auflistung
 findet man in der AUTHORS.md Datei).

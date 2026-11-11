@@ -42,6 +42,11 @@ include::includes/cmdline_options.sr.adoc[tag=debug]
 
 include::includes/man.sr.adoc[tag=plugin_options]
 
+// TRANSLATION MISSING
+== EXIT STATUS
+
+include::includes/man.sr.adoc[tag=exit_status]
+
 == ФАЈЛОВИ
 
 include::includes/man.sr.adoc[tag=files]

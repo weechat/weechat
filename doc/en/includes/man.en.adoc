@@ -100,6 +100,20 @@ $HOME/.local/share/weechat/weechat.log::
     WeeChat log file
 // end::files[]
 
+// tag::exit_status[]
+0::
+    Success: WeeChat was quit normally (for example with the command `/quit`),
+    or an option like "--help" or "--version" was given.
+
+1::
+    Error: WeeChat could not start or stopped because of an error, for example
+    if the log file can not be created.
+
+2::
+    Invalid command line arguments: unknown or ambiguous option, missing
+    argument, or argument given to an option that does not take one.
+// end::exit_status[]
+
 // tag::copyright[]
 WeeChat is written by Sébastien Helleu and contributors (complete list is in
 the AUTHORS.md file).

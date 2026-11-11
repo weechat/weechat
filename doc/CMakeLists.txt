@@ -227,6 +227,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/cmdline_options.${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/key_bindings.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/man.${lang}.adoc"
           doc-autogen
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_commands.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_default_aliases.${lang}.adoc"

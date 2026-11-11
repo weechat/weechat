@@ -162,6 +162,7 @@ deloutq
 delvar
 desc
 describe
+dev
 dhkey
 dict
 diff

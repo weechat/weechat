@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-09 09:01+0100\n"
-"PO-Revision-Date: 2026-11-09 09:04+0100\n"
+"POT-Creation-Date: 2026-11-11 00:15+0100\n"
+"PO-Revision-Date: 2026-11-11 00:18+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -169,6 +169,23 @@ msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
 msgstr ""
 "Options de debug (pour des outils comme valgrind, NE PAS UTILISER EN "
 "PRODUCTION) :"
+
+#. TRANSLATORS: "%s" is the command used to run WeeChat.
+#, c-format
+msgid "Try \"%s --help\" for more information.\n"
+msgstr "Essayez \"%s --help\" pour plus d'informations.\n"
+
+#, c-format
+msgid "Error: ambiguous option \"%s\"\n"
+msgstr "Erreur : option ambiguë \"%s\"\n"
+
+#, c-format
+msgid "Error: option \"--%s\" does not take an argument\n"
+msgstr "Erreur : l'option \"--%s\" ne prend pas de paramètre\n"
+
+#, c-format
+msgid "Error: unknown option \"%s\"\n"
+msgstr "Erreur : option inconnue \"%s\"\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -7075,6 +7092,15 @@ msgstr "La fonction système \"%s\" n'est pas disponible"
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Utilisation des ressources (voir \"man getrusage\" pour de l'aide) :"
 
+msgid "Running WeeChat in background..."
+msgstr "Lancement de WeeChat en tâche de fond..."
+
+msgid "fork error"
+msgstr "erreur de fork"
+
+msgid "OK"
+msgstr "OK"
+
 msgid "WeeChat default theme for light-background terminals"
 msgstr "Thème par défaut de WeeChat par défaut pour les terminaux à fond clair"
 
@@ -7484,15 +7510,6 @@ msgstr "La souris est désactivée"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', taille : %dx%d"
-
-msgid "Running WeeChat in background..."
-msgstr "Lancement de WeeChat en tâche de fond..."
-
-msgid "fork error"
-msgstr "erreur de fork"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "condition(s) to display the bar item (evaluated, see /help eval)"
 msgstr ""
