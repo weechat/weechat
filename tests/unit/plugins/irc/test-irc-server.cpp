@@ -435,6 +435,41 @@ TEST(IrcServer, Strcasecmp)
 
 /*
  * Test functions:
+ *   irc_server_string_tolower
+ */
+
+TEST(IrcServer, StringTolower)
+{
+    struct t_irc_server *server;
+    char *str;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    WEE_TEST_STR(NULL, irc_server_string_tolower (NULL, NULL));
+    WEE_TEST_STR("", irc_server_string_tolower (NULL, ""));
+
+    /* No server: casemapping "rfc1459". */
+    WEE_TEST_STR("nick{a}|~_", irc_server_string_tolower (NULL, "NICK[A]\\^_"));
+    WEE_TEST_STR("\xc3\x89lan",
+                 irc_server_string_tolower (NULL, "\xc3\x89lan"));
+
+    WEE_TEST_STR("nick{a}|~_",
+                 irc_server_string_tolower (server, "NICK[A]\\^_"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_STRICT_RFC1459;
+    WEE_TEST_STR("nick{a}|^_",
+                 irc_server_string_tolower (server, "NICK[A]\\^_"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_ASCII;
+    WEE_TEST_STR("nick[a]\\^_",
+                 irc_server_string_tolower (server, "NICK[A]\\^_"));
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
  *   irc_server_eval_expression
  */
 

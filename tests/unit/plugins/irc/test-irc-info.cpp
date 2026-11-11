@@ -152,6 +152,41 @@ TEST(IrcInfo, InfoIrcNickCb)
 
 /*
  * Test functions:
+ *   irc_info_info_irc_nick_tolower_cb
+ */
+
+TEST(IrcInfo, InfoIrcNickTolowerCb)
+{
+    struct t_irc_server *server;
+    char *str;
+
+    server = irc_server_alloc ("server");
+    CHECK(server);
+
+    WEE_TEST_STR(NULL, hook_info_get (NULL, "irc_nick_tolower", NULL));
+    WEE_TEST_STR("", hook_info_get (NULL, "irc_nick_tolower", ""));
+
+    /* No server or unknown server: casemapping "rfc1459". */
+    WEE_TEST_STR("nick{a}|~",
+                 hook_info_get (NULL, "irc_nick_tolower", "Nick[A]\\^"));
+    WEE_TEST_STR("nick{a}|~",
+                 hook_info_get (NULL, "irc_nick_tolower",
+                                "unknown,Nick[A]\\^"));
+
+    WEE_TEST_STR("nick{a}|~",
+                 hook_info_get (NULL, "irc_nick_tolower",
+                                "server,Nick[A]\\^"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_ASCII;
+    WEE_TEST_STR("nick[a]\\^",
+                 hook_info_get (NULL, "irc_nick_tolower",
+                                "server,Nick[A]\\^"));
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
  *   irc_info_info_irc_nick_from_host_cb
  */
 
