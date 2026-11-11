@@ -9,6 +9,7 @@
 #define WEECHAT_PLUGIN_OTR_MESSAGE_H
 
 extern int otr_message_is_ctcp (const char *message);
+extern const char *otr_message_action_text (const char *message, int *length);
 extern int otr_message_is_action (const char *message);
 extern char *otr_message_plain_from_irc (const char *message);
 extern char *otr_message_html_escape (const char *string);

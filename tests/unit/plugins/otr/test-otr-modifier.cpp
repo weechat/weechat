@@ -556,6 +556,13 @@ TEST(OtrModifier, InCbAction)
                                      "srv_otr_action",
                                      ":bob!u@h PRIVMSG alice "
                                      ":\x01" "ACTION waves\x01"));
+    /* CTCP type is case insensitive (like in IRC plugin). */
+    WEE_TEST_STR(":bob!u@h PRIVMSG alice "
+                 ":Unencrypted message received: /me waves",
+                 otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                     "srv_otr_action",
+                                     ":bob!u@h PRIVMSG alice "
+                                     ":\x01" "action waves\x01"));
     ptr_context->msgstate = OTRL_MSGSTATE_FINISHED;
     WEE_TEST_STR(":bob!u@h PRIVMSG alice "
                  ":Unencrypted message received: /me waves",
