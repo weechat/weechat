@@ -536,8 +536,6 @@ otr_modifier_policy_changed_cb (const void *pointer, void *data,
 {
     ConnContext *ptr_context, *ptr_best_context;
     struct t_otr_peer_data *ptr_peer_data;
-    const char *ptr_message;
-    int count;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -569,22 +567,7 @@ otr_modifier_policy_changed_cb (const void *pointer, void *data,
         {
             continue;
         }
-        count = 1;
-        for (ptr_message = *(ptr_peer_data->held_messages); ptr_message[0];
-             ptr_message++)
-        {
-            if (ptr_message[0] == '\n')
-                count++;
-        }
-        otr_context_clear_held_messages (ptr_peer_data);
-        otr_buffer_ctx_print (
-            ptr_context, OTR_CONFIG_LEVEL_WARNING,
-            NG_("%d message held for the OTR session has been discarded: "
-                "encryption is not required anymore.",
-                "%d messages held for the OTR session have been discarded: "
-                "encryption is not required anymore.",
-                count),
-            count);
+        otr_context_drop_held_messages (ptr_context, ptr_peer_data, 1);
     }
 
     return WEECHAT_RC_OK;

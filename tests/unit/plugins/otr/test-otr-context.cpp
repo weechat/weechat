@@ -13,6 +13,9 @@
 extern "C"
 {
 #include <stdlib.h>
+#include <string.h>
+#include "src/gui/gui-buffer.h"
+#include "src/gui/gui-line.h"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-context.h"
 }
@@ -83,12 +86,14 @@ TEST(OtrContext, Smp)
  * Test functions:
  *   otr_context_hold_message
  *   otr_context_clear_held_messages
+ *   otr_context_drop_held_messages
  *   otr_context_end_session (messages held removed)
  */
 
 TEST(OtrContext, HeldMessages)
 {
     struct t_otr_peer_data *ptr_peer_data;
+    struct t_gui_line *ptr_last_line;
 
     LONGS_EQUAL(0, otr_context_hold_message (NULL, "test"));
     otr_context_clear_held_messages (NULL);
@@ -106,11 +111,25 @@ TEST(OtrContext, HeldMessages)
     otr_context_clear_held_messages (ptr_peer_data);
     POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
 
-    /* Messages held are removed at the end of session (even if no session). */
+    /*
+     * Messages held are removed at the end of session (even if no session),
+     * silently (for example when the buffer is closed).
+     */
     LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 1"));
+    ptr_last_line = gui_buffers->own_lines->last_line;
     LONGS_EQUAL(0, otr_context_end_session ("alice@srv_otr_ctx_held", "bob",
                                             0, 0));
     POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
+    POINTERS_EQUAL(ptr_last_line, gui_buffers->own_lines->last_line);
+
+    /* With display (/otr finish): number of messages discarded displayed. */
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 1"));
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 2"));
+    LONGS_EQUAL(0, otr_context_end_session ("alice@srv_otr_ctx_held", "bob",
+                                            1, 0));
+    POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
+    CHECK(strstr (gui_buffers->own_lines->last_line->data->message,
+                  "2 messages held for the OTR session have been discarded."));
 }
 
 /*
