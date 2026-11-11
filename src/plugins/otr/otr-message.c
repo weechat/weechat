@@ -35,7 +35,43 @@ otr_message_is_ctcp (const char *message)
 }
 
 /*
- * Check if a message is a CTCP ACTION ("/me").
+ * Get the text of a CTCP ACTION ("/me"): "\x01ACTION text\x01" or
+ * "\x01ACTION\x01" (no text); the CTCP type is case insensitive, like in the
+ * IRC plugin.
+ *
+ * Return pointer to the text in message (its length, without the final
+ * "\x01", is stored in *length), NULL if the message is not a CTCP ACTION.
+ */
+
+const char *
+otr_message_action_text (const char *message, int *length)
+{
+    const char *ptr_text, *ptr_end;
+
+    if (!otr_message_is_ctcp (message)
+        || (weechat_strncasecmp (message + 1, "ACTION", 6) != 0))
+    {
+        return NULL;
+    }
+
+    ptr_text = message + 7;
+    if (ptr_text[0] == ' ')
+        ptr_text++;
+    else if (ptr_text[0] != '\x01')
+        return NULL;
+
+    /* Final "\x01" (the text ends just before it). */
+    ptr_end = message + strlen (message) - 1;
+
+    if (length)
+        *length = (int)(ptr_end - ptr_text);
+
+    return ptr_text;
+}
+
+/*
+ * Check if a message is a CTCP ACTION ("/me"), see function
+ * otr_message_action_text.
  *
  * Return 1 if the message is a CTCP ACTION, 0 otherwise.
  */
@@ -43,8 +79,7 @@ otr_message_is_ctcp (const char *message)
 int
 otr_message_is_action (const char *message)
 {
-    return (otr_message_is_ctcp (message)
-            && (strncmp (message, "\x01" "ACTION ", 8) == 0)) ? 1 : 0;
+    return (otr_message_action_text (message, NULL)) ? 1 : 0;
 }
 
 /*
@@ -57,15 +92,15 @@ otr_message_is_action (const char *message)
 char *
 otr_message_plain_from_irc (const char *message)
 {
+    const char *ptr_text;
     char *result;
-    size_t length;
+    int length;
 
-    if (!otr_message_is_action (message))
+    ptr_text = otr_message_action_text (message, &length);
+    if (!ptr_text)
         return otr_util_dupstr (message);
 
-    length = strlen (message);
-    weechat_asprintf (&result, OTR_ACTION_PREFIX "%.*s",
-                      (int)(length - 9), message + 8);
+    weechat_asprintf (&result, OTR_ACTION_PREFIX "%.*s", length, ptr_text);
 
     return result;
 }
@@ -368,11 +403,14 @@ otr_message_add_decrypted_line (char **messages, const char *tags,
         action = 1;
         ptr_line += 4;
     }
-    else if ((length >= 9) && (strncmp (line, "\x01" "ACTION ", 8) == 0)
-             && (line[length - 1] == '\x01'))
+    else if ((length >= 8) && (line[0] == '\x01')
+             && (line[length - 1] == '\x01')
+             && (weechat_strncasecmp (line + 1, "ACTION", 6) == 0)
+             && ((line[7] == ' ') || (length == 8)))
     {
+        /* CTCP ACTION (type case insensitive), with or without text. */
         action = 1;
-        ptr_line += 8;
+        ptr_line += (length == 8) ? 7 : 8;
         ptr_end--;
     }
 
