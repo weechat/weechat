@@ -37,6 +37,8 @@ extern void otr_context_smp_reset (struct t_otr_peer_data *peer_data);
 extern int otr_context_hold_message (struct t_otr_peer_data *peer_data,
                                      const char *message);
 extern void otr_context_clear_held_messages (struct t_otr_peer_data *peer_data);
+extern void otr_context_move_held_messages (struct t_otr_peer_data *from,
+                                            struct t_otr_peer_data *to);
 extern void otr_context_send_held_messages (ConnContext *context);
 extern int otr_context_end_session (const char *account, const char *peer,
                                     int display, int buffer_closing);

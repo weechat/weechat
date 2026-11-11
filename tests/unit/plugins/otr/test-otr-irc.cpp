@@ -18,6 +18,7 @@ extern "C"
 #include "src/gui/gui-line.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/otr/otr.h"
+#include "src/plugins/otr/otr-context.h"
 #include "src/plugins/otr/otr-irc.h"
 }
 
@@ -104,6 +105,7 @@ TEST(OtrIrc, NickCb)
 {
     struct t_irc_server *server;
     struct t_gui_line *ptr_last_line;
+    struct t_otr_peer_data *ptr_peer_data, *ptr_new_peer_data;
     ConnContext *ptr_context;
 
     run_cmd_quiet ("/mute /server add test_otr_nick fake:127.0.0.1");
@@ -132,6 +134,28 @@ TEST(OtrIrc, NickCb)
     LONGS_EQUAL(1, core_line_displayed (ptr_last_line, "Sending OTR query"));
 
     ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+
+    /*
+     * Messages held for dave (no OTR session) with our nick "alice3", then
+     * nick change ("alice3" -> "alice4"): messages moved to the new account
+     * and OTR query sent with the new nick.
+     */
+    ptr_peer_data = otr_context_peer_data_for ("alice3@test_otr_nick", "dave");
+    CHECK(ptr_peer_data);
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 1"));
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 2"));
+    irc_server_set_nick (server, "alice4");
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    otr_irc_nick_cb (NULL, NULL, "test_otr_nick,irc_in2_nick", NULL,
+                     (void *)":alice3!u@h NICK :alice4");
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line, "Sending OTR query"));
+    POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
+    ptr_new_peer_data = otr_context_peer_data_for ("alice4@test_otr_nick",
+                                                   "dave");
+    CHECK(ptr_new_peer_data);
+    CHECK(ptr_new_peer_data->held_messages);
+    STRCMP_EQUAL("line 1\nline 2", *(ptr_new_peer_data->held_messages));
+    otr_context_clear_held_messages (ptr_new_peer_data);
 
     run_cmd_quiet ("/mute /disconnect test_otr_nick");
     run_cmd_quiet ("/mute /server del test_otr_nick");
