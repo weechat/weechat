@@ -228,8 +228,9 @@ irc_color_hex_color_value (const unsigned char *string)
 /*
  * Parse an IRC color code at the beginning of a string: "^C" followed by an
  * optional color ("NN" or "NN,MM", with 1 or 2 digits), or "^D" followed by
- * an optional hex color ("RRGGBB" or "RRGGBB,RRGGBB"), read like function
- * irc_color_decode reads them.
+ * an optional hex color ("RRGGBB" or "RRGGBB,RRGGBB"); a background is read
+ * only if a foreground is given (this function is used to decode, encode and
+ * split messages, so that they all read the same codes).
  *
  * If not NULL, "fg" and "bg" are set to the colors of the code: IRC color
  * (0-99), RGB color with flag IRC_COLOR_RGB_FLAG (for "^D"), or
@@ -660,7 +661,6 @@ irc_color_decode (const char *string, int keep_colors)
     unsigned char *ptr_string;
     int length, fg, bg, fg_term, bg_term, current_bg_irc, current_bg_term;
     int bold, reverse, italic, strikethrough, underline, term_remap;
-    long fg_rgb, bg_rgb;
 
     if (!string)
         return NULL;
@@ -752,59 +752,16 @@ irc_color_decode (const char *string, int keep_colors)
                 ptr_string++;
                 break;
             case IRC_COLOR_COLOR_CHAR:
-                ptr_string++;
-                str_fg[0] = '\0';
-                str_bg[0] = '\0';
-                if (isdigit (ptr_string[0]))
-                {
-                    /* Foreground */
-                    str_fg[0] = ptr_string[0];
-                    str_fg[1] = '\0';
-                    ptr_string++;
-                    if (isdigit (ptr_string[0]))
-                    {
-                        str_fg[1] = ptr_string[0];
-                        str_fg[2] = '\0';
-                        ptr_string++;
-                    }
-                    /*
-                     * Background (only if a foreground is given, so "^C,05"
-                     * is a color reset followed by text ",05").
-                     */
-                    if ((ptr_string[0] == ',') && (isdigit (ptr_string[1])))
-                    {
-                        ptr_string++;
-                        str_bg[0] = ptr_string[0];
-                        str_bg[1] = '\0';
-                        ptr_string++;
-                        if (isdigit (ptr_string[0]))
-                        {
-                            str_bg[1] = ptr_string[0];
-                            str_bg[2] = '\0';
-                            ptr_string++;
-                        }
-                    }
-                }
+                /*
+                 * A background is read only if a foreground is given, so
+                 * "^C,05" is a color reset followed by text ",05".
+                 */
+                ptr_string += irc_color_code_parse ((const char *)ptr_string,
+                                                    &fg, &bg);
                 if (keep_colors)
                 {
-                    if (str_fg[0] || str_bg[0])
+                    if (fg != IRC_COLOR_FORMATTING_NONE)
                     {
-                        fg = -1;
-                        bg = -1;
-                        if (str_fg[0])
-                        {
-                            if (weechat_util_parse_int (str_fg, 10, &fg))
-                                fg %= IRC_NUM_COLORS;
-                            else
-                                fg = -1;
-                        }
-                        if (str_bg[0])
-                        {
-                            if (weechat_util_parse_int (str_bg, 10, &bg))
-                                bg %= IRC_NUM_COLORS;
-                            else
-                                bg = -1;
-                        }
                         if (bg >= 0)
                         {
                             /* IRC color 99 is the default background. */
@@ -846,51 +803,17 @@ irc_color_decode (const char *string, int keep_colors)
                 }
                 break;
             case IRC_COLOR_HEX_COLOR_CHAR:
-                ptr_string++;
-                str_fg[0] = '\0';
-                str_bg[0] = '\0';
                 /*
-                 * Colors have exactly 6 hexadecimal digits ("RRGGBB"):
-                 * "^D" followed by less digits is a color reset followed
-                 * by text.
+                 * Colors have exactly 6 hexadecimal digits ("RRGGBB"): "^D"
+                 * followed by less digits is a color reset followed by text,
+                 * and a background is read only if a foreground is given.
                  */
-                if (irc_color_is_hex_color (ptr_string))
-                {
-                    /* Foreground */
-                    memcpy (str_fg, ptr_string, 6);
-                    str_fg[6] = '\0';
-                    ptr_string += 6;
-                    /*
-                     * Background (only if a foreground is given, so
-                     * "^D,FF0000" is a color reset followed by text
-                     * ",FF0000").
-                     */
-                    if ((ptr_string[0] == ',')
-                        && irc_color_is_hex_color (ptr_string + 1))
-                    {
-                        ptr_string++;
-                        memcpy (str_bg, ptr_string, 6);
-                        str_bg[6] = '\0';
-                        ptr_string += 6;
-                    }
-                }
+                ptr_string += irc_color_code_parse ((const char *)ptr_string,
+                                                    &fg, &bg);
                 if (keep_colors)
                 {
-                    if (str_fg[0] || str_bg[0])
+                    if (fg != IRC_COLOR_FORMATTING_NONE)
                     {
-                        fg_rgb = -1;
-                        bg_rgb = -1;
-                        if (str_fg[0])
-                        {
-                            if (!weechat_util_parse_long (str_fg, 16, &fg_rgb))
-                                fg_rgb = -1;
-                        }
-                        if (str_bg[0])
-                        {
-                            if (!weechat_util_parse_long (str_bg, 16, &bg_rgb))
-                                bg_rgb = -1;
-                        }
-                        str_fg[0] = '\0';
                         str_bg[0] = '\0';
                         fg_term = -1;
                         bg_term = -1;
@@ -905,19 +828,16 @@ irc_color_decode (const char *string, int keep_colors)
                         term_remap = (weechat_hashtable_get_integer (
                                           irc_config_hashtable_color_term_remap,
                                           "items_count") > 0);
-                        if (fg_rgb >= 0)
+                        if (term_remap)
+                            fg_term = irc_color_convert_rgb2term (fg & 0xFFFFFF);
+                        snprintf (str_fg, sizeof (str_fg), "#%06x",
+                                  fg & 0xFFFFFF);
+                        if (bg != IRC_COLOR_FORMATTING_NONE)
                         {
                             if (term_remap)
-                                fg_term = irc_color_convert_rgb2term (fg_rgb);
-                            snprintf (str_fg, sizeof (str_fg), "#%06lx",
-                                      fg_rgb & 0xFFFFFF);
-                        }
-                        if (bg_rgb >= 0)
-                        {
-                            if (term_remap)
-                                bg_term = irc_color_convert_rgb2term (bg_rgb);
-                            snprintf (str_bg, sizeof (str_bg), "#%06lx",
-                                      bg_rgb & 0xFFFFFF);
+                                bg_term = irc_color_convert_rgb2term (bg & 0xFFFFFF);
+                            snprintf (str_bg, sizeof (str_bg), "#%06x",
+                                      bg & 0xFFFFFF);
                             current_bg_irc = -2;
                             current_bg_term = bg_term;
                         }
@@ -965,11 +885,10 @@ irc_color_decode (const char *string, int keep_colors)
             default:
                 /*
                  * We are not on an IRC color code, just copy the UTF-8 char
-                 * into "str_to_add".
+                 * into "str_to_add" (a byte which is not valid UTF-8 is
+                 * copied alone, so that it can not include a code).
                  */
-                length = weechat_utf8_char_size ((char *)ptr_string);
-                if (length == 0)
-                    length = 1;
+                length = irc_color_char_size ((const char *)ptr_string);
                 memcpy (str_to_add, ptr_string, length);
                 str_to_add[length] = '\0';
                 ptr_string += length;
@@ -1038,77 +957,15 @@ irc_color_encode (const char *string, int keep_colors)
                 ptr_string++;
                 break;
             case 0x03: /* ^C */
-                if (keep_colors)
-                    weechat_string_dyn_concat (out, IRC_COLOR_COLOR_STR, -1);
-                ptr_string++;
-                if (isdigit (ptr_string[0]))
-                {
-                    /* Foreground */
-                    if (keep_colors)
-                    {
-                        weechat_string_dyn_concat (out,
-                                                   (const char *)ptr_string,
-                                                   1);
-                    }
-                    ptr_string++;
-                    if (isdigit (ptr_string[0]))
-                    {
-                        if (keep_colors)
-                        {
-                            weechat_string_dyn_concat (
-                                out,
-                                (const char *)ptr_string,
-                                1);
-                        }
-                        ptr_string++;
-                    }
-                    /* Background (only if a foreground is given) */
-                    if ((ptr_string[0] == ',') && (isdigit (ptr_string[1])))
-                    {
-                        ptr_string++;
-                        length = (isdigit (ptr_string[1])) ? 2 : 1;
-                        if (keep_colors)
-                        {
-                            weechat_string_dyn_concat (out, ",", -1);
-                            weechat_string_dyn_concat (
-                                out,
-                                (const char *)ptr_string,
-                                length);
-                        }
-                        ptr_string += length;
-                    }
-                }
-                break;
             case 0x04: /* ^D */
+                /* Color code with its colors: copied as-is (or removed). */
+                length = irc_color_code_size ((const char *)ptr_string);
                 if (keep_colors)
-                    weechat_string_dyn_concat (out, IRC_COLOR_HEX_COLOR_STR, -1);
-                ptr_string++;
-                /* Colors have exactly 6 hexadecimal digits ("RRGGBB"). */
-                if (irc_color_is_hex_color (ptr_string))
                 {
-                    /* Foreground */
-                    if (keep_colors)
-                    {
-                        weechat_string_dyn_concat (out,
-                                                   (const char *)ptr_string,
-                                                   6);
-                    }
-                    ptr_string += 6;
-                    /* Background (only if a foreground is given) */
-                    if ((ptr_string[0] == ',')
-                        && irc_color_is_hex_color (ptr_string + 1))
-                    {
-                        ptr_string++;
-                        if (keep_colors)
-                        {
-                            weechat_string_dyn_concat (out, ",", -1);
-                            weechat_string_dyn_concat (out,
-                                                       (const char *)ptr_string,
-                                                       6);
-                        }
-                        ptr_string += 6;
-                    }
+                    weechat_string_dyn_concat (out, (const char *)ptr_string,
+                                               length);
                 }
+                ptr_string += length;
                 break;
             case 0x0F: /* ^O */
                 if (keep_colors)
@@ -1136,9 +993,11 @@ irc_color_encode (const char *string, int keep_colors)
                 ptr_string++;
                 break;
             default:
-                length = weechat_utf8_char_size ((char *)ptr_string);
-                if (length == 0)
-                    length = 1;
+                /*
+                 * A byte which is not valid UTF-8 is copied alone, so that it
+                 * can not include a code.
+                 */
+                length = irc_color_char_size ((const char *)ptr_string);
                 weechat_string_dyn_concat (out,
                                            (const char *)ptr_string,
                                            length);
