@@ -83,7 +83,10 @@ TEST(OtrLog, LogLevelDisableRestore)
     run_cmd_quiet ("/mute /set " OTR_TEST_LOGGER_OPTION " 5");
     LONGS_EQUAL(5, otr_log_buffer_log_level (channel->buffer));
 
-    /* OTR session while the buffer is not logged: level is kept. */
+    /*
+     * OTR session while the buffer is not logged: level saved, and set to 0
+     * so that logging can not start during the session.
+     */
     ptr_context = otrl_context_find (otr_us, "bob", "alice@test_otr_log",
                                      OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
                                      NULL, NULL, NULL);
@@ -92,6 +95,20 @@ TEST(OtrLog, LogLevelDisableRestore)
     CHECK(ptr_peer_data);
     otr_log_disable (ptr_context, ptr_peer_data);
     LONGS_EQUAL(5, ptr_peer_data->prev_log);
+    ptr_option = logger_option ();
+    CHECK(ptr_option);
+    LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option));
+
+    /*
+     * Logging enabled during the session (auto_log on, then all buffers
+     * checked again by logger on a level change): buffer not logged.
+     */
+    run_cmd_quiet ("/mute /set logger.file.auto_log on");
+    run_cmd_quiet ("/mute /set logger.level.irc.test_otr_log.other 9");
+    LONGS_EQUAL(0, otr_log_buffer_is_logged (channel->buffer));
+    run_cmd_quiet ("/mute /unset logger.level.irc.test_otr_log.other");
+    run_cmd_quiet ("/mute /set logger.file.auto_log off");
+
     otr_log_restore (ptr_context, ptr_peer_data, 0);
     LONGS_EQUAL(OTR_LOG_UNTOUCHED, ptr_peer_data->prev_log);
     ptr_option = logger_option ();
