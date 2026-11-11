@@ -218,7 +218,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
         goto end;
     }
 
-    peer = weechat_string_tolower (ptr_nick);
+    peer = otr_irc_nick_tolower (ptr_server, ptr_nick);
     if (!peer)
         goto end;
     account = otr_irc_peer_account (ptr_server, peer);
@@ -654,7 +654,7 @@ otr_modifier_remove_batch (const char *server, const char *message)
     {
         goto end;
     }
-    peer = weechat_string_tolower (items[2]);
+    peer = otr_irc_nick_tolower (server, items[2]);
     account = (peer) ? otr_irc_peer_account (server, peer) : NULL;
     if (!account
         || (!otr_context_encrypted (otr_context_find (account, peer))
@@ -857,7 +857,7 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     if (otr_message_is_ctcp (ptr_text) && !otr_message_is_action (ptr_text))
         goto end;
 
-    peer = weechat_string_tolower (target);
+    peer = otr_irc_nick_tolower (ptr_server, target);
     account = (peer) ? otr_irc_peer_account (ptr_server, peer) : NULL;
     if (!account || !peer)
     {
