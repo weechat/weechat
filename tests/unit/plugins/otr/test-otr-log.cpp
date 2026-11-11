@@ -35,6 +35,15 @@ TEST_GROUP(OtrLog)
                                         NULL, NULL, &ptr_option, NULL);
         return ptr_option;
     }
+
+    struct t_config_option *option (const char *name)
+    {
+        struct t_config_option *ptr_option;
+
+        ptr_option = NULL;
+        config_file_search_with_string (name, NULL, NULL, &ptr_option, NULL);
+        return ptr_option;
+    }
 };
 
 /*
@@ -96,4 +105,73 @@ TEST(OtrLog, LogLevelDisableRestore)
 
     run_cmd_quiet ("/mute /disconnect test_otr_log");
     run_cmd_quiet ("/mute /server del test_otr_log");
+}
+
+/*
+ * Test functions:
+ *   otr_log_save_level
+ *   otr_log_buffer_renamed
+ *   otr_buffer_renamed_cb
+ */
+
+TEST(OtrLog, BufferRenamed)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_config_option *ptr_option;
+    struct t_otr_peer_data *ptr_peer_data;
+    ConnContext *ptr_context;
+
+    run_cmd_quiet ("/mute /server add test_otr_ren fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_ren");
+    server = irc_server_search ("test_otr_ren");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "bob", 0, 0);
+    CHECK(channel);
+    LONGS_EQUAL(1, otr_log_buffer_is_logged (channel->buffer));
+
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@test_otr_ren",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    ptr_peer_data = otr_context_peer_data_ctx (ptr_context);
+    CHECK(ptr_peer_data);
+
+    /* Logging disabled with the buffer name "bob". */
+    otr_log_disable (ptr_context, ptr_peer_data);
+    LONGS_EQUAL(OTR_LOG_DEFAULT, ptr_peer_data->prev_log);
+    STRCMP_EQUAL("logger.level.irc.test_otr_ren.bob",
+                 ptr_peer_data->log_option);
+    ptr_option = option ("logger.level.irc.test_otr_ren.bob");
+    CHECK(ptr_option);
+    LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option));
+    LONGS_EQUAL(0, otr_log_buffer_is_logged (channel->buffer));
+
+    /*
+     * Buffer renamed by the IRC plugin (case of nick changed): old option
+     * restored, logging disabled with the new name.
+     */
+    irc_channel_pv_rename (server, channel, "Bob");
+    POINTERS_EQUAL(NULL, option ("logger.level.irc.test_otr_ren.bob"));
+    ptr_option = option ("logger.level.irc.test_otr_ren.Bob");
+    CHECK(ptr_option);
+    LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option));
+    LONGS_EQUAL(0, otr_log_buffer_is_logged (channel->buffer));
+    LONGS_EQUAL(OTR_LOG_DEFAULT, ptr_peer_data->prev_log);
+    STRCMP_EQUAL("logger.level.irc.test_otr_ren.Bob",
+                 ptr_peer_data->log_option);
+
+    /* End of session: logger level restored with the new name. */
+    otr_log_restore (ptr_context, ptr_peer_data, 0);
+    POINTERS_EQUAL(NULL, option ("logger.level.irc.test_otr_ren.Bob"));
+    LONGS_EQUAL(OTR_LOG_UNTOUCHED, ptr_peer_data->prev_log);
+    POINTERS_EQUAL(NULL, ptr_peer_data->log_option);
+    LONGS_EQUAL(1, otr_log_buffer_is_logged (channel->buffer));
+
+    gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_otr_ren");
+    run_cmd_quiet ("/mute /server del test_otr_ren");
 }

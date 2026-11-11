@@ -35,6 +35,7 @@ otr_context_peer_data_free (void *data)
     peer_data = (struct t_otr_peer_data *)data;
 
     free (peer_data->assembly);
+    free (peer_data->log_option);
     weechat_string_dyn_free (peer_data->held_messages, 1);
     free (peer_data);
 }
