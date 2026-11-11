@@ -5620,6 +5620,9 @@ msgstr ""
 msgid "Running WeeChat in background..."
 msgstr ""
 
+msgid "unable to open /dev/null"
+msgstr ""
+
 msgid "fork error"
 msgstr ""
 

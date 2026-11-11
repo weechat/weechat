@@ -359,15 +359,31 @@ void
 sys_daemonize (void)
 {
     pid_t pid;
-    int fd, i, rc;
+    int fd_null, fd, i;
 
     printf ("%s ", _("Running WeeChat in background..."));
+    fflush (stdout);
+
+    /*
+     * Open /dev/null before fork, so that an error can still be displayed
+     * (the child closes all file descriptors).
+     */
+    fd_null = open ("/dev/null", O_RDWR);
+    if (fd_null < 0)
+    {
+        /* End the line on stdout, display the error on stderr. */
+        printf ("\n");
+        fprintf (stderr, "%s\n", _("unable to open /dev/null"));
+        exit (EXIT_FAILURE);
+    }
 
     pid = fork ();
 
     if (pid < 0)
     {
-        printf ("%s\n", _("fork error"));
+        /* End the line on stdout, display the error on stderr. */
+        printf ("\n");
+        fprintf (stderr, "%s\n", _("fork error"));
         exit (EXIT_FAILURE);
     }
 
@@ -383,13 +399,16 @@ sys_daemonize (void)
     /* Obtain a new process group. */
     setsid ();
 
-    /* Close all file descriptors. */
-    for (i = sysconf (_SC_OPEN_MAX); i >= 0; --i)
+    /* Redirect stdin, stdout and stderr to /dev/null. */
+    for (fd = 0; fd <= 2; fd++)
+    {
+        if (fd != fd_null)
+            dup2 (fd_null, fd);
+    }
+
+    /* Close all other file descriptors. */
+    for (i = sysconf (_SC_OPEN_MAX); i > 2; --i)
     {
         close (i);
     }
-    fd = open ("/dev/null", O_RDWR);
-    rc = dup (fd);
-    rc = dup (fd);
-    (void) rc;
 }

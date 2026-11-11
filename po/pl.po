@@ -6866,6 +6866,11 @@ msgstr "Zużycie zasobów (zobacz \"man getrusage\"):"
 msgid "Running WeeChat in background..."
 msgstr "Uruchamianie WeeChat w tle..."
 
+#, fuzzy
+#| msgid "%sUnable to open file \"%s\""
+msgid "unable to open /dev/null"
+msgstr "%sNie można otworzyć pliku „%s”"
+
 msgid "fork error"
 msgstr "nie udało się utworzyć procesu"
 

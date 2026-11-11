@@ -6694,6 +6694,11 @@ msgstr "Özkaynak kullanımı (yardım için bkz. \"man getrusage\"):"
 msgid "Running WeeChat in background..."
 msgstr "WeeChat arka planda çalışıyor..."
 
+#, fuzzy
+#| msgid "%sUnable to open file \"%s\""
+msgid "unable to open /dev/null"
+msgstr "%s\"%s\" dosyası açılamıyor"
+
 msgid "fork error"
 msgstr "çatal hatası"
 

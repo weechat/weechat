@@ -6066,6 +6066,10 @@ msgid "Running WeeChat in background..."
 msgstr ""
 
 #, fuzzy
+msgid "unable to open /dev/null"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy
 msgid "fork error"
 msgstr "%sСервер: %s%s\n"
 

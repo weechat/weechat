@@ -6527,6 +6527,11 @@ msgid "Running WeeChat in background..."
 msgstr ""
 
 #, fuzzy
+#| msgid "%s%s: unable to parse file \"%s\""
+msgid "unable to open /dev/null"
+msgstr "%s%s: no es posible analizar el archivo \"%s\""
+
+#, fuzzy
 msgid "fork error"
 msgstr "error"
 

@@ -6029,6 +6029,10 @@ msgid "Running WeeChat in background..."
 msgstr ""
 
 #, fuzzy
+msgid "unable to open /dev/null"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy
 msgid "fork error"
 msgstr "%sSzerver: %s%s\n"
 

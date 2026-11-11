@@ -7225,6 +7225,11 @@ msgstr "Ressourcennutzung (siehe \"man getrusage\" für Hilfe):"
 msgid "Running WeeChat in background..."
 msgstr "WeeChat wird im Hintergrund ausgeführt..."
 
+#, fuzzy
+#| msgid "%sUnable to open file \"%s\""
+msgid "unable to open /dev/null"
+msgstr "%sDatei \"%s\" kann nicht geöffnet werden"
+
 msgid "fork error"
 msgstr "Fork-Fehler"
 

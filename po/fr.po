@@ -7095,6 +7095,9 @@ msgstr "Utilisation des ressources (voir \"man getrusage\" pour de l'aide) :"
 msgid "Running WeeChat in background..."
 msgstr "Lancement de WeeChat en tâche de fond..."
 
+msgid "unable to open /dev/null"
+msgstr "impossible d'ouvrir /dev/null"
+
 msgid "fork error"
 msgstr "erreur de fork"
 

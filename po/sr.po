@@ -6869,6 +6869,11 @@ msgstr "Употреба ресурса (за помоћ погледајте �
 msgid "Running WeeChat in background..."
 msgstr "WeeChat се извршава у позадини..."
 
+#, fuzzy
+#| msgid "%sUnable to open file \"%s\""
+msgid "unable to open /dev/null"
+msgstr "%sНије успело отварање фајла „%s”"
+
 msgid "fork error"
 msgstr "грешка при рачвању"
 

@@ -6707,6 +6707,11 @@ msgstr "メモリ使用量 (ヘルプを見るには \"man mallinfo\" を参照�
 msgid "Running WeeChat in background..."
 msgstr "WeeChat をバックグラウンドで実行中..."
 
+#, fuzzy
+#| msgid "%s%s: unable to parse file \"%s\""
+msgid "unable to open /dev/null"
+msgstr "%s%s: ファイル \"%s\" を解析できません"
+
 msgid "fork error"
 msgstr "フォークエラー"
 
