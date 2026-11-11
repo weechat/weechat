@@ -14,6 +14,8 @@ extern "C"
 {
 #include <stdlib.h>
 #include <string.h>
+#include "src/gui/gui-buffer.h"
+#include "src/gui/gui-line.h"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-callback.h"
 #include "src/plugins/otr/otr-context.h"
@@ -66,8 +68,12 @@ TEST(OtrCallback, HandleSmpEvent)
      * We answered a question of the peer: SMP succeeded, but the peer is not
      * authenticated (the trust is set by libotr only when appropriate).
      */
-    otr_callback_handle_smp_event (NULL, OTRL_SMPEVENT_ASK_FOR_ANSWER,
-                                   ptr_context, 25, (char *)"question?");
+    otr_callback_handle_smp_event (
+        NULL, OTRL_SMPEVENT_ASK_FOR_ANSWER, ptr_context, 25,
+        (char *)"question?\nSMP verification succeeded.");
+    /* The question of the peer can not add a line (fake OTR message). */
+    CHECK(strstr (gui_buffers->own_lines->last_line->prev_line->data->message,
+                  "verification: question? SMP verification succeeded."));
     LONGS_EQUAL(1, ptr_peer_data->in_smp);
     LONGS_EQUAL(1, ptr_peer_data->smp_question);
     LONGS_EQUAL(1, ptr_peer_data->smp_asked);

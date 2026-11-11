@@ -20,6 +20,7 @@
 #include "otr-irc.h"
 #include "otr-log.h"
 #include "otr-policy.h"
+#include "otr-util.h"
 
 
 /*
@@ -419,6 +420,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
                                char *question)
 {
     struct t_otr_peer_data *ptr_peer_data;
+    char *peer_text;
     int in_smp, smp_question, smp_asked;
 
     /* Make C compiler happy. */
@@ -448,10 +450,12 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             in_smp = 1;
             smp_question = 1;
             smp_asked = 1;
+            peer_text = otr_util_peer_text (question);
             otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_INFO,
                                   _("Peer has requested SMP verification: %s\n"
                                     "Respond with: /otr smp respond <answer>"),
-                                  (question) ? question : "");
+                                  (peer_text) ? peer_text : "");
+            free (peer_text);
             break;
         case OTRL_SMPEVENT_IN_PROGRESS:
             otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_INFO,
@@ -533,6 +537,7 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
                                gcry_error_t error)
 {
     struct t_otr_callback_data *ptr_data;
+    char *peer_text;
 
     if (!context)
         return;
@@ -593,9 +598,11 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
                                   _("Received a malformed OTR message."));
             break;
         case OTRL_MSGEVENT_RCVDMSG_GENERAL_ERR:
+            peer_text = otr_util_peer_text (message);
             otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_ERROR,
                                   _("Received OTR error: %s"),
-                                  (message) ? message : "");
+                                  (peer_text) ? peer_text : "");
+            free (peer_text);
             break;
         case OTRL_MSGEVENT_RCVDMSG_UNRECOGNIZED:
             otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_WARNING,

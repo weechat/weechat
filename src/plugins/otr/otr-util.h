@@ -10,5 +10,6 @@
 
 extern char *otr_util_dupstr (const char *string);
 extern char *otr_util_irc_sanitize (const char *string);
+extern char *otr_util_peer_text (const char *text);
 
 #endif /* WEECHAT_PLUGIN_OTR_UTIL_H */
