@@ -48,3 +48,26 @@ TEST(OtrUtil, IrcSanitize)
     WEE_TEST_STR("abc", otr_util_irc_sanitize ("abc"));
     WEE_TEST_STR("a b  c ", otr_util_irc_sanitize ("a\rb\r\nc\n"));
 }
+
+/*
+ * Test functions:
+ *   otr_util_peer_text
+ */
+
+TEST(OtrUtil, PeerText)
+{
+    char *str;
+
+    WEE_TEST_STR("", otr_util_peer_text (NULL));
+    WEE_TEST_STR("", otr_util_peer_text (""));
+    WEE_TEST_STR("abc", otr_util_peer_text ("abc"));
+    WEE_TEST_STR("question? SMP verification succeeded.",
+                 otr_util_peer_text ("question?\n"
+                                     "SMP verification succeeded."));
+    WEE_TEST_STR("a b", otr_util_peer_text ("a\rb"));
+
+    /* WeeChat color codes are removed. */
+    WEE_TEST_STR("green text",
+                 otr_util_peer_text ("\x19" "02" "green text"));
+    WEE_TEST_STR("bold", otr_util_peer_text ("\x1A" "\x01" "bold"));
+}
