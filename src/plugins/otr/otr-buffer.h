@@ -9,6 +9,9 @@
 #define WEECHAT_PLUGIN_OTR_BUFFER_H
 
 extern void otr_buffer_debug (const char *format, ...);
+extern void otr_buffer_print_str_tags (struct t_gui_buffer *buffer,
+                                       const char *tags, int color,
+                                       const char *message);
 extern void otr_buffer_print_str (struct t_gui_buffer *buffer, int color,
                                   const char *message);
 extern void otr_buffer_error_core (const char *format, ...);
