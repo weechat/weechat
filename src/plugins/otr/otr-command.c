@@ -765,8 +765,7 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
     else if ((strcmp (args[1], "start") == 0)
              && !otr_log_buffer_is_logged (buffer))
     {
-        if (ptr_peer_data && (ptr_peer_data->prev_log == OTR_LOG_UNTOUCHED))
-            ptr_peer_data->prev_log = otr_log_buffer_log_level (buffer);
+        otr_log_save_level (ptr_peer_data, buffer);
         otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_WARNING,
                                _("From this point on, this conversation will "
                                  "be logged. Please keep in mind that by doing "
@@ -778,8 +777,7 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
     else if ((strcmp (args[1], "stop") == 0)
              && otr_log_buffer_is_logged (buffer))
     {
-        if (ptr_peer_data && (ptr_peer_data->prev_log == OTR_LOG_UNTOUCHED))
-            ptr_peer_data->prev_log = otr_log_buffer_log_level (buffer);
+        otr_log_save_level (ptr_peer_data, buffer);
         weechat_command (buffer, "/mute logger set 0");
         otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
                                _("From this point on, this conversation will "

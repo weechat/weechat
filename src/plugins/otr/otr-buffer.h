@@ -27,6 +27,9 @@ extern int otr_buffer_irc_pv_opened_cb (const void *pointer, void *data,
                                         const char *signal,
                                         const char *type_data,
                                         void *signal_data);
+extern int otr_buffer_renamed_cb (const void *pointer, void *data,
+                                  const char *signal, const char *type_data,
+                                  void *signal_data);
 extern int otr_buffer_closing_cb (const void *pointer, void *data,
                                   const char *signal, const char *type_data,
                                   void *signal_data);
