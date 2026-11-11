@@ -104,8 +104,35 @@ otr_irc_target_is_channel (const char *server, const char *target)
 }
 
 /*
+ * Convert a nick to lower case, according to the casemapping of the server,
+ * like the IRC plugin does to compare nicks (with the default casemapping
+ * "rfc1459", chars "[\]^" are also converted to "{|}~").
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+otr_irc_nick_tolower (const char *server, const char *nick)
+{
+    char *info_args, *result;
+
+    if (!nick)
+        return NULL;
+
+    weechat_asprintf (&info_args, "%s,%s", (server) ? server : "", nick);
+    if (!info_args)
+        return NULL;
+
+    result = weechat_info_get ("irc_nick_tolower", info_args);
+
+    free (info_args);
+
+    return result;
+}
+
+/*
  * Build the OTR account name for a server: "ownnick@server" (nick in lower
- * case).
+ * case, see function otr_irc_nick_tolower).
  *
  * Return NULL if not connected to the server.
  *
@@ -123,7 +150,7 @@ otr_irc_make_account (const char *server)
     if (!info_nick || !info_nick[0])
         goto end;
 
-    nick = weechat_string_tolower (info_nick);
+    nick = otr_irc_nick_tolower (server, info_nick);
     if (!nick)
         goto end;
 

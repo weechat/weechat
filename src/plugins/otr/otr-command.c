@@ -169,7 +169,7 @@ int
 otr_command_resolve (const struct t_otr_peer_ref *peer_ref, char **account,
                      char **peer)
 {
-    *peer = weechat_string_tolower (peer_ref->nick);
+    *peer = otr_irc_nick_tolower (peer_ref->server, peer_ref->nick);
     *account = (*peer) ? otr_irc_peer_account (peer_ref->server, *peer) : NULL;
     if (!*account || !*peer)
     {

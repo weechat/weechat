@@ -91,7 +91,7 @@ otr_bar_item_cb (const void *pointer, void *data, struct t_gui_bar_item *item,
     if (!ptr_server || !ptr_peer)
         return strdup ("");
 
-    peer = weechat_string_tolower (ptr_peer);
+    peer = otr_irc_nick_tolower (ptr_server, ptr_peer);
     account = (peer) ? otr_irc_peer_account (ptr_server, peer) : NULL;
     if (!account || !peer)
     {
