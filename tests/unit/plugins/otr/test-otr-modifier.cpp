@@ -17,6 +17,7 @@ extern "C"
 #include "src/core/core-config-file.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-line.h"
+#include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-context.h"
@@ -474,6 +475,25 @@ TEST(OtrModifier, HoldMessages)
     otr_context_clear_held_messages (ptr_peer_data);
     run_cmd_quiet ("/mute /unset "
                    "otr.policy.srv_otr_hold.alice.bob.require_encryption");
+
+    /*
+     * Encryption required by nick policy, invalid value for a new peer
+     * option: refused, messages held are kept.
+     */
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_hold.alice.require_encryption", "on");
+    WEE_TEST_STR("",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_hold", "PRIVMSG bob :line 5"));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_with_string (
+                    "otr.policy.srv_otr_hold.alice.bob.require_encryption",
+                    "enabled"));
+    CHECK(ptr_peer_data->held_messages);
+    STRCMP_EQUAL("line 5", *(ptr_peer_data->held_messages));
+    otr_context_clear_held_messages (ptr_peer_data);
+    run_cmd_quiet ("/mute /unset "
+                   "otr.policy.srv_otr_hold.alice.require_encryption");
 
     run_cmd_quiet ("/mute /disconnect srv_otr_hold");
     run_cmd_quiet ("/mute /server del srv_otr_hold");
