@@ -2793,17 +2793,21 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "output of command \"/exec -o\") to IRC colors: "
                    "basic = colors 0-15, "
                    "extended = colors 0-98 (colors 16-98 are defined with "
-                   "RGB values in the IRC formatting specification); "
+                   "RGB values in the IRC formatting specification), "
+                   "rgb = colors 0-98 and RGB colors sent as-is with IRC "
+                   "hex colors (\"^Drrggbb\"), which are not supported by "
+                   "all IRC clients (some display the hexadecimal digits as "
+                   "text); "
                    "basic ANSI colors (30-37 and 90-97) are always converted "
                    "to IRC colors 0-15, the option is used for terminal "
                    "colors 16-255 and RGB colors: a terminal color used to "
                    "display an IRC color 16-98 is converted to this IRC color, "
-                   "other colors to the nearest IRC color; with \"/exec -o\", "
-                   "the option of the server of the buffer where the output "
-                   "is sent is used (with \"/exec -pipe\", the server of the "
-                   "current buffer, even if the command sends the output to "
-                   "another server)"),
-                "basic|extended", 0, 0,
+                   "other colors to the nearest IRC color (or sent as-is with "
+                   "rgb); with \"/exec -o\", the option of the server of the "
+                   "buffer where the output is sent is used (with \"/exec "
+                   "-pipe\", the server of the current buffer, even if the "
+                   "command sends the output to another server)"),
+                "basic|extended|rgb", 0, 0,
                 default_value, value,
                 null_value_allowed,
                 callback_check_value,

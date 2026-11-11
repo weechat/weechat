@@ -73,6 +73,7 @@ enum t_irc_color_palette
 {
     IRC_COLOR_PALETTE_BASIC = 0,       /* IRC colors 0-15                   */
     IRC_COLOR_PALETTE_EXTENDED,        /* IRC colors 0-98                   */
+    IRC_COLOR_PALETTE_RGB,             /* IRC colors 0-98 and hex colors    */
     /* number of palettes */
     IRC_COLOR_NUM_PALETTES,
 };
