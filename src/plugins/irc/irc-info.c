@@ -146,6 +146,44 @@ irc_info_info_irc_nick_cb (const void *pointer, void *data,
 }
 
 /*
+ * Return IRC info "irc_nick_tolower".
+ */
+
+char *
+irc_info_info_irc_nick_tolower_cb (const void *pointer, void *data,
+                                   const char *info_name,
+                                   const char *arguments)
+{
+    char *server;
+    const char *pos_nick, *pos_comma;
+    struct t_irc_server *ptr_server;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments)
+        return NULL;
+
+    ptr_server = NULL;
+    pos_nick = arguments;
+    pos_comma = strchr (arguments, ',');
+    if (pos_comma)
+    {
+        pos_nick = pos_comma + 1;
+        server = weechat_strndup (arguments, pos_comma - arguments);
+        if (server)
+        {
+            ptr_server = irc_server_search (server);
+            free (server);
+        }
+    }
+
+    return irc_server_string_tolower (ptr_server, pos_nick);
+}
+
+/*
  * Return IRC info "irc_nick_from_host".
  */
 
@@ -1337,6 +1375,12 @@ irc_info_init (void)
         N_("get current nick on a server"),
         N_("server name"),
         &irc_info_info_irc_nick_cb, NULL, NULL);
+    weechat_hook_info (
+        "irc_nick_tolower",
+        N_("nick in lower case, according to the casemapping of the server "
+           "(default casemapping is \"rfc1459\")"),
+        N_("server,nickname (server is optional)"),
+        &irc_info_info_irc_nick_tolower_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_from_host",
         N_("get nick from IRC host"),
