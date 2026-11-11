@@ -916,19 +916,12 @@ otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
         otr_irc_account_nick (account, nick, sizeof (nick));
         snprintf (option_name, sizeof (option_name), "%s.%s.%s.%s",
                   otr_irc_account_server (account), nick, peer, ptr_policy);
+        /*
+         * With "toggle", the option of the peer is created if needed with
+         * the opposite of the value inherited from upper levels (see
+         * function otr_config_policy_create_option_cb).
+         */
         ptr_value = otr_command_get_policy_value (args[2]);
-        if ((strcmp (ptr_value, "toggle") == 0)
-            && !weechat_config_search_option (otr_config_file,
-                                              otr_config_section_policy,
-                                              option_name))
-        {
-            /*
-             * The option of the peer does not exist yet: toggle the value
-             * inherited from the nick, server or default policy.
-             */
-            ptr_value = (otr_policy_for (account, peer, ptr_policy)) ?
-                "off" : "on";
-        }
         weechat_asprintf (&command, "/set otr.policy.%s %s",
                           option_name, ptr_value);
         if (command)
