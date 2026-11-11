@@ -358,7 +358,11 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
         goto end;
     }
 
-    was_otr = (strncmp (assembled, "?OTR", 4) == 0) ? 1 : 0;
+    /*
+     * OTR message: the OTR tag can be anywhere in the message (like in libotr,
+     * which decrypts the message even if there is text before the tag).
+     */
+    was_otr = (strstr (assembled, "?OTR")) ? 1 : 0;
     ignore = otrl_message_receiving (otr_us, &otr_callback_ops,
                                      &callback_data, account, OTR_PROTOCOL,
                                      peer, assembled,
