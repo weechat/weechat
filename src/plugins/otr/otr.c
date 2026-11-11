@@ -194,6 +194,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     otr_completion_init ();
 
+    weechat_hook_config ("otr.policy.*",
+                         &otr_modifier_policy_changed_cb, NULL, NULL);
     weechat_hook_config ("logger.level.irc.*",
                          &otr_log_logger_level_update_cb, NULL, NULL);
     weechat_hook_signal ("buffer_switch", &otr_buffer_switch_cb, NULL, NULL);

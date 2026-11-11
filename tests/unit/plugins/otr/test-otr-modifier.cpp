@@ -15,6 +15,8 @@ extern "C"
 #include <stdlib.h>
 #include <string.h>
 #include "src/core/core-config-file.h"
+#include "src/gui/gui-buffer.h"
+#include "src/gui/gui-line.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-context.h"
@@ -437,7 +439,30 @@ TEST(OtrModifier, HoldMessages)
     /* Session encrypted: messages not held. */
     ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
     LONGS_EQUAL(0, otr_modifier_must_hold ("alice@srv_otr_hold", "bob"));
+
+    /* Policy changed during the session: messages held are being sent. */
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_hold.alice.bob.require_encryption", "off");
+    CHECK(ptr_peer_data->held_messages);
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_hold.alice.bob.require_encryption", "on");
     ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+
+    /* Encryption not required anymore, no session: messages discarded. */
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_hold.alice.bob.require_encryption", "off");
+    POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
+    CHECK(strstr (gui_buffers->own_lines->last_line->data->message,
+                  "3 messages held for the OTR session have been "
+                  "discarded"));
+
+    /* Encryption required again: new messages held. */
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_hold.alice.bob.require_encryption", "on");
+    WEE_TEST_STR("",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_hold", "PRIVMSG bob :line 4"));
+    STRCMP_EQUAL("line 4", *(ptr_peer_data->held_messages));
 
     otr_context_clear_held_messages (ptr_peer_data);
     run_cmd_quiet ("/mute /unset "

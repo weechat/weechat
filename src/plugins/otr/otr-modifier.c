@@ -524,6 +524,73 @@ otr_modifier_hold_message (const char *server, const char *account,
 }
 
 /*
+ * Callback for changes on OTR policy options: messages held until the OTR
+ * session is encrypted are discarded if they must not be held anymore
+ * (encryption not required anymore or OTR disabled), so that they are never
+ * sent later, after newer messages.
+ */
+
+int
+otr_modifier_policy_changed_cb (const void *pointer, void *data,
+                                const char *option, const char *value)
+{
+    ConnContext *ptr_context, *ptr_best_context;
+    struct t_otr_peer_data *ptr_peer_data;
+    const char *ptr_message;
+    int count;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) option;
+    (void) value;
+
+    if (!otr_us)
+        return WEECHAT_RC_OK;
+
+    for (ptr_context = otr_us->context_root; ptr_context;
+         ptr_context = ptr_context->next)
+    {
+        if (ptr_context->their_instance != OTRL_INSTAG_MASTER)
+            continue;
+        ptr_peer_data = (struct t_otr_peer_data *)ptr_context->app_data;
+        if (!ptr_peer_data || !ptr_peer_data->held_messages)
+            continue;
+        /* OTR session started: messages held are being sent. */
+        ptr_best_context = otr_context_find (ptr_context->accountname,
+                                             ptr_context->username);
+        if (ptr_best_context
+            && (ptr_best_context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
+        {
+            continue;
+        }
+        if (otr_modifier_must_hold (ptr_context->accountname,
+                                    ptr_context->username))
+        {
+            continue;
+        }
+        count = 1;
+        for (ptr_message = *(ptr_peer_data->held_messages); ptr_message[0];
+             ptr_message++)
+        {
+            if (ptr_message[0] == '\n')
+                count++;
+        }
+        otr_context_clear_held_messages (ptr_peer_data);
+        otr_buffer_ctx_print (
+            ptr_context, OTR_CONFIG_LEVEL_WARNING,
+            NG_("%d message held for the OTR session has been discarded: "
+                "encryption is not required anymore.",
+                "%d messages held for the OTR session have been discarded: "
+                "encryption is not required anymore.",
+                count),
+            count);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Check a line "BATCH" of an outgoing multiline message (IRCv3 capability
  * "draft/multiline"): the batch is removed if it is sent to a nick with an
  * encrypted OTR session, or if messages to the nick are held until the session
