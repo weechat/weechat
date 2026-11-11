@@ -160,6 +160,34 @@ otr_irc_nick_tolower (const char *server, const char *nick)
 }
 
 /*
+ * Check if two nicks are equal on a server, according to the casemapping of
+ * the server (see function otr_irc_nick_tolower).
+ *
+ * Return 1 if the nicks are equal, 0 otherwise.
+ */
+
+int
+otr_irc_nick_equal (const char *server, const char *nick1, const char *nick2)
+{
+    char *nick1_lower, *nick2_lower;
+    int equal;
+
+    if (!nick1 || !nick2)
+        return 0;
+
+    nick1_lower = otr_irc_nick_tolower (server, nick1);
+    nick2_lower = otr_irc_nick_tolower (server, nick2);
+
+    equal = (nick1_lower && nick2_lower
+             && (strcmp (nick1_lower, nick2_lower) == 0)) ? 1 : 0;
+
+    free (nick1_lower);
+    free (nick2_lower);
+
+    return equal;
+}
+
+/*
  * Build the OTR account name for a server: "ownnick@server" (nick in lower
  * case, see function otr_irc_nick_tolower).
  *
@@ -374,7 +402,7 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
 
     /* Only our own nick change is handled. */
     info_nick = weechat_info_get ("irc_nick", server);
-    if (!info_nick || (weechat_strcasecmp (info_nick, ptr_new_nick) != 0))
+    if (!otr_irc_nick_equal (server, info_nick, ptr_new_nick))
         goto end;
 
     new_account = otr_irc_make_account (server);

@@ -13,6 +13,8 @@ extern struct t_gui_buffer *otr_irc_buffer (const char *server,
 extern int otr_irc_is_nick (const char *server, const char *nick);
 extern int otr_irc_target_is_channel (const char *server, const char *target);
 extern char *otr_irc_nick_tolower (const char *server, const char *nick);
+extern int otr_irc_nick_equal (const char *server, const char *nick1,
+                               const char *nick2);
 extern char *otr_irc_make_account (const char *server);
 extern char *otr_irc_peer_account (const char *server, const char *peer);
 extern const char *otr_irc_account_server (const char *account);

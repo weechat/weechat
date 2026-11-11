@@ -210,7 +210,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
         goto end;
 
     own_nick = weechat_info_get ("irc_nick", ptr_server);
-    if (own_nick && (weechat_strcasecmp (own_nick, ptr_nick) == 0))
+    if (otr_irc_nick_equal (ptr_server, own_nick, ptr_nick))
     {
         /* echo-message: the server returns our own outgoing message. */
         result = otr_echo_replace (ptr_server, string, ptr_host, target,

@@ -222,3 +222,34 @@ TEST(OtrIrc, IsNick)
     LONGS_EQUAL(1, otr_irc_is_nick ("test", "nick[a]"));
     LONGS_EQUAL(1, otr_irc_is_nick (NULL, "bob"));
 }
+
+/*
+ * Test functions:
+ *   otr_irc_nick_equal
+ */
+
+TEST(OtrIrc, NickEqual)
+{
+    struct t_irc_server *server;
+
+    LONGS_EQUAL(0, otr_irc_nick_equal ("test", NULL, NULL));
+    LONGS_EQUAL(0, otr_irc_nick_equal ("test", "bob", NULL));
+    LONGS_EQUAL(0, otr_irc_nick_equal ("test", NULL, "bob"));
+    LONGS_EQUAL(0, otr_irc_nick_equal ("test", "bob", "alice"));
+    LONGS_EQUAL(1, otr_irc_nick_equal ("test", "bob", "bob"));
+    LONGS_EQUAL(1, otr_irc_nick_equal ("test", "bob", "BOB"));
+    LONGS_EQUAL(1, otr_irc_nick_equal ("test", "nick[a]", "NICK{A}"));
+    LONGS_EQUAL(1, otr_irc_nick_equal (NULL, "nick^", "nick~"));
+
+    run_cmd_quiet ("/mute /server add test_otr_eq fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_eq");
+    server = irc_server_search ("test_otr_eq");
+    CHECK(server);
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_ASCII;
+    LONGS_EQUAL(1, otr_irc_nick_equal ("test_otr_eq", "bob", "BOB"));
+    LONGS_EQUAL(0, otr_irc_nick_equal ("test_otr_eq", "nick[a]", "nick{a}"));
+
+    run_cmd_quiet ("/mute /disconnect test_otr_eq");
+    run_cmd_quiet ("/mute /server del test_otr_eq");
+}
