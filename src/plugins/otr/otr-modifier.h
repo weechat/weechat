@@ -9,7 +9,10 @@
 #define WEECHAT_PLUGIN_OTR_MODIFIER_H
 
 extern struct t_hashtable *otr_modifier_removed_batches;
+extern struct t_hook *otr_modifier_assembly_timer;
 
+extern int otr_modifier_assembly_timer_cb (const void *pointer, void *data,
+                                           int remaining_calls);
 extern char *otr_modifier_in_cb (const void *pointer, void *data,
                                  const char *modifier,
                                  const char *modifier_data,

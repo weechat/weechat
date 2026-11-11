@@ -140,6 +140,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     otr_us = NULL;
     otr_bar_item = NULL;
     otr_modifier_removed_batches = NULL;
+    otr_modifier_assembly_timer = NULL;
 
     if (otrl_init (OTRL_VERSION_MAJOR, OTRL_VERSION_MINOR, OTRL_VERSION_SUB))
     {

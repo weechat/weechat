@@ -8,11 +8,14 @@
 #ifndef WEECHAT_PLUGIN_OTR_CONTEXT_H
 #define WEECHAT_PLUGIN_OTR_CONTEXT_H
 
+#include <time.h>
+
 struct t_otr_peer_data
 {
     char *assembly;                    /* reassembly of OTR messages split  */
                                        /* over several IRC lines            */
     size_t assembly_length;            /* length of assembly                */
+    time_t assembly_time;              /* time of first line in assembly    */
     int in_smp;                        /* 1 if SMP authentication running   */
     int smp_question;                  /* 1 if peer asked an SMP question   */
     int smp_asked;                     /* 1 if peer asked SMP verification, */
