@@ -19,6 +19,9 @@ extern char *otr_modifier_out_cb (const void *pointer, void *data,
                                   const char *modifier_data,
                                   const char *string);
 
+extern int otr_modifier_policy_changed_cb (const void *pointer, void *data,
+                                           const char *option,
+                                           const char *value);
 extern void otr_modifier_free_removed_batches (void);
 
 #endif /* WEECHAT_PLUGIN_OTR_MODIFIER_H */
