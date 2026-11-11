@@ -63,6 +63,9 @@ $HOME/.config/weechat/logger.conf::
 $HOME/.config/weechat/lua.conf::
     configuration file for _lua_ plugin
 
+$HOME/.config/weechat/otr.conf::
+    configuration file for _otr_ plugin
+
 $HOME/.config/weechat/perl.conf::
     configuration file for _perl_ plugin
 
@@ -98,6 +101,15 @@ $HOME/.config/weechat/xfer.conf::
 
 $HOME/.local/share/weechat/weechat.log::
     WeeChat log file
+
+$HOME/.local/share/weechat/otr/otr.private_key::
+    private keys for _otr_ plugin (highly sensitive: never share this file)
+
+$HOME/.local/share/weechat/otr/otr.fingerprints::
+    fingerprints of peers for _otr_ plugin
+
+$HOME/.local/share/weechat/otr/otr.instag::
+    instance tags for _otr_ plugin
 // end::files[]
 
 // tag::exit_status[]
