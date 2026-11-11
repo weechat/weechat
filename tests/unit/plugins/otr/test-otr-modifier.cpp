@@ -24,6 +24,8 @@ extern "C"
 #include "src/plugins/otr/otr-modifier.h"
 
 extern int otr_modifier_is_base64_part (const char *line);
+extern int otr_modifier_assembly_stale (struct t_otr_peer_data *peer_data,
+                                        time_t now);
 extern int otr_modifier_assemble (struct t_otr_peer_data *peer_data,
                                   const char *line, char **message);
 extern int otr_modifier_parse_out_privmsg (const char *message, char **tags,
@@ -577,4 +579,60 @@ TEST(OtrModifier, InCbAction)
 
     run_cmd_quiet ("/mute /disconnect srv_otr_action");
     run_cmd_quiet ("/mute /server del srv_otr_action");
+}
+
+/*
+ * Test functions:
+ *   otr_modifier_assembly_stale
+ *   otr_modifier_drop_assembly
+ *   otr_modifier_assembly_timer_cb
+ */
+
+TEST(OtrModifier, AssemblyTimeout)
+{
+    struct t_otr_peer_data peer_data, *ptr_peer_data;
+    char *message;
+    time_t now;
+
+    memset (&peer_data, 0, sizeof (peer_data));
+    now = time (NULL);
+
+    LONGS_EQUAL(0, otr_modifier_assembly_stale (NULL, now));
+    LONGS_EQUAL(0, otr_modifier_assembly_stale (&peer_data, now));
+
+    /* Assembly started. */
+    message = NULL;
+    LONGS_EQUAL(0, otr_modifier_assemble (&peer_data, "?OTR:abc", &message));
+    CHECK(peer_data.assembly);
+    LONGS_EQUAL(0, otr_modifier_assembly_stale (&peer_data, now));
+    LONGS_EQUAL(1, otr_modifier_assembly_stale (
+                    &peer_data, now + OTR_ASSEMBLY_TIMEOUT + 1));
+
+    /* Next line received too late: assembly dropped, line returned as-is. */
+    peer_data.assembly_time -= OTR_ASSEMBLY_TIMEOUT + 1;
+    LONGS_EQUAL(1, otr_modifier_assemble (&peer_data, "def.", &message));
+    STRCMP_EQUAL("def.", message);
+    free (message);
+    POINTERS_EQUAL(NULL, peer_data.assembly);
+
+    /*
+     * Stale assemblies dropped by the timer (only stale ones); the timer is
+     * created when an assembly starts and removed when there is no assembly
+     * anymore.
+     */
+    otr_modifier_assembly_timer_cb (NULL, NULL, 0);
+    POINTERS_EQUAL(NULL, otr_modifier_assembly_timer);
+    ptr_peer_data = otr_context_peer_data_for ("alice@srv_otr_asm", "bob");
+    CHECK(ptr_peer_data);
+    LONGS_EQUAL(0, otr_modifier_assemble (ptr_peer_data, "?OTR:abc",
+                                          &message));
+    CHECK(otr_modifier_assembly_timer);
+    otr_modifier_assembly_timer_cb (NULL, NULL, 0);
+    CHECK(ptr_peer_data->assembly);
+    CHECK(otr_modifier_assembly_timer);
+    ptr_peer_data->assembly_time -= OTR_ASSEMBLY_TIMEOUT + 1;
+    otr_modifier_assembly_timer_cb (NULL, NULL, 0);
+    POINTERS_EQUAL(NULL, ptr_peer_data->assembly);
+    LONGS_EQUAL(0, ptr_peer_data->assembly_length);
+    POINTERS_EQUAL(NULL, otr_modifier_assembly_timer);
 }
