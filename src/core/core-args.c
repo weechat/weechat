@@ -671,6 +671,12 @@ args_add_plugin_arg (const char *arg)
  * (like "--help") are only recorded in args_action, and stop the parsing;
  * they are run later by function args_run_action.
  *
+ * All variables set by this function are reset first (values set by a
+ * previous call are freed).
+ *
+ * The arguments for plugins (weechat_plugin_argv) point to strings in argv:
+ * argv must remain valid while plugins are initialized.
+ *
  * Arguments argc and argv come from main() function.
  */
 
@@ -681,15 +687,25 @@ args_parse (int argc, char *argv[])
     char *option;
     struct option long_options[ARGS_NUM_LONG_OPTIONS];
 
+    /* Reset variables (and free values set by a previous call). */
+    free (weechat_argv0);
     weechat_argv0 = (argv[0]) ? strdup (argv[0]) : NULL;
     weechat_upgrading = 0;
+    free (weechat_home_force);
     weechat_home_force = NULL;
     weechat_home_temp = 0;
     weechat_home_delete_on_exit = 0;
     weechat_server_cmd_line = 0;
+    free (weechat_force_plugin_autoload);
     weechat_force_plugin_autoload = NULL;
+    weelist_free (weechat_startup_commands);
+    weechat_startup_commands = NULL;
     weechat_doc_gen = 0;
+    free (weechat_doc_gen_path);
+    weechat_doc_gen_path = NULL;
     weechat_plugin_no_dlclose = 0;
+    weechat_no_gnutls = 0;
+    weechat_no_gcrypt = 0;
     weechat_daemon = 0;
     weechat_log_stdout = 0;
     args_action = ARGS_ACTION_NONE;
