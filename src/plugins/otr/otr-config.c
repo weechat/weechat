@@ -266,8 +266,40 @@ otr_config_policy_inherited (struct t_config_file *config_file,
 }
 
 /*
+ * Check if a value is valid for a policy option: "toggle" or a boolean value
+ * accepted by WeeChat (case sensitive, like in WeeChat core).
+ *
+ * Return 1 if the value is valid, 0 otherwise.
+ */
+
+int
+otr_config_policy_value_valid (const char *value)
+{
+    const char *values[] = {
+        "on", "yes", "y", "true", "t", "1",
+        "off", "no", "n", "false", "f", "0",
+        "toggle", NULL,
+    };
+    int i;
+
+    if (!value)
+        return 0;
+
+    for (i = 0; values[i]; i++)
+    {
+        if (strcmp (values[i], value) == 0)
+            return 1;
+    }
+
+    return 0;
+}
+
+/*
  * Callback to create an option in section "policy" (boolean, "off" if no value
- * is given); the option is not created if the value is not a valid boolean.
+ * is given); the option is not created if the value is not a valid boolean
+ * (the value is checked before the option is created: WeeChat runs the config
+ * hooks when an option is created, see function
+ * otr_modifier_policy_changed_cb).
  *
  * With value "toggle", the option is created with the opposite of the value
  * inherited from upper levels (see function otr_config_policy_inherited).
@@ -287,6 +319,8 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
     (void) data;
 
     ptr_value = (value) ? value : "off";
+    if (!otr_config_policy_value_valid (ptr_value))
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
     if (strcmp (ptr_value, "toggle") == 0)
     {
         ptr_value = (otr_config_policy_inherited (config_file, section,
@@ -300,21 +334,9 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_option)
-        return WEECHAT_CONFIG_OPTION_SET_ERROR;
 
-    /*
-     * The option is created with "off" if the value is not a valid boolean:
-     * set the value again to check it, and remove the option if invalid.
-     */
-    if (weechat_config_option_set (ptr_option, ptr_value, 0)
-        == WEECHAT_CONFIG_OPTION_SET_ERROR)
-    {
-        weechat_config_option_free (ptr_option);
-        return WEECHAT_CONFIG_OPTION_SET_ERROR;
-    }
-
-    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    return (ptr_option) ?
+        WEECHAT_CONFIG_OPTION_SET_OK_CHANGED : WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
 /*

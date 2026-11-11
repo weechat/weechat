@@ -17,6 +17,7 @@ extern "C"
 #include "src/plugins/plugin.h"
 #include "src/plugins/otr/otr-config.h"
 
+extern int otr_config_policy_value_valid (const char *value);
 extern int otr_config_policy_inherited (struct t_config_file *config_file,
                                         struct t_config_section *section,
                                         const char *option_name);
@@ -168,4 +169,22 @@ TEST(OtrConfig, PolicyToggle)
     config_file_option_unset (option ("otr.policy.tst.alice2.bob.log"));
     config_file_option_unset (option ("otr.policy.tst.alice.log"));
     config_file_option_unset (option ("otr.policy.default.log"));
+}
+
+/*
+ * Test functions:
+ *   otr_config_policy_value_valid
+ */
+
+TEST(OtrConfig, PolicyValueValid)
+{
+    LONGS_EQUAL(0, otr_config_policy_value_valid (NULL));
+    LONGS_EQUAL(0, otr_config_policy_value_valid (""));
+    LONGS_EQUAL(0, otr_config_policy_value_valid ("enabled"));
+    LONGS_EQUAL(0, otr_config_policy_value_valid ("ON"));
+    LONGS_EQUAL(1, otr_config_policy_value_valid ("on"));
+    LONGS_EQUAL(1, otr_config_policy_value_valid ("off"));
+    LONGS_EQUAL(1, otr_config_policy_value_valid ("yes"));
+    LONGS_EQUAL(1, otr_config_policy_value_valid ("0"));
+    LONGS_EQUAL(1, otr_config_policy_value_valid ("toggle"));
 }
