@@ -514,6 +514,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          curses/                                | Корен unit тестова за Curses интерфејс.
 |             test-gui-curses-mouse.cpp           | Тестови: миш (Curses интерфејс).
 |             test-gui-curses-term.cpp            | Тестови: функције терминала (Curses интерфејс).
+// TRANSLATION MISSING
+|             test-gui-curses-window.cpp          | Tests: window functions (Curses interface).
 |       plugins/                                  | Корен unit тестова додатака.
 |          test-plugin-api-info.cpp               | Тестови: инфо функције API додатака.
 |          test-plugin-config.cpp                 | Тестови: функције конфигурације додатка.

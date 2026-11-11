@@ -116,6 +116,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix read and write out of bounds in table of color pairs on terminals without colors (for example `TERM=vt100`), and with an invalid background in color codes
 - core: fix memory leak when WeeChat colors are built again, for example when a color option is changed
 - core: display an error when /dev/null can not be opened with option `--daemon` in headless mode
 - core: fix options `-a` and `-s` ignored by plugins when abbreviated or grouped (for example `--no-conn` or `-as`), do not send the program name and values of options to plugins

@@ -532,12 +532,19 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
         }
 
         if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
+        {
             bg &= GUI_COLOR_EXTENDED_MASK;
-        else
+        }
+        else if ((bg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
             bg &= GUI_COLOR_EXTENDED_MASK;
             bg = (gui_color_term_colors >= 16) ?
                 gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground;
+        }
+        else
+        {
+            /* Invalid basic color: the background is not changed. */
+            bg = gui_window_current_style_bg;
         }
 
         gui_window_set_color (window, fg, bg);

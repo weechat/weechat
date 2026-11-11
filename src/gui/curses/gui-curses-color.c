@@ -719,7 +719,10 @@ gui_color_init_vars (void)
         gui_color_term_color_pairs = 1;
         gui_color_term_can_change_color = 0;
         gui_color_num_pairs = 1;
-        gui_color_pairs = calloc (1, sizeof (gui_color_pairs[0]));
+        /* Same size as with colors (see function gui_color_get_pair). */
+        gui_color_pairs = calloc (
+            (size_t)(gui_color_term_colors + 2) * (gui_color_term_colors + 2),
+            sizeof (gui_color_pairs[0]));
         gui_color_pairs_used = 0;
     }
 }

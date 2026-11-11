@@ -635,6 +635,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-gui-curses-mouse.cpp           | Tests: mouse (Curses interface).
 // TRANSLATION MISSING
 |             test-gui-curses-term.cpp            | Tests: terminal functions (Curses interface).
+// TRANSLATION MISSING
+|             test-gui-curses-window.cpp          | Tests: window functions (Curses interface).
 |       plugins/                                  | プラグインの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
 |          test-plugin-api-info.cpp               | Tests: plugin API info functions.
