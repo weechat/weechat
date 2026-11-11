@@ -203,3 +203,32 @@ TEST(OtrCommand, ShowPeerFingerprints)
 
     otrl_context_forget_fingerprint (ptr_fingerprint, 0);
 }
+
+/*
+ * Test functions:
+ *   otr_command_peer_args
+ */
+
+TEST(OtrCommand, PeerArgs)
+{
+    struct t_otr_peer_ref peer_ref;
+    char *args[2];
+
+    /* No arguments, not in a private buffer. */
+    LONGS_EQUAL(0, otr_command_peer_args (gui_buffers, NULL, 0, &peer_ref));
+
+    /* Nick and server. */
+    args[0] = (char *)"bob";
+    args[1] = (char *)"libera";
+    LONGS_EQUAL(1, otr_command_peer_args (NULL, args, 2, &peer_ref));
+    STRCMP_EQUAL("bob", peer_ref.nick);
+    STRCMP_EQUAL("libera", peer_ref.server);
+
+    /* Not a nick: channel or list of targets. */
+    args[0] = (char *)"#chan";
+    LONGS_EQUAL(0, otr_command_peer_args (NULL, args, 2, &peer_ref));
+    args[0] = (char *)"bob,carol";
+    LONGS_EQUAL(0, otr_command_peer_args (NULL, args, 2, &peer_ref));
+    args[0] = (char *)"bob carol";
+    LONGS_EQUAL(0, otr_command_peer_args (NULL, args, 2, &peer_ref));
+}

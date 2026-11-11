@@ -49,6 +49,35 @@ otr_irc_buffer (const char *server, const char *nick)
 }
 
 /*
+ * Check if a string is a valid nick on a server (according to the IRC
+ * plugin: a channel or a list of targets like "nick1,nick2" is not a nick).
+ *
+ * Return 1 if the string is a valid nick, 0 otherwise.
+ */
+
+int
+otr_irc_is_nick (const char *server, const char *nick)
+{
+    char *info_args, *info;
+    int is_nick;
+
+    if (!nick || !nick[0])
+        return 0;
+
+    weechat_asprintf (&info_args, "%s,%s", (server) ? server : "", nick);
+    if (!info_args)
+        return 0;
+
+    info = weechat_info_get ("irc_is_nick", info_args);
+    is_nick = (info && (strcmp (info, "1") == 0)) ? 1 : 0;
+
+    free (info);
+    free (info_args);
+
+    return is_nick;
+}
+
+/*
  * Check if a message target is an IRC channel, including a channel with a
  * status message prefix (for example "@#channel").
  *
