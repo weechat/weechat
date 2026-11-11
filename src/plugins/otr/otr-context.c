@@ -206,6 +206,44 @@ otr_context_clear_held_messages (struct t_otr_peer_data *peer_data)
 }
 
 /*
+ * Discard messages held for the peer of a libotr context (master context, with
+ * per-peer data); if display is 1, the number of messages discarded is
+ * displayed.
+ */
+
+void
+otr_context_drop_held_messages (ConnContext *context,
+                                struct t_otr_peer_data *peer_data,
+                                int display)
+{
+    const char *ptr_message;
+    int count;
+
+    if (!peer_data || !peer_data->held_messages)
+        return;
+
+    count = 1;
+    for (ptr_message = *(peer_data->held_messages); ptr_message[0];
+         ptr_message++)
+    {
+        if (ptr_message[0] == '\n')
+            count++;
+    }
+
+    otr_context_clear_held_messages (peer_data);
+
+    if (display && context)
+    {
+        otr_buffer_ctx_print (
+            context, OTR_CONFIG_LEVEL_WARNING,
+            NG_("%d message held for the OTR session has been discarded.",
+                "%d messages held for the OTR session have been discarded.",
+                count),
+            count);
+    }
+}
+
+/*
  * Move messages held for a peer to another per-peer data (for example after a
  * change of our own nick): they are added before the messages already held in
  * "to".
@@ -325,7 +363,8 @@ otr_context_send_held_messages (ConnContext *context)
  * libotr notifies the peer if the session is encrypted, then the logger level
  * of the private buffer is restored.
  *
- * If display is 1, a message is displayed for the peer.
+ * If display is 1, messages are displayed for the peer (end of session and
+ * number of messages held that are discarded).
  *
  * If buffer_closing is 1, the private buffer with the peer is being closed (see
  * function otr_log_restore).
@@ -344,8 +383,9 @@ otr_context_end_session (const char *account, const char *peer, int display,
                                      OTRL_INSTAG_MASTER, 0, NULL, NULL, NULL);
     if (ptr_context)
     {
-        otr_context_clear_held_messages (
-            (struct t_otr_peer_data *)ptr_context->app_data);
+        otr_context_drop_held_messages (
+            ptr_context, (struct t_otr_peer_data *)ptr_context->app_data,
+            display);
     }
 
     ptr_context = otr_context_find (account, peer);
