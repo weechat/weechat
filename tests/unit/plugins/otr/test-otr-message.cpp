@@ -44,6 +44,46 @@ TEST(OtrMessage, IsCtcpIsAction)
     LONGS_EQUAL(0, otr_message_is_action ("\x01VERSION\x01"));
     LONGS_EQUAL(0, otr_message_is_action ("\x01" "ACTION waves"));
     LONGS_EQUAL(1, otr_message_is_action ("\x01" "ACTION waves\x01"));
+    LONGS_EQUAL(1, otr_message_is_action ("\x01" "action waves\x01"));
+    LONGS_EQUAL(1, otr_message_is_action ("\x01" "Action\x01"));
+    LONGS_EQUAL(0, otr_message_is_action ("\x01" "ACTIONS waves\x01"));
+}
+
+/*
+ * Test functions:
+ *   otr_message_action_text
+ */
+
+TEST(OtrMessage, ActionText)
+{
+    int length;
+
+    POINTERS_EQUAL(NULL, otr_message_action_text ("", &length));
+    POINTERS_EQUAL(NULL, otr_message_action_text ("hello", &length));
+    POINTERS_EQUAL(NULL, otr_message_action_text ("\x01VERSION\x01", &length));
+    POINTERS_EQUAL(NULL, otr_message_action_text ("\x01" "ACTIONX\x01",
+                                                  &length));
+    POINTERS_EQUAL(NULL, otr_message_action_text ("\x01" "ACTION waves",
+                                                  &length));
+
+    length = -1;
+    STRCMP_EQUAL("waves\x01",
+                 otr_message_action_text ("\x01" "ACTION waves\x01", &length));
+    LONGS_EQUAL(5, length);
+    length = -1;
+    STRCMP_EQUAL("waves\x01",
+                 otr_message_action_text ("\x01" "aCtIoN waves\x01", &length));
+    LONGS_EQUAL(5, length);
+    length = -1;
+    STRCMP_EQUAL("\x01",
+                 otr_message_action_text ("\x01" "ACTION\x01", &length));
+    LONGS_EQUAL(0, length);
+    length = -1;
+    STRCMP_EQUAL("\x01",
+                 otr_message_action_text ("\x01" "ACTION \x01", &length));
+    LONGS_EQUAL(0, length);
+    STRCMP_EQUAL("waves\x01",
+                 otr_message_action_text ("\x01" "ACTION waves\x01", NULL));
 }
 
 /*
@@ -60,6 +100,9 @@ TEST(OtrMessage, PlainFromIrc)
     WEE_TEST_STR("\x01VERSION\x01",
                  otr_message_plain_from_irc ("\x01VERSION\x01"));
     WEE_TEST_STR("/me ", otr_message_plain_from_irc ("\x01" "ACTION \x01"));
+    WEE_TEST_STR("/me ", otr_message_plain_from_irc ("\x01" "ACTION\x01"));
+    WEE_TEST_STR("/me waves",
+                 otr_message_plain_from_irc ("\x01" "action waves\x01"));
     WEE_TEST_STR("/me waves",
                  otr_message_plain_from_irc ("\x01" "ACTION waves\x01"));
 }
@@ -174,6 +217,13 @@ TEST(OtrMessage, BuildInPrivmsgs)
                  otr_message_build_in_privmsgs ("", "bob!u@h", "alice",
                                                 "\x01" "ACTION waves\x01", "",
                                                 1));
+    WEE_TEST_STR(":bob!u@h PRIVMSG alice :\x01" "ACTION waves\x01",
+                 otr_message_build_in_privmsgs ("", "bob!u@h", "alice",
+                                                "\x01" "action waves\x01", "",
+                                                1));
+    WEE_TEST_STR(":bob!u@h PRIVMSG alice :\x01" "ACTION \x01",
+                 otr_message_build_in_privmsgs ("", "bob!u@h", "alice",
+                                                "\x01" "ACTION\x01", "", 1));
     WEE_TEST_STR(":bob!u@h PRIVMSG alice :VERSION",
                  otr_message_build_in_privmsgs ("", "bob!u@h", "alice",
                                                 "\x01VERSION\x01", "", 1));
