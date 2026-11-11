@@ -117,19 +117,32 @@ TEST(OtrContext, HeldMessages)
      */
     LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 1"));
     ptr_last_line = gui_buffers->own_lines->last_line;
-    LONGS_EQUAL(0, otr_context_end_session ("alice@srv_otr_ctx_held", "bob",
+    LONGS_EQUAL(1, otr_context_end_session ("alice@srv_otr_ctx_held", "bob",
                                             0, 0));
     POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
     POINTERS_EQUAL(ptr_last_line, gui_buffers->own_lines->last_line);
 
+    /* No session and no messages held: nothing done. */
+    LONGS_EQUAL(0, otr_context_end_session ("alice@srv_otr_ctx_held", "bob",
+                                            0, 0));
+
     /* With display (/otr finish): number of messages discarded displayed. */
     LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 1"));
     LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 2"));
-    LONGS_EQUAL(0, otr_context_end_session ("alice@srv_otr_ctx_held", "bob",
+    LONGS_EQUAL(1, otr_context_end_session ("alice@srv_otr_ctx_held", "bob",
                                             1, 0));
     POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
     CHECK(strstr (gui_buffers->own_lines->last_line->data->message,
                   "2 messages held for the OTR session have been discarded."));
+
+    /* Number of messages discarded. */
+    LONGS_EQUAL(0, otr_context_drop_held_messages (NULL, NULL, 0));
+    LONGS_EQUAL(0, otr_context_drop_held_messages (NULL, ptr_peer_data, 0));
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 1"));
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 2"));
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 3"));
+    LONGS_EQUAL(3, otr_context_drop_held_messages (NULL, ptr_peer_data, 0));
+    POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
 }
 
 /*

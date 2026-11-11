@@ -209,9 +209,11 @@ otr_context_clear_held_messages (struct t_otr_peer_data *peer_data)
  * Discard messages held for the peer of a libotr context (master context, with
  * per-peer data); if display is 1, the number of messages discarded is
  * displayed.
+ *
+ * Return the number of messages discarded.
  */
 
-void
+int
 otr_context_drop_held_messages (ConnContext *context,
                                 struct t_otr_peer_data *peer_data,
                                 int display)
@@ -220,7 +222,7 @@ otr_context_drop_held_messages (ConnContext *context,
     int count;
 
     if (!peer_data || !peer_data->held_messages)
-        return;
+        return 0;
 
     count = 1;
     for (ptr_message = *(peer_data->held_messages); ptr_message[0];
@@ -241,6 +243,8 @@ otr_context_drop_held_messages (ConnContext *context,
                 count),
             count);
     }
+
+    return count;
 }
 
 /*
@@ -369,7 +373,8 @@ otr_context_send_held_messages (ConnContext *context)
  * If buffer_closing is 1, the private buffer with the peer is being closed (see
  * function otr_log_restore).
  *
- * Return 1 if a session was ended, 0 if there was no session with the peer.
+ * Return 1 if a session was ended or if messages held for the session were
+ * discarded, 0 if there was no session nor messages held for the peer.
  */
 
 int
@@ -377,20 +382,22 @@ otr_context_end_session (const char *account, const char *peer, int display,
                          int buffer_closing)
 {
     ConnContext *ptr_context;
+    int count_dropped;
 
     /* Messages held for the session are not sent anymore. */
+    count_dropped = 0;
     ptr_context = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
                                      OTRL_INSTAG_MASTER, 0, NULL, NULL, NULL);
     if (ptr_context)
     {
-        otr_context_drop_held_messages (
+        count_dropped = otr_context_drop_held_messages (
             ptr_context, (struct t_otr_peer_data *)ptr_context->app_data,
             display);
     }
 
     ptr_context = otr_context_find (account, peer);
     if (!ptr_context || (ptr_context->msgstate == OTRL_MSGSTATE_PLAINTEXT))
-        return 0;
+        return (count_dropped > 0) ? 1 : 0;
 
     otrl_message_disconnect_all_instances (otr_us, &otr_callback_ops, NULL,
                                            account, OTR_PROTOCOL, peer);
