@@ -327,6 +327,12 @@ basic colors can be used again with:
 /set irc.server_default.ansi_colors basic
 ```
 
+With the value `rgb`, RGB colors and the terminal colors which are not used to
+display an IRC color are sent as-is with IRC hex colors (`^Drrggbb`):
+they are not supported by all IRC clients (some display the hexadecimal digits as
+text), and each color code is longer, so long messages with a lot of colors are
+split in more messages.
+
 ### Modifier irc_color_decode_ansi
 
 The modifier data of `irc_color_decode_ansi` can now contain the pointer of the buffer

@@ -26,6 +26,7 @@ extern "C"
 extern int irc_color_convert_rgb2term (long rgb);
 extern int irc_color_convert_rgb2irc (long rgb);
 extern int irc_color_convert_term2irc (int color);
+extern char irc_color_term2irc[];
 extern int irc_color_ansi_next_param (const char **ptr_param,
                                       const char *ptr_end, int *value);
 extern int irc_color_ansi_next_color (const char **ptr_param,
@@ -266,6 +267,12 @@ extern void irc_color_decode_ansi_sequence (char **output,
 #define WEE_CHECK_DECODE_ANSI_EXTENDED(__result, __string)              \
     decoded = irc_color_decode_ansi (__string, 1,                       \
                                      IRC_COLOR_PALETTE_EXTENDED);       \
+    STRCMP_EQUAL(__result, decoded);                                    \
+    free (decoded);
+
+#define WEE_CHECK_DECODE_ANSI_RGB(__result, __string)                   \
+    decoded = irc_color_decode_ansi (__string, 1,                       \
+                                     IRC_COLOR_PALETTE_RGB);            \
     STRCMP_EQUAL(__result, decoded);                                    \
     free (decoded);
 
@@ -1903,6 +1910,32 @@ TEST(IrcColor, ConvertPalette)
                                                     IRC_COLOR_PALETTE_BASIC),
                 irc_color_convert_term2irc_cached (256,
                                                    IRC_COLOR_PALETTE_BASIC));
+
+    /* RGB palette: RGB colors are kept. */
+    LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (
+                    -1, IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (
+                    0x1000000, IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(IRC_COLOR_RGB_FLAG | 0xFF8800,
+                irc_color_convert_rgb2irc_palette (0xFF8800,
+                                                   IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(IRC_COLOR_RGB_FLAG,
+                irc_color_convert_rgb2irc_palette (0x000000,
+                                                   IRC_COLOR_PALETTE_RGB));
+
+    /*
+     * RGB palette: terminal colors 0-15 are IRC colors 0-15, terminal
+     * colors displayed for IRC colors 16-98 are these IRC colors, other
+     * colors are RGB colors.
+     */
+    LONGS_EQUAL(irc_color_convert_term2irc (9),
+                irc_color_convert_term2irc_palette (
+                    9, IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(52, irc_color_convert_term2irc_palette (
+                    196, IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(IRC_COLOR_RGB_FLAG | 0xFF5F00,
+                irc_color_convert_term2irc_palette (
+                    202, IRC_COLOR_PALETTE_RGB));
 }
 
 /*
@@ -1950,6 +1983,65 @@ TEST(IrcColor, DecodeAnsiExtended)
                                    "\x03\x03" "52" "D",
                                    "A\x1B[38;5;196;48;5;208mB"
                                    "\x1B[48;5;21mC\x1B[49mD");
+}
+
+/*
+ * Test functions:
+ *   irc_color_decode_ansi (RGB palette)
+ */
+
+TEST(IrcColor, DecodeAnsiRgb)
+{
+    char string[1024], *decoded;
+
+    /* Basic ANSI colors are always IRC colors 0-15. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x03" "04" "red",
+                              "test_\x1B[91mred");
+
+    /* RGB colors: IRC hex colors. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" "orange",
+                              "test_\x1B[38;2;255;136;0morange");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" "orange",
+                              "test_\x1B[38:2::255:136:0morange");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800,000080" "orange/navy",
+                              "test_\x1B[38;2;255;136;0;48;2;0;0;128m"
+                              "orange/navy");
+
+    /* Terminal colors: IRC colors 16-98 if possible, otherwise RGB. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x03" "52" "red",
+                              "test_\x1B[38;5;196mred");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF5F00" "orange",
+                              "test_\x1B[38;5;202morange");
+
+    /* Colors of different kinds: background first. */
+    snprintf (string, sizeof (string),
+              "test_" "\x04" "FFFFFF,000080" "\x03" "%02d" "red/navy",
+              irc_color_term2irc[1]);
+    WEE_CHECK_DECODE_ANSI_RGB(string, "test_\x1B[31;48;2;0;0;128mred/navy");
+    snprintf (string, sizeof (string),
+              "test_" "\x03" "99,%02d" "\x04" "FF8800" "orange/red",
+              irc_color_term2irc[1]);
+    WEE_CHECK_DECODE_ANSI_RGB(string, "test_\x1B[38;2;255;136;0;41morange/red");
+
+    /* Background reset: colors reset, then RGB text color. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800,000080" "A"
+                              "\x03" "\x04" "FF8800" "B",
+                              "test_\x1B[38;2;255;136;0;48;2;0;0;128mA"
+                              "\x1B[49mB");
+
+    /* RGB text color alone followed by "," and hexadecimal digits */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" "\x02\x02" ",ABCDEF",
+                              "test_\x1B[38;2;255;136;0m,ABCDEF");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" ",G",
+                              "test_\x1B[38;2;255;136;0m,G");
+    /* SI (IRC reset): RGB colors are sent again after it. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" "A"
+                              "\x0F" "\x04" "FF8800" "B",
+                              "test_\x1B[38;2;255;136;0mA\x0F" "B");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800,000080" "A"
+                              "\x0F" "\x04" "FF8800,000080" "B",
+                              "test_\x1B[38;2;255;136;0;48;2;0;0;128mA"
+                              "\x0F" "B");
 }
 
 /*
@@ -2064,6 +2156,17 @@ TEST(IrcColor, AnsiPalette)
                             "basic", 1);
     LONGS_EQUAL(IRC_COLOR_PALETTE_BASIC,
                 irc_color_ansi_palette (str_buffer));
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANSI_COLORS],
+                            "rgb", 1);
+    LONGS_EQUAL(IRC_COLOR_PALETTE_RGB,
+                irc_color_ansi_palette (str_buffer));
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 str_data,
+                                 "A\x1B[38;2;255;136;0mB");
+    STRCMP_EQUAL("A" "\x04" "FF8800" "B", result);
+    free (result);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANSI_COLORS],
+                            "basic", 1);
     snprintf (string, sizeof (string),
               "A%s%02dB",
               IRC_COLOR_COLOR_STR, irc_color_convert_term2irc (196));

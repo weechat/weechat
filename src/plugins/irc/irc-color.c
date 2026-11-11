@@ -98,10 +98,10 @@ long irc_color_extended_rgb[IRC_COLOR_NUM_EXTENDED] =
     0xBCBCBC, 0xE2E2E2, 0xFFFFFF,                   /* 96-98 */
 };
 /*
- * Terminal colors converted to IRC colors, for each palette: IRC color + 1,
- * 0 if not converted yet; each color is converted once (with infos
- * "color_term2rgb" and "color_rgb2term"), see function
- * irc_color_convert_term2irc_cached.
+ * Terminal colors converted to IRC colors, for each palette: IRC color (or
+ * RGB color with flag IRC_COLOR_RGB_FLAG) + 1, 0 if not converted yet; each
+ * color is converted once (with infos "color_term2rgb" and "color_rgb2term"),
+ * see function irc_color_convert_term2irc_cached.
  */
 int irc_color_term2irc_cache[IRC_COLOR_NUM_PALETTES][256];
 int irc_color_index_string_decoded = 0;
@@ -274,9 +274,10 @@ irc_color_convert_rgb2irc_extended (long rgb)
 
 /*
  * Convert a RGB color to an IRC color of a palette: nearest color of IRC
- * colors 0-15 (basic) or 16-98 (extended).
+ * colors 0-15 (basic) or 16-98 (extended), or the RGB color itself (rgb,
+ * with flag IRC_COLOR_RGB_FLAG: IRC_COLOR_RGB_FLAG | 0xRRGGBB).
  *
- * Return an IRC color number, -1 if error.
+ * Return an IRC color number or a RGB color with flag, -1 if error.
  */
 
 int
@@ -284,6 +285,9 @@ irc_color_convert_rgb2irc_palette (long rgb, int palette)
 {
     if ((rgb < 0) || (rgb > 0xFFFFFF))
         return -1;
+
+    if (palette == IRC_COLOR_PALETTE_RGB)
+        return IRC_COLOR_RGB_FLAG | (int)rgb;
 
     if (palette == IRC_COLOR_PALETTE_EXTENDED)
         return irc_color_convert_rgb2irc_extended (rgb);
@@ -295,13 +299,14 @@ irc_color_convert_rgb2irc_palette (long rgb, int palette)
  * Convert a terminal color (0-255) to an IRC color of a palette.
  *
  * Terminal colors 0-15 are converted to IRC colors 0-15 (like the theme of
- * the terminal, they can be displayed with any color). With the extended
- * palette, the other terminal colors are converted to the IRC color displayed
- * with this terminal color if there is one (for example 196 is IRC color 52,
- * and 16, which is black, is IRC color 1), otherwise to the nearest extended
- * IRC color.
+ * the terminal, they can be displayed with any color). With the extended and
+ * rgb palettes, the other terminal colors are converted to the IRC color
+ * displayed with this terminal color if there is one (for example 196 is IRC
+ * color 52, and 16, which is black, is IRC color 1), otherwise to the nearest
+ * extended IRC color (extended) or to the RGB color of the terminal color
+ * (rgb, with flag IRC_COLOR_RGB_FLAG).
  *
- * Return an IRC color number, -1 if error.
+ * Return an IRC color number or a RGB color with flag, -1 if error.
  */
 
 int
@@ -313,8 +318,12 @@ irc_color_convert_term2irc_palette (int color, int palette)
     if ((color < 0) || (color > 255))
         return -1;
 
-    if ((palette != IRC_COLOR_PALETTE_EXTENDED) || (color < 16))
+    if (((palette != IRC_COLOR_PALETTE_EXTENDED)
+         && (palette != IRC_COLOR_PALETTE_RGB))
+        || (color < 16))
+    {
         return irc_color_convert_term2irc (color);
+    }
 
     for (i = IRC_COLOR_EXTENDED_FIRST; i <= IRC_COLOR_EXTENDED_LAST; i++)
     {
@@ -324,7 +333,7 @@ irc_color_convert_term2irc_palette (int color, int palette)
 
     rgb = irc_color_convert_term2rgb (color);
 
-    return (rgb >= 0) ? irc_color_convert_rgb2irc_extended (rgb) : -1;
+    return (rgb >= 0) ? irc_color_convert_rgb2irc_palette (rgb, palette) : -1;
 }
 
 /*
@@ -375,7 +384,8 @@ irc_color_ansi_palette (const char *str_buffer)
  * irc_color_convert_term2irc_palette), with a cache: each terminal color is
  * converted only once per palette.
  *
- * Return an IRC color number, -1 if error.
+ * Return an IRC color number or a RGB color with flag IRC_COLOR_RGB_FLAG
+ * (palette rgb), -1 if error.
  */
 
 int
@@ -1640,9 +1650,10 @@ irc_color_ansi_sequence_size (const char *string)
  * colors.
  *
  * The palette is the set of IRC colors used for ANSI terminal colors
- * (16-255) and RGB colors: IRC colors 0-15 (IRC_COLOR_PALETTE_BASIC) or
- * 16-98 (IRC_COLOR_PALETTE_EXTENDED); basic ANSI colors are always
- * converted to IRC colors 0-15.
+ * (16-255) and RGB colors: IRC colors 0-15 (IRC_COLOR_PALETTE_BASIC), 16-98
+ * (IRC_COLOR_PALETTE_EXTENDED), or 16-98 and IRC hex colors
+ * (IRC_COLOR_PALETTE_RGB); basic ANSI colors are always converted to IRC
+ * colors 0-15.
  *
  * Note: result must be freed after use.
  */
