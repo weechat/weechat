@@ -772,6 +772,7 @@ Les fichiers dans le répertoire principal de WeeChat sont :
 | javascript.conf | Fichier de configuration de l'extension _javascript_ | Non.
 | logger.conf     | Fichier de configuration de l'extension _logger_     | Non.
 | lua.conf        | Fichier de configuration de l'extension _lua_        | Non.
+| otr.conf        | Fichier de configuration de l'extension _otr_        | Non.
 | perl.conf       | Fichier de configuration de l'extension _perl_       | Non.
 | php.conf        | Fichier de configuration de l'extension _php_        | Non.
 | python.conf     | Fichier de configuration de l'extension _python_     | Non.
@@ -784,6 +785,9 @@ Les fichiers dans le répertoire principal de WeeChat sont :
 | typing.conf     | Fichier de configuration de l'extension _typing_     | Non.
 | xfer.conf       | Fichier de configuration de l'extension _xfer_       | Non.
 | weechat.log     | Fichier de log WeeChat                               | Non.
+| otr/otr.private_key | Clés privées de l'extension _otr_ | *Oui, très sensibles* : ce fichier ne doit jamais être partagé avec quiconque.
+| otr/otr.fingerprints | Empreintes des correspondants pour l'extension _otr_ | Possible : pseudos des correspondants avec une session OTR et leur niveau de confiance.
+| otr/otr.instag | Marqueurs d'instance pour l'extension _otr_ | Non.
 |===
 
 [IMPORTANT]

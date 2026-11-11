@@ -814,6 +814,7 @@ WeeChat ホームディレクトリには以下のファイルが含まれます
 | javascript.conf | _javascript_ プラグイン用の設定ファイル | 保護されません
 | logger.conf     | _logger_ プラグイン用の設定ファイル     | 保護されません
 | lua.conf        | _lua_ プラグイン用の設定ファイル        | 保護されません
+| otr.conf        | _otr_ プラグイン用の設定ファイル        | 保護されません
 | perl.conf       | _perl_ プラグイン用の設定ファイル       | 保護されません
 | php.conf        | _php_ プラグイン用の設定ファイル        | 保護されません
 | python.conf     | _python_ プラグイン用の設定ファイル     | 保護されません
@@ -827,6 +828,12 @@ WeeChat ホームディレクトリには以下のファイルが含まれます
 | typing.conf     | _typing_ プラグイン用の設定ファイル     | 保護されません
 | xfer.conf       | _xfer_ プラグイン用の設定ファイル       | 保護されません
 | weechat.log     | WeeChat ログファイル                    | 保護されません
+// TRANSLATION MISSING
+| otr/otr.private_key | Private keys for _otr_ plugin | *Yes, highly sensitive*: this file must never be shared with anyone.
+// TRANSLATION MISSING
+| otr/otr.fingerprints | Fingerprints of peers for _otr_ plugin | Possible: nicks of peers with an OTR session and their trust level.
+// TRANSLATION MISSING
+| otr/otr.instag | Instance tags for _otr_ plugin | No.
 |===
 
 [IMPORTANT]
