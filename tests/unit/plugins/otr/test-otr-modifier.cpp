@@ -372,6 +372,13 @@ TEST(OtrModifier, RemoveBatch)
     LONGS_EQUAL(1, otr_modifier_remove_batch ("srv_otr_batch", "BATCH -abc"));
     LONGS_EQUAL(0, otr_modifier_remove_batch ("srv_otr_batch", "BATCH -abc"));
 
+    /* Batch to a nick with a finished session: removed. */
+    ptr_context->msgstate = OTRL_MSGSTATE_FINISHED;
+    LONGS_EQUAL(1, otr_modifier_remove_batch (
+                    "srv_otr_batch", "BATCH +ghi draft/multiline bob"));
+    LONGS_EQUAL(1, otr_modifier_remove_batch ("srv_otr_batch", "BATCH -ghi"));
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+
     /* Free batches removed (end of batch never sent). */
     LONGS_EQUAL(1, otr_modifier_remove_batch (
                     "srv_otr_batch", "BATCH +def draft/multiline bob"));

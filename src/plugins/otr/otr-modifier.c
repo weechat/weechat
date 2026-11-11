@@ -576,8 +576,9 @@ otr_modifier_policy_changed_cb (const void *pointer, void *data,
 /*
  * Check a line "BATCH" of an outgoing multiline message (IRCv3 capability
  * "draft/multiline"): the batch is removed if it is sent to a nick with an
- * encrypted OTR session, or if messages to the nick are held until the session
- * is encrypted.
+ * OTR session started (encrypted or finished, where messages are not sent at
+ * all: the batch would be empty), or if messages to the nick are held until
+ * the session is encrypted.
  *
  * Servers hold the lines of a batch until its end, while all OTR fragments of
  * a line except the last one are sent immediately (out of the batch): the
@@ -591,6 +592,7 @@ int
 otr_modifier_remove_batch (const char *server, const char *message)
 {
     char **items, *key, *peer, *account;
+    ConnContext *ptr_context;
     int num_items, removed;
 
     if (weechat_strncasecmp (message, "BATCH ", 6) != 0)
@@ -639,9 +641,11 @@ otr_modifier_remove_batch (const char *server, const char *message)
     }
     peer = otr_irc_nick_tolower (server, items[2]);
     account = (peer) ? otr_irc_peer_account (server, peer) : NULL;
-    if (!account
-        || (!otr_context_encrypted (otr_context_find (account, peer))
-            && !otr_modifier_must_hold (account, peer)))
+    if (!account)
+        goto end;
+    ptr_context = otr_context_find (account, peer);
+    if ((!ptr_context || (ptr_context->msgstate == OTRL_MSGSTATE_PLAINTEXT))
+        && !otr_modifier_must_hold (account, peer))
     {
         goto end;
     }
