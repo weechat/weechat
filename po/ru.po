@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-18 22:28+0100\n"
+"POT-Creation-Date: 2026-11-22 16:47+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -11668,6 +11668,11 @@ msgstr "сменить текущий ник"
 #, fuzzy
 msgid "server name"
 msgstr "цель: название сервера"
+
+msgid ""
+"nick in lower case, according to the casemapping of the server (default "
+"casemapping is \"rfc1459\")"
+msgstr ""
 
 #, fuzzy
 msgid "get nick from IRC host"

@@ -45,6 +45,7 @@ blocksize
 bool
 buflist
 calc
+casemapping
 ccc
 charset
 charsets

@@ -325,6 +325,43 @@ irc_server_strncasecmp (struct t_irc_server *server,
 }
 
 /*
+ * Convert a string to lower case on server (depends on casemapping, like
+ * function irc_server_strcasecmp): only ASCII chars in the range of the
+ * casemapping are converted, for example with "rfc1459": "A-Z[\]^" are
+ * converted to "a-z{|}~".
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_server_string_tolower (struct t_irc_server *server, const char *string)
+{
+    char *result, *ptr_result;
+    int casemapping, range;
+
+    if (!string)
+        return NULL;
+
+    casemapping = (server) ? server->casemapping : -1;
+    if ((casemapping < 0) || (casemapping >= IRC_SERVER_NUM_CASEMAPPING))
+        casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+
+    range = irc_server_casemapping_range[casemapping];
+
+    result = strdup (string);
+    if (!result)
+        return NULL;
+
+    for (ptr_result = result; ptr_result[0]; ptr_result++)
+    {
+        if ((ptr_result[0] >= 'A') && (ptr_result[0] < 'A' + range))
+            ptr_result[0] += ('a' - 'A');
+    }
+
+    return result;
+}
+
+/*
  * Evaluate a string using the server as context:
  * ${irc_server.xxx} and ${server} are replaced by a server option and the
  * server name.
