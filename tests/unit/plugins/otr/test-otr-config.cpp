@@ -16,10 +16,22 @@ extern "C"
 #include "src/core/core-config-file.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/otr/otr-config.h"
+
+extern int otr_config_policy_inherited (struct t_config_file *config_file,
+                                        struct t_config_section *section,
+                                        const char *option_name);
 }
 
 TEST_GROUP(OtrConfig)
 {
+    struct t_config_option *option (const char *name)
+    {
+        struct t_config_option *ptr_option;
+
+        ptr_option = NULL;
+        config_file_search_with_string (name, NULL, NULL, &ptr_option, NULL);
+        return ptr_option;
+    }
 };
 
 /*
@@ -100,4 +112,60 @@ TEST(OtrConfig, RegexNoSendTag)
 
     config_file_option_reset (otr_config_general_no_send_tag_regex, 1);
     CHECK(otr_config_regex_no_send_tag);
+}
+
+/*
+ * Test functions:
+ *   otr_config_policy_inherited
+ *   otr_config_policy_create_option_cb (value "toggle")
+ */
+
+TEST(OtrConfig, PolicyToggle)
+{
+    struct t_config_option *ptr_option;
+
+    config_file_option_set_with_string ("otr.policy.default.log", "on");
+
+    /* Value inherited from upper levels. */
+    LONGS_EQUAL(0, otr_config_policy_inherited (otr_config_file,
+                                                otr_config_section_policy,
+                                                "log"));
+    LONGS_EQUAL(1, otr_config_policy_inherited (otr_config_file,
+                                                otr_config_section_policy,
+                                                "tst.log"));
+    LONGS_EQUAL(1, otr_config_policy_inherited (otr_config_file,
+                                                otr_config_section_policy,
+                                                "tst.alice.bob.log"));
+    config_file_option_set_with_string ("otr.policy.tst.alice.log", "off");
+    LONGS_EQUAL(0, otr_config_policy_inherited (otr_config_file,
+                                                otr_config_section_policy,
+                                                "tst.alice.bob.log"));
+    LONGS_EQUAL(1, otr_config_policy_inherited (otr_config_file,
+                                                otr_config_section_policy,
+                                                "tst.alice2.bob.log"));
+
+    /* Toggle a missing option: opposite of the value inherited. */
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_with_string (
+                    "otr.policy.tst.alice.bob.log", "toggle"));
+    ptr_option = option ("otr.policy.tst.alice.bob.log");
+    CHECK(ptr_option);
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(ptr_option));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_with_string (
+                    "otr.policy.tst.alice2.bob.log", "toggle"));
+    ptr_option = option ("otr.policy.tst.alice2.bob.log");
+    CHECK(ptr_option);
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option));
+
+    /* Toggle an existing option. */
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_with_string (
+                    "otr.policy.tst.alice2.bob.log", "toggle"));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(ptr_option));
+
+    config_file_option_unset (option ("otr.policy.tst.alice.bob.log"));
+    config_file_option_unset (option ("otr.policy.tst.alice2.bob.log"));
+    config_file_option_unset (option ("otr.policy.tst.alice.log"));
+    config_file_option_unset (option ("otr.policy.default.log"));
 }

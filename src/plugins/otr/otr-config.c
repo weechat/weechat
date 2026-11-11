@@ -211,8 +211,66 @@ otr_config_change_no_send_tag_regex_cb (const void *pointer, void *data,
 }
 
 /*
+ * Get the value inherited by a policy option (name without "otr.policy."), from
+ * the options of upper levels: for example for "server.nick.peer.name", the
+ * value of the first option found among "server.nick.name", "server.name" and
+ * "default.name".
+ *
+ * Return the boolean value inherited, 0 if no option is found.
+ */
+
+int
+otr_config_policy_inherited (struct t_config_file *config_file,
+                             struct t_config_section *section,
+                             const char *option_name)
+{
+    struct t_config_option *ptr_option;
+    const char *ptr_name;
+    char *prefix, *pos, *parent_name;
+
+    ptr_name = strrchr (option_name, '.');
+    if (!ptr_name)
+        return 0;
+    ptr_name++;
+
+    prefix = weechat_strndup (option_name, ptr_name - 1 - option_name);
+    if (!prefix)
+        return 0;
+
+    ptr_option = NULL;
+    while (!ptr_option)
+    {
+        pos = strrchr (prefix, '.');
+        if (pos)
+        {
+            pos[0] = '\0';
+            weechat_asprintf (&parent_name, "%s.%s", prefix, ptr_name);
+        }
+        else
+        {
+            weechat_asprintf (&parent_name, "default.%s", ptr_name);
+        }
+        if (parent_name)
+        {
+            ptr_option = weechat_config_search_option (config_file, section,
+                                                       parent_name);
+            free (parent_name);
+        }
+        if (!pos)
+            break;
+    }
+
+    free (prefix);
+
+    return (ptr_option) ? weechat_config_boolean (ptr_option) : 0;
+}
+
+/*
  * Callback to create an option in section "policy" (boolean, "off" if no value
  * is given); the option is not created if the value is not a valid boolean.
+ *
+ * With value "toggle", the option is created with the opposite of the value
+ * inherited from upper levels (see function otr_config_policy_inherited).
  */
 
 int
@@ -229,6 +287,12 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
     (void) data;
 
     ptr_value = (value) ? value : "off";
+    if (strcmp (ptr_value, "toggle") == 0)
+    {
+        ptr_value = (otr_config_policy_inherited (config_file, section,
+                                                  option_name)) ?
+            "off" : "on";
+    }
 
     ptr_option = weechat_config_new_option (
         config_file, section,
