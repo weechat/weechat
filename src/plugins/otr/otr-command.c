@@ -126,7 +126,7 @@ error:
  * Get the peer from command arguments "<nick> <server>" (if num_args is 2) or,
  * without arguments, from the current private buffer.
  *
- * Return 1 if OK, 0 if error.
+ * Return 1 if OK, 0 if error (for example the nick given is a channel).
  */
 
 int
@@ -137,6 +137,9 @@ otr_command_peer_args (struct t_gui_buffer *buffer, char **args, int num_args,
 
     if (num_args == 2)
     {
+        /* Only a nick is allowed (not a channel or a list of targets). */
+        if (!otr_irc_is_nick (args[1], args[0]))
+            return 0;
         snprintf (peer_ref->nick, sizeof (peer_ref->nick), "%s", args[0]);
         snprintf (peer_ref->server, sizeof (peer_ref->server), "%s", args[1]);
         return 1;

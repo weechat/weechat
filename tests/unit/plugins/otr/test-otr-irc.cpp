@@ -204,3 +204,21 @@ TEST(OtrIrc, NickTolower)
     run_cmd_quiet ("/mute /disconnect test_otr_cm");
     run_cmd_quiet ("/mute /server del test_otr_cm");
 }
+
+/*
+ * Test functions:
+ *   otr_irc_is_nick
+ */
+
+TEST(OtrIrc, IsNick)
+{
+    LONGS_EQUAL(0, otr_irc_is_nick ("test", NULL));
+    LONGS_EQUAL(0, otr_irc_is_nick ("test", ""));
+    LONGS_EQUAL(0, otr_irc_is_nick ("test", "#chan"));
+    LONGS_EQUAL(0, otr_irc_is_nick ("test", "@#chan"));
+    LONGS_EQUAL(0, otr_irc_is_nick ("test", "bob,carol"));
+    LONGS_EQUAL(0, otr_irc_is_nick ("test", "bob carol"));
+    LONGS_EQUAL(1, otr_irc_is_nick ("test", "bob"));
+    LONGS_EQUAL(1, otr_irc_is_nick ("test", "nick[a]"));
+    LONGS_EQUAL(1, otr_irc_is_nick (NULL, "bob"));
+}
