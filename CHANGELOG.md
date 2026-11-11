@@ -235,6 +235,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - trigger: set variables "tg_trigger_name" and "tg_hook_type" in focus triggers, do not add them in the hashtable returned
 - trigger: escape backslashes in arguments displayed by commands `/trigger input|output|recreate` ([#729](https://github.com/weechat/weechat/issues/729))
 - typing: fix issue with year ≥ 2038 in typing status of nicks
+- xfer: fix comparison of nicks with casemapping of IRC server in option xfer.file.auto_accept_nicks
 - xfer: fix memory leak of token in passive DCC transfers
 - xfer: fix send of files greater than 4 GiB with DCC, the transfer failed or stalled after 4 GiB
 - xfer: fix timeout of transfers when option xfer.network.timeout is greater than 2147483 seconds

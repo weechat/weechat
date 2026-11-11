@@ -36,7 +36,10 @@ extern "C"
 extern int xfer_search_type (const char *type);
 extern int xfer_search_protocol (const char *protocol);
 extern int xfer_port_in_use (int port);
-extern int xfer_nick_auto_accepted (const char *server, const char *nick);
+extern int xfer_nick_equal (const char *plugin_name, const char *server,
+                            const char *nick1, const char *nick2);
+extern int xfer_nick_auto_accepted (const char *plugin_name,
+                                    const char *server, const char *nick);
 extern struct t_xfer *xfer_new (const char *plugin_name,
                                 const char *plugin_id,
                                 enum t_xfer_type type,
@@ -1177,27 +1180,59 @@ TEST(XferAdd, ValidSearch)
 
 /*
  * Test functions:
+ *   xfer_nick_equal
+ */
+
+TEST(XferAdd, NickEqual)
+{
+    LONGS_EQUAL(0, xfer_nick_equal ("irc", "libera", NULL, NULL));
+    LONGS_EQUAL(0, xfer_nick_equal ("irc", "libera", "bob", NULL));
+    LONGS_EQUAL(0, xfer_nick_equal ("irc", "libera", NULL, "bob"));
+    LONGS_EQUAL(0, xfer_nick_equal ("irc", "libera", "bob", "alice"));
+    LONGS_EQUAL(1, xfer_nick_equal ("irc", "libera", "bob", "BOB"));
+
+    /* IRC: casemapping of server (default is "rfc1459"). */
+    LONGS_EQUAL(1, xfer_nick_equal ("irc", "libera", "nick[a]", "NICK{A}"));
+    LONGS_EQUAL(1, xfer_nick_equal ("irc", NULL, "nick^", "nick~"));
+
+    /* Other plugin: case-insensitive comparison. */
+    LONGS_EQUAL(1, xfer_nick_equal ("other", "srv", "bob", "BOB"));
+    LONGS_EQUAL(0, xfer_nick_equal ("other", "srv", "nick[a]", "nick{a}"));
+    LONGS_EQUAL(0, xfer_nick_equal (NULL, "srv", "nick[a]", "nick{a}"));
+}
+
+/*
+ * Test functions:
  *   xfer_nick_auto_accepted
  */
 
 TEST(XferAdd, NickAutoAccepted)
 {
-    LONGS_EQUAL(0, xfer_nick_auto_accepted ("libera", "alice"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("irc", "libera", "alice"));
 
     config_file_option_set (xfer_config_file_auto_accept_nicks,
                             "alice,libera.bob", 1);
-    LONGS_EQUAL(1, xfer_nick_auto_accepted ("libera", "alice"));
-    LONGS_EQUAL(1, xfer_nick_auto_accepted ("oftc", "ALICE"));
-    LONGS_EQUAL(1, xfer_nick_auto_accepted ("libera", "bob"));
-    LONGS_EQUAL(1, xfer_nick_auto_accepted ("LIBERA", "Bob"));
-    LONGS_EQUAL(0, xfer_nick_auto_accepted ("oftc", "bob"));
-    LONGS_EQUAL(0, xfer_nick_auto_accepted ("libera", "carol"));
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("irc", "libera", "alice"));
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("irc", "oftc", "ALICE"));
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("irc", "libera", "bob"));
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("irc", "LIBERA", "Bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("irc", "oftc", "bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("irc", "libera", "carol"));
 
     /* The whole server name must match. */
-    LONGS_EQUAL(0, xfer_nick_auto_accepted ("libera2", "bob"));
-    LONGS_EQUAL(0, xfer_nick_auto_accepted ("liberatest", "bob"));
-    LONGS_EQUAL(0, xfer_nick_auto_accepted ("liber", "bob"));
-    LONGS_EQUAL(0, xfer_nick_auto_accepted ("", "bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("irc", "libera2", "bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("irc", "liberatest", "bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("irc", "liber", "bob"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("irc", "", "bob"));
+
+    /* Casemapping of IRC server ("rfc1459" by default). */
+    config_file_option_set (xfer_config_file_auto_accept_nicks,
+                            "nick[a],libera.dave^", 1);
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("irc", "oftc", "NICK{A}"));
+    LONGS_EQUAL(1, xfer_nick_auto_accepted ("irc", "libera", "dave~"));
+    LONGS_EQUAL(0, xfer_nick_auto_accepted ("other", "oftc", "nick{a}"));
+
+    config_file_option_reset (xfer_config_file_auto_accept_nicks, 1);
 }
 
 /*
