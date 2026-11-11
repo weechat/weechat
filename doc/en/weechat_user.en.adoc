@@ -761,6 +761,7 @@ The files in the WeeChat home directory are:
 | javascript.conf | Configuration file for _javascript_ plugin | No.
 | logger.conf     | Configuration file for _logger_ plugin     | No.
 | lua.conf        | Configuration file for _lua_ plugin        | No.
+| otr.conf        | Configuration file for _otr_ plugin        | No.
 | perl.conf       | Configuration file for _perl_ plugin       | No.
 | php.conf        | Configuration file for _php_ plugin        | No.
 | python.conf     | Configuration file for _python_ plugin     | No.
@@ -773,6 +774,9 @@ The files in the WeeChat home directory are:
 | typing.conf     | Configuration file for _typing_ plugin     | No.
 | xfer.conf       | Configuration file for _xfer_ plugin       | No.
 | weechat.log     | WeeChat log file                           | No.
+| otr/otr.private_key | Private keys for _otr_ plugin | *Yes, highly sensitive*: this file must never be shared with anyone.
+| otr/otr.fingerprints | Fingerprints of peers for _otr_ plugin | Possible: nicks of peers with an OTR session and their trust level.
+| otr/otr.instag | Instance tags for _otr_ plugin | No.
 |===
 
 [IMPORTANT]

@@ -62,6 +62,9 @@ $HOME/.config/weechat/logger.conf::
 $HOME/.config/weechat/lua.conf::
     конфигурациони фајл за _lua_ додатак
 
+$HOME/.config/weechat/otr.conf::
+    конфигурациони фајл за _otr_ додатак
+
 $HOME/.config/weechat/perl.conf::
     конфигурациони фајл за _perl_ додатак
 
@@ -97,6 +100,18 @@ $HOME/.config/weechat/xfer.conf::
 
 $HOME/.config/weechat/weechat.log::
     WeeChat лог фајл
+
+// TRANSLATION MISSING
+$HOME/.local/share/weechat/otr/otr.private_key::
+    private keys for _otr_ plugin (highly sensitive: never share this file)
+
+// TRANSLATION MISSING
+$HOME/.local/share/weechat/otr/otr.fingerprints::
+    fingerprints of peers for _otr_ plugin
+
+// TRANSLATION MISSING
+$HOME/.local/share/weechat/otr/otr.instag::
+    instance tags for _otr_ plugin
 // end::files[]
 
 // tag::exit_status[]

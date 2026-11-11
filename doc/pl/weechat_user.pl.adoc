@@ -766,6 +766,7 @@ Pliki tworzone w katalogu domowym WeeChat:
 | javascript.conf | Plik konfiguracyjny wtyczki _javascript_     | Nie.
 | logger.conf     | Plik konfiguracyjny wtyczki _logger_         | Nie.
 | lua.conf        | Plik konfiguracyjny wtyczki _lua_            | Nie.
+| otr.conf        | Plik konfiguracyjny wtyczki _otr_            | Nie.
 | perl.conf       | Plik konfiguracyjny wtyczki _perl_           | Nie.
 | php.conf        | Plik konfiguracyjny wtyczki _php_            | Nie.
 | python.conf     | Plik konfiguracyjny wtyczki _python_         | Nie.
@@ -778,6 +779,12 @@ Pliki tworzone w katalogu domowym WeeChat:
 | typing.conf     | Plik konfiguracyjny wtyczki _typing_         | Nie.
 | xfer.conf       | Plik konfiguracyjny wtyczki _xfer_           | Nie.
 | weechat.log     | Plik z logami WeeChat                        | Nie.
+// TRANSLATION MISSING
+| otr/otr.private_key | Private keys for _otr_ plugin | *Yes, highly sensitive*: this file must never be shared with anyone.
+// TRANSLATION MISSING
+| otr/otr.fingerprints | Fingerprints of peers for _otr_ plugin | Possible: nicks of peers with an OTR session and their trust level.
+// TRANSLATION MISSING
+| otr/otr.instag | Instance tags for _otr_ plugin | No.
 |===
 
 [IMPORTANT]

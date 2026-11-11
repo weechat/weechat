@@ -732,6 +732,7 @@ WeeChat подразумевано користи XDG директоријуме
 | javascript.conf | Конфигурациони фајл за _javascript_ додатак | Не.
 | logger.conf     | Конфигурациони фајл за _logger_ додатак     | Не.
 | lua.conf        | Конфигурациони фајл за _lua_ додатак        | Не.
+| otr.conf        | Конфигурациони фајл за _otr_ додатак        | Не.
 | perl.conf       | Конфигурациони фајл за _perl_ додатак       | Не.
 | php.conf        | Конфигурациони фајл за _php_ додатак        | Не.
 | python.conf     | Конфигурациони фајл за _python_ додатак     | Не.
@@ -744,6 +745,12 @@ WeeChat подразумевано користи XDG директоријуме
 | typing.conf     | Конфигурациони фајл за _typing_ додатак     | Не.
 | xfer.conf       | Конфигурациони фајл за _xfer_ додатак       | Не.
 | weechat.log     | WeeChat лог фајл                            | Не.
+// TRANSLATION MISSING
+| otr/otr.private_key | Private keys for _otr_ plugin | *Yes, highly sensitive*: this file must never be shared with anyone.
+// TRANSLATION MISSING
+| otr/otr.fingerprints | Fingerprints of peers for _otr_ plugin | Possible: nicks of peers with an OTR session and their trust level.
+// TRANSLATION MISSING
+| otr/otr.instag | Instance tags for _otr_ plugin | No.
 |===
 
 [IMPORTANT]

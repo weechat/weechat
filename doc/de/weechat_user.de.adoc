@@ -770,6 +770,7 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | javascript.conf | Konfiguration für _javascript_-Erweiterung | Nein.
 | logger.conf     | Konfiguration für _logger_-Erweiterung     | Nein.
 | lua.conf        | Konfiguration für _lua_-Erweiterung        | Nein.
+| otr.conf        | Konfiguration für _otr_-Erweiterung        | Nein.
 | perl.conf       | Konfiguration für _perl_-Erweiterung       | Nein.
 | php.conf        | Konfiguration für _php_-Erweiterung        | Nein.
 | python.conf     | Konfiguration für _python_-Erweiterung     | Nein.
@@ -782,6 +783,12 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | typing.conf     | Konfiguration für _typing_-Erweiterung     | Nein.
 | xfer.conf       | Konfiguration für _xfer_-Erweiterung       | Nein.
 | weechat.log     | WeeChat Logdateien                         | Nein.
+// TRANSLATION MISSING
+| otr/otr.private_key | Private keys for _otr_ plugin | *Yes, highly sensitive*: this file must never be shared with anyone.
+// TRANSLATION MISSING
+| otr/otr.fingerprints | Fingerprints of peers for _otr_ plugin | Possible: nicks of peers with an OTR session and their trust level.
+// TRANSLATION MISSING
+| otr/otr.instag | Instance tags for _otr_ plugin | No.
 |===
 
 [IMPORTANT]
