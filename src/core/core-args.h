@@ -46,7 +46,7 @@ extern int args_check_long_option (const char *arg,
 extern void args_display_usage_hint (void);
 extern void args_display_error_invalid_option (const char *arg,
                                                const struct option *long_options);
-extern void args_exit_usage_error (void);
+extern void args_exit (int return_code);
 extern void args_display_help (void);
 extern void args_parse (int argc, char *argv[]);
 extern void args_run_action (void);

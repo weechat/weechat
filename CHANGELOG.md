@@ -114,6 +114,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix exit code 1 instead of 0 when option `--doc-gen` is given with an option that exits immediately, like `--version`
 - core: fix option `--no-gcrypt`, which did not disable the init of gcrypt
 - core: call config hooks with the old option name when an option is renamed, so that the old name is seen as removed
 - core: fix memory leak when the upgrade file can not be read on startup with option `--upgrade`

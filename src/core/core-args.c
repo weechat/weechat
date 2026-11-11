@@ -589,15 +589,16 @@ args_display_error_invalid_option (const char *arg,
 }
 
 /*
- * Exit WeeChat after an error in command line arguments (usage error).
+ * Exit WeeChat while parsing command line arguments, with this return code
+ * (the return code of doc generation is not used, even if option "--doc-gen"
+ * was given).
  */
 
 void
-args_exit_usage_error (void)
+args_exit (int return_code)
 {
-    /* Exit code must not be the one of doc generation. */
     weechat_doc_gen = 0;
-    weechat_shutdown (ARGS_EXIT_USAGE_ERROR, 0);
+    weechat_shutdown (return_code, 0);
 }
 
 /*
@@ -702,7 +703,7 @@ args_parse (int argc, char *argv[])
             {
                 args_display_error_invalid_option (argv[index_arg],
                                                    long_options);
-                args_exit_usage_error ();
+                args_exit (ARGS_EXIT_USAGE_ERROR);
             }
             break;
         }
@@ -810,7 +811,7 @@ args_parse (int argc, char *argv[])
                 {
                     args_display_error_invalid_option (argv[index_arg],
                                                        long_options);
-                    args_exit_usage_error ();
+                    args_exit (ARGS_EXIT_USAGE_ERROR);
                 }
                 option = args_get_invalid_option (argv[index_arg],
                                                   ARGS_SHORT_OPTIONS);
@@ -819,12 +820,12 @@ args_parse (int argc, char *argv[])
                                 (option) ? option : "?");
                 free (option);
                 args_display_usage_hint ();
-                args_exit_usage_error ();
+                args_exit (ARGS_EXIT_USAGE_ERROR);
                 break;
             case '?':
                 args_display_error_invalid_option (argv[index_arg],
                                                    long_options);
-                args_exit_usage_error ();
+                args_exit (ARGS_EXIT_USAGE_ERROR);
                 break;
             default:
                 /* Ignore any other error. */
@@ -877,5 +878,5 @@ args_run_action (void)
             fprintf (stdout, "\n");
             break;
     }
-    weechat_shutdown (EXIT_SUCCESS, 0);
+    args_exit (EXIT_SUCCESS);
 }
