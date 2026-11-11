@@ -122,6 +122,11 @@ otr_log_save_level (struct t_otr_peer_data *peer_data,
  * Disable logging of the private buffer with the peer of a libotr context
  * during the OTR session; the previous logger level is saved in per-peer data,
  * to be restored at the end of the session.
+ *
+ * If a level is already saved (for example the peer ended the previous session
+ * and started a new one, without the end of session on our side), this level
+ * is kept (it is the level before the first session), but logging is disabled
+ * anyway if the buffer is logged.
  */
 
 void
@@ -129,7 +134,7 @@ otr_log_disable (ConnContext *context, struct t_otr_peer_data *peer_data)
 {
     struct t_gui_buffer *ptr_buffer;
 
-    if (!peer_data || (peer_data->prev_log != OTR_LOG_UNTOUCHED))
+    if (!peer_data)
         return;
 
     ptr_buffer = otr_irc_buffer (otr_irc_account_server (context->accountname),

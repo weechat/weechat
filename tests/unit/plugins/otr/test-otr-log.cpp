@@ -175,3 +175,60 @@ TEST(OtrLog, BufferRenamed)
     run_cmd_quiet ("/mute /disconnect test_otr_ren");
     run_cmd_quiet ("/mute /server del test_otr_ren");
 }
+
+/*
+ * Test functions:
+ *   otr_log_disable (level already saved)
+ */
+
+TEST(OtrLog, DisableLevelSaved)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_config_option *ptr_option;
+    struct t_otr_peer_data *ptr_peer_data;
+    ConnContext *ptr_context;
+
+    run_cmd_quiet ("/mute /server add test_otr_saved fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_saved");
+    server = irc_server_search ("test_otr_saved");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "bob", 0, 0);
+    CHECK(channel);
+
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@test_otr_saved",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    ptr_peer_data = otr_context_peer_data_ctx (ptr_context);
+    CHECK(ptr_peer_data);
+
+    /* First session: level saved, then logging enabled ("/otr log start"). */
+    otr_log_save_level (ptr_peer_data, channel->buffer);
+    LONGS_EQUAL(OTR_LOG_DEFAULT, ptr_peer_data->prev_log);
+    run_cmd_quiet ("/mute /set logger.level.irc.test_otr_saved.bob 9");
+    LONGS_EQUAL(1, otr_log_buffer_is_logged (channel->buffer));
+
+    /*
+     * New session started by the peer (level still saved): logging is
+     * disabled, the level saved is kept.
+     */
+    otr_log_disable (ptr_context, ptr_peer_data);
+    ptr_option = option ("logger.level.irc.test_otr_saved.bob");
+    CHECK(ptr_option);
+    LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option));
+    LONGS_EQUAL(0, otr_log_buffer_is_logged (channel->buffer));
+    LONGS_EQUAL(OTR_LOG_DEFAULT, ptr_peer_data->prev_log);
+
+    /* End of session: level before the first session restored. */
+    otr_log_restore (ptr_context, ptr_peer_data, 0);
+    POINTERS_EQUAL(NULL, option ("logger.level.irc.test_otr_saved.bob"));
+    LONGS_EQUAL(1, otr_log_buffer_is_logged (channel->buffer));
+
+    gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_otr_saved");
+    run_cmd_quiet ("/mute /server del test_otr_saved");
+}
