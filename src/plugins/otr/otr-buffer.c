@@ -60,13 +60,14 @@ otr_buffer_debug (const char *format, ...)
 }
 
 /*
- * Display a message in a buffer with the OTR prefix and a color (index in enum
- * t_otr_config_color); each line of the message is displayed separately.
+ * Display a message in a buffer with the OTR prefix, optional tags (separated
+ * by commas, can be NULL) and a color (index in enum t_otr_config_color); each
+ * line of the message is displayed separately.
  */
 
 void
-otr_buffer_print_str (struct t_gui_buffer *buffer, int color,
-                      const char *message)
+otr_buffer_print_str_tags (struct t_gui_buffer *buffer, const char *tags,
+                           int color, const char *message)
 {
     char *prefix, *message2, *ptr_line, *ptr_newline;
     const char *ptr_color;
@@ -86,15 +87,27 @@ otr_buffer_print_str (struct t_gui_buffer *buffer, int color,
         ptr_newline = strchr (ptr_line, '\n');
         if (ptr_newline)
             ptr_newline[0] = '\0';
-        weechat_printf (buffer, "%s\t%s%s",
-                        (prefix) ? prefix : OTR_PLUGIN_NAME,
-                        (ptr_color) ? ptr_color : "",
-                        ptr_line);
+        weechat_printf_date_tags (buffer, 0, tags, "%s\t%s%s",
+                                  (prefix) ? prefix : OTR_PLUGIN_NAME,
+                                  (ptr_color) ? ptr_color : "",
+                                  ptr_line);
         ptr_line = (ptr_newline) ? ptr_newline + 1 : NULL;
     }
 
     free (message2);
     free (prefix);
+}
+
+/*
+ * Display a message in a buffer with the OTR prefix and a color (index in enum
+ * t_otr_config_color); each line of the message is displayed separately.
+ */
+
+void
+otr_buffer_print_str (struct t_gui_buffer *buffer, int color,
+                      const char *message)
+{
+    otr_buffer_print_str_tags (buffer, NULL, color, message);
 }
 
 /*
@@ -136,7 +149,7 @@ otr_buffer_is_private (struct t_gui_buffer *buffer)
 /*
  * Display a message for a peer, in the private buffer with the peer if it
  * exists, otherwise in core buffer with the nick of the peer before the
- * message.
+ * message (the message is then not logged).
  *
  * Nothing is displayed when the plugin is unloading.
  */
@@ -157,8 +170,17 @@ otr_buffer_peer_print (const char *server, const char *nick, int color,
     if (nick && nick[0] && !otr_buffer_is_private (ptr_buffer))
         weechat_asprintf (&message_with_nick, "[%s] %s", nick, message);
 
-    otr_buffer_print_str (ptr_buffer, color,
-                          (message_with_nick) ? message_with_nick : message);
+    /*
+     * Not in the private buffer with the peer (for example in core buffer):
+     * the message is not logged (it can contain data received from the peer
+     * in the OTR session, like an SMP question, and logging is disabled only
+     * in the private buffer during the session).
+     */
+    otr_buffer_print_str_tags (
+        ptr_buffer,
+        (otr_buffer_is_private (ptr_buffer)) ? NULL : "no_log",
+        color,
+        (message_with_nick) ? message_with_nick : message);
 
     free (message_with_nick);
 }
