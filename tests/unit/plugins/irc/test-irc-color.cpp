@@ -91,6 +91,12 @@ extern int irc_color_convert_term2irc (int color);
     "test_" IRC_COLOR_HEX_COLOR_STR ",8B008B" "_end"
 #define STRING_IRC_COLOR_FG_ORANGE_COMMA                                \
     "test_" IRC_COLOR_HEX_COLOR_STR "FF7F00," "orange_end"
+#define STRING_IRC_COLOR_HEX_SHORT                                      \
+    "test_" IRC_COLOR_HEX_COLOR_STR "12" " apples"
+#define STRING_IRC_COLOR_HEX_SHORT_BG                                   \
+    "test_" IRC_COLOR_HEX_COLOR_STR "FF7F00,8B00" " orange"
+#define STRING_IRC_COLOR_HEX_LONG                                       \
+    "test_" IRC_COLOR_HEX_COLOR_STR "FF7F00" "ABCD" " orange"
 #define STRING_IRC_COLOR_TERM_REMAPPED                                  \
     "test_"                                                             \
     IRC_COLOR_HEX_COLOR_STR "FFFF00,8B008B" "remapped"
@@ -140,6 +146,10 @@ extern int irc_color_convert_term2irc (int color);
     "test_" "\x04" ",8B008B" "_end"
 #define STRING_USER_FG_ORANGE_COMMA                                     \
     "test_" "\x04" "FF7F00," "orange_end"
+#define STRING_USER_HEX_SHORT                                           \
+    "test_" "\x04" "12" " apples"
+#define STRING_USER_HEX_SHORT_BG                                        \
+    "test_" "\x04" "FF7F00,8B00" " orange"
 
 /* Tests on irc_color_decode_ansi(): ANSI color -> IRC color */
 #define STRING_ANSI_RESET "test_\x1B[mreset"
@@ -442,6 +452,27 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("|#ff7f00"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_ORANGE_COMMA, 1);
 
+    /* Color: hex with less than 6 digits (reset + text "12 apples") */
+    WEE_CHECK_DECODE("test_12 apples", STRING_IRC_COLOR_HEX_SHORT, 0);
+    snprintf (string, sizeof (string),
+              "test_%s12 apples",
+              gui_color_get_custom ("resetcolor"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_HEX_SHORT, 1);
+
+    /* Color: hex background with less than 6 digits (text ",8B00") */
+    WEE_CHECK_DECODE("test_,8B00 orange", STRING_IRC_COLOR_HEX_SHORT_BG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,8B00 orange",
+              gui_color_get_custom ("|#ff7f00"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_HEX_SHORT_BG, 1);
+
+    /* Color: hex followed by more hexadecimal digits (text "ABCD") */
+    WEE_CHECK_DECODE("test_ABCD orange", STRING_IRC_COLOR_HEX_LONG, 0);
+    snprintf (string, sizeof (string),
+              "test_%sABCD orange",
+              gui_color_get_custom ("|#ff7f00"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_HEX_LONG, 1);
+
     /*
      * Color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90)
      * -> blue (remapped via option irc.color.term_remap).
@@ -639,6 +670,30 @@ TEST(IrcColor, Encode)
               "test_%sFF7F00,orange_end",
               IRC_COLOR_HEX_COLOR_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_FG_ORANGE_COMMA, 1);
+
+    /* Color: hex with less than 6 digits (reset + text "12 apples") */
+    WEE_CHECK_ENCODE("test_12 apples", STRING_USER_HEX_SHORT, 0);
+    WEE_CHECK_ENCODE(STRING_USER_HEX_SHORT, STRING_USER_HEX_SHORT, 1);
+
+    /* Color: hex background with less than 6 digits (text ",8B00") */
+    WEE_CHECK_ENCODE("test_,8B00 orange", STRING_USER_HEX_SHORT_BG, 0);
+    WEE_CHECK_ENCODE(STRING_USER_HEX_SHORT_BG, STRING_USER_HEX_SHORT_BG, 1);
+}
+
+/*
+ * Test functions:
+ *   irc_color_is_hex_color
+ */
+
+TEST(IrcColor, IsHexColor)
+{
+    LONGS_EQUAL(0, irc_color_is_hex_color ((const unsigned char *)""));
+    LONGS_EQUAL(0, irc_color_is_hex_color ((const unsigned char *)"12"));
+    LONGS_EQUAL(0, irc_color_is_hex_color ((const unsigned char *)"FF7F0"));
+    LONGS_EQUAL(0, irc_color_is_hex_color ((const unsigned char *)"FF7F0G"));
+    LONGS_EQUAL(1, irc_color_is_hex_color ((const unsigned char *)"FF7F00"));
+    LONGS_EQUAL(1, irc_color_is_hex_color ((const unsigned char *)"ff7f00"));
+    LONGS_EQUAL(1, irc_color_is_hex_color ((const unsigned char *)"FF7F00AB"));
 }
 
 /*

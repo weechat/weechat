@@ -108,6 +108,7 @@ struct t_irc_color_ansi_state
     char strikethrough;
 };
 
+extern int irc_color_is_hex_color (const unsigned char *string);
 extern char *irc_color_decode (const char *string, int keep_colors);
 extern const char *irc_color_decode_const (const char *string, int keep_colors);
 extern char *irc_color_encode (const char *string, int keep_colors);
