@@ -186,6 +186,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: read alone a byte which is not valid UTF-8 when decoding or encoding IRC colors, so that a color code after it is not ignored
 - irc: count each message of a split line in limit "max-lines" of multiline batches, and the codes of formatting sent again in limit "max-bytes"
 - irc: keep colors and attributes in a long message split in several messages: color codes are not split any more, and each message starts with the colors and attributes of the end of the previous message
 - irc: do not send an empty message when a long message is split at a space at the beginning of a part

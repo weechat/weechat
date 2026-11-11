@@ -264,6 +264,9 @@ TEST(IrcColor, Decode)
     WEE_CHECK_DECODE("", "", 0);
     WEE_CHECK_DECODE("", "", 1);
 
+    /* Byte which is not valid UTF-8 before a color code */
+    WEE_CHECK_DECODE("A\xC3" "red", "A\xC3\x03" "04red", 0);
+
     /* No color codes */
     WEE_CHECK_DECODE("test string", "test string", 0);
     WEE_CHECK_DECODE("test string", "test string", 1);
@@ -530,6 +533,10 @@ TEST(IrcColor, Encode)
     /* No color codes */
     WEE_CHECK_ENCODE("test string", "test string", 0);
     WEE_CHECK_ENCODE("test string", "test string", 1);
+
+    /* Byte which is not valid UTF-8 before a color code */
+    WEE_CHECK_ENCODE("A\xC3" "red", "A\xC3\x03" "04red", 0);
+    WEE_CHECK_ENCODE("A\xC3\x03" "04red", "A\xC3\x03" "04red", 1);
 
     /* bold */
     WEE_CHECK_ENCODE("test_bold_end", STRING_USER_BOLD, 0);
