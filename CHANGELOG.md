@@ -213,6 +213,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - relay: ignore option relay.network.allowed_ips for relays on UNIX domain sockets (clients were rejected if the regular expression did not match an empty string)
 - relay/irc: add support of extra date/time specifiers like "%@" (UTC date) in option relay.irc.backlog_time_format
 - relay/irc: remove message tags not negotiated by the client in redirected messages ([#2359](https://github.com/weechat/weechat/issues/2359))
+- relay/api: allow header "x-weechat-totp" in CORS preflight response, so that browsers can send the TOTP in HTTP requests
 - relay/api: fix memory leak when a message without body is sent to a client connected with websocket
 - relay/api: replace invalid UTF-8 chars by "?" in JSON sent, so that it is always valid JSON
 - relay/api: fix integer numbers sent with exponent in JSON (for example buffer identifier sent as `1.70993282323864e+15` instead of `1709932823238640`)

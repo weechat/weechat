@@ -464,7 +464,8 @@ RELAY_API_PROTOCOL_CALLBACK(preflight)
         client,
         RELAY_HTTP_204_NO_CONTENT,
         "Access-Control-Allow-Methods: " RELAY_API_ALLOWED_METHODS "\r\n"
-        "Access-Control-Allow-Headers: origin, content-type, accept, authorization",
+        "Access-Control-Allow-Headers: origin, content-type, accept, authorization, "
+        "x-weechat-totp",
         NULL,  /* body_type */
         NULL);  /* json_body */
 

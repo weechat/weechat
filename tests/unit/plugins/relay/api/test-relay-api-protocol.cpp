@@ -285,7 +285,7 @@ TEST(RelayApiProtocolWithClient, CbPreflight)
     STRCMP_EQUAL(
         "HTTP/1.1 204 No Content\r\n"
         "Access-Control-Allow-Methods: GET, POST, PUT, DELETE\r\n"
-        "Access-Control-Allow-Headers: origin, content-type, accept, authorization\r\n"
+        "Access-Control-Allow-Headers: origin, content-type, accept, authorization, x-weechat-totp\r\n"
         "Access-Control-Allow-Origin: *\r\n"
         "Content-Type: application/json; charset=utf-8\r\n"
         "Content-Length: 0\r\n"

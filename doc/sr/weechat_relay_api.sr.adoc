@@ -409,7 +409,7 @@ Accept-Language: en-US,en;q=0.9,fr;q=0.8
 ----
 HTTP/1.1 204 No Content
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE
-Access-Control-Allow-Headers: origin, content-type, accept, authorization
+Access-Control-Allow-Headers: origin, content-type, accept, authorization, x-weechat-totp
 Access-Control-Allow-Origin: *
 Content-Type: application/json; charset=utf-8
 Content-Length: 0
