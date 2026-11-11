@@ -20,6 +20,8 @@ struct t_otr_peer_data
     int prev_log;                      /* logger level before OTR session:  */
                                        /* OTR_LOG_UNTOUCHED,                */
                                        /* OTR_LOG_DEFAULT or level          */
+    char *log_option;                  /* name of logger level option       */
+                                       /* changed (to restore prev_log)     */
     char **held_messages;              /* messages held until the session   */
                                        /* is encrypted (separated by "\n")  */
 };

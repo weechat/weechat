@@ -272,6 +272,55 @@ otr_buffer_irc_pv_opened_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for signal "buffer_renamed": if a private buffer is renamed during
+ * an OTR session (the IRC plugin renames it when the case of the peer's nick
+ * changes), logging is disabled again with the new buffer name.
+ */
+
+int
+otr_buffer_renamed_cb (const void *pointer, void *data, const char *signal,
+                       const char *type_data, void *signal_data)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_otr_peer_ref peer_ref;
+    ConnContext *ptr_context;
+    char *account, *peer;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+
+    ptr_buffer = (struct t_gui_buffer *)signal_data;
+
+    if (!otr_us || !otr_buffer_is_private (ptr_buffer)
+        || !otr_command_peer_args (ptr_buffer, NULL, 0, &peer_ref))
+    {
+        return WEECHAT_RC_OK;
+    }
+
+    peer = weechat_string_tolower (peer_ref.nick);
+    account = (peer) ? otr_irc_peer_account (peer_ref.server, peer) : NULL;
+    if (account)
+    {
+        ptr_context = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
+                                         OTRL_INSTAG_MASTER, 0,
+                                         NULL, NULL, NULL);
+        if (ptr_context)
+        {
+            otr_log_buffer_renamed (
+                (struct t_otr_peer_data *)ptr_context->app_data, ptr_buffer);
+        }
+    }
+
+    free (account);
+    free (peer);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for signal "buffer_closing": end the OTR session when its private
  * buffer is closed.
  */

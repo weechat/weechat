@@ -326,11 +326,8 @@ otr_callback_gone_secure (void *opdata, ConnContext *context)
     {
         ptr_buffer = otr_irc_buffer (
             otr_irc_account_server (context->accountname), context->username);
-        if (ptr_peer_data && (ptr_peer_data->prev_log == OTR_LOG_UNTOUCHED)
-            && otr_buffer_is_private (ptr_buffer))
-        {
-            ptr_peer_data->prev_log = otr_log_buffer_log_level (ptr_buffer);
-        }
+        if (otr_buffer_is_private (ptr_buffer))
+            otr_log_save_level (ptr_peer_data, ptr_buffer);
         if (otr_log_buffer_is_logged (ptr_buffer))
         {
             otr_buffer_ctx_hint (
