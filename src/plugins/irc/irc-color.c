@@ -180,6 +180,29 @@ irc_color_convert_term2irc (int color)
 }
 
 /*
+ * Check if a string starts with a RGB color of IRC hex colors: exactly 6
+ * hexadecimal digits ("RRGGBB").
+ *
+ * Return:
+ *   1: string starts with 6 hexadecimal digits
+ *   0: string does not start with 6 hexadecimal digits
+ */
+
+int
+irc_color_is_hex_color (const unsigned char *string)
+{
+    int i;
+
+    for (i = 0; i < 6; i++)
+    {
+        if (!isxdigit (string[i]))
+            return 0;
+    }
+
+    return 1;
+}
+
+/*
  * Replace IRC colors by WeeChat colors.
  *
  * If keep_colors == 0: removes any color/style in message otherwise keeps
@@ -386,37 +409,29 @@ irc_color_decode (const char *string, int keep_colors)
                 ptr_string++;
                 str_fg[0] = '\0';
                 str_bg[0] = '\0';
-                if (isxdigit (ptr_string[0]))
+                /*
+                 * Colors have exactly 6 hexadecimal digits ("RRGGBB"):
+                 * "^D" followed by less digits is a color reset followed
+                 * by text.
+                 */
+                if (irc_color_is_hex_color (ptr_string))
                 {
                     /* Foreground */
-                    length = 1;
-                    while (isxdigit (ptr_string[length]))
-                    {
-                        length++;
-                        if (length == 6)
-                            break;
-                    }
-                    memcpy (str_fg, ptr_string, length);
-                    str_fg[length] = '\0';
-                    ptr_string += length;
+                    memcpy (str_fg, ptr_string, 6);
+                    str_fg[6] = '\0';
+                    ptr_string += 6;
                     /*
                      * Background (only if a foreground is given, so
                      * "^D,FF0000" is a color reset followed by text
                      * ",FF0000").
                      */
-                    if ((ptr_string[0] == ',') && (isxdigit (ptr_string[1])))
+                    if ((ptr_string[0] == ',')
+                        && irc_color_is_hex_color (ptr_string + 1))
                     {
                         ptr_string++;
-                        length = 1;
-                        while (isxdigit (ptr_string[length]))
-                        {
-                            length++;
-                            if (length == 6)
-                                break;
-                        }
-                        memcpy (str_bg, ptr_string, length);
-                        str_bg[length] = '\0';
-                        ptr_string += length;
+                        memcpy (str_bg, ptr_string, 6);
+                        str_bg[6] = '\0';
+                        ptr_string += 6;
                     }
                 }
                 if (keep_colors)
@@ -628,42 +643,30 @@ irc_color_encode (const char *string, int keep_colors)
                 if (keep_colors)
                     weechat_string_dyn_concat (out, IRC_COLOR_HEX_COLOR_STR, -1);
                 ptr_string++;
-                if (isxdigit (ptr_string[0]))
+                /* Colors have exactly 6 hexadecimal digits ("RRGGBB"). */
+                if (irc_color_is_hex_color (ptr_string))
                 {
                     /* Foreground */
-                    length = 1;
-                    while (isxdigit (ptr_string[length]))
-                    {
-                        length++;
-                        if (length == 6)
-                            break;
-                    }
                     if (keep_colors)
                     {
                         weechat_string_dyn_concat (out,
                                                    (const char *)ptr_string,
-                                                   length);
+                                                   6);
                     }
-                    ptr_string += length;
+                    ptr_string += 6;
                     /* Background (only if a foreground is given) */
-                    if ((ptr_string[0] == ',') && (isxdigit (ptr_string[1])))
+                    if ((ptr_string[0] == ',')
+                        && irc_color_is_hex_color (ptr_string + 1))
                     {
                         ptr_string++;
-                        length = 1;
-                        while (isxdigit (ptr_string[length]))
-                        {
-                            length++;
-                            if (length == 6)
-                                break;
-                        }
                         if (keep_colors)
                         {
                             weechat_string_dyn_concat (out, ",", -1);
                             weechat_string_dyn_concat (out,
                                                        (const char *)ptr_string,
-                                                       length);
+                                                       6);
                         }
-                        ptr_string += length;
+                        ptr_string += 6;
                     }
                 }
                 break;
