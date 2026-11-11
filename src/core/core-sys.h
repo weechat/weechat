@@ -19,6 +19,8 @@ extern void sys_setrlimit (void);
 extern void sys_display_rlimit (void);
 extern void sys_display_rusage (void);
 extern void sys_waitpid (int number_processes);
+extern void sys_close_fds_loop (int fd_min);
+extern void sys_close_fds (int fd_min);
 extern void sys_daemonize (void);
 
 #endif /* WEECHAT_SYS_H */

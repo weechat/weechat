@@ -190,6 +190,13 @@ check_symbol_exists("htonll" "sys/types.h;netinet/in.h;inttypes.h" HAVE_HTONLL)
 
 check_symbol_exists("eat_newline_glitch" "term.h" HAVE_EAT_NEWLINE_GLITCH)
 
+# Functions to close file descriptors (used to run in background);
+# _GNU_SOURCE is required by glibc for close_range() (defined in config.h).
+set(CMAKE_REQUIRED_DEFINITIONS "-D_GNU_SOURCE")
+check_symbol_exists("close_range" "unistd.h" HAVE_CLOSE_RANGE)
+check_symbol_exists("closefrom" "unistd.h" HAVE_CLOSEFROM)
+unset(CMAKE_REQUIRED_DEFINITIONS)
+
 # Check if res_init requires libresolv.
 check_function_exists(res_init, LIBC_HAS_RES_INIT)
 if(NOT LIBC_HAS_RES_INIT)

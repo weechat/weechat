@@ -11,6 +11,7 @@
 #endif
 
 #include <stdlib.h>
+#include <limits.h>
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
@@ -352,6 +353,60 @@ sys_waitpid (int number_processes)
 }
 
 /*
+ * Close all file descriptors greater than or equal to "fd_min", one by one,
+ * up to the maximum number of open files.
+ */
+
+void
+sys_close_fds_loop (int fd_min)
+{
+    long fd, fd_max;
+
+    if (fd_min < 0)
+        fd_min = 0;
+
+    fd_max = sysconf (_SC_OPEN_MAX);
+    if (fd_max < 0)
+        fd_max = 1024;
+    else if (fd_max > INT_MAX)
+        fd_max = INT_MAX;
+
+    for (fd = fd_max - 1; fd >= fd_min; fd--)
+    {
+        close ((int)fd);
+    }
+}
+
+/*
+ * Close all file descriptors greater than or equal to "fd_min".
+ *
+ * The function close_range() is used if available, otherwise closefrom() if
+ * available, otherwise each file descriptor is closed (see function
+ * sys_close_fds_loop).
+ */
+
+void
+sys_close_fds (int fd_min)
+{
+    if (fd_min < 0)
+        fd_min = 0;
+
+#if defined(HAVE_CLOSE_RANGE)
+    /*
+     * If close_range() fails (old kernel, blocked by seccomp), closefrom() is
+     * not used: in glibc it calls close_range() too, then reads /proc/self/fd,
+     * and aborts if both fail.
+     */
+    if (close_range ((unsigned int)fd_min, ~0U, 0) != 0)
+        sys_close_fds_loop (fd_min);
+#elif defined(HAVE_CLOSEFROM)
+    closefrom (fd_min);
+#else
+    sys_close_fds_loop (fd_min);
+#endif
+}
+
+/*
  * Daemonize the process (used by weechat-headless with option "--daemon").
  */
 
@@ -359,7 +414,7 @@ void
 sys_daemonize (void)
 {
     pid_t pid;
-    int fd_null, fd, i;
+    int fd_null, fd;
 
     printf ("%s ", _("Running WeeChat in background..."));
     fflush (stdout);
@@ -407,8 +462,5 @@ sys_daemonize (void)
     }
 
     /* Close all other file descriptors. */
-    for (i = sysconf (_SC_OPEN_MAX); i > 2; --i)
-    {
-        close (i);
-    }
+    sys_close_fds (3);
 }

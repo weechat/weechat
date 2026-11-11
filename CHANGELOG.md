@@ -44,6 +44,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 ### Changed
 
 - core, plugins: use plural forms or reword messages displaying a count
+- core: close file descriptors faster when running in background with option `--daemon` in headless mode
 - **breaking:** core: exit with an error on unknown command-line option, exit with code 2 on invalid command-line arguments
 - core: keep the current buffer in the zoomed window when the window is unzoomed ([#1372](https://github.com/weechat/weechat/issues/1372))
 - core: format strings faster in function string_asprintf

@@ -50,6 +50,8 @@ SPDX-License-Identifier: GPL-3.0-or-later
 #cmakedefine HAVE_MALLOC_TRIM
 #cmakedefine HAVE_HTONLL
 #cmakedefine HAVE_EAT_NEWLINE_GLITCH
+#cmakedefine HAVE_CLOSE_RANGE
+#cmakedefine HAVE_CLOSEFROM
 #cmakedefine HAVE_ASPELL_VERSION_STRING
 #cmakedefine HAVE_GUILE_GMP_MEMORY_FUNCTIONS
 
