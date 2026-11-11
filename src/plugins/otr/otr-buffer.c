@@ -252,7 +252,7 @@ otr_buffer_irc_pv_opened_cb (const void *pointer, void *data,
     if (!otr_command_peer_args (ptr_buffer, NULL, 0, &peer_ref))
         return WEECHAT_RC_OK;
 
-    peer = weechat_string_tolower (peer_ref.nick);
+    peer = otr_irc_nick_tolower (peer_ref.server, peer_ref.nick);
     account = (peer) ? otr_irc_peer_account (peer_ref.server, peer) : NULL;
     if (account)
     {
@@ -300,7 +300,7 @@ otr_buffer_renamed_cb (const void *pointer, void *data, const char *signal,
         return WEECHAT_RC_OK;
     }
 
-    peer = weechat_string_tolower (peer_ref.nick);
+    peer = otr_irc_nick_tolower (peer_ref.server, peer_ref.nick);
     account = (peer) ? otr_irc_peer_account (peer_ref.server, peer) : NULL;
     if (account)
     {
@@ -348,7 +348,7 @@ otr_buffer_closing_cb (const void *pointer, void *data, const char *signal,
      * The account is resolved silently: if we are not connected to the server
      * and there is no OTR session with the peer, there is nothing to do.
      */
-    peer = weechat_string_tolower (peer_ref.nick);
+    peer = otr_irc_nick_tolower (peer_ref.server, peer_ref.nick);
     account = (peer) ? otr_irc_peer_account (peer_ref.server, peer) : NULL;
     if (account)
         otr_context_end_session (account, peer, 0, 1);

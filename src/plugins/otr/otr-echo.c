@@ -14,6 +14,7 @@
 #include "../weechat-plugin.h"
 #include "otr.h"
 #include "otr-echo.h"
+#include "otr-irc.h"
 #include "otr-message.h"
 #include "otr-util.h"
 
@@ -97,7 +98,7 @@ otr_echo_pending_add (const char *server, const char *peer, const char *cipher,
 
     ptr_pending = &otr_echo_pending_queue[otr_echo_pending_count];
     ptr_pending->server = otr_util_dupstr (server);
-    ptr_pending->peer = weechat_string_tolower (peer);
+    ptr_pending->peer = otr_irc_nick_tolower (server, peer);
     ptr_pending->cipher = otr_util_dupstr (cipher);
     ptr_pending->plain = otr_util_dupstr (plain);
     ptr_pending->date = time (NULL);
@@ -148,19 +149,23 @@ char *
 otr_echo_pending_take (const char *server, const char *target,
                        const char *cipher)
 {
-    char *plain;
+    char *plain, *peer;
     size_t cipher_length;
     int i;
 
     otr_echo_pending_purge ();
 
+    peer = otr_irc_nick_tolower (server, target);
+    if (!peer)
+        return NULL;
+
     cipher_length = otr_echo_trimmed_len (cipher);
 
+    plain = NULL;
     for (i = 0; i < otr_echo_pending_count; i++)
     {
         if ((strcmp (otr_echo_pending_queue[i].server, server) == 0)
-            && (weechat_strcasecmp (otr_echo_pending_queue[i].peer,
-                                    target) == 0)
+            && (strcmp (otr_echo_pending_queue[i].peer, peer) == 0)
             && (otr_echo_trimmed_len (
                     otr_echo_pending_queue[i].cipher) == cipher_length)
             && (memcmp (otr_echo_pending_queue[i].cipher, cipher,
@@ -169,11 +174,13 @@ otr_echo_pending_take (const char *server, const char *target,
             plain = otr_echo_pending_queue[i].plain;
             otr_echo_pending_queue[i].plain = NULL;
             otr_echo_pending_drop (i);
-            return plain;
+            break;
         }
     }
 
-    return NULL;
+    free (peer);
+
+    return plain;
 }
 
 /*

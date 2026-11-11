@@ -136,3 +136,47 @@ TEST(OtrIrc, NickCb)
     run_cmd_quiet ("/mute /disconnect test_otr_nick");
     run_cmd_quiet ("/mute /server del test_otr_nick");
 }
+
+/*
+ * Test functions:
+ *   otr_irc_nick_tolower
+ */
+
+TEST(OtrIrc, NickTolower)
+{
+    struct t_irc_server *server;
+    char *str;
+
+    POINTERS_EQUAL(NULL, otr_irc_nick_tolower ("test", NULL));
+
+    /* Unknown server: casemapping "rfc1459". */
+    WEE_TEST_STR("", otr_irc_nick_tolower ("unknown_server", ""));
+    WEE_TEST_STR("nick{a}|~_", otr_irc_nick_tolower ("unknown_server",
+                                                     "NICK[A]\\^_"));
+    WEE_TEST_STR("\xc3\x89lan", otr_irc_nick_tolower ("unknown_server",
+                                                     "\xc3\x89lan"));
+
+    run_cmd_quiet ("/mute /server add test_otr_cm fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_cm");
+    server = irc_server_search ("test_otr_cm");
+    CHECK(server);
+
+    /* No casemapping received from server: "rfc1459". */
+    WEE_TEST_STR("nick{a}|~", otr_irc_nick_tolower ("test_otr_cm",
+                                                    "Nick[A]\\^"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+    WEE_TEST_STR("nick{a}|~", otr_irc_nick_tolower ("test_otr_cm",
+                                                    "Nick[A]\\^"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_STRICT_RFC1459;
+    WEE_TEST_STR("nick{a}|^", otr_irc_nick_tolower ("test_otr_cm",
+                                                    "Nick[A]\\^"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_ASCII;
+    WEE_TEST_STR("nick[a]\\^", otr_irc_nick_tolower ("test_otr_cm",
+                                                     "Nick[A]\\^"));
+
+    run_cmd_quiet ("/mute /disconnect test_otr_cm");
+    run_cmd_quiet ("/mute /server del test_otr_cm");
+}
