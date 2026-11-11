@@ -114,6 +114,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix options `-a` and `-s` ignored by plugins when abbreviated or grouped (for example `--no-conn` or `-as`), do not send the program name and values of options to plugins
 - core: fix exit code 1 instead of 0 when option `--doc-gen` is given with an option that exits immediately, like `--version`
 - core: fix option `--no-gcrypt`, which did not disable the init of gcrypt
 - core: call config hooks with the old option name when an option is renamed, so that the old name is seen as removed

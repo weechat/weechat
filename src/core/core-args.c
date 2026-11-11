@@ -646,6 +646,24 @@ args_get_long_options (struct option *long_options, int headless)
 }
 
 /*
+ * Add an argument for plugins in weechat_plugin_argv (the array must have been
+ * allocated with enough room for all arguments).
+ *
+ * The argument is not duplicated: it must remain valid while plugins are
+ * initialized.
+ */
+
+void
+args_add_plugin_arg (const char *arg)
+{
+    if (!weechat_plugin_argv || !arg)
+        return;
+
+    weechat_plugin_argv[weechat_plugin_argc++] = (char *)arg;
+    weechat_plugin_argv[weechat_plugin_argc] = NULL;
+}
+
+/*
  * Parse command line arguments.
  *
  * This function does not require any initialization (it is called before
@@ -659,7 +677,7 @@ args_get_long_options (struct option *long_options, int headless)
 void
 args_parse (int argc, char *argv[])
 {
-    int opt, index_arg;
+    int i, opt, index_arg, no_connect, no_script;
     char *option;
     struct option long_options[ARGS_NUM_LONG_OPTIONS];
 
@@ -675,6 +693,22 @@ args_parse (int argc, char *argv[])
     weechat_daemon = 0;
     weechat_log_stdout = 0;
     args_action = ARGS_ACTION_NONE;
+
+    /*
+     * Arguments for plugins: options "-a" and "-s" (if given) and non-option
+     * arguments (for example "irc://..." URLs).
+     */
+    no_connect = 0;
+    no_script = 0;
+    free (weechat_plugin_argv);
+    weechat_plugin_argc = 0;
+    weechat_plugin_argv = malloc ((argc + 3) * sizeof (*weechat_plugin_argv));
+    if (!weechat_plugin_argv)
+    {
+        string_fprintf (stderr, _("Error: not enough memory\n"));
+        args_exit (EXIT_FAILURE);
+    }
+    weechat_plugin_argv[0] = NULL;
 
     /* Options for headless mode are unknown in the other modes. */
     args_get_long_options (long_options, weechat_headless);
@@ -705,15 +739,28 @@ args_parse (int argc, char *argv[])
                                                    long_options);
                 args_exit (ARGS_EXIT_USAGE_ERROR);
             }
+            /*
+             * End of options: if "--" was found, the next arguments are not
+             * options: send them to plugins, except those starting with "-"
+             * (like non-option arguments before "--").
+             */
+            for (i = optind; i < argc; i++)
+            {
+                if (argv[i][0] != '-')
+                    args_add_plugin_arg (argv[i]);
+            }
             break;
         }
         switch (opt)
         {
             case 1: /* Non-option argument */
-                /* Argument ignored, it will be used by plugins. */
+                /* Argument used by plugins (except "-"). */
+                if (optarg && (optarg[0] != '-'))
+                    args_add_plugin_arg (optarg);
                 break;
             case 'a': /* -a / --no-connect */
-                /* Option ignored, it will be used by plugins/scripts. */
+                /* Option used by plugins. */
+                no_connect = 1;
                 break;
             case 'c': /* -c / --colors */
                 args_action = ARGS_ACTION_COLORS;
@@ -752,7 +799,8 @@ args_parse (int argc, char *argv[])
                              WEECHAT_LIST_POS_END, NULL);
                 break;
             case 's': /* -s / --no-script */
-                /* Option ignored, it will be used by the scripting plugins. */
+                /* Option used by the scripting plugins. */
+                no_script = 1;
                 break;
             case 'u': /* --upgrade */
                 weechat_upgrading = 1;
@@ -835,6 +883,11 @@ args_parse (int argc, char *argv[])
         if (args_action != ARGS_ACTION_NONE)
             break;
     }
+
+    if (no_connect)
+        args_add_plugin_arg ("-a");
+    if (no_script)
+        args_add_plugin_arg ("-s");
 
     /* Option "--daemon" is ignored if "--doc-gen" is given. */
     if (weechat_doc_gen)

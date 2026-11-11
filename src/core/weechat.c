@@ -117,6 +117,10 @@ int weechat_no_gcrypt = 0;             /* remove init/deinit of gcrypt      */
                                        /* (useful with valgrind)            */
 struct t_weelist *weechat_startup_commands = NULL; /* startup commands      */
                                                    /* (option -r)           */
+int weechat_plugin_argc = 0;           /* number of arguments for plugins   */
+char **weechat_plugin_argv = NULL;     /* arguments for plugins: "-a", "-s" */
+                                       /* and non-option arguments (only    */
+                                       /* during init of plugins)           */
 int weechat_auto_connect = 1;          /* auto-connect to servers           */
 int weechat_auto_load_scripts = 1;     /* auto-load scripts                 */
 
@@ -325,6 +329,7 @@ weechat_shutdown (int return_code, int crash)
     free (weechat_local_charset);
     free (weechat_force_plugin_autoload);
     weelist_free (weechat_startup_commands);
+    free (weechat_plugin_argv);
     free (weechat_doc_gen_path);
 
     if (crash)
@@ -431,7 +436,10 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     weechat_locale_check ();            /* Display warning if wrong locale. */
     command_startup (0);                /* Execute commands before plugins. */
     plugin_init (weechat_force_plugin_autoload, /* Initialize plugins.      */
-                 argc, argv);
+                 weechat_plugin_argc, weechat_plugin_argv);
+    free (weechat_plugin_argv);         /* Plugin args not needed any more. */
+    weechat_plugin_argv = NULL;
+    weechat_plugin_argc = 0;
     command_startup (1);                /* Execute commands after plugins.  */
     if (!weechat_upgrading)
         gui_layout_window_apply (gui_layout_current, -1);
