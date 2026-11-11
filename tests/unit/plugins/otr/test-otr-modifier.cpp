@@ -448,6 +448,17 @@ TEST(OtrModifier, HoldMessages)
     ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
     LONGS_EQUAL(0, otr_modifier_must_hold ("alice@srv_otr_hold", "bob"));
 
+    /*
+     * Session encrypted but messages held not sent yet: new message held
+     * after them (to keep the order).
+     */
+    WEE_TEST_STR("",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_hold",
+                                      "PRIVMSG bob :line 3b"));
+    STRCMP_EQUAL("line 1\nline 2\nline 3\nline 3b",
+                 *(ptr_peer_data->held_messages));
+
     /* Policy changed during the session: messages held are being sent. */
     config_file_option_set_with_string (
         "otr.policy.srv_otr_hold.alice.bob.require_encryption", "off");
@@ -461,7 +472,7 @@ TEST(OtrModifier, HoldMessages)
         "otr.policy.srv_otr_hold.alice.bob.require_encryption", "off");
     POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
     CHECK(strstr (gui_buffers->own_lines->last_line->data->message,
-                  "3 messages held for the OTR session have been "
+                  "4 messages held for the OTR session have been "
                   "discarded"));
 
     /* Encryption required again: new messages held. */

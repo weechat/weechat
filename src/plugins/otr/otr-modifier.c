@@ -768,7 +768,8 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     char *tags, *target, *account, *peer, *plain, *new_message, *result;
     char *clean, *shown, *converted, *new_tags;
     const char *ptr_text, *ptr_server;
-    ConnContext *ptr_context;
+    struct t_otr_peer_data *ptr_peer_data;
+    ConnContext *ptr_context, *ptr_master_context;
     gcry_error_t error;
     size_t length;
     int action, batch_removed, started;
@@ -865,6 +866,23 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     ptr_context = otr_context_find (account, peer);
     if (otr_context_encrypted (ptr_context))
     {
+        /*
+         * Messages held are not sent yet (they are sent with a timer when
+         * the session becomes encrypted): the message is held after them, to
+         * keep the order of messages.
+         */
+        ptr_master_context = otrl_context_find (otr_us, peer, account,
+                                                OTR_PROTOCOL,
+                                                OTRL_INSTAG_MASTER, 0,
+                                                NULL, NULL, NULL);
+        ptr_peer_data = (ptr_master_context) ?
+            (struct t_otr_peer_data *)ptr_master_context->app_data : NULL;
+        if (ptr_peer_data && ptr_peer_data->held_messages
+            && otr_context_hold_message (ptr_peer_data, ptr_text))
+        {
+            result = strdup ("");
+            goto end;
+        }
         converted = otr_message_plain_from_irc (ptr_text);
         shown = otr_util_dupstr (converted);
         if (converted && otr_policy_for (account, peer, "html_escape"))
