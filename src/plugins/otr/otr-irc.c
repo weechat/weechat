@@ -284,6 +284,10 @@ end:
  * The account of the session is the one of our nick when the session started,
  * which can be different from our previous nick (if our nick changed several
  * times during the session).
+ *
+ * Messages held until the OTR session is encrypted (session not started yet)
+ * are moved to the account of our new nick, and an OTR query is sent with our
+ * new nick.
  */
 
 int
@@ -291,10 +295,13 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
                  const char *type_data, void *signal_data)
 {
     struct t_hashtable *hashtable_in, *hashtable_out;
-    ConnContext *ptr_context;
-    const char *ptr_old_nick, *ptr_new_nick, *ptr_query;
-    char *server, *info_nick, *account;
+    struct t_otr_peer_data *ptr_peer_data, *ptr_new_peer_data;
+    ConnContext *ptr_context, *ptr_best_context;
+    const char *ptr_old_nick, *ptr_new_nick, *ptr_query, *ptr_peer;
+    char *server, *info_nick, *account, *new_account, **held_peers;
+    char **peers, *pos_space;
     const char *ptr_comma;
+    int i, num_peers;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -313,6 +320,9 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
 
     hashtable_out = NULL;
     info_nick = NULL;
+    new_account = NULL;
+    held_peers = NULL;
+    peers = NULL;
 
     hashtable_in = weechat_hashtable_new (8,
                                           WEECHAT_HASHTABLE_STRING,
@@ -338,6 +348,11 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
     if (!info_nick || (weechat_strcasecmp (info_nick, ptr_new_nick) != 0))
         goto end;
 
+    new_account = otr_irc_make_account (server);
+    held_peers = weechat_string_dyn_alloc (64);
+    if (!new_account || !held_peers)
+        goto end;
+
     for (ptr_context = otr_us->context_root; ptr_context;
          ptr_context = ptr_context->next)
     {
@@ -347,6 +362,30 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
                         server) != 0))
         {
             continue;
+        }
+        /*
+         * Messages held with our previous nick, OTR session not started:
+         * they are moved to the new account after the loop (the list of
+         * contexts must not change during the loop).
+         */
+        ptr_peer_data = (struct t_otr_peer_data *)ptr_context->app_data;
+        if (ptr_peer_data && ptr_peer_data->held_messages
+            && (strcmp (ptr_context->accountname, new_account) != 0))
+        {
+            ptr_best_context = otr_context_find (ptr_context->accountname,
+                                                 ptr_context->username);
+            if (!ptr_best_context
+                || (ptr_best_context->msgstate == OTRL_MSGSTATE_PLAINTEXT))
+            {
+                if ((*held_peers)[0])
+                    weechat_string_dyn_concat (held_peers, "\n", -1);
+                weechat_string_dyn_concat (held_peers,
+                                           ptr_context->accountname, -1);
+                weechat_string_dyn_concat (held_peers, " ", -1);
+                weechat_string_dyn_concat (held_peers,
+                                           ptr_context->username, -1);
+                continue;
+            }
         }
         /* Only the account used with the peer (one query per peer). */
         account = otr_irc_peer_account (server, ptr_context->username);
@@ -368,9 +407,50 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
         otr_irc_send_raw (server, ptr_context->username, ptr_query);
     }
 
+    /*
+     * Move messages held with our previous nick to the new account, and start
+     * the OTR session with our new nick (the previous one can not receive the
+     * answer of the peer anymore).
+     */
+    peers = weechat_string_split (*held_peers, "\n", NULL, 0, 0, &num_peers);
+    for (i = 0; peers && (i < num_peers); i++)
+    {
+        pos_space = strchr (peers[i], ' ');
+        if (!pos_space)
+            continue;
+        pos_space[0] = '\0';
+        ptr_peer = pos_space + 1;
+        ptr_context = otrl_context_find (otr_us, ptr_peer, peers[i],
+                                         OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                         NULL, NULL, NULL);
+        ptr_peer_data = (ptr_context) ?
+            (struct t_otr_peer_data *)ptr_context->app_data : NULL;
+        ptr_new_peer_data = otr_context_peer_data_for (new_account, ptr_peer);
+        if (!ptr_peer_data || !ptr_new_peer_data)
+            continue;
+        otr_context_move_held_messages (ptr_peer_data, ptr_new_peer_data);
+        ptr_best_context = otr_context_find (new_account, ptr_peer);
+        if (otr_context_encrypted (ptr_best_context))
+        {
+            otr_context_send_held_messages (ptr_best_context);
+            continue;
+        }
+        ptr_query = otr_policy_query (new_account, ptr_peer);
+        if (!ptr_query)
+            continue;
+        otr_buffer_peer_hint (
+            server, ptr_peer,
+            _("Sending OTR query... Please await confirmation of the OTR "
+              "session being started before sending a message."));
+        otr_irc_send_raw (server, ptr_peer, ptr_query);
+    }
+
 end:
     free (server);
     free (info_nick);
+    free (new_account);
+    weechat_string_dyn_free (held_peers, 1);
+    weechat_string_free_split (peers);
     weechat_hashtable_free (hashtable_out);
     return WEECHAT_RC_OK;
 }
