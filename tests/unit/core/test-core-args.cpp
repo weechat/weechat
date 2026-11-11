@@ -16,6 +16,9 @@ extern "C"
 #include <string.h>
 #include <getopt.h>
 #include "src/core/core-args.h"
+#include "src/core/core-list.h"
+#include "src/core/core-string.h"
+#include "src/core/weechat.h"
 }
 
 #define WEE_CHECK_ESCAPE(__result, __string, __length)                  \
@@ -295,4 +298,411 @@ TEST(CoreArgs, GetLongOptions)
     LONGS_EQUAL(0, long_options[count_common].has_arg);
     POINTERS_EQUAL(NULL, long_options[count_common].flag);
     LONGS_EQUAL(0, long_options[count_common].val);
+}
+
+TEST_GROUP(CoreArgsParse)
+{
+    /* Variables set by args_parse, saved before each test. */
+    char *saved_argv0;
+    int saved_upgrading;
+    char *saved_home_force;
+    int saved_home_temp;
+    int saved_home_delete_on_exit;
+    int saved_server_cmd_line;
+    char *saved_force_plugin_autoload;
+    struct t_weelist *saved_startup_commands;
+    int saved_doc_gen;
+    char *saved_doc_gen_path;
+    int saved_plugin_no_dlclose;
+    int saved_no_gnutls;
+    int saved_no_gcrypt;
+    int saved_daemon;
+    int saved_log_stdout;
+    int saved_headless;
+    int saved_plugin_argc;
+    char **saved_plugin_argv;
+    int saved_action;
+
+    /* Arguments given to args_parse (plugin arguments point to them). */
+    char **test_argv;
+
+    /* Plugin arguments as a string, for example: "[irc://x] [-a]". */
+    char plugin_args[1024];
+
+    /*
+     * Parse command line arguments (the program name "weechat" is added
+     * before them), in headless mode or not.
+     *
+     * The arguments must not make args_parse exit (no invalid option).
+     */
+
+    void parse (const char *args, int headless)
+    {
+        char *command;
+        int argc, i;
+
+        string_free_split (test_argv);
+        test_argv = NULL;
+
+        command = (char *)malloc (strlen (args) + 16);
+        CHECK(command);
+        snprintf (command, strlen (args) + 16, "weechat %s", args);
+        test_argv = string_split_shell (command, &argc);
+        free (command);
+        CHECK(test_argv);
+
+        weechat_headless = headless;
+        args_parse (argc, test_argv);
+
+        plugin_args[0] = '\0';
+        CHECK(weechat_plugin_argv);
+        for (i = 0; i < weechat_plugin_argc; i++)
+        {
+            if (i > 0)
+                strcat (plugin_args, " ");
+            strcat (plugin_args, "[");
+            strcat (plugin_args, weechat_plugin_argv[i]);
+            strcat (plugin_args, "]");
+        }
+        POINTERS_EQUAL(NULL, weechat_plugin_argv[weechat_plugin_argc]);
+    }
+
+    void setup ()
+    {
+        saved_argv0 = weechat_argv0;
+        saved_upgrading = weechat_upgrading;
+        saved_home_force = weechat_home_force;
+        saved_home_temp = weechat_home_temp;
+        saved_home_delete_on_exit = weechat_home_delete_on_exit;
+        saved_server_cmd_line = weechat_server_cmd_line;
+        saved_force_plugin_autoload = weechat_force_plugin_autoload;
+        saved_startup_commands = weechat_startup_commands;
+        saved_doc_gen = weechat_doc_gen;
+        saved_doc_gen_path = weechat_doc_gen_path;
+        saved_plugin_no_dlclose = weechat_plugin_no_dlclose;
+        saved_no_gnutls = weechat_no_gnutls;
+        saved_no_gcrypt = weechat_no_gcrypt;
+        saved_daemon = weechat_daemon;
+        saved_log_stdout = weechat_log_stdout;
+        saved_headless = weechat_headless;
+        saved_plugin_argc = weechat_plugin_argc;
+        saved_plugin_argv = weechat_plugin_argv;
+        saved_action = args_action;
+
+        /* Detach the saved values, so that args_parse does not free them. */
+        weechat_argv0 = NULL;
+        weechat_home_force = NULL;
+        weechat_force_plugin_autoload = NULL;
+        weechat_startup_commands = NULL;
+        weechat_doc_gen_path = NULL;
+        weechat_plugin_argv = NULL;
+        weechat_plugin_argc = 0;
+
+        test_argv = NULL;
+        plugin_args[0] = '\0';
+    }
+
+    void teardown ()
+    {
+        /* Free the values set by args_parse. */
+        free (weechat_argv0);
+        free (weechat_home_force);
+        free (weechat_force_plugin_autoload);
+        weelist_free (weechat_startup_commands);
+        free (weechat_doc_gen_path);
+        free (weechat_plugin_argv);
+        string_free_split (test_argv);
+
+        weechat_argv0 = saved_argv0;
+        weechat_upgrading = saved_upgrading;
+        weechat_home_force = saved_home_force;
+        weechat_home_temp = saved_home_temp;
+        weechat_home_delete_on_exit = saved_home_delete_on_exit;
+        weechat_server_cmd_line = saved_server_cmd_line;
+        weechat_force_plugin_autoload = saved_force_plugin_autoload;
+        weechat_startup_commands = saved_startup_commands;
+        weechat_doc_gen = saved_doc_gen;
+        weechat_doc_gen_path = saved_doc_gen_path;
+        weechat_plugin_no_dlclose = saved_plugin_no_dlclose;
+        weechat_no_gnutls = saved_no_gnutls;
+        weechat_no_gcrypt = saved_no_gcrypt;
+        weechat_daemon = saved_daemon;
+        weechat_log_stdout = saved_log_stdout;
+        weechat_headless = saved_headless;
+        weechat_plugin_argc = saved_plugin_argc;
+        weechat_plugin_argv = saved_plugin_argv;
+        args_action = saved_action;
+    }
+};
+
+/*
+ * Test functions:
+ *   args_parse (no argument, default values)
+ */
+
+TEST(CoreArgsParse, NoArgument)
+{
+    parse ("", 0);
+    STRCMP_EQUAL("weechat", weechat_argv0);
+    LONGS_EQUAL(0, weechat_upgrading);
+    POINTERS_EQUAL(NULL, weechat_home_force);
+    LONGS_EQUAL(0, weechat_home_temp);
+    POINTERS_EQUAL(NULL, weechat_force_plugin_autoload);
+    POINTERS_EQUAL(NULL, weechat_startup_commands);
+    LONGS_EQUAL(0, weechat_doc_gen);
+    POINTERS_EQUAL(NULL, weechat_doc_gen_path);
+    LONGS_EQUAL(0, weechat_plugin_no_dlclose);
+    LONGS_EQUAL(0, weechat_no_gnutls);
+    LONGS_EQUAL(0, weechat_no_gcrypt);
+    LONGS_EQUAL(0, weechat_daemon);
+    LONGS_EQUAL(0, weechat_log_stdout);
+    LONGS_EQUAL(ARGS_ACTION_NONE, args_action);
+    LONGS_EQUAL(0, weechat_plugin_argc);
+    STRCMP_EQUAL("", plugin_args);
+}
+
+/*
+ * Test functions:
+ *   args_parse (options "-d", "-t")
+ */
+
+TEST(CoreArgsParse, HomeDir)
+{
+    parse ("-d /tmp/x", 0);
+    STRCMP_EQUAL("/tmp/x", weechat_home_force);
+    LONGS_EQUAL(0, weechat_home_temp);
+
+    parse ("--dir=/tmp/y", 0);
+    STRCMP_EQUAL("/tmp/y", weechat_home_force);
+
+    parse ("--di /tmp/z", 0);
+    STRCMP_EQUAL("/tmp/z", weechat_home_force);
+
+    parse ("-d/tmp/x -d /tmp/y", 0);
+    STRCMP_EQUAL("/tmp/y", weechat_home_force);
+
+    parse ("-t", 0);
+    POINTERS_EQUAL(NULL, weechat_home_force);
+    LONGS_EQUAL(1, weechat_home_temp);
+
+    /* The last option wins. */
+    parse ("-d /tmp/x -t", 0);
+    POINTERS_EQUAL(NULL, weechat_home_force);
+    LONGS_EQUAL(1, weechat_home_temp);
+
+    parse ("--temp-dir -d /tmp/x", 0);
+    STRCMP_EQUAL("/tmp/x", weechat_home_force);
+    LONGS_EQUAL(0, weechat_home_temp);
+}
+
+/*
+ * Test functions:
+ *   args_parse (options "-p", "-P", "-r", "--upgrade", debug options)
+ */
+
+TEST(CoreArgsParse, Options)
+{
+    parse ("-p", 0);
+    STRCMP_EQUAL("!*", weechat_force_plugin_autoload);
+
+    parse ("-P irc,relay", 0);
+    STRCMP_EQUAL("irc,relay", weechat_force_plugin_autoload);
+
+    parse ("-p -P irc", 0);
+    STRCMP_EQUAL("irc", weechat_force_plugin_autoload);
+
+    parse ("-pPirc", 0);
+    STRCMP_EQUAL("irc", weechat_force_plugin_autoload);
+
+    parse ("--plugins=irc -p", 0);
+    STRCMP_EQUAL("!*", weechat_force_plugin_autoload);
+
+    parse ("-r '/print a' --run-command=/print_b -r /c", 0);
+    CHECK(weechat_startup_commands);
+    LONGS_EQUAL(3, weelist_size (weechat_startup_commands));
+    STRCMP_EQUAL("/print a",
+                 weelist_string (weelist_get (weechat_startup_commands, 0)));
+    STRCMP_EQUAL("/print_b",
+                 weelist_string (weelist_get (weechat_startup_commands, 1)));
+    STRCMP_EQUAL("/c",
+                 weelist_string (weelist_get (weechat_startup_commands, 2)));
+
+    parse ("--upgrade", 0);
+    LONGS_EQUAL(1, weechat_upgrading);
+
+    parse ("--no-dlclose --no-gnutls --no-gcrypt", 0);
+    LONGS_EQUAL(1, weechat_plugin_no_dlclose);
+    LONGS_EQUAL(1, weechat_no_gnutls);
+    LONGS_EQUAL(1, weechat_no_gcrypt);
+}
+
+/*
+ * Test functions:
+ *   args_parse (variables reset on each call)
+ */
+
+TEST(CoreArgsParse, Reset)
+{
+    parse ("-d /tmp/x -P irc -r /a --upgrade --no-dlclose --no-gnutls "
+           "--no-gcrypt -a irc://x", 0);
+    CHECK(weechat_home_force);
+    CHECK(weechat_force_plugin_autoload);
+    CHECK(weechat_startup_commands);
+    STRCMP_EQUAL("[irc://x] [-a]", plugin_args);
+
+    parse ("", 0);
+    POINTERS_EQUAL(NULL, weechat_home_force);
+    POINTERS_EQUAL(NULL, weechat_force_plugin_autoload);
+    POINTERS_EQUAL(NULL, weechat_startup_commands);
+    LONGS_EQUAL(0, weechat_upgrading);
+    LONGS_EQUAL(0, weechat_plugin_no_dlclose);
+    LONGS_EQUAL(0, weechat_no_gnutls);
+    LONGS_EQUAL(0, weechat_no_gcrypt);
+    STRCMP_EQUAL("", plugin_args);
+
+    parse ("--doc-gen /tmp/doc", 1);
+    LONGS_EQUAL(1, weechat_doc_gen);
+    CHECK(weechat_doc_gen_path);
+
+    parse ("", 1);
+    LONGS_EQUAL(0, weechat_doc_gen);
+    POINTERS_EQUAL(NULL, weechat_doc_gen_path);
+
+    parse ("--daemon", 1);
+    LONGS_EQUAL(1, weechat_daemon);
+
+    parse ("", 1);
+    LONGS_EQUAL(0, weechat_daemon);
+
+    parse ("--stdout", 1);
+    LONGS_EQUAL(1, weechat_log_stdout);
+
+    parse ("", 1);
+    LONGS_EQUAL(0, weechat_log_stdout);
+}
+
+/*
+ * Test functions:
+ *   args_parse (arguments for plugins)
+ */
+
+TEST(CoreArgsParse, PluginArgs)
+{
+    /* Non-option arguments. */
+    parse ("irc://x", 0);
+    STRCMP_EQUAL("[irc://x]", plugin_args);
+    parse ("irc://x irc://y", 0);
+    STRCMP_EQUAL("[irc://x] [irc://y]", plugin_args);
+    parse ("irc://x - irc://y", 0);
+    STRCMP_EQUAL("[irc://x] [irc://y]", plugin_args);
+
+    /* Options "-a" and "-s" (always at the end, "-a" first). */
+    parse ("-a", 0);
+    STRCMP_EQUAL("[-a]", plugin_args);
+    parse ("-s", 0);
+    STRCMP_EQUAL("[-s]", plugin_args);
+    parse ("-s -a -a", 0);
+    STRCMP_EQUAL("[-a] [-s]", plugin_args);
+    parse ("-as", 0);
+    STRCMP_EQUAL("[-a] [-s]", plugin_args);
+    parse ("-sa", 0);
+    STRCMP_EQUAL("[-a] [-s]", plugin_args);
+    parse ("--no-connect --no-script", 0);
+    STRCMP_EQUAL("[-a] [-s]", plugin_args);
+    parse ("--no-conn --no-sc", 0);
+    STRCMP_EQUAL("[-a] [-s]", plugin_args);
+    parse ("-pa", 0);
+    STRCMP_EQUAL("[-a]", plugin_args);
+    parse ("-a irc://x -s irc://y", 0);
+    STRCMP_EQUAL("[irc://x] [irc://y] [-a] [-s]", plugin_args);
+
+    /* Program name and values of options are not sent to plugins. */
+    parse ("-d /tmp/x -r irc_cmd -P irc irc://y", 0);
+    STRCMP_EQUAL("[irc://y]", plugin_args);
+    parse ("-dirc_dir -rirc_cmd", 0);
+    STRCMP_EQUAL("", plugin_args);
+
+    /* Arguments after "--" (except those starting with "-"). */
+    parse ("-- irc://x", 0);
+    STRCMP_EQUAL("[irc://x]", plugin_args);
+    parse ("irc://x -- irc://y -z --foo - -a irc://z", 0);
+    STRCMP_EQUAL("[irc://x] [irc://y] [irc://z]", plugin_args);
+    parse ("-a -- -s", 0);
+    STRCMP_EQUAL("[-a]", plugin_args);
+    parse ("--", 0);
+    STRCMP_EQUAL("", plugin_args);
+}
+
+/*
+ * Test functions:
+ *   args_parse (options that display something and exit)
+ */
+
+TEST(CoreArgsParse, Actions)
+{
+    parse ("-c", 0);
+    LONGS_EQUAL(ARGS_ACTION_COLORS, args_action);
+    parse ("--help", 0);
+    LONGS_EQUAL(ARGS_ACTION_HELP, args_action);
+    parse ("-i", 0);
+    LONGS_EQUAL(ARGS_ACTION_BUILD_INFO, args_action);
+    parse ("--license", 0);
+    LONGS_EQUAL(ARGS_ACTION_LICENSE, args_action);
+    parse ("-v", 0);
+    LONGS_EQUAL(ARGS_ACTION_VERSION, args_action);
+    parse ("--vers", 0);
+    LONGS_EQUAL(ARGS_ACTION_VERSION, args_action);
+
+    /* Parsing stops at the first one: next arguments are not parsed. */
+    parse ("-v -h", 0);
+    LONGS_EQUAL(ARGS_ACTION_VERSION, args_action);
+    parse ("-hv", 0);
+    LONGS_EQUAL(ARGS_ACTION_HELP, args_action);
+    parse ("-v --foo -Z --dir", 0);
+    LONGS_EQUAL(ARGS_ACTION_VERSION, args_action);
+    parse ("-a irc://x -v -d /tmp/x irc://y", 0);
+    LONGS_EQUAL(ARGS_ACTION_VERSION, args_action);
+    POINTERS_EQUAL(NULL, weechat_home_force);
+    STRCMP_EQUAL("[irc://x] [-a]", plugin_args);
+}
+
+/*
+ * Test functions:
+ *   args_parse (options for headless mode)
+ */
+
+TEST(CoreArgsParse, Headless)
+{
+    parse ("--daemon", 1);
+    LONGS_EQUAL(1, weechat_daemon);
+    LONGS_EQUAL(0, weechat_log_stdout);
+
+    parse ("--stdout", 1);
+    LONGS_EQUAL(0, weechat_daemon);
+    LONGS_EQUAL(1, weechat_log_stdout);
+
+    /* Option "--stdout" is ignored if "--daemon" is given. */
+    parse ("--dae --std", 1);
+    LONGS_EQUAL(1, weechat_daemon);
+    LONGS_EQUAL(0, weechat_log_stdout);
+    parse ("--stdout --daemon", 1);
+    LONGS_EQUAL(1, weechat_daemon);
+    LONGS_EQUAL(0, weechat_log_stdout);
+
+    parse ("--doc-gen /tmp/doc", 1);
+    LONGS_EQUAL(1, weechat_doc_gen);
+    STRCMP_EQUAL("/tmp/doc", weechat_doc_gen_path);
+
+    parse ("--doc-gen=/tmp/doc2 --doc-gen /tmp/doc3", 1);
+    STRCMP_EQUAL("/tmp/doc3", weechat_doc_gen_path);
+
+    /* Option "--daemon" is ignored if "--doc-gen" is given. */
+    parse ("--daemon --stdout --doc-gen /tmp/doc", 1);
+    LONGS_EQUAL(1, weechat_doc_gen);
+    LONGS_EQUAL(0, weechat_daemon);
+    LONGS_EQUAL(1, weechat_log_stdout);
+
+    /* "--d" is "--dir" in other modes (no headless options). */
+    parse ("--d /tmp/x", 0);
+    STRCMP_EQUAL("/tmp/x", weechat_home_force);
 }
