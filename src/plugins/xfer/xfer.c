@@ -610,7 +610,49 @@ xfer_alloc (void)
 }
 
 /*
- * Check if the given server/nick is auto-accepted.
+ * Check if two nicks are equal (case-insensitive): for the IRC plugin, the
+ * casemapping of the server is used (with info "irc_nick_tolower").
+ *
+ * Return 1 if the nicks are equal, 0 otherwise.
+ */
+
+int
+xfer_nick_equal (const char *plugin_name, const char *server,
+                 const char *nick1, const char *nick2)
+{
+    char *info_args, *nick1_lower, *nick2_lower;
+    int equal;
+
+    if (!nick1 || !nick2)
+        return 0;
+
+    if (!plugin_name || (strcmp (plugin_name, "irc") != 0))
+        return (weechat_strcasecmp (nick1, nick2) == 0) ? 1 : 0;
+
+    weechat_asprintf (&info_args, "%s,%s", (server) ? server : "", nick1);
+    nick1_lower = (info_args) ?
+        weechat_info_get ("irc_nick_tolower", info_args) : NULL;
+    free (info_args);
+    weechat_asprintf (&info_args, "%s,%s", (server) ? server : "", nick2);
+    nick2_lower = (info_args) ?
+        weechat_info_get ("irc_nick_tolower", info_args) : NULL;
+    free (info_args);
+
+    /* IRC plugin not loaded: compare nicks without the casemapping. */
+    if (!nick1_lower || !nick2_lower)
+        equal = (weechat_strcasecmp (nick1, nick2) == 0) ? 1 : 0;
+    else
+        equal = (strcmp (nick1_lower, nick2_lower) == 0) ? 1 : 0;
+
+    free (nick1_lower);
+    free (nick2_lower);
+
+    return equal;
+}
+
+/*
+ * Check if the given server/nick is auto-accepted (nicks are compared with
+ * function xfer_nick_equal).
  *
  * Return:
  *   1: nick auto-accepted
@@ -618,7 +660,8 @@ xfer_alloc (void)
  */
 
 int
-xfer_nick_auto_accepted (const char *server, const char *nick)
+xfer_nick_auto_accepted (const char *plugin_name, const char *server,
+                         const char *nick)
 {
     int rc, i, num_nicks;
     char **nicks, *pos, *nick_server;
@@ -645,7 +688,7 @@ xfer_nick_auto_accepted (const char *server, const char *nick)
                 nick_server = weechat_strndup (nicks[i], pos - nicks[i]);
                 if (nick_server
                     && (weechat_strcasecmp (server, nick_server) == 0)
-                    && (weechat_strcasecmp (nick, pos + 1) == 0))
+                    && xfer_nick_equal (plugin_name, server, nick, pos + 1))
                 {
                     rc = 1;
                 }
@@ -655,7 +698,7 @@ xfer_nick_auto_accepted (const char *server, const char *nick)
             }
             else
             {
-                if (weechat_strcasecmp (nick, nicks[i]) == 0)
+                if (xfer_nick_equal (plugin_name, server, nick, nicks[i]))
                 {
                     rc = 1;
                     break;
@@ -897,7 +940,9 @@ xfer_new (const char *plugin_name, const char *plugin_id,
      * auto-accepted.
      */
     if ((XFER_IS_RECV(type)
-         && xfer_nick_auto_accepted (new_xfer->plugin_id, new_xfer->remote_nick))
+         && xfer_nick_auto_accepted (new_xfer->plugin_name,
+                                     new_xfer->plugin_id,
+                                     new_xfer->remote_nick))
         || ((type == XFER_TYPE_FILE_RECV_ACTIVE)
             && weechat_config_boolean (xfer_config_file_auto_accept_files))
         || ((type == XFER_TYPE_CHAT_RECV)
