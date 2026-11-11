@@ -126,13 +126,18 @@ otr_log_save_level (struct t_otr_peer_data *peer_data,
  * If a level is already saved (for example the peer ended the previous session
  * and started a new one, without the end of session on our side), this level
  * is kept (it is the level before the first session), but logging is disabled
- * anyway if the buffer is logged.
+ * anyway.
+ *
+ * The logger level is set to 0 even if the buffer is not logged now (for
+ * example if option logger.file.auto_log is off), so that logging can not
+ * start during the session.
  */
 
 void
 otr_log_disable (ConnContext *context, struct t_otr_peer_data *peer_data)
 {
     struct t_gui_buffer *ptr_buffer;
+    int logged;
 
     if (!peer_data)
         return;
@@ -143,9 +148,10 @@ otr_log_disable (ConnContext *context, struct t_otr_peer_data *peer_data)
         return;
 
     otr_log_save_level (peer_data, ptr_buffer);
-    if (otr_log_buffer_is_logged (ptr_buffer))
+    logged = otr_log_buffer_is_logged (ptr_buffer);
+    weechat_command (ptr_buffer, "/mute logger disable");
+    if (logged)
     {
-        weechat_command (ptr_buffer, "/mute logger disable");
         otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_INFO,
                               _("Logs have been temporarily disabled for the "
                                 "session. They will be restored upon finishing "
@@ -313,8 +319,7 @@ otr_log_buffer_renamed (struct t_otr_peer_data *peer_data,
     if (disabled)
     {
         otr_log_save_level (peer_data, buffer);
-        if (otr_log_buffer_is_logged (buffer))
-            weechat_command (buffer, "/mute logger disable");
+        weechat_command (buffer, "/mute logger disable");
     }
 }
 
