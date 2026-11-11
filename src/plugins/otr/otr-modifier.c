@@ -717,7 +717,7 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     ConnContext *ptr_context;
     gcry_error_t error;
     size_t length;
-    int action, batch_removed;
+    int action, batch_removed, started;
     struct t_otr_callback_data callback_data;
     OtrlFragmentPolicy fragment_policy;
 
@@ -841,6 +841,10 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     fragment_policy = (batch_removed) ?
         OTRL_FRAGMENT_SEND_ALL : OTRL_FRAGMENT_SEND_ALL_BUT_LAST;
 
+    /* OTR session started (encrypted or finished): never send in plain text. */
+    started = (ptr_context
+               && (ptr_context->msgstate != OTRL_MSGSTATE_PLAINTEXT)) ? 1 : 0;
+
     /* No whitespace tag after a CTCP ACTION sent in plain text. */
     action = otr_message_is_action (ptr_text);
     if (action)
@@ -890,6 +894,25 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
                               (clean[length - 1] == ' ') ? "\t" : "");
         }
         otrl_message_free (new_message);
+    }
+    else if (started)
+    {
+        /*
+         * No OTR message although the OTR session is started: OTR disabled
+         * by policies (allow_v2 and allow_v3 off) or encryption error
+         * (already displayed by libotr); the message is not sent.
+         */
+        if (!otr_policy_query (account, peer))
+        {
+            otr_buffer_peer_print (
+                ptr_server, peer, OTR_CONFIG_LEVEL_ERROR,
+                _("Failed to send message; it was NOT sent."));
+            otr_buffer_peer_print (
+                ptr_server, peer, OTR_CONFIG_LEVEL_ERROR,
+                _("OTR is disabled by policy (allow_v2 and allow_v3 are both "
+                  "off)."));
+        }
+        result = strdup ("");
     }
     /* Otherwise: not an OTR message (plaintext allowed), result stays NULL. */
 

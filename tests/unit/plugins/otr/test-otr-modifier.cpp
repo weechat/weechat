@@ -257,6 +257,7 @@ TEST(OtrModifier, InCb)
 TEST(OtrModifier, OutCb)
 {
     ConnContext *ptr_context;
+    char *str;
 
     ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_out",
                                      OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
@@ -283,6 +284,21 @@ TEST(OtrModifier, OutCb)
                                         "srv_otr_out",
                                         "@batch=abc PRIVMSG bob :\x01" "DCC "
                                         "SEND file 2130706433 5000 1234\x01"));
+
+    /* OTR disabled by policies during the session: not sent in plain text. */
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_out.alice.bob.allow_v2", "off");
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_out.alice.bob.allow_v3", "off");
+    WEE_TEST_STR("",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_out", "PRIVMSG bob :secret"));
+    ptr_context->msgstate = OTRL_MSGSTATE_FINISHED;
+    WEE_TEST_STR("",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_out", "PRIVMSG bob :secret"));
+    run_cmd_quiet ("/mute /unset otr.policy.srv_otr_out.alice.bob.allow_v2");
+    run_cmd_quiet ("/mute /unset otr.policy.srv_otr_out.alice.bob.allow_v3");
 
     ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
 }
