@@ -16,6 +16,7 @@ extern "C"
 #include <string.h>
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-line.h"
+#include "src/plugins/irc/irc-server.h"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-command.h"
 #include "src/plugins/otr/otr-context.h"
@@ -231,4 +232,44 @@ TEST(OtrCommand, PeerArgs)
     LONGS_EQUAL(0, otr_command_peer_args (NULL, args, 2, &peer_ref));
     args[0] = (char *)"bob carol";
     LONGS_EQUAL(0, otr_command_peer_args (NULL, args, 2, &peer_ref));
+}
+
+/*
+ * Test functions:
+ *   otr_command_finish (messages held)
+ */
+
+TEST(OtrCommand, FinishHeldMessages)
+{
+    struct t_irc_server *server;
+    struct t_otr_peer_data *ptr_peer_data;
+    struct t_gui_line *ptr_last_line;
+
+    run_cmd_quiet ("/mute /server add test_otr_finish fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_finish");
+    server = irc_server_search ("test_otr_finish");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+
+    /* No session, no messages held. */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    run_cmd_quiet ("/otr finish bob test_otr_finish");
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line,
+                                        "no private conversation to finish"));
+
+    /* No session, messages held: only the messages discarded are displayed. */
+    ptr_peer_data = otr_context_peer_data_for ("alice@test_otr_finish", "bob");
+    CHECK(ptr_peer_data);
+    LONGS_EQUAL(1, otr_context_hold_message (ptr_peer_data, "line 1"));
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    run_cmd_quiet ("/otr finish bob test_otr_finish");
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line,
+                                        "1 message held for the OTR session "
+                                        "has been discarded."));
+    LONGS_EQUAL(0, core_line_displayed (ptr_last_line,
+                                        "no private conversation to finish"));
+    POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
+
+    run_cmd_quiet ("/mute /disconnect test_otr_finish");
+    run_cmd_quiet ("/mute /server del test_otr_finish");
 }
