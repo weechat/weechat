@@ -206,6 +206,30 @@ otr_context_clear_held_messages (struct t_otr_peer_data *peer_data)
 }
 
 /*
+ * Move messages held for a peer to another per-peer data (for example after a
+ * change of our own nick): they are added before the messages already held in
+ * "to".
+ */
+
+void
+otr_context_move_held_messages (struct t_otr_peer_data *from,
+                                struct t_otr_peer_data *to)
+{
+    if (!from || !to || (from == to) || !from->held_messages)
+        return;
+
+    if (to->held_messages)
+    {
+        weechat_string_dyn_concat (from->held_messages, "\n", -1);
+        weechat_string_dyn_concat (from->held_messages, *(to->held_messages),
+                                   -1);
+        weechat_string_dyn_free (to->held_messages, 1);
+    }
+    to->held_messages = from->held_messages;
+    from->held_messages = NULL;
+}
+
+/*
  * Callback of timer used to send the messages held for a peer: data is
  * "account peer".
  */

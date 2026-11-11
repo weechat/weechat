@@ -112,3 +112,42 @@ TEST(OtrContext, HeldMessages)
                                             0, 0));
     POINTERS_EQUAL(NULL, ptr_peer_data->held_messages);
 }
+
+/*
+ * Test functions:
+ *   otr_context_move_held_messages
+ */
+
+TEST(OtrContext, MoveHeldMessages)
+{
+    struct t_otr_peer_data *ptr_peer_data1, *ptr_peer_data2;
+
+    otr_context_move_held_messages (NULL, NULL);
+
+    ptr_peer_data1 = otr_context_peer_data_for ("alice@srv_otr_ctx_move",
+                                                "bob");
+    CHECK(ptr_peer_data1);
+    ptr_peer_data2 = otr_context_peer_data_for ("alice2@srv_otr_ctx_move",
+                                                "bob");
+    CHECK(ptr_peer_data2);
+
+    /* Nothing to move. */
+    otr_context_move_held_messages (ptr_peer_data1, ptr_peer_data2);
+    POINTERS_EQUAL(NULL, ptr_peer_data2->held_messages);
+
+    /* Move to per-peer data without messages held. */
+    otr_context_hold_message (ptr_peer_data1, "line 1");
+    otr_context_move_held_messages (ptr_peer_data1, ptr_peer_data1);
+    STRCMP_EQUAL("line 1", *(ptr_peer_data1->held_messages));
+    otr_context_move_held_messages (ptr_peer_data1, ptr_peer_data2);
+    POINTERS_EQUAL(NULL, ptr_peer_data1->held_messages);
+    STRCMP_EQUAL("line 1", *(ptr_peer_data2->held_messages));
+
+    /* Move to per-peer data with messages held: added before. */
+    otr_context_hold_message (ptr_peer_data1, "line 0");
+    otr_context_move_held_messages (ptr_peer_data2, ptr_peer_data1);
+    POINTERS_EQUAL(NULL, ptr_peer_data2->held_messages);
+    STRCMP_EQUAL("line 1\nline 0", *(ptr_peer_data1->held_messages));
+
+    otr_context_clear_held_messages (ptr_peer_data1);
+}
