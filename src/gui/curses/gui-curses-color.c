@@ -1908,6 +1908,23 @@ gui_color_alloc (void)
 }
 
 /*
+ * Write a color of a pair with direct colors in "buffer": "default" (-1),
+ * the index of a palette color (lower than the number of palette colors kept
+ * by the terminal), or the RGB value ("#rrggbb").
+ */
+
+void
+gui_color_direct_color_string (int color, char *buffer, int size)
+{
+    if (color < 0)
+        snprintf (buffer, size, "default");
+    else if (color < gui_color_term_direct_indexed)
+        snprintf (buffer, size, "%d", color);
+    else
+        snprintf (buffer, size, "#%06x", color);
+}
+
+/*
  * Callback for hashtable_map on pairs with direct colors: add a line with the
  * pair to the dynamic string "data" (lines are displayed after the map,
  * because printing a line can run hooks which change the pairs).
@@ -1918,17 +1935,18 @@ gui_color_dump_pair_direct_map_cb (void *data,
                                    struct t_hashtable *hashtable,
                                    const void *key, const void *value)
 {
-    char str_line[256];
+    char str_line[256], str_fg[16], str_bg[16];
     int fg, bg;
 
     /* Make C compiler happy. */
     (void) hashtable;
 
     gui_color_pair_direct_key_get_colors (key, &fg, &bg);
+    gui_color_direct_color_string (fg, str_fg, sizeof (str_fg));
+    gui_color_direct_color_string (bg, str_bg, sizeof (str_bg));
     snprintf (str_line, sizeof (str_line),
-              "  direct fg:%8d (0x%06x), bg:%8d (0x%06x), pair = %d\n",
-              fg, (fg >= 0) ? fg : 0, bg, (bg >= 0) ? bg : 0,
-              *((int *)value));
+              "  direct fg: %7s, bg: %7s, pair = %d\n",
+              str_fg, str_bg, *((int *)value));
     string_dyn_concat ((char **)data, str_line, -1);
 }
 

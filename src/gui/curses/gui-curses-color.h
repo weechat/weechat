@@ -41,6 +41,7 @@ extern void gui_color_init_pair_direct_map_cb (void *data,
                                                struct t_hashtable *hashtable,
                                                const void *key,
                                                const void *value);
+extern void gui_color_direct_color_string (int color, char *buffer, int size);
 extern void gui_color_dump_pair_direct_map_cb (void *data,
                                                struct t_hashtable *hashtable,
                                                const void *key,

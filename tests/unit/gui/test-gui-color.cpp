@@ -28,6 +28,7 @@ extern int gui_color_pairs_used;
 extern int gui_color_get_pair (int fg, int bg);
 extern void gui_color_pair_direct_key_get_colors (const void *key, int *fg,
                                                   int *bg);
+extern void gui_color_direct_color_string (int color, char *buffer, int size);
 }
 
 #define WEE_CHECK_DECODE(__result, __string, __replacement)             \
@@ -810,6 +811,33 @@ TEST(GuiColor, PairDirectKey)
     gui_color_pair_direct_key_get_colors (&key, &fg, &bg);
     LONGS_EQUAL(-1, fg);
     LONGS_EQUAL(0xffffff, bg);
+}
+
+/*
+ * Test functions:
+ *   gui_color_direct_color_string
+ */
+
+TEST(GuiColor, DirectColorString)
+{
+    char str_color[16];
+    int old_direct_indexed;
+
+    old_direct_indexed = gui_color_term_direct_indexed;
+    gui_color_term_direct_indexed = 16;
+
+    gui_color_direct_color_string (-1, str_color, sizeof (str_color));
+    STRCMP_EQUAL("default", str_color);
+    gui_color_direct_color_string (0, str_color, sizeof (str_color));
+    STRCMP_EQUAL("0", str_color);
+    gui_color_direct_color_string (15, str_color, sizeof (str_color));
+    STRCMP_EQUAL("15", str_color);
+    gui_color_direct_color_string (0x000110, str_color, sizeof (str_color));
+    STRCMP_EQUAL("#000110", str_color);
+    gui_color_direct_color_string (0xff8800, str_color, sizeof (str_color));
+    STRCMP_EQUAL("#ff8800", str_color);
+
+    gui_color_term_direct_indexed = old_direct_indexed;
 }
 
 /*
