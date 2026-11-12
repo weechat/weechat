@@ -13,6 +13,14 @@ extern "C"
 #include "src/core/core-config.h"
 #include "src/core/core-string.h"
 #include "src/gui/gui-color.h"
+
+extern int gui_color_use_term_colors;
+extern int gui_color_num_pairs;
+extern int gui_color_term_colors;
+extern int gui_color_pairs_used;
+extern int gui_color_pairs_used_max;
+extern int gui_color_term_has_colors;
+extern int gui_color_get_pair (int fg, int bg);
 }
 
 #define WEE_CHECK_DECODE(__result, __string, __replacement)             \
@@ -934,11 +942,13 @@ TEST(GuiColor, DecodeAnsi)
 /*
  * Test functions:
  *   gui_color_encode_ansi
+ *   gui_color_get_pair_colors
  */
 
 TEST(GuiColor, EncodeAnsi)
 {
-    char string[256], *encoded;
+    char string[256], expected[256], *encoded;
+    int pair, fg, bg, old_pairs_used_max, old_term_colors;
 
     /* NULL/empty string */
     STRCMP_EQUAL(NULL, gui_color_encode_ansi (NULL));
@@ -1085,6 +1095,67 @@ TEST(GuiColor, EncodeAnsi)
         "option_weechat.color.chat_host",
         string);
     config_file_option_reset (config_color_chat_host, 1);
+
+    /*
+     * Color pair: colors of the pair (not the pair number), like on screen:
+     * pair 0 is the default colors, a pair never used and any pair with
+     * terminal colors is the terminal color N, no color for an invalid pair
+     * or a pair used before a reset of pairs.
+     */
+    pair = gui_color_get_pair (3, 5);
+    CHECK(pair > 0);
+    LONGS_EQUAL(1, gui_color_get_pair_colors (pair, &fg, &bg));
+    LONGS_EQUAL(3, fg);
+    LONGS_EQUAL(5, bg);
+    LONGS_EQUAL(1, gui_color_get_pair_colors (0, &fg, &bg));
+    LONGS_EQUAL(-1, fg);
+    LONGS_EQUAL(-1, bg);
+    LONGS_EQUAL(-1, gui_color_get_pair_colors (-1, &fg, &bg));
+    LONGS_EQUAL(-1, gui_color_get_pair_colors (32000, &fg, &bg));
+    if ((gui_color_pairs_used_max < gui_color_num_pairs)
+        && (gui_color_pairs_used_max + 1 < gui_color_term_colors))
+    {
+        /* Pair never used: pair number on default background. */
+        LONGS_EQUAL(1, gui_color_get_pair_colors (gui_color_pairs_used_max + 1,
+                                                  &fg, &bg));
+        LONGS_EQUAL(gui_color_pairs_used_max + 1, fg);
+        LONGS_EQUAL(-1, bg);
+        /* Pair used before a reset of pairs: colors unknown. */
+        old_pairs_used_max = gui_color_pairs_used_max;
+        gui_color_pairs_used_max = gui_color_num_pairs;
+        LONGS_EQUAL(0, gui_color_get_pair_colors (old_pairs_used_max + 1,
+                                                  &fg, &bg));
+        gui_color_pairs_used_max = old_pairs_used_max;
+    }
+    /* Pair never used, greater than the terminal colors: colors unknown. */
+    old_term_colors = gui_color_term_colors;
+    gui_color_term_colors = 16;
+    old_pairs_used_max = gui_color_pairs_used_max;
+    gui_color_pairs_used_max = 0;
+    LONGS_EQUAL(0, gui_color_get_pair_colors (20, &fg, &bg));
+    gui_color_pairs_used_max = old_pairs_used_max;
+    gui_color_term_colors = old_term_colors;
+    /* Terminal without colors: colors unknown. */
+    gui_color_term_has_colors = 0;
+    LONGS_EQUAL(0, gui_color_get_pair_colors (pair, &fg, &bg));
+    gui_color_term_has_colors = 1;
+    snprintf (string, sizeof (string), "a" "\x19" "@%05d" "b", pair);
+    WEE_CHECK_ENCODE_ANSI("a" "\x1B[38;5;3m" "\x1B[48;5;5m" "b", string);
+    pair = gui_color_get_pair (-1, 2);
+    snprintf (string, sizeof (string), "a" "\x19" "@%05d" "b", pair);
+    WEE_CHECK_ENCODE_ANSI("a" "\x1B[39m" "\x1B[48;5;2m" "b", string);
+    WEE_CHECK_ENCODE_ANSI("a" "\x1B[39m" "\x1B[49m" "b",
+                          "a" "\x19" "@00000" "b");
+    WEE_CHECK_ENCODE_ANSI("a" "b", "a" "\x19" "@32000" "b");
+    gui_color_use_term_colors = 1;
+    LONGS_EQUAL(1, gui_color_get_pair_colors (pair, &fg, &bg));
+    LONGS_EQUAL(pair, fg);
+    LONGS_EQUAL(-1, bg);
+    snprintf (string, sizeof (string), "a" "\x19" "@%05d" "b", pair);
+    snprintf (expected, sizeof (expected), "a" "\x1B[38;5;%dm" "\x1B[49m" "b",
+              pair);
+    WEE_CHECK_ENCODE_ANSI(expected, string);
+    gui_color_use_term_colors = 0;
 
     /* Multiple colors/attributes */
     snprintf (string, sizeof (string),

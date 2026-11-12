@@ -89,6 +89,7 @@ short *gui_color_term_color_content = NULL; /* content of colors (r/b/g)    */
 int gui_color_num_pairs = 63;            /* number of pairs used by WeeChat */
 short *gui_color_pairs = NULL;           /* table with pair for each fg+bg  */
 int gui_color_pairs_used = 0;            /* number of pairs currently used  */
+int gui_color_pairs_used_max = 0;        /* max pairs used since start      */
 int gui_color_warning_pairs_full = 0;    /* warning displayed?              */
 int gui_color_pairs_auto_reset = 0;         /* auto reset of pairs needed   */
 int gui_color_pairs_auto_reset_pending = 0; /* auto reset is pending        */
@@ -506,6 +507,8 @@ gui_color_get_pair (int fg, int bg)
 
         /* Create a new pair if no pair exists for this fg/bg. */
         gui_color_pairs_used++;
+        if (gui_color_pairs_used > gui_color_pairs_used_max)
+            gui_color_pairs_used_max = gui_color_pairs_used;
         gui_color_pairs[index] = gui_color_pairs_used;
         gui_color_init_pair (gui_color_pairs_used, fg, bg);
         if ((gui_color_num_pairs > 1) && !gui_color_pairs_auto_reset_pending
@@ -518,6 +521,77 @@ gui_color_get_pair (int fg, int bg)
     }
 
     return gui_color_pairs[index];
+}
+
+/*
+ * Get the terminal colors of a color pair, as displayed on screen (see
+ * function gui_window_set_custom_color_pair).
+ *
+ * A pair never used by WeeChat since start is initialized with the terminal
+ * color of the pair number on the default background (see function
+ * gui_color_init_pairs_terminal); a pair used before a reset of pairs can
+ * still have its old colors on screen.
+ *
+ * Return:
+ *    1: pair is displayed, *fg and *bg are set (-1 for the default color)
+ *    0: pair is displayed but its colors are unknown (terminal without
+ *       colors, pair used before a reset of pairs, or pair greater than the
+ *       number of terminal colors)
+ *   -1: pair is ignored on screen (invalid pair number)
+ */
+
+int
+gui_color_get_pair_colors (int pair, int *fg, int *bg)
+{
+    int i, count;
+
+    if ((pair < 0) || (pair > gui_color_num_pairs))
+        return -1;
+
+    if (!gui_color_term_has_colors)
+        return 0;
+
+    if (pair == 0)
+    {
+        /* Pair 0: default colors of terminal. */
+        *fg = -1;
+        *bg = -1;
+        return 1;
+    }
+
+    if (gui_color_use_term_colors)
+    {
+        /* Terminal colors: pair N is the color N on default background. */
+        if (pair >= gui_color_term_colors)
+            return 0;
+        *fg = pair;
+        *bg = -1;
+        return 1;
+    }
+
+    if (gui_color_pairs)
+    {
+        count = (gui_color_term_colors + 2) * (gui_color_term_colors + 2);
+        for (i = 0; i < count; i++)
+        {
+            if (gui_color_pairs[i] == pair)
+            {
+                *fg = (i % (gui_color_term_colors + 2)) - 1;
+                *bg = (i / (gui_color_term_colors + 2)) - 1;
+                return 1;
+            }
+        }
+    }
+
+    /* Pair never used by WeeChat: pair number on default background. */
+    if ((pair > gui_color_pairs_used_max) && (pair < gui_color_term_colors))
+    {
+        *fg = pair;
+        *bg = -1;
+        return 1;
+    }
+
+    return 0;
 }
 
 /*
@@ -671,6 +745,7 @@ gui_color_init_vars (void)
         gui_color_pairs = NULL;
     }
     gui_color_pairs_used = 0;
+    gui_color_pairs_used_max = 0;
 
     if (gui_color_term_has_colors)
     {
