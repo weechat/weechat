@@ -14561,7 +14561,13 @@ List of modifiers defined by WeeChat and plugins that can be used:
 
 // TRANSLATION MISSING
 | [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0
-| "1" per mantenere i colori, "0" per rimuovere i colori
+| "1" per mantenere i colori, "0" per rimuovere i colori,
+// TRANSLATION MISSING
+  optionally followed by ";" and the pointer of the buffer where the string is
+  sent (for example "1;0x1234abcd"), to use the option
+  irc.server.xxx.ansi_colors of its IRC server (without buffer, or for a buffer
+  which is not an IRC buffer, option irc.server_default.ansi_colors is used)
+  _(WeeChat ≥ 5.0.0)_
 | Qualsiasi stringa.
 | String with ANSI colors converted to IRC colors (or ANSI colors removed).
 

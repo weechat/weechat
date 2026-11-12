@@ -14246,7 +14246,12 @@ utilisés :
 | Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées).
 
 | [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0
-| "1" pour garder les couleurs, "0" pour les supprimer
+| "1" pour garder les couleurs, "0" pour les supprimer,
+  éventuellement suivi par ";" et le pointeur du tampon où la chaîne est
+  envoyée (par exemple "1;0x1234abcd"), pour utiliser l'option
+  irc.server.xxx.ansi_colors de son serveur IRC (sans tampon, ou pour un tampon
+  qui n'est pas un tampon IRC, l'option irc.server_default.ansi_colors est
+  utilisée) _(WeeChat ≥ 5.0.0)_
 | Toute chaîne.
 | Chaîne avec les couleurs ANSI converties en couleurs IRC (ou avec les couleurs
   ANSI supprimées).

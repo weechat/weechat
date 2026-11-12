@@ -17,6 +17,7 @@ extern "C"
 #include "src/core/core-hook.h"
 #include "src/core/core-infolist.h"
 #include "src/core/core-string.h"
+#include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-color.h"
 #include "src/plugins/irc/irc-config.h"
@@ -1958,7 +1959,7 @@ TEST(IrcColor, DecodeAnsiExtended)
 
 TEST(IrcColor, ModifierCallback)
 {
-    char string[1024], *result;
+    char string[1024], str_core[64], *result;
 
     /* Modifier "irc_color_decode" */
     snprintf (string, sizeof (string),
@@ -1980,6 +1981,14 @@ TEST(IrcColor, ModifierCallback)
     STRCMP_EQUAL(string, result);
     free (result);
 
+    /* A buffer after ";" is only for modifier "irc_color_decode_ansi". */
+    snprintf (str_core, sizeof (str_core), "1;0x%lx",
+              (unsigned long)gui_buffers);
+    result = hook_modifier_exec (NULL, "irc_color_encode",
+                                 str_core, STRING_USER_BOLD);
+    STRCMP_EQUAL("test_bold_end", result);
+    free (result);
+
     /* Modifier "irc_color_decode_ansi" */
     snprintf (string, sizeof (string),
               "test_%sbold1%s_normal_%sbold2%s_normal_%sbold3%s_normal",
@@ -1999,6 +2008,10 @@ TEST(IrcColor, ModifierCallback)
                                  "1", "A\x1B[38;5;196mB");
     STRCMP_EQUAL("A" "\x03" "52" "B", result);
     free (result);
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 str_core, "A\x1B[38;5;196mB");
+    STRCMP_EQUAL("A" "\x03" "52" "B", result);
+    free (result);
     config_file_option_set (
         irc_config_server_default[IRC_SERVER_OPTION_ANSI_COLORS], "basic", 1);
     snprintf (string, sizeof (string),
@@ -2010,6 +2023,56 @@ TEST(IrcColor, ModifierCallback)
     free (result);
     config_file_option_reset (
         irc_config_server_default[IRC_SERVER_OPTION_ANSI_COLORS], 1);
+    snprintf (str_core, sizeof (str_core), "0;0x%lx",
+              (unsigned long)gui_buffers);
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 str_core, "A\x1B[38;5;196mB");
+    STRCMP_EQUAL("AB", result);
+    free (result);
+}
+
+/*
+ * Test functions:
+ *   irc_color_ansi_palette
+ *   irc_color_modifier_cb (modifier "irc_color_decode_ansi" with a buffer)
+ */
+
+TEST(IrcColor, AnsiPalette)
+{
+    struct t_irc_server *server;
+    char string[1024], str_buffer[64], str_data[128], *result;
+
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED, irc_color_ansi_palette (NULL));
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED, irc_color_ansi_palette (""));
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED,
+                irc_color_ansi_palette ("core.weechat"));
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED, irc_color_ansi_palette ("0x1"));
+    snprintf (str_buffer, sizeof (str_buffer), "0x%lx",
+              (unsigned long)gui_buffers);
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED, irc_color_ansi_palette (str_buffer));
+
+    /* Option of the server of the buffer */
+    server = irc_server_alloc ("test_palette");
+    CHECK(server);
+    irc_server_create_buffer (server);
+    snprintf (str_buffer, sizeof (str_buffer), "0x%lx",
+              (unsigned long)server->buffer);
+    snprintf (str_data, sizeof (str_data), "1;%s", str_buffer);
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED,
+                irc_color_ansi_palette (str_buffer));
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANSI_COLORS],
+                            "basic", 1);
+    LONGS_EQUAL(IRC_COLOR_PALETTE_BASIC,
+                irc_color_ansi_palette (str_buffer));
+    snprintf (string, sizeof (string),
+              "A%s%02dB",
+              IRC_COLOR_COLOR_STR, irc_color_convert_term2irc (196));
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 str_data,
+                                 "A\x1B[38;5;196mB");
+    STRCMP_EQUAL(string, result);
+    free (result);
+    irc_server_free (server);
 }
 
 /*

@@ -180,6 +180,7 @@ extern char *irc_color_encode (const char *string, int keep_colors);
 extern int irc_color_convert_rgb2irc_palette (long rgb, int palette);
 extern int irc_color_convert_term2irc_palette (int color, int palette);
 extern int irc_color_convert_term2irc_cached (int color, int palette);
+extern int irc_color_ansi_palette (const char *str_buffer);
 extern char *irc_color_decode_ansi (const char *string, int keep_colors,
                                     int palette);
 extern char *irc_color_modifier_cb (const void *pointer, void *data,

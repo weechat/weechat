@@ -13526,7 +13526,13 @@ char *weechat_hook_modifier_exec (const char *modifier,
 | Стринг са IRC бојама (или са уклоњеним IRC бојама).
 
 | [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0
-| "1" да се боје задрже, "0" да се боје уклоне
+| "1" да се боје задрже, "0" да се боје уклоне,
+// TRANSLATION MISSING
+  optionally followed by ";" and the pointer of the buffer where the string is
+  sent (for example "1;0x1234abcd"), to use the option
+  irc.server.xxx.ansi_colors of its IRC server (without buffer, or for a buffer
+  which is not an IRC buffer, option irc.server_default.ansi_colors is used)
+  _(WeeChat ≥ 5.0.0)_
 | Било који стринг.
 | Стринг у којем су ANSI боје конвертоване у IRC боје (или су уклоњене ANSI боје).
 

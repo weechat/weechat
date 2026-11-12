@@ -98,6 +98,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - buflist: display only the first char of nick prefix in variable `${nick_prefix}`, so that buffers stay aligned when a nick has multiple prefixes in nicklist
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: accept a number or a string with a number as integer data in function hook_signal_send, return an error if the data is not a valid integer
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
+- **breaking:** irc: add buffer pointer in modifier data of modifier "irc_color_decode_ansi", for example "1;0x1234abcd", to use the server option ansi_colors of its IRC server, the modifier data sent by `/exec` contains the buffer where the output is sent ([#1364](https://github.com/weechat/weechat/issues/1364))
 - **breaking:** irc: convert ANSI terminal colors 16-255 and RGB colors to IRC colors 16-98 instead of 0-15 (the IRC color displayed with the terminal color, or the nearest IRC color), basic ANSI colors are still converted to IRC colors 0-15 (server option ansi_colors) ([#1364](https://github.com/weechat/weechat/issues/1364))
 - **breaking:** irc: keep the RGB value of hex colors (`^D`) (color code "@#rrggbb") instead of using the nearest terminal color ([#1364](https://github.com/weechat/weechat/issues/1364))
 - irc: allow spaces around commas in server option tls_fingerprint

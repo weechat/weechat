@@ -13,6 +13,7 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
+#include "irc-buffer.h"
 #include "irc-color.h"
 #include "irc-config.h"
 #include "irc-server.h"
@@ -324,6 +325,49 @@ irc_color_convert_term2irc_palette (int color, int palette)
     rgb = irc_color_convert_term2rgb (color);
 
     return (rgb >= 0) ? irc_color_convert_rgb2irc_extended (rgb) : -1;
+}
+
+/*
+ * Get the palette used to convert ANSI colors to IRC colors in a buffer
+ * (pointer as string, for example "0x1234abcd"): option "ansi_colors" of the
+ * IRC server of the buffer, or of the default server options if the buffer
+ * is not an IRC buffer or not found.
+ */
+
+int
+irc_color_ansi_palette (const char *str_buffer)
+{
+    struct t_hdata *hdata_buffer;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_irc_server *ptr_server;
+    unsigned long value;
+    int rc;
+
+    ptr_server = NULL;
+    if (str_buffer && str_buffer[0])
+    {
+        rc = sscanf (str_buffer, "%lx", &value);
+        ptr_buffer = ((rc != EOF) && (rc != 0)) ?
+            (struct t_gui_buffer *)value : NULL;
+        hdata_buffer = weechat_hdata_get ("buffer");
+        if (ptr_buffer
+            && weechat_hdata_check_pointer (
+                hdata_buffer,
+                weechat_hdata_get_list (hdata_buffer, "gui_buffers"),
+                ptr_buffer))
+        {
+            irc_buffer_get_server_and_channel (ptr_buffer, &ptr_server, NULL);
+        }
+    }
+
+    if (ptr_server)
+    {
+        return IRC_SERVER_OPTION_ENUM(ptr_server,
+                                      IRC_SERVER_OPTION_ANSI_COLORS);
+    }
+
+    return weechat_config_enum (
+        irc_config_server_default[IRC_SERVER_OPTION_ANSI_COLORS]);
 }
 
 /*
@@ -1692,11 +1736,18 @@ irc_color_modifier_cb (const void *pointer, void *data,
                        const char *string)
 {
     int keep_colors;
+    const char *ptr_buffer;
 
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
 
+    /*
+     * Modifier data: "1" (keep colors) or "0" (remove colors); for
+     * "irc_color_decode_ansi", it can be followed by ";" and the pointer of
+     * the buffer where the string is sent, for example "1;0x1234abcd" (to use
+     * the option "ansi_colors" of its IRC server).
+     */
     keep_colors = (modifier_data && (strcmp (modifier_data, "1") == 0)) ? 1 : 0;
 
     if (strcmp (modifier, "irc_color_decode") == 0)
@@ -1707,16 +1758,17 @@ irc_color_modifier_cb (const void *pointer, void *data,
 
     if (strcmp (modifier, "irc_color_decode_ansi") == 0)
     {
-        /*
-         * The palette of the default server options is used, only for colors
-         * (in escape sequences).
-         */
+        keep_colors = (modifier_data && (modifier_data[0] == '1')
+                       && (!modifier_data[1] || (modifier_data[1] == ';'))) ?
+            1 : 0;
+        ptr_buffer = (modifier_data) ? strchr (modifier_data, ';') : NULL;
+        if (ptr_buffer)
+            ptr_buffer++;
+        /* The palette is used only for colors (in escape sequences). */
         return irc_color_decode_ansi (
             string, keep_colors,
             (keep_colors && string && strchr (string, '\33')) ?
-            weechat_config_enum (
-                irc_config_server_default[IRC_SERVER_OPTION_ANSI_COLORS]) :
-            IRC_COLOR_PALETTE_BASIC);
+            irc_color_ansi_palette (ptr_buffer) : IRC_COLOR_PALETTE_BASIC);
     }
 
     /* Unknown modifier */

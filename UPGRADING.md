@@ -327,6 +327,15 @@ basic colors can be used again with:
 /set irc.server_default.ansi_colors basic
 ```
 
+### Modifier irc_color_decode_ansi
+
+The modifier data of `irc_color_decode_ansi` can now contain the pointer of the buffer
+where the string is sent, after `;` (for example `1;0x1234abcd`), to use the option
+`ansi_colors` of its IRC server; command `/exec` sends this data.
+
+Scripts which hook this modifier and compare its data with `1` or `0` must accept the
+buffer after `;`, for example by checking only the first char.
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer
