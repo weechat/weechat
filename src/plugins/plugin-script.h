@@ -80,6 +80,8 @@ struct t_plugin_script
     char *shutdown_func;                 /* function when script is unloaded*/
     char *charset;                       /* script charset                  */
     int unloading;                       /* script is being unloaded        */
+    int running;                         /* > 0 if a function of script is  */
+                                         /* running (> 1 if nested calls)   */
     struct t_plugin_script *prev_script; /* link to previous script         */
     struct t_plugin_script *next_script; /* link to next script             */
 };
@@ -183,6 +185,12 @@ extern void plugin_script_set_buffer_callbacks (struct t_weechat_plugin *weechat
                                                                               void *data,
                                                                               struct t_gui_buffer *buffer));
 extern void plugin_script_free (struct t_plugin_script *script);
+extern int plugin_script_is_running (struct t_plugin_script *scripts,
+                                     struct t_plugin_script *script);
+extern int plugin_script_delay_unload (struct t_weechat_plugin *weechat_plugin,
+                                       struct t_plugin_script *scripts,
+                                       struct t_gui_buffer *buffer,
+                                       int argc, char **argv, char **argv_eol);
 extern void plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
                                   struct t_plugin_script **scripts,
                                   struct t_plugin_script **last_script,

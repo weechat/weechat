@@ -199,7 +199,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
                   int ret_type, const char *function,
                   const char *format, void **argv)
 {
-    int argc, i;
+    int argc, i, rc;
     int *ret_i;
     char *ret_cv;
     void *ret_val;
@@ -246,7 +246,11 @@ weechat_tcl_exec (struct t_plugin_script *script,
         }
     }
 
-    if (Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT) == TCL_OK)
+    script->running++;
+    rc = Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT);
+    script->running--;
+
+    if (rc == TCL_OK)
     {
         Tcl_DecrRefCount (cmdlist);  /* -1 */
         ret_val = NULL;
@@ -581,6 +585,16 @@ weechat_tcl_command_cb (const void *pointer, void *data,
     /* make C compiler happy */
     (void) pointer;
     (void) data;
+
+    /*
+     * unloading a script while one of its functions is running would crash
+     * WeeChat: in this case the command is executed later
+     */
+    if (plugin_script_delay_unload (weechat_tcl_plugin, tcl_scripts,
+                                    buffer, argc, argv, argv_eol))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     if (argc == 1)
     {

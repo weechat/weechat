@@ -189,6 +189,7 @@ weechat_js_exec (struct t_plugin_script *script,
 
     old_js_current_script = js_current_script;
     js_current_script = script;
+    script->running++;
     js_v8 = (WeechatJsV8 *)(script->interpreter);
 
     if (!js_v8->functionExists(function))
@@ -287,6 +288,7 @@ weechat_js_exec (struct t_plugin_script *script,
 
 end:
     js_current_script = old_js_current_script;
+    script->running--;
 
     return ret_value;
 }
@@ -589,6 +591,16 @@ weechat_js_command_cb (const void *pointer, void *data,
     /* make C++ compiler happy */
     (void) pointer;
     (void) data;
+
+    /*
+     * unloading a script while one of its functions is running would crash
+     * WeeChat: in this case the command is executed later
+     */
+    if (plugin_script_delay_unload (weechat_js_plugin, js_scripts,
+                                    buffer, argc, argv, argv_eol))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     if (argc == 1)
     {

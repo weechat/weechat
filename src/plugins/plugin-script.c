@@ -771,6 +771,7 @@ plugin_script_alloc (const char *filename, const char *name,
         strdup (shutdown_func) : NULL;
     new_script->charset = (charset) ? strdup (charset) : NULL;
     new_script->unloading = 0;
+    new_script->running = 0;
     new_script->prev_script = NULL;
     new_script->next_script = NULL;
 
@@ -1078,6 +1079,100 @@ plugin_script_free (struct t_plugin_script *script)
     free (script->charset);
 
     free (script);
+}
+
+/*
+ * Check if a script is running: one of its functions is being executed.
+ *
+ * If script is NULL, check if any script in the list "scripts" is running.
+ *
+ * Return:
+ *   1: script is running
+ *   0: script is not running
+ */
+
+int
+plugin_script_is_running (struct t_plugin_script *scripts,
+                          struct t_plugin_script *script)
+{
+    struct t_plugin_script *ptr_script;
+
+    if (script)
+        return (script->running > 0) ? 1 : 0;
+
+    for (ptr_script = scripts; ptr_script;
+         ptr_script = ptr_script->next_script)
+    {
+        if (ptr_script->running > 0)
+            return 1;
+    }
+
+    return 0;
+}
+
+/*
+ * Delay the command "/<language> reload|unload [-q] [<name>]" if the script
+ * "name" is running, or if any script is running when there is no name: the
+ * command is executed again from the main loop, after the script functions
+ * have returned (unloading a script while one of its functions is running
+ * would crash WeeChat).
+ *
+ * Arguments are the ones received by the command callback.
+ *
+ * Return:
+ *   1: command delayed
+ *   0: command not delayed (it can be executed now)
+ */
+
+int
+plugin_script_delay_unload (struct t_weechat_plugin *weechat_plugin,
+                            struct t_plugin_script *scripts,
+                            struct t_gui_buffer *buffer,
+                            int argc, char **argv, char **argv_eol)
+{
+    struct t_plugin_script *ptr_script;
+    struct t_hashtable *options;
+    const char *ptr_name;
+
+    if ((argc < 2)
+        || ((weechat_strcmp (argv[1], "reload") != 0)
+            && (weechat_strcmp (argv[1], "unload") != 0)))
+    {
+        return 0;
+    }
+
+    if (argc > 2)
+    {
+        ptr_name = argv_eol[2];
+        if (strncmp (ptr_name, "-q ", 3) == 0)
+        {
+            ptr_name += 3;
+            while (ptr_name[0] == ' ')
+            {
+                ptr_name++;
+            }
+        }
+        ptr_script = plugin_script_search (scripts, ptr_name);
+        if (!ptr_script || !plugin_script_is_running (scripts, ptr_script))
+            return 0;
+    }
+    else if (!plugin_script_is_running (scripts, NULL))
+    {
+        return 0;
+    }
+
+    options = weechat_hashtable_new (8,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     NULL, NULL);
+    if (!options)
+        return 0;
+
+    weechat_hashtable_set (options, "delay", "1");
+    (void) weechat_command_options (buffer, argv_eol[0], options);
+    weechat_hashtable_free (options);
+
+    return 1;
 }
 
 /*
@@ -1695,6 +1790,7 @@ plugin_script_hdata_script (struct t_weechat_plugin *weechat_plugin,
         WEECHAT_HDATA_VAR(struct t_plugin_script, shutdown_func, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_plugin_script, charset, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_plugin_script, unloading, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, running, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_plugin_script, prev_script, POINTER, 0, NULL, hdata_name);
         WEECHAT_HDATA_VAR(struct t_plugin_script, next_script, POINTER, 0, NULL, hdata_name);
         weechat_hdata_new_list (hdata, "scripts", scripts,
@@ -1860,6 +1956,7 @@ plugin_script_print_log (struct t_weechat_plugin *weechat_plugin,
         weechat_log_printf ("  shutdown_func . . . : '%s'", ptr_script->shutdown_func);
         weechat_log_printf ("  charset . . . . . . : '%s'", ptr_script->charset);
         weechat_log_printf ("  unloading . . . . . : %d", ptr_script->unloading);
+        weechat_log_printf ("  running . . . . . . : %d", ptr_script->running);
         weechat_log_printf ("  prev_script . . . . : %p", ptr_script->prev_script);
         weechat_log_printf ("  next_script . . . . : %p", ptr_script->next_script);
     }

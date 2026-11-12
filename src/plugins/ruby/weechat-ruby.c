@@ -460,6 +460,7 @@ weechat_ruby_exec (struct t_plugin_script *script,
 
     old_ruby_current_script = ruby_current_script;
     ruby_current_script = script;
+    script->running++;
 
     argc = 0;
     if (format && format[0])
@@ -510,6 +511,7 @@ weechat_ruby_exec (struct t_plugin_script *script,
         weechat_ruby_print_exception (err);
 
         ruby_current_script = old_ruby_current_script;
+        script->running--;
 
         return NULL;
     }
@@ -568,6 +570,7 @@ weechat_ruby_exec (struct t_plugin_script *script,
     }
 
     ruby_current_script = old_ruby_current_script;
+    script->running--;
 
     return ret_value;
 }
@@ -935,6 +938,16 @@ weechat_ruby_command_cb (const void *pointer, void *data,
     /* make C compiler happy */
     (void) pointer;
     (void) data;
+
+    /*
+     * unloading a script while one of its functions is running would crash
+     * WeeChat: in this case the command is executed later
+     */
+    if (plugin_script_delay_unload (weechat_ruby_plugin, ruby_scripts,
+                                    buffer, argc, argv, argv_eol))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     if (argc == 1)
     {

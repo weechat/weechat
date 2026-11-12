@@ -408,6 +408,7 @@ weechat_python_exec (struct t_plugin_script *script,
 
     old_python_current_script = python_current_script;
     python_current_script = script;
+    script->running++;
     old_interpreter = NULL;
 
     if (script->interpreter)
@@ -593,6 +594,7 @@ weechat_python_exec (struct t_plugin_script *script,
 
 end:
     python_current_script = old_python_current_script;
+    script->running--;
 
     if (old_interpreter)
         PyThreadState_Swap (old_interpreter);
@@ -1118,6 +1120,16 @@ weechat_python_command_cb (const void *pointer, void *data,
     /* make C compiler happy */
     (void) pointer;
     (void) data;
+
+    /*
+     * unloading a script while one of its functions is running would crash
+     * WeeChat: in this case the command is executed later
+     */
+    if (plugin_script_delay_unload (weechat_python_plugin, python_scripts,
+                                    buffer, argc, argv, argv_eol))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     if (argc == 1)
     {
