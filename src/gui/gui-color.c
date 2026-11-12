@@ -2375,31 +2375,6 @@ gui_color_add_ansi_attrs (char **output, int color, int *attrs_on)
 }
 
 /*
- * Add ANSI color codes for the attribute flags at the beginning of a WeeChat
- * text color (for example "*" for bold), and update attributes enabled in
- * output of gui_color_encode_ansi (see function gui_color_add_ansi_attrs).
- *
- * Return pointer to the string after the attribute flags.
- */
-
-const unsigned char *
-gui_color_add_ansi_flags (char **output, const unsigned char *string,
-                          int *attrs_on)
-{
-    int flag, flags;
-
-    flags = 0;
-    while ((flag = gui_color_attr_get_flag (string[0])) > 0)
-    {
-        flags |= flag;
-        string++;
-    }
-    gui_color_add_ansi_attrs (output, flags, attrs_on);
-
-    return string;
-}
-
-/*
  * Convert a WeeChat color number to an ANSI color number.
  *
  * Return -1 if the color is not found.
@@ -2427,7 +2402,8 @@ gui_color_weechat_to_ansi (int color)
 
 /*
  * Build an ANSI color code for a RGB color (if "rgb" >= 0) or a terminal
- * color "term" (0-255), for foreground or background.
+ * color "term" (0-255), for foreground or background; like on screen, a
+ * terminal color greater than 255 is the default color.
  *
  * If "rgb_colors" is 0, a RGB color is replaced by the nearest color of the
  * 256-color palette (otherwise a 24-bit ANSI color code is used).
@@ -2445,6 +2421,13 @@ gui_color_encode_ansi_rgb_term (char *buffer, int size, int rgb, int term,
                   (rgb >> 16) & 0xFF,
                   (rgb >> 8) & 0xFF,
                   rgb & 0xFF);
+    }
+    else if ((rgb < 0) && (term > 255))
+    {
+        snprintf (buffer, size,
+                  "\x1B[%dm",
+                  (background) ?
+                  GUI_COLOR_ANSI_DEFAULT_BG : GUI_COLOR_ANSI_DEFAULT_FG);
     }
     else
     {
@@ -2512,67 +2495,120 @@ gui_color_add_ansi_color (char **output, int color, int background,
 }
 
 /*
- * Convert a WeeChat color number at the beginning of "string" to an ANSI
- * color, and add it to "output": as foreground color with attributes if
- * "foreground" is 1, otherwise as background color. A RGB color "@#rrggbb"
- * is added as ANSI RGB color.
+ * Add ANSI color codes for a WeeChat color number read by function
+ * gui_color_code_size_number_rgb (with "rgb" not NULL): as foreground color
+ * with its attributes if "foreground" is 1 (and update attributes enabled in
+ * output, see function gui_color_add_ansi_attrs), otherwise as background
+ * color.
  *
- * Nothing is added if the color number is incomplete.
- *
- * Return the size (in bytes) of the color number in "string" (see function
- * gui_color_code_size_number_rgb).
- *
- * If "number" is not NULL, it is set to the color (see function
- * gui_color_code_size_number_rgb, with "rgb" not NULL).
- *
- * If "attrs_on" is not NULL, the attributes enabled in output are updated
- * with the attributes of a foreground color (see function
- * gui_color_add_ansi_flags).
+ * Like on screen, an incomplete color or an invalid basic color is ignored
+ * with its attributes, and a terminal color greater than 255 is the default
+ * color.
  *
  * If "rgb_colors" is 0, a RGB color is replaced by the nearest color of the
  * 256-color palette (otherwise a 24-bit ANSI color code is used).
  */
 
-int
-gui_color_encode_ansi_number (char **output, const char *string,
-                              int foreground, int *number, int *attrs_on,
-                              int rgb_colors)
+void
+gui_color_encode_ansi_add_number (char **output, int color, int rgb,
+                                  int foreground, int *attrs_on,
+                                  int rgb_colors)
 {
-    const char *ptr_string;
-    char str_concat[128];
-    int size, color, rgb, unused_attrs_on;
-
-    size = gui_color_code_size_number_rgb (string, foreground, &color, &rgb);
-
-    if (number)
-        *number = color;
+    char str_concat[64];
 
     if (color < 0)
-        return size;
+        return;
 
-    if (foreground)
+    if ((rgb < 0) && !(color & GUI_COLOR_EXTENDED_FLAG)
+        && !gui_color_search_index (color & GUI_COLOR_EXTENDED_MASK))
     {
-        /* add attributes, in the same order as in string */
-        ptr_string = string;
-        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-            ptr_string++;
-        unused_attrs_on = 0;
-        gui_color_add_ansi_flags (output, (const unsigned char *)ptr_string,
-                                  (attrs_on) ? attrs_on : &unused_attrs_on);
+        return;
     }
 
-    if (rgb >= 0)
+    if (foreground)
+        gui_color_add_ansi_attrs (output, color, attrs_on);
+
+    if ((rgb >= 0) || (color & GUI_COLOR_EXTENDED_FLAG))
     {
         gui_color_encode_ansi_rgb_term (str_concat, sizeof (str_concat),
-                                        rgb, -1, !foreground, rgb_colors);
+                                        rgb, color & GUI_COLOR_EXTENDED_MASK,
+                                        !foreground, rgb_colors);
         string_dyn_concat (output, str_concat, -1);
     }
     else
     {
         gui_color_add_ansi_color (output, color, !foreground, rgb_colors);
     }
+}
+
+/*
+ * Convert a WeeChat color number at the beginning of "string" to an ANSI
+ * color, and add it to "output": as foreground color with attributes if
+ * "foreground" is 1, otherwise as background color (see function
+ * gui_color_encode_ansi_add_number).
+ *
+ * Return the size (in bytes) of the color number in "string" (see function
+ * gui_color_code_size_number_rgb).
+ */
+
+int
+gui_color_encode_ansi_number (char **output, const char *string,
+                              int foreground, int *attrs_on, int rgb_colors)
+{
+    int size, color, rgb;
+
+    size = gui_color_code_size_number_rgb (string, foreground, &color, &rgb);
+
+    gui_color_encode_ansi_add_number (output, color, rgb, foreground,
+                                      attrs_on, rgb_colors);
 
     return size;
+}
+
+/*
+ * Add ANSI color codes for a WeeChat text and background color code (after
+ * "*"): text color with attributes, then background color after "~" (or ","
+ * in old strings).
+ *
+ * Like on screen (see function gui_window_string_apply_color_fg_bg), the code
+ * is ignored with its attributes if the text color or the background is
+ * incomplete; an invalid basic color is ignored (with the attributes for an
+ * invalid basic text color).
+ *
+ * Return pointer to the string after the color code.
+ */
+
+const unsigned char *
+gui_color_encode_ansi_fg_bg_code (char **output, const unsigned char *string,
+                                  int *attrs_on, int rgb_colors)
+{
+    int fg, fg_rgb, bg, bg_rgb;
+
+    bg = -1;
+    bg_rgb = -1;
+    string += gui_color_code_size_number_rgb ((const char *)string, 1,
+                                              &fg, &fg_rgb);
+    /*
+     * Note: the comma is an old separator not used any more
+     * (since WeeChat 2.6), but we still use it here so in case of /upgrade
+     * this will not break colors in old messages.
+     */
+    if ((fg >= 0) && ((string[0] == ',') || (string[0] == '~')))
+    {
+        string++;
+        string += gui_color_code_size_number_rgb ((const char *)string, 0,
+                                                  &bg, &bg_rgb);
+    }
+
+    if ((fg < 0) || (bg < 0))
+        return string;
+
+    gui_color_encode_ansi_add_number (output, fg, fg_rgb, 1, attrs_on,
+                                      rgb_colors);
+    gui_color_encode_ansi_add_number (output, bg, bg_rgb, 0, NULL,
+                                      rgb_colors);
+
+    return string;
 }
 
 /*
@@ -2642,34 +2678,19 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                     case GUI_COLOR_FG_CHAR:
                         ptr_string++;
                         ptr_string += gui_color_encode_ansi_number (
-                            out, (const char *)ptr_string, 1, NULL,
-                            &attrs_on, rgb_colors);
+                            out, (const char *)ptr_string, 1, &attrs_on,
+                            rgb_colors);
                         break;
                     case GUI_COLOR_BG_CHAR:
                         ptr_string++;
                         ptr_string += gui_color_encode_ansi_number (
-                            out, (const char *)ptr_string, 0, NULL, NULL,
+                            out, (const char *)ptr_string, 0, NULL,
                             rgb_colors);
                         break;
                     case GUI_COLOR_FG_BG_CHAR:
                         ptr_string++;
-                        ptr_string += gui_color_encode_ansi_number (
-                            out, (const char *)ptr_string, 1, &fg,
-                            &attrs_on, rgb_colors);
-                        /*
-                         * Note: the comma is an old separator not used any
-                         * more (since WeeChat 2.6), but we still use it here
-                         * so in case of/upgrade this will not break colors in
-                         * old messages.
-                         */
-                        if ((fg >= 0)
-                            && ((ptr_string[0] == ',') || (ptr_string[0] == '~')))
-                        {
-                            ptr_string++;
-                            ptr_string += gui_color_encode_ansi_number (
-                                out, (const char *)ptr_string, 0, NULL, NULL,
-                                rgb_colors);
-                        }
+                        ptr_string = gui_color_encode_ansi_fg_bg_code (
+                            out, ptr_string, &attrs_on, rgb_colors);
                         break;
                     case GUI_COLOR_EXTENDED_CHAR:
                         ptr_string++;
