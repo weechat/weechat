@@ -10,10 +10,12 @@
 
 extern "C"
 {
+#include <string.h>
 #include <stdio.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-hook.h"
 #include "src/core/core-infolist.h"
+#include "src/core/core-string.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-color.h"
 #include "src/plugins/irc/irc-config.h"
@@ -678,6 +680,313 @@ TEST(IrcColor, Encode)
     /* Color: hex background with less than 6 digits (text ",8B00") */
     WEE_CHECK_ENCODE("test_,8B00 orange", STRING_USER_HEX_SHORT_BG, 0);
     WEE_CHECK_ENCODE(STRING_USER_HEX_SHORT_BG, STRING_USER_HEX_SHORT_BG, 1);
+}
+
+/*
+ * Test functions:
+ *   irc_color_code_size
+ */
+
+TEST(IrcColor, CodeSize)
+{
+    LONGS_EQUAL(0, irc_color_code_size (NULL));
+    LONGS_EQUAL(0, irc_color_code_size (""));
+    LONGS_EQUAL(0, irc_color_code_size ("abc"));
+    LONGS_EQUAL(0, irc_color_code_size ("\x02" "abc"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x03"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x03" "abc"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x03" ",05"));
+    LONGS_EQUAL(2, irc_color_code_size ("\x03" "4abc"));
+    LONGS_EQUAL(3, irc_color_code_size ("\x03" "04abc"));
+    LONGS_EQUAL(3, irc_color_code_size ("\x03" "045"));
+    LONGS_EQUAL(3, irc_color_code_size ("\x03" "04,abc"));
+    LONGS_EQUAL(5, irc_color_code_size ("\x03" "04,5abc"));
+    LONGS_EQUAL(6, irc_color_code_size ("\x03" "04,05abc"));
+    LONGS_EQUAL(6, irc_color_code_size ("\x03" "04,056"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x04"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x04" "12 apples"));
+    LONGS_EQUAL(7, irc_color_code_size ("\x04" "FF7F00abc"));
+    LONGS_EQUAL(7, irc_color_code_size ("\x04" "FF7F00,8B00"));
+    LONGS_EQUAL(14, irc_color_code_size ("\x04" "FF7F00,8B008Babc"));
+}
+
+/*
+ * Test functions:
+ *   irc_color_hex_color_value
+ *   irc_color_code_parse
+ */
+
+TEST(IrcColor, CodeParse)
+{
+    int fg, bg;
+
+    LONGS_EQUAL(0x000000, irc_color_hex_color_value ((const unsigned char *)"000000"));
+    LONGS_EQUAL(0xFF7F00, irc_color_hex_color_value ((const unsigned char *)"FF7F00abc"));
+    LONGS_EQUAL(0xFF7F00, irc_color_hex_color_value ((const unsigned char *)"ff7f00"));
+
+    fg = 1;
+    bg = 1;
+    LONGS_EQUAL(0, irc_color_code_parse (NULL, &fg, &bg));
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(0, irc_color_code_parse ("abc", &fg, &bg));
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, fg);
+
+    LONGS_EQUAL(1, irc_color_code_parse ("\x03" ",05", &fg, &bg));
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(2, irc_color_code_parse ("\x03" "4abc", &fg, &bg));
+    LONGS_EQUAL(4, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(3, irc_color_code_parse ("\x03" "99,abc", &fg, &bg));
+    LONGS_EQUAL(99, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(5, irc_color_code_parse ("\x03" "04,5abc", &fg, &bg));
+    LONGS_EQUAL(4, fg);
+    LONGS_EQUAL(5, bg);
+    LONGS_EQUAL(6, irc_color_code_parse ("\x03" "04,056", &fg, &bg));
+    LONGS_EQUAL(4, fg);
+    LONGS_EQUAL(5, bg);
+
+    LONGS_EQUAL(1, irc_color_code_parse ("\x04" "12 apples", &fg, &bg));
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, fg);
+    LONGS_EQUAL(7, irc_color_code_parse ("\x04" "ff7f00,8B00", &fg, &bg));
+    LONGS_EQUAL(0xFF7F00 | IRC_COLOR_RGB_FLAG, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(14, irc_color_code_parse ("\x04" "FF7F00,8B008Babc", &fg, &bg));
+    LONGS_EQUAL(0xFF7F00 | IRC_COLOR_RGB_FLAG, fg);
+    LONGS_EQUAL(0x8B008B | IRC_COLOR_RGB_FLAG, bg);
+
+    /* Colors are optional. */
+    LONGS_EQUAL(3, irc_color_code_parse ("\x03" "04", NULL, NULL));
+}
+
+/*
+ * Test functions:
+ *   irc_color_formatting_transition
+ *   irc_color_formatting_add_separator
+ */
+
+TEST(IrcColor, FormattingTransition)
+{
+    struct t_irc_color_formatting from, to;
+    char **output;
+    int fg_only;
+
+#define WEE_CHECK_TRANSITION(__codes, __fg_only, __colors_only)         \
+    output = string_dyn_alloc (32);                                     \
+    fg_only = irc_color_formatting_transition (output, &from, &to,      \
+                                               __colors_only);          \
+    STRCMP_EQUAL(__codes, *output);                                     \
+    LONGS_EQUAL(__fg_only, fg_only);                                    \
+    string_dyn_free (output, 1);
+
+    output = string_dyn_alloc (32);
+    LONGS_EQUAL(0, irc_color_formatting_transition (NULL, &from, &to, 0));
+    LONGS_EQUAL(0, irc_color_formatting_transition (output, NULL, &to, 0));
+    LONGS_EQUAL(0, irc_color_formatting_transition (output, &from, NULL, 0));
+    string_dyn_free (output, 1);
+
+    /* Same formatting: no code. */
+    irc_color_formatting_init (&from);
+    irc_color_formatting_init (&to);
+    WEE_CHECK_TRANSITION("", 0, 0);
+
+    /* Attributes are toggled, or ignored with colors only. */
+    from.bold = 1;
+    to.underline = 1;
+    to.monospace = 1;
+    WEE_CHECK_TRANSITION("\x02\x1F\x11", 0, 0);
+    WEE_CHECK_TRANSITION("", 0, 1);
+    irc_color_formatting_init (&from);
+    irc_color_formatting_init (&to);
+
+    /* Text color only. */
+    to.fg = 4;
+    WEE_CHECK_TRANSITION("\x03" "04", 1, 0);
+    to.fg = 0xFF7F00 | IRC_COLOR_RGB_FLAG;
+    WEE_CHECK_TRANSITION("\x04" "FF7F00", 2, 0);
+
+    /* Text color and background of the same kind. */
+    to.fg = 4;
+    to.bg = 2;
+    WEE_CHECK_TRANSITION("\x03" "04,02", 0, 0);
+    to.fg = 0xFF7F00 | IRC_COLOR_RGB_FLAG;
+    to.bg = 0x000080 | IRC_COLOR_RGB_FLAG;
+    WEE_CHECK_TRANSITION("\x04" "FF7F00,000080", 0, 0);
+
+    /* Colors of different kinds: background first, then text color. */
+    to.fg = 4;
+    to.bg = 0x000080 | IRC_COLOR_RGB_FLAG;
+    WEE_CHECK_TRANSITION("\x04" "FFFFFF,000080" "\x03" "04", 1, 0);
+    to.fg = 0xFF7F00 | IRC_COLOR_RGB_FLAG;
+    to.bg = 2;
+    WEE_CHECK_TRANSITION("\x03" "99,02" "\x04" "FF7F00", 2, 0);
+
+    /* Background without text color: default text color. */
+    to.fg = IRC_COLOR_FORMATTING_NONE;
+    to.bg = 2;
+    WEE_CHECK_TRANSITION("\x03" "99,02", 0, 0);
+
+    /* Only colors which differ are sent. */
+    from.fg = 4;
+    from.bg = 2;
+    to.fg = 12;
+    to.bg = 2;
+    WEE_CHECK_TRANSITION("\x03" "12", 1, 0);
+    to.fg = 4;
+    WEE_CHECK_TRANSITION("", 0, 0);
+
+    /* Background reset to default: colors reset, then text color. */
+    to.bg = IRC_COLOR_DEFAULT;
+    WEE_CHECK_TRANSITION("\x03\x03" "04", 1, 0);
+    to.fg = IRC_COLOR_DEFAULT;
+    WEE_CHECK_TRANSITION("\x03" "99,99", 0, 0);
+
+    /* Background without text color: sent with the default color. */
+    from.fg = 4;
+    from.bg = 2;
+    to.fg = IRC_COLOR_FORMATTING_NONE;
+    to.bg = 5;
+    WEE_CHECK_TRANSITION("\x03" "99,05", 0, 0);
+
+#undef WEE_CHECK_TRANSITION
+}
+
+TEST(IrcColor, FormattingSeparator)
+{
+    char **output;
+
+#define WEE_CHECK_SEPARATOR(__codes, __fg_only, __text, __length)       \
+    output = string_dyn_alloc (32);                                     \
+    irc_color_formatting_add_separator (output, __fg_only, __text,      \
+                                        __length);                      \
+    STRCMP_EQUAL(__codes, *output);                                     \
+    string_dyn_free (output, 1);
+
+    irc_color_formatting_add_separator (NULL, 1, ",5", -1);
+
+    WEE_CHECK_SEPARATOR("", 0, ",5", -1);
+    WEE_CHECK_SEPARATOR("", 1, NULL, -1);
+    WEE_CHECK_SEPARATOR("", 1, "5", -1);
+
+    /*
+     * Complete text: the color after "," is checked (for "^Dfg", any
+     * hexadecimal digit: some IRC clients read 1 to 6 digits).
+     */
+    WEE_CHECK_SEPARATOR("\x02\x02", 1, ",5 text", -1);
+    WEE_CHECK_SEPARATOR("", 1, ", text", -1);
+    WEE_CHECK_SEPARATOR("", 1, ",", -1);
+    WEE_CHECK_SEPARATOR("\x02\x02", 2, ",000080 text", -1);
+    WEE_CHECK_SEPARATOR("\x02\x02", 2, ",5 text", -1);
+    WEE_CHECK_SEPARATOR("", 2, ",g text", -1);
+
+    /* Partial text: the rest may come later. */
+    WEE_CHECK_SEPARATOR("\x02\x02", 1, ",", 1);
+    WEE_CHECK_SEPARATOR("\x02\x02", 1, ",5", 2);
+    WEE_CHECK_SEPARATOR("", 1, ",a", 2);
+    WEE_CHECK_SEPARATOR("\x02\x02", 2, ",a", 2);
+    WEE_CHECK_SEPARATOR("", 2, ",g", 2);
+
+#undef WEE_CHECK_SEPARATOR
+}
+
+/*
+ * Test functions:
+ *   irc_color_formatting_init
+ *   irc_color_formatting_update
+ *   irc_color_formatting_codes
+ */
+
+TEST(IrcColor, Formatting)
+{
+    struct t_irc_color_formatting formatting;
+    const char *string;
+    char *codes;
+
+#define WEE_CHECK_FORMATTING(__codes, __string, __next_text)            \
+    irc_color_formatting_init (&formatting);                            \
+    string = __string;                                                  \
+    irc_color_formatting_update (&formatting, string, strlen (string)); \
+    codes = irc_color_formatting_codes (&formatting, __next_text, 0);   \
+    STRCMP_EQUAL(__codes, codes);                                       \
+    free (codes);
+
+    irc_color_formatting_init (NULL);
+    irc_color_formatting_update (NULL, "\x02", 1);
+    POINTERS_EQUAL(NULL, irc_color_formatting_codes (NULL, NULL, 0));
+
+    /* No formatting. */
+    WEE_CHECK_FORMATTING("", "", NULL);
+    WEE_CHECK_FORMATTING("", "test", "next");
+
+    /* Attributes. */
+    WEE_CHECK_FORMATTING("\x02", "\x02" "bold", NULL);
+    WEE_CHECK_FORMATTING("", "\x02" "bold" "\x02", NULL);
+    WEE_CHECK_FORMATTING("\x02\x16\x1D\x1E\x1F\x11",
+                         "\x02\x16\x1D\x1E\x1F\x11" "all", NULL);
+    WEE_CHECK_FORMATTING("", "\x02\x16\x1D\x1E\x1F\x11" "all" "\x0F", NULL);
+
+    /* Colors: text color alone keeps the background. */
+    WEE_CHECK_FORMATTING("\x03" "04", "\x03" "4red", NULL);
+    WEE_CHECK_FORMATTING("\x03" "04,02", "\x03" "04,02" "red/blue", NULL);
+    WEE_CHECK_FORMATTING("\x03" "12,02",
+                         "\x03" "04,02" "red/blue" "\x03" "12" "lightblue",
+                         NULL);
+    WEE_CHECK_FORMATTING("", "\x03" "04,02" "red/blue" "\x03" "reset", NULL);
+    WEE_CHECK_FORMATTING("\x02\x03" "04",
+                         "\x02\x03" "04" "bold red", NULL);
+
+    /* Hex colors. */
+    WEE_CHECK_FORMATTING("\x04" "FF7F00", "\x04" "FF7F00" "orange", NULL);
+    WEE_CHECK_FORMATTING("\x04" "FF7F00,000080",
+                         "\x04" "FF7F00,000080" "orange/navy", NULL);
+    WEE_CHECK_FORMATTING("", "\x04" "FF7F00" "orange" "\x04" "reset", NULL);
+    WEE_CHECK_FORMATTING("\x04" "FF7F00", "\x04" "ff7f00" "orange", NULL);
+
+    /* Mixed kinds of colors: background first, then text color. */
+    WEE_CHECK_FORMATTING("\x03" "99,02" "\x04" "FF7F00",
+                         "\x03" "04,02" "red/blue" "\x04" "FF7F00" "orange",
+                         NULL);
+    WEE_CHECK_FORMATTING("\x04" "FFFFFF,000080" "\x03" "04",
+                         "\x04" "FF7F00,000080" "orange" "\x03" "04" "red",
+                         NULL);
+    WEE_CHECK_FORMATTING("\x04" "FFFFFF,000080" "\x03" "99",
+                         "\x04" "FF7F00,000080" "orange" "\x03" "99"
+                         "default/navy",
+                         NULL);
+
+    /* Text color followed by "," + digits: "^B^B" is added. */
+    WEE_CHECK_FORMATTING("\x03" "04" "\x02\x02", "\x03" "04" "red", ",5 text");
+    WEE_CHECK_FORMATTING("\x03" "04", "\x03" "04" "red", ", text");
+    WEE_CHECK_FORMATTING("\x03" "04,02", "\x03" "04,02" "red", ",5 text");
+    WEE_CHECK_FORMATTING("\x04" "FF7F00" "\x02\x02",
+                         "\x04" "FF7F00" "orange", ",000080 text");
+    WEE_CHECK_FORMATTING("\x04" "FF7F00" "\x02\x02",
+                         "\x04" "FF7F00" "orange", ",5 text");
+    WEE_CHECK_FORMATTING("\x04" "FF7F00", "\x04" "FF7F00" "orange", ",g text");
+
+    /* Attributes only (no separator after attributes). */
+    irc_color_formatting_init (&formatting);
+    string = "\x02\x1F" "\x03" "04,02" "bold underline red/blue";
+    irc_color_formatting_update (&formatting, string, strlen (string));
+    codes = irc_color_formatting_codes (&formatting, NULL, 1);
+    STRCMP_EQUAL("\x02\x1F", codes);
+    free (codes);
+    irc_color_formatting_init (&formatting);
+    string = "\x03" "04" "red";
+    irc_color_formatting_update (&formatting, string, strlen (string));
+    codes = irc_color_formatting_codes (&formatting, ",5 text", 1);
+    STRCMP_EQUAL("", codes);
+    free (codes);
+
+    /* Code cut at the end of the string: ignored. */
+    irc_color_formatting_init (&formatting);
+    string = "\x03" "04,02" "red/blue";
+    irc_color_formatting_update (&formatting, string, 4);
+    codes = irc_color_formatting_codes (&formatting, NULL, 0);
+    STRCMP_EQUAL("", codes);
+    free (codes);
 }
 
 /*

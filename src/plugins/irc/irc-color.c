@@ -203,6 +203,446 @@ irc_color_is_hex_color (const unsigned char *string)
 }
 
 /*
+ * Get the value of a hex color: 6 hexadecimal digits at the beginning of a
+ * string (checked with function irc_color_is_hex_color).
+ *
+ * Return the RGB value (0x000000 to 0xFFFFFF).
+ */
+
+int
+irc_color_hex_color_value (const unsigned char *string)
+{
+    int i, value;
+
+    value = 0;
+    for (i = 0; i < 6; i++)
+    {
+        value = (value << 4)
+            | (isdigit (string[i]) ?
+               string[i] - '0' : tolower (string[i]) - 'a' + 10);
+    }
+
+    return value;
+}
+
+/*
+ * Parse an IRC color code at the beginning of a string: "^C" followed by an
+ * optional color ("NN" or "NN,MM", with 1 or 2 digits), or "^D" followed by
+ * an optional hex color ("RRGGBB" or "RRGGBB,RRGGBB"), read like function
+ * irc_color_decode reads them.
+ *
+ * If not NULL, "fg" and "bg" are set to the colors of the code: IRC color
+ * (0-99), RGB color with flag IRC_COLOR_RGB_FLAG (for "^D"), or
+ * IRC_COLOR_FORMATTING_NONE if the code has no such color.
+ *
+ * Return the size of the code, 0 if the string does not start with "^C" or
+ * "^D".
+ */
+
+int
+irc_color_code_parse (const char *string, int *fg, int *bg)
+{
+    const unsigned char *ptr_string;
+    int color_fg, color_bg;
+
+    color_fg = IRC_COLOR_FORMATTING_NONE;
+    color_bg = IRC_COLOR_FORMATTING_NONE;
+
+    if (fg)
+        *fg = color_fg;
+    if (bg)
+        *bg = color_bg;
+
+    if (!string)
+        return 0;
+
+    ptr_string = (const unsigned char *)string;
+
+    switch (ptr_string[0])
+    {
+        case IRC_COLOR_COLOR_CHAR:
+            ptr_string++;
+            if (isdigit (ptr_string[0]))
+            {
+                color_fg = ptr_string[0] - '0';
+                ptr_string++;
+                if (isdigit (ptr_string[0]))
+                {
+                    color_fg = (color_fg * 10) + ptr_string[0] - '0';
+                    ptr_string++;
+                }
+                if ((ptr_string[0] == ',') && isdigit (ptr_string[1]))
+                {
+                    color_bg = ptr_string[1] - '0';
+                    ptr_string += 2;
+                    if (isdigit (ptr_string[0]))
+                    {
+                        color_bg = (color_bg * 10) + ptr_string[0] - '0';
+                        ptr_string++;
+                    }
+                }
+            }
+            break;
+        case IRC_COLOR_HEX_COLOR_CHAR:
+            ptr_string++;
+            if (irc_color_is_hex_color (ptr_string))
+            {
+                color_fg = irc_color_hex_color_value (ptr_string)
+                    | IRC_COLOR_RGB_FLAG;
+                ptr_string += 6;
+                if ((ptr_string[0] == ',')
+                    && irc_color_is_hex_color (ptr_string + 1))
+                {
+                    color_bg = irc_color_hex_color_value (ptr_string + 1)
+                        | IRC_COLOR_RGB_FLAG;
+                    ptr_string += 7;
+                }
+            }
+            break;
+        default:
+            return 0;
+    }
+
+    if (fg)
+        *fg = color_fg;
+    if (bg)
+        *bg = color_bg;
+
+    return ptr_string - (const unsigned char *)string;
+}
+
+/*
+ * Get the size of the char at the beginning of a string: the size of a valid
+ * UTF-8 char, or 1 for a byte which is not valid UTF-8, so that it can not
+ * include the beginning of an IRC code after it.
+ *
+ * Return the size of the char (1 at the end of string).
+ */
+
+int
+irc_color_char_size (const char *string)
+{
+    int size;
+
+    if (((unsigned char)string[0] < 0x80)
+        || !weechat_utf8_is_valid (string, 1, NULL))
+    {
+        return 1;
+    }
+
+    size = weechat_utf8_char_size (string);
+
+    return (size > 0) ? size : 1;
+}
+
+/*
+ * Get the size of an IRC color code at the beginning of a string (see
+ * function irc_color_code_parse).
+ *
+ * Return the size of the code, 0 if the string does not start with "^C" or
+ * "^D".
+ */
+
+int
+irc_color_code_size (const char *string)
+{
+    return irc_color_code_parse (string, NULL, NULL);
+}
+
+/*
+ * Initialize formatting: no attribute, no color.
+ */
+
+void
+irc_color_formatting_init (struct t_irc_color_formatting *formatting)
+{
+    if (!formatting)
+        return;
+
+    memset (formatting, 0, sizeof (*formatting));
+    formatting->fg = IRC_COLOR_FORMATTING_NONE;
+    formatting->bg = IRC_COLOR_FORMATTING_NONE;
+}
+
+/*
+ * Set colors with the colors of an IRC color code (see function
+ * irc_color_code_parse): a code without color sets both colors to "reset",
+ * a text color alone keeps the background.
+ */
+
+void
+irc_color_formatting_set_colors (int *fg, int *bg, int code_fg, int code_bg,
+                                 int reset)
+{
+    if (code_fg == IRC_COLOR_FORMATTING_NONE)
+    {
+        *fg = reset;
+        *bg = reset;
+        return;
+    }
+
+    *fg = code_fg;
+    if (code_bg != IRC_COLOR_FORMATTING_NONE)
+        *bg = code_bg;
+}
+
+/*
+ * Update formatting with the IRC formatting codes in a string (the first
+ * "length" bytes of string): attributes are toggled, colors are set or
+ * reset ("^C" or "^D" alone resets colors, a text color alone keeps the
+ * background), "^O" resets everything.
+ */
+
+void
+irc_color_formatting_update (struct t_irc_color_formatting *formatting,
+                             const char *string, int length)
+{
+    const char *ptr_string, *ptr_end;
+    int size, fg, bg;
+
+    if (!formatting || !string)
+        return;
+
+    ptr_string = string;
+    ptr_end = string + length;
+    while ((ptr_string < ptr_end) && ptr_string[0])
+    {
+        switch (ptr_string[0])
+        {
+            case IRC_COLOR_BOLD_CHAR:
+                formatting->bold ^= 1;
+                break;
+            case IRC_COLOR_REVERSE_CHAR:
+                formatting->reverse ^= 1;
+                break;
+            case IRC_COLOR_ITALIC_CHAR:
+                formatting->italic ^= 1;
+                break;
+            case IRC_COLOR_STRIKETHROUGH_CHAR:
+                formatting->strikethrough ^= 1;
+                break;
+            case IRC_COLOR_UNDERLINE_CHAR:
+                formatting->underline ^= 1;
+                break;
+            case IRC_COLOR_MONOSPACE_CHAR:
+                formatting->monospace ^= 1;
+                break;
+            case IRC_COLOR_RESET_CHAR:
+                irc_color_formatting_init (formatting);
+                break;
+            case IRC_COLOR_COLOR_CHAR:
+            case IRC_COLOR_HEX_COLOR_CHAR:
+                size = irc_color_code_parse (ptr_string, &fg, &bg);
+                /* Code cut at the end of string: ignore it. */
+                if (ptr_string + size > ptr_end)
+                    return;
+                irc_color_formatting_set_colors (&formatting->fg,
+                                                 &formatting->bg, fg, bg,
+                                                 IRC_COLOR_FORMATTING_NONE);
+                ptr_string += size;
+                continue;
+        }
+        ptr_string++;
+    }
+}
+
+/*
+ * Add a color to IRC codes: IRC color number on 2 digits (for "^C"), or RGB
+ * color on 6 hexadecimal digits (for "^D", if color has flag
+ * IRC_COLOR_RGB_FLAG).
+ */
+
+void
+irc_color_formatting_add_color (char **output, int color)
+{
+    char str_color[16];
+
+    if (color & IRC_COLOR_RGB_FLAG)
+        snprintf (str_color, sizeof (str_color), "%06X", color & 0xFFFFFF);
+    else
+        snprintf (str_color, sizeof (str_color), "%02d", color);
+    weechat_string_dyn_concat (output, str_color, -1);
+}
+
+/*
+ * Add an IRC color code with a text color and an optional background: "^C"
+ * for IRC colors, "^D" for RGB colors (both colors must be of the same kind).
+ */
+
+void
+irc_color_formatting_add_code (char **output, int fg, int bg)
+{
+    weechat_string_dyn_concat (
+        output,
+        (fg & IRC_COLOR_RGB_FLAG) ? IRC_COLOR_HEX_COLOR_STR : IRC_COLOR_COLOR_STR,
+        -1);
+    irc_color_formatting_add_color (output, fg);
+    if (bg != IRC_COLOR_FORMATTING_NONE)
+    {
+        weechat_string_dyn_concat (output, ",", -1);
+        irc_color_formatting_add_color (output, bg);
+    }
+}
+
+/*
+ * Add the IRC codes that change the formatting "from" to the formatting "to":
+ * codes for the attributes which differ (unless "colors_only" is 1), then a
+ * color code if colors differ.
+ *
+ * Colors are only set (IRC_COLOR_FORMATTING_NONE in "to" means "no color
+ * code"), and a missing text color in "to" is sent as the default color
+ * (with a background).
+ * A background is set only with a text color: with colors of different kinds,
+ * the background is set with a text color of the same kind ("^C99,bg" or
+ * "^DFFFFFF,bg"), then the text color is set (it keeps the background).
+ * A background reset to the default color is sent as a color reset followed
+ * by the text color ("^C^Cfg"), so that the colors remapped with the default
+ * background (option irc.color.mirc_remap) apply.
+ *
+ * Return the kind of the last code added if it has only a text color (then
+ * text starting with "," and a color would be read as a background, see
+ * function irc_color_formatting_add_separator): 1 for "^Cfg", 2 for "^Dfg",
+ * 0 otherwise.
+ */
+
+int
+irc_color_formatting_transition (char **output,
+                                 const struct t_irc_color_formatting *from,
+                                 const struct t_irc_color_formatting *to,
+                                 int colors_only)
+{
+    int fg, bg;
+
+    if (!output || !from || !to)
+        return 0;
+
+    if (!colors_only)
+    {
+        if (from->bold != to->bold)
+            weechat_string_dyn_concat (output, IRC_COLOR_BOLD_STR, -1);
+        if (from->reverse != to->reverse)
+            weechat_string_dyn_concat (output, IRC_COLOR_REVERSE_STR, -1);
+        if (from->italic != to->italic)
+            weechat_string_dyn_concat (output, IRC_COLOR_ITALIC_STR, -1);
+        if (from->strikethrough != to->strikethrough)
+            weechat_string_dyn_concat (output, IRC_COLOR_STRIKETHROUGH_STR, -1);
+        if (from->underline != to->underline)
+            weechat_string_dyn_concat (output, IRC_COLOR_UNDERLINE_STR, -1);
+        if (from->monospace != to->monospace)
+            weechat_string_dyn_concat (output, IRC_COLOR_MONOSPACE_STR, -1);
+    }
+
+    /* Text color sent: a missing color is the default color. */
+    fg = (to->fg >= 0) ? to->fg : IRC_COLOR_DEFAULT;
+
+    if ((to->bg != from->bg) && (to->bg != IRC_COLOR_FORMATTING_NONE))
+    {
+        bg = (to->bg >= 0) ? to->bg : IRC_COLOR_DEFAULT;
+        if ((bg == IRC_COLOR_DEFAULT)
+            && (from->bg != IRC_COLOR_FORMATTING_NONE)
+            && (to->fg >= 0) && (to->fg != IRC_COLOR_DEFAULT))
+        {
+            weechat_string_dyn_concat (output, IRC_COLOR_COLOR_STR, -1);
+            irc_color_formatting_add_code (output, fg,
+                                           IRC_COLOR_FORMATTING_NONE);
+            return (fg & IRC_COLOR_RGB_FLAG) ? 2 : 1;
+        }
+        if ((fg & IRC_COLOR_RGB_FLAG) == (bg & IRC_COLOR_RGB_FLAG))
+        {
+            irc_color_formatting_add_code (output, fg, bg);
+            return 0;
+        }
+        irc_color_formatting_add_code (
+            output,
+            (bg & IRC_COLOR_RGB_FLAG) ? (int)(0xFFFFFF | IRC_COLOR_RGB_FLAG) : IRC_COLOR_DEFAULT,
+            bg);
+        irc_color_formatting_add_code (output, fg, IRC_COLOR_FORMATTING_NONE);
+        return (fg & IRC_COLOR_RGB_FLAG) ? 2 : 1;
+    }
+
+    if ((to->fg != from->fg) && (to->fg != IRC_COLOR_FORMATTING_NONE))
+    {
+        irc_color_formatting_add_code (output, fg, IRC_COLOR_FORMATTING_NONE);
+        return (fg & IRC_COLOR_RGB_FLAG) ? 2 : 1;
+    }
+
+    return 0;
+}
+
+/*
+ * Add "^B^B" (empty bold) before text if the last code added has only a text
+ * color ("fg_only" returned by function irc_color_formatting_transition) and
+ * if the text starts with "," and a color, which would be read as a
+ * background.
+ *
+ * The text after "," is a color if it starts with a digit for "^Cfg", or a
+ * hexadecimal digit for "^Dfg" (some IRC clients read 1 to 6 hexadecimal
+ * digits). If "length" is negative, "text" is the complete text after the
+ * code; otherwise "text" is only the next "length" bytes, the rest may come
+ * later: a "," at the end of the text is enough.
+ */
+
+void
+irc_color_formatting_add_separator (char **output, int fg_only,
+                                    const char *text, int length)
+{
+    int separator;
+
+    if (!output || !fg_only || !text || (text[0] != ','))
+        return;
+
+    separator = (length == 1)
+        || ((fg_only == 1) && isdigit ((unsigned char)text[1]))
+        || ((fg_only == 2) && isxdigit ((unsigned char)text[1]));
+
+    if (separator)
+    {
+        weechat_string_dyn_concat (output, IRC_COLOR_BOLD_STR, -1);
+        weechat_string_dyn_concat (output, IRC_COLOR_BOLD_STR, -1);
+    }
+}
+
+/*
+ * Build the IRC codes that set the formatting from the default formatting,
+ * for example at the beginning of the next part of a message split in
+ * several messages; "next_text" is the text after the codes: if needed,
+ * "^B^B" is added so that it can not be read as a background color.
+ *
+ * If "attributes_only" is 1, only the attributes are set (not the colors).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_color_formatting_codes (struct t_irc_color_formatting *formatting,
+                            const char *next_text, int attributes_only)
+{
+    struct t_irc_color_formatting formatting_default, formatting_to;
+    char **codes;
+    int fg_only;
+
+    if (!formatting)
+        return NULL;
+
+    codes = weechat_string_dyn_alloc (32);
+    if (!codes)
+        return NULL;
+
+    irc_color_formatting_init (&formatting_default);
+    formatting_to = *formatting;
+    if (attributes_only)
+    {
+        formatting_to.fg = IRC_COLOR_FORMATTING_NONE;
+        formatting_to.bg = IRC_COLOR_FORMATTING_NONE;
+    }
+    fg_only = irc_color_formatting_transition (
+        codes, &formatting_default, &formatting_to, 0);
+    irc_color_formatting_add_separator (codes, fg_only, next_text, -1);
+
+    return weechat_string_dyn_free (codes, 0);
+}
+
+/*
  * Replace IRC colors by WeeChat colors.
  *
  * If keep_colors == 0: removes any color/style in message otherwise keeps
