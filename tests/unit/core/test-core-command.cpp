@@ -36,6 +36,9 @@ extern "C"
 #include "src/gui/gui-mouse.h"
 #include "src/gui/gui-window.h"
 #include "src/plugins/plugin.h"
+
+extern int gui_color_use_term_colors;
+extern int gui_color_timer;
 }
 
 #define WEE_CMD_BUFFER(__buffer_name, __command)                        \
@@ -612,7 +615,14 @@ TEST(CoreCommand, Color)
     /* /color switch */
     WEE_CMD_CORE("/color");
     WEE_CMD_CORE("/color switch");
+    LONGS_EQUAL(1, gui_color_use_term_colors);
+    /* A switch during the display of terminal colors adds time. */
     WEE_CMD_CORE("/color switch");
+    LONGS_EQUAL(1, gui_color_use_term_colors);
+    /* Back to WeeChat colors, for the next tests. */
+    gui_color_timer = 1;
+    WEE_CMD_CORE("/color switch");
+    LONGS_EQUAL(0, gui_color_use_term_colors);
     WEE_CMD_CORE("/buffer close core.color");
 
     /* /color term2rgb */
