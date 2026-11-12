@@ -2569,6 +2569,40 @@ TEST(IrcMessage, SplitColors)
     STRNCMP_EQUAL("\x0F\x02" "aaa", ptr_args, 5);
     hashtable_free (hashtable);
 
+    /*
+     * Multiline batch with "max-lines": a line split in several messages
+     * counts for each message.
+     */
+    server->multiline_max_lines = 3;
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :a\nb\n%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("a\nb",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    STRCMP_EQUAL(text,
+                 (const char *)hashtable_get (hashtable, "multiline_args2"));
+    hashtable_free (hashtable);
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+
+    /*
+     * Multiline batch with "max-bytes": the codes of formatting sent again in
+     * the messages of a split line are counted.
+     */
+    server->multiline_max_bytes = 3200;
+    memset (text, 'a', 3000);
+    text[3000] = '\0';
+    snprintf (msg, sizeof (msg),
+              "PRIVMSG #channel :s\n"
+              "\x02\x1D\x1F\x16\x1E\x11\x04" "AABBCC,DDEEFF%s",
+              text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("s",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    CHECK(hashtable_get (hashtable, "multiline_args2"));
+    hashtable_free (hashtable);
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+
     hashtable_remove (server->cap_list, "batch");
     hashtable_remove (server->cap_list, "draft/multiline");
 
