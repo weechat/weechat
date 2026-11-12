@@ -680,6 +680,14 @@ Paramètres de la requête :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Exemple de requête : obtenir tous les tampons sans les lignes :
 
@@ -1126,6 +1134,14 @@ Paramètres de requête :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Exemple de requête : obtenir les 1000 dernières lignes d'un tampon, sans codes
 couleur :
@@ -1224,6 +1240,14 @@ Paramètres de requête :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Exemple de requête : obtenir les pseudos d'un tampon :
 
@@ -1765,6 +1789,14 @@ Paramètres du corps :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 * `options` (tableau de chaînes, facultatif, par défaut : `[]`) : options
   à synchroniser : les évènements `option_changed` et `option_removed` sont
   envoyés lorsqu'une option correspondant à l'un de ces noms est ajoutée,

@@ -689,6 +689,14 @@ Path parameters:
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје
 ** `strip`: уклањају се боје
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Пример захтева: врати све бафере без линија:
 
@@ -1133,6 +1141,14 @@ GET /api/buffers/{име_бафера}/lines/{id_линије}
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје
 ** `strip`: уклањају се боје
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Пример захтева: врати последњих 1000 линија бафера, без кодова боје:
 
@@ -1229,6 +1245,14 @@ GET /api/buffers/{име_бафера}/nicks
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје
 ** `strip`: уклањају се боје
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Пример захтева: врати надимке бафера:
 
@@ -1762,6 +1786,14 @@ POST /api/sync
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје
 ** `strip`: уклањају се боје
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 // TRANSLATION MISSING
 * `options` (array of strings, optional, default: `[]`): options to
   synchronize: the events `option_changed` and `option_removed` are sent when

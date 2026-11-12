@@ -667,6 +667,13 @@ Query parameters:
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Request example: get all buffers without lines:
 
@@ -1113,6 +1120,13 @@ Query parameters:
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Request example: get last 1000 lines of a buffer, without color codes:
 
@@ -1209,6 +1223,13 @@ Query parameters:
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Request example: get nicks of a buffer:
 
@@ -1743,6 +1764,13 @@ Body parameters:
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 * `options` (array of strings, optional, default: `[]`): options to
   synchronize: the events `option_changed` and `option_removed` are sent when
   an option matching one of these names is added, changed or removed; the

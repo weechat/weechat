@@ -37,6 +37,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
 - javascript, php, tcl: add `eval` option in script commands and info "xxx_eval" ([#128](https://github.com/weechat/weechat/issues/128))
 - relay: add option relay.network.allowed_networks to restrict connections to IPv4/IPv6 networks in CIDR notation ([#2364](https://github.com/weechat/weechat/issues/2364))
+- relay/api: add parameter "rgb_colors" in resources `GET /api/buffers` and `POST /api/sync` to receive RGB colors with colors "ansi" or "weechat", RGB colors are replaced by the nearest terminal color if it is not enabled ([#1364](https://github.com/weechat/weechat/issues/1364))
 - relay/api: accept TOTP in websocket sub-protocol `totp.weechat.<code>`, for clients unable to send header "x-weechat-totp"
 - relay/api: add resource `GET /api/info` to get infos about WeeChat, with info "locale"
 - relay/api: add option "options" in resource `POST /api/sync` to receive changes on options
