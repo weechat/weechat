@@ -224,6 +224,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - ruby: fix errors when a script loads another script during its initialization
 - ruby: fix crash when an exception has no backtrace, display the class name of exception instead of its singleton class
 - ruby: clear exception after an error, so that it is not set as cause of the next exception and not displayed again when the plugin is unloaded
+- scripts: fix crash when a script is unloaded or reloaded while one of its functions is running, delay the unload until the function has returned ([#2380](https://github.com/weechat/weechat/issues/2380))
 - spell: skip IRC hex color codes and strikethrough attribute before checking words
 - spell: do not skip the comma in IRC color code `^C,NN` without foreground, skip the two digits of background in color code `^CNN,NN`
 - spell: apply changes on options spell.option.* immediately, without reloading the plugin ([#1241](https://github.com/weechat/weechat/issues/1241))

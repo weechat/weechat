@@ -296,6 +296,7 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
 
     old_lua_current_script = lua_current_script;
     lua_current_script = script;
+    script->running++;
 
     argc = 0;
     if (format && format[0])
@@ -411,6 +412,7 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
     lua_pop (lua_current_interpreter, 1);
 
     lua_current_script = old_lua_current_script;
+    script->running--;
     lua_current_interpreter = old_lua_current_interpreter;
 
     return ret_value;
@@ -906,6 +908,16 @@ weechat_lua_command_cb (const void *pointer, void *data,
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
+
+    /*
+     * Unloading a script while one of its functions is running would crash
+     * WeeChat: in this case the command is executed later.
+     */
+    if (plugin_script_delay_unload (weechat_lua_plugin, lua_scripts,
+                                    buffer, argc, argv, argv_eol))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     if (argc == 1)
     {

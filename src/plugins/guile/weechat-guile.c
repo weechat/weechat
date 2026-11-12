@@ -379,6 +379,7 @@ weechat_guile_exec (struct t_plugin_script *script,
         scm_set_current_module ((SCM)(script->interpreter));
     }
     guile_current_script = script;
+    script->running++;
 
     if (argv && argv[0])
     {
@@ -470,6 +471,7 @@ weechat_guile_exec (struct t_plugin_script *script,
         scm_set_current_module (old_current_module);
 
     guile_current_script = old_guile_current_script;
+    script->running--;
 
     return ret_value;
 }
@@ -851,6 +853,16 @@ weechat_guile_command_cb (const void *pointer, void *data,
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
+
+    /*
+     * Unloading a script while one of its functions is running would crash
+     * WeeChat: in this case the command is executed later.
+     */
+    if (plugin_script_delay_unload (weechat_guile_plugin, guile_scripts,
+                                    buffer, argc, argv, argv_eol))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     if (argc == 1)
     {

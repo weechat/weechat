@@ -588,6 +588,7 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     /* Save old script */
     old_php_current_script = php_current_script;
     php_current_script = script;
+    script->running++;
 
     /* Build func args */
     if (!format || !format[0])
@@ -705,6 +706,7 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
 
     /* Restore old script */
     php_current_script = old_php_current_script;
+    script->running--;
 
     return ret_value;
 }
@@ -1018,6 +1020,16 @@ weechat_php_command_cb (const void *pointer, void *data,
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
+
+    /*
+     * Unloading a script while one of its functions is running would crash
+     * WeeChat: in this case the command is executed later.
+     */
+    if (plugin_script_delay_unload (weechat_php_plugin, php_scripts,
+                                    buffer, argc, argv, argv_eol))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     if (argc == 1)
     {

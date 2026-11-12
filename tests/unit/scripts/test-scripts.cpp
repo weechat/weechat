@@ -128,6 +128,50 @@ test_scripts_wait_tests (int timeout)
     }
 }
 
+/*
+ * Check if a script is loaded.
+ *
+ * Return:
+ *   1: script is loaded
+ *   0: script is not loaded
+ */
+
+int
+test_scripts_is_loaded (const char *language, const char *name)
+{
+    struct t_hdata *hdata;
+    char str_hdata[128], str_search[256];
+
+    snprintf (str_hdata, sizeof (str_hdata), "%s_script", language);
+    hdata = hook_hdata_get (NULL, str_hdata);
+    if (!hdata)
+        return 0;
+    snprintf (str_search, sizeof (str_search),
+              "${%s_script.name} == %s", language, name);
+    return (hdata_search (hdata, hdata_get_list (hdata, "scripts"),
+                          str_search, NULL, NULL, NULL, 1) != NULL) ? 1 : 0;
+}
+
+/*
+ * Run the timers until the script is unloaded, or until timeout (in
+ * milliseconds) is reached.
+ */
+
+void
+test_scripts_wait_unload (const char *language, const char *name, int timeout)
+{
+    struct timeval time_start, time_now;
+
+    gettimeofday (&time_start, NULL);
+    while (test_scripts_is_loaded (language, name))
+    {
+        hook_timer_exec ();
+        gettimeofday (&time_now, NULL);
+        if (util_timeval_diff (&time_start, &time_now) >= (long long)timeout * 1000)
+            break;
+    }
+}
+
 TEST_GROUP(Scripts)
 {
     /*
@@ -625,6 +669,169 @@ TEST(Scripts, NestedLoad)
         /* The outer script and the valid script are both registered. */
         CHECK(outer_loaded);
         CHECK(good_loaded);
+    }
+
+    dir_rmtree (path_dir);
+    free (path_dir);
+}
+
+/*
+ * Tests unload of a script by itself, in one of its callbacks: the unload is
+ * delayed until the callback has returned (unloading the script while its
+ * callback is running would crash WeeChat).
+ */
+
+TEST(Scripts, UnloadRunning)
+{
+    /* Language, extension, code of script. */
+    const char *languages[][3] = {
+#ifdef HAVE_PYTHON
+        { "python", "py",
+          "import weechat\n"
+          "weechat.register('unload_running', 'me', '0.1', 'GPL3', '', '', '')\n"
+          "def cmd_cb(data, buffer, args):\n"
+          "    weechat.command('', '/python unload unload_running')\n"
+          "    weechat.prnt('', 'unload_running: after unload')\n"
+          "    return weechat.WEECHAT_RC_OK\n"
+          "weechat.hook_command('unload_running_cmd', '', '', '', '', "
+          "'cmd_cb', '')\n" },
+#endif
+#ifdef HAVE_PERL
+        { "perl", "pl",
+          "weechat::register('unload_running', 'me', '0.1', 'GPL3', '', '', '');\n"
+          "sub cmd_cb {\n"
+          "    weechat::command('', '/perl unload unload_running');\n"
+          "    weechat::print('', 'unload_running: after unload');\n"
+          "    return weechat::WEECHAT_RC_OK;\n"
+          "}\n"
+          "weechat::hook_command('unload_running_cmd', '', '', '', '', "
+          "'cmd_cb', '');\n" },
+#endif
+#ifdef HAVE_RUBY
+        { "ruby", "rb",
+          "def weechat_init\n"
+          "  Weechat.register('unload_running', 'me', '0.1', 'GPL3', '', '', '')\n"
+          "  Weechat.hook_command('unload_running_cmd', '', '', '', '', "
+          "'cmd_cb', '')\n"
+          "  return Weechat::WEECHAT_RC_OK\n"
+          "end\n"
+          "def cmd_cb(data, buffer, args)\n"
+          "  Weechat.command('', '/ruby unload unload_running')\n"
+          "  Weechat.print('', 'unload_running: after unload')\n"
+          "  return Weechat::WEECHAT_RC_OK\n"
+          "end\n" },
+#endif
+#ifdef HAVE_LUA
+        { "lua", "lua",
+          "weechat.register('unload_running', 'me', '0.1', 'GPL3', '', '', '')\n"
+          "function cmd_cb(data, buffer, args)\n"
+          "  weechat.command('', '/lua unload unload_running')\n"
+          "  weechat.print('', 'unload_running: after unload')\n"
+          "  return weechat.WEECHAT_RC_OK\n"
+          "end\n"
+          "weechat.hook_command('unload_running_cmd', '', '', '', '', "
+          "'cmd_cb', '')\n" },
+#endif
+#ifdef HAVE_TCL
+        { "tcl", "tcl",
+          "weechat::register unload_running me 0.1 GPL3 {} {} {}\n"
+          "proc cmd_cb {data buffer arguments} {\n"
+          "  weechat::command {} {/tcl unload unload_running}\n"
+          "  weechat::print {} {unload_running: after unload}\n"
+          "  return $::weechat::WEECHAT_RC_OK\n"
+          "}\n"
+          "weechat::hook_command unload_running_cmd {} {} {} {} cmd_cb {}\n" },
+#endif
+#ifdef HAVE_GUILE
+        { "guile", "scm",
+          "(weechat:register \"unload_running\" \"me\" \"0.1\" \"GPL3\" "
+          "\"\" \"\" \"\")\n"
+          "(define (cmd_cb data buffer args)\n"
+          "  (weechat:command \"\" \"/guile unload unload_running\")\n"
+          "  (weechat:print \"\" \"unload_running: after unload\")\n"
+          "  weechat:WEECHAT_RC_OK)\n"
+          "(weechat:hook_command \"unload_running_cmd\" \"\" \"\" \"\" "
+          "\"\" \"cmd_cb\" \"\")\n" },
+#endif
+#ifdef HAVE_JAVASCRIPT
+        { "javascript", "js",
+          "weechat.register('unload_running', 'me', '0.1', 'GPL3', '', '', '');\n"
+          "function cmd_cb(data, buffer, args) {\n"
+          "  weechat.command('', '/javascript unload unload_running');\n"
+          "  weechat.print('', 'unload_running: after unload');\n"
+          "  return weechat.WEECHAT_RC_OK;\n"
+          "}\n"
+          "weechat.hook_command('unload_running_cmd', '', '', '', '', "
+          "'cmd_cb', '');\n" },
+#endif
+#ifdef HAVE_PHP
+        { "php", "php",
+          "<?php\n"
+          "weechat_register('unload_running', 'me', '0.1', 'GPL3', '', '', '');\n"
+          "function cmd_cb($data, $buffer, $args) {\n"
+          "  weechat_command('', '/php unload unload_running');\n"
+          "  weechat_print('', 'unload_running: after unload');\n"
+          "  return WEECHAT_RC_OK;\n"
+          "}\n"
+          "weechat_hook_command('unload_running_cmd', '', '', '', '', "
+          "'cmd_cb', '');\n" },
+#endif
+        { NULL, NULL, NULL }
+    };
+    char *path_dir, path[PATH_MAX], str_command[PATH_MAX + 128];
+    int i, turnoff_memleak, loaded_after_cmd, loaded_after_timers;
+
+    path_dir = string_eval_path_home ("${weechat_data_dir}/test_unload_running",
+                                      NULL, NULL, NULL);
+    CHECK(path_dir);
+    dir_rmtree (path_dir);
+    LONGS_EQUAL(1, dir_mkdir_parents (path_dir, 0755));
+
+    for (i = 0; languages[i][0]; i++)
+    {
+        snprintf (path, sizeof (path), "%s/unload_running.%s",
+                  path_dir, languages[i][1]);
+        LONGS_EQUAL(1, test_scripts_write_file (path, languages[i][2]));
+
+        /*
+         * TODO: fix memory leaks in javascript plugin
+         * and keep memory leak detection enabled.
+         */
+        turnoff_memleak = (strcmp (languages[i][0], "javascript") == 0);
+
+        if (turnoff_memleak)
+            MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
+
+        snprintf (str_command, sizeof (str_command),
+                  "/%s load %s", languages[i][0], path);
+        run_cmd_quiet (str_command);
+        LONGS_EQUAL(1, test_scripts_is_loaded (languages[i][0],
+                                               "unload_running"));
+
+        /*
+         * The script unloads itself in its command callback: the unload is
+         * delayed, then done by a timer.
+         */
+        record_start ();
+        run_cmd_quiet ("/unload_running_cmd");
+        record_stop ();
+        loaded_after_cmd = test_scripts_is_loaded (languages[i][0],
+                                                   "unload_running");
+        test_scripts_wait_unload (languages[i][0], "unload_running", 1000);
+        loaded_after_timers = test_scripts_is_loaded (languages[i][0],
+                                                      "unload_running");
+
+        /*
+         * Enable memory leak detection again before checks:
+         * a failed check exits the test immediately.
+         */
+        if (turnoff_memleak)
+            MemoryLeakWarningPlugin::turnOnThreadSafeNewDeleteOverloads();
+
+        RECORD_CHECK_MSG("core.weechat", "", "unload_running: after unload",
+                         NULL);
+        LONGS_EQUAL(1, loaded_after_cmd);
+        LONGS_EQUAL(0, loaded_after_timers);
     }
 
     dir_rmtree (path_dir);

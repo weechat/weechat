@@ -346,9 +346,12 @@ weechat_perl_exec (struct t_plugin_script *script,
             (char *) ((script->interpreter) ? script->interpreter : perl_main),
             function) < 0)
     {
+        perl_current_script = old_perl_current_script;
         return NULL;
     }
 #endif /* MULTIPLICITY */
+
+    script->running++;
 
     dSP;
     ENTER;
@@ -469,6 +472,7 @@ weechat_perl_exec (struct t_plugin_script *script,
     LEAVE;
 
     perl_current_script = old_perl_current_script;
+    script->running--;
 #ifdef MULTIPLICITY
     PERL_SET_CONTEXT (old_context);
 #else
@@ -930,6 +934,16 @@ weechat_perl_command_cb (const void *pointer, void *data,
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
+
+    /*
+     * Unloading a script while one of its functions is running would crash
+     * WeeChat: in this case the command is executed later.
+     */
+    if (plugin_script_delay_unload (weechat_perl_plugin, perl_scripts,
+                                    buffer, argc, argv, argv_eol))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     if (argc == 1)
     {

@@ -394,7 +394,9 @@ weechat_tcl_exec (struct t_plugin_script *script,
         }
     }
 
+    script->running++;
     rc = Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT);
+    script->running--;
 
     weechat_tcl_output_flush ();
 
@@ -825,6 +827,16 @@ weechat_tcl_command_cb (const void *pointer, void *data,
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
+
+    /*
+     * Unloading a script while one of its functions is running would crash
+     * WeeChat: in this case the command is executed later.
+     */
+    if (plugin_script_delay_unload (weechat_tcl_plugin, tcl_scripts,
+                                    buffer, argc, argv, argv_eol))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     if (argc == 1)
     {
