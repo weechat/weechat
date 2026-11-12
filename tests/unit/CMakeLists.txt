@@ -137,6 +137,12 @@ if(ENABLE_ALIAS)
   )
 endif()
 
+if(ENABLE_EXEC)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    plugins/exec/test-exec.cpp
+  )
+endif()
+
 if(ENABLE_IRC)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/irc/test-irc-bar-item.cpp

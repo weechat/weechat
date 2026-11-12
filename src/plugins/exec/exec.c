@@ -180,14 +180,21 @@ exec_timer_delete_cb (const void *pointer, void *data, int remaining_calls)
 /*
  * Decode colors in a string (from stdout/stderr).
  *
+ * The buffer is where the string is sent (NULL if the string is not sent to
+ * a buffer, for example in a hsignal): for IRC colors, the IRC plugin uses
+ * the option "ansi_colors" of the IRC server of this buffer (or the default
+ * server option without buffer).
+ *
  * Return string with colors as-is, decoded or removed.
  *
  * Note: result must be freed after use.
  */
 
 char *
-exec_decode_color (struct t_exec_cmd *exec_cmd, const char *string)
+exec_decode_color (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
+                   const char *string)
 {
+    char modifier_data[64];
     int irc_color, keep_colors;
 
     if (!string)
@@ -213,10 +220,29 @@ exec_decode_color (struct t_exec_cmd *exec_cmd, const char *string)
             break;
     }
 
-    return weechat_hook_modifier_exec (
-        (irc_color) ? "irc_color_decode_ansi" : "color_decode_ansi",
-        (keep_colors) ? "1" : "0",
-        string);
+    if (!irc_color)
+    {
+        return weechat_hook_modifier_exec ("color_decode_ansi",
+                                           (keep_colors) ? "1" : "0",
+                                           string);
+    }
+
+    if (!buffer)
+    {
+        return weechat_hook_modifier_exec ("irc_color_decode_ansi",
+                                           (keep_colors) ? "1" : "0",
+                                           string);
+    }
+
+    /*
+     * The buffer is given to the IRC plugin, which converts colors according
+     * to the option "ansi_colors" of the IRC server of the buffer.
+     */
+    snprintf (modifier_data, sizeof (modifier_data), "%s;0x%lx",
+              (keep_colors) ? "1" : "0", (unsigned long)buffer);
+
+    return weechat_hook_modifier_exec ("irc_color_decode_ansi",
+                                       modifier_data, string);
 }
 
 /*
@@ -247,8 +273,14 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
         return;
     }
 
-    /* Decode colors. */
-    line_color = exec_decode_color (exec_cmd, line);
+    /*
+     * Decode colors (the command of option "-pipe" is run on the current
+     * buffer).
+     */
+    line_color = exec_decode_color (
+        exec_cmd,
+        (exec_cmd->pipe_command) ? weechat_current_buffer () : buffer,
+        line);
     if (!line_color)
         return;
 
@@ -440,10 +472,12 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
                       "%ld", exec_cmd->number);
             weechat_hashtable_set (hashtable, "number", str_number);
             weechat_hashtable_set (hashtable, "name", exec_cmd->name);
-            output = exec_decode_color (exec_cmd, exec_cmd->output[EXEC_STDOUT]);
+            output = exec_decode_color (exec_cmd, NULL,
+                                        exec_cmd->output[EXEC_STDOUT]);
             weechat_hashtable_set (hashtable, "out", output);
             free (output);
-            output = exec_decode_color (exec_cmd, exec_cmd->output[EXEC_STDERR]);
+            output = exec_decode_color (exec_cmd, NULL,
+                                        exec_cmd->output[EXEC_STDERR]);
             weechat_hashtable_set (hashtable, "err", output);
             free (output);
             snprintf (str_number, sizeof (str_number), "%d", return_code);

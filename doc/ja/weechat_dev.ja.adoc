@@ -107,6 +107,8 @@ qweechat::
 |       plugins/     | プラグインの単体テスト
 // TRANSLATION MISSING
 |          alias/    | Unit tests for alias plugin.
+// TRANSLATION MISSING
+|          exec/     | Unit tests for exec plugin.
 |          irc/      | IRC プラグインの単体テスト
 // TRANSLATION MISSING
 |          logger/   | Unit tests for logger plugin.
@@ -653,6 +655,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          alias/                                 | Root of unit tests for alias plugin.
 // TRANSLATION MISSING
 |             test-alias.cpp                      | Tests: aliases.
+// TRANSLATION MISSING
+|          exec/                                  | Root of unit tests for exec plugin.
+// TRANSLATION MISSING
+|             test-exec.cpp                       | Tests: exec functions.
 |          irc/                                   | IRC プラグインの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
 |             test-irc-bar-item.cpp               | Tests: IRC bar items.

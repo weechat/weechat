@@ -100,6 +100,7 @@ The main WeeChat directories are:
 |          curses/   | Unit tests for Curses interface functions.
 |       plugins/     | Unit tests for plugins.
 |          alias/    | Unit tests for alias plugin.
+|          exec/     | Unit tests for exec plugin.
 |          irc/      | Unit tests for IRC plugin.
 |          logger/   | Unit tests for logger plugin.
 |          relay/    | Unit tests for relay plugin.
@@ -523,6 +524,8 @@ WeeChat "core" is located in following directories:
 |          test-plugins.cpp                       | Tests: plugins.
 |          alias/                                 | Root of unit tests for alias plugin.
 |             test-alias.cpp                      | Tests: aliases.
+|          exec/                                  | Root of unit tests for exec plugin.
+|             test-exec.cpp                       | Tests: exec functions.
 |          irc/                                   | Root of unit tests for IRC plugin.
 |             test-irc-bar-item.cpp               | Tests: IRC bar items.
 |             test-irc-batch.cpp                  | Tests: IRC batched events.

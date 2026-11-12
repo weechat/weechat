@@ -2798,9 +2798,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "to IRC colors 0-15, the option is used for terminal "
                    "colors 16-255 and RGB colors: a terminal color used to "
                    "display an IRC color 16-98 is converted to this IRC color, "
-                   "other colors to the nearest IRC color; only the option "
-                   "of the default server options "
-                   "(irc.server_default.ansi_colors) is used"),
+                   "other colors to the nearest IRC color; with \"/exec -o\", "
+                   "the option of the server of the buffer where the output "
+                   "is sent is used (with \"/exec -pipe\", the server of the "
+                   "current buffer, even if the command sends the output to "
+                   "another server)"),
                 "basic|extended", 0, 0,
                 default_value, value,
                 null_value_allowed,

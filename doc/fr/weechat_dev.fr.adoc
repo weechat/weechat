@@ -101,6 +101,7 @@ Les répertoires principaux de WeeChat sont :
 |          curses/   | Tests unitaires pour les fonctions de l'interface Curses.
 |       plugins/     | Tests unitaires pour les extensions.
 |          alias/    | Tests unitaires pour l'extension alias.
+|          exec/     | Tests unitaires pour l'extension exec.
 |          irc/      | Tests unitaires pour l'extension IRC.
 |          logger/   | Tests unitaires pour l'extension logger.
 |          relay/    | Tests unitaires pour l'extension relay.
@@ -524,6 +525,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-plugins.cpp                       | Tests : extensions.
 |          alias/                                 | Racine des tests unitaires pour l'extension alias.
 |             test-alias.cpp                      | Tests : alias.
+|          exec/                                  | Racine des tests unitaires pour l'extension exec.
+|             test-exec.cpp                       | Tests : fonctions exec.
 |          irc/                                   | Racine des tests unitaires pour l'extension IRC.
 |             test-irc-bar-item.cpp               | Tests : objets de barre IRC.
 |             test-irc-batch.cpp                  | Tests : évènements batch IRC.

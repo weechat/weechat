@@ -100,6 +100,8 @@ qweechat::
 |          curses/   | Unit тестови за функције Curses интерфејса.
 |       plugins/     | Unit тестови за додатке.
 |          alias/    | Unit тестови за alias додатак.
+// TRANSLATION MISSING
+|          exec/     | Unit tests for exec plugin.
 |          irc/      | Unit тестови за IRC додатак.
 |          logger/   | Unit тестови за logger додатак.
 |          relay/    | Unit тестови за relay додатак.
@@ -528,6 +530,10 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-plugins.cpp                       | Тестови: plugins.
 |          alias/                                 | Корен unit тестова за alias додатак.
 |             test-alias.cpp                      | Тестови: алијаси.
+// TRANSLATION MISSING
+|          exec/                                  | Root of unit tests for exec plugin.
+// TRANSLATION MISSING
+|             test-exec.cpp                       | Tests: exec functions.
 |          irc/                                   | Корен unit тестова IRC додатка.
 |             test-irc-bar-item.cpp               | Тестови: IRC ставке траке.
 |             test-irc-batch.cpp                  | Тестови: IRC пакетни догађаји.
