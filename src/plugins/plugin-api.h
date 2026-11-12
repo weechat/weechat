@@ -24,6 +24,8 @@
 
 #include <time.h>
 
+extern int plugin_api_command_running;
+
 /* strings */
 extern void plugin_api_charset_set (struct t_weechat_plugin *plugin,
                                     const char *charset);

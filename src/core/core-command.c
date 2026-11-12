@@ -92,6 +92,7 @@
 #include "../gui/gui-mouse.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
+#include "../plugins/plugin-api.h"
 #include "../plugins/plugin-config.h"
 
 
@@ -5474,6 +5475,19 @@ COMMAND_CALLBACK(plugin)
         plugin_load (full_name, 1, plugin_argc, plugin_argv);
         free (full_name);
         string_free_split (plugin_argv);
+        return WEECHAT_RC_OK;
+    }
+
+    if (((string_strcmp (argv[1], "reload") == 0)
+         || (string_strcmp (argv[1], "unload") == 0))
+        && (plugin_api_command_running > 0))
+    {
+        /*
+         * the command is executed by a plugin or script, probably in one of
+         * its callbacks: unloading it now would crash WeeChat, so the command
+         * is executed again later, from the main loop
+         */
+        (void) input_data_delayed (buffer, argv_eol[0], NULL, 0, 1);
         return WEECHAT_RC_OK;
     }
 
