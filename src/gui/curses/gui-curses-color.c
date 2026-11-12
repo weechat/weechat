@@ -521,6 +521,36 @@ gui_color_get_pair (int fg, int bg)
 }
 
 /*
+ * Get the terminal colors of a color pair (pair of terminal colors, not
+ * pairs with direct colors).
+ *
+ * Return 1 if the pair is found (*fg and *bg are set, -1 for the default
+ * color), 0 otherwise.
+ */
+
+int
+gui_color_get_pair_colors (int pair, int *fg, int *bg)
+{
+    int i, count;
+
+    if (!gui_color_pairs || (pair <= 0))
+        return 0;
+
+    count = (gui_color_term_colors + 2) * (gui_color_term_colors + 2);
+    for (i = 0; i < count; i++)
+    {
+        if (gui_color_pairs[i] == pair)
+        {
+            *fg = (i % (gui_color_term_colors + 2)) - 1;
+            *bg = (i / (gui_color_term_colors + 2)) - 1;
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+/*
  * Get color pair with a WeeChat color number.
  */
 

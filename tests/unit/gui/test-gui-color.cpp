@@ -13,6 +13,8 @@ extern "C"
 #include "src/core/core-config.h"
 #include "src/core/core-string.h"
 #include "src/gui/gui-color.h"
+
+extern int gui_color_get_pair (int fg, int bg);
 }
 
 #define WEE_CHECK_DECODE(__result, __string, __replacement)             \
@@ -775,6 +777,7 @@ TEST(GuiColor, DecodeAnsi)
 TEST(GuiColor, EncodeAnsi)
 {
     char string[256], *encoded;
+    int pair, fg, bg;
 
     /* NULL/empty string */
     STRCMP_EQUAL(NULL, gui_color_encode_ansi (NULL));
@@ -921,6 +924,23 @@ TEST(GuiColor, EncodeAnsi)
         "option_weechat.color.chat_host",
         string);
     config_file_option_reset (config_color_chat_host, 1);
+
+    /*
+     * Color pair: colors of the pair (not the pair number), no color for an
+     * unknown pair.
+     */
+    pair = gui_color_get_pair (3, 5);
+    CHECK(pair > 0);
+    LONGS_EQUAL(1, gui_color_get_pair_colors (pair, &fg, &bg));
+    LONGS_EQUAL(3, fg);
+    LONGS_EQUAL(5, bg);
+    LONGS_EQUAL(0, gui_color_get_pair_colors (32000, &fg, &bg));
+    snprintf (string, sizeof (string), "a" "\x19" "@%05d" "b", pair);
+    WEE_CHECK_ENCODE_ANSI("a" "\x1B[38;5;3m" "\x1B[48;5;5m" "b", string);
+    pair = gui_color_get_pair (-1, 2);
+    snprintf (string, sizeof (string), "a" "\x19" "@%05d" "b", pair);
+    WEE_CHECK_ENCODE_ANSI("a" "\x1B[39m" "\x1B[48;5;2m" "b", string);
+    WEE_CHECK_ENCODE_ANSI("a" "b", "a" "\x19" "@32000" "b");
 
     /* Multiple colors/attributes */
     snprintf (string, sizeof (string),

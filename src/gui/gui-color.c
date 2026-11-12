@@ -1289,6 +1289,30 @@ gui_color_weechat_to_ansi (int color)
 }
 
 /*
+ * Add an ANSI color code for a terminal color (0-255, or -1 for the default
+ * color), text color or background.
+ */
+
+void
+gui_color_ansi_add_term_color (char **output, int color, int background)
+{
+    char str_concat[32];
+
+    if (color < 0)
+    {
+        snprintf (str_concat, sizeof (str_concat), "\x1B[%dm",
+                  (background) ?
+                  GUI_COLOR_ANSI_DEFAULT_BG : GUI_COLOR_ANSI_DEFAULT_FG);
+    }
+    else
+    {
+        snprintf (str_concat, sizeof (str_concat), "\x1B[%d;5;%dm",
+                  (background) ? 48 : 38, color);
+    }
+    string_dyn_concat (output, str_concat, -1);
+}
+
+/*
  * Replace WeeChat colors by ANSI colors.
  *
  * Note: result must be freed after use.
@@ -1517,12 +1541,15 @@ gui_color_encode_ansi (const char *string)
                         {
                             memcpy (str_color, ptr_string, 5);
                             str_color[5] = '\0';
-                            if (util_parse_int (str_color, 10, &color))
+                            /*
+                             * Colors of the pair (the pair number is not a
+                             * color); unknown pair: no color.
+                             */
+                            if (util_parse_int (str_color, 10, &color)
+                                && gui_color_get_pair_colors (color, &fg, &bg))
                             {
-                                snprintf (str_concat, sizeof (str_concat),
-                                          "\x1B[38;5;%dm",
-                                          color);
-                                string_dyn_concat (out, str_concat, -1);
+                                gui_color_ansi_add_term_color (out, fg, 0);
+                                gui_color_ansi_add_term_color (out, bg, 1);
                             }
                             ptr_string += 5;
                         }

@@ -213,6 +213,7 @@ extern int gui_color_assign_by_diff (int *color, const char *color_name,
 extern int gui_color_get_weechat_colors_number (void);
 extern int gui_color_get_term_colors (void);
 extern int gui_color_get_term_color_pairs (void);
+extern int gui_color_get_pair_colors (int pair, int *fg, int *bg);
 extern const char *gui_color_get_name (int num_color);
 extern void gui_color_free_vars (void);
 extern void gui_color_init_weechat (void);
