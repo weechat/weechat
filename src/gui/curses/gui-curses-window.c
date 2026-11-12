@@ -640,9 +640,11 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
 void
 gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
 {
-    int fg;
+    int fg, rgb;
 
-    *string += gui_color_code_size_number ((const char *)*string, 1, &fg);
+    /* without window, a RGB color is not added to the table of RGB colors */
+    *string += gui_color_code_size_number_rgb ((const char *)*string, 1, &fg,
+                                               (window) ? NULL : &rgb);
 
     if (window && (fg >= 0))
         gui_window_set_custom_color_fg (window, fg);
@@ -661,9 +663,11 @@ gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
 void
 gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
 {
-    int bg;
+    int bg, rgb;
 
-    *string += gui_color_code_size_number ((const char *)*string, 0, &bg);
+    /* without window, a RGB color is not added to the table of RGB colors */
+    *string += gui_color_code_size_number_rgb ((const char *)*string, 0, &bg,
+                                               (window) ? NULL : &rgb);
 
     if (window && (bg >= 0))
         gui_window_set_custom_color_bg (window, bg);
@@ -683,12 +687,16 @@ void
 gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
-    int fg, bg;
+    int fg, bg, rgb, *ptr_rgb;
 
     ptr_string = *string;
 
+    /* without window, a RGB color is not added to the table of RGB colors */
+    ptr_rgb = (window) ? NULL : &rgb;
+
     bg = -1;
-    ptr_string += gui_color_code_size_number ((const char *)ptr_string, 1, &fg);
+    ptr_string += gui_color_code_size_number_rgb ((const char *)ptr_string, 1,
+                                                  &fg, ptr_rgb);
     /*
      * Note: the comma is an old separator not used anymore
      * (since WeeChat 2.6), but we still use it here so in case of /upgrade
@@ -697,8 +705,8 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
     if ((fg >= 0) && ((ptr_string[0] == ',') || (ptr_string[0] == '~')))
     {
         ptr_string++;
-        ptr_string += gui_color_code_size_number ((const char *)ptr_string,
-                                                  0, &bg);
+        ptr_string += gui_color_code_size_number_rgb ((const char *)ptr_string,
+                                                      0, &bg, ptr_rgb);
     }
     if (window && (fg >= 0) && (bg >= 0))
     {

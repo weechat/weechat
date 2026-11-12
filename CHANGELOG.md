@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
+- core: add RGB color codes `@#rrggbb` in strings with WeeChat colors, displayed as-is on terminals with direct colors (for example with `TERM=xterm-direct256` or `TERM=tmux-direct`) and with the nearest terminal color otherwise ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: add signal "buffer_lines_filtered"
 - core: add jump to buffer with command `/N` (for example `/42`) and option weechat.look.command_buffer_number ([#762](https://github.com/weechat/weechat/issues/762))
 - core: add option `insert_raw` in command `/input` to insert text without converting escaped chars
@@ -51,6 +52,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: accept only numbers between 0 and 99999 in palette options (weechat.palette.*), greater numbers are used for RGB colors
 - core, plugins: use plural forms or reword messages displaying a count
 - core: close file descriptors faster when running in background with option `--daemon` in headless mode
 - **breaking:** core: exit with an error on unknown command-line option, exit with code 2 on invalid command-line arguments

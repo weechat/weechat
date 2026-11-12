@@ -140,6 +140,19 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_MASK               0x00FFFFF
 #define GUI_COLOR_EXTENDED_MAX                99999
 
+/*
+ * RGB colors ("#RRGGBB") are interned: each distinct RGB value gets a number
+ * above GUI_COLOR_EXTENDED_MAX, used like any other extended color number;
+ * in strings, the RGB value is always used: "@#RRGGBB" (instead of "@00123").
+ */
+#define GUI_COLOR_EXTENDED_RGB_CHAR           '#'
+#define GUI_COLOR_RGB_FIRST                   (GUI_COLOR_EXTENDED_MAX + 1)
+/* RGB colors used in strings: numbers are reset with color pairs */
+#define GUI_COLOR_RGB_DISPLAY_FIRST           GUI_COLOR_RGB_FIRST
+#define GUI_COLOR_RGB_DISPLAY_MAX             32768
+#define GUI_COLOR_RGB_LAST                                              \
+    (GUI_COLOR_RGB_DISPLAY_FIRST + GUI_COLOR_RGB_DISPLAY_MAX - 1)
+
 #define GUI_COLOR_REGEX_ANSI_DECODE             \
     "\33("                                      \
     "([()].)|"                                  \
@@ -161,6 +174,20 @@ struct t_gui_color
     char *string;                  /* WeeChat color: "\x19??", ?? is #color */
 };
 
+/* Table of RGB colors (each RGB value has a color number) */
+
+struct t_gui_color_rgb_table
+{
+    int first;                     /* color number of first RGB color       */
+    int max;                       /* max number of RGB colors in table     */
+    int *values;                   /* RGB value of each color               */
+    int *term;                     /* nearest terminal color (cache)        */
+    int count;                     /* number of RGB colors in table         */
+    int size;                      /* allocated size of arrays              */
+    int term_limit;                /* limit used for the cache "term"       */
+    struct t_hashtable *index;     /* RGB value -> index in table           */
+};
+
 /* Custom color in palette */
 
 struct t_gui_color_palette
@@ -176,6 +203,9 @@ extern struct t_hashtable *gui_color_hash_palette_color;
 extern struct t_hashtable *gui_color_hash_palette_alias;
 extern struct t_weelist *gui_color_list_with_alias;
 extern int gui_color_term256[];
+extern struct t_gui_color_rgb_table gui_color_rgb_display;
+extern int gui_color_rgb_display_reset_needed;
+extern time_t gui_color_rgb_display_reset_last;
 
 /* Color functions */
 
@@ -187,10 +217,16 @@ extern const char *gui_color_get_custom (const char *color_name);
 extern int gui_color_convert_term_to_rgb (int color);
 extern int gui_color_convert_rgb_to_term (int rgb, int limit);
 extern int gui_color_convert_term_to_direct (int color);
+extern int gui_color_rgb_to_direct (int rgb);
+extern unsigned long long gui_color_hash_key_cb (struct t_hashtable *hashtable,
+                                                const void *key);
+extern void gui_color_rgb_display_reset (void);
+extern int gui_color_rgb_from_number (int number);
+extern int gui_color_rgb_to_term_cached (int number, int limit);
 extern int gui_color_parse_digits (const char *string, int max_digits,
                                    int *number);
-extern int gui_color_code_size_number (const char *string, int with_attr,
-                                       int *number);
+extern int gui_color_code_size_number_rgb (const char *string, int with_attr,
+                                           int *number, int *rgb);
 extern int gui_color_code_size (const char *string);
 extern char *gui_color_decode (const char *string, const char *replacement);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);

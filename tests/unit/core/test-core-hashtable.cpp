@@ -17,8 +17,6 @@ extern "C"
 #include "src/core/core-infolist.h"
 #include "src/core/core-list.h"
 #include "src/plugins/plugin.h"
-
-extern unsigned long long hashtable_hash_mix64 (unsigned long long value);
 }
 
 #define HASHTABLE_TEST_KEY           "test"
