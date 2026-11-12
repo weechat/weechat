@@ -186,6 +186,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: do not send an empty message when a long message is split at a space at the beginning of a part
 - irc: count the space after the target in the max length of a split message, so that a message received by other clients is not longer than 512 bytes (with a long nick, user and host, the last char was cut by servers, for example the final "\x01" of a CTCP)
 - irc, spell: read IRC hex colors (`^D`) only with exactly 6 hexadecimal digits (`RRGGBB`), as in the IRC formatting specification: `^D` followed by less digits is a color reset followed by text ([#1364](https://github.com/weechat/weechat/issues/1364))
 - irc: fix issue with year ≥ 2038 in reconnection after `/upgrade`

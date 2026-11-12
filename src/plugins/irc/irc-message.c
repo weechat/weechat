@@ -1091,7 +1091,11 @@ irc_message_split_string (struct t_irc_message_split_context *context,
                 break;
             pos = pos_next;
         }
-        if (pos[0] && pos_last_delim)
+        /*
+         * Split at the last delimiter, unless it is at the beginning of the
+         * part (the part would be empty).
+         */
+        if (pos[0] && pos_last_delim && (pos_last_delim > arguments))
             pos = pos_last_delim;
         dup_arguments = weechat_strndup (arguments, pos - arguments);
         if (dup_arguments)

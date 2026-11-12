@@ -2306,3 +2306,55 @@ TEST(IrcMessage, SplitMaxLength)
 
     irc_server_free (server);
 }
+
+/*
+ * Test functions:
+ *   irc_message_split (delimiter at the beginning of a part)
+ */
+
+TEST(IrcMessage, SplitDelimiterAtBeginningOfPart)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+    const char *ptr_args;
+    char text[2048], msg[4096], key[32];
+    int i, length, count;
+
+    server = irc_server_alloc ("test_split_delimiter");
+    CHECK(server);
+
+    /* Length of the first part of a long message. */
+    memset (text, 'a', 1000);
+    text[1000] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    length = strlen ((const char *)hashtable_get (hashtable, "args1"));
+    CHECK(length > 100);
+    hashtable_free (hashtable);
+
+    /*
+     * The first part ends before two spaces, so the second part starts with
+     * a space: it is split at the max length, not at this space (the part
+     * would be empty).
+     */
+    memset (text, 'a', length);
+    memcpy (text + length, "  ", 2);
+    memset (text + length + 2, 'b', 600);
+    text[length + 2 + 600] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    count = atoi ((const char *)hashtable_get (hashtable, "count"));
+    LONGS_EQUAL(3, count);
+    for (i = 1; i <= count; i++)
+    {
+        snprintf (key, sizeof (key), "args%d", i);
+        ptr_args = (const char *)hashtable_get (hashtable, key);
+        CHECK(ptr_args);
+        CHECK(ptr_args[0]);
+    }
+    hashtable_free (hashtable);
+
+    irc_server_free (server);
+}
