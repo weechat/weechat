@@ -729,6 +729,11 @@ gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
             }
             ptr_string += 6;
         }
+        else
+        {
+            /* The extended char is skipped, even if the color is truncated. */
+            ptr_string++;
+        }
     }
     else
     {
@@ -841,6 +846,14 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
                         bg = -1;
                 }
                 ptr_string += 6;
+            }
+            else
+            {
+                /*
+                 * The extended char is skipped, even if the color is
+                 * truncated.
+                 */
+                ptr_string++;
             }
         }
         else

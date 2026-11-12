@@ -16,6 +16,10 @@ extern "C"
 
 extern void gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
                                                int reset_attributes);
+extern void gui_window_string_apply_color_bg (unsigned char **str,
+                                              WINDOW *window);
+extern void gui_window_string_apply_color_fg_bg (unsigned char **str,
+                                                 WINDOW *window);
 extern int gui_window_current_style_fg;
 extern int gui_window_current_style_bg;
 }
@@ -60,4 +64,29 @@ TEST(GuiCursesWindow, CustomColorFgBgInvalid)
 
     gui_window_current_style_fg = saved_style_fg;
     gui_window_current_style_bg = saved_style_bg;
+}
+
+/*
+ * Test functions:
+ *   gui_window_string_apply_color_bg (truncated extended color)
+ *   gui_window_string_apply_color_fg_bg (truncated extended color)
+ */
+
+TEST(GuiCursesWindow, StringApplyColorTruncated)
+{
+    unsigned char *ptr_string;
+
+    /*
+     * Truncated extended background: the extended char is skipped, like in
+     * function gui_color_code_size.
+     */
+    ptr_string = (unsigned char *)"@12x";
+    gui_window_string_apply_color_bg (&ptr_string, NULL);
+    STRCMP_EQUAL("12x", (const char *)ptr_string);
+    LONGS_EQUAL(3, gui_color_code_size ("\x19" "B@12x"));
+
+    ptr_string = (unsigned char *)"01~@12x";
+    gui_window_string_apply_color_fg_bg (&ptr_string, NULL);
+    STRCMP_EQUAL("12x", (const char *)ptr_string);
+    LONGS_EQUAL(6, gui_color_code_size ("\x19" "*01~@12x"));
 }
