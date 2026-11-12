@@ -140,6 +140,23 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_MASK               0x00FFFFF
 #define GUI_COLOR_EXTENDED_MAX                99999
 
+/*
+ * RGB colors ("#RRGGBB") are interned: each distinct RGB value gets a number
+ * above GUI_COLOR_EXTENDED_MAX, used like any other extended color number;
+ * in strings, the RGB value is always used: "@#RRGGBB" (instead of "@00123").
+ */
+#define GUI_COLOR_EXTENDED_RGB_CHAR           '#'
+#define GUI_COLOR_RGB_FIRST                   (GUI_COLOR_EXTENDED_MAX + 1)
+/* RGB colors used in options: numbers never change */
+#define GUI_COLOR_RGB_OPTIONS_FIRST           GUI_COLOR_RGB_FIRST
+#define GUI_COLOR_RGB_OPTIONS_MAX             100000
+/* RGB colors used in strings: numbers are reset with color pairs */
+#define GUI_COLOR_RGB_DISPLAY_FIRST                                     \
+    (GUI_COLOR_RGB_OPTIONS_FIRST + GUI_COLOR_RGB_OPTIONS_MAX)
+#define GUI_COLOR_RGB_DISPLAY_MAX             32768
+#define GUI_COLOR_RGB_LAST                                              \
+    (GUI_COLOR_RGB_DISPLAY_FIRST + GUI_COLOR_RGB_DISPLAY_MAX - 1)
+
 #define GUI_COLOR_REGEX_ANSI_DECODE             \
     "\33("                                      \
     "([()].)|"                                  \
@@ -161,6 +178,20 @@ struct t_gui_color
     char *string;                  /* WeeChat color: "\x19??", ?? is #color */
 };
 
+/* Table of RGB colors (each RGB value has a color number) */
+
+struct t_gui_color_rgb_table
+{
+    int first;                     /* color number of first RGB color       */
+    int max;                       /* max number of RGB colors in table     */
+    int *values;                   /* RGB value of each color               */
+    int *term;                     /* nearest terminal color (cache)        */
+    int count;                     /* number of RGB colors in table         */
+    int size;                      /* allocated size of arrays              */
+    int term_limit;                /* limit used for the cache "term"       */
+    struct t_hashtable *index;     /* RGB value -> index in table           */
+};
+
 /* Custom color in palette */
 
 struct t_gui_color_palette
@@ -176,6 +207,10 @@ extern struct t_hashtable *gui_color_hash_palette_color;
 extern struct t_hashtable *gui_color_hash_palette_alias;
 extern struct t_weelist *gui_color_list_with_alias;
 extern int gui_color_term256[];
+extern struct t_gui_color_rgb_table gui_color_rgb_options;
+extern struct t_gui_color_rgb_table gui_color_rgb_display;
+extern int gui_color_rgb_display_reset_needed;
+extern time_t gui_color_rgb_display_reset_last;
 
 /* Color functions */
 
@@ -189,9 +224,30 @@ extern int gui_color_convert_term_to_rgb (int color);
 extern int gui_color_palette_rgb (int color, int limit);
 extern int gui_color_convert_rgb_to_term (int rgb, int limit);
 extern int gui_color_convert_term_to_direct (int color);
+extern int gui_color_rgb_to_direct (int rgb);
+extern int gui_color_rgb_parse (const char *string);
+extern unsigned long long gui_color_hash_key_cb (struct t_hashtable *hashtable,
+                                                const void *key);
+extern int gui_color_rgb_table_add (struct t_gui_color_rgb_table *table,
+                                    int rgb);
+extern struct t_gui_color_rgb_table *gui_color_rgb_table_search (int number,
+                                                                int *index);
+extern void gui_color_rgb_table_free (struct t_gui_color_rgb_table *table);
+extern int gui_color_rgb_to_number (int rgb);
+extern int gui_color_rgb_to_number_option (int rgb);
+extern void gui_color_rgb_display_reset (void);
+extern int gui_color_rgb_from_number (int number);
+extern int gui_color_rgb_to_term_cached (int number, int limit);
+extern int gui_color_extended_size (const char *string);
+extern int gui_color_extended_value (const char *string, int *rgb,
+                                     int *color);
+extern int gui_color_extended_parse (const char *string, int *color);
+extern const char *gui_color_extended_string (int number);
 extern int gui_color_code_size (const char *string);
 extern char *gui_color_decode (const char *string, const char *replacement);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);
+extern int gui_color_encode_ansi_extended (char **output, const char *string,
+                                           int background);
 extern char *gui_color_encode_ansi (const char *string);
 extern char *gui_color_emphasize (const char *string, const char *search,
                                   int case_sensitive, regex_t *regex);

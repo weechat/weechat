@@ -1081,6 +1081,10 @@ Possible colors are:
 
 * standard color: optional attributes + number on 2 digits
 * extended color: `+@+` + optional attributes + number on 5 digits
+* RGB color _(WeeChat ≥ 5.0.0)_: `+@+` + optional attributes + `+#+` + RGB
+  value on 6 hexadecimal digits (for example `+@*#ff8800+`); it is allowed
+  in all foreground and background colors with `EXT` in table below, but not
+  in the ncurses pair ([hex]#19# + `EXT`), which is always 5 digits
 
 In following table, these conventions are used:
 

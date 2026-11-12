@@ -18,6 +18,9 @@
 extern struct t_gui_color *gui_weechat_colors;
 extern int gui_color_term_colors;
 extern int gui_color_term_direct_colors;
+extern int gui_color_use_term_colors;
+extern int gui_color_pairs_used;
+extern struct t_hashtable *gui_color_pairs_direct;
 extern int gui_color_num_pairs;
 extern int gui_color_pairs_auto_reset;
 extern int gui_color_pairs_auto_reset_pending;
@@ -26,6 +29,20 @@ extern int gui_color_buffer_refresh_needed;
 
 extern int gui_color_get_gui_attrs (int color);
 extern void gui_color_init_pair (int number, int fg, int bg);
+extern int gui_color_get_valid_term_color (int color);
+extern int gui_color_alloc_pair (void);
+extern int gui_color_get_direct_color (int color);
+extern int gui_color_get_pair_direct (int fg, int bg);
+extern void gui_color_pair_direct_key_get_colors (const void *key, int *fg,
+                                                  int *bg);
+extern void gui_color_init_pair_direct_map_cb (void *data,
+                                               struct t_hashtable *hashtable,
+                                               const void *key,
+                                               const void *value);
+extern void gui_color_dump_pair_direct_map_cb (void *data,
+                                               struct t_hashtable *hashtable,
+                                               const void *key,
+                                               const void *value);
 extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
 extern void gui_color_alloc (void);

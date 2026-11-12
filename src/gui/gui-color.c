@@ -19,6 +19,9 @@
 #include <time.h>
 #include <ctype.h>
 #include <limits.h>
+#include <stdint.h>
+#include <sys/time.h>
+#include <gcrypt.h>
 
 #include "../core/weechat.h"
 #include "../core/core-config.h"
@@ -39,6 +42,18 @@ struct t_gui_color *gui_color[GUI_COLOR_NUM_COLORS]; /* GUI colors          */
 struct t_hashtable *gui_color_hash_palette_color = NULL;
 struct t_hashtable *gui_color_hash_palette_alias = NULL;
 struct t_weelist *gui_color_list_with_alias = NULL;
+
+/* RGB colors (interned, see GUI_COLOR_RGB_FIRST in gui-color.h) */
+struct t_gui_color_rgb_table gui_color_rgb_options =   /* used in options    */
+{ GUI_COLOR_RGB_OPTIONS_FIRST, GUI_COLOR_RGB_OPTIONS_MAX,
+  NULL, NULL, 0, 0, 0, NULL };
+struct t_gui_color_rgb_table gui_color_rgb_display =   /* used in strings    */
+{ GUI_COLOR_RGB_DISPLAY_FIRST, GUI_COLOR_RGB_DISPLAY_MAX,
+  NULL, NULL, 0, 0, 0, NULL };
+int gui_color_rgb_display_reset_needed = 0;  /* display table is full       */
+time_t gui_color_rgb_display_reset_last = 0; /* time of last reset          */
+unsigned long long gui_color_hash_seed = 0;  /* random seed for hash of keys */
+int gui_color_hash_seed_set = 0;             /* 1 if seed is set            */
 
 /* Terminal colors */
 int gui_color_term256[256] =
@@ -646,8 +661,7 @@ gui_color_convert_rgb_to_term (int rgb, int limit)
  *
  * Return:
  *   - color unchanged if < 8 (including -1 for default color) or > 255
- *   - RGB value of color otherwise (forced to at least 8, so that a very
- *     dark color is not confused with a basic ANSI color)
+ *   - RGB value of color otherwise (see function gui_color_rgb_to_direct)
  */
 
 int
@@ -660,7 +674,453 @@ gui_color_convert_term_to_direct (int color)
 
     rgb = gui_color_term256[color];
 
-    return (rgb < 8) ? 8 : rgb;
+    return gui_color_rgb_to_direct (rgb);
+}
+
+/*
+ * Convert a RGB value to a color for a terminal with direct colors.
+ *
+ * With direct colors, the first colors are terminal palette indexes
+ * (0-7 with "xterm-direct", 0-255 with "xterm-direct256"), so the RGB values
+ * below 256 (blue component only) are changed to use a green component of 1,
+ * which is visually identical.
+ */
+
+int
+gui_color_rgb_to_direct (int rgb)
+{
+    if (rgb < 0)
+        return rgb;
+
+    return (rgb < 256) ? (rgb | 0x000100) : rgb;
+}
+
+/*
+ * Parse a RGB color at the beginning of a string: "#" followed by exactly
+ * 6 hexadecimal digits (other chars may follow).
+ *
+ * Return the RGB value (0x000000 to 0xFFFFFF), -1 if the string does not
+ * start with a RGB color.
+ */
+
+int
+gui_color_rgb_parse (const char *string)
+{
+    int i, rgb, digit;
+
+    if (!string || (string[0] != GUI_COLOR_EXTENDED_RGB_CHAR))
+        return -1;
+
+    rgb = 0;
+    for (i = 1; i <= 6; i++)
+    {
+        if (!isxdigit ((unsigned char)string[i]))
+            return -1;
+        digit = (isdigit ((unsigned char)string[i])) ?
+            string[i] - '0' : (tolower ((unsigned char)string[i]) - 'a' + 10);
+        rgb = (rgb << 4) | digit;
+    }
+
+    return rgb;
+}
+
+/*
+ * Hash a key of type integer or long long (with a mix of all bits, so that
+ * keys which differ only in high bits are spread in hashtable).
+ *
+ * It is used for hashtables with RGB colors and color pairs, where keys can
+ * be chosen by remote users (colors received in messages): a random seed
+ * (chosen once per process) is mixed with the key, so that keys with the same
+ * hash can not be computed in advance.
+ */
+
+unsigned long long
+gui_color_hash_key_cb (struct t_hashtable *hashtable, const void *key)
+{
+    unsigned long long value, nonce;
+    struct timeval tv;
+
+    if (!key)
+        return 0ULL;
+
+    if (!gui_color_hash_seed_set)
+    {
+        /*
+         * Seed: random bytes of gcrypt (if initialized), mixed with the
+         * pseudo-random generator seeded on startup, the time, the process id
+         * and an address of the process.
+         */
+        gettimeofday (&tv, NULL);
+        gui_color_hash_seed = (((unsigned long long)rand ()) << 33)
+            ^ (((unsigned long long)rand ()) << 11)
+            ^ (unsigned long long)rand ()
+            ^ (((unsigned long long)tv.tv_sec) << 20)
+            ^ (unsigned long long)tv.tv_usec
+            ^ (((unsigned long long)getpid ()) << 40)
+            ^ (unsigned long long)(uintptr_t)&gui_color_hash_seed;
+        if (!weechat_no_gcrypt)
+        {
+            nonce = 0;
+            gcry_create_nonce (&nonce, sizeof (nonce));
+            gui_color_hash_seed ^= nonce;
+        }
+        gui_color_hash_seed_set = 1;
+    }
+
+    value = (hashtable->type_keys == HASHTABLE_LONGLONG) ?
+        (unsigned long long)(*((long long *)key)) :
+        (unsigned long long)(*((int *)key));
+
+    return hashtable_hash_mix64 (value ^ gui_color_hash_seed);
+}
+
+/*
+ * Search or add a RGB value in a table of RGB colors.
+ *
+ * Return the color number, -1 if the table is full or on error.
+ */
+
+int
+gui_color_rgb_table_add (struct t_gui_color_rgb_table *table, int rgb)
+{
+    int *ptr_index, new_size, *new_values, *new_term;
+
+    if (!table->index)
+    {
+        table->index = hashtable_new (256,
+                                      WEECHAT_HASHTABLE_INTEGER,
+                                      WEECHAT_HASHTABLE_INTEGER,
+                                      &gui_color_hash_key_cb, NULL);
+        if (!table->index)
+            return -1;
+    }
+
+    ptr_index = hashtable_get (table->index, &rgb);
+    if (ptr_index)
+        return table->first + *ptr_index;
+
+    if (table->count >= table->max)
+        return -1;
+
+    if (table->count >= table->size)
+    {
+        new_size = (table->size == 0) ? 64 : table->size * 2;
+        if (new_size > table->max)
+            new_size = table->max;
+        new_values = realloc (table->values,
+                              sizeof (table->values[0]) * new_size);
+        if (!new_values)
+            return -1;
+        table->values = new_values;
+        new_term = realloc (table->term, sizeof (table->term[0]) * new_size);
+        if (!new_term)
+            return -1;
+        table->term = new_term;
+        table->size = new_size;
+    }
+
+    table->values[table->count] = rgb;
+    table->term[table->count] = -1;
+    if (!hashtable_set (table->index, &rgb, &table->count))
+        return -1;
+    table->count++;
+
+    return table->first + table->count - 1;
+}
+
+/*
+ * Search a color number in tables of RGB colors.
+ *
+ * Return the table and set *index to the index of color in table, NULL if
+ * the number is not a RGB color.
+ */
+
+struct t_gui_color_rgb_table *
+gui_color_rgb_table_search (int number, int *index)
+{
+    struct t_gui_color_rgb_table *tables[2];
+    int i;
+
+    tables[0] = &gui_color_rgb_options;
+    tables[1] = &gui_color_rgb_display;
+    for (i = 0; i < 2; i++)
+    {
+        if ((number >= tables[i]->first)
+            && (number < tables[i]->first + tables[i]->count))
+        {
+            *index = number - tables[i]->first;
+            return tables[i];
+        }
+    }
+
+    return NULL;
+}
+
+/*
+ * Free a table of RGB colors (the table can be used again after this call).
+ */
+
+void
+gui_color_rgb_table_free (struct t_gui_color_rgb_table *table)
+{
+    hashtable_free (table->index);
+    table->index = NULL;
+    free (table->values);
+    table->values = NULL;
+    free (table->term);
+    table->term = NULL;
+    table->count = 0;
+    table->size = 0;
+    table->term_limit = 0;
+}
+
+/*
+ * Get color number for a RGB value used in a string (for display).
+ *
+ * The RGB value is added to the table of displayed RGB colors if needed
+ * (unless it is already used in an option). This table is emptied when color
+ * pairs are reset; when it is full, the nearest color in the 256-color palette
+ * is returned, and a reset is requested (at most once per second), unless the
+ * automatic reset is disabled (option weechat.look.color_pairs_auto_reset set
+ * to -1): then a manual "/color reset" is needed.
+ *
+ * Return a number between GUI_COLOR_RGB_FIRST and GUI_COLOR_RGB_LAST, or a
+ * number between 0 and 255.
+ */
+
+int
+gui_color_rgb_to_number (int rgb)
+{
+    int *ptr_index, number;
+    time_t now;
+
+    if (rgb < 0)
+        rgb = 0;
+    rgb &= 0xFFFFFF;
+
+    if (gui_color_rgb_options.index)
+    {
+        ptr_index = hashtable_get (gui_color_rgb_options.index, &rgb);
+        if (ptr_index)
+            return gui_color_rgb_options.first + *ptr_index;
+    }
+
+    number = gui_color_rgb_table_add (&gui_color_rgb_display, rgb);
+    if (number >= 0)
+        return number;
+
+    if ((gui_color_rgb_display.count >= gui_color_rgb_display.max)
+        && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) >= 0))
+    {
+        now = time (NULL);
+        if (now > gui_color_rgb_display_reset_last)
+            gui_color_rgb_display_reset_needed = 1;
+    }
+
+    /*
+     * Nearest color of the terminal palette (colors are displayed with the
+     * palette of the terminal, for example with 88 colors).
+     */
+    return gui_color_convert_rgb_to_term (rgb, gui_color_get_term_colors ());
+}
+
+/*
+ * Get color number for a RGB value used in an option (this number never
+ * changes).
+ *
+ * Return a number between GUI_COLOR_RGB_FIRST and GUI_COLOR_RGB_LAST, -1 if
+ * there are too many RGB colors in options.
+ */
+
+int
+gui_color_rgb_to_number_option (int rgb)
+{
+    if (rgb < 0)
+        rgb = 0;
+    rgb &= 0xFFFFFF;
+
+    return gui_color_rgb_table_add (&gui_color_rgb_options, rgb);
+}
+
+/*
+ * Remove RGB colors used for display (not the ones used in options).
+ *
+ * It must be called only when color pairs are reset, because color numbers
+ * of these RGB colors are not valid any more.
+ */
+
+void
+gui_color_rgb_display_reset (void)
+{
+    gui_color_rgb_table_free (&gui_color_rgb_display);
+    gui_color_rgb_display_reset_needed = 0;
+    gui_color_rgb_display_reset_last = time (NULL);
+}
+
+/*
+ * Get RGB value of a color number.
+ *
+ * Return the RGB value, -1 if the number is not a RGB color.
+ */
+
+int
+gui_color_rgb_from_number (int number)
+{
+    struct t_gui_color_rgb_table *table;
+    int index;
+
+    table = gui_color_rgb_table_search (number, &index);
+
+    return (table) ? table->values[index] : -1;
+}
+
+/*
+ * Get the nearest terminal color of a RGB color number to display it, using
+ * only the first "limit" terminal colors (see function
+ * gui_color_convert_rgb_to_term); the result is cached.
+ *
+ * Return the terminal color, -1 if the number is not a RGB color.
+ */
+
+int
+gui_color_rgb_to_term_cached (int number, int limit)
+{
+    struct t_gui_color_rgb_table *table;
+    int i, index;
+
+    table = gui_color_rgb_table_search (number, &index);
+    if (!table)
+        return -1;
+
+    if (limit != table->term_limit)
+    {
+        for (i = 0; i < table->count; i++)
+        {
+            table->term[i] = -1;
+        }
+        table->term_limit = limit;
+    }
+
+    if (table->term[index] < 0)
+    {
+        table->term[index] = gui_color_convert_rgb_to_term (
+            table->values[index], limit);
+    }
+
+    return table->term[index];
+}
+
+/*
+ * Return the size of the extended color at the beginning of "string" (string
+ * is after the extended char and the attributes): 7 for a RGB color
+ * ("#RRGGBB"), 5 for a color number ("00123"), 0 if string is too short.
+ */
+
+int
+gui_color_extended_size (const char *string)
+{
+    if (!string)
+        return 0;
+
+    if (gui_color_rgb_parse (string) >= 0)
+        return 7;
+
+    if (string[0] && string[1] && string[2] && string[3] && string[4])
+        return 5;
+
+    return 0;
+}
+
+/*
+ * Read the extended color at the beginning of "string" (string is after the
+ * extended char and the attributes): a RGB color ("#RRGGBB") or a color
+ * number ("00123"), without adding the RGB color to the table of RGB colors.
+ *
+ * The RGB value is stored in *rgb (-1 if not a RGB color) and the color
+ * number in *color (-1 if not a valid color number).
+ *
+ * Return the size of color in string (see gui_color_extended_size).
+ */
+
+int
+gui_color_extended_value (const char *string, int *rgb, int *color)
+{
+    char str_color[6];
+    int size;
+
+    *color = -1;
+
+    *rgb = gui_color_rgb_parse (string);
+    if (*rgb >= 0)
+        return 7;
+
+    size = gui_color_extended_size (string);
+    if (size == 5)
+    {
+        memcpy (str_color, string, 5);
+        str_color[5] = '\0';
+        if (!util_parse_int (str_color, 10, color) || (*color < 0))
+            *color = -1;
+    }
+
+    return size;
+}
+
+/*
+ * Parse the extended color at the beginning of "string" (string is after
+ * the extended char and the attributes): a RGB color ("#RRGGBB") or a color
+ * number ("00123").
+ *
+ * If "color" is not NULL, the color number is stored in *color (-1 if
+ * invalid): a RGB color is added to the table of RGB colors and its number
+ * is returned. If "color" is NULL, only the size is returned.
+ *
+ * Return the size of color in string (see gui_color_extended_size).
+ */
+
+int
+gui_color_extended_parse (const char *string, int *color)
+{
+    int rgb, size;
+
+    if (!color)
+        return gui_color_extended_size (string);
+
+    size = gui_color_extended_value (string, &rgb, color);
+    if (rgb >= 0)
+        *color = gui_color_rgb_to_number (rgb);
+
+    return size;
+}
+
+/*
+ * Return the string for an extended color number, used in WeeChat color codes
+ * after the extended char: "#RRGGBB" for a RGB color, "00123" for other
+ * colors.
+ */
+
+const char *
+gui_color_extended_string (int number)
+{
+    static char str_color[16][16];
+    static int index_color = 0;
+    int rgb;
+
+    index_color = (index_color + 1) % 16;
+
+    rgb = gui_color_rgb_from_number (number);
+    if (rgb >= 0)
+    {
+        snprintf (str_color[index_color], sizeof (str_color[index_color]),
+                  "%c%06x", GUI_COLOR_EXTENDED_RGB_CHAR, rgb);
+    }
+    else
+    {
+        snprintf (str_color[index_color], sizeof (str_color[index_color]),
+                  "%05d", number);
+    }
+
+    return str_color[index_color];
 }
 
 /*
@@ -698,11 +1158,7 @@ gui_color_code_size (const char *string)
                         {
                             ptr_string++;
                         }
-                        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                            && ptr_string[3] && ptr_string[4])
-                        {
-                            ptr_string += 5;
-                        }
+                        ptr_string += gui_color_extended_size ((const char *)ptr_string);
                     }
                     else
                     {
@@ -719,11 +1175,7 @@ gui_color_code_size (const char *string)
                     if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
                     {
                         ptr_string++;
-                        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                            && ptr_string[3] && ptr_string[4])
-                        {
-                            ptr_string += 5;
-                        }
+                        ptr_string += gui_color_extended_size ((const char *)ptr_string);
                     }
                     else
                     {
@@ -740,11 +1192,7 @@ gui_color_code_size (const char *string)
                         {
                             ptr_string++;
                         }
-                        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                            && ptr_string[3] && ptr_string[4])
-                        {
-                            ptr_string += 5;
-                        }
+                        ptr_string += gui_color_extended_size ((const char *)ptr_string);
                     }
                     else
                     {
@@ -766,12 +1214,7 @@ gui_color_code_size (const char *string)
                         if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
                         {
                             ptr_string += 2;
-                            if (ptr_string[0] && ptr_string[1]
-                                && ptr_string[2] && ptr_string[3]
-                                && ptr_string[4])
-                            {
-                                ptr_string += 5;
-                            }
+                            ptr_string += gui_color_extended_size ((const char *)ptr_string);
                         }
                         else
                         {
@@ -881,11 +1324,7 @@ gui_color_decode (const char *string, const char *replacement)
                             {
                                 ptr_string++;
                             }
-                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                                && ptr_string[3] && ptr_string[4])
-                            {
-                                ptr_string += 5;
-                            }
+                            ptr_string += gui_color_extended_size ((const char *)ptr_string);
                         }
                         else
                         {
@@ -902,11 +1341,7 @@ gui_color_decode (const char *string, const char *replacement)
                         if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
                         {
                             ptr_string++;
-                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                                && ptr_string[3] && ptr_string[4])
-                            {
-                                ptr_string += 5;
-                            }
+                            ptr_string += gui_color_extended_size ((const char *)ptr_string);
                         }
                         else
                         {
@@ -923,11 +1358,7 @@ gui_color_decode (const char *string, const char *replacement)
                             {
                                 ptr_string++;
                             }
-                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                                && ptr_string[3] && ptr_string[4])
-                            {
-                                ptr_string += 5;
-                            }
+                            ptr_string += gui_color_extended_size ((const char *)ptr_string);
                         }
                         else
                         {
@@ -949,12 +1380,7 @@ gui_color_decode (const char *string, const char *replacement)
                             if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
                             {
                                 ptr_string += 2;
-                                if (ptr_string[0] && ptr_string[1]
-                                    && ptr_string[2] && ptr_string[3]
-                                    && ptr_string[4])
-                                {
-                                    ptr_string += 5;
-                                }
+                                ptr_string += gui_color_extended_size ((const char *)ptr_string);
                             }
                             else
                             {
@@ -1346,6 +1772,47 @@ gui_color_weechat_to_ansi (int color)
 }
 
 /*
+ * Add an ANSI color code for the extended color at the beginning of "string"
+ * (string is after the extended char and the attributes): RGB color
+ * ("#RRGGBB") or color number ("00123").
+ *
+ * Return the size of color in string.
+ */
+
+int
+gui_color_encode_ansi_extended (char **output, const char *string,
+                                int background)
+{
+    char str_concat[64];
+    int size, rgb, color;
+
+    rgb = gui_color_rgb_parse (string);
+    if (rgb >= 0)
+    {
+        snprintf (str_concat, sizeof (str_concat),
+                  "\x1B[%d;2;%d;%d;%dm",
+                  (background) ? 48 : 38,
+                  (rgb >> 16) & 0xFF,
+                  (rgb >> 8) & 0xFF,
+                  rgb & 0xFF);
+        string_dyn_concat (output, str_concat, -1);
+        return 7;
+    }
+
+    size = gui_color_extended_parse (string, &color);
+    if (color >= 0)
+    {
+        snprintf (str_concat, sizeof (str_concat),
+                  "\x1B[%d;5;%dm",
+                  (background) ? 48 : 38,
+                  color);
+        string_dyn_concat (output, str_concat, -1);
+    }
+
+    return size;
+}
+
+/*
  * Add an ANSI color code for a terminal color (0-255, or -1 for the default
  * color), text color or background.
  */
@@ -1408,20 +1875,8 @@ gui_color_encode_ansi (const char *string)
                                 gui_color_add_ansi_flag (out, flag);
                                 ptr_string++;
                             }
-                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                                && ptr_string[3] && ptr_string[4])
-                            {
-                                memcpy (str_color, ptr_string, 5);
-                                str_color[5] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                {
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[38;5;%dm",
-                                              color);
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                ptr_string += 5;
-                            }
+                            ptr_string += gui_color_encode_ansi_extended (
+                                out, (const char *)ptr_string, 0);
                         }
                         else
                         {
@@ -1454,20 +1909,8 @@ gui_color_encode_ansi (const char *string)
                         if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
                         {
                             ptr_string++;
-                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                                && ptr_string[3] && ptr_string[4])
-                            {
-                                memcpy (str_color, ptr_string, 5);
-                                str_color[5] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                {
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[48;5;%dm",
-                                              color);
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                ptr_string += 5;
-                            }
+                            ptr_string += gui_color_encode_ansi_extended (
+                                out, (const char *)ptr_string, 1);
                         }
                         else
                         {
@@ -1500,20 +1943,8 @@ gui_color_encode_ansi (const char *string)
                                 gui_color_add_ansi_flag (out, flag);
                                 ptr_string++;
                             }
-                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                                && ptr_string[3] && ptr_string[4])
-                            {
-                                memcpy (str_color, ptr_string, 5);
-                                str_color[5] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                {
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[38;5;%dm",
-                                              color);
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                ptr_string += 5;
-                            }
+                            ptr_string += gui_color_encode_ansi_extended (
+                                out, (const char *)ptr_string, 0);
                         }
                         else
                         {
@@ -1551,21 +1982,8 @@ gui_color_encode_ansi (const char *string)
                             if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
                             {
                                 ptr_string += 2;
-                                if (ptr_string[0] && ptr_string[1]
-                                    && ptr_string[2] && ptr_string[3]
-                                    && ptr_string[4])
-                                {
-                                    memcpy (str_color, ptr_string, 5);
-                                    str_color[5] = '\0';
-                                    if (util_parse_int (str_color, 10, &color))
-                                    {
-                                        snprintf (str_concat, sizeof (str_concat),
-                                                  "\x1B[48;5;%dm",
-                                                  color);
-                                        string_dyn_concat (out, str_concat, -1);
-                                    }
-                                    ptr_string += 5;
-                                }
+                                ptr_string += gui_color_encode_ansi_extended (
+                                    out, (const char *)ptr_string, 1);
                             }
                             else
                             {
@@ -2150,6 +2568,9 @@ gui_color_end (void)
     }
     gui_color_palette_free_structs ();
     gui_color_free_vars ();
+
+    gui_color_rgb_table_free (&gui_color_rgb_options);
+    gui_color_rgb_table_free (&gui_color_rgb_display);
 
     if (gui_color_regex_ansi)
     {

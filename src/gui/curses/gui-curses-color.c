@@ -88,6 +88,7 @@ short *gui_color_term_color_content = NULL; /* content of colors (r/b/g)    */
 /* Pairs */
 int gui_color_num_pairs = 63;            /* number of pairs used by WeeChat */
 short *gui_color_pairs = NULL;           /* table with pair for each fg+bg  */
+struct t_hashtable *gui_color_pairs_direct = NULL; /* pairs with RGB colors */
 int gui_color_pairs_used = 0;            /* number of pairs currently used  */
 int gui_color_warning_pairs_full = 0;    /* warning displayed?              */
 int gui_color_pairs_auto_reset = 0;         /* auto reset of pairs needed   */
@@ -439,7 +440,136 @@ gui_color_init_pair (int number, int fg, int bg)
 }
 
 /*
+ * Get a valid terminal color: if the color is not supported by the terminal,
+ * return the nearest color (for colors 0-255) or -1 (default color).
+ */
+
+int
+gui_color_get_valid_term_color (int color)
+{
+    if (color < gui_color_term_colors)
+        return color;
+
+    /* Find nearest color. */
+    if ((color >= 0) && (color <= 255))
+    {
+        return gui_color_convert_rgb_to_term (gui_color_term256[color],
+                                              gui_color_term_colors);
+    }
+
+    /* Fallback to default color. */
+    return -1;
+}
+
+/*
+ * Allocate a new pair number (the pair is not initialized).
+ *
+ * Return the pair number, 0 if all pairs are already used.
+ */
+
+int
+gui_color_alloc_pair (void)
+{
+    if (gui_color_pairs_used >= gui_color_num_pairs)
+    {
+        /* Oh no, no more pair available! */
+        if (!gui_color_warning_pairs_full
+            && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) < 0))
+        {
+            /* Display a warning if auto reset of pairs is disabled. */
+            hook_timer (NULL, 1, 0, 1,
+                        &gui_color_timer_warning_pairs_full, NULL, NULL);
+            gui_color_warning_pairs_full = 1;
+        }
+        return 0;
+    }
+
+    gui_color_pairs_used++;
+    if ((gui_color_num_pairs > 1) && !gui_color_pairs_auto_reset_pending
+        && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) >= 0)
+        && (gui_color_num_pairs - gui_color_pairs_used <= CONFIG_INTEGER(config_look_color_pairs_auto_reset)))
+    {
+        gui_color_pairs_auto_reset = 1;
+    }
+    gui_color_buffer_refresh_needed = 1;
+
+    return gui_color_pairs_used;
+}
+
+/*
+ * Convert a color (terminal color or RGB color number) to a color for
+ * init_extended_pair on a terminal with direct colors.
+ */
+
+int
+gui_color_get_direct_color (int color)
+{
+    int rgb;
+
+    rgb = gui_color_rgb_from_number (color);
+    if (rgb >= 0)
+        return gui_color_rgb_to_direct (rgb);
+
+    return gui_color_convert_term_to_direct (
+        gui_color_get_valid_term_color (color));
+}
+
+/*
+ * Get a pair with given foreground/background colors on a terminal with
+ * direct colors, when at least one color is a RGB color.
+ *
+ * Return a value between 1 and COLOR_PAIRS-1.
+ */
+
+int
+gui_color_get_pair_direct (int fg, int bg)
+{
+#if defined(NCURSES_EXT_COLORS) && (NCURSES_EXT_COLORS >= 20180127)
+    long long key;
+    int *ptr_pair, pair;
+
+    fg = gui_color_get_direct_color (fg);
+    bg = gui_color_get_direct_color (bg);
+
+    if (!gui_color_pairs_direct)
+    {
+        gui_color_pairs_direct = hashtable_new (1024,
+                                                WEECHAT_HASHTABLE_LONGLONG,
+                                                WEECHAT_HASHTABLE_INTEGER,
+                                                &gui_color_hash_key_cb, NULL);
+        if (!gui_color_pairs_direct)
+            return 1;
+    }
+
+    key = (((long long)(fg + 1)) << 32) | (long long)(bg + 1);
+
+    ptr_pair = hashtable_get (gui_color_pairs_direct, &key);
+    if (ptr_pair)
+        return *ptr_pair;
+
+    pair = gui_color_alloc_pair ();
+    if (pair == 0)
+        return 1;
+
+    init_extended_pair (pair, fg, bg);
+    hashtable_set (gui_color_pairs_direct, &key, &pair);
+
+    return pair;
+#else
+    /* Direct colors are never used without extended colors in ncurses. */
+    (void) fg;
+    (void) bg;
+
+    return 1;
+#endif /* NCURSES_EXT_COLORS >= 20180127 */
+}
+
+/*
  * Get a pair with given foreground/background colors.
+ *
+ * Colors can be terminal colors or RGB colors (see GUI_COLOR_RGB_FIRST):
+ * on a terminal with direct colors, RGB colors are used as-is, otherwise the
+ * nearest terminal color is used.
  *
  * If no pair is found for fg/bg, a new pair is created.
  *
@@ -449,40 +579,28 @@ gui_color_init_pair (int number, int fg, int bg)
 int
 gui_color_get_pair (int fg, int bg)
 {
-    int index;
+    int index, pair, rgb_fg, rgb_bg;
 
     /* Only one color when displaying terminal colors */
     if (gui_color_use_term_colors)
         return COLOR_WHITE;
 
+    /* RGB colors */
+    rgb_fg = gui_color_rgb_from_number (fg);
+    rgb_bg = gui_color_rgb_from_number (bg);
+    if ((rgb_fg >= 0) || (rgb_bg >= 0))
+    {
+        if (gui_color_term_direct_colors)
+            return gui_color_get_pair_direct (fg, bg);
+        if (rgb_fg >= 0)
+            fg = gui_color_rgb_to_term_cached (fg, gui_color_term_colors);
+        if (rgb_bg >= 0)
+            bg = gui_color_rgb_to_term_cached (bg, gui_color_term_colors);
+    }
+
     /* If invalid color, use nearest color or default fg/bg. */
-    if (fg >= gui_color_term_colors)
-    {
-        /* Find nearest color. */
-        if ((fg >= 0) && (fg <= 255))
-        {
-            fg = gui_color_convert_rgb_to_term (gui_color_term256[fg],
-                                                gui_color_term_colors);
-        }
-        else
-        {
-            /* Fallback to default foreground. */
-            fg = -1;
-        }
-    }
-    if (bg >= gui_color_term_colors)
-    {
-        if ((bg >= 0) && (bg <= 255))
-        {
-            bg = gui_color_convert_rgb_to_term (gui_color_term256[bg],
-                                                gui_color_term_colors);
-        }
-        else
-        {
-            /* Fallback to default background. */
-            bg = -1;
-        }
-    }
+    fg = gui_color_get_valid_term_color (fg);
+    bg = gui_color_get_valid_term_color (bg);
 
     /* Compute index for gui_color_pairs with foreground and background. */
     index = ((bg + 1) * (gui_color_term_colors + 2)) + (fg + 1);
@@ -490,31 +608,12 @@ gui_color_get_pair (int fg, int bg)
     /* Pair not allocated for this fg/bg? */
     if (gui_color_pairs[index] == 0)
     {
-        if (gui_color_pairs_used >= gui_color_num_pairs)
-        {
-            /* Oh no, no more pair available! */
-            if (!gui_color_warning_pairs_full
-                && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) < 0))
-            {
-                /* Display a warning if auto reset of pairs is disabled. */
-                hook_timer (NULL, 1, 0, 1,
-                            &gui_color_timer_warning_pairs_full, NULL, NULL);
-                gui_color_warning_pairs_full = 1;
-            }
-            return 1;
-        }
-
         /* Create a new pair if no pair exists for this fg/bg. */
-        gui_color_pairs_used++;
-        gui_color_pairs[index] = gui_color_pairs_used;
-        gui_color_init_pair (gui_color_pairs_used, fg, bg);
-        if ((gui_color_num_pairs > 1) && !gui_color_pairs_auto_reset_pending
-            && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) >= 0)
-            && (gui_color_num_pairs - gui_color_pairs_used <= CONFIG_INTEGER(config_look_color_pairs_auto_reset)))
-        {
-            gui_color_pairs_auto_reset = 1;
-        }
-        gui_color_buffer_refresh_needed = 1;
+        pair = gui_color_alloc_pair ();
+        if (pair == 0)
+            return 1;
+        gui_color_pairs[index] = pair;
+        gui_color_init_pair (pair, fg, bg);
     }
 
     return gui_color_pairs[index];
@@ -695,6 +794,8 @@ gui_color_init_vars (void)
         free (gui_color_pairs);
         gui_color_pairs = NULL;
     }
+    if (gui_color_pairs_direct)
+        hashtable_remove_all (gui_color_pairs_direct);
     gui_color_pairs_used = 0;
 
     if (gui_color_term_has_colors)
@@ -769,6 +870,11 @@ gui_color_free_vars (void)
         free (gui_color_pairs);
         gui_color_pairs = NULL;
     }
+    if (gui_color_pairs_direct)
+    {
+        hashtable_free (gui_color_pairs_direct);
+        gui_color_pairs_direct = NULL;
+    }
     if (gui_color_term_color_content)
     {
         free (gui_color_term_color_content);
@@ -792,6 +898,45 @@ gui_color_init_pairs_terminal (void)
             gui_color_init_pair (i, i, -1);
         }
     }
+}
+
+/*
+ * Get foreground and background of a key in hashtable with pairs of direct
+ * colors.
+ */
+
+void
+gui_color_pair_direct_key_get_colors (const void *key, int *fg, int *bg)
+{
+    long long value;
+
+    value = *((long long *)key);
+    *fg = (int)(value >> 32) - 1;
+    *bg = (int)(value & 0xFFFFFFFFLL) - 1;
+}
+
+/*
+ * Callback for hashtable_map on pairs with direct colors: initialize pair
+ * again (after display of terminal colors).
+ */
+
+void
+gui_color_init_pair_direct_map_cb (void *data,
+                                   struct t_hashtable *hashtable,
+                                   const void *key, const void *value)
+{
+    int fg, bg;
+
+    /* Make C compiler happy. */
+    (void) data;
+    (void) hashtable;
+
+    gui_color_pair_direct_key_get_colors (key, &fg, &bg);
+#if defined(NCURSES_EXT_COLORS) && (NCURSES_EXT_COLORS >= 20180127)
+    init_extended_pair (*((int *)value), fg, bg);
+#else
+    (void) value;
+#endif /* NCURSES_EXT_COLORS >= 20180127 */
 }
 
 /*
@@ -822,6 +967,12 @@ gui_color_init_pairs_weechat (void)
         }
         free (foregrounds);
         free (backgrounds);
+        /* Pairs with RGB colors (terminal with direct colors). */
+        if (gui_color_pairs_direct)
+        {
+            hashtable_map (gui_color_pairs_direct,
+                           &gui_color_init_pair_direct_map_cb, NULL);
+        }
     }
 }
 
@@ -1292,6 +1443,9 @@ gui_color_reset_pairs (void)
                 (size_t)(gui_color_term_colors + 2)
                 * (gui_color_term_colors + 2)
                 * sizeof (gui_color_pairs[0]));
+        if (gui_color_pairs_direct)
+            hashtable_remove_all (gui_color_pairs_direct);
+        gui_color_rgb_display_reset ();
         gui_color_pairs_used = 0;
         gui_color_warning_pairs_full = 0;
         gui_color_buffer_refresh_needed = 1;
@@ -1684,14 +1838,39 @@ gui_color_alloc (void)
 }
 
 /*
+ * Callback for hashtable_map on pairs with direct colors: add a line with the
+ * pair to the dynamic string "data" (lines are displayed after the map,
+ * because printing a line can run hooks which change the pairs).
+ */
+
+void
+gui_color_dump_pair_direct_map_cb (void *data,
+                                   struct t_hashtable *hashtable,
+                                   const void *key, const void *value)
+{
+    char str_line[256];
+    int fg, bg;
+
+    /* Make C compiler happy. */
+    (void) hashtable;
+
+    gui_color_pair_direct_key_get_colors (key, &fg, &bg);
+    snprintf (str_line, sizeof (str_line),
+              "  direct fg:%8d (0x%06x), bg:%8d (0x%06x), pair = %d\n",
+              fg, (fg >= 0) ? fg : 0, bg, (bg >= 0) ? bg : 0,
+              *((int *)value));
+    string_dyn_concat ((char **)data, str_line, -1);
+}
+
+/*
  * Dump colors.
  */
 
 void
 gui_color_dump (void)
 {
-    char str_line[1024];
-    int fg, bg, index;
+    char str_line[1024], **lines_direct, **lines;
+    int fg, bg, index, i, num_lines;
 
     gui_color_info_term_colors (str_line, sizeof (str_line));
 
@@ -1715,6 +1894,27 @@ gui_color_dump (void)
                                      fg, bg, index, gui_color_pairs[index]);
                 }
             }
+        }
+    }
+    if (gui_color_pairs_direct)
+    {
+        lines_direct = string_dyn_alloc (256);
+        if (lines_direct)
+        {
+            hashtable_map (gui_color_pairs_direct,
+                           &gui_color_dump_pair_direct_map_cb, lines_direct);
+            lines = string_split (*lines_direct, "\n", NULL,
+                                  WEECHAT_STRING_SPLIT_STRIP_RIGHT,
+                                  0, &num_lines);
+            if (lines)
+            {
+                for (i = 0; i < num_lines; i++)
+                {
+                    gui_chat_printf (NULL, "%s", lines[i]);
+                }
+                string_free_split (lines);
+            }
+            string_dyn_free (lines_direct, 1);
         }
     }
 }

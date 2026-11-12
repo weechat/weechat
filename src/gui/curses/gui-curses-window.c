@@ -653,20 +653,13 @@ gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
             extra_attr |= flag;
             ptr_string++;
         }
-        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-            && ptr_string[3] && ptr_string[4])
+        fg = -1;
+        ptr_string += gui_color_extended_parse ((const char *)ptr_string,
+                                                (window) ? &fg : NULL);
+        if (window && (fg >= 0))
         {
-            if (window)
-            {
-                memcpy (str_fg, ptr_string, 5);
-                str_fg[5] = '\0';
-                if (util_parse_int (str_fg, 10, &fg))
-                {
-                    gui_window_set_custom_color_fg (window,
-                                                    fg | GUI_COLOR_EXTENDED_FLAG | extra_attr);
-                }
-            }
-            ptr_string += 5;
+            gui_window_set_custom_color_fg (window,
+                                            fg | GUI_COLOR_EXTENDED_FLAG | extra_attr);
         }
     }
     else
@@ -708,32 +701,22 @@ gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
     char str_bg[6];
-    int bg;
+    int bg, size;
 
     ptr_string = *string;
 
     if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
     {
-        if (ptr_string[1] && ptr_string[2] && ptr_string[3]
-            && ptr_string[4] && ptr_string[5])
+        bg = -1;
+        size = gui_color_extended_parse ((const char *)ptr_string + 1,
+                                         (window) ? &bg : NULL);
+        if (bg >= 0)
         {
-            if (window)
-            {
-                memcpy (str_bg, ptr_string + 1, 5);
-                str_bg[5] = '\0';
-                if (util_parse_int (str_bg, 10, &bg))
-                {
-                    gui_window_set_custom_color_bg (window,
-                                                    bg | GUI_COLOR_EXTENDED_FLAG);
-                }
-            }
-            ptr_string += 6;
+            gui_window_set_custom_color_bg (window,
+                                            bg | GUI_COLOR_EXTENDED_FLAG);
         }
-        else
-        {
-            /* The extended char is skipped, even if the color is truncated. */
-            ptr_string++;
-        }
+        /* The extended char is skipped, even if the color is truncated. */
+        ptr_string += 1 + size;
     }
     else
     {
@@ -768,7 +751,7 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
     char str_fg[6], str_bg[6];
-    int fg, bg, extra_attr, flag;
+    int fg, bg, extra_attr, flag, size;
 
     ptr_string = *string;
 
@@ -785,20 +768,10 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
             extra_attr |= flag;
             ptr_string++;
         }
-        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-            && ptr_string[3] && ptr_string[4])
-        {
-            if (window)
-            {
-                memcpy (str_fg, ptr_string, 5);
-                str_fg[5] = '\0';
-                if (util_parse_int (str_fg, 10, &fg))
-                    fg |= GUI_COLOR_EXTENDED_FLAG | extra_attr;
-                else
-                    fg = -1;
-            }
-            ptr_string += 5;
-        }
+        ptr_string += gui_color_extended_parse ((const char *)ptr_string,
+                                                (window) ? &fg : NULL);
+        if (window && (fg >= 0))
+            fg |= GUI_COLOR_EXTENDED_FLAG | extra_attr;
     }
     else
     {
@@ -833,28 +806,12 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
         ptr_string++;
         if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
         {
-            if (ptr_string[1] && ptr_string[2] && ptr_string[3]
-                && ptr_string[4] && ptr_string[5])
-            {
-                if (window)
-                {
-                    memcpy (str_bg, ptr_string + 1, 5);
-                    str_bg[5] = '\0';
-                    if (util_parse_int (str_bg, 10, &bg))
-                        bg |= GUI_COLOR_EXTENDED_FLAG;
-                    else
-                        bg = -1;
-                }
-                ptr_string += 6;
-            }
-            else
-            {
-                /*
-                 * The extended char is skipped, even if the color is
-                 * truncated.
-                 */
-                ptr_string++;
-            }
+            size = gui_color_extended_parse ((const char *)ptr_string + 1,
+                                             (window) ? &bg : NULL);
+            if (window && (bg >= 0))
+                bg |= GUI_COLOR_EXTENDED_FLAG;
+            /* The extended char is skipped, even if the color is truncated. */
+            ptr_string += 1 + size;
         }
         else
         {

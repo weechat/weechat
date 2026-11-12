@@ -405,8 +405,11 @@ gui_main_loop (void)
         /* Execute timer hooks. */
         hook_timer_exec ();
 
-        /* Auto reset of color pairs. */
-        if (gui_color_pairs_auto_reset)
+        /*
+         * Auto reset of color pairs (also when there are too many RGB
+         * colors displayed).
+         */
+        if (gui_color_pairs_auto_reset || gui_color_rgb_display_reset_needed)
         {
             gui_color_reset_pairs ();
             gui_color_pairs_auto_reset_last = time (NULL);

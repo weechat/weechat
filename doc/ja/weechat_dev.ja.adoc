@@ -1304,6 +1304,11 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 
 * 標準色: 任意属性 + 2 桁の番号
 * 拡張色: `+@+` + 任意属性 + 5 桁の番号
+// TRANSLATION MISSING
+* RGB color _(WeeChat ≥ 5.0.0)_: `+@+` + optional attributes + `+#+` + RGB
+  value on 6 hexadecimal digits (for example `+@*#ff8800+`); it is allowed
+  in all foreground and background colors with `EXT` in table below, but not
+  in the ncurses pair ([hex]#19# + `EXT`), which is always 5 digits
 
 以下の表に使われる組み合わせを示す:
 
