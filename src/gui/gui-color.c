@@ -2285,21 +2285,35 @@ gui_color_normalize_ansi (const char *string, int keep_colors)
 }
 
 /*
- * Update flags bold/dim enabled in output of gui_color_encode_ansi after a
- * text color with the given attribute flags: without flag "keep attributes",
- * the text color removes all attributes on screen, so only the bold/dim of
- * the color itself are enabled.
+ * Update attributes enabled in output of gui_color_encode_ansi before a text
+ * color with the given attribute flags: without flag "keep attributes", the
+ * text color removes all attributes on screen, so the attributes enabled in
+ * output are removed (the attributes of the color are added after).
  */
 
 void
-gui_color_ansi_update_intensity (int *intensity, int flags)
+gui_color_ansi_update_attrs (char **output, int *attrs_on, int flags)
 {
+    int remove;
+
     if (flags & GUI_COLOR_EXTENDED_KEEPATTR_FLAG)
-        *intensity |= flags & (GUI_COLOR_EXTENDED_BOLD_FLAG
-                               | GUI_COLOR_EXTENDED_DIM_FLAG);
-    else
-        *intensity = flags & (GUI_COLOR_EXTENDED_BOLD_FLAG
-                              | GUI_COLOR_EXTENDED_DIM_FLAG);
+    {
+        *attrs_on |= flags & GUI_COLOR_EXTENDED_ATTR_FLAGS;
+        return;
+    }
+
+    remove = *attrs_on;
+    if (remove & (GUI_COLOR_EXTENDED_BOLD_FLAG | GUI_COLOR_EXTENDED_DIM_FLAG))
+        string_dyn_concat (output, "\x1B[22m", -1);
+    if (remove & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+        string_dyn_concat (output, "\x1B[23m", -1);
+    if (remove & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+        string_dyn_concat (output, "\x1B[24m", -1);
+    if (remove & GUI_COLOR_EXTENDED_BLINK_FLAG)
+        string_dyn_concat (output, "\x1B[25m", -1);
+    if (remove & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+        string_dyn_concat (output, "\x1B[27m", -1);
+    *attrs_on = flags & GUI_COLOR_EXTENDED_ATTR_FLAGS;
 }
 
 /*
@@ -2336,27 +2350,51 @@ gui_color_add_ansi_flag (char **output, int flag)
 }
 
 /*
+ * Add ANSI color codes for the attribute flags of a WeeChat color (integer
+ * with flags like GUI_COLOR_EXTENDED_BOLD_FLAG), and update attributes
+ * enabled in output of gui_color_encode_ansi: without flag "keep attributes",
+ * the attributes enabled before are removed first (see
+ * gui_color_ansi_update_attrs).
+ */
+
+void
+gui_color_add_ansi_attrs (char **output, int color, int *attrs_on)
+{
+    int flags[] = { GUI_COLOR_EXTENDED_BLINK_FLAG, GUI_COLOR_EXTENDED_DIM_FLAG,
+                    GUI_COLOR_EXTENDED_BOLD_FLAG, GUI_COLOR_EXTENDED_REVERSE_FLAG,
+                    GUI_COLOR_EXTENDED_ITALIC_FLAG,
+                    GUI_COLOR_EXTENDED_UNDERLINE_FLAG, 0 };
+    int i;
+
+    gui_color_ansi_update_attrs (output, attrs_on, color);
+    for (i = 0; flags[i]; i++)
+    {
+        if (color & flags[i])
+            gui_color_add_ansi_flag (output, flags[i]);
+    }
+}
+
+/*
  * Add ANSI color codes for the attribute flags at the beginning of a WeeChat
- * text color (for example "*" for bold), and update flags bold/dim enabled in
- * output of gui_color_encode_ansi (see gui_color_ansi_update_intensity).
+ * text color (for example "*" for bold), and update attributes enabled in
+ * output of gui_color_encode_ansi (see function gui_color_add_ansi_attrs).
  *
  * Return pointer to the string after the attribute flags.
  */
 
 const unsigned char *
 gui_color_add_ansi_flags (char **output, const unsigned char *string,
-                          int *intensity)
+                          int *attrs_on)
 {
     int flag, flags;
 
     flags = 0;
     while ((flag = gui_color_attr_get_flag (string[0])) > 0)
     {
-        gui_color_add_ansi_flag (output, flag);
         flags |= flag;
         string++;
     }
-    gui_color_ansi_update_intensity (intensity, flags);
+    gui_color_add_ansi_attrs (output, flags, attrs_on);
 
     return string;
 }
@@ -2487,7 +2525,7 @@ gui_color_add_ansi_color (char **output, int color, int background,
  * If "number" is not NULL, it is set to the color (see function
  * gui_color_code_size_number_rgb, with "rgb" not NULL).
  *
- * If "intensity" is not NULL, the flags bold/dim enabled in output are updated
+ * If "attrs_on" is not NULL, the attributes enabled in output are updated
  * with the attributes of a foreground color (see function
  * gui_color_add_ansi_flags).
  *
@@ -2497,12 +2535,12 @@ gui_color_add_ansi_color (char **output, int color, int background,
 
 int
 gui_color_encode_ansi_number (char **output, const char *string,
-                              int foreground, int *number, int *intensity,
+                              int foreground, int *number, int *attrs_on,
                               int rgb_colors)
 {
     const char *ptr_string;
     char str_concat[128];
-    int size, color, rgb, unused_intensity;
+    int size, color, rgb, unused_attrs_on;
 
     size = gui_color_code_size_number_rgb (string, foreground, &color, &rgb);
 
@@ -2518,9 +2556,9 @@ gui_color_encode_ansi_number (char **output, const char *string,
         ptr_string = string;
         if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
             ptr_string++;
-        unused_intensity = 0;
+        unused_attrs_on = 0;
         gui_color_add_ansi_flags (output, (const unsigned char *)ptr_string,
-                                  (intensity) ? intensity : &unused_intensity);
+                                  (attrs_on) ? attrs_on : &unused_attrs_on);
     }
 
     if (rgb >= 0)
@@ -2535,29 +2573,6 @@ gui_color_encode_ansi_number (char **output, const char *string,
     }
 
     return size;
-}
-
-/*
- * Add ANSI color codes for the attribute flags of a WeeChat color (integer
- * with flags like GUI_COLOR_EXTENDED_BOLD_FLAG), and update flags bold/dim
- * enabled in output of gui_color_encode_ansi.
- */
-
-void
-gui_color_add_ansi_attrs (char **output, int color, int *intensity)
-{
-    int flags[] = { GUI_COLOR_EXTENDED_BLINK_FLAG, GUI_COLOR_EXTENDED_DIM_FLAG,
-                    GUI_COLOR_EXTENDED_BOLD_FLAG, GUI_COLOR_EXTENDED_REVERSE_FLAG,
-                    GUI_COLOR_EXTENDED_ITALIC_FLAG,
-                    GUI_COLOR_EXTENDED_UNDERLINE_FLAG, 0 };
-    int i;
-
-    for (i = 0; flags[i]; i++)
-    {
-        if (color & flags[i])
-            gui_color_add_ansi_flag (output, flags[i]);
-    }
-    gui_color_ansi_update_intensity (intensity, color);
 }
 
 /*
@@ -2598,7 +2613,7 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
 {
     const unsigned char *ptr_string;
     char **out, str_concat[128];
-    int color, length, fg, bg, attrs, intensity;
+    int color, length, fg, bg, attrs, attrs_on, pair_rc;
 
     if (!string)
         return NULL;
@@ -2608,10 +2623,12 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
         return NULL;
 
     /*
-     * Flags bold/dim currently enabled in output: ANSI code 22 removes both,
-     * so the other one must be enabled again when only one is removed.
+     * Attributes currently enabled in output (flags like
+     * GUI_COLOR_EXTENDED_BOLD_FLAG): a text color without "keep attributes"
+     * removes them, and ANSI code 22 removes both bold and dim, so the other
+     * one must be enabled again when only one is removed.
      */
-    intensity = 0;
+    attrs_on = 0;
 
     ptr_string = (unsigned char *)string;
     while (ptr_string && ptr_string[0])
@@ -2626,7 +2643,7 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                         ptr_string++;
                         ptr_string += gui_color_encode_ansi_number (
                             out, (const char *)ptr_string, 1, NULL,
-                            &intensity, rgb_colors);
+                            &attrs_on, rgb_colors);
                         break;
                     case GUI_COLOR_BG_CHAR:
                         ptr_string++;
@@ -2638,7 +2655,7 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                         ptr_string++;
                         ptr_string += gui_color_encode_ansi_number (
                             out, (const char *)ptr_string, 1, &fg,
-                            &intensity, rgb_colors);
+                            &attrs_on, rgb_colors);
                         /*
                          * Note: the comma is an old separator not used any
                          * more (since WeeChat 2.6), but we still use it here
@@ -2656,19 +2673,24 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                         break;
                     case GUI_COLOR_EXTENDED_CHAR:
                         ptr_string++;
-                        /* Color pair: attributes are removed on screen. */
-                        intensity = 0;
                         ptr_string += gui_color_parse_digits (
                             (const char *)ptr_string, 5, &color);
-                        /*
-                         * Colors of the pair (the pair number is not a
-                         * color), like on screen.
-                         */
-                        if ((color >= 0)
-                            && (gui_color_get_pair_colors (color, &fg, &bg) > 0))
+                        if (color >= 0)
                         {
-                            gui_color_ansi_add_term_color (out, fg, 0);
-                            gui_color_ansi_add_term_color (out, bg, 1);
+                            /*
+                             * Colors of the pair (the pair number is not a
+                             * color), like on screen: the attributes are
+                             * removed, an invalid pair is ignored.
+                             */
+                            pair_rc = gui_color_get_pair_colors (color,
+                                                                 &fg, &bg);
+                            if (pair_rc >= 0)
+                                gui_color_ansi_update_attrs (out, &attrs_on, 0);
+                            if (pair_rc > 0)
+                            {
+                                gui_color_ansi_add_term_color (out, fg, 0);
+                                gui_color_ansi_add_term_color (out, bg, 1);
+                            }
                         }
                         break;
                     case GUI_COLOR_EMPHASIS_CHAR:
@@ -2679,6 +2701,11 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                         switch (ptr_string[0])
                         {
                             case GUI_COLOR_BAR_FG_CHAR:
+                                /*
+                                 * Text color of bar: attributes are removed,
+                                 * like in bars.
+                                 */
+                                gui_color_ansi_update_attrs (out, &attrs_on, 0);
                                 snprintf (str_concat, sizeof (str_concat),
                                           "\x1B[%dm",
                                           GUI_COLOR_ANSI_DEFAULT_FG);
@@ -2699,7 +2726,7 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                  */
                                 color = CONFIG_COLOR(config_color_chat_delimiters);
                                 gui_color_add_ansi_attrs (out, color,
-                                                          &intensity);
+                                                          &attrs_on);
                                 gui_color_add_ansi_color (out, color, 0,
                                                           rgb_colors);
                                 ptr_string++;
@@ -2738,8 +2765,8 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                                 fg += 8;
                             }
                             string_dyn_concat (out, "\x1B[0m", -1);
-                            intensity = 0;
-                            gui_color_add_ansi_attrs (out, attrs, &intensity);
+                            attrs_on = 0;
+                            gui_color_add_ansi_attrs (out, attrs, &attrs_on);
                             if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
                                 fg &= GUI_COLOR_EXTENDED_MASK;
                             if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
@@ -2778,23 +2805,27 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                     {
                         case GUI_COLOR_ATTR_BLINK_CHAR:
                             string_dyn_concat (out, "\x1B[5m", -1);
+                            attrs_on |= GUI_COLOR_EXTENDED_BLINK_FLAG;
                             break;
                         case GUI_COLOR_ATTR_DIM_CHAR:
                             string_dyn_concat (out, "\x1B[2m", -1);
-                            intensity |= GUI_COLOR_EXTENDED_DIM_FLAG;
+                            attrs_on |= GUI_COLOR_EXTENDED_DIM_FLAG;
                             break;
                         case GUI_COLOR_ATTR_BOLD_CHAR:
                             string_dyn_concat (out, "\x1B[1m", -1);
-                            intensity |= GUI_COLOR_EXTENDED_BOLD_FLAG;
+                            attrs_on |= GUI_COLOR_EXTENDED_BOLD_FLAG;
                             break;
                         case GUI_COLOR_ATTR_REVERSE_CHAR:
                             string_dyn_concat (out, "\x1B[7m", -1);
+                            attrs_on |= GUI_COLOR_EXTENDED_REVERSE_FLAG;
                             break;
                         case GUI_COLOR_ATTR_ITALIC_CHAR:
                             string_dyn_concat (out, "\x1B[3m", -1);
+                            attrs_on |= GUI_COLOR_EXTENDED_ITALIC_FLAG;
                             break;
                         case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                             string_dyn_concat (out, "\x1B[4m", -1);
+                            attrs_on |= GUI_COLOR_EXTENDED_UNDERLINE_FLAG;
                             break;
                     }
                     ptr_string++;
@@ -2808,27 +2839,31 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                     {
                         case GUI_COLOR_ATTR_BLINK_CHAR:
                             string_dyn_concat (out, "\x1B[25m", -1);
+                            attrs_on &= ~GUI_COLOR_EXTENDED_BLINK_FLAG;
                             break;
                         case GUI_COLOR_ATTR_DIM_CHAR:
                             string_dyn_concat (out, "\x1B[22m", -1);
-                            intensity &= ~GUI_COLOR_EXTENDED_DIM_FLAG;
-                            if (intensity & GUI_COLOR_EXTENDED_BOLD_FLAG)
+                            attrs_on &= ~GUI_COLOR_EXTENDED_DIM_FLAG;
+                            if (attrs_on & GUI_COLOR_EXTENDED_BOLD_FLAG)
                                 string_dyn_concat (out, "\x1B[1m", -1);
                             break;
                         case GUI_COLOR_ATTR_BOLD_CHAR:
                             string_dyn_concat (out, "\x1B[22m", -1);
-                            intensity &= ~GUI_COLOR_EXTENDED_BOLD_FLAG;
-                            if (intensity & GUI_COLOR_EXTENDED_DIM_FLAG)
+                            attrs_on &= ~GUI_COLOR_EXTENDED_BOLD_FLAG;
+                            if (attrs_on & GUI_COLOR_EXTENDED_DIM_FLAG)
                                 string_dyn_concat (out, "\x1B[2m", -1);
                             break;
                         case GUI_COLOR_ATTR_REVERSE_CHAR:
                             string_dyn_concat (out, "\x1B[27m", -1);
+                            attrs_on &= ~GUI_COLOR_EXTENDED_REVERSE_FLAG;
                             break;
                         case GUI_COLOR_ATTR_ITALIC_CHAR:
                             string_dyn_concat (out, "\x1B[23m", -1);
+                            attrs_on &= ~GUI_COLOR_EXTENDED_ITALIC_FLAG;
                             break;
                         case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                             string_dyn_concat (out, "\x1B[24m", -1);
+                            attrs_on &= ~GUI_COLOR_EXTENDED_UNDERLINE_FLAG;
                             break;
                     }
                     ptr_string++;
@@ -2836,7 +2871,7 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                 break;
             case GUI_COLOR_RESET_CHAR:
                 string_dyn_concat (out, "\x1B[0m", -1);
-                intensity = 0;
+                attrs_on = 0;
                 ptr_string++;
                 break;
             default:
