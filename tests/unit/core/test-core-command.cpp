@@ -21,10 +21,12 @@ extern "C"
 #include "src/core/weechat.h"
 #include "src/core/core-command.h"
 #include "src/core/core-debug.h"
+#include "src/core/core-hook.h"
 #include "src/core/core-input.h"
 #include "src/core/core-string.h"
 #include "src/core/core-upgrade.h"
 #include "src/core/core-url.h"
+#include "src/core/core-util.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
@@ -37,6 +39,7 @@ extern "C"
 #include "src/gui/gui-mouse.h"
 #include "src/gui/gui-window.h"
 #include "src/plugins/plugin.h"
+#include "src/plugins/plugin-api.h"
 }
 
 #define WEE_CMD_BUFFER(__buffer_name, __command)                        \
@@ -1273,7 +1276,44 @@ TEST(CoreCommand, Pipe)
 
 TEST(CoreCommand, Plugin)
 {
-    /* TODO: write tests */
+    struct t_hook *ptr_last_timer;
+    struct timeval time_start, time_now;
+
+    /* Unload/reload executed by the user: immediate. */
+    WEE_CMD_CORE("/plugin unload xxx");
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                       "Plugin \"xxx\" not found");
+    WEE_CMD_CORE("/plugin reload xxx");
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                       "Plugin \"xxx\" not found");
+
+    /*
+     * Unload/reload executed by a plugin: delayed (executed again by a
+     * timer).
+     */
+    ptr_last_timer = last_weechat_hook[HOOK_TYPE_TIMER];
+    plugin_api_command_running = 1;
+    WEE_CMD_CORE("/plugin unload xxx");
+    plugin_api_command_running = 0;
+    if (record_search ("core.weechat", GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                       "Plugin \"xxx\" not found", NULL))
+    {
+        FAIL("Unexpected message: plugin unloaded immediately");
+    }
+    CHECK(last_weechat_hook[HOOK_TYPE_TIMER] != ptr_last_timer);
+    record_start ();
+    gettimeofday (&time_start, NULL);
+    while (!record_search ("core.weechat", GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                           "Plugin \"xxx\" not found", NULL))
+    {
+        hook_timer_exec ();
+        gettimeofday (&time_now, NULL);
+        if (util_timeval_diff (&time_start, &time_now) >= 1000 * 1000)
+            break;
+    }
+    record_stop ();
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                       "Plugin \"xxx\" not found");
 }
 
 /*

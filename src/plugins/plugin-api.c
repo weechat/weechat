@@ -45,6 +45,10 @@
 #include "plugin-config.h"
 
 
+/* Number of commands being executed by plugins (> 1 if nested). */
+int plugin_api_command_running = 0;
+
+
 /*
  * Set plugin charset.
  */
@@ -411,11 +415,15 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
 
     command2 = string_iconv_to_internal (plugin->charset, command);
 
+    plugin_api_command_running++;
+
     rc = input_data_delayed ((buffer) ? buffer : gui_current_window->buffer,
                              (command2) ? command2 : command,
                              ptr_commands_allowed,
                              split_newline,
                              delay);
+
+    plugin_api_command_running--;
 
     free (command2);
 
