@@ -1024,6 +1024,15 @@ TEST(IrcCommandWithServer, Server)
     config_file_option_reset (server->options[IRC_SERVER_OPTION_SASL_PASSWORD],
                               1);
 
+    /* Detailed list: option "ansi_colors" set in server. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANSI_COLORS],
+                            "basic", 1);
+    CMD_SRV("/server listfull " IRC_FAKE_SERVER);
+    CHECK(record_search ("core.weechat", "",
+                         "  ansi_colors. . . . . : 'basic'", NULL));
+    config_file_option_reset (server->options[IRC_SERVER_OPTION_ANSI_COLORS],
+                              1);
+
     /* Add a server. */
     CMD_SRV("/server add test_srv1 irc.example.com/6697 -tls -nicks=bob");
     ptr_server = irc_server_search ("test_srv1");
