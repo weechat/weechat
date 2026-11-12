@@ -514,6 +514,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          curses/                                | Racine des tests unitaires pour l'interface Curses.
 |             test-gui-curses-mouse.cpp           | Tests : souris (interface Curses).
 |             test-gui-curses-term.cpp            | Tests : fonctions pour le terminal (interface Curses).
+|             test-gui-curses-window.cpp          | Tests : fonctions pour les fenêtres (interface Curses).
 |       plugins/                                  | Racine des tests unitaires pour les extensions.
 |          test-plugin-api-info.cpp               | Tests : fonctions info de l'API extension.
 |          test-plugin-config.cpp                 | Tests : fonctions config de l'extension.
@@ -1102,6 +1103,11 @@ Les couleurs possibles sont :
 
 * couleur standard : attributs facultatifs + nombre sur 2 digits
 * couleur étendue : `+@+` + attributs facultatifs + nombre sur 5 digits
+// TRANSLATION MISSING
+* RGB color _(WeeChat ≥ 5.0.0)_: `+@+` + optional attributes + `+#+` + RGB
+  value on 6 hexadecimal digits (for example `+@*#ff8800+`); it is allowed
+  in all foreground and background colors with `EXT` in table below, but not
+  in the ncurses pair ([hex]#19# + `EXT`), which is always 5 digits
 
 Dans le tableau qui suit, les conventions suivantes sont utilisées :
 

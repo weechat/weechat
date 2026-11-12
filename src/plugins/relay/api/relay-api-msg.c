@@ -55,32 +55,20 @@
     MSG_ADD_STR_PTR(__json_name, ptr_string);
 
 #define MSG_CONVERT_COLORS(__json_name, __string)                       \
-    switch (colors)                                                     \
+    string = relay_api_msg_convert_colors (__string, colors,            \
+                                           rgb_colors);                 \
+    if (string)                                                         \
     {                                                                   \
-        case RELAY_API_COLORS_ANSI:                                     \
-            string = weechat_hook_modifier_exec (                       \
-                "color_encode_ansi", NULL,                              \
-                (__string) ? __string : "");                            \
-            if (string)                                                 \
-            {                                                           \
-                MSG_ADD_STR_PTR(__json_name, string);                   \
-                free (string);                                          \
-            }                                                           \
-            break;                                                      \
-        case RELAY_API_COLORS_WEECHAT:                                  \
-            MSG_ADD_STR_PTR(__json_name, __string);                     \
-            break;                                                      \
-        case RELAY_API_COLORS_STRIP:                                    \
-            string = weechat_string_remove_color (                      \
-                (__string) ? __string : "", NULL);                      \
-            if (string)                                                 \
-            {                                                           \
-                MSG_ADD_STR_PTR(__json_name, string);                   \
-                free (string);                                          \
-            }                                                           \
-        case RELAY_API_NUM_COLORS:                                      \
-            break;                                                      \
+        MSG_ADD_STR_PTR(__json_name, string);                           \
+        free (string);                                                  \
     }
+
+#define MSG_ADD_HDATA_COLOR_NAME(__json_name, __var_name)               \
+    ptr_string = weechat_hdata_string (hdata, pointer, __var_name);     \
+    string = relay_api_msg_convert_color_name (ptr_string,              \
+                                               rgb_colors);             \
+    MSG_ADD_STR_PTR(__json_name, (string) ? string : ptr_string);       \
+    free (string);
 
 #define MSG_ADD_HDATA_STR_COLORS(__json_name, __var_name)               \
     ptr_string = weechat_hdata_string (hdata, pointer, __var_name);     \
@@ -92,6 +80,63 @@
         weechat_color (ptr_string) : NULL;                              \
     MSG_CONVERT_COLORS(__json_name, ptr_color);
 
+
+/*
+ * Convert a string with WeeChat colors for a client: to ANSI colors,
+ * WeeChat colors or without colors.
+ *
+ * If "rgb_colors" is 0 (the client did not ask for RGB colors), RGB colors are
+ * replaced by the nearest color of the 256-color palette.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+relay_api_msg_convert_colors (const char *string,
+                              enum t_relay_api_colors colors,
+                              int rgb_colors)
+{
+    char *downgraded, *result;
+
+    if (!string)
+        string = "";
+
+    switch (colors)
+    {
+        case RELAY_API_COLORS_ANSI:
+            result = weechat_hook_modifier_exec (
+                "color_encode_ansi", (rgb_colors) ? NULL : "256", string);
+            break;
+        case RELAY_API_COLORS_WEECHAT:
+            downgraded = (rgb_colors) ? NULL : relay_downgrade_rgb (string, 0);
+            result = (downgraded) ? downgraded : strdup (string);
+            break;
+        case RELAY_API_COLORS_STRIP:
+            result = weechat_string_remove_color (string, NULL);
+            break;
+        default:
+            result = NULL;
+            break;
+    }
+
+    return result;
+}
+
+/*
+ * Convert a color name (for example "lightred" or "#ff8800") for a client.
+ *
+ * If "rgb_colors" is 0 (the client did not ask for RGB colors), a RGB color is
+ * replaced by the nearest color of the 256-color palette.
+ *
+ * Return a converted name (must be freed after use), NULL if the name is
+ * unchanged.
+ */
+
+char *
+relay_api_msg_convert_color_name (const char *name, int rgb_colors)
+{
+    return (rgb_colors) ? NULL : relay_downgrade_rgb (name, 1);
+}
 
 /*
  * Send JSON response to client (internal use).
@@ -336,7 +381,8 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
                               long lines,
                               long lines_free,
                               int nicks,
-                              enum t_relay_api_colors colors)
+                              enum t_relay_api_colors colors,
+                              int rgb_colors)
 {
     struct t_hdata *hdata;
     struct t_gui_buffer *pointer;
@@ -400,7 +446,8 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     /* Lines */
     if (lines != 0)
     {
-        json_lines = relay_api_msg_lines_to_json (buffer, lines, colors);
+        json_lines = relay_api_msg_lines_to_json (buffer, lines, colors,
+                                                  rgb_colors);
         if (json_lines)
             relay_json_object_add (json, "lines", json_lines);
     }
@@ -441,7 +488,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     {
         json_nicklist_root = relay_api_msg_nick_group_to_json (
             weechat_hdata_pointer (hdata, buffer, "nicklist_root"),
-            colors);
+            colors, rgb_colors);
         if (json_nicklist_root)
             relay_json_object_add (json, "nicklist_root", json_nicklist_root);
     }
@@ -507,7 +554,8 @@ relay_api_msg_keys_to_json (struct t_gui_buffer *buffer)
 
 struct t_relay_json *
 relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
-                                 enum t_relay_api_colors colors)
+                                 enum t_relay_api_colors colors,
+                                 int rgb_colors)
 {
     struct t_hdata *hdata;
     struct t_gui_line_data *pointer;
@@ -544,9 +592,13 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
         for (i = 0; i < tags_count; i++)
         {
             snprintf (str_var, sizeof (str_var), "%d|tags_array", i);
+            ptr_string = weechat_hdata_string (hdata, line_data, str_var);
+            /* Color of nick in tags. */
+            string = (rgb_colors) ? NULL : relay_downgrade_tag (ptr_string);
             relay_json_array_add (
                 json_tags,
-                relay_json_new_string (weechat_hdata_string (hdata, line_data, str_var)));
+                relay_json_new_string ((string) ? string : ptr_string));
+            free (string);
         }
     }
     relay_json_object_add(json, "tags", json_tags);
@@ -561,7 +613,8 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
 struct t_relay_json *
 relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
                              long lines,
-                             enum t_relay_api_colors colors)
+                             enum t_relay_api_colors colors,
+                             int rgb_colors)
 {
     struct t_relay_json *json;
     struct t_gui_lines *ptr_lines;
@@ -612,7 +665,8 @@ relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
         {
             relay_json_array_add (
                 json,
-                relay_api_msg_line_data_to_json (ptr_line_data, colors));
+                relay_api_msg_line_data_to_json (ptr_line_data, colors,
+                                                 rgb_colors));
         }
         count++;
         if ((lines > 0) && (count >= lines))
@@ -629,7 +683,8 @@ relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
 
 struct t_relay_json *
 relay_api_msg_nick_to_json (struct t_gui_nick *nick,
-                            enum t_relay_api_colors colors)
+                            enum t_relay_api_colors colors,
+                            int rgb_colors)
 {
     struct t_hdata *hdata;
     struct t_gui_nick *pointer;
@@ -656,10 +711,10 @@ relay_api_msg_nick_to_json (struct t_gui_nick *nick,
             (ptr_group) ?
             weechat_hdata_longlong (relay_hdata_nick_group, ptr_group, "id") : -1));
     MSG_ADD_HDATA_STR("prefix", "prefix");
-    MSG_ADD_HDATA_STR("prefix_color_name", "prefix_color");
+    MSG_ADD_HDATA_COLOR_NAME("prefix_color_name", "prefix_color");
     MSG_ADD_HDATA_COLOR("prefix_color", "prefix_color");
     MSG_ADD_HDATA_STR("name", "name");
-    MSG_ADD_HDATA_STR("color_name", "color");
+    MSG_ADD_HDATA_COLOR_NAME("color_name", "color");
     MSG_ADD_HDATA_COLOR("color", "color");
     MSG_ADD_HDATA_VAR(bool, "visible", integer, "visible");
 
@@ -672,7 +727,8 @@ relay_api_msg_nick_to_json (struct t_gui_nick *nick,
 
 struct t_relay_json *
 relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group,
-                                  enum t_relay_api_colors colors)
+                                  enum t_relay_api_colors colors,
+                                  int rgb_colors)
 {
     struct t_hdata *hdata;
     struct t_gui_nick_group *pointer, *ptr_group;
@@ -699,7 +755,7 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group,
             (ptr_group) ?
             weechat_hdata_longlong (relay_hdata_nick_group, ptr_group, "id") : -1));
     MSG_ADD_HDATA_STR("name", "name");
-    MSG_ADD_HDATA_STR("color_name", "color");
+    MSG_ADD_HDATA_COLOR_NAME("color_name", "color");
     MSG_ADD_HDATA_COLOR("color", "color");
     MSG_ADD_HDATA_VAR(bool, "visible", integer, "visible");
 
@@ -713,7 +769,8 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group,
             {
                 relay_json_array_add (
                     json_groups,
-                    relay_api_msg_nick_group_to_json (ptr_group, colors));
+                    relay_api_msg_nick_group_to_json (ptr_group, colors,
+                                                      rgb_colors));
                 ptr_group = weechat_hdata_move (relay_hdata_nick_group, ptr_group, 1);
             }
         }
@@ -730,7 +787,7 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group,
             {
                 relay_json_array_add (
                     json_nicks,
-                    relay_api_msg_nick_to_json (ptr_nick, colors));
+                    relay_api_msg_nick_to_json (ptr_nick, colors, rgb_colors));
                 ptr_nick = weechat_hdata_move (relay_hdata_nick, ptr_nick, 1);
             }
         }

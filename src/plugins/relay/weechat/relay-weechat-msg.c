@@ -32,13 +32,57 @@
 
 
 /*
+ * String variables of hdata and infolists, and infos, with a color name or
+ * tags of a line, converted for clients that do not support RGB colors
+ * (WeeChat color codes are converted in all strings, see function
+ * relay_weechat_msg_add_string); the variable name is a mask (see function
+ * string_match), "*" for infos.
+ * Values of options are sent as-is.
+ */
+
+struct t_relay_weechat_msg_color_var relay_weechat_msg_color_vars[] =
+{
+    { RELAY_WEECHAT_MSG_VAR_HDATA, "nick_group", "color",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { RELAY_WEECHAT_MSG_VAR_HDATA, "nick", "color",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { RELAY_WEECHAT_MSG_VAR_HDATA, "nick", "prefix_color",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { RELAY_WEECHAT_MSG_VAR_HDATA, "line_data", "tags_array",
+      RELAY_WEECHAT_MSG_VAR_TAGS },
+    { RELAY_WEECHAT_MSG_VAR_INFOLIST, "nicklist", "color",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { RELAY_WEECHAT_MSG_VAR_INFOLIST, "nicklist", "prefix_color",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { RELAY_WEECHAT_MSG_VAR_INFOLIST, "hotlist", "color",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { RELAY_WEECHAT_MSG_VAR_INFOLIST, "bar", "color_*",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { RELAY_WEECHAT_MSG_VAR_INFOLIST, "buffer_lines", "tags",
+      RELAY_WEECHAT_MSG_VAR_TAGS },
+    { RELAY_WEECHAT_MSG_VAR_INFOLIST, "buffer_lines", "tag_*",
+      RELAY_WEECHAT_MSG_VAR_TAGS },
+    { RELAY_WEECHAT_MSG_VAR_INFO, "nick_color_name", "*",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { RELAY_WEECHAT_MSG_VAR_INFO, "nick_color_name_ignore_case", "*",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { RELAY_WEECHAT_MSG_VAR_INFO, "irc_nick_color_name", "*",
+      RELAY_WEECHAT_MSG_VAR_COLOR_NAME },
+    { 0, NULL, NULL, 0 },
+};
+
+/*
  * Build a new message (for sending to client).
+ *
+ * If client is NULL or if it did not enable the handshake option
+ * "rgb_colors", RGB colors ("#rrggbb") in strings added to the message are
+ * replaced by the nearest terminal color.
  *
  * Return pointer to new message, NULL if error.
  */
 
 struct t_relay_weechat_msg *
-relay_weechat_msg_new (const char *id)
+relay_weechat_msg_new (struct t_relay_client *client, const char *id)
 {
     struct t_relay_weechat_msg *new_msg;
 
@@ -55,6 +99,8 @@ relay_weechat_msg_new (const char *id)
     }
     new_msg->data_alloc = RELAY_WEECHAT_MSG_INITIAL_ALLOC;
     new_msg->data_size = 0;
+    new_msg->rgb_colors = (client && client->protocol_data) ?
+        RELAY_WEECHAT_DATA(client, rgb_colors) : 0;
 
     /* Add size and compression flag (they will be set later). */
     relay_weechat_msg_add_int (new_msg, 0);
@@ -181,25 +227,100 @@ relay_weechat_msg_add_longlong (struct t_relay_weechat_msg *msg,
 
 /*
  * Add length + string to a message.
+ *
+ * If the client does not support RGB colors (handshake option "rgb_colors"),
+ * RGB colors in WeeChat color codes are replaced by the nearest terminal
+ * color.
  */
 
 void
 relay_weechat_msg_add_string (struct t_relay_weechat_msg *msg,
                               const char *string)
 {
+    char *downgraded;
     int length;
 
     if (string)
     {
+        /*
+         * If client does not support RGB colors, replace them by the nearest
+         * terminal color.
+         */
+        downgraded = (msg->rgb_colors) ? NULL : relay_downgrade_rgb (string, 0);
+        if (downgraded)
+            string = downgraded;
         length = strlen (string);
         relay_weechat_msg_add_int (msg, length);
         if (length > 0)
             relay_weechat_msg_add_bytes (msg, string, length);
+        free (downgraded);
     }
     else
     {
         relay_weechat_msg_add_int (msg, -1);
     }
+}
+
+/*
+ * Add a color name (for example "lightred" or "#ff8800") to a message.
+ *
+ * If the client does not support RGB colors (handshake option "rgb_colors"),
+ * RGB colors in the name are replaced by the nearest terminal color.
+ */
+
+void
+relay_weechat_msg_add_color_name (struct t_relay_weechat_msg *msg,
+                                  const char *name)
+{
+    char *downgraded;
+
+    downgraded = (msg->rgb_colors) ? NULL : relay_downgrade_rgb (name, 1);
+    relay_weechat_msg_add_string (msg, (downgraded) ? downgraded : name);
+    free (downgraded);
+}
+
+/*
+ * Add a string variable of a hdata or an infolist, or the result of an info
+ * (with variable ""), to a message.
+ *
+ * If the client does not support RGB colors (handshake option "rgb_colors"),
+ * RGB colors in color names and tags of lines (see
+ * relay_weechat_msg_color_vars) are replaced by the nearest terminal color.
+ */
+
+void
+relay_weechat_msg_add_var_string (struct t_relay_weechat_msg *msg,
+                                  enum t_relay_weechat_msg_var_source source,
+                                  const char *object, const char *var,
+                                  const char *value)
+{
+    char *downgraded;
+    int i;
+
+    downgraded = NULL;
+    if (!msg->rgb_colors && value && value[0])
+    {
+        for (i = 0; relay_weechat_msg_color_vars[i].object; i++)
+        {
+            if ((relay_weechat_msg_color_vars[i].source != source)
+                || (strcmp (relay_weechat_msg_color_vars[i].object, object) != 0))
+            {
+                continue;
+            }
+            if (weechat_string_match (var, relay_weechat_msg_color_vars[i].var,
+                                      1))
+            {
+                downgraded = (relay_weechat_msg_color_vars[i].type
+                              == RELAY_WEECHAT_MSG_VAR_COLOR_NAME) ?
+                    relay_downgrade_rgb (value, 1) :
+                    relay_downgrade_tags (value);
+                break;
+            }
+        }
+    }
+
+    relay_weechat_msg_add_string (msg, (downgraded) ? downgraded : value);
+    free (downgraded);
 }
 
 /*
@@ -343,6 +464,7 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
                                   void **path_pointers,
                                   struct t_hdata *hdata,
                                   void *pointer,
+                                  const char *hdata_name,
                                   char **list_keys)
 {
     int num_added, i, j, count, count_all, var_type, array_size, max_array_size;
@@ -350,7 +472,7 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
     char *pos, *pos2, *str_count, *name;
     void *sub_pointer;
     struct t_hdata *sub_hdata;
-    const char *sub_hdata_name;
+    const char *sub_hdata_name, *ptr_string;
 
     num_added = 0;
 
@@ -409,6 +531,7 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
                                                                    path_pointers,
                                                                    sub_hdata,
                                                                    sub_pointer,
+                                                                   hdata_name,
                                                                    list_keys);
                 }
             }
@@ -495,10 +618,13 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
                                     break;
                                 case WEECHAT_HDATA_STRING:
                                 case WEECHAT_HDATA_SHARED_STRING:
-                                    relay_weechat_msg_add_string (msg,
-                                                                  weechat_hdata_string (hdata,
-                                                                                        pointer,
-                                                                                        name));
+                                    ptr_string = weechat_hdata_string (hdata,
+                                                                       pointer,
+                                                                       name);
+                                    relay_weechat_msg_add_var_string (
+                                        msg, RELAY_WEECHAT_MSG_VAR_HDATA,
+                                        hdata_name, list_keys[i],
+                                        ptr_string);
                                     break;
                                 case WEECHAT_HDATA_POINTER:
                                     relay_weechat_msg_add_pointer (msg,
@@ -571,7 +697,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     struct t_hdata *ptr_hdata_head, *ptr_hdata;
     char *hdata_head, **list_keys, *keys_types, **list_path;
     char **path_returned, *pos_paren;
-    const char *hdata_name, *array_size, *pos;
+    const char *hdata_name, *last_hdata_name, *array_size, *pos;
     void *pointer, **path_pointers;
     unsigned long value;
     int rc, num_keys, num_path, i, type, pos_count, count, rc_sscanf;
@@ -648,6 +774,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     if (!path_returned)
         goto end;
     ptr_hdata = ptr_hdata_head;
+    last_hdata_name = hdata_head;
     weechat_string_dyn_concat (path_returned, hdata_head, -1);
     for (i = 1; i < num_path; i++)
     {
@@ -660,6 +787,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
         ptr_hdata = weechat_hdata_get (hdata_name);
         if (!ptr_hdata)
             goto end;
+        last_hdata_name = hdata_name;
         weechat_string_dyn_concat (path_returned, "/", -1);
         weechat_string_dyn_concat (path_returned, hdata_name, -1);
         if (pos_paren)
@@ -748,6 +876,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
                                                   path_pointers,
                                                   ptr_hdata_head,
                                                   pointer,
+                                                  last_hdata_name,
                                                   list_keys);
         free (path_pointers);
     }
@@ -833,9 +962,11 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
                                 break;
                             case 's':
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
-                                relay_weechat_msg_add_string (msg,
-                                                              weechat_infolist_string (ptr_infolist,
-                                                                                       list_fields[i] + 2));
+                                relay_weechat_msg_add_var_string (
+                                    msg, RELAY_WEECHAT_MSG_VAR_INFOLIST, name,
+                                    list_fields[i] + 2,
+                                    weechat_infolist_string (ptr_infolist,
+                                                             list_fields[i] + 2));
                                 break;
                             case 'p':
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);
@@ -920,9 +1051,10 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
             relay_weechat_msg_add_char (msg, nicklist->items[i].visible);
             relay_weechat_msg_add_int (msg, nicklist->items[i].level);
             relay_weechat_msg_add_string (msg, nicklist->items[i].name);
-            relay_weechat_msg_add_string (msg, nicklist->items[i].color);
+            relay_weechat_msg_add_color_name (msg, nicklist->items[i].color);
             relay_weechat_msg_add_string (msg, nicklist->items[i].prefix);
-            relay_weechat_msg_add_string (msg, nicklist->items[i].prefix_color);
+            relay_weechat_msg_add_color_name (msg,
+                                              nicklist->items[i].prefix_color);
             count++;
         }
     }
@@ -950,7 +1082,7 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                     weechat_hdata_string (relay_hdata_nick,
                                           ptr_nick,
                                           "name"));
-                relay_weechat_msg_add_string (
+                relay_weechat_msg_add_color_name (
                     msg,
                     weechat_hdata_string (relay_hdata_nick,
                                           ptr_nick,
@@ -960,7 +1092,7 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                     weechat_hdata_string (relay_hdata_nick,
                                           ptr_nick,
                                           "prefix"));
-                relay_weechat_msg_add_string (
+                relay_weechat_msg_add_color_name (
                     msg,
                     weechat_hdata_string (relay_hdata_nick,
                                           ptr_nick,
@@ -987,7 +1119,7 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                     weechat_hdata_string (relay_hdata_nick_group,
                                           ptr_group,
                                           "name"));
-                relay_weechat_msg_add_string (
+                relay_weechat_msg_add_color_name (
                     msg,
                     weechat_hdata_string (relay_hdata_nick_group,
                                           ptr_group,

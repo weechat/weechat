@@ -12,6 +12,8 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
+- core: display support of RGB colors in `/color` buffer and output of `weechat --colors`, with a suggested value of `TERM` if RGB colors are not displayed as-is, and RGB color samples and comparison of palette colors with standard RGB values in `/color` buffer, where a RGB color can be typed to display it with the nearest terminal color ([#1364](https://github.com/weechat/weechat/issues/1364))
+- core: add RGB colors "#rrggbb" in color options, function color and `${color:...}`, displayed as-is on terminals with direct colors (for example with `TERM=xterm-direct256` or `TERM=tmux-direct`) ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: add jump to buffer with command `/N` (for example `/42`) and option weechat.look.command_buffer_number ([#762](https://github.com/weechat/weechat/issues/762))
 - core: add option `insert_raw` in command `/input` to insert text without converting escaped chars
 - core: add option `-older` in command `/buffer clear` to clear only lines older than a delay
@@ -19,6 +21,8 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: add signal "buffer_day_change_changed"
 - core: add signal "buffer_notify_changed"
 - core: add flag "prefix_for_each_line" in buffer
+- api: add modifier "color_normalize_ansi"
+- api: add modifier "color_downgrade_rgb", add modifier data "256" in modifier "color_encode_ansi" to get colors of the 256-color palette instead of 24-bit ANSI colors ([#1364](https://github.com/weechat/weechat/issues/1364))
 - api: add property "notify" in function buffer_get_string
 - api: add function "hashtable_map_sorted"
 - api: add focus key "_chat_line_id", deprecate keys "_chat_line_date_printed" and "_chat_line_date_usec_printed"
@@ -27,6 +31,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - buflist: add info "buflist_bar_items_count"
 - build/container: add files to build container images (Debian and Alpine) from the local sources, moved from repository [weechat-container](https://github.com/weechat/weechat-container)
 - doc: add cheat sheet with all key bindings and mouse actions
+- irc: add server option ansi_colors to convert ANSI colors (for example in output of `/exec -o`) to the 99 IRC colors ("extended", default), to the 16 basic IRC colors ("basic"), or to the 99 IRC colors and IRC hex colors for RGB colors ("rgb") ([#1364](https://github.com/weechat/weechat/issues/1364))
 - irc: add options irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and irc.look.notice_target_separator to customize the text displayed around nick and target in prefix of notices
 - irc: add pointers "irc_server" and "irc_channel" in focus hashtable of buflist bar items ([#1543](https://github.com/weechat/weechat/issues/1543))
 - irc: add option irc.look.multi_prefix_in_nicklist to display all nick prefixes in nicklist when capability "multi-prefix" is enabled ([#132](https://github.com/weechat/weechat/issues/132))
@@ -36,14 +41,19 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
 - javascript, php, tcl: add `eval` option in script commands and info "xxx_eval" ([#128](https://github.com/weechat/weechat/issues/128))
 - relay: add option relay.network.allowed_networks to restrict connections to IPv4/IPv6 networks in CIDR notation ([#2364](https://github.com/weechat/weechat/issues/2364))
+- relay/api: add parameter "rgb_colors" in resources `GET /api/buffers` and `POST /api/sync` to receive RGB colors with colors "ansi" or "weechat", RGB colors are replaced by the nearest terminal color if it is not enabled ([#1364](https://github.com/weechat/weechat/issues/1364))
 - relay/api: accept TOTP in websocket sub-protocol `totp.weechat.<code>`, for clients unable to send header "x-weechat-totp"
 - relay/api: add resource `GET /api/info` to get infos about WeeChat, with info "locale"
 - relay/api: add option "options" in resource `POST /api/sync` to receive changes on options
 - relay/api: add option "notify_only" in resource `POST /api/sync` to receive only highlights and private messages ([#2363](https://github.com/weechat/weechat/issues/2363))
 - relay/api: add resource `GET /api/options`
+- relay/weechat: add handshake option "rgb_colors", RGB colors are replaced by the nearest terminal color for clients that do not enable it ([#1364](https://github.com/weechat/weechat/issues/1364))
 
 ### Changed
 
+- core: count the color pairs used by RGB colors in `/color` buffer instead of displaying them, there can be thousands of them ([#1364](https://github.com/weechat/weechat/issues/1364))
+- **breaking:** core: keep the RGB value of ANSI colors `38;2` and `48;2` (color code "@#rrggbb") instead of using the nearest terminal color ([#1364](https://github.com/weechat/weechat/issues/1364))
+- core: display a color 16-255 which is not supported by the terminal (for example on a terminal with 88 colors) with the nearest terminal color other than colors 0-15, which are defined by the theme of the terminal ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core, plugins: use plural forms or reword messages displaying a count
 - core: close file descriptors faster when running in background with option `--daemon` in headless mode
 - **breaking:** core: exit with an error on unknown command-line option, exit with code 2 on invalid command-line arguments
@@ -70,6 +80,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: save secured data in sec.conf and display them on secured data buffer sorted by name
 - **breaking:** core: use the current date/time with microseconds as line identifier, replace buffer property "next_line_id" by "lines_last_id_assigned"
 - **breaking:** core: remove fields "date_printed" and "date_usec_printed" in lines, replaced by the line identifier
+- **breaking:** api: info "color_ansi_regex" matches all ANSI control sequences and other escape sequences (for example OSC and DCS strings), also unterminated or cancelled, and the chars SI and SO, not only colors
 - **breaking:** api: add optional argument "digits" in info "totp_validate" (6 by default), the one-time password must have exactly this number of digits
 - api: check completion pointer in functions completion_search, completion_get_string, completion_set, completion_list_add, completion_free, hook_completion_get_string and hook_completion_list_add to prevent a crash when a freed completion is used
 - api: check bar and bar item pointers in functions bar_set, bar_remove and bar_item_remove to prevent a crash when a removed bar or bar item is used
@@ -88,6 +99,9 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - buflist: display only the first char of nick prefix in variable `${nick_prefix}`, so that buffers stay aligned when a nick has multiple prefixes in nicklist
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: accept a number or a string with a number as integer data in function hook_signal_send, return an error if the data is not a valid integer
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
+- **breaking:** irc: add buffer pointer in modifier data of modifier "irc_color_decode_ansi", for example "1;0x1234abcd", to use the server option ansi_colors of its IRC server, the modifier data sent by `/exec` contains the buffer where the output is sent ([#1364](https://github.com/weechat/weechat/issues/1364))
+- **breaking:** irc: convert ANSI terminal colors 16-255 and RGB colors to IRC colors 16-98 instead of 0-15 (the IRC color displayed with the terminal color, or the nearest IRC color), basic ANSI colors are still converted to IRC colors 0-15 (server option ansi_colors) ([#1364](https://github.com/weechat/weechat/issues/1364))
+- **breaking:** irc: keep the RGB value of hex colors (`^D`) (color code "@#rrggbb") instead of using the nearest terminal color ([#1364](https://github.com/weechat/weechat/issues/1364))
 - irc: allow spaces around commas in server option tls_fingerprint
 - irc: allow multiple nicks separated by commas in commands `/notify add`, `/notify addreplace` and `/notify del` ([#689](https://github.com/weechat/weechat/issues/689))
 - **breaking:** irc: display all nick prefixes in nicklist when capability "multi-prefix" is enabled (option irc.look.multi_prefix_in_nicklist), the nick prefix in nicklist can now have more than one char
@@ -116,6 +130,35 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: ignore invalid color codes with their attributes and use the default color for a terminal color greater than 255 when converting WeeChat colors to ANSI colors, like on screen (relay "api" protocol with colors "ansi", option logger.file.color_lines)
+- core: remove the attributes reset by a color without "keep attributes" when converting WeeChat colors to ANSI colors, like on screen (relay "api" protocol with colors "ansi", option logger.file.color_lines)
+- core: keep the char after a set/remove attribute code which is not followed by a valid attribute when converting WeeChat colors to ANSI colors
+- core, irc: remove unterminated or cancelled ANSI escape sequences and lone ESC chars when decoding ANSI colors
+- core, irc: remove chars SI and SO (shift in/out) when decoding ANSI colors, except SI on IRC, which is the IRC reset: the attributes and colors are now sent again after it (for example with `TERM=screen`, in output of `tput`)
+- core: decode ANSI rapid blink (code 6) as blink
+- core, irc: remove ANSI escape sequences containing bytes which are not valid UTF-8 when decoding ANSI colors, for example a window title in ISO-8859-1
+- core, irc: fix slow decoding of ANSI colors in a line with many escape sequences
+- core, irc: decode ANSI colors with sub-parameters separated by colons, for example `38:2::255:136:0` in output of `/exec` ([#1364](https://github.com/weechat/weechat/issues/1364))
+- core, irc: remove other ANSI escape sequences when decoding ANSI colors: operating system commands (OSC, for example window title and hyperlinks), device control strings (DCS) and escape sequences like `\e7` or `\e=`
+- core: convert bar delimiter color to an ANSI text color instead of a background color (relay "api" protocol with colors "ansi", option logger.file.color_lines)
+- core, irc: ignore invalid colors in ANSI colors (incomplete color, unknown type of color, terminal color greater than 255) and numbers out of range, instead of decoding the remaining parameters as attributes
+- core, irc: fix conversion of ANSI RGB colors (for example in output of `/exec`) when a red, green or blue component is greater than 255, use 255 instead
+- core, irc: remove ANSI control sequences (CSI) other than colors when decoding ANSI colors (for example cursor style), decode as colors only SGR sequences with parameters made of digits, ";" and ":" (not private sequences ending with "m")
+- core: keep attributes when decoding ANSI code 39 (default text color), like other text colors
+- **breaking:** core: fix ANSI code 22 (normal intensity), remove both bold and dim when decoding ANSI colors, use it instead of 21 (double underline) to remove bold when encoding ANSI colors
+- core: keep light colors displayed with bold (terminal with less than 16 colors or option weechat.look.color_basic_force_bold) when the bold attribute is removed, and remove this bold when another color is used
+- core: fix reverse video removed after a control char displayed in text with reverse video, when an attribute was removed before
+- core, irc: ignore underline color in ANSI colors (SGR 58), instead of decoding its arguments as other attributes
+- core, irc: fix decoding of empty parameters in ANSI colors, use value 0 (for example reset) instead of ignoring them
+- core, irc: fix slow decoding of ANSI colors with many parameters
+- core: use the palette of terminals with 88 colors (for example rxvt-unicode) to find the nearest terminal color of a RGB color, for example with info "color_rgb2term" ([#1364](https://github.com/weechat/weechat/issues/1364))
+- core: switch back to WeeChat colors as soon as the `/color` buffer is closed or not displayed any more, after a switch to terminal colors (key alt-c), instead of displaying all buffers with one terminal color until the end of the delay
+- core: keep the char after a set/remove attribute code which is not followed by a valid attribute when removing colors (for example function string_remove_color) and in function string_color_code_size, like on screen
+- core: convert color pair codes (for example in `/color` buffer) to the colors of the pair instead of a terminal color with the pair number when converting WeeChat colors to ANSI colors (relay "api" protocol with colors "ansi")
+- core: do not display the extended char "@" of a truncated background color code (for example `\x19B@12`), which is skipped when colors are removed
+- core: ignore an invalid basic text color in a color code with a text and a background color (for example `\x19*99~01`), like an invalid text color alone, instead of using it as a terminal color
+- core: fix read and write out of bounds in table of color pairs on terminals without colors (for example `TERM=vt100`), and with an invalid background in color codes
+- core: fix memory leak when WeeChat colors are built again, for example when a color option is changed
 - core: display an error when /dev/null can not be opened with option `--daemon` in headless mode
 - core: fix options `-a` and `-s` ignored by plugins when abbreviated or grouped (for example `--no-conn` or `-as`), do not send the program name and values of options to plugins
 - core: fix exit code 1 instead of 0 when option `--doc-gen` is given with an option that exits immediately, like `--version`
@@ -165,11 +208,21 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: fix crash in function config_write_line when the file is not opened
 - api: fix crash in function upgrade_write_object when the upgrade file is invalid
 - **breaking:** alias: allow escaping buffer local variables with `\$`, do not replace buffer local variables in the arguments given to the alias ([#896](https://github.com/weechat/weechat/issues/896))
+- exec: fix memory leak when a line of output can not be displayed because of a memory allocation error
 - fset, irc, script: fix freeze when the fset, script or `/list` buffer is scrolled in a window too small to display the chat area
 - guile: fix conversion of alist with pairs like `(("key" . "value"))` to hashtable in API functions and callbacks ([#1490](https://github.com/weechat/weechat/issues/1490))
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: convert ANSI reverse video (codes 7 and 27) to IRC reverse video (for example with `/exec -o`)
+- irc: fix ANSI colors converted to IRC colors (for example with `/exec -o`): a background color is sent with the text color (it was displayed as text like ",04"), text starting with a comma and digits after a text color is not lost any more, colors are sent only when they change, use IRC color 99 for default colors
+- irc: decode ANSI colors like WeeChat core when converting them to IRC colors (for example in output of `/exec -o`): code `\e[m` resets the attributes of the next sequences too, a RGB component greater than 255 is read as 255
+- irc: read alone a byte which is not valid UTF-8 when decoding or encoding IRC colors, so that a color code after it is not ignored
+- irc: count each message of a split line in limit "max-lines" of multiline batches, and the codes of formatting sent again in limit "max-bytes"
+- irc: keep colors and attributes in a long message split in several messages: color codes are not split any more, and each message starts with the colors and attributes of the end of the previous message
+- irc: do not send an empty message when a long message is split at a space at the beginning of a part
+- irc: count the space after the target in the max length of a split message, so that a message received by other clients is not longer than 512 bytes (with a long nick, user and host, the last char was cut by servers, for example the final "\x01" of a CTCP)
+- irc, spell: read IRC hex colors (`^D`) only with exactly 6 hexadecimal digits (`RRGGBB`), as in the IRC formatting specification: `^D` followed by less digits is a color reset followed by text ([#1364](https://github.com/weechat/weechat/issues/1364))
 - irc: fix issue with year ≥ 2038 in reconnection after `/upgrade`
 - irc: fix use after free of a deleted server in raw messages, which could cause a crash in raw buffer or on `/upgrade`
 - irc: remove extra spaces after "online" in notify list

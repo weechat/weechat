@@ -529,6 +529,17 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "{\"error\":\"Sub-resource of buffers not found: \\\"invalid\\\"\"}",
                  data_sent[0]);
 
+    /* Error: empty value for "rgb_colors" */
+    test_client_recv_http ("GET /api/buffers?colors=weechat&rgb_colors=",
+                           NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 44\r\n"
+                 "\r\n"
+                 "{\"error\":\"Invalid parameter \\\"rgb_colors\\\"\"}",
+                 data_sent[0]);
+
     /* Error: too many parameters in path */
     test_client_recv_http ("GET /api/buffers/core.weechat/too/many/parameters",
                            NULL, NULL);
@@ -1209,6 +1220,37 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
 
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
+    LONGS_EQUAL(RELAY_API_COLORS_WEECHAT, RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+
+    /* WeeChat colors with RGB colors */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"colors\": \"weechat\", \"rgb_colors\": true}}");
+    LONGS_EQUAL(RELAY_API_COLORS_WEECHAT,
+                RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"colors\": \"weechat\", \"rgb_colors\": false}}");
+    LONGS_EQUAL(RELAY_API_COLORS_WEECHAT,
+                RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+
+    /* ANSI colors with RGB colors */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"colors\": \"ansi\", \"rgb_colors\": true}}");
+    LONGS_EQUAL(RELAY_API_COLORS_ANSI,
+                RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+
+    /* Without "rgb_colors", RGB colors are not kept */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"colors\": \"strip\"}}");
+    LONGS_EQUAL(RELAY_API_COLORS_STRIP,
+                RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"sync\": true, \"nicks\": true, \"colors\": \"weechat\"}}");
     LONGS_EQUAL(RELAY_API_COLORS_WEECHAT, RELAY_API_DATA(ptr_relay_client, sync_colors));
 
     test_client_recv_text ("{\"request\": \"POST /api/sync\", "

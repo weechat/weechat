@@ -10,17 +10,32 @@
 
 extern "C"
 {
+#include <string.h>
 #include <stdio.h>
+#include <string.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-hook.h"
 #include "src/core/core-infolist.h"
+#include "src/core/core-string.h"
+#include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-color.h"
 #include "src/plugins/irc/irc-config.h"
+#include "src/plugins/irc/irc-server.h"
 
 extern int irc_color_convert_rgb2term (long rgb);
 extern int irc_color_convert_rgb2irc (long rgb);
 extern int irc_color_convert_term2irc (int color);
+extern char irc_color_term2irc[];
+extern int irc_color_ansi_next_param (const char **ptr_param,
+                                      const char *ptr_end, int *value);
+extern int irc_color_ansi_next_color (const char **ptr_param,
+                                      const char *ptr_end);
+extern int irc_color_ansi_sequence_size (const char *string);
+extern void irc_color_decode_ansi_reset_state (struct t_irc_color_ansi_state *ansi_state);
+extern void irc_color_decode_ansi_sequence (char **output,
+                                            struct t_irc_color_ansi_state *ansi_state,
+                                            const char *params, int length);
 }
 
 /* Tests on irc_color_decode(): IRC color -> WeeChat color */
@@ -91,6 +106,12 @@ extern int irc_color_convert_term2irc (int color);
     "test_" IRC_COLOR_HEX_COLOR_STR ",8B008B" "_end"
 #define STRING_IRC_COLOR_FG_ORANGE_COMMA                                \
     "test_" IRC_COLOR_HEX_COLOR_STR "FF7F00," "orange_end"
+#define STRING_IRC_COLOR_HEX_SHORT                                      \
+    "test_" IRC_COLOR_HEX_COLOR_STR "12" " apples"
+#define STRING_IRC_COLOR_HEX_SHORT_BG                                   \
+    "test_" IRC_COLOR_HEX_COLOR_STR "FF7F00,8B00" " orange"
+#define STRING_IRC_COLOR_HEX_LONG                                       \
+    "test_" IRC_COLOR_HEX_COLOR_STR "FF7F00" "ABCD" " orange"
 #define STRING_IRC_COLOR_TERM_REMAPPED                                  \
     "test_"                                                             \
     IRC_COLOR_HEX_COLOR_STR "FFFF00,8B008B" "remapped"
@@ -140,6 +161,10 @@ extern int irc_color_convert_term2irc (int color);
     "test_" "\x04" ",8B008B" "_end"
 #define STRING_USER_FG_ORANGE_COMMA                                     \
     "test_" "\x04" "FF7F00," "orange_end"
+#define STRING_USER_HEX_SHORT                                           \
+    "test_" "\x04" "12" " apples"
+#define STRING_USER_HEX_SHORT_BG                                        \
+    "test_" "\x04" "FF7F00,8B00" " orange"
 
 /* Tests on irc_color_decode_ansi(): ANSI color -> IRC color */
 #define STRING_ANSI_RESET "test_\x1B[mreset"
@@ -174,6 +199,54 @@ extern int irc_color_convert_term2irc (int color);
     "test_\x1B[39mdefault_fg"
 #define STRING_ANSI_DEFAULT_BG                                          \
     "test_\x1B[49mdefault_bg"
+#define STRING_ANSI_EMPTY_PARAM_ONLY                                    \
+    "A\x1B[1mX\x1B[;mB"
+#define STRING_ANSI_EMPTY_PARAM_FIRST                                   \
+    "A\x1B[;1mB"
+#define STRING_ANSI_EMPTY_PARAM_MIDDLE                                  \
+    "A\x1B[1;;4mB"
+#define STRING_ANSI_EMPTY_PARAM_LAST                                    \
+    "A\x1B[1;mB"
+#define STRING_ANSI_FG_TERM_EMPTY                                       \
+    "test_\x1B[38;5;mcolor01"
+#define STRING_ANSI_BG_TERM_EMPTY                                       \
+    "test_\x1B[48;5;;1mcolor01"
+#define STRING_ANSI_FG_RGB_EMPTY                                        \
+    "test_\x1B[38;2;255;;255mcolor13"
+#define STRING_ANSI_BG_RGB_EMPTY                                        \
+    "test_\x1B[48;2;255;;255;4mcolor13"
+#define STRING_ANSI_UNDERLINE_COLOR_TERM                                \
+    "test_\x1B[58;5;1mul_1"
+#define STRING_ANSI_UNDERLINE_COLOR_RGB                                 \
+    "test_\x1B[58;2;255;0;0mul_red"
+#define STRING_ANSI_UNDERLINE_COLOR_DEFAULT                             \
+    "test_\x1B[59mul_default"
+#define STRING_ANSI_UNDERLINE_FG_RGB_UNDERLINE_COLOR_RGB                \
+    "test_\x1B[4m\x1B[38;2;0;128;128m\x1B[58;2;255;0;0mul_color10"
+#define STRING_ANSI_UNDERLINE_COLOR_MIXED                               \
+    "test_\x1B[4;58;5;1;34;59;1mul_blue"
+#define STRING_ANSI_FG_RGB_COMPONENT_256                                \
+    "test_\x1B[38;2;0;256;0mcolor09"
+#define STRING_ANSI_FG_RGB_COMPONENT_40000                              \
+    "test_\x1B[38;2;40000;0;0mcolor04"
+#define STRING_ANSI_BG_RGB_COMPONENTS_TOO_BIG                           \
+    "test_\x1B[48;2;0;256;99999999999mcolor11"
+#define STRING_ANSI_FG_RED_COMMA                                        \
+    "grep: \x1B[01;31m\x1B[K,5\x1B[m\x1B[K total"
+#define STRING_ANSI_FG_TERM_IRC_12_COMMA                                \
+    "test_\x1B[38;5;21m,5_\x1B[38;5;21m,55_\x1B[38;5;21m,555"
+#define STRING_ANSI_BG_TERM_IRC_04                                      \
+    "A\x1B[48;5;196mB"
+#define STRING_ANSI_FG_TERM_IRC_12_BG_TERM_IRC_04                       \
+    "A\x1B[38;5;21;48;5;196mB"
+#define STRING_ANSI_BG_RED_COMMA                                        \
+    "test_\x1B[41m,5_\x1B[101m,5"
+#define STRING_ANSI_DEFAULT_FG_BG                                       \
+    "test_\x1B[31m\x1B[42mred/green_\x1B[39mdefault/green_"          \
+    "\x1B[34mblue/green_\x1B[49mblue/default_"                         \
+    "\x1B[0m\x1B[44mdefault/blue_\x1B[m\x1B[33mbrown/default"
+#define STRING_ANSI_RESET_ATTRS                                         \
+    "test_\x1B[1mbold\x1B[m_normal_\x1B[1mbold"
 
 #define WEE_CHECK_DECODE(__result, __string, __keep_colors)             \
     decoded = irc_color_decode (__string, __keep_colors);               \
@@ -186,9 +259,29 @@ extern int irc_color_convert_term2irc (int color);
     free (encoded);
 
 #define WEE_CHECK_DECODE_ANSI(__result, __string, __keep_colors)        \
-    decoded = irc_color_decode_ansi (__string, __keep_colors);          \
+    decoded = irc_color_decode_ansi (__string, __keep_colors,           \
+                                     IRC_COLOR_PALETTE_BASIC);          \
     STRCMP_EQUAL(__result, decoded);                                    \
     free (decoded);
+
+#define WEE_CHECK_DECODE_ANSI_EXTENDED(__result, __string)              \
+    decoded = irc_color_decode_ansi (__string, 1,                       \
+                                     IRC_COLOR_PALETTE_EXTENDED);       \
+    STRCMP_EQUAL(__result, decoded);                                    \
+    free (decoded);
+
+#define WEE_CHECK_DECODE_ANSI_RGB(__result, __string)                   \
+    decoded = irc_color_decode_ansi (__string, 1,                       \
+                                     IRC_COLOR_PALETTE_RGB);            \
+    STRCMP_EQUAL(__result, decoded);                                    \
+    free (decoded);
+
+#define WEE_CHECK_DECODE_ANSI_DECODE(__result, __string)                \
+    decoded_ansi = irc_color_decode_ansi (__string, 1,                  \
+                                          IRC_COLOR_PALETTE_BASIC);     \
+    CHECK(decoded_ansi);                                                \
+    WEE_CHECK_DECODE(__result, decoded_ansi, 1);                        \
+    free (decoded_ansi);
 
 TEST_GROUP(IrcColor)
 {
@@ -251,6 +344,9 @@ TEST(IrcColor, Decode)
     STRCMP_EQUAL(NULL, irc_color_decode (NULL, 1));
     WEE_CHECK_DECODE("", "", 0);
     WEE_CHECK_DECODE("", "", 1);
+
+    /* Byte which is not valid UTF-8 before a color code */
+    WEE_CHECK_DECODE("A\xC3" "red", "A\xC3\x03" "04red", 0);
 
     /* No color codes */
     WEE_CHECK_DECODE("test string", "test string", 0);
@@ -403,26 +499,26 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("|darkgray"),
               gui_color_get_custom ("|black,default"),
               gui_color_get_custom ("|darkgray"),
-              gui_color_get_custom ("|11,90"),
+              gui_color_get_custom ("|#ffff00,#8b008b"),
               gui_color_get_custom ("|black"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_MIRC_REMAPPED_CURRENT_BG, 1);
     config_file_option_unset (irc_config_color_mirc_remap);
 
-    /* Color: hex 0xFF7F00 (orange / 208) */
+    /* Color: hex 0xFF7F00 (orange, RGB kept) */
     WEE_CHECK_DECODE("test_orange_end",
                      STRING_IRC_COLOR_FG_ORANGE, 0);
     snprintf (string, sizeof (string),
               "test_%sorange%s_end",
-              gui_color_get_custom ("|208"),
+              gui_color_get_custom ("|#ff7f00"),
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_ORANGE, 1);
 
-    /* Color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90) */
+    /* Color: hex 0xFFFF00 (yellow) on 0x8B008B (dark magenta), RGB kept */
     WEE_CHECK_DECODE("test_yellow/darkmagenta_end",
                      STRING_IRC_COLOR_FG_YELLOW_BG_DARKMAGENTA, 0);
     snprintf (string, sizeof (string),
               "test_%syellow/darkmagenta%s_end",
-              gui_color_get_custom ("|11,90"),
+              gui_color_get_custom ("|#ffff00,#8b008b"),
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_YELLOW_BG_DARKMAGENTA, 1);
 
@@ -434,13 +530,34 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_HEX_BG_WITHOUT_FG, 1);
 
-    /* Color: hex 0xFF7F00 (orange / 208) followed by a comma */
+    /* Color: hex 0xFF7F00 (orange, RGB kept) followed by a comma */
     WEE_CHECK_DECODE("test_,orange_end",
                      STRING_IRC_COLOR_FG_ORANGE_COMMA, 0);
     snprintf (string, sizeof (string),
               "test_%s,orange_end",
-              gui_color_get_custom ("|208"));
+              gui_color_get_custom ("|#ff7f00"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_ORANGE_COMMA, 1);
+
+    /* Color: hex with less than 6 digits (reset + text "12 apples") */
+    WEE_CHECK_DECODE("test_12 apples", STRING_IRC_COLOR_HEX_SHORT, 0);
+    snprintf (string, sizeof (string),
+              "test_%s12 apples",
+              gui_color_get_custom ("resetcolor"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_HEX_SHORT, 1);
+
+    /* Color: hex background with less than 6 digits (text ",8B00") */
+    WEE_CHECK_DECODE("test_,8B00 orange", STRING_IRC_COLOR_HEX_SHORT_BG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,8B00 orange",
+              gui_color_get_custom ("|#ff7f00"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_HEX_SHORT_BG, 1);
+
+    /* Color: hex followed by more hexadecimal digits (text "ABCD") */
+    WEE_CHECK_DECODE("test_ABCD orange", STRING_IRC_COLOR_HEX_LONG, 0);
+    snprintf (string, sizeof (string),
+              "test_%sABCD orange",
+              gui_color_get_custom ("|#ff7f00"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_HEX_LONG, 1);
 
     /*
      * Color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90)
@@ -466,15 +583,15 @@ TEST(IrcColor, Decode)
     snprintf (string, sizeof (string),
               "test_%sblack/darkmagenta_%sblack_%s%sremapped1_"
               "%sblack/darkmagenta_%s%sremapped2_%sblack/red_%sblack",
-              gui_color_get_custom ("|0,90"),
-              gui_color_get_custom ("|0"),
+              gui_color_get_custom ("|#000000,#8b008b"),
+              gui_color_get_custom ("|#000000"),
               gui_color_get_custom ("resetcolor"),
               gui_color_get_custom ("|darkgray"),
-              gui_color_get_custom ("|0,90"),
+              gui_color_get_custom ("|#000000,#8b008b"),
               gui_color_get_custom ("reset"),
               gui_color_get_custom ("|darkgray"),
               gui_color_get_custom ("|black,red"),
-              gui_color_get_custom ("|0"));
+              gui_color_get_custom ("|#000000"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_TERM_REMAPPED_CURRENT_BG, 1);
     config_file_option_unset (irc_config_color_term_remap);
 }
@@ -497,6 +614,10 @@ TEST(IrcColor, Encode)
     /* No color codes */
     WEE_CHECK_ENCODE("test string", "test string", 0);
     WEE_CHECK_ENCODE("test string", "test string", 1);
+
+    /* Byte which is not valid UTF-8 before a color code */
+    WEE_CHECK_ENCODE("A\xC3" "red", "A\xC3\x03" "04red", 0);
+    WEE_CHECK_ENCODE("A\xC3\x03" "04red", "A\xC3\x03" "04red", 1);
 
     /* bold */
     WEE_CHECK_ENCODE("test_bold_end", STRING_USER_BOLD, 0);
@@ -609,7 +730,7 @@ TEST(IrcColor, Encode)
               IRC_COLOR_UNDERLINE_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_ATTRS_AND_COLORS, 1);
 
-    /* Color: hex 0xFF7F00 (orange / 208) */
+    /* Color: hex 0xFF7F00 (orange, RGB kept) */
     WEE_CHECK_ENCODE("test_orange_end", STRING_USER_FG_ORANGE, 0);
     snprintf (string, sizeof (string),
               "test_%sFF7F00orange%s_end",
@@ -617,7 +738,7 @@ TEST(IrcColor, Encode)
               IRC_COLOR_HEX_COLOR_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_FG_ORANGE, 1);
 
-    /* Color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90) */
+    /* Color: hex 0xFFFF00 (yellow) on 0x8B008B (dark magenta), RGB kept */
     WEE_CHECK_ENCODE("test_yellow/darkmagenta_end",
                      STRING_USER_FG_YELLOW_BG_DARKMAGENTA, 0);
     snprintf (string, sizeof (string),
@@ -633,12 +754,423 @@ TEST(IrcColor, Encode)
               IRC_COLOR_HEX_COLOR_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_HEX_BG_WITHOUT_FG, 1);
 
-    /* Color: hex 0xFF7F00 (orange / 208) followed by a comma */
+    /* Color: hex 0xFF7F00 (orange, RGB kept) followed by a comma */
     WEE_CHECK_ENCODE("test_,orange_end", STRING_USER_FG_ORANGE_COMMA, 0);
     snprintf (string, sizeof (string),
               "test_%sFF7F00,orange_end",
               IRC_COLOR_HEX_COLOR_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_FG_ORANGE_COMMA, 1);
+
+    /* Color: hex with less than 6 digits (reset + text "12 apples") */
+    WEE_CHECK_ENCODE("test_12 apples", STRING_USER_HEX_SHORT, 0);
+    WEE_CHECK_ENCODE(STRING_USER_HEX_SHORT, STRING_USER_HEX_SHORT, 1);
+
+    /* Color: hex background with less than 6 digits (text ",8B00") */
+    WEE_CHECK_ENCODE("test_,8B00 orange", STRING_USER_HEX_SHORT_BG, 0);
+    WEE_CHECK_ENCODE(STRING_USER_HEX_SHORT_BG, STRING_USER_HEX_SHORT_BG, 1);
+}
+
+/*
+ * Test functions:
+ *   irc_color_code_size
+ */
+
+TEST(IrcColor, CodeSize)
+{
+    LONGS_EQUAL(0, irc_color_code_size (NULL));
+    LONGS_EQUAL(0, irc_color_code_size (""));
+    LONGS_EQUAL(0, irc_color_code_size ("abc"));
+    LONGS_EQUAL(0, irc_color_code_size ("\x02" "abc"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x03"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x03" "abc"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x03" ",05"));
+    LONGS_EQUAL(2, irc_color_code_size ("\x03" "4abc"));
+    LONGS_EQUAL(3, irc_color_code_size ("\x03" "04abc"));
+    LONGS_EQUAL(3, irc_color_code_size ("\x03" "045"));
+    LONGS_EQUAL(3, irc_color_code_size ("\x03" "04,abc"));
+    LONGS_EQUAL(5, irc_color_code_size ("\x03" "04,5abc"));
+    LONGS_EQUAL(6, irc_color_code_size ("\x03" "04,05abc"));
+    LONGS_EQUAL(6, irc_color_code_size ("\x03" "04,056"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x04"));
+    LONGS_EQUAL(1, irc_color_code_size ("\x04" "12 apples"));
+    LONGS_EQUAL(7, irc_color_code_size ("\x04" "FF7F00abc"));
+    LONGS_EQUAL(7, irc_color_code_size ("\x04" "FF7F00,8B00"));
+    LONGS_EQUAL(14, irc_color_code_size ("\x04" "FF7F00,8B008Babc"));
+}
+
+/*
+ * Test functions:
+ *   irc_color_hex_color_value
+ *   irc_color_code_parse
+ */
+
+TEST(IrcColor, CodeParse)
+{
+    int fg, bg;
+
+    LONGS_EQUAL(0x000000, irc_color_hex_color_value ((const unsigned char *)"000000"));
+    LONGS_EQUAL(0xFF7F00, irc_color_hex_color_value ((const unsigned char *)"FF7F00abc"));
+    LONGS_EQUAL(0xFF7F00, irc_color_hex_color_value ((const unsigned char *)"ff7f00"));
+
+    fg = 1;
+    bg = 1;
+    LONGS_EQUAL(0, irc_color_code_parse (NULL, &fg, &bg));
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(0, irc_color_code_parse ("abc", &fg, &bg));
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, fg);
+
+    LONGS_EQUAL(1, irc_color_code_parse ("\x03" ",05", &fg, &bg));
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(2, irc_color_code_parse ("\x03" "4abc", &fg, &bg));
+    LONGS_EQUAL(4, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(3, irc_color_code_parse ("\x03" "99,abc", &fg, &bg));
+    LONGS_EQUAL(99, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(5, irc_color_code_parse ("\x03" "04,5abc", &fg, &bg));
+    LONGS_EQUAL(4, fg);
+    LONGS_EQUAL(5, bg);
+    LONGS_EQUAL(6, irc_color_code_parse ("\x03" "04,056", &fg, &bg));
+    LONGS_EQUAL(4, fg);
+    LONGS_EQUAL(5, bg);
+
+    LONGS_EQUAL(1, irc_color_code_parse ("\x04" "12 apples", &fg, &bg));
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, fg);
+    LONGS_EQUAL(7, irc_color_code_parse ("\x04" "ff7f00,8B00", &fg, &bg));
+    LONGS_EQUAL(0xFF7F00 | IRC_COLOR_RGB_FLAG, fg);
+    LONGS_EQUAL(IRC_COLOR_FORMATTING_NONE, bg);
+    LONGS_EQUAL(14, irc_color_code_parse ("\x04" "FF7F00,8B008Babc", &fg, &bg));
+    LONGS_EQUAL(0xFF7F00 | IRC_COLOR_RGB_FLAG, fg);
+    LONGS_EQUAL(0x8B008B | IRC_COLOR_RGB_FLAG, bg);
+
+    /* Colors are optional. */
+    LONGS_EQUAL(3, irc_color_code_parse ("\x03" "04", NULL, NULL));
+}
+
+/*
+ * Test functions:
+ *   irc_color_formatting_transition
+ *   irc_color_formatting_add_separator
+ */
+
+TEST(IrcColor, FormattingTransition)
+{
+    struct t_irc_color_formatting from, to;
+    char **output;
+    int fg_only;
+
+#define WEE_CHECK_TRANSITION(__codes, __fg_only, __colors_only)         \
+    output = string_dyn_alloc (32);                                     \
+    fg_only = irc_color_formatting_transition (output, &from, &to,      \
+                                               __colors_only);          \
+    STRCMP_EQUAL(__codes, *output);                                     \
+    LONGS_EQUAL(__fg_only, fg_only);                                    \
+    string_dyn_free (output, 1);
+
+    output = string_dyn_alloc (32);
+    LONGS_EQUAL(0, irc_color_formatting_transition (NULL, &from, &to, 0));
+    LONGS_EQUAL(0, irc_color_formatting_transition (output, NULL, &to, 0));
+    LONGS_EQUAL(0, irc_color_formatting_transition (output, &from, NULL, 0));
+    string_dyn_free (output, 1);
+
+    /* Same formatting: no code. */
+    irc_color_formatting_init (&from);
+    irc_color_formatting_init (&to);
+    WEE_CHECK_TRANSITION("", 0, 0);
+
+    /* Attributes are toggled, or ignored with colors only. */
+    from.bold = 1;
+    to.underline = 1;
+    to.monospace = 1;
+    WEE_CHECK_TRANSITION("\x02\x1F\x11", 0, 0);
+    WEE_CHECK_TRANSITION("", 0, 1);
+    irc_color_formatting_init (&from);
+    irc_color_formatting_init (&to);
+
+    /* Text color only. */
+    to.fg = 4;
+    WEE_CHECK_TRANSITION("\x03" "04", 1, 0);
+    to.fg = 0xFF7F00 | IRC_COLOR_RGB_FLAG;
+    WEE_CHECK_TRANSITION("\x04" "FF7F00", 2, 0);
+
+    /* Text color and background of the same kind. */
+    to.fg = 4;
+    to.bg = 2;
+    WEE_CHECK_TRANSITION("\x03" "04,02", 0, 0);
+    to.fg = 0xFF7F00 | IRC_COLOR_RGB_FLAG;
+    to.bg = 0x000080 | IRC_COLOR_RGB_FLAG;
+    WEE_CHECK_TRANSITION("\x04" "FF7F00,000080", 0, 0);
+
+    /* Colors of different kinds: background first, then text color. */
+    to.fg = 4;
+    to.bg = 0x000080 | IRC_COLOR_RGB_FLAG;
+    WEE_CHECK_TRANSITION("\x04" "FFFFFF,000080" "\x03" "04", 1, 0);
+    to.fg = 0xFF7F00 | IRC_COLOR_RGB_FLAG;
+    to.bg = 2;
+    WEE_CHECK_TRANSITION("\x03" "99,02" "\x04" "FF7F00", 2, 0);
+
+    /* Background without text color: default text color. */
+    to.fg = IRC_COLOR_FORMATTING_NONE;
+    to.bg = 2;
+    WEE_CHECK_TRANSITION("\x03" "99,02", 0, 0);
+
+    /* Only colors which differ are sent. */
+    from.fg = 4;
+    from.bg = 2;
+    to.fg = 12;
+    to.bg = 2;
+    WEE_CHECK_TRANSITION("\x03" "12", 1, 0);
+    to.fg = 4;
+    WEE_CHECK_TRANSITION("", 0, 0);
+
+    /* Background reset to default: colors reset, then text color. */
+    to.bg = IRC_COLOR_DEFAULT;
+    WEE_CHECK_TRANSITION("\x03\x03" "04", 1, 0);
+    to.fg = IRC_COLOR_DEFAULT;
+    WEE_CHECK_TRANSITION("\x03" "99,99", 0, 0);
+
+    /* Background without text color: sent with the default color. */
+    from.fg = 4;
+    from.bg = 2;
+    to.fg = IRC_COLOR_FORMATTING_NONE;
+    to.bg = 5;
+    WEE_CHECK_TRANSITION("\x03" "99,05", 0, 0);
+
+#undef WEE_CHECK_TRANSITION
+}
+
+TEST(IrcColor, FormattingSeparator)
+{
+    char **output;
+
+#define WEE_CHECK_SEPARATOR(__codes, __fg_only, __text, __length)       \
+    output = string_dyn_alloc (32);                                     \
+    irc_color_formatting_add_separator (output, __fg_only, __text,      \
+                                        __length);                      \
+    STRCMP_EQUAL(__codes, *output);                                     \
+    string_dyn_free (output, 1);
+
+    irc_color_formatting_add_separator (NULL, 1, ",5", -1);
+
+    WEE_CHECK_SEPARATOR("", 0, ",5", -1);
+    WEE_CHECK_SEPARATOR("", 1, NULL, -1);
+    WEE_CHECK_SEPARATOR("", 1, "5", -1);
+
+    /*
+     * Complete text: the color after "," is checked (for "^Dfg", any
+     * hexadecimal digit: some IRC clients read 1 to 6 digits).
+     */
+    WEE_CHECK_SEPARATOR("\x02\x02", 1, ",5 text", -1);
+    WEE_CHECK_SEPARATOR("", 1, ", text", -1);
+    WEE_CHECK_SEPARATOR("", 1, ",", -1);
+    WEE_CHECK_SEPARATOR("\x02\x02", 2, ",000080 text", -1);
+    WEE_CHECK_SEPARATOR("\x02\x02", 2, ",5 text", -1);
+    WEE_CHECK_SEPARATOR("", 2, ",g text", -1);
+
+    /* Partial text: the rest may come later. */
+    WEE_CHECK_SEPARATOR("\x02\x02", 1, ",", 1);
+    WEE_CHECK_SEPARATOR("\x02\x02", 1, ",5", 2);
+    WEE_CHECK_SEPARATOR("", 1, ",a", 2);
+    WEE_CHECK_SEPARATOR("\x02\x02", 2, ",a", 2);
+    WEE_CHECK_SEPARATOR("", 2, ",g", 2);
+
+#undef WEE_CHECK_SEPARATOR
+}
+
+/*
+ * Test functions:
+ *   irc_color_formatting_init
+ *   irc_color_formatting_update
+ *   irc_color_formatting_codes
+ */
+
+TEST(IrcColor, Formatting)
+{
+    struct t_irc_color_formatting formatting;
+    const char *string;
+    char *codes;
+
+#define WEE_CHECK_FORMATTING(__codes, __string, __next_text)            \
+    irc_color_formatting_init (&formatting);                            \
+    string = __string;                                                  \
+    irc_color_formatting_update (&formatting, string, strlen (string)); \
+    codes = irc_color_formatting_codes (&formatting, __next_text, 0);   \
+    STRCMP_EQUAL(__codes, codes);                                       \
+    free (codes);
+
+    irc_color_formatting_init (NULL);
+    irc_color_formatting_update (NULL, "\x02", 1);
+    POINTERS_EQUAL(NULL, irc_color_formatting_codes (NULL, NULL, 0));
+
+    /* No formatting. */
+    WEE_CHECK_FORMATTING("", "", NULL);
+    WEE_CHECK_FORMATTING("", "test", "next");
+
+    /* Attributes. */
+    WEE_CHECK_FORMATTING("\x02", "\x02" "bold", NULL);
+    WEE_CHECK_FORMATTING("", "\x02" "bold" "\x02", NULL);
+    WEE_CHECK_FORMATTING("\x02\x16\x1D\x1E\x1F\x11",
+                         "\x02\x16\x1D\x1E\x1F\x11" "all", NULL);
+    WEE_CHECK_FORMATTING("", "\x02\x16\x1D\x1E\x1F\x11" "all" "\x0F", NULL);
+
+    /* Colors: text color alone keeps the background. */
+    WEE_CHECK_FORMATTING("\x03" "04", "\x03" "4red", NULL);
+    WEE_CHECK_FORMATTING("\x03" "04,02", "\x03" "04,02" "red/blue", NULL);
+    WEE_CHECK_FORMATTING("\x03" "12,02",
+                         "\x03" "04,02" "red/blue" "\x03" "12" "lightblue",
+                         NULL);
+    WEE_CHECK_FORMATTING("", "\x03" "04,02" "red/blue" "\x03" "reset", NULL);
+    WEE_CHECK_FORMATTING("\x02\x03" "04",
+                         "\x02\x03" "04" "bold red", NULL);
+
+    /* Hex colors. */
+    WEE_CHECK_FORMATTING("\x04" "FF7F00", "\x04" "FF7F00" "orange", NULL);
+    WEE_CHECK_FORMATTING("\x04" "FF7F00,000080",
+                         "\x04" "FF7F00,000080" "orange/navy", NULL);
+    WEE_CHECK_FORMATTING("", "\x04" "FF7F00" "orange" "\x04" "reset", NULL);
+    WEE_CHECK_FORMATTING("\x04" "FF7F00", "\x04" "ff7f00" "orange", NULL);
+
+    /* Mixed kinds of colors: background first, then text color. */
+    WEE_CHECK_FORMATTING("\x03" "99,02" "\x04" "FF7F00",
+                         "\x03" "04,02" "red/blue" "\x04" "FF7F00" "orange",
+                         NULL);
+    WEE_CHECK_FORMATTING("\x04" "FFFFFF,000080" "\x03" "04",
+                         "\x04" "FF7F00,000080" "orange" "\x03" "04" "red",
+                         NULL);
+    WEE_CHECK_FORMATTING("\x04" "FFFFFF,000080" "\x03" "99",
+                         "\x04" "FF7F00,000080" "orange" "\x03" "99"
+                         "default/navy",
+                         NULL);
+
+    /* Text color followed by "," + digits: "^B^B" is added. */
+    WEE_CHECK_FORMATTING("\x03" "04" "\x02\x02", "\x03" "04" "red", ",5 text");
+    WEE_CHECK_FORMATTING("\x03" "04", "\x03" "04" "red", ", text");
+    WEE_CHECK_FORMATTING("\x03" "04,02", "\x03" "04,02" "red", ",5 text");
+    WEE_CHECK_FORMATTING("\x04" "FF7F00" "\x02\x02",
+                         "\x04" "FF7F00" "orange", ",000080 text");
+    WEE_CHECK_FORMATTING("\x04" "FF7F00" "\x02\x02",
+                         "\x04" "FF7F00" "orange", ",5 text");
+    WEE_CHECK_FORMATTING("\x04" "FF7F00", "\x04" "FF7F00" "orange", ",g text");
+
+    /* Attributes only (no separator after attributes). */
+    irc_color_formatting_init (&formatting);
+    string = "\x02\x1F" "\x03" "04,02" "bold underline red/blue";
+    irc_color_formatting_update (&formatting, string, strlen (string));
+    codes = irc_color_formatting_codes (&formatting, NULL, 1);
+    STRCMP_EQUAL("\x02\x1F", codes);
+    free (codes);
+    irc_color_formatting_init (&formatting);
+    string = "\x03" "04" "red";
+    irc_color_formatting_update (&formatting, string, strlen (string));
+    codes = irc_color_formatting_codes (&formatting, ",5 text", 1);
+    STRCMP_EQUAL("", codes);
+    free (codes);
+
+    /* Code cut at the end of the string: ignored. */
+    irc_color_formatting_init (&formatting);
+    string = "\x03" "04,02" "red/blue";
+    irc_color_formatting_update (&formatting, string, 4);
+    codes = irc_color_formatting_codes (&formatting, NULL, 0);
+    STRCMP_EQUAL("", codes);
+    free (codes);
+}
+
+/*
+ * Test functions:
+ *   irc_color_is_hex_color
+ */
+
+TEST(IrcColor, IsHexColor)
+{
+    LONGS_EQUAL(0, irc_color_is_hex_color ((const unsigned char *)""));
+    LONGS_EQUAL(0, irc_color_is_hex_color ((const unsigned char *)"12"));
+    LONGS_EQUAL(0, irc_color_is_hex_color ((const unsigned char *)"FF7F0"));
+    LONGS_EQUAL(0, irc_color_is_hex_color ((const unsigned char *)"FF7F0G"));
+    LONGS_EQUAL(1, irc_color_is_hex_color ((const unsigned char *)"FF7F00"));
+    LONGS_EQUAL(1, irc_color_is_hex_color ((const unsigned char *)"ff7f00"));
+    LONGS_EQUAL(1, irc_color_is_hex_color ((const unsigned char *)"FF7F00AB"));
+}
+
+/*
+ * Test functions:
+ *   irc_color_ansi_parse_color_sub_params
+ *   irc_color_decode_ansi (sub-parameters separated by colons)
+ */
+
+TEST(IrcColor, DecodeAnsiColons)
+{
+    const char *colons[][2] = {
+        { "\x1B[38:2::255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2:255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2:1:255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[48:2::0:0:128m", "\x1B[48;2;0;0;128m" },
+        { "\x1B[38:5:214m", "\x1B[38;5;214m" },
+        { "\x1B[48:5:17m", "\x1B[48;5;17m" },
+        { "\x1B[1;38:2::255:136:0;48:5:17m", "\x1B[1;38;2;255;136;0;48;5;17m" },
+        { "\x1B[38:2::255::0m", "\x1B[38;2;255;0;0m" },
+        { "\x1B[38:2::255:136:0:m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2::255:136:0:1:2:3m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:5:;1m", "\x1B[38;5;0;1m" },
+        { "\x1B[38;5;1:2m", "\x1B[38;5;1m" },
+        { "\x1B[38;5;4:0m", "\x1B[38;5;4m" },
+        { "\x1B[38:5;1m", "\x1B[1m" },
+        { "\x1B[38:3:1:2:3;1m", "\x1B[1m" },
+        { "\x1B[1:2m", "\x1B[1m" },
+        { "\x1B[58:2::255:0:0;1m", "\x1B[1m" },
+        { "\x1B[58:5:1;1m", "\x1B[1m" },
+        { "\x1B[4:3m", "\x1B[4m" },
+        { "\x1B[4:4294967296m", "\x1B[4m" },
+        { "\x1B[4m" "A" "\x1B[4:0m", "\x1B[4m" "A" "\x1B[24m" },
+        { "\x1B[4m" "A" "\x1B[4:3m", "\x1B[4m" "A" "\x1B[4m" },
+        { NULL, NULL },
+    };
+    char string1[128], string2[128], *decoded1, *decoded2;
+    int i;
+
+    for (i = 0; colons[i][0]; i++)
+    {
+        snprintf (string1, sizeof (string1), "test_%stext", colons[i][0]);
+        snprintf (string2, sizeof (string2), "test_%stext", colons[i][1]);
+        /* Colors removed and kept: same as parameters separated by ";". */
+        decoded1 = irc_color_decode_ansi (string1, 0, IRC_COLOR_PALETTE_BASIC);
+        decoded2 = irc_color_decode_ansi (string2, 0, IRC_COLOR_PALETTE_BASIC);
+        STRCMP_EQUAL(decoded2, decoded1);
+        CHECK(!strchr (decoded1, '\x1B'));
+        free (decoded1);
+        free (decoded2);
+        decoded1 = irc_color_decode_ansi (string1, 1, IRC_COLOR_PALETTE_BASIC);
+        decoded2 = irc_color_decode_ansi (string2, 1, IRC_COLOR_PALETTE_BASIC);
+        STRCMP_EQUAL(decoded2, decoded1);
+        free (decoded1);
+        free (decoded2);
+    }
+}
+
+/*
+ * Test functions:
+ *   irc_color_decode_ansi (invalid parameters)
+ */
+
+TEST(IrcColor, DecodeAnsiInvalid)
+{
+    char string[256], *decoded;
+
+    /* Incomplete colors: remaining parameters are ignored. */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[58;2;1;0mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[38;2;255mB", 1);
+    snprintf (string, sizeof (string), "A%sB", IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "A\x1B[1;58;5mB", 1);
+    WEE_CHECK_DECODE_ANSI(string, "A\x1B[1;48;3;1;2;3mB", 1);
+
+    /* Invalid terminal color: ignored */
+    WEE_CHECK_DECODE_ANSI(string, "A\x1B[38;5;300;1mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[48;5;300mB", 1);
+
+    /* Numbers out of range: ignored */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[4294967297mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[38;4294967298;0;255;0mB", 1);
 }
 
 /*
@@ -651,8 +1183,12 @@ TEST(IrcColor, DecodeAnsi)
     char string[1024], *decoded;
 
     /* NULL/empty string */
-    STRCMP_EQUAL(NULL, irc_color_decode_ansi (NULL, 0));
-    STRCMP_EQUAL(NULL, irc_color_decode_ansi (NULL, 1));
+    STRCMP_EQUAL(NULL,
+                 irc_color_decode_ansi (NULL, 0,
+                                        IRC_COLOR_PALETTE_BASIC));
+    STRCMP_EQUAL(NULL,
+                 irc_color_decode_ansi (NULL, 1,
+                                        IRC_COLOR_PALETTE_BASIC));
     WEE_CHECK_DECODE_ANSI ("", "", 0);
     WEE_CHECK_DECODE_ANSI ("", "", 1);
 
@@ -734,7 +1270,7 @@ TEST(IrcColor, DecodeAnsi)
     /* Color: blue on red */
     WEE_CHECK_DECODE_ANSI("test_blue/red", STRING_ANSI_FG_BLUE_BG_RED, 0);
     snprintf (string, sizeof (string),
-              "test_%s02%s,05blue/red",
+              "test_%s02%s02,05blue/red",
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_BLUE_BG_RED, 1);
@@ -743,7 +1279,7 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_lightcyan/lightblue",
                           STRING_ANSI_FG_LIGHTCYAN_BG_LIGHTBLUE, 0);
     snprintf (string, sizeof (string),
-              "test_%s11%s,12lightcyan/lightblue",
+              "test_%s11%s11,12lightcyan/lightblue",
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_LIGHTCYAN_BG_LIGHTBLUE, 1);
@@ -769,7 +1305,7 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_color13/02",
                           STRING_ANSI_FG_RGB_IRC_13_BG_RGB_IRC_02, 0);
     snprintf (string, sizeof (string),
-              "test_%s13%s,02color13/02",
+              "test_%s13%s13,02color13/02",
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string,
@@ -782,7 +1318,7 @@ TEST(IrcColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_color13/02",
                           STRING_ANSI_FG_TERM_IRC_13_BG_TERM_IRC_02, 0);
     snprintf (string, sizeof (string),
-              "test_%s13%s,02color13/02",
+              "test_%s13%s13,02color13/02",
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string,
@@ -790,17 +1326,478 @@ TEST(IrcColor, DecodeAnsi)
 
     /* Default text color */
     WEE_CHECK_DECODE_ANSI("test_default_fg", STRING_ANSI_DEFAULT_FG, 0);
-    snprintf (string, sizeof (string),
-              "test_%s15default_fg",
-              IRC_COLOR_COLOR_STR);
-    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_FG, 1);
+    WEE_CHECK_DECODE_ANSI("test_default_fg", STRING_ANSI_DEFAULT_FG, 1);
 
     /* Default background color */
     WEE_CHECK_DECODE_ANSI("test_default_bg", STRING_ANSI_DEFAULT_BG, 0);
+    WEE_CHECK_DECODE_ANSI("test_default_bg", STRING_ANSI_DEFAULT_BG, 1);
+
+    /* Empty parameters (reset) */
+    WEE_CHECK_DECODE_ANSI("AXB", STRING_ANSI_EMPTY_PARAM_ONLY, 0);
     snprintf (string, sizeof (string),
-              "test_%s,01default_bg",
+              "A%sX%s%sB",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_RESET_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_EMPTY_PARAM_ONLY, 1);
+    WEE_CHECK_DECODE_ANSI("AB", STRING_ANSI_EMPTY_PARAM_FIRST, 0);
+    snprintf (string, sizeof (string),
+              "A%s%sB",
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_EMPTY_PARAM_FIRST, 1);
+    WEE_CHECK_DECODE_ANSI("AB", STRING_ANSI_EMPTY_PARAM_MIDDLE, 0);
+    snprintf (string, sizeof (string),
+              "A%s%s%sB",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_UNDERLINE_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_EMPTY_PARAM_MIDDLE, 1);
+    WEE_CHECK_DECODE_ANSI("AB", STRING_ANSI_EMPTY_PARAM_LAST, 0);
+    snprintf (string, sizeof (string),
+              "A%s%sB",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_RESET_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_EMPTY_PARAM_LAST, 1);
+
+    /* Empty arguments in text/background colors (0 -> IRC 01 -> black) */
+    WEE_CHECK_DECODE_ANSI("test_color01", STRING_ANSI_FG_TERM_EMPTY, 0);
+    snprintf (string, sizeof (string),
+              "test_%s01color01",
               IRC_COLOR_COLOR_STR);
-    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_BG, 1);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_TERM_EMPTY, 1);
+    snprintf (string, sizeof (string),
+              "test_%s%s99,01color01",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_TERM_EMPTY, 1);
+
+    /* Empty arguments in RGB colors: "FF00FF" (IRC 13 -> lightmagenta) */
+    WEE_CHECK_DECODE_ANSI("test_color13", STRING_ANSI_FG_RGB_EMPTY, 0);
+    snprintf (string, sizeof (string),
+              "test_%s13color13",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_RGB_EMPTY, 1);
+    snprintf (string, sizeof (string),
+              "test_%s%s99,13color13",
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_RGB_EMPTY, 1);
+
+    /* Underline terminal color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_1", STRING_ANSI_UNDERLINE_COLOR_TERM, 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_1", STRING_ANSI_UNDERLINE_COLOR_TERM, 1);
+
+    /* Underline RGB color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_red", STRING_ANSI_UNDERLINE_COLOR_RGB, 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_red", STRING_ANSI_UNDERLINE_COLOR_RGB, 1);
+
+    /* Default underline color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_default",
+                          STRING_ANSI_UNDERLINE_COLOR_DEFAULT, 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_default",
+                          STRING_ANSI_UNDERLINE_COLOR_DEFAULT, 1);
+
+    /*
+     * Underline + RGB "008080" (IRC 10 -> cyan)
+     * + underline RGB color (ignored)
+     */
+    WEE_CHECK_DECODE_ANSI("test_ul_color10",
+                          STRING_ANSI_UNDERLINE_FG_RGB_UNDERLINE_COLOR_RGB, 0);
+    snprintf (string, sizeof (string),
+              "test_%s%s10ul_color10",
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string,
+                          STRING_ANSI_UNDERLINE_FG_RGB_UNDERLINE_COLOR_RGB, 1);
+
+    /* Underline + underline colors (ignored) + blue + bold */
+    WEE_CHECK_DECODE_ANSI("test_ul_blue", STRING_ANSI_UNDERLINE_COLOR_MIXED, 0);
+    snprintf (string, sizeof (string),
+              "test_%s%s%s02ul_blue",
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_UNDERLINE_COLOR_MIXED, 1);
+
+    /* Other escape sequences (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B(BB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B(BB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B(mB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B(mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B>B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B>B", 1);
+
+    /* Control sequences other than SGR (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[2 qB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[2 qB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[=5uB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[=5uB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[3~B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[3~B", 1);
+
+    /* Private control sequences ending with "m" (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[>4;2mB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[>4;2mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[?4mB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[?4mB", 1);
+
+    /* Private bytes after the first parameter (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1;>4mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1<mB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[5=mB", 1);
+
+    /*
+     * Char SI: kept (IRC reset), then attributes and colors are sent again;
+     * char SO: removed.
+     */
+    snprintf (string, sizeof (string),
+              "%s%s%s%sbold text",
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[0;1m\x0F" "bold\x0E text", 1);
+    snprintf (string, sizeof (string),
+              "%s05,03A%s%s05,03B",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31;42mA\x0F" "B", 1);
+    snprintf (string, sizeof (string),
+              "%s05A%s%s05%s%s,5",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31mA\x0F" ",5", 1);
+    WEE_CHECK_DECODE_ANSI("A\x0F" "B", "A\x0F" "B\x0E", 0);
+    /* Text formatted for IRC: kept. */
+    WEE_CHECK_DECODE_ANSI("\x02" "bold\x0F" " normal",
+                          "\x02" "bold\x0F" " normal", 1);
+    WEE_CHECK_DECODE_ANSI("\x03" "04,01red\x0F" " normal",
+                          "\x03" "04,01red\x0F" " normal", 1);
+    /*
+     * IRC colors in text change the colors of the IRC client, not the ANSI
+     * colors (kept after SI).
+     */
+    WEE_CHECK_DECODE_ANSI("\x03" "05red\x03" "04x\x03" "05,03y",
+                          "\x1B[31mred\x03" "04x\x1B[42my", 1);
+    WEE_CHECK_DECODE_ANSI("\x03" "05red\x03" "04x\x0F\x03" "05y",
+                          "\x1B[31mred\x03" "04x\x0Fy", 1);
+
+    /* Unterminated or cancelled sequences, lone ESC (removed). */
+    WEE_CHECK_DECODE_ANSI("a1", "a1\x1B]0;title", 1);
+    WEE_CHECK_DECODE_ANSI("a1", "a1\x1B[1;2", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "\x1B[12\x18" "AB", 1);
+    WEE_CHECK_DECODE_ANSI("X", "\x1BPHello\x07X", 1);
+    WEE_CHECK_DECODE_ANSI("A\xC3\xA9", "A\x1B(" "\xC3\xA9", 1);
+    snprintf (string, sizeof (string), "%sX", IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[1\x7F" "mX", 1);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B\x7F" "[1mX", 1);
+    snprintf (string, sizeof (string), "a1%sa2", IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "a1\x1B\x1B[1ma2", 1);
+
+    /* Other escape sequences: OSC, DCS, ESC + char (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B]0;title\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AlinkB",
+                          "A\x1B]8;;http://example.com\x1B\\link"
+                          "\x1B]8;;\x1B\\" "B",
+                          1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1BP1$r0m\x1B\\" "B", 1);
+    WEE_CHECK_DECODE_ANSI("ABC", "A\x1B" "7B\x1B" "8C", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B=B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B" "cB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B#8B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B]0;t\xE9tle\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B]0;\xF4\x90\x80\x80\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("\xC3\xA9" "\xE9",
+                          "\xC3\xA9" "\x1B]0;t\xC3\xAFtle\x07" "\xE9", 1);
+
+    /* Control sequence ending with "m" with intermediate bytes (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A\x1B[1 mB", 1);
+
+    /* RGB color with components greater than 255 (clamped to 255) */
+    WEE_CHECK_DECODE_ANSI("test_color09",
+                          STRING_ANSI_FG_RGB_COMPONENT_256, 0);
+    snprintf (string, sizeof (string),
+              "test_%s09color09",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_RGB_COMPONENT_256, 1);
+    WEE_CHECK_DECODE_ANSI("test_color04",
+                          STRING_ANSI_FG_RGB_COMPONENT_40000, 0);
+    snprintf (string, sizeof (string),
+              "test_%s04color04",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_RGB_COMPONENT_40000, 1);
+    WEE_CHECK_DECODE_ANSI("test_color11",
+                          STRING_ANSI_BG_RGB_COMPONENTS_TOO_BIG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s99,11color11",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_RGB_COMPONENTS_TOO_BIG, 1);
+
+    /* Foreground color followed by text starting with comma and digits */
+    WEE_CHECK_DECODE_ANSI("grep: ,5 total", STRING_ANSI_FG_RED_COMMA, 0);
+    snprintf (string, sizeof (string),
+              "grep: %s%s05%s%s,5%s total",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_RESET_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_RED_COMMA, 1);
+    snprintf (string, sizeof (string),
+              "test_%s12%s%s,5_,55_,555",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_TERM_IRC_12_COMMA, 1);
+
+    /* Background color without foreground color */
+    WEE_CHECK_DECODE_ANSI("AB", STRING_ANSI_BG_TERM_IRC_04, 0);
+    snprintf (string, sizeof (string),
+              "A%s99,04B",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_TERM_IRC_04, 1);
+    snprintf (string, sizeof (string),
+              "test_%s99,05,5_%s99,04,5",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BG_RED_COMMA, 1);
+
+    /* Foreground and background colors in the same sequence */
+    WEE_CHECK_DECODE_ANSI("AB", STRING_ANSI_FG_TERM_IRC_12_BG_TERM_IRC_04, 0);
+    snprintf (string, sizeof (string),
+              "A%s12,04B",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_TERM_IRC_12_BG_TERM_IRC_04,
+                          1);
+
+    /* Default foreground/background colors and reset */
+    snprintf (string, sizeof (string),
+              "test_%s05%s05,03red/green_%s99default/green_"
+              "%s02blue/green_%s%s02blue/default_"
+              "%s%s99,02default/blue_%s%s07brown/default",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_FG_BG, 1);
+
+    /* Reverse video */
+    WEE_CHECK_DECODE_ANSI("test_rev_normal",
+                          "test_\x1B[7mrev\x1B[27m_normal", 0);
+    snprintf (string, sizeof (string),
+              "test_%srev%s_normal",
+              IRC_COLOR_REVERSE_STR,
+              IRC_COLOR_REVERSE_STR);
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[7mrev\x1B[27m_normal", 1);
+    snprintf (string, sizeof (string),
+              "test_%srev%s_normal_%srev",
+              IRC_COLOR_REVERSE_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_REVERSE_STR);
+    WEE_CHECK_DECODE_ANSI(string,
+                          "test_\x1B[7;7mrev\x1B[m_normal_\x1B[7mrev", 1);
+
+    /* Separator after a foreground only, with sequences adding nothing. */
+    snprintf (string, sizeof (string),
+              "%s05%s%s,5 apples",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31m\x1B[2m,5 apples", 1);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31m\x1B[49m,5 apples", 1);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31m,\x1B[K5 apples", 1);
+
+    /* IRC codes and new lines in text: colors are sent again. */
+    snprintf (string, sizeof (string),
+              "%s05A\n%s05B",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31mA\n\x1B[31mB", 1);
+    snprintf (string, sizeof (string),
+              "%s05A%s04B%s05C",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[31mA\x03" "04B\x1B[31mC", 1);
+
+    /* Colors not changed: not sent again. */
+    snprintf (string, sizeof (string),
+              "A%s05B" "C%s05,03D" "E",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(
+        string,
+        "A\x1B[31mB\x1B[31mC\x1B[42mD\x1B[31;42mE",
+        1);
+
+    /* Attributes after a reset */
+    snprintf (string, sizeof (string),
+              "test_%sbold%s_normal_%sbold",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_RESET_ATTRS, 1);
+}
+
+/*
+ * Test functions:
+ *   irc_color_decode_ansi
+ *   irc_color_decode
+ */
+
+TEST(IrcColor, DecodeAnsiDecode)
+{
+    char string[1024], *decoded_ansi, *decoded;
+
+    /* Foreground color followed by text starting with comma and digits */
+    snprintf (string, sizeof (string),
+              "grep: %s%s%s%s,5%s total",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("|red"),
+              gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_FG_RED_COMMA);
+    snprintf (string, sizeof (string),
+              "test_%s%s%s,5_,55_,555",
+              gui_color_get_custom ("|lightblue"),
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_FG_TERM_IRC_12_COMMA);
+
+    /* Background color without foreground color */
+    snprintf (string, sizeof (string),
+              "A%sB",
+              gui_color_get_custom ("|default,lightred"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_BG_TERM_IRC_04);
+    snprintf (string, sizeof (string),
+              "test_%s,5_%s,5",
+              gui_color_get_custom ("|default,red"),
+              gui_color_get_custom ("|default,lightred"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_BG_RED_COMMA);
+
+    /* Foreground and background colors in the same sequence */
+    snprintf (string, sizeof (string),
+              "A%sB",
+              gui_color_get_custom ("|lightblue,lightred"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string,
+                                 STRING_ANSI_FG_TERM_IRC_12_BG_TERM_IRC_04);
+
+    /* Default foreground/background colors and reset */
+    snprintf (string, sizeof (string),
+              "test_%s%sred/green_%sdefault/green_"
+              "%sblue/green_%s%sblue/default_"
+              "%s%sdefault/blue_%s%sbrown/default",
+              gui_color_get_custom ("|red"),
+              gui_color_get_custom ("|red,green"),
+              gui_color_get_custom ("|default"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("resetcolor"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|default,blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|brown"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, STRING_ANSI_DEFAULT_FG_BG);
+
+    /*
+     * Black text: sent without background, so the default remapped color
+     * of option irc.color.mirc_remap ("1,-1:darkgray") is used
+     */
+    snprintf (string, sizeof (string),
+              "test_%sblack",
+              gui_color_get_custom ("|darkgray"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string, "test_\x1B[30mblack");
+
+    /*
+     * Black text after the end of a background: the default remapped color
+     * of option irc.color.mirc_remap ("1,-1:darkgray") is used
+     */
+    snprintf (string, sizeof (string),
+              "%s WARN %s%s message",
+              gui_color_get_custom ("|black,brown"),
+              gui_color_get_custom ("resetcolor"),
+              gui_color_get_custom ("|darkgray"));
+    WEE_CHECK_DECODE_ANSI_DECODE(string,
+                                 "\x1B[30;43m WARN \x1B[49m message");
+
+    /*
+     * IRC text color in the text (the same as the ANSI color), then an
+     * escape sequence which adds nothing: text starting with comma and digits
+     * is not read as a background.
+     */
+    WEE_CHECK_DECODE_ANSI("\x03" "05" "red" "\x03" "05" "\x02\x02" ",12",
+                          "\x1B[31m" "red" "\x03" "05" "\x1B[22m" ",12", 1);
+    WEE_CHECK_DECODE_ANSI("\x03" "05,03" "x" "\x03" "05,03" ",12",
+                          "\x1B[31;42m" "x" "\x03" "05,03" "\x1B[22m" ",12",
+                          1);
+    WEE_CHECK_DECODE_ANSI("\x03" "05" "\x03" "05" "x" ",12",
+                          "\x1B[31m" "\x03" "05" "x" "\x1B[22m" ",12", 1);
+}
+
+/*
+ * Test functions:
+ *   irc_color_ansi_next_param
+ *   irc_color_ansi_next_color
+ *   irc_color_ansi_sequence_size
+ *   irc_color_decode_ansi_sequence
+ */
+
+TEST(IrcColor, DecodeAnsiSequence)
+{
+    struct t_irc_color_ansi_state ansi_state;
+    const char *ptr_param, *params;
+    char **output;
+    int value;
+
+    params = "1;38;5;196";
+    ptr_param = params;
+    LONGS_EQUAL(1, irc_color_ansi_next_param (&ptr_param, params + 10, &value));
+    LONGS_EQUAL(1, value);
+    LONGS_EQUAL(1, irc_color_ansi_next_param (&ptr_param, params + 10, &value));
+    LONGS_EQUAL(38, value);
+    LONGS_EQUAL(196, irc_color_ansi_next_color (&ptr_param, params + 10));
+    LONGS_EQUAL(0, irc_color_ansi_next_param (&ptr_param, params + 10, &value));
+
+    params = "2;255;136;0";
+    ptr_param = params;
+    LONGS_EQUAL(IRC_COLOR_RGB_FLAG | 0xFF8800,
+                irc_color_ansi_next_color (&ptr_param, params + 11));
+    params = "2;256;0;0";
+    ptr_param = params;
+    LONGS_EQUAL(-1, irc_color_ansi_next_color (&ptr_param, params + 9));
+    params = "x";
+    ptr_param = params;
+    LONGS_EQUAL(0, irc_color_ansi_next_param (&ptr_param, params + 1, &value));
+
+    LONGS_EQUAL(0, irc_color_ansi_sequence_size ("test"));
+    LONGS_EQUAL(0, irc_color_ansi_sequence_size ("\x1B[m"));
+    LONGS_EQUAL(0, irc_color_ansi_sequence_size ("\x1B[1"));
+    LONGS_EQUAL(0, irc_color_ansi_sequence_size ("\x1B[?1m"));
+    LONGS_EQUAL(4, irc_color_ansi_sequence_size ("\x1B[1mtest"));
+    LONGS_EQUAL(11, irc_color_ansi_sequence_size ("\x1B[38;5;196m"));
+
+    /* Invalid parameters (for example changed by a script) are ignored. */
+    irc_color_decode_ansi_reset_state (&ansi_state);
+    ansi_state.palette = IRC_COLOR_PALETTE_BASIC;
+    output = string_dyn_alloc (32);
+    irc_color_decode_ansi_sequence (output, &ansi_state, "1;x;4", 5);
+    STRCMP_EQUAL("\x02", *output);
+    irc_color_decode_ansi_sequence (output, &ansi_state, "38;5", 4);
+    STRCMP_EQUAL("\x02", *output);
+    string_dyn_free (output, 1);
 }
 
 /*
@@ -819,12 +1816,242 @@ TEST(IrcColor, ForTags)
 
 /*
  * Test functions:
+ *   irc_color_convert_rgb2irc_palette
+ *   irc_color_convert_term2irc_palette
+ */
+
+TEST(IrcColor, ConvertPalette)
+{
+    int i, palette;
+
+    /* Invalid RGB colors, with any palette. */
+    for (palette = 0; palette < IRC_COLOR_NUM_PALETTES; palette++)
+    {
+        LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (-1, palette));
+        LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (0x1000000, palette));
+    }
+
+    /* Basic palette: IRC colors 0-15. */
+    LONGS_EQUAL(irc_color_convert_rgb2irc (0xFF0000),
+                irc_color_convert_rgb2irc_palette (0xFF0000,
+                                                   IRC_COLOR_PALETTE_BASIC));
+    LONGS_EQUAL(irc_color_convert_term2irc (196),
+                irc_color_convert_term2irc_palette (196,
+                                                    IRC_COLOR_PALETTE_BASIC));
+
+    /* Extended palette: RGB colors, nearest IRC color 16-98. */
+    LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (
+                    -1, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (
+                    0x1000000, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(52, irc_color_convert_rgb2irc_palette (
+                    0xFF0000, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(53, irc_color_convert_rgb2irc_palette (
+                    0xFF8C00, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(53, irc_color_convert_rgb2irc_palette (
+                    0xFF8800, IRC_COLOR_PALETTE_EXTENDED));
+    /* Black (IRC color 88) is IRC color 1 (remapped colors still apply). */
+    LONGS_EQUAL(1, irc_color_convert_rgb2irc_palette (
+                    0x000000, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(1, irc_color_convert_rgb2irc_palette (
+                    0x080808, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(89, irc_color_convert_rgb2irc_palette (
+                    0x101010, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(98, irc_color_convert_rgb2irc_palette (
+                    0xFFFFFF, IRC_COLOR_PALETTE_EXTENDED));
+
+    /*
+     * Extended palette: terminal colors 0-15 are IRC colors 0-15, other
+     * colors are the IRC color displayed with this terminal color or the
+     * nearest one.
+     */
+    LONGS_EQUAL(irc_color_convert_term2irc (1),
+                irc_color_convert_term2irc_palette (
+                    1, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(irc_color_convert_term2irc (9),
+                irc_color_convert_term2irc_palette (
+                    9, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(1, irc_color_convert_term2irc_palette (
+                    16, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(-1, irc_color_convert_term2irc_palette (
+                    -1, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(-1, irc_color_convert_term2irc_palette (
+                    256, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(-1, irc_color_convert_term2irc_palette (
+                    300, IRC_COLOR_PALETTE_BASIC));
+    LONGS_EQUAL(52, irc_color_convert_term2irc_palette (
+                    196, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(53, irc_color_convert_term2irc_palette (
+                    208, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(96, irc_color_convert_term2irc_palette (
+                    250, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(98, irc_color_convert_term2irc_palette (
+                    231, IRC_COLOR_PALETTE_EXTENDED));
+    /* 232 (#080808): nearest is 88 (#000000), so IRC color 1 */
+    LONGS_EQUAL(1, irc_color_convert_term2irc_palette (
+                    232, IRC_COLOR_PALETTE_EXTENDED));
+    /* 255 (#eeeeee): nearest is 97 (#e2e2e2) */
+    LONGS_EQUAL(97, irc_color_convert_term2irc_palette (
+                    255, IRC_COLOR_PALETTE_EXTENDED));
+
+    /* Cached conversion: same result, also when called again. */
+    for (i = 0; i < 256; i++)
+    {
+        for (palette = 0; palette < IRC_COLOR_NUM_PALETTES; palette++)
+        {
+            LONGS_EQUAL(irc_color_convert_term2irc_palette (i, palette),
+                        irc_color_convert_term2irc_cached (i, palette));
+            LONGS_EQUAL(irc_color_convert_term2irc_palette (i, palette),
+                        irc_color_convert_term2irc_cached (i, palette));
+        }
+    }
+    /* Not cached: color or palette out of range. */
+    LONGS_EQUAL(irc_color_convert_term2irc_palette (256,
+                                                    IRC_COLOR_PALETTE_BASIC),
+                irc_color_convert_term2irc_cached (256,
+                                                   IRC_COLOR_PALETTE_BASIC));
+
+    /* RGB palette: RGB colors are kept. */
+    LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (
+                    -1, IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (
+                    0x1000000, IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(IRC_COLOR_RGB_FLAG | 0xFF8800,
+                irc_color_convert_rgb2irc_palette (0xFF8800,
+                                                   IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(IRC_COLOR_RGB_FLAG,
+                irc_color_convert_rgb2irc_palette (0x000000,
+                                                   IRC_COLOR_PALETTE_RGB));
+
+    /*
+     * RGB palette: terminal colors 0-15 are IRC colors 0-15, terminal
+     * colors displayed for IRC colors 16-98 are these IRC colors, other
+     * colors are RGB colors.
+     */
+    LONGS_EQUAL(irc_color_convert_term2irc (9),
+                irc_color_convert_term2irc_palette (
+                    9, IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(52, irc_color_convert_term2irc_palette (
+                    196, IRC_COLOR_PALETTE_RGB));
+    LONGS_EQUAL(IRC_COLOR_RGB_FLAG | 0xFF5F00,
+                irc_color_convert_term2irc_palette (
+                    202, IRC_COLOR_PALETTE_RGB));
+}
+
+/*
+ * Test functions:
+ *   irc_color_decode_ansi (extended palette)
+ */
+
+TEST(IrcColor, DecodeAnsiExtended)
+{
+    char string[1024], *decoded;
+
+    /* Basic ANSI colors are always IRC colors 0-15. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "04" "red",
+                                   "test_\x1B[91mred");
+    snprintf (string, sizeof (string),
+              "test_%s%02dred",
+              IRC_COLOR_COLOR_STR, irc_color_convert_term2irc (9));
+    WEE_CHECK_DECODE_ANSI_EXTENDED(string, "test_\x1B[38;5;9mred");
+
+    /* Terminal colors 16-255 and RGB colors: IRC colors 16-98. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "52" "red",
+                                   "test_\x1B[38;5;196mred");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "53" "orange",
+                                   "test_\x1B[38;2;255;140;0morange");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "52" "red",
+                                   "test_\x1B[38:2::255:0:0mred");
+    /* 236 (#303030): nearest is 91 (#363636) */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "96,91" "gray",
+                                   "test_\x1B[38;5;250;48;5;236mgray");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "99,52" "B",
+                                   "A\x1B[48;5;196mB");
+
+    /* Black is IRC color 1 (not 88), near blacks are 89-90. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "01" "B", "A\x1B[38;5;16mB");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "01" "B",
+                                   "A\x1B[38;2;0;0;0mB");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "89" "B", "A\x1B[38;5;233mB");
+
+    /* Text color 16-98 followed by "," and a digit: "^B^B" is added. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "52" "\x02\x02" ",5",
+                                   "A\x1B[38;5;196m,5");
+
+    /* Background changed (not from the default), then reset to default. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "52,53" "B" "\x03" "52,60" "C"
+                                   "\x03\x03" "52" "D",
+                                   "A\x1B[38;5;196;48;5;208mB"
+                                   "\x1B[48;5;21mC\x1B[49mD");
+}
+
+/*
+ * Test functions:
+ *   irc_color_decode_ansi (RGB palette)
+ */
+
+TEST(IrcColor, DecodeAnsiRgb)
+{
+    char string[1024], *decoded;
+
+    /* Basic ANSI colors are always IRC colors 0-15. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x03" "04" "red",
+                              "test_\x1B[91mred");
+
+    /* RGB colors: IRC hex colors. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" "orange",
+                              "test_\x1B[38;2;255;136;0morange");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" "orange",
+                              "test_\x1B[38:2::255:136:0morange");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800,000080" "orange/navy",
+                              "test_\x1B[38;2;255;136;0;48;2;0;0;128m"
+                              "orange/navy");
+
+    /* Terminal colors: IRC colors 16-98 if possible, otherwise RGB. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x03" "52" "red",
+                              "test_\x1B[38;5;196mred");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF5F00" "orange",
+                              "test_\x1B[38;5;202morange");
+
+    /* Colors of different kinds: background first. */
+    snprintf (string, sizeof (string),
+              "test_" "\x04" "FFFFFF,000080" "\x03" "%02d" "red/navy",
+              irc_color_term2irc[1]);
+    WEE_CHECK_DECODE_ANSI_RGB(string, "test_\x1B[31;48;2;0;0;128mred/navy");
+    snprintf (string, sizeof (string),
+              "test_" "\x03" "99,%02d" "\x04" "FF8800" "orange/red",
+              irc_color_term2irc[1]);
+    WEE_CHECK_DECODE_ANSI_RGB(string, "test_\x1B[38;2;255;136;0;41morange/red");
+
+    /* Background reset: colors reset, then RGB text color. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800,000080" "A"
+                              "\x03" "\x04" "FF8800" "B",
+                              "test_\x1B[38;2;255;136;0;48;2;0;0;128mA"
+                              "\x1B[49mB");
+
+    /* RGB text color alone followed by "," and hexadecimal digits */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" "\x02\x02" ",ABCDEF",
+                              "test_\x1B[38;2;255;136;0m,ABCDEF");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" ",G",
+                              "test_\x1B[38;2;255;136;0m,G");
+    /* SI (IRC reset): RGB colors are sent again after it. */
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800" "A"
+                              "\x0F" "\x04" "FF8800" "B",
+                              "test_\x1B[38;2;255;136;0mA\x0F" "B");
+    WEE_CHECK_DECODE_ANSI_RGB("test_" "\x04" "FF8800,000080" "A"
+                              "\x0F" "\x04" "FF8800,000080" "B",
+                              "test_\x1B[38;2;255;136;0;48;2;0;0;128mA"
+                              "\x0F" "B");
+}
+
+/*
+ * Test functions:
  *   irc_color_modifier_cb
  */
 
 TEST(IrcColor, ModifierCallback)
 {
-    char string[1024], *result;
+    char string[1024], str_core[64], *result;
 
     /* Modifier "irc_color_decode" */
     snprintf (string, sizeof (string),
@@ -846,6 +2073,14 @@ TEST(IrcColor, ModifierCallback)
     STRCMP_EQUAL(string, result);
     free (result);
 
+    /* A buffer after ";" is only for modifier "irc_color_decode_ansi". */
+    snprintf (str_core, sizeof (str_core), "1;0x%lx",
+              (unsigned long)gui_buffers);
+    result = hook_modifier_exec (NULL, "irc_color_encode",
+                                 str_core, STRING_USER_BOLD);
+    STRCMP_EQUAL("test_bold_end", result);
+    free (result);
+
     /* Modifier "irc_color_decode_ansi" */
     snprintf (string, sizeof (string),
               "test_%sbold1%s_normal_%sbold2%s_normal_%sbold3%s_normal",
@@ -859,6 +2094,88 @@ TEST(IrcColor, ModifierCallback)
                                  "1", STRING_ANSI_BOLD);
     STRCMP_EQUAL(string, result);
     free (result);
+
+    /* Modifier "irc_color_decode_ansi": palette of default server options */
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 "1", "A\x1B[38;5;196mB");
+    STRCMP_EQUAL("A" "\x03" "52" "B", result);
+    free (result);
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 str_core, "A\x1B[38;5;196mB");
+    STRCMP_EQUAL("A" "\x03" "52" "B", result);
+    free (result);
+    config_file_option_set (
+        irc_config_server_default[IRC_SERVER_OPTION_ANSI_COLORS], "basic", 1);
+    snprintf (string, sizeof (string),
+              "A%s%02dB",
+              IRC_COLOR_COLOR_STR, irc_color_convert_term2irc (196));
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 "1", "A\x1B[38;5;196mB");
+    STRCMP_EQUAL(string, result);
+    free (result);
+    config_file_option_reset (
+        irc_config_server_default[IRC_SERVER_OPTION_ANSI_COLORS], 1);
+    snprintf (str_core, sizeof (str_core), "0;0x%lx",
+              (unsigned long)gui_buffers);
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 str_core, "A\x1B[38;5;196mB");
+    STRCMP_EQUAL("AB", result);
+    free (result);
+}
+
+/*
+ * Test functions:
+ *   irc_color_ansi_palette
+ *   irc_color_modifier_cb (modifier "irc_color_decode_ansi" with a buffer)
+ */
+
+TEST(IrcColor, AnsiPalette)
+{
+    struct t_irc_server *server;
+    char string[1024], str_buffer[64], str_data[128], *result;
+
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED, irc_color_ansi_palette (NULL));
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED, irc_color_ansi_palette (""));
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED,
+                irc_color_ansi_palette ("core.weechat"));
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED, irc_color_ansi_palette ("0x1"));
+    snprintf (str_buffer, sizeof (str_buffer), "0x%lx",
+              (unsigned long)gui_buffers);
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED, irc_color_ansi_palette (str_buffer));
+
+    /* Option of the server of the buffer */
+    server = irc_server_alloc ("test_palette");
+    CHECK(server);
+    irc_server_create_buffer (server);
+    snprintf (str_buffer, sizeof (str_buffer), "0x%lx",
+              (unsigned long)server->buffer);
+    snprintf (str_data, sizeof (str_data), "1;%s", str_buffer);
+    LONGS_EQUAL(IRC_COLOR_PALETTE_EXTENDED,
+                irc_color_ansi_palette (str_buffer));
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANSI_COLORS],
+                            "basic", 1);
+    LONGS_EQUAL(IRC_COLOR_PALETTE_BASIC,
+                irc_color_ansi_palette (str_buffer));
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANSI_COLORS],
+                            "rgb", 1);
+    LONGS_EQUAL(IRC_COLOR_PALETTE_RGB,
+                irc_color_ansi_palette (str_buffer));
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 str_data,
+                                 "A\x1B[38;2;255;136;0mB");
+    STRCMP_EQUAL("A" "\x04" "FF8800" "B", result);
+    free (result);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_ANSI_COLORS],
+                            "basic", 1);
+    snprintf (string, sizeof (string),
+              "A%s%02dB",
+              IRC_COLOR_COLOR_STR, irc_color_convert_term2irc (196));
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 str_data,
+                                 "A\x1B[38;5;196mB");
+    STRCMP_EQUAL(string, result);
+    free (result);
+    irc_server_free (server);
 }
 
 /*

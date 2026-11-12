@@ -514,6 +514,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          curses/                                | Корен unit тестова за Curses интерфејс.
 |             test-gui-curses-mouse.cpp           | Тестови: миш (Curses интерфејс).
 |             test-gui-curses-term.cpp            | Тестови: функције терминала (Curses интерфејс).
+// TRANSLATION MISSING
+|             test-gui-curses-window.cpp          | Tests: window functions (Curses interface).
 |       plugins/                                  | Корен unit тестова додатака.
 |          test-plugin-api-info.cpp               | Тестови: инфо функције API додатака.
 |          test-plugin-config.cpp                 | Тестови: функције конфигурације додатка.
@@ -1080,6 +1082,11 @@ struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 
 * стандардна боја: необавезни атрибути + двоцифрени број
 * проширена боја: `+@+` + необавезни атрибути + петоцифрени број
+// TRANSLATION MISSING
+* RGB color _(WeeChat ≥ 5.0.0)_: `+@+` + optional attributes + `+#+` + RGB
+  value on 6 hexadecimal digits (for example `+@*#ff8800+`); it is allowed
+  in all foreground and background colors with `EXT` in table below, but not
+  in the ncurses pair ([hex]#19# + `EXT`), which is always 5 digits
 
 У следећој табели се подразумева следеће:
 

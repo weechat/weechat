@@ -689,6 +689,14 @@ Path parameters:
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје
 ** `strip`: уклањају се боје
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Пример захтева: врати све бафере без линија:
 
@@ -780,7 +788,7 @@ HTTP/1.1 200 OK
         "hidden": false,
         "title": "Welcome to the WeeChat official support channel",
         "modes": "+nt",
-        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[38;5;22m(\u001b[39mi\u001b[38;5;22m)",
         "input": "",
         "input_position": 0,
         "input_multiline": false,
@@ -891,7 +899,7 @@ HTTP/1.1 200 OK
     "hidden": false,
     "title": "Welcome to the WeeChat official support channel",
     "modes": "+nt",
-    "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+    "input_prompt": "\u001b[92m@\u001b[96malice\u001b[38;5;22m(\u001b[39mi\u001b[38;5;22m)",
     "input": "",
     "input_position": 0,
     "input_multiline": false,
@@ -1133,6 +1141,14 @@ GET /api/buffers/{име_бафера}/lines/{id_линије}
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје
 ** `strip`: уклањају се боје
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Пример захтева: врати последњих 1000 линија бафера, без кодова боје:
 
@@ -1229,6 +1245,14 @@ GET /api/buffers/{име_бафера}/nicks
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје
 ** `strip`: уклањају се боје
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Пример захтева: врати надимке бафера:
 
@@ -1763,6 +1787,14 @@ POST /api/sync
 ** `weechat`: враћају се WeeChat интерни кодови боје
 ** `strip`: уклањају се боје
 // TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
+// TRANSLATION MISSING
 * `options` (array of strings, optional, default: `[]`): options to
   synchronize: the events `option_changed` and `option_removed` are sent when
   an option matching one of these names is added, changed or removed; the
@@ -2157,7 +2189,7 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
         "hidden": false,
         "title": "",
         "modes": "",
-        "input_prompt": "\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input_prompt": "\u001b[96malice\u001b[38;5;22m(\u001b[39mi\u001b[38;5;22m)",
         "input": "",
         "input_position": 0,
         "input_multiline": false,

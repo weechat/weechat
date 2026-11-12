@@ -343,6 +343,7 @@ relay_api_alloc (struct t_relay_client *client)
     RELAY_API_DATA(client, sync_input) = 0;
     RELAY_API_DATA(client, sync_notify_only) = 0;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
+    RELAY_API_DATA(client, sync_rgb_colors) = 0;
     RELAY_API_DATA(client, sync_options) = NULL;
     RELAY_API_DATA(client, num_sync_options) = 0;
 }
@@ -386,6 +387,8 @@ relay_api_alloc_with_infolist (struct t_relay_client *client,
         infolist, "sync_notify_only");
     RELAY_API_DATA(client, sync_colors) = weechat_infolist_integer (
         infolist, "sync_colors");
+    RELAY_API_DATA(client, sync_rgb_colors) = weechat_infolist_integer (
+        infolist, "sync_rgb_colors");
     RELAY_API_DATA(client, sync_options) = NULL;
     RELAY_API_DATA(client, num_sync_options) = 0;
     options = weechat_string_split (
@@ -500,6 +503,8 @@ relay_api_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!weechat_infolist_new_var_integer (item, "sync_colors", RELAY_API_DATA(client, sync_colors)))
         return 0;
+    if (!weechat_infolist_new_var_integer (item, "sync_rgb_colors", RELAY_API_DATA(client, sync_rgb_colors)))
+        return 0;
     options = (RELAY_API_DATA(client, sync_options)) ?
         weechat_string_rebuild_split_string (
             (const char **)RELAY_API_DATA(client, sync_options), "\n", 0, -1) :
@@ -538,6 +543,7 @@ relay_api_print_log (struct t_relay_client *client)
         weechat_log_printf ("    sync_input. . . . . . . : %d", RELAY_API_DATA(client, sync_input));
         weechat_log_printf ("    sync_notify_only. . . . : %d", RELAY_API_DATA(client, sync_notify_only));
         weechat_log_printf ("    sync_colors . . . . . . : %d", RELAY_API_DATA(client, sync_colors));
+        weechat_log_printf ("    sync_rgb_colors . . . . : %d", RELAY_API_DATA(client, sync_rgb_colors));
         weechat_log_printf ("    num_sync_options. . . . : %d", RELAY_API_DATA(client, num_sync_options));
         for (i = 0; i < RELAY_API_DATA(client, num_sync_options); i++)
         {

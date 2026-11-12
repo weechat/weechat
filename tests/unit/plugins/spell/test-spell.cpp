@@ -25,6 +25,7 @@ extern int spell_command_authorized (const char *command);
 extern int spell_string_is_url (const char *word);
 extern int spell_string_is_nick (struct t_gui_buffer *buffer, char *word);
 extern int spell_string_is_simili_number (const char *word);
+extern int spell_is_hex_color (const char *string);
 extern void spell_skip_color_codes (char **string, char **result);
 }
 
@@ -335,8 +336,17 @@ TEST(Spell, SkipColorCodes)
     /* IRC hex color: reset */
     WEE_CHECK_SKIP_COLOR_CODES("\x04", "word", "\x04word");
 
+    LONGS_EQUAL(0, spell_is_hex_color (""));
+    LONGS_EQUAL(0, spell_is_hex_color ("FF7F0"));
+    LONGS_EQUAL(0, spell_is_hex_color ("FF7F0G"));
+    LONGS_EQUAL(1, spell_is_hex_color ("ff7f00"));
+    LONGS_EQUAL(1, spell_is_hex_color ("FF7F00AB"));
+
+    /* IRC hex color: less than 6 digits (reset + text) */
+    WEE_CHECK_SKIP_COLOR_CODES("\x04", "Fword", "\x04" "Fword");
+    WEE_CHECK_SKIP_COLOR_CODES("\x04", "facde text", "\x04" "facde text");
+
     /* IRC hex color: foreground */
-    WEE_CHECK_SKIP_COLOR_CODES("\x04" "F", "word", "\x04" "Fword");
     WEE_CHECK_SKIP_COLOR_CODES("\x04" "FF7F00", "word", "\x04" "FF7F00word");
     WEE_CHECK_SKIP_COLOR_CODES("\x04" "FF7F00", "1word",
                                "\x04" "FF7F001word");
@@ -346,7 +356,9 @@ TEST(Spell, SkipColorCodes)
                                "\x04" "FF7F00,word");
 
     /* IRC hex color: foreground and background */
-    WEE_CHECK_SKIP_COLOR_CODES("\x04" "F,8", "word", "\x04" "F,8word");
+    WEE_CHECK_SKIP_COLOR_CODES("\x04", "F,8word", "\x04" "F,8word");
+    WEE_CHECK_SKIP_COLOR_CODES("\x04" "FFFFFF", ",abc word",
+                               "\x04" "FFFFFF,abc word");
     WEE_CHECK_SKIP_COLOR_CODES("\x04" "FFFF00,8B008B", "word",
                                "\x04" "FFFF00,8B008Bword");
     WEE_CHECK_SKIP_COLOR_CODES("\x04" "FFFF00,8B008B", "1word",

@@ -118,6 +118,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "charset_message",      "message"                 },
   { "default_chantypes",    "#&"                      },
   { "registered_mode",      "r"                       },
+  { "ansi_colors",          "extended"                },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =

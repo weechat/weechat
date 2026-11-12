@@ -37,6 +37,8 @@ struct t_relay_weechat_data
     enum t_relay_weechat_compression compression; /* compression type       */
     int escape_commands;               /* 1 if backslashes are interpreted  */
                                        /* in commands sent by client        */
+    int rgb_colors;                    /* 1 if client supports RGB colors   */
+                                       /* ("#rrggbb") in color codes        */
 
     /* authentication status (init command) */
     int password_ok;                   /* password received and OK?         */

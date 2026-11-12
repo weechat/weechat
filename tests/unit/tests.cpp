@@ -113,6 +113,7 @@ IMPORT_TEST_GROUP(GuiWindow);
 /* GUI - Curses */
 IMPORT_TEST_GROUP(GuiCursesMouse);
 IMPORT_TEST_GROUP(GuiCursesTerm);
+IMPORT_TEST_GROUP(GuiCursesWindow);
 /* scripts */
 IMPORT_TEST_GROUP(Scripts);
 

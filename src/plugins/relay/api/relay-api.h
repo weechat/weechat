@@ -58,6 +58,7 @@ struct t_relay_api_data
     int sync_notify_only;                 /* 1 to sync only highlights and  */
                                           /* private messages               */
     enum t_relay_api_colors sync_colors;  /* colors to send with sync       */
+    int sync_rgb_colors;                  /* 1 to keep RGB colors with sync */
     char **sync_options;                  /* options to sync (masks with    */
                                           /* "*"), NULL-terminated array    */
     int num_sync_options;                 /* number of options to sync      */

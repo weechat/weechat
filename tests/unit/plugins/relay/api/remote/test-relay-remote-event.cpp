@@ -1308,9 +1308,10 @@ TEST(RelayRemoteEventWithRemote, SyncWithRemote)
     relay_remote_event_sync_with_remote (remote);
     CHECK(peer_recv () > 0);
     STRCMP_EQUAL("[{\"request\":\"GET /api/buffers?lines=-1000&nicks=true"
-                 "&colors=weechat\",\"request_id\":\"initial_sync\"},"
+                 "&colors=weechat&rgb_colors=true\","
+                 "\"request_id\":\"initial_sync\"},"
                  "{\"request\":\"POST /api/sync\","
-                 "\"body\":{\"colors\":\"weechat\"}}]",
+                 "\"body\":{\"colors\":\"weechat\",\"rgb_colors\":true}}]",
                  data_sent);
 }
 

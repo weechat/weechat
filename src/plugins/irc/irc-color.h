@@ -8,6 +8,7 @@
 #define WEECHAT_PLUGIN_IRC_COLOR_H
 
 #define IRC_NUM_COLORS        100
+#define IRC_COLOR_DEFAULT     99   /* default color (fg or bg)         */
 
 /*
  * Shift ncurses colors for compatibility with colors
@@ -49,7 +50,33 @@
 #define IRC_COLOR_UNDERLINE_CHAR     '\x1F'  /* underlined text             */
 #define IRC_COLOR_UNDERLINE_STR      "\x1F"  /*   [1F]...[1F]               */
 
+#define IRC_COLOR_MONOSPACE_CHAR     '\x11'  /* monospace text              */
+#define IRC_COLOR_MONOSPACE_STR      "\x11"  /*   [11]...[11]               */
+
 #define IRC_COLOR_TERM2IRC_NUM_COLORS 16
+
+/* Flag for a RGB color (IRC hex color "^Drrggbb") in an IRC formatting */
+#define IRC_COLOR_RGB_FLAG           0x1000000
+
+/* Colors of IRC formatting which are not a color */
+#define IRC_COLOR_FORMATTING_NONE    -1 /* no color code                    */
+
+/* Extended IRC colors (defined with RGB values) */
+#define IRC_COLOR_EXTENDED_FIRST     16
+#define IRC_COLOR_EXTENDED_LAST      98
+#define IRC_COLOR_EXTENDED_BLACK     88 /* same as IRC color 1             */
+#define IRC_COLOR_NUM_EXTENDED                                          \
+    (IRC_COLOR_EXTENDED_LAST - IRC_COLOR_EXTENDED_FIRST + 1)
+
+/* Colors used to convert ANSI colors to IRC colors */
+enum t_irc_color_palette
+{
+    IRC_COLOR_PALETTE_BASIC = 0,       /* IRC colors 0-15                   */
+    IRC_COLOR_PALETTE_EXTENDED,        /* IRC colors 0-98                   */
+    IRC_COLOR_PALETTE_RGB,             /* IRC colors 0-98 and hex colors    */
+    /* number of palettes */
+    IRC_COLOR_NUM_PALETTES,
+};
 
 /* Macros for WeeChat core and IRC colors */
 
@@ -99,19 +126,64 @@
         __string,                                                       \
         weechat_config_boolean (irc_config_network_colors_receive))
 
-struct t_irc_color_ansi_state
+/* Formatting (attributes and colors) at a position in an IRC message */
+struct t_irc_color_formatting
 {
-    char keep_colors;
     char bold;
-    char underline;
+    char reverse;
     char italic;
     char strikethrough;
+    char underline;
+    char monospace;
+    int fg;                            /* IRC color (0-99), RGB color with  */
+                                       /* flag IRC_COLOR_RGB_FLAG, or       */
+                                       /* IRC_COLOR_FORMATTING_NONE         */
+    int bg;                            /* background (same values as fg)    */
 };
 
+/* State of ANSI colors converted to IRC colors */
+struct t_irc_color_ansi_state
+{
+    int palette;                       /* IRC colors used (palette)         */
+    struct t_irc_color_formatting formatting; /* formatting of ANSI colors  */
+                                       /* (like on a terminal), colors are  */
+                                       /* IRC_COLOR_DEFAULT (99) by default */
+    int irc_fg;                        /* colors displayed by IRC client:   */
+    int irc_bg;                        /* also changed by IRC codes in text */
+    char fg_only;                      /* last code has only a fg:          */
+                                       /* 1 = "^Cfg", 2 = "^Dfg" (hex)      */
+};
+
+extern int irc_color_is_hex_color (const unsigned char *string);
+extern int irc_color_hex_color_value (const unsigned char *string);
+extern int irc_color_code_parse (const char *string, int *fg, int *bg);
+extern int irc_color_char_size (const char *string);
+extern int irc_color_code_size (const char *string);
+extern void irc_color_formatting_init (struct t_irc_color_formatting *formatting);
+extern void irc_color_formatting_set_colors (int *fg, int *bg, int code_fg,
+                                             int code_bg, int reset);
+extern void irc_color_formatting_update (struct t_irc_color_formatting *formatting,
+                                         const char *string, int length);
+extern void irc_color_formatting_add_color (char **output, int color);
+extern void irc_color_formatting_add_code (char **output, int fg, int bg);
+extern int irc_color_formatting_transition (char **output,
+                                            const struct t_irc_color_formatting *from,
+                                            const struct t_irc_color_formatting *to,
+                                            int colors_only);
+extern void irc_color_formatting_add_separator (char **output, int fg_only,
+                                                const char *text, int length);
+extern char *irc_color_formatting_codes (struct t_irc_color_formatting *formatting,
+                                         const char *next_text,
+                                         int attributes_only);
 extern char *irc_color_decode (const char *string, int keep_colors);
 extern const char *irc_color_decode_const (const char *string, int keep_colors);
 extern char *irc_color_encode (const char *string, int keep_colors);
-extern char *irc_color_decode_ansi (const char *string, int keep_colors);
+extern int irc_color_convert_rgb2irc_palette (long rgb, int palette);
+extern int irc_color_convert_term2irc_palette (int color, int palette);
+extern int irc_color_convert_term2irc_cached (int color, int palette);
+extern int irc_color_ansi_palette (const char *str_buffer);
+extern char *irc_color_decode_ansi (const char *string, int keep_colors,
+                                    int palette);
 extern char *irc_color_modifier_cb (const void *pointer, void *data,
                                     const char *modifier,
                                     const char *modifier_data,

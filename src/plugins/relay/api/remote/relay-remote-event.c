@@ -1217,7 +1217,8 @@ relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
     if (json_req1)
     {
         snprintf (url, sizeof (url),
-                  "GET /api/buffers?lines=-%d&nicks=true&colors=weechat",
+                  "GET /api/buffers?lines=-%d&nicks=true&colors=weechat"
+                  "&rgb_colors=true",
                   weechat_config_integer (relay_config_api_remote_get_lines));
         relay_json_object_add (json_req1, "request",
                                relay_json_new_string (url));
@@ -1242,6 +1243,8 @@ relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
         }
         relay_json_object_add (json_body, "colors",
                                relay_json_new_string ("weechat"));
+        relay_json_object_add (json_body, "rgb_colors",
+                               relay_json_new_bool (1));
         relay_json_object_add (json_req2, "body", json_body);
         relay_json_array_add (json, json_req2);
     }

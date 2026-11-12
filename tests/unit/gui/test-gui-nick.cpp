@@ -373,6 +373,19 @@ TEST(GuiNick, FindColor)
     WEE_FIND_COLOR("148", "ABCDEF]^", 29, NULL);
     WEE_FIND_COLOR("186", "ABCDEF]^", 26, NULL);
 
+    /* With RGB colors (custom colors, with background, option) */
+    WEE_FIND_COLOR("#ff8800", "abcdef", -1, "red,blue,#ff8800,magenta");
+    WEE_FIND_COLOR("#ff8800:#000080", "abcdef", -1,
+                   "red,blue,#ff8800:#000080,magenta");
+    config_file_option_set (config_color_chat_nick_colors,
+                            "red,blue,#ff8800,magenta", 1);
+    WEE_FIND_COLOR("#ff8800", "abcdef", -1, NULL);
+    config_file_option_reset (config_color_chat_nick_colors, 1);
+    config_file_option_set (config_look_nick_color_force,
+                            "abcdef:#00ff80", 1);
+    WEE_FIND_COLOR("#00ff80", "abcdef", -1, NULL);
+    config_file_option_reset (config_look_nick_color_force, 1);
+
     /* With case range and custom colors */
     WEE_FIND_COLOR("214", "ABCDEF]^", -1, "red,blue,214,magenta,yellow");
     WEE_FIND_COLOR("yellow", "ABCDEF]^", 0, "red,blue,214,magenta,yellow");

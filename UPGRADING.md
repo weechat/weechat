@@ -254,6 +254,94 @@ The text displayed before nick and after nick/target is set by options
 between nick and target is set by option `irc.look.notice_target_separator` (default: `:`),
 and their color is set by option `irc.color.notice`.
 
+### RGB colors in color codes
+
+WeeChat color codes can now contain RGB colors: `@` + optional attributes + `#rrggbb`, for example
+`\x19F@#ff8800`, instead of a color number on 5 digits (`\x19F@00208`); see
+[color codes in strings](https://weechat.org/doc/weechat/dev/#color_codes_in_strings).
+
+RGB colors received in ANSI escape codes (`38;2;r;g;b` and `48;2;r;g;b`, for example in output of
+command `/exec`) and in IRC hex colors (`^D`, for example `^DFF7F00`) are now kept as RGB colors
+instead of being converted to the nearest color of the 256-color palette.
+
+On a terminal with 256 colors and without direct colors (for example `TERM=xterm-256color`),
+these RGB colors are displayed with the nearest color among colors 16-255: colors 0-15 are not
+used, because they are defined by the theme of the terminal. Previous versions used the nearest
+of all 256 colors, so a RGB color can be displayed with another color than before (for example
+`#000080` is displayed with color 18 instead of 4).
+
+Scripts and plugins parsing WeeChat color codes themselves must accept `#` followed by 6
+hexadecimal digits after `@` and the optional attributes. The modifier `color_downgrade_rgb`
+can be used to get strings with a color number instead of the RGB colors: it uses the nearest
+color among colors 16-255 (like on screen), so the result can differ from the previous versions;
+info `color_rgb2term` gives the nearest of all 256 colors, like the previous versions.
+
+### ANSI codes 21 and 22
+
+The ANSI code 22 (normal intensity) now removes both bold and dim when ANSI colors
+are decoded (for example in output of command `/exec` and in log files displayed in
+backlog), and it is used instead of code 21 to remove bold when WeeChat colors are
+converted to ANSI colors (relay "api" protocol with colors `ansi`, option
+`logger.file.color_lines`).
+
+Log files written by older versions with option `logger.file.color_lines` used code
+22 to remove dim only: in backlog, text which was both bold and dim may be displayed
+without bold after the end of dim.
+
+### Info color_ansi_regex
+
+The POSIX extended regular expression returned by info `color_ansi_regex` has changed: it
+now matches all ANSI control sequences, following the ECMA-48 grammar (parameter bytes,
+intermediate bytes and final byte), for example the cursor style `\e[2 q`, and also
+operating system commands (OSC, for example window title and hyperlinks), device control
+strings (DCS) and other escape sequences like `\e7`, and the chars SI and SO (shift in/out);
+unterminated or cancelled sequences and a lone ESC are matched too (an unterminated
+string ends at the end of the line). Only SGR sequences (ending with `m`) are colors.
+
+### IRC colors in output of /exec -o
+
+ANSI colors converted to IRC colors (for example in output of command `/exec -o`)
+now use the 99 IRC colors: a terminal color 16-255 used to display an IRC color
+16-98 is converted to this IRC color (for example 196 is IRC color 52), and the
+other terminal colors and the RGB colors are converted to the nearest of IRC colors
+16-98 (defined with RGB values in the IRC formatting specification), instead of the
+16 basic IRC colors 0-15; black is still IRC color 1.
+
+This is the new default (option `irc.server_default.ansi_colors` set to `extended`)
+because:
+
+- IRC colors 16-98 are part of the IRC formatting specification and are supported by
+  most current IRC clients;
+- the basic ANSI colors (codes 30-37 and 90-97, terminal colors 0-15), which are the
+  only colors used by most programs, are still converted to IRC colors 0-15: the
+  output of these programs does not change;
+- only colors of the 256-color palette and RGB colors are converted differently: with
+  the 16 basic colors, most of them were converted to a wrong color (for example all
+  shades of a gradient became the same color), and the IRC codes are as short as
+  before.
+
+If people in your channels use IRC clients which do not support colors 16-98, the
+basic colors can be used again with:
+
+```text
+/set irc.server_default.ansi_colors basic
+```
+
+With the value `rgb`, RGB colors and the terminal colors which are not used to
+display an IRC color are sent as-is with IRC hex colors (`^Drrggbb`):
+they are not supported by all IRC clients (some display the hexadecimal digits as
+text), and each color code is longer, so long messages with a lot of colors are
+split in more messages.
+
+### Modifier irc_color_decode_ansi
+
+The modifier data of `irc_color_decode_ansi` can now contain the pointer of the buffer
+where the string is sent, after `;` (for example `1;0x1234abcd`), to use the option
+`ansi_colors` of its IRC server; command `/exec` sends this data.
+
+Scripts which hook this modifier and compare its data with `1` or `0` must accept the
+buffer after `;`, for example by checking only the first char.
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer

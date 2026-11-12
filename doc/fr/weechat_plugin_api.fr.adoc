@@ -10299,6 +10299,15 @@ Exemples :
 * `+*214+` : orange gras
 * `+yellow,red+` : jaune sur rouge
 * `+|cyan+` : cyan (et garder tout attribut définit précédemment)
+// TRANSLATION MISSING
+* `+#ff8800+`: orange (RGB color) _(WeeChat ≥ 5.0.0)_
+
+// TRANSLATION MISSING
+[NOTE]
+_WeeChat ≥ 5.0.0._ RGB colors (for example `+#ff8800+`) can be used directly,
+there is no need to convert them to terminal colors with info "color_rgb2term":
+they are displayed as-is on terminals with direct colors, and with the nearest
+terminal color otherwise.
 
 Valeur de retour :
 
@@ -14237,7 +14246,12 @@ utilisés :
 | Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées).
 
 | [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi | 1.0
-| "1" pour garder les couleurs, "0" pour les supprimer
+| "1" pour garder les couleurs, "0" pour les supprimer,
+  éventuellement suivi par ";" et le pointeur du tampon où la chaîne est
+  envoyée (par exemple "1;0x1234abcd"), pour utiliser l'option
+  irc.server.xxx.ansi_colors de son serveur IRC (sans tampon, ou pour un tampon
+  qui n'est pas un tampon IRC, l'option irc.server_default.ansi_colors est
+  utilisée) _(WeeChat ≥ 5.0.0)_
 | Toute chaîne.
 | Chaîne avec les couleurs ANSI converties en couleurs IRC (ou avec les couleurs
   ANSI supprimées).
@@ -14276,10 +14290,28 @@ utilisés :
 | Chaîne avec les couleurs ANSI converties en couleurs WeeChat (ou avec les
   couleurs ANSI supprimées).
 
+// TRANSLATION MISSING
+| [[hook_modifier_color_normalize_ansi]] color_normalize_ansi | 5.0.0
+| "1" to keep colors, "0" to remove colors
+| Any string.
+| String with normalized ANSI escape sequences: each SGR sequence (`+ESC[...m+`)
+  has only the parameters used, separated by `;`, with colors `38;5;N`,
+  `48;5;N` (terminal color) or `38;2;R;G;B`, `48;2;R;G;B` (RGB color); other
+  escape sequences and char SO (shift out) are removed (all sequences are
+  removed with "0"); char SI (shift in) is kept, because it is also the IRC
+  reset code.
+
+// TRANSLATION MISSING
 | [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7
-| -
+| Optional: `256` to replace RGB colors by the nearest color of the 256-color palette (colors 16-255) _(WeeChat ≥ 5.0.0)_
 | Toute chaîne.
 | Chaîne avec les couleurs WeeChat converties en couleurs ANSI.
+
+// TRANSLATION MISSING
+| [[hook_modifier_color_downgrade_rgb]] color_downgrade_rgb | 5.0.0
+| "name" for a color name (for example `+*#ff8800:#000080+`), empty for a string with WeeChat colors
+| Any string.
+| String with RGB colors (`#rrggbb`) replaced by the nearest terminal color (16-255: colors 0-15 depend on the theme of the terminal).
 
 | [[hook_modifier_eval_path_home]] eval_path_home | 2.7
 | Facultatif : `directory=xxx` où `xxx` peut être : `config`, `data`, `cache`, `runtime`

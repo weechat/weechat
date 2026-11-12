@@ -8,11 +8,70 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests.h"
+
 extern "C"
 {
+#include <stdlib.h>
+#include <string.h>
 #include "src/core/core-config.h"
+#include "src/core/core-config-file.h"
+#include "src/core/core-hook.h"
+#include "src/plugins/weechat-plugin.h"
 #include "src/core/core-string.h"
+#include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
+#include "src/gui/gui-line.h"
+
+extern struct t_gui_buffer *gui_color_buffer;
+extern int gui_color_hash_seed_set;
+extern int gui_color_term_colors;
+extern int gui_color_term_direct_colors;
+extern int gui_color_term_direct_indexed;
+extern int gui_color_pairs_used;
+extern int gui_color_get_pair (int fg, int bg);
+extern void gui_color_pair_direct_key_get_colors (const void *key, int *fg,
+                                                  int *bg);
+extern void gui_color_direct_color_string (int color, char *buffer, int size);
+extern char *gui_color_buffer_rgb_line (const int *colors, int count);
+extern char *gui_color_buffer_palette_line (const char *label,
+                                            int label_width, int rgb);
+extern int gui_color_buffer_sample_rgb;
+extern int gui_color_use_term_colors;
+extern int *gui_color_buffer_get_pairs (int *count, int *count_rgb);
+extern int gui_color_buffer_input_cb (const void *pointer, void *data,
+                                      struct t_gui_buffer *buffer,
+                                      const char *input_data);
+}
+
+/*
+ * Check if a line of a buffer contains a string.
+ *
+ * Return:
+ *   1: string found in a line
+ *   0: string not found
+ */
+
+int
+test_gui_color_buffer_contains (struct t_gui_buffer *buffer,
+                                const char *string)
+{
+    struct t_gui_line *ptr_line;
+
+    if (!buffer)
+        return 0;
+
+    for (ptr_line = buffer->own_lines->first_line; ptr_line;
+         ptr_line = ptr_line->next_line)
+    {
+        if (ptr_line->data->message
+            && strstr (ptr_line->data->message, string))
+        {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 #define WEE_CHECK_DECODE(__result, __string, __replacement)             \
@@ -263,6 +322,8 @@ TEST(GuiColor, GetCustom)
 /*
  * Test functions:
  *   gui_color_convert_rgb_to_term
+ *   gui_color_convert_rgb_to_term_display
+ *   gui_color_convert_rgb_to_term_range
  */
 
 TEST(GuiColor, ConvertRgbToTerm)
@@ -272,11 +333,32 @@ TEST(GuiColor, ConvertRgbToTerm)
     LONGS_EQUAL(154, gui_color_convert_rgb_to_term (0xafff00, 256));
     LONGS_EQUAL(11, gui_color_convert_rgb_to_term (0xafff00, 64));
 
+    /* Terminal with 88 colors: its own palette after the 16 basic colors. */
+    LONGS_EQUAL(0x000000, gui_color_palette_rgb (16, 88));
+    LONGS_EQUAL(0x8b0000, gui_color_palette_rgb (32, 88));
+    LONGS_EQUAL(0xffffff, gui_color_palette_rgb (79, 88));
+    LONGS_EQUAL(0x2e2e2e, gui_color_palette_rgb (80, 88));
+    LONGS_EQUAL(0xe7e7e7, gui_color_palette_rgb (87, 88));
+    LONGS_EQUAL(-1, gui_color_palette_rgb (88, 88));
+    LONGS_EQUAL(gui_color_term256[52], gui_color_palette_rgb (52, 256));
+    LONGS_EQUAL(81, gui_color_convert_rgb_to_term (0x5f5f5f, 88));
+    LONGS_EQUAL(15, gui_color_convert_rgb_to_term (0xffffff, 88));
+    LONGS_EQUAL(52, gui_color_convert_rgb_to_term (0xcd8b00, 88));
+    LONGS_EQUAL(1, gui_color_convert_rgb_to_term (0x5f0000, 88));
+
     /* invalid limit */
     LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x808080, 0));
     LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x808080, -1));
     LONGS_EQUAL(8, gui_color_convert_rgb_to_term (0x808080, 257));
     LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x010203, 100000000));
+
+    /* For display: colors 0-15 (theme of terminal) are not used. */
+    LONGS_EQUAL(244, gui_color_convert_rgb_to_term_display (0x808080, 256));
+    LONGS_EQUAL(196, gui_color_convert_rgb_to_term_display (0xff0000, 256));
+    LONGS_EQUAL(79, gui_color_convert_rgb_to_term_display (0xffffff, 88));
+    LONGS_EQUAL(8, gui_color_convert_rgb_to_term_display (0x808080, 16));
+    LONGS_EQUAL(0, gui_color_convert_rgb_to_term_display (0x808080, 0));
+    LONGS_EQUAL(8, gui_color_convert_rgb_to_term_range (0x808080, 300, 256));
 }
 
 /*
@@ -287,26 +369,800 @@ TEST(GuiColor, ConvertRgbToTerm)
 TEST(GuiColor, ConvertTermToDirect)
 {
     /* default color and basic ANSI colors: unchanged */
-    LONGS_EQUAL(-1, gui_color_convert_term_to_direct (-1));
-    LONGS_EQUAL(0, gui_color_convert_term_to_direct (0));
-    LONGS_EQUAL(1, gui_color_convert_term_to_direct (1));
-    LONGS_EQUAL(7, gui_color_convert_term_to_direct (7));
+    LONGS_EQUAL(-1, gui_color_convert_term_to_direct (-1, 8));
+    LONGS_EQUAL(0, gui_color_convert_term_to_direct (0, 8));
+    LONGS_EQUAL(1, gui_color_convert_term_to_direct (1, 8));
+    LONGS_EQUAL(7, gui_color_convert_term_to_direct (7, 8));
 
     /* out of range: unchanged */
-    LONGS_EQUAL(-2, gui_color_convert_term_to_direct (-2));
-    LONGS_EQUAL(256, gui_color_convert_term_to_direct (256));
-    LONGS_EQUAL(0x123456, gui_color_convert_term_to_direct (0x123456));
+    LONGS_EQUAL(-2, gui_color_convert_term_to_direct (-2, 8));
+    LONGS_EQUAL(256, gui_color_convert_term_to_direct (256, 8));
+    LONGS_EQUAL(0x123456, gui_color_convert_term_to_direct (0x123456, 8));
 
     /* colors converted to RGB */
-    LONGS_EQUAL(0x808080, gui_color_convert_term_to_direct (8));
-    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (9));
-    LONGS_EQUAL(0xffffff, gui_color_convert_term_to_direct (15));
-    LONGS_EQUAL(0x00005f, gui_color_convert_term_to_direct (17));
-    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (196));
-    LONGS_EQUAL(0xeeeeee, gui_color_convert_term_to_direct (255));
+    LONGS_EQUAL(0x808080, gui_color_convert_term_to_direct (8, 8));
+    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (9, 8));
+    LONGS_EQUAL(0xffffff, gui_color_convert_term_to_direct (15, 8));
+    LONGS_EQUAL(0x00015f, gui_color_convert_term_to_direct (17, 8));
+    LONGS_EQUAL(0xff0000, gui_color_convert_term_to_direct (196, 8));
+    LONGS_EQUAL(0xeeeeee, gui_color_convert_term_to_direct (255, 8));
 
-    /* black: forced to 8 so that it is not a basic ANSI color */
-    LONGS_EQUAL(8, gui_color_convert_term_to_direct (16));
+    /*
+     * RGB values < 256 (blue only, including black): green set to 1 so that
+     * it is not a palette index ("xterm-direct256" uses indexes 0-255)
+     */
+    LONGS_EQUAL(0x000100, gui_color_convert_term_to_direct (16, 8));
+
+    /* 16 palette colors (like "xterm-direct16") */
+    LONGS_EQUAL(8, gui_color_convert_term_to_direct (8, 16));
+    LONGS_EQUAL(15, gui_color_convert_term_to_direct (15, 16));
+    LONGS_EQUAL(0x000100, gui_color_convert_term_to_direct (16, 16));
+    LONGS_EQUAL(0xeeeeee, gui_color_convert_term_to_direct (255, 16));
+
+    /* 256 palette colors (like "xterm-direct256") */
+    LONGS_EQUAL(-1, gui_color_convert_term_to_direct (-1, 256));
+    LONGS_EQUAL(8, gui_color_convert_term_to_direct (8, 256));
+    LONGS_EQUAL(16, gui_color_convert_term_to_direct (16, 256));
+    LONGS_EQUAL(255, gui_color_convert_term_to_direct (255, 256));
+    LONGS_EQUAL(256, gui_color_convert_term_to_direct (256, 256));
+}
+
+/*
+ * Test functions:
+ *   gui_color_info_term_colors
+ */
+
+TEST(GuiColor, InfoTermColors)
+{
+    char str_info_no_direct[1024], str_info_256[1024], str_info_8[1024];
+    int old_direct_colors, old_direct_indexed;
+
+    old_direct_colors = gui_color_term_direct_colors;
+    old_direct_indexed = gui_color_term_direct_indexed;
+
+    gui_color_term_direct_colors = 0;
+    gui_color_info_term_colors (str_info_no_direct, sizeof (str_info_no_direct));
+    gui_color_term_direct_colors = 1;
+    gui_color_term_direct_indexed = 256;
+    gui_color_info_term_colors (str_info_256, sizeof (str_info_256));
+    gui_color_term_direct_indexed = 8;
+    gui_color_info_term_colors (str_info_8, sizeof (str_info_8));
+
+    gui_color_term_direct_colors = old_direct_colors;
+    gui_color_term_direct_indexed = old_direct_indexed;
+
+    /* note: $TERM is in the string, it can contain "direct" */
+    CHECK(strstr (str_info_no_direct, "COLORS: "));
+    CHECK(!strstr (str_info_no_direct, " (direct, palette:"));
+    CHECK(strstr (str_info_256, " (direct, palette: 256), "));
+    CHECK(strstr (str_info_8, " (direct, palette: 8), "));
+}
+
+/*
+ * Test functions:
+ *   gui_color_hue_to_rgb
+ */
+
+TEST(GuiColor, HueToRgb)
+{
+    LONGS_EQUAL(0xff0000, gui_color_hue_to_rgb (0));
+    LONGS_EQUAL(0xff7f00, gui_color_hue_to_rgb (30));
+    LONGS_EQUAL(0xffff00, gui_color_hue_to_rgb (60));
+    LONGS_EQUAL(0x00ff00, gui_color_hue_to_rgb (120));
+    LONGS_EQUAL(0x00ffff, gui_color_hue_to_rgb (180));
+    LONGS_EQUAL(0x0000ff, gui_color_hue_to_rgb (240));
+    LONGS_EQUAL(0xff00ff, gui_color_hue_to_rgb (300));
+    LONGS_EQUAL(0xff0000, gui_color_hue_to_rgb (360));
+    LONGS_EQUAL(0xff00ff, gui_color_hue_to_rgb (-60));
+}
+
+/*
+ * Test functions:
+ *   gui_color_buffer_rgb_line
+ *   gui_color_buffer_display (RGB colors)
+ */
+
+TEST(GuiColor, BufferRgb)
+{
+    int colors[2] = { 0xff0000, 0x000080 };
+    char expected[128], *str;
+
+    /* line with 2 RGB colors as background */
+    snprintf (expected, sizeof (expected), " %s %s %s",
+              "\x19" "B@#ff0000", "\x19" "B@#000080", GUI_NO_COLOR);
+    WEE_TEST_STR(expected, gui_color_buffer_rgb_line (colors, 2));
+    snprintf (expected, sizeof (expected), " %s", GUI_NO_COLOR);
+    WEE_TEST_STR(expected, gui_color_buffer_rgb_line (colors, 0));
+
+    /* color buffer: rainbow (starts with red) and gray ramp (black, white) */
+    gui_color_buffer_open ();
+    CHECK(gui_color_buffer);
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer,
+                                          "\x19" "B@#ff0000"));
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer,
+                                          "\x19" "B@#000000"));
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer,
+                                          "\x19" "B@#ffffff"));
+    gui_buffer_close (gui_color_buffer);
+    POINTERS_EQUAL(NULL, gui_color_buffer);
+}
+
+/*
+ * Test functions:
+ *   gui_color_buffer_get_pairs
+ *   gui_color_buffer_display (pairs)
+ */
+
+TEST(GuiColor, BufferPairs)
+{
+    char str_pair[64];
+    int old_direct_colors, old_use_term_colors, pair_term, pair_rgb1;
+    int pair_rgb2, *pairs, count, count_rgb;
+
+    old_direct_colors = gui_color_term_direct_colors;
+    old_use_term_colors = gui_color_use_term_colors;
+    gui_color_use_term_colors = 0;
+
+    /* one pair of terminal colors and two pairs of RGB colors */
+    gui_color_reset_pairs ();
+    gui_color_term_direct_colors = 1;
+    pair_term = gui_color_get_pair (214, -1);
+    pair_rgb1 = gui_color_get_pair (gui_color_rgb_to_number (0x123456), -1);
+    pair_rgb2 = gui_color_get_pair (gui_color_rgb_to_number (0x654321), -1);
+    CHECK((pair_term > 0) && (pair_rgb1 > 0) && (pair_rgb2 > 0));
+    LONGS_EQUAL(3, gui_color_pairs_used);
+
+    /* pairs of RGB colors are not in the array */
+    pairs = gui_color_buffer_get_pairs (&count, &count_rgb);
+    CHECK(pairs);
+    LONGS_EQUAL(1, count);
+    LONGS_EQUAL(2, count_rgb);
+    LONGS_EQUAL(pair_term, pairs[1]);
+    free (pairs);
+
+    /* color buffer: pair of terminal colors displayed, RGB pairs counted */
+    gui_color_buffer_open ();
+    CHECK(gui_color_buffer);
+    snprintf (str_pair, sizeof (str_pair), "\x19@%05d", pair_term);
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer, str_pair));
+    snprintf (str_pair, sizeof (str_pair), "\x19@%05d", pair_rgb1);
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer, str_pair));
+    CHECK(test_gui_color_buffer_contains (
+              gui_color_buffer, " ... and 2 pairs with RGB colors"));
+
+    /* terminal colors (alt-c): no count of RGB pairs */
+    gui_color_use_term_colors = 1;
+    gui_color_buffer_display ();
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer,
+                                           "pairs with RGB colors"));
+    gui_color_use_term_colors = 0;
+
+    /* no RGB pairs: no count */
+    gui_color_reset_pairs ();
+    CHECK(gui_color_get_pair (214, -1) > 0);
+    gui_color_buffer_display ();
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer,
+                                           "pairs with RGB colors"));
+
+    gui_buffer_close (gui_color_buffer);
+    POINTERS_EQUAL(NULL, gui_color_buffer);
+    gui_color_term_direct_colors = old_direct_colors;
+    gui_color_use_term_colors = old_use_term_colors;
+    gui_color_reset_pairs ();
+}
+
+/*
+ * Test functions:
+ *   gui_color_buffer_palette_line
+ *   gui_color_buffer_display_palette_rgb
+ */
+
+TEST(GuiColor, BufferPaletteRgb)
+{
+    char *str;
+    int old_direct_colors;
+
+    /* palette indexes, label padded */
+    str = gui_color_buffer_palette_line ("ab", 4, 0);
+    CHECK(strncmp (str, " ab   ", 6) == 0);
+    CHECK(strstr (str, "\x19" "B@00000   "));
+    CHECK(strstr (str, "\x19" "B@00015   "));
+    CHECK(!strstr (str, "#"));
+    free (str);
+
+    /* standard RGB values */
+    str = gui_color_buffer_palette_line ("ab", 2, 1);
+    CHECK(strncmp (str, " ab ", 4) == 0);
+    CHECK(strstr (str, "\x19" "B@#000000   "));
+    CHECK(strstr (str, "\x19" "B@#800000   "));
+    CHECK(strstr (str, "\x19" "B@#ffffff   "));
+    free (str);
+
+    /* displayed in color buffer only with direct colors */
+    old_direct_colors = gui_color_term_direct_colors;
+    gui_color_buffer_open ();
+    CHECK(gui_color_buffer);
+    gui_color_term_direct_colors = 0;
+    gui_color_buffer_display ();
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer, "\x19" "B@#800000"));
+    gui_color_term_direct_colors = 1;
+    gui_color_buffer_display ();
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer, "\x19" "B@#800000"));
+    gui_color_term_direct_colors = old_direct_colors;
+    gui_buffer_close (gui_color_buffer);
+}
+
+/*
+ * Test functions:
+ *   gui_color_buffer_input_cb (RGB color)
+ *   gui_color_buffer_display_sample
+ */
+
+TEST(GuiColor, BufferSample)
+{
+    char str_nearest[64];
+
+    gui_color_buffer_open ();
+    CHECK(gui_color_buffer);
+    LONGS_EQUAL(-1, gui_color_buffer_sample_rgb);
+
+    /* invalid RGB colors: ignored */
+    gui_color_buffer_input_cb (NULL, NULL, gui_color_buffer, "#ff88");
+    gui_color_buffer_input_cb (NULL, NULL, gui_color_buffer, "#ff880000");
+    gui_color_buffer_input_cb (NULL, NULL, gui_color_buffer, "ff8800");
+    LONGS_EQUAL(-1, gui_color_buffer_sample_rgb);
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer, "Color #ff8800"));
+
+    /* valid RGB color: displayed with nearest terminal color */
+    gui_color_buffer_input_cb (NULL, NULL, gui_color_buffer, "#FF8800");
+    LONGS_EQUAL(0xff8800, gui_color_buffer_sample_rgb);
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer, "Color #ff8800"));
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer,
+                                          "\x19" "B@#ff8800      "));
+    snprintf (str_nearest, sizeof (str_nearest),
+              "nearest terminal color: %d ",
+              gui_color_convert_rgb_to_term_display (0xff8800,
+                                                    gui_color_term_colors));
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer, str_nearest));
+
+    /* closing the buffer resets the color */
+    gui_buffer_close (gui_color_buffer);
+    LONGS_EQUAL(-1, gui_color_buffer_sample_rgb);
+}
+
+/*
+ * Test functions:
+ *   gui_color_suggest_term_direct
+ */
+
+TEST(GuiColor, SuggestTermDirect)
+{
+    STRCMP_EQUAL("xterm-direct256", gui_color_suggest_term_direct (NULL, 0));
+    STRCMP_EQUAL("xterm-direct256", gui_color_suggest_term_direct ("", 0));
+    STRCMP_EQUAL("xterm-direct256", gui_color_suggest_term_direct ("xterm", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("xterm-256color", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("xterm-ghostty", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("unknown-term", 0));
+    STRCMP_EQUAL("tmux-direct", gui_color_suggest_term_direct ("tmux", 0));
+    STRCMP_EQUAL("tmux-direct",
+                 gui_color_suggest_term_direct ("tmux-256color", 0));
+    STRCMP_EQUAL("kitty-direct", gui_color_suggest_term_direct ("kitty", 0));
+    STRCMP_EQUAL("foot-direct", gui_color_suggest_term_direct ("foot", 0));
+    STRCMP_EQUAL("st-direct",
+                 gui_color_suggest_term_direct ("st-256color", 0));
+    STRCMP_EQUAL("xterm-direct256",
+                 gui_color_suggest_term_direct ("stterm-256color", 0));
+
+    /* GNU screen and Linux console: no TERM with direct colors */
+    POINTERS_EQUAL(NULL, gui_color_suggest_term_direct ("screen", 0));
+    POINTERS_EQUAL(NULL,
+                   gui_color_suggest_term_direct ("screen-256color", 0));
+    POINTERS_EQUAL(NULL,
+                   gui_color_suggest_term_direct ("screen.xterm-256color", 0));
+    POINTERS_EQUAL(NULL, gui_color_suggest_term_direct ("linux", 0));
+
+    /* running under tmux: always "tmux-direct" */
+    STRCMP_EQUAL("tmux-direct",
+                 gui_color_suggest_term_direct ("screen-256color", 1));
+    STRCMP_EQUAL("tmux-direct",
+                 gui_color_suggest_term_direct ("xterm-256color", 1));
+}
+
+/*
+ * Test functions:
+ *   gui_color_info_rgb
+ */
+
+TEST(GuiColor, InfoRgb)
+{
+    char str_info[1024];
+    int old_direct_colors;
+
+    old_direct_colors = gui_color_term_direct_colors;
+
+    gui_color_term_direct_colors = 1;
+    gui_color_info_rgb (str_info, sizeof (str_info));
+    CHECK(strstr (str_info, "displayed as-is"));
+
+    gui_color_term_direct_colors = 0;
+    gui_color_info_rgb (str_info, sizeof (str_info));
+    CHECK(strstr (str_info, "nearest terminal color"));
+
+    gui_color_term_direct_colors = old_direct_colors;
+}
+
+/*
+ * Test functions:
+ *   gui_color_ansi_is_indexed
+ */
+
+TEST(GuiColor, AnsiIsIndexed)
+{
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed (NULL));
+    LONGS_EQUAL(1, gui_color_ansi_is_indexed (""));
+    LONGS_EQUAL(1, gui_color_ansi_is_indexed ("\x1B[37m"));
+    LONGS_EQUAL(1, gui_color_ansi_is_indexed ("\x1B[97m"));
+    LONGS_EQUAL(1, gui_color_ansi_is_indexed ("\x1B[38;5;255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[38:2::0:0:255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[38:2:0:0:255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[38;2;0;0;255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[48:2::0:0:255m"));
+    LONGS_EQUAL(0, gui_color_ansi_is_indexed ("\x1B[48;2;0;0;255m"));
+}
+
+/*
+ * Test functions:
+ *   gui_color_rgb_parse
+ *   gui_color_rgb_to_direct
+ *   gui_color_rgb_to_number
+ *   gui_color_rgb_from_number
+ *   gui_color_rgb_to_term_cached
+ *   gui_color_extended_string
+ */
+
+TEST(GuiColor, Rgb)
+{
+    int number1, number2;
+
+    /* parse */
+    LONGS_EQUAL(-1, gui_color_rgb_parse (NULL));
+    LONGS_EQUAL(-1, gui_color_rgb_parse (""));
+    LONGS_EQUAL(-1, gui_color_rgb_parse ("#"));
+    LONGS_EQUAL(-1, gui_color_rgb_parse ("#12345"));
+    LONGS_EQUAL(-1, gui_color_rgb_parse ("#12345g"));
+    LONGS_EQUAL(-1, gui_color_rgb_parse ("123456"));
+    LONGS_EQUAL(0x000000, gui_color_rgb_parse ("#000000"));
+    LONGS_EQUAL(0xff8800, gui_color_rgb_parse ("#ff8800"));
+    LONGS_EQUAL(0xff8800, gui_color_rgb_parse ("#FF8800"));
+    LONGS_EQUAL(0xabcdef, gui_color_rgb_parse ("#abcdef_text"));
+
+    /* RGB to direct color */
+    LONGS_EQUAL(-1, gui_color_rgb_to_direct (-1));
+    LONGS_EQUAL(0x000100, gui_color_rgb_to_direct (0x000000));
+    LONGS_EQUAL(0x0001ff, gui_color_rgb_to_direct (0x0000ff));
+    LONGS_EQUAL(0x000100, gui_color_rgb_to_direct (0x000100));
+    LONGS_EQUAL(0xff8800, gui_color_rgb_to_direct (0xff8800));
+
+    /* RGB to color number (interned) */
+    number1 = gui_color_rgb_to_number (0x123456);
+    CHECK(number1 >= GUI_COLOR_RGB_FIRST);
+    CHECK(number1 <= GUI_COLOR_RGB_LAST);
+    LONGS_EQUAL(number1, gui_color_rgb_to_number (0x123456));
+    number2 = gui_color_rgb_to_number (0x654321);
+    CHECK(number2 >= GUI_COLOR_RGB_FIRST);
+    CHECK(number1 != number2);
+
+    /* color number to RGB */
+    LONGS_EQUAL(0x123456, gui_color_rgb_from_number (number1));
+    LONGS_EQUAL(0x654321, gui_color_rgb_from_number (number2));
+    LONGS_EQUAL(-1, gui_color_rgb_from_number (-1));
+    LONGS_EQUAL(-1, gui_color_rgb_from_number (214));
+    LONGS_EQUAL(-1, gui_color_rgb_from_number (GUI_COLOR_EXTENDED_MAX));
+    LONGS_EQUAL(-1, gui_color_rgb_from_number (GUI_COLOR_RGB_LAST));
+
+    /* nearest terminal color */
+    LONGS_EQUAL(-1, gui_color_rgb_to_term_cached (214, 256));
+    LONGS_EQUAL(gui_color_convert_rgb_to_term (0x123456, 256),
+                gui_color_rgb_to_term_cached (number1, 256));
+    LONGS_EQUAL(gui_color_convert_rgb_to_term (0x123456, 16),
+                gui_color_rgb_to_term_cached (number1, 16));
+    LONGS_EQUAL(gui_color_convert_rgb_to_term (0x123456, 256),
+                gui_color_rgb_to_term_cached (number1, 256));
+
+    /* string for an extended color */
+    STRCMP_EQUAL("00000", gui_color_extended_string (0));
+    STRCMP_EQUAL("00214", gui_color_extended_string (214));
+    STRCMP_EQUAL("#123456", gui_color_extended_string (number1));
+    STRCMP_EQUAL("#654321", gui_color_extended_string (number2));
+}
+
+/*
+ * Test functions:
+ *   gui_color_rgb_to_number
+ *   gui_color_rgb_to_number_option
+ *   gui_color_rgb_display_reset
+ *   gui_color_hash_key_cb
+ */
+
+TEST(GuiColor, RgbTables)
+{
+    int number_option, number_display, i, number, key1, key2, old_term_colors;
+
+    /* RGB color in option: number never changes, reused for display */
+    number_option = gui_color_rgb_to_number_option (0x111111);
+    CHECK(number_option >= GUI_COLOR_RGB_OPTIONS_FIRST);
+    CHECK(number_option < GUI_COLOR_RGB_DISPLAY_FIRST);
+    LONGS_EQUAL(number_option, gui_color_rgb_to_number_option (0x111111));
+    LONGS_EQUAL(number_option, gui_color_rgb_to_number (0x111111));
+
+    /* RGB color for display */
+    number_display = gui_color_rgb_to_number (0x222222);
+    CHECK(number_display >= GUI_COLOR_RGB_DISPLAY_FIRST);
+    CHECK(number_display <= GUI_COLOR_RGB_LAST);
+    LONGS_EQUAL(0x222222, gui_color_rgb_from_number (number_display));
+
+    /* reset of RGB colors for display (options are kept) */
+    gui_color_rgb_display_reset ();
+    LONGS_EQUAL(-1, gui_color_rgb_from_number (number_display));
+    LONGS_EQUAL(0x111111, gui_color_rgb_from_number (number_option));
+    LONGS_EQUAL(0, gui_color_rgb_display.count);
+
+    /* table for display full: nearest terminal color and reset requested */
+    gui_color_rgb_display_reset_last = 0;
+    number = -1;
+    for (i = 0; i < GUI_COLOR_RGB_DISPLAY_MAX; i++)
+    {
+        number = gui_color_rgb_to_number (0x300000 + i);
+    }
+    LONGS_EQUAL(GUI_COLOR_RGB_LAST, number);
+    LONGS_EQUAL(GUI_COLOR_RGB_DISPLAY_MAX, gui_color_rgb_display.count);
+    LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
+    LONGS_EQUAL(gui_color_convert_rgb_to_term_display (0xabc123,
+                                                       gui_color_term_colors),
+                gui_color_rgb_to_number (0xabc123));
+    LONGS_EQUAL(1, gui_color_rgb_display_reset_needed);
+    /*
+     * terminal with 88 colors: nearest color of the 88-color palette, colors
+     * 0-15 (theme of terminal) are not used
+     */
+    old_term_colors = gui_color_term_colors;
+    gui_color_term_colors = 88;
+    LONGS_EQUAL(32, gui_color_rgb_to_number (0x5f0000));
+    LONGS_EQUAL(19, gui_color_rgb_to_number (0x0000ff));
+    gui_color_term_colors = old_term_colors;
+    gui_color_rgb_display_reset ();
+    LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
+
+    /* table for display full, automatic reset disabled: no reset */
+    gui_color_rgb_display_reset_last = 0;
+    for (i = 0; i < GUI_COLOR_RGB_DISPLAY_MAX; i++)
+    {
+        gui_color_rgb_to_number (0x300000 + i);
+    }
+    config_file_option_set (config_look_color_pairs_auto_reset, "-1", 1);
+    LONGS_EQUAL(gui_color_convert_rgb_to_term_display (0xabc123, 256),
+                gui_color_rgb_to_number (0xabc123));
+    LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
+    config_file_option_reset (config_look_color_pairs_auto_reset, 1);
+    gui_color_rgb_display_reset ();
+
+    /* hash of keys: same hash for same key (random seed set once) */
+    key1 = 0x000abc;
+    LONGS_EQUAL(gui_color_hash_key_cb (gui_color_rgb_options.index, &key1),
+                gui_color_hash_key_cb (gui_color_rgb_options.index, &key1));
+    LONGS_EQUAL(1, gui_color_hash_seed_set);
+
+    /*
+     * hash of keys: different hashes for keys which differ in high bits (the
+     * low bits depend on the random seed, the mix of bits is tested with
+     * function hashtable_hash_mix64)
+     */
+    key1 = 0x000abc;
+    key2 = 0x100abc;
+    CHECK(gui_color_hash_key_cb (gui_color_rgb_options.index, &key1)
+          != gui_color_hash_key_cb (gui_color_rgb_options.index, &key2));
+}
+
+/*
+ * Test functions:
+ *   gui_color_extended_size
+ *   gui_color_extended_parse
+ */
+
+TEST(GuiColor, Extended)
+{
+    int color;
+
+    LONGS_EQUAL(0, gui_color_extended_size (NULL));
+    LONGS_EQUAL(0, gui_color_extended_size (""));
+    LONGS_EQUAL(0, gui_color_extended_size ("0021"));
+    LONGS_EQUAL(0, gui_color_extended_size ("#12"));
+    LONGS_EQUAL(5, gui_color_extended_size ("00214"));
+    LONGS_EQUAL(5, gui_color_extended_size ("00214_text"));
+    LONGS_EQUAL(5, gui_color_extended_size ("#1234"));
+    LONGS_EQUAL(7, gui_color_extended_size ("#123456"));
+    LONGS_EQUAL(7, gui_color_extended_size ("#123456_text"));
+
+    LONGS_EQUAL(0, gui_color_extended_parse ("", &color));
+    LONGS_EQUAL(-1, color);
+    LONGS_EQUAL(0, gui_color_extended_parse ("#12", &color));
+    LONGS_EQUAL(-1, color);
+    LONGS_EQUAL(5, gui_color_extended_parse ("abcde", &color));
+    LONGS_EQUAL(-1, color);
+    LONGS_EQUAL(5, gui_color_extended_parse ("00214", &color));
+    LONGS_EQUAL(214, color);
+    LONGS_EQUAL(7, gui_color_extended_parse ("#123456", &color));
+    LONGS_EQUAL(gui_color_rgb_to_number (0x123456), color);
+}
+
+/*
+ * Test functions:
+ *   gui_color_get_custom (RGB colors)
+ *   gui_color_assign (RGB colors)
+ *   gui_color_get_name (RGB colors)
+ */
+
+TEST(GuiColor, GetCustomAssignRgb)
+{
+    char string[64];
+    int color, count, old_max;
+
+    /* foreground */
+    snprintf (string, sizeof (string), "%c%c%c#ff8800",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("#ff8800"));
+    STRCMP_EQUAL(string, gui_color_get_custom ("#FF8800"));
+
+    /* foreground with attributes */
+    snprintf (string, sizeof (string), "%c%c%c*_#ff8800",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("*_#ff8800"));
+
+    /* background */
+    snprintf (string, sizeof (string), "%c%c%c#000080",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_BG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom (",#000080"));
+
+    /* foreground + background (RGB and mixed) */
+    snprintf (string, sizeof (string), "%c%c%c#ff8800~%c#000080",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_BG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR, GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("#ff8800,#000080"));
+    snprintf (string, sizeof (string), "%c%c%c00214~%c#000080",
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_BG_CHAR,
+              GUI_COLOR_EXTENDED_CHAR, GUI_COLOR_EXTENDED_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("214,#000080"));
+
+    /* invalid RGB colors */
+    STRCMP_EQUAL("", gui_color_get_custom ("#ff88"));
+    STRCMP_EQUAL("", gui_color_get_custom ("#ff880000"));
+
+    /* assign / get name */
+    color = 0;
+    LONGS_EQUAL(1, gui_color_assign (&color, "#ff8800"));
+    CHECK(color & GUI_COLOR_EXTENDED_FLAG);
+    LONGS_EQUAL(0xff8800,
+                gui_color_rgb_from_number (color & GUI_COLOR_EXTENDED_MASK));
+    STRCMP_EQUAL("#ff8800", gui_color_get_name (color));
+    LONGS_EQUAL(1, gui_color_assign (&color, "*_#FF8800"));
+    CHECK(color & GUI_COLOR_EXTENDED_BOLD_FLAG);
+    CHECK(color & GUI_COLOR_EXTENDED_UNDERLINE_FLAG);
+    STRCMP_EQUAL("*_#ff8800", gui_color_get_name (color));
+    LONGS_EQUAL(0, gui_color_assign (&color, "#ff88"));
+    LONGS_EQUAL(0, gui_color_assign (&color, "#ff880000"));
+
+    /* RGB colors in strings are not added to the table of RGB colors */
+    count = gui_color_rgb_display.count;
+    gui_color_get_custom ("#abcdef,#fedcba");
+    LONGS_EQUAL(count, gui_color_rgb_display.count);
+
+    /* RGB colors in options: table of options */
+    LONGS_EQUAL(1, gui_color_assign (&color, "#123abc"));
+    CHECK((color & GUI_COLOR_EXTENDED_MASK) >= GUI_COLOR_RGB_OPTIONS_FIRST);
+    CHECK((color & GUI_COLOR_EXTENDED_MASK) < GUI_COLOR_RGB_DISPLAY_FIRST);
+
+    /* table of options full: error */
+    old_max = gui_color_rgb_options.max;
+    gui_color_rgb_options.max = gui_color_rgb_options.count;
+    LONGS_EQUAL(1, gui_color_assign (&color, "#123abc"));
+    LONGS_EQUAL(0, gui_color_assign (&color, "#cba321"));
+    gui_color_rgb_options.max = old_max;
+}
+
+/*
+ * Test functions:
+ *   gui_color_get_pair (RGB colors)
+ */
+
+TEST(GuiColor, GetPairRgb)
+{
+    int old_direct_colors, number1, number2, pairs_used;
+    int pair1, pair2, pair3;
+
+    old_direct_colors = gui_color_term_direct_colors;
+
+    /* terminal with direct colors: one pair by fg/bg */
+    gui_color_reset_pairs ();
+    number1 = gui_color_rgb_to_number (0x123456);
+    number2 = gui_color_rgb_to_number (0x654321);
+    gui_color_term_direct_colors = 1;
+    pairs_used = gui_color_pairs_used;
+    pair1 = gui_color_get_pair (number1, -1);
+    CHECK(pair1 > 0);
+    LONGS_EQUAL(pairs_used + 1, gui_color_pairs_used);
+    LONGS_EQUAL(pair1, gui_color_get_pair (number1, -1));
+    LONGS_EQUAL(pairs_used + 1, gui_color_pairs_used);
+    pair2 = gui_color_get_pair (number1, number2);
+    CHECK((pair2 > 0) && (pair2 != pair1));
+    pair3 = gui_color_get_pair (214, number2);
+    CHECK((pair3 > 0) && (pair3 != pair1) && (pair3 != pair2));
+    LONGS_EQUAL(pairs_used + 3, gui_color_pairs_used);
+
+    /* terminal without direct colors: nearest terminal color */
+    gui_color_reset_pairs ();
+    number1 = gui_color_rgb_to_number (0x123456);
+    gui_color_term_direct_colors = 0;
+    LONGS_EQUAL(
+        gui_color_get_pair (
+            gui_color_convert_rgb_to_term_display (0x123456,
+                                                   gui_color_term_colors),
+            -1),
+        gui_color_get_pair (number1, -1));
+
+    gui_color_term_direct_colors = old_direct_colors;
+    gui_color_reset_pairs ();
+}
+
+int test_gui_color_dump_lines_direct = 0;
+int test_gui_color_dump_last_line_empty = 0;
+
+/*
+ * Callback of print hook used in test GuiColor.DumpPairsDirect: reset color
+ * pairs while pairs are displayed.
+ */
+
+int
+test_gui_color_dump_print_cb (const void *pointer, void *data,
+                              struct t_gui_buffer *buffer,
+                              time_t date, int date_usec,
+                              int tags_count, const char **tags,
+                              int displayed, int highlight,
+                              const char *prefix, const char *message)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+    (void) date;
+    (void) date_usec;
+    (void) tags_count;
+    (void) tags;
+    (void) displayed;
+    (void) highlight;
+    (void) prefix;
+
+    test_gui_color_dump_last_line_empty = (message && !message[0]) ? 1 : 0;
+
+    if (message && strstr (message, "direct fg:"))
+    {
+        test_gui_color_dump_lines_direct++;
+        gui_color_reset_pairs ();
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Test functions:
+ *   gui_color_dump
+ */
+
+TEST(GuiColor, DumpPairsDirect)
+{
+    struct t_hook *hook;
+    int old_direct_colors;
+
+    old_direct_colors = gui_color_term_direct_colors;
+
+    gui_color_reset_pairs ();
+    gui_color_term_direct_colors = 1;
+    CHECK(gui_color_get_pair (gui_color_rgb_to_number (0x123456), -1) > 0);
+    CHECK(gui_color_get_pair (gui_color_rgb_to_number (0x654321), -1) > 0);
+    CHECK(gui_color_get_pair (gui_color_rgb_to_number (0xabcdef), -1) > 0);
+
+    /* A print hook resetting pairs does not change the pairs displayed. */
+    hook = hook_print (NULL, NULL, NULL, NULL, 1,
+                       &test_gui_color_dump_print_cb, NULL, NULL);
+    CHECK(hook);
+    test_gui_color_dump_lines_direct = 0;
+    gui_color_dump ();
+    LONGS_EQUAL(3, test_gui_color_dump_lines_direct);
+    /* No empty line after the pairs. */
+    LONGS_EQUAL(0, test_gui_color_dump_last_line_empty);
+    unhook (hook);
+
+    gui_color_term_direct_colors = old_direct_colors;
+    gui_color_reset_pairs ();
+}
+
+/*
+ * Test functions:
+ *   gui_color_pair_direct_key_get_colors
+ */
+
+TEST(GuiColor, PairDirectKey)
+{
+    long long key;
+    int fg, bg;
+
+    key = (((long long)(0xff8800 + 1)) << 32) | (long long)(-1 + 1);
+    gui_color_pair_direct_key_get_colors (&key, &fg, &bg);
+    LONGS_EQUAL(0xff8800, fg);
+    LONGS_EQUAL(-1, bg);
+
+    key = (((long long)(-1 + 1)) << 32) | (long long)(0xffffff + 1);
+    gui_color_pair_direct_key_get_colors (&key, &fg, &bg);
+    LONGS_EQUAL(-1, fg);
+    LONGS_EQUAL(0xffffff, bg);
+}
+
+/*
+ * Test functions:
+ *   gui_color_direct_color_string
+ */
+
+TEST(GuiColor, DirectColorString)
+{
+    char str_color[16];
+    int old_direct_indexed;
+
+    old_direct_indexed = gui_color_term_direct_indexed;
+    gui_color_term_direct_indexed = 16;
+
+    gui_color_direct_color_string (-1, str_color, sizeof (str_color));
+    STRCMP_EQUAL("default", str_color);
+    gui_color_direct_color_string (0, str_color, sizeof (str_color));
+    STRCMP_EQUAL("0", str_color);
+    gui_color_direct_color_string (15, str_color, sizeof (str_color));
+    STRCMP_EQUAL("15", str_color);
+    gui_color_direct_color_string (0x000110, str_color, sizeof (str_color));
+    STRCMP_EQUAL("#000110", str_color);
+    gui_color_direct_color_string (0xff8800, str_color, sizeof (str_color));
+    STRCMP_EQUAL("#ff8800", str_color);
+
+    gui_color_term_direct_indexed = old_direct_indexed;
+}
+
+/*
+ * Test functions:
+ *   config_weechat_palette_create_option_cb (number of palette color)
+ */
+
+TEST(GuiColor, PaletteNumber)
+{
+    struct t_config_option *ptr_option;
+
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_with_string ("weechat.palette.100000",
+                                                    "orange"));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_with_string ("weechat.palette.-1",
+                                                    "orange"));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
+                config_file_option_set_with_string ("weechat.palette.99999",
+                                                    "test_palette_max"));
+    LONGS_EQUAL(99999, gui_color_palette_get_alias ("test_palette_max"));
+    config_file_search_with_string ("weechat.palette.99999", NULL, NULL,
+                                    &ptr_option, NULL);
+    CHECK(ptr_option);
+    config_file_option_unset (ptr_option);
+    LONGS_EQUAL(-1, gui_color_palette_get_alias ("test_palette_max"));
 }
 
 /*
@@ -324,6 +1180,16 @@ TEST(GuiColor, CodeSize)
 
     /* No color code */
     LONGS_EQUAL(0, gui_color_code_size ("test"));
+
+    /*
+     * Set/remove attribute: the next char is part of the code only if it is
+     * an attribute, like on screen.
+     */
+    LONGS_EQUAL(2, gui_color_code_size ("\x1A" "\x01" "x"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x1B" "\x06" "x"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x1A" "x"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x1B" "\x07"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x1A"));
 
     /* reset */
     LONGS_EQUAL(1, gui_color_code_size (gui_color_get_custom ("reset")));
@@ -404,6 +1270,13 @@ TEST(GuiColor, CodeSize)
 
     /* WeeChat color */
     LONGS_EQUAL(3, gui_color_code_size (GUI_COLOR(GUI_COLOR_CHAT_HOST)));
+
+    /* RGB colors */
+    LONGS_EQUAL(10, gui_color_code_size ("\x19" "F@#ff8800"));
+    LONGS_EQUAL(11, gui_color_code_size ("\x19" "F@*#ff8800"));
+    LONGS_EQUAL(10, gui_color_code_size ("\x19" "B@#000080"));
+    LONGS_EQUAL(19,
+                gui_color_code_size ("\x19" "*@#ff8800~@#000080"));
 }
 
 /*
@@ -427,6 +1300,11 @@ TEST(GuiColor, Decode)
     WEE_CHECK_DECODE("test string", "test string", NULL);
     WEE_CHECK_DECODE("test string", "test string", "");
     WEE_CHECK_DECODE("test string", "test string", "?");
+
+    /* Set/remove attribute: the char after it is kept if not an attribute. */
+    WEE_CHECK_DECODE("ab", "a" "\x1A" "\x01" "b", NULL);
+    WEE_CHECK_DECODE("axb", "a" "\x1A" "xb", NULL);
+    WEE_CHECK_DECODE("a?xb", "a" "\x1B" "xb", "?");
 
     /* reset */
     snprintf (string, sizeof (string),
@@ -593,6 +1471,149 @@ TEST(GuiColor, Decode)
     WEE_CHECK_DECODE("test_option_weechat.color.chat_host", string, NULL);
     WEE_CHECK_DECODE("test_option_weechat.color.chat_host", string, "");
     WEE_CHECK_DECODE("test_[color]option_weechat.color.chat_host", string, "[color]");
+
+    /* RGB colors */
+    snprintf (string, sizeof (string),
+              "test_%sfg%sbg%sfg_bg_end",
+              "\x19" "F@*#ff8800",
+              "\x19" "B@#000080",
+              "\x19" "*@#ff8800~@#000080");
+    WEE_CHECK_DECODE("test_fgbgfg_bg_end", string, NULL);
+    WEE_CHECK_DECODE("test_[C]fg[C]bg[C]fg_bg_end", string, "[C]");
+}
+
+/*
+ * Test functions:
+ *   gui_color_downgrade_rgb_term
+ *   gui_color_downgrade_rgb
+ */
+
+TEST(GuiColor, DowngradeRgb)
+{
+    char string[256], expected[256], str_fg[32], str_fg_bg[32], str_bg[32];
+    char *str, *result;
+    int fg, bg, i, rgb;
+
+    /* Like on screen, colors 0-15 (theme of terminal) are not used. */
+    LONGS_EQUAL(196, gui_color_downgrade_rgb_term (0xff0000));
+    LONGS_EQUAL(244, gui_color_downgrade_rgb_term (0x808080));
+
+    /* Cached conversion: same result, also for colors in the same slot. */
+    for (i = 0; i < 300; i++)
+    {
+        rgb = (i * 0x10305) & 0xFFFFFF;
+        LONGS_EQUAL(gui_color_convert_rgb_to_term_display (rgb, 256),
+                    gui_color_downgrade_rgb_term (rgb));
+        LONGS_EQUAL(gui_color_convert_rgb_to_term_display (rgb, 256),
+                    gui_color_downgrade_rgb_term (rgb));
+    }
+
+    POINTERS_EQUAL(NULL, gui_color_downgrade_rgb (NULL));
+    WEE_TEST_STR("", gui_color_downgrade_rgb (""));
+    WEE_TEST_STR("test", gui_color_downgrade_rgb ("test"));
+
+    /* RGB color in text (not in a color code): unchanged */
+    WEE_TEST_STR("text @#ff8800", gui_color_downgrade_rgb ("text @#ff8800"));
+
+    /* colors without RGB: unchanged */
+    snprintf (string, sizeof (string), "%sa%sb%sc",
+              gui_color_get_custom ("*214"),
+              gui_color_get_custom ("214,blue"),
+              gui_color_get_custom ("bold"));
+    WEE_TEST_STR(string, gui_color_downgrade_rgb (string));
+
+    /* RGB colors replaced by nearest terminal colors */
+    fg = gui_color_convert_rgb_to_term_display (0xff8800, 256);
+    bg = gui_color_convert_rgb_to_term_display (0x000080, 256);
+    snprintf (string, sizeof (string), "%sa%sb%sc @#ff8800",
+              "\x19" "F@*#ff8800",
+              "\x19" "*@#ff8800~@#000080",
+              "\x19" "B@#000080");
+    snprintf (str_fg, sizeof (str_fg), "*%d", fg);
+    snprintf (str_fg_bg, sizeof (str_fg_bg), "%d,%d", fg, bg);
+    snprintf (str_bg, sizeof (str_bg), ",%d", bg);
+    snprintf (expected, sizeof (expected), "%sa%sb%sc @#ff8800",
+              gui_color_get_custom (str_fg),
+              gui_color_get_custom (str_fg_bg),
+              gui_color_get_custom (str_bg));
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb (string));
+
+    /*
+     * RGB color after an attribute code: the next char is part of the
+     * attribute code only if it is an attribute.
+     */
+    snprintf (string, sizeof (string), "%s%sa%s%sb",
+              "\x1B", "\x19" "F@#ff8800", "\x1A\x01", "\x19" "F@#ff8800");
+    snprintf (expected, sizeof (expected), "%s%s%05da%s%s%05db",
+              "\x1B", "\x19" "F@", fg, "\x1A\x01", "\x19" "F@", fg);
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb (string));
+
+    /* Many color codes after a RGB color (linear time). */
+    str = (char *)malloc (10 + (8 * 20000) + 1);
+    CHECK(str);
+    memcpy (str, "\x19" "F@#ff8800", 10);
+    for (i = 0; i < 20000; i++)
+        memcpy (str + 10 + (8 * i), "\x19" "F@00214", 8);
+    str[10 + (8 * 20000)] = '\0';
+    result = gui_color_downgrade_rgb (str);
+    CHECK(result);
+    LONGS_EQUAL(8 + (8 * 20000), strlen (result));
+    free (result);
+    free (str);
+}
+
+/*
+ * Test functions:
+ *   gui_color_downgrade_rgb_name
+ */
+
+TEST(GuiColor, DowngradeRgbName)
+{
+    char *str, expected[64];
+    int fg, bg;
+
+    fg = gui_color_convert_rgb_to_term_display (0xff8800, 256);
+    bg = gui_color_convert_rgb_to_term_display (0x000080, 256);
+
+    POINTERS_EQUAL(NULL, gui_color_downgrade_rgb_name (NULL));
+    WEE_TEST_STR("", gui_color_downgrade_rgb_name (""));
+    WEE_TEST_STR("red", gui_color_downgrade_rgb_name ("red"));
+    WEE_TEST_STR("*214,blue", gui_color_downgrade_rgb_name ("*214,blue"));
+    WEE_TEST_STR("#ff88", gui_color_downgrade_rgb_name ("#ff88"));
+    snprintf (expected, sizeof (expected), "%d", fg);
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb_name ("#ff8800"));
+    snprintf (expected, sizeof (expected), "*_%d:%d", fg, bg);
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb_name ("*_#FF8800:#000080"));
+    snprintf (expected, sizeof (expected), "%d,red", fg);
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb_name ("#ff8800,red"));
+}
+
+/*
+ * Test functions:
+ *   modifier "color_downgrade_rgb"
+ */
+
+TEST(GuiColor, ModifierDowngradeRgb)
+{
+    char *str, string[64], expected[64];
+    int fg;
+
+    fg = gui_color_convert_rgb_to_term_display (0xff8800, 256);
+
+    /* WeeChat color codes */
+    snprintf (string, sizeof (string), "%s" "test #ff8800", "\x19" "F@|#ff8800");
+    snprintf (expected, sizeof (expected), "%s%05d" "test #ff8800",
+              "\x19" "F@|", fg);
+    WEE_TEST_STR(expected,
+                 hook_modifier_exec (NULL, "color_downgrade_rgb", NULL, string));
+    WEE_TEST_STR(expected,
+                 hook_modifier_exec (NULL, "color_downgrade_rgb", "", string));
+
+    /* color name */
+    snprintf (expected, sizeof (expected), "*%d", fg);
+    WEE_TEST_STR(expected,
+                 hook_modifier_exec (NULL, "color_downgrade_rgb", "name",
+                                     "*#ff8800"));
 }
 
 /*
@@ -637,22 +1658,33 @@ TEST(GuiColor, DecodeAnsi)
               gui_color_get_custom ("blink"),
               gui_color_get_custom ("-blink"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[5m" "blink" "\x1B[25m" "_end", 1);
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[6m" "blink" "\x1B[25m" "_end", 1);
 
-    /* dim */
+    /* Dim (22 = normal intensity: remove bold and dim) */
     WEE_CHECK_DECODE_ANSI("test_dim_end", "test_" "\x1B[2m" "dim" "\x1B[22m" "_end", 0);
     snprintf (string, sizeof (string),
-              "test_" "%s" "dim" "%s" "_end",
+              "test_" "%s" "dim" "%s%s" "_end",
               gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-bold"),
               gui_color_get_custom ("-dim"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[2m" "dim" "\x1B[22m" "_end", 1);
 
-    /* bold */
+    /* Bold (21 = remove bold) */
     WEE_CHECK_DECODE_ANSI("test_bold_end", "test_" "\x1B[1m" "bold" "\x1B[21m" "_end", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "bold" "%s" "_end",
               gui_color_get_custom ("bold"),
               gui_color_get_custom ("-bold"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[1m" "bold" "\x1B[21m" "_end", 1);
+
+    /* Bold (22 = normal intensity: remove bold and dim) */
+    WEE_CHECK_DECODE_ANSI("test_bold_end", "test_" "\x1B[1m" "bold" "\x1B[22m" "_end", 0);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bold" "%s%s" "_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[1m" "bold" "\x1B[22m" "_end", 1);
 
     /* reverse */
     WEE_CHECK_DECODE_ANSI("test_reverse_end",
@@ -685,8 +1717,16 @@ TEST(GuiColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_default", "test_" "\x1B[39m" "default", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "default",
-              gui_color_get_custom ("default"));
+              gui_color_get_custom ("|default"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[39m" "default", 1);
+    WEE_CHECK_DECODE_ANSI("test_" "\x19" "F|00" "default",
+                          "test_" "\x1B[39m" "default", 1);
+
+    /* Default text color keeps attributes, like other text colors. */
+    WEE_CHECK_DECODE_ANSI("A B C",
+                          "\x1B[1m" "A " "\x1B[31m" "B" "\x1B[39m" " C", 0);
+    WEE_CHECK_DECODE_ANSI("\x1A\x01" "A " "\x19" "F|03" "B" "\x19" "F|00" " C",
+                          "\x1B[1m" "A " "\x1B[31m" "B" "\x1B[39m" " C", 1);
 
     /* Default text color */
     WEE_CHECK_DECODE_ANSI("test_bg_default", "test_" "\x1B[49m" "bg_default", 0);
@@ -720,7 +1760,7 @@ TEST(GuiColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_13", "test_" "\x1B[38;2;255;0;255m" "13", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "13",
-              gui_color_get_custom ("|13"));
+              gui_color_get_custom ("|#ff00ff"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[38;2;255;0;255m" "13", 1);
 
     /* Background color */
@@ -749,7 +1789,7 @@ TEST(GuiColor, DecodeAnsi)
     WEE_CHECK_DECODE_ANSI("test_bg_13", "test_" "\x1B[48;2;255;0;255m" "bg_13", 0);
     snprintf (string, sizeof (string),
               "test_" "%s" "bg_13",
-              gui_color_get_custom ("|,13"));
+              gui_color_get_custom ("|,#ff00ff"));
     WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[48;2;255;0;255m" "bg_13", 1);
 
     /* Text RGB + background RGB color */
@@ -759,12 +1799,491 @@ TEST(GuiColor, DecodeAnsi)
         0);
     snprintf (string, sizeof (string),
               "test_" "%s" "%s" "fg_13_bg_04",
-              gui_color_get_custom ("|13"),
-              gui_color_get_custom ("|,04"));
+              gui_color_get_custom ("|#ff00ff"),
+              gui_color_get_custom ("|,#000080"));
     WEE_CHECK_DECODE_ANSI(
         string,
         "test_\x1B[38;2;255;0;255m" "\x1B[48;2;0;0;128m" "fg_13_bg_04",
         1);
+
+    /* Empty parameters (reset) */
+    WEE_CHECK_DECODE_ANSI("AXB", "A" "\x1B[1m" "X" "\x1B[;m" "B", 0);
+    snprintf (string, sizeof (string),
+              "A" "%s" "X" "%s" "%s" "B",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1m" "X" "\x1B[;m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[;1m" "B", 0);
+    snprintf (string, sizeof (string),
+              "A" "%s" "%s" "B",
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[;1m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1;;4m" "B", 0);
+    snprintf (string, sizeof (string),
+              "A" "%s" "%s" "%s" "B",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("underline"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;;4m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1;m" "B", 0);
+    snprintf (string, sizeof (string),
+              "A" "%s" "%s" "B",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;m" "B", 1);
+
+    /* Empty arguments in text/background colors (0) */
+    WEE_CHECK_DECODE_ANSI("test_0", "test_" "\x1B[38;5;m" "0", 0);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "0",
+              gui_color_get_custom ("|0"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[38;5;m" "0", 1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "%s" "0",
+              gui_color_get_custom ("|,0"),
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[48;5;;1m" "0", 1);
+    WEE_CHECK_DECODE_ANSI("test_13", "test_" "\x1B[38;2;255;;255m" "13", 0);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "13",
+              gui_color_get_custom ("|#ff00ff"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[38;2;255;;255m" "13", 1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "%s" "bg_13",
+              gui_color_get_custom ("|,#ff00ff"),
+              gui_color_get_custom ("underline"));
+    WEE_CHECK_DECODE_ANSI(string, "test_" "\x1B[48;2;255;;255;4m" "bg_13", 1);
+
+    /* Underline terminal color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_1", "test_" "\x1B[58;5;1m" "ul_1", 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_1", "test_" "\x1B[58;5;1m" "ul_1", 1);
+
+    /* Underline RGB color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_red", "test_" "\x1B[58;2;255;0;0m" "ul_red", 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_red", "test_" "\x1B[58;2;255;0;0m" "ul_red", 1);
+
+    /* Default underline color (ignored) */
+    WEE_CHECK_DECODE_ANSI("test_ul_default", "test_" "\x1B[59m" "ul_default", 0);
+    WEE_CHECK_DECODE_ANSI("test_ul_default", "test_" "\x1B[59m" "ul_default", 1);
+
+    /* Underline + underline color + text color */
+    WEE_CHECK_DECODE_ANSI(
+        "test_ul_blue",
+        "test_" "\x1B[4m" "\x1B[38;5;12m" "\x1B[58;2;255;0;0m" "ul_blue",
+        0);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "%s" "ul_blue",
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("|12"));
+    WEE_CHECK_DECODE_ANSI(
+        string,
+        "test_" "\x1B[4m" "\x1B[38;5;12m" "\x1B[58;2;255;0;0m" "ul_blue",
+        1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "%s" "%s" "ul_blue",
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(
+        string,
+        "test_" "\x1B[4;58;5;1;34;59;1m" "ul_blue",
+        1);
+
+    /* Other escape sequences (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B(B" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B(B" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B(m" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B(m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B>" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B>" "B", 1);
+
+    /* Control sequences other than SGR (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[2 q" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[2 q" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[=5u" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[=5u" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[3~" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[3~" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[@" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[@" "B", 1);
+
+    /* Private control sequences ending with "m" (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[>4;2m" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[>4;2m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[?4m" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[?4m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[<m" "B", 1);
+
+    /* Private bytes after the first parameter (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1;>4m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1<m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[5=m" "B", 1);
+
+    /* Chars SI and SO (removed). */
+    WEE_CHECK_DECODE_ANSI("ABC", "A" "\x0F" "B" "\x0E" "C", 0);
+    WEE_CHECK_DECODE_ANSI("ABC", "A" "\x0F" "B" "\x0E" "C", 1);
+
+    /* Other escape sequences: OSC, DCS, ESC + char (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;title\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AlinkB",
+                          "A" "\x1B]8;;http://example.com\x1B\\" "link"
+                          "\x1B]8;;\x1B\\" "B",
+                          1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1BP1$r0m\x1B\\" "B", 1);
+    WEE_CHECK_DECODE_ANSI("ABC", "A" "\x1B" "7" "B" "\x1B" "8" "C", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B=" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B" "c" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B#8" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;title\x07" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1BP1$r0m\x1B\\" "B", 0);
+    /* Sequences with bytes which are not valid UTF-8 (removed). */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;t\xE9tle\x07" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;t\xE9tle\x07" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1BP\xE9\x1B\\" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B]0;\xF4\x90\x80\x80\x07" "B", 1);
+    /* Chars which are not ASCII in text (kept). */
+    WEE_CHECK_DECODE_ANSI("\xC3\xA9" "\xE9" "\xC3\xA9",
+                          "\xC3\xA9" "\x1B]0;t\xC3\xAFtle\x07" "\xE9"
+                          "\x1B" "7" "\xC3\xA9",
+                          1);
+    /* Unterminated or cancelled sequences (removed). */
+    WEE_CHECK_DECODE_ANSI("A", "A" "\x1B]0;title", 1);
+    WEE_CHECK_DECODE_ANSI("a1", "a1" "\x1B[1;2", 1);
+    WEE_CHECK_DECODE_ANSI("X", "\x1B[123" "\x1B" "9X", 1);
+    WEE_CHECK_DECODE_ANSI("X", "\x1B]Something" "\x1B" "9X", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "\x1B[12" "\x18" "AB", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "\x1B]12" "\x1A" "AB", 0);
+    WEE_CHECK_DECODE_ANSI("X", "\x1BPHello" "\x07" "X", 1);
+    WEE_CHECK_DECODE_ANSI("", "\x1B(" "\x1B)Z", 1);
+    WEE_CHECK_DECODE_ANSI("A" "\xC3\xA9", "A" "\x1B(" "\xC3\xA9", 1);
+    WEE_CHECK_DECODE_ANSI("A\nB", "A" "\x1B(" "\nB", 1);
+    /* An unterminated string ends at the end of the line. */
+    WEE_CHECK_DECODE_ANSI("A\nB\nC", "A" "\x1B]0;title" "\nB\nC", 1);
+    WEE_CHECK_DECODE_ANSI("A\nB", "A" "\x1BPq" "\nB", 1);
+    WEE_CHECK_DECODE_ANSI("ab", "a" "\x1B(" "\x18" "b", 1);
+    WEE_CHECK_DECODE_ANSI("ab", "a" "\x1B" "\x1A" "b", 0);
+
+    /* DEL is ignored inside a control sequence (removed). */
+    WEE_CHECK_DECODE_ANSI("X", "\x1B[12" "\x7F" "3mX", 1);
+    snprintf (string, sizeof (string),
+              "%s" "X", gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "\x1B[1" "\x7F" "mX", 1);
+    WEE_CHECK_DECODE_ANSI(string, "\x1B" "\x7F" "[1mX", 1);
+    WEE_CHECK_DECODE_ANSI("a1", "a1" "\x1B" "\x7F", 1);
+
+    /* Lone ESC (removed). */
+    WEE_CHECK_DECODE_ANSI("a1", "a1" "\x1B", 1);
+    snprintf (string, sizeof (string),
+              "a1" "%s" "a2", gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "a1" "\x1B" "\x1B[1m" "a2", 1);
+
+    /* Control sequence ending with "m" with intermediate bytes (removed) */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 0);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[1 m" "B", 1);
+}
+
+/*
+ * Test functions:
+ *   gui_color_ansi_string_ascii
+ */
+
+TEST(GuiColor, AnsiStringAscii)
+{
+    char *str;
+
+    str = gui_color_ansi_string_ascii ("");
+    STRCMP_EQUAL("", str);
+    free (str);
+
+    str = gui_color_ansi_string_ascii ("abc \x1B[1m\x7F");
+    STRCMP_EQUAL("abc \x1B[1m\x7F", str);
+    free (str);
+
+    str = gui_color_ansi_string_ascii ("\xC3\xA9" "a" "\xE9");
+    STRCMP_EQUAL("\x01\x01" "a" "\x01", str);
+    free (str);
+}
+
+/*
+ * Test functions:
+ *   gui_color_ansi_parse_color_sub_params
+ *   gui_color_decode_ansi (sub-parameters separated by colons)
+ */
+
+TEST(GuiColor, DecodeAnsiColons)
+{
+    const char *colons[][2] = {
+        { "\x1B[38:2::255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2:255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2:1:255:136:0m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[48:2::0:0:128m", "\x1B[48;2;0;0;128m" },
+        { "\x1B[38:5:214m", "\x1B[38;5;214m" },
+        { "\x1B[48:5:17m", "\x1B[48;5;17m" },
+        { "\x1B[1;38:2::255:136:0;48:5:17m", "\x1B[1;38;2;255;136;0;48;5;17m" },
+        { "\x1B[38:2::255::0m", "\x1B[38;2;255;0;0m" },
+        { "\x1B[38:2::255:136:0:m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:2::255:136:0:1:2:3m", "\x1B[38;2;255;136;0m" },
+        { "\x1B[38:5:;1m", "\x1B[38;5;0;1m" },
+        { "\x1B[38;5;1:2m", "\x1B[38;5;1m" },
+        { "\x1B[38;5;4:0m", "\x1B[38;5;4m" },
+        { "\x1B[38:5;1m", "\x1B[1m" },
+        { "\x1B[38:3:1:2:3;1m", "\x1B[1m" },
+        { "\x1B[1:2m", "\x1B[1m" },
+        { "\x1B[58:2::255:0:0;1m", "\x1B[1m" },
+        { "\x1B[58:5:1;1m", "\x1B[1m" },
+        { "\x1B[4:3m", "\x1B[4m" },
+        { "\x1B[4:4294967296m", "\x1B[4m" },
+        { "\x1B[4m" "A" "\x1B[4:0m", "\x1B[4m" "A" "\x1B[24m" },
+        { "\x1B[4m" "A" "\x1B[4:m", "\x1B[4m" "A" "\x1B[24m" },
+        { "\x1B[1m" "A" "\x1B[:3m", "\x1B[1m" "A" "\x1B[0m" },
+        { NULL, NULL },
+    };
+    char string1[128], string2[128], *decoded, *decoded1, *decoded2;
+    char *long_string;
+    int i;
+
+    for (i = 0; colons[i][0]; i++)
+    {
+        snprintf (string1, sizeof (string1), "test_%stext", colons[i][0]);
+        snprintf (string2, sizeof (string2), "test_%stext", colons[i][1]);
+        /* Colors removed: no ANSI code left in string. */
+        decoded1 = gui_color_decode_ansi (string1, 0);
+        decoded2 = gui_color_decode_ansi (string2, 0);
+        STRCMP_EQUAL(decoded2, decoded1);
+        CHECK(!strchr (decoded1, '\x1B'));
+        free (decoded1);
+        free (decoded2);
+        /* Colors kept: same as parameters separated by semicolons. */
+        decoded1 = gui_color_decode_ansi (string1, 1);
+        decoded2 = gui_color_decode_ansi (string2, 1);
+        STRCMP_EQUAL(decoded2, decoded1);
+        free (decoded1);
+        free (decoded2);
+    }
+
+    /* Many colons: only the first sub-parameters are used. */
+    long_string = (char *)malloc (100000 + 16);
+    CHECK(long_string);
+    strcpy (long_string, "A\x1B[1");
+    memset (long_string + 4, ':', 100000);
+    strcpy (long_string + 4 + 100000, "mB");
+    snprintf (string2, sizeof (string2),
+              "A" "%s" "B", gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string2, long_string, 1);
+    free (long_string);
+}
+
+/*
+ * Test functions:
+ *   gui_color_normalize_ansi
+ */
+
+TEST(GuiColor, NormalizeAnsi)
+{
+    char *str;
+
+    POINTERS_EQUAL(NULL, gui_color_normalize_ansi (NULL, 1));
+    WEE_TEST_STR("", gui_color_normalize_ansi ("", 1));
+    WEE_TEST_STR("test", gui_color_normalize_ansi ("test", 1));
+
+    /* All sequences removed. */
+    WEE_TEST_STR("test", gui_color_normalize_ansi ("\x1B[1mtest\x1B[0m", 0));
+
+    /* SGR sequences. */
+    WEE_TEST_STR("\x1B[0mtest", gui_color_normalize_ansi ("\x1B[mtest", 1));
+    WEE_TEST_STR("\x1B[1;4mtest\x1B[0m",
+                 gui_color_normalize_ansi ("\x1B[01;04mtest\x1B[0m", 1));
+    WEE_TEST_STR("\x1B[38;5;214mtest",
+                 gui_color_normalize_ansi ("\x1B[38;5;214mtest", 1));
+    WEE_TEST_STR("\x1B[1;48;2;255;136;0mtest",
+                 gui_color_normalize_ansi ("\x1B[1;48;2;255;136;0mtest", 1));
+    WEE_TEST_STR("\x1B[38;2;0;255;0mtest",
+                 gui_color_normalize_ansi ("\x1B[38;2;0;300;0mtest", 1));
+
+    /* Invalid values are ignored. */
+    WEE_TEST_STR("\x1B[1;3mtest",
+                 gui_color_normalize_ansi (
+                     "\x1B[1;99999999999999999999;3mtest", 1));
+    WEE_TEST_STR("test",
+                 gui_color_normalize_ansi (
+                     "\x1B[38;5;99999999999999999999mtest", 1));
+
+    /* Char SI is kept (also without colors), SO is removed. */
+    WEE_TEST_STR("\x1B[1m" "test" "\x0F",
+                 gui_color_normalize_ansi ("\x0E" "\x1B[1m" "test" "\x0F", 1));
+    WEE_TEST_STR("test" "\x0F",
+                 gui_color_normalize_ansi ("\x0E" "\x1B[1m" "test" "\x0F", 0));
+    WEE_TEST_STR("A" "\x0F" "B",
+                 gui_color_normalize_ansi ("A" "\x0F" "B" "\x0E", 1));
+
+    /* Other escape sequences are removed. */
+    WEE_TEST_STR("test", gui_color_normalize_ansi ("\x1B[2Jtest", 1));
+    WEE_TEST_STR("test", gui_color_normalize_ansi ("\x1B(Btest", 1));
+
+    /* Modifier. */
+    WEE_TEST_STR("\x1B[1mtest",
+                 hook_modifier_exec (NULL, "color_normalize_ansi", "1",
+                                     "\x1B[01mtest"));
+    WEE_TEST_STR("test",
+                 hook_modifier_exec (NULL, "color_normalize_ansi", "0",
+                                     "\x1B[01mtest"));
+}
+
+/*
+ * Test functions:
+ *   gui_color_ansi_param_value
+ */
+
+TEST(GuiColor, AnsiParamValue)
+{
+    LONGS_EQUAL(0, gui_color_ansi_param_value (NULL));
+    LONGS_EQUAL(0, gui_color_ansi_param_value (""));
+    LONGS_EQUAL(0, gui_color_ansi_param_value ("0"));
+    LONGS_EQUAL(38, gui_color_ansi_param_value ("38"));
+    LONGS_EQUAL(65535, gui_color_ansi_param_value ("65535"));
+    LONGS_EQUAL(-1, gui_color_ansi_param_value ("65536"));
+    LONGS_EQUAL(-1, gui_color_ansi_param_value ("4294967297"));
+    LONGS_EQUAL(-1, gui_color_ansi_param_value ("99999999999999999999999"));
+    LONGS_EQUAL(-1, gui_color_ansi_param_value ("1x"));
+    LONGS_EQUAL(4, gui_color_ansi_param_value ("4:0"));
+    LONGS_EQUAL(0, gui_color_ansi_param_value (":3"));
+}
+
+/*
+ * Test functions:
+ *   gui_color_ansi_parse_color
+ */
+
+TEST(GuiColor, AnsiParseColor)
+{
+    char **items;
+    int num_items, index;
+
+    /* Terminal color */
+    items = string_split ("38;5;214;1", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(214, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(2, index);
+    string_free_split (items);
+
+    /* RGB color */
+    items = string_split ("1;48;2;255;0;0;4", ";", NULL, 0, 0, &num_items);
+    index = 1;
+    LONGS_EQUAL(GUI_COLOR_ANSI_RGB_FLAG | 0xff0000,
+                gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(5, index);
+    string_free_split (items);
+
+    /* Invalid terminal color: color is ignored. */
+    items = string_split ("38;5;300;1", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(2, index);
+    string_free_split (items);
+
+    /* Incomplete colors: the remaining parameters are ignored. */
+    items = string_split ("58;2;1;0", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(3, index);
+    string_free_split (items);
+    items = string_split ("38;5", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(1, index);
+    string_free_split (items);
+    items = string_split ("38", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(0, index);
+    string_free_split (items);
+
+    /* Unknown type of color: the remaining parameters are ignored. */
+    items = string_split ("38;3;1;2;3;1", ";", NULL, 0, 0, &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(5, index);
+    string_free_split (items);
+    items = string_split ("38;4294967298;0;255;0", ";", NULL, 0, 0,
+                          &num_items);
+    index = 0;
+    LONGS_EQUAL(-1, gui_color_ansi_parse_color (items, num_items, &index));
+    LONGS_EQUAL(4, index);
+    string_free_split (items);
+}
+
+/*
+ * Test functions:
+ *   gui_color_decode_ansi (invalid parameters)
+ */
+
+TEST(GuiColor, DecodeAnsiInvalid)
+{
+    char string[256], *decoded;
+
+    /* Incomplete colors: remaining parameters are ignored. */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[58;2;1;0m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[38;2;255m" "B", 1);
+    snprintf (string, sizeof (string),
+              "A" "%s" "B", gui_color_get_custom ("bold"));
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;58;5m" "B", 1);
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[1;48;3;1;2;3m" "B", 1);
+
+    /* Invalid terminal color: ignored */
+    WEE_CHECK_DECODE_ANSI(string, "A" "\x1B[38;5;300;1m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[48;5;300m" "B", 1);
+
+    /* Numbers out of range: ignored */
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[4294967297m" "B", 1);
+    WEE_CHECK_DECODE_ANSI("AB", "A" "\x1B[38;4294967298;0;255;0m" "B", 1);
+}
+
+/*
+ * Test functions:
+ *   gui_color_ansi_rgb_component
+ */
+
+TEST(GuiColor, AnsiRgbComponent)
+{
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component (""));
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component ("abc"));
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component ("-99999999999"));
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component ("-5"));
+    LONGS_EQUAL(0, gui_color_ansi_rgb_component ("0"));
+    LONGS_EQUAL(128, gui_color_ansi_rgb_component ("128"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("255"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("256"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("40000"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("99999999999"));
+    LONGS_EQUAL(255, gui_color_ansi_rgb_component ("4294967296"));
+}
+
+/*
+ * Test functions:
+ *   gui_color_decode_ansi (RGB components greater than 255)
+ */
+
+TEST(GuiColor, DecodeAnsiRgbClamp)
+{
+    char string[256], *decoded;
+
+    /* Green 256 is 255: #00ff00, not black. */
+    snprintf (string, sizeof (string),
+              "test_%sgreen", gui_color_get_custom ("|#00ff00"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[38;2;0;256;0mgreen", 1);
+    snprintf (string, sizeof (string),
+              "test_%sgreen", gui_color_get_custom ("|,#00ff00"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[48;2;0;256;0mgreen", 1);
+
+    /* Red 40000 is 255: #ff0000. */
+    snprintf (string, sizeof (string),
+              "test_%sred", gui_color_get_custom ("|#ff0000"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[38;2;40000;0;0mred", 1);
+    snprintf (string, sizeof (string),
+              "test_%sred", gui_color_get_custom ("|,#ff0000"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[48;2;99999999999;0;0mred", 1);
 }
 
 /*
@@ -774,7 +2293,8 @@ TEST(GuiColor, DecodeAnsi)
 
 TEST(GuiColor, EncodeAnsi)
 {
-    char string[256], *encoded;
+    char string[256], expected[256], *encoded;
+    int pair, fg, bg;
 
     /* NULL/empty string */
     STRCMP_EQUAL(NULL, gui_color_encode_ansi (NULL));
@@ -804,7 +2324,54 @@ TEST(GuiColor, EncodeAnsi)
               "test_" "%s" "bold" "%s" "_end",
               gui_color_get_custom ("bold"),
               gui_color_get_custom ("-bold"));
-    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[1m" "bold" "\x1B[21m" "_end", string);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[1m" "bold" "\x1B[22m" "_end", string);
+
+    /* Bold + dim, remove bold: dim is set again. */
+    snprintf (string, sizeof (string),
+              "test_" "%s%s" "bold_dim" "%s" "dim" "%s" "_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_" "\x1B[1m" "\x1B[2m" "bold_dim" "\x1B[22m" "\x1B[2m" "dim"
+        "\x1B[22m" "_end",
+        string);
+
+    /* Bold + dim, remove dim: bold is set again. */
+    snprintf (string, sizeof (string),
+              "test_" "%s%s" "bold_dim" "%s" "bold" "%s" "_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"),
+              gui_color_get_custom ("-bold"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_" "\x1B[1m" "\x1B[2m" "bold_dim" "\x1B[22m" "\x1B[1m" "bold"
+        "\x1B[22m" "_end",
+        string);
+
+    /* Bold, reset, dim, remove dim: bold is not set again. */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bold" "%s" "reset" "%s" "dim" "%s" "_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_" "\x1B[1m" "bold" "\x1B[0m" "reset" "\x1B[2m" "dim"
+        "\x1B[22m" "_end",
+        string);
+
+    /* Bold in text color, dim, remove dim: bold is set again. */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bold_red" "%s" "dim" "%s" "_end",
+              gui_color_get_custom ("*red"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_" "\x1B[1m" "\x1B[31m" "bold_red" "\x1B[2m" "dim"
+        "\x1B[22m" "\x1B[1m" "_end",
+        string);
 
     /* reverse */
     snprintf (string, sizeof (string),
@@ -826,6 +2393,12 @@ TEST(GuiColor, EncodeAnsi)
               gui_color_get_custom ("underline"),
               gui_color_get_custom ("-underline"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[4m" "underline" "\x1B[24m" "_end", string);
+
+    /* Set/remove attribute followed by an invalid attribute: the char is kept */
+    WEE_CHECK_ENCODE_ANSI("a1" "a2", "a1" "\x1A" "a2");
+    WEE_CHECK_ENCODE_ANSI("a1" "\x1B[1m" "a2", "a1" "\x1B" "\x1A" "\x01" "a2");
+    WEE_CHECK_ENCODE_ANSI("a1" "\x1B[0m", "a1" "\x1B" "\x1C");
+    WEE_CHECK_ENCODE_ANSI("a1", "a1" "\x1A");
 
     /* Text color: WeeChat: "default" -> ANSI: 39 (default fg color) */
     snprintf (string, sizeof (string),
@@ -849,7 +2422,14 @@ TEST(GuiColor, EncodeAnsi)
     snprintf (string, sizeof (string),
               "test_" "%s" "bar_delim",
               gui_color_get_custom ("bar_delim"));
-    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[48;5;22m" "bar_delim", string);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[38;5;22m" "bar_delim", string);
+    config_file_option_set (config_color_chat_delimiters, "lightred", 1);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[91m" "bar_delim", string);
+    config_file_option_set (config_color_chat_delimiters, "red", 1);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[31m" "bar_delim", string);
+    config_file_option_set (config_color_chat_delimiters, "*green", 1);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[1m" "\x1B[32m" "bar_delim", string);
+    config_file_option_reset (config_color_chat_delimiters, 1);
 
     /* Text color */
     snprintf (string, sizeof (string),
@@ -922,6 +2502,59 @@ TEST(GuiColor, EncodeAnsi)
         string);
     config_file_option_reset (config_color_chat_host, 1);
 
+    /* WeeChat color with bold, dim, remove dim: bold is set again. */
+    config_file_option_set (config_color_chat_host, "*green", 1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bold_green" "%s" "dim" "%s" "_end",
+              GUI_COLOR(GUI_COLOR_CHAT_HOST),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_\x1B[0m" "\x1B[1m" "\x1B[38;5;2m" "\x1B[49m" "bold_green"
+        "\x1B[2m" "dim" "\x1B[22m" "\x1B[1m" "_end",
+        string);
+    config_file_option_reset (config_color_chat_host, 1);
+
+    /*
+     * WeeChat light color displayed with bold (terminal with less than 16
+     * colors): light color, removing bold attribute keeps it.
+     */
+    config_file_option_set (config_look_color_basic_force_bold, "on", 1);
+    config_file_option_set (config_color_chat_host, "lightred", 1);
+    snprintf (string, sizeof (string),
+              "test_" "%s" "light" "%s" "b" "%s" "_end",
+              GUI_COLOR(GUI_COLOR_CHAT_HOST),
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_\x1B[0m" "\x1B[38;5;9m" "\x1B[49m" "light"
+        "\x1B[1m" "b" "\x1B[22m" "_end",
+        string);
+    config_file_option_set (config_color_chat_host, "*lightred", 1);
+    WEE_CHECK_ENCODE_ANSI(
+        "test_\x1B[0m" "\x1B[1m" "\x1B[38;5;9m" "\x1B[49m" "light"
+        "\x1B[1m" "b" "\x1B[22m" "_end",
+        string);
+    config_file_option_reset (config_color_chat_host, 1);
+    config_file_option_reset (config_look_color_basic_force_bold, 1);
+
+    /*
+     * Color pair: colors of the pair (not the pair number), no color for an
+     * unknown pair.
+     */
+    pair = gui_color_get_pair (3, 5);
+    CHECK(pair > 0);
+    LONGS_EQUAL(1, gui_color_get_pair_colors (pair, &fg, &bg));
+    LONGS_EQUAL(3, fg);
+    LONGS_EQUAL(5, bg);
+    LONGS_EQUAL(0, gui_color_get_pair_colors (32000, &fg, &bg));
+    snprintf (string, sizeof (string), "a" "\x19" "@%05d" "b", pair);
+    WEE_CHECK_ENCODE_ANSI("a" "\x1B[38;5;3m" "\x1B[48;5;5m" "b", string);
+    pair = gui_color_get_pair (-1, 2);
+    snprintf (string, sizeof (string), "a" "\x19" "@%05d" "b", pair);
+    WEE_CHECK_ENCODE_ANSI("a" "\x1B[39m" "\x1B[48;5;2m" "b", string);
+    WEE_CHECK_ENCODE_ANSI("a" "b", "a" "\x19" "@32000" "b");
+
     /* Multiple colors/attributes */
     snprintf (string, sizeof (string),
               "%s" "hello, " "%s" "this is" "%s %s" "blink" "%s %s" "dim"
@@ -937,9 +2570,151 @@ TEST(GuiColor, EncodeAnsi)
               gui_color_get_custom ("reset"),
               gui_color_get_custom ("yellow,red"));
     WEE_CHECK_ENCODE_ANSI(
-        "\x1B[44m" "hello, \x1B[1m" "this is" "\x1B[21m \x1B[5m" "blink"
+        "\x1B[44m" "hello, \x1B[1m" "this is" "\x1B[22m \x1B[5m" "blink"
         "\x1B[25m \x1B[2m" "dim" "\x1B[22m a test \x1B[34m" "blue \x1B[0m"
         "reset \x1B[93m" "\x1B[41m" "yellow,red here!",
+        string);
+
+    /* Invalid colors are ignored with their attributes, like on screen. */
+    WEE_CHECK_ENCODE_ANSI("a" "b", "a" "\x19" "F-1" "b");
+    WEE_CHECK_ENCODE_ANSI("a" "b", "a" "\x19" "F*99" "b");
+    WEE_CHECK_ENCODE_ANSI("a" "b", "a" "\x19" "B-1" "b");
+    /* Terminal color greater than 255: default color, like on screen. */
+    WEE_CHECK_ENCODE_ANSI("\x1B[31m" "a" "\x1B[39m" "b",
+                          "\x19" "F03" "a" "\x19" "F@00300" "b");
+    WEE_CHECK_ENCODE_ANSI("\x1B[41m" "a" "\x1B[49m" "b",
+                          "\x19" "B03" "a" "\x19" "B@00300" "b");
+    WEE_CHECK_ENCODE_ANSI("\x1B[39m" "\x1B[49m" "a",
+                          "\x19" "*@00300~@00300" "a");
+    /*
+     * Text and background: ignored with the attributes if one of them is
+     * missing or invalid, like on screen.
+     */
+    snprintf (string, sizeof (string),
+              "%s" "A" "\x19" "*09~-1" "B" "\x19" "*09" "C"
+              "\x19" "*@abcde~05" "D" "\x19" "*09~ab" "E",
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_ENCODE_ANSI("\x1B[1m" "A" "B" "C" "D" "E", string);
+    WEE_CHECK_ENCODE_ANSI("a" "\x1B[34m" "\x1B[40m" "b",
+                          "a" "\x19" "*09~01" "b");
+    /* Truncated extended background: the extended char is skipped. */
+    WEE_CHECK_ENCODE_ANSI("a" "12b", "a" "\x19" "*01~@12b");
+    WEE_CHECK_ENCODE_ANSI("a" "12b", "a" "\x19" "B@12b");
+
+    /* Invalid basic text color: only the background is set, like on screen. */
+    snprintf (string, sizeof (string), "%s" "A" "\x19" "**99~01" "B",
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_ENCODE_ANSI("\x1B[1m" "A" "\x1B[40m" "B", string);
+
+    /* Text color of bar: attributes are removed, like on screen. */
+    snprintf (string, sizeof (string), "%s" "A" "%c%c%c" "B",
+              gui_color_get_custom ("bold"),
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_BAR_CHAR, GUI_COLOR_BAR_FG_CHAR);
+    WEE_CHECK_ENCODE_ANSI("\x1B[1m" "A" "\x1B[22m" "\x1B[39m" "B", string);
+
+    /* Invalid color pair: attributes are kept. */
+    snprintf (string, sizeof (string),
+              "%s" "a" "\x19" "@" "b", gui_color_get_custom ("bold"));
+    WEE_CHECK_ENCODE_ANSI("\x1B[1m" "a" "b", string);
+
+    /* RGB colors */
+    snprintf (string, sizeof (string),
+              "test_%sfg%sbg%sfg_bg_end",
+              "\x19" "F@*#ff8800",
+              "\x19" "B@#000080",
+              "\x19" "*@#ff8800~@#000080");
+    WEE_CHECK_ENCODE_ANSI("test_"
+                          "\x1B[1m" "\x1B[38;2;255;136;0m" "fg"
+                          "\x1B[48;2;0;0;128m" "bg"
+                          "\x1B[22m"
+                          "\x1B[38;2;255;136;0m" "\x1B[48;2;0;0;128m"
+                          "fg_bg_end",
+                          string);
+
+    /* RGB colors replaced by colors of the 256-color palette */
+    snprintf (expected, sizeof (expected),
+              "test_" "\x1B[1m" "\x1B[38;5;%dm" "fg" "\x1B[48;5;%dm" "bg"
+              "\x1B[22m" "\x1B[38;5;%dm" "\x1B[48;5;%dm" "fg_bg_end",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256),
+              gui_color_convert_rgb_to_term_display (0x000080, 256),
+              gui_color_convert_rgb_to_term_display (0xff8800, 256),
+              gui_color_convert_rgb_to_term_display (0x000080, 256));
+    encoded = gui_color_encode_ansi_rgb (string, 0);
+    STRCMP_EQUAL(expected, encoded);
+    free (encoded);
+    encoded = hook_modifier_exec (NULL, "color_encode_ansi", "256", string);
+    STRCMP_EQUAL(expected, encoded);
+    free (encoded);
+    encoded = hook_modifier_exec (NULL, "color_encode_ansi", NULL, string);
+    CHECK(strstr (encoded, "\x1B[38;2;255;136;0m"));
+    free (encoded);
+
+    /* option color and bar delimiter with RGB colors */
+    config_file_option_set (config_color_chat_nick_self, "#ff8800", 1);
+    config_file_option_set (config_color_chat_delimiters, "#00ff80", 1);
+    snprintf (string, sizeof (string), "%s" "nick" "%c%c%c" "delim",
+              GUI_COLOR(GUI_COLOR_CHAT_NICK_SELF),
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_BAR_CHAR, GUI_COLOR_BAR_DELIM_CHAR);
+    encoded = gui_color_encode_ansi (string);
+    CHECK(strstr (encoded, "\x1B[38;2;255;136;0m"));
+    CHECK(strstr (encoded, "\x1B[38;2;0;255;128m" "delim"));
+    CHECK(!strstr (encoded, ";5;1000"));
+    free (encoded);
+    encoded = gui_color_encode_ansi_rgb (string, 0);
+    snprintf (expected, sizeof (expected), "\x1B[38;5;%dm",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+    CHECK(strstr (encoded, expected));
+    snprintf (expected, sizeof (expected), "\x1B[38;5;%dm" "delim",
+              gui_color_convert_rgb_to_term_display (0x00ff80, 256));
+    CHECK(strstr (encoded, expected));
+    CHECK(!strstr (encoded, ";2;"));
+    free (encoded);
+    config_file_option_reset (config_color_chat_nick_self, 1);
+    config_file_option_reset (config_color_chat_delimiters, 1);
+
+    /*
+     * Text color without "keep attributes": bold is removed (like on screen),
+     * so it is not enabled again after the end of dim
+     */
+    snprintf (string, sizeof (string),
+              "%s" "A" "%s" "B" "%s" "C" "%s" "D",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("red"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[1m" "A" "\x1B[22m\x1B[31m" "B" "\x1B[2m" "C" "\x1B[22m" "D",
+        string);
+
+    /* Text color without "keep attributes": all attributes are removed. */
+    snprintf (string, sizeof (string),
+              "%s%s%s%s" "a1" "%s" "b2",
+              gui_color_get_custom ("italic"),
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("blink"),
+              gui_color_get_custom ("!brown"),
+              gui_color_get_custom ("/cyan"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[3m\x1B[4m\x1B[5m" "\x1B[23m\x1B[24m\x1B[25m\x1B[7m\x1B[33m"
+        "a1" "\x1B[27m\x1B[3m\x1B[36m" "b2",
+        string);
+    snprintf (string, sizeof (string),
+              "%s" "a1" "%s" "b2",
+              gui_color_get_custom ("!brown"),
+              gui_color_get_custom ("|/cyan"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[7m\x1B[33m" "a1" "\x1B[3m\x1B[36m" "b2",
+        string);
+
+    /* Text color with "keep attributes": bold is enabled again. */
+    snprintf (string, sizeof (string),
+              "%s" "A" "%s" "B" "%s" "C" "%s" "D",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("|red"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[1m" "A" "\x1B[31m" "B" "\x1B[2m" "C" "\x1B[22m\x1B[1m" "D",
         string);
 }
 
