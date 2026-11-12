@@ -116,6 +116,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: ignore an invalid basic text color in a color code with a text and a background color (for example `\x19*99~01`), like an invalid text color alone, instead of using it as a terminal color
 - core: fix read and write out of bounds in table of color pairs on terminals without colors (for example `TERM=vt100`), and with an invalid background in color codes
 - core: fix memory leak when WeeChat colors are built again, for example when a color option is changed
 - core: display an error when /dev/null can not be opened with option `--daemon` in headless mode

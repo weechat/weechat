@@ -530,6 +530,11 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
                 fg = -1;
             }
         }
+        else
+        {
+            /* Invalid basic color: the text color is not changed. */
+            fg = gui_window_current_style_fg;
+        }
 
         if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
         {
