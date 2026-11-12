@@ -2555,9 +2555,10 @@ TEST(IrcMessage, SplitColors)
 {
     struct t_irc_server *server;
     struct t_hashtable *hashtable;
-    const char *args1, *args2, *ptr_args;
+    const char *args1, *args2, *ptr_args, *ptr_msg;
     char text[4096], msg[8192], key[32];
-    int i, length, count;
+    char batch_ref[64], str_tag[128];
+    int i, length, count, count_batches, count_msgs, bytes;
 
     server = irc_server_alloc ("test_split_colors");
     CHECK(server);
@@ -2755,6 +2756,121 @@ TEST(IrcMessage, SplitColors)
     CHECK(ptr_args);
     STRNCMP_EQUAL("\x0F\x02" "aaa", ptr_args, 5);
     hashtable_free (hashtable);
+
+    /*
+     * Multiline batch with "max-lines": a line split in several messages
+     * counts for each message.
+     */
+    server->multiline_max_lines = 3;
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :a\nb\n%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("a\nb",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    STRCMP_EQUAL(text,
+                 (const char *)hashtable_get (hashtable, "multiline_args2"));
+    hashtable_free (hashtable);
+
+    /*
+     * Multiline batch with "max-lines": a line split in more messages than
+     * "max-lines" is sent in several batches.
+     */
+    server->multiline_max_lines = 2;
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :x\n%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("x",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    CHECK(strchr ((const char *)hashtable_get (hashtable, "multiline_args2"),
+                  '\n'));
+    CHECK(hashtable_get (hashtable, "multiline_args3"));
+    POINTERS_EQUAL(NULL, hashtable_get (hashtable, "multiline_args4"));
+    count_batches = 0;
+    count_msgs = 0;
+    for (i = 1; ; i++)
+    {
+        snprintf (key, sizeof (key), "msg%d", i);
+        ptr_msg = (const char *)hashtable_get (hashtable, key);
+        if (!ptr_msg)
+            break;
+        if (strncmp (ptr_msg, "BATCH +", 7) == 0)
+        {
+            count_batches++;
+            count_msgs = 0;
+        }
+        else if (strstr (ptr_msg, " PRIVMSG "))
+        {
+            count_msgs++;
+            CHECK(count_msgs <= 2);
+        }
+    }
+    LONGS_EQUAL(3, count_batches);
+    hashtable_free (hashtable);
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+
+    /*
+     * Multiline batch with "max-bytes": the codes of formatting sent again in
+     * the messages of a split line are counted.
+     */
+    server->multiline_max_bytes = 3200;
+    memset (text, 'a', 3000);
+    text[3000] = '\0';
+    snprintf (msg, sizeof (msg),
+              "PRIVMSG #channel :s\n"
+              "\x02\x1D\x1F\x16\x1E\x11\x04" "AABBCC,DDEEFF%s",
+              text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("s",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    CHECK(hashtable_get (hashtable, "multiline_args2"));
+    /*
+     * Each batch is ended, its messages have its reference, and the text of
+     * its messages does not exceed "max-bytes" (unless the batch has only one
+     * message).
+     */
+    batch_ref[0] = '\0';
+    count_batches = 0;
+    count_msgs = 0;
+    bytes = 0;
+    for (i = 1; ; i++)
+    {
+        snprintf (key, sizeof (key), "msg%d", i);
+        ptr_msg = (const char *)hashtable_get (hashtable, key);
+        if (!ptr_msg)
+            break;
+        if (strncmp (ptr_msg, "BATCH +", 7) == 0)
+        {
+            STRCMP_EQUAL("", batch_ref);
+            length = strchr (ptr_msg + 7, ' ') - (ptr_msg + 7);
+            CHECK(length < (int)sizeof (batch_ref));
+            memcpy (batch_ref, ptr_msg + 7, length);
+            batch_ref[length] = '\0';
+            count_batches++;
+            count_msgs = 0;
+            bytes = 0;
+        }
+        else if (strncmp (ptr_msg, "BATCH -", 7) == 0)
+        {
+            STRCMP_EQUAL(batch_ref, ptr_msg + 7);
+            CHECK((count_msgs == 1)
+                  || (bytes <= server->multiline_max_bytes));
+            batch_ref[0] = '\0';
+        }
+        else
+        {
+            snprintf (str_tag, sizeof (str_tag), "@batch=%s ", batch_ref);
+            CHECK(batch_ref[0]);
+            STRNCMP_EQUAL(str_tag, ptr_msg, strlen (str_tag));
+            snprintf (key, sizeof (key), "args%d", i);
+            bytes += strlen ((const char *)hashtable_get (hashtable, key));
+            count_msgs++;
+        }
+    }
+    STRCMP_EQUAL("", batch_ref);
+    CHECK(count_batches >= 2);
+    hashtable_free (hashtable);
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
 
     hashtable_remove (server->cap_list, "batch");
     hashtable_remove (server->cap_list, "draft/multiline");

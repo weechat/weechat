@@ -1700,6 +1700,62 @@ irc_message_end_batch (struct t_irc_message_split_context *context,
 }
 
 /*
+ * Build tags for a message of a multiline batch: "@batch=ref " or
+ * "@batch=ref;tags " (if "tags" is not empty, it starts with "@").
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_message_batch_tags (const char *tags, const char *batch_ref)
+{
+    char *result;
+
+    result = NULL;
+    if (tags && tags[0])
+    {
+        if (weechat_asprintf (&result, "@batch=%s;%s", batch_ref, tags + 1) < 0)
+            result = NULL;
+    }
+    else
+    {
+        if (weechat_asprintf (&result, "@batch=%s ", batch_ref) < 0)
+            result = NULL;
+    }
+
+    return result;
+}
+
+/*
+ * End the multiline batch and start a new one, when the next message would
+ * exceed a limit of capability "draft/multiline": the arguments of the batch
+ * ended are added in hashtable (key "multiline_argsN"), and the tags of
+ * messages are built with the reference of the new batch.
+ */
+
+void
+irc_message_split_new_batch (struct t_irc_message_split_context *context,
+                             const char *tags, const char *target,
+                             char *batch_ref, int size_batch_ref,
+                             char **multiline_args, int *index_multiline_args,
+                             char **tags_multiline, int *length_tags)
+{
+    char name[64];
+
+    irc_message_end_batch (context, batch_ref);
+    snprintf (name, sizeof (name), "multiline_args%d", *index_multiline_args);
+    weechat_hashtable_set (context->hashtable, name, *multiline_args);
+    weechat_string_dyn_copy (multiline_args, NULL);
+    (*index_multiline_args)++;
+    irc_batch_generate_random_ref (batch_ref, size_batch_ref - 1);
+    context->total_bytes = 0;
+    irc_message_start_batch (context, target, batch_ref);
+    free (*tags_multiline);
+    *tags_multiline = irc_message_batch_tags (tags, batch_ref);
+    *length_tags = (*tags_multiline) ? strlen (*tags_multiline) : 0;
+}
+
+/*
  * Split a PRIVMSG or NOTICE message, taking care of keeping the '\001' char
  * used in CTCP messages.
  *
@@ -1724,11 +1780,13 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
                                   int multiline_max_bytes,
                                   int multiline_max_lines)
 {
+    struct t_irc_message_split_context context_line;
     char prefix[4096], suffix[2], *pos, saved_char, name[256];
     char *tags_multiline, **list_lines, batch_ref[16 + 1];
     char  **multiline_args;
-    const char *ptr_args;
-    int i, length, length_tags, rc, count_lines, batch_lines;
+    const char *ptr_args, *ptr_msg;
+    int i, j, length, length_tags, rc, count_lines, batch_lines;
+    int number_before, bytes_line;
     int index_multiline_args;
 
     /*
@@ -1765,50 +1823,109 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
             batch_lines = 0;
             for (i = 0; i < count_lines; i++)
             {
-                tags_multiline = NULL;
-                if (tags && tags[0])
+                tags_multiline = irc_message_batch_tags (tags, batch_ref);
+                length_tags = (tags_multiline) ? strlen (tags_multiline) : 0;
+                /*
+                 * Messages and bytes of text of this line once split (a line
+                 * can be split in several messages, which start with the
+                 * codes of formatting): start a new batch if this line would
+                 * exceed the max lines/bytes (the batch reference has always
+                 * the same length).
+                 */
+                context_line.hashtable = weechat_hashtable_new (
+                    32, WEECHAT_HASHTABLE_STRING, WEECHAT_HASHTABLE_STRING,
+                    NULL, NULL);
+                context_line.number = 1;
+                context_line.total_bytes = 0;
+                bytes_line = strlen (list_lines[i]);
+                if (context_line.hashtable)
                 {
-                    weechat_asprintf (&tags_multiline,
-                                      "@batch=%s;%s",
-                                      batch_ref,
-                                      tags + 1);
+                    irc_message_split_string (
+                        &context_line, NULL, host, command, target,
+                        ":", list_lines[i], "", ' ', max_length_nick_user_host,
+                        max_length, 2);
+                    bytes_line = 0;
+                    for (j = 1; j < context_line.number; j++)
+                    {
+                        snprintf (name, sizeof (name), "args%d", j);
+                        ptr_args = weechat_hashtable_get (
+                            context_line.hashtable, name);
+                        if (ptr_args)
+                            bytes_line += strlen (ptr_args);
+                    }
+                }
+                if ((batch_lines > 0)
+                    && ((batch_lines + context_line.number - 1
+                         > multiline_max_lines)
+                        || (context->total_bytes + length_tags + bytes_line
+                            >= multiline_max_bytes)))
+                {
+                    irc_message_split_new_batch (
+                        context, tags, target, batch_ref, sizeof (batch_ref),
+                        multiline_args, &index_multiline_args,
+                        &tags_multiline, &length_tags);
+                    batch_lines = 0;
+                }
+                if (context_line.hashtable
+                    && ((context_line.number - 1 > multiline_max_lines)
+                        || (context->total_bytes + length_tags + bytes_line
+                            >= multiline_max_bytes)))
+                {
+                    /*
+                     * Line too long for a batch: its messages are sent in
+                     * several batches (they are not concatenated, so they can
+                     * be in different batches).
+                     */
+                    for (j = 1; j < context_line.number; j++)
+                    {
+                        snprintf (name, sizeof (name), "msg%d", j);
+                        ptr_msg = weechat_hashtable_get (context_line.hashtable,
+                                                         name);
+                        snprintf (name, sizeof (name), "args%d", j);
+                        ptr_args = weechat_hashtable_get (
+                            context_line.hashtable, name);
+                        if (!ptr_msg)
+                            continue;
+                        if ((batch_lines > 0)
+                            && ((batch_lines + 1 > multiline_max_lines)
+                                || (context->total_bytes + length_tags
+                                    + ((ptr_args) ? (int)strlen (ptr_args) : 0)
+                                    >= multiline_max_bytes)))
+                        {
+                            irc_message_split_new_batch (
+                                context, tags, target, batch_ref,
+                                sizeof (batch_ref), multiline_args,
+                                &index_multiline_args, &tags_multiline,
+                                &length_tags);
+                            batch_lines = 0;
+                        }
+                        irc_message_split_add (context, tags_multiline, ptr_msg,
+                                               ptr_args);
+                        (context->number)++;
+                        if (batch_lines > 0)
+                            weechat_string_dyn_concat (multiline_args, "\n", -1);
+                        weechat_string_dyn_concat (multiline_args,
+                                                   (ptr_args) ? ptr_args : "",
+                                                   -1);
+                        batch_lines++;
+                    }
                 }
                 else
                 {
-                    weechat_asprintf (&tags_multiline,
-                                      "@batch=%s ",
-                                      batch_ref);
+                    number_before = context->number;
+                    rc &= irc_message_split_string (
+                        context, tags_multiline, host, command, target, ":",
+                        list_lines[i], "", ' ', max_length_nick_user_host,
+                        max_length, 2);
+                    if (batch_lines > 0)
+                        weechat_string_dyn_concat (multiline_args, "\n", -1);
+                    weechat_string_dyn_concat (multiline_args,
+                                               list_lines[i], -1);
+                    batch_lines += context->number - number_before;
                 }
-                length_tags = (tags_multiline) ? strlen (tags_multiline) : 0;
-                rc &= irc_message_split_string (
-                    context, tags_multiline, host, command, target, ":",
-                    list_lines[i], "", ' ', max_length_nick_user_host,
-                    max_length, 2);
+                if (context_line.hashtable)
+                    weechat_hashtable_free (context_line.hashtable);
                 free (tags_multiline);
-                if (batch_lines > 0)
-                    weechat_string_dyn_concat (multiline_args, "\n", -1);
-                weechat_string_dyn_concat (multiline_args,
-                                           list_lines[i], -1);
-                batch_lines++;
-                if ((i < count_lines - 1)
-                    && ((batch_lines >= multiline_max_lines)
-                        || (context->total_bytes + length_tags
-                            + (int)strlen (list_lines[i + 1]) >= multiline_max_bytes)))
-                {
-                    /* Start new batch if we have reached max lines/bytes. */
-                    irc_message_end_batch (context, batch_ref);
-                    snprintf (name, sizeof (name),
-                              "multiline_args%d", index_multiline_args);
-                    weechat_hashtable_set (context->hashtable, name,
-                                           *multiline_args);
-                    weechat_string_dyn_copy (multiline_args, NULL);
-                    index_multiline_args++;
-                    irc_batch_generate_random_ref (batch_ref,
-                                                   sizeof (batch_ref) - 1);
-                    context->total_bytes = 0;
-                    irc_message_start_batch (context, target, batch_ref);
-                    batch_lines = 0;
-                }
             }
             weechat_string_free_split (list_lines);
         }
