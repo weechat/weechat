@@ -9,6 +9,7 @@
 
 #include <time.h>
 
+struct t_relay_client;
 struct t_relay_weechat_nicklist;
 
 #define RELAY_WEECHAT_MSG_INITIAL_ALLOC 4096
@@ -33,9 +34,12 @@ struct t_relay_weechat_msg
     char *data;                        /* binary buffer                     */
     int data_alloc;                    /* currently allocated size          */
     int data_size;                     /* current size of buffer            */
+    int rgb_colors;                    /* 1 to keep RGB colors in strings,  */
+                                       /* 0 to use nearest terminal color   */
 };
 
-extern struct t_relay_weechat_msg *relay_weechat_msg_new (const char *id);
+extern struct t_relay_weechat_msg *relay_weechat_msg_new (struct t_relay_client *client,
+                                                          const char *id);
 extern void relay_weechat_msg_add_bytes (struct t_relay_weechat_msg *msg,
                                          const void *buffer, int size);
 extern void relay_weechat_msg_set_bytes (struct t_relay_weechat_msg *msg,
