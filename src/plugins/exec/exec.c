@@ -257,7 +257,10 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
                                      WEECHAT_HASHTABLE_STRING,
                                      NULL, NULL);
     if (!options)
+    {
+        free (line_color);
         return;
+    }
 
     exec_cmd->output_line_nb++;
 
