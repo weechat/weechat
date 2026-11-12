@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-11 00:15+0100\n"
+"POT-Creation-Date: 2026-11-12 20:44+0100\n"
 "PO-Revision-Date: 2026-11-11 00:18+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
@@ -186,6 +186,9 @@ msgstr "Erreur : l'option \"--%s\" ne prend pas de paramètre\n"
 #, c-format
 msgid "Error: unknown option \"%s\"\n"
 msgstr "Erreur : option inconnue \"%s\"\n"
+
+msgid "Error: not enough memory\n"
+msgstr "Erreur : pas assez de mémoire\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -1076,18 +1079,6 @@ msgid "WeeChat session saved (files *.upgrade)"
 msgstr "Session WeeChat sauvegardée (fichiers *.upgrade)"
 
 #, c-format
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-"%sImpossible de mettre à jour : il y a un ou plusieurs processus/thread en "
-"tâche de fond (type de hook : process, connect ou url)"
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr "Vérifiez les hooks qui tournent avec la commande : %s"
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sImpossible de mettre à jour : le binaire WeeChat \"%s\" n'existe pas"
 
@@ -1105,14 +1096,6 @@ msgstr "%sPas de binaire spécifié"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Mise à jour de WeeChat avec le fichier binaire : \"%s\"..."
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr "%sMise à jour abandonnée"
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr "***** Erreur : exec a échoué (programme : \"%s\"), sortie de WeeChat"
 
 #. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
@@ -6664,9 +6647,6 @@ msgstr ""
 "UTF-8) : strlen %s/%s utf8_strlen, gui_chat_strlen %s/%s wcwidth, "
 "utf8_char_size_screen, utf8_strlen_screen, gui_chat_strlen_screen :"
 
-msgid "Error: not enough memory\n"
-msgstr "Erreur : pas assez de mémoire\n"
-
 #, c-format
 msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
@@ -7288,6 +7268,26 @@ msgstr "debug : suppression du fichier : %s"
 #, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr "Mise à jour terminée (%.02fs)"
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+"%sImpossible de mettre à jour : il y a un ou plusieurs processus/thread en "
+"tâche de fond (type de hook : process, connect ou url)"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr "Vérifiez les hooks qui tournent avec la commande : %s"
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "***** Erreur : exec a échoué (programme : \"%s\"), sortie de WeeChat"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr "%sMise à jour abandonnée"
 
 msgid "invalid URL"
 msgstr "URL invalide"

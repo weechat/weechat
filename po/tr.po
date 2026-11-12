@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-11 00:15+0100\n"
+"POT-Creation-Date: 2026-11-12 20:44+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -183,6 +183,9 @@ msgstr "Hata: \"%s\" bir dizin değil\n"
 #| msgid "%s%s: error: unknown protocol \"%s\""
 msgid "Error: unknown option \"%s\"\n"
 msgstr "%s%s: Hata: Bilinmeyen protokol \"%s\""
+
+msgid "Error: not enough memory\n"
+msgstr "Hata: Yetersiz bellek\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -1070,18 +1073,6 @@ msgid "WeeChat session saved (files *.upgrade)"
 msgstr "WeeChat oturumu kaydedildi (*.upgrade dosyaları)"
 
 #, c-format
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-"%sYükseltilemiyor: Bir veya birden çok arka plan süreci/iş parçacığı sürüyor "
-"(kanca türü: process, connect veya url)"
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr "Şu komutla çalışan kancaları denetle: %s"
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sYükseltilemiyor: WeeChat ikilisi \"%s\" yok"
 
@@ -1097,15 +1088,6 @@ msgstr "%sBir ikili belirtilmemiş"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "WeeChat ikili dosya ile yükseltiliyor: \"%s\"..."
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr "%sYükseltme iptal edildi"
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr ""
-"***** Hata: Çalıştırma başarısız (program: \"%s\"), WeeChat'ten çıkılıyor"
 
 #. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
@@ -6284,9 +6266,6 @@ msgid ""
 "utf8_strlen_screen, gui_chat_strlen_screen:"
 msgstr ""
 
-msgid "Error: not enough memory\n"
-msgstr "Hata: Yetersiz bellek\n"
-
 #, fuzzy, c-format
 #| msgid ""
 #| "Error: wrong number of paths for home directories (expected: 1 or 4, "
@@ -6899,6 +6878,27 @@ msgstr "hata ayıklama: dosya kaldırılıyor: %s"
 #, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr "Yükseltme bitti (%.02fs)"
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+"%sYükseltilemiyor: Bir veya birden çok arka plan süreci/iş parçacığı sürüyor "
+"(kanca türü: process, connect veya url)"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr "Şu komutla çalışan kancaları denetle: %s"
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr ""
+"***** Hata: Çalıştırma başarısız (program: \"%s\"), WeeChat'ten çıkılıyor"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr "%sYükseltme iptal edildi"
 
 msgid "invalid URL"
 msgstr "geçersiz URL"

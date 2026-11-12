@@ -6037,8 +6037,8 @@ COMMAND_CALLBACK(quit)
     (void) data;
     (void) buffer;
 
-    /* Already quitting? just ignore the command. */
-    if (weechat_quit)
+    /* Already quitting or upgrading? just ignore the command. */
+    if (weechat_quit || upgrade_pending)
         return WEECHAT_RC_OK;
 
     confirm_ok = 0;
@@ -7786,9 +7786,7 @@ command_upgrade_display (struct t_gui_buffer *buffer,
 
 COMMAND_CALLBACK(upgrade)
 {
-    struct t_weechat_plugin *ptr_plugin;
     char *ptr_binary;
-    char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--upgrade", NULL };
     struct stat stat_buf;
     int confirm_ok, index_args, rc, quit;
 
@@ -7863,24 +7861,12 @@ COMMAND_CALLBACK(upgrade)
         return WEECHAT_RC_OK;
     }
 
-    /*
-     * It is forbidden to upgrade while there are some background process or
-     * thread (hook types: process, connect, url).
-     */
-    if (weechat_hooks[HOOK_TYPE_PROCESS]
-        || weechat_hooks[HOOK_TYPE_CONNECT]
-        || weechat_hooks[HOOK_TYPE_URL])
-    {
-        gui_chat_printf (NULL,
-                         _("%sCan't upgrade: there is one or more background "
-                           "process/thread running (hook type: process, "
-                           "connect or url)"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        gui_chat_printf (NULL,
-                         _("Check running hooks with command: %s"),
-                         "/debug hooks * process connect url");
+    /* Already quitting or upgrading? just ignore the command. */
+    if (weechat_quit || upgrade_pending)
+        return WEECHAT_RC_OK;
+
+    if (!upgrade_weechat_check_background ())
         return WEECHAT_RC_ERROR;
-    }
 
     ptr_binary = NULL;
     quit = 0;
@@ -7948,87 +7934,14 @@ COMMAND_CALLBACK(upgrade)
                          ptr_binary);
     }
 
-    /* Send "upgrade" signal to plugins. */
-    rc = hook_signal_send ("[flags:stop_on_error,ignore_eat]upgrade",
-                           WEECHAT_HOOK_SIGNAL_STRING,
-                           (quit) ? "quit" : NULL);
-    if (rc == WEECHAT_RC_ERROR)
-    {
-        gui_chat_printf (NULL,
-                         _("%sUnable to save some plugin sessions "
-                           "(files *.upgrade)"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        gui_chat_printf (NULL,
-                         _("%sUpgrade aborted"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        free (ptr_binary);
-        return WEECHAT_RC_ERROR;
-    }
-
-    /* Save WeeChat session. */
-    if (!upgrade_weechat_save ())
-    {
-        gui_chat_printf (NULL,
-                         _("%sUnable to save WeeChat session "
-                           "(files *.upgrade)"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        gui_chat_printf (NULL,
-                         _("%sUpgrade aborted"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        free (ptr_binary);
-        return WEECHAT_RC_ERROR;
-    }
-
-    for (ptr_plugin = weechat_plugins; ptr_plugin;
-         ptr_plugin = ptr_plugin->next_plugin)
-    {
-        ptr_plugin->unload_with_upgrade = 1;
-    }
-
-    weechat_quit = 1;
-    weechat_upgrading = 1;
-
-    /* Store layout, unload plugins, save config, then upgrade. */
-    gui_layout_store_on_exit ();
-    plugin_end ();
-    if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
-        (void) config_weechat_write ();
-    gui_main_end (1);
-    log_close ();
-
-    if (quit)
-    {
-        exit (0);
-        return WEECHAT_RC_OK;
-    }
-
     /*
-     * Set passphrase in environment var, so that it will not be asked to user
-     * when starting the new binary.
+     * The upgrade is executed later in the main loop, because this command
+     * can be executed from a callback of a plugin or script, which must not
+     * be unloaded while its callback is running.
      */
-    if (secure_passphrase)
-        setenv (SECURE_ENV_PASSPHRASE, secure_passphrase, 1);
+    upgrade_weechat_schedule (ptr_binary, quit);
 
-    /* Execute binary. */
-    exec_args[0] = ptr_binary;
-    exec_args[3] = dir_get_string_home_dirs ();
-    execvp (exec_args[0], exec_args);
-
-    /* This code should not be reached if execvp is OK. */
-    string_fprintf (stderr, "\n\n*****\n");
-    string_fprintf (stderr,
-                    _("***** Error: exec failed (program: \"%s\"), "
-                      "exiting WeeChat"),
-                    exec_args[0]);
-    string_fprintf (stderr, "\n*****\n\n");
-
-    free (exec_args[0]);
-    free (exec_args[3]);
-
-    exit (EXIT_FAILURE);
-
-    /* Never executed */
-    COMMAND_ERROR;
+    return WEECHAT_RC_OK;
 }
 
 /*

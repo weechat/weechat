@@ -649,8 +649,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
 
     /*
      * Delay the execution of command after we go back in the WeeChat
-     * main loop (some commands like /upgrade executed now can cause
-     * a crash).
+     * main loop, so that it is not executed while the data received from
+     * the client is being processed.
      */
     weechat_hashtable_set (options, "delay", "1");
 

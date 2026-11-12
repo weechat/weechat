@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-11 00:15+0100\n"
+"POT-Creation-Date: 2026-11-12 20:44+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -161,6 +161,9 @@ msgstr ""
 
 #, c-format
 msgid "Error: unknown option \"%s\"\n"
+msgstr ""
+
+msgid "Error: not enough memory\n"
 msgstr ""
 
 #, c-format
@@ -1010,16 +1013,6 @@ msgid "WeeChat session saved (files *.upgrade)"
 msgstr ""
 
 #, c-format
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr ""
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr ""
 
@@ -1034,14 +1027,6 @@ msgstr ""
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
-msgstr ""
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr ""
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is a date.
@@ -5257,9 +5242,6 @@ msgid ""
 "utf8_strlen_screen, gui_chat_strlen_screen:"
 msgstr ""
 
-msgid "Error: not enough memory\n"
-msgstr ""
-
 #, c-format
 msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
@@ -5805,6 +5787,24 @@ msgstr ""
 #. TRANSLATORS: %.02fs is a float number + "s" ("seconds").
 #, c-format
 msgid "Upgrade done (%.02fs)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr ""
+
+#, c-format
+msgid "%sUpgrade aborted"
 msgstr ""
 
 msgid "invalid URL"

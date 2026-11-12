@@ -24,8 +24,16 @@ enum t_upgrade_weechat_type
     UPGRADE_WEECHAT_TYPE_LAYOUT_WINDOW,
 };
 
+extern int upgrade_pending;
+extern char *upgrade_pending_binary;
+extern int upgrade_pending_quit;
+
 int upgrade_weechat_save (void);
 int upgrade_weechat_load (void);
 void upgrade_weechat_end (void);
+int upgrade_weechat_check_background (void);
+void upgrade_weechat_schedule (char *binary, int quit);
+void upgrade_weechat_cancel (void);
+void upgrade_weechat_exec (void);
 
 #endif /* WEECHAT_UPGRADE_H */

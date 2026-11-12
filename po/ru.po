@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-11 00:15+0100\n"
+"POT-Creation-Date: 2026-11-12 20:44+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -178,6 +178,10 @@ msgstr "%s домашний каталог (%s) не является дирек
 #, fuzzy, c-format
 msgid "Error: unknown option \"%s\"\n"
 msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy
+msgid "Error: not enough memory\n"
+msgstr "Недостаточно памяти для новой строчки\n"
 
 #, fuzzy, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -1103,16 +1107,6 @@ msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%s не могу сохранить сессию в файл\n"
 
 #, c-format
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr ""
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr ""
 
@@ -1128,14 +1122,6 @@ msgstr "Сокращения не заданы.\n"
 #, fuzzy, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Обновляю WeeChat...\n"
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr "%s запуск не удался (программа: \"%s\"), выхожу из WeeChat\n"
 
 #. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
@@ -5674,10 +5660,6 @@ msgid ""
 "utf8_strlen_screen, gui_chat_strlen_screen:"
 msgstr ""
 
-#, fuzzy
-msgid "Error: not enough memory\n"
-msgstr "Недостаточно памяти для новой строчки\n"
-
 #, c-format
 msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
@@ -6257,6 +6239,24 @@ msgstr "       IRC(%s)\n"
 #. TRANSLATORS: %.02fs is a float number + "s" ("seconds").
 #, c-format
 msgid "Upgrade done (%.02fs)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "%s запуск не удался (программа: \"%s\"), выхожу из WeeChat\n"
+
+#, c-format
+msgid "%sUpgrade aborted"
 msgstr ""
 
 msgid "invalid URL"

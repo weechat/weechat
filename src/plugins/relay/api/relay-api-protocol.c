@@ -1165,7 +1165,8 @@ RELAY_API_PROTOCOL_CALLBACK(input)
 
     /*
      * Delay the execution of command after we go back in the WeeChat
-     * main loop (some commands like /upgrade executed now can cause a crash).
+     * main loop, so that it is not executed while the data received from
+     * the client is being processed.
      */
     snprintf (str_delay, sizeof (str_delay),
               "%d", relay_api_protocol_command_delay);

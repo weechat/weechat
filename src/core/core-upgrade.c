@@ -17,10 +17,13 @@
 
 #include "weechat.h"
 #include "core-upgrade.h"
+#include "core-config.h"
 #include "core-dir.h"
 #include "core-hashtable.h"
 #include "core-hook.h"
 #include "core-infolist.h"
+#include "core-log.h"
+#include "core-secure.h"
 #include "core-secure-buffer.h"
 #include "core-string.h"
 #include "core-util.h"
@@ -31,6 +34,7 @@
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-line.h"
+#include "../gui/gui-main.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -41,6 +45,10 @@ struct t_gui_buffer *upgrade_set_current_buffer = NULL;
 int upgrade_set_current_window = 0;
 int hotlist_reset = 0;
 struct t_gui_layout *upgrade_layout = NULL;
+
+int upgrade_pending = 0;               /* 1 if /upgrade is scheduled        */
+char *upgrade_pending_binary = NULL;   /* binary to execute (NULL if quit)  */
+int upgrade_pending_quit = 0;          /* 1 to quit instead of exec binary  */
 
 
 /*
@@ -1096,4 +1104,181 @@ upgrade_weechat_end (void)
 
     /* Send signal for end of /upgrade. */
     (void) hook_signal_send ("upgrade_ended", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+}
+
+/*
+ * Check that no background process or thread is running (hook types: process,
+ * connect, url): it is forbidden to upgrade while there is any.
+ *
+ * Display an error if there is at least one background process or thread.
+ *
+ * Return:
+ *   1: OK (no background process or thread)
+ *   0: there is at least one background process or thread
+ */
+
+int
+upgrade_weechat_check_background (void)
+{
+    if (weechat_hooks[HOOK_TYPE_PROCESS]
+        || weechat_hooks[HOOK_TYPE_CONNECT]
+        || weechat_hooks[HOOK_TYPE_URL])
+    {
+        gui_chat_printf (NULL,
+                         _("%sCan't upgrade: there is one or more background "
+                           "process/thread running (hook type: process, "
+                           "connect or url)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        gui_chat_printf (NULL,
+                         _("Check running hooks with command: %s"),
+                         "/debug hooks * process connect url");
+        return 0;
+    }
+
+    return 1;
+}
+
+/*
+ * Schedule an upgrade, which is executed by function upgrade_weechat_exec,
+ * called in the main loop.
+ *
+ * The upgrade is not executed immediately because the command /upgrade can be
+ * executed from a callback of a plugin or script: unloading plugins and
+ * scripts while one of their callbacks is running would crash WeeChat.
+ *
+ * Argument "binary" is the WeeChat binary to execute (NULL if quit is 1), it
+ * is freed when the upgrade is executed or canceled.
+ *
+ * Any upgrade already scheduled is canceled and replaced by this one.
+ */
+
+void
+upgrade_weechat_schedule (char *binary, int quit)
+{
+    upgrade_weechat_cancel ();
+
+    upgrade_pending = 1;
+    upgrade_pending_binary = binary;
+    upgrade_pending_quit = quit;
+}
+
+/*
+ * Cancel a scheduled upgrade.
+ */
+
+void
+upgrade_weechat_cancel (void)
+{
+    free (upgrade_pending_binary);
+    upgrade_pending_binary = NULL;
+    upgrade_pending = 0;
+    upgrade_pending_quit = 0;
+}
+
+/*
+ * Execute the scheduled upgrade (if any): save session, unload plugins, then
+ * execute the new WeeChat binary (or quit WeeChat).
+ *
+ * This function must be called in the main loop, outside any callback.
+ *
+ * It returns only if there is no upgrade scheduled or if the upgrade is
+ * aborted because of an error.
+ */
+
+void
+upgrade_weechat_exec (void)
+{
+    struct t_weechat_plugin *ptr_plugin;
+    char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--upgrade", NULL };
+    char *binary;
+    int rc, quit;
+
+    if (!upgrade_pending)
+        return;
+
+    binary = upgrade_pending_binary;
+    quit = upgrade_pending_quit;
+    upgrade_pending_binary = NULL;
+    upgrade_weechat_cancel ();
+
+    /*
+     * Check again background processes/threads, some may have been created
+     * after the command /upgrade.
+     */
+    if (!upgrade_weechat_check_background ())
+        goto abort;
+
+    /* Send "upgrade" signal to plugins. */
+    rc = hook_signal_send ("[flags:stop_on_error,ignore_eat]upgrade",
+                           WEECHAT_HOOK_SIGNAL_STRING,
+                           (quit) ? "quit" : NULL);
+    if (rc == WEECHAT_RC_ERROR)
+    {
+        gui_chat_printf (NULL,
+                         _("%sUnable to save some plugin sessions "
+                           "(files *.upgrade)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        goto abort;
+    }
+
+    /* Save WeeChat session. */
+    if (!upgrade_weechat_save ())
+    {
+        gui_chat_printf (NULL,
+                         _("%sUnable to save WeeChat session "
+                           "(files *.upgrade)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        goto abort;
+    }
+
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        ptr_plugin->unload_with_upgrade = 1;
+    }
+
+    weechat_quit = 1;
+    weechat_upgrading = 1;
+
+    /* Store layout, unload plugins, save config, then upgrade. */
+    gui_layout_store_on_exit ();
+    plugin_end ();
+    if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
+        (void) config_weechat_write ();
+    gui_main_end (1);
+    log_close ();
+
+    if (quit)
+        exit (0);
+
+    /*
+     * Set passphrase in environment var, so that it will not be asked to user
+     * when starting the new binary.
+     */
+    if (secure_passphrase)
+        setenv (SECURE_ENV_PASSPHRASE, secure_passphrase, 1);
+
+    /* Execute binary. */
+    exec_args[0] = binary;
+    exec_args[3] = dir_get_string_home_dirs ();
+    execvp (exec_args[0], exec_args);
+
+    /* This code should not be reached if execvp is OK. */
+    string_fprintf (stderr, "\n\n*****\n");
+    string_fprintf (stderr,
+                    _("***** Error: exec failed (program: \"%s\"), "
+                      "exiting WeeChat"),
+                    exec_args[0]);
+    string_fprintf (stderr, "\n*****\n\n");
+
+    free (exec_args[0]);
+    free (exec_args[3]);
+
+    exit (EXIT_FAILURE);
+
+abort:
+    gui_chat_printf (NULL,
+                     _("%sUpgrade aborted"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+    free (binary);
 }

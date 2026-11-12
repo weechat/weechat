@@ -24,6 +24,7 @@
 #include "../../core/core-log.h"
 #include "../../core/core-signal.h"
 #include "../../core/core-string.h"
+#include "../../core/core-upgrade.h"
 #include "../../core/core-utf8.h"
 #include "../../core/core-version.h"
 #include "../../plugins/plugin.h"
@@ -433,6 +434,12 @@ gui_main_loop (void)
         }
 
         gui_color_pairs_auto_reset_pending = 0;
+
+        /*
+         * Execute scheduled upgrade (outside any callback), before waiting
+         * for fd hooks, so that an upgrade scheduled by a timer is not delayed.
+         */
+        upgrade_weechat_exec ();
 
         /* Execute fd hooks. */
         hook_fd_exec ();

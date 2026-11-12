@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-11 00:15+0100\n"
+"POT-Creation-Date: 2026-11-12 20:44+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -184,6 +184,10 @@ msgstr "Errore: home (%s) non è una directory\n"
 #| msgid "%s%s: error: unknown protocol \"%s\""
 msgid "Error: unknown option \"%s\"\n"
 msgstr "%s%s: errore: protocollo \"%s\" sconosciuto"
+
+#, fuzzy
+msgid "Error: not enough memory\n"
+msgstr "%sSpazio non sufficiente"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -1094,21 +1098,6 @@ msgstr "%sErrore: impossibile salvare la sessione su file"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%sErrore: impossibile salvare la sessione su file"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%sCan't upgrade: there is one or more background process (hook type "
-#| "'process' or 'connect')"
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-"%sImpossibile aggiornare: ci sono uno o più processi in background (hook di "
-"tipo 'process' o 'connect')"
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr ""
-
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sImpossbile aggiornare: il binario di WeeChat \"%s\" non esiste"
@@ -1127,14 +1116,6 @@ msgstr "Nessuna barra definita"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aggiornamento di WeeChat con il file binario: \"%s\"..."
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr ""
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr "***** Errore: exec fallito (programma: \"%s\"), chiusura di WeeChat"
 
 #. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
@@ -6096,10 +6077,6 @@ msgid ""
 "utf8_strlen_screen, gui_chat_strlen_screen:"
 msgstr ""
 
-#, fuzzy
-msgid "Error: not enough memory\n"
-msgstr "%sSpazio non sufficiente"
-
 #, c-format
 msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
@@ -6712,6 +6689,29 @@ msgstr "debug: rimozione del file: %s"
 #, fuzzy, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr "Aggiornamento completato (%.02f %s)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+"%sImpossibile aggiornare: ci sono uno o più processi in background (hook di "
+"tipo 'process' o 'connect')"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "***** Errore: exec fallito (programma: \"%s\"), chiusura di WeeChat"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 msgid "invalid URL"
 msgstr ""
