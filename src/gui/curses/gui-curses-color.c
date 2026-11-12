@@ -615,7 +615,7 @@ gui_color_build (int number, int foreground, int background)
     /* Allocate color. */
     if (!gui_color[number])
     {
-        gui_color[number] = malloc (sizeof ((*gui_color)[number]));
+        gui_color[number] = calloc (1, sizeof ((*gui_color)[number]));
         if (!gui_color[number])
             return;
     }
@@ -643,6 +643,7 @@ gui_color_build (int number, int foreground, int background)
     snprintf (str_color, sizeof (str_color),
               "%c%02d",
               GUI_COLOR_COLOR_CHAR, number);
+    free (gui_color[number]->string);
     gui_color[number]->string = strdup (str_color);
 }
 
