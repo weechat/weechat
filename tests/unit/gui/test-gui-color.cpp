@@ -27,10 +27,16 @@ extern int gui_color_term_direct_colors;
 extern int gui_color_pairs_used;
 extern int gui_color_pairs_used_max;
 extern int gui_color_term_has_colors;
+extern int gui_color_warning_pairs_full;
+extern int gui_color_pairs_auto_reset;
 extern int gui_color_get_pair (int fg, int bg);
+extern int gui_color_get_valid_term_color (int color);
+extern int gui_color_alloc_pair (void);
 extern void gui_color_pair_direct_key_get_colors (const void *key, int *fg,
                                                   int *bg);
 extern int gui_color_palette_rgb (int color, int limit);
+extern int gui_color_convert_rgb_to_term_range (int rgb, int first,
+                                                int limit);
 extern int gui_color_rgb_parse (const char *string);
 extern int gui_color_rgb_to_number (int rgb);
 extern int gui_color_extended_value (const char *string, int *rgb,
@@ -304,6 +310,8 @@ TEST(GuiColor, GetCustom)
 /*
  * Test functions:
  *   gui_color_convert_rgb_to_term
+ *   gui_color_convert_rgb_to_term_display
+ *   gui_color_convert_rgb_to_term_range
  */
 
 TEST(GuiColor, ConvertRgbToTerm)
@@ -331,6 +339,14 @@ TEST(GuiColor, ConvertRgbToTerm)
     LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x808080, -1));
     LONGS_EQUAL(8, gui_color_convert_rgb_to_term (0x808080, 257));
     LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x010203, 100000000));
+
+    /* For display: colors 0-15 (theme of terminal) are not used. */
+    LONGS_EQUAL(244, gui_color_convert_rgb_to_term_display (0x808080, 256));
+    LONGS_EQUAL(196, gui_color_convert_rgb_to_term_display (0xff0000, 256));
+    LONGS_EQUAL(79, gui_color_convert_rgb_to_term_display (0xffffff, 88));
+    LONGS_EQUAL(8, gui_color_convert_rgb_to_term_display (0x808080, 16));
+    LONGS_EQUAL(0, gui_color_convert_rgb_to_term_display (0x808080, 0));
+    LONGS_EQUAL(8, gui_color_convert_rgb_to_term_range (0x808080, 300, 256));
 }
 
 /*
@@ -435,7 +451,7 @@ TEST(GuiColor, Rgb)
 TEST(GuiColor, RgbTables)
 {
     struct t_hashtable *hashtable;
-    int number_display, i, number, key1, key2;
+    int number_display, i, number, key1, key2, old_term_colors;
 
     /* RGB color for display */
     number_display = gui_color_rgb_to_number (0x222222);
@@ -458,10 +474,19 @@ TEST(GuiColor, RgbTables)
     LONGS_EQUAL(GUI_COLOR_RGB_LAST, number);
     LONGS_EQUAL(GUI_COLOR_RGB_DISPLAY_MAX, gui_color_rgb_display.count);
     LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
-    LONGS_EQUAL(gui_color_convert_rgb_to_term (0xff8800,
-                                               gui_color_term_colors),
+    LONGS_EQUAL(gui_color_convert_rgb_to_term_display (0xff8800,
+                                                       gui_color_term_colors),
                 gui_color_rgb_to_number (0xff8800));
     LONGS_EQUAL(1, gui_color_rgb_display_reset_needed);
+    /*
+     * terminal with 88 colors: nearest color of the 88-color palette, colors
+     * 0-15 (theme of terminal) are not used
+     */
+    old_term_colors = gui_color_term_colors;
+    gui_color_term_colors = 88;
+    LONGS_EQUAL(32, gui_color_rgb_to_number (0x5f0000));
+    LONGS_EQUAL(19, gui_color_rgb_to_number (0x0000ff));
+    gui_color_term_colors = old_term_colors;
     gui_color_rgb_display_reset ();
     LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
 
@@ -472,7 +497,7 @@ TEST(GuiColor, RgbTables)
         gui_color_rgb_to_number (0x300000 + i);
     }
     config_file_option_set (config_look_color_pairs_auto_reset, "-1", 1);
-    LONGS_EQUAL(gui_color_convert_rgb_to_term (0xabc123, 256),
+    LONGS_EQUAL(gui_color_convert_rgb_to_term_display (0xabc123, 256),
                 gui_color_rgb_to_number (0xabc123));
     LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
     config_file_option_reset (config_look_color_pairs_auto_reset, 1);
@@ -499,6 +524,60 @@ TEST(GuiColor, RgbTables)
     CHECK(gui_color_hash_key_cb (hashtable, &key1)
           != gui_color_hash_key_cb (hashtable, &key2));
     hashtable_free (hashtable);
+}
+
+/*
+ * Test functions:
+ *   gui_color_get_valid_term_color
+ *   gui_color_alloc_pair
+ *   gui_color_get_pair (RGB colors, no more pairs available)
+ */
+
+TEST(GuiColor, PairsRgb)
+{
+    int old_term_colors, old_pairs_used, number, pair;
+
+    /* Valid terminal color: nearest color or default color. */
+    old_term_colors = gui_color_term_colors;
+    gui_color_term_colors = 16;
+    LONGS_EQUAL(5, gui_color_get_valid_term_color (5));
+    LONGS_EQUAL(gui_color_convert_rgb_to_term_display (gui_color_term256[196],
+                                                       16),
+                gui_color_get_valid_term_color (196));
+    LONGS_EQUAL(-1, gui_color_get_valid_term_color (300));
+    gui_color_term_colors = old_term_colors;
+
+    /* RGB background without direct colors: nearest terminal color. */
+    number = gui_color_rgb_to_number (0x123456);
+    pair = gui_color_get_pair (5, number);
+    CHECK(pair > 0);
+    LONGS_EQUAL(pair,
+                gui_color_get_pair (
+                    5, gui_color_convert_rgb_to_term_display (0x123456,
+                                                              gui_color_term_colors)));
+
+    old_pairs_used = gui_color_pairs_used;
+
+    /* Few pairs left: automatic reset of pairs requested. */
+    gui_color_pairs_used = gui_color_num_pairs - 1;
+    LONGS_EQUAL(gui_color_num_pairs, gui_color_alloc_pair ());
+    LONGS_EQUAL(1, gui_color_pairs_auto_reset);
+    gui_color_pairs_auto_reset = 0;
+
+    /* No more pairs: warning (if no automatic reset), pair 1 is used. */
+    config_file_option_set (config_look_color_pairs_auto_reset, "-1", 1);
+    gui_color_warning_pairs_full = 0;
+    LONGS_EQUAL(0, gui_color_alloc_pair ());
+    LONGS_EQUAL(1, gui_color_warning_pairs_full);
+    LONGS_EQUAL(1, gui_color_get_pair (201, 202));
+    gui_color_term_direct_colors = 1;
+    LONGS_EQUAL(1, gui_color_get_pair (gui_color_rgb_to_number (0x654321),
+                                       -1));
+    gui_color_term_direct_colors = 0;
+    config_file_option_reset (config_look_color_pairs_auto_reset, 1);
+    gui_color_warning_pairs_full = 0;
+
+    gui_color_pairs_used = old_pairs_used;
 }
 
 /*
@@ -618,8 +697,8 @@ TEST(GuiColor, GetPairRgb)
     gui_color_term_direct_colors = 0;
     LONGS_EQUAL(
         gui_color_get_pair (
-            gui_color_convert_rgb_to_term (0x123456,
-                                           gui_color_term_colors),
+            gui_color_convert_rgb_to_term_display (0x123456,
+                                                   gui_color_term_colors),
             -1),
         gui_color_get_pair (number1, -1));
 
