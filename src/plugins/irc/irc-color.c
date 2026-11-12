@@ -312,6 +312,30 @@ irc_color_code_parse (const char *string, int *fg, int *bg)
 }
 
 /*
+ * Get the size of the char at the beginning of a string: the size of a valid
+ * UTF-8 char, or 1 for a byte which is not valid UTF-8, so that it can not
+ * include the beginning of an IRC code after it.
+ *
+ * Return the size of the char (1 at the end of string).
+ */
+
+int
+irc_color_char_size (const char *string)
+{
+    int size;
+
+    if (((unsigned char)string[0] < 0x80)
+        || !weechat_utf8_is_valid (string, 1, NULL))
+    {
+        return 1;
+    }
+
+    size = weechat_utf8_char_size (string);
+
+    return (size > 0) ? size : 1;
+}
+
+/*
  * Get the size of an IRC color code at the beginning of a string (see
  * function irc_color_code_parse).
  *

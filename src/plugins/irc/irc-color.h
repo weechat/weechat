@@ -133,6 +133,14 @@ struct t_irc_color_formatting
     int bg;                            /* background (same values as fg)    */
 };
 
+extern int irc_color_char_size (const char *string);
+extern int irc_color_code_size (const char *string);
+extern void irc_color_formatting_init (struct t_irc_color_formatting *formatting);
+extern void irc_color_formatting_update (struct t_irc_color_formatting *formatting,
+                                         const char *string, int length);
+extern char *irc_color_formatting_codes (struct t_irc_color_formatting *formatting,
+                                         const char *next_text,
+                                         int attributes_only);
 extern char *irc_color_decode (const char *string, int keep_colors);
 extern const char *irc_color_decode_const (const char *string, int keep_colors);
 extern char *irc_color_encode (const char *string, int keep_colors);

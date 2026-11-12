@@ -26,19 +26,12 @@ extern int irc_color_convert_term2irc (int color);
 extern int irc_color_is_hex_color (const unsigned char *string);
 extern int irc_color_hex_color_value (const unsigned char *string);
 extern int irc_color_code_parse (const char *string, int *fg, int *bg);
-extern int irc_color_code_size (const char *string);
-extern void irc_color_formatting_init (struct t_irc_color_formatting *formatting);
-extern void irc_color_formatting_update (struct t_irc_color_formatting *formatting,
-                                         const char *string, int length);
 extern int irc_color_formatting_transition (char **output,
                                             const struct t_irc_color_formatting *from,
                                             const struct t_irc_color_formatting *to,
                                             int colors_only);
 extern void irc_color_formatting_add_separator (char **output, int fg_only,
                                                 const char *text, int length);
-extern char *irc_color_formatting_codes (struct t_irc_color_formatting *formatting,
-                                         const char *next_text,
-                                         int attributes_only);
 }
 
 /* Tests on irc_color_decode(): IRC color -> WeeChat color */
@@ -696,6 +689,24 @@ TEST(IrcColor, Encode)
     /* Color: hex background with less than 6 digits (text ",8B00") */
     WEE_CHECK_ENCODE("test_,8B00 orange", STRING_USER_HEX_SHORT_BG, 0);
     WEE_CHECK_ENCODE(STRING_USER_HEX_SHORT_BG, STRING_USER_HEX_SHORT_BG, 1);
+}
+
+/*
+ * Test functions:
+ *   irc_color_char_size
+ */
+
+TEST(IrcColor, CharSize)
+{
+    LONGS_EQUAL(1, irc_color_char_size (""));
+    LONGS_EQUAL(1, irc_color_char_size ("abc"));
+    LONGS_EQUAL(1, irc_color_char_size ("\x02" "abc"));
+    LONGS_EQUAL(2, irc_color_char_size ("\xc3\xa9" "abc"));
+    LONGS_EQUAL(4, irc_color_char_size ("\xf0\x9f\x98\x80" "abc"));
+    /* Byte which is not valid UTF-8: read alone. */
+    LONGS_EQUAL(1, irc_color_char_size ("\xc3" "\x03" "04"));
+    LONGS_EQUAL(1, irc_color_char_size ("\xff" "abc"));
+    LONGS_EQUAL(1, irc_color_char_size ("\xf0\x9f\x98"));
 }
 
 /*
