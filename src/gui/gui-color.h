@@ -166,10 +166,27 @@ enum t_gui_color_enum
     "([<>])|"                                   \
     "(\\[[0-9;?]*[A-Za-z]))"
 
+/* RGB color in the result of ANSI color parsing: flag + 0xRRGGBB */
+#define GUI_COLOR_ANSI_RGB_FLAG               0x1000000
+
+/* Parameter given to the callback after the last parameter of a sequence */
+#define GUI_COLOR_ANSI_PARAM_END              -1
+
 #define GUI_COLOR_ANSI_DEFAULT_FG 39
 #define GUI_COLOR_ANSI_DEFAULT_BG 49
 
 #define GUI_COLOR_BUFFER_NAME "color"
+
+/* Callback for each parameter of an ANSI escape sequence */
+typedef void (t_gui_color_ansi_param_cb)(char **output, int value,
+                                         int color);
+
+/* Data for function gui_color_ansi_replace */
+struct t_gui_color_ansi_replace
+{
+    int keep_colors;                     /* 1 to keep colors               */
+    t_gui_color_ansi_param_cb *callback; /* callback for each parameter    */
+};
 
 /* Color structure */
 
