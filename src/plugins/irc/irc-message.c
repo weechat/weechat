@@ -1031,7 +1031,10 @@ irc_message_split_string (struct t_irc_message_split_context *context,
         max_length -= (host) ? strlen (host) + 1 : 0;
     max_length -= strlen (command) + 1;
     if (target)
-        max_length -= strlen (target);
+    {
+        /* Target and the space after it (if target is not empty). */
+        max_length -= strlen (target) + ((target[0]) ? 1 : 0);
+    }
     if (prefix)
         max_length -= strlen (prefix);
     if (suffix)

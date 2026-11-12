@@ -2261,3 +2261,48 @@ TEST(IrcMessage, Split)
 
     irc_server_free (server);
 }
+
+/*
+ * Test functions:
+ *   irc_message_split (max length of a message received by other clients)
+ */
+
+TEST(IrcMessage, SplitMaxLength)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+    const char *ptr_msg;
+    char text[2048], msg[4096];
+    int length_nick_user_host;
+
+    server = irc_server_alloc ("test_split_max_length");
+    CHECK(server);
+
+    /*
+     * Message received by other clients: ":nick!user@host " (at most 93
+     * bytes with the default max lengths of nick, user and host: 16, 10 and
+     * 63), the message sent and "\r\n": a full part has exactly 512 bytes.
+     */
+    length_nick_user_host = 1 + 16 + 1 + 10 + 1 + 63 + 1;
+    memset (text, 'a', 1000);
+    text[1000] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    LONGS_EQUAL(512, length_nick_user_host + (int)strlen (ptr_msg) + 2);
+    hashtable_free (hashtable);
+
+    /* CTCP: the final "\01" is in the 512 bytes. */
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :\01ACTION %s\01", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    LONGS_EQUAL(512, length_nick_user_host + (int)strlen (ptr_msg) + 2);
+    LONGS_EQUAL('\01', ptr_msg[strlen (ptr_msg) - 1]);
+    hashtable_free (hashtable);
+
+    irc_server_free (server);
+}
