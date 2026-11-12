@@ -116,6 +116,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: switch back to WeeChat colors as soon as the `/color` buffer is closed or not displayed any more, after a switch to terminal colors (key alt-c), instead of displaying all buffers with one terminal color until the end of the delay
 - core: keep the char after a set/remove attribute code which is not followed by a valid attribute when removing colors (for example function string_remove_color) and in function string_color_code_size, like on screen
 - core: convert color pair codes (for example in `/color` buffer) to the colors of the pair instead of a terminal color with the pair number when converting WeeChat colors to ANSI colors (relay "api" protocol with colors "ansi")
 - core: do not display the extended char "@" of a truncated background color code (for example `\x19B@12`), which is skipped when colors are removed

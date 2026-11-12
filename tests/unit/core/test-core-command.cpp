@@ -39,6 +39,8 @@ extern "C"
 
 extern int gui_color_use_term_colors;
 extern int gui_color_timer;
+extern int gui_color_timer_cb (const void *pointer, void *data,
+                               int remaining_calls);
 }
 
 #define WEE_CMD_BUFFER(__buffer_name, __command)                        \
@@ -619,11 +621,13 @@ TEST(CoreCommand, Color)
     /* A switch during the display of terminal colors adds time. */
     WEE_CMD_CORE("/color switch");
     LONGS_EQUAL(1, gui_color_use_term_colors);
-    /* Back to WeeChat colors, for the next tests. */
-    gui_color_timer = 1;
-    WEE_CMD_CORE("/color switch");
-    LONGS_EQUAL(0, gui_color_use_term_colors);
+    /* Terminal colors are kept while the color buffer is displayed. */
+    gui_color_timer_cb (NULL, NULL, 0);
+    LONGS_EQUAL(1, gui_color_use_term_colors);
+    /* Back to WeeChat colors when the color buffer is closed. */
     WEE_CMD_CORE("/buffer close core.color");
+    gui_color_timer_cb (NULL, NULL, 0);
+    LONGS_EQUAL(0, gui_color_use_term_colors);
 
     /* /color term2rgb */
     WEE_CMD_CORE_MIN_ARGS("/color term2rgb", "/color term2rgb");

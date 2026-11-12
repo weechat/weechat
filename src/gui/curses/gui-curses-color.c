@@ -1207,6 +1207,13 @@ gui_color_timer_cb (const void *pointer, void *data, int remaining_calls)
 
     gui_color_timer--;
 
+    /*
+     * Terminal colors are displayed for the color buffer only: back to
+     * WeeChat colors as soon as this buffer is closed or not displayed.
+     */
+    if (!gui_color_buffer || (gui_color_buffer->num_displayed == 0))
+        gui_color_timer = 0;
+
     if (gui_color_timer <= 0)
     {
         if (gui_color_use_term_colors)
