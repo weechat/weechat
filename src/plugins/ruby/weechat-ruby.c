@@ -509,6 +509,8 @@ weechat_ruby_exec (struct t_plugin_script *script,
         err = rb_gv_get ("$!");
         weechat_ruby_print_exception (err);
 
+        ruby_current_script = old_ruby_current_script;
+
         return NULL;
     }
 
