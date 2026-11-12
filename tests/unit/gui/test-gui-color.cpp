@@ -274,6 +274,19 @@ TEST(GuiColor, ConvertRgbToTerm)
     LONGS_EQUAL(154, gui_color_convert_rgb_to_term (0xafff00, 256));
     LONGS_EQUAL(11, gui_color_convert_rgb_to_term (0xafff00, 64));
 
+    /* Terminal with 88 colors: its own palette after the 16 basic colors. */
+    LONGS_EQUAL(0x000000, gui_color_palette_rgb (16, 88));
+    LONGS_EQUAL(0x8b0000, gui_color_palette_rgb (32, 88));
+    LONGS_EQUAL(0xffffff, gui_color_palette_rgb (79, 88));
+    LONGS_EQUAL(0x2e2e2e, gui_color_palette_rgb (80, 88));
+    LONGS_EQUAL(0xe7e7e7, gui_color_palette_rgb (87, 88));
+    LONGS_EQUAL(-1, gui_color_palette_rgb (88, 88));
+    LONGS_EQUAL(gui_color_term256[52], gui_color_palette_rgb (52, 256));
+    LONGS_EQUAL(81, gui_color_convert_rgb_to_term (0x5f5f5f, 88));
+    LONGS_EQUAL(15, gui_color_convert_rgb_to_term (0xffffff, 88));
+    LONGS_EQUAL(52, gui_color_convert_rgb_to_term (0xcd8b00, 88));
+    LONGS_EQUAL(1, gui_color_convert_rgb_to_term (0x5f0000, 88));
+
     /* invalid limit */
     LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x808080, 0));
     LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x808080, -1));

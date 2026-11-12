@@ -549,12 +549,49 @@ gui_color_convert_term_to_rgb (int color)
 }
 
 /*
+ * Get the RGB value of a terminal color in a palette of "limit" colors.
+ *
+ * Terminals with 88 colors (for example rxvt-unicode) have their own palette
+ * after the 16 basic colors: a 4x4x4 color cube (16-79) and 8 grays (80-87);
+ * other palettes use the colors of the 256-color palette.
+ *
+ * Return the RGB value, -1 if the color is not in the palette.
+ */
+
+int
+gui_color_palette_rgb (int color, int limit)
+{
+    int levels[4] = { 0x00, 0x8b, 0xcd, 0xff };
+    int grays[8] = { 0x2e, 0x5c, 0x73, 0x8b, 0xa2, 0xb9, 0xd0, 0xe7 };
+
+    if ((color < 0) || (color >= 256) || (color >= limit))
+        return -1;
+
+    if ((limit == 88) && (color >= 16))
+    {
+        if (color < 80)
+        {
+            color -= 16;
+            return (levels[color / 16] << 16)
+                | (levels[(color / 4) % 4] << 8)
+                | levels[color % 4];
+        }
+        return (grays[color - 80] << 16) | (grays[color - 80] << 8)
+            | grays[color - 80];
+    }
+
+    return gui_color_term256[color];
+}
+
+/*
  * Convert a RGB color to the closest terminal color.
  *
  * Argument "limit" is the number of colors to check in the table of terminal
  * colors (starting from 0). So for example 256 will return any of the 256
  * colors, 16 will return a color between 0 and 15. A limit greater than 256
- * is the same as 256, and a limit lower than 1 returns 0.
+ * is the same as 256, and a limit lower than 1 returns 0. With 88 colors, the
+ * palette of terminals with 88 colors is used (see function
+ * gui_color_palette_rgb).
  *
  * Return the closest terminal color (0-255).
  */
@@ -562,7 +599,7 @@ gui_color_convert_term_to_rgb (int color)
 int
 gui_color_convert_rgb_to_term (int rgb, int limit)
 {
-    int i, r1, g1, b1, r2, g2, b2, diff, best_diff, best_color;
+    int i, r1, g1, b1, rgb2, r2, g2, b2, diff, best_diff, best_color;
 
     if (limit > 256)
         limit = 256;
@@ -576,9 +613,10 @@ gui_color_convert_rgb_to_term (int rgb, int limit)
 
     for (i = 0; i < limit; i++)
     {
-        r2 = gui_color_term256[i] >> 16;
-        g2 = (gui_color_term256[i] >> 8) & 0xFF;
-        b2 = gui_color_term256[i] & 0xFF;
+        rgb2 = gui_color_palette_rgb (i, limit);
+        r2 = rgb2 >> 16;
+        g2 = (rgb2 >> 8) & 0xFF;
+        b2 = rgb2 & 0xFF;
 
         diff = ((r2 - r1) * (r2 - r1)) +
             ((g2 - g1) * (g2 - g1)) +
