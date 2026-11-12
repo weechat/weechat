@@ -108,9 +108,34 @@ hashtable_hash_key_djb2 (const char *string)
 }
 
 /*
- * Hash a pointer using the finalizer of MurmurHash3 (64-bit), function
- * "fmix64" written by Austin Appleby (public domain), see:
+ * Mix the bits of a 64-bit value using the finalizer of MurmurHash3 (64-bit),
+ * function "fmix64" written by Austin Appleby (public domain), see:
  * https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp
+ *
+ * Each bit of the value changes about half of the bits of the result, so that
+ * values which differ only in a few bits are spread over all the buckets of
+ * a hashtable.
+ *
+ * Return the mixed value.
+ */
+
+unsigned long long
+hashtable_hash_mix64 (unsigned long long value)
+{
+    uint64_t hash;
+
+    hash = (uint64_t)value;
+    hash ^= hash >> 33;
+    hash *= 0xff51afd7ed558ccdULL;
+    hash ^= hash >> 33;
+    hash *= 0xc4ceb9fe1a85ec53ULL;
+    hash ^= hash >> 33;
+
+    return hash;
+}
+
+/*
+ * Hash a pointer.
  *
  * Pointers returned by malloc are aligned (low bits are always 0), so the
  * bits are mixed to spread pointers over all the buckets of the hashtable.
@@ -121,16 +146,7 @@ hashtable_hash_key_djb2 (const char *string)
 unsigned long long
 hashtable_hash_key_pointer (const void *pointer)
 {
-    uint64_t hash;
-
-    hash = (uint64_t)((uintptr_t)pointer);
-    hash ^= hash >> 33;
-    hash *= 0xff51afd7ed558ccdULL;
-    hash ^= hash >> 33;
-    hash *= 0xc4ceb9fe1a85ec53ULL;
-    hash ^= hash >> 33;
-
-    return hash;
+    return hashtable_hash_mix64 ((unsigned long long)((uintptr_t)pointer));
 }
 
 /*
