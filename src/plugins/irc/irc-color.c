@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include <regex.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -67,7 +66,6 @@ char irc_color_term2irc[IRC_COLOR_TERM2IRC_NUM_COLORS] =
     11,  /*  14    11 (lightcyan)    */
     0,   /*  15     0 (white)        */
 };
-regex_t *irc_color_regex_ansi = NULL;
 int irc_color_index_string_decoded = 0;
 char *irc_color_string_decoded[32];
 
@@ -1009,125 +1007,158 @@ irc_color_encode (const char *string, int keep_colors)
 }
 
 /*
- * Replace ANSI colors by IRC colors (or removes them).
+ * Read the next parameter (a number) of a normalized ANSI escape sequence
+ * (see modifier "color_normalize_ansi"), and skip the separator ";" after it.
  *
- * This callback is called by irc_color_decode_ansi, it must not be called
- * directly.
+ * Return 1 if a parameter was read, 0 if there is no more parameter or if
+ * the parameter is invalid.
  */
 
-char *
-irc_color_decode_ansi_cb (void *data, const char *text)
+int
+irc_color_ansi_next_param (const char **ptr_param, const char *ptr_end,
+                           int *value)
 {
-    struct t_irc_color_ansi_state *ansi_state;
-    char *text2, **items, *output, str_color[128];
-    int i, length, num_items, value, value2, color;
+    const char *ptr_string;
+    int number;
 
-    ansi_state = (struct t_irc_color_ansi_state *)data;
+    ptr_string = *ptr_param;
+    if ((ptr_string >= ptr_end) || !isdigit ((unsigned char)ptr_string[0]))
+        return 0;
 
-    /* If we don't keep colors or if text is empty, just return empty string. */
-    if (!ansi_state->keep_colors || !text || !text[0])
-        return strdup ("");
-
-    /* Only sequences ending with 'm' are used, the others are discarded. */
-    length = strlen (text);
-    if (text[length - 1] != 'm')
-        return strdup ("");
-
-    /* Sequence "\33[m" resets color. */
-    if (length < 4)
-        return strdup (IRC_COLOR_RESET_STR);
-
-    text2 = NULL;
-    items = NULL;
-    output = NULL;
-
-    /* Extract text between "\33[" and "m". */
-    text2 = weechat_strndup (text + 2, length - 3);
-    if (!text2)
-        goto end;
-
-    items = weechat_string_split (text2, ";", NULL,
-                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                  0, &num_items);
-    if (!items)
-        goto end;
-
-    output = malloc ((32 * num_items) + 1);
-    if (!output)
-        goto end;
-    output[0] = '\0';
-
-    for (i = 0; i < num_items; i++)
+    number = 0;
+    while ((ptr_string < ptr_end) && isdigit ((unsigned char)ptr_string[0]))
     {
-        value = atoi (items[i]);
+        if (number < 1000000)
+            number = (number * 10) + (ptr_string[0] - '0');
+        ptr_string++;
+    }
+    if ((ptr_string < ptr_end) && (ptr_string[0] == ';'))
+        ptr_string++;
+
+    *ptr_param = ptr_string;
+    *value = number;
+
+    return 1;
+}
+
+/*
+ * Read the color after parameter 38 or 48 of a normalized ANSI escape
+ * sequence: "5;N" (terminal color) or "2;R;G;B" (RGB color).
+ *
+ * Return the color: terminal color (0-255), or RGB color with flag
+ * IRC_COLOR_RGB_FLAG, -1 if the color is invalid.
+ */
+
+int
+irc_color_ansi_next_color (const char **ptr_param, const char *ptr_end)
+{
+    int type, value, red, green, blue;
+
+    if (!irc_color_ansi_next_param (ptr_param, ptr_end, &type))
+        return -1;
+
+    switch (type)
+    {
+        case 2:
+            if (!irc_color_ansi_next_param (ptr_param, ptr_end, &red)
+                || !irc_color_ansi_next_param (ptr_param, ptr_end, &green)
+                || !irc_color_ansi_next_param (ptr_param, ptr_end, &blue)
+                || (red > 255) || (green > 255) || (blue > 255))
+            {
+                return -1;
+            }
+            return IRC_COLOR_RGB_FLAG | (red << 16) | (green << 8) | blue;
+        case 5:
+            if (!irc_color_ansi_next_param (ptr_param, ptr_end, &value)
+                || (value > 255))
+            {
+                return -1;
+            }
+            return value;
+    }
+
+    return -1;
+}
+
+/*
+ * Set an attribute of ANSI state: if it changes, the IRC code of the
+ * attribute (which toggles it) is added in output.
+ */
+
+void
+irc_color_decode_ansi_set_attr (char **output, char *attribute, int value,
+                                const char *code)
+{
+    if (*attribute == value)
+        return;
+
+    weechat_string_dyn_concat (output, code, -1);
+    *attribute = value;
+}
+
+/*
+ * Convert a normalized ANSI escape sequence (parameters between "\33[" and
+ * "m", see modifier "color_normalize_ansi") to IRC colors, using and updating
+ * the state of ANSI colors.
+ */
+
+void
+irc_color_decode_ansi_sequence (char **output,
+                                struct t_irc_color_ansi_state *ansi_state,
+                                const char *params, int length)
+{
+    struct t_irc_color_formatting *formatting;
+    const char *ptr_param, *ptr_end;
+    char str_color[32];
+    int value, color;
+
+    formatting = &ansi_state->formatting;
+
+    ptr_param = params;
+    ptr_end = params + length;
+    while (irc_color_ansi_next_param (&ptr_param, ptr_end, &value))
+    {
         switch (value)
         {
             case 0: /* Reset */
-                strcat (output, IRC_COLOR_RESET_STR);
-                ansi_state->bold = 0;
-                ansi_state->underline = 0;
-                ansi_state->italic = 0;
-                ansi_state->strikethrough = 0;
+                weechat_string_dyn_concat (output, IRC_COLOR_RESET_STR, -1);
+                irc_color_formatting_init (formatting);
                 break;
             case 1: /* Bold */
-                if (!ansi_state->bold)
-                {
-                    strcat (output, IRC_COLOR_BOLD_STR);
-                    ansi_state->bold = 1;
-                }
+                irc_color_decode_ansi_set_attr (output, &formatting->bold, 1,
+                                                IRC_COLOR_BOLD_STR);
                 break;
             case 2: /* Remove bold */
             case 21:
             case 22:
-                if (ansi_state->bold)
-                {
-                    strcat (output, IRC_COLOR_BOLD_STR);
-                    ansi_state->bold = 0;
-                }
+                irc_color_decode_ansi_set_attr (output, &formatting->bold, 0,
+                                                IRC_COLOR_BOLD_STR);
                 break;
             case 3: /* Italic */
-                if (!ansi_state->italic)
-                {
-                    strcat (output, IRC_COLOR_ITALIC_STR);
-                    ansi_state->italic = 1;
-                }
+                irc_color_decode_ansi_set_attr (output, &formatting->italic, 1,
+                                                IRC_COLOR_ITALIC_STR);
                 break;
             case 4: /* Underline */
-                if (!ansi_state->underline)
-                {
-                    strcat (output, IRC_COLOR_UNDERLINE_STR);
-                    ansi_state->underline = 1;
-                }
+                irc_color_decode_ansi_set_attr (output, &formatting->underline,
+                                                1, IRC_COLOR_UNDERLINE_STR);
                 break;
             case 9: /* Strikethrough */
-                if (!ansi_state->strikethrough)
-                {
-                    strcat (output, IRC_COLOR_STRIKETHROUGH_STR);
-                    ansi_state->strikethrough = 1;
-                }
+                irc_color_decode_ansi_set_attr (output,
+                                                &formatting->strikethrough, 1,
+                                                IRC_COLOR_STRIKETHROUGH_STR);
                 break;
             case 23: /* Remove italic */
-                if (ansi_state->italic)
-                {
-                    strcat (output, IRC_COLOR_ITALIC_STR);
-                    ansi_state->italic = 0;
-                }
+                irc_color_decode_ansi_set_attr (output, &formatting->italic, 0,
+                                                IRC_COLOR_ITALIC_STR);
                 break;
             case 24: /* Remove underline */
-                if (ansi_state->underline)
-                {
-                    strcat (output, IRC_COLOR_UNDERLINE_STR);
-                    ansi_state->underline = 0;
-                }
+                irc_color_decode_ansi_set_attr (output, &formatting->underline,
+                                                0, IRC_COLOR_UNDERLINE_STR);
                 break;
             case 29: /* Remove strikethrough */
-                if (ansi_state->strikethrough)
-                {
-                    strcat (output, IRC_COLOR_STRIKETHROUGH_STR);
-                    ansi_state->strikethrough = 0;
-                }
+                irc_color_decode_ansi_set_attr (output,
+                                                &formatting->strikethrough, 0,
+                                                IRC_COLOR_STRIKETHROUGH_STR);
                 break;
             case 30: /* Text color */
             case 31:
@@ -1141,56 +1172,31 @@ irc_color_decode_ansi_cb (void *data, const char *text)
                           "%c%02d",
                           IRC_COLOR_COLOR_CHAR,
                           irc_color_term2irc[value - 30]);
-                strcat (output, str_color);
+                weechat_string_dyn_concat (output, str_color, -1);
                 break;
             case 38: /* Text color */
-                if (i + 1 < num_items)
+            case 48: /* Background color */
+                color = irc_color_ansi_next_color (&ptr_param, ptr_end);
+                if (color < 0)
+                    break;
+                color = (color & IRC_COLOR_RGB_FLAG) ?
+                    irc_color_convert_rgb2irc (color & 0xFFFFFF) :
+                    irc_color_convert_term2irc (color);
+                if (color >= 0)
                 {
-                    value2 = atoi (items[i + 1]);
-                    if (value2 == 2)
-                    {
-                        /* RGB color */
-                        if (i + 4 < num_items)
-                        {
-                            color = irc_color_convert_rgb2irc (
-                                (atoi (items[i + 2]) << 16) |
-                                (atoi (items[i + 3]) << 8) |
-                                atoi (items[i + 4]));
-                            if (color >= 0)
-                            {
-                                snprintf (str_color, sizeof (str_color),
-                                          "%c%02d",
-                                          IRC_COLOR_COLOR_CHAR,
-                                          color);
-                                strcat (output, str_color);
-                            }
-                            i += 4;
-                        }
-                    }
-                    else if (value2 == 5)
-                    {
-                        /* Terminal color (0-255) */
-                        if (i + 2 < num_items)
-                        {
-                            color = irc_color_convert_term2irc (atoi (items[i + 2]));
-                            if (color >= 0)
-                            {
-                                snprintf (str_color, sizeof (str_color),
-                                          "%c%02d",
-                                          IRC_COLOR_COLOR_CHAR,
-                                          color);
-                                strcat (output, str_color);
-                            }
-                            i += 2;
-                        }
-                    }
+                    snprintf (str_color, sizeof (str_color),
+                              "%c%s%02d",
+                              IRC_COLOR_COLOR_CHAR,
+                              (value == 38) ? "" : ",",
+                              color);
+                    weechat_string_dyn_concat (output, str_color, -1);
                 }
                 break;
             case 39: /* Default text color */
                 snprintf (str_color, sizeof (str_color),
                           "%c15",
                           IRC_COLOR_COLOR_CHAR);
-                strcat (output, str_color);
+                weechat_string_dyn_concat (output, str_color, -1);
                 break;
             case 40: /* Background color */
             case 41:
@@ -1204,56 +1210,13 @@ irc_color_decode_ansi_cb (void *data, const char *text)
                           "%c,%02d",
                           IRC_COLOR_COLOR_CHAR,
                           irc_color_term2irc[value - 40]);
-                strcat (output, str_color);
-                break;
-            case 48: /* Background color */
-                if (i + 1 < num_items)
-                {
-                    value2 = atoi (items[i + 1]);
-                    if (value2 == 2)
-                    {
-                        /* RGB color */
-                        if (i + 4 < num_items)
-                        {
-                            color = irc_color_convert_rgb2irc (
-                                (atoi (items[i + 2]) << 16) |
-                                (atoi (items[i + 3]) << 8) |
-                                atoi (items[i + 4]));
-                            if (color >= 0)
-                            {
-                                snprintf (str_color, sizeof (str_color),
-                                          "%c,%02d",
-                                          IRC_COLOR_COLOR_CHAR,
-                                          color);
-                                strcat (output, str_color);
-                            }
-                            i += 4;
-                        }
-                    }
-                    else if (value2 == 5)
-                    {
-                        /* Terminal color (0-255) */
-                        if (i + 2 < num_items)
-                        {
-                            color = irc_color_convert_term2irc (atoi (items[i + 2]));
-                            if (color >= 0)
-                            {
-                                snprintf (str_color, sizeof (str_color),
-                                          "%c,%02d",
-                                          IRC_COLOR_COLOR_CHAR,
-                                          color);
-                                strcat (output, str_color);
-                            }
-                            i += 2;
-                        }
-                    }
-                }
+                weechat_string_dyn_concat (output, str_color, -1);
                 break;
             case 49: /* Default background color */
                 snprintf (str_color, sizeof (str_color),
                           "%c,01",
                           IRC_COLOR_COLOR_CHAR);
-                strcat (output, str_color);
+                weechat_string_dyn_concat (output, str_color, -1);
                 break;
             case 90: /* Text color (bright) */
             case 91:
@@ -1267,7 +1230,7 @@ irc_color_decode_ansi_cb (void *data, const char *text)
                           "%c%02d",
                           IRC_COLOR_COLOR_CHAR,
                           irc_color_term2irc[value - 90 + 8]);
-                strcat (output, str_color);
+                weechat_string_dyn_concat (output, str_color, -1);
                 break;
             case 100: /* Background color (bright) */
             case 101:
@@ -1281,20 +1244,40 @@ irc_color_decode_ansi_cb (void *data, const char *text)
                           "%c,%02d",
                           IRC_COLOR_COLOR_CHAR,
                           irc_color_term2irc[value - 100 + 8]);
-                strcat (output, str_color);
+                weechat_string_dyn_concat (output, str_color, -1);
                 break;
         }
     }
+}
 
-end:
-    weechat_string_free_split (items);
-    free (text2);
+/*
+ * Get the size of a normalized ANSI escape sequence at the beginning of a
+ * string: "\33[" + parameters (digits and ";") + "m".
+ *
+ * Return the size of the sequence, 0 if the string does not start with a
+ * normalized ANSI escape sequence.
+ */
 
-    return (output) ? output : strdup ("");
+int
+irc_color_ansi_sequence_size (const char *string)
+{
+    int length;
+
+    if ((string[0] != '\33') || (string[1] != '['))
+        return 0;
+
+    length = strspn (string + 2, "0123456789;");
+    if ((length == 0) || (string[2 + length] != 'm'))
+        return 0;
+
+    return length + 3;
 }
 
 /*
  * Replace ANSI colors by IRC colors.
+ *
+ * The ANSI escape sequences are first normalized by the modifier
+ * "color_normalize_ansi" of WeeChat core.
  *
  * If keep_colors == 0: removes any color/style in message otherwise keeps
  * colors.
@@ -1306,37 +1289,52 @@ char *
 irc_color_decode_ansi (const char *string, int keep_colors)
 {
     struct t_irc_color_ansi_state ansi_state;
-    char *ansi_regex;
+    char *normalized, **output;
+    const char *ptr_string, *ptr_text;
+    int size;
 
-    /* Allocate/compile regex if needed (first call). */
-    if (!irc_color_regex_ansi)
+    if (!string)
+        return NULL;
+
+    /* Without ESC, there is nothing to decode. */
+    if (!strchr (string, '\33'))
+        return strdup (string);
+
+    normalized = weechat_hook_modifier_exec ("color_normalize_ansi",
+                                             (keep_colors) ? "1" : "0",
+                                             string);
+    if (!normalized || !keep_colors)
+        return normalized;
+
+    output = weechat_string_dyn_alloc (strlen (normalized) + 1);
+    if (!output)
     {
-        irc_color_regex_ansi = malloc (sizeof (*irc_color_regex_ansi));
-        if (!irc_color_regex_ansi)
-            return NULL;
-        ansi_regex = weechat_info_get ("color_ansi_regex", NULL);
-        if (weechat_string_regcomp (irc_color_regex_ansi,
-                                    ansi_regex,
-                                    REG_EXTENDED) != 0)
-        {
-            free (ansi_regex);
-            free (irc_color_regex_ansi);
-            irc_color_regex_ansi = NULL;
-            return NULL;
-        }
-        free (ansi_regex);
+        free (normalized);
+        return NULL;
     }
 
-    ansi_state.keep_colors = keep_colors;
-    ansi_state.bold = 0;
-    ansi_state.underline = 0;
-    ansi_state.italic = 0;
-    ansi_state.strikethrough = 0;
+    irc_color_formatting_init (&ansi_state.formatting);
 
-    return weechat_string_replace_regex (string, irc_color_regex_ansi,
-                                         "$0", '$',
-                                         &irc_color_decode_ansi_cb,
-                                         &ansi_state);
+    ptr_text = normalized;
+    ptr_string = strchr (normalized, '\33');
+    while (ptr_string)
+    {
+        size = irc_color_ansi_sequence_size (ptr_string);
+        if (size > 0)
+        {
+            weechat_string_dyn_concat (output, ptr_text,
+                                       ptr_string - ptr_text);
+            irc_color_decode_ansi_sequence (output, &ansi_state,
+                                            ptr_string + 2, size - 3);
+            ptr_text = ptr_string + size;
+        }
+        ptr_string = strchr (ptr_string + ((size > 0) ? size : 1), '\33');
+    }
+    weechat_string_dyn_concat (output, ptr_text, -1);
+
+    free (normalized);
+
+    return weechat_string_dyn_free (output, 0);
 }
 
 /*
@@ -1442,12 +1440,6 @@ irc_color_end (void)
 {
     int i;
 
-    if (irc_color_regex_ansi)
-    {
-        regfree (irc_color_regex_ansi);
-        free (irc_color_regex_ansi);
-        irc_color_regex_ansi = NULL;
-    }
     for (i = 0; i < 32; i++)
     {
         free (irc_color_string_decoded[i]);

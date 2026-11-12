@@ -139,7 +139,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
-- core: fix slow decoding of ANSI colors with many parameters
+- core, irc: fix slow decoding of ANSI colors with many parameters
 - core: use the palette of terminals with 88 colors (for example rxvt-unicode) to find the nearest terminal color of a RGB color, for example with info "color_rgb2term" ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: switch back to WeeChat colors as soon as the `/color` buffer is closed or not displayed any more, after a switch to terminal colors (key alt-c), instead of displaying all buffers with one terminal color until the end of the delay
 - core: convert color pair codes (for example in `/color` buffer) to the colors of the pair instead of a terminal color with the pair number when converting WeeChat colors to ANSI colors (relay "api" protocol with colors "ansi")
@@ -208,6 +208,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: decode ANSI colors like WeeChat core when converting them to IRC colors (for example in output of `/exec -o`): code `\e[m` resets the attributes of the next sequences too, a RGB component greater than 255 is read as 255
 - irc: read alone a byte which is not valid UTF-8 when decoding or encoding IRC colors, so that a color code after it is not ignored
 - irc: count each message of a split line in limit "max-lines" of multiline batches, and the codes of formatting sent again in limit "max-bytes", send the messages of a line which exceeds these limits in several batches
 - irc: keep colors and attributes in a long message split in several messages: color codes are not split any more (unless a code is longer than a message), and each message starts with the colors and attributes of the end of the previous message
