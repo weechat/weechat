@@ -21,6 +21,7 @@ extern "C"
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <gcrypt.h>
+#include "src/core/core-config.h"
 #include "src/core/core-config-file.h"
 #include "src/core/core-crypto.h"
 #include "src/core/core-hashtable.h"
@@ -28,6 +29,7 @@ extern "C"
 #include "src/core/core-string.h"
 #include "src/core/hook/hook-timer.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-color.h"
 #include "src/gui/gui-nicklist.h"
 #include "src/plugins/weechat-plugin.h"
 #include "src/plugins/relay/relay.h"
@@ -984,6 +986,21 @@ TEST(RelayWeechatProtocolWithClient, CbInfo)
     recv (client, "(i) info nick_color_name alice");
     LONGS_EQUAL(1, test_msgs_count);
     CHECK_PREFIX("(i) inf:nick_color_name=\"", msg (0, 0));
+
+    /* RGB color of nick: replaced if client does not support RGB colors. */
+    config_file_option_set (config_color_chat_nick_colors, "#ff8800", 1);
+    recv (client, "(i) info nick_color_name alice");
+    LONGS_EQUAL(1, test_msgs_count);
+    snprintf (expected, sizeof (expected), "(i) inf:nick_color_name=\"%d\"",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+    STRCMP_EQUAL(expected, msg (0, 0).c_str ());
+    recv (client, "(i) info nick_color_name_ignore_case alice;30");
+    LONGS_EQUAL(1, test_msgs_count);
+    snprintf (expected, sizeof (expected),
+              "(i) inf:nick_color_name_ignore_case=\"%d\"",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+    STRCMP_EQUAL(expected, msg (0, 0).c_str ());
+    config_file_option_reset (config_color_chat_nick_colors, 1);
 }
 
 /*

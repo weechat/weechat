@@ -570,6 +570,49 @@ TEST(RelayApiMsg, HasRgbColorCode)
 
 /*
  * Test functions:
+ *   relay_downgrade_tag
+ */
+
+TEST(RelayApiMsg, DowngradeTag)
+{
+    char expected[64], *str;
+
+    snprintf (expected, sizeof (expected), "prefix_nick_%d",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+
+    POINTERS_EQUAL(NULL, relay_downgrade_tag (NULL));
+    POINTERS_EQUAL(NULL, relay_downgrade_tag ("irc_privmsg"));
+    POINTERS_EQUAL(NULL, relay_downgrade_tag ("prefix_nick_lightred"));
+    POINTERS_EQUAL(NULL, relay_downgrade_tag ("host_#ff8800"));
+    WEE_TEST_STR(expected, relay_downgrade_tag ("prefix_nick_#ff8800"));
+}
+
+/*
+ * Test functions:
+ *   relay_downgrade_tags
+ */
+
+TEST(RelayApiMsg, DowngradeTags)
+{
+    char expected[128], *str;
+
+    snprintf (expected, sizeof (expected),
+              "irc_privmsg,prefix_nick_%d,log1",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+
+    POINTERS_EQUAL(NULL, relay_downgrade_tags (NULL));
+    POINTERS_EQUAL(NULL, relay_downgrade_tags (""));
+    POINTERS_EQUAL(NULL, relay_downgrade_tags ("irc_privmsg,log1"));
+    POINTERS_EQUAL(NULL,
+                   relay_downgrade_tags ("irc_privmsg,prefix_nick_lightred"));
+    WEE_TEST_STR(expected,
+                 relay_downgrade_tags ("irc_privmsg,prefix_nick_#ff8800,log1"));
+    WEE_TEST_STR(expected + 12,
+                 relay_downgrade_tags ("prefix_nick_#ff8800,log1"));
+}
+
+/*
+ * Test functions:
  *   relay_api_msg_completion_to_json
  */
 

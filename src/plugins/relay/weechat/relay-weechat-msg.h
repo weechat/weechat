@@ -28,6 +28,29 @@ struct t_relay_weechat_nicklist;
 #define RELAY_WEECHAT_MSG_OBJ_INFOLIST  "inl"
 #define RELAY_WEECHAT_MSG_OBJ_ARRAY     "arr"
 
+/* Source of a string converted without RGB colors */
+enum t_relay_weechat_msg_var_source
+{
+    RELAY_WEECHAT_MSG_VAR_HDATA = 0,      /* variable of hdata              */
+    RELAY_WEECHAT_MSG_VAR_INFOLIST,       /* variable of infolist           */
+    RELAY_WEECHAT_MSG_VAR_INFO,           /* info (no variable name)        */
+};
+
+/* Type of string of hdata/infolist/info converted without RGB colors */
+enum t_relay_weechat_msg_var_type
+{
+    RELAY_WEECHAT_MSG_VAR_COLOR_NAME = 1, /* color name ("#ff8800")         */
+    RELAY_WEECHAT_MSG_VAR_TAGS,           /* tags of a line ("prefix_nick_") */
+};
+
+struct t_relay_weechat_msg_color_var
+{
+    enum t_relay_weechat_msg_var_source source; /* hdata, infolist or info  */
+    const char *object;                /* name of hdata, infolist or info   */
+    const char *var;                   /* mask of variable ("*" for info)   */
+    enum t_relay_weechat_msg_var_type type; /* type of variable             */
+};
+
 struct t_relay_weechat_msg
 {
     char *id;                          /* message id                        */
@@ -59,6 +82,11 @@ extern void relay_weechat_msg_add_string (struct t_relay_weechat_msg *msg,
                                           const char *string);
 extern void relay_weechat_msg_add_color_name (struct t_relay_weechat_msg *msg,
                                               const char *name);
+extern void relay_weechat_msg_add_var_string (struct t_relay_weechat_msg *msg,
+                                              enum t_relay_weechat_msg_var_source source,
+                                              const char *object,
+                                              const char *var,
+                                              const char *value);
 extern void relay_weechat_msg_add_buffer (struct t_relay_weechat_msg *msg,
                                           void *data, int length);
 extern void relay_weechat_msg_add_pointer (struct t_relay_weechat_msg *msg,

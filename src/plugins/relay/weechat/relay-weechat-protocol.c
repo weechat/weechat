@@ -513,7 +513,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
                                  (argc > 1) ? argv_eol[1] : NULL);
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INFO);
         relay_weechat_msg_add_string (msg, argv[0]);
-        relay_weechat_msg_add_string (msg, info);
+        relay_weechat_msg_add_var_string (msg, RELAY_WEECHAT_MSG_VAR_INFO,
+                                          argv[0], "", info);
         relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
         free (info);
