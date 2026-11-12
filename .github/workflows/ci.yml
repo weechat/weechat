@@ -120,6 +120,7 @@ jobs:
       RUFF_VERSION: "0.17.0"
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-26.04
@@ -160,6 +161,7 @@ jobs:
   install:
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-26.04
@@ -266,6 +268,7 @@ jobs:
   install_fedora:
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-26.04
@@ -311,6 +314,7 @@ jobs:
   install_rockylinux:
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-26.04
@@ -361,6 +365,7 @@ jobs:
   install_freebsd:
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-26.04
@@ -404,6 +409,7 @@ jobs:
   install_macos:
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - macos-15
@@ -455,6 +461,7 @@ jobs:
   build_debian:
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-26.04
@@ -491,6 +498,7 @@ jobs:
   codeql_analysis:
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-26.04
