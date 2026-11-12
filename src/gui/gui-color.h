@@ -153,6 +153,9 @@ enum t_gui_color_enum
 #define GUI_COLOR_RGB_LAST                                              \
     (GUI_COLOR_RGB_DISPLAY_FIRST + GUI_COLOR_RGB_DISPLAY_MAX - 1)
 
+/* Size of cache for downgrade of RGB colors (power of 2) */
+#define GUI_COLOR_DOWNGRADE_CACHE_SIZE        64
+
 #define GUI_COLOR_REGEX_ANSI_DECODE             \
     "\33("                                      \
     "([()].)|"                                  \
@@ -230,7 +233,10 @@ extern int gui_color_code_size_number_rgb (const char *string, int with_attr,
                                            int *number, int *rgb);
 extern int gui_color_code_size (const char *string);
 extern char *gui_color_decode (const char *string, const char *replacement);
+extern char *gui_color_downgrade_rgb (const char *string);
+extern char *gui_color_downgrade_rgb_name (const char *name);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);
+extern char *gui_color_encode_ansi_rgb (const char *string, int rgb_colors);
 extern char *gui_color_encode_ansi (const char *string);
 extern char *gui_color_emphasize (const char *string, const char *search,
                                   int case_sensitive, regex_t *regex);
