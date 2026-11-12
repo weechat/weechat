@@ -223,6 +223,9 @@ extern const char *gui_color_get_custom (const char *color_name);
 extern int gui_color_convert_term_to_rgb (int color);
 extern int gui_color_palette_rgb (int color, int limit);
 extern int gui_color_convert_rgb_to_term (int rgb, int limit);
+extern int gui_color_convert_rgb_to_term_display (int rgb, int limit);
+extern int gui_color_convert_rgb_to_term_range (int rgb, int first,
+                                                int limit);
 extern int gui_color_convert_term_to_direct (int color);
 extern int gui_color_rgb_to_direct (int rgb);
 extern int gui_color_rgb_parse (const char *string);

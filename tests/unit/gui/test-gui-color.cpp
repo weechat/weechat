@@ -275,6 +275,8 @@ TEST(GuiColor, GetCustom)
 /*
  * Test functions:
  *   gui_color_convert_rgb_to_term
+ *   gui_color_convert_rgb_to_term_display
+ *   gui_color_convert_rgb_to_term_range
  */
 
 TEST(GuiColor, ConvertRgbToTerm)
@@ -302,6 +304,14 @@ TEST(GuiColor, ConvertRgbToTerm)
     LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x808080, -1));
     LONGS_EQUAL(8, gui_color_convert_rgb_to_term (0x808080, 257));
     LONGS_EQUAL(0, gui_color_convert_rgb_to_term (0x010203, 100000000));
+
+    /* For display: colors 0-15 (theme of terminal) are not used. */
+    LONGS_EQUAL(244, gui_color_convert_rgb_to_term_display (0x808080, 256));
+    LONGS_EQUAL(196, gui_color_convert_rgb_to_term_display (0xff0000, 256));
+    LONGS_EQUAL(79, gui_color_convert_rgb_to_term_display (0xffffff, 88));
+    LONGS_EQUAL(8, gui_color_convert_rgb_to_term_display (0x808080, 16));
+    LONGS_EQUAL(0, gui_color_convert_rgb_to_term_display (0x808080, 0));
+    LONGS_EQUAL(8, gui_color_convert_rgb_to_term_range (0x808080, 300, 256));
 }
 
 /*
@@ -413,7 +423,7 @@ TEST(GuiColor, Rgb)
 
 TEST(GuiColor, RgbTables)
 {
-    int number_option, number_display, i, number, key1, key2;
+    int number_option, number_display, i, number, key1, key2, old_term_colors;
 
     /* RGB color in option: number never changes, reused for display */
     number_option = gui_color_rgb_to_number_option (0x111111);
@@ -444,10 +454,19 @@ TEST(GuiColor, RgbTables)
     LONGS_EQUAL(GUI_COLOR_RGB_LAST, number);
     LONGS_EQUAL(GUI_COLOR_RGB_DISPLAY_MAX, gui_color_rgb_display.count);
     LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
-    LONGS_EQUAL(gui_color_convert_rgb_to_term (0xff8800,
-                                               gui_color_term_colors),
+    LONGS_EQUAL(gui_color_convert_rgb_to_term_display (0xff8800,
+                                                       gui_color_term_colors),
                 gui_color_rgb_to_number (0xff8800));
     LONGS_EQUAL(1, gui_color_rgb_display_reset_needed);
+    /*
+     * terminal with 88 colors: nearest color of the 88-color palette, colors
+     * 0-15 (theme of terminal) are not used
+     */
+    old_term_colors = gui_color_term_colors;
+    gui_color_term_colors = 88;
+    LONGS_EQUAL(32, gui_color_rgb_to_number (0x5f0000));
+    LONGS_EQUAL(19, gui_color_rgb_to_number (0x0000ff));
+    gui_color_term_colors = old_term_colors;
     gui_color_rgb_display_reset ();
     LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
 
@@ -458,7 +477,7 @@ TEST(GuiColor, RgbTables)
         gui_color_rgb_to_number (0x300000 + i);
     }
     config_file_option_set (config_look_color_pairs_auto_reset, "-1", 1);
-    LONGS_EQUAL(gui_color_convert_rgb_to_term (0xabc123, 256),
+    LONGS_EQUAL(gui_color_convert_rgb_to_term_display (0xabc123, 256),
                 gui_color_rgb_to_number (0xabc123));
     LONGS_EQUAL(0, gui_color_rgb_display_reset_needed);
     config_file_option_reset (config_look_color_pairs_auto_reset, 1);
@@ -548,8 +567,8 @@ TEST(GuiColor, GetPairRgb)
     gui_color_term_direct_colors = 0;
     LONGS_EQUAL(
         gui_color_get_pair (
-            gui_color_convert_rgb_to_term (0x123456,
-                                           gui_color_term_colors),
+            gui_color_convert_rgb_to_term_display (0x123456,
+                                                   gui_color_term_colors),
             -1),
         gui_color_get_pair (number1, -1));
 

@@ -453,8 +453,8 @@ gui_color_get_valid_term_color (int color)
     /* Find nearest color. */
     if ((color >= 0) && (color <= 255))
     {
-        return gui_color_convert_rgb_to_term (gui_color_term256[color],
-                                              gui_color_term_colors);
+        return gui_color_convert_rgb_to_term_display (gui_color_term256[color],
+                                                      gui_color_term_colors);
     }
 
     /* Fallback to default color. */

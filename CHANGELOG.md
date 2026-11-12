@@ -44,6 +44,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: display a color 16-255 which is not supported by the terminal (for example on a terminal with 88 colors) with the nearest terminal color other than colors 0-15, which are defined by the theme of the terminal ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core, plugins: use plural forms or reword messages displaying a count
 - core: close file descriptors faster when running in background with option `--daemon` in headless mode
 - **breaking:** core: exit with an error on unknown command-line option, exit with code 2 on invalid command-line arguments

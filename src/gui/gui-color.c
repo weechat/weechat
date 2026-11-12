@@ -614,19 +614,50 @@ gui_color_palette_rgb (int color, int limit)
 int
 gui_color_convert_rgb_to_term (int rgb, int limit)
 {
+    return gui_color_convert_rgb_to_term_range (rgb, 0, limit);
+}
+
+/*
+ * Convert a RGB color to the closest terminal color to display it: on a
+ * terminal with more than 16 colors, colors 0-15 are not used, because they
+ * are defined by the theme of the terminal (for example color 8 can be the
+ * background color).
+ *
+ * Return the closest terminal color (0-255).
+ */
+
+int
+gui_color_convert_rgb_to_term_display (int rgb, int limit)
+{
+    return gui_color_convert_rgb_to_term_range (rgb, (limit > 16) ? 16 : 0,
+                                                limit);
+}
+
+/*
+ * Convert a RGB color to the closest terminal color between "first" and
+ * "limit" - 1 (see function gui_color_convert_rgb_to_term).
+ *
+ * Return the closest terminal color (0-255).
+ */
+
+int
+gui_color_convert_rgb_to_term_range (int rgb, int first, int limit)
+{
     int i, r1, g1, b1, rgb2, r2, g2, b2, diff, best_diff, best_color;
 
     if (limit > 256)
         limit = 256;
+    if ((first < 0) || (first >= limit))
+        first = 0;
 
     r1 = rgb >> 16;
     g1 = (rgb >> 8) & 0xFF;
     b1 = rgb & 0xFF;
 
     best_diff = INT_MAX;
-    best_color = 0;
+    best_color = first;
 
-    for (i = 0; i < limit; i++)
+    for (i = first; i < limit; i++)
     {
         rgb2 = gui_color_palette_rgb (i, limit);
         r2 = rgb2 >> 16;
@@ -921,7 +952,8 @@ gui_color_rgb_to_number (int rgb)
      * Nearest color of the terminal palette (colors are displayed with the
      * palette of the terminal, for example with 88 colors).
      */
-    return gui_color_convert_rgb_to_term (rgb, gui_color_get_term_colors ());
+    return gui_color_convert_rgb_to_term_display (
+        rgb, gui_color_get_term_colors ());
 }
 
 /*
@@ -977,7 +1009,7 @@ gui_color_rgb_from_number (int number)
 /*
  * Get the nearest terminal color of a RGB color number to display it, using
  * only the first "limit" terminal colors (see function
- * gui_color_convert_rgb_to_term); the result is cached.
+ * gui_color_convert_rgb_to_term_display); the result is cached.
  *
  * Return the terminal color, -1 if the number is not a RGB color.
  */
@@ -1003,7 +1035,7 @@ gui_color_rgb_to_term_cached (int number, int limit)
 
     if (table->term[index] < 0)
     {
-        table->term[index] = gui_color_convert_rgb_to_term (
+        table->term[index] = gui_color_convert_rgb_to_term_display (
             table->values[index], limit);
     }
 
