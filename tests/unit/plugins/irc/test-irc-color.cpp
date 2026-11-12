@@ -23,6 +23,14 @@ extern "C"
 extern int irc_color_convert_rgb2term (long rgb);
 extern int irc_color_convert_rgb2irc (long rgb);
 extern int irc_color_convert_term2irc (int color);
+extern int irc_color_ansi_next_param (const char **ptr_param,
+                                      const char *ptr_end, int *value);
+extern int irc_color_ansi_next_color (const char **ptr_param,
+                                      const char *ptr_end);
+extern int irc_color_ansi_sequence_size (const char *string);
+extern void irc_color_decode_ansi_sequence (char **output,
+                                            struct t_irc_color_ansi_state *ansi_state,
+                                            const char *params, int length);
 }
 
 /* Tests on irc_color_decode(): IRC color -> WeeChat color */
@@ -1172,6 +1180,58 @@ TEST(IrcColor, DecodeAnsi)
               "test_%s,01default_bg",
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_BG, 1);
+}
+
+/*
+ * Test functions:
+ *   irc_color_ansi_next_param
+ *   irc_color_ansi_next_color
+ *   irc_color_ansi_sequence_size
+ *   irc_color_decode_ansi_sequence
+ */
+
+TEST(IrcColor, DecodeAnsiSequence)
+{
+    struct t_irc_color_ansi_state ansi_state;
+    const char *ptr_param, *params;
+    char **output;
+    int value;
+
+    params = "1;38;5;196";
+    ptr_param = params;
+    LONGS_EQUAL(1, irc_color_ansi_next_param (&ptr_param, params + 10, &value));
+    LONGS_EQUAL(1, value);
+    LONGS_EQUAL(1, irc_color_ansi_next_param (&ptr_param, params + 10, &value));
+    LONGS_EQUAL(38, value);
+    LONGS_EQUAL(196, irc_color_ansi_next_color (&ptr_param, params + 10));
+    LONGS_EQUAL(0, irc_color_ansi_next_param (&ptr_param, params + 10, &value));
+
+    params = "2;255;136;0";
+    ptr_param = params;
+    LONGS_EQUAL(IRC_COLOR_RGB_FLAG | 0xFF8800,
+                irc_color_ansi_next_color (&ptr_param, params + 11));
+    params = "2;256;0;0";
+    ptr_param = params;
+    LONGS_EQUAL(-1, irc_color_ansi_next_color (&ptr_param, params + 9));
+    params = "x";
+    ptr_param = params;
+    LONGS_EQUAL(0, irc_color_ansi_next_param (&ptr_param, params + 1, &value));
+
+    LONGS_EQUAL(0, irc_color_ansi_sequence_size ("test"));
+    LONGS_EQUAL(0, irc_color_ansi_sequence_size ("\x1B[m"));
+    LONGS_EQUAL(0, irc_color_ansi_sequence_size ("\x1B[1"));
+    LONGS_EQUAL(0, irc_color_ansi_sequence_size ("\x1B[?1m"));
+    LONGS_EQUAL(4, irc_color_ansi_sequence_size ("\x1B[1mtest"));
+    LONGS_EQUAL(11, irc_color_ansi_sequence_size ("\x1B[38;5;196m"));
+
+    /* Invalid parameters (for example changed by a script) are ignored. */
+    irc_color_formatting_init (&ansi_state.formatting);
+    output = string_dyn_alloc (32);
+    irc_color_decode_ansi_sequence (output, &ansi_state, "1;x;4", 5);
+    STRCMP_EQUAL("\x02", *output);
+    irc_color_decode_ansi_sequence (output, &ansi_state, "38;5", 4);
+    STRCMP_EQUAL("\x02", *output);
+    string_dyn_free (output, 1);
 }
 
 /*

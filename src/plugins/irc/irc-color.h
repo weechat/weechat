@@ -109,15 +109,6 @@
         __string,                                                       \
         weechat_config_boolean (irc_config_network_colors_receive))
 
-struct t_irc_color_ansi_state
-{
-    char keep_colors;
-    char bold;
-    char underline;
-    char italic;
-    char strikethrough;
-};
-
 /* Formatting (attributes and colors) at a position in an IRC message */
 struct t_irc_color_formatting
 {
@@ -131,6 +122,12 @@ struct t_irc_color_formatting
                                        /* flag IRC_COLOR_RGB_FLAG, or       */
                                        /* IRC_COLOR_FORMATTING_NONE         */
     int bg;                            /* background (same values as fg)    */
+};
+
+/* State of ANSI colors converted to IRC colors */
+struct t_irc_color_ansi_state
+{
+    struct t_irc_color_formatting formatting; /* IRC formatting sent        */
 };
 
 extern int irc_color_is_hex_color (const unsigned char *string);
