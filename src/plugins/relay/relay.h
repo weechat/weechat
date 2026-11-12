@@ -76,6 +76,7 @@ extern char *relay_msg_type_string[];
 
 extern int relay_protocol_search (const char *name);
 extern int relay_status_search (const char *name);
+extern char *relay_downgrade_tag (const char *tag);
 extern char *relay_downgrade_tags (const char *tags);
 extern char *relay_downgrade_rgb (const char *string, int name);
 

@@ -35,8 +35,9 @@ extern "C"
 #include "src/plugins/relay/api/relay-api.h"
 #include "src/plugins/relay/api/relay-api-msg.h"
 
+extern char *relay_api_msg_convert_color_name (const char *name,
+                                               int rgb_colors);
 extern int relay_has_rgb_color_code (const char *string);
-extern char *relay_downgrade_tag (const char *tag);
 }
 
 /*
@@ -168,7 +169,7 @@ TEST(RelayApiMsg, BufferToJson)
 
     json = relay_api_msg_buffer_to_json (NULL, 0L, 0L,
                                          RELAY_API_FILTERED_INCLUDE, 0,
-                                         RELAY_API_COLORS_ANSI);
+                                         RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     POINTERS_EQUAL(NULL, relay_json_object_get (json, "name"));
@@ -180,7 +181,7 @@ TEST(RelayApiMsg, BufferToJson)
     /* Buffer without lines and nicks */
     json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L,
                                          RELAY_API_FILTERED_INCLUDE, 0,
-                                         RELAY_API_COLORS_ANSI);
+                                         RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
@@ -232,7 +233,7 @@ TEST(RelayApiMsg, BufferToJson)
 
     json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L,
                                          RELAY_API_FILTERED_INCLUDE, 0,
-                                         RELAY_API_COLORS_ANSI);
+                                         RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_STR("highlight", json, "notify");
@@ -253,7 +254,7 @@ TEST(RelayApiMsg, BufferToJson)
     /* Buffer with 2 lines, without nicks */
     json = relay_api_msg_buffer_to_json (gui_buffers, 2L, 0L,
                                          RELAY_API_FILTERED_INCLUDE, 0,
-                                         RELAY_API_COLORS_ANSI);
+                                         RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     json_lines = relay_json_object_get (json, "lines");
@@ -278,7 +279,7 @@ TEST(RelayApiMsg, BufferToJson)
     /* Buffer with no lines and 1 group / 4 nicks */
     json = relay_api_msg_buffer_to_json (buffer, 1L, 0L,
                                          RELAY_API_FILTERED_INCLUDE, 1,
-                                         RELAY_API_COLORS_ANSI);
+                                         RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_BOOL(1, json, "nicklist");
@@ -412,7 +413,7 @@ TEST(RelayApiMsg, BufferToJson)
 
     json = relay_api_msg_buffer_to_json (buffer, 1L, 2L,
                                          RELAY_API_FILTERED_INCLUDE, 0,
-                                         RELAY_API_COLORS_ANSI);
+                                         RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     json_lines = relay_json_object_get (json, "lines");
@@ -429,7 +430,7 @@ TEST(RelayApiMsg, BufferToJson)
 
     json = relay_api_msg_buffer_to_json (buffer, 1L, -2L,
                                          RELAY_API_FILTERED_INCLUDE, 0,
-                                         RELAY_API_COLORS_ANSI);
+                                         RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     json_lines = relay_json_object_get (json, "lines");
@@ -472,7 +473,7 @@ TEST(RelayApiMsg, LinesToJson)
     /* Two lines with ANSI colors */
     json = relay_api_msg_lines_to_json (gui_buffers, -2,
                                         RELAY_API_FILTERED_INCLUDE,
-                                        RELAY_API_COLORS_ANSI);
+                                        RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     CHECK(relay_json_is_array (json));
     LONGS_EQUAL(2, relay_json_array_size (json));
@@ -539,7 +540,7 @@ TEST(RelayApiMsg, LinesToJson)
     /* With ANSI colors */
     json = relay_api_msg_lines_to_json (gui_buffers, -1,
                                         RELAY_API_FILTERED_INCLUDE,
-                                        RELAY_API_COLORS_ANSI);
+                                        RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     CHECK(relay_json_is_array (json));
     LONGS_EQUAL(1, relay_json_array_size (json));
@@ -557,7 +558,7 @@ TEST(RelayApiMsg, LinesToJson)
     /* One line with WeeChat colors */
     json = relay_api_msg_lines_to_json (gui_buffers, -1,
                                         RELAY_API_FILTERED_INCLUDE,
-                                        RELAY_API_COLORS_WEECHAT);
+                                        RELAY_API_COLORS_WEECHAT, 0);
     CHECK(json);
     CHECK(relay_json_is_array (json));
     LONGS_EQUAL(1, relay_json_array_size (json));
@@ -572,7 +573,7 @@ TEST(RelayApiMsg, LinesToJson)
     /* One line without colors */
     json = relay_api_msg_lines_to_json (gui_buffers, -1,
                                         RELAY_API_FILTERED_INCLUDE,
-                                        RELAY_API_COLORS_STRIP);
+                                        RELAY_API_COLORS_STRIP, 0);
     CHECK(json);
     CHECK(relay_json_is_array (json));
     LONGS_EQUAL(1, relay_json_array_size (json));
@@ -621,7 +622,7 @@ TEST(RelayApiMsg, LinesToJsonFiltered)
 
 #define WEE_CHECK_LINES(__expected, __lines, __filtered)                \
     json = relay_api_msg_lines_to_json (buffer, __lines, __filtered,    \
-                                        RELAY_API_COLORS_ANSI);         \
+                                        RELAY_API_COLORS_ANSI, 0);      \
     CHECK(json);                                                        \
     CHECK(relay_json_is_array (json));                                  \
     test_relay_api_msg_lines_messages (json, messages,                  \
@@ -665,7 +666,7 @@ TEST(RelayApiMsg, LinesToJsonFiltered)
     /* Buffer with lines. */
     json = relay_api_msg_buffer_to_json (buffer, -2L, 0L,
                                          RELAY_API_FILTERED_EXCLUDE, 0,
-                                         RELAY_API_COLORS_ANSI);
+                                         RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     json_lines = relay_json_object_get (json, "lines");
     CHECK(json_lines);
@@ -701,7 +702,7 @@ TEST(RelayApiMsg, LinesToJsonFiltered)
     gui_filter_buffer (buffer, NULL);
     json = relay_api_msg_buffer_to_json (buffer, 0L, -2L,
                                          RELAY_API_FILTERED_BETWEEN, 0,
-                                         RELAY_API_COLORS_ANSI);
+                                         RELAY_API_COLORS_ANSI, 0);
     CHECK(json);
     json_lines = relay_json_object_get (json, "lines");
     CHECK(json_lines);
@@ -713,6 +714,79 @@ TEST(RelayApiMsg, LinesToJsonFiltered)
     gui_buffer_close (buffer);
 
 #undef WEE_CHECK_LINES
+}
+
+/*
+ * Test functions:
+ *   relay_api_msg_lines_to_json (RGB colors)
+ */
+
+TEST(RelayApiMsg, LinesToJsonRgbColors)
+{
+    char str_msg[256], str_msg_downgraded[256], str_tag[64], *str_ansi;
+    struct t_relay_json *json, *json_line, *json_obj;
+    int fg;
+
+    fg = gui_color_convert_rgb_to_term_display (0xff8800, 256);
+
+    /* RGB color with attributes, the message does not contain "@#" */
+    snprintf (str_msg, sizeof (str_msg), "%s" "rgb #ff8800",
+              "\x19" "F@*#ff8800");
+    snprintf (str_msg_downgraded, sizeof (str_msg_downgraded),
+              "%s%05d" "rgb #ff8800", "\x19" "F@*", fg);
+    gui_chat_printf_date_tags (NULL, 0, "prefix_nick_#ff8800", "%s", str_msg);
+
+    /* WeeChat colors: RGB colors replaced by nearest terminal color */
+    json = relay_api_msg_lines_to_json (gui_buffers, -1,
+                                        RELAY_API_FILTERED_INCLUDE,
+                                        RELAY_API_COLORS_WEECHAT, 0);
+    CHECK(json);
+    LONGS_EQUAL(1, relay_json_array_size (json));
+    json_line = relay_json_array_get (json, 0);
+    CHECK(json_line);
+    WEE_CHECK_OBJ_STR(str_msg_downgraded, json_line, "message");
+    snprintf (str_tag, sizeof (str_tag), "prefix_nick_%d", fg);
+    json_obj = relay_json_array_get (relay_json_object_get (json_line, "tags"), 0);
+    STRCMP_EQUAL(str_tag, relay_json_get_string (json_obj));
+    relay_json_free (json);
+
+    /* WeeChat colors with RGB colors: unchanged */
+    json = relay_api_msg_lines_to_json (gui_buffers, -1,
+                                        RELAY_API_FILTERED_INCLUDE,
+                                        RELAY_API_COLORS_WEECHAT, 1);
+    CHECK(json);
+    json_line = relay_json_array_get (json, 0);
+    CHECK(json_line);
+    WEE_CHECK_OBJ_STR(str_msg, json_line, "message");
+    json_obj = relay_json_array_get (relay_json_object_get (json_line, "tags"), 0);
+    STRCMP_EQUAL("prefix_nick_#ff8800", relay_json_get_string (json_obj));
+    relay_json_free (json);
+
+    /* ANSI colors: RGB colors replaced by nearest terminal color */
+    str_ansi = gui_color_encode_ansi (str_msg_downgraded);
+    CHECK(strstr (str_ansi, "38;5;"));
+    json = relay_api_msg_lines_to_json (gui_buffers, -1,
+                                        RELAY_API_FILTERED_INCLUDE,
+                                        RELAY_API_COLORS_ANSI, 0);
+    CHECK(json);
+    json_line = relay_json_array_get (json, 0);
+    CHECK(json_line);
+    WEE_CHECK_OBJ_STR(str_ansi, json_line, "message");
+    relay_json_free (json);
+    free (str_ansi);
+
+    /* ANSI colors with RGB colors: 24-bit ANSI colors */
+    str_ansi = gui_color_encode_ansi (str_msg);
+    CHECK(strstr (str_ansi, "38;2;255;136;0"));
+    json = relay_api_msg_lines_to_json (gui_buffers, -1,
+                                        RELAY_API_FILTERED_INCLUDE,
+                                        RELAY_API_COLORS_ANSI, 1);
+    CHECK(json);
+    json_line = relay_json_array_get (json, 0);
+    CHECK(json_line);
+    WEE_CHECK_OBJ_STR(str_ansi, json_line, "message");
+    relay_json_free (json);
+    free (str_ansi);
 }
 
 /*
@@ -790,6 +864,73 @@ TEST(RelayApiMsg, DowngradeTags)
                  relay_downgrade_tags ("irc_privmsg,prefix_nick_#ff8800,log1"));
     WEE_TEST_STR(expected + 12,
                  relay_downgrade_tags ("prefix_nick_#ff8800,log1"));
+}
+
+/*
+ * Test functions:
+ *   relay_api_msg_convert_color_name
+ */
+
+TEST(RelayApiMsg, ConvertColorName)
+{
+    char expected[64], *str;
+
+    snprintf (expected, sizeof (expected), "%d:red",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+
+    POINTERS_EQUAL(NULL, relay_api_msg_convert_color_name (NULL, 0));
+    POINTERS_EQUAL(NULL, relay_api_msg_convert_color_name ("red", 0));
+    POINTERS_EQUAL(NULL, relay_api_msg_convert_color_name ("#ff8800:red", 1));
+    WEE_TEST_STR(expected,
+                 relay_api_msg_convert_color_name ("#ff8800:red", 0));
+}
+
+/*
+ * Test functions:
+ *   relay_api_msg_nick_to_json (RGB colors)
+ */
+
+TEST(RelayApiMsg, NickToJsonRgbColors)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick *nick;
+    struct t_relay_json *json, *json_obj;
+    char expected[64];
+
+    snprintf (expected, sizeof (expected), "%d",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    nick = gui_nicklist_add_nick (buffer, NULL, "nick1", "#ff8800", "@",
+                                  "#ff8800", 1);
+    CHECK(nick);
+
+    /* RGB colors replaced by nearest terminal color, with all colors */
+    json = relay_api_msg_nick_to_json (nick, RELAY_API_COLORS_ANSI, 0);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR(expected, json, "color_name");
+    WEE_CHECK_OBJ_STR(expected, json, "prefix_color_name");
+    relay_json_free (json);
+    json = relay_api_msg_nick_to_json (nick, RELAY_API_COLORS_WEECHAT, 0);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR(expected, json, "color_name");
+    relay_json_free (json);
+    json = relay_api_msg_nick_to_json (nick, RELAY_API_COLORS_STRIP, 0);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR(expected, json, "color_name");
+    WEE_CHECK_OBJ_STR(expected, json, "prefix_color_name");
+    WEE_CHECK_OBJ_STR("", json, "color");
+    relay_json_free (json);
+
+    /* RGB colors kept */
+    json = relay_api_msg_nick_to_json (nick, RELAY_API_COLORS_STRIP, 1);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("#ff8800", json, "color_name");
+    WEE_CHECK_OBJ_STR("#ff8800", json, "prefix_color_name");
+    relay_json_free (json);
+
+    gui_buffer_close (buffer);
 }
 
 /*

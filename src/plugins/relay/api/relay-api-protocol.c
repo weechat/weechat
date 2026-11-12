@@ -261,7 +261,8 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         /* Build body with buffer info. */
         json = relay_api_msg_buffer_to_json (
             ptr_buffer, lines, lines_free, filtered, nicks,
-            RELAY_API_DATA(ptr_client, sync_colors));
+            RELAY_API_DATA(ptr_client, sync_colors),
+            RELAY_API_DATA(ptr_client, sync_rgb_colors));
 
         /* Send to client. */
         if (json)
@@ -310,7 +311,8 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         }
 
         json = relay_api_msg_line_data_to_json (
-            ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors));
+            ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors),
+            RELAY_API_DATA(ptr_client, sync_rgb_colors));
         if (json)
         {
             relay_api_msg_send_event (
@@ -334,7 +336,8 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
             return WEECHAT_RC_OK;
 
         json = relay_api_msg_line_data_to_json (
-            ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors));
+            ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors),
+            RELAY_API_DATA(ptr_client, sync_rgb_colors));
         if (json)
         {
             relay_api_msg_send_event (
@@ -393,7 +396,8 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
     {
         json = relay_api_msg_nick_group_to_json (
             ptr_group,
-            RELAY_API_DATA(ptr_client, sync_colors));
+            RELAY_API_DATA(ptr_client, sync_colors),
+            RELAY_API_DATA(ptr_client, sync_rgb_colors));
         if (json)
         {
             relay_api_msg_send_event (ptr_client, signal, buffer_id,
@@ -407,7 +411,8 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
     {
         json = relay_api_msg_nick_to_json (
             ptr_nick,
-            RELAY_API_DATA(ptr_client, sync_colors));
+            RELAY_API_DATA(ptr_client, sync_colors),
+            RELAY_API_DATA(ptr_client, sync_rgb_colors));
         if (json)
         {
             relay_api_msg_send_event (ptr_client, signal, buffer_id,
@@ -447,7 +452,8 @@ relay_api_protocol_signal_input_cb (const void *pointer, void *data,
 
     json = relay_api_msg_buffer_to_json (
         ptr_buffer, 0, 0, RELAY_API_FILTERED_INCLUDE, 0,
-        RELAY_API_DATA(ptr_client, sync_colors));
+        RELAY_API_DATA(ptr_client, sync_colors),
+        RELAY_API_DATA(ptr_client, sync_rgb_colors));
 
     if (json)
     {
@@ -989,7 +995,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     struct t_gui_line_data *ptr_line_data;
     long lines, lines_free;
     long long line_id;
-    int colors, filtered, nicks;
+    int colors, filtered, nicks, rgb_colors;
     const char *ptr_colors, *ptr_filtered;
 
     json = NULL;
@@ -1041,6 +1047,14 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
             return RELAY_API_PROTOCOL_RC_OK;
         }
     }
+    if (!relay_http_get_param_boolean (client->http_req, "rgb_colors", 0,
+                                       &rgb_colors))
+    {
+        relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL,
+                                       "Invalid parameter \"%s\"",
+                                       "rgb_colors");
+        return RELAY_API_PROTOCOL_RC_OK;
+    }
 
     if (client->http_req->num_path_items > 3)
     {
@@ -1063,7 +1077,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                                                    client->http_req->path_items[2]);
                     return RELAY_API_PROTOCOL_RC_OK;
                 }
-                json = relay_api_msg_line_data_to_json (ptr_line_data, colors);
+                json = relay_api_msg_line_data_to_json (ptr_line_data, colors,
+                                                        rgb_colors);
                 if (json)
                 {
                     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
@@ -1083,7 +1098,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                     return RELAY_API_PROTOCOL_RC_OK;
                 }
                 json = relay_api_msg_lines_to_json (ptr_buffer, lines,
-                                                    filtered, colors);
+                                                    filtered, colors,
+                                                    rgb_colors);
                 if (json)
                 {
                     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
@@ -1096,7 +1112,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
             json = relay_api_msg_nick_group_to_json (
                 weechat_hdata_pointer (relay_hdata_buffer,
                                        ptr_buffer, "nicklist_root"),
-                colors);
+                colors, rgb_colors);
             if (json)
             {
                 relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
@@ -1140,7 +1156,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         if (ptr_buffer)
         {
             json = relay_api_msg_buffer_to_json (ptr_buffer, lines, lines_free,
-                                                 filtered, nicks, colors);
+                                                 filtered, nicks, colors,
+                                                 rgb_colors);
             if (json)
             {
                 relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
@@ -1159,7 +1176,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                 relay_json_array_add (
                     json,
                     relay_api_msg_buffer_to_json (ptr_buffer, lines, lines_free,
-                                                  filtered, nicks, colors));
+                                                  filtered, nicks, colors,
+                                                  rgb_colors));
                 ptr_buffer = weechat_hdata_move (relay_hdata_buffer, ptr_buffer, 1);
             }
             if (json)
@@ -1589,7 +1607,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     struct t_relay_json *json_body, *json_sync, *json_nicks, *json_input;
     struct t_relay_json *json_typing;
     struct t_relay_json *json_notify_only, *json_filtered_lines, *json_colors;
-    struct t_relay_json *json_options;
+    struct t_relay_json *json_options, *json_rgb_colors;
     int i, size;
 
     if (client->websocket != RELAY_CLIENT_WEBSOCKET_READY)
@@ -1609,6 +1627,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     RELAY_API_DATA(client, sync_notify_only) = 0;
     RELAY_API_DATA(client, sync_filtered_lines) = 1;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
+    RELAY_API_DATA(client, sync_rgb_colors) = 0;
 
     /* Hooks on options must be removed before options are freed. */
     relay_api_unhook_signals (client);
@@ -1654,6 +1673,12 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
                     relay_json_get_string (
                         relay_json_array_get (json_options, i)));
             }
+        }
+        json_rgb_colors = relay_json_object_get (json_body, "rgb_colors");
+        if (relay_json_is_bool (json_rgb_colors))
+        {
+            RELAY_API_DATA(client, sync_rgb_colors) =
+                (relay_json_is_true (json_rgb_colors)) ? 1 : 0;
         }
     }
 

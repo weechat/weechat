@@ -207,6 +207,7 @@ paths:
         - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -251,6 +252,7 @@ paths:
         - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -299,6 +301,7 @@ paths:
         - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -345,6 +348,7 @@ paths:
         - $ref: '#/components/parameters/lines'
         - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/colors'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -392,6 +396,7 @@ paths:
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/lineId'
         - $ref: '#/components/parameters/colors'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -438,6 +443,7 @@ paths:
         - $ref: '#/components/parameters/lines'
         - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/colors'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -485,6 +491,7 @@ paths:
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/lineId'
         - $ref: '#/components/parameters/colors'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -529,6 +536,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/colors'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -573,6 +581,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/colors'
+        - $ref: '#/components/parameters/rgbColors'
       responses:
         '200':
           description: Successful operation
@@ -1036,6 +1045,15 @@ paths:
                     * `ansi`: return ANSI color codes
                     * `weechat`: return WeeChat internal color codes
                     * `strip`: strip colors
+                rgb_colors:
+                  type: boolean
+                  default: false
+                  description: |
+                    Keep RGB colors: 24-bit ANSI colors with colors `ansi`,
+                    `@#rrggbb` in WeeChat color codes with colors `weechat`;
+                    if false, RGB colors are replaced by the nearest color of
+                    the 256-color palette
+                  example: false
                 options:
                   type: array
                   items:
@@ -1217,6 +1235,17 @@ components:
         * `ansi`: return ANSI color codes
         * `weechat`: return WeeChat internal color codes
         * `strip`: strip colors
+    rgbColors:
+      name: rgb_colors
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: |
+        Keep RGB colors: 24-bit ANSI colors with colors `ansi`, `@#rrggbb` in
+        WeeChat color codes with colors `weechat`; if false, RGB colors are
+        replaced by the nearest color of the 256-color palette
 
   schemas:
     Error:
