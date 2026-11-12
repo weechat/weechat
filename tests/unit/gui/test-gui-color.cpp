@@ -37,6 +37,8 @@ extern char *gui_color_buffer_rgb_line (const int *colors, int count);
 extern char *gui_color_buffer_palette_line (const char *label,
                                             int label_width, int rgb);
 extern int gui_color_buffer_sample_rgb;
+extern int gui_color_use_term_colors;
+extern int *gui_color_buffer_get_pairs (int *count, int *count_rgb);
 extern int gui_color_buffer_input_cb (const void *pointer, void *data,
                                       struct t_gui_buffer *buffer,
                                       const char *input_data);
@@ -483,6 +485,70 @@ TEST(GuiColor, BufferRgb)
                                           "\x19" "B@#ffffff"));
     gui_buffer_close (gui_color_buffer);
     POINTERS_EQUAL(NULL, gui_color_buffer);
+}
+
+/*
+ * Test functions:
+ *   gui_color_buffer_get_pairs
+ *   gui_color_buffer_display (pairs)
+ */
+
+TEST(GuiColor, BufferPairs)
+{
+    char str_pair[64];
+    int old_direct_colors, old_use_term_colors, pair_term, pair_rgb1;
+    int pair_rgb2, *pairs, count, count_rgb;
+
+    old_direct_colors = gui_color_term_direct_colors;
+    old_use_term_colors = gui_color_use_term_colors;
+    gui_color_use_term_colors = 0;
+
+    /* one pair of terminal colors and two pairs of RGB colors */
+    gui_color_reset_pairs ();
+    gui_color_term_direct_colors = 1;
+    pair_term = gui_color_get_pair (214, -1);
+    pair_rgb1 = gui_color_get_pair (gui_color_rgb_to_number (0x123456), -1);
+    pair_rgb2 = gui_color_get_pair (gui_color_rgb_to_number (0x654321), -1);
+    CHECK((pair_term > 0) && (pair_rgb1 > 0) && (pair_rgb2 > 0));
+    LONGS_EQUAL(3, gui_color_pairs_used);
+
+    /* pairs of RGB colors are not in the array */
+    pairs = gui_color_buffer_get_pairs (&count, &count_rgb);
+    CHECK(pairs);
+    LONGS_EQUAL(1, count);
+    LONGS_EQUAL(2, count_rgb);
+    LONGS_EQUAL(pair_term, pairs[1]);
+    free (pairs);
+
+    /* color buffer: pair of terminal colors displayed, RGB pairs counted */
+    gui_color_buffer_open ();
+    CHECK(gui_color_buffer);
+    snprintf (str_pair, sizeof (str_pair), "\x19@%05d", pair_term);
+    CHECK(test_gui_color_buffer_contains (gui_color_buffer, str_pair));
+    snprintf (str_pair, sizeof (str_pair), "\x19@%05d", pair_rgb1);
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer, str_pair));
+    CHECK(test_gui_color_buffer_contains (
+              gui_color_buffer, " ... and 2 pairs with RGB colors"));
+
+    /* terminal colors (alt-c): no count of RGB pairs */
+    gui_color_use_term_colors = 1;
+    gui_color_buffer_display ();
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer,
+                                           "pairs with RGB colors"));
+    gui_color_use_term_colors = 0;
+
+    /* no RGB pairs: no count */
+    gui_color_reset_pairs ();
+    CHECK(gui_color_get_pair (214, -1) > 0);
+    gui_color_buffer_display ();
+    CHECK(!test_gui_color_buffer_contains (gui_color_buffer,
+                                           "pairs with RGB colors"));
+
+    gui_buffer_close (gui_color_buffer);
+    POINTERS_EQUAL(NULL, gui_color_buffer);
+    gui_color_term_direct_colors = old_direct_colors;
+    gui_color_use_term_colors = old_use_term_colors;
+    gui_color_reset_pairs ();
 }
 
 /*

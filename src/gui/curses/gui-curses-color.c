@@ -1407,13 +1407,85 @@ gui_color_buffer_display_sample (int y, int rgb)
 }
 
 /*
+ * Callback for hashtable_map on pairs with direct colors: mark the pair in
+ * the array "data" (one char for each pair number).
+ */
+
+void
+gui_color_buffer_mark_pair_direct_cb (void *data,
+                                      struct t_hashtable *hashtable,
+                                      const void *key, const void *value)
+{
+    int pair;
+
+    /* Make C compiler happy. */
+    (void) hashtable;
+    (void) key;
+
+    pair = *((int *)value);
+    if ((pair > 0) && (pair <= gui_color_pairs_used))
+        ((char *)data)[pair] = 1;
+}
+
+/*
+ * Get the pairs displayed in color buffer: all the pairs used, except the
+ * pairs with RGB colors (with direct colors, thousands of pairs can be
+ * allocated for RGB colors).
+ *
+ * Return an array with the pair numbers, starting at index 1 (index 0 is
+ * pair 0), and set *count to the number of pairs in the array (pair 0 not
+ * included) and *count_rgb to the number of pairs with RGB colors.
+ *
+ * Note: result must be freed after use.
+ */
+
+int *
+gui_color_buffer_get_pairs (int *count, int *count_rgb)
+{
+    char *pairs_rgb;
+    int *pairs, i;
+
+    *count = 0;
+    *count_rgb = 0;
+
+    pairs_rgb = calloc (gui_color_pairs_used + 1, sizeof (pairs_rgb[0]));
+    pairs = malloc ((gui_color_pairs_used + 1) * sizeof (pairs[0]));
+    if (!pairs_rgb || !pairs)
+    {
+        free (pairs_rgb);
+        free (pairs);
+        return NULL;
+    }
+
+    if (gui_color_pairs_direct)
+    {
+        hashtable_map (gui_color_pairs_direct,
+                       &gui_color_buffer_mark_pair_direct_cb, pairs_rgb);
+    }
+
+    pairs[0] = 0;
+    for (i = 1; i <= gui_color_pairs_used; i++)
+    {
+        if (pairs_rgb[i])
+            (*count_rgb)++;
+        else
+            pairs[++(*count)] = i;
+    }
+
+    free (pairs_rgb);
+
+    return pairs;
+}
+
+/*
  * Display content of color buffer.
  */
 
 void
 gui_color_buffer_display (void)
 {
-    int y, i, lines, columns, line, col, color, max_color;
+    int y, i, lines, columns, line, col, color, max_color, last_color, pair;
+    int *pairs, count_pairs, count_pairs_rgb;
     char str_line[1024], str_color[64], str_rgb[64];
     struct t_gui_color_palette *color_palette;
 
@@ -1454,8 +1526,22 @@ gui_color_buffer_display (void)
                            gui_color_num_pairs - gui_color_pairs_used);
     }
     columns = 16;
-    max_color = (gui_color_use_term_colors) ?
-        gui_color_term_colors - 1 : gui_color_pairs_used;
+    pairs = NULL;
+    count_pairs_rgb = 0;
+    if (gui_color_use_term_colors)
+    {
+        max_color = gui_color_term_colors - 1;
+    }
+    else
+    {
+        /*
+         * Pairs without the pairs of RGB colors, which can be thousands (they
+         * are counted after the table).
+         */
+        pairs = gui_color_buffer_get_pairs (&count_pairs, &count_pairs_rgb);
+        max_color = (pairs) ? count_pairs : gui_color_pairs_used;
+    }
+    last_color = max_color;
     /* Round up to nearest multiple of columns. */
     max_color = (max_color / columns) * columns + columns - 1;
     lines = max_color / columns + 1;
@@ -1472,15 +1558,15 @@ gui_color_buffer_display (void)
                     snprintf (str_color, sizeof (str_color),
                               "     ");
                 }
-                else if (gui_color_use_term_colors
-                         || (color <= gui_color_pairs_used))
+                else if (gui_color_use_term_colors || (color <= last_color))
                 {
+                    pair = (pairs) ? pairs[color] : color;
                     snprintf (str_color, sizeof (str_color),
-                              (color <= 999) ? "%c%c%05d %03d " : "%c%c%05d%5d",
+                              (pair <= 999) ? "%c%c%05d %03d " : "%c%c%05d%5d",
                               GUI_COLOR_COLOR_CHAR,
                               GUI_COLOR_EXTENDED_CHAR,
-                              color,
-                              color);
+                              pair,
+                              pair);
                 }
                 else
                 {
@@ -1501,6 +1587,17 @@ gui_color_buffer_display (void)
         gui_chat_printf_y (gui_color_buffer, y++,
                            " %s",
                            str_line);
+    }
+    free (pairs);
+    if (count_pairs_rgb > 0)
+    {
+        gui_chat_printf_y (gui_color_buffer, y++,
+                           NG_(" ... and %d pair with RGB colors (not "
+                               "displayed)",
+                               " ... and %d pairs with RGB colors (not "
+                               "displayed)",
+                               count_pairs_rgb),
+                           count_pairs_rgb);
     }
     gui_chat_printf_y (gui_color_buffer, y++,
                        (gui_color_use_term_colors) ?

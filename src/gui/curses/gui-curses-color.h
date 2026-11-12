@@ -50,6 +50,11 @@ extern void gui_color_dump_pair_direct_map_cb (void *data,
                                                struct t_hashtable *hashtable,
                                                const void *key,
                                                const void *value);
+extern void gui_color_buffer_mark_pair_direct_cb (void *data,
+                                                  struct t_hashtable *hashtable,
+                                                  const void *key,
+                                                  const void *value);
+extern int *gui_color_buffer_get_pairs (int *count, int *count_rgb);
 extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
 extern char *gui_color_buffer_rgb_line (const int *colors, int count);
