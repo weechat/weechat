@@ -15,6 +15,7 @@
 #include "irc.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-server.h"
 
 
 char *irc_color_to_weechat[IRC_NUM_COLORS] =
@@ -66,6 +67,42 @@ char irc_color_term2irc[IRC_COLOR_TERM2IRC_NUM_COLORS] =
     11,  /*  14    11 (lightcyan)    */
     0,   /*  15     0 (white)        */
 };
+/*
+ * RGB values of extended IRC colors 16-98, from the IRC formatting
+ * specification (https://modern.ircdocs.horse/formatting#colors-16-98);
+ * the terminal colors used to display them are in irc_color_to_weechat.
+ */
+long irc_color_extended_rgb[IRC_COLOR_NUM_EXTENDED] =
+{
+    0x470000, 0x472100, 0x474700, 0x324700,         /* 16-19 */
+    0x004700, 0x00472C, 0x004747, 0x002747,         /* 20-23 */
+    0x000047, 0x2E0047, 0x470047, 0x47002A,         /* 24-27 */
+    0x740000, 0x743A00, 0x747400, 0x517400,         /* 28-31 */
+    0x007400, 0x007449, 0x007474, 0x004074,         /* 32-35 */
+    0x000074, 0x4B0074, 0x740074, 0x740045,         /* 36-39 */
+    0xB50000, 0xB56300, 0xB5B500, 0x7DB500,         /* 40-43 */
+    0x00B500, 0x00B571, 0x00B5B5, 0x0063B5,         /* 44-47 */
+    0x0000B5, 0x7500B5, 0xB500B5, 0xB5006B,         /* 48-51 */
+    0xFF0000, 0xFF8C00, 0xFFFF00, 0xB2FF00,         /* 52-55 */
+    0x00FF00, 0x00FFA0, 0x00FFFF, 0x008CFF,         /* 56-59 */
+    0x0000FF, 0xA500FF, 0xFF00FF, 0xFF0098,         /* 60-63 */
+    0xFF5959, 0xFFB459, 0xFFFF71, 0xCFFF60,         /* 64-67 */
+    0x6FFF6F, 0x65FFC9, 0x6DFFFF, 0x59B4FF,         /* 68-71 */
+    0x5959FF, 0xC459FF, 0xFF66FF, 0xFF59BC,         /* 72-75 */
+    0xFF9C9C, 0xFFD39C, 0xFFFF9C, 0xE2FF9C,         /* 76-79 */
+    0x9CFF9C, 0x9CFFDB, 0x9CFFFF, 0x9CD3FF,         /* 80-83 */
+    0x9C9CFF, 0xDC9CFF, 0xFF9CFF, 0xFF94D3,         /* 84-87 */
+    0x000000, 0x131313, 0x282828, 0x363636,         /* 88-91 */
+    0x4D4D4D, 0x656565, 0x818181, 0x9F9F9F,         /* 92-95 */
+    0xBCBCBC, 0xE2E2E2, 0xFFFFFF,                   /* 96-98 */
+};
+/*
+ * Terminal colors converted to IRC colors, for each palette: IRC color + 1,
+ * 0 if not converted yet; each color is converted once (with infos
+ * "color_term2rgb" and "color_rgb2term"), see function
+ * irc_color_convert_term2irc_cached.
+ */
+int irc_color_term2irc_cache[IRC_COLOR_NUM_PALETTES][256];
 int irc_color_index_string_decoded = 0;
 char *irc_color_string_decoded[32];
 
@@ -145,13 +182,13 @@ irc_color_convert_rgb2irc (long rgb)
 }
 
 /*
- * Convert a terminal color to IRC color.
+ * Get the RGB value of a terminal color (0-255).
  *
- * Return a IRC color number (between 0 and 15), -1 if error.
+ * Return the RGB value (0x000000 to 0xFFFFFF), -1 if not found.
  */
 
-int
-irc_color_convert_term2irc (int color)
+long
+irc_color_convert_term2rgb (int color)
 {
     char str_color[64], *info_color;
     long number;
@@ -159,13 +196,8 @@ irc_color_convert_term2irc (int color)
     snprintf (str_color, sizeof (str_color), "%d", color);
 
     info_color = weechat_info_get ("color_term2rgb", str_color);
-    if (!info_color || !info_color[0])
-    {
-        free (info_color);
-        return -1;
-    }
-
-    if (!weechat_util_parse_long (info_color, 10, &number)
+    if (!info_color || !info_color[0]
+        || !weechat_util_parse_long (info_color, 10, &number)
         || (number < 0) || (number > 0xFFFFFF))
     {
         free (info_color);
@@ -174,7 +206,154 @@ irc_color_convert_term2irc (int color)
 
     free (info_color);
 
-    return irc_color_convert_rgb2irc (number);
+    return number;
+}
+
+/*
+ * Convert a terminal color to IRC color.
+ *
+ * Return a IRC color number (between 0 and 15), -1 if error.
+ */
+
+int
+irc_color_convert_term2irc (int color)
+{
+    long rgb;
+
+    rgb = irc_color_convert_term2rgb (color);
+
+    return (rgb >= 0) ? irc_color_convert_rgb2irc (rgb) : -1;
+}
+
+/*
+ * Convert a RGB color to the nearest extended IRC color (16-98), using the
+ * RGB values of the IRC formatting specification.
+ *
+ * Black (IRC color 88) is IRC color 1, the usual black, so that the remapped
+ * colors of IRC clients still apply (for example "1,-1:darkgray" in option
+ * irc.color.mirc_remap).
+ *
+ * Return an IRC color number (1 or between 16 and 98), -1 if error.
+ */
+
+int
+irc_color_convert_rgb2irc_extended (long rgb)
+{
+    int i, best;
+    long rgb2, r1, g1, b1, r2, g2, b2, diff, best_diff;
+
+    if ((rgb < 0) || (rgb > 0xFFFFFF))
+        return -1;
+
+    r1 = (rgb >> 16) & 0xFF;
+    g1 = (rgb >> 8) & 0xFF;
+    b1 = rgb & 0xFF;
+
+    best = -1;
+    best_diff = -1;
+    for (i = IRC_COLOR_EXTENDED_FIRST; i <= IRC_COLOR_EXTENDED_LAST; i++)
+    {
+        rgb2 = irc_color_extended_rgb[i - IRC_COLOR_EXTENDED_FIRST];
+        r2 = (rgb2 >> 16) & 0xFF;
+        g2 = (rgb2 >> 8) & 0xFF;
+        b2 = rgb2 & 0xFF;
+        diff = ((r2 - r1) * (r2 - r1)) + ((g2 - g1) * (g2 - g1))
+            + ((b2 - b1) * (b2 - b1));
+        if ((best_diff < 0) || (diff < best_diff))
+        {
+            best = i;
+            best_diff = diff;
+            if (diff == 0)
+                break;
+        }
+    }
+
+    return (best == IRC_COLOR_EXTENDED_BLACK) ? 1 : best;
+}
+
+/*
+ * Convert a RGB color to an IRC color of a palette: nearest color of IRC
+ * colors 0-15 (basic) or 16-98 (extended).
+ *
+ * Return an IRC color number, -1 if error.
+ */
+
+int
+irc_color_convert_rgb2irc_palette (long rgb, int palette)
+{
+    if ((rgb < 0) || (rgb > 0xFFFFFF))
+        return -1;
+
+    if (palette == IRC_COLOR_PALETTE_EXTENDED)
+        return irc_color_convert_rgb2irc_extended (rgb);
+
+    return irc_color_convert_rgb2irc (rgb);
+}
+
+/*
+ * Convert a terminal color (0-255) to an IRC color of a palette.
+ *
+ * Terminal colors 0-15 are converted to IRC colors 0-15 (like the theme of
+ * the terminal, they can be displayed with any color). With the extended
+ * palette, the other terminal colors are converted to the IRC color displayed
+ * with this terminal color if there is one (for example 196 is IRC color 52,
+ * and 16, which is black, is IRC color 1), otherwise to the nearest extended
+ * IRC color.
+ *
+ * Return an IRC color number, -1 if error.
+ */
+
+int
+irc_color_convert_term2irc_palette (int color, int palette)
+{
+    long rgb;
+    int i;
+
+    if ((color < 0) || (color > 255))
+        return -1;
+
+    if ((palette != IRC_COLOR_PALETTE_EXTENDED) || (color < 16))
+        return irc_color_convert_term2irc (color);
+
+    for (i = IRC_COLOR_EXTENDED_FIRST; i <= IRC_COLOR_EXTENDED_LAST; i++)
+    {
+        if (strtol (irc_color_to_weechat[i], NULL, 10) == color)
+            return (i == IRC_COLOR_EXTENDED_BLACK) ? 1 : i;
+    }
+
+    rgb = irc_color_convert_term2rgb (color);
+
+    return (rgb >= 0) ? irc_color_convert_rgb2irc_extended (rgb) : -1;
+}
+
+/*
+ * Convert a terminal color (0-255) to an IRC color of a palette (see function
+ * irc_color_convert_term2irc_palette), with a cache: each terminal color is
+ * converted only once per palette.
+ *
+ * Return an IRC color number, -1 if error.
+ */
+
+int
+irc_color_convert_term2irc_cached (int color, int palette)
+{
+    int irc_color;
+
+    if ((color < 0) || (color > 255)
+        || (palette < 0) || (palette >= IRC_COLOR_NUM_PALETTES))
+    {
+        return irc_color_convert_term2irc_palette (color, palette);
+    }
+
+    if (!irc_color_term2irc_cache[palette][color])
+    {
+        irc_color = irc_color_convert_term2irc_palette (color, palette);
+        if (irc_color < 0)
+            return -1;
+        irc_color_term2irc_cache[palette][color] = irc_color + 1;
+    }
+
+    return irc_color_term2irc_cache[palette][color] - 1;
 }
 
 /*
@@ -1214,8 +1393,10 @@ irc_color_decode_ansi_sequence (char **output,
                 if (color < 0)
                     break;
                 color = (color & IRC_COLOR_RGB_FLAG) ?
-                    irc_color_convert_rgb2irc (color & 0xFFFFFF) :
-                    irc_color_convert_term2irc (color);
+                    irc_color_convert_rgb2irc_palette (color & 0xFFFFFF,
+                                                       ansi_state->palette) :
+                    irc_color_convert_term2irc_cached (color,
+                                                       ansi_state->palette);
                 if (color >= 0)
                 {
                     if (value == 38)
@@ -1414,11 +1595,16 @@ irc_color_ansi_sequence_size (const char *string)
  * If keep_colors == 0: removes any color/style in message otherwise keeps
  * colors.
  *
+ * The palette is the set of IRC colors used for ANSI terminal colors
+ * (16-255) and RGB colors: IRC colors 0-15 (IRC_COLOR_PALETTE_BASIC) or
+ * 16-98 (IRC_COLOR_PALETTE_EXTENDED); basic ANSI colors are always
+ * converted to IRC colors 0-15.
+ *
  * Note: result must be freed after use.
  */
 
 char *
-irc_color_decode_ansi (const char *string, int keep_colors)
+irc_color_decode_ansi (const char *string, int keep_colors, int palette)
 {
     struct t_irc_color_ansi_state ansi_state;
     char *normalized, **output;
@@ -1450,6 +1636,8 @@ irc_color_decode_ansi (const char *string, int keep_colors)
         return NULL;
     }
 
+    ansi_state.palette = ((palette >= 0) && (palette < IRC_COLOR_NUM_PALETTES)) ?
+        palette : IRC_COLOR_PALETTE_BASIC;
     irc_color_decode_ansi_reset_state (&ansi_state);
 
     /*
@@ -1518,7 +1706,18 @@ irc_color_modifier_cb (const void *pointer, void *data,
         return irc_color_encode (string, keep_colors);
 
     if (strcmp (modifier, "irc_color_decode_ansi") == 0)
-        return irc_color_decode_ansi (string, keep_colors);
+    {
+        /*
+         * The palette of the default server options is used, only for colors
+         * (in escape sequences).
+         */
+        return irc_color_decode_ansi (
+            string, keep_colors,
+            (keep_colors && string && strchr (string, '\33')) ?
+            weechat_config_enum (
+                irc_config_server_default[IRC_SERVER_OPTION_ANSI_COLORS]) :
+            IRC_COLOR_PALETTE_BASIC);
+    }
 
     /* Unknown modifier */
     return NULL;

@@ -3379,6 +3379,7 @@ see this with the command `/fset libera`:
 
 ....
 irc.server.libera.addresses             文字列  "irc.libera.chat"
+irc.server.libera.ansi_colors           enum    null -> extended
 irc.server.libera.anti_flood            整数    null -> 2000
 irc.server.libera.autoconnect           ブール  on
 irc.server.libera.autojoin              文字列  null -> ""

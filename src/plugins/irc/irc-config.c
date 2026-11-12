@@ -2785,6 +2785,33 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_ANSI_COLORS:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "enum",
+                N_("IRC colors used to convert ANSI colors (for example in "
+                   "output of command \"/exec -o\") to IRC colors: "
+                   "basic = colors 0-15, "
+                   "extended = colors 0-98 (colors 16-98 are defined with "
+                   "RGB values in the IRC formatting specification); "
+                   "basic ANSI colors (30-37 and 90-97) are always converted "
+                   "to IRC colors 0-15, the option is used for terminal "
+                   "colors 16-255 and RGB colors: a terminal color used to "
+                   "display an IRC color 16-98 is converted to this IRC color, "
+                   "other colors to the nearest IRC color; only the option "
+                   "of the default server options "
+                   "(irc.server_default.ansi_colors) is used"),
+                "basic|extended", 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value,
+                callback_check_value_pointer,
+                callback_check_value_data,
+                callback_change,
+                callback_change_pointer,
+                callback_change_data,
+                NULL, NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_REGISTERED_MODE:
             new_option = weechat_config_new_option (
                 config_file, section,

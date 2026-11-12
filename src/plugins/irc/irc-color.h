@@ -61,6 +61,22 @@
 /* Colors of IRC formatting which are not a color */
 #define IRC_COLOR_FORMATTING_NONE    -1 /* no color code                    */
 
+/* Extended IRC colors (defined with RGB values) */
+#define IRC_COLOR_EXTENDED_FIRST     16
+#define IRC_COLOR_EXTENDED_LAST      98
+#define IRC_COLOR_EXTENDED_BLACK     88 /* same as IRC color 1             */
+#define IRC_COLOR_NUM_EXTENDED                                          \
+    (IRC_COLOR_EXTENDED_LAST - IRC_COLOR_EXTENDED_FIRST + 1)
+
+/* Colors used to convert ANSI colors to IRC colors */
+enum t_irc_color_palette
+{
+    IRC_COLOR_PALETTE_BASIC = 0,       /* IRC colors 0-15                   */
+    IRC_COLOR_PALETTE_EXTENDED,        /* IRC colors 0-98                   */
+    /* number of palettes */
+    IRC_COLOR_NUM_PALETTES,
+};
+
 /* Macros for WeeChat core and IRC colors */
 
 #define IRC_COLOR_BAR_FG weechat_color("bar_fg")
@@ -127,6 +143,7 @@ struct t_irc_color_formatting
 /* State of ANSI colors converted to IRC colors */
 struct t_irc_color_ansi_state
 {
+    int palette;                       /* IRC colors used (palette)         */
     struct t_irc_color_formatting formatting; /* formatting of ANSI colors  */
                                        /* (like on a terminal), colors are  */
                                        /* IRC_COLOR_DEFAULT (99) by default */
@@ -160,7 +177,11 @@ extern char *irc_color_formatting_codes (struct t_irc_color_formatting *formatti
 extern char *irc_color_decode (const char *string, int keep_colors);
 extern const char *irc_color_decode_const (const char *string, int keep_colors);
 extern char *irc_color_encode (const char *string, int keep_colors);
-extern char *irc_color_decode_ansi (const char *string, int keep_colors);
+extern int irc_color_convert_rgb2irc_palette (long rgb, int palette);
+extern int irc_color_convert_term2irc_palette (int color, int palette);
+extern int irc_color_convert_term2irc_cached (int color, int palette);
+extern char *irc_color_decode_ansi (const char *string, int keep_colors,
+                                    int palette);
 extern char *irc_color_modifier_cb (const void *pointer, void *data,
                                     const char *modifier,
                                     const char *modifier_data,

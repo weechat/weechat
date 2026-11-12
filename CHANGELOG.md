@@ -31,6 +31,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - buflist: add info "buflist_bar_items_count"
 - build/container: add files to build container images (Debian and Alpine) from the local sources, moved from repository [weechat-container](https://github.com/weechat/weechat-container)
 - doc: add cheat sheet with all key bindings and mouse actions
+- irc: add server option ansi_colors to convert ANSI colors (for example in output of `/exec -o`) to the 99 IRC colors ("extended", default) or to the 16 basic IRC colors ("basic") ([#1364](https://github.com/weechat/weechat/issues/1364))
 - irc: add options irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and irc.look.notice_target_separator to customize the text displayed around nick and target in prefix of notices
 - irc: add pointers "irc_server" and "irc_channel" in focus hashtable of buflist bar items ([#1543](https://github.com/weechat/weechat/issues/1543))
 - irc: add option irc.look.multi_prefix_in_nicklist to display all nick prefixes in nicklist when capability "multi-prefix" is enabled ([#132](https://github.com/weechat/weechat/issues/132))
@@ -97,6 +98,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - buflist: display only the first char of nick prefix in variable `${nick_prefix}`, so that buffers stay aligned when a nick has multiple prefixes in nicklist
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: accept a number or a string with a number as integer data in function hook_signal_send, return an error if the data is not a valid integer
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
+- **breaking:** irc: convert ANSI terminal colors 16-255 and RGB colors to IRC colors 16-98 instead of 0-15 (the IRC color displayed with the terminal color, or the nearest IRC color), basic ANSI colors are still converted to IRC colors 0-15 (server option ansi_colors) ([#1364](https://github.com/weechat/weechat/issues/1364))
 - **breaking:** irc: keep the RGB value of hex colors (`^D`) (color code "@#rrggbb") instead of using the nearest terminal color ([#1364](https://github.com/weechat/weechat/issues/1364))
 - irc: allow spaces around commas in server option tls_fingerprint
 - irc: allow multiple nicks separated by commas in commands `/notify add`, `/notify addreplace` and `/notify del` ([#689](https://github.com/weechat/weechat/issues/689))

@@ -3060,6 +3060,7 @@ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 
 ....
 irc.server.libera.addresses             стринг      "irc.libera.chat"
+irc.server.libera.ansi_colors           набрајање   null -> extended
 irc.server.libera.anti_flood            целобројна  null -> 2000
 irc.server.libera.autoconnect           логичка     on
 irc.server.libera.autojoin              стринг      null -> ""

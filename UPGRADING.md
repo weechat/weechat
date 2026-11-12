@@ -298,6 +298,35 @@ strings (DCS) and other escape sequences like `\e7`, and the chars SI and SO (sh
 unterminated or cancelled sequences and a lone ESC are matched too (an unterminated
 string ends at the end of the line). Only SGR sequences (ending with `m`) are colors.
 
+### IRC colors in output of /exec -o
+
+ANSI colors converted to IRC colors (for example in output of command `/exec -o`)
+now use the 99 IRC colors: a terminal color 16-255 used to display an IRC color
+16-98 is converted to this IRC color (for example 196 is IRC color 52), and the
+other terminal colors and the RGB colors are converted to the nearest of IRC colors
+16-98 (defined with RGB values in the IRC formatting specification), instead of the
+16 basic IRC colors 0-15; black is still IRC color 1.
+
+This is the new default (option `irc.server_default.ansi_colors` set to `extended`)
+because:
+
+- IRC colors 16-98 are part of the IRC formatting specification and are supported by
+  most current IRC clients;
+- the basic ANSI colors (codes 30-37 and 90-97, terminal colors 0-15), which are the
+  only colors used by most programs, are still converted to IRC colors 0-15: the
+  output of these programs does not change;
+- only colors of the 256-color palette and RGB colors are converted differently: with
+  the 16 basic colors, most of them were converted to a wrong color (for example all
+  shades of a gradient became the same color), and the IRC codes are as short as
+  before.
+
+If people in your channels use IRC clients which do not support colors 16-98, the
+basic colors can be used again with:
+
+```text
+/set irc.server_default.ansi_colors basic
+```
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer

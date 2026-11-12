@@ -20,6 +20,7 @@ extern "C"
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-color.h"
 #include "src/plugins/irc/irc-config.h"
+#include "src/plugins/irc/irc-server.h"
 
 extern int irc_color_convert_rgb2term (long rgb);
 extern int irc_color_convert_rgb2irc (long rgb);
@@ -29,6 +30,7 @@ extern int irc_color_ansi_next_param (const char **ptr_param,
 extern int irc_color_ansi_next_color (const char **ptr_param,
                                       const char *ptr_end);
 extern int irc_color_ansi_sequence_size (const char *string);
+extern void irc_color_decode_ansi_reset_state (struct t_irc_color_ansi_state *ansi_state);
 extern void irc_color_decode_ansi_sequence (char **output,
                                             struct t_irc_color_ansi_state *ansi_state,
                                             const char *params, int length);
@@ -255,12 +257,20 @@ extern void irc_color_decode_ansi_sequence (char **output,
     free (encoded);
 
 #define WEE_CHECK_DECODE_ANSI(__result, __string, __keep_colors)        \
-    decoded = irc_color_decode_ansi (__string, __keep_colors);          \
+    decoded = irc_color_decode_ansi (__string, __keep_colors,           \
+                                     IRC_COLOR_PALETTE_BASIC);          \
+    STRCMP_EQUAL(__result, decoded);                                    \
+    free (decoded);
+
+#define WEE_CHECK_DECODE_ANSI_EXTENDED(__result, __string)              \
+    decoded = irc_color_decode_ansi (__string, 1,                       \
+                                     IRC_COLOR_PALETTE_EXTENDED);       \
     STRCMP_EQUAL(__result, decoded);                                    \
     free (decoded);
 
 #define WEE_CHECK_DECODE_ANSI_DECODE(__result, __string)                \
-    decoded_ansi = irc_color_decode_ansi (__string, 1);                 \
+    decoded_ansi = irc_color_decode_ansi (__string, 1,                  \
+                                          IRC_COLOR_PALETTE_BASIC);     \
     CHECK(decoded_ansi);                                                \
     WEE_CHECK_DECODE(__result, decoded_ansi, 1);                        \
     free (decoded_ansi);
@@ -1116,14 +1126,14 @@ TEST(IrcColor, DecodeAnsiColons)
         snprintf (string1, sizeof (string1), "test_%stext", colons[i][0]);
         snprintf (string2, sizeof (string2), "test_%stext", colons[i][1]);
         /* Colors removed and kept: same as parameters separated by ";". */
-        decoded1 = irc_color_decode_ansi (string1, 0);
-        decoded2 = irc_color_decode_ansi (string2, 0);
+        decoded1 = irc_color_decode_ansi (string1, 0, IRC_COLOR_PALETTE_BASIC);
+        decoded2 = irc_color_decode_ansi (string2, 0, IRC_COLOR_PALETTE_BASIC);
         STRCMP_EQUAL(decoded2, decoded1);
         CHECK(!strchr (decoded1, '\x1B'));
         free (decoded1);
         free (decoded2);
-        decoded1 = irc_color_decode_ansi (string1, 1);
-        decoded2 = irc_color_decode_ansi (string2, 1);
+        decoded1 = irc_color_decode_ansi (string1, 1, IRC_COLOR_PALETTE_BASIC);
+        decoded2 = irc_color_decode_ansi (string2, 1, IRC_COLOR_PALETTE_BASIC);
         STRCMP_EQUAL(decoded2, decoded1);
         free (decoded1);
         free (decoded2);
@@ -1165,8 +1175,12 @@ TEST(IrcColor, DecodeAnsi)
     char string[1024], *decoded;
 
     /* NULL/empty string */
-    STRCMP_EQUAL(NULL, irc_color_decode_ansi (NULL, 0));
-    STRCMP_EQUAL(NULL, irc_color_decode_ansi (NULL, 1));
+    STRCMP_EQUAL(NULL,
+                 irc_color_decode_ansi (NULL, 0,
+                                        IRC_COLOR_PALETTE_BASIC));
+    STRCMP_EQUAL(NULL,
+                 irc_color_decode_ansi (NULL, 1,
+                                        IRC_COLOR_PALETTE_BASIC));
     WEE_CHECK_DECODE_ANSI ("", "", 0);
     WEE_CHECK_DECODE_ANSI ("", "", 1);
 
@@ -1768,7 +1782,8 @@ TEST(IrcColor, DecodeAnsiSequence)
     LONGS_EQUAL(11, irc_color_ansi_sequence_size ("\x1B[38;5;196m"));
 
     /* Invalid parameters (for example changed by a script) are ignored. */
-    irc_color_formatting_init (&ansi_state.formatting);
+    irc_color_decode_ansi_reset_state (&ansi_state);
+    ansi_state.palette = IRC_COLOR_PALETTE_BASIC;
     output = string_dyn_alloc (32);
     irc_color_decode_ansi_sequence (output, &ansi_state, "1;x;4", 5);
     STRCMP_EQUAL("\x02", *output);
@@ -1789,6 +1804,151 @@ TEST(IrcColor, ForTags)
     STRCMP_EQUAL("", irc_color_for_tags (""));
     STRCMP_EQUAL("test", irc_color_for_tags ("test"));
     STRCMP_EQUAL("blue:red", irc_color_for_tags ("blue,red"));
+}
+
+/*
+ * Test functions:
+ *   irc_color_convert_rgb2irc_palette
+ *   irc_color_convert_term2irc_palette
+ */
+
+TEST(IrcColor, ConvertPalette)
+{
+    int i, palette;
+
+    /* Invalid RGB colors, with any palette. */
+    for (palette = 0; palette < IRC_COLOR_NUM_PALETTES; palette++)
+    {
+        LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (-1, palette));
+        LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (0x1000000, palette));
+    }
+
+    /* Basic palette: IRC colors 0-15. */
+    LONGS_EQUAL(irc_color_convert_rgb2irc (0xFF0000),
+                irc_color_convert_rgb2irc_palette (0xFF0000,
+                                                   IRC_COLOR_PALETTE_BASIC));
+    LONGS_EQUAL(irc_color_convert_term2irc (196),
+                irc_color_convert_term2irc_palette (196,
+                                                    IRC_COLOR_PALETTE_BASIC));
+
+    /* Extended palette: RGB colors, nearest IRC color 16-98. */
+    LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (
+                    -1, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(-1, irc_color_convert_rgb2irc_palette (
+                    0x1000000, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(52, irc_color_convert_rgb2irc_palette (
+                    0xFF0000, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(53, irc_color_convert_rgb2irc_palette (
+                    0xFF8C00, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(53, irc_color_convert_rgb2irc_palette (
+                    0xFF8800, IRC_COLOR_PALETTE_EXTENDED));
+    /* Black (IRC color 88) is IRC color 1 (remapped colors still apply). */
+    LONGS_EQUAL(1, irc_color_convert_rgb2irc_palette (
+                    0x000000, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(1, irc_color_convert_rgb2irc_palette (
+                    0x080808, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(89, irc_color_convert_rgb2irc_palette (
+                    0x101010, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(98, irc_color_convert_rgb2irc_palette (
+                    0xFFFFFF, IRC_COLOR_PALETTE_EXTENDED));
+
+    /*
+     * Extended palette: terminal colors 0-15 are IRC colors 0-15, other
+     * colors are the IRC color displayed with this terminal color or the
+     * nearest one.
+     */
+    LONGS_EQUAL(irc_color_convert_term2irc (1),
+                irc_color_convert_term2irc_palette (
+                    1, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(irc_color_convert_term2irc (9),
+                irc_color_convert_term2irc_palette (
+                    9, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(1, irc_color_convert_term2irc_palette (
+                    16, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(-1, irc_color_convert_term2irc_palette (
+                    -1, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(-1, irc_color_convert_term2irc_palette (
+                    256, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(-1, irc_color_convert_term2irc_palette (
+                    300, IRC_COLOR_PALETTE_BASIC));
+    LONGS_EQUAL(52, irc_color_convert_term2irc_palette (
+                    196, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(53, irc_color_convert_term2irc_palette (
+                    208, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(96, irc_color_convert_term2irc_palette (
+                    250, IRC_COLOR_PALETTE_EXTENDED));
+    LONGS_EQUAL(98, irc_color_convert_term2irc_palette (
+                    231, IRC_COLOR_PALETTE_EXTENDED));
+    /* 232 (#080808): nearest is 88 (#000000), so IRC color 1 */
+    LONGS_EQUAL(1, irc_color_convert_term2irc_palette (
+                    232, IRC_COLOR_PALETTE_EXTENDED));
+    /* 255 (#eeeeee): nearest is 97 (#e2e2e2) */
+    LONGS_EQUAL(97, irc_color_convert_term2irc_palette (
+                    255, IRC_COLOR_PALETTE_EXTENDED));
+
+    /* Cached conversion: same result, also when called again. */
+    for (i = 0; i < 256; i++)
+    {
+        for (palette = 0; palette < IRC_COLOR_NUM_PALETTES; palette++)
+        {
+            LONGS_EQUAL(irc_color_convert_term2irc_palette (i, palette),
+                        irc_color_convert_term2irc_cached (i, palette));
+            LONGS_EQUAL(irc_color_convert_term2irc_palette (i, palette),
+                        irc_color_convert_term2irc_cached (i, palette));
+        }
+    }
+    /* Not cached: color or palette out of range. */
+    LONGS_EQUAL(irc_color_convert_term2irc_palette (256,
+                                                    IRC_COLOR_PALETTE_BASIC),
+                irc_color_convert_term2irc_cached (256,
+                                                   IRC_COLOR_PALETTE_BASIC));
+}
+
+/*
+ * Test functions:
+ *   irc_color_decode_ansi (extended palette)
+ */
+
+TEST(IrcColor, DecodeAnsiExtended)
+{
+    char string[1024], *decoded;
+
+    /* Basic ANSI colors are always IRC colors 0-15. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "04" "red",
+                                   "test_\x1B[91mred");
+    snprintf (string, sizeof (string),
+              "test_%s%02dred",
+              IRC_COLOR_COLOR_STR, irc_color_convert_term2irc (9));
+    WEE_CHECK_DECODE_ANSI_EXTENDED(string, "test_\x1B[38;5;9mred");
+
+    /* Terminal colors 16-255 and RGB colors: IRC colors 16-98. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "52" "red",
+                                   "test_\x1B[38;5;196mred");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "53" "orange",
+                                   "test_\x1B[38;2;255;140;0morange");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "52" "red",
+                                   "test_\x1B[38:2::255:0:0mred");
+    /* 236 (#303030): nearest is 91 (#363636) */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("test_" "\x03" "96,91" "gray",
+                                   "test_\x1B[38;5;250;48;5;236mgray");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "99,52" "B",
+                                   "A\x1B[48;5;196mB");
+
+    /* Black is IRC color 1 (not 88), near blacks are 89-90. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "01" "B", "A\x1B[38;5;16mB");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "01" "B",
+                                   "A\x1B[38;2;0;0;0mB");
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "89" "B", "A\x1B[38;5;233mB");
+
+    /* Text color 16-98 followed by "," and a digit: "^B^B" is added. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "52" "\x02\x02" ",5",
+                                   "A\x1B[38;5;196m,5");
+
+    /* Background changed (not from the default), then reset to default. */
+    WEE_CHECK_DECODE_ANSI_EXTENDED("A" "\x03" "52,53" "B" "\x03" "52,60" "C"
+                                   "\x03\x03" "52" "D",
+                                   "A\x1B[38;5;196;48;5;208mB"
+                                   "\x1B[48;5;21mC\x1B[49mD");
 }
 
 /*
@@ -1833,6 +1993,23 @@ TEST(IrcColor, ModifierCallback)
                                  "1", STRING_ANSI_BOLD);
     STRCMP_EQUAL(string, result);
     free (result);
+
+    /* Modifier "irc_color_decode_ansi": palette of default server options */
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 "1", "A\x1B[38;5;196mB");
+    STRCMP_EQUAL("A" "\x03" "52" "B", result);
+    free (result);
+    config_file_option_set (
+        irc_config_server_default[IRC_SERVER_OPTION_ANSI_COLORS], "basic", 1);
+    snprintf (string, sizeof (string),
+              "A%s%02dB",
+              IRC_COLOR_COLOR_STR, irc_color_convert_term2irc (196));
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 "1", "A\x1B[38;5;196mB");
+    STRCMP_EQUAL(string, result);
+    free (result);
+    config_file_option_reset (
+        irc_config_server_default[IRC_SERVER_OPTION_ANSI_COLORS], 1);
 }
 
 /*

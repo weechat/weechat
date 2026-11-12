@@ -91,6 +91,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_CHARSET_MESSAGE,      /* what to decode/encode in msg  */
     IRC_SERVER_OPTION_DEFAULT_CHANTYPES,    /* chantypes if not received     */
     IRC_SERVER_OPTION_REGISTERED_MODE,      /* mode set on registered user   */
+    IRC_SERVER_OPTION_ANSI_COLORS,          /* IRC colors for ANSI colors    */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };

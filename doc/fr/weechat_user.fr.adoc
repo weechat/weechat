@@ -3360,6 +3360,7 @@ vous verrez ceci avec la commande `/fset libera` :
 
 ....
 irc.server.libera.addresses             chaîne   "irc.libera.chat"
+irc.server.libera.ansi_colors           énuméré  null -> extended
 irc.server.libera.anti_flood            entier   null -> 2000
 irc.server.libera.autoconnect           booléen  on
 irc.server.libera.autojoin              chaîne   null -> ""

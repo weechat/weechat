@@ -3278,6 +3278,7 @@ zobaczysz to po wykonaniu `/fset libera`:
 
 ....
 irc.server.libera.addresses             ciąg    "irc.libera.chat"
+irc.server.libera.ansi_colors           enum    null -> extended
 irc.server.libera.anti_flood            liczba  null -> 2000
 irc.server.libera.autoconnect           bool    on
 irc.server.libera.autojoin              ciąg    null -> ""

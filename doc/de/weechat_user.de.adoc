@@ -3310,6 +3310,7 @@ sehen Sie dies mit dem Befehl `/fset libera`:
 
 ....
 irc.server.libera.addresses             Zeichenkette  "irc.libera.chat"
+irc.server.libera.ansi_colors           Aufzählung    null -> extended
 irc.server.libera.anti_flood            integer       null -> 2000
 irc.server.libera.autoconnect           boolesch      on
 irc.server.libera.autojoin              Zeichenkette  null -> ""
