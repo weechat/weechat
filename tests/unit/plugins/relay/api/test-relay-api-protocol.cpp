@@ -107,6 +107,31 @@ struct t_relay_client *ptr_relay_client = NULL;
 int data_sent_index = 0;
 char *data_sent[4] = { NULL, NULL, NULL, NULL };
 struct t_relay_json *json_body_sent[4] = { NULL, NULL, NULL, NULL };
+char test_relay_api_protocol_typing_signal[128];
+void *test_relay_api_protocol_typing_signal_data = NULL;
+
+/*
+ * Callback for signals "typing_self_*": save the signal name and data.
+ */
+
+int
+test_relay_api_protocol_typing_signal_cb (const void *pointer, void *data,
+                                          const char *signal,
+                                          const char *type_data,
+                                          void *signal_data)
+{
+    /* Make C++ compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) type_data;
+
+    snprintf (test_relay_api_protocol_typing_signal,
+              sizeof (test_relay_api_protocol_typing_signal),
+              "%s", signal);
+    test_relay_api_protocol_typing_signal_data = signal_data;
+
+    return WEECHAT_RC_OK;
+}
 
 TEST_GROUP(RelayApiProtocol)
 {
@@ -1236,6 +1261,122 @@ TEST(RelayApiProtocolWithClient, CbInput)
 
 /*
  * Test functions:
+ *   relay_api_protocol_cb_typing
+ */
+
+TEST(RelayApiProtocolWithClient, CbTyping)
+{
+    struct t_hook *hook;
+    char body[256];
+
+    test_relay_api_protocol_typing_signal[0] = '\0';
+    test_relay_api_protocol_typing_signal_data = NULL;
+    hook = hook_signal (NULL, "typing_self_*",
+                        &test_relay_api_protocol_typing_signal_cb,
+                        NULL, NULL);
+
+    /* Error: no body. */
+    test_client_recv_http ("POST /api/typing", NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
+                 data_sent[0]);
+
+    /* Error: body is not an object. */
+    test_client_recv_http ("POST /api/typing", NULL, "[]");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: buffer name is not a string. */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_name\": 123, \"state\": \"active\"}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: buffer not found (by name). */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_name\": \"invalid\", "
+                           "\"state\": \"active\"}");
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 40\r\n"
+                 "\r\n"
+                 "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
+                 data_sent[0]);
+
+    /* Error: buffer id is not a number. */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_id\": \"abc\", \"state\": \"active\"}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: buffer not found (by id). */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_id\": 123, \"state\": \"active\"}");
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 36\r\n"
+                 "\r\n"
+                 "{\"error\":\"Buffer \\\"123\\\" not found\"}",
+                 data_sent[0]);
+
+    /* Error: missing state. */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_name\": \"core.weechat\"}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: state is not a string. */
+    test_client_recv_http ("POST /api/typing", NULL, "{\"state\": 1}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: invalid state. */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"state\": \"unknown\"}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* No signal sent on errors. */
+    STRCMP_EQUAL("", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(NULL, test_relay_api_protocol_typing_signal_data);
+
+    /* State "active" on buffer (by name). */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_name\": \"core.weechat\", "
+                           "\"state\": \"active\"}");
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+    STRCMP_EQUAL("typing_self_typing", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(gui_buffers, test_relay_api_protocol_typing_signal_data);
+
+    /* State "paused" on buffer (by id). */
+    test_relay_api_protocol_typing_signal_data = NULL;
+    snprintf (body, sizeof (body),
+              "{\"buffer_id\": %lld, \"state\": \"paused\"}",
+              gui_buffers->id);
+    test_client_recv_http ("POST /api/typing", NULL, body);
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+    STRCMP_EQUAL("typing_self_paused", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(gui_buffers, test_relay_api_protocol_typing_signal_data);
+
+    /* State "done" on default buffer. */
+    test_relay_api_protocol_typing_signal_data = NULL;
+    test_client_recv_http ("POST /api/typing", NULL, "{\"state\": \"done\"}");
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+    STRCMP_EQUAL("typing_self_cleared", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(gui_buffers, test_relay_api_protocol_typing_signal_data);
+
+    /* State "sent" on default buffer. */
+    test_relay_api_protocol_typing_signal_data = NULL;
+    test_client_recv_http ("POST /api/typing", NULL, "{\"state\": \"sent\"}");
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+    STRCMP_EQUAL("typing_self_sent", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(gui_buffers, test_relay_api_protocol_typing_signal_data);
+
+    unhook (hook);
+}
+
+/*
+ * Test functions:
  *   relay_api_protocol_cb_ping
  */
 
@@ -1355,6 +1496,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_buffer));
     POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_hsignal_nicklist));
     POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_input));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_upgrade));
     POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_day_changed));
 
@@ -1800,6 +1942,171 @@ TEST(RelayApiProtocolWithClient, SignalDayChangedCb)
     free_data_sent ();
     (void) hook_signal_send ("day_changed",
                              WEECHAT_HOOK_SIGNAL_STRING, (void *)"2026-10-05");
+    POINTERS_EQUAL(NULL, data_sent[0]);
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_signal_typing_cb
+ */
+
+TEST(RelayApiProtocolWithClient, SignalTypingCb)
+{
+    char signal_data[128], expected[1024];
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    /* Typing not synchronized by default. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_typing));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing;alice", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* Typing ignored with "notify_only". */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"typing\": true, "
+                           "\"notify_only\": true}}");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_typing));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"typing\": true}}");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_typing));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
+
+    /* Invalid signal data: no event sent. */
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, (void *)"");
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, (void *)"invalid");
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING,
+                             (void *)"0x0;typing;alice");
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING,
+                             (void *)"0x1;typing;alice");
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing", (unsigned long)gui_buffers);
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;unknown;alice", (unsigned long)gui_buffers);
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing;", (unsigned long)gui_buffers);
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    (void) hook_signal_send ("typing_reset_buffer",
+                             WEECHAT_HOOK_SIGNAL_POINTER, NULL);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* Typing states. */
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing;alice", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_nick_changed\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":\"typing\","
+              "\"body\":{\"nick\":\"alice\",\"state\":\"active\"}}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;paused;bob", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_nick_changed\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":\"typing\","
+              "\"body\":{\"nick\":\"bob\",\"state\":\"paused\"}}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;off;alice", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_nick_changed\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":\"typing\","
+              "\"body\":{\"nick\":\"alice\",\"state\":\"done\"}}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;cleared;bob", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_nick_changed\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":\"typing\","
+              "\"body\":{\"nick\":\"bob\",\"state\":\"done\"}}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    /* Reset of buffer. */
+    free_data_sent ();
+    (void) hook_signal_send ("typing_reset_buffer",
+                             WEECHAT_HOOK_SIGNAL_POINTER, gui_buffers);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_buffer_reset\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":null,"
+              "\"body\":null}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    /* No event sent after typing is disabled. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"typing\": false}}");
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_typing));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing;alice", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    (void) hook_signal_send ("typing_reset_buffer",
+                             WEECHAT_HOOK_SIGNAL_POINTER, gui_buffers);
     POINTERS_EQUAL(NULL, data_sent[0]);
 }
 

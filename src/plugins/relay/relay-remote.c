@@ -934,6 +934,16 @@ relay_remote_buffer_input (struct t_gui_buffer *buffer, const char *input_data)
 }
 
 /*
+ * Send self typing state for a remote buffer.
+ */
+
+void
+relay_remote_buffer_typing (struct t_gui_buffer *buffer, const char *state)
+{
+    relay_remote_event_buffer_typing (buffer, state);
+}
+
+/*
  * Delete a remote.
  */
 

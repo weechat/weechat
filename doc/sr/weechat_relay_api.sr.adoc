@@ -1795,6 +1795,67 @@ HTTP/1.1 200 OK
 }
 ----
 
+[[resource_typing]]
+// TRANSLATION MISSING
+=== Typing
+
+// TRANSLATION MISSING
+Send a typing notification for a buffer.
+
+Крајња тачка:
+
+----
+POST /api/typing
+----
+
+Параметри тела:
+
+* `buffer_id` (цео број, није обавезно): јединствени идентификатор бафера (не треба
+  да се помеша са бројем бафера, то је нешто друго)
+* `buffer_name` (стринг, није обавезно, подразумевано: `core.weechat`): име бафера
+// TRANSLATION MISSING
+* `state` (string, **required**): typing state:
+// TRANSLATION MISSING
+** `active`: the user is typing a message
+// TRANSLATION MISSING
+** `paused`: the user has paused typing
+// TRANSLATION MISSING
+** `done`: the user has cleared the input without sending the message
+// TRANSLATION MISSING
+** `sent`: the user has sent the message
+
+// TRANSLATION MISSING
+While the user is typing, the state `active` must be sent again regularly
+(every 3 seconds is recommended).
+
+// TRANSLATION MISSING
+For IRC buffers, the typing state is sent to the IRC server only if the option
+`irc.look.typing_status_self` is enabled and if the server supports typing
+notifications (capability "message-tags"); the state `active` is changed to
+`done` if it is not received again for 6 seconds.
+
+// TRANSLATION MISSING
+The typing state is shared by all clients and the local user on a buffer: if a
+client sends `done` while another one is still typing in the same buffer, the
+state becomes `done` until `active` is received again.
+
+// TRANSLATION MISSING
+Request example: notify that the user is typing in channel #weechat:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "state": "active"}' \
+  'https://localhost:9000/api/typing'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+----
+
 [[resource_sync]]
 === Sync
 
@@ -1819,12 +1880,15 @@ POST /api/sync
   ажурирања надимака у баферима (користи се само ако је `sync` `true`)
 * `input` (логичка, није обавезно, подразумевано: `true`): `true` да се синхронизује улаз
   бафера са удаљеног релеја на локални клијент (користи се само ако је `sync` `true`)
+// TRANSLATION MISSING
+* `typing` (boolean, optional, default: `false`): `true` to synchronize typing
+  notifications (used only if `sync` is `true`)
 * `notify_only` (логичка, није обавезно, подразумевано: `false`): `true` to receive only
   new lines with a highlight or a private message (notify level greater than or
   equal to 2) and the events `upgrade`, `upgrade_ended` and `quit`, all other
-  events are not sent and parameters `nicks`, `input` and `options` are ignored
-  (used only if `sync` is `true`); this is useful for a mobile client in
-  background
+  events are not sent and parameters `nicks`, `input`, `typing` and `options`
+  are ignored (used only if `sync` is `true`); this is useful for a mobile
+  client in background
 // TRANSLATION MISSING
 * `filtered_lines` (boolean, optional, default: `true`): `false` to not receive
   the lines filtered with command `/filter` (lines with `displayed` set to
@@ -2021,6 +2085,7 @@ GUID `258EAFA5-E914-47DA-95CA-C5AB0DC85B11` (SHA-1 се кодира у base64).
 * `option` (објекат)
 * `completion` (објекат)
 * `ping` (објекат)
+* `typing` (објекат)
 
 [TIP]
 Ове схеме можете да прегледате на мрежи: https://weechat.org/api/[WeeChat Relay API ^↗^^].
@@ -2199,6 +2264,10 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
 | `input_prompt_changed`                | buffer id | `buffer`      | бафер
 | `input_text_changed`                  | buffer id | `buffer`      | бафер
 | `input_text_cursor_moved`             | buffer id | `buffer`      | бафер
+// TRANSLATION MISSING
+| `typing_nick_changed`                 | buffer id | `typing`      | typing state of a nick: `active`, `paused` or `done`
+// TRANSLATION MISSING
+| `typing_buffer_reset`                 | buffer id | null          | null
 | `nicklist_group_changed`              | buffer id | `nick_group`  | група надимака
 | `nicklist_group_added`                | buffer id | `nick_group`  | група надимака
 | `nicklist_group_removing`             | buffer id | `nick_group`  | група надимака

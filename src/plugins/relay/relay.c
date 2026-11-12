@@ -313,6 +313,50 @@ relay_modifier_input_text_display_cb (const void *pointer,
 }
 
 /*
+ * Callback for signals "typing_self_*": send self typing state to the remote
+ * relay for buffers with remote (relay api).
+ */
+
+int
+relay_signal_typing_self_cb (const void *pointer, void *data,
+                             const char *signal, const char *type_data,
+                             void *signal_data)
+{
+    struct t_gui_buffer *ptr_buffer;
+    const char *state;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) type_data;
+
+    if (!relay_remotes)
+        return WEECHAT_RC_OK;
+
+    ptr_buffer = (struct t_gui_buffer *)signal_data;
+    if (!ptr_buffer
+        || (weechat_buffer_get_pointer (ptr_buffer, "plugin") != weechat_plugin))
+    {
+        return WEECHAT_RC_OK;
+    }
+
+    if (strcmp (signal, "typing_self_typing") == 0)
+        state = "active";
+    else if (strcmp (signal, "typing_self_paused") == 0)
+        state = "paused";
+    else if (strcmp (signal, "typing_self_cleared") == 0)
+        state = "done";
+    else if (strcmp (signal, "typing_self_sent") == 0)
+        state = "sent";
+    else
+        return WEECHAT_RC_OK;
+
+    relay_remote_buffer_typing (ptr_buffer, state);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Timer callback, called each second.
  */
 
@@ -377,6 +421,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("debug_dump", &relay_debug_dump_cb, NULL, NULL);
 
     relay_info_init ();
+
+    /* Callback for self typing state (buffer api remote). */
+    weechat_hook_signal ("typing_self_*",
+                         &relay_signal_typing_self_cb, NULL, NULL);
 
     /*
      * Callback for adding local/remote command status (buffer api remote),

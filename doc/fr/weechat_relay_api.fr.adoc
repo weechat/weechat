@@ -1789,6 +1789,59 @@ HTTP/1.1 200 OK
 }
 ----
 
+[[resource_typing]]
+=== Saisie
+
+Envoyer une notification de saisie pour un tampon.
+
+Point de terminaison :
+
+----
+POST /api/typing
+----
+
+Paramètres du corps :
+
+* `buffer_id` (entier, facultatif) : identifiant unique du tampon (à ne pas
+  confondre avec le numéro du tampon, qui est différent)
+* `buffer_name` (chaîne, facultatif, par défaut : `core.weechat`) : nom de tampon
+* `state` (chaîne, **obligatoire**) : état de la saisie :
+** `active` : l'utilisateur est en train d'écrire un message
+** `paused` : l'utilisateur a fait une pause dans l'écriture
+** `done` : l'utilisateur a effacé la ligne de commande sans envoyer le
+   message
+** `sent` : l'utilisateur a envoyé le message
+
+Pendant que l'utilisateur écrit, l'état `active` doit être envoyé à nouveau
+régulièrement (il est recommandé de l'envoyer toutes les 3 secondes).
+
+Pour les tampons IRC, l'état de la saisie est envoyé au serveur IRC seulement
+si l'option `irc.look.typing_status_self` est activée et si le serveur supporte
+les notifications de saisie (capacité "message-tags") ; l'état `active` est
+changé en `done` s'il n'est pas reçu à nouveau pendant 6 secondes.
+
+L'état de la saisie est partagé par tous les clients et l'utilisateur local sur
+un tampon : si un client envoie `done` alors qu'un autre est encore en train
+d'écrire sur le même tampon, l'état devient `done` jusqu'à ce que `active` soit
+reçu à nouveau.
+
+Exemple de requête : notifier que l'utilisateur est en train d'écrire sur le
+canal #weechat :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "state": "active"}' \
+  'https://localhost:9000/api/typing'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+----
+
 [[resource_sync]]
 === Sync
 
@@ -1816,12 +1869,15 @@ Paramètres du corps :
 * `input` (booléen, facultatif, par défaut : `true`) : `true` pour synchroniser
   l'entrée de tampon depuis le relai distant vers le client local (utilisé
   seulement si `sync` vaut `true`)
+* `typing` (booléen, facultatif, par défaut : `false`) : `true` pour
+  synchroniser les notifications de saisie (utilisé seulement si `sync` vaut
+  `true`)
 * `notify_only` (booléen, facultatif, par défaut : `false`) : `true` pour
   recevoir seulement les nouvelles lignes avec un highlight ou un message privé
   (niveau de notification supérieur ou égal à 2) et les évènements `upgrade`,
   `upgrade_ended` et `quit`, tous les autres évènements ne sont pas envoyés et
-  les paramètres `nicks`, `input` et `options` sont ignorés (utilisé seulement
-  si `sync` vaut `true`) ; ceci est utile pour un client mobile en
+  les paramètres `nicks`, `input`, `typing` et `options` sont ignorés (utilisé
+  seulement si `sync` vaut `true`) ; ceci est utile pour un client mobile en
   arrière-plan
 * `filtered_lines` (booléen, facultatif, par défaut : `true`) : `false` pour ne
   pas recevoir les lignes filtrées avec la commande `/filter` (lignes avec
@@ -2028,6 +2084,7 @@ Les types de corps qui peuvent être retournés :
 * `option` (objet)
 * `completion` (objet)
 * `ping` (objet)
+* `typing` (objet)
 
 [TIP]
 Vous pouvez parcourir les schémas en ligne : https://weechat.org/api/[API relay WeeChat ^↗^^].
@@ -2208,6 +2265,8 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `input_prompt_changed`                | id tampon | `buffer`      | tampon
 | `input_text_changed`                  | id tampon | `buffer`      | tampon
 | `input_text_cursor_moved`             | id tampon | `buffer`      | tampon
+| `typing_nick_changed`                 | id tampon | `typing`      | état de la saisie pour un pseudo : `active`, `paused` ou `done`
+| `typing_buffer_reset`                 | id tampon | null          | null
 | `nicklist_group_changed`              | id tampon | `nick_group`  | groupe de pseudos
 | `nicklist_group_added`                | id tampon | `nick_group`  | groupe de pseudos
 | `nicklist_group_removing`             | id tampon | `nick_group`  | groupe de pseudos
