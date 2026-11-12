@@ -124,6 +124,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix slow decoding of ANSI colors with many parameters
 - core: use the palette of terminals with 88 colors (for example rxvt-unicode) to find the nearest terminal color of a RGB color, for example with info "color_rgb2term" ([#1364](https://github.com/weechat/weechat/issues/1364))
 - core: switch back to WeeChat colors as soon as the `/color` buffer is closed or not displayed any more, after a switch to terminal colors (key alt-c), instead of displaying all buffers with one terminal color until the end of the delay
 - core: keep the char after a set/remove attribute code which is not followed by a valid attribute when removing colors (for example function string_remove_color) and in function string_color_code_size, like on screen

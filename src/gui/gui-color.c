@@ -1645,39 +1645,49 @@ gui_color_ansi_rgb_component (const char *item)
 }
 
 /*
- * Convert ANSI color codes to WeeChat colors (or removes them).
+ * Parse an ANSI escape sequence: for each parameter of a SGR sequence
+ * ("\33[" + parameters + "m"), call the callback with the value of the
+ * parameter and its color (for 38 and 48: terminal color 0-255, or RGB color
+ * with flag GUI_COLOR_ANSI_RGB_FLAG; -1 for other parameters), then call it
+ * with GUI_COLOR_ANSI_PARAM_END; the callback adds its result in "output".
  *
- * This callback is called by gui_color_decode_ansi, it must not be called
- * directly.
+ * The other escape sequences are removed (empty result).
+ *
+ * Note: result must be freed after use.
  */
 
 char *
-gui_color_decode_ansi_cb (void *data, const char *text)
+gui_color_ansi_parse_sequence (const char *sequence,
+                               t_gui_color_ansi_param_cb *callback)
 {
-    char *text2, **items, *output, str_color[128];
-    int i, keep_colors, length, num_items, value;
+    char *text2, **items, **output;
+    int i, length, num_items, value, color;
 
-    keep_colors = (data) ? 1 : 0;;
-
-    /* If we don't keep colors or if text is empty, just return empty string. */
-    if (!keep_colors || !text || !text[0])
+    if (!sequence || !sequence[0])
         return strdup ("");
 
     /* Only sequences ending with 'm' are used, the others are discarded. */
-    length = strlen (text);
-    if (text[length - 1] != 'm')
+    length = strlen (sequence);
+    if (sequence[length - 1] != 'm')
         return strdup ("");
 
-    /* Sequence "\33[m" resets color. */
+    output = string_dyn_alloc (32);
+    if (!output)
+        return strdup ("");
+
+    /* Sequence "\33[m" resets attributes and colors. */
     if (length < 4)
-        return strdup (gui_color_get_custom ("reset"));
+    {
+        (callback) (output, 0, -1);
+        (callback) (output, GUI_COLOR_ANSI_PARAM_END, -1);
+        return string_dyn_free (output, 0);
+    }
 
     text2 = NULL;
     items = NULL;
-    output = NULL;
 
     /* Extract text between "\33[" and "m". */
-    text2 = string_strndup (text + 2, length - 3);
+    text2 = string_strndup (sequence + 2, length - 3);
     if (!text2)
         goto end;
 
@@ -1689,190 +1699,217 @@ gui_color_decode_ansi_cb (void *data, const char *text)
     if (!items)
         goto end;
 
-    output = malloc ((32 * num_items) + 1);
-    if (!output)
-        goto end;
-    output[0] = '\0';
-
     for (i = 0; i < num_items; i++)
     {
         value = atoi (items[i]);
-        switch (value)
+        /* Invalid value (for example a number too large): ignored. */
+        if (value < 0)
+            continue;
+        color = -1;
+        if ((value == 38) || (value == 48))
         {
-            case 0: /* Reset */
-                strcat (output, gui_color_get_custom ("reset"));
-                break;
-            case 1: /* Bold */
-                strcat (output, gui_color_get_custom ("bold"));
-                break;
-            case 2: /* Dim */
-                strcat (output, gui_color_get_custom ("dim"));
-                break;
-            case 3: /* Italic */
-                strcat (output, gui_color_get_custom ("italic"));
-                break;
-            case 4: /* Underline */
-                strcat (output, gui_color_get_custom ("underline"));
-                break;
-            case 5: /* Blink */
-                strcat (output, gui_color_get_custom ("blink"));
-                break;
-            case 7: /* Reverse */
-                strcat (output, gui_color_get_custom ("reverse"));
-                break;
-            case 21: /* Remove bold */
-                strcat (output, gui_color_get_custom ("-bold"));
-                break;
-            case 22: /* Remove dim */
-                strcat (output, gui_color_get_custom ("-dim"));
-                break;
-            case 23: /* Remove italic */
-                strcat (output, gui_color_get_custom ("-italic"));
-                break;
-            case 24: /* Remove underline */
-                strcat (output, gui_color_get_custom ("-underline"));
-                break;
-            case 25: /* Remove blink */
-                strcat (output, gui_color_get_custom ("-blink"));
-                break;
-            case 27: /* Remove reverse */
-                strcat (output, gui_color_get_custom ("-reverse"));
-                break;
-            case 30: /* Text color */
-            case 31:
-            case 32:
-            case 33:
-            case 34:
-            case 35:
-            case 36:
-            case 37:
-                snprintf (str_color, sizeof (str_color),
-                          "|%s",
-                          gui_color_ansi[value - 30]);
-                strcat (output, gui_color_get_custom (str_color));
-                break;
-            case 38: /* Text color */
-                if (i + 1 < num_items)
-                {
-                    switch (atoi (items[i + 1]))
-                    {
-                        case 2: /* RGB color */
-                            if (i + 4 < num_items)
-                            {
-                                snprintf (str_color, sizeof (str_color),
-                                          "|#%02x%02x%02x",
-                                          gui_color_ansi_rgb_component (items[i + 2]),
-                                          gui_color_ansi_rgb_component (items[i + 3]),
-                                          gui_color_ansi_rgb_component (items[i + 4]));
-                                strcat (output, gui_color_get_custom (str_color));
-                                i += 4;
-                            }
-                            break;
-                        case 5: /* Terminal color (0-255) */
-                            if (i + 2 < num_items)
-                            {
-                                snprintf (str_color, sizeof (str_color),
-                                          "|%d", atoi (items[i + 2]));
-                                strcat (output, gui_color_get_custom (str_color));
-                                i += 2;
-                            }
-                            break;
-                    }
-                }
-                break;
-            case 39: /* Default text color */
-                strcat (output, gui_color_get_custom ("default"));
-                break;
-            case 40: /* Background color */
-            case 41:
-            case 42:
-            case 43:
-            case 44:
-            case 45:
-            case 46:
-            case 47:
-                snprintf (str_color, sizeof (str_color),
-                          "|,%s",
-                          gui_color_ansi[value - 40]);
-                strcat (output, gui_color_get_custom (str_color));
-                break;
-            case 48: /* Background color */
-                if (i + 1 < num_items)
-                {
-                    switch (atoi (items[i + 1]))
-                    {
-                        case 2: /* RGB color */
-                            if (i + 4 < num_items)
-                            {
-                                snprintf (str_color, sizeof (str_color),
-                                          "|,#%02x%02x%02x",
-                                          gui_color_ansi_rgb_component (items[i + 2]),
-                                          gui_color_ansi_rgb_component (items[i + 3]),
-                                          gui_color_ansi_rgb_component (items[i + 4]));
-                                strcat (output, gui_color_get_custom (str_color));
-                                i += 4;
-                            }
-                            break;
-                        case 5: /* Terminal color (0-255) */
-                            if (i + 2 < num_items)
-                            {
-                                snprintf (str_color, sizeof (str_color),
-                                          "|,%d", atoi (items[i + 2]));
-                                strcat (output, gui_color_get_custom (str_color));
-                                i += 2;
-                            }
-                            break;
-                    }
-                }
-                break;
-            case 49: /* Default background color */
-                strcat (output, gui_color_get_custom (",default"));
-                break;
-            case 90: /* Text color (bright) */
-            case 91:
-            case 92:
-            case 93:
-            case 94:
-            case 95:
-            case 96:
-            case 97:
-                snprintf (str_color, sizeof (str_color),
-                          "|%s",
-                          gui_color_ansi[value - 90 + 8]);
-                strcat (output, gui_color_get_custom (str_color));
-                break;
-            case 100: /* Background color (bright) */
-            case 101:
-            case 102:
-            case 103:
-            case 104:
-            case 105:
-            case 106:
-            case 107:
-                snprintf (str_color, sizeof (str_color),
-                          "|,%s",
-                          gui_color_ansi[value - 100 + 8]);
-                strcat (output, gui_color_get_custom (str_color));
-                break;
+            if (i + 1 >= num_items)
+                continue;
+            switch (atoi (items[i + 1]))
+            {
+                case 2: /* RGB color */
+                    if (i + 4 >= num_items)
+                        continue;
+                    color = GUI_COLOR_ANSI_RGB_FLAG
+                        | (gui_color_ansi_rgb_component (items[i + 2]) << 16)
+                        | (gui_color_ansi_rgb_component (items[i + 3]) << 8)
+                        | gui_color_ansi_rgb_component (items[i + 4]);
+                    i += 4;
+                    break;
+                case 5: /* Terminal color (0-255) */
+                    if (i + 2 >= num_items)
+                        continue;
+                    color = atoi (items[i + 2]);
+                    i += 2;
+                    break;
+                default:
+                    continue;
+            }
         }
+        (callback) (output, value, color);
     }
+    (callback) (output, GUI_COLOR_ANSI_PARAM_END, -1);
 
 end:
     string_free_split (items);
     free (text2);
 
-    return (output) ? output : strdup ("");
+    return string_dyn_free (output, 0);
 }
 
 /*
- * Convert ANSI color codes to WeeChat colors (or removes them).
+ * Callback for each parameter of an ANSI escape sequence, to convert ANSI
+ * colors to WeeChat colors (see function gui_color_ansi_parse_sequence).
+ */
+
+void
+gui_color_decode_ansi_param_cb (char **output, int value, int color)
+{
+    char str_color[128];
+
+    switch (value)
+    {
+        case 0: /* Reset */
+            string_dyn_concat (output, gui_color_get_custom ("reset"), -1);
+            break;
+        case 1: /* Bold */
+            string_dyn_concat (output, gui_color_get_custom ("bold"), -1);
+            break;
+        case 2: /* Dim */
+            string_dyn_concat (output, gui_color_get_custom ("dim"), -1);
+            break;
+        case 3: /* Italic */
+            string_dyn_concat (output, gui_color_get_custom ("italic"), -1);
+            break;
+        case 4: /* Underline */
+            string_dyn_concat (output, gui_color_get_custom ("underline"), -1);
+            break;
+        case 5: /* Blink */
+            string_dyn_concat (output, gui_color_get_custom ("blink"), -1);
+            break;
+        case 7: /* Reverse */
+            string_dyn_concat (output, gui_color_get_custom ("reverse"), -1);
+            break;
+        case 21: /* Remove bold */
+            string_dyn_concat (output, gui_color_get_custom ("-bold"), -1);
+            break;
+        case 22: /* Remove dim */
+            string_dyn_concat (output, gui_color_get_custom ("-dim"), -1);
+            break;
+        case 23: /* Remove italic */
+            string_dyn_concat (output, gui_color_get_custom ("-italic"), -1);
+            break;
+        case 24: /* Remove underline */
+            string_dyn_concat (output, gui_color_get_custom ("-underline"), -1);
+            break;
+        case 25: /* Remove blink */
+            string_dyn_concat (output, gui_color_get_custom ("-blink"), -1);
+            break;
+        case 27: /* Remove reverse */
+            string_dyn_concat (output, gui_color_get_custom ("-reverse"), -1);
+            break;
+        case 30: /* Text color */
+        case 31:
+        case 32:
+        case 33:
+        case 34:
+        case 35:
+        case 36:
+        case 37:
+            snprintf (str_color, sizeof (str_color),
+                      "|%s",
+                      gui_color_ansi[value - 30]);
+            string_dyn_concat (output, gui_color_get_custom (str_color), -1);
+            break;
+        case 38: /* Text color */
+        case 48: /* Background color */
+            if (color & GUI_COLOR_ANSI_RGB_FLAG)
+            {
+                snprintf (str_color, sizeof (str_color),
+                          "%s#%06x",
+                          (value == 38) ? "|" : "|,",
+                          color & 0xFFFFFF);
+            }
+            else
+            {
+                snprintf (str_color, sizeof (str_color),
+                          "%s%d",
+                          (value == 38) ? "|" : "|,",
+                          color);
+            }
+            string_dyn_concat (output, gui_color_get_custom (str_color), -1);
+            break;
+        case 39: /* Default text color */
+            string_dyn_concat (output, gui_color_get_custom ("default"), -1);
+            break;
+        case 40: /* Background color */
+        case 41:
+        case 42:
+        case 43:
+        case 44:
+        case 45:
+        case 46:
+        case 47:
+            snprintf (str_color, sizeof (str_color),
+                      "|,%s",
+                      gui_color_ansi[value - 40]);
+            string_dyn_concat (output, gui_color_get_custom (str_color), -1);
+            break;
+        case 49: /* Default background color */
+            string_dyn_concat (output, gui_color_get_custom (",default"), -1);
+            break;
+        case 90: /* Text color (bright) */
+        case 91:
+        case 92:
+        case 93:
+        case 94:
+        case 95:
+        case 96:
+        case 97:
+            snprintf (str_color, sizeof (str_color),
+                      "|%s",
+                      gui_color_ansi[value - 90 + 8]);
+            string_dyn_concat (output, gui_color_get_custom (str_color), -1);
+            break;
+        case 100: /* Background color (bright) */
+        case 101:
+        case 102:
+        case 103:
+        case 104:
+        case 105:
+        case 106:
+        case 107:
+            snprintf (str_color, sizeof (str_color),
+                      "|,%s",
+                      gui_color_ansi[value - 100 + 8]);
+            string_dyn_concat (output, gui_color_get_custom (str_color), -1);
+            break;
+    }
+}
+
+/*
+ * Callback for each ANSI escape sequence found in a string (see function
+ * gui_color_ansi_replace).
  *
  * Note: result must be freed after use.
  */
 
 char *
-gui_color_decode_ansi (const char *string, int keep_colors)
+gui_color_ansi_replace_cb (void *data, const char *text)
 {
+    struct t_gui_color_ansi_replace *ansi_replace;
+
+    ansi_replace = (struct t_gui_color_ansi_replace *)data;
+
+    /* If colors are not kept, the sequence is removed. */
+    if (!ansi_replace->keep_colors)
+        return strdup ("");
+
+    return gui_color_ansi_parse_sequence (text, ansi_replace->callback);
+}
+
+/*
+ * Replace ANSI escape sequences in a string: each SGR sequence is replaced by
+ * the output of the callback called for each of its parameters (if
+ * keep_colors is 1), the other escape sequences are removed.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_ansi_replace (const char *string, int keep_colors,
+                        t_gui_color_ansi_param_cb *callback)
+{
+    struct t_gui_color_ansi_replace ansi_replace;
+
+    if (!string)
+        return NULL;
+
     /* Allocate/compile regex if needed (first call). */
     if (!gui_color_regex_ansi)
     {
@@ -1889,10 +1926,29 @@ gui_color_decode_ansi (const char *string, int keep_colors)
         }
     }
 
+    ansi_replace.keep_colors = keep_colors;
+    ansi_replace.callback = callback;
+
     return string_replace_regex (string, gui_color_regex_ansi,
                                  "$0", '$',
-                                 &gui_color_decode_ansi_cb,
-                                 (void *)((unsigned long)keep_colors));
+                                 &gui_color_ansi_replace_cb,
+                                 &ansi_replace);
+}
+
+/*
+ * Replace ANSI colors by WeeChat colors.
+ *
+ * If keep_colors == 0: removes any color/style in message otherwise keeps
+ * colors.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_decode_ansi (const char *string, int keep_colors)
+{
+    return gui_color_ansi_replace (string, keep_colors,
+                                   &gui_color_decode_ansi_param_cb);
 }
 
 /*
