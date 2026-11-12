@@ -1457,9 +1457,9 @@ gui_color_code_size (const char *string)
 char *
 gui_color_decode (const char *string, const char *replacement)
 {
-    const unsigned char *ptr_string;
+    const char *ptr_string;
     char **out;
-    int length;
+    int size;
 
     if (!string)
         return NULL;
@@ -1468,152 +1468,23 @@ gui_color_decode (const char *string, const char *replacement)
     if (!out)
         return NULL;
 
-    ptr_string = (unsigned char *)string;
-    while (ptr_string && ptr_string[0])
+    ptr_string = string;
+    while (ptr_string[0])
     {
-        switch (ptr_string[0])
+        size = gui_color_code_size (ptr_string);
+        if (size > 0)
         {
-            case GUI_COLOR_COLOR_CHAR:
-                ptr_string++;
-                switch (ptr_string[0])
-                {
-                    case GUI_COLOR_FG_CHAR:
-                        ptr_string++;
-                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            ptr_string++;
-                            while (gui_color_attr_get_flag (ptr_string[0]) > 0)
-                            {
-                                ptr_string++;
-                            }
-                            ptr_string += gui_color_extended_size ((const char *)ptr_string);
-                        }
-                        else
-                        {
-                            while (gui_color_attr_get_flag (ptr_string[0]) > 0)
-                            {
-                                ptr_string++;
-                            }
-                            if (ptr_string[0] && ptr_string[1])
-                                ptr_string += 2;
-                        }
-                        break;
-                    case GUI_COLOR_BG_CHAR:
-                        ptr_string++;
-                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            ptr_string++;
-                            ptr_string += gui_color_extended_size ((const char *)ptr_string);
-                        }
-                        else
-                        {
-                            if (ptr_string[0] && ptr_string[1])
-                                ptr_string += 2;
-                        }
-                        break;
-                    case GUI_COLOR_FG_BG_CHAR:
-                        ptr_string++;
-                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            ptr_string++;
-                            while (gui_color_attr_get_flag (ptr_string[0]) > 0)
-                            {
-                                ptr_string++;
-                            }
-                            ptr_string += gui_color_extended_size ((const char *)ptr_string);
-                        }
-                        else
-                        {
-                            while (gui_color_attr_get_flag (ptr_string[0]) > 0)
-                            {
-                                ptr_string++;
-                            }
-                            if (ptr_string[0] && ptr_string[1])
-                                ptr_string += 2;
-                        }
-                        /*
-                         * Note: the comma is an old separator not used any
-                         * more (since WeeChat 2.6), but we still use it here
-                         * so in case of/upgrade this will not break colors in
-                         * old messages.
-                         */
-                        if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
-                        {
-                            if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
-                            {
-                                ptr_string += 2;
-                                ptr_string += gui_color_extended_size ((const char *)ptr_string);
-                            }
-                            else
-                            {
-                                ptr_string++;
-                                if (ptr_string[0] && ptr_string[1])
-                                    ptr_string += 2;
-                            }
-                        }
-                        break;
-                    case GUI_COLOR_EXTENDED_CHAR:
-                        ptr_string++;
-                        if ((isdigit (ptr_string[0])) && (isdigit (ptr_string[1]))
-                            && (isdigit (ptr_string[2])) && (isdigit (ptr_string[3]))
-                            && (isdigit (ptr_string[4])))
-                        {
-                            ptr_string += 5;
-                        }
-                        break;
-                    case GUI_COLOR_EMPHASIS_CHAR:
-                        ptr_string++;
-                        break;
-                    case GUI_COLOR_BAR_CHAR:
-                        ptr_string++;
-                        switch (ptr_string[0])
-                        {
-                            case GUI_COLOR_BAR_FG_CHAR:
-                            case GUI_COLOR_BAR_BG_CHAR:
-                            case GUI_COLOR_BAR_DELIM_CHAR:
-                            case GUI_COLOR_BAR_START_INPUT_CHAR:
-                            case GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR:
-                            case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
-                            case GUI_COLOR_BAR_START_ITEM:
-                            case GUI_COLOR_BAR_START_LINE_ITEM:
-                            case GUI_COLOR_BAR_SPACER:
-                                ptr_string++;
-                                break;
-                        }
-                        break;
-                    case GUI_COLOR_RESET_CHAR:
-                        ptr_string++;
-                        break;
-                    default:
-                        if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
-                            ptr_string += 2;
-                        break;
-                }
-                if (replacement && replacement[0])
-                    string_dyn_concat (out, replacement, -1);
-                break;
-            case GUI_COLOR_SET_ATTR_CHAR:
-            case GUI_COLOR_REMOVE_ATTR_CHAR:
-                /* The next char is removed only if it is an attribute. */
-                ptr_string++;
-                if (gui_color_attr_char_is_valid (ptr_string[0]))
-                    ptr_string++;
-                if (replacement && replacement[0])
-                    string_dyn_concat (out, replacement, -1);
-                break;
-            case GUI_COLOR_RESET_CHAR:
-                ptr_string++;
-                if (replacement && replacement[0])
-                    string_dyn_concat (out, replacement, -1);
-                break;
-            default:
-                length = utf8_char_size ((char *)ptr_string);
-                if (length == 0)
-                    length = 1;
-                string_dyn_concat (out, (const char *)ptr_string, length);
-                ptr_string += length;
-                break;
+            if (replacement && replacement[0])
+                string_dyn_concat (out, replacement, -1);
         }
+        else
+        {
+            size = utf8_char_size (ptr_string);
+            if (size == 0)
+                size = 1;
+            string_dyn_concat (out, ptr_string, size);
+        }
+        ptr_string += size;
     }
 
     return string_dyn_free (out, 0);
