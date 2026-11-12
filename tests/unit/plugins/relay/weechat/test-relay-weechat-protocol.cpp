@@ -21,6 +21,7 @@ extern "C"
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <gcrypt.h>
+#include "src/core/core-config.h"
 #include "src/core/core-config-file.h"
 #include "src/core/core-crypto.h"
 #include "src/core/core-hashtable.h"
@@ -28,6 +29,9 @@ extern "C"
 #include "src/core/core-string.h"
 #include "src/core/hook/hook-timer.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-chat.h"
+#include "src/gui/gui-line.h"
+#include "src/gui/gui-color.h"
 #include "src/gui/gui-nicklist.h"
 #include "src/plugins/weechat-plugin.h"
 #include "src/plugins/relay/relay.h"
@@ -984,6 +988,21 @@ TEST(RelayWeechatProtocolWithClient, CbInfo)
     recv (client, "(i) info nick_color_name alice");
     LONGS_EQUAL(1, test_msgs_count);
     CHECK_PREFIX("(i) inf:nick_color_name=\"", msg (0, 0));
+
+    /* RGB color of nick: replaced if client does not support RGB colors. */
+    config_file_option_set (config_color_chat_nick_colors, "#ff8800", 1);
+    recv (client, "(i) info nick_color_name alice");
+    LONGS_EQUAL(1, test_msgs_count);
+    snprintf (expected, sizeof (expected), "(i) inf:nick_color_name=\"%d\"",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+    STRCMP_EQUAL(expected, msg (0, 0).c_str ());
+    recv (client, "(i) info nick_color_name_ignore_case alice;30");
+    LONGS_EQUAL(1, test_msgs_count);
+    snprintf (expected, sizeof (expected),
+              "(i) inf:nick_color_name_ignore_case=\"%d\"",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+    STRCMP_EQUAL(expected, msg (0, 0).c_str ());
+    config_file_option_reset (config_color_chat_nick_colors, 1);
 }
 
 /*
@@ -1421,4 +1440,98 @@ TEST(RelayWeechatProtocolWithClient, SignalUpgradeCb)
     relay_weechat_protocol_signal_upgrade_cb (client, NULL, "upgrade_other",
                                               NULL, NULL);
     LONGS_EQUAL(0, test_msgs_count);
+}
+
+/*
+ * Test functions:
+ *   relay_weechat_protocol_signal_buffer_cb
+ *   relay_weechat_protocol_timer_nicklist_cb
+ */
+
+TEST(RelayWeechatProtocolWithClient, SignalBufferCb)
+{
+    struct t_gui_buffer *buffer;
+    const char *signals[] = {
+        "buffer_opened", "buffer_type_changed", "buffer_moved",
+        "buffer_merged", "buffer_unmerged", "buffer_hidden",
+        "buffer_unhidden", "buffer_renamed", "buffer_title_changed",
+        "buffer_notify_changed", "buffer_localvar_added", "buffer_cleared",
+        NULL,
+    };
+    char str_id[128];
+    int i, rgb_colors;
+
+    buffer = gui_buffer_new_user ("test_signal", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    gui_buffer_set (buffer, "title", "\x19" "F@#ff8800" "title");
+    gui_buffer_set (buffer, "nicklist", "1");
+    gui_chat_printf (buffer, "\x19" "F@#ff8800" "line");
+
+    recv (client, "sync");
+
+    /* Signals of buffers, RGB colors replaced if not enabled by client. */
+    for (rgb_colors = 0; rgb_colors <= 1; rgb_colors++)
+    {
+        RELAY_WEECHAT_DATA(client, rgb_colors) = rgb_colors;
+        for (i = 0; signals[i]; i++)
+        {
+            free_msgs ();
+            relay_weechat_protocol_signal_buffer_cb (
+                client, NULL, signals[i], WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+            LONGS_EQUAL(1, test_msgs_count);
+            snprintf (str_id, sizeof (str_id), "(_%s)", signals[i]);
+            CHECK_PREFIX(str_id, msg (0, 1));
+            if (strcmp (signals[i], "buffer_title_changed") == 0)
+            {
+                LONGS_EQUAL(rgb_colors,
+                            (msg (0, 1).find ("@#ff8800") != std::string::npos) ? 1 : 0);
+            }
+        }
+
+        /* Lines. */
+        free_msgs ();
+        relay_weechat_protocol_signal_buffer_cb (
+            client, NULL, "buffer_line_added", WEECHAT_HOOK_SIGNAL_POINTER,
+            buffer->own_lines->last_line);
+        LONGS_EQUAL(1, test_msgs_count);
+        CHECK_PREFIX("(_buffer_line_added)", msg (0, 1));
+        LONGS_EQUAL(rgb_colors,
+                    (msg (0, 1).find ("@#ff8800") != std::string::npos) ? 1 : 0);
+        free_msgs ();
+        relay_weechat_protocol_signal_buffer_cb (
+            client, NULL, "buffer_line_data_changed",
+            WEECHAT_HOOK_SIGNAL_POINTER, buffer->own_lines->last_line->data);
+        LONGS_EQUAL(1, test_msgs_count);
+        CHECK_PREFIX("(_buffer_line_data_changed)", msg (0, 1));
+    }
+
+    /*
+     * Nicklist diff with a RGB color (replaced if not enabled by client),
+     * after other nicks so that the diff is smaller than the nicklist.
+     */
+    RELAY_WEECHAT_DATA(client, rgb_colors) = 0;
+    CHECK(gui_nicklist_add_nick (buffer, NULL, "nick1", NULL, NULL, NULL, 1));
+    CHECK(gui_nicklist_add_nick (buffer, NULL, "nick2", NULL, NULL, NULL, 1));
+    CHECK(gui_nicklist_add_nick (buffer, NULL, "nick3", NULL, NULL, NULL, 1));
+    relay_weechat_protocol_timer_nicklist_cb (client, NULL, 0);
+    CHECK(gui_nicklist_add_nick (buffer, NULL, "test_nick", "#ff8800", "@",
+                                 "#00ff80", 1));
+    free_msgs ();
+    relay_weechat_protocol_timer_nicklist_cb (client, NULL, 0);
+    LONGS_EQUAL(1, test_msgs_count);
+    CHECK_PREFIX("(_nicklist_diff)", msg (0, 1));
+    CHECK(msg (0, 1).find ("test_nick") != std::string::npos);
+    CHECK(msg (0, 1).find ("#ff8800") == std::string::npos);
+    CHECK(msg (0, 1).find ("#00ff80") == std::string::npos);
+    CHECK(msg (0, 1).find ("color=\"208\",prefix=\"@\",prefix_color=\"48\"")
+          != std::string::npos);
+
+    /* Buffer closing. */
+    free_msgs ();
+    relay_weechat_protocol_signal_buffer_cb (
+        client, NULL, "buffer_closing", WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    LONGS_EQUAL(1, test_msgs_count);
+    CHECK_PREFIX("(_buffer_closing)", msg (0, 1));
+
+    gui_buffer_close (buffer);
 }

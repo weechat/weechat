@@ -179,6 +179,81 @@ relay_downgrade_rgb (const char *string, int name)
 }
 
 /*
+ * Replace RGB colors ("#rrggbb") by the nearest color of the 256-color
+ * palette in a tag of a line, for clients that do not support RGB colors:
+ * only the color of tag "prefix_nick_xxx" (color of nick in prefix) is
+ * converted, for example "prefix_nick_#ff8800" becomes "prefix_nick_208".
+ *
+ * Return the converted tag, NULL if the tag is unchanged.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+relay_downgrade_tag (const char *tag)
+{
+    char *downgraded, *result;
+
+    if (!tag || (strncmp (tag, "prefix_nick_", 12) != 0))
+        return NULL;
+
+    downgraded = relay_downgrade_rgb (tag + 12, 1);
+    if (!downgraded)
+        return NULL;
+
+    result = NULL;
+    if (weechat_asprintf (&result, "prefix_nick_%s", downgraded) < 0)
+        result = NULL;
+    free (downgraded);
+
+    return result;
+}
+
+/*
+ * Replace RGB colors ("#rrggbb") by the nearest color of the 256-color
+ * palette in tags of a line separated by commas (for example
+ * "irc_privmsg,prefix_nick_#ff8800,log1"), for clients that do not support
+ * RGB colors (see function relay_downgrade_tag).
+ *
+ * Return the converted tags, NULL if the tags are unchanged.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+relay_downgrade_tags (const char *tags)
+{
+    char **list_tags, *downgraded, *result;
+    int i, num_tags, changed;
+
+    if (!tags || !strchr (tags, '#') || !strstr (tags, "prefix_nick_"))
+        return NULL;
+
+    list_tags = weechat_string_split (tags, ",", NULL, 0, 0, &num_tags);
+    if (!list_tags)
+        return NULL;
+
+    changed = 0;
+    for (i = 0; i < num_tags; i++)
+    {
+        downgraded = relay_downgrade_tag (list_tags[i]);
+        if (downgraded)
+        {
+            free (list_tags[i]);
+            list_tags[i] = downgraded;
+            changed = 1;
+        }
+    }
+
+    result = (changed) ?
+        weechat_string_rebuild_split_string ((const char **)list_tags, ",",
+                                             0, -1) : NULL;
+    weechat_string_free_split (list_tags);
+
+    return result;
+}
+
+/*
  * Callback for signal "upgrade".
  */
 

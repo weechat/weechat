@@ -136,9 +136,14 @@ Arguments:
 ** _rgb_colors_: the client supports RGB colors in WeeChat color codes
    (`@#rrggbb`, for example `\x19F@#ff8800`); if this option is not enabled,
    RGB colors are replaced by the nearest color of the 256-color palette (colors 16-255)
-   (for example `\x19F@00208`) in the strings with WeeChat color codes and in
-   the colors of nicks and groups of the nicklist (for example `#ff8800` is
-   sent as `208`); other values are sent as-is
+   (for example `\x19F@00208`) in the strings with WeeChat color codes, in
+   the colors of nicks and groups of the nicklist, also in hdata _nick_ and
+   _nick_group_ and infolist _nicklist_ (for example `#ff8800` is sent as
+   `208`), in the colors of infolists _hotlist_ and _bar_, in the result of
+   infos _nick_color_name_, _nick_color_name_ignore_case_ and
+   _irc_nick_color_name_ and in the color of nick in tags of lines, also in infolist _buffer_lines_ (for example
+   `prefix_nick_#ff8800` is sent as `prefix_nick_208`); other values (for
+   example options) are sent as-is
    _(WeeChat ≥ 5.0.0)_
 
 Notes about option _password_hash_algo_:
