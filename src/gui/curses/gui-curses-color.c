@@ -615,7 +615,7 @@ gui_color_build (int number, int foreground, int background)
     /* Allocate color. */
     if (!gui_color[number])
     {
-        gui_color[number] = malloc (sizeof ((*gui_color)[number]));
+        gui_color[number] = calloc (1, sizeof ((*gui_color)[number]));
         if (!gui_color[number])
             return;
     }
@@ -639,11 +639,17 @@ gui_color_build (int number, int foreground, int background)
     else
         gui_color[number]->background = gui_weechat_colors[background & GUI_COLOR_EXTENDED_MASK].background;
 
-    /* Set string. */
-    snprintf (str_color, sizeof (str_color),
-              "%c%02d",
-              GUI_COLOR_COLOR_CHAR, number);
-    gui_color[number]->string = strdup (str_color);
+    /*
+     * Set string (it does not change, so it is allocated only once: it can be
+     * used by plugins, see function gui_color_search_config).
+     */
+    if (!gui_color[number]->string)
+    {
+        snprintf (str_color, sizeof (str_color),
+                  "%c%02d",
+                  GUI_COLOR_COLOR_CHAR, number);
+        gui_color[number]->string = strdup (str_color);
+    }
 }
 
 /*

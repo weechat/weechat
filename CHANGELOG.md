@@ -127,6 +127,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix memory leak when WeeChat colors are built again, for example when a color option is changed
 - core: fix read of passphrase from command (option sec.crypt.passphrase_command) when the read is interrupted by a signal
 - core: fix loss of secured data still encrypted in file sec.conf after a partial decryption with command `/secure decrypt`
 - core: fix decryption of secured data with a comma in name with command `/secure decrypt`

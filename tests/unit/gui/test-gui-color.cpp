@@ -43,6 +43,23 @@ TEST_GROUP(GuiColor)
 
 /*
  * Test functions:
+ *   gui_color_init_weechat
+ */
+
+TEST(GuiColor, InitWeechat)
+{
+    const char *ptr_color;
+
+    /* The string of a color is allocated only once (pointer kept). */
+    ptr_color = GUI_COLOR(GUI_COLOR_CHAT);
+    CHECK(ptr_color[0]);
+    gui_color_init_weechat ();
+    POINTERS_EQUAL(ptr_color, GUI_COLOR(GUI_COLOR_CHAT));
+    STRCMP_EQUAL(ptr_color, GUI_COLOR(GUI_COLOR_CHAT));
+}
+
+/*
+ * Test functions:
  *   gui_color_get_custom
  */
 
