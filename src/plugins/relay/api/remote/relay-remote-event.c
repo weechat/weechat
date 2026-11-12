@@ -742,6 +742,61 @@ error:
 }
 
 /*
+ * Send a typing notification for a remote buffer.
+ */
+
+void
+relay_remote_event_buffer_typing (struct t_gui_buffer *buffer,
+                                  const char *state)
+{
+    struct t_relay_remote *ptr_remote;
+    struct t_relay_json *json, *json_body;
+    long long buffer_id;
+
+    if (!buffer || !state)
+        return;
+
+    ptr_remote = relay_remote_search (
+        weechat_buffer_get_string (buffer, "localvar_relay_remote"));
+    if (!ptr_remote)
+        return;
+
+    buffer_id = relay_remote_event_get_buffer_id (buffer);
+    if (buffer_id < 0)
+        return;
+
+    json = relay_json_new_object ();
+    if (!json)
+        return;
+    json_body = relay_json_new_object ();
+    if (!json_body)
+    {
+        relay_json_free (json);
+        return;
+    }
+
+    relay_json_object_add (json, "request",
+                           relay_json_new_string ("POST /api/typing"));
+    relay_json_object_add (json_body, "buffer_id",
+                           relay_json_new_number (buffer_id));
+    relay_json_object_add (json_body, "state",
+                           relay_json_new_string (state));
+    relay_json_object_add (json, "body", json_body);
+
+    if (relay_remote_network_send_json (ptr_remote, json) <= 0)
+    {
+        weechat_printf (
+            NULL,
+            _("%sremote[%s]: unable to send data, disconnecting"),
+            weechat_prefix ("error"),
+            ptr_remote->name);
+        relay_remote_network_disconnect (ptr_remote);
+    }
+
+    relay_json_free (json);
+}
+
+/*
  * Check if a local variable received in JSON object "local_variables" can
  * be used.
  *
@@ -1168,6 +1223,57 @@ RELAY_REMOTE_EVENT_CALLBACK(input)
 }
 
 /*
+ * Callback for event "typing_set_nick".
+ */
+
+RELAY_REMOTE_EVENT_CALLBACK(typing)
+{
+    struct t_relay_json *json_obj;
+    const char *nick, *state;
+    char signal_data[1024];
+
+    if (!event || !event->buffer || !event->json)
+        return WEECHAT_RC_OK;
+
+    JSON_GET_STR(event->json, nick);
+    JSON_GET_STR(event->json, state);
+    if (!nick || !nick[0] || !state)
+        return WEECHAT_RC_OK;
+
+    if ((strcmp (state, "active") != 0)
+        && (strcmp (state, "paused") != 0)
+        && (strcmp (state, "done") != 0))
+        return WEECHAT_RC_OK;
+
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;%s;%s",
+              (unsigned long)event->buffer,
+              (strcmp (state, "active") == 0) ? "typing" :
+              ((strcmp (state, "paused") == 0) ? "paused" : "off"),
+              nick);
+    weechat_hook_signal_send ("typing_set_nick",
+                              WEECHAT_HOOK_SIGNAL_STRING,
+                              signal_data);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for event "typing_reset_buffer".
+ */
+
+RELAY_REMOTE_EVENT_CALLBACK(typing_reset)
+{
+    if (!event || !event->buffer)
+        return WEECHAT_RC_OK;
+
+    weechat_hook_signal_send ("typing_reset_buffer",
+                              WEECHAT_HOOK_SIGNAL_POINTER,
+                              event->buffer);
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Clear buffers lines/nicklist for a remote.
  */
 
@@ -1242,6 +1348,8 @@ relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
         }
         relay_json_object_add (json_body, "colors",
                                relay_json_new_string ("weechat"));
+        relay_json_object_add (json_body, "typing",
+                               relay_json_new_bool (1));
         relay_json_object_add (json_req2, "body", json_body);
         relay_json_array_add (json, json_req2);
     }
@@ -1352,6 +1460,8 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
         { "buffer_closed", &relay_remote_event_cb_buffer_closed },
         { "buffer_*", &relay_remote_event_cb_buffer },
         { "input_*", &relay_remote_event_cb_input },
+        { "typing_set_nick", &relay_remote_event_cb_typing },
+        { "typing_reset_buffer", &relay_remote_event_cb_typing_reset },
         { "nicklist_group_*", &relay_remote_event_cb_nick_group },
         { "nicklist_nick_*", &relay_remote_event_cb_nick },
         { "upgrade*", &relay_remote_event_cb_upgrade },

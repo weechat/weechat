@@ -1116,6 +1116,49 @@ TEST(RelayApiProtocolWithClient, CbInput)
 
 /*
  * Test functions:
+ *   relay_api_protocol_cb_typing
+ */
+
+TEST(RelayApiProtocolWithClient, CbTyping)
+{
+    test_client_recv_http ("POST /api/typing", NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
+                 data_sent[0]);
+
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_name\": \"invalid\", "
+                           "\"state\": \"active\"}");
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 40\r\n"
+                 "\r\n"
+                 "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
+                 data_sent[0]);
+
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"state\": \"unknown\"}");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
+                 data_sent[0]);
+
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_name\": \"core.weechat\", "
+                           "\"state\": \"active\"}");
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+}
+
+/*
+ * Test functions:
  *   relay_api_protocol_cb_ping
  */
 
@@ -1164,6 +1207,9 @@ TEST(RelayApiProtocolWithClient, CbSync)
 
 TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
 {
+    struct t_relay_json *json, *json_obj;
+    char signal_data[128];
+
     test_client_recv_http_raw (
         "GET /api HTTP/1.1\r\n"
         "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
@@ -1186,6 +1232,27 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
     LONGS_EQUAL(RELAY_API_COLORS_ANSI, RELAY_API_DATA(ptr_relay_client, sync_colors));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"typing\": true}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync",
+                   "{\"typing\":true}", "null");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_typing));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
+
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing;alice", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    CHECK(data_sent[0]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("typing_set_nick", json, "event_name");
+    WEE_CHECK_OBJ_STR("typing", json, "body_type");
+    WEE_CHECK_OBJ_STR("alice", relay_json_object_get (json, "body"), "nick");
+    WEE_CHECK_OBJ_STR("active", relay_json_object_get (json, "body"), "state");
+    relay_json_free (json);
 
     test_client_recv_text ("{\"request\": \"POST /api/sync\", "
                            "\"body\": {\"sync\": false}}");
@@ -1234,6 +1301,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_buffer));
     POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_hsignal_nicklist));
     POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_input));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_upgrade));
     POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_day_changed));
 

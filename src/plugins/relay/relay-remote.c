@@ -934,6 +934,38 @@ relay_remote_buffer_input (struct t_gui_buffer *buffer, const char *input_data)
 }
 
 /*
+ * Callback for signals "typing_self_*".
+ */
+
+int
+relay_remote_signal_typing_cb (const void *pointer, void *data,
+                               const char *signal, const char *type_data,
+                               void *signal_data)
+{
+    const char *state;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) type_data;
+
+    if (strcmp (signal, "typing_self_typing") == 0)
+        state = "active";
+    else if (strcmp (signal, "typing_self_paused") == 0)
+        state = "paused";
+    else if (strcmp (signal, "typing_self_cleared") == 0)
+        state = "done";
+    else if (strcmp (signal, "typing_self_sent") == 0)
+        state = "sent";
+    else
+        return WEECHAT_RC_OK;
+
+    relay_remote_event_buffer_typing (
+        (struct t_gui_buffer *)signal_data, state);
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Delete a remote.
  */
 

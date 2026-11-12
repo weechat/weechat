@@ -11,7 +11,7 @@ struct t_relay_client;
 enum t_relay_status;
 
 #define RELAY_API_VERSION_MAJOR 0
-#define RELAY_API_VERSION_MINOR 7
+#define RELAY_API_VERSION_MINOR 8
 #define RELAY_API_VERSION_PATCH 0
 #define RELAY_API_VERSION_NUMBER                                        \
     ((RELAY_API_VERSION_MAJOR << 16)                                    \
@@ -44,6 +44,7 @@ struct t_relay_api_data
     struct t_hook *hook_hsignal_nicklist; /* hook for hsignals "nicklist_*" */
     struct t_hook *hook_signal_input;     /* hook for signal                */
                                           /* "input_text_changed"           */
+    struct t_hook *hook_signal_typing;   /* hook for signals "typing_*"    */
     struct t_hook *hook_signal_upgrade;   /* hook for signals "upgrade*"    */
                                           /* and "quit"                     */
     struct t_hook *hook_signal_day_changed; /* hook for signal              */
@@ -55,6 +56,7 @@ struct t_relay_api_data
     int sync_nicks;                       /* 1 if nicks are synchronized    */
     int sync_input;                       /* 1 if input is synchronized     */
                                           /* (WeeChat -> client)            */
+    int sync_typing;                      /* 1 if typing is synchronized    */
     int sync_notify_only;                 /* 1 to sync only highlights and  */
                                           /* private messages               */
     enum t_relay_api_colors sync_colors;  /* colors to send with sync       */

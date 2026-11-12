@@ -62,6 +62,7 @@ struct t_hdata *relay_hdata_completion_word = NULL;
 struct t_hdata *relay_hdata_hotlist = NULL;
 
 struct t_hook *relay_hook_timer = NULL;
+struct t_hook *relay_remote_hook_signal_typing = NULL;
 
 
 /*
@@ -378,6 +379,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     relay_info_init ();
 
+    relay_remote_hook_signal_typing = weechat_hook_signal (
+        "typing_self_*", &relay_remote_signal_typing_cb, NULL, NULL);
+
     /*
      * Callback for adding local/remote command status (buffer api remote),
      * we use a low priority here, so that other modifiers "input_text_display"
@@ -418,6 +422,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     {
         weechat_unhook (relay_hook_timer);
         relay_hook_timer = NULL;
+    }
+    if (relay_remote_hook_signal_typing)
+    {
+        weechat_unhook (relay_remote_hook_signal_typing);
+        relay_remote_hook_signal_typing = NULL;
     }
 
     relay_config_write ();
