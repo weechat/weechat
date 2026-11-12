@@ -37,6 +37,7 @@ extern "C"
 #include "src/core/core-debug.h"
 #include "src/core/core-input.h"
 #include "src/core/core-string.h"
+#include "src/core/core-upgrade.h"
 #include "src/core/core-url.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
@@ -1393,7 +1394,12 @@ TEST(CoreCommand, Proxy)
 
 TEST(CoreCommand, Quit)
 {
-    /* TODO: write tests */
+    /* upgrade scheduled: command is ignored */
+    upgrade_weechat_schedule (NULL, 1);
+    WEE_CMD_CORE("/quit -yes");
+    LONGS_EQUAL(0, weechat_quit);
+    LONGS_EQUAL(1, upgrade_pending);
+    upgrade_weechat_cancel ();
 }
 
 /*
@@ -1536,7 +1542,39 @@ TEST(CoreCommand, Unset)
 
 TEST(CoreCommand, Upgrade)
 {
-    /* TODO: write tests */
+    /* dummy upgrade: nothing is done */
+    WEE_CMD_CORE("/upgrade -dummy");
+    LONGS_EQUAL(0, upgrade_pending);
+
+    /* binary not found */
+    WEE_CMD_CORE_ERROR_MSG(
+        "/upgrade /path/to/nonexistent/weechat",
+        "Can't upgrade: WeeChat binary \"/path/to/nonexistent/weechat\" "
+        "does not exist");
+    LONGS_EQUAL(0, upgrade_pending);
+
+    /* upgrade is scheduled, not executed immediately */
+    WEE_CMD_CORE("/upgrade -quit");
+    LONGS_EQUAL(1, upgrade_pending);
+    POINTERS_EQUAL(NULL, upgrade_pending_binary);
+    LONGS_EQUAL(1, upgrade_pending_quit);
+    LONGS_EQUAL(0, weechat_quit);
+    LONGS_EQUAL(0, weechat_upgrading);
+
+    /* upgrade already scheduled: command is ignored */
+    WEE_CMD_CORE("/upgrade");
+    LONGS_EQUAL(1, upgrade_pending);
+    POINTERS_EQUAL(NULL, upgrade_pending_binary);
+    LONGS_EQUAL(1, upgrade_pending_quit);
+
+    upgrade_weechat_cancel ();
+    LONGS_EQUAL(0, upgrade_pending);
+
+    /* quitting: command is ignored */
+    weechat_quit = 1;
+    WEE_CMD_CORE("/upgrade -quit");
+    LONGS_EQUAL(0, upgrade_pending);
+    weechat_quit = 0;
 }
 
 /*

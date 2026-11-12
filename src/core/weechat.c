@@ -482,5 +482,6 @@ weechat_end (void (*gui_end_cb)(int clean_exit))
     theme_end ();                       /* end theme registry               */
     string_end ();                      /* end string                       */
     weeurl_end ();
+    upgrade_weechat_cancel ();          /* cancel scheduled upgrade         */
     weechat_shutdown (-1, 0);           /* end other things                 */
 }

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 23:47+0100\n"
+"POT-Creation-Date: 2026-11-12 21:18+0100\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <weechat-dev@nongnu.org>\n"
@@ -1095,21 +1095,6 @@ msgstr "%sErro: não foi possível guardar a sessão no ficheiro"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%sErro: não foi possível guardar a sessão no ficheiro"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%sCan't upgrade: there is one or more background process (hook type "
-#| "'process' or 'connect')"
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-"%sNão é possível atualizar: há um ou mais processos em segundo plano (hook "
-"do tipo 'process' ou 'connect')"
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr ""
-
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sNão é possível atualizar: o binário do WeeChat \"%s\" não existe"
@@ -1128,15 +1113,6 @@ msgstr "%sNenhum binário especificado"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "A atualizar o WeeChat com o ficheiro binário: \"%s\"..."
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr ""
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr ""
-"***** Erro: falha ao invocar exec (programa: \"%s\"), a sair do WeeChat"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -6888,6 +6864,30 @@ msgstr "depuração: a remover o ficheiro: %s"
 #, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr "Atualização concluída (%.02fs)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+"%sNão é possível atualizar: há um ou mais processos em segundo plano (hook "
+"do tipo 'process' ou 'connect')"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr ""
+"***** Erro: falha ao invocar exec (programa: \"%s\"), a sair do WeeChat"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 msgid "invalid URL"
 msgstr ""

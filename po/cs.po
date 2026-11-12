@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 23:47+0100\n"
+"POT-Creation-Date: 2026-11-12 21:18+0100\n"
 "PO-Revision-Date: 2026-07-05 12:29+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -1096,21 +1096,6 @@ msgstr "%sChyba: nemohu uložit sezení do souboru"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%sChyba: nemohu uložit sezení do souboru"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%sCan't upgrade: there is one or more background process (hook type "
-#| "'process' or 'connect')"
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-"%sNemohu aktualizovat: je zde jeden nebo více procesů na pozadí (napojení "
-"typu 'process' nebo 'connect')"
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr ""
-
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sNemohu aktualizovat: binární soubor WeeChat \"%s\" neexistuje"
@@ -1128,14 +1113,6 @@ msgstr "%sNení specifikována binárka"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aktualizuji WeeChat s použitím binárního souboru: \"%s\"..."
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr ""
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr "***** Chyba: exec selhal (program: \"%s\"), ukončuji WeeChat"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -6508,6 +6485,29 @@ msgstr "ladění: odstraňuji soubor: %s"
 #, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr "Aktualizace dokončena (%.02fs)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+"%sNemohu aktualizovat: je zde jeden nebo více procesů na pozadí (napojení "
+"typu 'process' nebo 'connect')"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "***** Chyba: exec selhal (program: \"%s\"), ukončuji WeeChat"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 msgid "invalid URL"
 msgstr ""

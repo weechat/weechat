@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 23:47+0100\n"
+"POT-Creation-Date: 2026-11-12 21:18+0100\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -1093,21 +1093,6 @@ msgstr "%sエラー: ファイルにセッションを保存できません"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%sエラー: ファイルにセッションを保存できません"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%sCan't upgrade: there is one or more background process (hook type "
-#| "'process' or 'connect')"
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-"%sアップグレードできません: 1 つ以上のバックグラウンドプロセスが残っています "
-"(フックタイプ 'process' または 'connect')"
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr ""
-
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sアップグレードできません: WeeChat バイナリ \"%s\" がありません"
@@ -1125,14 +1110,6 @@ msgstr "%sバイナリが指定されていません"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "バイナリファイル: \"%s\" で WeeChat のアップグレード中..."
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr ""
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr "***** エラー: 実行失敗 (プログラム: \"%s\")、WeeChat を終了しています"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -6832,6 +6809,29 @@ msgstr "デバッグ: ファイル削除中: %s"
 #, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr "アップグレード完了 (%.02f 秒)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+"%sアップグレードできません: 1 つ以上のバックグラウンドプロセスが残っています "
+"(フックタイプ 'process' または 'connect')"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "***** エラー: 実行失敗 (プログラム: \"%s\")、WeeChat を終了しています"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 msgid "invalid URL"
 msgstr ""

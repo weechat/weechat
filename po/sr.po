@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-04 23:47+0100\n"
+"POT-Creation-Date: 2026-11-12 21:18+0100\n"
 "PO-Revision-Date: 2026-07-05 12:29+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -1065,18 +1065,6 @@ msgid "WeeChat session saved (files *.upgrade)"
 msgstr "WeeChat сесија је сачувана (*.upgrade фајлови)"
 
 #, c-format
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-"%sНије могуће ажурирање: у позадини се извршава један или више процеса/нити "
-"(тип куке: process, connect или url)"
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr "Провера кука које се извршавају са командом: %s"
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sНије могуће ажурирање: WeeChat бинарни фајл „%s” не постоји"
 
@@ -1093,15 +1081,6 @@ msgstr "%sНије наведен бинарни фајл"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "WeeChat се ажурира са бинарним фајлом: „%s”..."
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr "%sАжурирање је прекинуто"
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr ""
-"***** Грешка: exec није успела (програм: „%s”), WeeChat прекида извршавање"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -7003,6 +6982,27 @@ msgstr "дибаг: уклањање фајла: %s"
 #, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr "Обављено је ажурирање (%.02fs)"
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+"%sНије могуће ажурирање: у позадини се извршава један или више процеса/нити "
+"(тип куке: process, connect или url)"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr "Провера кука које се извршавају са командом: %s"
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr ""
+"***** Грешка: exec није успела (програм: „%s”), WeeChat прекида извршавање"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr "%sАжурирање је прекинуто"
 
 msgid "invalid URL"
 msgstr "неисправан URL"

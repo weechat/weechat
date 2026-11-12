@@ -8,6 +8,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 _The file [UPGRADING.md](UPGRADING.md) contains important information about upgrades, for example manual actions to perform when upgrading from a version to another one (most changes are automated, but some of them cannot be)._
 
+## [Unreleased]
+
+### Fixed
+
+- core: fix crash when command `/upgrade` is executed by a script, execute the upgrade in the main loop ([#2380](https://github.com/weechat/weechat/issues/2380))
+
 ## [4.10.4] - 2026-11-09
 
 ### Added
