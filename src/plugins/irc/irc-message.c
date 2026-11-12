@@ -974,6 +974,56 @@ irc_message_split_add (struct t_irc_message_split_context *context,
 }
 
 /*
+ * Get the next unit of a string to split (the position after it): a color
+ * code with its colors if "formatting" is 1, otherwise a UTF-8 char; a byte
+ * which does not start a valid UTF-8 char is a unit of one byte, so that it
+ * can not include the beginning of a color code after it.
+ */
+
+const char *
+irc_message_split_next_unit (const char *string, int formatting)
+{
+    int code_size;
+
+    if (formatting)
+    {
+        code_size = irc_color_code_size (string);
+        if (code_size > 0)
+            return string + code_size;
+    }
+
+    return string + irc_color_char_size (string);
+}
+
+/*
+ * Get the IRC codes that set the formatting at the beginning of the next part
+ * of a split message (see function irc_color_formatting_codes); if
+ * "reset" is 1 and there are codes, they start with "^O" (reset).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_message_split_codes (struct t_irc_color_formatting *formatting,
+                         const char *next_text, int attributes_only,
+                         int reset)
+{
+    char *codes, *result;
+
+    codes = irc_color_formatting_codes (formatting, next_text,
+                                        attributes_only);
+    if (!codes || !codes[0] || !reset)
+        return codes;
+
+    result = NULL;
+    if (weechat_asprintf (&result, "%s%s", IRC_COLOR_RESET_STR, codes) < 0)
+        result = NULL;
+    free (codes);
+
+    return result;
+}
+
+/*
  * Split "arguments" using delimiter and max length.
  *
  * Examples of arguments for this function:
@@ -1000,6 +1050,19 @@ irc_message_split_add (struct t_irc_message_split_context *context,
  *   host + command + target + prefix + XXX + suffix
  * (where XXX is part of "arguments")
  *
+ * If "formatting" is 1, "arguments" is text which can contain IRC formatting
+ * codes (attributes and colors): a color code is never split, and each part
+ * after the first one starts with the codes of the formatting at the end of
+ * the previous part, so that the text keeps its attributes and colors (only
+ * the attributes if the codes would take more than 1/4 of the part, and no
+ * codes if the attributes alone would take more); no codes are added in an
+ * empty part.
+ *
+ * If "formatting" is 2, the parts may be joined in one message by IRC clients
+ * (lines of a multiline batch): the codes start with "^O" (reset), so that
+ * the formatting is the same if the parts are joined (codes toggle
+ * attributes) or displayed as separate messages.
+ *
  * Return:
  *   1: OK
  *   0: error
@@ -1016,10 +1079,13 @@ irc_message_split_string (struct t_irc_message_split_context *context,
                           const char *suffix,
                           const char delimiter,
                           int max_length_nick_user_host,
-                          int max_length)
+                          int max_length,
+                          int formatting)
 {
-    const char *pos, *pos_max, *pos_next, *pos_last_delim;
-    char *message, *dup_arguments;
+    const char *pos, *pos_max, *pos_next, *pos_last_delim, *ptr_first;
+    char *message, *dup_arguments, *codes;
+    struct t_irc_color_formatting text_formatting;
+    int length_codes, attributes_only;
 
     if (!context)
         return 0;
@@ -1077,18 +1143,48 @@ irc_message_split_string (struct t_irc_message_split_context *context,
         return 1;
     }
 
+    irc_color_formatting_init (&text_formatting);
+    ptr_first = arguments;
+
     while (arguments && arguments[0])
     {
+        /*
+         * Codes of formatting at the end of the previous part (none in the
+         * first part); if they take more than 1/4 of the message, only the
+         * attributes (they are toggled by the next codes, so they must be
+         * kept), or nothing if the attributes are too long.
+         */
+        codes = NULL;
+        length_codes = 0;
+        for (attributes_only = 0;
+             formatting && (arguments != ptr_first) && (attributes_only <= 1);
+             attributes_only++)
+        {
+            codes = irc_message_split_codes (&text_formatting, arguments,
+                                             attributes_only,
+                                             (formatting == 2));
+            length_codes = (codes) ? strlen (codes) : 0;
+            if (length_codes * 4 <= max_length)
+                break;
+            free (codes);
+            codes = NULL;
+            length_codes = 0;
+        }
         pos = arguments;
-        pos_max = pos + max_length;
+        pos_max = pos + max_length - length_codes;
         pos_last_delim = NULL;
         while (pos && pos[0])
         {
             if (pos[0] == delimiter)
                 pos_last_delim = pos;
-            pos_next = weechat_utf8_next_char (pos);
+            pos_next = irc_message_split_next_unit (pos, formatting);
             if (!pos_next || (pos_next > pos_max))
+            {
+                /* At least one char or code in each part. */
+                if (pos == arguments)
+                    pos = pos_next;
                 break;
+            }
             pos = pos_next;
         }
         /*
@@ -1098,6 +1194,22 @@ irc_message_split_string (struct t_irc_message_split_context *context,
         if (pos[0] && pos_last_delim && (pos_last_delim > arguments))
             pos = pos_last_delim;
         dup_arguments = weechat_strndup (arguments, pos - arguments);
+        if (formatting && dup_arguments)
+        {
+            /* Formatting at the end of this part (if there is a next part). */
+            if (pos[0])
+            {
+                irc_color_formatting_update (&text_formatting, arguments,
+                                             pos - arguments);
+            }
+            if ((length_codes > 0) && dup_arguments[0])
+            {
+                weechat_asprintf (&message, "%s%s", codes, dup_arguments);
+                free (dup_arguments);
+                dup_arguments = message;
+            }
+        }
+        free (codes);
         if (dup_arguments)
         {
             if (weechat_asprintf (&message,
@@ -1461,7 +1573,7 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
                 rc &= irc_message_split_string (
                     context, tags_multiline, host, command, target, ":",
                     list_lines[i], "", ' ', max_length_nick_user_host,
-                    max_length);
+                    max_length, 2);
                 free (tags_multiline);
                 if (batch_lines > 0)
                     weechat_string_dyn_concat (multiline_args, "\n", -1);
@@ -1540,7 +1652,7 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
                 rc = irc_message_split_string (context, tags, host, command, target,
                                                prefix, ptr_args, suffix,
                                                ' ', max_length_nick_user_host,
-                                               max_length);
+                                               max_length, 1);
             }
             weechat_string_free_split (list_lines);
         }
@@ -1584,7 +1696,7 @@ irc_message_split_005 (struct t_irc_message_split_context *context,
 
     return irc_message_split_string (context, tags, host, command, target,
                                      NULL, arguments, suffix, ' ', -1,
-                                     max_length);
+                                     max_length, 0);
 }
 
 /*
@@ -1761,7 +1873,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
             &split_context, tags, host, command, NULL, ":",
             (argv_eol[index_args][0] == ':') ?
             argv_eol[index_args] + 1 : argv_eol[index_args],
-            NULL, ' ', max_length_nick_user_host, split_msg_max_length);
+            NULL, ' ', max_length_nick_user_host, split_msg_max_length, 0);
     }
     else if (weechat_strcasecmp (command, "monitor") == 0)
     {
@@ -1777,7 +1889,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
             split_ok = irc_message_split_string (
                 &split_context, tags, host, command, NULL, monitor_action,
                 argv_eol[index_args] + 2, NULL, ',', max_length_nick_user_host,
-                split_msg_max_length);
+                split_msg_max_length, 0);
         }
         else
         {
@@ -1785,7 +1897,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                 &split_context, tags, host, command, NULL, ":",
                 (argv_eol[index_args][0] == ':') ?
                 argv_eol[index_args] + 1 : argv_eol[index_args],
-                NULL, ',', max_length_nick_user_host, split_msg_max_length);
+                NULL, ',', max_length_nick_user_host, split_msg_max_length, 0);
         }
     }
     else if (weechat_strcasecmp (command, "join") == 0)
@@ -1844,7 +1956,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                     &split_context, tags, host, command, target, ":",
                     (argv_eol[index_args + 2][0] == ':') ?
                     argv_eol[index_args + 2] + 1 : argv_eol[index_args + 2],
-                    NULL, ' ', -1, split_msg_max_length);
+                    NULL, ' ', -1, split_msg_max_length, 0);
             }
             else
             {
@@ -1857,7 +1969,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                         &split_context, tags, host, command, target, ":",
                         (argv_eol[index_args + 3][0] == ':') ?
                         argv_eol[index_args + 3] + 1 : argv_eol[index_args + 3],
-                        NULL, ' ', -1, split_msg_max_length);
+                        NULL, ' ', -1, split_msg_max_length, 0);
                 }
             }
         }
