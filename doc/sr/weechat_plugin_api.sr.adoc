@@ -13554,10 +13554,17 @@ char *weechat_hook_modifier_exec (const char *modifier,
 | Било који стринг.
 | Стринг у којем су ANSI боје конвертоване у WeeChat боје (или су уклоњене WeeChat боје).
 
+// TRANSLATION MISSING
 | [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7
-| - |
+| Optional: `256` to replace RGB colors by the nearest color of the 256-color palette (colors 16-255) _(WeeChat ≥ 5.0.0)_ |
 Било који стринг. |
 Стринг са WeeChat бојама конвертованим у ANSI боје.
+
+// TRANSLATION MISSING
+| [[hook_modifier_color_downgrade_rgb]] color_downgrade_rgb | 5.0.0
+| "name" for a color name (for example `+*#ff8800:#000080+`), empty for a string with WeeChat colors
+| Any string.
+| String with RGB colors (`#rrggbb`) replaced by the nearest terminal color (16-255: colors 0-15 depend on the theme of the terminal).
 
 | [[hook_modifier_eval_path_home]] eval_path_home | 2.7
 | Није обавезно: `directory=xxx` где `xxx` може бити: `config`, `data`, `cache`, `runtime`

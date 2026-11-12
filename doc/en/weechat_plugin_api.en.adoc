@@ -13959,9 +13959,14 @@ List of modifiers defined by WeeChat and plugins that can be used:
 | String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
 
 | [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7
-| -
+| Optional: `256` to replace RGB colors by the nearest color of the 256-color palette (colors 16-255) _(WeeChat ≥ 5.0.0)_
 | Any string.
 | String with WeeChat colors converted to ANSI colors.
+
+| [[hook_modifier_color_downgrade_rgb]] color_downgrade_rgb | 5.0.0
+| "name" for a color name (for example `+*#ff8800:#000080+`), empty for a string with WeeChat colors
+| Any string.
+| String with RGB colors (`#rrggbb`) replaced by the nearest terminal color (16-255: colors 0-15 depend on the theme of the terminal).
 
 | [[hook_modifier_eval_path_home]] eval_path_home | 2.7
 | Optional: `directory=xxx` where `xxx` can be: `config`, `data`, `cache`, `runtime`

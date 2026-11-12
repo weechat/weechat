@@ -56,6 +56,10 @@ unsigned long long gui_color_hash_seed = 0;  /* random seed for hash of keys */
 int gui_color_hash_seed_set = 0;             /* 1 if seed is set            */
 
 /* Terminal colors */
+/* Cache of RGB colors converted to the 256-color palette (RGB + 1, 0 = empty) */
+int gui_color_downgrade_cache_rgb[GUI_COLOR_DOWNGRADE_CACHE_SIZE];
+int gui_color_downgrade_cache_term[GUI_COLOR_DOWNGRADE_CACHE_SIZE];
+
 int gui_color_term256[256] =
 {
     0x000000, 0x800000, 0x008000, 0x808000, 0x000080, 0x800080,  /*   0-5   */
@@ -1490,6 +1494,143 @@ gui_color_decode (const char *string, const char *replacement)
 }
 
 /*
+ * Convert a RGB color to the nearest color of the 256-color palette, with a
+ * small cache (the RGB colors of a string are often the same); like on
+ * screen, colors 0-15 are not used, because they are defined by the theme of
+ * the terminal (see function gui_color_convert_rgb_to_term_display).
+ *
+ * Return the terminal color (16-255).
+ */
+
+int
+gui_color_downgrade_rgb_term (int rgb)
+{
+    int index;
+
+    index = (rgb ^ (rgb >> 6) ^ (rgb >> 12))
+        & (GUI_COLOR_DOWNGRADE_CACHE_SIZE - 1);
+    if (gui_color_downgrade_cache_rgb[index] != rgb + 1)
+    {
+        gui_color_downgrade_cache_rgb[index] = rgb + 1;
+        gui_color_downgrade_cache_term[index] =
+            gui_color_convert_rgb_to_term_display (rgb, 256);
+    }
+
+    return gui_color_downgrade_cache_term[index];
+}
+
+/*
+ * Add "length" bytes of a string to a dynamic string, with RGB colors
+ * ("#rrggbb") replaced by the nearest color of the 256-color palette,
+ * written on 5 digits if "padded" is 1 (in color codes), as-is otherwise (in
+ * color names).
+ */
+
+void
+gui_color_downgrade_rgb_concat (char **output, const char *string, int length,
+                                int padded)
+{
+    const char *ptr_string, *ptr_end, *ptr_hash;
+    char str_color[16];
+    int rgb, size;
+
+    ptr_string = string;
+    ptr_end = string + length;
+    while (ptr_string < ptr_end)
+    {
+        rgb = ((ptr_string[0] == '#') && (ptr_end - ptr_string >= 7)) ?
+            gui_color_rgb_parse (ptr_string) : -1;
+        if (rgb >= 0)
+        {
+            snprintf (str_color, sizeof (str_color),
+                      (padded) ? "%05d" : "%d",
+                      gui_color_downgrade_rgb_term (rgb));
+            string_dyn_concat (output, str_color, -1);
+            ptr_string += 7;
+        }
+        else
+        {
+            /* Copy the text until the next "#" (only in this text). */
+            ptr_hash = memchr (ptr_string + 1, '#', ptr_end - ptr_string - 1);
+            size = (ptr_hash) ? ptr_hash - ptr_string : ptr_end - ptr_string;
+            string_dyn_concat (output, ptr_string, size);
+            ptr_string += size;
+        }
+    }
+}
+
+/*
+ * Replace RGB colors ("#rrggbb") in WeeChat color codes by the nearest color
+ * in the 256-color palette ("00123"), for consumers that do not support RGB
+ * colors (for example old relay clients).
+ *
+ * Text outside color codes is not changed.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_downgrade_rgb (const char *string)
+{
+    const char *ptr_string;
+    char **out;
+    int size;
+
+    if (!string)
+        return NULL;
+
+    out = string_dyn_alloc (strlen (string) + 1);
+    if (!out)
+        return NULL;
+
+    ptr_string = string;
+    while (ptr_string[0])
+    {
+        size = gui_color_code_size (ptr_string);
+        if (size > 0)
+        {
+            /* Color code, with RGB colors replaced. */
+            gui_color_downgrade_rgb_concat (out, ptr_string, size, 1);
+            ptr_string += size;
+        }
+        else
+        {
+            /* Copy the text until the next color code. */
+            size = 1 + strcspn (ptr_string + 1, "\x19\x1A\x1B\x1C");
+            string_dyn_concat (out, ptr_string, size);
+            ptr_string += size;
+        }
+    }
+
+    return string_dyn_free (out, 0);
+}
+
+/*
+ * Replace RGB colors ("#rrggbb") in a color name (for example
+ * "*#ff8800:#000080") by the nearest color in the 256-color palette
+ * (for example "*208:18"), for consumers that do not support RGB colors.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_downgrade_rgb_name (const char *name)
+{
+    char **out;
+
+    if (!name)
+        return NULL;
+
+    out = string_dyn_alloc (strlen (name) + 1);
+    if (!out)
+        return NULL;
+
+    gui_color_downgrade_rgb_concat (out, name, strlen (name), 0);
+
+    return string_dyn_free (out, 0);
+}
+
+/*
  * Convert ANSI color codes to WeeChat colors (or removes them).
  *
  * This callback is called by gui_color_decode_ansi, it must not be called
@@ -1808,17 +1949,29 @@ gui_color_weechat_to_ansi (int color)
  * (string is after the extended char and the attributes): RGB color
  * ("#RRGGBB") or color number ("00123").
  *
+ * If "rgb_colors" is 0, a RGB color is replaced by the nearest color of the
+ * 256-color palette (otherwise a 24-bit ANSI color code is used).
+ *
  * Return the size of color in string.
  */
 
 int
 gui_color_encode_ansi_extended (char **output, const char *string,
-                                int background)
+                                int background, int rgb_colors)
 {
     char str_concat[64];
     int size, rgb, color;
 
     rgb = gui_color_rgb_parse (string);
+    if ((rgb >= 0) && !rgb_colors)
+    {
+        snprintf (str_concat, sizeof (str_concat),
+                  "\x1B[%d;5;%dm",
+                  (background) ? 48 : 38,
+                  gui_color_downgrade_rgb_term (rgb));
+        string_dyn_concat (output, str_concat, -1);
+        return 7;
+    }
     if (rgb >= 0)
     {
         snprintf (str_concat, sizeof (str_concat),
@@ -1871,11 +2024,14 @@ gui_color_ansi_add_term_color (char **output, int color, int background)
 /*
  * Replace WeeChat colors by ANSI colors.
  *
+ * If "rgb_colors" is 0, RGB colors are replaced by the nearest color of the
+ * 256-color palette (otherwise 24-bit ANSI color codes are used).
+ *
  * Note: result must be freed after use.
  */
 
 char *
-gui_color_encode_ansi (const char *string)
+gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
 {
     const unsigned char *ptr_string;
     char **out, str_concat[128], str_color[8];
@@ -1908,7 +2064,7 @@ gui_color_encode_ansi (const char *string)
                                 ptr_string++;
                             }
                             ptr_string += gui_color_encode_ansi_extended (
-                                out, (const char *)ptr_string, 0);
+                                out, (const char *)ptr_string, 0, rgb_colors);
                         }
                         else
                         {
@@ -1942,7 +2098,7 @@ gui_color_encode_ansi (const char *string)
                         {
                             ptr_string++;
                             ptr_string += gui_color_encode_ansi_extended (
-                                out, (const char *)ptr_string, 1);
+                                out, (const char *)ptr_string, 1, rgb_colors);
                         }
                         else
                         {
@@ -1976,7 +2132,7 @@ gui_color_encode_ansi (const char *string)
                                 ptr_string++;
                             }
                             ptr_string += gui_color_encode_ansi_extended (
-                                out, (const char *)ptr_string, 0);
+                                out, (const char *)ptr_string, 0, rgb_colors);
                         }
                         else
                         {
@@ -2015,7 +2171,8 @@ gui_color_encode_ansi (const char *string)
                             {
                                 ptr_string += 2;
                                 ptr_string += gui_color_encode_ansi_extended (
-                                    out, (const char *)ptr_string, 1);
+                                    out, (const char *)ptr_string, 1,
+                                    rgb_colors);
                             }
                             else
                             {
@@ -2247,6 +2404,19 @@ gui_color_encode_ansi (const char *string)
     }
 
     return string_dyn_free (out, 0);
+}
+
+/*
+ * Replace WeeChat colors by ANSI colors (with 24-bit ANSI color codes for
+ * RGB colors).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_encode_ansi (const char *string)
+{
+    return gui_color_encode_ansi_rgb (string, 1);
 }
 
 /*

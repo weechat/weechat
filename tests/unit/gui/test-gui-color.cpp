@@ -8,6 +8,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests.h"
+
 extern "C"
 {
 #include <string.h>
@@ -1014,6 +1016,140 @@ TEST(GuiColor, Decode)
 
 /*
  * Test functions:
+ *   gui_color_downgrade_rgb_term
+ *   gui_color_downgrade_rgb
+ */
+
+TEST(GuiColor, DowngradeRgb)
+{
+    char string[256], expected[256], str_fg[32], str_fg_bg[32], str_bg[32];
+    char *str, *result;
+    int fg, bg, i, rgb;
+
+    /* Like on screen, colors 0-15 (theme of terminal) are not used. */
+    LONGS_EQUAL(196, gui_color_downgrade_rgb_term (0xff0000));
+    LONGS_EQUAL(244, gui_color_downgrade_rgb_term (0x808080));
+
+    /* Cached conversion: same result, also for colors in the same slot. */
+    for (i = 0; i < 300; i++)
+    {
+        rgb = (i * 0x10305) & 0xFFFFFF;
+        LONGS_EQUAL(gui_color_convert_rgb_to_term_display (rgb, 256),
+                    gui_color_downgrade_rgb_term (rgb));
+        LONGS_EQUAL(gui_color_convert_rgb_to_term_display (rgb, 256),
+                    gui_color_downgrade_rgb_term (rgb));
+    }
+
+    POINTERS_EQUAL(NULL, gui_color_downgrade_rgb (NULL));
+    WEE_TEST_STR("", gui_color_downgrade_rgb (""));
+    WEE_TEST_STR("test", gui_color_downgrade_rgb ("test"));
+
+    /* RGB color in text (not in a color code): unchanged */
+    WEE_TEST_STR("text @#ff8800", gui_color_downgrade_rgb ("text @#ff8800"));
+
+    /* colors without RGB: unchanged */
+    snprintf (string, sizeof (string), "%sa%sb%sc",
+              gui_color_get_custom ("*214"),
+              gui_color_get_custom ("214,blue"),
+              gui_color_get_custom ("bold"));
+    WEE_TEST_STR(string, gui_color_downgrade_rgb (string));
+
+    /* RGB colors replaced by nearest terminal colors */
+    fg = gui_color_convert_rgb_to_term_display (0xff8800, 256);
+    bg = gui_color_convert_rgb_to_term_display (0x000080, 256);
+    snprintf (string, sizeof (string), "%sa%sb%sc @#ff8800",
+              "\x19" "F@*#ff8800",
+              "\x19" "*@#ff8800~@#000080",
+              "\x19" "B@#000080");
+    snprintf (str_fg, sizeof (str_fg), "*%d", fg);
+    snprintf (str_fg_bg, sizeof (str_fg_bg), "%d,%d", fg, bg);
+    snprintf (str_bg, sizeof (str_bg), ",%d", bg);
+    snprintf (expected, sizeof (expected), "%sa%sb%sc @#ff8800",
+              gui_color_get_custom (str_fg),
+              gui_color_get_custom (str_fg_bg),
+              gui_color_get_custom (str_bg));
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb (string));
+
+    /*
+     * RGB color after an attribute code: the next char is part of the
+     * attribute code only if it is an attribute.
+     */
+    snprintf (string, sizeof (string), "%s%sa%s%sb",
+              "\x1B", "\x19" "F@#ff8800", "\x1A\x01", "\x19" "F@#ff8800");
+    snprintf (expected, sizeof (expected), "%s%s%05da%s%s%05db",
+              "\x1B", "\x19" "F@", fg, "\x1A\x01", "\x19" "F@", fg);
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb (string));
+
+    /* Many color codes after a RGB color (linear time). */
+    str = (char *)malloc (10 + (8 * 20000) + 1);
+    CHECK(str);
+    memcpy (str, "\x19" "F@#ff8800", 10);
+    for (i = 0; i < 20000; i++)
+        memcpy (str + 10 + (8 * i), "\x19" "F@00214", 8);
+    str[10 + (8 * 20000)] = '\0';
+    result = gui_color_downgrade_rgb (str);
+    CHECK(result);
+    LONGS_EQUAL(8 + (8 * 20000), strlen (result));
+    free (result);
+    free (str);
+}
+
+/*
+ * Test functions:
+ *   gui_color_downgrade_rgb_name
+ */
+
+TEST(GuiColor, DowngradeRgbName)
+{
+    char *str, expected[64];
+    int fg, bg;
+
+    fg = gui_color_convert_rgb_to_term_display (0xff8800, 256);
+    bg = gui_color_convert_rgb_to_term_display (0x000080, 256);
+
+    POINTERS_EQUAL(NULL, gui_color_downgrade_rgb_name (NULL));
+    WEE_TEST_STR("", gui_color_downgrade_rgb_name (""));
+    WEE_TEST_STR("red", gui_color_downgrade_rgb_name ("red"));
+    WEE_TEST_STR("*214,blue", gui_color_downgrade_rgb_name ("*214,blue"));
+    WEE_TEST_STR("#ff88", gui_color_downgrade_rgb_name ("#ff88"));
+    snprintf (expected, sizeof (expected), "%d", fg);
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb_name ("#ff8800"));
+    snprintf (expected, sizeof (expected), "*_%d:%d", fg, bg);
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb_name ("*_#FF8800:#000080"));
+    snprintf (expected, sizeof (expected), "%d,red", fg);
+    WEE_TEST_STR(expected, gui_color_downgrade_rgb_name ("#ff8800,red"));
+}
+
+/*
+ * Test functions:
+ *   modifier "color_downgrade_rgb"
+ */
+
+TEST(GuiColor, ModifierDowngradeRgb)
+{
+    char *str, string[64], expected[64];
+    int fg;
+
+    fg = gui_color_convert_rgb_to_term_display (0xff8800, 256);
+
+    /* WeeChat color codes */
+    snprintf (string, sizeof (string), "%s" "test #ff8800", "\x19" "F@|#ff8800");
+    snprintf (expected, sizeof (expected), "%s%05d" "test #ff8800",
+              "\x19" "F@|", fg);
+    WEE_TEST_STR(expected,
+                 hook_modifier_exec (NULL, "color_downgrade_rgb", NULL, string));
+    WEE_TEST_STR(expected,
+                 hook_modifier_exec (NULL, "color_downgrade_rgb", "", string));
+
+    /* color name */
+    snprintf (expected, sizeof (expected), "*%d", fg);
+    WEE_TEST_STR(expected,
+                 hook_modifier_exec (NULL, "color_downgrade_rgb", "name",
+                                     "*#ff8800"));
+}
+
+/*
+ * Test functions:
  *   gui_color_decode_ansi
  */
 
@@ -1191,7 +1327,7 @@ TEST(GuiColor, DecodeAnsi)
 
 TEST(GuiColor, EncodeAnsi)
 {
-    char string[256], *encoded;
+    char string[256], expected[256], *encoded;
     int pair, fg, bg;
 
     /* NULL/empty string */
@@ -1389,6 +1525,24 @@ TEST(GuiColor, EncodeAnsi)
                           "\x1B[38;2;255;136;0m" "\x1B[48;2;0;0;128m"
                           "fg_bg_end",
                           string);
+
+    /* RGB colors replaced by colors of the 256-color palette */
+    snprintf (expected, sizeof (expected),
+              "test_" "\x1B[1m" "\x1B[38;5;%dm" "fg" "\x1B[48;5;%dm" "bg"
+              "\x1B[38;5;%dm" "\x1B[48;5;%dm" "fg_bg_end",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256),
+              gui_color_convert_rgb_to_term_display (0x000080, 256),
+              gui_color_convert_rgb_to_term_display (0xff8800, 256),
+              gui_color_convert_rgb_to_term_display (0x000080, 256));
+    encoded = gui_color_encode_ansi_rgb (string, 0);
+    STRCMP_EQUAL(expected, encoded);
+    free (encoded);
+    encoded = hook_modifier_exec (NULL, "color_encode_ansi", "256", string);
+    STRCMP_EQUAL(expected, encoded);
+    free (encoded);
+    encoded = hook_modifier_exec (NULL, "color_encode_ansi", NULL, string);
+    CHECK(strstr (encoded, "\x1B[38;2;255;136;0m"));
+    free (encoded);
 }
 
 /*

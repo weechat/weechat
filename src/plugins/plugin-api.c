@@ -476,7 +476,8 @@ plugin_api_modifier_color_decode_ansi_cb (const void *pointer, void *data,
 
 /*
  * Modifier callback: encode ANSI colors: convert WeeChat colors to ANSI
- * color codes.
+ * color codes (RGB colors are replaced by the nearest color of the 256-color
+ * palette if modifier_data is "256").
  */
 
 char *
@@ -489,9 +490,33 @@ plugin_api_modifier_color_encode_ansi_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) modifier;
-    (void) modifier_data;
 
-    return gui_color_encode_ansi (string);
+    return gui_color_encode_ansi_rgb (
+        string,
+        (modifier_data && (strcmp (modifier_data, "256") == 0)) ? 0 : 1);
+}
+
+/*
+ * Modifier callback: replace RGB colors ("#rrggbb") by the nearest terminal
+ * color (0-255), in a string with WeeChat colors, or in a color name if
+ * modifier_data is "name".
+ */
+
+char *
+plugin_api_modifier_color_downgrade_rgb_cb (const void *pointer, void *data,
+                                            const char *modifier,
+                                            const char *modifier_data,
+                                            const char *string)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+
+    if (modifier_data && (strcmp (modifier_data, "name") == 0))
+        return gui_color_downgrade_rgb_name (string);
+
+    return gui_color_downgrade_rgb (string);
 }
 
 /*
@@ -714,6 +739,8 @@ plugin_api_init (void)
                    &plugin_api_modifier_color_decode_ansi_cb, NULL, NULL);
     hook_modifier (NULL, "color_encode_ansi",
                    &plugin_api_modifier_color_encode_ansi_cb, NULL, NULL);
+    hook_modifier (NULL, "color_downgrade_rgb",
+                   &plugin_api_modifier_color_downgrade_rgb_cb, NULL, NULL);
     hook_modifier (NULL, "eval_path_home",
                    &plugin_api_modifier_eval_path_home_cb, NULL, NULL);
 
