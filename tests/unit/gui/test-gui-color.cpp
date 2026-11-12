@@ -2509,6 +2509,17 @@ TEST(GuiColor, EncodeAnsi)
         "reset \x1B[93m" "\x1B[41m" "yellow,red here!",
         string);
 
+    /* Text color of bar: attributes are removed, like on screen. */
+    snprintf (string, sizeof (string), "%s" "A" "%c%c%c" "B",
+              gui_color_get_custom ("bold"),
+              GUI_COLOR_COLOR_CHAR, GUI_COLOR_BAR_CHAR, GUI_COLOR_BAR_FG_CHAR);
+    WEE_CHECK_ENCODE_ANSI("\x1B[1m" "A" "\x1B[22m" "\x1B[39m" "B", string);
+
+    /* Invalid color pair: attributes are kept. */
+    snprintf (string, sizeof (string),
+              "%s" "a" "\x19" "@" "b", gui_color_get_custom ("bold"));
+    WEE_CHECK_ENCODE_ANSI("\x1B[1m" "a" "b", string);
+
     /* RGB colors */
     snprintf (string, sizeof (string),
               "test_%sfg%sbg%sfg_bg_end",
@@ -2518,6 +2529,7 @@ TEST(GuiColor, EncodeAnsi)
     WEE_CHECK_ENCODE_ANSI("test_"
                           "\x1B[1m" "\x1B[38;2;255;136;0m" "fg"
                           "\x1B[48;2;0;0;128m" "bg"
+                          "\x1B[22m"
                           "\x1B[38;2;255;136;0m" "\x1B[48;2;0;0;128m"
                           "fg_bg_end",
                           string);
@@ -2525,7 +2537,7 @@ TEST(GuiColor, EncodeAnsi)
     /* RGB colors replaced by colors of the 256-color palette */
     snprintf (expected, sizeof (expected),
               "test_" "\x1B[1m" "\x1B[38;5;%dm" "fg" "\x1B[48;5;%dm" "bg"
-              "\x1B[38;5;%dm" "\x1B[48;5;%dm" "fg_bg_end",
+              "\x1B[22m" "\x1B[38;5;%dm" "\x1B[48;5;%dm" "fg_bg_end",
               gui_color_convert_rgb_to_term_display (0xff8800, 256),
               gui_color_convert_rgb_to_term_display (0x000080, 256),
               gui_color_convert_rgb_to_term_display (0xff8800, 256),
@@ -2564,8 +2576,8 @@ TEST(GuiColor, EncodeAnsi)
     config_file_option_reset (config_color_chat_delimiters, 1);
 
     /*
-     * Text color without "keep attributes": bold is removed on screen, so it
-     * is not enabled again after the end of dim
+     * Text color without "keep attributes": bold is removed (like on screen),
+     * so it is not enabled again after the end of dim
      */
     snprintf (string, sizeof (string),
               "%s" "A" "%s" "B" "%s" "C" "%s" "D",
@@ -2574,7 +2586,27 @@ TEST(GuiColor, EncodeAnsi)
               gui_color_get_custom ("dim"),
               gui_color_get_custom ("-dim"));
     WEE_CHECK_ENCODE_ANSI(
-        "\x1B[1m" "A" "\x1B[31m" "B" "\x1B[2m" "C" "\x1B[22m" "D",
+        "\x1B[1m" "A" "\x1B[22m\x1B[31m" "B" "\x1B[2m" "C" "\x1B[22m" "D",
+        string);
+
+    /* Text color without "keep attributes": all attributes are removed. */
+    snprintf (string, sizeof (string),
+              "%s%s%s%s" "a1" "%s" "b2",
+              gui_color_get_custom ("italic"),
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("blink"),
+              gui_color_get_custom ("!brown"),
+              gui_color_get_custom ("/cyan"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[3m\x1B[4m\x1B[5m" "\x1B[23m\x1B[24m\x1B[25m\x1B[7m\x1B[33m"
+        "a1" "\x1B[27m\x1B[3m\x1B[36m" "b2",
+        string);
+    snprintf (string, sizeof (string),
+              "%s" "a1" "%s" "b2",
+              gui_color_get_custom ("!brown"),
+              gui_color_get_custom ("|/cyan"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[7m\x1B[33m" "a1" "\x1B[3m\x1B[36m" "b2",
         string);
 
     /* Text color with "keep attributes": bold is enabled again. */

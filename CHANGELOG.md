@@ -126,6 +126,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: remove the attributes reset by a color without "keep attributes" when converting WeeChat colors to ANSI colors, like on screen (relay "api" protocol with colors "ansi", option logger.file.color_lines)
 - core: keep the char after a set/remove attribute code which is not followed by a valid attribute when converting WeeChat colors to ANSI colors
 - core, irc: remove unterminated or cancelled ANSI escape sequences and lone ESC chars when decoding ANSI colors
 - core, irc: remove chars SI and SO (shift in/out) when decoding ANSI colors, except SI on IRC, which is the IRC reset: the attributes and colors are now sent again after it (for example with `TERM=screen`, in output of `tput`)
