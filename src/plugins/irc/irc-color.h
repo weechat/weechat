@@ -8,6 +8,7 @@
 #define WEECHAT_PLUGIN_IRC_COLOR_H
 
 #define IRC_NUM_COLORS        100
+#define IRC_COLOR_DEFAULT     99   /* default color (fg or bg)         */
 
 /*
  * Shift ncurses colors for compatibility with colors
@@ -49,7 +50,16 @@
 #define IRC_COLOR_UNDERLINE_CHAR     '\x1F'  /* underlined text             */
 #define IRC_COLOR_UNDERLINE_STR      "\x1F"  /*   [1F]...[1F]               */
 
+#define IRC_COLOR_MONOSPACE_CHAR     '\x11'  /* monospace text              */
+#define IRC_COLOR_MONOSPACE_STR      "\x11"  /*   [11]...[11]               */
+
 #define IRC_COLOR_TERM2IRC_NUM_COLORS 16
+
+/* Flag for a RGB color (IRC hex color "^Drrggbb") in an IRC formatting */
+#define IRC_COLOR_RGB_FLAG           0x1000000
+
+/* Colors of IRC formatting which are not a color */
+#define IRC_COLOR_FORMATTING_NONE    -1 /* no color code                    */
 
 /* Macros for WeeChat core and IRC colors */
 
@@ -106,6 +116,21 @@ struct t_irc_color_ansi_state
     char underline;
     char italic;
     char strikethrough;
+};
+
+/* Formatting (attributes and colors) at a position in an IRC message */
+struct t_irc_color_formatting
+{
+    char bold;
+    char reverse;
+    char italic;
+    char strikethrough;
+    char underline;
+    char monospace;
+    int fg;                            /* IRC color (0-99), RGB color with  */
+                                       /* flag IRC_COLOR_RGB_FLAG, or       */
+                                       /* IRC_COLOR_FORMATTING_NONE         */
+    int bg;                            /* background (same values as fg)    */
 };
 
 extern char *irc_color_decode (const char *string, int keep_colors);
