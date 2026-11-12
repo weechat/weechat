@@ -2509,6 +2509,37 @@ TEST(GuiColor, EncodeAnsi)
         "reset \x1B[93m" "\x1B[41m" "yellow,red here!",
         string);
 
+    /* Invalid colors are ignored with their attributes, like on screen. */
+    WEE_CHECK_ENCODE_ANSI("a" "b", "a" "\x19" "F-1" "b");
+    WEE_CHECK_ENCODE_ANSI("a" "b", "a" "\x19" "F*99" "b");
+    WEE_CHECK_ENCODE_ANSI("a" "b", "a" "\x19" "B-1" "b");
+    /* Terminal color greater than 255: default color, like on screen. */
+    WEE_CHECK_ENCODE_ANSI("\x1B[31m" "a" "\x1B[39m" "b",
+                          "\x19" "F03" "a" "\x19" "F@00300" "b");
+    WEE_CHECK_ENCODE_ANSI("\x1B[41m" "a" "\x1B[49m" "b",
+                          "\x19" "B03" "a" "\x19" "B@00300" "b");
+    WEE_CHECK_ENCODE_ANSI("\x1B[39m" "\x1B[49m" "a",
+                          "\x19" "*@00300~@00300" "a");
+    /*
+     * Text and background: ignored with the attributes if one of them is
+     * missing or invalid, like on screen.
+     */
+    snprintf (string, sizeof (string),
+              "%s" "A" "\x19" "*09~-1" "B" "\x19" "*09" "C"
+              "\x19" "*@abcde~05" "D" "\x19" "*09~ab" "E",
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_ENCODE_ANSI("\x1B[1m" "A" "B" "C" "D" "E", string);
+    WEE_CHECK_ENCODE_ANSI("a" "\x1B[34m" "\x1B[40m" "b",
+                          "a" "\x19" "*09~01" "b");
+    /* Truncated extended background: the extended char is skipped. */
+    WEE_CHECK_ENCODE_ANSI("a" "12b", "a" "\x19" "*01~@12b");
+    WEE_CHECK_ENCODE_ANSI("a" "12b", "a" "\x19" "B@12b");
+
+    /* Invalid basic text color: only the background is set, like on screen. */
+    snprintf (string, sizeof (string), "%s" "A" "\x19" "**99~01" "B",
+              gui_color_get_custom ("bold"));
+    WEE_CHECK_ENCODE_ANSI("\x1B[1m" "A" "\x1B[40m" "B", string);
+
     /* Text color of bar: attributes are removed, like on screen. */
     snprintf (string, sizeof (string), "%s" "A" "%c%c%c" "B",
               gui_color_get_custom ("bold"),

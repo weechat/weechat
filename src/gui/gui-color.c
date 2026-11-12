@@ -2355,31 +2355,6 @@ gui_color_add_ansi_attrs (char **output, int color, int *attrs_on)
 }
 
 /*
- * Add ANSI color codes for the attribute flags at the beginning of a WeeChat
- * text color (for example "*" for bold), and update attributes enabled in
- * output of gui_color_encode_ansi (see function gui_color_add_ansi_attrs).
- *
- * Return pointer to the string after the attribute flags.
- */
-
-const unsigned char *
-gui_color_add_ansi_flags (char **output, const unsigned char *string,
-                          int *attrs_on)
-{
-    int flag, flags;
-
-    flags = 0;
-    while ((flag = gui_color_attr_get_flag (string[0])) > 0)
-    {
-        flags |= flag;
-        string++;
-    }
-    gui_color_add_ansi_attrs (output, flags, attrs_on);
-
-    return string;
-}
-
-/*
  * Convert a WeeChat color number to an ANSI color number.
  *
  * Return -1 if the color is not found.
@@ -2407,7 +2382,8 @@ gui_color_weechat_to_ansi (int color)
 
 /*
  * Build an ANSI color code for a RGB color (if "rgb" >= 0) or a terminal
- * color "term" (0-255), for foreground or background.
+ * color "term" (0-255), for foreground or background; like on screen, a
+ * terminal color greater than 255 is the default color.
  *
  * If "rgb_colors" is 0, a RGB color is replaced by the nearest color of the
  * 256-color palette (otherwise a 24-bit ANSI color code is used).
@@ -2425,6 +2401,13 @@ gui_color_encode_ansi_rgb_term (char *buffer, int size, int rgb, int term,
                   (rgb >> 16) & 0xFF,
                   (rgb >> 8) & 0xFF,
                   rgb & 0xFF);
+    }
+    else if ((rgb < 0) && (term > 255))
+    {
+        snprintf (buffer, size,
+                  "\x1B[%dm",
+                  (background) ?
+                  GUI_COLOR_ANSI_DEFAULT_BG : GUI_COLOR_ANSI_DEFAULT_FG);
     }
     else
     {
@@ -2543,6 +2526,212 @@ gui_color_add_ansi_bg (char **output, int color, int rgb_colors)
 }
 
 /*
+ * Check if a WeeChat basic color (2 digits in a color code, for example "05")
+ * is valid.
+ *
+ * Return the color number, -1 if the color is invalid (like on screen, where
+ * an invalid color code is ignored).
+ */
+
+int
+gui_color_encode_ansi_basic_color (const unsigned char *string)
+{
+    int color;
+
+    if (!isdigit (string[0]) || !isdigit (string[1]))
+        return -1;
+
+    color = ((string[0] - '0') * 10) + (string[1] - '0');
+
+    return (gui_color_search_index (color)) ? color : -1;
+}
+
+/*
+ * Add ANSI color codes for a WeeChat text color code (after "F" or "*"):
+ * attribute flags then extended color ("@" + flags + color) or basic color
+ * (flags + 2 digits).
+ *
+ * Like on screen, an invalid color is ignored with its attributes.
+ *
+ * Return pointer to the string after the color code.
+ */
+
+const unsigned char *
+gui_color_encode_ansi_fg_code (char **output, const unsigned char *string,
+                               int *attrs_on, int rgb_colors)
+{
+    char str_concat[64];
+    int extended, flag, flags, size, rgb, color;
+
+    extended = (string[0] == GUI_COLOR_EXTENDED_CHAR) ? 1 : 0;
+    if (extended)
+        string++;
+    flags = 0;
+    while ((flag = gui_color_attr_get_flag (string[0])) > 0)
+    {
+        flags |= flag;
+        string++;
+    }
+
+    if (extended)
+    {
+        size = gui_color_extended_value ((const char *)string, &rgb, &color);
+        if ((rgb >= 0) || (color >= 0))
+        {
+            gui_color_add_ansi_attrs (output, flags, attrs_on);
+            gui_color_encode_ansi_rgb_term (str_concat, sizeof (str_concat),
+                                            rgb, color, 0, rgb_colors);
+            string_dyn_concat (output, str_concat, -1);
+        }
+        return string + size;
+    }
+
+    if (!string[0] || !string[1])
+        return string;
+
+    color = gui_color_encode_ansi_basic_color (string);
+    if (color >= 0)
+    {
+        gui_color_add_ansi_attrs (output, flags, attrs_on);
+        gui_color_add_ansi_fg (output, color, rgb_colors);
+    }
+
+    return string + 2;
+}
+
+/*
+ * Add ANSI color code for a WeeChat background color code (after "B" or
+ * after the separator of "*fg~bg"): extended color ("@" + color) or basic
+ * color (2 digits).
+ *
+ * Like on screen, an invalid color is ignored.
+ *
+ * Return pointer to the string after the color code.
+ */
+
+const unsigned char *
+gui_color_encode_ansi_bg_code (char **output, const unsigned char *string,
+                               int rgb_colors)
+{
+    int color;
+
+    if (string[0] == GUI_COLOR_EXTENDED_CHAR)
+    {
+        string++;
+        return string + gui_color_encode_ansi_extended (
+            output, (const char *)string, 1, rgb_colors);
+    }
+
+    if (!string[0] || !string[1])
+        return string;
+
+    color = gui_color_encode_ansi_basic_color (string);
+    if (color >= 0)
+        gui_color_add_ansi_bg (output, color, rgb_colors);
+
+    return string + 2;
+}
+
+/*
+ * Add ANSI color codes for a WeeChat text and background color code (after
+ * "*"): attribute flags, text color (extended or basic) and background color
+ * after "~" (or "," in old strings).
+ *
+ * Like on screen, the code is ignored with its attributes if the text color
+ * or the background is missing or invalid; an invalid basic color is ignored
+ * (and the attributes with an invalid basic text color).
+ *
+ * Return pointer to the string after the color code.
+ */
+
+const unsigned char *
+gui_color_encode_ansi_fg_bg_code (char **output, const unsigned char *string,
+                                  int *attrs_on, int rgb_colors)
+{
+    char str_concat[64], str_color[3];
+    int fg_extended, bg_extended, flag, flags, size, fg_rgb, fg, bg_rgb, bg;
+
+    /* Text color (see function gui_window_string_apply_color_fg_bg). */
+    fg_extended = (string[0] == GUI_COLOR_EXTENDED_CHAR) ? 1 : 0;
+    if (fg_extended)
+        string++;
+    flags = 0;
+    while ((flag = gui_color_attr_get_flag (string[0])) > 0)
+    {
+        flags |= flag;
+        string++;
+    }
+    fg_rgb = -1;
+    fg = -1;
+    if (fg_extended)
+    {
+        string += gui_color_extended_value ((const char *)string, &fg_rgb,
+                                            &fg);
+    }
+    else if (string[0] && string[1])
+    {
+        memcpy (str_color, string, 2);
+        str_color[2] = '\0';
+        if (!util_parse_int (str_color, 10, &fg))
+            fg = -1;
+        string += 2;
+    }
+
+    /* Background. */
+    bg_extended = 0;
+    bg_rgb = -1;
+    bg = -1;
+    if ((string[0] == ',') || (string[0] == '~'))
+    {
+        string++;
+        if (string[0] == GUI_COLOR_EXTENDED_CHAR)
+        {
+            bg_extended = 1;
+            size = gui_color_extended_value ((const char *)string + 1,
+                                             &bg_rgb, &bg);
+            /* The extended char is skipped, even if the color is truncated. */
+            string += 1 + size;
+        }
+        else if (string[0] && string[1])
+        {
+            memcpy (str_color, string, 2);
+            str_color[2] = '\0';
+            if (!util_parse_int (str_color, 10, &bg))
+                bg = -1;
+            string += 2;
+        }
+    }
+
+    if (((fg_rgb < 0) && (fg < 0)) || ((bg_rgb < 0) && (bg < 0)))
+        return string;
+
+    if (fg_extended)
+    {
+        gui_color_add_ansi_attrs (output, flags, attrs_on);
+        gui_color_encode_ansi_rgb_term (str_concat, sizeof (str_concat),
+                                        fg_rgb, fg, 0, rgb_colors);
+        string_dyn_concat (output, str_concat, -1);
+    }
+    else if (gui_color_search_index (fg))
+    {
+        gui_color_add_ansi_attrs (output, flags, attrs_on);
+        gui_color_add_ansi_fg (output, fg, rgb_colors);
+    }
+    if (bg_extended)
+    {
+        gui_color_encode_ansi_rgb_term (str_concat, sizeof (str_concat),
+                                        bg_rgb, bg, 1, rgb_colors);
+        string_dyn_concat (output, str_concat, -1);
+    }
+    else if (gui_color_search_index (bg))
+    {
+        gui_color_add_ansi_bg (output, bg, rgb_colors);
+    }
+
+    return string;
+}
+
+/*
  * Add an ANSI color code for a terminal color (0-255, or -1 for the default
  * color), text color or background.
  */
@@ -2608,103 +2797,18 @@ gui_color_encode_ansi_rgb (const char *string, int rgb_colors)
                 {
                     case GUI_COLOR_FG_CHAR:
                         ptr_string++;
-                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            ptr_string++;
-                            ptr_string = gui_color_add_ansi_flags (
-                                out, ptr_string, &attrs_on);
-                            ptr_string += gui_color_encode_ansi_extended (
-                                out, (const char *)ptr_string, 0, rgb_colors);
-                        }
-                        else
-                        {
-                            ptr_string = gui_color_add_ansi_flags (
-                                out, ptr_string, &attrs_on);
-                            if (ptr_string[0] && ptr_string[1])
-                            {
-                                memcpy (str_color, ptr_string, 2);
-                                str_color[2] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                    gui_color_add_ansi_fg (out, color,
-                                                           rgb_colors);
-                                ptr_string += 2;
-                            }
-                        }
+                        ptr_string = gui_color_encode_ansi_fg_code (
+                            out, ptr_string, &attrs_on, rgb_colors);
                         break;
                     case GUI_COLOR_BG_CHAR:
                         ptr_string++;
-                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            ptr_string++;
-                            ptr_string += gui_color_encode_ansi_extended (
-                                out, (const char *)ptr_string, 1, rgb_colors);
-                        }
-                        else
-                        {
-                            if (ptr_string[0] && ptr_string[1])
-                            {
-                                memcpy (str_color, ptr_string, 2);
-                                str_color[2] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                    gui_color_add_ansi_bg (out, color,
-                                                           rgb_colors);
-                                ptr_string += 2;
-                            }
-                        }
+                        ptr_string = gui_color_encode_ansi_bg_code (
+                            out, ptr_string, rgb_colors);
                         break;
                     case GUI_COLOR_FG_BG_CHAR:
                         ptr_string++;
-                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            ptr_string++;
-                            ptr_string = gui_color_add_ansi_flags (
-                                out, ptr_string, &attrs_on);
-                            ptr_string += gui_color_encode_ansi_extended (
-                                out, (const char *)ptr_string, 0, rgb_colors);
-                        }
-                        else
-                        {
-                            ptr_string = gui_color_add_ansi_flags (
-                                out, ptr_string, &attrs_on);
-                            if (ptr_string[0] && ptr_string[1])
-                            {
-                                memcpy (str_color, ptr_string, 2);
-                                str_color[2] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                    gui_color_add_ansi_fg (out, color,
-                                                           rgb_colors);
-                                ptr_string += 2;
-                            }
-                        }
-                        /*
-                         * Note: the comma is an old separator not used any
-                         * more (since WeeChat 2.6), but we still use it here
-                         * so in case of/upgrade this will not break colors in
-                         * old messages.
-                         */
-                        if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
-                        {
-                            if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
-                            {
-                                ptr_string += 2;
-                                ptr_string += gui_color_encode_ansi_extended (
-                                    out, (const char *)ptr_string, 1,
-                                    rgb_colors);
-                            }
-                            else
-                            {
-                                ptr_string++;
-                                if (ptr_string[0] && ptr_string[1])
-                                {
-                                    memcpy (str_color, ptr_string, 2);
-                                    str_color[2] = '\0';
-                                    if (util_parse_int (str_color, 10, &color))
-                                        gui_color_add_ansi_bg (out, color,
-                                                               rgb_colors);
-                                    ptr_string += 2;
-                                }
-                            }
-                        }
+                        ptr_string = gui_color_encode_ansi_fg_bg_code (
+                            out, ptr_string, &attrs_on, rgb_colors);
                         break;
                     case GUI_COLOR_EXTENDED_CHAR:
                         ptr_string++;
