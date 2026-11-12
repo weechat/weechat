@@ -166,6 +166,20 @@ gui_color_search_config (const char *color_name)
 }
 
 /*
+ * Check if a char is an attribute after a set/remove attribute char (for
+ * example GUI_COLOR_ATTR_BOLD_CHAR).
+ *
+ * Return 1 if the char is an attribute, 0 otherwise.
+ */
+
+int
+gui_color_attr_char_is_valid (char c)
+{
+    return ((c >= GUI_COLOR_ATTR_BOLD_CHAR)
+            && (c <= GUI_COLOR_ATTR_DIM_CHAR)) ? 1 : 0;
+}
+
+/*
  * Return flag for attribute char of a color.
  *
  * Return 0 if char is unknown.
@@ -774,8 +788,12 @@ gui_color_code_size (const char *string)
             return ptr_string - string;
         case GUI_COLOR_SET_ATTR_CHAR:
         case GUI_COLOR_REMOVE_ATTR_CHAR:
+            /*
+             * The next char is part of the code only if it is an attribute,
+             * like on screen.
+             */
             ptr_string++;
-            if (ptr_string[0])
+            if (gui_color_attr_char_is_valid (ptr_string[0]))
                 ptr_string++;
             return ptr_string - string;
         case GUI_COLOR_RESET_CHAR:
@@ -950,8 +968,9 @@ gui_color_decode (const char *string, const char *replacement)
                 break;
             case GUI_COLOR_SET_ATTR_CHAR:
             case GUI_COLOR_REMOVE_ATTR_CHAR:
+                /* The next char is removed only if it is an attribute. */
                 ptr_string++;
-                if (ptr_string[0])
+                if (gui_color_attr_char_is_valid (ptr_string[0]))
                     ptr_string++;
                 if (replacement && replacement[0])
                     string_dyn_concat (out, replacement, -1);

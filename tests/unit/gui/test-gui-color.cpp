@@ -327,6 +327,16 @@ TEST(GuiColor, CodeSize)
     /* No color code */
     LONGS_EQUAL(0, gui_color_code_size ("test"));
 
+    /*
+     * Set/remove attribute: the next char is part of the code only if it is
+     * an attribute, like on screen.
+     */
+    LONGS_EQUAL(2, gui_color_code_size ("\x1A" "\x01" "x"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x1B" "\x06" "x"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x1A" "x"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x1B" "\x07"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x1A"));
+
     /* reset */
     LONGS_EQUAL(1, gui_color_code_size (gui_color_get_custom ("reset")));
 
@@ -429,6 +439,11 @@ TEST(GuiColor, Decode)
     WEE_CHECK_DECODE("test string", "test string", NULL);
     WEE_CHECK_DECODE("test string", "test string", "");
     WEE_CHECK_DECODE("test string", "test string", "?");
+
+    /* Set/remove attribute: the char after it is kept if not an attribute. */
+    WEE_CHECK_DECODE("ab", "a" "\x1A" "\x01" "b", NULL);
+    WEE_CHECK_DECODE("axb", "a" "\x1A" "xb", NULL);
+    WEE_CHECK_DECODE("a?xb", "a" "\x1B" "xb", "?");
 
     /* reset */
     snprintf (string, sizeof (string),

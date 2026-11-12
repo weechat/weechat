@@ -181,6 +181,7 @@ extern int gui_color_term256[];
 
 extern const char *gui_color_from_option (struct t_config_option *option);
 extern const char *gui_color_search_config (const char *color_name);
+extern int gui_color_attr_char_is_valid (char c);
 extern int gui_color_attr_get_flag (char c);
 extern void gui_color_attr_build_string (int color, char *str_attr);
 extern const char *gui_color_get_custom (const char *color_name);
