@@ -282,6 +282,7 @@ extern char *gui_color_ansi_parse_sequence (const char *sequence,
 extern char *gui_color_ansi_replace (const char *string, int keep_colors,
                                      t_gui_color_ansi_param_cb *callback);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);
+extern char *gui_color_normalize_ansi (const char *string, int keep_colors);
 extern int gui_color_encode_ansi_extended (char **output, const char *string,
                                            int background, int rgb_colors);
 extern void gui_color_encode_ansi_color (char *buffer, int size, int color,

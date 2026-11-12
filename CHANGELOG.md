@@ -21,6 +21,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: add signal "buffer_day_change_changed"
 - core: add signal "buffer_notify_changed"
 - core: add flag "prefix_for_each_line" in buffer
+- api: add modifier "color_normalize_ansi"
 - api: add modifier "color_downgrade_rgb", add modifier data "256" in modifier "color_encode_ansi" to get colors of the 256-color palette instead of 24-bit ANSI colors ([#1364](https://github.com/weechat/weechat/issues/1364))
 - api: add property "notify" in function buffer_get_string
 - api: add function "hashtable_map_sorted"

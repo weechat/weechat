@@ -475,6 +475,28 @@ plugin_api_modifier_color_decode_ansi_cb (const void *pointer, void *data,
 }
 
 /*
+ * Modifier callback: normalize ANSI colors: keep only the parameters used in
+ * SGR sequences, in a canonical form (or remove the sequences).
+ */
+
+char *
+plugin_api_modifier_color_normalize_ansi_cb (const void *pointer, void *data,
+                                             const char *modifier,
+                                             const char *modifier_data,
+                                             const char *string)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+
+    return gui_color_normalize_ansi (
+        string,
+        (modifier_data && (strcmp (modifier_data, "1") == 0)) ?
+        1: 0);
+}
+
+/*
  * Modifier callback: encode ANSI colors: convert WeeChat colors to ANSI
  * color codes (RGB colors are replaced by the nearest color of the 256-color
  * palette if modifier_data is "256").
@@ -737,6 +759,8 @@ plugin_api_init (void)
                    &plugin_api_modifier_color_decode_cb, NULL, NULL);
     hook_modifier (NULL, "color_decode_ansi",
                    &plugin_api_modifier_color_decode_ansi_cb, NULL, NULL);
+    hook_modifier (NULL, "color_normalize_ansi",
+                   &plugin_api_modifier_color_normalize_ansi_cb, NULL, NULL);
     hook_modifier (NULL, "color_encode_ansi",
                    &plugin_api_modifier_color_encode_ansi_cb, NULL, NULL);
     hook_modifier (NULL, "color_downgrade_rgb",

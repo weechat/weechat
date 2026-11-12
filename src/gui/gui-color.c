@@ -1873,6 +1873,50 @@ gui_color_decode_ansi_param_cb (char **output, int value, int color)
 }
 
 /*
+ * Callback for each parameter of an ANSI escape sequence, to build the
+ * normalized ANSI escape sequence (see function gui_color_normalize_ansi).
+ */
+
+void
+gui_color_normalize_ansi_param_cb (char **output, int value, int color)
+{
+    char str_param[64];
+
+    if (value == GUI_COLOR_ANSI_PARAM_END)
+    {
+        if ((*output)[0])
+            string_dyn_concat (output, "m", -1);
+        return;
+    }
+
+    /* Invalid color (for example a number too large): ignored. */
+    if (((value == 38) || (value == 48)) && (color < 0))
+        return;
+
+    if ((value == 38) || (value == 48))
+    {
+        if (color & GUI_COLOR_ANSI_RGB_FLAG)
+        {
+            snprintf (str_param, sizeof (str_param), "%d;2;%d;%d;%d",
+                      value,
+                      (color >> 16) & 0xFF,
+                      (color >> 8) & 0xFF,
+                      color & 0xFF);
+        }
+        else
+        {
+            snprintf (str_param, sizeof (str_param), "%d;5;%d", value, color);
+        }
+    }
+    else
+    {
+        snprintf (str_param, sizeof (str_param), "%d", value);
+    }
+    string_dyn_concat (output, ((*output)[0]) ? ";" : "\33[", -1);
+    string_dyn_concat (output, str_param, -1);
+}
+
+/*
  * Callback for each ANSI escape sequence found in a string (see function
  * gui_color_ansi_replace).
  *
@@ -1949,6 +1993,27 @@ gui_color_decode_ansi (const char *string, int keep_colors)
 {
     return gui_color_ansi_replace (string, keep_colors,
                                    &gui_color_decode_ansi_param_cb);
+}
+
+/*
+ * Normalize ANSI escape sequences: each SGR sequence is replaced by a SGR
+ * sequence with only the parameters which are used, in a canonical form
+ * ("\33[" + parameters separated by ";" + "m"), where each parameter is a
+ * number, and colors are "38;5;N", "48;5;N" (terminal color) or
+ * "38;2;R;G;B", "48;2;R;G;B" (RGB color, components in range 0-255); a
+ * sequence without parameter used is removed, and the other escape sequences
+ * are removed.
+ *
+ * If keep_colors == 0, all escape sequences are removed.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_normalize_ansi (const char *string, int keep_colors)
+{
+    return gui_color_ansi_replace (string, keep_colors,
+                                   &gui_color_normalize_ansi_param_cb);
 }
 
 /*

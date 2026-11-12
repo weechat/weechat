@@ -13965,6 +13965,14 @@ List of modifiers defined by WeeChat and plugins that can be used:
 | Any string.
 | String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
 
+| [[hook_modifier_color_normalize_ansi]] color_normalize_ansi | 5.0.0
+| "1" to keep colors, "0" to remove colors
+| Any string.
+| String with normalized ANSI escape sequences: each SGR sequence (`+ESC[...m+`)
+  has only the parameters used, separated by `;`, with colors `38;5;N`,
+  `48;5;N` (terminal color) or `38;2;R;G;B`, `48;2;R;G;B` (RGB color); other
+  escape sequences are removed (all sequences are removed with "0").
+
 | [[hook_modifier_color_encode_ansi]] color_encode_ansi | 2.7
 | Optional: `256` to replace RGB colors by the nearest color of the 256-color palette (colors 16-255) _(WeeChat ≥ 5.0.0)_
 | Any string.

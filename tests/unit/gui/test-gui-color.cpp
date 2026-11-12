@@ -1723,6 +1723,54 @@ TEST(GuiColor, DecodeAnsi)
 
 /*
  * Test functions:
+ *   gui_color_normalize_ansi
+ */
+
+TEST(GuiColor, NormalizeAnsi)
+{
+    char *str;
+
+    POINTERS_EQUAL(NULL, gui_color_normalize_ansi (NULL, 1));
+    WEE_TEST_STR("", gui_color_normalize_ansi ("", 1));
+    WEE_TEST_STR("test", gui_color_normalize_ansi ("test", 1));
+
+    /* All sequences removed. */
+    WEE_TEST_STR("test", gui_color_normalize_ansi ("\x1B[1mtest\x1B[0m", 0));
+
+    /* SGR sequences. */
+    WEE_TEST_STR("\x1B[0mtest", gui_color_normalize_ansi ("\x1B[mtest", 1));
+    WEE_TEST_STR("\x1B[1;4mtest\x1B[0m",
+                 gui_color_normalize_ansi ("\x1B[01;04mtest\x1B[0m", 1));
+    WEE_TEST_STR("\x1B[38;5;214mtest",
+                 gui_color_normalize_ansi ("\x1B[38;5;214mtest", 1));
+    WEE_TEST_STR("\x1B[1;48;2;255;136;0mtest",
+                 gui_color_normalize_ansi ("\x1B[1;48;2;255;136;0mtest", 1));
+    WEE_TEST_STR("\x1B[38;2;0;255;0mtest",
+                 gui_color_normalize_ansi ("\x1B[38;2;0;300;0mtest", 1));
+
+    /* Invalid values are ignored. */
+    WEE_TEST_STR("\x1B[1;3mtest",
+                 gui_color_normalize_ansi (
+                     "\x1B[1;99999999999999999999;3mtest", 1));
+    WEE_TEST_STR("test",
+                 gui_color_normalize_ansi (
+                     "\x1B[38;5;99999999999999999999mtest", 1));
+
+    /* Other escape sequences are removed. */
+    WEE_TEST_STR("test", gui_color_normalize_ansi ("\x1B[2Jtest", 1));
+    WEE_TEST_STR("test", gui_color_normalize_ansi ("\x1B(Btest", 1));
+
+    /* Modifier. */
+    WEE_TEST_STR("\x1B[1mtest",
+                 hook_modifier_exec (NULL, "color_normalize_ansi", "1",
+                                     "\x1B[01mtest"));
+    WEE_TEST_STR("test",
+                 hook_modifier_exec (NULL, "color_normalize_ansi", "0",
+                                     "\x1B[01mtest"));
+}
+
+/*
+ * Test functions:
  *   gui_color_encode_ansi
  */
 
