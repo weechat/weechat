@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -111,6 +112,70 @@ relay_status_search (const char *name)
 
     /* Status not found */
     return -1;
+}
+
+/*
+ * Check if a string with WeeChat color codes contains a RGB color code: "@",
+ * optional attribute chars and "#rrggbb" (for example "\x19F@*#ff8800"), so
+ * that a string with only a "#" in text (for example a channel name) is not
+ * converted.
+ *
+ * Any punctuation char is accepted as attribute char, so that an attribute
+ * added in a later version is accepted too: a false positive only costs a
+ * conversion which keeps the text unchanged.
+ *
+ * Return:
+ *   1: string may contain a RGB color code
+ *   0: string has no RGB color code
+ */
+
+int
+relay_has_rgb_color_code (const char *string)
+{
+    const char *ptr_hash, *ptr_char;
+
+    if (!strchr (string, '\x19'))
+        return 0;
+
+    for (ptr_hash = strchr (string, '#'); ptr_hash;
+         ptr_hash = strchr (ptr_hash + 1, '#'))
+    {
+        ptr_char = ptr_hash;
+        while ((ptr_char > string)
+               && ispunct ((unsigned char)ptr_char[-1])
+               && (ptr_char[-1] != '@') && (ptr_char[-1] != '#'))
+        {
+            ptr_char--;
+        }
+        if ((ptr_char > string) && (ptr_char[-1] == '@'))
+            return 1;
+    }
+
+    return 0;
+}
+
+/*
+ * Replace RGB colors ("#rrggbb") by the nearest color of the 256-color
+ * palette, for clients that do not support RGB colors: in a string with
+ * WeeChat color codes (name == 0) or in a color name (name == 1).
+ *
+ * Return the converted string, NULL if the string has no RGB colors (quick
+ * test: "#", and a color code in a string).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+relay_downgrade_rgb (const char *string, int name)
+{
+    if (!string || !strchr (string, '#')
+        || (!name && !relay_has_rgb_color_code (string)))
+    {
+        return NULL;
+    }
+
+    return weechat_hook_modifier_exec ("color_downgrade_rgb",
+                                       (name) ? "name" : NULL, string);
 }
 
 /*

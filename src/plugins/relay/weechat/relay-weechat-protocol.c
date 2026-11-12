@@ -180,8 +180,12 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
             hashtable,
             "escape_commands",
             RELAY_WEECHAT_DATA(client, escape_commands) ? "on" : "off");
+        weechat_hashtable_set (
+            hashtable,
+            "rgb_colors",
+            RELAY_WEECHAT_DATA(client, rgb_colors) ? "on" : "off");
 
-        msg = relay_weechat_msg_new (id);
+        msg = relay_weechat_msg_new (client, id);
         if (msg)
         {
             relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HASHTABLE);
@@ -294,6 +298,12 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
                 else if (strcmp (*ptr_option, "escape_commands") == 0)
                 {
                     RELAY_WEECHAT_DATA(client, escape_commands) =
+                        (weechat_strcmp (pos, "on") == 0) ?
+                        1 : 0;
+                }
+                else if (strcmp (*ptr_option, "rgb_colors") == 0)
+                {
+                    RELAY_WEECHAT_DATA(client, rgb_colors) =
                         (weechat_strcmp (pos, "on") == 0) ?
                         1 : 0;
                 }
@@ -464,7 +474,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(hdata)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
 
-    msg = relay_weechat_msg_new (id);
+    msg = relay_weechat_msg_new (client, id);
     if (msg)
     {
         if (!relay_weechat_msg_add_hdata (msg, argv[0],
@@ -496,7 +506,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
 
-    msg = relay_weechat_msg_new (id);
+    msg = relay_weechat_msg_new (client, id);
     if (msg)
     {
         info = weechat_info_get (argv[0],
@@ -528,7 +538,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
 
-    msg = relay_weechat_msg_new (id);
+    msg = relay_weechat_msg_new (client, id);
     if (msg)
     {
         value = 0;
@@ -583,7 +593,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
         }
     }
 
-    msg = relay_weechat_msg_new (id);
+    msg = relay_weechat_msg_new (client, id);
     if (msg)
     {
         relay_weechat_msg_add_nicklist (msg, ptr_buffer, NULL);
@@ -730,7 +740,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
     if (!ptr_list)
         goto error;
 
-    msg = relay_weechat_msg_new (id);
+    msg = relay_weechat_msg_new (client, id);
     if (msg)
     {
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HDATA);
@@ -806,7 +816,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
 error:
     weechat_completion_free (completion);
 
-    msg = relay_weechat_msg_new (id);
+    msg = relay_weechat_msg_new (client, id);
     if (msg)
     {
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HDATA);
@@ -862,7 +872,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -888,7 +898,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -911,7 +921,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -936,7 +946,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -961,7 +971,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -1006,7 +1016,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -1030,7 +1040,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -1053,7 +1063,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -1076,7 +1086,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -1098,7 +1108,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
         if (relay_weechat_protocol_is_sync (ptr_client, ptr_buffer,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -1129,7 +1139,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
         if (relay_weechat_protocol_is_sync (ptr_client, ptr_buffer,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -1160,7 +1170,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
         if (relay_weechat_protocol_is_sync (ptr_client, ptr_buffer,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -1187,7 +1197,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
@@ -1251,7 +1261,9 @@ relay_weechat_protocol_nicklist_map_cb (void *data,
         }
 
         /* Send nicklist diffs or full nicklist. */
-        msg = relay_weechat_msg_new ((ptr_nicklist) ? "_nicklist_diff" : "_nicklist");
+        msg = relay_weechat_msg_new (
+            ptr_client,
+            (ptr_nicklist) ? "_nicklist_diff" : "_nicklist");
         if (msg)
         {
             relay_weechat_msg_add_nicklist (msg, ptr_buffer, ptr_nicklist);
@@ -1419,7 +1431,7 @@ relay_weechat_protocol_signal_upgrade_cb (const void *pointer, void *data,
         if (relay_weechat_protocol_is_sync (ptr_client, NULL,
                                             RELAY_WEECHAT_PROTOCOL_SYNC_UPGRADE))
         {
-            msg = relay_weechat_msg_new (str_signal);
+            msg = relay_weechat_msg_new (ptr_client, str_signal);
             if (msg)
             {
                 relay_weechat_msg_send (ptr_client, msg);
@@ -1627,7 +1639,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    msg = relay_weechat_msg_new (id);
+    msg = relay_weechat_msg_new (client, id);
     if (msg)
     {
         /* Char */
@@ -1719,7 +1731,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(ping)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    msg = relay_weechat_msg_new ("_pong");
+    msg = relay_weechat_msg_new (client, "_pong");
     if (msg)
     {
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);

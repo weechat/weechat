@@ -536,6 +536,40 @@ TEST(RelayApiMsg, LinesToJson)
 
 /*
  * Test functions:
+ *   relay_has_rgb_color_code
+ */
+
+TEST(RelayApiMsg, HasRgbColorCode)
+{
+    char string[64];
+
+    LONGS_EQUAL(0, relay_has_rgb_color_code (""));
+    LONGS_EQUAL(0, relay_has_rgb_color_code ("#ff8800"));
+    LONGS_EQUAL(0, relay_has_rgb_color_code ("\x19" "F05" "#weechat"));
+    /* "@#" in text: may be a RGB code (the downgrade keeps the text). */
+    LONGS_EQUAL(1, relay_has_rgb_color_code ("\x19" "F05" "user@#chan"));
+    LONGS_EQUAL(1, relay_has_rgb_color_code ("\x19" "F@#ff8800" "orange"));
+    LONGS_EQUAL(1, relay_has_rgb_color_code ("\x19" "F@*_#ff8800" "orange"));
+    LONGS_EQUAL(1, relay_has_rgb_color_code ("#chan " "\x19" "B@#000080"));
+
+    /* Each attribute char of an extended color is allowed before "#". */
+    snprintf (string, sizeof (string), "\x19" "F@%c%c%c%c%c%c%c" "#ff8800",
+              GUI_COLOR_EXTENDED_BLINK_CHAR,
+              GUI_COLOR_EXTENDED_DIM_CHAR,
+              GUI_COLOR_EXTENDED_BOLD_CHAR,
+              GUI_COLOR_EXTENDED_REVERSE_CHAR,
+              GUI_COLOR_EXTENDED_ITALIC_CHAR,
+              GUI_COLOR_EXTENDED_UNDERLINE_CHAR,
+              GUI_COLOR_EXTENDED_KEEPATTR_CHAR);
+    LONGS_EQUAL(1, relay_has_rgb_color_code (string));
+
+    /* Any punctuation char is accepted (attribute of a later version). */
+    LONGS_EQUAL(1, relay_has_rgb_color_code ("\x19" "F@^#ff8800" "orange"));
+    LONGS_EQUAL(0, relay_has_rgb_color_code ("\x19" "F@a#ff8800" "orange"));
+}
+
+/*
+ * Test functions:
  *   relay_api_msg_completion_to_json
  */
 

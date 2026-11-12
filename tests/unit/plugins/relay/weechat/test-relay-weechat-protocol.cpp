@@ -816,6 +816,7 @@ TEST(RelayWeechatProtocolWithClient, CbHandshake)
               "\"nonce\":\"%s\","
               "\"password_hash_algo\":\"plain\","
               "\"password_hash_iterations\":\"1234\","
+              "\"rgb_colors\":\"off\","
               "\"totp\":\"off\"}",
               client2->nonce);
     STRCMP_EQUAL(expected, msg (0, 0).c_str ());
@@ -834,7 +835,7 @@ TEST(RelayWeechatProtocolWithClient, CbHandshake)
     recv (client2,
           "handshake password_hash_algo=plain:pbkdf2+sha256:sha512:unknown,"
           "compression=unknown:zlib:off,escape_commands=on,unknown=value,"
-          "invalid");
+          "rgb_colors=on,invalid");
     LONGS_EQUAL(1, test_msgs_count);
     snprintf (expected, sizeof (expected),
               "(null) htb:{\"compression\":\"zlib\","
@@ -842,6 +843,7 @@ TEST(RelayWeechatProtocolWithClient, CbHandshake)
               "\"nonce\":\"%s\","
               "\"password_hash_algo\":\"pbkdf2+sha256\","
               "\"password_hash_iterations\":\"1234\","
+              "\"rgb_colors\":\"on\","
               "\"totp\":\"off\"}",
               client2->nonce);
     STRCMP_EQUAL(expected, msg (0, 0).c_str ());
@@ -850,6 +852,7 @@ TEST(RelayWeechatProtocolWithClient, CbHandshake)
     LONGS_EQUAL(RELAY_WEECHAT_COMPRESSION_ZLIB,
                 RELAY_WEECHAT_DATA(client2, compression));
     LONGS_EQUAL(1, RELAY_WEECHAT_DATA(client2, escape_commands));
+    LONGS_EQUAL(1, RELAY_WEECHAT_DATA(client2, rgb_colors));
     LONGS_EQUAL(RELAY_STATUS_AUTHENTICATING, client2->status);
     relay_client_free (client2);
 
@@ -857,6 +860,12 @@ TEST(RelayWeechatProtocolWithClient, CbHandshake)
     client2 = new_client ();
     recv (client2, "handshake escape_commands=ON");
     LONGS_EQUAL(0, RELAY_WEECHAT_DATA(client2, escape_commands));
+    relay_client_free (client2);
+
+    /* RGB colors: only "on" enables it. */
+    client2 = new_client ();
+    recv (client2, "handshake rgb_colors=ON");
+    LONGS_EQUAL(0, RELAY_WEECHAT_DATA(client2, rgb_colors));
     relay_client_free (client2);
 
     /* No supported algorithm: authentication failed. */

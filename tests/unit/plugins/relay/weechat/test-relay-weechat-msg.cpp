@@ -21,6 +21,7 @@ extern "C"
 #include "src/core/core-string.h"
 #include "src/core/hook/hook-infolist.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/relay/weechat/relay-weechat-msg.h"
 }
@@ -87,7 +88,7 @@ test_relay_weechat_msg_get_hdata_path (struct t_relay_weechat_msg *msg)
 }
 
 #define WEE_CHECK_ADD_HDATA(__result, __path_returned, __path, __keys)  \
-    msg = relay_weechat_msg_new ("test");                               \
+    msg = relay_weechat_msg_new (NULL, "test");                         \
     CHECK(msg);                                                         \
     LONGS_EQUAL(__result,                                               \
                 relay_weechat_msg_add_hdata (msg, __path, __keys));     \
@@ -194,6 +195,83 @@ TEST_GROUP(RelayWeechatMsg)
 
 /*
  * Test functions:
+ *   relay_weechat_msg_new
+ *   relay_weechat_msg_add_string
+ */
+
+TEST(RelayWeechatMsg, AddStringRgbColors)
+{
+    struct t_relay_weechat_msg *msg;
+    char string[256], expected[256], *str;
+    int position, fg, rgb_colors;
+
+    fg = gui_color_convert_rgb_to_term_display (0xff8800, 256);
+
+    /*
+     * RGB colors with attributes (as built for IRC hex colors and ANSI
+     * colors), the string does not contain "@#"
+     */
+    snprintf (string, sizeof (string), "%s" "a" "%s" "b #ff8800",
+              "\x19" "F@|#ff8800", "\x19" "*@*#ff8800~@#000080");
+    snprintf (expected, sizeof (expected), "%s%05d" "a" "%s%05d~@%05d" "b #ff8800",
+              "\x19" "F@|", fg, "\x19" "*@*", fg,
+              gui_color_convert_rgb_to_term_display (0x000080, 256));
+
+    for (rgb_colors = 0; rgb_colors <= 1; rgb_colors++)
+    {
+        msg = relay_weechat_msg_new (NULL, "test");
+        CHECK(msg);
+        LONGS_EQUAL(0, msg->rgb_colors);
+        msg->rgb_colors = rgb_colors;
+        position = msg->data_size;
+        relay_weechat_msg_add_string (msg, string);
+        str = test_relay_weechat_msg_get_string (msg, &position);
+        /*
+         * Without client or if client does not support RGB colors: replaced
+         * by nearest terminal color; otherwise string unchanged.
+         */
+        STRCMP_EQUAL((rgb_colors) ? string : expected, str);
+        free (str);
+        relay_weechat_msg_free (msg);
+    }
+}
+
+/*
+ * Test functions:
+ *   relay_weechat_msg_add_color_name
+ */
+
+TEST(RelayWeechatMsg, AddColorNameRgbColors)
+{
+    struct t_relay_weechat_msg *msg;
+    char expected[64], *str;
+    int position, rgb_colors;
+
+    snprintf (expected, sizeof (expected), "*%d:red",
+              gui_color_convert_rgb_to_term_display (0xff8800, 256));
+
+    for (rgb_colors = 0; rgb_colors <= 1; rgb_colors++)
+    {
+        msg = relay_weechat_msg_new (NULL, "test");
+        CHECK(msg);
+        msg->rgb_colors = rgb_colors;
+        position = msg->data_size;
+        relay_weechat_msg_add_color_name (msg, "*#ff8800:red");
+        relay_weechat_msg_add_color_name (msg, "lightred");
+        relay_weechat_msg_add_color_name (msg, NULL);
+        str = test_relay_weechat_msg_get_string (msg, &position);
+        STRCMP_EQUAL((rgb_colors) ? "*#ff8800:red" : expected, str);
+        free (str);
+        str = test_relay_weechat_msg_get_string (msg, &position);
+        STRCMP_EQUAL("lightred", str);
+        free (str);
+        POINTERS_EQUAL(NULL, test_relay_weechat_msg_get_string (msg, &position));
+        relay_weechat_msg_free (msg);
+    }
+}
+
+/*
+ * Test functions:
  *   relay_weechat_msg_add_infolist
  */
 
@@ -208,7 +286,7 @@ TEST(RelayWeechatMsg, AddInfolist)
                           &test_infolist_cb, NULL, NULL);
     CHECK(hook);
 
-    msg = relay_weechat_msg_new ("test");
+    msg = relay_weechat_msg_new (NULL, "test");
     CHECK(msg);
 
     /* Unknown infolist: nothing added. */

@@ -34,11 +34,15 @@
 /*
  * Build a new message (for sending to client).
  *
+ * If client is NULL or if it did not enable the handshake option
+ * "rgb_colors", RGB colors ("#rrggbb") in strings added to the message are
+ * replaced by the nearest terminal color.
+ *
  * Return pointer to new message, NULL if error.
  */
 
 struct t_relay_weechat_msg *
-relay_weechat_msg_new (const char *id)
+relay_weechat_msg_new (struct t_relay_client *client, const char *id)
 {
     struct t_relay_weechat_msg *new_msg;
 
@@ -55,6 +59,8 @@ relay_weechat_msg_new (const char *id)
     }
     new_msg->data_alloc = RELAY_WEECHAT_MSG_INITIAL_ALLOC;
     new_msg->data_size = 0;
+    new_msg->rgb_colors = (client && client->protocol_data) ?
+        RELAY_WEECHAT_DATA(client, rgb_colors) : 0;
 
     /* Add size and compression flag (they will be set later). */
     relay_weechat_msg_add_int (new_msg, 0);
@@ -181,25 +187,56 @@ relay_weechat_msg_add_longlong (struct t_relay_weechat_msg *msg,
 
 /*
  * Add length + string to a message.
+ *
+ * If the client does not support RGB colors (handshake option "rgb_colors"),
+ * RGB colors in WeeChat color codes are replaced by the nearest terminal
+ * color.
  */
 
 void
 relay_weechat_msg_add_string (struct t_relay_weechat_msg *msg,
                               const char *string)
 {
+    char *downgraded;
     int length;
 
     if (string)
     {
+        /*
+         * If client does not support RGB colors, replace them by the nearest
+         * terminal color.
+         */
+        downgraded = (msg->rgb_colors) ? NULL : relay_downgrade_rgb (string, 0);
+        if (downgraded)
+            string = downgraded;
         length = strlen (string);
         relay_weechat_msg_add_int (msg, length);
         if (length > 0)
             relay_weechat_msg_add_bytes (msg, string, length);
+        free (downgraded);
     }
     else
     {
         relay_weechat_msg_add_int (msg, -1);
     }
+}
+
+/*
+ * Add a color name (for example "lightred" or "#ff8800") to a message.
+ *
+ * If the client does not support RGB colors (handshake option "rgb_colors"),
+ * RGB colors in the name are replaced by the nearest terminal color.
+ */
+
+void
+relay_weechat_msg_add_color_name (struct t_relay_weechat_msg *msg,
+                                  const char *name)
+{
+    char *downgraded;
+
+    downgraded = (msg->rgb_colors) ? NULL : relay_downgrade_rgb (name, 1);
+    relay_weechat_msg_add_string (msg, (downgraded) ? downgraded : name);
+    free (downgraded);
 }
 
 /*
@@ -920,9 +957,10 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
             relay_weechat_msg_add_char (msg, nicklist->items[i].visible);
             relay_weechat_msg_add_int (msg, nicklist->items[i].level);
             relay_weechat_msg_add_string (msg, nicklist->items[i].name);
-            relay_weechat_msg_add_string (msg, nicklist->items[i].color);
+            relay_weechat_msg_add_color_name (msg, nicklist->items[i].color);
             relay_weechat_msg_add_string (msg, nicklist->items[i].prefix);
-            relay_weechat_msg_add_string (msg, nicklist->items[i].prefix_color);
+            relay_weechat_msg_add_color_name (msg,
+                                              nicklist->items[i].prefix_color);
             count++;
         }
     }
@@ -950,7 +988,7 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                     weechat_hdata_string (relay_hdata_nick,
                                           ptr_nick,
                                           "name"));
-                relay_weechat_msg_add_string (
+                relay_weechat_msg_add_color_name (
                     msg,
                     weechat_hdata_string (relay_hdata_nick,
                                           ptr_nick,
@@ -960,7 +998,7 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                     weechat_hdata_string (relay_hdata_nick,
                                           ptr_nick,
                                           "prefix"));
-                relay_weechat_msg_add_string (
+                relay_weechat_msg_add_color_name (
                     msg,
                     weechat_hdata_string (relay_hdata_nick,
                                           ptr_nick,
@@ -987,7 +1025,7 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                     weechat_hdata_string (relay_hdata_nick_group,
                                           ptr_group,
                                           "name"));
-                relay_weechat_msg_add_string (
+                relay_weechat_msg_add_color_name (
                     msg,
                     weechat_hdata_string (relay_hdata_nick_group,
                                           ptr_group,

@@ -42,6 +42,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - relay/api: add option "options" in resource `POST /api/sync` to receive changes on options
 - relay/api: add option "notify_only" in resource `POST /api/sync` to receive only highlights and private messages ([#2363](https://github.com/weechat/weechat/issues/2363))
 - relay/api: add resource `GET /api/options`
+- relay/weechat: add handshake option "rgb_colors", RGB colors are replaced by the nearest terminal color for clients that do not enable it ([#1364](https://github.com/weechat/weechat/issues/1364))
 
 ### Changed
 
