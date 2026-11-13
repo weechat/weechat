@@ -3558,6 +3558,35 @@ irc_server_msgq_add_buffer (struct t_irc_server *server, char *buffer)
 }
 
 /*
+ * Replace WeeChat internal color control characters in an IRC message.
+ *
+ * The characters are replaced one by one instead of being decoded as color
+ * sequences because bytes following them can be IRC protocol separators.
+ *
+ * Note: result must be freed after use.
+ */
+
+static char *
+irc_server_replace_internal_color_chars (const char *message)
+{
+    char *result, *pos;
+    unsigned char value;
+
+    result = strdup (message);
+    if (!result)
+        return NULL;
+
+    for (pos = result; pos[0]; pos++)
+    {
+        value = (unsigned char)pos[0];
+        if ((value >= 0x19) && (value <= 0x1C))
+            pos[0] = '?';
+    }
+
+    return result;
+}
+
+/*
  * Flush message queue.
  */
 
@@ -3733,11 +3762,10 @@ irc_server_msgq_flush (void)
                                 }
                             }
 
-                            /* Replace WeeChat internal color codes by "?". */
+                            /* Replace WeeChat internal color chars by "?". */
                             msg_decoded_without_color =
-                                weechat_string_remove_color (
-                                    (msg_decoded) ? msg_decoded : ptr_msg,
-                                    "?");
+                                irc_server_replace_internal_color_chars (
+                                    (msg_decoded) ? msg_decoded : ptr_msg);
 
                             /* Call modifier after charset. */
                             ptr_msg2 = (msg_decoded_without_color) ?
