@@ -21,6 +21,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 ### Security
 
 - core: fix decoding of incomplete WeeChat color codes in functions string_remove_color and string_color_code_size, which could remove the sender of an IRC message received with a crafted message tag ([#2382](https://github.com/weechat/weechat/pull/2382))
+- xfer: open the socket of a passive file receive (reverse DCC) only when the transfer is accepted, to prevent a remote peer from exhausting file descriptors with many DCC offers ([#2384](https://github.com/weechat/weechat/pull/2384))
 
 ## [4.10.4] - 2026-11-09
 
