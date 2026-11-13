@@ -88,10 +88,10 @@ minimum version changes (same for the default value of a CMake option
   User's guide, in all languages, the tables of required and optional
   dependencies (package, version, features) and the table of CMake options
   (default value).
-- **Debian packaging:** in both `debian-devel/` and `debian-stable/`: `control`
-  (`Build-Depends`, packages), `rules` (CMake options), `*.install` and
-  `*.dirs` files of a new package; the patches for old Debian/Ubuntu versions
-  in `tools/debian/patches/` (applied by `tools/build_debian.sh`).
+- **Debian packaging:** in `debian/`: `control` (`Build-Depends`, packages),
+  `rules` (CMake options), `*.install` and `*.dirs` files of a new package; the
+  patches for old Debian/Ubuntu versions in `tools/debian/patches/` (applied by
+  `tools/build_debian.sh`).
 - **Cygwin:** [weechat.cygport.in](weechat.cygport.in) (`BUILD_REQUIRES`, CMake
   options).
 - **CI:** [.github/workflows/ci.yml](.github/workflows/ci.yml): the package

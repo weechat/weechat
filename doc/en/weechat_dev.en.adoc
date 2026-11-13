@@ -1344,8 +1344,7 @@ Where _component_ is one of following:
 | Continuous integration
 
 | debian
-| debian-devel/* +
-  debian-stable/*
+| debian/*
 | Debian packaging
 
 | tests/fuzz

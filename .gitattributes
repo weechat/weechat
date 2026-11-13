@@ -5,7 +5,6 @@
 # Files/directories excluded from tarballs.
 
 .git*                  export-ignore
-debian-devel           export-ignore
-debian-stable          export-ignore
+/debian                export-ignore
 .mailmap               export-ignore
 tools/build_debian.sh  export-ignore

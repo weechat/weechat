@@ -6,8 +6,7 @@ version = 1
 
 [[annotations]]
 path = [
-    "debian-devel/**",
-    "debian-stable/**",
+    "debian/**",
     "icons/**/*.png",
     "icons/**/*.svg",
     "src/plugins/php/weechat-php_arginfo.h",

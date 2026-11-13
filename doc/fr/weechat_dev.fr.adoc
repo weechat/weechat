@@ -1372,8 +1372,7 @@ Où _composant_ est :
 | Intégration continue
 
 | debian
-| debian-devel/* +
-  debian-stable/*
+| debian/*
 | Empaquetage Debian
 
 | tests/fuzz
