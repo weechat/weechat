@@ -797,7 +797,8 @@ logger_print_cb (const void *pointer, void *data,
             &tv);
 
         /* Write each part of a multiline message as a complete log record. */
-        if (ptr_message && strchr (ptr_message, '\n'))
+        if (ptr_message && strchr (ptr_message, '\n')
+            && weechat_config_boolean (logger_config_file_multiline_prefix))
         {
             if (weechat_asprintf (
                     &line_prefix,

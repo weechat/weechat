@@ -47,6 +47,7 @@ struct t_config_option *logger_config_file_fsync = NULL;
 struct t_config_option *logger_config_file_info_lines = NULL;
 struct t_config_option *logger_config_file_log_conditions = NULL;
 struct t_config_option *logger_config_file_mask = NULL;
+struct t_config_option *logger_config_file_multiline_prefix = NULL;
 struct t_config_option *logger_config_file_name_lower_case = NULL;
 struct t_config_option *logger_config_file_nick_prefix = NULL;
 struct t_config_option *logger_config_file_nick_suffix = NULL;
@@ -616,6 +617,14 @@ logger_config_init (void)
             NULL, NULL, NULL,
             &logger_config_change_file_option_restart_log, NULL, NULL,
             NULL, NULL, NULL);
+        logger_config_file_multiline_prefix = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "multiline_prefix", "boolean",
+            N_("add a timestamp and prefix to each line of a multiline "
+               "message (if disabled, only the first line has a timestamp "
+               "and prefix)"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         logger_config_file_name_lower_case = weechat_config_new_option (
             logger_config_file, logger_config_section_file,
             "name_lower_case", "boolean",

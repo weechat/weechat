@@ -23,6 +23,7 @@ extern struct t_config_option *logger_config_file_fsync;
 extern struct t_config_option *logger_config_file_info_lines;
 extern struct t_config_option *logger_config_file_log_conditions;
 extern struct t_config_option *logger_config_file_mask;
+extern struct t_config_option *logger_config_file_multiline_prefix;
 extern struct t_config_option *logger_config_file_name_lower_case;
 extern struct t_config_option *logger_config_file_nick_prefix;
 extern struct t_config_option *logger_config_file_nick_suffix;
