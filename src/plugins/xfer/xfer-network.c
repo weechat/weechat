@@ -152,6 +152,88 @@ xfer_network_resolve_addr (const char *str_address, const char *str_port,
 }
 
 /*
+ * Opens a socket and binds it to a local port, on the wildcard address of the
+ * given family (AF_INET or AF_INET6).
+ *
+ * The port is the first one available in option xfer.network.port_range,
+ * or a port chosen by the system if the option is empty.
+ *
+ * On success, the bound port is stored in *port (which is not changed on
+ * error).
+ *
+ * Returns the socket descriptor, -1 if error.
+ */
+
+int
+xfer_network_bind_socket (int family, int *port)
+{
+    const char *port_range;
+    int args, port_candidate, port_end, sock, bound;
+    uint16_t *bind_port;
+    struct sockaddr_storage bind_addr;
+    socklen_t bind_addr_len;
+
+    memset (&bind_addr, 0, sizeof (bind_addr));
+    bind_addr.ss_family = family;
+    bind_addr_len = (family == AF_INET) ?
+        sizeof (struct sockaddr_in) : sizeof (struct sockaddr_in6);
+    bind_port = (family == AF_INET) ?
+        &((struct sockaddr_in *)&bind_addr)->sin_port :
+        &((struct sockaddr_in6 *)&bind_addr)->sin6_port;
+
+    sock = socket (family, SOCK_STREAM, 0);
+    if (sock < 0)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: cannot create socket for xfer: error %d %s"),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        errno, strerror (errno));
+        return -1;
+    }
+    port_candidate = 0;
+    port_end = 0;
+    port_range = weechat_config_string (xfer_config_network_port_range);
+    args = (port_range && port_range[0]) ?
+        sscanf (port_range, "%d-%d", &port_candidate, &port_end) : 0;
+    if (args == 1)
+        port_end = port_candidate;
+    bound = 0;
+    if ((args == 0) || (port_candidate <= port_end))
+    {
+        do
+        {
+            if ((port_candidate == 0) || !xfer_port_in_use (port_candidate))
+            {
+                *bind_port = htons (port_candidate);
+                if (bind (sock, (struct sockaddr *)&bind_addr,
+                          bind_addr_len) == 0)
+                {
+                    bound = 1;
+                    break;
+                }
+            }
+            port_candidate++;
+        }
+        while ((args > 0) && (port_candidate <= port_end));
+    }
+    if (!bound)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: cannot find available port for xfer"),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME);
+        close (sock);
+        return -1;
+    }
+    if (port_candidate == 0)
+    {
+        getsockname (sock, (struct sockaddr *)&bind_addr, &bind_addr_len);
+        port_candidate = ntohs (*bind_port);
+    }
+    *port = port_candidate;
+    return sock;
+}
+
+/*
  * Creates pipe for communication with child process.
  *
  * Returns:
@@ -915,6 +997,21 @@ xfer_network_connect_init (struct t_xfer *xfer)
 void
 xfer_network_accept (struct t_xfer *xfer)
 {
+    if ((xfer->type == XFER_TYPE_FILE_RECV_PASSIVE) && (xfer->sock < 0))
+    {
+        if (xfer->local_address)
+        {
+            xfer->sock = xfer_network_bind_socket (
+                xfer->local_address->sa_family, &xfer->port);
+        }
+        if (xfer->sock < 0)
+        {
+            xfer_close (xfer, XFER_STATUS_FAILED);
+            xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+            return;
+        }
+    }
+
     if (XFER_IS_FILE(xfer->type) && (xfer->start_resume > 0))
     {
         xfer->status = XFER_STATUS_CONNECTING;

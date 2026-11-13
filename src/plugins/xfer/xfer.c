@@ -1039,13 +1039,13 @@ xfer_add_cb (const void *pointer, void *data,
     const char *plugin_name, *plugin_id, *str_type, *str_protocol;
     const char *remote_nick, *local_nick, *charset_modifier, *filename, *proxy;
     const char *str_address, *str_port, *token;
-    int type, protocol, args, port_start, port_end, sock, server_sock, port;
+    int type, protocol, sock, server_sock, port;
     char *path, *filename2, *short_filename, *pos, str_port_temp[16];
     struct stat st;
-    struct sockaddr_storage local_addr_storage, remote_addr_storage, own_ip_addr, bind_addr;
+    struct sockaddr_storage local_addr_storage, remote_addr_storage, own_ip_addr;
     struct sockaddr *local_addr = (struct sockaddr*)&local_addr_storage;
     struct sockaddr *remote_addr = (struct sockaddr*)&remote_addr_storage;
-    socklen_t local_addr_length, remote_addr_length, bind_addr_len;
+    socklen_t local_addr_length, remote_addr_length;
     unsigned long long file_size;
     struct t_xfer *ptr_xfer;
     struct t_hashtable *options;
@@ -1225,6 +1225,8 @@ xfer_add_cb (const void *pointer, void *data,
     }
     if (type == XFER_TYPE_FILE_RECV_PASSIVE)
     {
+        /* local port is assigned when the xfer is accepted */
+        port = 0;
         str_address = weechat_infolist_string (infolist, "remote_address");
         remote_addr_length = sizeof (remote_addr_storage);
         if (!xfer_network_resolve_addr (str_address, NULL,
@@ -1236,9 +1238,7 @@ xfer_add_cb (const void *pointer, void *data,
     }
     if (XFER_IS_FILE_PASSIVE(type) || (type == XFER_TYPE_CHAT_SEND))
     {
-        memset (&bind_addr, 0, sizeof (bind_addr));
-
-        /* determine bind_addr family from either own_ip or default */
+        /* determine local address from either own_ip or the IRC connection */
         if (weechat_config_string (xfer_config_network_own_ip)
             && weechat_config_string (xfer_config_network_own_ip)[0])
         {
@@ -1256,105 +1256,23 @@ xfer_add_cb (const void *pointer, void *data,
 
             /* set the advertised address to own_ip */
             local_addr = (struct sockaddr*)&own_ip_addr;
-
-            /* bind_addr's family should be the advertised family */
-            bind_addr.ss_family = own_ip_addr.ss_family;
         }
         else
         {
-            /* no own_ip, so bind_addr's family comes from irc connection  */
             /* use the local interface, from the server socket */
             server_sock = weechat_infolist_integer (infolist, "socket");
             if (getsockname (server_sock, (struct sockaddr *)&local_addr_storage, &local_addr_length))
             {
                 goto error;
             }
-            bind_addr.ss_family = local_addr_storage.ss_family;
         }
 
-        /* determine bind wildcard address */
-        if (bind_addr.ss_family == AF_INET)
+        /* passive receives only need a socket after they are accepted */
+        if (type != XFER_TYPE_FILE_RECV_PASSIVE)
         {
-            ((struct sockaddr_in*)&bind_addr)->sin_addr.s_addr = INADDR_ANY;
-            bind_addr_len = sizeof (struct sockaddr_in);
-        }
-        else
-        {
-            memcpy (&((struct sockaddr_in6*)&bind_addr)->sin6_addr,
-                    &in6addr_any, sizeof (in6addr_any));
-            bind_addr_len = sizeof (struct sockaddr_in6);
-        }
-
-        /* open socket for xfer */
-        sock = socket (bind_addr.ss_family, SOCK_STREAM, 0);
-        if (sock < 0)
-        {
-            weechat_printf (NULL,
-                            _("%s%s: cannot create socket for xfer: error %d %s"),
-                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
-                            errno, strerror (errno));
-            goto error;
-        }
-
-        /* look for port */
-        port = 0;
-
-        if (weechat_config_string (xfer_config_network_port_range)
-            && weechat_config_string (xfer_config_network_port_range)[0])
-        {
-            /* find a free port in the specified range */
-            args = sscanf (weechat_config_string (xfer_config_network_port_range),
-                           "%d-%d", &port_start, &port_end);
-            if (args > 0)
-            {
-                port = port_start;
-                if (args == 1)
-                    port_end = port_start;
-
-                /* loop through the entire allowed port range */
-                while (port <= port_end)
-                {
-                    if (!xfer_port_in_use (port))
-                    {
-                        /* attempt to bind to the free port */
-                        if (bind_addr.ss_family == AF_INET)
-                            ((struct sockaddr_in *)&bind_addr)->sin_port = htons (port);
-                        else
-                            ((struct sockaddr_in6 *)&bind_addr)->sin6_port = htons (port);
-                        if (bind (sock, (struct sockaddr *)&bind_addr, bind_addr_len) == 0)
-                            break;
-                    }
-                    port++;
-                }
-
-                if (port > port_end)
-                    port = -1;
-            }
-        }
-
-        if (port == 0)
-        {
-            /* find port automatically */
-            if (bind (sock, (struct sockaddr *)&bind_addr, bind_addr_len) == 0)
-            {
-                getsockname (sock, (struct sockaddr *)&bind_addr, &bind_addr_len);
-                if (bind_addr.ss_family == AF_INET)
-                    port = ntohs (((struct sockaddr_in *)&bind_addr)->sin_port);
-                else
-                    port = ntohs (((struct sockaddr_in6 *)&bind_addr)->sin6_port);
-            }
-            else
-                port = -1;
-        }
-
-        if (port == -1)
-        {
-            /* Could not find any port to bind */
-            weechat_printf (NULL,
-                            _("%s%s: cannot find available port for xfer"),
-                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
-            close (sock);
-            goto error;
+            sock = xfer_network_bind_socket (local_addr->sa_family, &port);
+            if (sock < 0)
+                goto error;
         }
     }
 
