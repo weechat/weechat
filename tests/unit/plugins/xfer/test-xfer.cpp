@@ -32,10 +32,10 @@ extern "C"
 #include "src/plugins/weechat-plugin.h"
 #include "src/plugins/xfer/xfer.h"
 #include "src/plugins/xfer/xfer-config.h"
+#include "src/plugins/xfer/xfer-network.h"
 
 extern int xfer_search_type (const char *type);
 extern int xfer_search_protocol (const char *protocol);
-extern int xfer_port_in_use (int port);
 extern int xfer_nick_auto_accepted (const char *server, const char *nick);
 extern struct t_xfer *xfer_new (const char *plugin_name,
                                 const char *plugin_id,
@@ -514,8 +514,9 @@ TEST_GROUP(XferAdd)
     struct t_xfer *saved_xfer_list;
     int sock_server;
     char *filename, *rel_filename;
-    int count_signals;
-    struct t_hook *hook_signals;
+    int count_signals, count_resume;
+    struct t_hook *hook_signals, *hook_resume;
+    char *temp_resume_filename;
 
     static int signal_cb (const void *pointer, void *data,
                           const char *signal, const char *type_data,
@@ -567,6 +568,11 @@ TEST_GROUP(XferAdd)
         count_signals = 0;
         hook_signals = hook_signal (NULL, "xfer_send_ready", &signal_cb,
                                     &count_signals, NULL);
+        count_resume = 0;
+        hook_resume = hook_signal (NULL, "xfer_resume_ready", &signal_cb,
+                                   &count_resume, NULL);
+
+        temp_resume_filename = NULL;
 
         record_start ();
     }
@@ -578,6 +584,13 @@ TEST_GROUP(XferAdd)
         record_stop ();
 
         unhook (hook_signals);
+        unhook (hook_resume);
+
+        if (temp_resume_filename)
+        {
+            unlink (temp_resume_filename);
+            free (temp_resume_filename);
+        }
 
         /* Free xfers created by the test (added at the beginning). */
         while (xfer_list && (xfer_list != saved_xfer_list))
@@ -897,7 +910,7 @@ TEST(XferAdd, AddCbFileRecvPassive)
                           "protocol_string", "dcc",
                           "remote_nick", "alice", "local_nick", "bob",
                           "filename", "test.txt", "size", "10",
-                          "remote_address", "127.0.0.1",
+                          "remote_address", "127.0.0.1", "port", "5000",
                           "socket", str_sock_server (), "token", "42",
                           NULL));
     ptr_xfer = xfer_list;
@@ -906,8 +919,8 @@ TEST(XferAdd, AddCbFileRecvPassive)
     STRCMP_EQUAL("127.0.0.1", ptr_xfer->remote_address_str);
     STRCMP_EQUAL("127.0.0.1", ptr_xfer->local_address_str);
     STRCMP_EQUAL("42", ptr_xfer->token);
-    CHECK(ptr_xfer->sock >= 0);
-    CHECK(ptr_xfer->port > 0);
+    LONGS_EQUAL(-1, ptr_xfer->sock);
+    LONGS_EQUAL(0, ptr_xfer->port);
     LONGS_EQUAL(0, count_signals);
 
     /* Nick auto-accepted: xfer accepted, listening socket. */
@@ -1083,6 +1096,152 @@ TEST(XferAdd, AddCbPortRange)
     /* Port not in use any more when the xfer has ended. */
     xfer_close (ptr_xfer, XFER_STATUS_ABORTED);
     LONGS_EQUAL(0, xfer_port_in_use (port));
+}
+
+/*
+ * Test functions:
+ *   xfer_network_accept (file received, passive, with port range)
+ *   xfer_network_bind_socket
+ */
+
+TEST(XferAdd, AcceptFileRecvPassivePortRange)
+{
+    struct t_xfer *ptr_xfer, *ptr_xfer2;
+    char str_range[64];
+    int port;
+
+    port = free_port ();
+    CHECK(port > 0);
+
+    snprintf (str_range, sizeof (str_range), "%d", port);
+    config_file_option_set (xfer_config_network_port_range, str_range, 1);
+
+    /* Offer pending: no socket, port not reserved. */
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test.txt", "size", "10",
+                          "remote_address", "127.0.0.1",
+                          "socket", str_sock_server (), "token", "42",
+                          NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(XFER_STATUS_WAITING, ptr_xfer->status);
+    LONGS_EQUAL(-1, ptr_xfer->sock);
+    LONGS_EQUAL(0, ptr_xfer->port);
+    LONGS_EQUAL(0, xfer_port_in_use (port));
+
+    /* Second offer, also pending. */
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "test2.txt", "size", "10",
+                          "remote_address", "127.0.0.1",
+                          "socket", str_sock_server (), "token", "43",
+                          NULL));
+    ptr_xfer2 = xfer_list;
+    LONGS_EQUAL(-1, ptr_xfer2->sock);
+    LONGS_EQUAL(0, ptr_xfer2->port);
+
+    /* Accept first offer: socket bound on the port of the range. */
+    xfer_network_accept (ptr_xfer);
+    LONGS_EQUAL(XFER_STATUS_CONNECTING, ptr_xfer->status);
+    CHECK(ptr_xfer->sock >= 0);
+    LONGS_EQUAL(port, ptr_xfer->port);
+    CHECK(ptr_xfer->hook_fd);
+    LONGS_EQUAL(1, xfer_port_in_use (port));
+    LONGS_EQUAL(1, count_signals);
+
+    /* Accept second offer: no port available in the range. */
+    xfer_network_accept (ptr_xfer2);
+    LONGS_EQUAL(XFER_STATUS_FAILED, ptr_xfer2->status);
+    LONGS_EQUAL(-1, ptr_xfer2->sock);
+    LONGS_EQUAL(0, ptr_xfer2->port);
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "cannot find available port for xfer");
+    LONGS_EQUAL(1, count_signals);
+}
+
+/*
+ * Test functions:
+ *   xfer_network_accept (file received, passive, resumed, with port range)
+ *   xfer_start_resume_cb (file received, passive)
+ */
+
+TEST(XferAdd, AcceptFileRecvPassiveResumePortRange)
+{
+    struct t_xfer *ptr_xfer;
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
+    char str_range[64], *local_filename;
+    int port, sock;
+
+    port = free_port ();
+    CHECK(port > 0);
+
+    snprintf (str_range, sizeof (str_range), "%d", port);
+    config_file_option_set (xfer_config_network_port_range, str_range, 1);
+
+    /* Partial file already received (temporary file, removed in teardown). */
+    local_filename = string_eval_path_home (
+        "${weechat_data_dir}/xfer/alice.resume_passive.txt", NULL, NULL, NULL);
+    string_asprintf (&temp_resume_filename, "%s.part", local_filename);
+    free (local_filename);
+    create_file (temp_resume_filename, "0123456789");
+
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "resume_passive.txt", "size", "100",
+                          "remote_address", "127.0.0.1",
+                          "socket", str_sock_server (), "token", "44",
+                          NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(10, ptr_xfer->start_resume);
+    LONGS_EQUAL(-1, ptr_xfer->sock);
+    LONGS_EQUAL(0, ptr_xfer->port);
+
+    /*
+     * Accept: socket bound on the port of the range before DCC RESUME is
+     * sent (with this port), but not listening yet.
+     */
+    xfer_network_accept (ptr_xfer);
+    LONGS_EQUAL(XFER_STATUS_CONNECTING, ptr_xfer->status);
+    CHECK(ptr_xfer->sock >= 0);
+    LONGS_EQUAL(port, ptr_xfer->port);
+    POINTERS_EQUAL(NULL, ptr_xfer->hook_fd);
+    LONGS_EQUAL(1, count_resume);
+    LONGS_EQUAL(0, count_signals);
+    POINTERS_EQUAL(ptr_xfer,
+                   xfer_search_resume ("irc", "libera",
+                                       XFER_TYPE_FILE_RECV_PASSIVE,
+                                       port, "44"));
+
+    /* DCC ACCEPT received: same socket, now listening. */
+    sock = ptr_xfer->sock;
+    infolist = infolist_new (NULL);
+    item = infolist_new_item (infolist);
+    infolist_new_var_string (item, "plugin_name", "irc");
+    infolist_new_var_string (item, "plugin_id", "libera");
+    infolist_new_var_string (item, "filename", "resume_passive.txt");
+    infolist_new_var_integer (item, "port", port);
+    infolist_new_var_string (item, "start_resume", "10");
+    infolist_new_var_string (item, "token", "44");
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                xfer_start_resume_cb (NULL, NULL, "xfer_start_resume",
+                                      WEECHAT_HOOK_SIGNAL_POINTER, infolist));
+    infolist_free (infolist);
+    LONGS_EQUAL(XFER_STATUS_CONNECTING, ptr_xfer->status);
+    LONGS_EQUAL(sock, ptr_xfer->sock);
+    LONGS_EQUAL(port, ptr_xfer->port);
+    CHECK(ptr_xfer->hook_fd);
+    CHECK(ptr_xfer->hook_timer);
+    LONGS_EQUAL(1, count_signals);
 }
 
 /*

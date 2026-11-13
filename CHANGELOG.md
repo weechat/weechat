@@ -274,6 +274,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - relay: reject fragmented, compressed or oversized websocket control frames received from a client ([#2356](https://github.com/weechat/weechat/issues/2356))
 - relay: limit size of partial message received from a client to prevent memory exhaustion ([#2347](https://github.com/weechat/weechat/issues/2347))
 - script: reject script names containing path separators in the scripts repository file to prevent writing files outside the scripts directory ([#2351](https://github.com/weechat/weechat/issues/2351))
+- xfer: open the socket of a passive file receive (reverse DCC) only when the transfer is accepted, to prevent a remote peer from exhausting file descriptors with many DCC offers ([#2384](https://github.com/weechat/weechat/pull/2384))
 - xfer: compare the whole server name in option xfer.file.auto_accept_nicks, so that a nick is not auto-accepted on another server whose name starts with the same chars
 - xfer: validate resume position received in DCC RESUME and DCC ACCEPT, to prevent a remote peer from completing a file transfer with a truncated file ([#2369](https://github.com/weechat/weechat/pull/2369))
 - xfer: fix comparison of status in search of transfers, preventing a remote peer from starting a file transfer that was not accepted by the user ([#2352](https://github.com/weechat/weechat/issues/2352))
