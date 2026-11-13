@@ -906,8 +906,8 @@ TEST(XferAdd, AddCbFileRecvPassive)
     STRCMP_EQUAL("127.0.0.1", ptr_xfer->remote_address_str);
     STRCMP_EQUAL("127.0.0.1", ptr_xfer->local_address_str);
     STRCMP_EQUAL("42", ptr_xfer->token);
-    CHECK(ptr_xfer->sock >= 0);
-    CHECK(ptr_xfer->port > 0);
+    LONGS_EQUAL(-1, ptr_xfer->sock);
+    LONGS_EQUAL(0, ptr_xfer->port);
     LONGS_EQUAL(0, count_signals);
 
     /* Nick auto-accepted: xfer accepted, listening socket. */
