@@ -7,6 +7,7 @@
 /* Logger plugin for WeeChat: save buffer lines to disk files */
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
@@ -36,6 +37,72 @@ struct t_weechat_plugin *weechat_logger_plugin = NULL;
 struct t_hook *logger_hook_timer = NULL;    /* timer to flush log files     */
 struct t_hook *logger_hook_print = NULL;
 
+
+/*
+ * Build a multiline log message with the prefix added on every line.
+ *
+ * Note: result must be freed after use.
+ */
+
+static char *
+logger_build_multiline_message (const char *prefix, const char *message)
+{
+    const char *pos;
+    char *result, *ptr_result;
+    size_t length_prefix, length_message, length_result, num_lines;
+
+    if (!prefix || !message)
+        return NULL;
+
+    length_prefix = strlen (prefix);
+    length_message = strlen (message);
+
+    num_lines = 1;
+    for (pos = message; pos[0]; pos++)
+    {
+        if (pos[0] == '\n')
+        {
+            if (num_lines == SIZE_MAX)
+                return NULL;
+            num_lines++;
+        }
+    }
+
+    length_result = 0;
+    if (length_prefix > 0)
+    {
+        if (num_lines > SIZE_MAX / length_prefix)
+            return NULL;
+        length_result = num_lines * length_prefix;
+    }
+    if (length_message > SIZE_MAX - length_result)
+        return NULL;
+    length_result += length_message;
+    if (length_result == SIZE_MAX)
+        return NULL;
+    length_result++;
+
+    result = malloc (length_result);
+    if (!result)
+        return NULL;
+
+    ptr_result = result;
+    memcpy (ptr_result, prefix, length_prefix);
+    ptr_result += length_prefix;
+    for (pos = message; pos[0]; pos++)
+    {
+        ptr_result[0] = pos[0];
+        ptr_result++;
+        if (pos[0] == '\n')
+        {
+            memcpy (ptr_result, prefix, length_prefix);
+            ptr_result += length_prefix;
+        }
+    }
+    ptr_result[0] = '\0';
+
+    return result;
+}
 
 /*
  * Check conditions against a buffer.
@@ -682,6 +749,7 @@ logger_print_cb (const void *pointer, void *data,
     struct t_logger_buffer *ptr_logger_buffer;
     struct timeval tv;
     char buf_time[256], *prefix_ansi, *message_ansi;
+    char *line_prefix, *message_multiline;
     const char *ptr_prefix, *ptr_message;
     int line_log_level, prefix_is_nick, color_lines;
 
@@ -704,6 +772,8 @@ logger_print_cb (const void *pointer, void *data,
     {
         prefix_ansi = NULL;
         message_ansi = NULL;
+        line_prefix = NULL;
+        message_multiline = NULL;
         color_lines = weechat_config_boolean (logger_config_file_color_lines);
         if (color_lines)
         {
@@ -726,18 +796,44 @@ logger_print_cb (const void *pointer, void *data,
             weechat_config_string (logger_config_file_time_format),
             &tv);
 
-        logger_buffer_write_line (
-            ptr_logger_buffer,
-            "%s\t%s%s%s\t%s%s",
-            buf_time,
-            (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_prefix) : "",
-            (ptr_prefix) ? ptr_prefix : "",
-            (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_suffix) : "",
-            (color_lines) ? "\x1B[0m" : "",
-            ptr_message);
+        /* Write each part of a multiline message as a complete log record. */
+        if (ptr_message && strchr (ptr_message, '\n'))
+        {
+            if (weechat_asprintf (
+                    &line_prefix,
+                    "%s\t%s%s%s\t%s",
+                    buf_time,
+                    (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_prefix) : "",
+                    (ptr_prefix) ? ptr_prefix : "",
+                    (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_suffix) : "",
+                    (color_lines) ? "\x1B[0m" : "") >= 0)
+            {
+                message_multiline = logger_build_multiline_message (
+                    line_prefix, ptr_message);
+                if (message_multiline)
+                {
+                    logger_buffer_write_line (
+                        ptr_logger_buffer, "%s", message_multiline);
+                }
+            }
+        }
+        else
+        {
+            logger_buffer_write_line (
+                ptr_logger_buffer,
+                "%s\t%s%s%s\t%s%s",
+                buf_time,
+                (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_prefix) : "",
+                (ptr_prefix) ? ptr_prefix : "",
+                (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_suffix) : "",
+                (color_lines) ? "\x1B[0m" : "",
+                ptr_message);
+        }
 
         free (prefix_ansi);
         free (message_ansi);
+        free (line_prefix);
+        free (message_multiline);
     }
 
     return WEECHAT_RC_OK;
