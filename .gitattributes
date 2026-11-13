@@ -7,4 +7,4 @@
 .git*                  export-ignore
 /debian                export-ignore
 .mailmap               export-ignore
-tools/build_debian.sh  export-ignore
+/tools/build_debian.sh export-ignore
