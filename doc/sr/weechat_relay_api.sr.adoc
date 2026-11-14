@@ -560,7 +560,7 @@ Available infos:
 | Name | Type | Description
 
 // TRANSLATION MISSING
-| `language` | string or null
+| `language` | string
 | Language of WeeChat translated messages, for example `fr` or `pt_BR`, `en`
   if messages are not translated; it is the language of the translation
   actually used, taking into account the environment variable `LANGUAGE`

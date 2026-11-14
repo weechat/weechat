@@ -632,8 +632,7 @@ RELAY_API_PROTOCOL_CALLBACK(version)
 
 /*
  * Return value of info "language": the language of WeeChat translated
- * messages, for example "fr" or "pt_BR" ("en" if messages are not translated,
- * JSON null if unknown).
+ * messages, for example "fr" or "pt_BR" ("en" if messages are not translated).
  *
  * Return NULL if not enough memory.
  */
@@ -648,8 +647,10 @@ relay_api_protocol_info_language (struct t_relay_client *client)
     (void) client;
 
     language = weechat_info_get ("language", NULL);
-    json = (language) ?
-        relay_json_new_string (language) : relay_json_new_null ();
+    if (!language)
+        return NULL;
+
+    json = relay_json_new_string (language);
     free (language);
 
     return json;

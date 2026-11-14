@@ -556,7 +556,7 @@ Infos disponibles :
 |===
 | Nom | Type | Description
 
-| `language` | chaîne ou null
+| `language` | chaîne
 | Langue des messages traduits de WeeChat, par exemple `fr` ou `pt_BR`, `en`
   si les messages ne sont pas traduits ; c'est la langue de la traduction
   réellement utilisée, qui tient compte de la variable d'environnement
