@@ -1763,6 +1763,49 @@ HTTP/1.1 200 OK
 }
 ----
 
+// TRANSLATION MISSING
+[[resource_typing]]
+// TRANSLATION MISSING
+=== Typing
+
+// TRANSLATION MISSING
+Send a typing notification for a buffer.
+
+// TRANSLATION MISSING
+Endpoint:
+
+----
+POST /api/typing
+----
+
+// TRANSLATION MISSING
+Body parameters:
+
+// TRANSLATION MISSING
+* `buffer_id` (integer, optional): buffer unique identifier
+// TRANSLATION MISSING
+* `buffer_name` (string, optional, default: `core.weechat`): buffer name
+// TRANSLATION MISSING
+* `state` (string, **required**): typing state: `active`, `paused`, `done` or `sent`
+
+// TRANSLATION MISSING
+Request example: notify that the user is actively typing on channel #weechat:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "state": "active"}' \
+  'https://localhost:9000/api/typing'
+----
+
+// TRANSLATION MISSING
+Response:
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+----
+
 [[resource_sync]]
 === Sync
 
@@ -1787,10 +1830,13 @@ POST /api/sync
   ажурирања надимака у баферима (користи се само ако је `sync` `true`)
 * `input` (логичка, није обавезно, подразумевано: `true`): `true` да се синхронизује улаз
   бафера са удаљеног релеја на локални клијент (користи се само ако је `sync` `true`)
+// TRANSLATION MISSING
+* `typing` (boolean, optional, default: `false`): `true` to synchronize typing
+  notifications (used only if `sync` is `true`)
 * `notify_only` (логичка, није обавезно, подразумевано: `false`): `true` to receive only
   new lines with a highlight or a private message (notify level greater than or
   equal to 2) and the events `upgrade`, `upgrade_ended` and `quit`, all other
-  events are not sent and parameters `nicks`, `input` and `options` are ignored
+  events are not sent and parameters `nicks`, `input`, `typing` and `options` are ignored
   (used only if `sync` is `true`); this is useful for a mobile client in
   background
 * `colors` (стринг, није обавезно, подразумевано: `ansi`): како се враћају стрингови са
@@ -2152,6 +2198,10 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
 | `input_prompt_changed`                | buffer id | `buffer`      | бафер
 | `input_text_changed`                  | buffer id | `buffer`      | бафер
 | `input_text_cursor_moved`             | buffer id | `buffer`      | бафер
+// TRANSLATION MISSING
+| `typing_set_nick`                     | buffer id | `typing`      | typing status for a nick
+// TRANSLATION MISSING
+| `typing_reset_buffer`                 | buffer id | null          | null
 | `nicklist_group_changed`              | buffer id | `nick_group`  | група надимака
 | `nicklist_group_added`                | buffer id | `nick_group`  | група надимака
 | `nicklist_group_removing`             | buffer id | `nick_group`  | група надимака
@@ -2425,7 +2475,7 @@ The response is displayed on a single line:
 
 [source,json]
 ----
-{"code":200,"message":"OK","request":"GET /api/version","request_body":null,"request_id":null,"body_type":"version","body":{"weechat_version":"5.0.0-dev","weechat_version_git":"v4.10.0-576-gb86e0c0b7","weechat_version_number":83886080,"relay_api_version":"0.7.0","relay_api_version_number":1792}}
+{"code":200,"message":"OK","request":"GET /api/version","request_body":null,"request_id":null,"body_type":"version","body":{"weechat_version":"5.0.0-dev","weechat_version_git":"v4.10.0-576-gb86e0c0b7","weechat_version_number":83886080,"relay_api_version":"0.8.0","relay_api_version_number":2048}}
 ----
 
 // TRANSLATION MISSING
@@ -2457,7 +2507,7 @@ Output:
     "weechat_version_git": "v4.10.0-576-gb86e0c0b7",
     "weechat_version_number": 83886080,
     "relay_api_version": "0.7.0",
-    "relay_api_version_number": 1792
+    "relay_api_version_number": 2048
   }
 }
 ----

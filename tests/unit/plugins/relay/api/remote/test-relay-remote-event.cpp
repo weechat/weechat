@@ -1310,7 +1310,7 @@ TEST(RelayRemoteEventWithRemote, SyncWithRemote)
     STRCMP_EQUAL("[{\"request\":\"GET /api/buffers?lines=-1000&nicks=true"
                  "&colors=weechat\",\"request_id\":\"initial_sync\"},"
                  "{\"request\":\"POST /api/sync\","
-                 "\"body\":{\"colors\":\"weechat\"}}]",
+                 "\"body\":{\"colors\":\"weechat\",\"typing\":true}}]",
                  data_sent);
 }
 

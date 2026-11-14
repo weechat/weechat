@@ -1741,6 +1741,40 @@ HTTP/1.1 200 OK
 }
 ----
 
+[[resource_typing]]
+=== Typing
+
+Send a typing notification for a buffer.
+
+Endpoint:
+
+----
+POST /api/typing
+----
+
+Body parameters:
+
+* `buffer_id` (integer, optional): buffer unique identifier
+* `buffer_name` (string, optional, default: `core.weechat`): buffer name
+* `state` (string, **required**): typing state: `active`, `paused`, `done` or
+  `sent`
+
+Request example: notify that the user is typing in channel #weechat:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "state": "active"}' \
+  'https://localhost:9000/api/typing'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+----
+
 [[resource_sync]]
 === Sync
 
@@ -1766,10 +1800,13 @@ Body parameters:
   in buffers (used only if `sync` is `true`)
 * `input` (boolean, optional, default: `true`): `true` to synchronize buffer input
   from remote relay to local client (used only if `sync` is `true`)
+* `typing` (boolean, optional, default: `false`): `true` to synchronize typing
+  notifications (used only if `sync` is `true`)
 * `notify_only` (boolean, optional, default: `false`): `true` to receive only
   new lines with a highlight or a private message (notify level greater than or
   equal to 2) and the events `upgrade`, `upgrade_ended` and `quit`, all other
-  events are not sent and parameters `nicks`, `input` and `options` are ignored
+  events are not sent and parameters `nicks`, `input`, `typing` and `options`
+  are ignored
   (used only if `sync` is `true`); this is useful for a mobile client in
   background
 * `colors` (string, optional, default: `ansi`): how to return strings with
@@ -2131,6 +2168,8 @@ The following events are sent to the client, according to synchronization option
 | `input_prompt_changed`                | buffer id | `buffer`      | buffer
 | `input_text_changed`                  | buffer id | `buffer`      | buffer
 | `input_text_cursor_moved`             | buffer id | `buffer`      | buffer
+| `typing_set_nick`                     | buffer id | `typing`      | typing status for a nick
+| `typing_reset_buffer`                 | buffer id | null          | null
 | `nicklist_group_changed`              | buffer id | `nick_group`  | nick group
 | `nicklist_group_added`                | buffer id | `nick_group`  | nick group
 | `nicklist_group_removing`             | buffer id | `nick_group`  | nick group
@@ -2393,7 +2432,7 @@ The response is displayed on a single line:
 
 [source,json]
 ----
-{"code":200,"message":"OK","request":"GET /api/version","request_body":null,"request_id":null,"body_type":"version","body":{"weechat_version":"5.0.0-dev","weechat_version_git":"v4.10.0-576-gb86e0c0b7","weechat_version_number":83886080,"relay_api_version":"0.7.0","relay_api_version_number":1792}}
+{"code":200,"message":"OK","request":"GET /api/version","request_body":null,"request_id":null,"body_type":"version","body":{"weechat_version":"5.0.0-dev","weechat_version_git":"v4.10.0-576-gb86e0c0b7","weechat_version_number":83886080,"relay_api_version":"0.8.0","relay_api_version_number":2048}}
 ----
 
 To send a single request and exit as soon as the response is received, the
@@ -2423,7 +2462,7 @@ Output:
     "weechat_version_git": "v4.10.0-576-gb86e0c0b7",
     "weechat_version_number": 83886080,
     "relay_api_version": "0.7.0",
-    "relay_api_version_number": 1792
+    "relay_api_version_number": 2048
   }
 }
 ----

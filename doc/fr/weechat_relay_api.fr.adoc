@@ -1762,6 +1762,49 @@ HTTP/1.1 200 OK
 }
 ----
 
+// TRANSLATION MISSING
+[[resource_typing]]
+// TRANSLATION MISSING
+=== Typing
+
+// TRANSLATION MISSING
+Send a typing notification for a buffer.
+
+// TRANSLATION MISSING
+Endpoint:
+
+----
+POST /api/typing
+----
+
+// TRANSLATION MISSING
+Body parameters:
+
+// TRANSLATION MISSING
+* `buffer_id` (integer, optional): buffer unique identifier
+// TRANSLATION MISSING
+* `buffer_name` (string, optional, default: `core.weechat`): buffer name
+// TRANSLATION MISSING
+* `state` (string, **required**): typing state: `active`, `paused`, `done` or `sent`
+
+// TRANSLATION MISSING
+Request example: notify that the user is actively typing on channel #weechat:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "state": "active"}' \
+  'https://localhost:9000/api/typing'
+----
+
+// TRANSLATION MISSING
+Response:
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+----
+
 [[resource_sync]]
 === Sync
 
@@ -1789,11 +1832,14 @@ Paramètres du corps :
 * `input` (booléen, facultatif, par défaut : `true`) : `true` pour synchroniser
   l'entrée de tampon depuis le relai distant vers le client local (utilisé
   seulement si `sync` vaut `true`)
+// TRANSLATION MISSING
+* `typing` (boolean, optional, default: `false`): `true` to synchronize typing
+  notifications (used only if `sync` is `true`)
 * `notify_only` (booléen, facultatif, par défaut : `false`) : `true` pour
   recevoir seulement les nouvelles lignes avec un highlight ou un message privé
   (niveau de notification supérieur ou égal à 2) et les évènements `upgrade`,
   `upgrade_ended` et `quit`, tous les autres évènements ne sont pas envoyés et
-  les paramètres `nicks`, `input` et `options` sont ignorés (utilisé seulement
+  les paramètres `nicks`, `input`, `typing` et `options` sont ignorés (utilisé seulement
   si `sync` vaut `true`) ; ceci est utile pour un client mobile en
   arrière-plan
 * `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
@@ -2166,6 +2212,10 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `input_prompt_changed`                | id tampon | `buffer`      | tampon
 | `input_text_changed`                  | id tampon | `buffer`      | tampon
 | `input_text_cursor_moved`             | id tampon | `buffer`      | tampon
+// TRANSLATION MISSING
+| `typing_set_nick`                     | id tampon | `typing`      | typing status for a nick
+// TRANSLATION MISSING
+| `typing_reset_buffer`                 | id tampon | null          | null
 | `nicklist_group_changed`              | id tampon | `nick_group`  | groupe de pseudos
 | `nicklist_group_added`                | id tampon | `nick_group`  | groupe de pseudos
 | `nicklist_group_removing`             | id tampon | `nick_group`  | groupe de pseudos
@@ -2428,7 +2478,7 @@ La réponse est affichée sur une seule ligne :
 
 [source,json]
 ----
-{"code":200,"message":"OK","request":"GET /api/version","request_body":null,"request_id":null,"body_type":"version","body":{"weechat_version":"5.0.0-dev","weechat_version_git":"v4.10.0-576-gb86e0c0b7","weechat_version_number":83886080,"relay_api_version":"0.7.0","relay_api_version_number":1792}}
+{"code":200,"message":"OK","request":"GET /api/version","request_body":null,"request_id":null,"body_type":"version","body":{"weechat_version":"5.0.0-dev","weechat_version_git":"v4.10.0-576-gb86e0c0b7","weechat_version_number":83886080,"relay_api_version":"0.8.0","relay_api_version_number":2048}}
 ----
 
 Pour envoyer une seule requête et quitter dès que la réponse est reçue, les
@@ -2458,7 +2508,7 @@ Sortie :
     "weechat_version_git": "v4.10.0-576-gb86e0c0b7",
     "weechat_version_number": 83886080,
     "relay_api_version": "0.7.0",
-    "relay_api_version_number": 1792
+    "relay_api_version_number": 2048
   }
 }
 ----

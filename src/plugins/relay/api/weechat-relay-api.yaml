@@ -17,7 +17,7 @@ info:
   license:
     name: CC BY-NC-SA 4.0
     url: https://creativecommons.org/licenses/by-nc-sa/4.0/
-  version: 0.7.0
+  version: 0.8.0
 
 externalDocs:
   url: https://weechat.org/doc/
@@ -762,6 +762,68 @@ paths:
                 $ref: '#/components/schemas/Error'
       security:
         - password: []
+  /typing:
+    post:
+      tags:
+        - typing
+      description: |
+        Send a typing notification for a buffer.
+      operationId: typing
+      parameters:
+        - $ref: '#/components/parameters/totp'
+      requestBody:
+        description: Buffer and typing state
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                buffer_id:
+                  type: integer
+                  format: int64
+                  description: Buffer identifier (≥ 0)
+                buffer_name:
+                  type: string
+                  description: Buffer full name
+                  example: 'irc.libera.#weechat'
+                state:
+                  type: string
+                  enum:
+                    - active
+                    - paused
+                    - done
+                    - sent
+                  description: Typing state
+                  example: active
+              required:
+                - state
+            example:
+              buffer_name: 'irc.libera.#weechat'
+              state: active
+      responses:
+        '204':
+          description: Successful operation
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Buffer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - password: []
   /completion:
     post:
       tags:
@@ -911,6 +973,11 @@ paths:
                   type: boolean
                   description: Receive input changes in buffers (content and cursor position)
                   example: true
+                typing:
+                  type: boolean
+                  default: false
+                  description: Receive typing notifications
+                  example: true
                 notify_only:
                   type: boolean
                   default: false
@@ -918,7 +985,7 @@ paths:
                     Receive only new lines with highlight or private message
                     (notify level >= 2), and events `upgrade`, `upgrade_ended`
                     and `quit`; all other events are not sent, and options
-                    `nicks`, `input` and `options` are ignored
+                    `nicks`, `input`, `typing` and `options` are ignored
                   example: false
                 colors:
                   type: string

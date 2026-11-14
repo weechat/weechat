@@ -34,6 +34,9 @@ struct t_relay_remote_event_cb
 
 extern void relay_remote_event_buffer_input (struct t_gui_buffer *buffer,
                                              const char *input_data);
+extern void relay_remote_event_buffer_typing (struct t_gui_buffer *buffer,
+                                              const char *state);
+extern int relay_remote_event_cb_typing (struct t_relay_remote_event *event);
 extern void relay_remote_event_recv (struct t_relay_remote *remote,
                                      const char *data);
 
