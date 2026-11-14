@@ -26,7 +26,11 @@
 
 int relay_api_protocol_command_delay = 1; /* delay to execute command       */
 
-/* infos returned by resource "info" (no pointer must ever be returned) */
+/*
+ * Infos returned by resource "info" (no pointer must ever be returned).
+ * The description is not translated: it is always returned in English to
+ * clients with "GET /api/info".
+ */
 struct t_relay_api_protocol_info relay_api_protocol_infos[] =
 {
     { "language", "Language of WeeChat translated messages",
