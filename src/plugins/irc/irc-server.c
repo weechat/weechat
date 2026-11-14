@@ -1216,6 +1216,10 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
  * "typing_allowed" in server using value of CLIENTTAGDENY in IRC message 005.
  * The masks in array start with "!" for a tag that is allowed (not denied).
  *
+ * The local variable "irc_clienttagdeny" is also set (or removed if
+ * clienttagdeny is NULL or empty) in server buffer and all channels/pv
+ * buffers.
+ *
  * For example, if clienttagdeny is "*,-foo,-example/bar":
  *   clienttagdeny is set to "*,-foo,-example/bar"
  *   clienttagdeny_count is set to 3
@@ -1254,7 +1258,10 @@ irc_server_set_clienttagdeny (struct t_irc_server *server,
 
     /* Assign new values. */
     if (!clienttagdeny || !clienttagdeny[0])
+    {
+        irc_server_set_buffer_clienttagdeny (server);
         return;
+    }
     server->clienttagdeny = strdup (clienttagdeny);
     server->clienttagdeny_array = weechat_string_split (
         clienttagdeny, ",", NULL,
@@ -1275,6 +1282,8 @@ irc_server_set_clienttagdeny (struct t_irc_server *server,
         (const char **)server->clienttagdeny_array,
         1);
     server->typing_allowed = (typing_denied) ? 0 : 1;
+
+    irc_server_set_buffer_clienttagdeny (server);
 }
 
 /*
@@ -1699,6 +1708,128 @@ irc_server_set_buffer_input_multiline (struct t_irc_server *server,
                                 (multiline) ? "1" : "0");
         }
     }
+}
+
+/*
+ * Callback used to build the list of capabilities enabled.
+ */
+
+void
+irc_server_get_caps_cb (void *data,
+                        struct t_hashtable *hashtable,
+                        const void *key,
+                        const void *value)
+{
+    char **str_caps;
+
+    /* Make C compiler happy. */
+    (void) hashtable;
+    (void) value;
+
+    str_caps = (char **)data;
+
+    if ((*str_caps)[0])
+        weechat_string_dyn_concat (str_caps, ",", -1);
+    weechat_string_dyn_concat (str_caps, (const char *)key, -1);
+}
+
+/*
+ * Get the list of capabilities enabled on server: names sorted and separated
+ * by commas, without values (for example: "batch,message-tags,server-time").
+ *
+ * Return NULL if no capability is enabled.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_server_get_caps (struct t_irc_server *server)
+{
+    char **str_caps;
+
+    if (!server || !server->cap_list
+        || (weechat_hashtable_get_integer (server->cap_list, "items_count") == 0))
+    {
+        return NULL;
+    }
+
+    str_caps = weechat_string_dyn_alloc (256);
+    if (!str_caps)
+        return NULL;
+
+    weechat_hashtable_map_sorted (server->cap_list,
+                                  &irc_server_get_caps_cb, str_caps);
+
+    return weechat_string_dyn_free (str_caps, 0);
+}
+
+/*
+ * Set (or remove) a local variable in server buffer and all channels/pv
+ * buffers.
+ *
+ * If value is NULL, the local variable is removed.
+ */
+
+void
+irc_server_set_buffer_localvar (struct t_irc_server *server,
+                                const char *name, const char *value)
+{
+    struct t_irc_channel *ptr_channel;
+    char str_property[256];
+
+    if (!server || !name)
+        return;
+
+    snprintf (str_property, sizeof (str_property),
+              "localvar_%s_%s", (value) ? "set" : "del", name);
+
+    if (server->buffer)
+        weechat_buffer_set (server->buffer, str_property, (value) ? value : "");
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->buffer)
+        {
+            weechat_buffer_set (ptr_channel->buffer, str_property,
+                                (value) ? value : "");
+        }
+    }
+}
+
+/*
+ * Set local variable "irc_caps" in server buffer and all channels/pv buffers
+ * with the list of capabilities enabled (variable removed if no capability
+ * is enabled).
+ */
+
+void
+irc_server_set_buffer_caps (struct t_irc_server *server)
+{
+    char *caps;
+
+    if (!server)
+        return;
+
+    caps = irc_server_get_caps (server);
+    irc_server_set_buffer_localvar (server, "irc_caps", caps);
+    free (caps);
+}
+
+/*
+ * Set local variable "irc_clienttagdeny" in server buffer and all channels/pv
+ * buffers with the value of CLIENTTAGDENY sent by the server (variable
+ * removed if not set).
+ */
+
+void
+irc_server_set_buffer_clienttagdeny (struct t_irc_server *server)
+{
+    if (!server)
+        return;
+
+    irc_server_set_buffer_localvar (server, "irc_clienttagdeny",
+                                    server->clienttagdeny);
 }
 
 /*
@@ -5806,6 +5937,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     weechat_hashtable_remove_all (server->cap_ls);
     server->checking_cap_list = 0;
     weechat_hashtable_remove_all (server->cap_list);
+    irc_server_set_buffer_caps (server);
     server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
     server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
     if (server->isupport)
@@ -5831,18 +5963,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         free (server->chanmodes);
         server->chanmodes = NULL;
     }
-    if (server->clienttagdeny)
-    {
-        free (server->clienttagdeny);
-        server->clienttagdeny = NULL;
-    }
-    if (server->clienttagdeny_array)
-    {
-        weechat_string_free_split (server->clienttagdeny_array);
-        server->clienttagdeny_array = NULL;
-    }
-    server->clienttagdeny_count = 0;
-    server->typing_allowed = 1;
+    irc_server_set_clienttagdeny (server, NULL);
     server->is_away = 0;
     server->away_time = 0;
     server->lag = 0;

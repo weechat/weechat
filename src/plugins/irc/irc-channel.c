@@ -177,7 +177,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
     int buffer_created, current_buffer_number, buffer_position;
     int autojoin_join, manual_join, noswitch;
     const char *ptr_short_name;
-    char str_number[32], *channel_name_lower, *buffer_name, *prompt;
+    char str_number[32], *channel_name_lower, *buffer_name, *prompt, *caps;
 
     buffer_created = 0;
     buffer_props = NULL;
@@ -232,6 +232,23 @@ irc_channel_create_buffer (struct t_irc_server *server,
         else
         {
             weechat_hashtable_set (buffer_props, "localvar_del_away", "");
+        }
+        caps = irc_server_get_caps (server);
+        if (caps)
+            weechat_hashtable_set (buffer_props, "localvar_set_irc_caps", caps);
+        else
+            weechat_hashtable_set (buffer_props, "localvar_del_irc_caps", "");
+        free (caps);
+        if (server->clienttagdeny)
+        {
+            weechat_hashtable_set (buffer_props,
+                                   "localvar_set_irc_clienttagdeny",
+                                   server->clienttagdeny);
+        }
+        else
+        {
+            weechat_hashtable_set (buffer_props,
+                                   "localvar_del_irc_clienttagdeny", "");
         }
     }
 

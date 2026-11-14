@@ -1450,6 +1450,18 @@ WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
 | dowolny ciąg
 | Własny host (jeśli jest znany), ustawiane przez wtyczkę irc.
 
+// TRANSLATION MISSING
+| irc_caps
+| any string
+| List of IRC capabilities enabled on the server (names separated by commas,
+  for example `batch,message-tags,server-time`), set by irc plugin.
+
+// TRANSLATION MISSING
+| irc_clienttagdeny
+| any string
+| Client-only tags blocked by the IRC server (value of `CLIENTTAGDENY` in
+  message 005, for example `*,-draft/react`), set by irc plugin.
+
 | lag
 | dowolny ciąg
 | Opóźnienie serwera, ustawiane przez wtyczkę irc.

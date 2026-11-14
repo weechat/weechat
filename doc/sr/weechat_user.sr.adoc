@@ -1363,6 +1363,18 @@ _прозор_ је површина екрана која приказује б
 | било који стринг
 | Име вашег хоста (ако је познато), поставља је irc додатак.
 
+// TRANSLATION MISSING
+| irc_caps
+| any string
+| List of IRC capabilities enabled on the server (names separated by commas,
+  for example `batch,message-tags,server-time`), set by irc plugin.
+
+// TRANSLATION MISSING
+| irc_clienttagdeny
+| any string
+| Client-only tags blocked by the IRC server (value of `CLIENTTAGDENY` in
+  message 005, for example `*,-draft/react`), set by irc plugin.
+
 | lag
 | било који стринг
 | Кашњење у комуникацији са сервером, поставља је irc додатак.

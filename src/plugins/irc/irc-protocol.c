@@ -1375,6 +1375,19 @@ IRC_PROTOCOL_CALLBACK(cap)
     }
 
     /*
+     * Update local variable "irc_caps" in buffers if the list of enabled
+     * capabilities has changed: "CAP ACK", "CAP DEL" and "CAP LIST" (only
+     * on last line of reply).
+     */
+    if ((strcmp (ctxt->params[1], "ACK") == 0)
+        || (strcmp (ctxt->params[1], "DEL") == 0)
+        || ((strcmp (ctxt->params[1], "LIST") == 0)
+            && !ctxt->server->checking_cap_list))
+    {
+        irc_server_set_buffer_caps (ctxt->server);
+    }
+
+    /*
      * Refresh nick prefixes if capability "multi-prefix" was toggled.
      * With "CAP LIST" (sent by command /cap list), the list of enabled
      * capabilities is cleared on first line of reply, which may be split

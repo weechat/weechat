@@ -2094,6 +2094,96 @@ TEST(IrcProtocolWithServer, cap_multi_prefix)
 
 /*
  * Test functions:
+ *   irc_protocol_cb_cap (local variable "irc_caps" in buffers)
+ */
+
+TEST(IrcProtocolWithServer, cap_localvar)
+{
+    struct t_irc_channel *ptr_channel, *ptr_channel_pv;
+
+    SRV_INIT_JOIN;
+
+    ptr_channel = ptr_server->channels;
+    CHECK(ptr_channel);
+
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_server->buffer,
+                                          "localvar_irc_caps"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_irc_caps"));
+
+    /* CAP ACK: capabilities enabled (sorted) */
+    RECV(":server CAP alice ACK :server-time message-tags batch");
+    STRCMP_EQUAL("batch,message-tags,server-time",
+                 gui_buffer_get_string (ptr_server->buffer,
+                                        "localvar_irc_caps"));
+    STRCMP_EQUAL("batch,message-tags,server-time",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_irc_caps"));
+
+    /* CAP ACK: capability disabled */
+    RECV(":server CAP alice ACK :-batch");
+    STRCMP_EQUAL("message-tags,server-time",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_irc_caps"));
+
+    /* CAP NAK, CAP LS, CAP NEW: no change */
+    RECV(":server CAP alice NAK :batch");
+    RECV(":server CAP alice LS :batch message-tags server-time");
+    RECV(":server CAP alice NEW :echo-message");
+    STRCMP_EQUAL("message-tags,server-time",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_irc_caps"));
+
+    /* Multi-line "CAP LIST": update only on last line */
+    RECV(":server CAP alice LIST * :away-notify");
+    STRCMP_EQUAL("message-tags,server-time",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_irc_caps"));
+    RECV(":server CAP alice LIST :message-tags sasl=PLAIN");
+    STRCMP_EQUAL("away-notify,message-tags,sasl",
+                 gui_buffer_get_string (ptr_server->buffer,
+                                        "localvar_irc_caps"));
+    STRCMP_EQUAL("away-notify,message-tags,sasl",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_irc_caps"));
+
+    /* New private buffer: local variable set on creation */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+    ptr_channel_pv = irc_channel_search (ptr_server, "bob");
+    CHECK(ptr_channel_pv);
+    STRCMP_EQUAL("away-notify,message-tags,sasl",
+                 gui_buffer_get_string (ptr_channel_pv->buffer,
+                                        "localvar_irc_caps"));
+
+    /* CAP DEL */
+    RECV(":server CAP alice DEL :sasl away-notify");
+    STRCMP_EQUAL("message-tags",
+                 gui_buffer_get_string (ptr_server->buffer,
+                                        "localvar_irc_caps"));
+    STRCMP_EQUAL("message-tags",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_irc_caps"));
+    STRCMP_EQUAL("message-tags",
+                 gui_buffer_get_string (ptr_channel_pv->buffer,
+                                        "localvar_irc_caps"));
+
+    /* No more capabilities: local variable removed */
+    RECV(":server CAP alice DEL :message-tags");
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_server->buffer,
+                                          "localvar_irc_caps"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_irc_caps"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel_pv->buffer,
+                                          "localvar_irc_caps"));
+}
+
+/*
+ * Test functions:
  *   irc_protocol_cb_chghost
  */
 
@@ -4199,6 +4289,44 @@ TEST(IrcProtocolWithServer, 005_full)
     LONGS_EQUAL(IRC_SERVER_UTF8MAPPING_RFC8265, ptr_server->utf8mapping);
     LONGS_EQUAL(1, ptr_server->utf8only);
     STRCMP_EQUAL(IRC_MSG_005 " " IRC_MSG_005, ptr_server->isupport);
+}
+
+/*
+ * Test functions:
+ *   irc_protocol_cb_005 (local variable "irc_clienttagdeny" in buffers)
+ */
+
+TEST(IrcProtocolWithServer, 005_clienttagdeny_localvar)
+{
+    struct t_irc_channel *ptr_channel;
+
+    SRV_INIT_JOIN;
+
+    ptr_channel = ptr_server->channels;
+    CHECK(ptr_channel);
+
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_server->buffer,
+                                          "localvar_irc_clienttagdeny"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_irc_clienttagdeny"));
+
+    RECV(":server 005 alice CLIENTTAGDENY=*,-draft/react :are supported");
+    STRCMP_EQUAL("*,-draft/react",
+                 gui_buffer_get_string (ptr_server->buffer,
+                                        "localvar_irc_clienttagdeny"));
+    STRCMP_EQUAL("*,-draft/react",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_irc_clienttagdeny"));
+
+    RECV(":server 005 alice CLIENTTAGDENY= :are supported");
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_server->buffer,
+                                          "localvar_irc_clienttagdeny"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_irc_clienttagdeny"));
 }
 
 /*

@@ -1454,6 +1454,18 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 | beliebige Zeichenkette
 | eigener Host (sofern bekannt), wird durch IRC Erweiterung genutzt.
 
+// TRANSLATION MISSING
+| irc_caps
+| any string
+| List of IRC capabilities enabled on the server (names separated by commas,
+  for example `batch,message-tags,server-time`), set by irc plugin.
+
+// TRANSLATION MISSING
+| irc_clienttagdeny
+| any string
+| Client-only tags blocked by the IRC server (value of `CLIENTTAGDENY` in
+  message 005, for example `*,-draft/react`), set by irc plugin.
+
 | lag
 | beliebige Zeichenkette
 | Verzögerung auf dem Server, wird durch IRC Erweiterung genutzt.

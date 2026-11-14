@@ -1347,6 +1347,112 @@ TEST(IrcServer, SetClienttagdeny)
 
 /*
  * Test functions:
+ *   irc_server_get_caps
+ */
+
+TEST(IrcServer, GetCaps)
+{
+    struct t_irc_server *server;
+    char *str;
+
+    POINTERS_EQUAL(NULL, irc_server_get_caps (NULL));
+
+    server = irc_server_alloc ("test_caps");
+    CHECK(server);
+
+    POINTERS_EQUAL(NULL, irc_server_get_caps (server));
+
+    hashtable_set (server->cap_list, "server-time", NULL);
+    WEE_TEST_STR("server-time", irc_server_get_caps (server));
+
+    hashtable_set (server->cap_list, "sasl", "PLAIN");
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "message-tags", NULL);
+    WEE_TEST_STR("batch,message-tags,sasl,server-time",
+                 irc_server_get_caps (server));
+
+    hashtable_remove_all (server->cap_list);
+    POINTERS_EQUAL(NULL, irc_server_get_caps (server));
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
+ *   irc_server_set_buffer_localvar
+ *   irc_server_set_buffer_caps
+ *   irc_server_set_buffer_clienttagdeny
+ */
+
+TEST(IrcServer, SetBufferCapsClienttagdeny)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+
+    /* Test NULL server (no crash). */
+    irc_server_set_buffer_caps (NULL);
+    irc_server_set_buffer_clienttagdeny (NULL);
+
+    run_cmd_quiet ("/mute /server add test_caps fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_caps");
+    server = irc_server_search ("test_caps");
+    CHECK(server);
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (server->buffer, "localvar_irc_caps"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (channel->buffer, "localvar_irc_caps"));
+
+    /* Capabilities. */
+    hashtable_set (server->cap_list, "server-time", NULL);
+    hashtable_set (server->cap_list, "message-tags", NULL);
+    irc_server_set_buffer_caps (server);
+    STRCMP_EQUAL("message-tags,server-time",
+                 gui_buffer_get_string (server->buffer, "localvar_irc_caps"));
+    STRCMP_EQUAL("message-tags,server-time",
+                 gui_buffer_get_string (channel->buffer, "localvar_irc_caps"));
+
+    /* CLIENTTAGDENY. */
+    irc_server_set_clienttagdeny (server, "*,-draft/react");
+    STRCMP_EQUAL("*,-draft/react",
+                 gui_buffer_get_string (server->buffer,
+                                        "localvar_irc_clienttagdeny"));
+    STRCMP_EQUAL("*,-draft/react",
+                 gui_buffer_get_string (channel->buffer,
+                                        "localvar_irc_clienttagdeny"));
+    irc_server_set_clienttagdeny (server, NULL);
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (server->buffer,
+                                          "localvar_irc_clienttagdeny"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (channel->buffer,
+                                          "localvar_irc_clienttagdeny"));
+
+    /* Local variables removed on disconnection. */
+    irc_server_set_clienttagdeny (server, "*");
+    STRCMP_EQUAL("*",
+                 gui_buffer_get_string (channel->buffer,
+                                        "localvar_irc_clienttagdeny"));
+    irc_server_disconnect (server, 0, 0);
+    POINTERS_EQUAL(NULL, server->clienttagdeny);
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (server->buffer, "localvar_irc_caps"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (channel->buffer, "localvar_irc_caps"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (server->buffer,
+                                          "localvar_irc_clienttagdeny"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (channel->buffer,
+                                          "localvar_irc_clienttagdeny"));
+
+    run_cmd_quiet ("/mute /server del test_caps");
+}
+
+/*
+ * Test functions:
  *   irc_server_set_lag
  */
 

@@ -28,6 +28,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - buflist: add info "buflist_bar_items_count"
 - build/container: add files to build container images (Debian and Alpine) from the local sources, moved from repository [weechat-container](https://github.com/weechat/weechat-container)
 - doc: add cheat sheet with all key bindings and mouse actions
+- irc: add buffer local variables "irc_caps" (capabilities enabled) and "irc_clienttagdeny" (value of CLIENTTAGDENY)
 - irc: add options irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and irc.look.notice_target_separator to customize the text displayed around nick and target in prefix of notices
 - irc: add pointers "irc_server" and "irc_channel" in focus hashtable of buflist bar items ([#1543](https://github.com/weechat/weechat/issues/1543))
 - irc: add option irc.look.multi_prefix_in_nicklist to display all nick prefixes in nicklist when capability "multi-prefix" is enabled ([#132](https://github.com/weechat/weechat/issues/132))
