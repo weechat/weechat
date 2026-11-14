@@ -797,7 +797,8 @@ HTTP/1.1 200 OK
             "charset_modifier": "irc.libera",
             "nick": "alice",
             "tls_version": "TLS1.3",
-            "host": "~alice@example.com"
+            "host": "~alice@example.com",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "last_read_line_id": -1,
@@ -830,7 +831,8 @@ HTTP/1.1 200 OK
             "server": "libera",
             "channel": "#weechat",
             "nick": "alice",
-            "host": "~alice@example.com"
+            "host": "~alice@example.com",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "last_read_line_id": -1,
@@ -941,7 +943,8 @@ HTTP/1.1 200 OK
         "server": "libera",
         "channel": "#weechat",
         "nick": "alice",
-        "host": "~alice@example.com"
+        "host": "~alice@example.com",
+        "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
     },
     "keys": [],
     "last_read_line_id": -1,
@@ -2207,7 +2210,8 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
             "nick": "alice",
             "host": "~alice@example.com",
             "server": "libera",
-            "channel": "#weechat"
+            "channel": "#weechat",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "lines": [],
