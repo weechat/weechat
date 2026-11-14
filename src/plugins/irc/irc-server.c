@@ -854,6 +854,40 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
 }
 
 /*
+ * Set (or remove) a local variable in server buffer and all channels/pv
+ * buffers.
+ *
+ * If value is NULL, the local variable is removed.
+ */
+
+void
+irc_server_set_buffer_localvar (struct t_irc_server *server,
+                                const char *name, const char *value)
+{
+    struct t_irc_channel *ptr_channel;
+    char str_property[256];
+
+    if (!server || !name)
+        return;
+
+    snprintf (str_property, sizeof (str_property),
+              "localvar_%s_%s", (value) ? "set" : "del", name);
+
+    if (server->buffer)
+        weechat_buffer_set (server->buffer, str_property, (value) ? value : "");
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->buffer)
+        {
+            weechat_buffer_set (ptr_channel->buffer, str_property,
+                                (value) ? value : "");
+        }
+    }
+}
+
+/*
  * Set nickname for server.
  *
  * If nick is NULL, the local variable "nick" is removed from server and
@@ -863,9 +897,6 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
 void
 irc_server_set_nick (struct t_irc_server *server, const char *nick)
 {
-    struct t_irc_channel *ptr_channel;
-    const char *property;
-
     /* If nick is the same, just return. */
     if (weechat_strcmp (server->nick, nick) == 0)
         return;
@@ -875,13 +906,7 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
     server->nick = (nick) ? strdup (nick) : NULL;
 
     /* Set (or remove) local variable "nick" for server and all channels/pv. */
-    property = (nick) ? "localvar_set_nick" : "localvar_del_nick";
-    weechat_buffer_set (server->buffer, property, (nick) ? nick : "");
-    for (ptr_channel = server->channels; ptr_channel;
-         ptr_channel = ptr_channel->next_channel)
-    {
-        weechat_buffer_set (ptr_channel->buffer, property, (nick) ? nick : "");
-    }
+    irc_server_set_buffer_localvar (server, "nick", nick);
 
     irc_server_set_buffer_input_prompt (server);
     weechat_bar_item_update ("irc_nick");
@@ -898,9 +923,6 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
 void
 irc_server_set_host (struct t_irc_server *server, const char *host)
 {
-    struct t_irc_channel *ptr_channel;
-    const char *property;
-
     /* If host is the same, just return. */
     if ((!server->host && !host)
         || (server->host && host && strcmp (server->host, host) == 0))
@@ -913,13 +935,7 @@ irc_server_set_host (struct t_irc_server *server, const char *host)
     server->host = (host) ? strdup (host) : NULL;
 
     /* Set (or remove) local variable "host" for server and all channels/pv. */
-    property = (host) ? "localvar_set_host" : "localvar_del_host";
-    weechat_buffer_set (server->buffer, property, (host) ? host : "");
-    for (ptr_channel = server->channels; ptr_channel;
-         ptr_channel = ptr_channel->next_channel)
-    {
-        weechat_buffer_set (ptr_channel->buffer, property, (host) ? host : "");
-    }
+    irc_server_set_buffer_localvar (server, "host", host);
 
     weechat_bar_item_update ("irc_host");
     weechat_bar_item_update ("irc_nick_host");
@@ -1294,7 +1310,6 @@ irc_server_set_clienttagdeny (struct t_irc_server *server,
 void
 irc_server_set_lag (struct t_irc_server *server)
 {
-    struct t_irc_channel *ptr_channel;
     char str_lag[32];
 
     str_lag[0] = '\0';
@@ -1308,22 +1323,8 @@ irc_server_set_lag (struct t_irc_server *server)
 
     }
 
-    if (str_lag[0])
-        weechat_buffer_set (server->buffer, "localvar_set_lag", str_lag);
-    else
-        weechat_buffer_set (server->buffer, "localvar_del_lag", "");
-
-    for (ptr_channel = server->channels; ptr_channel;
-         ptr_channel = ptr_channel->next_channel)
-    {
-        if (ptr_channel->buffer)
-        {
-            if (str_lag[0])
-                weechat_buffer_set (ptr_channel->buffer, "localvar_set_lag", str_lag);
-            else
-                weechat_buffer_set (ptr_channel->buffer, "localvar_del_lag", "");
-        }
-    }
+    irc_server_set_buffer_localvar (server, "lag",
+                                    (str_lag[0]) ? str_lag : NULL);
 
     weechat_hook_signal_send ("irc_server_lag_changed",
                               WEECHAT_HOOK_SIGNAL_STRING,
@@ -1761,40 +1762,6 @@ irc_server_get_caps (struct t_irc_server *server)
                                   &irc_server_get_caps_cb, str_caps);
 
     return weechat_string_dyn_free (str_caps, 0);
-}
-
-/*
- * Set (or remove) a local variable in server buffer and all channels/pv
- * buffers.
- *
- * If value is NULL, the local variable is removed.
- */
-
-void
-irc_server_set_buffer_localvar (struct t_irc_server *server,
-                                const char *name, const char *value)
-{
-    struct t_irc_channel *ptr_channel;
-    char str_property[256];
-
-    if (!server || !name)
-        return;
-
-    snprintf (str_property, sizeof (str_property),
-              "localvar_%s_%s", (value) ? "set" : "del", name);
-
-    if (server->buffer)
-        weechat_buffer_set (server->buffer, str_property, (value) ? value : "");
-
-    for (ptr_channel = server->channels; ptr_channel;
-         ptr_channel = ptr_channel->next_channel)
-    {
-        if (ptr_channel->buffer)
-        {
-            weechat_buffer_set (ptr_channel->buffer, str_property,
-                                (value) ? value : "");
-        }
-    }
 }
 
 /*
