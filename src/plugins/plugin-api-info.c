@@ -561,6 +561,24 @@ plugin_api_info_locale_cb (const void *pointer, void *data,
 }
 
 /*
+ * Return WeeChat info "language".
+ */
+
+char *
+plugin_api_info_language_cb (const void *pointer, void *data,
+                             const char *info_name,
+                             const char *arguments)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return util_get_language ();
+}
+
+/*
  * Return WeeChat info "inactivity".
  */
 
@@ -2198,6 +2216,10 @@ plugin_api_info_init (void)
     hook_info (NULL, "locale",
                N_("locale used for translating messages"),
                NULL, &plugin_api_info_locale_cb, NULL, NULL);
+    hook_info (NULL, "language",
+               N_("language of translated messages (for example \"fr\" "
+                  "or \"pt_BR\"), \"en\" if messages are not translated"),
+               NULL, &plugin_api_info_language_cb, NULL, NULL);
     hook_info (NULL, "inactivity",
                N_("keyboard inactivity (seconds)"),
                NULL, &plugin_api_info_inactivity_cb, NULL, NULL);

@@ -377,6 +377,19 @@ TEST(PluginApiInfo, LocaleCb)
 
 /*
  * Test functions:
+ *   plugin_api_info_language_cb
+ */
+
+TEST(PluginApiInfo, LanguageCb)
+{
+    char *str;
+
+    /* Tests run with locale "en_US.UTF-8": messages are not translated. */
+    WEE_TEST_STR("en", hook_info_get (NULL, "language", NULL));
+}
+
+/*
+ * Test functions:
  *   plugin_api_info_inactivity_cb
  */
 

@@ -23,6 +23,8 @@ extern "C"
 #include "src/core/core-config-file.h"
 #include "src/core/core-string.h"
 #include "src/core/core-util.h"
+
+extern char *util_get_language_from_header (const char *header);
 }
 
 #define WEE_PARSE_NUMBER(__result, __parsed, __string, __base) \
@@ -792,4 +794,47 @@ TEST(CoreUtil, VersionNumber)
     CHECK(util_version_number ("1.2.3.4") == 0x01020304);
     CHECK(util_version_number ("255.255.255.255") == 0xFFFFFFFF);
     CHECK(util_version_number ("999999999.999999999.999999999.999999999") == 0xFFFFFFFF);
+}
+
+/*
+ * Test functions:
+ *   util_get_language_from_header
+ */
+
+TEST(CoreUtil, GetLanguageFromHeader)
+{
+    char *str;
+
+    WEE_TEST_STR("en", util_get_language_from_header (NULL));
+    WEE_TEST_STR("en", util_get_language_from_header (""));
+    WEE_TEST_STR("en", util_get_language_from_header ("test"));
+    WEE_TEST_STR("en", util_get_language_from_header ("Language:"));
+    WEE_TEST_STR("en", util_get_language_from_header ("Language: \n"));
+    WEE_TEST_STR("en",
+                 util_get_language_from_header (
+                     "Language-Team: French <fr@example.com>\n"));
+    WEE_TEST_STR("en", util_get_language_from_header ("X-Language: fr\n"));
+
+    WEE_TEST_STR("fr", util_get_language_from_header ("Language: fr"));
+    WEE_TEST_STR("fr", util_get_language_from_header ("Language:fr\n"));
+    WEE_TEST_STR("fr", util_get_language_from_header ("Language: fr \r\n"));
+    WEE_TEST_STR("pt_BR",
+                 util_get_language_from_header (
+                     "Project-Id-Version: WeeChat\n"
+                     "Language-Team: Portuguese <pt_BR@example.com>\n"
+                     "Language: pt_BR\n"
+                     "MIME-Version: 1.0\n"));
+}
+
+/*
+ * Test functions:
+ *   util_get_language
+ */
+
+TEST(CoreUtil, GetLanguage)
+{
+    char *str;
+
+    /* Tests run with locale "en_US.UTF-8": messages are not translated. */
+    WEE_TEST_STR("en", util_get_language ());
 }
