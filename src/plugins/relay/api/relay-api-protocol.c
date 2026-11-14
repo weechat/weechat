@@ -24,7 +24,7 @@
 #include "relay-api-msg.h"
 #include "relay-api-protocol.h"
 
-int relay_api_protocol_command_delay = 1; /* delay to execute command       */
+int relay_api_protocol_command_delay = 1; /* delay to execute command (ms)  */
 
 /*
  * Infos returned by resource "info" (no pointer must ever be returned).
