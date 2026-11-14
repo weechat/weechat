@@ -384,6 +384,7 @@ TEST(RelayApiProtocolWithClient, CbVersion)
 
 /*
  * Test functions:
+ *   relay_api_protocol_info_language
  *   relay_api_protocol_info_locale
  *   relay_api_protocol_cb_info
  */
@@ -399,13 +400,27 @@ TEST(RelayApiProtocolWithClient, CbInfo)
     json = json_body_sent[0];
     CHECK(json);
     CHECK(relay_json_is_array (json));
-    LONGS_EQUAL(1, relay_json_array_size (json));
+    LONGS_EQUAL(2, relay_json_array_size (json));
     json_info = relay_json_array_get (json, 0);
+    CHECK(json_info);
+    WEE_CHECK_OBJ_STR("language", json_info, "name");
+    WEE_CHECK_OBJ_STR("Language of WeeChat translated messages",
+                      json_info, "description");
+    POINTERS_EQUAL(NULL, relay_json_object_get (json_info, "value"));
+    json_info = relay_json_array_get (json, 1);
     CHECK(json_info);
     WEE_CHECK_OBJ_STR("locale", json_info, "name");
     WEE_CHECK_OBJ_STR("WeeChat locale used for translated messages",
                       json_info, "description");
     POINTERS_EQUAL(NULL, relay_json_object_get (json_info, "value"));
+
+    /* Info "language" (tests run with English locale) */
+    test_client_recv_http ("GET /api/info/language", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("language", json, "name");
+    WEE_CHECK_OBJ_STR("en", json, "value");
 
     /* Info "locale" */
     test_client_recv_http ("GET /api/info/locale", NULL, NULL);
@@ -473,7 +488,19 @@ TEST(RelayApiProtocolWithClient, CbInfoWebsocket)
     json_body = relay_json_object_get (json, "body");
     CHECK(json_body);
     CHECK(relay_json_is_array (json_body));
-    LONGS_EQUAL(1, relay_json_array_size (json_body));
+    LONGS_EQUAL(2, relay_json_array_size (json_body));
+    relay_json_free (json);
+
+    /* Info "language" */
+    test_client_recv_text ("{\"request\": \"GET /api/info/language\"}");
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_NUM(200, json, "code");
+    WEE_CHECK_OBJ_STR("info", json, "body_type");
+    json_body = relay_json_object_get (json, "body");
+    CHECK(json_body);
+    WEE_CHECK_OBJ_STR("language", json_body, "name");
+    WEE_CHECK_OBJ_STR("en", json_body, "value");
     relay_json_free (json);
 
     /* Info "locale" */

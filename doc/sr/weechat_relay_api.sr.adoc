@@ -560,10 +560,16 @@ Available infos:
 | Name | Type | Description
 
 // TRANSLATION MISSING
+| `language` | string or null
+| Language of WeeChat translated messages, for example `fr` or `pt_BR`, `en`
+  if messages are not translated; it is the language of the translation
+  actually used, taking into account the environment variable `LANGUAGE`
+
+// TRANSLATION MISSING
 | `locale` | string or null
 | WeeChat locale used for translated messages, for example `fr_FR.UTF-8`
   (category `LC_MESSAGES`); the language of messages can be different if the
-  environment variable `LANGUAGE` is set
+  environment variable `LANGUAGE` is set (see info `language`)
 |===
 
 // TRANSLATION MISSING
@@ -602,10 +608,37 @@ HTTP/1.1 200 OK
 ----
 [
     {
+        "name": "language",
+        "description": "Language of WeeChat translated messages"
+    },
+    {
         "name": "locale",
         "description": "WeeChat locale used for translated messages"
     }
 ]
+----
+
+// TRANSLATION MISSING
+Request example: get the language of WeeChat messages:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info/language'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "language",
+    "value": "fr"
+}
 ----
 
 // TRANSLATION MISSING

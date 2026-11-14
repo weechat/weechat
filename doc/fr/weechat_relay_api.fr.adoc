@@ -556,10 +556,17 @@ Infos disponibles :
 |===
 | Nom | Type | Description
 
+| `language` | chaîne ou null
+| Langue des messages traduits de WeeChat, par exemple `fr` ou `pt_BR`, `en`
+  si les messages ne sont pas traduits ; c'est la langue de la traduction
+  réellement utilisée, qui tient compte de la variable d'environnement
+  `LANGUAGE`
+
 | `locale` | chaîne ou null
 | Locale de WeeChat utilisée pour les messages traduits, par exemple
   `fr_FR.UTF-8` (catégorie `LC_MESSAGES`) ; la langue des messages peut être
-  différente si la variable d'environnement `LANGUAGE` est définie
+  différente si la variable d'environnement `LANGUAGE` est définie (voir
+  l'info `language`)
 |===
 
 Champs retournés dans la liste des infos :
@@ -591,10 +598,36 @@ HTTP/1.1 200 OK
 ----
 [
     {
+        "name": "language",
+        "description": "Language of WeeChat translated messages"
+    },
+    {
         "name": "locale",
         "description": "WeeChat locale used for translated messages"
     }
 ]
+----
+
+Exemple de requête : obtenir la langue des messages de WeeChat :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info/language'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "language",
+    "value": "fr"
+}
 ----
 
 Exemple de requête : obtenir la locale de WeeChat :

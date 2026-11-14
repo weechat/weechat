@@ -29,6 +29,8 @@ int relay_api_protocol_command_delay = 1; /* delay to execute command       */
 /* infos returned by resource "info" (no pointer must ever be returned) */
 struct t_relay_api_protocol_info relay_api_protocol_infos[] =
 {
+    { "language", "Language of WeeChat translated messages",
+      &relay_api_protocol_info_language },
     { "locale", "WeeChat locale used for translated messages",
       &relay_api_protocol_info_locale },
     { NULL, NULL, NULL },
@@ -626,6 +628,31 @@ RELAY_API_PROTOCOL_CALLBACK(version)
     relay_json_free (json);
 
     return RELAY_API_PROTOCOL_RC_OK;
+}
+
+/*
+ * Return value of info "language": the language of WeeChat translated
+ * messages, for example "fr" or "pt_BR" ("en" if messages are not translated,
+ * JSON null if unknown).
+ *
+ * Return NULL if not enough memory.
+ */
+
+struct t_relay_json *
+relay_api_protocol_info_language (struct t_relay_client *client)
+{
+    struct t_relay_json *json;
+    char *language;
+
+    /* Make C compiler happy. */
+    (void) client;
+
+    language = weechat_info_get ("language", NULL);
+    json = (language) ?
+        relay_json_new_string (language) : relay_json_new_null ();
+    free (language);
+
+    return json;
 }
 
 /*

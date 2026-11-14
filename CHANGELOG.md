@@ -38,7 +38,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - javascript, php, tcl: add `eval` option in script commands and info "xxx_eval" ([#128](https://github.com/weechat/weechat/issues/128))
 - relay: add option relay.network.allowed_networks to restrict connections to IPv4/IPv6 networks in CIDR notation ([#2364](https://github.com/weechat/weechat/issues/2364))
 - relay/api: accept TOTP in websocket sub-protocol `totp.weechat.<code>`, for clients unable to send header "x-weechat-totp"
-- relay/api: add resource `GET /api/info` to get infos about WeeChat, with info "locale"
+- relay/api: add resource `GET /api/info` to get infos about WeeChat, with infos "language" and "locale"
 - relay/api: add option "options" in resource `POST /api/sync` to receive changes on options
 - relay/api: add option "notify_only" in resource `POST /api/sync` to receive only highlights and private messages ([#2363](https://github.com/weechat/weechat/issues/2363))
 - relay/api: add resource `GET /api/options`

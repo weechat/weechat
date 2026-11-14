@@ -1007,7 +1007,8 @@ components:
       schema:
         type: string
       description: >-
-        Info name
+        Info name: `language` (language of WeeChat translated messages) or
+        `locale` (WeeChat locale used for translated messages)
       example: 'locale'
     optionName:
       name: option_name
