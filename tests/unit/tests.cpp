@@ -225,8 +225,13 @@ main (int argc, char *argv[])
     const char *ptr_path;
     void *handle;
 
-    /* Setup environment: English language, no specific timezone. */
+    /*
+     * Setup environment: English language, no specific timezone.
+     * LANGUAGE is removed because gettext uses it first (if locale is not
+     * "C"), and messages could be translated.
+     */
     setenv ("LC_ALL", LOCALE_TESTS, 1);
+    unsetenv ("LANGUAGE");
     setenv ("TZ", "", 1);
 
     /* Check if locale exists. */
