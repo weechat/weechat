@@ -17,7 +17,13 @@
  * of pure protocol traffic (query, AKE, fragments) are hidden.
  */
 
-#define OTR_ECHO_PENDING_MAX 32
+/*
+ * Max number of messages waiting for their echo (long pastes are split in many
+ * messages, sent slowly because of anti-flood).
+ */
+#define OTR_ECHO_PENDING_MAX 256
+
+/* Seconds to wait for an echo (since last echo received from the server). */
 #define OTR_ECHO_PENDING_TTL 60
 
 struct t_otr_echo_pending
