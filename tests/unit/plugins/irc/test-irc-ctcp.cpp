@@ -323,6 +323,18 @@ TEST(IrcCtcp, ParseTypeArguments)
     STRCMP_EQUAL("", args);
     free (type);
     free (args);
+
+    /* Text after the end of CTCP is ignored. */
+    irc_ctcp_parse_type_arguments ("\001VERSION\001 extra", &type, &args);
+    STRCMP_EQUAL("VERSION", type);
+    POINTERS_EQUAL(NULL, args);
+    free (type);
+
+    irc_ctcp_parse_type_arguments ("\001PING 123\001 extra", &type, &args);
+    STRCMP_EQUAL("PING", type);
+    STRCMP_EQUAL("123", args);
+    free (type);
+    free (args);
 }
 
 /*

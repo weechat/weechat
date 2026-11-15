@@ -159,6 +159,8 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
  * Extract CTCP type and arguments from message, which format is:
  *   \001TYPE arguments...\001
  *
+ * Any text after the last "\001" is ignored.
+ *
  * Strings *type and *arguments are set with type and arguments parsed,
  * both are set to NULL in case of error.
  */
@@ -182,7 +184,10 @@ irc_ctcp_parse_type_arguments (const char *message,
     if (!pos_end)
         return;
 
+    /* Search a space before the end of CTCP. */
     pos_space = strchr (message + 1, ' ');
+    if (pos_space && (pos_space > pos_end))
+        pos_space = NULL;
 
     *type = weechat_strndup (
         message + 1,
