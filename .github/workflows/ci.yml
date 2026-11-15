@@ -304,17 +304,18 @@ jobs:
             cxx: "clang++"
             buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
-    name: "install (fedora:43, ${{ matrix.config.name }})"
+    name: "install (fedora:45, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     container:
-      image: fedora:43
+      image: fedora:45
 
     steps:
       - uses: actions/checkout@v7
 
       - name: Install dependencies
-        run: dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }} nodejs-devel
+        # uriparser-devel: PHP links with "-luriparser", but php-devel does not depend on it.
+        run: dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }} nodejs-devel uriparser-devel
 
       - name: Build and run tests
         env:
