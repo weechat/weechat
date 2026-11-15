@@ -17,6 +17,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - perl: fix warnings "Subroutine redefined" when loading multiple scripts with Perl built without multiplicity
 - ruby: restore the current script when a function of a script fails
 - scripts: fix crash when a script is unloaded or reloaded while one of its functions is running, delay the unload until the function has returned ([#2380](https://github.com/weechat/weechat/issues/2380))
+- xfer: fail the transfer when option xfer.network.port_range contains a port lower than 1 or greater than 65535, instead of binding an unexpected port or looping forever
 
 ### Security
 

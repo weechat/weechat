@@ -714,6 +714,32 @@ TEST(XferAdd, AddCbFileRecvPassive)
 
 /*
  * Test functions:
+ *   xfer_add_cb (invalid port range)
+ *   xfer_network_bind_socket (invalid port range)
+ */
+
+TEST(XferAdd, AddCbPortRangeInvalid)
+{
+    const char *ranges[] = { "0", "0-10", "65536", "65535-65540",
+                             "70000-2147483647", "5010-5000", NULL };
+    int i;
+
+    for (i = 0; ranges[i]; i++)
+    {
+        config_file_option_set (xfer_config_network_port_range, ranges[i], 1);
+        record_start ();
+        LONGS_EQUAL(WEECHAT_RC_ERROR,
+                    add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                              "type_string", "chat_send",
+                              "remote_nick", "alice", "local_nick", "bob",
+                              "socket", str_sock_server (), NULL));
+        CHECK(record_search_msg_regex ("core.weechat",
+                                       "cannot find available port for xfer"));
+    }
+}
+
+/*
+ * Test functions:
  *   xfer_network_accept (file received, passive, with port range)
  *   xfer_network_bind_socket
  */

@@ -156,7 +156,9 @@ xfer_network_resolve_addr (const char *str_address, const char *str_port,
  * given family (AF_INET or AF_INET6).
  *
  * The port is the first one available in option xfer.network.port_range,
- * or a port chosen by the system if the option is empty.
+ * or a port chosen by the system if the option is empty; the range is
+ * invalid (error) if a port is lower than 1 or greater than 65535, or if the
+ * first port is greater than the last one.
  *
  * On success, the bound port is stored in *port (which is not changed on
  * error).
@@ -198,7 +200,9 @@ xfer_network_bind_socket (int family, int *port)
     if (args == 1)
         port_end = port_candidate;
     bound = 0;
-    if ((args == 0) || (port_candidate <= port_end))
+    if ((args <= 0)
+        || ((port_candidate >= 1) && (port_end <= 65535)
+            && (port_candidate <= port_end)))
     {
         do
         {
