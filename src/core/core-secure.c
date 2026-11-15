@@ -54,6 +54,15 @@ char *secure_decrypt_error[] = { "memory", "buffer", "key", "cipher", "setkey",
 /* used only when reading sec.conf: 1 if flag __passphrase__ is enabled */
 int secure_data_encrypted = 0;
 
+/* context to decrypt data still encrypted */
+struct t_secure_decrypt_not_decrypted
+{
+    const char *passphrase;            /* passphrase used to decrypt data   */
+    int hash_algo;                     /* hash algorithm                    */
+    int cipher;                        /* cipher                            */
+    int num_ok;                        /* number of data decrypted          */
+};
+
 
 /*
  * Derive a key from salt + passphrase (using a hash).
@@ -410,6 +419,57 @@ decrypt_end:
 }
 
 /*
+ * Decrypt a data still encrypted (callback called for each data still
+ * encrypted).
+ *
+ * If the data is decrypted, it is added in hashtable "secure_hashtable_data",
+ * removed from hashtable "secure_hashtable_data_encrypted", and the counter
+ * of decrypted data is incremented.
+ */
+
+void
+secure_decrypt_data_not_decrypted_map_cb (void *data,
+                                          struct t_hashtable *hashtable,
+                                          const void *key, const void *value)
+{
+    struct t_secure_decrypt_not_decrypted *ctx;
+    char *buffer, *decrypted;
+    int length_buffer, length_decrypted, rc;
+
+    /* make C compiler happy */
+    (void) hashtable;
+
+    ctx = (struct t_secure_decrypt_not_decrypted *)data;
+
+    if (!value || !((const char *)value)[0])
+        return;
+
+    buffer = malloc (strlen ((const char *)value) + 1);
+    if (!buffer)
+        return;
+
+    length_buffer = string_base16_decode ((const char *)value, buffer);
+    decrypted = NULL;
+    length_decrypted = 0;
+    rc = secure_decrypt_data (
+        buffer,
+        length_buffer,
+        ctx->hash_algo,
+        ctx->cipher,
+        ctx->passphrase,
+        &decrypted,
+        &length_decrypted);
+    if ((rc == 0) && decrypted)
+    {
+        hashtable_set (secure_hashtable_data, (const char *)key, decrypted);
+        hashtable_remove (secure_hashtable_data_encrypted, (const char *)key);
+        ctx->num_ok++;
+    }
+    free (decrypted);
+    free (buffer);
+}
+
+/*
  * Decrypt data still encrypted (data that could not be decrypted when reading
  * secured data configuration file (because no passphrase was given).
  *
@@ -423,74 +483,39 @@ decrypt_end:
 int
 secure_decrypt_data_not_decrypted (const char *passphrase)
 {
-    char **keys, *buffer, *decrypted;
-    const char *value;
-    int num_ok, num_keys, i, hash_algo, cipher, rc;
-    int length_buffer, length_decrypted;
+    struct t_secure_decrypt_not_decrypted ctx;
+    struct t_hashtable *data_encrypted;
 
     /* we need a passphrase to decrypt data! */
     if (!passphrase || !passphrase[0])
         return -1;
 
-    hash_algo = weecrypto_get_hash_algo (
+    ctx.hash_algo = weecrypto_get_hash_algo (
         config_file_option_string (secure_config_crypt_hash_algo));
-    if (hash_algo == GCRY_MD_NONE)
+    if (ctx.hash_algo == GCRY_MD_NONE)
         return -2;
 
-    cipher = weecrypto_get_cipher (
+    ctx.cipher = weecrypto_get_cipher (
         config_file_option_string (secure_config_crypt_cipher));
-    if (cipher == GCRY_CIPHER_NONE)
+    if (ctx.cipher == GCRY_CIPHER_NONE)
         return -3;
 
-    num_ok = 0;
+    ctx.passphrase = passphrase;
+    ctx.num_ok = 0;
 
-    keys = string_split (hashtable_get_string (secure_hashtable_data_encrypted,
-                                               "keys"),
-                         ",",
-                         NULL,
-                         WEECHAT_STRING_SPLIT_STRIP_LEFT
-                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                         0,
-                         &num_keys);
-    if (keys)
+    /*
+     * use a copy of the hashtable, because decrypted data is removed from
+     * the hashtable during the loop
+     */
+    data_encrypted = hashtable_dup (secure_hashtable_data_encrypted);
+    if (data_encrypted)
     {
-        for (i = 0; i < num_keys; i++)
-        {
-            value = hashtable_get (secure_hashtable_data_encrypted, keys[i]);
-            if (value && value[0])
-            {
-                buffer = malloc (strlen (value) + 1);
-                if (buffer)
-                {
-                    length_buffer = string_base16_decode (value, buffer);
-                    decrypted = NULL;
-                    length_decrypted = 0;
-                    rc = secure_decrypt_data (
-                        buffer,
-                        length_buffer,
-                        hash_algo,
-                        cipher,
-                        passphrase,
-                        &decrypted,
-                        &length_decrypted);
-                    if ((rc == 0) && decrypted)
-                    {
-                        hashtable_set (secure_hashtable_data, keys[i],
-                                       decrypted);
-                        hashtable_remove (secure_hashtable_data_encrypted,
-                                          keys[i]);
-                        num_ok++;
-                    }
-                    free (decrypted);
-                    free (buffer);
-                }
-            }
-        }
-        string_free_split (keys);
+        hashtable_map (data_encrypted,
+                       &secure_decrypt_data_not_decrypted_map_cb, &ctx);
+        hashtable_free (data_encrypted);
     }
 
-    return num_ok;
+    return ctx.num_ok;
 }
 
 /*
