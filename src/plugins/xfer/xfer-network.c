@@ -201,6 +201,17 @@ xfer_network_bind_socket (int family, int *port)
         }
         while ((args > 0) && (port_candidate <= port_end));
     }
+    if (bound && (port_candidate == 0))
+    {
+        /* Get the port chosen by the system. */
+        if (getsockname (sock, (struct sockaddr *)&bind_addr,
+                         &bind_addr_len) == 0)
+        {
+            port_candidate = ntohs (*bind_port);
+        }
+        if (port_candidate == 0)
+            bound = 0;
+    }
     if (!bound)
     {
         weechat_printf (NULL,
@@ -208,11 +219,6 @@ xfer_network_bind_socket (int family, int *port)
                         weechat_prefix ("error"), XFER_PLUGIN_NAME);
         close (sock);
         return -1;
-    }
-    if (port_candidate == 0)
-    {
-        getsockname (sock, (struct sockaddr *)&bind_addr, &bind_addr_len);
-        port_candidate = ntohs (*bind_port);
     }
     *port = port_candidate;
     return sock;
