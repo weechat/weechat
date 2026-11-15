@@ -20,7 +20,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Security
 
-- core: fix decoding of incomplete WeeChat color codes, which could remove the sender of an IRC message received with a crafted message tag ([#2382](https://github.com/weechat/weechat/pull/2382))
+- core: fix decoding of incomplete WeeChat color codes in functions string_remove_color and string_color_code_size, which could remove the sender of an IRC message received with a crafted message tag ([#2382](https://github.com/weechat/weechat/pull/2382))
 
 ## [4.10.4] - 2026-11-09
 
