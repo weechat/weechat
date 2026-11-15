@@ -368,6 +368,36 @@ TEST(GuiColor, CodeSize)
 
     /* WeeChat color */
     LONGS_EQUAL(3, gui_color_code_size (GUI_COLOR(GUI_COLOR_CHAT_HOST)));
+
+    /* Incomplete/invalid color codes: only the valid prefix is counted */
+    LONGS_EQUAL(1, gui_color_code_size ("\x19"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x19" "x"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x19" "1x"));
+    LONGS_EQUAL(3, gui_color_code_size ("\x19" "12x"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x19" "F"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x19" "F :"));
+    LONGS_EQUAL(3, gui_color_code_size ("\x19" "F0 :"));
+    LONGS_EQUAL(4, gui_color_code_size ("\x19" "F05 :"));
+    LONGS_EQUAL(3, gui_color_code_size ("\x19" "F* :"));
+    LONGS_EQUAL(5, gui_color_code_size ("\x19" "F*05 :"));
+    LONGS_EQUAL(3, gui_color_code_size ("\x19" "F@ :"));
+    LONGS_EQUAL(7, gui_color_code_size ("\x19" "F@0001 :"));
+    LONGS_EQUAL(9, gui_color_code_size ("\x19" "F@*00001 :"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x19" "B :"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x19" "B* :"));
+    LONGS_EQUAL(5, gui_color_code_size ("\x19" "B@12x"));
+    LONGS_EQUAL(3, gui_color_code_size ("\x19" "*0~05"));
+    LONGS_EQUAL(5, gui_color_code_size ("\x19" "*05~ :"));
+    LONGS_EQUAL(6, gui_color_code_size ("\x19" "*05~0 :"));
+    LONGS_EQUAL(11, gui_color_code_size ("\x19" "*05~@00001 :"));
+    LONGS_EQUAL(5, gui_color_code_size ("\x19" "@123ab"));
+    LONGS_EQUAL(7, gui_color_code_size ("\x19" "@123456"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x19" "bx"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x1A"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x1A" " :"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x1A" "\x01" " :"));
+    LONGS_EQUAL(1, gui_color_code_size ("\x1B" "x"));
+    LONGS_EQUAL(2, gui_color_code_size ("\x1B" "\x06" "x"));
 }
 
 /*
@@ -557,6 +587,24 @@ TEST(GuiColor, Decode)
     WEE_CHECK_DECODE("test_option_weechat.color.chat_host", string, NULL);
     WEE_CHECK_DECODE("test_option_weechat.color.chat_host", string, "");
     WEE_CHECK_DECODE("test_[color]option_weechat.color.chat_host", string, "[color]");
+
+    /* Incomplete/invalid color codes: chars after the valid prefix are kept */
+    WEE_CHECK_DECODE("test_?", "test_" "\x19" "F", "?");
+    WEE_CHECK_DECODE("test_? :end", "test_" "\x19" "F :end", "?");
+    WEE_CHECK_DECODE("test_ :end", "test_" "\x19" "F :end", NULL);
+    WEE_CHECK_DECODE("test_? :end", "test_" "\x19" "F0 :end", "?");
+    WEE_CHECK_DECODE("test_? :end", "test_" "\x19" "F@0001 :end", "?");
+    WEE_CHECK_DECODE("test_? :end", "test_" "\x19" "B :end", "?");
+    WEE_CHECK_DECODE("test_?~05 :end", "test_" "\x19" "*0~05 :end", "?");
+    WEE_CHECK_DECODE("test_? :end", "test_" "\x19" "*05~ :end", "?");
+    WEE_CHECK_DECODE("test_?ab :end", "test_" "\x19" "@123ab :end", "?");
+    WEE_CHECK_DECODE("test_?x :end", "test_" "\x19" "1x :end", "?");
+    WEE_CHECK_DECODE("test_? :end", "test_" "\x1A" " :end", "?");
+    WEE_CHECK_DECODE("test_? :end", "test_" "\x1B" " :end", "?");
+    WEE_CHECK_DECODE(
+        "@+example.com/x=? :nick!user@host NOTICE alice :test",
+        "@+example.com/x=" "\x19" "F :nick!user@host NOTICE alice :test",
+        "?");
 }
 
 /*
