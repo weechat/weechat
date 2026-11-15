@@ -1086,6 +1086,10 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 // TRANSLATION MISSING
 * Do not declare functions `static`, so that they can be used in unit tests
   (declared with `extern`).
+// TRANSLATION MISSING
+* Declare in the header (_.h_) only the functions used in other files: an
+  internal helper used only in its own _.c_ file has no prototype in the
+  header (a unit test that calls it declares it with `extern`).
 * Emacs テキストエディタのユーザは以下の Lisp コードを
   _~/.emacs.el_ に追記することで、適切なインデントを行うことができます。
 

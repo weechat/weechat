@@ -872,6 +872,9 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 * Do not declare functions `static`, so that they can be used in unit tests
   (declared with `extern`).
+* Declare in the header (_.h_) only the functions used in other files: an
+  internal helper used only in its own _.c_ file has no prototype in the
+  header (a unit test that calls it declares it with `extern`).
 * This Lisp code can be used in your _~/.emacs.el_ to indent properly if you are
   using Emacs as text editor:
 

@@ -887,6 +887,10 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 * Ne déclarez pas les fonctions `static`, afin qu'elles puissent être
   utilisées dans les tests unitaires (déclarées avec `extern`).
+* Déclarez dans l'en-tête (_.h_) seulement les fonctions utilisées dans
+  d'autres fichiers : une fonction interne utilisée uniquement dans son
+  fichier _.c_ n'a pas de prototype dans l'en-tête (un test unitaire qui
+  l'appelle la déclare avec `extern`).
 * Ce code Lisp peut être utilisé dans votre _~/.emacs.el_ pour indenter
   correctement si vous utilisez l'éditeur de texte Emacs :
 

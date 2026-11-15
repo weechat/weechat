@@ -878,6 +878,10 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 * Немојте да декларишете функције као `static`, тако да би могле да се користе у unit тестовима
   (декларисаним са `extern`).
+// TRANSLATION MISSING
+* Declare in the header (_.h_) only the functions used in other files: an
+  internal helper used only in its own _.c_ file has no prototype in the
+  header (a unit test that calls it declares it with `extern`).
 * Ако користите Emacs као текст едитор, за исправно увлачење можете у свом _~/.emacs.el_ употребити Lisp кôд који следи:
 
 [source,lisp]

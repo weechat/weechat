@@ -132,6 +132,9 @@ The rules most often missed:
 
 - Never declare C functions `static` (unit tests declare them `extern`),
   including helper functions in tests.
+- Declare in the header `.h` only the functions used in other files: an
+  internal helper used only in its own `.c` file has no prototype in the
+  header (a unit test that calls it declares it `extern`).
 - Comment every function, in the imperative mood ("Check if…", not
   "Checks if…"), and update this comment when the behavior of the function
   changes (parameters, return value, units…).
