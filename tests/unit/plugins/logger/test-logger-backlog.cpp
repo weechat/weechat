@@ -23,6 +23,7 @@ extern "C"
 
 extern void logger_backlog_display_line (struct t_gui_buffer *buffer,
                                          const char *line);
+extern int logger_backlog_line_has_date (const char *line);
 extern struct t_arraylist *logger_backlog_group_messages (struct t_arraylist *lines);
 }
 
@@ -169,6 +170,26 @@ test_logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
 
 /*
  * Test functions:
+ *   logger_backlog_line_has_date
+ */
+
+TEST(LoggerBacklog, LineHasDate)
+{
+    LONGS_EQUAL(0, logger_backlog_line_has_date (NULL));
+    LONGS_EQUAL(0, logger_backlog_line_has_date (""));
+    LONGS_EQUAL(0, logger_backlog_line_has_date ("test"));
+    LONGS_EQUAL(0, logger_backlog_line_has_date ("\t\ttest"));
+    LONGS_EQUAL(0, logger_backlog_line_has_date ("\t\t2026-11-15 10:00:00\tnick\ttest"));
+    LONGS_EQUAL(0, logger_backlog_line_has_date ("invalid date\tnick\ttest"));
+    LONGS_EQUAL(0, logger_backlog_line_has_date ("2026-11-15 10:00:00.123456Z"));
+
+    LONGS_EQUAL(1, logger_backlog_line_has_date ("2026-11-15 10:00:00.123456Z\tnick\ttest"));
+    LONGS_EQUAL(1, logger_backlog_line_has_date ("2026-11-15 10:00:00.123456Z\t\t"));
+    LONGS_EQUAL(1, logger_backlog_line_has_date ("2026-11-15 10:00:00\tnick\ttest"));
+}
+
+/*
+ * Test functions:
  *   logger_backlog_msg_cmp_cb
  *   logger_backlog_msg_free_cb
  *   logger_backlog_group_messages
@@ -191,6 +212,24 @@ TEST(LoggerBacklog, GroupMessages)
         "2023-06-04 21:15:37.123456Z\t\tTwo lines with empty line",
         "",
         "2023-06-04 21:15:40.123456Z\t\tMessage on one line",
+        NULL,
+    };
+    const char *test_lines_3[] = {
+        "\t\tend of line",
+        "2023-06-04 21:15:34.123456Z\t\tFirst line",
+        "\t\tof multiline message",
+        "\t\t",
+        "\t\tend of message",
+        "2023-06-04 21:15:37.123456Z\t\tTwo lines with empty line",
+        "\t\t",
+        "2023-06-04 21:15:40.123456Z\t\tMessage on one line",
+        NULL,
+    };
+    const char *test_lines_4[] = {
+        "2023-06-04 21:15:34.123456Z\tnick\tline 1",
+        "\t\t2023-06-04 21:15:35.123456Z\tfake\tmessage",
+        "\t\t\tline 3 with tab",
+        "2023-06-04 21:15:40.123456Z\tnick\tMessage on one line",
         NULL,
     };
     int i;
@@ -238,6 +277,48 @@ TEST(LoggerBacklog, GroupMessages)
                  (const char *)arraylist_get (messages, 3));
     arraylist_free (messages);
 
+    arraylist_clear (lines);
+
+    /* Same messages as test_lines_2, with next lines indented by two tabs */
+    for (i = 0; test_lines_3[i]; i++)
+    {
+        arraylist_add (lines, strdup (test_lines_3[i]));
+    }
+
+    messages = logger_backlog_group_messages (lines);
+    CHECK(messages);
+    LONGS_EQUAL(4, arraylist_size (messages));
+    STRCMP_EQUAL("end of line",
+                 (const char *)arraylist_get (messages, 0));
+    STRCMP_EQUAL("2023-06-04 21:15:34.123456Z\t\tFirst line\n"
+                 "of multiline message\n"
+                 "\n"
+                 "end of message",
+                 (const char *)arraylist_get (messages, 1));
+    STRCMP_EQUAL("2023-06-04 21:15:37.123456Z\t\tTwo lines with empty line\n",
+                 (const char *)arraylist_get (messages, 2));
+    STRCMP_EQUAL("2023-06-04 21:15:40.123456Z\t\tMessage on one line",
+                 (const char *)arraylist_get (messages, 3));
+    arraylist_free (messages);
+
+    arraylist_clear (lines);
+
+    /* Next lines looking like a message: not a message if indented */
+    for (i = 0; test_lines_4[i]; i++)
+    {
+        arraylist_add (lines, strdup (test_lines_4[i]));
+    }
+
+    messages = logger_backlog_group_messages (lines);
+    CHECK(messages);
+    LONGS_EQUAL(2, arraylist_size (messages));
+    STRCMP_EQUAL("2023-06-04 21:15:34.123456Z\tnick\tline 1\n"
+                 "2023-06-04 21:15:35.123456Z\tfake\tmessage\n"
+                 "\tline 3 with tab",
+                 (const char *)arraylist_get (messages, 0));
+    STRCMP_EQUAL("2023-06-04 21:15:40.123456Z\tnick\tMessage on one line",
+                 (const char *)arraylist_get (messages, 1));
+    arraylist_free (messages);
 
     arraylist_free (lines);
 }

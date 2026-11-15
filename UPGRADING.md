@@ -254,6 +254,28 @@ The text displayed before nick and after nick/target is set by options
 between nick and target is set by option `irc.look.notice_target_separator` (default: `:`),
 and their color is set by option `irc.color.notice`.
 
+### Multiline messages in log files
+
+The next lines of a multiline message are now written in log files with an empty date and prefix
+(two tabs at beginning of line), so that they can not be read as a new message:
+
+```text
+2026-11-15 10:00:00.123456Z	nick	line 1
+		line 2
+		line 3
+```
+
+The backlog displayed when a buffer is opened is the same as before, and log files written by
+older versions are still read as before.
+
+Tools parsing log files may need to be adapted, or the new option `logger.file.split_multiline`
+can be enabled to write the date and prefix on each line of multiline messages (the backlog then
+displays one message per line):
+
+```text
+/set logger.file.split_multiline on
+```
+
 ### Xfer port range
 
 The value of option `xfer.network.port_range` is now checked: it must be empty (any port),

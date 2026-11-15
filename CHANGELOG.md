@@ -97,6 +97,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: split channel modes in multiple messages in commands `/mode` and `/samode` according to the server limit ([#295](https://github.com/weechat/weechat/issues/295))
 - javascript: enable build by default ([#360](https://github.com/weechat/weechat/issues/360))
 - **breaking:** javascript: use the current V8 API, require V8 ≥ 11.3 (provided by Node.js shared library on Linux, or standalone V8 library like on macOS with Homebrew), V8 is now initialized on first script load and runs in single-threaded mode ([#360](https://github.com/weechat/weechat/issues/360))
+- logger: write the next lines of multiline messages with an empty date and prefix (two tabs at beginning of line), add option logger.file.split_multiline to write the date and prefix on each line ([#2210](https://github.com/weechat/weechat/issues/2210))
 - logger: read the backlog faster when the log file has very long lines
 - **breaking:** php: remove GnuTLS arguments of function hook_connect, like in all other languages
 - **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script

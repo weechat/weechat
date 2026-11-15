@@ -669,6 +669,85 @@ logger_get_line_tag_info (int tags_count, const char **tags,
 }
 
 /*
+ * Concatenate a string to a dynamic string, starting each new line ('\r' or
+ * '\n' in string) with "line_start".
+ *
+ * Return:
+ *   1: OK
+ *   0: error
+ */
+
+int
+logger_dyn_concat_lines (char **dyn_string, const char *string,
+                         const char *line_start)
+{
+    const char *pos_eol;
+
+    while (1)
+    {
+        pos_eol = strpbrk (string, "\r\n");
+        if (!pos_eol)
+            return weechat_string_dyn_concat (dyn_string, string, -1);
+        if (!weechat_string_dyn_concat (dyn_string, string, pos_eol - string)
+            || !weechat_string_dyn_concat (dyn_string, "\n", -1)
+            || !weechat_string_dyn_concat (dyn_string, line_start, -1))
+        {
+            return 0;
+        }
+        string = pos_eol + 1;
+    }
+}
+
+/*
+ * Build the message to write in log file: the line start (date and prefix)
+ * followed by the message.
+ *
+ * Each char '\r' or '\n' in message starts a new line in the log file:
+ *   - if split == 1: the new line starts with the line start (date and prefix),
+ *     so each line of message is a full log record
+ *   - if split == 0: the new line starts with two tabs (empty date and prefix),
+ *     so that it can not be parsed as a new log record and the backlog can
+ *     rebuild the multiline message.
+ *
+ * A char '\r' or '\n' in line start (for example in prefix) starts a new line
+ * with two tabs, whatever the value of "split".
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+logger_build_message (const char *line_start, const char *message, int split)
+{
+    char **start, **result;
+
+    if (!line_start || !message)
+        return NULL;
+
+    start = weechat_string_dyn_alloc (strlen (line_start) + 1);
+    result = weechat_string_dyn_alloc (strlen (line_start) + strlen (message) + 1);
+    if (!start || !result)
+        goto error;
+
+    if (!logger_dyn_concat_lines (start, line_start, "\t\t")
+        || !weechat_string_dyn_concat (result, *start, -1)
+        || !logger_dyn_concat_lines (result, message,
+                                     (split) ? *start : "\t\t"))
+    {
+        goto error;
+    }
+
+    weechat_string_dyn_free (start, 1);
+    return weechat_string_dyn_free (result, 0);
+
+error:
+    if (start)
+        weechat_string_dyn_free (start, 1);
+    if (result)
+        weechat_string_dyn_free (result, 1);
+    return NULL;
+}
+
+/*
  * Callback for print hooked.
  */
 
@@ -681,7 +760,7 @@ logger_print_cb (const void *pointer, void *data,
 {
     struct t_logger_buffer *ptr_logger_buffer;
     struct timeval tv;
-    char buf_time[256], *prefix_ansi, *message_ansi;
+    char buf_time[256], *prefix_ansi, *message_ansi, *line_start, *log_message;
     const char *ptr_prefix, *ptr_message;
     int line_log_level, prefix_is_nick, color_lines;
 
@@ -704,6 +783,7 @@ logger_print_cb (const void *pointer, void *data,
     {
         prefix_ansi = NULL;
         message_ansi = NULL;
+        line_start = NULL;
         color_lines = weechat_config_boolean (logger_config_file_color_lines);
         if (color_lines)
         {
@@ -726,18 +806,27 @@ logger_print_cb (const void *pointer, void *data,
             weechat_config_string (logger_config_file_time_format),
             &tv);
 
-        logger_buffer_write_line (
-            ptr_logger_buffer,
-            "%s\t%s%s%s\t%s%s",
-            buf_time,
-            (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_prefix) : "",
-            (ptr_prefix) ? ptr_prefix : "",
-            (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_suffix) : "",
-            (color_lines) ? "\x1B[0m" : "",
-            ptr_message);
+        if (weechat_asprintf (
+                &line_start,
+                "%s\t%s%s%s\t%s",
+                buf_time,
+                (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_prefix) : "",
+                (ptr_prefix) ? ptr_prefix : "",
+                (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_suffix) : "",
+                (color_lines) ? "\x1B[0m" : "") >= 0)
+        {
+            log_message = logger_build_message (
+                line_start,
+                (ptr_message) ? ptr_message : "",
+                weechat_config_boolean (logger_config_file_split_multiline));
+            if (log_message)
+                logger_buffer_write_line (ptr_logger_buffer, "%s", log_message);
+            free (log_message);
+        }
 
         free (prefix_ansi);
         free (message_ansi);
+        free (line_start);
     }
 
     return WEECHAT_RC_OK;

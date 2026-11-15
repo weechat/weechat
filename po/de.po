@@ -15036,6 +15036,13 @@ msgstr ""
 "logger.file.rotation_compression_type festlegen"
 
 msgid ""
+"split multiline messages: write the date and prefix on each line of the "
+"message (the backlog then displays one message per line); if disabled, the "
+"next lines of the message start with two tabs (empty date and prefix), so "
+"that the backlog displays a single message"
+msgstr ""
+
+msgid ""
 "timestamp used in log files (see man strftime for date/time specifiers, "
 "extra specifiers are supported, see function util_strftimeval in Plugin API "
 "reference)"

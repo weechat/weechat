@@ -55,6 +55,7 @@ struct t_config_option *logger_config_file_replacement_char = NULL;
 struct t_config_option *logger_config_file_rotation_compression_level = NULL;
 struct t_config_option *logger_config_file_rotation_compression_type = NULL;
 struct t_config_option *logger_config_file_rotation_size_max = NULL;
+struct t_config_option *logger_config_file_split_multiline = NULL;
 struct t_config_option *logger_config_file_time_format = NULL;
 
 /* Other */
@@ -700,6 +701,16 @@ logger_config_init (void)
             &logger_config_rotation_size_max_check, NULL, NULL,
             &logger_config_rotation_size_max_change, NULL, NULL,
             NULL, NULL, NULL);
+        logger_config_file_split_multiline = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "split_multiline", "boolean",
+            N_("split multiline messages: write the date and prefix on each "
+               "line of the message (the backlog then displays one message "
+               "per line); if disabled, the next lines of the message start "
+               "with two tabs (empty date and prefix), so that the backlog "
+               "displays a single message"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         logger_config_file_time_format = weechat_config_new_option (
             logger_config_file, logger_config_section_file,
             "time_format", "string",
