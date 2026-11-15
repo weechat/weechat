@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-14 09:53+0100\n"
+"POT-Creation-Date: 2026-11-15 15:39+0100\n"
 "PO-Revision-Date: 2026-11-08 22:22+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -19159,6 +19159,12 @@ msgstr ""
 msgid "nicks of DCC chat"
 msgstr "Nicks vom DCC Chat"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 "öffnet automatisch den Buffer für Übertragungen, falls eine neue Übertragung "
@@ -19210,11 +19216,19 @@ msgstr ""
 "Schnittstelle verwendet (Hinweis: Der Inhalt wird ausgewertet, siehe /help "
 "eval)"
 
+#, fuzzy
+#| msgid ""
+#| "restricts outgoing files/chats and incoming/passive files to use only "
+#| "ports in the given range (useful for NAT) (syntax: a single port, ie. "
+#| "5000 or a port range, ie. 5000-5015, empty value means any port, it's "
+#| "recommended to use ports greater than 1024, because only root can use "
+#| "ports below 1024)"
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "schränkt den ausgehenden Dateien/Chats und eingehende/passive Dateien auf "
 "die ausschließliche Verwendung von Ports im angegebenen Bereich ein "
@@ -19333,6 +19347,14 @@ msgstr ""
 #, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "%s%s: ungültige Adresse \"%s\": Fehler %d %s"
+
+#, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: Socket kann für xfer nicht erstellt werden: Fehler %d %s"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s: Es konnte kein Port für den Transfer ermitteln werden"
 
 #, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -19537,14 +19559,6 @@ msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr ""
 "%s%s: lokale Adresse für xfer-Übertragung konnte nicht ermittelt werden: "
 "Fehler %d %s"
-
-#, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: Socket kann für xfer nicht erstellt werden: Fehler %d %s"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: Es konnte kein Port für den Transfer ermitteln werden"
 
 #, c-format
 msgid "%s%s: error creating xfer"

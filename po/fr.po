@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-14 09:53+0100\n"
+"POT-Creation-Date: 2026-11-15 15:39+0100\n"
 "PO-Revision-Date: 2026-11-14 09:56+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
@@ -18825,6 +18825,14 @@ msgstr "Sans paramètre, cette commande ouvre le tampon avec la liste des xfer."
 msgid "nicks of DCC chat"
 msgstr "pseudos de la discussion DCC"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+"%s%s : intervalle de ports \"%s\" invalide (attendu : un port ou un "
+"intervalle de ports entre 1 et 65535, par exemple : 5000 ou 5000-5015)"
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 "ouvrir automatiquement le tampon xfer lorsqu'un nouveau xfer est ajouté à la "
@@ -18877,15 +18885,16 @@ msgstr ""
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "restreint les fichiers/discussions sortants et les fichiers entrants de "
 "manière passive à utiliser des ports dans l'intervalle donné (pratique pour "
 "le NAT) (syntaxe : un port simple, par exemple 5000, un intervalle de ports, "
-"par exemple 5000-5015, si non renseigné tout port peut être utilisé, il est "
-"recommandé d'utiliser des ports supérieurs à 1024, car seul root peut "
-"utiliser les ports en dessous de 1024)"
+"par exemple 5000-5015, avec des ports entre 1 et 65535, si non renseigné tout "
+"port peut être utilisé, il est recommandé d'utiliser des ports supérieurs à "
+"1024, car seul root peut utiliser les ports en dessous de 1024)"
 
 msgid ""
 "send acks when receiving files; if disabled, the transfer may freeze if the "
@@ -18998,6 +19007,14 @@ msgstr ""
 #, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "%s%s : adresse \"%s\" invalide : erreur %d %s"
+
+#, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s : impossible de créer le socket pour le xfer : erreur %d %s"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s : impossible de trouver un port disponible pour le xfer"
 
 #, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -19199,14 +19216,6 @@ msgstr "%s%s : impossible d'accéder au fichier \"%s\""
 msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr ""
 "%s%s : impossible d'obtenir l'adresse locale pour le xfer : erreur %d %s"
-
-#, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s : impossible de créer le socket pour le xfer : erreur %d %s"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s : impossible de trouver un port disponible pour le xfer"
 
 #, c-format
 msgid "%s%s: error creating xfer"

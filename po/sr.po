@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-14 09:53+0100\n"
+"POT-Creation-Date: 2026-11-15 15:39+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -18309,6 +18309,12 @@ msgstr "Без аргумента ова команда отвара бафер 
 msgid "nicks of DCC chat"
 msgstr "надимци за DCC разговор"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr "ауто отварање xfer бафера када се на листу дода нови xfer"
 
@@ -18356,11 +18362,19 @@ msgstr ""
 "разговора; ако је празно, користи се IP локалног интерфејса (напомена: "
 "садржај сер израчунава, погледајте /help eval)"
 
+#, fuzzy
+#| msgid ""
+#| "restricts outgoing files/chats and incoming/passive files to use only "
+#| "ports in the given range (useful for NAT) (syntax: a single port, ie. "
+#| "5000 or a port range, ie. 5000-5015, empty value means any port, it's "
+#| "recommended to use ports greater than 1024, because only root can use "
+#| "ports below 1024)"
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "ограничава одлазне фајлове/разговоре и долазне/пасивне фајлове тако да "
 "користе само портове у наведеном опсегу (корисно за NAT) (синтакса: један "
@@ -18470,6 +18484,14 @@ msgstr "%s%s: адреса „%s” се разрешила у већи sockaddr
 #, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "%s%s: неважећа адреса „%s”: грешка %d %s"
+
+#, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: не може да се креира сокет за xfer: грешка %d %s"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s: не може да се пронађе доступни порт за xfer"
 
 #, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -18675,14 +18697,6 @@ msgstr "%s%s: не може да се приступи фајлу „%s”"
 #| msgid "%s%s: cannot create socket for xfer: error %d %s"
 msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr "%s%s: не може да се креира сокет за xfer: грешка %d %s"
-
-#, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: не може да се креира сокет за xfer: грешка %d %s"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: не може да се пронађе доступни порт за xfer"
 
 #, c-format
 msgid "%s%s: error creating xfer"

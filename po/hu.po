@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-14 09:53+0100\n"
+"POT-Creation-Date: 2026-11-15 15:39+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -16729,6 +16729,12 @@ msgstr ""
 msgid "nicks of DCC chat"
 msgstr "felhasználók listája a szobában"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 
@@ -16785,8 +16791,9 @@ msgstr "kimenő dcc forgalom IP/DNS-címe (ha üres, a helyi interfész IP-címe
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "korlátozza a dcc-t, hogy csak egy bizonyos tartományban lévő portokat "
 "használja (NAT esetén hasznos) (szintaxis: egyetlen port, pl. 5000 vagy egy "
@@ -16879,6 +16886,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -17081,14 +17096,6 @@ msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
 #, fuzzy, c-format
 msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s nem sikerült a csatornát létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating xfer"

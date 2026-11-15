@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-14 09:53+0100\n"
+"POT-Creation-Date: 2026-11-15 15:39+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -17563,6 +17563,12 @@ msgstr ""
 msgid "nicks of DCC chat"
 msgstr "přezdívky DCC rozhovoru"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 "automaticky otevřít xfer buffer, když je přidána nová položka do xfer seznamu"
@@ -17623,8 +17629,9 @@ msgstr ""
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "omezit odchozí soubory/chat pro používaní portů pouze v zadaném rozsahu "
 "(užitečné pro NAT) (syntaxe: samostatný port, např. 5000 nebo rozsah portů "
@@ -17723,6 +17730,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "%s%s: nevalidní bind adresa \"%s\" pro %s"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: nemohu vytvořit soket: chyba %d %s"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s: nemůžu najít dostupný port pro xfer"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -17919,14 +17934,6 @@ msgstr "%s%s: nemohu přistupovat k souboru \"%s\""
 #, fuzzy, c-format
 msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr "%s%s: nemohu vytvořit soket: chyba %d %s"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: nemohu vytvořit soket: chyba %d %s"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: nemůžu najít dostupný port pro xfer"
 
 #, c-format
 msgid "%s%s: error creating xfer"

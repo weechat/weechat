@@ -13,6 +13,7 @@
 #include "xfer.h"
 #include "xfer-config.h"
 #include "xfer-buffer.h"
+#include "xfer-network.h"
 
 
 struct t_config_file *xfer_config_file = NULL;
@@ -80,6 +81,35 @@ xfer_config_refresh_cb (const void *pointer, void *data,
 
     if (xfer_buffer)
         xfer_buffer_refresh (NULL);
+}
+
+/*
+ * Check value of option "xfer.network.port_range".
+ *
+ * Return:
+ *   1: value is valid
+ *   0: value is invalid
+ */
+
+int
+xfer_config_check_port_range_cb (const void *pointer, void *data,
+                                 struct t_config_option *option,
+                                 const char *value)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (xfer_network_parse_port_range (value, NULL, NULL))
+        return 1;
+
+    weechat_printf (NULL,
+                    _("%s%s: invalid port range \"%s\" (expected a port or a "
+                      "range of ports between 1 and 65535, for example: 5000 "
+                      "or 5000-5015)"),
+                    weechat_prefix ("error"), XFER_PLUGIN_NAME, value);
+    return 0;
 }
 
 /*
@@ -268,11 +298,13 @@ xfer_config_init (void)
             "port_range", "string",
             N_("restricts outgoing files/chats and incoming/passive files to use "
                "only ports in the given range (useful for NAT) (syntax: a single port, "
-               "ie. 5000 or a port range, ie. 5000-5015, empty value means any port, "
+               "ie. 5000 or a port range, ie. 5000-5015, with ports between 1 and "
+               "65535, empty value means any port, "
                "it's recommended to use ports greater than 1024, because only root "
                "can use ports below 1024)"),
             NULL, 0, 0, "", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            &xfer_config_check_port_range_cb, NULL, NULL,
+            NULL, NULL, NULL, NULL, NULL, NULL);
         xfer_config_network_send_ack = weechat_config_new_option (
             xfer_config_file, xfer_config_section_network,
             "send_ack", "boolean",

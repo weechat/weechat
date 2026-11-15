@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <ctype.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -137,11 +138,68 @@ xfer_network_resolve_addr (const char *str_address, const char *str_port,
 }
 
 /*
+ * Parse a port range: a single port (for example "5000") or a range of ports
+ * (for example "5000-5015"), with ports between 1 and 65535 and the first
+ * port lower than or equal to the last one.
+ *
+ * An empty string (or NULL) is valid and means any port: then *port_start and
+ * *port_end are set to 0.
+ *
+ * If port_start and port_end are not NULL, they are set with the first and
+ * last port in case the range is valid.
+ *
+ * Return:
+ *   1: valid port range
+ *   0: invalid port range
+ */
+
+int
+xfer_network_parse_port_range (const char *port_range,
+                               int *port_start, int *port_end)
+{
+    long start, end;
+    char *ptr_error;
+
+    start = 0;
+    end = 0;
+
+    if (port_range && port_range[0])
+    {
+        if (!isdigit ((unsigned char)port_range[0]))
+            return 0;
+        errno = 0;
+        start = strtol (port_range, &ptr_error, 10);
+        if (errno == ERANGE)
+            return 0;
+        end = start;
+        if (ptr_error[0] == '-')
+        {
+            if (!isdigit ((unsigned char)ptr_error[1]))
+                return 0;
+            errno = 0;
+            end = strtol (ptr_error + 1, &ptr_error, 10);
+            if (errno == ERANGE)
+                return 0;
+        }
+        if (ptr_error[0] || (start < 1) || (end > 65535) || (start > end))
+            return 0;
+    }
+
+    if (port_start)
+        *port_start = (int)start;
+    if (port_end)
+        *port_end = (int)end;
+
+    return 1;
+}
+
+/*
  * Open a socket and bind it to a local port, on the wildcard address of the
  * given family (AF_INET or AF_INET6).
  *
  * The port is the first one available in option xfer.network.port_range,
- * or a port chosen by the system if the option is empty.
+ * or a port chosen by the system if the option is empty; an invalid range is
+ * an error (see function xfer_network_parse_port_range).
  *
  * On success, the bound port is stored in *port (which is not changed on
  * error).
@@ -152,8 +210,7 @@ xfer_network_resolve_addr (const char *str_address, const char *str_port,
 int
 xfer_network_bind_socket (int family, int *port)
 {
-    const char *port_range;
-    int args, port_candidate, port_end, sock, bound;
+    int port_candidate, port_end, sock, bound;
     uint16_t *bind_port;
     struct sockaddr_storage bind_addr;
     socklen_t bind_addr_len;
@@ -175,15 +232,10 @@ xfer_network_bind_socket (int family, int *port)
                         errno, strerror (errno));
         return -1;
     }
-    port_candidate = 0;
-    port_end = 0;
-    port_range = weechat_config_string (xfer_config_network_port_range);
-    args = (port_range && port_range[0]) ?
-        sscanf (port_range, "%d-%d", &port_candidate, &port_end) : 0;
-    if (args == 1)
-        port_end = port_candidate;
     bound = 0;
-    if ((args == 0) || (port_candidate <= port_end))
+    if (xfer_network_parse_port_range (
+            weechat_config_string (xfer_config_network_port_range),
+            &port_candidate, &port_end))
     {
         do
         {
@@ -199,7 +251,7 @@ xfer_network_bind_socket (int family, int *port)
             }
             port_candidate++;
         }
-        while ((args > 0) && (port_candidate <= port_end));
+        while ((port_end > 0) && (port_candidate <= port_end));
     }
     if (bound && (port_candidate == 0))
     {

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-14 09:53+0100\n"
+"POT-Creation-Date: 2026-11-15 15:39+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -18585,6 +18585,12 @@ msgstr ""
 msgid "nicks of DCC chat"
 msgstr "DCC チャットのニックネーム"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr "新しい xfer がリストに追加されたら xfer バッファを自動的に開く"
 
@@ -18643,8 +18649,9 @@ msgstr ""
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "ファイル/チャットを送信する際に、与えられた範囲のポートを使う (NAT で便利) こ"
 "とを強制 (構文: 単一のポートを指定する場合は 5000 等、ポート範囲の場合は "
@@ -18743,6 +18750,14 @@ msgstr "%s%s: アドレス \"%s\" は予想以上に大きな sockaddr に解決
 #, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "%s%s: \"%s\" は無効なアドレスです: エラー %d %s"
+
+#, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: xfer 用のソケット作成に失敗: エラー %d %s"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s: xfer 用に利用できるポートが見つかりません"
 
 #, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -18951,14 +18966,6 @@ msgstr "%s%s: ファイル \"%s\" にアクセスできません"
 #| msgid "%s%s: cannot create socket for xfer: error %d %s"
 msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr "%s%s: xfer 用のソケット作成に失敗: エラー %d %s"
-
-#, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: xfer 用のソケット作成に失敗: エラー %d %s"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: xfer 用に利用できるポートが見つかりません"
 
 #, c-format
 msgid "%s%s: error creating xfer"

@@ -1100,6 +1100,34 @@ TEST(XferAdd, AddCbPortRange)
 
 /*
  * Test functions:
+ *   xfer_config_check_port_range_cb
+ */
+
+TEST(XferAdd, PortRangeInvalid)
+{
+    const char *ranges[] = { "0", "0-10", "65536", "65535-65540",
+                             "70000-2147483647", "5010-5000", "abc",
+                             "5000 - 5010", "5000-5010xyz", NULL };
+    int i;
+
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (xfer_config_network_port_range,
+                                        "5000-5015", 1));
+
+    for (i = 0; ranges[i]; i++)
+    {
+        record_start ();
+        LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                    config_file_option_set (xfer_config_network_port_range,
+                                            ranges[i], 1));
+        STRCMP_EQUAL("5000-5015",
+                     CONFIG_STRING(xfer_config_network_port_range));
+        RECORD_CHECK_MSG_REGEX("core.weechat", "invalid port range");
+    }
+}
+
+/*
+ * Test functions:
  *   xfer_network_accept (file received, passive, with port range)
  *   xfer_network_bind_socket
  */

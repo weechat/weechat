@@ -115,6 +115,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - **breaking:** relay/api: remove field "date_printed" in lines
 - **breaking:** relay/api: bump API version to 0.7.0
 - relay/weechat: add field "notify" in message "_buffer_opened", send message "_buffer_notify_changed" to clients ([#593](https://github.com/weechat/weechat/issues/593))
+- **breaking:** xfer: check value of option xfer.network.port_range when it is set (ports between 1 and 65535), ignore an invalid value read from the configuration file; an invalid range could bind an unexpected port or loop forever
 
 ### Fixed
 

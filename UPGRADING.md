@@ -254,6 +254,22 @@ The text displayed before nick and after nick/target is set by options
 between nick and target is set by option `irc.look.notice_target_separator` (default: `:`),
 and their color is set by option `irc.color.notice`.
 
+### Xfer port range
+
+The value of option `xfer.network.port_range` is now checked: it must be empty (any port),
+a single port (for example `5000`) or a range of ports (for example `5000-5015`), without spaces,
+with ports between 1 and 65535 and the first port lower than or equal to the last one.
+
+An invalid value is now rejected by `/set`, and ignored with a warning when it is read from
+the configuration file: then any port is used.
+
+Previous versions tolerated some invalid values, for example `5000 - 5015` (with spaces) was
+used as the single port `5000`. If you use this option, check its value and fix it if needed:
+
+```text
+/set xfer.network.port_range 5000-5015
+```
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer

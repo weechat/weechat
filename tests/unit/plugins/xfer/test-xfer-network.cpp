@@ -251,6 +251,74 @@ TEST(XferNetwork, ConvertIntegerToIpv4)
 
 /*
  * Test functions:
+ *   xfer_network_parse_port_range
+ */
+
+TEST(XferNetwork, ParsePortRange)
+{
+    const char *invalid[] = { "0", "0-10", "65536", "65535-65540",
+                              "70000-2147483647", "99999999999999999999",
+                              "5000-99999999999999999999", "5010-5000",
+                              "abc", " 5000", "+5000", "-5000", "5000-",
+                              "5000-abc", "5000 - 5010", "5000-5010xyz",
+                              "5000-+5010", "5000--5010", "5000-5010-5020",
+                              "5000 ", NULL };
+    int i, port_start, port_end;
+
+    /* Empty value: any port. */
+    port_start = -1;
+    port_end = -1;
+    LONGS_EQUAL(1, xfer_network_parse_port_range (NULL, &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(0, port_start);
+    LONGS_EQUAL(0, port_end);
+    port_start = -1;
+    port_end = -1;
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(0, port_start);
+    LONGS_EQUAL(0, port_end);
+
+    /* Single port. */
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("1", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(1, port_start);
+    LONGS_EQUAL(1, port_end);
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("65535", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(65535, port_start);
+    LONGS_EQUAL(65535, port_end);
+
+    /* Range of ports. */
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("5000-5015", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(5000, port_start);
+    LONGS_EQUAL(5015, port_end);
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("5000-5000", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(5000, port_start);
+    LONGS_EQUAL(5000, port_end);
+
+    /* NULL pointers for the ports. */
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("5000-5015", NULL, NULL));
+
+    /* Invalid ranges: ports are not changed. */
+    for (i = 0; invalid[i]; i++)
+    {
+        port_start = -1;
+        port_end = -1;
+        LONGS_EQUAL(0, xfer_network_parse_port_range (invalid[i],
+                                                      &port_start,
+                                                      &port_end));
+        LONGS_EQUAL(-1, port_start);
+        LONGS_EQUAL(-1, port_end);
+        LONGS_EQUAL(0, xfer_network_parse_port_range (invalid[i],
+                                                      NULL, NULL));
+    }
+}
+
+/*
+ * Test functions:
  *   xfer_network_resolve_addr
  */
 

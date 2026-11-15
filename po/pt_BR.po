@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-14 09:53+0100\n"
+"POT-Creation-Date: 2026-11-15 15:39+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -17340,6 +17340,12 @@ msgstr ""
 msgid "nicks of DCC chat"
 msgstr "apelidos do DCC chat"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 "abrir automaticamente buffer de transferência quando uma nova transferência "
@@ -17401,8 +17407,9 @@ msgstr ""
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "restringir arquivos/chats que estejam sendo enviados para utilizar somente "
 "portas no intervalo fornecido (útil para NAT) (sintaxe: uma única porta, por "
@@ -17498,6 +17505,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "%s%s: charset inválido: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: não foi possível criar socket para transferência"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s: não foi possível encontrar porta disponível para transferência"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -17696,14 +17711,6 @@ msgstr "%s%s: não é possível acessar o arquivo \"%s\""
 #, fuzzy, c-format
 msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr "%s%s: não foi possível criar socket para transferência"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: não foi possível criar socket para transferência"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: não foi possível encontrar porta disponível para transferência"
 
 #, c-format
 msgid "%s%s: error creating xfer"
