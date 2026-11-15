@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix memory leak in completion of plugin commands when the plugin is not found
 - core: fix crash when a plugin is unloaded or reloaded with command `/plugin` executed by a plugin or script, delay the command ([#2380](https://github.com/weechat/weechat/issues/2380))
 - core: fix crash when command `/upgrade` is executed by a script, execute the upgrade in the main loop ([#2380](https://github.com/weechat/weechat/issues/2380))
 - perl: fix warnings "Subroutine redefined" when loading multiple scripts with Perl built without multiplicity
