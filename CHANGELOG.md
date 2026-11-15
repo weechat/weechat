@@ -18,6 +18,10 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - ruby: restore the current script when a function of a script fails
 - scripts: fix crash when a script is unloaded or reloaded while one of its functions is running, delay the unload until the function has returned ([#2380](https://github.com/weechat/weechat/issues/2380))
 
+### Security
+
+- core: fix decoding of incomplete WeeChat color codes, which could remove the sender of an IRC message received with a crafted message tag ([#2382](https://github.com/weechat/weechat/pull/2382))
+
 ## [4.10.4] - 2026-11-09
 
 ### Added
