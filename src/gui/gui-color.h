@@ -187,6 +187,10 @@ extern const char *gui_color_get_custom (const char *color_name);
 extern int gui_color_convert_term_to_rgb (int color);
 extern int gui_color_convert_rgb_to_term (int rgb, int limit);
 extern int gui_color_convert_term_to_direct (int color);
+extern int gui_color_parse_digits (const char *string, int max_digits,
+                                   int *number);
+extern int gui_color_code_size_number (const char *string, int with_attr,
+                                       int *number);
 extern int gui_color_code_size (const char *string);
 extern char *gui_color_decode (const char *string, const char *replacement);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);

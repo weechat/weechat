@@ -311,6 +311,105 @@ TEST(GuiColor, ConvertTermToDirect)
 
 /*
  * Test functions:
+ *   gui_color_parse_digits
+ */
+
+TEST(GuiColor, ParseDigits)
+{
+    int number;
+
+    number = 0;
+    LONGS_EQUAL(0, gui_color_parse_digits ("", 2, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = 0;
+    LONGS_EQUAL(0, gui_color_parse_digits ("x", 2, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = 0;
+    LONGS_EQUAL(1, gui_color_parse_digits ("1", 2, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = 0;
+    LONGS_EQUAL(1, gui_color_parse_digits ("1 :", 2, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = -1;
+    LONGS_EQUAL(2, gui_color_parse_digits ("05", 2, &number));
+    LONGS_EQUAL(5, number);
+
+    number = -1;
+    LONGS_EQUAL(2, gui_color_parse_digits ("123", 2, &number));
+    LONGS_EQUAL(12, number);
+
+    number = 0;
+    LONGS_EQUAL(4, gui_color_parse_digits ("0021x", 5, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = -1;
+    LONGS_EQUAL(5, gui_color_parse_digits ("00214", 5, &number));
+    LONGS_EQUAL(214, number);
+
+    LONGS_EQUAL(5, gui_color_parse_digits ("99999", 5, NULL));
+}
+
+/*
+ * Test functions:
+ *   gui_color_code_size_number
+ */
+
+TEST(GuiColor, CodeSizeNumber)
+{
+    int number;
+
+    number = 0;
+    LONGS_EQUAL(0, gui_color_code_size_number ("", 1, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = 0;
+    LONGS_EQUAL(0, gui_color_code_size_number (" :", 1, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = 0;
+    LONGS_EQUAL(1, gui_color_code_size_number ("0 :", 1, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = -1;
+    LONGS_EQUAL(2, gui_color_code_size_number ("05 :", 1, &number));
+    LONGS_EQUAL(5, number);
+
+    number = -1;
+    LONGS_EQUAL(3, gui_color_code_size_number ("*05", 1, &number));
+    LONGS_EQUAL(5 | GUI_COLOR_EXTENDED_BOLD_FLAG, number);
+
+    /* attributes are not allowed */
+    number = 0;
+    LONGS_EQUAL(0, gui_color_code_size_number ("*05", 0, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = 0;
+    LONGS_EQUAL(1, gui_color_code_size_number ("@ :", 1, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = 0;
+    LONGS_EQUAL(4, gui_color_code_size_number ("@002 :", 1, &number));
+    LONGS_EQUAL(-1, number);
+
+    number = -1;
+    LONGS_EQUAL(6, gui_color_code_size_number ("@00214 :", 0, &number));
+    LONGS_EQUAL(214 | GUI_COLOR_EXTENDED_FLAG, number);
+
+    number = -1;
+    LONGS_EQUAL(8, gui_color_code_size_number ("@*_00214 :", 1, &number));
+    LONGS_EQUAL(214 | GUI_COLOR_EXTENDED_FLAG | GUI_COLOR_EXTENDED_BOLD_FLAG
+                | GUI_COLOR_EXTENDED_UNDERLINE_FLAG,
+                number);
+
+    LONGS_EQUAL(6, gui_color_code_size_number ("@00214", 0, NULL));
+}
+
+/*
+ * Test functions:
  *   gui_color_code_size
  */
 
@@ -989,6 +1088,22 @@ TEST(GuiColor, EncodeAnsi)
         "\x1B[25m \x1B[2m" "dim" "\x1B[22m a test \x1B[34m" "blue \x1B[0m"
         "reset \x1B[93m" "\x1B[41m" "yellow,red here!",
         string);
+
+    /* Incomplete/invalid color codes: chars after the valid prefix are kept */
+    WEE_CHECK_ENCODE_ANSI("test_", "test_" "\x19" "F");
+    WEE_CHECK_ENCODE_ANSI("test_ :end", "test_" "\x19" "F :end");
+    WEE_CHECK_ENCODE_ANSI("test_ :end", "test_" "\x19" "F0 :end");
+    WEE_CHECK_ENCODE_ANSI("test_ :end", "test_" "\x19" "F*0 :end");
+    WEE_CHECK_ENCODE_ANSI("test_ :end", "test_" "\x19" "F@0001 :end");
+    WEE_CHECK_ENCODE_ANSI("test_ :end", "test_" "\x19" "B :end");
+    WEE_CHECK_ENCODE_ANSI("test_ :end", "test_" "\x19" "B@12 :end");
+    WEE_CHECK_ENCODE_ANSI("test_~05 :end", "test_" "\x19" "*0~05 :end");
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[38;5;214m :end",
+                          "test_" "\x19" "*@00214~ :end");
+    WEE_CHECK_ENCODE_ANSI("test_ab :end", "test_" "\x19" "@123ab :end");
+    WEE_CHECK_ENCODE_ANSI("test_x :end", "test_" "\x19" "1x :end");
+    WEE_CHECK_ENCODE_ANSI("test_ :end", "test_" "\x1A" " :end");
+    WEE_CHECK_ENCODE_ANSI("test_ :end", "test_" "\x1B" " :end");
 }
 
 /*

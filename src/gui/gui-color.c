@@ -199,6 +199,32 @@ gui_color_attr_get_flag (char c)
 }
 
 /*
+ * Check if a char is an attribute char, used after a "set attribute" or
+ * "remove attribute" char.
+ *
+ * Return:
+ *   1: char is an attribute char
+ *   0: char is not an attribute char
+ */
+
+int
+gui_color_is_attr_char (char c)
+{
+    switch (c)
+    {
+        case GUI_COLOR_ATTR_BOLD_CHAR:
+        case GUI_COLOR_ATTR_REVERSE_CHAR:
+        case GUI_COLOR_ATTR_ITALIC_CHAR:
+        case GUI_COLOR_ATTR_UNDERLINE_CHAR:
+        case GUI_COLOR_ATTR_BLINK_CHAR:
+        case GUI_COLOR_ATTR_DIM_CHAR:
+            return 1;
+    }
+
+    return 0;
+}
+
+/*
  * Build string with attributes of color.
  *
  * The str_attr must be at least 6 bytes long (5 for attributes + final '\0').
@@ -612,6 +638,36 @@ gui_color_convert_term_to_direct (int color)
 }
 
 /*
+ * Parse up to "max_digits" digits at the beginning of "string".
+ *
+ * Return the number of digits found (between 0 and "max_digits"): the first
+ * char that is not a digit stops the scan.
+ *
+ * If "number" is not NULL, it is set to the value of the digits if exactly
+ * "max_digits" digits are found, otherwise -1.
+ */
+
+int
+gui_color_parse_digits (const char *string, int max_digits, int *number)
+{
+    int num_digits, value;
+
+    num_digits = 0;
+    value = 0;
+    while ((num_digits < max_digits)
+           && isdigit ((unsigned char)string[num_digits]))
+    {
+        value = (value * 10) + (string[num_digits] - '0');
+        num_digits++;
+    }
+
+    if (number)
+        *number = (num_digits == max_digits) ? value : -1;
+
+    return num_digits;
+}
+
+/*
  * Return the size (in bytes) of a color number at the beginning of "string":
  * optional extended char "@", attributes (only if "with_attr" is 1) and
  * digits (2 digits, or 5 digits after "@").
@@ -619,43 +675,41 @@ gui_color_convert_term_to_direct (int color)
  * Only the valid prefix of the number is counted: the first char that is
  * not allowed stops the scan.
  *
- * If "complete" is not NULL, it is set to 1 if all digits are present,
- * otherwise 0.
+ * If "number" is not NULL, it is set to the color if all digits are present
+ * (with flag GUI_COLOR_EXTENDED_FLAG if the number starts with "@", and the
+ * flags of attributes), otherwise -1.
  */
 
 int
-gui_color_code_size_number (const char *string, int with_attr, int *complete)
+gui_color_code_size_number (const char *string, int with_attr, int *number)
 {
     const char *ptr_string;
-    int max_digits, num_digits;
+    int extended, attrs, flag, value;
 
     ptr_string = string;
 
-    max_digits = 2;
-    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-    {
-        max_digits = 5;
+    extended = (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR) ? 1 : 0;
+    if (extended)
         ptr_string++;
-    }
 
+    attrs = 0;
     if (with_attr)
     {
-        while (gui_color_attr_get_flag (ptr_string[0]) > 0)
+        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
         {
+            attrs |= flag;
             ptr_string++;
         }
     }
 
-    num_digits = 0;
-    while ((num_digits < max_digits)
-           && isdigit ((unsigned char)ptr_string[num_digits]))
-    {
-        num_digits++;
-    }
-    ptr_string += num_digits;
+    ptr_string += gui_color_parse_digits (ptr_string, (extended) ? 5 : 2,
+                                          &value);
 
-    if (complete)
-        *complete = (num_digits == max_digits) ? 1 : 0;
+    if (number)
+    {
+        *number = (value >= 0) ?
+            value | attrs | ((extended) ? GUI_COLOR_EXTENDED_FLAG : 0) : -1;
+    }
 
     return ptr_string - string;
 }
@@ -678,7 +732,7 @@ int
 gui_color_code_size (const char *string)
 {
     const char *ptr_string;
-    int complete;
+    int fg;
 
     if (!string)
         return 0;
@@ -704,14 +758,14 @@ gui_color_code_size (const char *string)
                 case GUI_COLOR_FG_BG_CHAR:
                     ptr_string++;
                     ptr_string += gui_color_code_size_number (ptr_string,
-                                                              1, &complete);
+                                                              1, &fg);
                     /*
                      * Note: the comma is an old separator not used any
                      * more (since WeeChat 2.6), but we still use it here
                      * so in case of/upgrade this will not break colors in
                      * old messages.
                      */
-                    if (complete
+                    if ((fg >= 0)
                         && ((ptr_string[0] == ',') || (ptr_string[0] == '~')))
                     {
                         ptr_string++;
@@ -756,17 +810,8 @@ gui_color_code_size (const char *string)
         case GUI_COLOR_SET_ATTR_CHAR:
         case GUI_COLOR_REMOVE_ATTR_CHAR:
             ptr_string++;
-            switch (ptr_string[0])
-            {
-                case GUI_COLOR_ATTR_BOLD_CHAR:
-                case GUI_COLOR_ATTR_REVERSE_CHAR:
-                case GUI_COLOR_ATTR_ITALIC_CHAR:
-                case GUI_COLOR_ATTR_UNDERLINE_CHAR:
-                case GUI_COLOR_ATTR_BLINK_CHAR:
-                case GUI_COLOR_ATTR_DIM_CHAR:
-                    ptr_string++;
-                    break;
-            }
+            if (gui_color_is_attr_char (ptr_string[0]))
+                ptr_string++;
             return ptr_string - string;
         case GUI_COLOR_RESET_CHAR:
             ptr_string++;
@@ -1137,6 +1182,84 @@ gui_color_weechat_to_ansi (int color)
 }
 
 /*
+ * Convert a WeeChat color number at the beginning of "string" to an ANSI
+ * color, and add it to "output": as foreground color with attributes if
+ * "foreground" is 1, otherwise as background color.
+ *
+ * Nothing is added if the color number is incomplete.
+ *
+ * Return the size (in bytes) of the color number in "string" (see function
+ * gui_color_code_size_number).
+ *
+ * If "number" is not NULL, it is set to the color (see function
+ * gui_color_code_size_number).
+ */
+
+int
+gui_color_encode_ansi_number (char **output, const char *string,
+                              int foreground, int *number)
+{
+    const char *ptr_string;
+    char str_concat[128];
+    int size, color, value, flag, ansi_color;
+
+    size = gui_color_code_size_number (string, foreground, &color);
+
+    if (number)
+        *number = color;
+
+    if (color < 0)
+        return size;
+
+    if (foreground)
+    {
+        /* add attributes, in the same order as in string */
+        ptr_string = string;
+        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
+            ptr_string++;
+        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
+        {
+            gui_color_add_ansi_flag (output, flag);
+            ptr_string++;
+        }
+    }
+
+    value = color & GUI_COLOR_EXTENDED_MASK;
+
+    if (color & GUI_COLOR_EXTENDED_FLAG)
+    {
+        snprintf (str_concat, sizeof (str_concat),
+                  (foreground) ? "\x1B[38;5;%dm" : "\x1B[48;5;%dm",
+                  value);
+    }
+    else
+    {
+        ansi_color = gui_color_weechat_to_ansi (value);
+        if (foreground)
+        {
+            snprintf (str_concat, sizeof (str_concat),
+                      "\x1B[%dm",
+                      (ansi_color < 0) ?
+                      GUI_COLOR_ANSI_DEFAULT_FG :
+                      ((ansi_color < 8) ?
+                       ansi_color + 30 : ansi_color - 8 + 90));
+        }
+        else
+        {
+            snprintf (str_concat, sizeof (str_concat),
+                      "\x1B[%dm",
+                      (ansi_color < 0) ?
+                      GUI_COLOR_ANSI_DEFAULT_BG :
+                      ((ansi_color < 8) ?
+                       ansi_color + 40 : ansi_color - 8 + 100));
+        }
+    }
+    string_dyn_concat (output, str_concat, -1);
+
+    return size;
+}
+
+/*
  * Replace WeeChat colors by ANSI colors.
  *
  * Note: result must be freed after use.
@@ -1146,8 +1269,8 @@ char *
 gui_color_encode_ansi (const char *string)
 {
     const unsigned char *ptr_string;
-    char **out, str_concat[128], str_color[8];
-    int flag, color, length, ansi_color, fg, bg, attrs;
+    char **out, str_concat[128];
+    int color, length, ansi_color, fg, bg, attrs;
 
     if (!string)
         return NULL;
@@ -1167,212 +1290,42 @@ gui_color_encode_ansi (const char *string)
                 {
                     case GUI_COLOR_FG_CHAR:
                         ptr_string++;
-                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            ptr_string++;
-                            while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
-                            {
-                                gui_color_add_ansi_flag (out, flag);
-                                ptr_string++;
-                            }
-                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                                && ptr_string[3] && ptr_string[4])
-                            {
-                                memcpy (str_color, ptr_string, 5);
-                                str_color[5] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                {
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[38;5;%dm",
-                                              color);
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                ptr_string += 5;
-                            }
-                        }
-                        else
-                        {
-                            while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
-                            {
-                                gui_color_add_ansi_flag (out, flag);
-                                ptr_string++;
-                            }
-                            if (ptr_string[0] && ptr_string[1])
-                            {
-                                memcpy (str_color, ptr_string, 2);
-                                str_color[2] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                {
-                                    ansi_color = gui_color_weechat_to_ansi (color);
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[%dm",
-                                              (ansi_color < 0) ?
-                                              GUI_COLOR_ANSI_DEFAULT_FG :
-                                              ((ansi_color < 8) ?
-                                               ansi_color + 30 : ansi_color - 8 + 90));
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                ptr_string += 2;
-                            }
-                        }
+                        ptr_string += gui_color_encode_ansi_number (
+                            out, (const char *)ptr_string, 1, NULL);
                         break;
                     case GUI_COLOR_BG_CHAR:
                         ptr_string++;
-                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            ptr_string++;
-                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                                && ptr_string[3] && ptr_string[4])
-                            {
-                                memcpy (str_color, ptr_string, 5);
-                                str_color[5] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                {
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[48;5;%dm",
-                                              color);
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                ptr_string += 5;
-                            }
-                        }
-                        else
-                        {
-                            if (ptr_string[0] && ptr_string[1])
-                            {
-                                memcpy (str_color, ptr_string, 2);
-                                str_color[2] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                {
-                                    ansi_color = gui_color_weechat_to_ansi (color);
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[%dm",
-                                              (ansi_color < 0) ?
-                                              GUI_COLOR_ANSI_DEFAULT_BG :
-                                              ((ansi_color < 8) ?
-                                               ansi_color + 40 : ansi_color - 8 + 100));
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                ptr_string += 2;
-                            }
-                        }
+                        ptr_string += gui_color_encode_ansi_number (
+                            out, (const char *)ptr_string, 0, NULL);
                         break;
                     case GUI_COLOR_FG_BG_CHAR:
                         ptr_string++;
-                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            ptr_string++;
-                            while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
-                            {
-                                gui_color_add_ansi_flag (out, flag);
-                                ptr_string++;
-                            }
-                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-                                && ptr_string[3] && ptr_string[4])
-                            {
-                                memcpy (str_color, ptr_string, 5);
-                                str_color[5] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                {
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[38;5;%dm",
-                                              color);
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                ptr_string += 5;
-                            }
-                        }
-                        else
-                        {
-                            while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
-                            {
-                                gui_color_add_ansi_flag (out, flag);
-                                ptr_string++;
-                            }
-                            if (ptr_string[0] && ptr_string[1])
-                            {
-                                memcpy (str_color, ptr_string, 2);
-                                str_color[2] = '\0';
-                                if (util_parse_int (str_color, 10, &color))
-                                {
-                                    ansi_color = gui_color_weechat_to_ansi (color);
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[%dm",
-                                              (ansi_color < 0) ?
-                                              GUI_COLOR_ANSI_DEFAULT_FG :
-                                              ((ansi_color < 8) ?
-                                               ansi_color + 30 : ansi_color - 8 + 90));
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                ptr_string += 2;
-                            }
-                        }
+                        ptr_string += gui_color_encode_ansi_number (
+                            out, (const char *)ptr_string, 1, &fg);
                         /*
                          * Note: the comma is an old separator not used any
                          * more (since WeeChat 2.6), but we still use it here
                          * so in case of/upgrade this will not break colors in
                          * old messages.
                          */
-                        if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
+                        if ((fg >= 0)
+                            && ((ptr_string[0] == ',') || (ptr_string[0] == '~')))
                         {
-                            if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
-                            {
-                                ptr_string += 2;
-                                if (ptr_string[0] && ptr_string[1]
-                                    && ptr_string[2] && ptr_string[3]
-                                    && ptr_string[4])
-                                {
-                                    memcpy (str_color, ptr_string, 5);
-                                    str_color[5] = '\0';
-                                    if (util_parse_int (str_color, 10, &color))
-                                    {
-                                        snprintf (str_concat, sizeof (str_concat),
-                                                  "\x1B[48;5;%dm",
-                                                  color);
-                                        string_dyn_concat (out, str_concat, -1);
-                                    }
-                                    ptr_string += 5;
-                                }
-                            }
-                            else
-                            {
-                                ptr_string++;
-                                if (ptr_string[0] && ptr_string[1])
-                                {
-                                    memcpy (str_color, ptr_string, 2);
-                                    str_color[2] = '\0';
-                                    if (util_parse_int (str_color, 10, &color))
-                                    {
-                                        ansi_color = gui_color_weechat_to_ansi (color);
-                                        snprintf (str_concat, sizeof (str_concat),
-                                                  "\x1B[%dm",
-                                                  (ansi_color < 0) ?
-                                                  GUI_COLOR_ANSI_DEFAULT_BG :
-                                                  ((ansi_color < 8) ?
-                                                   ansi_color + 40 : ansi_color - 8 + 100));
-                                        string_dyn_concat (out, str_concat, -1);
-                                    }
-                                    ptr_string += 2;
-                                }
-                            }
+                            ptr_string++;
+                            ptr_string += gui_color_encode_ansi_number (
+                                out, (const char *)ptr_string, 0, NULL);
                         }
                         break;
                     case GUI_COLOR_EXTENDED_CHAR:
                         ptr_string++;
-                        if ((isdigit (ptr_string[0])) && (isdigit (ptr_string[1]))
-                            && (isdigit (ptr_string[2])) && (isdigit (ptr_string[3]))
-                            && (isdigit (ptr_string[4])))
+                        ptr_string += gui_color_parse_digits (
+                            (const char *)ptr_string, 5, &color);
+                        if (color >= 0)
                         {
-                            memcpy (str_color, ptr_string, 5);
-                            str_color[5] = '\0';
-                            if (util_parse_int (str_color, 10, &color))
-                            {
-                                snprintf (str_concat, sizeof (str_concat),
-                                          "\x1B[38;5;%dm",
-                                          color);
-                                string_dyn_concat (out, str_concat, -1);
-                            }
-                            ptr_string += 5;
+                            snprintf (str_concat, sizeof (str_concat),
+                                      "\x1B[38;5;%dm",
+                                      color);
+                            string_dyn_concat (out, str_concat, -1);
                         }
                         break;
                     case GUI_COLOR_EMPHASIS_CHAR:
@@ -1433,66 +1386,60 @@ gui_color_encode_ansi (const char *string)
                         string_dyn_concat (out, "\x1B[39m\x1B[49m", -1);
                         break;
                     default:
-                        if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
+                        ptr_string += gui_color_parse_digits (
+                            (const char *)ptr_string, 2, &color);
+                        if ((color >= 0) && (color < GUI_COLOR_NUM_COLORS))
                         {
-                            memcpy (str_color, ptr_string, 2);
-                            str_color[2] = '\0';
-                            if (util_parse_int (str_color, 10, &color)
-                                && (color >= 0)
-                                && (color < GUI_COLOR_NUM_COLORS))
+                            fg = gui_color[color]->foreground;
+                            bg = gui_color[color]->background;
+                            attrs = gui_color_get_extended_flags (
+                                gui_color[color]->attributes);
+                            string_dyn_concat (out, "\x1B[0m", -1);
+                            if (attrs & GUI_COLOR_EXTENDED_BLINK_FLAG)
+                                string_dyn_concat (out, "\x1B[5m", -1);
+                            if (attrs & GUI_COLOR_EXTENDED_DIM_FLAG)
+                                string_dyn_concat (out, "\x1B[2m", -1);
+                            if (attrs & GUI_COLOR_EXTENDED_BOLD_FLAG)
+                                string_dyn_concat (out, "\x1B[1m", -1);
+                            if (attrs & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+                                string_dyn_concat (out, "\x1B[7m", -1);
+                            if (attrs & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+                                string_dyn_concat (out, "\x1B[3m", -1);
+                            if (attrs & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+                                string_dyn_concat (out, "\x1B[4m", -1);
+                            if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
+                                fg &= GUI_COLOR_EXTENDED_MASK;
+                            if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
+                                bg &= GUI_COLOR_EXTENDED_MASK;
+                            if (fg < 0)
                             {
-                                fg = gui_color[color]->foreground;
-                                bg = gui_color[color]->background;
-                                attrs = gui_color_get_extended_flags (
-                                    gui_color[color]->attributes);
-                                string_dyn_concat (out, "\x1B[0m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_BLINK_FLAG)
-                                    string_dyn_concat (out, "\x1B[5m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_DIM_FLAG)
-                                    string_dyn_concat (out, "\x1B[2m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_BOLD_FLAG)
-                                    string_dyn_concat (out, "\x1B[1m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_REVERSE_FLAG)
-                                    string_dyn_concat (out, "\x1B[7m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_ITALIC_FLAG)
-                                    string_dyn_concat (out, "\x1B[3m", -1);
-                                if (attrs & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
-                                    string_dyn_concat (out, "\x1B[4m", -1);
-                                if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
-                                    fg &= GUI_COLOR_EXTENDED_MASK;
-                                if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
-                                    bg &= GUI_COLOR_EXTENDED_MASK;
-                                if (fg < 0)
-                                {
-                                    string_dyn_concat (out, "\x1B[39m", -1);
-                                }
-                                else
-                                {
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[38;5;%dm",
-                                              fg);
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
-                                if (bg < 0)
-                                {
-                                    string_dyn_concat (out, "\x1B[49m", -1);
-                                }
-                                else
-                                {
-                                    snprintf (str_concat, sizeof (str_concat),
-                                              "\x1B[48;5;%dm",
-                                              bg);
-                                    string_dyn_concat (out, str_concat, -1);
-                                }
+                                string_dyn_concat (out, "\x1B[39m", -1);
                             }
-                            ptr_string += 2;
+                            else
+                            {
+                                snprintf (str_concat, sizeof (str_concat),
+                                          "\x1B[38;5;%dm",
+                                          fg);
+                                string_dyn_concat (out, str_concat, -1);
+                            }
+                            if (bg < 0)
+                            {
+                                string_dyn_concat (out, "\x1B[49m", -1);
+                            }
+                            else
+                            {
+                                snprintf (str_concat, sizeof (str_concat),
+                                          "\x1B[48;5;%dm",
+                                          bg);
+                                string_dyn_concat (out, str_concat, -1);
+                            }
                         }
                         break;
                 }
                 break;
             case GUI_COLOR_SET_ATTR_CHAR:
                 ptr_string++;
-                if (ptr_string[0])
+                if (gui_color_is_attr_char (ptr_string[0]))
                 {
                     switch (ptr_string[0])
                     {
@@ -1520,7 +1467,7 @@ gui_color_encode_ansi (const char *string)
                 break;
             case GUI_COLOR_REMOVE_ATTR_CHAR:
                 ptr_string++;
-                if (ptr_string[0])
+                if (gui_color_is_attr_char (ptr_string[0]))
                 {
                     switch (ptr_string[0])
                     {
