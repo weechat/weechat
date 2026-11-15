@@ -57,7 +57,9 @@ otr_echo_pending_clear_all (void)
 }
 
 /*
- * Remove pending messages older than OTR_ECHO_PENDING_TTL seconds.
+ * Remove pending messages older than OTR_ECHO_PENDING_TTL seconds (their date
+ * is refreshed when an echo is received from their server, see function
+ * otr_echo_pending_refresh).
  */
 
 void
@@ -75,6 +77,27 @@ otr_echo_pending_purge (void)
             otr_echo_pending_drop (i);
         else
             i++;
+    }
+}
+
+/*
+ * Refresh the date of messages waiting for their echo from a server: an echo
+ * has been received from this server, so the next messages are probably only
+ * delayed (for example by the anti-flood of the IRC plugin).
+ */
+
+void
+otr_echo_pending_refresh (const char *server)
+{
+    time_t time_now;
+    int i;
+
+    time_now = time (NULL);
+
+    for (i = 0; i < otr_echo_pending_count; i++)
+    {
+        if (strcmp (otr_echo_pending_queue[i].server, server) == 0)
+            otr_echo_pending_queue[i].date = time_now;
     }
 }
 
@@ -202,6 +225,9 @@ otr_echo_replace (const char *server, const char *message, const char *host,
 
     if (strncmp (text, "?OTR", 4) != 0)
         return NULL;
+
+    /* Echo received: the next messages are not lost, maybe just delayed. */
+    otr_echo_pending_refresh (server);
 
     plain = otr_echo_pending_take (server, target, text);
     if (!plain)

@@ -128,3 +128,44 @@ TEST(OtrEcho, Replace)
                                    "alice!u@h", "bob", "?OTR:def."));
     LONGS_EQUAL(0, otr_echo_pending_count);
 }
+
+/*
+ * Test functions:
+ *   otr_echo_pending_refresh
+ *   otr_echo_pending_purge
+ */
+
+TEST(OtrEcho, PendingRefresh)
+{
+    char cipher[64], plain[64], *str;
+    int i;
+
+    /* Many messages waiting for their echo (long paste with anti-flood). */
+    for (i = 0; i < 40; i++)
+    {
+        snprintf (cipher, sizeof (cipher), "?OTR:%d.", i);
+        snprintf (plain, sizeof (plain), "line %d", i);
+        otr_echo_pending_add ("srv", "bob", cipher, plain);
+    }
+    otr_echo_pending_add ("srv2", "bob", "?OTR:other.", "other");
+    LONGS_EQUAL(41, otr_echo_pending_count);
+
+    /* All messages are old (echoes delayed). */
+    for (i = 0; i < otr_echo_pending_count; i++)
+    {
+        otr_echo_pending_queue[i].date -= OTR_ECHO_PENDING_TTL + 10;
+    }
+
+    /*
+     * Echo received from server "srv": its messages are kept (only delayed),
+     * the old message of server "srv2" is removed.
+     */
+    WEE_TEST_STR(":alice!u@h PRIVMSG bob :line 0",
+                 otr_echo_replace ("srv", ":alice!u@h PRIVMSG bob :?OTR:0.",
+                                   "alice!u@h", "bob", "?OTR:0."));
+    LONGS_EQUAL(39, otr_echo_pending_count);
+    WEE_TEST_STR(":alice!u@h PRIVMSG bob :line 39",
+                 otr_echo_replace ("srv", ":alice!u@h PRIVMSG bob :?OTR:39.",
+                                   "alice!u@h", "bob", "?OTR:39."));
+    LONGS_EQUAL(38, otr_echo_pending_count);
+}
