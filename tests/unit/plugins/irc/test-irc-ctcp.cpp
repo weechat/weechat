@@ -531,6 +531,12 @@ TEST(IrcCtcpWithServer, RecvReply)
     CHECK(strstr (*sent, "NOTICE bob :\001XXX custom ") == *sent);
     run_cmd_quiet ("/mute /unset irc.ctcp.xxx");
 
+    /* Text after the end of CTCP is ignored: only one reply is sent. */
+    RECV(":bob!user_b@host_b PRIVMSG alice :\001VERSION\001 VERSION");
+    CHECK(strstr (*sent, "NOTICE bob :\001VERSION WeeChat ") == *sent);
+    POINTERS_EQUAL(NULL, strstr (*sent + 1, "NOTICE"));
+    LONGS_EQUAL(2, record_count_messages ());
+
     /* Reply not displayed. */
     config_file_option_set (irc_config_look_display_ctcp_reply, "off", 1);
     RECV(":bob!user_b@host_b PRIVMSG alice :\001VERSION\001");
@@ -630,6 +636,11 @@ TEST(IrcCtcpWithServer, RecvAction)
     STRCMP_EQUAL("", *sent);
     CHECK_MSG(CHAN_BUFFER, " *", "bob waves");
 
+    /* Text after the end of CTCP is ignored. */
+    RECV(":bob!user_b@host_b PRIVMSG #test :\001ACTION waves\001 extra");
+    CHECK_MSG(CHAN_BUFFER, " *", "bob waves");
+    LONGS_EQUAL(1, record_count_messages ());
+
     /* Action without text. */
     RECV(":bob!user_b@host_b PRIVMSG #test :\001ACTION\001");
     CHECK_MSG(CHAN_BUFFER, " *", "bob");
@@ -675,6 +686,11 @@ TEST(IrcCtcpWithServer, DisplayReplyFromNick)
 
     RECV(":bob!user_b@host_b NOTICE alice :\001VERSION\001");
     CHECK_MSG(SRV_BUFFER, "--", "CTCP reply from bob: VERSION");
+
+    /* Text after the end of CTCP is ignored. */
+    RECV(":bob!user_b@host_b NOTICE alice :\001VERSION 1.0\001 extra");
+    CHECK_MSG(SRV_BUFFER, "--", "CTCP reply from bob: VERSION 1.0");
+    LONGS_EQUAL(1, record_count_messages ());
 
     /* Missing "\001" at the end. */
     RECV(":bob!user_b@host_b NOTICE alice :\001VERSION WeeChat 1.0");

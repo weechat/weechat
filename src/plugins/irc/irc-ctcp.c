@@ -237,6 +237,8 @@ irc_ctcp_display_request (struct t_irc_protocol_ctxt *ctxt,
 
 /*
  * Display reply from a nick to a CTCP query.
+ *
+ * Any text after the last "\001" is ignored.
  */
 
 void
@@ -253,7 +255,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
 
     ptr_args = dup_arguments;
 
-    while (ptr_args && ptr_args[0])
+    if (ptr_args[0])
     {
         pos_end = strrchr (ptr_args + 1, '\001');
         if (pos_end)
@@ -342,7 +344,6 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
                 "");
         }
 
-        ptr_args = (pos_end) ? pos_end + 1 : NULL;
     }
 
     free (dup_arguments);
@@ -1389,6 +1390,8 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
 
 /*
  * Receive a CTCP and if needed replies to query.
+ *
+ * Any text after the last "\001" is ignored.
  */
 
 void
@@ -1408,7 +1411,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
 
     ptr_args = dup_arguments;
 
-    while (ptr_args && ptr_args[0])
+    if (ptr_args[0])
     {
         pos_end = strrchr (ptr_args + 1, '\001');
         if (pos_end)
@@ -1621,7 +1624,6 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                                          WEECHAT_HOOK_SIGNAL_STRING,
                                          (void *)ctxt->irc_message);
 
-        ptr_args = (pos_end) ? pos_end + 1 : NULL;
     }
 
     free (dup_arguments);
