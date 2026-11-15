@@ -3064,22 +3064,22 @@ TEST(IrcProtocolWithServer, notice)
         /* Broken CTCP to channel */
         RECV(":bob!user@host NOTICE #test :\001");
         CHECK_SRV("--", "CTCP reply from bob: ",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001TEST");
         CHECK_SRV("--", "CTCP reply from bob: TEST",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001ACTION");
         CHECK_SRV("--", "CTCP reply from bob: ACTION",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001ACTION is testing");
         CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001VERSION");
         CHECK_SRV("--", "CTCP reply from bob: VERSION",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001DCC");
         CHECK_SRV("--", "CTCP reply from bob: DCC",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001DCC SEND");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
@@ -3093,22 +3093,22 @@ TEST(IrcProtocolWithServer, notice)
         /* Broken CTCP to user */
         RECV(":bob!user@host NOTICE alice :\001");
         CHECK_SRV("--", "CTCP reply from bob: ",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001TEST");
         CHECK_SRV("--", "CTCP reply from bob: TEST",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001ACTION");
         CHECK_SRV("--", "CTCP reply from bob: ACTION",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001ACTION is testing");
         CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001VERSION");
         CHECK_SRV("--", "CTCP reply from bob: VERSION",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001DCC");
         CHECK_SRV("--", "CTCP reply from bob: DCC",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001DCC SEND");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
@@ -3122,16 +3122,16 @@ TEST(IrcProtocolWithServer, notice)
         /* Valid CTCP to channel */
         RECV(":bob!user@host NOTICE #test :\001TEST\001");
         CHECK_SRV("--", "CTCP reply from bob: TEST",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001ACTION\001");
         CHECK_SRV("--", "CTCP reply from bob: ACTION",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001ACTION is testing\001");
         CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001VERSION\001");
         CHECK_SRV("--", "CTCP reply from bob: VERSION",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE #test :\001DCC SEND file.txt 1 2 3\001");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
@@ -3139,16 +3139,16 @@ TEST(IrcProtocolWithServer, notice)
         /* Valid CTCP to user */
         RECV(":bob!user@host NOTICE alice :\001TEST\001");
         CHECK_SRV("--", "CTCP reply from bob: TEST",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001ACTION\001");
         CHECK_SRV("--", "CTCP reply from bob: ACTION",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001ACTION is testing\001");
         CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001VERSION\001");
         CHECK_SRV("--", "CTCP reply from bob: VERSION",
-                  "irc_notice,nick_bob,host_user@host,log1");
+                  "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
         RECV(":bob!user@host NOTICE alice :\001DCC SEND file.txt 1 2 3\001");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");

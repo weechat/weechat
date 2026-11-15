@@ -679,6 +679,10 @@ TEST(IrcCtcpWithServer, DisplayReplyFromNick)
     RECV(":bob!user_b@host_b NOTICE alice :\001VERSION WeeChat 1.0\001");
     STRCMP_EQUAL("", *sent);
     CHECK_MSG(SRV_BUFFER, "--", "CTCP reply from bob: VERSION WeeChat 1.0");
+    CHECK(record_search (SRV_BUFFER, "--",
+                         "CTCP reply from bob: VERSION WeeChat 1.0",
+                         "irc_notice,irc_ctcp,nick_bob,host_user_b@host_b,"
+                         "log1"));
 
     /* Extra spaces before arguments are ignored. */
     RECV(":bob!user_b@host_b NOTICE alice :\001VERSION   WeeChat 1.0\001");
@@ -686,6 +690,9 @@ TEST(IrcCtcpWithServer, DisplayReplyFromNick)
 
     RECV(":bob!user_b@host_b NOTICE alice :\001VERSION\001");
     CHECK_MSG(SRV_BUFFER, "--", "CTCP reply from bob: VERSION");
+    CHECK(record_search (SRV_BUFFER, "--", "CTCP reply from bob: VERSION",
+                         "irc_notice,irc_ctcp,nick_bob,host_user_b@host_b,"
+                         "log1"));
 
     /* Text after the end of CTCP is ignored. */
     RECV(":bob!user_b@host_b NOTICE alice :\001VERSION 1.0\001 extra");
