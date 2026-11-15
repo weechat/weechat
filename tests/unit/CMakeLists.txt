@@ -56,6 +56,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   core/test-core-backtrace.cpp
   core/test-core-calc.cpp
   core/test-core-command.cpp
+  core/test-core-completion.cpp
   core/test-core-config-file.cpp
   core/test-core-crypto.cpp
   core/test-core-dir.cpp

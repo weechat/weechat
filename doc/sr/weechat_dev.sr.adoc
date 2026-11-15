@@ -452,6 +452,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-backtrace.cpp                | Тестови: backtrace.
 |          test-core-calc.cpp                     | Тестови: калкулација израза.
 |          test-core-command.cpp                  | Тестови: команде.
+// TRANSLATION MISSING
+|          test-core-completion.cpp               | Tests: default completions.
 |          test-core-config-file.cpp              | Тестови: конфигурациони фајлови.
 |          test-core-crypto.cpp                   | Тестови: криптографске функције.
 |          test-core-dir.cpp                      | Тестови: функције директоријума/фајла.

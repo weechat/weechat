@@ -451,6 +451,7 @@ WeeChat "core" is located in following directories:
 |          test-core-backtrace.cpp                | Tests: backtrace.
 |          test-core-calc.cpp                     | Tests: calculation of expressions.
 |          test-core-command.cpp                  | Tests: commands.
+|          test-core-completion.cpp               | Tests: default completions.
 |          test-core-config-file.cpp              | Tests: configuration files.
 |          test-core-crypto.cpp                   | Tests: cryptographic functions.
 |          test-core-dir.cpp                      | Tests: directory/file functions.
