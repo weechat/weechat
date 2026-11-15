@@ -11,7 +11,6 @@
 #define SECURE_CONFIG_PRIO_NAME "120000|sec"
 
 extern struct t_config_file *secure_config_file;
-extern struct t_config_section *secure_config_section_pwd;
 
 extern struct t_config_option *secure_config_crypt_cipher;
 extern struct t_config_option *secure_config_crypt_hash_algo;
