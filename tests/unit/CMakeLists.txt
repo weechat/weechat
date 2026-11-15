@@ -181,6 +181,7 @@ if (ENABLE_RELAY)
     plugins/relay/test-relay-network.cpp
     plugins/relay/test-relay-raw.cpp
     plugins/relay/test-relay-remote.cpp
+    plugins/relay/test-relay-upgrade.cpp
     plugins/relay/test-relay-websocket.cpp
     plugins/relay/api/test-relay-api.cpp
     plugins/relay/api/test-relay-api-msg.cpp

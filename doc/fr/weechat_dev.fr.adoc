@@ -558,6 +558,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-relay-network.cpp              | Tests : fonctions réseau pour l'extension Relay.
 |             test-relay-raw.cpp                  | Tests : fonctions sur les messages bruts pour l'extension Relay.
 |             test-relay-remote.cpp               | Tests : fonctions remote pour l'extension Relay.
+|             test-relay-upgrade.cpp              | Tests : mise à jour de l'extension Relay.
 |             test-relay-websocket.cpp            | Tests : fonctions websocket pour l'extension Relay.
 |             api/                                | Racine des tests unitaires pour le protocole relay "api".
 |                test-relay-api.cpp               | Tests : protocole relay "api" : fonctions générales.
