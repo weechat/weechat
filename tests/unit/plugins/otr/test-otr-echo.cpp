@@ -17,6 +17,7 @@ extern "C"
 #include "src/plugins/otr/otr-echo.h"
 
 extern size_t otr_echo_trimmed_len (const char *string);
+extern int otr_echo_is_otr_protocol (const char *text);
 extern char *otr_echo_pending_take (const char *server, const char *target,
                                     const char *cipher);
 }
@@ -96,6 +97,25 @@ TEST(OtrEcho, PendingAddTake)
 
 /*
  * Test functions:
+ *   otr_echo_is_otr_protocol
+ */
+
+TEST(OtrEcho, IsOtrProtocol)
+{
+    LONGS_EQUAL(0, otr_echo_is_otr_protocol (""));
+    LONGS_EQUAL(0, otr_echo_is_otr_protocol ("hello"));
+    LONGS_EQUAL(0, otr_echo_is_otr_protocol ("?OTR"));
+    LONGS_EQUAL(0, otr_echo_is_otr_protocol ("?OTR is cool"));
+    LONGS_EQUAL(1, otr_echo_is_otr_protocol ("?OTR:AAMDabc."));
+    LONGS_EQUAL(1, otr_echo_is_otr_protocol ("?OTR|1|2,00001,00002,abc,"));
+    LONGS_EQUAL(1, otr_echo_is_otr_protocol ("?OTR,1,2,abc,"));
+    LONGS_EQUAL(1, otr_echo_is_otr_protocol ("?OTRv23?"));
+    LONGS_EQUAL(1, otr_echo_is_otr_protocol ("?OTR?"));
+    LONGS_EQUAL(1, otr_echo_is_otr_protocol ("?OTR Error: error"));
+}
+
+/*
+ * Test functions:
  *   otr_echo_replace
  */
 
@@ -108,6 +128,12 @@ TEST(OtrEcho, Replace)
                    otr_echo_replace ("srv",
                                      ":alice!u@h PRIVMSG bob :hello",
                                      "alice!u@h", "bob", "hello"));
+
+    /* Plain text starting with "?OTR": unchanged. */
+    POINTERS_EQUAL(NULL,
+                   otr_echo_replace ("srv",
+                                     ":alice!u@h PRIVMSG bob :?OTR is cool",
+                                     "alice!u@h", "bob", "?OTR is cool"));
 
     /* OTR message without pending message: hidden. */
     WEE_TEST_STR("",

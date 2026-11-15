@@ -207,12 +207,37 @@ otr_echo_pending_take (const char *server, const char *target,
 }
 
 /*
+ * Check if a text is an OTR protocol message: OTR encoded message, fragment,
+ * query or error (a plain text can start with "?OTR", for example
+ * "?OTR is cool").
+ *
+ * Return 1 if the text is an OTR protocol message, 0 otherwise.
+ */
+
+int
+otr_echo_is_otr_protocol (const char *text)
+{
+    const char *prefixes[] = {
+        "?OTR:", "?OTR|", "?OTR,", "?OTRv", "?OTR?", "?OTR Error:", NULL,
+    };
+    int i;
+
+    for (i = 0; prefixes[i]; i++)
+    {
+        if (strncmp (text, prefixes[i], strlen (prefixes[i])) == 0)
+            return 1;
+    }
+
+    return 0;
+}
+
+/*
  * Replace the echo of an OTR message sent (IRCv3 capability "echo-message") by
  * the plain text that was sent.
  *
- * Return NULL to leave the echoed message unchanged (not an OTR message), an
- * empty string to hide it (OTR protocol message or unknown message), otherwise
- * the new IRC message(s).
+ * Return NULL to leave the echoed message unchanged (not an OTR protocol
+ * message), an empty string to hide it (OTR protocol message not found in
+ * messages sent), otherwise the new IRC message(s).
  *
  * Note: result must be freed after use.
  */
@@ -223,7 +248,7 @@ otr_echo_replace (const char *server, const char *message, const char *host,
 {
     char *plain, *tags, *result;
 
-    if (strncmp (text, "?OTR", 4) != 0)
+    if (!otr_echo_is_otr_protocol (text))
         return NULL;
 
     /* Echo received: the next messages are not lost, maybe just delayed. */
