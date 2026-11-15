@@ -120,6 +120,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix decryption of secured data with a comma in name with command `/secure decrypt`
 - core: keep secured data encrypted when it cannot be decrypted with the passphrase on reload of file sec.conf, instead of deleting it
 - core: fix memory leak in completion of plugin commands when the plugin is not found
 - core: fix display and ANSI conversion of incomplete WeeChat color codes, keep chars that are not part of the color code ([#2382](https://github.com/weechat/weechat/pull/2382))
