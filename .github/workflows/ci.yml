@@ -227,7 +227,7 @@ jobs:
     timeout-minutes: 60
     env:
       PHP_INI_SCAN_DIR: /tmp/php-noscan  # Embed PHP loads no add-on extensions (see #2009).
-      SCHEMATHESIS_VERSION: "4.29.2"
+      SCHEMATHESIS_VERSION: "4.33.4"
 
     steps:
       - uses: actions/checkout@v7
