@@ -270,39 +270,41 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
             {
                 pos_args++;
             }
-            if (weechat_strcasecmp (ptr_args + 1, "ping") == 0)
+            /*
+             * Reply to CTCP PING with seconds and microseconds: display the
+             * lag, otherwise display the reply as-is.
+             */
+            pos_usec = (weechat_strcasecmp (ptr_args + 1, "ping") == 0) ?
+                strchr (pos_args, ' ') : NULL;
+            if (pos_usec)
             {
-                pos_usec = strchr (pos_args, ' ');
-                if (pos_usec)
-                {
-                    pos_usec[0] = '\0';
+                pos_usec[0] = '\0';
 
-                    gettimeofday (&tv, NULL);
-                    sec1 = atoll (pos_args);
-                    usec1 = atoll (pos_usec + 1);
-                    sec2 = tv.tv_sec;
-                    usec2 = tv.tv_usec;
+                gettimeofday (&tv, NULL);
+                sec1 = atoll (pos_args);
+                usec1 = atoll (pos_usec + 1);
+                sec2 = tv.tv_sec;
+                usec2 = tv.tv_usec;
 
-                    difftime = ((sec2 * 1000000) + usec2) -
-                        ((sec1 * 1000000) + usec1);
-                    weechat_printf_datetime_tags (
-                        irc_msgbuffer_get_target_buffer (
-                            ctxt->server, ctxt->nick, NULL, "ctcp", NULL),
-                        ctxt->date,
-                        ctxt->date_usec,
-                        irc_protocol_tags (ctxt, "irc_ctcp"),
-                        /* TRANSLATORS: %.3fs is a float number + "s" ("seconds"). */
-                        _("%sCTCP reply from %s%s%s: %s%s%s %.3fs"),
-                        weechat_prefix ("network"),
-                        irc_nick_color_for_msg (ctxt->server, 0, NULL,
-                                                ctxt->nick),
-                        ctxt->nick,
-                        IRC_COLOR_RESET,
-                        IRC_COLOR_CHAT_CHANNEL,
-                        ptr_args + 1,
-                        IRC_COLOR_RESET,
-                        (float)difftime / 1000000.0);
-                }
+                difftime = ((sec2 * 1000000) + usec2) -
+                    ((sec1 * 1000000) + usec1);
+                weechat_printf_datetime_tags (
+                    irc_msgbuffer_get_target_buffer (
+                        ctxt->server, ctxt->nick, NULL, "ctcp", NULL),
+                    ctxt->date,
+                    ctxt->date_usec,
+                    irc_protocol_tags (ctxt, "irc_ctcp"),
+                    /* TRANSLATORS: %.3fs is a float number + "s" ("seconds"). */
+                    _("%sCTCP reply from %s%s%s: %s%s%s %.3fs"),
+                    weechat_prefix ("network"),
+                    irc_nick_color_for_msg (ctxt->server, 0, NULL,
+                                            ctxt->nick),
+                    ctxt->nick,
+                    IRC_COLOR_RESET,
+                    IRC_COLOR_CHAT_CHANNEL,
+                    ptr_args + 1,
+                    IRC_COLOR_RESET,
+                    (float)difftime / 1000000.0);
             }
             else
             {

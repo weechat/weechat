@@ -703,6 +703,10 @@ TEST(IrcCtcpWithServer, DisplayReplyFromNick)
     RECV(":bob!user_b@host_b NOTICE alice :\001VERSION WeeChat 1.0");
     CHECK_MSG(SRV_BUFFER, "--", "CTCP reply from bob: VERSION WeeChat 1.0");
 
+    /* Reply to CTCP PING with a single argument: displayed as-is. */
+    RECV(":bob!user_b@host_b NOTICE alice :\001PING 1234\001");
+    CHECK_MSG(SRV_BUFFER, "--", "CTCP reply from bob: PING 1234");
+
     /* Reply to CTCP PING: the lag is displayed. */
     gettimeofday (&tv_now, NULL);
     snprintf (str_msg, sizeof (str_msg),
