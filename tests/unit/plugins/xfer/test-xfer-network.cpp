@@ -954,6 +954,7 @@ TEST(XferNetworkWithXfer, Accept)
     LONGS_EQUAL(XFER_STATUS_CONNECTING, xfer->status);
     LONGS_EQUAL(1, count_signals);
     LONGS_EQUAL(0, xfer->child_pid);
+    CHECK(xfer->hook_timer);
 
     /* No resume: connect and launch child process. */
     xfer->status = XFER_STATUS_WAITING;
@@ -963,4 +964,5 @@ TEST(XferNetworkWithXfer, Accept)
     LONGS_EQUAL(XFER_STATUS_CONNECTING, xfer->status);
     LONGS_EQUAL(1, count_signals);
     CHECK(xfer->child_pid > 0);
+    POINTERS_EQUAL(NULL, xfer->hook_timer);
 }

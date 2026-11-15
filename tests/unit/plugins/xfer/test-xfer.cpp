@@ -78,6 +78,8 @@ extern int xfer_start_resume_cb (const void *pointer, void *data,
 extern int xfer_accept_resume_cb (const void *pointer, void *data,
                                   const char *signal, const char *type_data,
                                   void *signal_data);
+extern int xfer_network_timer_cb (const void *pointer, void *data,
+                                  int remaining_calls);
 }
 
 TEST_GROUP(Xfer)
@@ -1243,6 +1245,7 @@ TEST(XferAdd, AcceptFileRecvPassiveResumePortRange)
     CHECK(ptr_xfer->sock >= 0);
     LONGS_EQUAL(port, ptr_xfer->port);
     POINTERS_EQUAL(NULL, ptr_xfer->hook_fd);
+    CHECK(ptr_xfer->hook_timer);
     LONGS_EQUAL(1, count_resume);
     LONGS_EQUAL(0, count_signals);
     POINTERS_EQUAL(ptr_xfer,
@@ -1270,6 +1273,64 @@ TEST(XferAdd, AcceptFileRecvPassiveResumePortRange)
     CHECK(ptr_xfer->hook_fd);
     CHECK(ptr_xfer->hook_timer);
     LONGS_EQUAL(1, count_signals);
+}
+
+/*
+ * Test functions:
+ *   xfer_network_accept (file received, passive, resumed, timeout)
+ *   xfer_network_timer_cb
+ */
+
+TEST(XferAdd, AcceptFileRecvPassiveResumeTimeout)
+{
+    struct t_xfer *ptr_xfer;
+    char str_range[64], *local_filename;
+    int port;
+
+    port = free_port ();
+    CHECK(port > 0);
+
+    snprintf (str_range, sizeof (str_range), "%d", port);
+    config_file_option_set (xfer_config_network_port_range, str_range, 1);
+
+    /* Partial file already received (temporary file, removed in teardown). */
+    local_filename = string_eval_path_home (
+        "${weechat_data_dir}/xfer/alice.resume_timeout.txt", NULL, NULL, NULL);
+    string_asprintf (&temp_resume_filename, "%s.part", local_filename);
+    free (local_filename);
+    create_file (temp_resume_filename, "0123456789");
+
+    LONGS_EQUAL(WEECHAT_RC_OK_EAT,
+                add_xfer ("plugin_name", "irc", "plugin_id", "libera",
+                          "type_string", "file_recv_passive",
+                          "protocol_string", "dcc",
+                          "remote_nick", "alice", "local_nick", "bob",
+                          "filename", "resume_timeout.txt", "size", "100",
+                          "remote_address", "127.0.0.1",
+                          "socket", str_sock_server (), "token", "45",
+                          NULL));
+    ptr_xfer = xfer_list;
+    LONGS_EQUAL(10, ptr_xfer->start_resume);
+
+    /* Accept: DCC RESUME sent, waiting for DCC ACCEPT with a timeout. */
+    xfer_network_accept (ptr_xfer);
+    LONGS_EQUAL(XFER_STATUS_CONNECTING, ptr_xfer->status);
+    CHECK(ptr_xfer->sock >= 0);
+    LONGS_EQUAL(port, ptr_xfer->port);
+    CHECK(ptr_xfer->hook_timer);
+    LONGS_EQUAL(1, count_resume);
+    LONGS_EQUAL(1, xfer_port_in_use (port));
+
+    /* DCC ACCEPT not received: socket closed and port released. */
+    record_start ();
+    LONGS_EQUAL(WEECHAT_RC_OK, xfer_network_timer_cb (ptr_xfer, NULL, 0));
+    RECORD_CHECK_MSG_REGEX("core.weechat",
+                           "timeout for \"resume_timeout.txt\" with alice");
+    LONGS_EQUAL(XFER_STATUS_FAILED, ptr_xfer->status);
+    LONGS_EQUAL(-1, ptr_xfer->sock);
+    POINTERS_EQUAL(NULL, ptr_xfer->hook_timer);
+    LONGS_EQUAL(0, xfer_port_in_use (port));
+    LONGS_EQUAL(0, count_signals);
 }
 
 /*
