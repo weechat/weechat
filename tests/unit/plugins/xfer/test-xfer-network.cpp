@@ -48,6 +48,7 @@ extern int xfer_network_child_read_cb (const void *pointer, void *data,
 extern void xfer_network_send_file_fork (struct t_xfer *xfer);
 extern void xfer_network_recv_file_fork (struct t_xfer *xfer);
 extern int xfer_network_fd_cb (const void *pointer, void *data, int fd);
+extern void xfer_network_add_timer (struct t_xfer *xfer);
 extern int xfer_network_timer_cb (const void *pointer, void *data,
                                   int remaining_calls);
 extern int xfer_network_connect_chat_recv_cb (const void *pointer, void *data,
@@ -83,6 +84,22 @@ TEST_GROUP(XferNetworkWithXfer)
         (*((int *)pointer))++;
 
         return WEECHAT_RC_OK;
+    }
+
+    /* Return the number of timers (not deleted) with the xfer as pointer. */
+    int count_xfer_timers ()
+    {
+        struct t_hook *ptr_hook;
+        int count;
+
+        count = 0;
+        for (ptr_hook = weechat_hooks[HOOK_TYPE_TIMER]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted && (ptr_hook->callback_pointer == xfer))
+                count++;
+        }
+        return count;
     }
 
     void setup ()
@@ -742,6 +759,44 @@ TEST(XferNetworkWithXfer, TimerCb)
     xfer->status = XFER_STATUS_CONNECTING;
     LONGS_EQUAL(WEECHAT_RC_OK, xfer_network_timer_cb (xfer, NULL, 0));
     LONGS_EQUAL(XFER_STATUS_FAILED, xfer->status);
+}
+
+/*
+ * Test functions:
+ *   xfer_network_add_timer
+ *   xfer_network_timer_cb (timer executed by WeeChat)
+ */
+
+TEST(XferNetworkWithXfer, AddTimer)
+{
+    struct t_hook *ptr_hook;
+
+    xfer->type = XFER_TYPE_FILE_SEND_PASSIVE;
+    xfer->status = XFER_STATUS_CONNECTING;
+
+    /* Add timer. */
+    xfer_network_add_timer (xfer);
+    CHECK(xfer->hook_timer);
+    LONGS_EQUAL(1, HOOK_TIMER(xfer->hook_timer, remaining_calls));
+    LONGS_EQUAL(1, count_xfer_timers ());
+
+    /* Add timer again: the previous one is removed. */
+    xfer_network_add_timer (xfer);
+    CHECK(xfer->hook_timer);
+    LONGS_EQUAL(1, count_xfer_timers ());
+
+    /*
+     * Timer executed by WeeChat while the xfer is active: nothing done,
+     * the timer is removed by WeeChat and must be forgotten by the xfer.
+     */
+    xfer->status = XFER_STATUS_ACTIVE;
+    ptr_hook = xfer->hook_timer;
+    HOOK_TIMER(ptr_hook, next_exec).tv_sec = 0;
+    HOOK_TIMER(ptr_hook, next_exec).tv_usec = 0;
+    hook_timer_exec ();
+    LONGS_EQUAL(XFER_STATUS_ACTIVE, xfer->status);
+    POINTERS_EQUAL(NULL, xfer->hook_timer);
+    LONGS_EQUAL(0, count_xfer_timers ());
 }
 
 /*

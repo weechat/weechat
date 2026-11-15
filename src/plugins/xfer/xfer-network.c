@@ -800,6 +800,13 @@ xfer_network_timer_cb (const void *pointer, void *data, int remaining_calls)
 
     xfer = (struct t_xfer *)pointer;
 
+    /*
+     * The timer is called only one time, then removed by WeeChat:
+     * forget it now, so that it is not removed later by the xfer
+     * (another hook could have been allocated at this address).
+     */
+    xfer->hook_timer = NULL;
+
     if ((xfer->status == XFER_STATUS_WAITING)
         || (xfer->status == XFER_STATUS_CONNECTING))
     {
@@ -812,6 +819,23 @@ xfer_network_timer_cb (const void *pointer, void *data, int remaining_calls)
     }
 
     return WEECHAT_RC_OK;
+}
+
+/*
+ * Add timer for timeout of xfer (option xfer.network.timeout), replacing
+ * the timer already added, if any.
+ */
+
+void
+xfer_network_add_timer (struct t_xfer *xfer)
+{
+    if (xfer->hook_timer)
+        weechat_unhook (xfer->hook_timer);
+
+    xfer->hook_timer = weechat_hook_timer (
+        (long)weechat_config_integer (xfer_config_network_timeout) * 1000,
+        0, 1,
+        &xfer_network_timer_cb, xfer, NULL);
 }
 
 /*
@@ -997,10 +1021,7 @@ xfer_network_connect (struct t_xfer *xfer)
                                          xfer, NULL);
 
         /* Add timeout. */
-        xfer->hook_timer = weechat_hook_timer ((long)weechat_config_integer (xfer_config_network_timeout) * 1000,
-                                               0, 1,
-                                               &xfer_network_timer_cb,
-                                               xfer, NULL);
+        xfer_network_add_timer (xfer);
 
         /* Send signal if type is file or chat "send". */
         if ((xfer->type == XFER_TYPE_FILE_RECV_PASSIVE) && !XFER_HAS_ENDED(xfer->status))
@@ -1070,10 +1091,7 @@ xfer_network_accept (struct t_xfer *xfer)
     {
         xfer->status = XFER_STATUS_CONNECTING;
         /* Add timeout: the xfer fails if DCC ACCEPT is not received. */
-        xfer->hook_timer = weechat_hook_timer ((long)weechat_config_integer (xfer_config_network_timeout) * 1000,
-                                               0, 1,
-                                               &xfer_network_timer_cb,
-                                               xfer, NULL);
+        xfer_network_add_timer (xfer);
         xfer_send_signal (xfer, "xfer_resume_ready");
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
