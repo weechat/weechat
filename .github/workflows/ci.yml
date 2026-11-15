@@ -124,7 +124,7 @@ jobs:
       POEXAM_VERSION: "0.4.0"
       REUSE_VERSION: "6.3.0"
       RUFF_VERSION: "0.17.5"
-      TY_VERSION: "0.0.86"
+      TY_VERSION: "0.0.104"
 
     strategy:
       fail-fast: false
