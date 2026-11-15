@@ -544,6 +544,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-network.cpp                  | Tests: network functions.
 |          test-core-secure.cpp                   | テスト: データ保護
 // TRANSLATION MISSING
+|          test-core-secure-buffer.cpp            | Tests: secured data buffer.
+// TRANSLATION MISSING
+|          test-core-secure-config.cpp            | Tests: secured data configuration file.
+// TRANSLATION MISSING
 |          test-core-signal.cpp                   | テスト: signals.
 |          test-core-string.cpp                   | テスト: 文字列
 // TRANSLATION MISSING

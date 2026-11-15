@@ -69,6 +69,8 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   core/test-core-list.cpp
   core/test-core-network.cpp
   core/test-core-secure.cpp
+  core/test-core-secure-buffer.cpp
+  core/test-core-secure-config.cpp
   core/test-core-signal.cpp
   core/test-core-string.cpp
   core/test-core-theme.cpp

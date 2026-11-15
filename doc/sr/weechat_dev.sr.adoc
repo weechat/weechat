@@ -466,6 +466,10 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-list.cpp                     | Тестови: листе.
 |          test-core-network.cpp                  | Тестови: мрежне функције.
 |          test-core-secure.cpp                   | Тестови: обезбеђени подаци.
+// TRANSLATION MISSING
+|          test-core-secure-buffer.cpp            | Tests: secured data buffer.
+// TRANSLATION MISSING
+|          test-core-secure-config.cpp            | Tests: secured data configuration file.
 |          test-core-signal.cpp                   | Тестови: сигнали.
 |          test-core-string.cpp                   | Тестови: стрингови.
 |          test-core-sys.cpp                      | Тестови: системске функције.
