@@ -402,3 +402,44 @@ TEST(CoreSecureConfig, ReloadCb)
                      NULL);
     LONGS_EQUAL(1, secure_hashtable_data->items_count);
 }
+
+/*
+ * Test functions:
+ *   secure_config_reload_cb (with a wrong passphrase)
+ *   secure_config_data_read_cb
+ */
+
+TEST(CoreSecureConfig, ReloadCbWrongPassphrase)
+{
+    char *content;
+
+    secure_passphrase = strdup (TEST_PASSPHRASE);
+    hashtable_set (secure_hashtable_data, "name1", "value1");
+    LONGS_EQUAL(WEECHAT_CONFIG_WRITE_OK, secure_config_write ());
+
+    /* Wrong passphrase: data is kept encrypted. */
+    free (secure_passphrase);
+    secure_passphrase = strdup ("wrong");
+    record_start ();
+    LONGS_EQUAL(WEECHAT_CONFIG_READ_OK,
+                secure_config_reload_cb (NULL, NULL, secure_config_file));
+    record_stop ();
+    RECORD_CHECK_MSG("core.weechat", "=!=",
+                     "Wrong passphrase, unable to decrypt data \"name1\"",
+                     NULL);
+    LONGS_EQUAL(0, secure_hashtable_data->items_count);
+    LONGS_EQUAL(1, secure_hashtable_data_encrypted->items_count);
+
+    /* Encrypted data is not lost when the file is written. */
+    LONGS_EQUAL(WEECHAT_CONFIG_WRITE_OK, secure_config_write ());
+    content = test_secure_config_get_file ();
+    CHECK(content);
+    CHECK(strstr (content, "name1 = \""));
+    free (content);
+
+    /* Data can be decrypted with the right passphrase. */
+    LONGS_EQUAL(1, secure_decrypt_data_not_decrypted (TEST_PASSPHRASE));
+    STRCMP_EQUAL("value1",
+                 (const char *)hashtable_get (secure_hashtable_data, "name1"));
+    LONGS_EQUAL(0, secure_hashtable_data_encrypted->items_count);
+}

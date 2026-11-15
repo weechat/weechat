@@ -331,6 +331,9 @@ secure_config_data_read_cb (const void *pointer, void *data,
                                    "\"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  option_name);
+                /* Keep data encrypted, so that it is not lost. */
+                hashtable_set (secure_hashtable_data_encrypted, option_name,
+                               value);
                 break;
             }
             snprintf (str_error, sizeof (str_error),
