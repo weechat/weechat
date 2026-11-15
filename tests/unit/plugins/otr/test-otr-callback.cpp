@@ -140,3 +140,31 @@ TEST(OtrCallback, CallbackData)
     free (callback_data.unencrypted);
     free (callback_data.last_injected);
 }
+
+/*
+ * Test functions:
+ *   otr_callback_handle_smp_event (events CHEATED and ERROR)
+ */
+
+TEST(OtrCallback, HandleSmpEventAbort)
+{
+    ConnContext *ptr_context;
+
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_smp_abort",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    CHECK(ptr_context->smstate);
+
+    /* SMP aborted (state reset) when the peer cheated. */
+    ptr_context->smstate->nextExpected = OTRL_SMP_EXPECT2;
+    otr_callback_handle_smp_event (NULL, OTRL_SMPEVENT_CHEATED, ptr_context,
+                                   0, NULL);
+    LONGS_EQUAL(OTRL_SMP_EXPECT1, ptr_context->smstate->nextExpected);
+
+    /* SMP aborted (state reset) on error. */
+    ptr_context->smstate->nextExpected = OTRL_SMP_EXPECT3;
+    otr_callback_handle_smp_event (NULL, OTRL_SMPEVENT_ERROR, ptr_context,
+                                   0, NULL);
+    LONGS_EQUAL(OTRL_SMP_EXPECT1, ptr_context->smstate->nextExpected);
+}

@@ -493,6 +493,11 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             smp_question = 0;
             break;
         case OTRL_SMPEVENT_CHEATED:
+            /*
+             * As requested by libotr: abort SMP, so that the state of SMP is
+             * reset on both sides (the peer is notified).
+             */
+            otrl_message_abort_smp (otr_us, &otr_callback_ops, NULL, context);
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_ERROR,
                 _("SMP aborted: the peer behaved incorrectly."));
@@ -500,6 +505,8 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             smp_question = 0;
             break;
         case OTRL_SMPEVENT_ERROR:
+            /* Same as above: abort SMP, as requested by libotr. */
+            otrl_message_abort_smp (otr_us, &otr_callback_ops, NULL, context);
             otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_ERROR,
                                   _("SMP error."));
             in_smp = 0;
