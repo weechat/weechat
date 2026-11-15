@@ -139,3 +139,29 @@ TEST(OtrBuffer, PeerPrint)
     run_cmd_quiet ("/mute /disconnect test_otr_print");
     run_cmd_quiet ("/mute /server del test_otr_print");
 }
+
+/*
+ * Test functions:
+ *   otr_buffer_debug
+ */
+
+TEST(OtrBuffer, Debug)
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    /* Debug disabled: no buffer. */
+    otr_buffer_debug ("test");
+    POINTERS_EQUAL(NULL, gui_buffer_search ("otr", "OTR Debug"));
+
+    /* Debug enabled: buffer created, not logged. */
+    config_file_option_set (otr_config_general_debug, "on", 1);
+    otr_buffer_debug ("test %d", 1);
+    ptr_buffer = gui_buffer_search ("otr", "OTR Debug");
+    CHECK(ptr_buffer);
+    STRCMP_EQUAL("1", gui_buffer_get_string (ptr_buffer, "localvar_no_log"));
+    LONGS_EQUAL(0, otr_log_buffer_is_logged (ptr_buffer));
+    STRCMP_EQUAL("test 1", ptr_buffer->own_lines->last_line->data->message);
+
+    gui_buffer_close (ptr_buffer);
+    config_file_option_reset (otr_config_general_debug, 1);
+}

@@ -31,6 +31,7 @@ void
 otr_buffer_debug (const char *format, ...)
 {
     struct t_gui_buffer *ptr_buffer;
+    struct t_hashtable *properties;
 
     if (!otr_config_general_debug
         || !weechat_config_boolean (otr_config_general_debug))
@@ -41,13 +42,25 @@ otr_buffer_debug (const char *format, ...)
     ptr_buffer = weechat_buffer_search (OTR_PLUGIN_NAME, "OTR Debug");
     if (!ptr_buffer)
     {
-        ptr_buffer = weechat_buffer_new ("OTR Debug",
-                                         NULL, NULL, NULL,
-                                         NULL, NULL, NULL);
+        /*
+         * The local variable "no_log" must be set when the buffer is created
+         * (before the logger starts logging the buffer): debug messages
+         * contain nicks of peers in OTR sessions.
+         */
+        properties = weechat_hashtable_new (8,
+                                            WEECHAT_HASHTABLE_STRING,
+                                            WEECHAT_HASHTABLE_STRING,
+                                            NULL, NULL);
+        if (!properties)
+            return;
+        weechat_hashtable_set (properties, "title", "OTR Debug");
+        weechat_hashtable_set (properties, "localvar_set_no_log", "1");
+        ptr_buffer = weechat_buffer_new_props ("OTR Debug", properties,
+                                               NULL, NULL, NULL,
+                                               NULL, NULL, NULL);
+        weechat_hashtable_free (properties);
         if (!ptr_buffer)
             return;
-        weechat_buffer_set (ptr_buffer, "title", "OTR Debug");
-        weechat_buffer_set (ptr_buffer, "localvar_set_no_log", "1");
     }
 
     weechat_va_format (format);
