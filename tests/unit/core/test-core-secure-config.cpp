@@ -443,3 +443,47 @@ TEST(CoreSecureConfig, ReloadCbWrongPassphrase)
                  (const char *)hashtable_get (secure_hashtable_data, "name1"));
     LONGS_EQUAL(0, secure_hashtable_data_encrypted->items_count);
 }
+
+/*
+ * Test functions:
+ *   secure_config_data_write_cb (data partially decrypted)
+ *   secure_config_data_write_map_encrypted_cb
+ */
+
+TEST(CoreSecureConfig, WritePartiallyDecrypted)
+{
+    char *value2, *content;
+
+    /*
+     * Data "name2" is encrypted with another passphrase: it is still
+     * encrypted after a partial decryption.
+     */
+    secure_passphrase = strdup (TEST_PASSPHRASE);
+    hashtable_set (secure_hashtable_data, "name1", "value1");
+    value2 = test_secure_config_encrypt ("other_passphrase", "value2");
+    CHECK(value2);
+    hashtable_set (secure_hashtable_data_encrypted, "name2", value2);
+
+    /* Both data are written. */
+    LONGS_EQUAL(WEECHAT_CONFIG_WRITE_OK, secure_config_write ());
+    content = test_secure_config_get_file ();
+    CHECK(content);
+    CHECK(strstr (content, SECURE_DATA_PASSPHRASE_FLAG " = on\n"));
+    CHECK(strstr (content, "name1 = \""));
+    CHECK(strstr (content, value2));
+    free (content);
+
+    /* Read file: "name1" is decrypted, "name2" is still encrypted. */
+    hashtable_remove_all (secure_hashtable_data);
+    hashtable_remove_all (secure_hashtable_data_encrypted);
+    record_start ();
+    LONGS_EQUAL(WEECHAT_CONFIG_READ_OK, secure_config_read ());
+    record_stop ();
+    STRCMP_EQUAL("value1",
+                 (const char *)hashtable_get (secure_hashtable_data, "name1"));
+    STRCMP_EQUAL(value2,
+                 (const char *)hashtable_get (secure_hashtable_data_encrypted,
+                                              "name2"));
+
+    free (value2);
+}

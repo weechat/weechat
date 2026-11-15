@@ -503,6 +503,17 @@ secure_config_data_write_cb (const void *pointer, void *data,
         /* Encrypt and write secured data. */
         hashtable_map_sorted (secure_hashtable_data,
                               &secure_config_data_write_map_cb, config_file);
+        /*
+         * Write as-is the data that could not be decrypted with the
+         * passphrase (if any), so that it is not lost.
+         */
+        if (secure_passphrase
+            && (secure_hashtable_data_encrypted->items_count > 0))
+        {
+            hashtable_map_sorted (secure_hashtable_data_encrypted,
+                                  &secure_config_data_write_map_encrypted_cb,
+                                  config_file);
+        }
     }
     else if (secure_hashtable_data_encrypted->items_count > 0)
     {
