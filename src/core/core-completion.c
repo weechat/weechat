@@ -1428,7 +1428,10 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
              */
             ptr_plugin = plugin_search (argv[arg_index]);
             if (!ptr_plugin)
+            {
+                string_free_split (argv);
                 return WEECHAT_RC_OK;
+            }
         }
 
         for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
