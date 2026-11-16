@@ -13180,6 +13180,11 @@ List of signals sent by WeeChat and plugins:
 | Pointer: line data.
 | Line data has been updated in a buffer.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_lines_filtered]] buffer_lines_filtered | 5.0.0
+| Pointer: buffer.
+| Lines filtered or unfiltered in buffer after a change in filters (filter added, removed, enabled or disabled, filters toggled in buffer).
+
 | weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
 | Puntatore: buffer.
 | Righe nascoste nel buffer.

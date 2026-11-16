@@ -17,6 +17,7 @@
 
 #include "../core/weechat.h"
 #include "../core/core-config.h"
+#include "../core/core-hashtable.h"
 #include "../core/core-hdata.h"
 #include "../core/core-hook.h"
 #include "../core/core-infolist.h"
@@ -95,9 +96,41 @@ gui_filter_check_line (struct t_gui_line_data *line_data)
 }
 
 /*
+ * Send signal "buffer_lines_filtered" for a buffer (callback called for each
+ * buffer with lines filtered or unfiltered).
+ *
+ * The buffer may have been closed by a callback of the signal sent for
+ * another buffer, so the pointer is checked before sending the signal.
+ */
+
+void
+gui_filter_buffer_send_signal_cb (void *data,
+                                  struct t_hashtable *hashtable,
+                                  const void *key, const void *value)
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    /* Make C compiler happy. */
+    (void) data;
+    (void) hashtable;
+    (void) value;
+
+    ptr_buffer = (struct t_gui_buffer *)key;
+
+    if (gui_buffer_valid (ptr_buffer))
+    {
+        (void) gui_buffer_send_signal (ptr_buffer,
+                                       "buffer_lines_filtered",
+                                       WEECHAT_HOOK_SIGNAL_POINTER, ptr_buffer);
+    }
+}
+
+/*
  * Filter a buffer, using message filters.
  *
- * If line_data is NULL, filters all lines in buffer.
+ * If line_data is NULL, filters all lines in buffer (lines of all merged
+ * buffers if the buffer is merged) and sends the signal "buffer_lines_filtered"
+ * for each buffer with at least one line filtered or unfiltered.
  * If line_data is not NULL, filters only this line_data.
  */
 
@@ -108,9 +141,13 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
     struct t_gui_window *ptr_window;
+    struct t_gui_buffer *ptr_last_buffer_changed;
+    struct t_hashtable *buffers_changed;
     int lines_changed, line_displayed, lines_hidden;
 
     lines_changed = 0;
+    buffers_changed = NULL;
+    ptr_last_buffer_changed = NULL;
     lines_hidden = buffer->lines->lines_hidden;
 
     ptr_line = buffer->lines->first_line;
@@ -124,6 +161,25 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
         {
             lines_changed = 1;
             lines_hidden += (line_displayed) ? -1 : 1;
+            /*
+             * Remember buffers with lines changed (lines of merged buffers),
+             * in order of their first line changed (the hashtable keeps the
+             * order of creation of keys); the last buffer added is checked
+             * first to avoid a lookup in the hashtable for each line.
+             */
+            if (!line_data && (ptr_line_data->buffer != ptr_last_buffer_changed))
+            {
+                if (!buffers_changed)
+                {
+                    buffers_changed = hashtable_new (32,
+                                                     WEECHAT_HASHTABLE_POINTER,
+                                                     WEECHAT_HASHTABLE_POINTER,
+                                                     NULL, NULL);
+                }
+                if (buffers_changed)
+                    hashtable_set (buffers_changed, ptr_line_data->buffer, NULL);
+                ptr_last_buffer_changed = ptr_line_data->buffer;
+            }
         }
 
         ptr_line_data->displayed = line_displayed;
@@ -169,6 +225,14 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
                 ptr_window->scroll->start_line_pos = 0;
             }
         }
+    }
+
+    if (buffers_changed)
+    {
+        /* Send signal for each buffer with lines changed. */
+        hashtable_map (buffers_changed,
+                       &gui_filter_buffer_send_signal_cb, NULL);
+        hashtable_free (buffers_changed);
     }
 }
 
