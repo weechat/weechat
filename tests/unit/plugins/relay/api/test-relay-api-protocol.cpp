@@ -1690,6 +1690,72 @@ TEST(RelayApiProtocolWithClient, SignalBufferCbFilteredLines)
 
 /*
  * Test functions:
+ *   relay_api_protocol_signal_buffer_cb (signal "buffer_lines_filtered")
+ */
+
+TEST(RelayApiProtocolWithClient, SignalBufferCbLinesFiltered)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_filter *ptr_filter;
+    struct t_relay_json *json, *json_obj, *json_body;
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    gui_chat_printf_date_tags (buffer, 0, "tag_test_filtered", "test filtered");
+    ptr_filter = gui_filter_new (1, "test_filtered", "core.test",
+                                 "tag_test_filtered", "*");
+    CHECK(ptr_filter);
+
+    /* Line filtered: event sent, without lines. */
+    free_data_sent ();
+    gui_filter_buffer (buffer, NULL);
+    CHECK(data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_lines_filtered", json, "event_name");
+    WEE_CHECK_OBJ_NUM(buffer->id, json, "buffer_id");
+    WEE_CHECK_OBJ_STR("buffer", json, "body_type");
+    json_body = relay_json_object_get (json, "body");
+    CHECK(json_body);
+    WEE_CHECK_OBJ_STR("core.test", json_body, "name");
+    POINTERS_EQUAL(NULL, relay_json_object_get (json_body, "lines"));
+    relay_json_free (json);
+
+    /* No line changed: no event. */
+    free_data_sent ();
+    gui_filter_buffer (buffer, NULL);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* No event with "notify_only". */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"notify_only\": true}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "{\"notify_only\":true}", "null");
+    gui_filter_free (ptr_filter);
+    free_data_sent ();
+    gui_filter_buffer (buffer, NULL);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
  *   relay_api_protocol_signal_day_changed_cb
  */
 

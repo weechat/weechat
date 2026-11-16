@@ -1347,6 +1347,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
         /* event (mask), callback (NULL = event ignored) */
         /* note: order is important */
         { "buffer_line_*", &relay_remote_event_cb_line },
+        { "buffer_lines_filtered", NULL },
         { "buffer_closing", NULL },
         { "buffer_cleared", &relay_remote_event_cb_buffer_cleared },
         { "buffer_closed", &relay_remote_event_cb_buffer_closed },

@@ -398,6 +398,20 @@ TEST(RelayRemoteEvent, CbBuffer)
     LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "day_change"));
 
     /*
+     * Event "buffer_lines_filtered" is ignored (the filters on the remote do
+     * not apply to the local buffer).
+     */
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 0, "
+        "\"event_name\": \"buffer_lines_filtered\", "
+        "\"buffer_id\": 123, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 123, \"name\": \"irc.libera.#test\", "
+        "\"title\": \"filtered title\"}}");
+    STRCMP_EQUAL("new title", gui_buffer_get_string (buffer, "title"));
+
+    /*
      * The time and the prefix are displayed when the fields "time_displayed"
      * and "prefix_displayed" are not received from the remote.
      */

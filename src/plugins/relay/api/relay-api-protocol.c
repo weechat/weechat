@@ -123,6 +123,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         || (strcmp (signal, "buffer_day_change_changed") == 0)
         || (strncmp (signal, "buffer_localvar_", 16) == 0)
         || (strcmp (signal, "buffer_cleared") == 0)
+        || (strcmp (signal, "buffer_lines_filtered") == 0)
         || (strcmp (signal, "buffer_closing") == 0)
         || (strcmp (signal, "buffer_closed") == 0))
     {

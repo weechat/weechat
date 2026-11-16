@@ -2161,6 +2161,7 @@ The following events are sent to the client, according to synchronization option
 | `buffer_localvar_changed`             | buffer id | `buffer`      | buffer
 | `buffer_localvar_removed`             | buffer id | `buffer`      | buffer
 | `buffer_cleared`                      | buffer id | `buffer`      | buffer
+| `buffer_lines_filtered` ^(1)^         | buffer id | `buffer`      | buffer
 | `buffer_closing`                      | buffer id | `buffer`      | buffer
 | `buffer_closed`                       | buffer id | null          | null
 | `buffer_line_added`                   | buffer id | `line`        | buffer line
@@ -2177,13 +2178,22 @@ The following events are sent to the client, according to synchronization option
 | `day_changed`                         | -1        | null          | null
 | `option_changed`                      | -1        | `option`      | option (only fields `name` and `value`)
 | `option_removed`                      | -1        | `option`      | option (only field `name`)
-| `upgrade` ^(1)^                       | -1        | null          | null
-| `upgrade_ended` ^(1)^                 | -1        | null          | null
+| `upgrade` ^(2)^                       | -1        | null          | null
+| `upgrade_ended` ^(2)^                 | -1        | null          | null
 | `quit`                                | -1        | null          | null
 |===
 
 [NOTE]
-^(1)^ The events `upgrade` and `upgrade_ended` are sent only if the client is
+^(1)^ The event `buffer_lines_filtered` _(WeeChat ≥ 5.0.0)_ is sent when lines
+are filtered or unfiltered in the buffer after a change in filters (filter added,
+removed, enabled or disabled, filters toggled in buffer): the field `displayed`
+of lines already received is not up to date any more and some lines may be
+missing, so the client must fetch the lines of this buffer again, for example
+with the parameter `filtered` set to `exclude` or `between` in resource
+<<resource_buffers,buffers>>.
+
+[NOTE]
+^(2)^ The events `upgrade` and `upgrade_ended` are sent only if the client is
 connected with plain text (no TLS), because with TLS the client is disconnected
 before the upgrade is done (upgrade of TLS connections is not supported).
 
