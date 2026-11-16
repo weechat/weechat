@@ -26,6 +26,7 @@ extern "C"
 #include "src/core/weechat.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
+#include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
 #include "src/plugins/plugin-config.h"
@@ -524,6 +525,7 @@ TEST(RelayApiProtocolWithClient, CbInfoWebsocket)
 TEST(RelayApiProtocolWithClient, CbBuffers)
 {
     struct t_relay_json *json, *json_obj, *json_var, *json_groups;
+    struct t_gui_filter *ptr_filter;
     char str_http[256];
 
     /* Error: invalid buffer name */
@@ -674,6 +676,67 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_BOOL(0, json, "highlight");
     WEE_CHECK_OBJ_STR("", json, "prefix");
     WEE_CHECK_OBJ_STR("test line 2", json, "message");
+
+    /* Error: invalid value for parameter "filtered". */
+    test_client_recv_http ("GET /api/buffers/core.weechat/lines?filtered=xxx",
+                           NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 42\r\n"
+                 "\r\n"
+                 "{\"error\":\"Invalid parameter \\\"filtered\\\"\"}",
+                 data_sent[0]);
+
+    /* Get the last line not filtered (line 1 filtered). */
+    gui_chat_printf (NULL, "test line 1");
+    gui_chat_printf_date_tags (NULL, 0, "tag_test_filtered", "test line 2");
+    ptr_filter = gui_filter_new (1, "test_filtered", "core.weechat",
+                                 "tag_test_filtered", "*");
+    CHECK(ptr_filter);
+    gui_filter_buffer (gui_buffers, NULL);
+    test_client_recv_http (
+        "GET /api/buffers/core.weechat/lines?lines=-1&filtered=exclude",
+        NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent[0]);
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    LONGS_EQUAL(1, relay_json_array_size (json_body_sent[0]));
+    json = relay_json_array_get (json_body_sent[0], 0);
+    WEE_CHECK_OBJ_STR("test line 1", json, "message");
+    WEE_CHECK_OBJ_BOOL(1, json, "displayed");
+    test_client_recv_http (
+        "GET /api/buffers/core.weechat/lines?lines=-1&filtered=between",
+        NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent[0]);
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    LONGS_EQUAL(2, relay_json_array_size (json_body_sent[0]));
+    json = relay_json_array_get (json_body_sent[0], 1);
+    WEE_CHECK_OBJ_STR("test line 2", json, "message");
+    WEE_CHECK_OBJ_BOOL(0, json, "displayed");
+    test_client_recv_http (
+        "GET /api/buffers/core.weechat?lines=-1&filtered=exclude",
+        NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent[0]);
+    json = relay_json_object_get (json_body_sent[0], "lines");
+    CHECK(json);
+    LONGS_EQUAL(1, relay_json_array_size (json));
+    json = relay_json_array_get (json, 0);
+    WEE_CHECK_OBJ_STR("test line 1", json, "message");
+
+    /* Get a filtered line by id: always returned. */
+    snprintf (str_http, sizeof (str_http),
+              "GET /api/buffers/core.weechat/lines/%lld?filtered=exclude",
+              gui_buffers->own_lines->last_line->data->id);
+    test_client_recv_http (str_http, NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent[0]);
+    WEE_CHECK_OBJ_STR("test line 2", json_body_sent[0], "message");
+    WEE_CHECK_OBJ_BOOL(0, json_body_sent[0], "displayed");
+    gui_filter_free (ptr_filter);
+    gui_filter_buffer (gui_buffers, NULL);
 
     /* Get nicks. */
     test_client_recv_http ("GET /api/buffers/core.weechat/nicks", NULL, NULL);

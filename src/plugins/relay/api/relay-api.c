@@ -52,6 +52,31 @@ relay_api_search_colors (const char *colors)
 }
 
 /*
+ * Return value of "filtered" URL parameter, an enum with one of these values:
+ *   - RELAY_API_FILTERED_INCLUDE (default)
+ *   - RELAY_API_FILTERED_BETWEEN
+ *   - RELAY_API_FILTERED_EXCLUDE
+ *
+ * Return -1 if the value is invalid.
+ */
+
+int
+relay_api_search_filtered (const char *filtered)
+{
+    if (!filtered)
+        return -1;
+
+    if (strcmp (filtered, "include") == 0)
+        return RELAY_API_FILTERED_INCLUDE;
+    if (strcmp (filtered, "between") == 0)
+        return RELAY_API_FILTERED_BETWEEN;
+    if (strcmp (filtered, "exclude") == 0)
+        return RELAY_API_FILTERED_EXCLUDE;
+
+    return -1;
+}
+
+/*
  * Add an option (mask with "*" allowed) to synchronize for a client.
  *
  * Empty strings, strings with a newline and duplicates are ignored.

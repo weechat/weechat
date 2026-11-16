@@ -40,6 +40,25 @@ TEST(RelayApi, SearchColors)
 
 /*
  * Test functions:
+ *   relay_api_search_filtered
+ */
+
+TEST(RelayApi, SearchFiltered)
+{
+    LONGS_EQUAL(-1, relay_api_search_filtered (NULL));
+    LONGS_EQUAL(-1, relay_api_search_filtered (""));
+    LONGS_EQUAL(-1, relay_api_search_filtered ("xxx"));
+    LONGS_EQUAL(-1, relay_api_search_filtered ("INCLUDE"));
+    LONGS_EQUAL(-1, relay_api_search_filtered ("BETWEEN"));
+    LONGS_EQUAL(-1, relay_api_search_filtered ("EXCLUDE"));
+
+    LONGS_EQUAL(RELAY_API_FILTERED_INCLUDE, relay_api_search_filtered ("include"));
+    LONGS_EQUAL(RELAY_API_FILTERED_BETWEEN, relay_api_search_filtered ("between"));
+    LONGS_EQUAL(RELAY_API_FILTERED_EXCLUDE, relay_api_search_filtered ("exclude"));
+}
+
+/*
+ * Test functions:
  *   relay_api_hook_signals
  */
 

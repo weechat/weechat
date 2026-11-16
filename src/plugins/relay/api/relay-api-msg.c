@@ -329,12 +329,18 @@ relay_api_msg_buffer_add_local_vars_cb (void *data,
 
 /*
  * Create a JSON object with a buffer.
+ *
+ * Arguments "lines" and "lines_free" are the number of lines to return in
+ * buffers with formatted and free content, and "filtered" defines how lines
+ * filtered with /filter are counted and returned (see function
+ * relay_api_msg_lines_to_json).
  */
 
 struct t_relay_json *
 relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
                               long lines,
                               long lines_free,
+                              enum t_relay_api_filtered filtered,
                               int nicks,
                               enum t_relay_api_colors colors)
 {
@@ -400,7 +406,8 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     /* Lines */
     if (lines != 0)
     {
-        json_lines = relay_api_msg_lines_to_json (buffer, lines, colors);
+        json_lines = relay_api_msg_lines_to_json (buffer, lines, filtered,
+                                                  colors);
         if (json_lines)
             relay_json_object_add (json, "lines", json_lines);
     }
@@ -555,19 +562,51 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
 }
 
 /*
+ * Check if a line is displayed (not filtered with /filter).
+ *
+ * Return:
+ *   1: line is displayed (not filtered)
+ *   0: line is filtered (or line_data is NULL)
+ */
+
+int
+relay_api_msg_line_data_is_displayed (struct t_gui_line_data *line_data)
+{
+    if (!line_data)
+        return 0;
+
+    return (weechat_hdata_char (relay_hdata_line_data, line_data,
+                                "displayed")) ? 1 : 0;
+}
+
+/*
  * Create a JSON object with an array of buffer lines.
+ *
+ * Argument "lines" is the number of lines to return: if negative, the last N
+ * lines are returned, if positive, the first N lines are returned.
+ *
+ * Argument "filtered" defines how lines filtered with /filter are counted
+ * and returned:
+ *   - RELAY_API_FILTERED_INCLUDE: count and return all lines
+ *   - RELAY_API_FILTERED_BETWEEN: count only lines not filtered, and return
+ *     filtered lines between them (the range of lines ends at the end of
+ *     buffer if "lines" is negative, starts at the beginning of buffer if
+ *     "lines" is positive)
+ *   - RELAY_API_FILTERED_EXCLUDE: count and return only lines not filtered.
  */
 
 struct t_relay_json *
 relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
                              long lines,
+                             enum t_relay_api_filtered filtered,
                              enum t_relay_api_colors colors)
 {
     struct t_relay_json *json;
     struct t_gui_lines *ptr_lines;
-    struct t_gui_line *ptr_line;
+    struct t_gui_line *ptr_line, *ptr_start_line;
     struct t_gui_line_data *ptr_line_data;
-    long i, count;
+    long count;
+    int counted;
 
     json = relay_json_new_array ();
     if (!json)
@@ -582,41 +621,60 @@ relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
 
     if (lines < 0)
     {
-        /* Search start line from the last line. */
-        ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines, "last_line");
-        if (ptr_line)
+        /*
+         * Search start line from the last line (all lines of buffer if there
+         * are not enough lines).
+         */
+        ptr_start_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines,
+                                                "first_line");
+        ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines,
+                                          "last_line");
+        count = 0;
+        while (ptr_line)
         {
-            for (i = -1; i > lines; i--)
+            counted = (filtered == RELAY_API_FILTERED_INCLUDE)
+                || relay_api_msg_line_data_is_displayed (
+                    weechat_hdata_pointer (relay_hdata_line, ptr_line, "data"));
+            if (counted)
             {
-                ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, -1);
-                if (!ptr_line)
+                count++;
+                /* Same as "count >= -lines", without overflow on -LONG_MIN. */
+                if (lines + count >= 0)
+                {
+                    ptr_start_line = ptr_line;
                     break;
+                }
             }
-            if (!ptr_line)
-                ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines, "first_line");
+            ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, -1);
         }
+        ptr_line = ptr_start_line;
     }
     else
     {
-        ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines, "first_line");
+        ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines,
+                                          "first_line");
     }
-
-    if (!ptr_line)
-        return json;
 
     count = 0;
     while (ptr_line)
     {
-        ptr_line_data = weechat_hdata_pointer (relay_hdata_line, ptr_line, "data");
-        if (ptr_line_data)
+        ptr_line_data = weechat_hdata_pointer (relay_hdata_line, ptr_line,
+                                               "data");
+        counted = (filtered == RELAY_API_FILTERED_INCLUDE)
+            || relay_api_msg_line_data_is_displayed (ptr_line_data);
+        if (ptr_line_data
+            && ((filtered != RELAY_API_FILTERED_EXCLUDE) || counted))
         {
             relay_json_array_add (
                 json,
                 relay_api_msg_line_data_to_json (ptr_line_data, colors));
         }
-        count++;
-        if ((lines > 0) && (count >= lines))
-            break;
+        if (counted)
+        {
+            count++;
+            if ((lines > 0) && (count >= lines))
+                break;
+        }
         ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, 1);
     }
 

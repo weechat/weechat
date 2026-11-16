@@ -8,6 +8,7 @@
 #define WEECHAT_PLUGIN_RELAY_API_MSG_H
 
 enum t_relay_api_colors;
+enum t_relay_api_filtered;
 
 extern int relay_api_msg_send_json (struct t_relay_client *client,
                                     int return_code,
@@ -28,6 +29,7 @@ extern int relay_api_msg_send_event (struct t_relay_client *client,
 extern struct t_relay_json *relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
                                                           long lines,
                                                           long lines_free,
+                                                          enum t_relay_api_filtered filtered,
                                                           int nicks,
                                                           enum t_relay_api_colors colors);
 extern struct t_relay_json *relay_api_msg_key_to_json (struct t_gui_key *key);
@@ -36,6 +38,7 @@ extern struct t_relay_json *relay_api_msg_line_data_to_json (struct t_gui_line_d
                                                              enum t_relay_api_colors colors);
 extern struct t_relay_json *relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
                                                          long lines,
+                                                         enum t_relay_api_filtered filtered,
                                                          enum t_relay_api_colors colors);
 extern struct t_relay_json *relay_api_msg_nick_to_json (struct t_gui_nick *nick,
                                                         enum t_relay_api_colors colors);

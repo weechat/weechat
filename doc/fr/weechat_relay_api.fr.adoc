@@ -706,6 +706,21 @@ Paramètres de la requête :
 ** nombre négatif : retourner N lignes depuis la fin du tampon
 ** `0` : ne retourner aucune ligne
 ** nombre positif : retourner N lignes depuis le début du tampon
+* `filtered` (chaîne, facultatif, par défaut : `include`) : comment les lignes
+  filtrées avec la commande `/filter` (lignes avec `displayed` à `false`) sont
+  comptées et retournées _(WeeChat ≥ 5.0.0)_ :
+** `include` : compter et retourner toutes les lignes
+** `between` : compter seulement les lignes non filtrées, et retourner les
+   lignes filtrées entre elles, donc plus de lignes que demandé peuvent être
+   retournées (la plage de lignes se termine à la fin du tampon si le nombre de
+   lignes est négatif et commence au début du tampon s'il est positif) ; il
+   n'y a pas de limite sur le nombre de lignes filtrées retournées, hormis la
+   taille de l'historique du tampon
+** `exclude` : compter et retourner seulement les lignes non filtrées ; la
+   ligne avec l'identifiant `last_read_line_id` (marqueur de lecture) peut être
+   filtrée et donc non retournée : le client affiche le marqueur de lecture
+   après la dernière ligne retournée avec un identifiant inférieur ou égal à
+   `last_read_line_id`
 * `nicks` (booléen, facultatif, par défaut : `false`) : retourner les pseudos
   du tampon
 * `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
@@ -1157,6 +1172,18 @@ Paramètres de requête :
    avec cette ressource)
 ** nombre positif : retourner N lignes depuis le début du tampon
    (lignes les plus anciennes)
+* `filtered` (chaîne, facultatif, par défaut : `include`) : comment les lignes
+  filtrées avec la commande `/filter` (lignes avec `displayed` à `false`) sont
+  comptées et retournées (ignoré avec `line_id` : la ligne est toujours retournée, même
+  si elle est filtrée) _(WeeChat ≥ 5.0.0)_ :
+** `include` : compter et retourner toutes les lignes
+** `between` : compter seulement les lignes non filtrées, et retourner les
+   lignes filtrées entre elles, donc plus de lignes que demandé peuvent être
+   retournées (la plage de lignes se termine à la fin du tampon si le nombre de
+   lignes est négatif et commence au début du tampon s'il est positif) ; il
+   n'y a pas de limite sur le nombre de lignes filtrées retournées, hormis la
+   taille de l'historique du tampon
+** `exclude` : compter et retourner seulement les lignes non filtrées
 * `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
   des couleurs sont retournées :
 ** `ansi` : retourner les codes couleur ANSI

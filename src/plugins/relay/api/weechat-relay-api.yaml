@@ -203,6 +203,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/bufferLinesFree'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
       responses:
@@ -246,6 +247,7 @@ paths:
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/bufferLinesFree'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
       responses:
@@ -293,6 +295,7 @@ paths:
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/bufferLinesFree'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
       responses:
@@ -339,6 +342,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/lines'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/colors'
       responses:
         '200':
@@ -431,6 +435,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/lines'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/colors'
       responses:
         '200':
@@ -1067,6 +1072,28 @@ components:
         * positive number: return N lines from the beginning of buffer (oldest lines)
 
         Default value is `0` if "lines" is set to 0, otherwise all lines are returned.
+    filtered:
+      name: filtered
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - include
+          - between
+          - exclude
+        default: include
+      description: |
+        How lines filtered with /filter (lines with `displayed` set to `false`) are counted and returned:
+        * `include`: count and return all lines
+        * `between`: count only lines not filtered, and return the filtered lines between them
+          (so more lines than requested can be returned); the range of lines ends at the end
+          of buffer if the number of lines is negative, starts at the beginning of buffer
+          if it is positive
+        * `exclude`: count and return only lines not filtered; the line `last_read_line_id`
+          (read marker) can be filtered and then not returned: the client displays the
+          read marker after the last line returned with an identifier lower than or
+          equal to `last_read_line_id`
     bufferNicks:
       name: nicks
       in: query

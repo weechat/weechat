@@ -717,6 +717,23 @@ Path parameters:
 ** негативни број: враћа N линија од краја бафера
 ** `0`: не враћа ниједну линију
 ** позитивни број: враћа N линија од почетка бафера
+// TRANSLATION MISSING
+* `filtered` (string, optional, default: `include`): how lines filtered with
+  command `/filter` (lines with `displayed` set to `false`) are counted and
+  returned _(WeeChat ≥ 5.0.0)_:
+// TRANSLATION MISSING
+** `include`: count and return all lines
+// TRANSLATION MISSING
+** `between`: count only lines not filtered, and return the filtered lines
+   between them, so more lines than requested can be returned (the range of
+   lines ends at the end of buffer if the number of lines is negative and
+   starts at the beginning of buffer if it is positive); there is no limit on
+   the number of filtered lines returned, except the size of the buffer history
+// TRANSLATION MISSING
+** `exclude`: count and return only lines not filtered; the line with the
+   identifier `last_read_line_id` (read marker) can be filtered and then not
+   returned: the client displays the read marker after the last line returned
+   with an identifier lower than or equal to `last_read_line_id`
 * `nicks` (логичка, није обавезно, подразумевано: `false`): враћа надимке у баферу
 * `colors` (стринг, није обавезно, подразумевано: `ansi`): како се враћају стрингови са кодовима боје:
 ** `ansi`: враћају се ANSI кодови боје
@@ -1165,6 +1182,21 @@ GET /api/buffers/{име_бафера}/lines/{id_линије}
 ** негативни број: враћа N линија од краја бафера (најновијих линија)
 ** `0`: не враћа се ниједна линија (дозвољено је, али нема смисла са овим ресурсом)
 ** позитивни број: враћа N линија од почетка бафера (најстаријих линија)
+// TRANSLATION MISSING
+* `filtered` (string, optional, default: `include`): how lines filtered with
+  command `/filter` (lines with `displayed` set to `false`) are counted and
+  returned (ignored with `line_id`: the line is always returned, even if
+  it is filtered) _(WeeChat ≥ 5.0.0)_:
+// TRANSLATION MISSING
+** `include`: count and return all lines
+// TRANSLATION MISSING
+** `between`: count only lines not filtered, and return the filtered lines
+   between them, so more lines than requested can be returned (the range of
+   lines ends at the end of buffer if the number of lines is negative and
+   starts at the beginning of buffer if it is positive); there is no limit on
+   the number of filtered lines returned, except the size of the buffer history
+// TRANSLATION MISSING
+** `exclude`: count and return only lines not filtered
 * `colors` (стринг, није обавезно, подразумевано: `ansi`): како да се врати стринг са кодовима боје:
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје

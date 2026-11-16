@@ -156,7 +156,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
 
         /* Build body with buffer info. */
         json = relay_api_msg_buffer_to_json (
-            ptr_buffer, lines, lines_free, nicks,
+            ptr_buffer, lines, lines_free, RELAY_API_FILTERED_INCLUDE, nicks,
             RELAY_API_DATA(ptr_client, sync_colors));
 
         /* Send to client. */
@@ -335,7 +335,7 @@ relay_api_protocol_signal_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
 
     json = relay_api_msg_buffer_to_json (
-        ptr_buffer, 0, 0, 0,
+        ptr_buffer, 0, 0, RELAY_API_FILTERED_INCLUDE, 0,
         RELAY_API_DATA(ptr_client, sync_colors));
 
     if (json)
@@ -789,8 +789,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     struct t_gui_line_data *ptr_line_data;
     long lines, lines_free;
     long long line_id;
-    int colors, nicks;
-    const char *ptr_colors;
+    int colors, filtered, nicks;
+    const char *ptr_colors, *ptr_filtered;
 
     json = NULL;
 
@@ -825,6 +825,19 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
             relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL,
                                            "Invalid parameter \"%s\"",
                                            "colors");
+            return RELAY_API_PROTOCOL_RC_OK;
+        }
+    }
+    filtered = RELAY_API_FILTERED_INCLUDE;
+    ptr_filtered = weechat_hashtable_get (client->http_req->params, "filtered");
+    if (ptr_filtered)
+    {
+        filtered = relay_api_search_filtered (ptr_filtered);
+        if (filtered < 0)
+        {
+            relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL,
+                                           "Invalid parameter \"%s\"",
+                                           "filtered");
             return RELAY_API_PROTOCOL_RC_OK;
         }
     }
@@ -869,7 +882,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                         "lines");
                     return RELAY_API_PROTOCOL_RC_OK;
                 }
-                json = relay_api_msg_lines_to_json (ptr_buffer, lines, colors);
+                json = relay_api_msg_lines_to_json (ptr_buffer, lines,
+                                                    filtered, colors);
                 if (json)
                 {
                     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
@@ -926,7 +940,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         if (ptr_buffer)
         {
             json = relay_api_msg_buffer_to_json (ptr_buffer, lines, lines_free,
-                                                 nicks, colors);
+                                                 filtered, nicks, colors);
             if (json)
             {
                 relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
@@ -945,7 +959,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                 relay_json_array_add (
                     json,
                     relay_api_msg_buffer_to_json (ptr_buffer, lines, lines_free,
-                                                  nicks, colors));
+                                                  filtered, nicks, colors));
                 ptr_buffer = weechat_hdata_move (relay_hdata_buffer, ptr_buffer, 1);
             }
             if (json)

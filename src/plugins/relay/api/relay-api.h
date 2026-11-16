@@ -38,6 +38,17 @@ enum t_relay_api_colors
     RELAY_API_NUM_COLORS,
 };
 
+enum t_relay_api_filtered
+{
+    RELAY_API_FILTERED_INCLUDE = 0,    /* count and return filtered lines   */
+    RELAY_API_FILTERED_BETWEEN,        /* count lines not filtered, return  */
+                                       /* filtered lines between them       */
+    RELAY_API_FILTERED_EXCLUDE,        /* count and return only lines not   */
+                                       /* filtered                          */
+    /* number of values */
+    RELAY_API_NUM_FILTERED,
+};
+
 struct t_relay_api_data
 {
     struct t_hook *hook_signal_buffer;    /* hook for signals "buffer_*"    */
@@ -64,6 +75,7 @@ struct t_relay_api_data
 };
 
 extern int relay_api_search_colors (const char *colors);
+extern int relay_api_search_filtered (const char *filtered);
 extern void relay_api_add_sync_option (struct t_relay_client *client,
                                        const char *option);
 extern void relay_api_free_sync_options (struct t_relay_client *client);
