@@ -57,6 +57,29 @@ relay_api_protocol_search_buffer_id_name (const char *string)
 }
 
 /*
+ * Check if lines filtered with /filter must be sent to a client in events
+ * of a buffer, according to the sync option "filtered_lines".
+ *
+ * In buffers with free content, filtered lines are always sent because a line
+ * can replace a line already received by the client.
+ *
+ * Return:
+ *   1: filtered lines must be sent
+ *   0: filtered lines must not be sent
+ */
+
+int
+relay_api_protocol_sync_filtered_lines (struct t_relay_client *client,
+                                        struct t_gui_buffer *buffer)
+{
+    if (RELAY_API_DATA(client, sync_filtered_lines))
+        return 1;
+
+    return (weechat_strcmp (weechat_buffer_get_string (buffer, "type"),
+                            "free") == 0) ? 1 : 0;
+}
+
+/*
  * Callback for signals "buffer_*".
  */
 
@@ -74,6 +97,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
     long lines, lines_free;
     long long buffer_id, *ptr_buffer_id;
     int nicks;
+    enum t_relay_api_filtered filtered;
 
     /* Make C compiler happy. */
     (void) data;
@@ -146,17 +170,21 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
             lines = LONG_MAX;
             lines_free = LONG_MAX;
             nicks = 1;
+            filtered = (relay_api_protocol_sync_filtered_lines (ptr_client,
+                                                                ptr_buffer)) ?
+                RELAY_API_FILTERED_INCLUDE : RELAY_API_FILTERED_EXCLUDE;
         }
         else
         {
             lines = 0;
             lines_free = 0;
             nicks = 0;
+            filtered = RELAY_API_FILTERED_INCLUDE;
         }
 
         /* Build body with buffer info. */
         json = relay_api_msg_buffer_to_json (
-            ptr_buffer, lines, lines_free, RELAY_API_FILTERED_INCLUDE, nicks,
+            ptr_buffer, lines, lines_free, filtered, nicks,
             RELAY_API_DATA(ptr_client, sync_colors));
 
         /* Send to client. */
@@ -194,6 +222,13 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         if (RELAY_API_DATA(ptr_client, sync_notify_only)
             && (weechat_hdata_char (relay_hdata_line_data, ptr_line_data,
                                     "notify_level") < 2))
+        {
+            return WEECHAT_RC_OK;
+        }
+
+        /* Do not send a filtered line if the client does not want it. */
+        if (!relay_api_msg_line_data_is_displayed (ptr_line_data)
+            && !relay_api_protocol_sync_filtered_lines (ptr_client, ptr_buffer))
         {
             return WEECHAT_RC_OK;
         }
@@ -1425,7 +1460,8 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
 RELAY_API_PROTOCOL_CALLBACK(sync)
 {
     struct t_relay_json *json_body, *json_sync, *json_nicks, *json_input;
-    struct t_relay_json *json_notify_only, *json_colors, *json_options;
+    struct t_relay_json *json_notify_only, *json_filtered_lines, *json_colors;
+    struct t_relay_json *json_options;
     int i, size;
 
     if (client->websocket != RELAY_CLIENT_WEBSOCKET_READY)
@@ -1442,6 +1478,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     RELAY_API_DATA(client, sync_nicks) = 1;
     RELAY_API_DATA(client, sync_input) = 1;
     RELAY_API_DATA(client, sync_notify_only) = 0;
+    RELAY_API_DATA(client, sync_filtered_lines) = 1;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
 
     /* Hooks on options must be removed before options are freed. */
@@ -1463,6 +1500,9 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
         json_notify_only = relay_json_object_get (json_body, "notify_only");
         if (relay_json_is_bool (json_notify_only))
             RELAY_API_DATA(client, sync_notify_only) = (relay_json_is_true (json_notify_only)) ? 1 : 0;
+        json_filtered_lines = relay_json_object_get (json_body, "filtered_lines");
+        if (relay_json_is_bool (json_filtered_lines))
+            RELAY_API_DATA(client, sync_filtered_lines) = (relay_json_is_true (json_filtered_lines)) ? 1 : 0;
         json_colors = relay_json_object_get (json_body, "colors");
         if (relay_json_is_string (json_colors))
         {

@@ -68,6 +68,8 @@ struct t_relay_api_data
                                           /* (WeeChat -> client)            */
     int sync_notify_only;                 /* 1 to sync only highlights and  */
                                           /* private messages               */
+    int sync_filtered_lines;              /* 1 to sync lines filtered with  */
+                                          /* /filter, 0 to skip them        */
     enum t_relay_api_colors sync_colors;  /* colors to send with sync       */
     char **sync_options;                  /* options to sync (masks with    */
                                           /* "*"), NULL-terminated array    */

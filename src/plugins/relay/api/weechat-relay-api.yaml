@@ -925,6 +925,20 @@ paths:
                     and `quit`; all other events are not sent, and options
                     `nicks`, `input` and `options` are ignored
                   example: false
+                filtered_lines:
+                  type: boolean
+                  default: true
+                  description: |
+                    Receive lines filtered with /filter (lines with `displayed`
+                    set to `false`): if disabled, the event `buffer_line_added`
+                    is not sent for a filtered line, and the event
+                    `buffer_opened` contains only lines not filtered; this does
+                    not apply to buffers with free content, where all lines are
+                    always sent because a line can replace a line already
+                    received; the event `buffer_line_data_changed` is always
+                    sent, with the field `displayed` (an update of a line not
+                    received with `displayed` set to `false` can be ignored)
+                  example: false
                 colors:
                   type: string
                   enum:

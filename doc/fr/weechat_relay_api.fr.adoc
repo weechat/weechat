@@ -1823,6 +1823,20 @@ Paramètres du corps :
   les paramètres `nicks`, `input` et `options` sont ignorés (utilisé seulement
   si `sync` vaut `true`) ; ceci est utile pour un client mobile en
   arrière-plan
+* `filtered_lines` (booléen, facultatif, par défaut : `true`) : `false` pour ne
+  pas recevoir les lignes filtrées avec la commande `/filter` (lignes avec
+  `displayed` à `false`) : l'évènement `buffer_line_added` n'est pas envoyé pour
+  une ligne filtrée et l'évènement `buffer_opened` contient seulement les lignes
+  non filtrées ; cela ne s'applique pas aux tampons avec contenu libre, où
+  toutes les lignes sont toujours envoyées car une ligne peut remplacer une
+  ligne déjà reçue (utilisé seulement si `sync` vaut `true`)
+  _(WeeChat ≥ 5.0.0)_ ; l'évènement `buffer_line_data_changed` est toujours
+  envoyé, avec le champ `displayed`, pour que le client puisse ajouter ou
+  supprimer la ligne (une mise à jour d'une ligne non reçue avec `displayed` à
+  `false` peut être ignorée) ; le client peut récupérer les lignes des
+  tampons avec contenu formaté avec le même comportement avec le paramètre
+  `filtered` à `exclude` dans la ressource <<resource_buffers,buffers>> (pour
+  les tampons avec contenu libre, le paramètre `filtered` doit être `include`)
 * `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
   des couleurs sont retournées :
 ** `ansi` : retourner les codes couleur ANSI

@@ -34,8 +34,6 @@ extern "C"
 #include "src/plugins/relay/relay-json.h"
 #include "src/plugins/relay/api/relay-api.h"
 #include "src/plugins/relay/api/relay-api-msg.h"
-
-extern int relay_api_msg_line_data_is_displayed (struct t_gui_line_data *line_data);
 }
 
 /*

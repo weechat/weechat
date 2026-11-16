@@ -42,6 +42,8 @@ extern "C"
 extern void relay_client_recv_text (struct t_relay_client *client,
                                     const char *data);
 extern int relay_api_protocol_command_delay;
+extern int relay_api_protocol_sync_filtered_lines (struct t_relay_client *client,
+                                                   struct t_gui_buffer *buffer);
 }
 
 /*
@@ -272,6 +274,34 @@ TEST(RelayApiProtocol, HsignalNicklistCb)
 TEST(RelayApiProtocol, SignalUpgradeCb)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_sync_filtered_lines
+ */
+
+TEST(RelayApiProtocolWithClient, SyncFilteredLines)
+{
+    struct t_gui_buffer *buffer;
+
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_filtered_lines));
+    LONGS_EQUAL(1, relay_api_protocol_sync_filtered_lines (ptr_relay_client,
+                                                           gui_buffers));
+    LONGS_EQUAL(1, relay_api_protocol_sync_filtered_lines (ptr_relay_client,
+                                                           buffer));
+
+    RELAY_API_DATA(ptr_relay_client, sync_filtered_lines) = 0;
+    LONGS_EQUAL(0, relay_api_protocol_sync_filtered_lines (ptr_relay_client,
+                                                           gui_buffers));
+    LONGS_EQUAL(1, relay_api_protocol_sync_filtered_lines (ptr_relay_client,
+                                                           buffer));
+    RELAY_API_DATA(ptr_relay_client, sync_filtered_lines) = 1;
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -1309,6 +1339,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
     LONGS_EQUAL(RELAY_API_COLORS_STRIP, RELAY_API_DATA(ptr_relay_client, sync_colors));
     LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_notify_only));
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_filtered_lines));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_buffer));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_hsignal_nicklist));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_input));
@@ -1526,6 +1557,135 @@ TEST(RelayApiProtocolWithClient, SignalBufferCbNotifyOnly)
     free_data_sent ();
     gui_buffer_close (buffer);
     POINTERS_EQUAL(NULL, data_sent[0]);
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_signal_buffer_cb (with "filtered_lines")
+ */
+
+TEST(RelayApiProtocolWithClient, SignalBufferCbFilteredLines)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_filter *ptr_filter;
+    struct t_relay_json *json, *json_obj, *json_lines;
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    ptr_filter = gui_filter_new (1, "test_filtered", "core.test",
+                                 "tag_test_filtered", "*");
+    CHECK(ptr_filter);
+
+    /* Default: filtered lines are sent. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_filtered_lines));
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    free_data_sent ();
+    gui_chat_printf_date_tags (buffer, 0, "tag_test_filtered", "test filtered");
+    CHECK(data_sent[0]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_line_added", json, "event_name");
+    WEE_CHECK_OBJ_STR("test filtered", relay_json_object_get (json, "body"), "message");
+    WEE_CHECK_OBJ_BOOL(0, relay_json_object_get (json, "body"), "displayed");
+    relay_json_free (json);
+    gui_buffer_close (buffer);
+
+    /* Filtered lines are not sent. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"filtered_lines\": false}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync",
+                   "{\"filtered_lines\":false}", "null");
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_filtered_lines));
+    free_data_sent ();
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    CHECK(data_sent[0]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_opened", json, "event_name");
+    relay_json_free (json);
+    free_data_sent ();
+    gui_chat_printf_date_tags (buffer, 0, "tag_test_filtered", "test filtered");
+    POINTERS_EQUAL(NULL, data_sent[0]);
+    gui_chat_printf_date_tags (buffer, 0, NULL, "test not filtered");
+    CHECK(data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_line_added", json, "event_name");
+    WEE_CHECK_OBJ_STR("test not filtered", relay_json_object_get (json, "body"), "message");
+    relay_json_free (json);
+
+    /* Buffer opened: only lines not filtered are sent. */
+    free_data_sent ();
+    (void) hook_signal_send ("buffer_opened",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    CHECK(data_sent[0]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_opened", json, "event_name");
+    json_lines = relay_json_object_get (relay_json_object_get (json, "body"),
+                                        "lines");
+    CHECK(json_lines);
+    LONGS_EQUAL(1, relay_json_array_size (json_lines));
+    WEE_CHECK_OBJ_STR("test not filtered", relay_json_array_get (json_lines, 0),
+                      "message");
+    relay_json_free (json);
+
+    free_data_sent ();
+    gui_buffer_close (buffer);
+    free_data_sent ();
+
+    /* Buffer with free content: line replaced by a filtered line is sent. */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+    free_data_sent ();
+    gui_chat_printf_y (buffer, 0, "test not filtered");
+    free_data_sent ();
+    gui_chat_printf_y_date_tags (buffer, 0, 0, "tag_test_filtered",
+                                 "test filtered");
+    CHECK(data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_line_added", json, "event_name");
+    WEE_CHECK_OBJ_NUM(0, relay_json_object_get (json, "body"), "y");
+    WEE_CHECK_OBJ_STR("test filtered", relay_json_object_get (json, "body"), "message");
+    WEE_CHECK_OBJ_BOOL(0, relay_json_object_get (json, "body"), "displayed");
+    relay_json_free (json);
+
+    /* Buffer with free content opened: filtered lines are sent. */
+    free_data_sent ();
+    (void) hook_signal_send ("buffer_opened",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    CHECK(data_sent[0]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_opened", json, "event_name");
+    json_lines = relay_json_object_get (relay_json_object_get (json, "body"),
+                                        "lines");
+    CHECK(json_lines);
+    LONGS_EQUAL(1, relay_json_array_size (json_lines));
+    WEE_CHECK_OBJ_STR("test filtered", relay_json_array_get (json_lines, 0),
+                      "message");
+    relay_json_free (json);
+
+    free_data_sent ();
+    gui_buffer_close (buffer);
+    gui_filter_free (ptr_filter);
 }
 
 /*

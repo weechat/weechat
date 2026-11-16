@@ -1825,6 +1825,20 @@ POST /api/sync
   events are not sent and parameters `nicks`, `input` and `options` are ignored
   (used only if `sync` is `true`); this is useful for a mobile client in
   background
+// TRANSLATION MISSING
+* `filtered_lines` (boolean, optional, default: `true`): `false` to not receive
+  the lines filtered with command `/filter` (lines with `displayed` set to
+  `false`): the event `buffer_line_added` is not sent for a filtered line and
+  the event `buffer_opened` contains only lines not filtered; this does not
+  apply to buffers with free content, where all lines are always sent because
+  a line can replace a line already received (used only if `sync` is `true`)
+  _(WeeChat ≥ 5.0.0)_; the event `buffer_line_data_changed` is always sent,
+  with the field `displayed`, so that the client can add or remove the line
+  (an update of a line not received with `displayed` set to `false` can be
+  ignored); the client can fetch the lines of buffers with formatted content
+  with the same behavior with the parameter `filtered` set to `exclude` in
+  resource <<resource_buffers,buffers>> (for buffers with free content, the
+  parameter `filtered` must be `include`)
 * `colors` (стринг, није обавезно, подразумевано: `ansi`): како се враћају стрингови са
   кодовома боје (користи се само ако је `sync` `true`):
 ** `ansi`: враћају се ANSI кодови боје

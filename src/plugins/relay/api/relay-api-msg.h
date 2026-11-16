@@ -34,6 +34,7 @@ extern struct t_relay_json *relay_api_msg_buffer_to_json (struct t_gui_buffer *b
                                                           enum t_relay_api_colors colors);
 extern struct t_relay_json *relay_api_msg_key_to_json (struct t_gui_key *key);
 extern struct t_relay_json *relay_api_msg_keys_to_json (struct t_gui_buffer *buffer);
+extern int relay_api_msg_line_data_is_displayed (struct t_gui_line_data *line_data);
 extern struct t_relay_json *relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
                                                              enum t_relay_api_colors colors);
 extern struct t_relay_json *relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,

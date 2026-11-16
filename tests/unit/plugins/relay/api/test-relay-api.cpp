@@ -10,6 +10,8 @@
 
 extern "C"
 {
+#include <string.h>
+#include "src/core/core-infolist.h"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-client.h"
 #include "src/plugins/relay/api/relay-api.h"
@@ -120,11 +122,57 @@ TEST(RelayApi, Alloc)
 /*
  * Test functions:
  *   relay_api_alloc_with_infolist
+ *   relay_api_add_to_infolist
  */
 
 TEST(RelayApi, AllocWithInfolist)
 {
-    /* TODO: write tests */
+    struct t_relay_client client, client2, *ptr_client, *ptr_client2;
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
+
+    memset (&client, 0, sizeof (client));
+    memset (&client2, 0, sizeof (client2));
+    ptr_client = &client;
+    ptr_client2 = &client2;
+
+    relay_api_alloc (&client);
+    CHECK(client.protocol_data);
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_client, sync_filtered_lines));
+
+    /* Save and restore sync data. */
+    RELAY_API_DATA(ptr_client, sync_enabled) = 1;
+    RELAY_API_DATA(ptr_client, sync_notify_only) = 1;
+    RELAY_API_DATA(ptr_client, sync_filtered_lines) = 0;
+    infolist = infolist_new (NULL);
+    CHECK(infolist);
+    item = infolist_new_item (infolist);
+    CHECK(item);
+    LONGS_EQUAL(1, relay_api_add_to_infolist (item, &client, 0));
+    CHECK(infolist_next (infolist));
+    relay_api_alloc_with_infolist (&client2, infolist);
+    CHECK(client2.protocol_data);
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_client2, sync_enabled));
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_client2, sync_notify_only));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_client2, sync_filtered_lines));
+    relay_api_free (&client2);
+    infolist_free (infolist);
+
+    /* Restore data saved by an older version (without "sync_filtered_lines"). */
+    infolist = infolist_new (NULL);
+    CHECK(infolist);
+    item = infolist_new_item (infolist);
+    CHECK(item);
+    CHECK(infolist_new_var_integer (item, "sync_enabled", 1));
+    CHECK(infolist_next (infolist));
+    relay_api_alloc_with_infolist (&client2, infolist);
+    CHECK(client2.protocol_data);
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_client2, sync_enabled));
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_client2, sync_filtered_lines));
+    relay_api_free (&client2);
+    infolist_free (infolist);
+
+    relay_api_free (&client);
 }
 
 /*
