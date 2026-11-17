@@ -13,9 +13,11 @@
 
 extern "C"
 {
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/time.h>
 #include "src/core/weechat.h"
 #include "src/core/core-config-file.h"
 #include "src/core/core-crypto.h"
@@ -144,6 +146,21 @@ TEST_GROUP(CoreSecureConfig)
     }
 };
 
+/* Number of signals SIGALRM received. */
+volatile sig_atomic_t test_secure_config_sigalrm_count = 0;
+
+/*
+ * Callback for signal SIGALRM: count signals received.
+ */
+
+void
+test_secure_config_sigalrm_cb (int signum)
+{
+    (void) signum;
+
+    test_secure_config_sigalrm_count = test_secure_config_sigalrm_count + 1;
+}
+
 /*
  * Test functions:
  *   secure_config_get_passphrase_from_command
@@ -151,6 +168,8 @@ TEST_GROUP(CoreSecureConfig)
 
 TEST(CoreSecureConfig, GetPassphraseFromCommand)
 {
+    struct sigaction action, old_action;
+    struct itimerval timer, old_timer;
     char *str;
 
     WEE_TEST_STR("secret",
@@ -172,6 +191,28 @@ TEST(CoreSecureConfig, GetPassphraseFromCommand)
     LONGS_EQUAL(SECURE_PASSPHRASE_MAX_LENGTH, strlen (str));
     LONGS_EQUAL('0', str[0]);
     LONGS_EQUAL('0', str[SECURE_PASSPHRASE_MAX_LENGTH - 1]);
+    free (str);
+
+    /*
+     * Read interrupted by signals (handler without SA_RESTART): the read is
+     * retried and the whole output is returned.
+     */
+    memset (&action, 0, sizeof (action));
+    sigemptyset (&action.sa_mask);
+    action.sa_flags = 0;
+    action.sa_handler = &test_secure_config_sigalrm_cb;
+    sigaction (SIGALRM, &action, &old_action);
+    memset (&timer, 0, sizeof (timer));
+    timer.it_interval.tv_usec = 100;
+    timer.it_value.tv_usec = 100;
+    test_secure_config_sigalrm_count = 0;
+    setitimer (ITIMER_REAL, &timer, &old_timer);
+    str = secure_config_get_passphrase_from_command (
+        "i=0; while [ $i -lt 3000 ]; do i=$((i+1)); done; echo abc");
+    setitimer (ITIMER_REAL, &old_timer, NULL);
+    sigaction (SIGALRM, &old_action, NULL);
+    CHECK(test_secure_config_sigalrm_count > 0);
+    STRCMP_EQUAL("abc", str);
     free (str);
 }
 
