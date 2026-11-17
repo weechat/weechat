@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2009-2025 Nils Görs <weechatter@arcor.de>
+// SPDX-FileCopyrightText: 2009-2026 Nils Görs <weechatter@arcor.de>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -101,20 +101,18 @@ $HOME/.local/share/weechat/weechat.log::
 // end::files[]
 
 // tag::exit_status[]
-// TRANSLATION MISSING
 0::
-    Success: WeeChat was quit normally (for example with the command `/quit`),
-    or an option like "--help" or "--version" was given.
+    Erfolg: WeeChat wurde regulär beendet (zum Beispiel über den Befehl `/quit`),
+    oder es wurde eine Option wie ""--help"" oder ""--version"" angegeben.
 
-// TRANSLATION MISSING
 1::
-    Error: WeeChat could not start or stopped because of an error, for example
-    if the log file can not be created.
+    Fehler: WeeChat konnte nicht starten oder wurde aufgrund eines Fehlers
+    beendet – beispielsweise, wenn die Protokolldatei nicht erstellt werden kann.
 
-// TRANSLATION MISSING
 2::
-    Invalid command line arguments: unknown or ambiguous option, missing
-    argument, or argument given to an option that does not take one.
+    Ungültige Befehlszeilenargumente: unbekannte oder mehrdeutige Option, fehlendes
+    Argument oder ein Argument wurde für eine Option angegeben, die kein Argument
+    akzeptiert.
 // end::exit_status[]
 
 // tag::copyright[]

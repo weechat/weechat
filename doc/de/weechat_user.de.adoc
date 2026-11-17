@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2010-2025 Nils Görs <weechatter@arcor.de>
+// SPDX-FileCopyrightText: 2010-2026 Nils Görs <weechatter@arcor.de>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -613,7 +613,6 @@ Einige zusätzliche Optionen sollten nur für Debug-Zwecke genutzt werden:
 include::includes/cmdline_options.de.adoc[tag=debug]
 
 [[exit_status]]
-// TRANSLATION MISSING
 ==== Exit status
 
 include::includes/man.de.adoc[tag=exit_status]
@@ -1454,17 +1453,15 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 | beliebige Zeichenkette
 | eigener Host (sofern bekannt), wird durch IRC Erweiterung genutzt.
 
-// TRANSLATION MISSING
 | irc_caps
-| any string
-| List of IRC capabilities enabled on the server (names separated by commas,
-  for example `batch,message-tags,server-time`), set by irc plugin.
+| beliebige Zeichenkette
+| Liste der auf dem Server aktivierten IRC-Fähigkeiten (Namen durch Kommata getrennt,
+  zum Beispiel `batch,message-tags,server-time`), festgelegt durch die IRC-Erweiterung.
 
-// TRANSLATION MISSING
 | irc_clienttagdeny
-| any string
-| Client-only tags blocked by the IRC server (value of `CLIENTTAGDENY` in
-  message 005, for example `*,-draft/react`), set by irc plugin.
+| beliebige Zeichenkette
+| Vom IRC-Server blockierte Client-only-Tags (Wert von `CLIENTTAGDENY` in
+  Nachricht 005, zum Beispiel `*,-draft/react`), festgelegt durch die IRC-Erweiterung.
 
 | lag
 | beliebige Zeichenkette

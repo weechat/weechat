@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2009-2025 Nils Görs <weechatter@arcor.de>
+// SPDX-FileCopyrightText: 2009-2026 Nils Görs <weechatter@arcor.de>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -10,17 +10,16 @@
 *-c*, *--colors*::
     zeigt die Standardfarben im Terminal an.
 
-// TRANSLATION MISSING
 *--daemon*::
-    Run WeeChat in background, as a daemon (only with the command
-    *weechat-headless*: with *weechat* this option is unknown and an error is
-    displayed).
+    Führen Sie WeeChat im Hintergrund als Daemon aus (nur mit dem Befehl
+    *weechat-headless*; bei *weechat* ist diese Option unbekannt, und es wird
+    ein Fehler ausgegeben).
 
-// TRANSLATION MISSING
 *--stdout*::
-    Display log messages on standard output instead of writing them in log file
-    (only with the command *weechat-headless*: with *weechat* this option is
-    unknown and an error is displayed; ignored if option "--daemon" is given).
+    Protokollmeldungen über die Standardausgabe ausgeben, anstatt sie in eine
+    Protokolldatei zu schreiben (nur beim Befehl *weechat-headless*;
+    bei *weechat* ist diese Option unbekannt, was zu einer Fehlermeldung führt;
+    wird ignoriert, wenn die Option ""--daemon"" angegeben ist).
 
 *-d*, *--dir* _<path>_::
     Erzwingen Sie ein einzelnes Verzeichnis für alle WeeChat-Dateien (Verzeichnis wird erstellt, wenn es nicht gefunden wird).
