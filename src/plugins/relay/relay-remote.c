@@ -432,15 +432,12 @@ relay_remote_new_with_options (const char *name, struct t_config_option **option
     struct t_relay_remote *new_remote;
     int i;
 
+    if (!relay_remote_url_valid (weechat_config_string (options[RELAY_REMOTE_OPTION_URL])))
+        return NULL;
+
     new_remote = relay_remote_alloc (name);
     if (!new_remote)
         return NULL;
-
-    if (!relay_remote_url_valid (weechat_config_string (options[RELAY_REMOTE_OPTION_URL])))
-    {
-        free (new_remote);
-        return NULL;
-    }
 
     for (i = 0; i < RELAY_REMOTE_NUM_OPTIONS; i++)
     {
