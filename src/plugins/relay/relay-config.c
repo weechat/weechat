@@ -728,6 +728,22 @@ relay_config_change_irc_backlog_tags (const void *pointer, void *data,
 }
 
 /*
+ * Get the relay server using an option of section "port" or "path".
+ *
+ * Return pointer to server, NULL if not found (or if option is NULL).
+ */
+
+struct t_relay_server *
+relay_config_get_server (struct t_config_option *option)
+{
+    if (!option)
+        return NULL;
+
+    return relay_server_search (
+        (const char *)weechat_config_option_get_pointer (option, "name"));
+}
+
+/*
  * Check if a port is valid.
  *
  * Return:
@@ -774,8 +790,9 @@ relay_config_check_port_cb (const void *pointer, void *data,
     if ((new_port < 0) || (new_port > 65535))
         return 1;
 
+    /* The port of the server using this option can be set again. */
     ptr_server = relay_server_search_port ((int)new_port);
-    if (ptr_server)
+    if (ptr_server && (ptr_server != relay_config_get_server (option)))
     {
         weechat_printf (NULL, _("%s%s: error: port \"%d\" is already used"),
                         weechat_prefix ("error"),
@@ -868,15 +885,18 @@ relay_config_check_path_cb (const void *pointer, void *data,
                             struct t_config_option *option,
                             const char *value)
 {
+    struct t_relay_server *ptr_server;
+
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
-    (void) option;
 
     if (!relay_config_check_path_length (value))
         return 0;
 
-    if (relay_server_search_path (value))
+    /* The path of the server using this option can be set again. */
+    ptr_server = relay_server_search_path (value);
+    if (ptr_server && (ptr_server != relay_config_get_server (option)))
     {
         weechat_printf (NULL, _("%s%s: error: path \"%s\" is already used"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME, value);

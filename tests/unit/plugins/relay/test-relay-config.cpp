@@ -96,17 +96,22 @@ TEST(RelayConfig, CheckPortCb)
     LONGS_EQUAL(1, relay_config_check_port_cb (NULL, NULL, ptr_option,
                                                "12345"));
 
-    /* Port already used. */
+    /* Port already used by another relay. */
     record_start ();
-    LONGS_EQUAL(0, relay_config_check_port_cb (NULL, NULL, ptr_option, "0"));
+    LONGS_EQUAL(0, relay_config_check_port_cb (NULL, NULL, NULL, "0"));
     record_stop ();
     RECORD_CHECK_MSG("core.weechat", "=!=",
                      "relay: error: port \"0\" is already used", NULL);
 
+    /* Port of the relay using the option: it can be set again. */
+    LONGS_EQUAL(1, relay_config_check_port_cb (NULL, NULL, ptr_option, "0"));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
+                config_file_option_set (ptr_option, "0", 1));
+
     /* Relative values (current value is 0). */
     LONGS_EQUAL(1, relay_config_check_port_cb (NULL, NULL, ptr_option, "++1"));
-    LONGS_EQUAL(0, relay_config_check_port_cb (NULL, NULL, ptr_option, "++0"));
-    LONGS_EQUAL(0, relay_config_check_port_cb (NULL, NULL, ptr_option, "--0"));
+    LONGS_EQUAL(1, relay_config_check_port_cb (NULL, NULL, ptr_option, "++0"));
+    LONGS_EQUAL(1, relay_config_check_port_cb (NULL, NULL, ptr_option, "--0"));
     LONGS_EQUAL(1, relay_config_check_port_cb (NULL, NULL, ptr_option, "--1"));
 }
 
@@ -174,6 +179,7 @@ TEST(RelayConfig, CheckPathAvailable)
 TEST(RelayConfig, CheckPathCb)
 {
     struct t_relay_server *ptr_server;
+    struct t_config_option *ptr_option;
 
     record_start ();
     LONGS_EQUAL(0, relay_config_check_path_cb (NULL, NULL, NULL, ""));
@@ -192,6 +198,15 @@ TEST(RelayConfig, CheckPathCb)
                                                ptr_server->path));
     LONGS_EQUAL(0, relay_config_check_path_cb (NULL, NULL, NULL,
                                                TEST_SOCKET));
+
+    /* Path of the relay using the option: it can be set again. */
+    config_file_search_with_string ("relay.path.unix.weechat", NULL, NULL,
+                                    &ptr_option, NULL);
+    CHECK(ptr_option);
+    LONGS_EQUAL(1, relay_config_check_path_cb (NULL, NULL, ptr_option,
+                                               TEST_SOCKET));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
+                config_file_option_set (ptr_option, TEST_SOCKET, 1));
 }
 
 /*
