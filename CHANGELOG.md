@@ -230,6 +230,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - python: fix crash when a script loads another script during its initialization
 - python: do not call sys.excepthook and do not exit WeeChat on SystemExit when an error is displayed (for example when a script calls sys.exit)
 - python: add functions config_option_get_string and config_option_get_pointer in stub (weechat.pyi) and plugin API reference
+- relay: refuse an invalid port (not an integer or out of range) when a relay is added
 - relay: ignore spaces around algorithms in option relay.network.password_hash_algo
 - relay: allow to set again the current port or path of a relay, which was refused as already used
 - relay: fix check of UNIX socket path already used by another relay when the path contains "%h" or must be evaluated

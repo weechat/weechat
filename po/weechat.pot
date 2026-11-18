@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-15 15:39+0100\n"
+"POT-Creation-Date: 2026-11-18 22:28+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13374,6 +13374,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: invalid port \"%s\""
 msgstr ""
 
 msgid ""

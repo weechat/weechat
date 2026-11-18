@@ -1047,19 +1047,27 @@ relay_config_create_option_port_path (const void *pointer, void *data,
         }
     }
 
+    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR) && !unix_socket)
+    {
+        /* Port must be valid before the server is created. */
+        if (!value
+            || !weechat_util_parse_int (value, 10, &port)
+            || (port < 0)
+            || (port > 65535))
+        {
+            weechat_printf (NULL, _("%s%s: error: invalid port \"%s\""),
+                            weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                            (value) ? value : "");
+            rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        }
+    }
+
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         if (unix_socket)
-        {
             ptr_server = relay_server_search_path (value);
-        }
         else
-        {
-            if (weechat_util_parse_int (value, 10, &port))
-                ptr_server = relay_server_search_port (port);
-            else
-                ptr_server = NULL;
-        }
+            ptr_server = relay_server_search_port (port);
         if (ptr_server)
         {
             if (unix_socket)

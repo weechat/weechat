@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-15 15:39+0100\n"
+"POT-Creation-Date: 2026-11-18 22:28+0100\n"
 "PO-Revision-Date: 2026-11-17 10:02+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -16674,6 +16674,11 @@ msgstr "%s%s: Unbekanntes Protokoll \"%s\""
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: Fehler: dieser Name ist für das Protokoll \"%s\" nicht erlaubt"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid charset: \"%s\""
+msgid "%s%s: error: invalid port \"%s\""
+msgstr "%s%s: Ungültiger Zeichensatz: \"%s\""
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "

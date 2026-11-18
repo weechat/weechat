@@ -310,6 +310,34 @@ TEST(RelayConfig, CreateOptionPortPath)
     POINTERS_EQUAL(NULL, relay_server_search ("unix.weechat"));
     LONGS_EQUAL(-1, access (path2, F_OK));
 
+    /* Invalid port: server not created. */
+    record_start ();
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                relay_config_create_option_port_path (
+                    NULL, NULL, relay_config_file, relay_config_section_port,
+                    "ipv4.weechat", "70000"));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                relay_config_create_option_port_path (
+                    NULL, NULL, relay_config_file, relay_config_section_port,
+                    "ipv4.weechat", "-1"));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                relay_config_create_option_port_path (
+                    NULL, NULL, relay_config_file, relay_config_section_port,
+                    "ipv4.weechat", "abc"));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                relay_config_create_option_port_path (
+                    NULL, NULL, relay_config_file, relay_config_section_port,
+                    "ipv4.weechat", ""));
+    record_stop ();
+    RECORD_CHECK_MSG("core.weechat", "=!=",
+                     "relay: error: invalid port \"70000\"", NULL);
+    RECORD_CHECK_MSG("core.weechat", "=!=",
+                     "relay: error: invalid port \"abc\"", NULL);
+    POINTERS_EQUAL(NULL, relay_server_search ("ipv4.weechat"));
+    config_file_search_with_string ("relay.port.ipv4.weechat", NULL, NULL,
+                                    &ptr_option, NULL);
+    POINTERS_EQUAL(NULL, ptr_option);
+
     /* TCP port (chosen by the system). */
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
                 relay_config_create_option_port_path (

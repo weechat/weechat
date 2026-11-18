@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-15 15:39+0100\n"
+"POT-Creation-Date: 2026-11-18 22:28+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -14653,6 +14653,10 @@ msgstr "%s неизвестная функция клавиши \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: invalid port \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "
