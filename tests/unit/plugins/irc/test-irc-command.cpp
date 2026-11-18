@@ -25,6 +25,7 @@ extern "C"
 #include "src/plugins/irc/irc-command.h"
 #include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-ignore.h"
+#include "src/plugins/irc/irc-raw.h"
 #include "src/plugins/irc/irc-notify.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/logger/logger-config.h"
@@ -38,6 +39,7 @@ extern int irc_command_run_away (const void *pointer, void *data,
                                  const char *command);
 extern void irc_send_nick_server (struct t_irc_server *server,
                                   const char *nickname);
+extern char *irc_raw_filter;
 }
 
 #define IRC_FAKE_SERVER "fake_cmd"
@@ -978,6 +980,174 @@ TEST(IrcCommandWithServer, Ignore)
 
 /*
  * Test functions:
+ *   irc_command_display_server
+ *   irc_command_server
+ */
+
+TEST(IrcCommandWithServer, Server)
+{
+    struct t_irc_server *ptr_server, *ptr_server2;
+
+    /* List servers. */
+    CMD_SRV("/server");
+    CHECK(record_search ("core.weechat", "", "All servers:", NULL));
+    CHECK(record_search ("core.weechat", "",
+                         " * " IRC_FAKE_SERVER " [connected], nick: alice "
+                         "(fake), 1 channel, 0 pv",
+                         NULL));
+    CMD_SRV("/server list -connected fake_c");
+    CHECK(record_search ("core.weechat", "",
+                         "Connected servers with \"fake_c\":", NULL));
+    CMD_SRV("/server list zzz");
+    CHECK(record_search ("core.weechat", "", "No server found with \"zzz\"",
+                         NULL));
+    CMD_SRV("/server list -connected zzz");
+    CHECK(record_search ("core.weechat", "",
+                         "No connected server found with \"zzz\"", NULL));
+
+    /* Detailed list: passwords are hidden. */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_PASSWORD],
+                            "secret_pwd", 1);
+    config_file_option_set (server->options[IRC_SERVER_OPTION_SASL_PASSWORD],
+                            "secret_sasl", 1);
+    CMD_SRV("/server listfull " IRC_FAKE_SERVER);
+    CHECK(record_search ("core.weechat", "",
+                         "Server: " IRC_FAKE_SERVER " [connected], nick: alice "
+                         "(fake)",
+                         NULL));
+    CHECK(record_search ("core.weechat", "",
+                         "  password . . . . . . : (hidden)", NULL));
+    CHECK(record_search ("core.weechat", "",
+                         "  sasl_password. . . . : (hidden)", NULL));
+    POINTERS_EQUAL(NULL, record_search_msg_regex ("core.weechat", "secret_"));
+    config_file_option_reset (server->options[IRC_SERVER_OPTION_PASSWORD], 1);
+    config_file_option_reset (server->options[IRC_SERVER_OPTION_SASL_PASSWORD],
+                              1);
+
+    /* Add a server. */
+    CMD_SRV("/server add test_srv1 irc.example.com/6697 -tls -nicks=bob");
+    ptr_server = irc_server_search ("test_srv1");
+    CHECK(ptr_server);
+    STRCMP_EQUAL("irc.example.com/6697",
+                 CONFIG_STRING(
+                     ptr_server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    STRCMP_EQUAL("bob",
+                 CONFIG_STRING(ptr_server->options[IRC_SERVER_OPTION_NICKS]));
+    CHECK(record_search_msg_regex ("core.weechat",
+                                   "^irc: server added: test_srv1 -> "
+                                   "irc\\.example\\.com/6697 "));
+    CMD_SRV("/server add test_srv1 irc.example.com");
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: server \"test_srv1\" already exists", NULL));
+    CMD_SRV("/server addreplace test_srv1 irc2.example.com");
+    CHECK(record_search_msg_regex ("core.weechat",
+                                   "^irc: server updated: test_srv1 -> "
+                                   "irc2\\.example\\.com/"));
+    ptr_server = irc_server_search ("test_srv1");
+    CHECK(ptr_server);
+    STRCMP_EQUAL("irc2.example.com",
+                 CONFIG_STRING(
+                     ptr_server->options[IRC_SERVER_OPTION_ADDRESSES]));
+
+    /* Copy a server. */
+    CMD_SRV("/server copy test_srv1 test_srv2");
+    CHECK(record_search ("core.weechat", "",
+                         "irc: server test_srv1 has been copied to test_srv2",
+                         NULL));
+    CHECK(irc_server_search ("test_srv2"));
+    CMD_SRV("/server copy zzz test_srv3");
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: server \"zzz\" not found for \"server copy\" "
+                         "command",
+                         NULL));
+    CMD_SRV("/server copy test_srv1 test_srv2");
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: server \"test_srv2\" already exists for "
+                         "\"server copy\" command",
+                         NULL));
+
+    /* Rename a server. */
+    CMD_SRV("/server rename test_srv2 test_srv3");
+    CHECK(record_search ("core.weechat", "",
+                         "irc: server test_srv2 has been renamed to test_srv3",
+                         NULL));
+    POINTERS_EQUAL(NULL, irc_server_search ("test_srv2"));
+    CHECK(irc_server_search ("test_srv3"));
+    CMD_SRV("/server rename zzz test_srv4");
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: server \"zzz\" not found for \"server rename\" "
+                         "command",
+                         NULL));
+    CMD_SRV("/server rename test_srv1 test_srv3");
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: server \"test_srv3\" already exists for "
+                         "\"server rename\" command",
+                         NULL));
+
+    /* Reorder servers. */
+    CMD_SRV("/server reorder test_srv3 test_srv1");
+    CHECK(record_search_msg_regex ("core.weechat", "^[0-9]+ servers? moved$"));
+    STRCMP_EQUAL("test_srv3", irc_servers->name);
+    STRCMP_EQUAL("test_srv1", irc_servers->next_server->name);
+
+    /* Open server buffers. */
+    ptr_server = irc_server_search ("test_srv1");
+    ptr_server2 = irc_server_search ("test_srv3");
+    POINTERS_EQUAL(NULL, ptr_server->buffer);
+    CMD_SRV("/server open test_srv1");
+    CHECK(ptr_server->buffer);
+    POINTERS_EQUAL(NULL, ptr_server2->buffer);
+    CMD_SRV("/server open -all");
+    CHECK(ptr_server2->buffer);
+    CMD_SRV("/server open zzz");
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: server \"zzz\" not found for \"server open\" "
+                         "command",
+                         NULL));
+
+    /* Delete servers. */
+    CMD_SRV("/server del " IRC_FAKE_SERVER);
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: you cannot delete server \"" IRC_FAKE_SERVER
+                         "\" because you are connected to. Try \"/disconnect "
+                         IRC_FAKE_SERVER "\" before.",
+                         NULL));
+    CMD_SRV("/server del zzz");
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: server \"zzz\" not found for \"server del\" "
+                         "command",
+                         NULL));
+    CMD_SRV("/server del test_srv1");
+    CHECK(record_search ("core.weechat", "",
+                         "irc: server test_srv1 has been deleted", NULL));
+    POINTERS_EQUAL(NULL, irc_server_search ("test_srv1"));
+    CMD_SRV("/server del test_srv3");
+    POINTERS_EQUAL(NULL, irc_server_search ("test_srv3"));
+
+    /* Delete messages in out queues. */
+    CMD_SRV("/server deloutq");
+    CHECK(record_search_msg_regex ("core.weechat",
+                                   "^irc: messages outqueue DELETED"));
+
+    /* Raw buffer, with filter. */
+    CMD_SRV("/server raw");
+    CHECK(irc_raw_buffer);
+    CMD_SRV("/server raw s:" IRC_FAKE_SERVER);
+    STRCMP_EQUAL("s:" IRC_FAKE_SERVER, irc_raw_filter);
+    irc_raw_set_filter (NULL);
+    gui_buffer_close ((struct t_gui_buffer *)irc_raw_buffer);
+
+    /* Jump to server buffer, fake receive without message. */
+    CMD_CHAN("/server jump");
+    CMD_SRV("/server fakerecv");
+
+    /* Unknown sub-command. */
+    CMD_SRV("/server xxx");
+    CHECK(record_search_msg_regex ("core.weechat", "^Error with command"));
+}
+
+/*
+ * Test functions:
  *   irc_command_mode_masks_convert_ranges
  */
 
@@ -1457,26 +1627,6 @@ TEST(IrcCommand, Reconnect)
  */
 
 TEST(IrcCommand, Samode)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_display_server
- */
-
-TEST(IrcCommand, DisplayServer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_server
- */
-
-TEST(IrcCommand, Server)
 {
     /* TODO: write tests */
 }
