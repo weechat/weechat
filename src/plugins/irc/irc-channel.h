@@ -72,6 +72,8 @@ struct t_irc_channel
     struct t_hashtable *join_smart_filtered; /* smart filtered joins        */
     int typing_state;                  /* typing state                      */
     time_t typing_status_sent;         /* last time typing status was sent  */
+    time_t typing_active_received;     /* last time self typing "active"    */
+                                       /* was received (signal)             */
     struct t_gui_buffer *buffer;       /* buffer allocated for channel      */
     char *buffer_as_string;            /* used to return buffer info        */
     struct t_irc_channel *prev_channel; /* link to previous channel         */

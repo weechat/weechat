@@ -17,6 +17,7 @@
 #include "irc-channel.h"
 #include "irc-config.h"
 #include "irc-server.h"
+#include "irc-typing.h"
 
 
 /*
@@ -66,6 +67,9 @@ irc_typing_signal_typing_self_cb (const void *pointer, void *data,
     else
         new_state = -1;
 
+    if (new_state == IRC_CHANNEL_TYPING_STATE_ACTIVE)
+        ptr_channel->typing_active_received = time (NULL);
+
     if ((new_state >= 0) && (new_state != ptr_channel->typing_state))
     {
         ptr_channel->typing_state = new_state;
@@ -96,6 +100,17 @@ irc_typing_send_to_targets (struct t_irc_server *server)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
+        /*
+         * State "active" not refreshed for too long (the sender of signals
+         * stopped without sending another state): switch to "done".
+         */
+        if ((ptr_channel->typing_state == IRC_CHANNEL_TYPING_STATE_ACTIVE)
+            && (ptr_channel->typing_active_received
+                + IRC_TYPING_ACTIVE_TIMEOUT < current_time))
+        {
+            ptr_channel->typing_state = IRC_CHANNEL_TYPING_STATE_DONE;
+            ptr_channel->typing_status_sent = 0;
+        }
         if (!ptr_channel->part
             && (ptr_channel->typing_state != IRC_CHANNEL_TYPING_STATE_OFF)
             && (ptr_channel->typing_status_sent + 3 < current_time))

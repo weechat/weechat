@@ -7,6 +7,12 @@
 #ifndef WEECHAT_PLUGIN_IRC_TYPING_H
 #define WEECHAT_PLUGIN_IRC_TYPING_H
 
+/*
+ * Delay (in seconds) after which the self typing state "active" is changed to
+ * "done" if no signal "typing_self_typing" is received in the meantime.
+ */
+#define IRC_TYPING_ACTIVE_TIMEOUT 6
+
 struct t_irc_server;
 
 extern int irc_typing_signal_typing_self_cb (const void *pointer, void *data,

@@ -161,6 +161,7 @@ if(ENABLE_IRC)
     plugins/irc/test-irc-sasl.cpp
     plugins/irc/test-irc-server.cpp
     plugins/irc/test-irc-tag.cpp
+    plugins/irc/test-irc-typing.cpp
     plugins/irc/test-irc-upgrade.cpp
   )
 endif()

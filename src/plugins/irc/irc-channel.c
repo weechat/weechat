@@ -490,6 +490,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->join_smart_filtered = NULL;
     new_channel->typing_state = IRC_CHANNEL_TYPING_STATE_OFF;
     new_channel->typing_status_sent = 0;
+    new_channel->typing_active_received = 0;
     new_channel->buffer = ptr_buffer;
     new_channel->buffer_as_string = NULL;
 
@@ -1732,6 +1733,7 @@ irc_channel_hdata_channel_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_channel, join_smart_filtered, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, typing_state, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, typing_status_sent, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, typing_active_received, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, buffer, POINTER, 0, NULL, "buffer");
         WEECHAT_HDATA_VAR(struct t_irc_channel, buffer_as_string, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, prev_channel, POINTER, 0, NULL, hdata_name);
@@ -1924,6 +1926,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
                                                       "keys_values"));
     weechat_log_printf ("       typing_state . . . . . . : %d", channel->typing_state);
     weechat_log_printf ("       typing_status_sent . . . : %lld", (long long)channel->typing_status_sent);
+    weechat_log_printf ("       typing_active_received . : %lld", (long long)channel->typing_active_received);
     weechat_log_printf ("       buffer . . . . . . . . . : %p", channel->buffer);
     weechat_log_printf ("       buffer_as_string . . . . : '%s'", channel->buffer_as_string);
     weechat_log_printf ("       prev_channel . . . . . . : %p", channel->prev_channel);
