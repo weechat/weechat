@@ -197,7 +197,39 @@ relay_server_search_port (int port)
 }
 
 /*
+ * Evaluate path of a UNIX socket (see function string_eval_path_home in
+ * plugin API reference, the default directory is "runtime").
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+relay_server_eval_path (const char *path)
+{
+    struct t_hashtable *options;
+    char *result;
+
+    if (!path)
+        return NULL;
+
+    options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        weechat_hashtable_set (options, "directory", "runtime");
+    result = weechat_string_eval_path_home (path, NULL, NULL, options);
+    weechat_hashtable_free (options);
+
+    return result;
+}
+
+/*
  * Search for a server by path. Only return servers that are using a UNIX socket.
+ *
+ * The path is evaluated before the search (see function
+ * relay_server_eval_path).
  *
  * Return pointer to new server, NULL if not found.
  */
@@ -206,20 +238,26 @@ struct t_relay_server *
 relay_server_search_path (const char *path)
 {
     struct t_relay_server *ptr_server;
+    char *path_eval;
 
-    if (!path)
+    path_eval = relay_server_eval_path (path);
+    if (!path_eval)
         return NULL;
 
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
         /* Only include UNIX socket relays, to allow for numerical paths. */
-        if (ptr_server->unix_socket && (strcmp (path, ptr_server->path) == 0))
-            return ptr_server;
+        if (ptr_server->unix_socket
+            && (strcmp (path_eval, ptr_server->path) == 0))
+        {
+            break;
+        }
     }
 
-    /* Server not found */
-    return NULL;
+    free (path_eval);
+
+    return ptr_server;
 }
 /*
  * Close socket for a relay server.
@@ -810,7 +848,6 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
                   int ipv4, int ipv6, int tls, int unix_socket)
 {
     struct t_relay_server *new_server, *dup_server;
-    struct t_hashtable *options;
 
     if (!protocol_string)
         return NULL;
@@ -843,16 +880,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
         new_server->protocol_args =
             (protocol_args) ? strdup (protocol_args) : NULL;
         new_server->port = port;
-        options = weechat_hashtable_new (
-            32,
-            WEECHAT_HASHTABLE_STRING,
-            WEECHAT_HASHTABLE_STRING,
-            NULL, NULL);
-        if (options)
-            weechat_hashtable_set (options, "directory", "runtime");
-        new_server->path = weechat_string_eval_path_home (path,
-                                                          NULL, NULL, options);
-        weechat_hashtable_free (options);
+        new_server->path = relay_server_eval_path (path);
         new_server->ipv4 = ipv4;
         new_server->ipv6 = ipv6;
         new_server->tls = tls;
@@ -890,17 +918,8 @@ void
 relay_server_update_path (struct t_relay_server *server, const char *path)
 {
     char *new_path;
-    struct t_hashtable *options;
 
-    options = weechat_hashtable_new (
-        32,
-        WEECHAT_HASHTABLE_STRING,
-        WEECHAT_HASHTABLE_STRING,
-        NULL, NULL);
-    if (options)
-        weechat_hashtable_set (options, "directory", "runtime");
-    new_path = weechat_string_eval_path_home (path, NULL, NULL, options);
-    weechat_hashtable_free (options);
+    new_path = relay_server_eval_path (path);
     if (!new_path)
         return;
 

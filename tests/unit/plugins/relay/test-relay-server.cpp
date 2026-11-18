@@ -24,6 +24,8 @@ extern "C"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-config.h"
 #include "src/plugins/relay/relay-server.h"
+
+extern char *relay_server_eval_path (const char *path);
 }
 
 #define TEST_SOCKET1 "%h/test_relay_server1.sock"
@@ -131,6 +133,26 @@ TEST(RelayServer, GetProtocolArgs)
 
 /*
  * Test functions:
+ *   relay_server_eval_path
+ */
+
+TEST(RelayServer, EvalPath)
+{
+    char *path1, *str;
+
+    path1 = eval_path (TEST_SOCKET1);
+    CHECK(path1);
+
+    POINTERS_EQUAL(NULL, relay_server_eval_path (NULL));
+    WEE_TEST_STR("", relay_server_eval_path (""));
+    WEE_TEST_STR("/tmp/relay.sock", relay_server_eval_path ("/tmp/relay.sock"));
+    WEE_TEST_STR(path1, relay_server_eval_path (TEST_SOCKET1));
+
+    free (path1);
+}
+
+/*
+ * Test functions:
  *   relay_server_new
  *   relay_server_search
  *   relay_server_search_port
@@ -171,6 +193,8 @@ TEST(RelayServer, NewSearchFree)
     /* Path already used: server not created. */
     POINTERS_EQUAL(NULL, new_unix ("unix.irc.test", RELAY_PROTOCOL_IRC,
                                    path1));
+    POINTERS_EQUAL(NULL, new_unix ("unix.irc.test", RELAY_PROTOCOL_IRC,
+                                   TEST_SOCKET1));
 
     /* TCP server on a port chosen by the system (port 0). */
     server3 = relay_server_new ("ipv4.irc.test", RELAY_PROTOCOL_IRC, "test",
@@ -200,6 +224,9 @@ TEST(RelayServer, NewSearchFree)
     POINTERS_EQUAL(NULL, relay_server_search_path (""));
     POINTERS_EQUAL(server1, relay_server_search_path (path1));
     POINTERS_EQUAL(server2, relay_server_search_path (path2));
+    /* The path is evaluated before the search. */
+    POINTERS_EQUAL(server1, relay_server_search_path (TEST_SOCKET1));
+    POINTERS_EQUAL(server2, relay_server_search_path (TEST_SOCKET2));
     POINTERS_EQUAL(NULL, relay_server_search_path ("0"));
 
     /* Free servers: socket files are removed. */

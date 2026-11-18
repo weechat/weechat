@@ -190,6 +190,8 @@ TEST(RelayConfig, CheckPathCb)
     CHECK(ptr_server);
     LONGS_EQUAL(0, relay_config_check_path_cb (NULL, NULL, NULL,
                                                ptr_server->path));
+    LONGS_EQUAL(0, relay_config_check_path_cb (NULL, NULL, NULL,
+                                               TEST_SOCKET));
 }
 
 /*
@@ -266,6 +268,18 @@ TEST(RelayConfig, CreateOptionPortPath)
                     NULL, NULL, relay_config_file, relay_config_section_path,
                     "unix.api", path1));
     record_stop ();
+    POINTERS_EQUAL(NULL, relay_server_search ("unix.api"));
+
+    /* Path already used (path to evaluate). */
+    record_start ();
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                relay_config_create_option_port_path (
+                    NULL, NULL, relay_config_file, relay_config_section_path,
+                    "unix.api", TEST_SOCKET));
+    record_stop ();
+    RECORD_CHECK_MSG("core.weechat", "=!=",
+                     "relay: error: path \"" TEST_SOCKET "\" is already used",
+                     NULL);
     POINTERS_EQUAL(NULL, relay_server_search ("unix.api"));
 
     /* Change path: socket is moved. */
