@@ -20,7 +20,6 @@ extern "C"
 #include <time.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-hook.h"
-#include "src/core/core-infolist.h"
 #include "src/core/core-string.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/relay/relay.h"
@@ -505,16 +504,6 @@ TEST(RelayRemote, New)
 
 /*
  * Test functions:
- *   relay_remote_new_with_infolist
- */
-
-TEST(RelayRemote, NewWithInfolist)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   relay_remote_set_status
  */
 
@@ -787,51 +776,6 @@ TEST(RelayRemote, FreeAll)
     POINTERS_EQUAL(NULL, relay_remotes);
     POINTERS_EQUAL(NULL, last_relay_remote);
     LONGS_EQUAL(0, relay_remotes_count);
-}
-
-/*
- * Test functions:
- *   relay_remote_add_to_infolist
- */
-
-TEST(RelayRemote, AddToInfolist)
-{
-    struct t_relay_remote *remote;
-    struct t_infolist *infolist;
-
-    remote = new_remote ("test", "https://example.com:1234");
-    CHECK(remote);
-
-    infolist = infolist_new (NULL);
-    CHECK(infolist);
-
-    LONGS_EQUAL(0, relay_remote_add_to_infolist (NULL, remote, 0));
-    LONGS_EQUAL(0, relay_remote_add_to_infolist (infolist, NULL, 0));
-
-    /* Connected remote saved with a disconnected state. */
-    remote->status = RELAY_STATUS_CONNECTED;
-    remote->sock = 42;
-    LONGS_EQUAL(1, relay_remote_add_to_infolist (infolist, remote, 1));
-    LONGS_EQUAL(1, relay_remote_add_to_infolist (infolist, remote, 0));
-    remote->status = RELAY_STATUS_DISCONNECTED;
-    remote->sock = -1;
-
-    infolist_reset_item_cursor (infolist);
-    CHECK(infolist_next (infolist));
-    STRCMP_EQUAL("test", infolist_string (infolist, "name"));
-    STRCMP_EQUAL("example.com", infolist_string (infolist, "address"));
-    LONGS_EQUAL(1234, infolist_integer (infolist, "port"));
-    LONGS_EQUAL(1, infolist_integer (infolist, "tls"));
-    LONGS_EQUAL(RELAY_STATUS_DISCONNECTED,
-                infolist_integer (infolist, "status"));
-    LONGS_EQUAL(-1, infolist_integer (infolist, "sock"));
-    CHECK(infolist_next (infolist));
-    LONGS_EQUAL(RELAY_STATUS_CONNECTED,
-                infolist_integer (infolist, "status"));
-    LONGS_EQUAL(42, infolist_integer (infolist, "sock"));
-    POINTERS_EQUAL(NULL, infolist_next (infolist));
-
-    infolist_free (infolist);
 }
 
 /*
