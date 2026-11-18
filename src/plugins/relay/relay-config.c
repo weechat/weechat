@@ -380,7 +380,7 @@ relay_config_change_network_password_hash_algo (const void *pointer,
     relay_config_network_password_hash_algo_list = weechat_string_split (
         weechat_config_string (relay_config_network_password_hash_algo),
         ",",
-        NULL,
+        " ",
         WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

@@ -500,4 +500,14 @@ TEST(RelayConfig, ChangeNetworkPasswordHashAlgo)
     STRCMP_EQUAL("pbkdf2+sha512",
                  relay_config_network_password_hash_algo_list[2]);
     POINTERS_EQUAL(NULL, relay_config_network_password_hash_algo_list[3]);
+
+    /* Spaces around items are ignored. */
+    config_file_option_set (relay_config_network_password_hash_algo,
+                            "plain , sha256,  pbkdf2+sha512 ", 1);
+    CHECK(relay_config_network_password_hash_algo_list);
+    STRCMP_EQUAL("plain", relay_config_network_password_hash_algo_list[0]);
+    STRCMP_EQUAL("sha256", relay_config_network_password_hash_algo_list[1]);
+    STRCMP_EQUAL("pbkdf2+sha512",
+                 relay_config_network_password_hash_algo_list[2]);
+    POINTERS_EQUAL(NULL, relay_config_network_password_hash_algo_list[3]);
 }
