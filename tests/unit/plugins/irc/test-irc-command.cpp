@@ -24,6 +24,7 @@ extern "C"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-command.h"
 #include "src/plugins/irc/irc-config.h"
+#include "src/plugins/irc/irc-ignore.h"
 #include "src/plugins/irc/irc-notify.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/logger/logger-config.h"
@@ -796,6 +797,187 @@ TEST(IrcCommandWithServer, Wallchops)
 
 /*
  * Test functions:
+ *   irc_command_admin
+ *   irc_command_info
+ *   irc_command_links
+ *   irc_command_lusers
+ *   irc_command_map
+ *   irc_command_motd
+ *   irc_command_rules
+ *   irc_command_service
+ *   irc_command_servlist
+ *   irc_command_stats
+ *   irc_command_summon
+ *   irc_command_time
+ *   irc_command_trace
+ *   irc_command_users
+ *   irc_command_version
+ */
+
+TEST(IrcCommandWithServer, ServerQueries)
+{
+    const char *commands[][3] = {
+        { "admin", "ADMIN", "ADMIN irc.example.com" },
+        { "info", "INFO", "INFO irc.example.com" },
+        { "links", "LINKS", "LINKS irc.example.com" },
+        { "lusers", "LUSERS", "LUSERS irc.example.com" },
+        { "map", "MAP", "MAP irc.example.com" },
+        { "motd", "MOTD", "MOTD irc.example.com" },
+        { "servlist", "SERVLIST", "SERVLIST irc.example.com" },
+        { "stats", "STATS", "STATS irc.example.com" },
+        { "time", "TIME", "TIME irc.example.com" },
+        { "trace", "TRACE", "TRACE irc.example.com" },
+        { "users", "USERS", "USERS irc.example.com" },
+        { "version", "VERSION", "VERSION irc.example.com" },
+        { NULL, NULL, NULL },
+    };
+    char str_command[256];
+    int i;
+
+    for (i = 0; commands[i][0]; i++)
+    {
+        snprintf (str_command, sizeof (str_command), "/%s", commands[i][0]);
+        CMD_SRV(str_command);
+        CHECK_SENT(commands[i][1]);
+        snprintf (str_command, sizeof (str_command),
+                  "/%s irc.example.com", commands[i][0]);
+        CMD_SRV(str_command);
+        CHECK_SENT(commands[i][2]);
+    }
+
+    /* /rules ignores arguments. */
+    CMD_SRV("/rules");
+    CHECK_SENT("RULES");
+
+    /* /version for a nick in channel: CTCP VERSION. */
+    CMD_CHAN("/version bob");
+    CHECK_SENT("PRIVMSG bob :\001VERSION\001");
+    CMD_SRV("/version bob");
+    CHECK_SENT("VERSION bob");
+
+    CMD_SRV("/service svc 0 * * 0 :info");
+    CHECK_SENT("SERVICE svc 0 * * 0 :info");
+    CMD_SRV("/summon bob");
+    CHECK_SENT("SUMMON bob");
+
+    /* Missing arguments. */
+    CMD_SRV("/service");
+    CMD_SRV("/summon");
+    CHECK_SENT("");
+}
+
+/*
+ * Test functions:
+ *   irc_command_die
+ *   irc_command_oper
+ *   irc_command_rehash
+ *   irc_command_restart
+ *   irc_command_sajoin
+ *   irc_command_sanick
+ *   irc_command_sapart
+ *   irc_command_saquit
+ *   irc_command_squit
+ */
+
+TEST(IrcCommandWithServer, OperCommands)
+{
+    CMD_SRV("/oper alice secret");
+    CHECK_SENT("OPER alice secret");
+
+    CMD_SRV("/die");
+    CHECK_SENT("DIE");
+    CMD_SRV("/die now");
+    CHECK_SENT("DIE now");
+    CMD_SRV("/rehash");
+    CHECK_SENT("REHASH");
+    CMD_SRV("/rehash motd");
+    CHECK_SENT("REHASH motd");
+    CMD_SRV("/restart");
+    CHECK_SENT("RESTART");
+    CMD_SRV("/restart now");
+    CHECK_SENT("RESTART now");
+
+    CMD_SRV("/sajoin bob #test");
+    CHECK_SENT("SAJOIN bob #test");
+    CMD_SRV("/sanick bob bob2");
+    CHECK_SENT("SANICK bob bob2");
+    CMD_SRV("/sapart bob #test");
+    CHECK_SENT("SAPART bob #test");
+    CMD_SRV("/saquit bob bye bye");
+    CHECK_SENT("SAQUIT bob :bye bye");
+    CMD_SRV("/squit irc2.example.com");
+    CHECK_SENT("SQUIT irc2.example.com");
+
+    /* Missing arguments. */
+    CMD_SRV("/oper alice");
+    CMD_SRV("/sajoin bob");
+    CMD_SRV("/sanick bob");
+    CMD_SRV("/sapart bob");
+    CMD_SRV("/saquit bob");
+    CMD_SRV("/squit");
+    CHECK_SENT("");
+}
+
+/*
+ * Test functions:
+ *   irc_command_ignore_display
+ *   irc_command_ignore
+ */
+
+TEST(IrcCommandWithServer, Ignore)
+{
+    POINTERS_EQUAL(NULL, irc_ignore_list);
+
+    CMD_SRV("/ignore");
+    CHECK(record_search ("core.weechat", "", "irc: no ignore in list", NULL));
+
+    /* Add ignores. */
+    CMD_SRV("/ignore add bob");
+    CHECK(irc_ignore_list);
+    STRCMP_EQUAL("^bob$", irc_ignore_list->mask);
+    CHECK(record_search ("core.weechat", "",
+                         "  [1] mask: ^bob$ / server: * / channel: *", NULL));
+    CMD_SRV("/ignore add toto*!*@host " IRC_FAKE_SERVER " #test");
+    CHECK(record_search ("core.weechat", "",
+                         "  [2] mask: ^toto.*!.*@host$ / server: "
+                         IRC_FAKE_SERVER " / channel: #test",
+                         NULL));
+    CMD_SRV("/ignore add re:(?i)^carol");
+    CHECK(record_search ("core.weechat", "",
+                         "  [3] mask: (?i)^^carol$ / server: * / channel: *",
+                         NULL));
+
+    /* Ignore already exists, or is replaced. */
+    CMD_SRV("/ignore add bob");
+    CHECK(record_search ("core.weechat", "=!=", "irc: ignore already exists",
+                         NULL));
+    CMD_SRV("/ignore addreplace bob");
+    CHECK(record_search ("core.weechat", "", "irc: ignore updated:", NULL));
+
+    /* List of ignores. */
+    CMD_SRV("/ignore list");
+    CHECK(record_search ("core.weechat", "", "irc: ignore list:", NULL));
+    LONGS_EQUAL(3, record_count_messages () - 2);
+
+    /* Delete ignores. */
+    CMD_SRV("/ignore del 1");
+    CHECK(record_search_msg_regex ("core.weechat",
+                                   "^irc: ignore \".*\" deleted$"));
+    CMD_SRV("/ignore del 99");
+    CHECK(record_search ("core.weechat", "=!=", "irc: ignore not found", NULL));
+    CMD_SRV("/ignore del abc");
+    CHECK(record_search ("core.weechat", "=!=", "irc: wrong ignore number",
+                         NULL));
+    CMD_SRV("/ignore del -all");
+    CHECK(record_search ("core.weechat", "", "irc: all ignores deleted",
+                         NULL));
+    POINTERS_EQUAL(NULL, irc_ignore_list);
+    CMD_SRV("/ignore del -all");
+    CHECK(record_search ("core.weechat", "", "irc: no ignore in list", NULL));
+}
+
+/*
+ * Test functions:
  *   irc_command_mode_masks_convert_ranges
  */
 
@@ -881,16 +1063,6 @@ TEST(IrcCommand, MeAllChannels)
  */
 
 TEST(IrcCommand, Action)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_admin
- */
-
-TEST(IrcCommand, Admin)
 {
     /* TODO: write tests */
 }
@@ -1027,16 +1199,6 @@ TEST(IrcCommand, Dcc)
 
 /*
  * Test functions:
- *   irc_command_die
- */
-
-TEST(IrcCommand, Die)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_quit_server
  */
 
@@ -1067,36 +1229,6 @@ TEST(IrcCommand, Disconnect)
 
 /*
  * Test functions:
- *   irc_command_ignore_display
- */
-
-TEST(IrcCommand, IgnoreDisplay)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_ignore
- */
-
-TEST(IrcCommand, Ignore)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_info
- */
-
-TEST(IrcCommand, Info)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_join_server
  */
 
@@ -1117,16 +1249,6 @@ TEST(IrcCommand, Join)
 
 /*
  * Test functions:
- *   irc_command_links
- */
-
-TEST(IrcCommand, Links)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_list_get_int_arg
  */
 
@@ -1141,26 +1263,6 @@ TEST(IrcCommand, ListGetIntArg)
  */
 
 TEST(IrcCommand, List)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_lusers
- */
-
-TEST(IrcCommand, Lusers)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_map
- */
-
-TEST(IrcCommand, Map)
 {
     /* TODO: write tests */
 }
@@ -1191,16 +1293,6 @@ TEST(IrcCommand, ModeServer)
  */
 
 TEST(IrcCommand, Mode)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_motd
- */
-
-TEST(IrcCommand, Motd)
 {
     /* TODO: write tests */
 }
@@ -1301,16 +1393,6 @@ TEST(IrcCommand, Notify)
 
 /*
  * Test functions:
- *   irc_command_oper
- */
-
-TEST(IrcCommand, Oper)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_part_channel
  */
 
@@ -1371,80 +1453,10 @@ TEST(IrcCommand, Reconnect)
 
 /*
  * Test functions:
- *   irc_command_rehash
- */
-
-TEST(IrcCommand, Rehash)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_restart
- */
-
-TEST(IrcCommand, Restart)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_rules
- */
-
-TEST(IrcCommand, Rules)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_sajoin
- */
-
-TEST(IrcCommand, Sajoin)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_samode
  */
 
 TEST(IrcCommand, Samode)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_sanick
- */
-
-TEST(IrcCommand, Sanick)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_sapart
- */
-
-TEST(IrcCommand, Sapart)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_saquit
- */
-
-TEST(IrcCommand, Saquit)
 {
     /* TODO: write tests */
 }
@@ -1465,96 +1477,6 @@ TEST(IrcCommand, DisplayServer)
  */
 
 TEST(IrcCommand, Server)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_service
- */
-
-TEST(IrcCommand, Service)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_servlist
- */
-
-TEST(IrcCommand, Servlist)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_squit
- */
-
-TEST(IrcCommand, Squit)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_stats
- */
-
-TEST(IrcCommand, Stats)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_summon
- */
-
-TEST(IrcCommand, Summon)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_time
- */
-
-TEST(IrcCommand, Time)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_trace
- */
-
-TEST(IrcCommand, Trace)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_users
- */
-
-TEST(IrcCommand, Users)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_version
- */
-
-TEST(IrcCommand, Version)
 {
     /* TODO: write tests */
 }
