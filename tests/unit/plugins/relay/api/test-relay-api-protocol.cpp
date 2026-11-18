@@ -44,6 +44,9 @@ extern void relay_client_recv_text (struct t_relay_client *client,
 extern int relay_api_protocol_command_delay;
 extern int relay_api_protocol_sync_filtered_lines (struct t_relay_client *client,
                                                    struct t_gui_buffer *buffer);
+extern int relay_api_protocol_get_request_buffer (struct t_relay_client *client,
+                                                  struct t_relay_json *json_body,
+                                                  struct t_gui_buffer **buffer);
 }
 
 /*
@@ -327,6 +330,117 @@ TEST(RelayApiProtocolWithClient, SyncFilteredLines)
     RELAY_API_DATA(ptr_relay_client, sync_filtered_lines) = 1;
 
     gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_get_request_buffer
+ */
+
+TEST(RelayApiProtocolWithClient, GetRequestBuffer)
+{
+    struct t_relay_json *json;
+    struct t_gui_buffer *buffer;
+    char str_json[256];
+
+    json = relay_json_parse ("{}");
+    CHECK(json);
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (NULL, NULL, NULL));
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                           json, NULL));
+    buffer = gui_buffers;
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (NULL, json,
+                                                           &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+    buffer = gui_buffers;
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                           NULL, &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+
+    /* No buffer name/id: core buffer. */
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
+
+    /* Buffer name. */
+    json = relay_json_parse ("{\"buffer_name\": \"core.weechat\"}");
+    CHECK(json);
+    buffer = NULL;
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
+
+    /* Buffer name is not a string: ignored (core buffer). */
+    json = relay_json_parse ("{\"buffer_name\": 123}");
+    CHECK(json);
+    buffer = NULL;
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
+
+    /* Buffer name not found. */
+    json = relay_json_parse ("{\"buffer_name\": \"invalid\"}");
+    CHECK(json);
+    free_data_sent ();
+    LONGS_EQUAL(0, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 40\r\n"
+                 "\r\n"
+                 "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
+                 data_sent[0]);
+    relay_json_free (json);
+
+    /* Buffer id. */
+    snprintf (str_json, sizeof (str_json),
+              "{\"buffer_id\": %lld}", gui_buffers->id);
+    json = relay_json_parse (str_json);
+    CHECK(json);
+    buffer = NULL;
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
+
+    /* Buffer id is not a number. */
+    json = relay_json_parse ("{\"buffer_id\": \"abc\"}");
+    CHECK(json);
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                           json, &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+    relay_json_free (json);
+
+    /* Buffer id not found. */
+    json = relay_json_parse ("{\"buffer_id\": 123}");
+    CHECK(json);
+    free_data_sent ();
+    LONGS_EQUAL(0, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 36\r\n"
+                 "\r\n"
+                 "{\"error\":\"Buffer \\\"123\\\" not found\"}",
+                 data_sent[0]);
+    relay_json_free (json);
+
+    /* Buffer name has priority over buffer id. */
+    json = relay_json_parse ("{\"buffer_name\": \"core.weechat\", "
+                             "\"buffer_id\": 123}");
+    CHECK(json);
+    buffer = NULL;
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
 }
 
 /*
@@ -1287,11 +1401,6 @@ TEST(RelayApiProtocolWithClient, CbTyping)
 
     /* Error: body is not an object. */
     test_client_recv_http ("POST /api/typing", NULL, "[]");
-    WEE_CHECK_HTTP_CODE(400, "Bad Request");
-
-    /* Error: buffer name is not a string. */
-    test_client_recv_http ("POST /api/typing", NULL,
-                           "{\"buffer_name\": 123, \"state\": \"active\"}");
     WEE_CHECK_HTTP_CODE(400, "Bad Request");
 
     /* Error: buffer not found (by name). */

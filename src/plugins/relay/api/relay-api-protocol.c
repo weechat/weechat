@@ -57,6 +57,81 @@ relay_api_protocol_search_buffer_id_name (const char *string)
 }
 
 /*
+ * Search buffer of a request, using fields "buffer_name" (string) and
+ * "buffer_id" (number) of the JSON body.
+ *
+ * Field "buffer_name" is used first (it is ignored if it is not a string),
+ * then field "buffer_id"; if none of these fields is set, the WeeChat core
+ * buffer is used.
+ *
+ * If the buffer is not found, an error 404 is sent to the client.
+ *
+ * Return:
+ *    1: buffer found (stored in *buffer)
+ *    0: buffer not found (error 404 sent to the client)
+ *   -1: bad request (invalid buffer id or core buffer not found)
+ */
+
+int
+relay_api_protocol_get_request_buffer (struct t_relay_client *client,
+                                       struct t_relay_json *json_body,
+                                       struct t_gui_buffer **buffer)
+{
+    struct t_relay_json *json_buffer_id, *json_buffer_name;
+    const char *ptr_buffer_name;
+    long long buffer_id;
+    char str_id[64];
+
+    if (!buffer)
+        return -1;
+
+    *buffer = NULL;
+
+    if (!client || !json_body)
+        return -1;
+
+    json_buffer_name = relay_json_object_get (json_body, "buffer_name");
+    if (relay_json_is_string (json_buffer_name))
+    {
+        ptr_buffer_name = relay_json_get_string (json_buffer_name);
+        *buffer = weechat_buffer_search ("==", ptr_buffer_name);
+        if (!*buffer)
+        {
+            relay_api_msg_send_error_json (
+                client,
+                RELAY_HTTP_404_NOT_FOUND, NULL,
+                "Buffer \"%s\" not found",
+                ptr_buffer_name);
+            return 0;
+        }
+        return 1;
+    }
+
+    json_buffer_id = relay_json_object_get (json_body, "buffer_id");
+    if (json_buffer_id)
+    {
+        if (!relay_json_get_number (json_buffer_id, &buffer_id))
+            return -1;
+        snprintf (str_id, sizeof (str_id), "%lld", buffer_id);
+        *buffer = weechat_buffer_search ("==id", str_id);
+        if (!*buffer)
+        {
+            relay_api_msg_send_error_json (
+                client,
+                RELAY_HTTP_404_NOT_FOUND, NULL,
+                "Buffer \"%lld\" not found",
+                buffer_id);
+            return 0;
+        }
+        return 1;
+    }
+
+    *buffer = weechat_buffer_search_main ();
+
+    return (*buffer) ? 1 : -1;
+}
+
+/*
  * Check if lines filtered with /filter must be sent to a client in events
  * of a buffer, according to the sync option "filtered_lines".
  *
@@ -1230,11 +1305,9 @@ RELAY_API_PROTOCOL_CALLBACK(options)
 
 RELAY_API_PROTOCOL_CALLBACK(input)
 {
-    struct t_relay_json *json_body, *json_buffer_id, *json_buffer_name;
-    struct t_relay_json *json_command;
-    const char *ptr_buffer_name, *ptr_command, *ptr_commands;
-    long long buffer_id;
-    char str_id[64];
+    struct t_relay_json *json_body, *json_command;
+    const char *ptr_command, *ptr_commands;
+    int rc;
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *options;
     char str_delay[32];
@@ -1249,56 +1322,12 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     }
 
     /* Get buffer either by name or by id. */
-    ptr_buffer = NULL;
-    json_buffer_name = relay_json_object_get (json_body, "buffer_name");
-    if (json_buffer_name)
-    {
-        if (relay_json_is_string (json_buffer_name))
-        {
-            ptr_buffer_name = relay_json_get_string (json_buffer_name);
-            ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
-            if (!ptr_buffer)
-            {
-                relay_api_msg_send_error_json (
-                    client,
-                    RELAY_HTTP_404_NOT_FOUND, NULL,
-                    "Buffer \"%s\" not found",
-                    ptr_buffer_name);
-                relay_json_free (json_body);
-                return RELAY_API_PROTOCOL_RC_OK;
-            }
-        }
-    }
-    if (!ptr_buffer)
-    {
-        json_buffer_id = relay_json_object_get (json_body, "buffer_id");
-        if (json_buffer_id)
-        {
-            if (!relay_json_get_number (json_buffer_id, &buffer_id))
-            {
-                relay_json_free (json_body);
-                return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
-            }
-            snprintf (str_id, sizeof (str_id), "%lld", buffer_id);
-            ptr_buffer = weechat_buffer_search ("==id", str_id);
-            if (!ptr_buffer)
-            {
-                relay_api_msg_send_error_json (
-                    client,
-                    RELAY_HTTP_404_NOT_FOUND, NULL,
-                    "Buffer \"%lld\" not found",
-                    buffer_id);
-                relay_json_free (json_body);
-                return RELAY_API_PROTOCOL_RC_OK;
-            }
-        }
-    }
-    if (!ptr_buffer)
-        ptr_buffer = weechat_buffer_search_main ();
-    if (!ptr_buffer)
+    rc = relay_api_protocol_get_request_buffer (client, json_body, &ptr_buffer);
+    if (rc <= 0)
     {
         relay_json_free (json_body);
-        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+        return (rc == 0) ?
+            RELAY_API_PROTOCOL_RC_OK : RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
     json_command = relay_json_object_get (json_body, "command");
@@ -1363,56 +1392,23 @@ RELAY_API_PROTOCOL_CALLBACK(input)
 
 RELAY_API_PROTOCOL_CALLBACK(typing)
 {
-    struct t_relay_json *json_body, *json_buffer_id, *json_buffer_name;
-    struct t_relay_json *json_state;
-    const char *ptr_buffer_name, *ptr_state, *signal;
-    long long buffer_id;
-    char str_id[64];
+    struct t_relay_json *json_body, *json_state;
+    const char *ptr_state, *signal;
+    int rc;
     struct t_gui_buffer *ptr_buffer;
 
     json_body = relay_json_parse (client->http_req->body);
     if (!json_body || !relay_json_is_object (json_body))
         goto bad_request;
 
-    ptr_buffer = NULL;
-    json_buffer_name = relay_json_object_get (json_body, "buffer_name");
-    if (json_buffer_name)
+    /* Get buffer either by name or by id. */
+    rc = relay_api_protocol_get_request_buffer (client, json_body, &ptr_buffer);
+    if (rc == 0)
     {
-        if (!relay_json_is_string (json_buffer_name))
-            goto bad_request;
-        ptr_buffer_name = relay_json_get_string (json_buffer_name);
-        ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
-        if (!ptr_buffer)
-        {
-            relay_api_msg_send_error_json (
-                client, RELAY_HTTP_404_NOT_FOUND, NULL,
-                "Buffer \"%s\" not found", ptr_buffer_name);
-            relay_json_free (json_body);
-            return RELAY_API_PROTOCOL_RC_OK;
-        }
+        relay_json_free (json_body);
+        return RELAY_API_PROTOCOL_RC_OK;
     }
-    if (!ptr_buffer)
-    {
-        json_buffer_id = relay_json_object_get (json_body, "buffer_id");
-        if (json_buffer_id)
-        {
-            if (!relay_json_get_number (json_buffer_id, &buffer_id))
-                goto bad_request;
-            snprintf (str_id, sizeof (str_id), "%lld", buffer_id);
-            ptr_buffer = weechat_buffer_search ("==id", str_id);
-            if (!ptr_buffer)
-            {
-                relay_api_msg_send_error_json (
-                    client, RELAY_HTTP_404_NOT_FOUND, NULL,
-                    "Buffer \"%lld\" not found", buffer_id);
-                relay_json_free (json_body);
-                return RELAY_API_PROTOCOL_RC_OK;
-            }
-        }
-    }
-    if (!ptr_buffer)
-        ptr_buffer = weechat_buffer_search_main ();
-    if (!ptr_buffer)
+    if (rc < 0)
         goto bad_request;
 
     json_state = relay_json_object_get (json_body, "state");
@@ -1451,12 +1447,10 @@ bad_request:
 RELAY_API_PROTOCOL_CALLBACK(completion)
 {
     struct t_relay_json *json_response, *json_body;
-    struct t_relay_json *json_buffer_id, *json_buffer_name;
     struct t_relay_json *json_command, *json_position;
-    const char *ptr_buffer_name, *ptr_command;
-    long long buffer_id, number;
-    int position;
-    char str_id[64];
+    const char *ptr_command;
+    long long number;
+    int rc, position;
     struct t_gui_completion *ptr_completion;
     struct t_gui_buffer *ptr_buffer;
 
@@ -1470,56 +1464,12 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
     }
 
     /* Get buffer either by name or by id. */
-    ptr_buffer = NULL;
-    json_buffer_name = relay_json_object_get (json_body, "buffer_name");
-    if (json_buffer_name)
-    {
-        if (relay_json_is_string (json_buffer_name))
-        {
-            ptr_buffer_name = relay_json_get_string (json_buffer_name);
-            ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
-            if (!ptr_buffer)
-            {
-                relay_api_msg_send_error_json (
-                    client,
-                    RELAY_HTTP_404_NOT_FOUND, NULL,
-                    "Buffer \"%s\" not found",
-                    ptr_buffer_name);
-                relay_json_free (json_body);
-                return RELAY_API_PROTOCOL_RC_OK;
-            }
-        }
-    }
-    if (!ptr_buffer)
-    {
-        json_buffer_id = relay_json_object_get (json_body, "buffer_id");
-        if (json_buffer_id)
-        {
-            if (!relay_json_get_number (json_buffer_id, &buffer_id))
-            {
-                relay_json_free (json_body);
-                return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
-            }
-            snprintf (str_id, sizeof (str_id), "%lld", buffer_id);
-            ptr_buffer = weechat_buffer_search ("==id", str_id);
-            if (!ptr_buffer)
-            {
-                relay_api_msg_send_error_json (
-                    client,
-                    RELAY_HTTP_404_NOT_FOUND, NULL,
-                    "Buffer \"%lld\" not found",
-                    buffer_id);
-                relay_json_free (json_body);
-                return RELAY_API_PROTOCOL_RC_OK;
-            }
-        }
-    }
-    if (!ptr_buffer)
-        ptr_buffer = weechat_buffer_search_main ();
-    if (!ptr_buffer)
+    rc = relay_api_protocol_get_request_buffer (client, json_body, &ptr_buffer);
+    if (rc <= 0)
     {
         relay_json_free (json_body);
-        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+        return (rc == 0) ?
+            RELAY_API_PROTOCOL_RC_OK : RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
     /* Get command and position (optional) from input json object. */
