@@ -565,10 +565,14 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-relay-auth.cpp                 | Тестови: аутентификација клијената.
 |             test-relay-bar-item.cpp             | Тестови: ставке траке за Релеј додатак.
 |             test-relay-client.cpp               | Тестови: клијенти релеја.
+// TRANSLATION MISSING
+|             test-relay-config.cpp               | Tests: configuration functions for Relay plugin.
 |             test-relay-http.cpp                 | Тестови: HTTP функције за Релеј додатак.
 |             test-relay-network.cpp              | Tests: network functions for Relay plugin.
 |             test-relay-raw.cpp                  | Тестови: функције сирових порука за Релеј додатак.
 |             test-relay-remote.cpp               | Тестови: удаљене функције за Релеј додатак.
+// TRANSLATION MISSING
+|             test-relay-server.cpp               | Tests: server functions for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-upgrade.cpp              | Tests: upgrade of Relay plugin.
 |             test-relay-websocket.cpp            | Тестови: websocket функције за Релеј додатак.

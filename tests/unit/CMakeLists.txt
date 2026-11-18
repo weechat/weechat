@@ -179,11 +179,13 @@ if (ENABLE_RELAY)
     plugins/relay/test-relay-auth.cpp
     plugins/relay/test-relay-bar-item.cpp
     plugins/relay/test-relay-client.cpp
+    plugins/relay/test-relay-config.cpp
     plugins/relay/test-relay-http.cpp
     plugins/relay/test-relay-json.cpp
     plugins/relay/test-relay-network.cpp
     plugins/relay/test-relay-raw.cpp
     plugins/relay/test-relay-remote.cpp
+    plugins/relay/test-relay-server.cpp
     plugins/relay/test-relay-upgrade.cpp
     plugins/relay/test-relay-websocket.cpp
     plugins/relay/api/test-relay-api.cpp
