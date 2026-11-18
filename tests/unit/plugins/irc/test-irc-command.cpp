@@ -9,31 +9,540 @@
 #include "CppUTest/TestHarness.h"
 
 #include "tests.h"
+#include "tests-record.h"
 
 extern "C"
 {
+#include <stdio.h>
 #include <string.h>
 #include "src/core/core-config-file.h"
+#include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
 #include "src/core/core-string.h"
+#include "src/plugins/plugin.h"
+#include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-command.h"
+#include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-notify.h"
 #include "src/plugins/irc/irc-server.h"
+#include "src/plugins/logger/logger-config.h"
 
 extern char **irc_command_mode_masks_convert_ranges (char **argv, int arg_start);
 }
+
+#define IRC_FAKE_SERVER "fake_cmd"
+#define SRV_BUFFER "irc.server." IRC_FAKE_SERVER
+#define CHAN_BUFFER "irc." IRC_FAKE_SERVER ".#test"
+
+/* Run an IRC command in the channel buffer. */
+#define CMD_CHAN(__command)                                             \
+    run_command (CHAN_BUFFER, __command);
+
+/* Run an IRC command in the server buffer. */
+#define CMD_SRV(__command)                                              \
+    run_command (SRV_BUFFER, __command);
+
+/* Check messages sent to the server (separated by "\n"). */
+#define CHECK_SENT(__messages)                                          \
+    STRCMP_EQUAL(__messages, *sent);
+
+/* Check an error displayed in the server buffer. */
+#define CHECK_SRV_ERROR(__message)                                      \
+    if (!record_search (SRV_BUFFER, "=!=", __message, NULL))            \
+    {                                                                   \
+        char **msg = string_dyn_alloc (256);                            \
+        string_dyn_concat (msg, "Error not displayed: ", -1);           \
+        string_dyn_concat (msg, __message, -1);                         \
+        string_dyn_concat (msg, "\nAll messages displayed:\n", -1);     \
+        record_dump (msg);                                              \
+        FAIL(string_dyn_free (msg, 0));                                 \
+    }
 
 TEST_GROUP(IrcCommand)
 {
 };
 
+TEST_GROUP(IrcCommandWithServer)
+{
+    struct t_irc_server *server = NULL;
+    struct t_irc_channel *channel = NULL;
+    struct t_hook *hook_irc_out = NULL;
+    char **sent = NULL;
+
+    /* Save messages sent to the server (separated by "\n"). */
+    static int irc_out_cb (const void *pointer, void *data,
+                           const char *signal, const char *type_data,
+                           void *signal_data)
+    {
+        char **ptr_sent;
+
+        (void) data;
+        (void) signal;
+        (void) type_data;
+
+        ptr_sent = (char **)pointer;
+        if ((*ptr_sent)[0])
+            string_dyn_concat (ptr_sent, "\n", -1);
+        string_dyn_concat (ptr_sent, (const char *)signal_data, -1);
+        return WEECHAT_RC_OK;
+    }
+
+    void server_recv (const char *message)
+    {
+        char str_command[8192];
+
+        snprintf (str_command, sizeof (str_command),
+                  "/command -buffer " SRV_BUFFER " irc "
+                  "/server fakerecv \"%s\"",
+                  message);
+        run_cmd_quiet (str_command);
+    }
+
+    /* Run a command in a buffer, record messages and messages sent. */
+    void run_command (const char *buffer, const char *command)
+    {
+        char str_command[8192];
+
+        string_dyn_copy (sent, NULL);
+        snprintf (str_command, sizeof (str_command),
+                  "/command -buffer %s irc %s", buffer, command);
+        record_start ();
+        run_cmd_quiet (str_command);
+        record_stop ();
+    }
+
+    void setup ()
+    {
+        sent = string_dyn_alloc (256);
+        config_file_option_set (logger_config_look_backlog, "0", 1);
+        run_cmd_quiet ("/mute /server add " IRC_FAKE_SERVER " fake:127.0.0.1 "
+                       "-nicks=alice -anti_flood=0");
+        run_cmd_quiet ("/mute /connect " IRC_FAKE_SERVER);
+        server = irc_server_search (IRC_FAKE_SERVER);
+        CHECK(server);
+        server_recv (":server 001 alice :Welcome");
+        server_recv (":server 005 alice MODES=3 PREFIX=(ohv)@%+ "
+                     "CHANMODES=beIq,k,l,imnpst CHANTYPES=# "
+                     ":are supported");
+        server_recv (":alice!user_a@host_a JOIN #test");
+        server_recv (":server 353 alice = #test :@alice %helen +carol dave");
+        server_recv (":server 366 alice #test :End of /NAMES list");
+        server_recv (":bob!user_b@host_b JOIN #test");
+        channel = irc_channel_search (server, "#test");
+        CHECK(channel);
+        hook_irc_out = hook_signal (NULL, IRC_FAKE_SERVER ",irc_out1_*",
+                                    &irc_out_cb, sent, NULL);
+    }
+
+    void teardown ()
+    {
+        record_stop ();
+        unhook (hook_irc_out);
+        hook_irc_out = NULL;
+        run_cmd_quiet ("/mute /disconnect " IRC_FAKE_SERVER);
+        run_cmd_quiet ("/mute /server del " IRC_FAKE_SERVER);
+        server = NULL;
+        channel = NULL;
+        string_dyn_free (sent, 1);
+        sent = NULL;
+        config_file_option_reset (logger_config_look_backlog, 1);
+    }
+};
+
 /*
  * Test functions:
  *   irc_command_mode_nicks
+ *   irc_command_op
+ *   irc_command_deop
+ *   irc_command_voice
+ *   irc_command_devoice
+ *   irc_command_halfop
+ *   irc_command_dehalfop
  */
 
-TEST(IrcCommand, ModeNicks)
+TEST(IrcCommandWithServer, ModeNicks)
 {
-    /* TODO: write tests */
+    /* "*" requires "-yes". */
+    CMD_CHAN("/op *");
+    CHECK_SENT("");
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: \"-yes\" argument is required for nick \"*\" "
+                         "(security reason), see /help op",
+                         NULL));
+
+    /* Nicks already op are ignored, nicks are sent once. */
+    CMD_CHAN("/op alice bob bob b*");
+    CHECK_SENT("MODE #test +o bob");
+
+    /* Max 3 modes per message (option MODES of server). */
+    CMD_CHAN("/op * -yes");
+    CHECK_SENT("MODE #test +ooo helen carol dave\n"
+               "MODE #test +o bob");
+
+    /* Own nick is not deop with a wildcard. */
+    CMD_CHAN("/deop * -yes");
+    CHECK_SENT("");
+    CMD_CHAN("/deop alice");
+    CHECK_SENT("MODE #test -o alice");
+
+    /* Own nick. */
+    CMD_CHAN("/op");
+    CHECK_SENT("MODE #test +o alice");
+
+    CMD_CHAN("/op bob carol");
+    CHECK_SENT("MODE #test +oo carol bob");
+
+    CMD_SRV("/op bob");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"op\" command can only be executed in a channel "
+                    "buffer");
+
+    CMD_CHAN("/deop");
+    CHECK_SENT("MODE #test -o alice");
+
+    /* Nick without op is ignored. */
+    CMD_CHAN("/deop alice bob");
+    CHECK_SENT("MODE #test -o alice");
+
+    CMD_SRV("/deop alice");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"deop\" command can only be executed in a channel "
+                    "buffer");
+
+    CMD_CHAN("/voice");
+    CHECK_SENT("MODE #test +v alice");
+
+    /* Nick already voiced is ignored. */
+    CMD_CHAN("/voice bob carol dave");
+    CHECK_SENT("MODE #test +vv dave bob");
+
+    CMD_SRV("/voice bob");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"voice\" command can only be executed in a "
+                    "channel buffer");
+
+    CMD_CHAN("/devoice");
+    CHECK_SENT("MODE #test -v alice");
+
+    CMD_CHAN("/devoice bob carol");
+    CHECK_SENT("MODE #test -v carol");
+
+    CMD_SRV("/devoice carol");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"devoice\" command can only be executed in a "
+                    "channel buffer");
+
+    CMD_CHAN("/halfop");
+    CHECK_SENT("MODE #test +h alice");
+
+    CMD_CHAN("/halfop bob helen");
+    CHECK_SENT("MODE #test +h bob");
+
+    CMD_SRV("/halfop bob");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"halfop\" command can only be executed in a "
+                    "channel buffer");
+
+    CMD_CHAN("/dehalfop");
+    CHECK_SENT("MODE #test -h alice");
+
+    CMD_CHAN("/dehalfop bob helen");
+    CHECK_SENT("MODE #test -h helen");
+
+    CMD_SRV("/dehalfop helen");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"dehalfop\" command can only be executed in a "
+                    "channel buffer");
+}
+
+/*
+ * Test functions:
+ *   irc_command_mode_masks
+ *   irc_command_ban
+ *   irc_command_unban
+ *   irc_command_quiet
+ *   irc_command_unquiet
+ */
+
+TEST(IrcCommandWithServer, ModeMasks)
+{
+    /* Nick is replaced by the default ban mask (if host is known). */
+    CMD_CHAN("/ban bob carol x!y@z");
+    CHECK_SENT("MODE #test +bbb *!user_b@host_b carol x!y@z");
+
+    /* Max 3 modes per message (option MODES of server). */
+    CMD_CHAN("/ban a b c d e");
+    CHECK_SENT("MODE #test +bbb a b c\n"
+               "MODE #test +bb d e");
+
+    /* List of bans. */
+    CMD_CHAN("/ban");
+    CHECK_SENT("MODE #test +b");
+    CMD_SRV("/ban #test");
+    CHECK_SENT("MODE #test +b");
+
+    CMD_CHAN("/ban bob");
+    CHECK_SENT("MODE #test +b *!user_b@host_b");
+    CMD_SRV("/ban #test x!y@z");
+    CHECK_SENT("MODE #test +b x!y@z");
+
+    /* Server buffer without channel. */
+    CMD_SRV("/ban");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"ban\" command can only be executed in a channel "
+                    "buffer");
+    CMD_SRV("/ban bob");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"ban\" command can only be executed in a channel "
+                    "buffer");
+
+    /* Bans received from server (numbers are used in /unban). */
+    server_recv (":server 367 alice #test ban1!*@* alice 1700000000");
+    server_recv (":server 367 alice #test ban2!*@* alice 1700000000");
+    server_recv (":server 367 alice #test ban3!*@* alice 1700000000");
+    server_recv (":server 368 alice #test :End of channel ban list");
+
+    CMD_CHAN("/unban bob x!y@z");
+    CHECK_SENT("MODE #test -bb *!user_b@host_b x!y@z");
+
+    CMD_CHAN("/unban 1 3");
+    CHECK_SENT("MODE #test -bb ban1!*@* ban3!*@*");
+    CMD_CHAN("/unban 1-3");
+    CHECK_SENT("MODE #test -bbb ban1!*@* ban2!*@* ban3!*@*");
+
+    /* Unknown number: sent as-is. */
+    CMD_CHAN("/unban 9");
+    CHECK_SENT("MODE #test -b 9");
+
+    CMD_SRV("/unban #test x!y@z");
+    CHECK_SENT("MODE #test -b x!y@z");
+
+    CMD_SRV("/unban x!y@z");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"unban\" command can only be executed in a "
+                    "channel buffer");
+
+    CMD_CHAN("/quiet");
+    CHECK_SENT("MODE #test +q");
+
+    CMD_CHAN("/quiet bob x!y@z");
+    CHECK_SENT("MODE #test +qq *!user_b@host_b x!y@z");
+    CMD_SRV("/quiet #test x!y@z");
+    CHECK_SENT("MODE #test +q x!y@z");
+
+    CMD_SRV("/quiet x!y@z");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"quiet\" command can only be executed in a "
+                    "channel buffer");
+
+    CMD_CHAN("/unquiet bob x!y@z");
+    CHECK_SENT("MODE #test -qq *!user_b@host_b x!y@z");
+    CMD_SRV("/unquiet #test x!y@z");
+    CHECK_SENT("MODE #test -q x!y@z");
+
+    CMD_SRV("/unquiet x!y@z");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"unquiet\" command can only be executed in a "
+                    "channel buffer");
+
+    /* Mode not supported by server. */
+    server_recv (":server 005 alice CHANMODES=beI,k,l,imnpst "
+                 ":are supported");
+    CMD_CHAN("/quiet x");
+    CHECK_SENT("");
+    CHECK(record_search ("core.weechat", "=!=",
+                         "irc: cannot execute command /quiet, channel mode "
+                         "\"q\" is not supported by server",
+                         NULL));
+}
+
+/*
+ * Test functions:
+ *   irc_command_kick_channel
+ *   irc_command_kick
+ *   irc_command_kickban
+ *   irc_command_send_ban
+ */
+
+TEST(IrcCommandWithServer, Kick)
+{
+    /* Default kick message (option msg_kick). */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_MSG_KICK],
+                            "${nick} kicks ${target} from ${channel}", 1);
+    CMD_CHAN("/kick bob");
+    CHECK_SENT("KICK #test bob :alice kicks bob from #test");
+    CMD_CHAN("/kick bob you are out");
+    CHECK_SENT("KICK #test bob :you are out");
+    config_file_option_reset (server->options[IRC_SERVER_OPTION_MSG_KICK], 1);
+
+    CMD_CHAN("/kick bob");
+    CHECK_SENT("KICK #test bob");
+    CMD_CHAN("/kick bob reason");
+    CHECK_SENT("KICK #test bob :reason");
+    CMD_SRV("/kick #test bob reason");
+    CHECK_SENT("KICK #test bob :reason");
+
+    CMD_SRV("/kick bob");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"kick\" command can only be executed in a channel "
+                    "buffer");
+
+    CMD_CHAN("/kickban bob reason");
+    CHECK_SENT("MODE #test +b *!user_b@host_b\n"
+               "KICK #test bob :reason");
+
+    /* Nick with host: host is banned. */
+    CMD_CHAN("/kickban bob!user@host");
+    CHECK_SENT("MODE #test +b *!user@host\n"
+               "KICK #test bob");
+    CMD_SRV("/kickban #test bob@host");
+    CHECK_SENT("MODE #test +b *!bob@host\n"
+               "KICK #test bob");
+
+    /* Mask must begin with a nick. */
+    CMD_CHAN("/kickban *!*@host");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: mask must begin with nick");
+
+    CMD_SRV("/kickban bob");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"kickban\" command can only be executed in a "
+                    "channel buffer");
+
+    CMD_CHAN("/kickban bob");
+    CHECK_SENT("MODE #test +b *!user_b@host_b\n"
+               "KICK #test bob");
+
+    /* Nick without host: nick is used. */
+    CMD_CHAN("/kickban carol");
+    CHECK_SENT("MODE #test +b carol\n"
+               "KICK #test carol");
+}
+
+/*
+ * Test functions:
+ *   irc_command_invite
+ *   irc_command_topic
+ *   irc_command_knock
+ */
+
+TEST(IrcCommandWithServer, InviteTopicKnock)
+{
+    CMD_CHAN("/invite bob");
+    CHECK_SENT("INVITE bob #test");
+    CMD_CHAN("/invite bob carol");
+    CHECK_SENT("INVITE bob #test\n"
+               "INVITE carol #test");
+    CMD_SRV("/invite bob carol #other");
+    CHECK_SENT("INVITE bob #other\n"
+               "INVITE carol #other");
+
+    CMD_SRV("/invite bob");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"invite\" command can only be executed in a "
+                    "channel buffer");
+    CMD_SRV("/invite bob carol");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"invite\" command can only be executed in a "
+                    "channel buffer");
+
+    CMD_CHAN("/topic");
+    CHECK_SENT("TOPIC #test");
+    CMD_CHAN("/topic new topic");
+    CHECK_SENT("TOPIC #test :new topic");
+    CMD_CHAN("/topic -delete");
+    CHECK_SENT("TOPIC #test :");
+    CMD_SRV("/topic #test");
+    CHECK_SENT("TOPIC #test");
+    CMD_SRV("/topic #test other topic");
+    CHECK_SENT("TOPIC #test :other topic");
+
+    CMD_SRV("/topic new topic");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"topic\" command can only be executed in a "
+                    "channel buffer");
+
+    CMD_SRV("/knock #secret");
+    CHECK_SENT("KNOCK #secret");
+    CMD_SRV("/knock #secret please let me in");
+    CHECK_SENT("KNOCK #secret :please let me in");
+}
+
+/*
+ * Test functions:
+ *   irc_command_cycle
+ *   irc_command_names
+ *   irc_command_remove
+ */
+
+TEST(IrcCommandWithServer, CycleNamesRemove)
+{
+    /* Default part message (option msg_part). */
+    config_file_option_set (server->options[IRC_SERVER_OPTION_MSG_PART],
+                            "bye from ${channel}", 1);
+    CMD_CHAN("/cycle");
+    CHECK_SENT("PART #test :bye from #test");
+    LONGS_EQUAL(1, channel->cycle);
+    channel->cycle = 0;
+
+    config_file_option_set (server->options[IRC_SERVER_OPTION_MSG_PART],
+                            "", 1);
+    CMD_CHAN("/cycle");
+    CHECK_SENT("PART #test");
+    LONGS_EQUAL(1, channel->cycle);
+    channel->cycle = 0;
+
+    CMD_CHAN("/cycle see you");
+    CHECK_SENT("PART #test :see you");
+    channel->cycle = 0;
+
+    CMD_SRV("/cycle #test,#other bye");
+    CHECK_SENT("PART #test,#other :bye");
+    LONGS_EQUAL(1, channel->cycle);
+    channel->cycle = 0;
+
+    CMD_SRV("/cycle");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"part\" command cannot be executed on a server "
+                    "buffer");
+    CMD_SRV("/cycle bye");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"cycle\" command cannot be executed on a server "
+                    "buffer");
+
+    config_file_option_reset (server->options[IRC_SERVER_OPTION_MSG_PART], 1);
+
+    CMD_CHAN("/names");
+    CHECK_SENT("NAMES #test");
+    CMD_SRV("/names #test,#other");
+    CHECK_SENT("NAMES #test,#other");
+
+    /* Filter on nick prefix. */
+    CMD_CHAN("/names -o");
+    CHECK_SENT("NAMES #test");
+    STRCMP_EQUAL("o", (const char *)hashtable_get (
+                     server->names_channel_filter, "#test"));
+    CMD_SRV("/names -count #test");
+    CHECK_SENT("NAMES #test");
+    STRCMP_EQUAL("#", (const char *)hashtable_get (
+                     server->names_channel_filter, "#test"));
+
+    CMD_SRV("/names");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"names\" command can only be executed in a "
+                    "channel buffer");
+
+    CMD_CHAN("/remove bob");
+    CHECK_SENT("REMOVE #test bob");
+    CMD_CHAN("/remove bob go away");
+    CHECK_SENT("REMOVE #test bob :go away");
+    CMD_SRV("/remove #test bob");
+    CHECK_SENT("REMOVE #test bob");
+
+    CMD_SRV("/remove bob");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"remove\" command can only be executed in a "
+                    "channel buffer");
 }
 
 /*
@@ -85,16 +594,6 @@ TEST(IrcCommand, ModeMasksConvertRanges)
     POINTERS_EQUAL(NULL, masks[7]);
     string_free_split (masks);
     string_free_split (args);
-}
-
-/*
- * Test functions:
- *   irc_command_mode_masks
- */
-
-TEST(IrcCommand, ModeMasks)
-{
-    /* TODO: write tests */
 }
 
 /*
@@ -269,26 +768,6 @@ TEST(IrcCommand, RunAway)
 
 /*
  * Test functions:
- *   irc_command_send_ban
- */
-
-TEST(IrcCommand, SendBan)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_ban
- */
-
-TEST(IrcCommand, Ban)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_cap
  */
 
@@ -329,50 +808,10 @@ TEST(IrcCommand, Ctcp)
 
 /*
  * Test functions:
- *   irc_command_cycle
- */
-
-TEST(IrcCommand, Cycle)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_dcc
  */
 
 TEST(IrcCommand, Dcc)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_dehalfop
- */
-
-TEST(IrcCommand, Dehalfop)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_deop
- */
-
-TEST(IrcCommand, Deop)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_devoice
- */
-
-TEST(IrcCommand, Devoice)
 {
     /* TODO: write tests */
 }
@@ -419,16 +858,6 @@ TEST(IrcCommand, Disconnect)
 
 /*
  * Test functions:
- *   irc_command_halfop
- */
-
-TEST(IrcCommand, Halfop)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_ignore_display
  */
 
@@ -453,16 +882,6 @@ TEST(IrcCommand, Ignore)
  */
 
 TEST(IrcCommand, Info)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_invite
- */
-
-TEST(IrcCommand, Invite)
 {
     /* TODO: write tests */
 }
@@ -499,50 +918,10 @@ TEST(IrcCommand, Join)
 
 /*
  * Test functions:
- *   irc_command_kick_channel
- */
-
-TEST(IrcCommand, KickChannel)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_kick
- */
-
-TEST(IrcCommand, Kick)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_kickban
- */
-
-TEST(IrcCommand, Kickban)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_kill
  */
 
 TEST(IrcCommand, Kill)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_knock
- */
-
-TEST(IrcCommand, Knock)
 {
     /* TODO: write tests */
 }
@@ -643,16 +1022,6 @@ TEST(IrcCommand, Motd)
  */
 
 TEST(IrcCommand, Msg)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_names
- */
-
-TEST(IrcCommand, Names)
 {
     /* TODO: write tests */
 }
@@ -763,16 +1132,6 @@ TEST(IrcCommand, Notify)
 
 /*
  * Test functions:
- *   irc_command_op
- */
-
-TEST(IrcCommand, Op)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_oper
  */
 
@@ -833,16 +1192,6 @@ TEST(IrcCommand, Query)
 
 /*
  * Test functions:
- *   irc_command_quiet
- */
-
-TEST(IrcCommand, Quiet)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_quote
  */
 
@@ -877,16 +1226,6 @@ TEST(IrcCommand, Reconnect)
  */
 
 TEST(IrcCommand, Rehash)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_remove
- */
-
-TEST(IrcCommand, Remove)
 {
     /* TODO: write tests */
 }
@@ -1063,40 +1402,10 @@ TEST(IrcCommand, Time)
 
 /*
  * Test functions:
- *   irc_command_topic
- */
-
-TEST(IrcCommand, Topic)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_trace
  */
 
 TEST(IrcCommand, Trace)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_unban
- */
-
-TEST(IrcCommand, Unban)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_unquiet
- */
-
-TEST(IrcCommand, Unquiet)
 {
     /* TODO: write tests */
 }
@@ -1127,16 +1436,6 @@ TEST(IrcCommand, Users)
  */
 
 TEST(IrcCommand, Version)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_voice
- */
-
-TEST(IrcCommand, Voice)
 {
     /* TODO: write tests */
 }
