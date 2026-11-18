@@ -18,6 +18,7 @@ extern "C"
 #include "src/core/core-config-file.h"
 #include "src/core/core-hashtable.h"
 #include "src/core/core-hook.h"
+#include "src/gui/gui-buffer.h"
 #include "src/core/core-string.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-channel.h"
@@ -28,6 +29,14 @@ extern "C"
 #include "src/plugins/logger/logger-config.h"
 
 extern char **irc_command_mode_masks_convert_ranges (char **argv, int arg_start);
+extern void irc_command_display_away (struct t_irc_server *server,
+                                      const char *string1,
+                                      const char *string2);
+extern int irc_command_run_away (const void *pointer, void *data,
+                                 struct t_gui_buffer *buffer,
+                                 const char *command);
+extern void irc_send_nick_server (struct t_irc_server *server,
+                                  const char *nickname);
 }
 
 #define IRC_FAKE_SERVER "fake_cmd"
@@ -547,6 +556,246 @@ TEST(IrcCommandWithServer, CycleNamesRemove)
 
 /*
  * Test functions:
+ *   irc_command_display_away
+ *   irc_command_away_server
+ *   irc_command_away
+ *   irc_command_run_away
+ */
+
+TEST(IrcCommandWithServer, Away)
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    /* Away with message displayed locally (default). */
+    CMD_CHAN("/away gone fishing");
+    CHECK_SENT("AWAY :gone fishing");
+    LONGS_EQUAL(1, server->is_away);
+    STRCMP_EQUAL("gone fishing", server->away_message);
+    CHECK(server->away_time > 0);
+    CHECK(record_search (CHAN_BUFFER, "", "[alice away: gone fishing]",
+                         NULL));
+
+    /* Back. */
+    CMD_CHAN("/away");
+    CHECK_SENT("AWAY");
+    LONGS_EQUAL(0, server->is_away);
+    POINTERS_EQUAL(NULL, server->away_message);
+    LONGS_EQUAL(0, server->away_time);
+    CHECK(record_search_msg_regex (CHAN_BUFFER,
+                                   "^\\[alice back: gone 00:00:0[0-9]\\]$"));
+
+    /* Away message sent as action to channels. */
+    config_file_option_set (irc_config_look_display_away, "channel", 1);
+    CMD_SRV("/away busy");
+    CHECK_SENT("AWAY :busy\n"
+               "PRIVMSG #test :\001ACTION is away: busy\001");
+    CMD_SRV("/away");
+    CHECK(strncmp (*sent,
+                   "AWAY\nPRIVMSG #test :\001ACTION is back (gone 00:00:0",
+                   48) == 0);
+
+    /* Nothing displayed or sent to channels. */
+    config_file_option_set (irc_config_look_display_away, "off", 1);
+    CMD_SRV("/away busy");
+    CHECK_SENT("AWAY :busy");
+    CMD_SRV("/away");
+    CHECK_SENT("AWAY");
+    config_file_option_reset (irc_config_look_display_away, 1);
+
+    /* All servers. */
+    CMD_CHAN("/away -all brb");
+    CHECK_SENT("AWAY :brb");
+    LONGS_EQUAL(1, server->is_away);
+    CMD_CHAN("/away -all");
+    CHECK_SENT("AWAY");
+    LONGS_EQUAL(0, server->is_away);
+
+    /* Callback of hook "command_run" on /away. */
+    ptr_buffer = gui_buffer_search ("irc", "server." IRC_FAKE_SERVER);
+    CHECK(ptr_buffer);
+    string_dyn_copy (sent, NULL);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_command_run_away (NULL, NULL, ptr_buffer, "/away later"));
+    CHECK_SENT("AWAY :later");
+    string_dyn_copy (sent, NULL);
+    irc_command_away_server (server, NULL, 0);
+    CHECK_SENT("AWAY");
+
+    /* Away on server not connected: message stored for next connection. */
+    run_cmd_quiet ("/mute /disconnect " IRC_FAKE_SERVER);
+    string_dyn_copy (sent, NULL);
+    record_start ();
+    irc_command_away_server (server, "later", 0);
+    record_stop ();
+    CHECK_SENT("");
+    STRCMP_EQUAL("later", server->away_message);
+    CHECK(record_search (SRV_BUFFER, "", "irc: future away: later", NULL));
+    record_start ();
+    irc_command_away_server (server, NULL, 0);
+    record_stop ();
+    POINTERS_EQUAL(NULL, server->away_message);
+    CHECK(record_search (SRV_BUFFER, "", "irc: future away removed", NULL));
+
+    /* Invalid server. */
+    irc_command_away_server (NULL, "test", 0);
+}
+
+/*
+ * Test functions:
+ *   irc_send_nick_server
+ *   irc_command_nick
+ */
+
+TEST(IrcCommandWithServer, Nick)
+{
+    CMD_SRV("/nick alice2");
+    CHECK_SENT("NICK alice2");
+    CMD_CHAN("/nick alice:2");
+    CHECK_SENT("NICK :alice:2");
+    CMD_CHAN("/nick -all alice3");
+    CHECK_SENT("NICK alice3");
+
+    /* Invalid arguments. */
+    CMD_CHAN("/nick alice2 alice3");
+    CHECK_SENT("");
+
+    irc_send_nick_server (NULL, "test");
+
+    /* Server not connected: nick is changed locally. */
+    run_cmd_quiet ("/mute /disconnect " IRC_FAKE_SERVER);
+    string_dyn_copy (sent, NULL);
+    irc_send_nick_server (server, "alice4");
+    CHECK_SENT("");
+    STRCMP_EQUAL("alice4", server->nick);
+}
+
+/*
+ * Test functions:
+ *   irc_command_whois
+ *   irc_command_whowas
+ *   irc_command_who
+ *   irc_command_userhost
+ *   irc_command_ison
+ */
+
+TEST(IrcCommandWithServer, UserInfo)
+{
+    /* /whois: own nick by default, nick of private buffer. */
+    CMD_SRV("/whois");
+    CHECK_SENT("WHOIS alice");
+    CMD_SRV("/whois bob");
+    CHECK_SENT("WHOIS bob");
+    CMD_SRV("/whois bob carol");
+    CHECK_SENT("WHOIS bob carol");
+    server_recv (":bob!user_b@host_b PRIVMSG alice :hi");
+    run_command ("irc." IRC_FAKE_SERVER ".bob", "/whois");
+    CHECK_SENT("WHOIS bob");
+
+    /* Option irc.network.whois_double_nick. */
+    config_file_option_set (irc_config_network_whois_double_nick, "on", 1);
+    CMD_SRV("/whois bob");
+    CHECK_SENT("WHOIS bob bob");
+    CMD_SRV("/whois bob,carol");
+    CHECK_SENT("WHOIS bob,carol");
+    config_file_option_reset (irc_config_network_whois_double_nick, 1);
+
+    CMD_SRV("/whowas bob");
+    CHECK_SENT("WHOWAS bob");
+    CMD_SRV("/whowas bob 5");
+    CHECK_SENT("WHOWAS bob 5");
+
+    CMD_SRV("/who");
+    CHECK_SENT("WHO");
+    CMD_SRV("/who #test o");
+    CHECK_SENT("WHO #test o");
+
+    CMD_SRV("/userhost bob carol");
+    CHECK_SENT("USERHOST bob carol");
+
+    CMD_SRV("/ison bob carol");
+    CHECK_SENT("ISON :bob carol");
+
+    /* Missing arguments. */
+    CMD_SRV("/whowas");
+    CMD_SRV("/userhost");
+    CMD_SRV("/ison");
+    CHECK_SENT("");
+}
+
+/*
+ * Test functions:
+ *   irc_command_ping
+ *   irc_command_pong
+ *   irc_command_kill
+ *   irc_command_squery
+ *   irc_command_setname
+ *   irc_command_wallops
+ */
+
+TEST(IrcCommandWithServer, MessagesToServer)
+{
+    CMD_SRV("/ping irc.example.com");
+    CHECK_SENT("PING irc.example.com");
+    CMD_SRV("/pong irc.example.com");
+    CHECK_SENT("PONG irc.example.com");
+
+    CMD_SRV("/kill bob");
+    CHECK_SENT("KILL bob");
+    CMD_SRV("/kill bob bad behavior");
+    CHECK_SENT("KILL bob :bad behavior");
+
+    CMD_SRV("/squery service");
+    CHECK_SENT("SQUERY service");
+    CMD_SRV("/squery service help me");
+    CHECK_SENT("SQUERY service :help me");
+
+    CMD_SRV("/setname Alice Liddell");
+    CHECK_SENT("SETNAME :Alice Liddell");
+
+    CMD_SRV("/wallops hello opers");
+    CHECK_SENT("WALLOPS :hello opers");
+
+    /* Missing arguments. */
+    CMD_SRV("/ping");
+    CMD_SRV("/pong");
+    CMD_SRV("/kill");
+    CMD_SRV("/squery");
+    CMD_SRV("/setname");
+    CMD_SRV("/wallops");
+    CHECK_SENT("");
+}
+
+/*
+ * Test functions:
+ *   irc_command_wallchops
+ */
+
+TEST(IrcCommandWithServer, Wallchops)
+{
+    /* No WALLCHOPS/STATUSMSG: notice sent to each op (except self). */
+    server_recv (":server MODE #test +o bob");
+    CMD_CHAN("/wallchops hello ops");
+    CHECK_SENT("NOTICE bob :hello ops");
+    CHECK(record_search_msg_regex (CHAN_BUFFER, "hello ops"));
+
+    /* STATUSMSG with "@": notice sent to @#channel. */
+    server_recv (":server 005 alice STATUSMSG=@+ :are supported");
+    CMD_SRV("/wallchops #test hello ops");
+    CHECK_SENT("NOTICE @#test :hello ops");
+
+    /* Channel not joined. */
+    CMD_SRV("/wallchops #other hello");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: you are not on channel \"#other\"");
+
+    CMD_SRV("/wallchops hello");
+    CHECK_SENT("");
+    CHECK_SRV_ERROR("irc: \"wallchops\" command can only be executed in a "
+                    "channel buffer");
+}
+
+/*
+ * Test functions:
  *   irc_command_mode_masks_convert_ranges
  */
 
@@ -728,46 +977,6 @@ TEST(IrcCommand, Autojoin)
 
 /*
  * Test functions:
- *   irc_command_display_away
- */
-
-TEST(IrcCommand, DisplayAway)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_away_server
- */
-
-TEST(IrcCommand, AwayServer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_away
- */
-
-TEST(IrcCommand, Away)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_run_away
- */
-
-TEST(IrcCommand, RunAway)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_cap
  */
 
@@ -888,16 +1097,6 @@ TEST(IrcCommand, Info)
 
 /*
  * Test functions:
- *   irc_command_ison
- */
-
-TEST(IrcCommand, Ison)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_join_server
  */
 
@@ -912,16 +1111,6 @@ TEST(IrcCommand, JoinServer)
  */
 
 TEST(IrcCommand, Join)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_kill
- */
-
-TEST(IrcCommand, Kill)
 {
     /* TODO: write tests */
 }
@@ -1022,26 +1211,6 @@ TEST(IrcCommand, Motd)
  */
 
 TEST(IrcCommand, Msg)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_nick_server
- */
-
-TEST(IrcCommand, NickServer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_nick
- */
-
-TEST(IrcCommand, Nick)
 {
     /* TODO: write tests */
 }
@@ -1156,26 +1325,6 @@ TEST(IrcCommand, PartChannel)
  */
 
 TEST(IrcCommand, Part)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_ping
- */
-
-TEST(IrcCommand, Ping)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_pong
- */
-
-TEST(IrcCommand, Pong)
 {
     /* TODO: write tests */
 }
@@ -1342,26 +1491,6 @@ TEST(IrcCommand, Servlist)
 
 /*
  * Test functions:
- *   irc_command_squery
- */
-
-TEST(IrcCommand, Squery)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_setname
- */
-
-TEST(IrcCommand, Setname)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_squit
  */
 
@@ -1412,16 +1541,6 @@ TEST(IrcCommand, Trace)
 
 /*
  * Test functions:
- *   irc_command_userhost
- */
-
-TEST(IrcCommand, Userhost)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
  *   irc_command_users
  */
 
@@ -1436,56 +1555,6 @@ TEST(IrcCommand, Users)
  */
 
 TEST(IrcCommand, Version)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_wallchops
- */
-
-TEST(IrcCommand, Wallchops)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_wallops
- */
-
-TEST(IrcCommand, Wallops)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_who
- */
-
-TEST(IrcCommand, Who)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_whois
- */
-
-TEST(IrcCommand, Whois)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Test functions:
- *   irc_command_whowas
- */
-
-TEST(IrcCommand, Whowas)
 {
     /* TODO: write tests */
 }
