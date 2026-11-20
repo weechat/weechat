@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
+- core: add option weechat.look.prefix_same_nick_wrap to display a prefix on continuation lines of messages with same nick as next message ([#1563](https://github.com/weechat/weechat/issues/1563))
 - core: add signal "buffer_lines_filtered"
 - core: add jump to buffer with command `/N` (for example `/42`) and option weechat.look.command_buffer_number ([#762](https://github.com/weechat/weechat/issues/762))
 - core: add option `insert_raw` in command `/input` to insert text without converting escaped chars

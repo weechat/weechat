@@ -190,6 +190,7 @@ struct t_config_option *config_look_prefix_buffer_align_more = NULL;
 struct t_config_option *config_look_prefix_buffer_align_more_after = NULL;
 struct t_config_option *config_look_prefix_same_nick = NULL;
 struct t_config_option *config_look_prefix_same_nick_middle = NULL;
+struct t_config_option *config_look_prefix_same_nick_wrap = NULL;
 struct t_config_option *config_look_prefix_suffix = NULL;
 struct t_config_option *config_look_quote_nick_prefix = NULL;
 struct t_config_option *config_look_quote_nick_suffix = NULL;
@@ -348,6 +349,7 @@ int config_loading = 0;
 int config_length_nick_prefix_suffix = 0;
 int config_length_prefix_same_nick = 0;
 int config_length_prefix_same_nick_middle = 0;
+int config_length_prefix_same_nick_wrap = 0;
 struct t_hook *config_day_change_timer = NULL;
 int config_day_change_old_day = -1;
 int config_emphasized_attributes = 0;
@@ -931,6 +933,25 @@ config_change_prefix_same_nick_middle (const void *pointer, void *data,
         gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_same_nick_middle));
 
     config_compute_prefix_max_length_all_buffers ();
+    gui_window_ask_refresh (1);
+}
+
+/*
+ * Callback for changes on option "weechat.look.prefix_same_nick_wrap".
+ */
+
+void
+config_change_prefix_same_nick_wrap (const void *pointer, void *data,
+                                     struct t_config_option *option)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    config_length_prefix_same_nick_wrap =
+        gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_same_nick_wrap));
+
     gui_window_ask_refresh (1);
 }
 
@@ -4288,6 +4309,22 @@ config_weechat_init_options (void)
             NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL,
             &config_change_prefix_same_nick_middle, NULL, NULL,
+            NULL, NULL, NULL);
+        config_look_prefix_same_nick_wrap = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "prefix_same_nick_wrap", "string",
+            N_("prefix displayed on the continuation lines of a message "
+               "(wrapped or multiline) with same nick as next message, for "
+               "example \"│\" to connect the prefixes set by options "
+               "weechat.look.prefix_same_nick and "
+               "weechat.look.prefix_same_nick_middle; it is aligned like "
+               "the prefix and displayed only if option "
+               "weechat.look.prefix_same_nick is set and option "
+               "weechat.look.align_end_of_lines is \"message\"; an empty "
+               "string disables the feature"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            &config_change_prefix_same_nick_wrap, NULL, NULL,
             NULL, NULL, NULL);
         config_look_prefix_suffix = config_file_new_option (
             weechat_config_file, weechat_config_section_look,

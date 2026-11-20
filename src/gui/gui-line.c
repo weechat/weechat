@@ -272,6 +272,61 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
 }
 
 /*
+ * Get length of time displayed on screen in a buffer, including the space
+ * after the time (0 if the time is not displayed).
+ */
+
+int
+gui_line_get_length_time (struct t_gui_buffer *buffer)
+{
+    if (!buffer->time_for_each_line || (gui_chat_time_length == 0))
+        return 0;
+
+    return gui_chat_time_length + 1;
+}
+
+/*
+ * Get length of buffer name displayed on screen before the prefix of a line
+ * (when many buffers are merged), including the space after the buffer name
+ * (0 if the buffer name is not displayed).
+ */
+
+int
+gui_line_get_length_buffer (struct t_gui_buffer *buffer,
+                            struct t_gui_line *line)
+{
+    if (!buffer->mixed_lines || (buffer->active == 2))
+        return 0;
+
+    if ((CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+        && (CONFIG_ENUM(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE))
+    {
+        return gui_chat_strlen_screen (line->data->buffer->short_name) + 1;
+    }
+
+    if (CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+        return buffer->mixed_lines->buffer_max_length + 1;
+
+    return ((CONFIG_INTEGER(config_look_prefix_buffer_align_max) > 0)
+            && (buffer->mixed_lines->buffer_max_length > CONFIG_INTEGER(config_look_prefix_buffer_align_max))) ?
+        CONFIG_INTEGER(config_look_prefix_buffer_align_max) + 1 : buffer->mixed_lines->buffer_max_length + 1;
+}
+
+/*
+ * Get length of the prefix column on screen in a buffer, when the prefix is
+ * aligned (max length of prefixes, limited by option
+ * weechat.look.prefix_align_max).
+ */
+
+int
+gui_line_get_length_prefix_aligned (struct t_gui_buffer *buffer)
+{
+    return ((CONFIG_INTEGER(config_look_prefix_align_max) > 0)
+            && (buffer->lines->prefix_max_length > CONFIG_INTEGER(config_look_prefix_align_max))) ?
+        CONFIG_INTEGER(config_look_prefix_align_max) : buffer->lines->prefix_max_length;
+}
+
+/*
  * Get alignment for a line.
  */
 
@@ -297,12 +352,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     }
 
     /* Length of time */
-    if (buffer->time_for_each_line)
-    {
-        length_time = (gui_chat_time_length == 0) ? 0 : gui_chat_time_length + 1;
-    }
-    else
-        length_time = 0;
+    length_time = gui_line_get_length_time (buffer);
 
     /* Return immediately if alignment for end of lines is "buffer". */
     if (!first_line
@@ -312,23 +362,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     }
 
     /* Length of buffer name (when many buffers are merged). */
-    if (buffer->mixed_lines && (buffer->active != 2))
-    {
-        if ((CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
-            && (CONFIG_ENUM(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE))
-            length_buffer = gui_chat_strlen_screen (line->data->buffer->short_name) + 1;
-        else
-        {
-            if (CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
-                length_buffer = buffer->mixed_lines->buffer_max_length + 1;
-            else
-                length_buffer = ((CONFIG_INTEGER(config_look_prefix_buffer_align_max) > 0)
-                                 && (buffer->mixed_lines->buffer_max_length > CONFIG_INTEGER(config_look_prefix_buffer_align_max))) ?
-                    CONFIG_INTEGER(config_look_prefix_buffer_align_max) + 1 : buffer->mixed_lines->buffer_max_length + 1;
-        }
-    }
-    else
-        length_buffer = 0;
+    length_buffer = gui_line_get_length_buffer (buffer, line);
 
     /* Return immediately if alignment for end of lines is "prefix". */
     if (!first_line
@@ -362,10 +396,100 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 
     return length_time + ((buffer->lines->prefix_max_length > 0) ? 1 : 0)
         + length_buffer
-        + (((CONFIG_INTEGER(config_look_prefix_align_max) > 0)
-            && (buffer->lines->prefix_max_length > CONFIG_INTEGER(config_look_prefix_align_max))) ?
-           CONFIG_INTEGER(config_look_prefix_align_max) : buffer->lines->prefix_max_length)
+        + gui_line_get_length_prefix_aligned (buffer)
         + length_suffix;
+}
+
+/*
+ * Get prefix displayed on the continuation lines of a message (wrapped or
+ * multiline), its length, color and position on screen (for display only).
+ *
+ * The prefix is the value of option "weechat.look.prefix_same_nick_wrap",
+ * displayed in the prefix column, aligned like the prefix, when the next
+ * message has the same nick (if the prefix is not aligned, it is displayed
+ * at the beginning of the prefix of the line, only if it is not longer than
+ * this prefix).
+ *
+ * Argument "x" is set to the position of the prefix on screen (number of
+ * chars from the beginning of the line).
+ *
+ * Return 1 if the prefix is displayed, 0 if it is not displayed (in this
+ * case the other arguments are not set).
+ */
+
+int
+gui_line_get_prefix_wrap_for_display (struct t_gui_buffer *buffer,
+                                      struct t_gui_line *line,
+                                      const char **prefix, int *length,
+                                      const char **color, int *x)
+{
+    const char *tag_prefix_nick;
+    int length_prefix_column, prefix_is_nick;
+
+    if (!buffer || !line)
+        return 0;
+
+    /* Option is disabled. */
+    if (!CONFIG_STRING(config_look_prefix_same_nick_wrap)
+        || !CONFIG_STRING(config_look_prefix_same_nick_wrap)[0]
+        || !CONFIG_STRING(config_look_prefix_same_nick)
+        || !CONFIG_STRING(config_look_prefix_same_nick)[0])
+    {
+        return 0;
+    }
+
+    /* Prefix column is not displayed. */
+    if ((buffer->type == GUI_BUFFER_TYPE_FREE)
+        || !buffer->prefix_for_each_line
+        || (line->data->date == 0)
+        || (CONFIG_ENUM(config_look_align_end_of_lines) != CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE))
+    {
+        return 0;
+    }
+
+    /*
+     * Length of the prefix column: same for all lines if the prefix is
+     * aligned, otherwise it is the length of the prefix displayed on the line.
+     */
+    if (CONFIG_ENUM(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
+    {
+        gui_line_get_prefix_for_display (line, NULL, &length_prefix_column,
+                                         NULL, &prefix_is_nick);
+        if (prefix_is_nick)
+            length_prefix_column += config_length_nick_prefix_suffix;
+    }
+    else
+    {
+        length_prefix_column = gui_line_get_length_prefix_aligned (buffer);
+    }
+
+    /* Prefix too long for the prefix column. */
+    if (config_length_prefix_same_nick_wrap > length_prefix_column)
+        return 0;
+
+    /* Next message does not have the same nick. */
+    if (!gui_line_prefix_is_same_nick (line, 1))
+        return 0;
+
+    if (prefix)
+        *prefix = CONFIG_STRING(config_look_prefix_same_nick_wrap);
+    if (length)
+        *length = config_length_prefix_same_nick_wrap;
+    if (color)
+    {
+        tag_prefix_nick = gui_line_search_tag_starting_with (line,
+                                                             "prefix_nick_");
+        *color = (tag_prefix_nick) ? tag_prefix_nick + 12 : NULL;
+    }
+    if (x)
+    {
+        *x = gui_line_get_length_time (buffer)
+            + gui_line_get_length_buffer (buffer, line);
+        if (CONFIG_ENUM(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_RIGHT)
+            *x += length_prefix_column - config_length_prefix_same_nick_wrap;
+    }
+
+    return 1;
 }
 
 /*

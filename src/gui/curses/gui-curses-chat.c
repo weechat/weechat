@@ -502,7 +502,9 @@ gui_chat_display_prefix_suffix (struct t_gui_window *window,
                                 int nick_offline)
 {
     char str_space[] = " ";
-    int chars_displayed, length_align;
+    char *prefix_wrap_colored;
+    const char *ptr_prefix_wrap, *ptr_prefix_wrap_color, *str_color;
+    int chars_displayed, length_align, x_line, x_prefix_wrap;
 
     chars_displayed = 0;
 
@@ -522,6 +524,50 @@ gui_chat_display_prefix_suffix (struct t_gui_window *window,
         if ((pre_chars_displayed + chars_displayed == 0)
             || CONFIG_BOOLEAN(config_look_align_multiline_words))
         {
+            /* Display prefix for wrapped lines (if same nick as next line). */
+            if (gui_line_get_prefix_wrap_for_display (window->buffer, line,
+                                                      &ptr_prefix_wrap, NULL,
+                                                      &ptr_prefix_wrap_color,
+                                                      &x_prefix_wrap)
+                && (x_prefix_wrap < length_align))
+            {
+                prefix_wrap_colored = NULL;
+                if (ptr_prefix_wrap_color && ptr_prefix_wrap_color[0])
+                {
+                    str_color = gui_color_get_custom (ptr_prefix_wrap_color);
+                    if (str_color && str_color[0])
+                    {
+                        string_asprintf (&prefix_wrap_colored, "%s%s",
+                                         str_color, ptr_prefix_wrap);
+                    }
+                }
+                x_line = window->win_chat_cursor_x;
+                window->win_chat_cursor_x += x_prefix_wrap;
+                if (!simulate)
+                {
+                    gui_window_save_style (GUI_WINDOW_OBJECTS(window)->win_chat);
+                    gui_chat_reset_style (window, line, nick_offline, 1,
+                                          GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                          (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
+                                           && CONFIG_BOOLEAN(config_look_color_inactive_prefix)
+                                           && !line->data->buffer->active) ?
+                                          GUI_COLOR_CHAT_INACTIVE_BUFFER :
+                                          GUI_COLOR_CHAT,
+                                          GUI_COLOR_CHAT);
+                    gui_window_current_emphasis = 0;
+                }
+                chars_displayed += gui_chat_display_word_raw (
+                    window, line,
+                    (prefix_wrap_colored) ? prefix_wrap_colored : ptr_prefix_wrap,
+                    0, simulate,
+                    CONFIG_BOOLEAN(config_look_color_inactive_prefix),
+                    nick_offline);
+                if (!simulate)
+                    gui_window_restore_style (GUI_WINDOW_OBJECTS(window)->win_chat);
+                free (prefix_wrap_colored);
+                window->win_chat_cursor_x = x_line;
+            }
+
             window->win_chat_cursor_x += length_align;
 
             if ((CONFIG_ENUM(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE)

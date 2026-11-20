@@ -24,6 +24,11 @@ extern "C"
 #include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
+
+extern int gui_line_get_length_time (struct t_gui_buffer *buffer);
+extern int gui_line_get_length_buffer (struct t_gui_buffer *buffer,
+                                       struct t_gui_line *line);
+extern int gui_line_get_length_prefix_aligned (struct t_gui_buffer *buffer);
 }
 
 #define WEE_BUILD_STR_PREFIX_MSG(__result, __prefix, __message)         \
@@ -377,6 +382,264 @@ TEST(GuiLine, GetAlign)
     gui_buffer_close (buffer_free);
     gui_buffer_close (buffer);
 
+    config_file_option_reset (config_look_buffer_time_format, 1);
+}
+
+/*
+ * Test functions:
+ *   gui_line_get_length_time
+ *   gui_line_get_length_buffer
+ *   gui_line_get_length_prefix_aligned
+ */
+
+TEST(GuiLine, GetLengthTimeBufferPrefix)
+{
+    struct t_gui_buffer *buffer, *buffer2;
+    struct t_gui_line *line;
+    struct timeval date;
+
+    gettimeofday (&date, NULL);
+
+    config_file_option_set (config_look_buffer_time_format, "%H:%M:%S", 1);
+
+    buffer = gui_buffer_new_user ("test_length", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    line = gui_line_new (buffer, -1, date.tv_sec, date.tv_usec,
+                         "notify_none", "prefix", "message", 0, NULL);
+    CHECK(line);
+    gui_line_add (line, 1);
+
+    /* Time: "HH:MM:SS" + space. */
+    LONGS_EQUAL(9, gui_line_get_length_time (buffer));
+    gui_buffer_set_time_for_each_line (buffer, 0);
+    LONGS_EQUAL(0, gui_line_get_length_time (buffer));
+    gui_buffer_set_time_for_each_line (buffer, 1);
+    config_file_option_set (config_look_buffer_time_format, "", 1);
+    LONGS_EQUAL(0, gui_line_get_length_time (buffer));
+    config_file_option_set (config_look_buffer_time_format, "%H:%M:%S", 1);
+
+    /* Buffer name: not displayed if the buffer is not merged. */
+    LONGS_EQUAL(0, gui_line_get_length_buffer (buffer, line));
+
+    /* Prefix column. */
+    LONGS_EQUAL(6, gui_line_get_length_prefix_aligned (buffer));
+    config_file_option_set (config_look_prefix_align_max, "3", 1);
+    LONGS_EQUAL(3, gui_line_get_length_prefix_aligned (buffer));
+    config_file_option_set (config_look_prefix_align_max, "10", 1);
+    LONGS_EQUAL(6, gui_line_get_length_prefix_aligned (buffer));
+    config_file_option_reset (config_look_prefix_align_max, 1);
+
+    /* Merged buffers: buffer name ("test_length_2": 13 chars) + space. */
+    buffer2 = gui_buffer_new_user ("test_length_2", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer2);
+    gui_buffer_merge (buffer2, buffer);
+    CHECK(buffer->mixed_lines);
+    gui_buffer_set_active_buffer (buffer);
+    gui_line_compute_buffer_max_length (buffer, buffer->mixed_lines);
+    LONGS_EQUAL(14, gui_line_get_length_buffer (buffer, line));
+    config_file_option_set (config_look_prefix_buffer_align_max, "4", 1);
+    LONGS_EQUAL(5, gui_line_get_length_buffer (buffer, line));
+    config_file_option_reset (config_look_prefix_buffer_align_max, 1);
+    config_file_option_set (config_look_prefix_buffer_align, "none", 1);
+    LONGS_EQUAL(14, gui_line_get_length_buffer (buffer, line));
+    config_file_option_set (config_look_prefix_align, "none", 1);
+    LONGS_EQUAL(12, gui_line_get_length_buffer (buffer, line));
+    config_file_option_reset (config_look_prefix_align, 1);
+    config_file_option_reset (config_look_prefix_buffer_align, 1);
+    buffer->active = 2;
+    LONGS_EQUAL(0, gui_line_get_length_buffer (buffer, line));
+    buffer->active = 1;
+
+    gui_buffer_unmerge (buffer2, -1);
+    gui_buffer_close (buffer2);
+    gui_buffer_close (buffer);
+
+    config_file_option_reset (config_look_buffer_time_format, 1);
+}
+
+/*
+ * Test functions:
+ *   gui_line_get_prefix_wrap_for_display
+ */
+
+TEST(GuiLine, GetPrefixWrapForDisplay)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *line1, *line2, *line3;
+    struct timeval date;
+    const char *prefix, *color;
+    int length, x;
+
+    gettimeofday (&date, NULL);
+
+    config_file_option_set (config_look_buffer_time_format, "%H:%M:%S", 1);
+
+    buffer = gui_buffer_new_user ("test_wrap", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    line1 = gui_line_new (buffer, -1, date.tv_sec, date.tv_usec,
+                          "notify_none,prefix_nick_red,nick_alice",
+                          "alice", "message 1", 0, NULL);
+    CHECK(line1);
+    gui_line_add (line1, 1);
+    line2 = gui_line_new (buffer, -1, date.tv_sec, date.tv_usec,
+                          "notify_none,prefix_nick_red,nick_alice",
+                          "alice", "message 2", 0, NULL);
+    CHECK(line2);
+    gui_line_add (line2, 1);
+    line3 = gui_line_new (buffer, -1, date.tv_sec, date.tv_usec,
+                          "notify_none,prefix_nick_blue,nick_bob",
+                          "bob", "message 3", 0, NULL);
+    CHECK(line3);
+    gui_line_add (line3, 1);
+    LONGS_EQUAL(5, buffer->lines->prefix_max_length);
+
+    /* Invalid arguments. */
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (NULL, NULL,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, NULL,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (NULL, line1,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+
+    /* Options are disabled by default. */
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+
+    /* Option "prefix_same_nick" is required. */
+    config_file_option_set (config_look_prefix_same_nick_wrap, "│", 1);
+    LONGS_EQUAL(1, config_length_prefix_same_nick_wrap);
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+    config_file_option_set (config_look_prefix_same_nick, "└", 1);
+
+    /* Same nick as next line: prefix aligned on the right. */
+    prefix = NULL;
+    length = -1;
+    color = NULL;
+    x = -1;
+    LONGS_EQUAL(1, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         &prefix, &length,
+                                                         &color, &x));
+    STRCMP_EQUAL("│", prefix);
+    LONGS_EQUAL(1, length);
+    STRCMP_EQUAL("red", color);
+    LONGS_EQUAL(9 + 5 - 1, x);
+
+    /* All output arguments are optional. */
+    LONGS_EQUAL(1, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+
+    /* Not the same nick as next line, or no next line. */
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, line2,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, line3,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+
+    /* Prefix with 2 chars. */
+    config_file_option_set (config_look_prefix_same_nick_wrap, "│ ", 1);
+    LONGS_EQUAL(2, config_length_prefix_same_nick_wrap);
+    LONGS_EQUAL(1, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, &length,
+                                                         NULL, &x));
+    LONGS_EQUAL(2, length);
+    LONGS_EQUAL(9 + 5 - 2, x);
+    config_file_option_set (config_look_prefix_same_nick_wrap, "│", 1);
+
+    /* Prefix aligned on the left. */
+    config_file_option_set (config_look_prefix_align, "left", 1);
+    LONGS_EQUAL(1, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, &x));
+    LONGS_EQUAL(9, x);
+
+    /*
+     * Prefix not aligned: displayed at the beginning of the prefix of the
+     * line ("alice": 5 chars), only if it is not longer than this prefix.
+     */
+    config_file_option_set (config_look_prefix_align, "none", 1);
+    LONGS_EQUAL(1, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, &x));
+    LONGS_EQUAL(9, x);
+    config_file_option_set (config_look_prefix_same_nick_wrap, "│    ", 1);
+    LONGS_EQUAL(1, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, &x));
+    LONGS_EQUAL(9, x);
+    config_file_option_set (config_look_prefix_same_nick_wrap, "│     ", 1);
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+
+    /* The nick prefix/suffix are counted in the length of the prefix. */
+    config_file_option_set (config_look_nick_prefix, "<", 1);
+    config_file_option_set (config_look_nick_suffix, ">", 1);
+    LONGS_EQUAL(1, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, &x));
+    LONGS_EQUAL(9, x);
+    config_file_option_reset (config_look_nick_prefix, 1);
+    config_file_option_reset (config_look_nick_suffix, 1);
+    config_file_option_set (config_look_prefix_same_nick_wrap, "│", 1);
+    config_file_option_reset (config_look_prefix_align, 1);
+
+    /* End of lines not aligned on message: not displayed. */
+    config_file_option_set (config_look_align_end_of_lines, "prefix", 1);
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+    config_file_option_reset (config_look_align_end_of_lines, 1);
+
+    /* Max size for the prefix. */
+    config_file_option_set (config_look_prefix_align_max, "3", 1);
+    LONGS_EQUAL(1, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, &x));
+    LONGS_EQUAL(9 + 3 - 1, x);
+
+    /* Prefix too long for the prefix column: not displayed. */
+    config_file_option_set (config_look_prefix_same_nick_wrap, "│  │", 1);
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+    config_file_option_set (config_look_prefix_same_nick_wrap, "│", 1);
+    config_file_option_reset (config_look_prefix_align_max, 1);
+
+    /* Time not displayed. */
+    gui_buffer_set_time_for_each_line (buffer, 0);
+    LONGS_EQUAL(1, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, &x));
+    LONGS_EQUAL(5 - 1, x);
+    gui_buffer_set_time_for_each_line (buffer, 1);
+
+    /* Prefix not displayed in the buffer. */
+    gui_buffer_set_prefix_for_each_line (buffer, 0);
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+    gui_buffer_set_prefix_for_each_line (buffer, 1);
+
+    /* Line without date. */
+    line1->data->date = 0;
+    LONGS_EQUAL(0, gui_line_get_prefix_wrap_for_display (buffer, line1,
+                                                         NULL, NULL,
+                                                         NULL, NULL));
+    line1->data->date = date.tv_sec;
+
+    gui_buffer_close (buffer);
+
+    config_file_option_reset (config_look_prefix_same_nick_wrap, 1);
+    config_file_option_reset (config_look_prefix_same_nick, 1);
     config_file_option_reset (config_look_buffer_time_format, 1);
 }
 
