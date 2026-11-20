@@ -909,9 +909,9 @@ def completion3_cb(data, completion_item, buf, completion):
     check(data == "completion_data")
     check(completion_item == "{SCRIPT_NAME}3")
     # The old functions are not documented, so they are not in the Python stub.
-    check(weechat.hook_completion_get_string(completion, "args") == "w")  # ty: ignore[unresolved-attribute]
+    check(weechat.hook_completion_get_string(completion, "args") == "w")  # ty: ignore[missing-attribute]
     check(
-        weechat.hook_completion_list_add(  # ty: ignore[unresolved-attribute]
+        weechat.hook_completion_list_add(  # ty: ignore[missing-attribute]
             completion, "word_completed", 0, weechat.WEECHAT_LIST_POS_END
         )
         == 1

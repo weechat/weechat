@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <ctype.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -134,6 +135,145 @@ xfer_network_resolve_addr (const char *str_address, const char *str_port,
     if ((rc == 0) && ainfo)
         freeaddrinfo (ainfo);
     return 0;
+}
+
+/*
+ * Parse a port range: a single port (for example "5000") or a range of ports
+ * (for example "5000-5015"), with ports between 1 and 65535 and the first
+ * port lower than or equal to the last one.
+ *
+ * An empty string (or NULL) is valid and means any port: then *port_start and
+ * *port_end are set to 0.
+ *
+ * If port_start and port_end are not NULL, they are set with the first and
+ * last port in case the range is valid.
+ *
+ * Return:
+ *   1: valid port range
+ *   0: invalid port range
+ */
+
+int
+xfer_network_parse_port_range (const char *port_range,
+                               int *port_start, int *port_end)
+{
+    long start, end;
+    char *ptr_error;
+
+    start = 0;
+    end = 0;
+
+    if (port_range && port_range[0])
+    {
+        if (!isdigit ((unsigned char)port_range[0]))
+            return 0;
+        errno = 0;
+        start = strtol (port_range, &ptr_error, 10);
+        if (errno == ERANGE)
+            return 0;
+        end = start;
+        if (ptr_error[0] == '-')
+        {
+            if (!isdigit ((unsigned char)ptr_error[1]))
+                return 0;
+            errno = 0;
+            end = strtol (ptr_error + 1, &ptr_error, 10);
+            if (errno == ERANGE)
+                return 0;
+        }
+        if (ptr_error[0] || (start < 1) || (end > 65535) || (start > end))
+            return 0;
+    }
+
+    if (port_start)
+        *port_start = (int)start;
+    if (port_end)
+        *port_end = (int)end;
+
+    return 1;
+}
+
+/*
+ * Open a socket and bind it to a local port, on the wildcard address of the
+ * given family (AF_INET or AF_INET6).
+ *
+ * The port is the first one available in option xfer.network.port_range,
+ * or a port chosen by the system if the option is empty; an invalid range is
+ * an error (see function xfer_network_parse_port_range).
+ *
+ * On success, the bound port is stored in *port (which is not changed on
+ * error).
+ *
+ * Return the socket descriptor, -1 if error.
+ */
+
+int
+xfer_network_bind_socket (int family, int *port)
+{
+    int port_candidate, port_end, sock, bound;
+    uint16_t *bind_port;
+    struct sockaddr_storage bind_addr;
+    socklen_t bind_addr_len;
+
+    memset (&bind_addr, 0, sizeof (bind_addr));
+    bind_addr.ss_family = family;
+    bind_addr_len = (family == AF_INET) ?
+        sizeof (struct sockaddr_in) : sizeof (struct sockaddr_in6);
+    bind_port = (family == AF_INET) ?
+        &((struct sockaddr_in *)&bind_addr)->sin_port :
+        &((struct sockaddr_in6 *)&bind_addr)->sin6_port;
+
+    sock = socket (family, SOCK_STREAM, 0);
+    if (sock < 0)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: cannot create socket for xfer: error %d %s"),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        errno, strerror (errno));
+        return -1;
+    }
+    bound = 0;
+    if (xfer_network_parse_port_range (
+            weechat_config_string (xfer_config_network_port_range),
+            &port_candidate, &port_end))
+    {
+        do
+        {
+            if ((port_candidate == 0) || !xfer_port_in_use (port_candidate))
+            {
+                *bind_port = htons (port_candidate);
+                if (bind (sock, (struct sockaddr *)&bind_addr,
+                          bind_addr_len) == 0)
+                {
+                    bound = 1;
+                    break;
+                }
+            }
+            port_candidate++;
+        }
+        while ((port_end > 0) && (port_candidate <= port_end));
+    }
+    if (bound && (port_candidate == 0))
+    {
+        /* Get the port chosen by the system. */
+        if (getsockname (sock, (struct sockaddr *)&bind_addr,
+                         &bind_addr_len) == 0)
+        {
+            port_candidate = ntohs (*bind_port);
+        }
+        if (port_candidate == 0)
+            bound = 0;
+    }
+    if (!bound)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: cannot find available port for xfer"),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME);
+        close (sock);
+        return -1;
+    }
+    *port = port_candidate;
+    return sock;
 }
 
 /*
@@ -660,6 +800,13 @@ xfer_network_timer_cb (const void *pointer, void *data, int remaining_calls)
 
     xfer = (struct t_xfer *)pointer;
 
+    /*
+     * The timer is called only one time, then removed by WeeChat:
+     * forget it now, so that it is not removed later by the xfer
+     * (another hook could have been allocated at this address).
+     */
+    xfer->hook_timer = NULL;
+
     if ((xfer->status == XFER_STATUS_WAITING)
         || (xfer->status == XFER_STATUS_CONNECTING))
     {
@@ -672,6 +819,23 @@ xfer_network_timer_cb (const void *pointer, void *data, int remaining_calls)
     }
 
     return WEECHAT_RC_OK;
+}
+
+/*
+ * Add timer for timeout of xfer (option xfer.network.timeout), replacing
+ * the timer already added, if any.
+ */
+
+void
+xfer_network_add_timer (struct t_xfer *xfer)
+{
+    if (xfer->hook_timer)
+        weechat_unhook (xfer->hook_timer);
+
+    xfer->hook_timer = weechat_hook_timer (
+        (long)weechat_config_integer (xfer_config_network_timeout) * 1000,
+        0, 1,
+        &xfer_network_timer_cb, xfer, NULL);
 }
 
 /*
@@ -817,6 +981,13 @@ xfer_network_connect (struct t_xfer *xfer)
 {
     int flags;
 
+    /* Remove timeout of resume (DCC ACCEPT has been received). */
+    if (xfer->hook_timer)
+    {
+        weechat_unhook (xfer->hook_timer);
+        xfer->hook_timer = NULL;
+    }
+
     if (xfer->type == XFER_TYPE_CHAT_SEND)
         xfer->status = XFER_STATUS_WAITING;
     else
@@ -850,10 +1021,7 @@ xfer_network_connect (struct t_xfer *xfer)
                                          xfer, NULL);
 
         /* Add timeout. */
-        xfer->hook_timer = weechat_hook_timer ((long)weechat_config_integer (xfer_config_network_timeout) * 1000,
-                                               0, 1,
-                                               &xfer_network_timer_cb,
-                                               xfer, NULL);
+        xfer_network_add_timer (xfer);
 
         /* Send signal if type is file or chat "send". */
         if ((xfer->type == XFER_TYPE_FILE_RECV_PASSIVE) && !XFER_HAS_ENDED(xfer->status))
@@ -904,9 +1072,26 @@ xfer_network_connect_init (struct t_xfer *xfer)
 void
 xfer_network_accept (struct t_xfer *xfer)
 {
+    if ((xfer->type == XFER_TYPE_FILE_RECV_PASSIVE) && (xfer->sock < 0))
+    {
+        if (xfer->local_address)
+        {
+            xfer->sock = xfer_network_bind_socket (
+                xfer->local_address->sa_family, &xfer->port);
+        }
+        if (xfer->sock < 0)
+        {
+            xfer_close (xfer, XFER_STATUS_FAILED);
+            xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+            return;
+        }
+    }
+
     if (XFER_IS_FILE(xfer->type) && (xfer->start_resume > 0))
     {
         xfer->status = XFER_STATUS_CONNECTING;
+        /* Add timeout: the xfer fails if DCC ACCEPT is not received. */
+        xfer_network_add_timer (xfer);
         xfer_send_signal (xfer, "xfer_resume_ready");
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }

@@ -52,6 +52,31 @@ relay_api_search_colors (const char *colors)
 }
 
 /*
+ * Return value of "filtered" URL parameter, an enum with one of these values:
+ *   - RELAY_API_FILTERED_INCLUDE (default)
+ *   - RELAY_API_FILTERED_BETWEEN
+ *   - RELAY_API_FILTERED_EXCLUDE
+ *
+ * Return -1 if the value is invalid.
+ */
+
+int
+relay_api_search_filtered (const char *filtered)
+{
+    if (!filtered)
+        return -1;
+
+    if (strcmp (filtered, "include") == 0)
+        return RELAY_API_FILTERED_INCLUDE;
+    if (strcmp (filtered, "between") == 0)
+        return RELAY_API_FILTERED_BETWEEN;
+    if (strcmp (filtered, "exclude") == 0)
+        return RELAY_API_FILTERED_EXCLUDE;
+
+    return -1;
+}
+
+/*
  * Add an option (mask with "*" allowed) to synchronize for a client.
  *
  * Empty strings, strings with a newline and duplicates are ignored.
@@ -191,6 +216,25 @@ relay_api_hook_signals (struct t_relay_client *client)
             RELAY_API_DATA(client, hook_signal_input) = NULL;
         }
     }
+    if (RELAY_API_DATA(client, sync_typing)
+        && !RELAY_API_DATA(client, sync_notify_only))
+    {
+        if (!RELAY_API_DATA(client, hook_signal_typing))
+        {
+            RELAY_API_DATA(client, hook_signal_typing) =
+                weechat_hook_signal ("typing_set_nick;typing_reset_buffer",
+                                     &relay_api_protocol_signal_typing_cb,
+                                     client, NULL);
+        }
+    }
+    else
+    {
+        if (RELAY_API_DATA(client, hook_signal_typing))
+        {
+            weechat_unhook (RELAY_API_DATA(client, hook_signal_typing));
+            RELAY_API_DATA(client, hook_signal_typing) = NULL;
+        }
+    }
     if (!RELAY_API_DATA(client, hook_signal_upgrade))
     {
         RELAY_API_DATA(client, hook_signal_upgrade) =
@@ -265,6 +309,11 @@ relay_api_unhook_signals (struct t_relay_client *client)
         weechat_unhook (RELAY_API_DATA(client, hook_signal_input));
         RELAY_API_DATA(client, hook_signal_input) = NULL;
     }
+    if (RELAY_API_DATA(client, hook_signal_typing))
+    {
+        weechat_unhook (RELAY_API_DATA(client, hook_signal_typing));
+        RELAY_API_DATA(client, hook_signal_typing) = NULL;
+    }
     if (RELAY_API_DATA(client, hook_signal_upgrade))
     {
         weechat_unhook (RELAY_API_DATA(client, hook_signal_upgrade));
@@ -329,6 +378,7 @@ relay_api_alloc (struct t_relay_client *client)
     RELAY_API_DATA(client, hook_signal_buffer) = NULL;
     RELAY_API_DATA(client, hook_hsignal_nicklist) = NULL;
     RELAY_API_DATA(client, hook_signal_input) = NULL;
+    RELAY_API_DATA(client, hook_signal_typing) = NULL;
     RELAY_API_DATA(client, hook_signal_upgrade) = NULL;
     RELAY_API_DATA(client, hook_signal_day_changed) = NULL;
     RELAY_API_DATA(client, hook_config_options) = NULL;
@@ -341,7 +391,9 @@ relay_api_alloc (struct t_relay_client *client)
     RELAY_API_DATA(client, sync_enabled) = 0;
     RELAY_API_DATA(client, sync_nicks) = 0;
     RELAY_API_DATA(client, sync_input) = 0;
+    RELAY_API_DATA(client, sync_typing) = 0;
     RELAY_API_DATA(client, sync_notify_only) = 0;
+    RELAY_API_DATA(client, sync_filtered_lines) = 1;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
     RELAY_API_DATA(client, sync_options) = NULL;
     RELAY_API_DATA(client, num_sync_options) = 0;
@@ -367,6 +419,7 @@ relay_api_alloc_with_infolist (struct t_relay_client *client,
     RELAY_API_DATA(client, hook_signal_buffer) = NULL;
     RELAY_API_DATA(client, hook_hsignal_nicklist) = NULL;
     RELAY_API_DATA(client, hook_signal_input) = NULL;
+    RELAY_API_DATA(client, hook_signal_typing) = NULL;
     RELAY_API_DATA(client, hook_signal_upgrade) = NULL;
     RELAY_API_DATA(client, hook_signal_day_changed) = NULL;
     RELAY_API_DATA(client, hook_config_options) = NULL;
@@ -382,8 +435,14 @@ relay_api_alloc_with_infolist (struct t_relay_client *client,
         infolist, "sync_nicks");
     RELAY_API_DATA(client, sync_input) = weechat_infolist_integer (
         infolist, "sync_input");
+    RELAY_API_DATA(client, sync_typing) = weechat_infolist_integer (
+        infolist, "sync_typing");
     RELAY_API_DATA(client, sync_notify_only) = weechat_infolist_integer (
         infolist, "sync_notify_only");
+    /* "sync_filtered_lines" is not saved by older versions: default is 1. */
+    RELAY_API_DATA(client, sync_filtered_lines) =
+        (weechat_infolist_search_var (infolist, "sync_filtered_lines")) ?
+        weechat_infolist_integer (infolist, "sync_filtered_lines") : 1;
     RELAY_API_DATA(client, sync_colors) = weechat_infolist_integer (
         infolist, "sync_colors");
     RELAY_API_DATA(client, sync_options) = NULL;
@@ -442,6 +501,7 @@ relay_api_free (struct t_relay_client *client)
         weechat_unhook (RELAY_API_DATA(client, hook_signal_buffer));
         weechat_unhook (RELAY_API_DATA(client, hook_hsignal_nicklist));
         weechat_unhook (RELAY_API_DATA(client, hook_signal_input));
+        weechat_unhook (RELAY_API_DATA(client, hook_signal_typing));
         weechat_unhook (RELAY_API_DATA(client, hook_signal_upgrade));
         weechat_unhook (RELAY_API_DATA(client, hook_signal_day_changed));
         relay_api_unhook_config_options (client);
@@ -486,6 +546,8 @@ relay_api_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!weechat_infolist_new_var_pointer (item, "hook_signal_input", RELAY_API_DATA(client, hook_signal_input)))
         return 0;
+    if (!weechat_infolist_new_var_pointer (item, "hook_signal_typing", RELAY_API_DATA(client, hook_signal_typing)))
+        return 0;
     if (!weechat_infolist_new_var_pointer (item, "hook_signal_upgrade", RELAY_API_DATA(client, hook_signal_upgrade)))
         return 0;
     if (!weechat_infolist_new_var_pointer (item, "hook_signal_day_changed", RELAY_API_DATA(client, hook_signal_day_changed)))
@@ -496,7 +558,11 @@ relay_api_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!weechat_infolist_new_var_integer (item, "sync_input", RELAY_API_DATA(client, sync_input)))
         return 0;
+    if (!weechat_infolist_new_var_integer (item, "sync_typing", RELAY_API_DATA(client, sync_typing)))
+        return 0;
     if (!weechat_infolist_new_var_integer (item, "sync_notify_only", RELAY_API_DATA(client, sync_notify_only)))
+        return 0;
+    if (!weechat_infolist_new_var_integer (item, "sync_filtered_lines", RELAY_API_DATA(client, sync_filtered_lines)))
         return 0;
     if (!weechat_infolist_new_var_integer (item, "sync_colors", RELAY_API_DATA(client, sync_colors)))
         return 0;
@@ -526,6 +592,7 @@ relay_api_print_log (struct t_relay_client *client)
         weechat_log_printf ("    hook_signal_buffer. . . : %p", RELAY_API_DATA(client, hook_signal_buffer));
         weechat_log_printf ("    hook_hsignal_nicklist . : %p", RELAY_API_DATA(client, hook_hsignal_nicklist));
         weechat_log_printf ("    hook_signal_input . . . : %p", RELAY_API_DATA(client, hook_signal_input));
+        weechat_log_printf ("    hook_signal_typing. . . : %p", RELAY_API_DATA(client, hook_signal_typing));
         weechat_log_printf ("    hook_signal_upgrade . . : %p", RELAY_API_DATA(client, hook_signal_upgrade));
         weechat_log_printf ("    hook_signal_day_changed : %p", RELAY_API_DATA(client, hook_signal_day_changed));
         weechat_log_printf ("    buffers_closing. . . . .: %p (hashtable: '%s')",
@@ -536,7 +603,9 @@ relay_api_print_log (struct t_relay_client *client)
         weechat_log_printf ("    sync_enabled. . . . . . : %d", RELAY_API_DATA(client, sync_enabled));
         weechat_log_printf ("    sync_nicks. . . . . . . : %d", RELAY_API_DATA(client, sync_nicks));
         weechat_log_printf ("    sync_input. . . . . . . : %d", RELAY_API_DATA(client, sync_input));
+        weechat_log_printf ("    sync_typing . . . . . . : %d", RELAY_API_DATA(client, sync_typing));
         weechat_log_printf ("    sync_notify_only. . . . : %d", RELAY_API_DATA(client, sync_notify_only));
+        weechat_log_printf ("    sync_filtered_lines . . : %d", RELAY_API_DATA(client, sync_filtered_lines));
         weechat_log_printf ("    sync_colors . . . . . . : %d", RELAY_API_DATA(client, sync_colors));
         weechat_log_printf ("    num_sync_options. . . . : %d", RELAY_API_DATA(client, num_sync_options));
         for (i = 0; i < RELAY_API_DATA(client, num_sync_options); i++)

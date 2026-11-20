@@ -101,6 +101,20 @@ $HOME/.local/share/weechat/weechat.log::
     fichier de log de WeeChat
 // end::files[]
 
+// tag::exit_status[]
+0::
+    Succès : WeeChat a été quitté normalement (par exemple avec la commande
+    `/quit`), ou une option comme "--help" ou "--version" a été donnée.
+
+1::
+    Erreur : WeeChat n'a pas pu démarrer ou s'est arrêté à cause d'une erreur,
+    par exemple si le fichier de log ne peut pas être créé.
+
+2::
+    Paramètres de ligne de commande invalides : option inconnue ou ambiguë,
+    paramètre manquant, ou paramètre donné à une option qui n'en prend pas.
+// end::exit_status[]
+
 // tag::copyright[]
 WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
 est dans le fichier AUTHORS.md).

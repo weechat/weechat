@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2010-2025 Nils Görs <weechatter@arcor.de>
+// SPDX-FileCopyrightText: 2010-2026 Nils Görs <weechatter@arcor.de>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -611,6 +611,11 @@ Einige zusätzliche Optionen sollten nur für Debug-Zwecke genutzt werden:
 *KEINE* dieser Optionen sollte für ein Produktivsystem genutzt werden!
 
 include::includes/cmdline_options.de.adoc[tag=debug]
+
+[[exit_status]]
+==== Exit status
+
+include::includes/man.de.adoc[tag=exit_status]
 
 [[environment_variables]]
 === Umgebungsvariablen
@@ -1447,6 +1452,16 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 | host
 | beliebige Zeichenkette
 | eigener Host (sofern bekannt), wird durch IRC Erweiterung genutzt.
+
+| irc_caps
+| beliebige Zeichenkette
+| Liste der auf dem Server aktivierten IRC-Fähigkeiten (Namen durch Kommata getrennt,
+  zum Beispiel `batch,message-tags,server-time`), festgelegt durch die IRC-Erweiterung.
+
+| irc_clienttagdeny
+| beliebige Zeichenkette
+| Vom IRC-Server blockierte Client-only-Tags (Wert von `CLIENTTAGDENY` in
+  Nachricht 005, zum Beispiel `*,-draft/react`), festgelegt durch die IRC-Erweiterung.
 
 | lag
 | beliebige Zeichenkette

@@ -238,7 +238,8 @@ TEST(RelayWebsocket, ClientHandshakeValid)
     relay_websocket_deflate_reinit (request->ws_deflate);
     hashtable_set (request->headers, "sec-websocket-protocol",
                    WEBSOCKET_SUB_PROTOCOL_API_WEECHAT
-                   ", base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk");
+                   ", base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk"
+                   ", totp.weechat.123456");
     WEE_TEST_STR(
         "HTTP/1.1 101 Switching Protocols\r\n"
         "Upgrade: websocket\r\n"

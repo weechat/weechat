@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 20:26+0100\n"
+"POT-Creation-Date: 2026-11-18 22:28+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -165,6 +165,29 @@ msgstr ""
 
 msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
 msgstr ""
+
+#. TRANSLATORS: "%s" is the command used to run WeeChat.
+#, c-format
+msgid "Try \"%s --help\" for more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: ambiguous option \"%s\"\n"
+msgstr "%s%s: chyba: neznámý protokol \"%s\""
+
+#, fuzzy, c-format
+msgid "Error: option \"--%s\" does not take an argument\n"
+msgstr "Chyba: domovský adresář (%s) není adresářem\n"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: unknown option \"%s\"\n"
+msgstr "%s%s: chyba: neznámý protokol \"%s\""
+
+#, fuzzy
+msgid "Error: not enough memory\n"
+msgstr "nedostatek paměti"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -1084,21 +1107,6 @@ msgstr "%sChyba: nemohu uložit sezení do souboru"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%sChyba: nemohu uložit sezení do souboru"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%sCan't upgrade: there is one or more background process (hook type "
-#| "'process' or 'connect')"
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-"%sNemohu aktualizovat: je zde jeden nebo více procesů na pozadí (napojení "
-"typu 'process' nebo 'connect')"
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr ""
-
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sNemohu aktualizovat: binární soubor WeeChat \"%s\" neexistuje"
@@ -1116,14 +1124,6 @@ msgstr "%sNení specifikována binárka"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aktualizuji WeeChat s použitím binárního souboru: \"%s\"..."
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr ""
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr "***** Chyba: exec selhal (program: \"%s\"), ukončuji WeeChat"
 
 #. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
@@ -5946,10 +5946,6 @@ msgid ""
 "utf8_strlen_screen, gui_chat_strlen_screen:"
 msgstr ""
 
-#, fuzzy
-msgid "Error: not enough memory\n"
-msgstr "nedostatek paměti"
-
 #, c-format
 msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
@@ -6343,6 +6339,21 @@ msgstr "%s: chyba: slovník \"%s\" není ve vašem systému dostupný"
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Využití paměti (viz \"man mallinfo\" pro nápovědu):"
 
+msgid "Running WeeChat in background..."
+msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: unable to parse file \"%s\""
+msgid "unable to open /dev/null"
+msgstr "%s%s: nemůžu parsovat soubor \"%s\""
+
+#, fuzzy
+msgid "fork error"
+msgstr "chyba"
+
+msgid "OK"
+msgstr "OK"
+
 msgid "WeeChat default theme for light-background terminals"
 msgstr ""
 
@@ -6528,6 +6539,29 @@ msgstr "ladění: odstraňuji soubor: %s"
 #, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr "Aktualizace dokončena (%.02fs)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+"%sNemohu aktualizovat: je zde jeden nebo více procesů na pozadí (napojení "
+"typu 'process' nebo 'connect')"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "***** Chyba: exec selhal (program: \"%s\"), ukončuji WeeChat"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 msgid "invalid URL"
 msgstr ""
@@ -6743,16 +6777,6 @@ msgstr "Myš je vypnuta"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', velikost: %dx%d"
-
-msgid "Running WeeChat in background..."
-msgstr ""
-
-#, fuzzy
-msgid "fork error"
-msgstr "chyba"
-
-msgid "OK"
-msgstr "OK"
 
 #, fuzzy
 msgid "condition(s) to display the bar item (evaluated, see /help eval)"
@@ -13616,6 +13640,13 @@ msgid ""
 "logger.file.rotation_compression_type"
 msgstr ""
 
+msgid ""
+"split multiline messages: write the date and prefix on each line of the "
+"message (the backlog then displays one message per line); if disabled, the "
+"next lines of the message start with two tabs (empty date and prefix), so "
+"that the backlog displays a single message"
+msgstr ""
+
 #, fuzzy
 #| msgid ""
 #| "timestamp used in log files (see man strftime for date/time specifiers)"
@@ -13792,6 +13823,11 @@ msgstr "interní znaková sada WeeChat"
 msgid "locale used for translating messages"
 msgstr "prefix pro zprávy akcí"
 
+msgid ""
+"language of translated messages (for example \"fr\" or \"pt_BR\"), \"en\" if "
+"messages are not translated"
+msgstr ""
+
 msgid "keyboard inactivity (seconds)"
 msgstr "nečinnost klávesnice (sekundy)"
 
@@ -13901,7 +13937,8 @@ msgstr ""
 
 msgid ""
 "secret (in base32), one-time password, timestamp (optional, current time by "
-"default), number of passwords before/after to test (optional, 0 by default)"
+"default), number of passwords before/after to test (optional, 0 by default), "
+"number of digits (optional, between 4 and 10, 6 by default)"
 msgstr ""
 
 #, fuzzy
@@ -15278,6 +15315,11 @@ msgstr "%s%s: chyba: neznámý protokol \"%s\""
 #, fuzzy, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: chyba: neznámý protokol \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid charset: \"%s\""
+msgid "%s%s: error: invalid port \"%s\""
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "
@@ -17533,6 +17575,12 @@ msgstr ""
 msgid "nicks of DCC chat"
 msgstr "přezdívky DCC rozhovoru"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 "automaticky otevřít xfer buffer, když je přidána nová položka do xfer seznamu"
@@ -17593,8 +17641,9 @@ msgstr ""
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "omezit odchozí soubory/chat pro používaní portů pouze v zadaném rozsahu "
 "(užitečné pro NAT) (syntaxe: samostatný port, např. 5000 nebo rozsah portů "
@@ -17693,6 +17742,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "%s%s: nevalidní bind adresa \"%s\" pro %s"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: nemohu vytvořit soket: chyba %d %s"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s: nemůžu najít dostupný port pro xfer"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -17889,14 +17946,6 @@ msgstr "%s%s: nemohu přistupovat k souboru \"%s\""
 #, fuzzy, c-format
 msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr "%s%s: nemohu vytvořit soket: chyba %d %s"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: nemohu vytvořit soket: chyba %d %s"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: nemůžu najít dostupný port pro xfer"
 
 #, c-format
 msgid "%s%s: error creating xfer"

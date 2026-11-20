@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2009-2025 Nils Görs <weechatter@arcor.de>
+// SPDX-FileCopyrightText: 2009-2026 Nils Görs <weechatter@arcor.de>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -99,6 +99,21 @@ $HOME/.config/weechat/xfer.conf::
 $HOME/.local/share/weechat/weechat.log::
     WeeChat Protokolldatei
 // end::files[]
+
+// tag::exit_status[]
+0::
+    Erfolg: WeeChat wurde regulär beendet (zum Beispiel über den Befehl `/quit`),
+    oder es wurde eine Option wie ""--help"" oder ""--version"" angegeben.
+
+1::
+    Fehler: WeeChat konnte nicht starten oder wurde aufgrund eines Fehlers
+    beendet – beispielsweise, wenn die Protokolldatei nicht erstellt werden kann.
+
+2::
+    Ungültige Befehlszeilenargumente: unbekannte oder mehrdeutige Option, fehlendes
+    Argument oder ein Argument wurde für eine Option angegeben, die kein Argument
+    akzeptiert.
+// end::exit_status[]
 
 // tag::copyright[]
 WeeChat wird programmiert von Sébastien Helleu und weiteren Beteiligten (eine vollständige Auflistung

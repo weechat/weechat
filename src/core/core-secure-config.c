@@ -10,6 +10,7 @@
 #include "config.h"
 #endif
 
+#include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -101,7 +102,7 @@ secure_config_get_passphrase_from_command (const char *command)
 {
     FILE *file;
     char *passphrase, *pos, buffer[SECURE_PASSPHRASE_MAX_LENGTH + 1];
-    size_t num_read;
+    size_t num_read, count;
 
     passphrase = NULL;
 
@@ -109,7 +110,30 @@ secure_config_get_passphrase_from_command (const char *command)
     if (!file)
         return NULL;
 
-    num_read = fread (buffer, 1, sizeof (buffer) - 1, file);
+    /*
+     * Read the output until end of file or until the max length is reached;
+     * a read interrupted by a signal is retried.
+     */
+    num_read = 0;
+    while (num_read < sizeof (buffer) - 1)
+    {
+        count = fread (buffer + num_read, 1,
+                       sizeof (buffer) - 1 - num_read, file);
+        num_read += count;
+        if (feof (file))
+            break;
+        if (ferror (file))
+        {
+            /* Read interrupted by a signal: clear error and read again. */
+            if (errno == EINTR)
+            {
+                clearerr (file);
+                continue;
+            }
+            break;
+        }
+    }
+
     if (num_read > 0)
     {
         buffer[num_read] = '\0';
@@ -331,6 +355,9 @@ secure_config_data_read_cb (const void *pointer, void *data,
                                    "\"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  option_name);
+                /* Keep data encrypted, so that it is not lost. */
+                hashtable_set (secure_hashtable_data_encrypted, option_name,
+                               value);
                 break;
             }
             snprintf (str_error, sizeof (str_error),
@@ -500,6 +527,17 @@ secure_config_data_write_cb (const void *pointer, void *data,
         /* Encrypt and write secured data. */
         hashtable_map_sorted (secure_hashtable_data,
                               &secure_config_data_write_map_cb, config_file);
+        /*
+         * Write as-is the data that could not be decrypted with the
+         * passphrase (if any), so that it is not lost.
+         */
+        if (secure_passphrase
+            && (secure_hashtable_data_encrypted->items_count > 0))
+        {
+            hashtable_map_sorted (secure_hashtable_data_encrypted,
+                                  &secure_config_data_write_map_encrypted_cb,
+                                  config_file);
+        }
     }
     else if (secure_hashtable_data_encrypted->items_count > 0)
     {

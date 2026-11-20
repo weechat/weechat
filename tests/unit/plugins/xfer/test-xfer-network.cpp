@@ -48,6 +48,7 @@ extern int xfer_network_child_read_cb (const void *pointer, void *data,
 extern void xfer_network_send_file_fork (struct t_xfer *xfer);
 extern void xfer_network_recv_file_fork (struct t_xfer *xfer);
 extern int xfer_network_fd_cb (const void *pointer, void *data, int fd);
+extern void xfer_network_add_timer (struct t_xfer *xfer);
 extern int xfer_network_timer_cb (const void *pointer, void *data,
                                   int remaining_calls);
 extern int xfer_network_connect_chat_recv_cb (const void *pointer, void *data,
@@ -83,6 +84,22 @@ TEST_GROUP(XferNetworkWithXfer)
         (*((int *)pointer))++;
 
         return WEECHAT_RC_OK;
+    }
+
+    /* Return the number of timers (not deleted) with the xfer as pointer. */
+    int count_xfer_timers ()
+    {
+        struct t_hook *ptr_hook;
+        int count;
+
+        count = 0;
+        for (ptr_hook = weechat_hooks[HOOK_TYPE_TIMER]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted && (ptr_hook->callback_pointer == xfer))
+                count++;
+        }
+        return count;
     }
 
     void setup ()
@@ -247,6 +264,74 @@ TEST(XferNetwork, ConvertIntegerToIpv4)
     WEE_TEST_STR("1.0.0.0", xfer_network_convert_integer_to_ipv4 ("16777216"));
     WEE_TEST_STR("127.0.0.1", xfer_network_convert_integer_to_ipv4 ("2130706433"));
     WEE_TEST_STR("192.168.1.2", xfer_network_convert_integer_to_ipv4 ("3232235778"));
+}
+
+/*
+ * Test functions:
+ *   xfer_network_parse_port_range
+ */
+
+TEST(XferNetwork, ParsePortRange)
+{
+    const char *invalid[] = { "0", "0-10", "65536", "65535-65540",
+                              "70000-2147483647", "99999999999999999999",
+                              "5000-99999999999999999999", "5010-5000",
+                              "abc", " 5000", "+5000", "-5000", "5000-",
+                              "5000-abc", "5000 - 5010", "5000-5010xyz",
+                              "5000-+5010", "5000--5010", "5000-5010-5020",
+                              "5000 ", NULL };
+    int i, port_start, port_end;
+
+    /* Empty value: any port. */
+    port_start = -1;
+    port_end = -1;
+    LONGS_EQUAL(1, xfer_network_parse_port_range (NULL, &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(0, port_start);
+    LONGS_EQUAL(0, port_end);
+    port_start = -1;
+    port_end = -1;
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(0, port_start);
+    LONGS_EQUAL(0, port_end);
+
+    /* Single port. */
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("1", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(1, port_start);
+    LONGS_EQUAL(1, port_end);
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("65535", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(65535, port_start);
+    LONGS_EQUAL(65535, port_end);
+
+    /* Range of ports. */
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("5000-5015", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(5000, port_start);
+    LONGS_EQUAL(5015, port_end);
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("5000-5000", &port_start,
+                                                  &port_end));
+    LONGS_EQUAL(5000, port_start);
+    LONGS_EQUAL(5000, port_end);
+
+    /* NULL pointers for the ports. */
+    LONGS_EQUAL(1, xfer_network_parse_port_range ("5000-5015", NULL, NULL));
+
+    /* Invalid ranges: ports are not changed. */
+    for (i = 0; invalid[i]; i++)
+    {
+        port_start = -1;
+        port_end = -1;
+        LONGS_EQUAL(0, xfer_network_parse_port_range (invalid[i],
+                                                      &port_start,
+                                                      &port_end));
+        LONGS_EQUAL(-1, port_start);
+        LONGS_EQUAL(-1, port_end);
+        LONGS_EQUAL(0, xfer_network_parse_port_range (invalid[i],
+                                                      NULL, NULL));
+    }
 }
 
 /*
@@ -678,6 +763,44 @@ TEST(XferNetworkWithXfer, TimerCb)
 
 /*
  * Test functions:
+ *   xfer_network_add_timer
+ *   xfer_network_timer_cb (timer executed by WeeChat)
+ */
+
+TEST(XferNetworkWithXfer, AddTimer)
+{
+    struct t_hook *ptr_hook;
+
+    xfer->type = XFER_TYPE_FILE_SEND_PASSIVE;
+    xfer->status = XFER_STATUS_CONNECTING;
+
+    /* Add timer. */
+    xfer_network_add_timer (xfer);
+    CHECK(xfer->hook_timer);
+    LONGS_EQUAL(1, HOOK_TIMER(xfer->hook_timer, remaining_calls));
+    LONGS_EQUAL(1, count_xfer_timers ());
+
+    /* Add timer again: the previous one is removed. */
+    xfer_network_add_timer (xfer);
+    CHECK(xfer->hook_timer);
+    LONGS_EQUAL(1, count_xfer_timers ());
+
+    /*
+     * Timer executed by WeeChat while the xfer is active: nothing done,
+     * the timer is removed by WeeChat and must be forgotten by the xfer.
+     */
+    xfer->status = XFER_STATUS_ACTIVE;
+    ptr_hook = xfer->hook_timer;
+    HOOK_TIMER(ptr_hook, next_exec).tv_sec = 0;
+    HOOK_TIMER(ptr_hook, next_exec).tv_usec = 0;
+    hook_timer_exec ();
+    LONGS_EQUAL(XFER_STATUS_ACTIVE, xfer->status);
+    POINTERS_EQUAL(NULL, xfer->hook_timer);
+    LONGS_EQUAL(0, count_xfer_timers ());
+}
+
+/*
+ * Test functions:
  *   xfer_network_connect_chat_recv_cb
  */
 
@@ -886,6 +1009,7 @@ TEST(XferNetworkWithXfer, Accept)
     LONGS_EQUAL(XFER_STATUS_CONNECTING, xfer->status);
     LONGS_EQUAL(1, count_signals);
     LONGS_EQUAL(0, xfer->child_pid);
+    CHECK(xfer->hook_timer);
 
     /* No resume: connect and launch child process. */
     xfer->status = XFER_STATUS_WAITING;
@@ -895,4 +1019,5 @@ TEST(XferNetworkWithXfer, Accept)
     LONGS_EQUAL(XFER_STATUS_CONNECTING, xfer->status);
     LONGS_EQUAL(1, count_signals);
     CHECK(xfer->child_pid > 0);
+    POINTERS_EQUAL(NULL, xfer->hook_timer);
 }

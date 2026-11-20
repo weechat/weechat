@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include <ctype.h>
 #include <stdarg.h>
 #include <libgen.h>
 #include <sys/ioctl.h>
@@ -617,8 +616,11 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
 }
 
 /*
- * Apply foreground color code in string and moves string pointer after color
+ * Apply foreground color code in string and move string pointer after color
  * in string.
+ *
+ * If the color is incomplete or invalid, it is not applied and the string
+ * pointer is moved after its valid prefix only.
  *
  * If window is NULL, do not apply colors but still move string pointer.
  */
@@ -626,67 +628,20 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
 void
 gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
 {
-    unsigned char *ptr_string;
-    char str_fg[6];
-    int fg, extra_attr, flag;
+    int fg;
 
-    ptr_string = *string;
+    *string += gui_color_code_size_number ((const char *)*string, 1, &fg);
 
-    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-    {
-        ptr_string++;
-        extra_attr = 0;
-        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
-        {
-            extra_attr |= flag;
-            ptr_string++;
-        }
-        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-            && ptr_string[3] && ptr_string[4])
-        {
-            if (window)
-            {
-                memcpy (str_fg, ptr_string, 5);
-                str_fg[5] = '\0';
-                if (util_parse_int (str_fg, 10, &fg))
-                {
-                    gui_window_set_custom_color_fg (window,
-                                                    fg | GUI_COLOR_EXTENDED_FLAG | extra_attr);
-                }
-            }
-            ptr_string += 5;
-        }
-    }
-    else
-    {
-        extra_attr = 0;
-        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
-        {
-            extra_attr |= flag;
-            ptr_string++;
-        }
-        if (ptr_string[0] && ptr_string[1])
-        {
-            if (window)
-            {
-                str_fg[0] = ptr_string[0];
-                str_fg[1] = ptr_string[1];
-                str_fg[2] = '\0';
-                if (util_parse_int (str_fg, 10, &fg))
-                {
-                    gui_window_set_custom_color_fg (window, fg | extra_attr);
-                }
-            }
-            ptr_string += 2;
-        }
-    }
-
-    *string = ptr_string;
+    if (window && (fg >= 0))
+        gui_window_set_custom_color_fg (window, fg);
 }
 
 /*
- * Apply background color code in string and moves string pointer after color
+ * Apply background color code in string and move string pointer after color
  * in string.
+ *
+ * If the color is incomplete or invalid, it is not applied and the string
+ * pointer is moved after its valid prefix only.
  *
  * If window is NULL, do not apply colors but still move string pointer.
  */
@@ -694,54 +649,20 @@ gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
 void
 gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
 {
-    unsigned char *ptr_string;
-    char str_bg[6];
     int bg;
 
-    ptr_string = *string;
+    *string += gui_color_code_size_number ((const char *)*string, 0, &bg);
 
-    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-    {
-        if (ptr_string[1] && ptr_string[2] && ptr_string[3]
-            && ptr_string[4] && ptr_string[5])
-        {
-            if (window)
-            {
-                memcpy (str_bg, ptr_string + 1, 5);
-                str_bg[5] = '\0';
-                if (util_parse_int (str_bg, 10, &bg))
-                {
-                    gui_window_set_custom_color_bg (window,
-                                                    bg | GUI_COLOR_EXTENDED_FLAG);
-                }
-            }
-            ptr_string += 6;
-        }
-    }
-    else
-    {
-        if (ptr_string[0] && ptr_string[1])
-        {
-            if (window)
-            {
-                str_bg[0] = ptr_string[0];
-                str_bg[1] = ptr_string[1];
-                str_bg[2] = '\0';
-                if (util_parse_int (str_bg, 10, &bg))
-                {
-                    gui_window_set_custom_color_bg (window, bg);
-                }
-            }
-            ptr_string += 2;
-        }
-    }
-
-    *string = ptr_string;
+    if (window && (bg >= 0))
+        gui_window_set_custom_color_bg (window, bg);
 }
 
 /*
- * Apply foreground + background color code in string and moves string pointer
+ * Apply foreground + background color code in string and move string pointer
  * after color in string.
+ *
+ * If the color is incomplete or invalid, it is not applied and the string
+ * pointer is moved after its valid prefix only.
  *
  * If window is NULL, do not apply colors but still move string pointer.
  */
@@ -750,102 +671,22 @@ void
 gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
-    char str_fg[6], str_bg[6];
-    int fg, bg, extra_attr, flag;
+    int fg, bg;
 
     ptr_string = *string;
 
-    str_fg[0] = '\0';
-    str_bg[0] = '\0';
-    fg = -1;
     bg = -1;
-    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-    {
-        ptr_string++;
-        extra_attr = 0;
-        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
-        {
-            extra_attr |= flag;
-            ptr_string++;
-        }
-        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
-            && ptr_string[3] && ptr_string[4])
-        {
-            if (window)
-            {
-                memcpy (str_fg, ptr_string, 5);
-                str_fg[5] = '\0';
-                if (util_parse_int (str_fg, 10, &fg))
-                    fg |= GUI_COLOR_EXTENDED_FLAG | extra_attr;
-                else
-                    fg = -1;
-            }
-            ptr_string += 5;
-        }
-    }
-    else
-    {
-        extra_attr = 0;
-        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
-        {
-            extra_attr |= flag;
-            ptr_string++;
-        }
-        if (ptr_string[0] && ptr_string[1])
-        {
-            if (window)
-            {
-                str_fg[0] = ptr_string[0];
-                str_fg[1] = ptr_string[1];
-                str_fg[2] = '\0';
-                if (util_parse_int (str_fg, 10, &fg))
-                    fg |= extra_attr;
-                else
-                    fg = -1;
-            }
-            ptr_string += 2;
-        }
-    }
+    ptr_string += gui_color_code_size_number ((const char *)ptr_string, 1, &fg);
     /*
      * Note: the comma is an old separator not used anymore
      * (since WeeChat 2.6), but we still use it here so in case of /upgrade
      * this will not break colors in old messages.
      */
-    if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
+    if ((fg >= 0) && ((ptr_string[0] == ',') || (ptr_string[0] == '~')))
     {
         ptr_string++;
-        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
-        {
-            if (ptr_string[1] && ptr_string[2] && ptr_string[3]
-                && ptr_string[4] && ptr_string[5])
-            {
-                if (window)
-                {
-                    memcpy (str_bg, ptr_string + 1, 5);
-                    str_bg[5] = '\0';
-                    if (util_parse_int (str_bg, 10, &bg))
-                        bg |= GUI_COLOR_EXTENDED_FLAG;
-                    else
-                        bg = -1;
-                }
-                ptr_string += 6;
-            }
-        }
-        else
-        {
-            if (ptr_string[0] && ptr_string[1])
-            {
-                if (window)
-                {
-                    str_bg[0] = ptr_string[0];
-                    str_bg[1] = ptr_string[1];
-                    str_bg[2] = '\0';
-                    if (!util_parse_int (str_bg, 10, &bg))
-                        bg = -1;
-                }
-                ptr_string += 2;
-            }
-        }
+        ptr_string += gui_color_code_size_number ((const char *)ptr_string,
+                                                  0, &bg);
     }
     if (window && (fg >= 0) && (bg >= 0))
     {
@@ -856,8 +697,11 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
 }
 
 /*
- * Apply pair color code in string and moves string pointer after color in
+ * Apply pair color code in string and move string pointer after color in
  * string.
+ *
+ * If the color is incomplete or invalid, it is not applied and the string
+ * pointer is moved after its valid prefix only.
  *
  * If window is NULL, do not apply colors but still move string pointer.
  */
@@ -865,32 +709,20 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
 void
 gui_window_string_apply_color_pair (unsigned char **string, WINDOW *window)
 {
-    unsigned char *ptr_string;
-    char str_pair[6];
     int pair;
 
-    ptr_string = *string;
+    *string += gui_color_parse_digits ((const char *)*string, 5, &pair);
 
-    if ((isdigit (ptr_string[0])) && (isdigit (ptr_string[1]))
-        && (isdigit (ptr_string[2])) && (isdigit (ptr_string[3]))
-        && (isdigit (ptr_string[4])))
-    {
-        if (window)
-        {
-            memcpy (str_pair, ptr_string, 5);
-            str_pair[5] = '\0';
-            if (util_parse_int (str_pair, 10, &pair))
-                gui_window_set_custom_color_pair (window, pair);
-        }
-        ptr_string += 5;
-    }
-
-    *string = ptr_string;
+    if (window && (pair >= 0))
+        gui_window_set_custom_color_pair (window, pair);
 }
 
 /*
- * Apply weechat color code in string and moves string pointer after color in
+ * Apply weechat color code in string and move string pointer after color in
  * string.
+ *
+ * If the color is incomplete or invalid, it is not applied and the string
+ * pointer is moved after its valid prefix only.
  *
  * If window is NULL, do not apply colors but still move string pointer.
  */
@@ -898,26 +730,13 @@ gui_window_string_apply_color_pair (unsigned char **string, WINDOW *window)
 void
 gui_window_string_apply_color_weechat (unsigned char **string, WINDOW *window)
 {
-    unsigned char *ptr_string;
-    char str_number[3];
     int weechat_color;
 
-    ptr_string = *string;
+    *string += gui_color_parse_digits ((const char *)*string, 2,
+                                       &weechat_color);
 
-    if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
-    {
-        if (window)
-        {
-            str_number[0] = ptr_string[0];
-            str_number[1] = ptr_string[1];
-            str_number[2] = '\0';
-            if (util_parse_int (str_number, 10, &weechat_color))
-                gui_window_set_weechat_color (window, weechat_color);
-        }
-        ptr_string += 2;
-    }
-
-    *string = ptr_string;
+    if (window && (weechat_color >= 0))
+        gui_window_set_weechat_color (window, weechat_color);
 }
 
 /*

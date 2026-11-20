@@ -12292,6 +12292,11 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: подаци линије.
 | У баферу су ажурирани подаци линије.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_lines_filtered]] buffer_lines_filtered | 5.0.0
+| Pointer: buffer.
+| Lines filtered or unfiltered in buffer after a change in filters (filter added, removed, enabled or disabled, filters toggled in buffer).
+
 | weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
 | Показивач: бафер.
 | У баферу су сакривене линије.

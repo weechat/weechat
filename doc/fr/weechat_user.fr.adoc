@@ -612,6 +612,11 @@ N'utilisez *AUCUNE* de ces options in production !
 
 include::includes/cmdline_options.fr.adoc[tag=debug]
 
+[[exit_status]]
+==== Code de sortie
+
+include::includes/man.fr.adoc[tag=exit_status]
+
 [[environment_variables]]
 === Variables d'environnement
 
@@ -1463,6 +1468,18 @@ Par défaut WeeChat et ses extensions par défaut interprètent ces variables :
 | host
 | toute chaîne
 | Nom d'hôte personnel (si connu), défini par l'extension irc.
+
+| irc_caps
+| toute chaîne
+| Liste des capacités IRC activées sur le serveur (noms séparés par des
+  virgules, par exemple `batch,message-tags,server-time`), définie par
+  l'extension irc.
+
+| irc_clienttagdeny
+| toute chaîne
+| Étiquettes client bloquées par le serveur IRC (valeur de `CLIENTTAGDENY`
+  dans le message 005, par exemple `*,-draft/react`), définie par l'extension
+  irc.
 
 | lag
 | toute chaîne

@@ -44,6 +44,11 @@ include::includes/cmdline_options.pl.adoc[tag=debug]
 
 include::includes/man.pl.adoc[tag=plugin_options]
 
+// TRANSLATION MISSING
+== EXIT STATUS
+
+include::includes/man.pl.adoc[tag=exit_status]
+
 == PLIKI
 
 include::includes/man.pl.adoc[tag=files]

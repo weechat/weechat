@@ -169,6 +169,13 @@ vous devez envoyer la valeur TOTP dans l'en-tête `x-weechat-totp` comme ceci :
 curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" 'https://localhost:9000/api/version'
 ----
 
+Le TOTP doit contenir exactement 6 chiffres, y compris les zéros initiaux (par
+exemple `012345`), sinon il est refusé.
+
+L'API WebSocket de JavaScript utilisée dans les navigateurs ne peut pas définir
+cet en-tête, les clients websocket envoient donc le TOTP dans un sous-protocole
+à la place _(WeeChat ≥ 5.0.0)_, voir <<authentication_sec_websocket_protocol,Sec-WebSocket-Protocol>>.
+
 En cas d'erreur, une réponse `401 Unauthorized` est retournée avec un champ
 `error` dans les données JSON qui décrit l'erreur.
 
@@ -300,6 +307,35 @@ const ws = new WebSocket("wss://localhost:9000/api", [
 ])
 ----
 
+Si TOTP est activé (option `relay.network.totp_secret` définie), les clients
+dans un navigateur ne peuvent pas non plus envoyer l'en-tête `x-weechat-totp` :
+ils doivent ajouter le sous-protocole `totp.weechat.<code>` _(WeeChat ≥ 5.0.0)_,
+où `<code>` est la valeur TOTP.
+Le relai le vérifie comme l'en-tête. Deux sous-protocoles TOTP dans une même
+requête sont refusés, de même qu'une requête où l'en-tête et le sous-protocole
+contiennent des codes différents. Seul `api.weechat` est sélectionné dans la
+réponse, donc le TOTP n'est jamais renvoyé.
+
+Par exemple avec le TOTP `123456` :
+
+[source,javascript]
+----
+const ws = new WebSocket("wss://localhost:9000/api", [
+  "api.weechat",
+  "base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk",
+  "totp.weechat.123456",
+])
+----
+
+Si un proxy inverse est placé devant WeeChat, vérifiez sa journalisation. Les
+proxys et répartiteurs de charge peuvent journaliser les en-têtes des requêtes,
+y compris `Sec-WebSocket-Protocol`, et cet en-tête contient le mot de passe
+ainsi que le TOTP. Le TOTP expire en 30 secondes avec la valeur par défaut de
+l'option `relay.network.totp_window` et un mot de passe haché expire selon
+l'option `relay.network.time_window`, mais un mot de passe en clair reste valide
+jusqu'à ce que vous le changiez : préférez un mot de passe haché et désactivez
+la journalisation des en-têtes pour le relai.
+
 [[compression]]
 == Compression
 
@@ -374,7 +410,7 @@ Réponse :
 ----
 HTTP/1.1 204 No Content
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE
-Access-Control-Allow-Headers: origin, content-type, accept, authorization
+Access-Control-Allow-Headers: origin, content-type, accept, authorization, x-weechat-totp
 Access-Control-Allow-Origin: *
 Content-Type: application/json; charset=utf-8
 Content-Length: 0
@@ -410,7 +446,8 @@ La réponse a les champs suivants :
 * `password_hash_iterations` (entier) : le nombre d'itérations à utiliser si le
   hachage PBKDF2 est utilisé
 * `totp` (booléen) : `true` si le TOTP est activé dans WeeChat (le client doit
-  alors envoyer le TOTP dans un en-tête spécifique), `false` sinon
+  alors envoyer le TOTP dans l'en-tête `x-weechat-totp` ou dans le
+  sous-protocole websocket `totp.weechat.<code>`), `false` sinon
 
 Exemple de requête :
 
@@ -519,10 +556,17 @@ Infos disponibles :
 |===
 | Nom | Type | Description
 
+| `language` | chaîne
+| Langue des messages traduits de WeeChat, par exemple `fr` ou `pt_BR`, `en`
+  si les messages ne sont pas traduits ; c'est la langue de la traduction
+  réellement utilisée, qui tient compte de la variable d'environnement
+  `LANGUAGE`
+
 | `locale` | chaîne ou null
 | Locale de WeeChat utilisée pour les messages traduits, par exemple
   `fr_FR.UTF-8` (catégorie `LC_MESSAGES`) ; la langue des messages peut être
-  différente si la variable d'environnement `LANGUAGE` est définie
+  différente si la variable d'environnement `LANGUAGE` est définie (voir
+  l'info `language`)
 |===
 
 Champs retournés dans la liste des infos :
@@ -554,10 +598,36 @@ HTTP/1.1 200 OK
 ----
 [
     {
+        "name": "language",
+        "description": "Language of WeeChat translated messages"
+    },
+    {
         "name": "locale",
         "description": "WeeChat locale used for translated messages"
     }
 ]
+----
+
+Exemple de requête : obtenir la langue des messages de WeeChat :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info/language'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "language",
+    "value": "fr"
+}
 ----
 
 Exemple de requête : obtenir la locale de WeeChat :
@@ -636,6 +706,21 @@ Paramètres de la requête :
 ** nombre négatif : retourner N lignes depuis la fin du tampon
 ** `0` : ne retourner aucune ligne
 ** nombre positif : retourner N lignes depuis le début du tampon
+* `filtered` (chaîne, facultatif, par défaut : `include`) : comment les lignes
+  filtrées avec la commande `/filter` (lignes avec `displayed` à `false`) sont
+  comptées et retournées _(WeeChat ≥ 5.0.0)_ :
+** `include` : compter et retourner toutes les lignes
+** `between` : compter seulement les lignes non filtrées, et retourner les
+   lignes filtrées entre elles, donc plus de lignes que demandé peuvent être
+   retournées (la plage de lignes se termine à la fin du tampon si le nombre de
+   lignes est négatif et commence au début du tampon s'il est positif) ; il
+   n'y a pas de limite sur le nombre de lignes filtrées retournées, hormis la
+   taille de l'historique du tampon
+** `exclude` : compter et retourner seulement les lignes non filtrées ; la
+   ligne avec l'identifiant `last_read_line_id` (marqueur de lecture) peut être
+   filtrée et donc non retournée : le client affiche le marqueur de lecture
+   après la dernière ligne retournée avec un identifiant inférieur ou égal à
+   `last_read_line_id`
 * `nicks` (booléen, facultatif, par défaut : `false`) : retourner les pseudos
   du tampon
 * `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
@@ -716,7 +801,8 @@ HTTP/1.1 200 OK
             "charset_modifier": "irc.libera",
             "nick": "alice",
             "tls_version": "TLS1.3",
-            "host": "~alice@example.com"
+            "host": "~alice@example.com",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "last_read_line_id": -1,
@@ -748,7 +834,8 @@ HTTP/1.1 200 OK
             "server": "libera",
             "channel": "#weechat",
             "nick": "alice",
-            "host": "~alice@example.com"
+            "host": "~alice@example.com",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "last_read_line_id": -1,
@@ -858,7 +945,8 @@ HTTP/1.1 200 OK
         "server": "libera",
         "channel": "#weechat",
         "nick": "alice",
-        "host": "~alice@example.com"
+        "host": "~alice@example.com",
+        "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
     },
     "keys": [],
     "last_read_line_id": -1,
@@ -1084,6 +1172,18 @@ Paramètres de requête :
    avec cette ressource)
 ** nombre positif : retourner N lignes depuis le début du tampon
    (lignes les plus anciennes)
+* `filtered` (chaîne, facultatif, par défaut : `include`) : comment les lignes
+  filtrées avec la commande `/filter` (lignes avec `displayed` à `false`) sont
+  comptées et retournées (ignoré avec `line_id` : la ligne est toujours retournée, même
+  si elle est filtrée) _(WeeChat ≥ 5.0.0)_ :
+** `include` : compter et retourner toutes les lignes
+** `between` : compter seulement les lignes non filtrées, et retourner les
+   lignes filtrées entre elles, donc plus de lignes que demandé peuvent être
+   retournées (la plage de lignes se termine à la fin du tampon si le nombre de
+   lignes est négatif et commence au début du tampon s'il est positif) ; il
+   n'y a pas de limite sur le nombre de lignes filtrées retournées, hormis la
+   taille de l'historique du tampon
+** `exclude` : compter et retourner seulement les lignes non filtrées
 * `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
   des couleurs sont retournées :
 ** `ansi` : retourner les codes couleur ANSI
@@ -1689,6 +1789,59 @@ HTTP/1.1 200 OK
 }
 ----
 
+[[resource_typing]]
+=== Saisie
+
+Envoyer une notification de saisie pour un tampon.
+
+Point de terminaison :
+
+----
+POST /api/typing
+----
+
+Paramètres du corps :
+
+* `buffer_id` (entier, facultatif) : identifiant unique du tampon (à ne pas
+  confondre avec le numéro du tampon, qui est différent)
+* `buffer_name` (chaîne, facultatif, par défaut : `core.weechat`) : nom de tampon
+* `state` (chaîne, **obligatoire**) : état de la saisie :
+** `active` : l'utilisateur est en train d'écrire un message
+** `paused` : l'utilisateur a fait une pause dans l'écriture
+** `done` : l'utilisateur a effacé la ligne de commande sans envoyer le
+   message
+** `sent` : l'utilisateur a envoyé le message
+
+Pendant que l'utilisateur écrit, l'état `active` doit être envoyé à nouveau
+régulièrement (il est recommandé de l'envoyer toutes les 3 secondes).
+
+Pour les tampons IRC, l'état de la saisie est envoyé au serveur IRC seulement
+si l'option `irc.look.typing_status_self` est activée et si le serveur supporte
+les notifications de saisie (capacité "message-tags") ; l'état `active` est
+changé en `done` s'il n'est pas reçu à nouveau pendant 6 secondes.
+
+L'état de la saisie est partagé par tous les clients et l'utilisateur local sur
+un tampon : si un client envoie `done` alors qu'un autre est encore en train
+d'écrire sur le même tampon, l'état devient `done` jusqu'à ce que `active` soit
+reçu à nouveau.
+
+Exemple de requête : notifier que l'utilisateur est en train d'écrire sur le
+canal #weechat :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "state": "active"}' \
+  'https://localhost:9000/api/typing'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+----
+
 [[resource_sync]]
 === Sync
 
@@ -1716,13 +1869,30 @@ Paramètres du corps :
 * `input` (booléen, facultatif, par défaut : `true`) : `true` pour synchroniser
   l'entrée de tampon depuis le relai distant vers le client local (utilisé
   seulement si `sync` vaut `true`)
+* `typing` (booléen, facultatif, par défaut : `false`) : `true` pour
+  synchroniser les notifications de saisie (utilisé seulement si `sync` vaut
+  `true`)
 * `notify_only` (booléen, facultatif, par défaut : `false`) : `true` pour
   recevoir seulement les nouvelles lignes avec un highlight ou un message privé
   (niveau de notification supérieur ou égal à 2) et les évènements `upgrade`,
   `upgrade_ended` et `quit`, tous les autres évènements ne sont pas envoyés et
-  les paramètres `nicks`, `input` et `options` sont ignorés (utilisé seulement
-  si `sync` vaut `true`) ; ceci est utile pour un client mobile en
+  les paramètres `nicks`, `input`, `typing` et `options` sont ignorés (utilisé
+  seulement si `sync` vaut `true`) ; ceci est utile pour un client mobile en
   arrière-plan
+* `filtered_lines` (booléen, facultatif, par défaut : `true`) : `false` pour ne
+  pas recevoir les lignes filtrées avec la commande `/filter` (lignes avec
+  `displayed` à `false`) : l'évènement `buffer_line_added` n'est pas envoyé pour
+  une ligne filtrée et l'évènement `buffer_opened` contient seulement les lignes
+  non filtrées ; cela ne s'applique pas aux tampons avec contenu libre, où
+  toutes les lignes sont toujours envoyées car une ligne peut remplacer une
+  ligne déjà reçue (utilisé seulement si `sync` vaut `true`)
+  _(WeeChat ≥ 5.0.0)_ ; l'évènement `buffer_line_data_changed` est toujours
+  envoyé, avec le champ `displayed`, pour que le client puisse ajouter ou
+  supprimer la ligne (une mise à jour d'une ligne non reçue avec `displayed` à
+  `false` peut être ignorée) ; le client peut récupérer les lignes des
+  tampons avec contenu formaté avec le même comportement avec le paramètre
+  `filtered` à `exclude` dans la ressource <<resource_buffers,buffers>> (pour
+  les tampons avec contenu libre, le paramètre `filtered` doit être `include`)
 * `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
   des couleurs sont retournées :
 ** `ansi` : retourner les codes couleur ANSI
@@ -1914,6 +2084,7 @@ Les types de corps qui peuvent être retournés :
 * `option` (objet)
 * `completion` (objet)
 * `ping` (objet)
+* `typing` (objet)
 
 [TIP]
 Vous pouvez parcourir les schémas en ligne : https://weechat.org/api/[API relay WeeChat ^↗^^].
@@ -2086,6 +2257,7 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `buffer_localvar_changed`             | id tampon | `buffer`      | tampon
 | `buffer_localvar_removed`             | id tampon | `buffer`      | tampon
 | `buffer_cleared`                      | id tampon | `buffer`      | tampon
+| `buffer_lines_filtered` ^(1)^         | id tampon | `buffer`      | tampon
 | `buffer_closing`                      | id tampon | `buffer`      | tampon
 | `buffer_closed`                       | id tampon | null          | null
 | `buffer_line_added`                   | id tampon | `line`        | ligne de tampon
@@ -2093,6 +2265,8 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `input_prompt_changed`                | id tampon | `buffer`      | tampon
 | `input_text_changed`                  | id tampon | `buffer`      | tampon
 | `input_text_cursor_moved`             | id tampon | `buffer`      | tampon
+| `typing_nick_changed`                 | id tampon | `typing`      | état de la saisie pour un pseudo : `active`, `paused` ou `done`
+| `typing_buffer_reset`                 | id tampon | null          | null
 | `nicklist_group_changed`              | id tampon | `nick_group`  | groupe de pseudos
 | `nicklist_group_added`                | id tampon | `nick_group`  | groupe de pseudos
 | `nicklist_group_removing`             | id tampon | `nick_group`  | groupe de pseudos
@@ -2102,13 +2276,22 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `day_changed`                         | -1        | null          | null
 | `option_changed`                      | -1        | `option`      | option (seulement les champs `name` et `value`)
 | `option_removed`                      | -1        | `option`      | option (seulement le champ `name`)
-| `upgrade` ^(1)^                       | -1        | null          | null
-| `upgrade_ended` ^(1)^                 | -1        | null          | null
+| `upgrade` ^(2)^                       | -1        | null          | null
+| `upgrade_ended` ^(2)^                 | -1        | null          | null
 | `quit`                                | -1        | null          | null
 |===
 
 [NOTE]
-^(1)^ Les évènements `upgrade` et `upgrade_ended` sont envoyés seulement si
+^(1)^ L'évènement `buffer_lines_filtered` _(WeeChat ≥ 5.0.0)_ est envoyé
+lorsque des lignes sont filtrées ou non filtrées dans le tampon après un
+changement dans les filtres (filtre ajouté, supprimé, activé ou désactivé,
+filtres basculés dans le tampon) : le champ `displayed` des lignes déjà
+reçues n'est plus à jour et des lignes peuvent manquer, donc le client doit
+récupérer à nouveau les lignes de ce tampon, par exemple avec le paramètre
+`filtered` à `exclude` ou `between` dans la ressource <<resource_buffers,buffers>>.
+
+[NOTE]
+^(2)^ Les évènements `upgrade` et `upgrade_ended` sont envoyés seulement si
 le client est connecté sans chiffrement (pas de TLS), car avec TLS le client est
 déconnecté avant que la mise à jour soit faire (la mise à jour des connexions TLS
 n'est pas supportée).
@@ -2149,7 +2332,8 @@ Exemple : nouveau tampon : le canal `#weechat` a été rejoint :
             "nick": "alice",
             "host": "~alice@example.com",
             "server": "libera",
-            "channel": "#weechat"
+            "channel": "#weechat",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "lines": [],

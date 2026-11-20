@@ -159,6 +159,8 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
  * Extract CTCP type and arguments from message, which format is:
  *   \001TYPE arguments...\001
  *
+ * Any text after the last "\001" is ignored.
+ *
  * Strings *type and *arguments are set with type and arguments parsed,
  * both are set to NULL in case of error.
  */
@@ -182,7 +184,10 @@ irc_ctcp_parse_type_arguments (const char *message,
     if (!pos_end)
         return;
 
+    /* Search a space before the end of CTCP. */
     pos_space = strchr (message + 1, ' ');
+    if (pos_space && (pos_space > pos_end))
+        pos_space = NULL;
 
     *type = weechat_strndup (
         message + 1,
@@ -232,6 +237,8 @@ irc_ctcp_display_request (struct t_irc_protocol_ctxt *ctxt,
 
 /*
  * Display reply from a nick to a CTCP query.
+ *
+ * Any text after the last "\001" is ignored.
  */
 
 void
@@ -248,7 +255,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
 
     ptr_args = dup_arguments;
 
-    while (ptr_args && ptr_args[0])
+    if (ptr_args[0])
     {
         pos_end = strrchr (ptr_args + 1, '\001');
         if (pos_end)
@@ -263,39 +270,41 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
             {
                 pos_args++;
             }
-            if (weechat_strcasecmp (ptr_args + 1, "ping") == 0)
+            /*
+             * Reply to CTCP PING with seconds and microseconds: display the
+             * lag, otherwise display the reply as-is.
+             */
+            pos_usec = (weechat_strcasecmp (ptr_args + 1, "ping") == 0) ?
+                strchr (pos_args, ' ') : NULL;
+            if (pos_usec)
             {
-                pos_usec = strchr (pos_args, ' ');
-                if (pos_usec)
-                {
-                    pos_usec[0] = '\0';
+                pos_usec[0] = '\0';
 
-                    gettimeofday (&tv, NULL);
-                    sec1 = atoll (pos_args);
-                    usec1 = atoll (pos_usec + 1);
-                    sec2 = tv.tv_sec;
-                    usec2 = tv.tv_usec;
+                gettimeofday (&tv, NULL);
+                sec1 = atoll (pos_args);
+                usec1 = atoll (pos_usec + 1);
+                sec2 = tv.tv_sec;
+                usec2 = tv.tv_usec;
 
-                    difftime = ((sec2 * 1000000) + usec2) -
-                        ((sec1 * 1000000) + usec1);
-                    weechat_printf_datetime_tags (
-                        irc_msgbuffer_get_target_buffer (
-                            ctxt->server, ctxt->nick, NULL, "ctcp", NULL),
-                        ctxt->date,
-                        ctxt->date_usec,
-                        irc_protocol_tags (ctxt, "irc_ctcp"),
-                        /* TRANSLATORS: %.3fs is a float number + "s" ("seconds"). */
-                        _("%sCTCP reply from %s%s%s: %s%s%s %.3fs"),
-                        weechat_prefix ("network"),
-                        irc_nick_color_for_msg (ctxt->server, 0, NULL,
-                                                ctxt->nick),
-                        ctxt->nick,
-                        IRC_COLOR_RESET,
-                        IRC_COLOR_CHAT_CHANNEL,
-                        ptr_args + 1,
-                        IRC_COLOR_RESET,
-                        (float)difftime / 1000000.0);
-                }
+                difftime = ((sec2 * 1000000) + usec2) -
+                    ((sec1 * 1000000) + usec1);
+                weechat_printf_datetime_tags (
+                    irc_msgbuffer_get_target_buffer (
+                        ctxt->server, ctxt->nick, NULL, "ctcp", NULL),
+                    ctxt->date,
+                    ctxt->date_usec,
+                    irc_protocol_tags (ctxt, "irc_ctcp"),
+                    /* TRANSLATORS: %.3fs is a float number + "s" ("seconds"). */
+                    _("%sCTCP reply from %s%s%s: %s%s%s %.3fs"),
+                    weechat_prefix ("network"),
+                    irc_nick_color_for_msg (ctxt->server, 0, NULL,
+                                            ctxt->nick),
+                    ctxt->nick,
+                    IRC_COLOR_RESET,
+                    IRC_COLOR_CHAT_CHANNEL,
+                    ptr_args + 1,
+                    IRC_COLOR_RESET,
+                    (float)difftime / 1000000.0);
             }
             else
             {
@@ -324,7 +333,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
                     ctxt->server, ctxt->nick, NULL, "ctcp", NULL),
                 ctxt->date,
                 ctxt->date_usec,
-                irc_protocol_tags (ctxt, NULL),
+                irc_protocol_tags (ctxt, "irc_ctcp"),
                 _("%sCTCP reply from %s%s%s: %s%s%s%s%s"),
                 weechat_prefix ("network"),
                 irc_nick_color_for_msg (ctxt->server, 0, NULL, ctxt->nick),
@@ -337,7 +346,6 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
                 "");
         }
 
-        ptr_args = (pos_end) ? pos_end + 1 : NULL;
     }
 
     free (dup_arguments);
@@ -1384,6 +1392,8 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
 
 /*
  * Receive a CTCP and if needed replies to query.
+ *
+ * Any text after the last "\001" is ignored.
  */
 
 void
@@ -1403,7 +1413,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
 
     ptr_args = dup_arguments;
 
-    while (ptr_args && ptr_args[0])
+    if (ptr_args[0])
     {
         pos_end = strrchr (ptr_args + 1, '\001');
         if (pos_end)
@@ -1616,7 +1626,6 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                                          WEECHAT_HOOK_SIGNAL_STRING,
                                          (void *)ctxt->irc_message);
 
-        ptr_args = (pos_end) ? pos_end + 1 : NULL;
     }
 
     free (dup_arguments);

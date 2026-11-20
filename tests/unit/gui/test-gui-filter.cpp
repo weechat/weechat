@@ -11,13 +11,64 @@
 extern "C"
 {
 #include <string.h>
+#include "src/core/core-hook.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-filter.h"
 #include "src/gui/gui-line.h"
+#include "src/plugins/weechat-plugin.h"
 
 extern struct t_gui_filter *gui_filter_find_pos (struct t_gui_filter *filter);
 
+}
+
+/* Number of signals "buffer_lines_filtered" received, and last buffer. */
+int test_filter_signal_count = 0;
+struct t_gui_buffer *test_filter_signal_buffer = NULL;
+
+/* Names of buffers received with the signal, separated by commas. */
+char test_filter_signal_buffers[1024];
+
+/* Buffers closed by the signal callback, if set. */
+struct t_gui_buffer *test_filter_close_buffer1 = NULL;
+struct t_gui_buffer *test_filter_close_buffer2 = NULL;
+
+/*
+ * Callback for signal "buffer_lines_filtered": count signals received.
+ */
+
+int
+test_filter_signal_cb (const void *pointer, void *data, const char *signal,
+                       const char *type_data, void *signal_data)
+{
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+
+    test_filter_signal_count++;
+    test_filter_signal_buffer = (struct t_gui_buffer *)signal_data;
+    if (test_filter_signal_buffers[0])
+    {
+        strncat (test_filter_signal_buffers, ",",
+                 sizeof (test_filter_signal_buffers)
+                 - strlen (test_filter_signal_buffers) - 1);
+    }
+    strncat (test_filter_signal_buffers,
+             test_filter_signal_buffer->full_name,
+             sizeof (test_filter_signal_buffers)
+             - strlen (test_filter_signal_buffers) - 1);
+
+    /* Close the other buffer (signal must not be sent for this buffer). */
+    if (test_filter_close_buffer1 && test_filter_close_buffer2)
+    {
+        gui_buffer_close ((signal_data == test_filter_close_buffer1) ?
+                          test_filter_close_buffer2 : test_filter_close_buffer1);
+        test_filter_close_buffer1 = NULL;
+        test_filter_close_buffer2 = NULL;
+    }
+
+    return WEECHAT_RC_OK;
 }
 
 TEST_GROUP(GuiFilter)
@@ -73,7 +124,121 @@ TEST(GuiFilter, CheckLine)
 
 TEST(GuiFilter, Buffer)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer1, *buffer2;
+    struct t_gui_filter *filter;
+    struct t_gui_line_data *line_data1, *line_data2;
+    struct t_hook *hook;
+
+    test_filter_signal_count = 0;
+    test_filter_signal_buffer = NULL;
+    test_filter_signal_buffers[0] = '\0';
+
+    buffer1 = gui_buffer_new (NULL, "test_filter_1",
+                              NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer1);
+    buffer2 = gui_buffer_new (NULL, "test_filter_2",
+                              NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer2);
+
+    gui_chat_printf_date_tags (buffer1, 0, "tag_test_filter", "line 1");
+    gui_chat_printf_date_tags (buffer2, 0, "tag_test_filter", "line 2");
+    line_data1 = buffer1->own_lines->last_line->data;
+    line_data2 = buffer2->own_lines->last_line->data;
+
+    hook = hook_signal (NULL, "buffer_lines_filtered",
+                        &test_filter_signal_cb, NULL, NULL);
+
+    /* No filter: no line changed, no signal. */
+    gui_filter_buffer (buffer1, NULL);
+    LONGS_EQUAL(0, test_filter_signal_count);
+    LONGS_EQUAL(1, line_data1->displayed);
+
+    /* Filter added: line filtered, signal sent. */
+    filter = gui_filter_new (1, "test", "core.test_filter_1",
+                             "tag_test_filter", "*");
+    CHECK(filter);
+    gui_filter_buffer (buffer1, NULL);
+    LONGS_EQUAL(1, test_filter_signal_count);
+    POINTERS_EQUAL(buffer1, test_filter_signal_buffer);
+    LONGS_EQUAL(0, line_data1->displayed);
+    LONGS_EQUAL(1, buffer1->own_lines->lines_hidden);
+
+    /* No line changed: no signal. */
+    gui_filter_buffer (buffer1, NULL);
+    LONGS_EQUAL(1, test_filter_signal_count);
+
+    /* Filter removed: line unfiltered, signal sent. */
+    gui_filter_free (filter);
+    gui_filter_buffer (buffer1, NULL);
+    LONGS_EQUAL(2, test_filter_signal_count);
+    POINTERS_EQUAL(buffer1, test_filter_signal_buffer);
+    LONGS_EQUAL(1, line_data1->displayed);
+    LONGS_EQUAL(0, buffer1->own_lines->lines_hidden);
+
+    /* Filter of a single line: no signal. */
+    filter = gui_filter_new (1, "test", "core.test_filter_1",
+                             "tag_test_filter", "*");
+    CHECK(filter);
+    gui_filter_buffer (buffer1, line_data1);
+    LONGS_EQUAL(2, test_filter_signal_count);
+    LONGS_EQUAL(0, line_data1->displayed);
+    gui_filter_free (filter);
+    gui_filter_buffer (buffer1, line_data1);
+    LONGS_EQUAL(2, test_filter_signal_count);
+    LONGS_EQUAL(1, line_data1->displayed);
+
+    /*
+     * Merged buffers: signal sent only for merged buffers with lines
+     * filtered or unfiltered.
+     */
+    gui_buffer_merge (buffer2, buffer1);
+    POINTERS_EQUAL(buffer1->mixed_lines, buffer2->mixed_lines);
+    filter = gui_filter_new (1, "test", "core.test_filter_1",
+                             "tag_test_filter", "*");
+    CHECK(filter);
+    gui_filter_buffer (buffer2, NULL);
+    LONGS_EQUAL(3, test_filter_signal_count);
+    POINTERS_EQUAL(buffer1, test_filter_signal_buffer);
+    LONGS_EQUAL(0, line_data1->displayed);
+    LONGS_EQUAL(1, line_data2->displayed);
+    gui_filter_free (filter);
+    filter = gui_filter_new (1, "test", "core.test_filter_*",
+                             "tag_test_filter", "*");
+    CHECK(filter);
+    gui_filter_buffer (buffer1, NULL);
+    LONGS_EQUAL(4, test_filter_signal_count);
+    POINTERS_EQUAL(buffer2, test_filter_signal_buffer);
+    LONGS_EQUAL(0, line_data1->displayed);
+    LONGS_EQUAL(0, line_data2->displayed);
+    test_filter_signal_buffers[0] = '\0';
+    gui_filter_free (filter);
+    gui_filter_buffer (buffer1, NULL);
+    LONGS_EQUAL(6, test_filter_signal_count);
+    LONGS_EQUAL(1, line_data1->displayed);
+    LONGS_EQUAL(1, line_data2->displayed);
+    /* Signals sent in order of the first line changed in each buffer. */
+    STRCMP_EQUAL("core.test_filter_1,core.test_filter_2",
+                 test_filter_signal_buffers);
+
+    /* Merged buffer closed by the signal callback: no signal sent for it. */
+    test_filter_close_buffer1 = buffer1;
+    test_filter_close_buffer2 = buffer2;
+    filter = gui_filter_new (1, "test", "core.test_filter_*",
+                             "tag_test_filter", "*");
+    CHECK(filter);
+    test_filter_signal_buffers[0] = '\0';
+    gui_filter_buffer (buffer1, NULL);
+    LONGS_EQUAL(7, test_filter_signal_count);
+    POINTERS_EQUAL(NULL, test_filter_close_buffer1);
+    STRCMP_EQUAL("core.test_filter_1", test_filter_signal_buffers);
+    gui_filter_free (filter);
+
+    unhook (hook);
+
+    if (gui_buffer_valid (buffer2))
+        gui_buffer_close (buffer2);
+    if (gui_buffer_valid (buffer1))
+        gui_buffer_close (buffer1);
 }
 
 /*

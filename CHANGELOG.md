@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
+- core: add signal "buffer_lines_filtered"
 - core: add jump to buffer with command `/N` (for example `/42`) and option weechat.look.command_buffer_number ([#762](https://github.com/weechat/weechat/issues/762))
 - core: add option `insert_raw` in command `/input` to insert text without converting escaped chars
 - core: add option `-older` in command `/buffer clear` to clear only lines older than a delay
@@ -19,6 +20,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: add signal "buffer_day_change_changed"
 - core: add signal "buffer_notify_changed"
 - core: add flag "prefix_for_each_line" in buffer
+- api: add info "language"
 - api: add property "notify" in function buffer_get_string
 - api: add function "hashtable_map_sorted"
 - api: add focus key "_chat_line_id", deprecate keys "_chat_line_date_printed" and "_chat_line_date_usec_printed"
@@ -27,6 +29,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - buflist: add info "buflist_bar_items_count"
 - build/container: add files to build container images (Debian and Alpine) from the local sources, moved from repository [weechat-container](https://github.com/weechat/weechat-container)
 - doc: add cheat sheet with all key bindings and mouse actions
+- irc: add buffer local variables "irc_caps" (capabilities enabled) and "irc_clienttagdeny" (value of CLIENTTAGDENY)
 - irc: add options irc.look.notice_nick_prefix, irc.look.notice_nick_suffix and irc.look.notice_target_separator to customize the text displayed around nick and target in prefix of notices
 - irc: add pointers "irc_server" and "irc_channel" in focus hashtable of buflist bar items ([#1543](https://github.com/weechat/weechat/issues/1543))
 - irc: add option irc.look.multi_prefix_in_nicklist to display all nick prefixes in nicklist when capability "multi-prefix" is enabled ([#132](https://github.com/weechat/weechat/issues/132))
@@ -36,7 +39,11 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
 - javascript, php, tcl: add `eval` option in script commands and info "xxx_eval" ([#128](https://github.com/weechat/weechat/issues/128))
 - relay: add option relay.network.allowed_networks to restrict connections to IPv4/IPv6 networks in CIDR notation ([#2364](https://github.com/weechat/weechat/issues/2364))
-- relay/api: add resource `GET /api/info` to get infos about WeeChat, with info "locale"
+- relay/api: add resource `POST /api/typing` and option "typing" in resource `POST /api/sync` to receive typing notifications
+- relay/api: add option "filtered_lines" in resource `POST /api/sync` to not receive lines filtered with `/filter`
+- relay/api: add parameter "filtered" in resource `GET /api/buffers` to count and return only lines not filtered with `/filter`
+- relay/api: accept TOTP in websocket sub-protocol `totp.weechat.<code>`, for clients unable to send header "x-weechat-totp"
+- relay/api: add resource `GET /api/info` to get infos about WeeChat, with infos "language" and "locale"
 - relay/api: add option "options" in resource `POST /api/sync` to receive changes on options
 - relay/api: add option "notify_only" in resource `POST /api/sync` to receive only highlights and private messages ([#2363](https://github.com/weechat/weechat/issues/2363))
 - relay/api: add resource `GET /api/options`
@@ -44,6 +51,8 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 ### Changed
 
 - core, plugins: use plural forms or reword messages displaying a count
+- core: close file descriptors faster when running in background with option `--daemon` in headless mode
+- **breaking:** core: exit with an error on unknown command-line option, exit with code 2 on invalid command-line arguments
 - core: keep the current buffer in the zoomed window when the window is unzoomed ([#1372](https://github.com/weechat/weechat/issues/1372))
 - core: format strings faster in function string_asprintf
 - core: evaluate expressions faster when they contain text outside variables
@@ -67,6 +76,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - core: save secured data in sec.conf and display them on secured data buffer sorted by name
 - **breaking:** core: use the current date/time with microseconds as line identifier, replace buffer property "next_line_id" by "lines_last_id_assigned"
 - **breaking:** core: remove fields "date_printed" and "date_usec_printed" in lines, replaced by the line identifier
+- **breaking:** api: add optional argument "digits" in info "totp_validate" (6 by default), the one-time password must have exactly this number of digits
 - api: check completion pointer in functions completion_search, completion_get_string, completion_set, completion_list_add, completion_free, hook_completion_get_string and hook_completion_list_add to prevent a crash when a freed completion is used
 - api: check bar and bar item pointers in functions bar_set, bar_remove and bar_item_remove to prevent a crash when a removed bar or bar item is used
 - api: check window pointer in functions window_get_integer and window_get_pointer to prevent a crash when a closed window is used
@@ -84,6 +94,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - buflist: display only the first char of nick prefix in variable `${nick_prefix}`, so that buffers stay aligned when a nick has multiple prefixes in nicklist
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: accept a number or a string with a number as integer data in function hook_signal_send, return an error if the data is not a valid integer
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
+- irc: send self typing status "done" if signal "typing_self_typing" is not received for 6 seconds
 - irc: allow spaces around commas in server option tls_fingerprint
 - irc: allow multiple nicks separated by commas in commands `/notify add`, `/notify addreplace` and `/notify del` ([#689](https://github.com/weechat/weechat/issues/689))
 - **breaking:** irc: display all nick prefixes in nicklist when capability "multi-prefix" is enabled (option irc.look.multi_prefix_in_nicklist), the nick prefix in nicklist can now have more than one char
@@ -91,6 +102,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: split channel modes in multiple messages in commands `/mode` and `/samode` according to the server limit ([#295](https://github.com/weechat/weechat/issues/295))
 - javascript: enable build by default ([#360](https://github.com/weechat/weechat/issues/360))
 - **breaking:** javascript: use the current V8 API, require V8 ≥ 11.3 (provided by Node.js shared library on Linux, or standalone V8 library like on macOS with Homebrew), V8 is now initialized on first script load and runs in single-threaded mode ([#360](https://github.com/weechat/weechat/issues/360))
+- logger: write the next lines of multiline messages with an empty date and prefix (two tabs at beginning of line), add option logger.file.split_multiline to write the date and prefix on each line ([#2210](https://github.com/weechat/weechat/issues/2210))
 - logger: read the backlog faster when the log file has very long lines
 - **breaking:** php: remove GnuTLS arguments of function hook_connect, like in all other languages
 - **breaking:** php: remove argument of function unhook_all, remove only the hooks of the current script
@@ -98,6 +110,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - **breaking:** php: fix signal data sent by function hook_signal_send and received in hook_signal callback, remove argument "type_data" from hook_signal callback
 - **breaking:** relay: remove "date_printed" and "date_usec_printed" of lines in weechat protocol
 - **breaking:** relay: change type of line identifier from "int" to "lon" in weechat protocol
+- relay/api: send event "buffer_lines_filtered" to clients when lines are filtered or unfiltered in a buffer
 - relay/api: send event "day_changed" to clients
 - relay/api: send event "buffer_day_change_changed" to clients
 - relay/api: add field "day_change" in buffers
@@ -109,9 +122,22 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - **breaking:** relay/api: remove field "date_printed" in lines
 - **breaking:** relay/api: bump API version to 0.7.0
 - relay/weechat: add field "notify" in message "_buffer_opened", send message "_buffer_notify_changed" to clients ([#593](https://github.com/weechat/weechat/issues/593))
+- **breaking:** xfer: check value of option xfer.network.port_range when it is set (ports between 1 and 65535), ignore an invalid value read from the configuration file; an invalid range could bind an unexpected port or loop forever
 
 ### Fixed
 
+- core: fix read of passphrase from command (option sec.crypt.passphrase_command) when the read is interrupted by a signal
+- core: fix loss of secured data still encrypted in file sec.conf after a partial decryption with command `/secure decrypt`
+- core: fix decryption of secured data with a comma in name with command `/secure decrypt`
+- core: keep secured data encrypted when it cannot be decrypted with the passphrase on reload of file sec.conf, instead of deleting it
+- core: fix memory leak in completion of plugin commands when the plugin is not found
+- core: fix display and ANSI conversion of incomplete WeeChat color codes, keep chars that are not part of the color code ([#2382](https://github.com/weechat/weechat/pull/2382))
+- core: fix crash when a plugin is unloaded or reloaded with command `/plugin` executed by a plugin or script, delay the command ([#2380](https://github.com/weechat/weechat/issues/2380))
+- core: fix crash when command `/upgrade` is executed by a script, execute the upgrade in the main loop ([#2380](https://github.com/weechat/weechat/issues/2380))
+- core: display an error when /dev/null can not be opened with option `--daemon` in headless mode
+- core: fix options `-a` and `-s` ignored by plugins when abbreviated or grouped (for example `--no-conn` or `-as`), do not send the program name and values of options to plugins
+- core: fix exit code 1 instead of 0 when option `--doc-gen` is given with an option that exits immediately, like `--version`
+- core: fix option `--no-gcrypt`, which did not disable the init of gcrypt
 - core: call config hooks with the old option name when an option is renamed, so that the old name is seen as removed
 - core: fix memory leak when the upgrade file can not be read on startup with option `--upgrade`
 - core: fix memory leak in input of buffers restored by command `/upgrade`
@@ -162,6 +188,10 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: display reply to CTCP PING with a single argument, which was ignored
+- irc: add missing tag "irc_ctcp" in display of CTCP reply without arguments
+- irc: ignore text after a received CTCP, which was parsed as another CTCP (one message could trigger two CTCP replies)
+- irc: fix display of own CTCP when there is text after the CTCP
 - irc: fix issue with year ≥ 2038 in reconnection after `/upgrade`
 - irc: fix use after free of a deleted server in raw messages, which could cause a crash in raw buffer or on `/upgrade`
 - irc: remove extra spaces after "online" in notify list
@@ -200,18 +230,26 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - python: fix crash when a script loads another script during its initialization
 - python: do not call sys.excepthook and do not exit WeeChat on SystemExit when an error is displayed (for example when a script calls sys.exit)
 - python: add functions config_option_get_string and config_option_get_pointer in stub (weechat.pyi) and plugin API reference
+- relay: fix memory leak when the URL of a remote relay is invalid in configuration file
+- relay: refuse an invalid port (not an integer or out of range) when a relay is added
+- relay: ignore spaces around algorithms in option relay.network.password_hash_algo
+- relay: allow to set again the current port or path of a relay, which was refused as already used
+- relay: fix check of UNIX socket path already used by another relay when the path contains "%h" or must be evaluated
 - relay: fix issue with year ≥ 2038 in reconnection to remotes after `/upgrade`
 - relay: fix memory leak when relay clients are restored after `/upgrade`
 - relay: ignore option relay.network.allowed_ips for relays on UNIX domain sockets (clients were rejected if the regular expression did not match an empty string)
 - relay/irc: add support of extra date/time specifiers like "%@" (UTC date) in option relay.irc.backlog_time_format
 - relay/irc: remove message tags not negotiated by the client in redirected messages ([#2359](https://github.com/weechat/weechat/issues/2359))
+- relay/api: allow header "x-weechat-totp" in CORS preflight response, so that browsers can send the TOTP in HTTP requests
 - relay/api: fix memory leak when a message without body is sent to a client connected with websocket
 - relay/api: replace invalid UTF-8 chars by "?" in JSON sent, so that it is always valid JSON
 - relay/api: fix integer numbers sent with exponent in JSON (for example buffer identifier sent as `1.70993282323864e+15` instead of `1709932823238640`)
 - relay/api: fix notify tag in line when already read on remote ([#2343](https://github.com/weechat/weechat/issues/2343))
+- ruby: restore the current script when a function of a script fails
 - ruby: fix errors when a script loads another script during its initialization
 - ruby: fix crash when an exception has no backtrace, display the class name of exception instead of its singleton class
 - ruby: clear exception after an error, so that it is not set as cause of the next exception and not displayed again when the plugin is unloaded
+- scripts: fix crash when a script is unloaded or reloaded while one of its functions is running, delay the unload until the function has returned ([#2380](https://github.com/weechat/weechat/issues/2380))
 - spell: skip IRC hex color codes and strikethrough attribute before checking words
 - spell: do not skip the comma in IRC color code `^C,NN` without foreground, skip the two digits of background in color code `^CNN,NN`
 - spell: apply changes on options spell.option.* immediately, without reloading the plugin ([#1241](https://github.com/weechat/weechat/issues/1241))
@@ -221,6 +259,8 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - trigger: set variables "tg_trigger_name" and "tg_hook_type" in focus triggers, do not add them in the hashtable returned
 - trigger: escape backslashes in arguments displayed by commands `/trigger input|output|recreate` ([#729](https://github.com/weechat/weechat/issues/729))
 - typing: fix issue with year ≥ 2038 in typing status of nicks
+- xfer: fix possible removal of an unrelated hook when a transfer lasts longer than the timeout (option xfer.network.timeout)
+- xfer: fail a file receive when DCC ACCEPT is not received after a resume request, after the timeout (option xfer.network.timeout), and release the socket and port of a passive receive
 - xfer: fix memory leak of token in passive DCC transfers
 - xfer: fix send of files greater than 4 GiB with DCC, the transfer failed or stalled after 4 GiB
 - xfer: fix timeout of transfers when option xfer.network.timeout is greater than 2147483 seconds
@@ -236,6 +276,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Security
 
+- core: fix decoding of incomplete WeeChat color codes in functions string_remove_color and string_color_code_size, which could remove the sender of an IRC message received with a crafted message tag ([#2382](https://github.com/weechat/weechat/pull/2382))
 - core: fix integer overflow in dynamic strings when their size exceeds 4 GiB ([GHSA-h394-85x4-68c7](https://github.com/weechat/weechat/security/advisories/GHSA-h394-85x4-68c7))
 - core: fix heap buffer overflow in charset conversion when the converted string is more than 4 times longer than the input and contains invalid chars, for example with charset TSCII ([GHSA-q32h-5qvq-3936](https://github.com/weechat/weechat/security/advisories/GHSA-q32h-5qvq-3936))
 - irc: refuse SASL success with SCRAM mechanisms when the server signature has not been verified, to enforce mutual authentication
@@ -248,6 +289,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: fix heap buffer overflow in nick prefixes when the server sends an empty PREFIX in message 005 and the connection is lost before message 001 ([GHSA-xj8h-x2w9-m8m6](https://github.com/weechat/weechat/security/advisories/GHSA-xj8h-x2w9-m8m6))
 - irc: fix crash on invalid SASL challenge received with mechanism "ecdsa-nist256p-challenge" ([#2350](https://github.com/weechat/weechat/issues/2350))
 - relay/api: refuse number of hash iterations lower than 1 or greater than 1000000 received from the remote relay, to prevent blocking WeeChat for a long time
+- relay: require exactly 6 digits in TOTP received from a client with "api" and "weechat" protocols
 - relay: check only the first password and TOTP received in command "init" of "weechat" protocol, to prevent a client from blocking WeeChat with many password checks (like PBKDF2) in a single message ([#2368](https://github.com/weechat/weechat/pull/2368))
 - relay: ignore IRC messages longer than 4096 bytes received from a client and reply with numeric 417 (ERR_INPUTTOOLONG), to prevent blocking WeeChat and consuming a lot of memory when parsing huge messages ([#2367](https://github.com/weechat/weechat/issues/2367))
 - relay: limit size of HTTP headers received from a client to prevent memory exhaustion ([GHSA-h394-85x4-68c7](https://github.com/weechat/weechat/security/advisories/GHSA-h394-85x4-68c7))
@@ -256,11 +298,30 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - relay: reject fragmented, compressed or oversized websocket control frames received from a client ([#2356](https://github.com/weechat/weechat/issues/2356))
 - relay: limit size of partial message received from a client to prevent memory exhaustion ([#2347](https://github.com/weechat/weechat/issues/2347))
 - script: reject script names containing path separators in the scripts repository file to prevent writing files outside the scripts directory ([#2351](https://github.com/weechat/weechat/issues/2351))
+- xfer: open the socket of a passive file receive (reverse DCC) only when the transfer is accepted, to prevent a remote peer from exhausting file descriptors with many DCC offers ([#2384](https://github.com/weechat/weechat/pull/2384))
 - xfer: compare the whole server name in option xfer.file.auto_accept_nicks, so that a nick is not auto-accepted on another server whose name starts with the same chars
 - xfer: validate resume position received in DCC RESUME and DCC ACCEPT, to prevent a remote peer from completing a file transfer with a truncated file ([#2369](https://github.com/weechat/weechat/pull/2369))
 - xfer: fix comparison of status in search of transfers, preventing a remote peer from starting a file transfer that was not accepted by the user ([#2352](https://github.com/weechat/weechat/issues/2352))
 - xfer: limit size of partial message received in DCC chat to prevent memory exhaustion ([#2349](https://github.com/weechat/weechat/issues/2349))
 - xfer: remove path from filename received in DCC file transfer to prevent writing the file outside the download directory ([#2348](https://github.com/weechat/weechat/issues/2348))
+
+## [4.10.4] - 2026-11-09
+
+### Added
+
+- build/container: add files to build container images (Debian and Alpine) from the local sources, moved from repository [weechat-container](https://github.com/weechat/weechat-container)
+
+### Fixed
+
+- core: fix memory leak when the upgrade file can not be read on startup with option `--upgrade`
+- core: fix memory leak in input of buffers restored by command `/upgrade`
+- core: fix crash in info "color_rgb2term" when the limit is greater than 256
+- irc: fix use after free of a deleted server in raw messages, which could cause a crash in raw buffer or on `/upgrade`
+
+### Security
+
+- relay: require exactly 6 digits in TOTP received from a client with "api" and "weechat" protocols
+- relay: check only the first password and TOTP received in command "init" of "weechat" protocol, to prevent a client from blocking WeeChat with many password checks (like PBKDF2) in a single message ([#2368](https://github.com/weechat/weechat/pull/2368))
 
 ## [4.10.3] - 2026-11-07
 
@@ -4819,6 +4880,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - nicklist can be moved on top, bottom, left or right of window
 
 [Unreleased]: https://github.com/weechat/weechat/compare/v4.10.0...HEAD
+[4.10.4]: https://github.com/weechat/weechat/compare/v4.10.3...v4.10.4
 [4.10.3]: https://github.com/weechat/weechat/compare/v4.10.2...v4.10.3
 [4.10.2]: https://github.com/weechat/weechat/compare/v4.10.1...v4.10.2
 [4.10.1]: https://github.com/weechat/weechat/compare/v4.10.0...v4.10.1

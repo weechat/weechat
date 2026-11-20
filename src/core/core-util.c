@@ -849,3 +849,70 @@ util_version_number (const char *version)
     return (values[0] << 24) | (values[1] << 16)
         | (values[2] << 8) | values[3];
 }
+
+/*
+ * Extract the language from a gettext catalog header (value of field
+ * "Language:", for example "fr" or "pt_BR").
+ *
+ * Return "en" (language of untranslated messages) if the header is NULL,
+ * empty or has no language.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+util_get_language_from_header (const char *header)
+{
+    const char *ptr_language, *ptr_end;
+
+    if (header)
+    {
+        ptr_language = strstr (header, "Language:");
+        while (ptr_language
+               && (ptr_language != header) && (ptr_language[-1] != '\n'))
+        {
+            ptr_language = strstr (ptr_language + 1, "Language:");
+        }
+        if (ptr_language)
+        {
+            ptr_language += 9;
+            while ((ptr_language[0] == ' ') || (ptr_language[0] == '\t'))
+            {
+                ptr_language++;
+            }
+            ptr_end = ptr_language;
+            while (ptr_end[0] && (ptr_end[0] != '\n') && (ptr_end[0] != '\r')
+                   && (ptr_end[0] != ' ') && (ptr_end[0] != '\t'))
+            {
+                ptr_end++;
+            }
+            if (ptr_end > ptr_language)
+                return string_strndup (ptr_language, ptr_end - ptr_language);
+        }
+    }
+
+    return strdup ("en");
+}
+
+/*
+ * Get the language of WeeChat translated messages (for example "fr" or
+ * "pt_BR"), which is the language of the gettext catalog loaded.
+ *
+ * Return "en" if messages are not translated (no catalog loaded or NLS
+ * disabled).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+util_get_language (void)
+{
+    const char *empty_msgid = "";
+
+    /*
+     * The header of the catalog loaded by gettext is the translation of
+     * the empty string; it is empty if no catalog is loaded.
+     * A variable is used so that xgettext does not extract the empty msgid.
+     */
+    return util_get_language_from_header (gettext (empty_msgid));
+}

@@ -52,6 +52,15 @@ include::includes/cmdline_options.ru.adoc[tag=debug]
 
 include::includes/man.ru.adoc[tag=plugin_options]
 
+// TRANSLATION MISSING
+== EXIT STATUS
+
+include::includes/man.ru.adoc[tag=exit_status]
+
+// TRANSLATION MISSING
+With option "--daemon", the exit status is 0 as soon as WeeChat runs in
+background: errors occurring after are not reported in the exit status.
+
 == ФАЙЛЫ
 
 include::includes/man.ru.adoc[tag=files]

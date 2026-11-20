@@ -50,6 +50,11 @@ include::includes/cmdline_options.it.adoc[tag=debug]
 include::includes/man.it.adoc[tag=plugin_options]
 
 // TRANSLATION MISSING
+== EXIT STATUS
+
+include::includes/man.it.adoc[tag=exit_status]
+
+// TRANSLATION MISSING
 == FILES
 
 include::includes/man.it.adoc[tag=files]

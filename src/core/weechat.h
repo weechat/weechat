@@ -118,6 +118,8 @@ extern int weechat_plugin_no_dlclose;
 extern int weechat_no_gnutls;
 extern int weechat_no_gcrypt;
 extern struct t_weelist *weechat_startup_commands;
+extern int weechat_plugin_argc;
+extern char **weechat_plugin_argv;
 extern int weechat_auto_connect;
 extern int weechat_auto_load_scripts;
 

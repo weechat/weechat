@@ -45,10 +45,12 @@ extern "C"
 
 /* Import tests from libs. */
 /* core */
+IMPORT_TEST_GROUP(CoreArgs);
 IMPORT_TEST_GROUP(CoreArraylist);
 IMPORT_TEST_GROUP(CoreBacktrace);
 IMPORT_TEST_GROUP(CoreCalc);
 IMPORT_TEST_GROUP(CoreCommand);
+IMPORT_TEST_GROUP(CoreCompletion);
 IMPORT_TEST_GROUP(CoreConfigFile);
 IMPORT_TEST_GROUP(CoreCrypto);
 IMPORT_TEST_GROUP(CoreDir);
@@ -61,6 +63,8 @@ IMPORT_TEST_GROUP(CoreInput);
 IMPORT_TEST_GROUP(CoreList);
 IMPORT_TEST_GROUP(CoreNetwork);
 IMPORT_TEST_GROUP(CoreSecure);
+IMPORT_TEST_GROUP(CoreSecureBuffer);
+IMPORT_TEST_GROUP(CoreSecureConfig);
 IMPORT_TEST_GROUP(CoreSignal);
 IMPORT_TEST_GROUP(CoreString);
 IMPORT_TEST_GROUP(CoreTheme);
@@ -224,8 +228,13 @@ main (int argc, char *argv[])
     const char *ptr_path;
     void *handle;
 
-    /* Setup environment: English language, no specific timezone. */
+    /*
+     * Setup environment: English language, no specific timezone.
+     * LANGUAGE is removed because gettext uses it first (if locale is not
+     * "C"), and messages could be translated.
+     */
     setenv ("LC_ALL", LOCALE_TESTS, 1);
+    unsetenv ("LANGUAGE");
     setenv ("TZ", "", 1);
 
     /* Check if locale exists. */

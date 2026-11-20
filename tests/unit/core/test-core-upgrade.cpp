@@ -20,6 +20,7 @@ extern "C"
 #include <sys/time.h>
 #include "src/core/weechat.h"
 #include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
 #include "src/core/core-infolist.h"
 #include "src/core/core-string.h"
 #include "src/core/core-upgrade.h"
@@ -1474,4 +1475,93 @@ TEST(CoreUpgrade, End)
     unlink (path_other);
     free (path_upgrade);
     free (path_other);
+}
+
+/*
+ * Callback for signal "upgrade": return an error, so that the upgrade is
+ * aborted before plugins are unloaded.
+ */
+
+int
+test_core_upgrade_signal_error_cb (const void *pointer, void *data,
+                                   const char *signal, const char *type_data,
+                                   void *signal_data)
+{
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * Test functions:
+ *   upgrade_weechat_check_background
+ *   upgrade_weechat_schedule
+ *   upgrade_weechat_cancel
+ *   upgrade_weechat_exec
+ */
+
+TEST(CoreUpgrade, Schedule)
+{
+    LONGS_EQUAL(1, upgrade_weechat_check_background ());
+
+    LONGS_EQUAL(0, upgrade_pending);
+    POINTERS_EQUAL(NULL, upgrade_pending_binary);
+    LONGS_EQUAL(0, upgrade_pending_quit);
+
+    /* Nothing is done if no upgrade is scheduled. */
+    upgrade_weechat_exec ();
+    LONGS_EQUAL(0, upgrade_pending);
+    LONGS_EQUAL(0, weechat_quit);
+    LONGS_EQUAL(0, weechat_upgrading);
+
+    upgrade_weechat_schedule (strdup ("/path/to/weechat"), 0);
+    LONGS_EQUAL(1, upgrade_pending);
+    STRCMP_EQUAL("/path/to/weechat", upgrade_pending_binary);
+    LONGS_EQUAL(0, upgrade_pending_quit);
+
+    /* A new schedule replaces the previous one. */
+    upgrade_weechat_schedule (NULL, 1);
+    LONGS_EQUAL(1, upgrade_pending);
+    POINTERS_EQUAL(NULL, upgrade_pending_binary);
+    LONGS_EQUAL(1, upgrade_pending_quit);
+
+    upgrade_weechat_cancel ();
+    LONGS_EQUAL(0, upgrade_pending);
+    POINTERS_EQUAL(NULL, upgrade_pending_binary);
+    LONGS_EQUAL(0, upgrade_pending_quit);
+}
+
+/*
+ * Test functions:
+ *   upgrade_weechat_exec
+ */
+
+TEST(CoreUpgrade, ExecAborted)
+{
+    struct t_hook *ptr_hook;
+
+    /* Signal "upgrade" returns an error: upgrade is aborted. */
+    ptr_hook = hook_signal (NULL, "999999|upgrade",
+                            &test_core_upgrade_signal_error_cb, NULL, NULL);
+    CHECK(ptr_hook);
+
+    upgrade_weechat_schedule (strdup ("/path/to/weechat"), 0);
+    record_start ();
+    upgrade_weechat_exec ();
+    record_stop ();
+    LONGS_EQUAL(0, upgrade_pending);
+    POINTERS_EQUAL(NULL, upgrade_pending_binary);
+    LONGS_EQUAL(0, upgrade_pending_quit);
+    LONGS_EQUAL(0, weechat_quit);
+    LONGS_EQUAL(0, weechat_upgrading);
+    RECORD_CHECK_MSG("core.weechat", "=!=",
+                     "Unable to save some plugin sessions (files *.upgrade)",
+                     NULL);
+    RECORD_CHECK_MSG("core.weechat", "=!=", "Upgrade aborted", NULL);
+
+    unhook (ptr_hook);
 }

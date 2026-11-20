@@ -51,10 +51,12 @@ endif()
 
 # Unit tests (core)
 set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
+  core/test-core-args.cpp
   core/test-core-arraylist.cpp
   core/test-core-backtrace.cpp
   core/test-core-calc.cpp
   core/test-core-command.cpp
+  core/test-core-completion.cpp
   core/test-core-config-file.cpp
   core/test-core-crypto.cpp
   core/test-core-dir.cpp
@@ -67,6 +69,8 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   core/test-core-list.cpp
   core/test-core-network.cpp
   core/test-core-secure.cpp
+  core/test-core-secure-buffer.cpp
+  core/test-core-secure-config.cpp
   core/test-core-signal.cpp
   core/test-core-string.cpp
   core/test-core-theme.cpp
@@ -157,6 +161,7 @@ if(ENABLE_IRC)
     plugins/irc/test-irc-sasl.cpp
     plugins/irc/test-irc-server.cpp
     plugins/irc/test-irc-tag.cpp
+    plugins/irc/test-irc-typing.cpp
     plugins/irc/test-irc-upgrade.cpp
   )
 endif()
@@ -174,11 +179,14 @@ if (ENABLE_RELAY)
     plugins/relay/test-relay-auth.cpp
     plugins/relay/test-relay-bar-item.cpp
     plugins/relay/test-relay-client.cpp
+    plugins/relay/test-relay-config.cpp
     plugins/relay/test-relay-http.cpp
     plugins/relay/test-relay-json.cpp
     plugins/relay/test-relay-network.cpp
     plugins/relay/test-relay-raw.cpp
     plugins/relay/test-relay-remote.cpp
+    plugins/relay/test-relay-server.cpp
+    plugins/relay/test-relay-upgrade.cpp
     plugins/relay/test-relay-websocket.cpp
     plugins/relay/api/test-relay-api.cpp
     plugins/relay/api/test-relay-api-msg.cpp

@@ -46,6 +46,13 @@ include::includes/cmdline_options.en.adoc[tag=debug]
 
 include::includes/man.en.adoc[tag=plugin_options]
 
+== EXIT STATUS
+
+include::includes/man.en.adoc[tag=exit_status]
+
+With option "--daemon", the exit status is 0 as soon as WeeChat runs in
+background: errors occurring after are not reported in the exit status.
+
 == FILES
 
 include::includes/man.en.adoc[tag=files]

@@ -44,6 +44,11 @@ include::includes/cmdline_options.ja.adoc[tag=debug]
 
 include::includes/man.ja.adoc[tag=plugin_options]
 
+// TRANSLATION MISSING
+== EXIT STATUS
+
+include::includes/man.ja.adoc[tag=exit_status]
+
 == ファイル
 
 include::includes/man.ja.adoc[tag=files]

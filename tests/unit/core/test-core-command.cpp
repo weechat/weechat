@@ -21,9 +21,12 @@ extern "C"
 #include "src/core/weechat.h"
 #include "src/core/core-command.h"
 #include "src/core/core-debug.h"
+#include "src/core/core-hook.h"
 #include "src/core/core-input.h"
 #include "src/core/core-string.h"
+#include "src/core/core-upgrade.h"
 #include "src/core/core-url.h"
+#include "src/core/core-util.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
@@ -36,6 +39,7 @@ extern "C"
 #include "src/gui/gui-mouse.h"
 #include "src/gui/gui-window.h"
 #include "src/plugins/plugin.h"
+#include "src/plugins/plugin-api.h"
 }
 
 #define WEE_CMD_BUFFER(__buffer_name, __command)                        \
@@ -1272,7 +1276,44 @@ TEST(CoreCommand, Pipe)
 
 TEST(CoreCommand, Plugin)
 {
-    /* TODO: write tests */
+    struct t_hook *ptr_last_timer;
+    struct timeval time_start, time_now;
+
+    /* Unload/reload executed by the user: immediate. */
+    WEE_CMD_CORE("/plugin unload xxx");
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                       "Plugin \"xxx\" not found");
+    WEE_CMD_CORE("/plugin reload xxx");
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                       "Plugin \"xxx\" not found");
+
+    /*
+     * Unload/reload executed by a plugin: delayed (executed again by a
+     * timer).
+     */
+    ptr_last_timer = last_weechat_hook[HOOK_TYPE_TIMER];
+    plugin_api_command_running = 1;
+    WEE_CMD_CORE("/plugin unload xxx");
+    plugin_api_command_running = 0;
+    if (record_search ("core.weechat", GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                       "Plugin \"xxx\" not found", NULL))
+    {
+        FAIL("Unexpected message: plugin unloaded immediately");
+    }
+    CHECK(last_weechat_hook[HOOK_TYPE_TIMER] != ptr_last_timer);
+    record_start ();
+    gettimeofday (&time_start, NULL);
+    while (!record_search ("core.weechat", GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                           "Plugin \"xxx\" not found", NULL))
+    {
+        hook_timer_exec ();
+        gettimeofday (&time_now, NULL);
+        if (util_timeval_diff (&time_start, &time_now) >= 1000 * 1000)
+            break;
+    }
+    record_stop ();
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ERROR_DEFAULT,
+                       "Plugin \"xxx\" not found");
 }
 
 /*
@@ -1442,7 +1483,12 @@ TEST(CoreCommand, Proxy)
 
 TEST(CoreCommand, Quit)
 {
-    /* TODO: write tests */
+    /* Upgrade scheduled: command is ignored. */
+    upgrade_weechat_schedule (NULL, 1);
+    WEE_CMD_CORE("/quit -yes");
+    LONGS_EQUAL(0, weechat_quit);
+    LONGS_EQUAL(1, upgrade_pending);
+    upgrade_weechat_cancel ();
 }
 
 /*
@@ -1585,7 +1631,39 @@ TEST(CoreCommand, Unset)
 
 TEST(CoreCommand, Upgrade)
 {
-    /* TODO: write tests */
+    /* Dummy upgrade: nothing is done. */
+    WEE_CMD_CORE("/upgrade -dummy");
+    LONGS_EQUAL(0, upgrade_pending);
+
+    /* Binary not found. */
+    WEE_CMD_CORE_ERROR_MSG(
+        "/upgrade /path/to/nonexistent/weechat",
+        "Can't upgrade: WeeChat binary \"/path/to/nonexistent/weechat\" "
+        "does not exist");
+    LONGS_EQUAL(0, upgrade_pending);
+
+    /* Upgrade is scheduled, not executed immediately. */
+    WEE_CMD_CORE("/upgrade -quit");
+    LONGS_EQUAL(1, upgrade_pending);
+    POINTERS_EQUAL(NULL, upgrade_pending_binary);
+    LONGS_EQUAL(1, upgrade_pending_quit);
+    LONGS_EQUAL(0, weechat_quit);
+    LONGS_EQUAL(0, weechat_upgrading);
+
+    /* Upgrade already scheduled: command is ignored. */
+    WEE_CMD_CORE("/upgrade");
+    LONGS_EQUAL(1, upgrade_pending);
+    POINTERS_EQUAL(NULL, upgrade_pending_binary);
+    LONGS_EQUAL(1, upgrade_pending_quit);
+
+    upgrade_weechat_cancel ();
+    LONGS_EQUAL(0, upgrade_pending);
+
+    /* Quitting: command is ignored. */
+    weechat_quit = 1;
+    WEE_CMD_CORE("/upgrade -quit");
+    LONGS_EQUAL(0, upgrade_pending);
+    weechat_quit = 0;
 }
 
 /*

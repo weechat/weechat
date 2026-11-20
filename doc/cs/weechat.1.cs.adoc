@@ -48,6 +48,11 @@ include::includes/cmdline_options.cs.adoc[tag=debug]
 
 include::includes/man.cs.adoc[tag=plugin_options]
 
+// TRANSLATION MISSING
+== EXIT STATUS
+
+include::includes/man.cs.adoc[tag=exit_status]
+
 == SOUBORY
 
 include::includes/man.cs.adoc[tag=files]

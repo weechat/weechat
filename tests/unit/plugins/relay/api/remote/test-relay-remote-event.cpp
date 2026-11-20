@@ -20,6 +20,7 @@ extern "C"
 #include "src/core/weechat.h"
 #include "src/core/core-config-file.h"
 #include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-hotlist.h"
@@ -59,6 +60,53 @@ extern void relay_remote_event_initial_sync_buffers (struct t_relay_remote_event
 extern void relay_remote_event_clear_buffers (struct t_relay_remote *remote);
 extern void relay_remote_event_sync_with_remote (struct t_relay_remote *remote);
 extern void relay_remote_network_close_connection (struct t_relay_remote *remote);
+extern int relay_remote_event_cb_typing (struct t_relay_remote_event *event);
+extern int relay_remote_event_cb_typing_reset (struct t_relay_remote_event *event);
+extern int relay_signal_typing_self_cb (const void *pointer, void *data,
+                                        const char *signal,
+                                        const char *type_data,
+                                        void *signal_data);
+}
+
+extern int test_remote_read_frame (const unsigned char *frame, int size,
+                                   char *payload, int payload_size);
+
+char test_relay_remote_event_typing_signal[1024];
+void *test_relay_remote_event_typing_signal_data = NULL;
+
+/*
+ * Callback for signals "typing_set_nick" and "typing_reset_buffer": save the
+ * signal name and data (string data is copied).
+ */
+
+int
+test_relay_remote_event_typing_signal_cb (const void *pointer, void *data,
+                                          const char *signal,
+                                          const char *type_data,
+                                          void *signal_data)
+{
+    /* Make C++ compiler happy. */
+    (void) pointer;
+    (void) data;
+
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        snprintf (test_relay_remote_event_typing_signal,
+                  sizeof (test_relay_remote_event_typing_signal),
+                  "%s:%s",
+                  signal,
+                  (signal_data) ? (const char *)signal_data : "");
+        test_relay_remote_event_typing_signal_data = NULL;
+    }
+    else
+    {
+        snprintf (test_relay_remote_event_typing_signal,
+                  sizeof (test_relay_remote_event_typing_signal),
+                  "%s", signal);
+        test_relay_remote_event_typing_signal_data = signal_data;
+    }
+
+    return WEECHAT_RC_OK;
 }
 
 #define WEE_CHECK_TAGS(__result, __json_tags, __buffer, __line_id,      \
@@ -398,6 +446,20 @@ TEST(RelayRemoteEvent, CbBuffer)
     LONGS_EQUAL(1, gui_buffer_get_integer (buffer, "day_change"));
 
     /*
+     * Event "buffer_lines_filtered" is ignored (the filters on the remote do
+     * not apply to the local buffer).
+     */
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 0, "
+        "\"event_name\": \"buffer_lines_filtered\", "
+        "\"buffer_id\": 123, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 123, \"name\": \"irc.libera.#test\", "
+        "\"title\": \"filtered title\"}}");
+    STRCMP_EQUAL("new title", gui_buffer_get_string (buffer, "title"));
+
+    /*
      * The time and the prefix are displayed when the fields "time_displayed"
      * and "prefix_displayed" are not received from the remote.
      */
@@ -715,6 +777,22 @@ TEST_GROUP(RelayRemoteEventWithRemote)
     int recv_peer (char *data, int size)
     {
         return ::recv (sock_peer, data, size, 0);
+    }
+
+    /*
+     * Read a websocket frame sent by the remote (on the other end of the
+     * socket), the payload is stored in "payload".
+     *
+     * Return the opcode (-1 if error or if nothing was sent).
+     */
+
+    int peer_recv_frame (char *payload, int payload_size)
+    {
+        int size;
+
+        size = peer_recv ();
+        return test_remote_read_frame ((unsigned char *)data_sent, size,
+                                       payload, payload_size);
     }
 
     /*
@@ -1088,6 +1166,123 @@ TEST(RelayRemoteEventWithRemote, BufferInputCb)
 
 /*
  * Test functions:
+ *   relay_remote_event_buffer_typing
+ */
+
+TEST(RelayRemoteEventWithRemote, BufferTyping)
+{
+    struct t_gui_buffer *buffer;
+    char payload[256];
+
+    relay_remote_event_buffer_typing (NULL, "active");
+    relay_remote_event_buffer_typing (gui_buffers, "active");
+    LONGS_EQUAL(0, peer_recv ());
+
+    buffer = create_buffer (123, "irc.libera.#test", NULL);
+    CHECK(buffer);
+
+    relay_remote_event_buffer_typing (buffer, NULL);
+    LONGS_EQUAL(0, peer_recv ());
+
+    /* Remote not connected: nothing sent. */
+    relay_remote_event_buffer_typing (buffer, "active");
+    LONGS_EQUAL(0, peer_recv ());
+
+    /* Remote authenticating (websocket handshake): nothing sent. */
+    relay_remote_set_status (remote, RELAY_STATUS_AUTHENTICATING);
+    relay_remote_event_buffer_typing (buffer, "active");
+    LONGS_EQUAL(0, peer_recv ());
+
+    /* Remote connected but not synchronized: nothing sent. */
+    relay_remote_set_status (remote, RELAY_STATUS_CONNECTED);
+    relay_remote_event_buffer_typing (buffer, "active");
+    LONGS_EQUAL(0, peer_recv ());
+
+    /* Typing state sent to the remote. */
+    remote->synced = 1;
+    relay_remote_event_buffer_typing (buffer, "active");
+    LONGS_EQUAL(0x1, peer_recv_frame (payload, sizeof (payload)));
+    STRCMP_EQUAL("{\"request\":\"POST /api/typing\","
+                 "\"body\":{\"buffer_id\":123,\"state\":\"active\"}}",
+                 payload);
+
+    /* Invalid buffer id: nothing sent. */
+    gui_buffer_set (buffer, "localvar_set_relay_remote_id", "abc");
+    relay_remote_event_buffer_typing (buffer, "active");
+    LONGS_EQUAL(0, peer_recv ());
+    gui_buffer_set (buffer, "localvar_set_relay_remote_id", "123");
+
+    /* Unable to send: disconnected. */
+    close (sock_peer);
+    sock_peer = -1;
+    relay_remote_event_buffer_typing (buffer, "active");
+    LONGS_EQUAL(RELAY_STATUS_DISCONNECTED, remote->status);
+    LONGS_EQUAL(-1, remote->sock);
+}
+
+/*
+ * Test functions:
+ *   relay_signal_typing_self_cb
+ *   relay_remote_buffer_typing
+ */
+
+TEST(RelayRemoteEventWithRemote, SignalTypingSelfCb)
+{
+    struct t_gui_buffer *buffer;
+    char payload[256];
+
+    buffer = create_buffer (123, "irc.libera.#test", NULL);
+    CHECK(buffer);
+
+    relay_remote_set_status (remote, RELAY_STATUS_CONNECTED);
+    remote->synced = 1;
+
+    /* Buffer not owned by relay plugin, or unknown signal: nothing sent. */
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                relay_signal_typing_self_cb (NULL, NULL, "typing_self_typing",
+                                             WEECHAT_HOOK_SIGNAL_POINTER,
+                                             NULL));
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                relay_signal_typing_self_cb (NULL, NULL, "typing_self_typing",
+                                             WEECHAT_HOOK_SIGNAL_POINTER,
+                                             gui_buffers));
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                relay_signal_typing_self_cb (NULL, NULL, "typing_self_unknown",
+                                             WEECHAT_HOOK_SIGNAL_POINTER,
+                                             buffer));
+    LONGS_EQUAL(0, peer_recv ());
+
+    relay_signal_typing_self_cb (NULL, NULL, "typing_self_typing",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    LONGS_EQUAL(0x1, peer_recv_frame (payload, sizeof (payload)));
+    STRCMP_EQUAL("{\"request\":\"POST /api/typing\","
+                 "\"body\":{\"buffer_id\":123,\"state\":\"active\"}}",
+                 payload);
+
+    relay_signal_typing_self_cb (NULL, NULL, "typing_self_paused",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    LONGS_EQUAL(0x1, peer_recv_frame (payload, sizeof (payload)));
+    STRCMP_EQUAL("{\"request\":\"POST /api/typing\","
+                 "\"body\":{\"buffer_id\":123,\"state\":\"paused\"}}",
+                 payload);
+
+    relay_signal_typing_self_cb (NULL, NULL, "typing_self_cleared",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    LONGS_EQUAL(0x1, peer_recv_frame (payload, sizeof (payload)));
+    STRCMP_EQUAL("{\"request\":\"POST /api/typing\","
+                 "\"body\":{\"buffer_id\":123,\"state\":\"done\"}}",
+                 payload);
+
+    relay_signal_typing_self_cb (NULL, NULL, "typing_self_sent",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    LONGS_EQUAL(0x1, peer_recv_frame (payload, sizeof (payload)));
+    STRCMP_EQUAL("{\"request\":\"POST /api/typing\","
+                 "\"body\":{\"buffer_id\":123,\"state\":\"sent\"}}",
+                 payload);
+}
+
+/*
+ * Test functions:
  *   relay_remote_event_check_local_var
  */
 
@@ -1260,6 +1455,82 @@ TEST(RelayRemoteEventWithRemote, CbInput)
 
 /*
  * Test functions:
+ *   relay_remote_event_cb_typing
+ *   relay_remote_event_cb_typing_reset
+ */
+
+TEST(RelayRemoteEventWithRemote, CbTyping)
+{
+    struct t_gui_buffer *buffer;
+    struct t_hook *hook;
+    char expected[1024];
+
+    LONGS_EQUAL(WEECHAT_RC_OK, relay_remote_event_cb_typing (NULL));
+    LONGS_EQUAL(WEECHAT_RC_OK, relay_remote_event_cb_typing_reset (NULL));
+
+    buffer = create_buffer (123, "irc.libera.#test", NULL);
+    CHECK(buffer);
+
+    test_relay_remote_event_typing_signal[0] = '\0';
+    test_relay_remote_event_typing_signal_data = NULL;
+    hook = hook_signal (NULL, "typing_set_nick;typing_reset_buffer",
+                        &test_relay_remote_event_typing_signal_cb,
+                        NULL, NULL);
+
+    /* Invalid events: no signal sent. */
+    recv ("{\"event_name\": \"typing_nick_changed\", \"buffer_id\": 999, "
+          "\"body_type\": \"typing\", "
+          "\"body\": {\"nick\": \"alice\", \"state\": \"active\"}}");
+    recv ("{\"event_name\": \"typing_nick_changed\", \"buffer_id\": 123, "
+          "\"body_type\": \"typing\", \"body\": null}");
+    recv ("{\"event_name\": \"typing_nick_changed\", \"buffer_id\": 123, "
+          "\"body_type\": \"typing\", \"body\": {\"state\": \"active\"}}");
+    recv ("{\"event_name\": \"typing_nick_changed\", \"buffer_id\": 123, "
+          "\"body_type\": \"typing\", "
+          "\"body\": {\"nick\": \"\", \"state\": \"active\"}}");
+    recv ("{\"event_name\": \"typing_nick_changed\", \"buffer_id\": 123, "
+          "\"body_type\": \"typing\", \"body\": {\"nick\": \"alice\"}}");
+    recv ("{\"event_name\": \"typing_nick_changed\", \"buffer_id\": 123, "
+          "\"body_type\": \"typing\", "
+          "\"body\": {\"nick\": \"alice\", \"state\": \"sent\"}}");
+    recv ("{\"event_name\": \"typing_buffer_reset\", \"buffer_id\": 999, "
+          "\"body_type\": null, \"body\": null}");
+    STRCMP_EQUAL("", test_relay_remote_event_typing_signal);
+    POINTERS_EQUAL(NULL, test_relay_remote_event_typing_signal_data);
+
+    /* Typing states. */
+    recv ("{\"event_name\": \"typing_nick_changed\", \"buffer_id\": 123, "
+          "\"body_type\": \"typing\", "
+          "\"body\": {\"nick\": \"alice\", \"state\": \"active\"}}");
+    snprintf (expected, sizeof (expected),
+              "typing_set_nick:0x%lx;typing;alice", (unsigned long)buffer);
+    STRCMP_EQUAL(expected, test_relay_remote_event_typing_signal);
+
+    recv ("{\"event_name\": \"typing_nick_changed\", \"buffer_id\": 123, "
+          "\"body_type\": \"typing\", "
+          "\"body\": {\"nick\": \"bob\", \"state\": \"paused\"}}");
+    snprintf (expected, sizeof (expected),
+              "typing_set_nick:0x%lx;paused;bob", (unsigned long)buffer);
+    STRCMP_EQUAL(expected, test_relay_remote_event_typing_signal);
+
+    recv ("{\"event_name\": \"typing_nick_changed\", \"buffer_id\": 123, "
+          "\"body_type\": \"typing\", "
+          "\"body\": {\"nick\": \"alice\", \"state\": \"done\"}}");
+    snprintf (expected, sizeof (expected),
+              "typing_set_nick:0x%lx;off;alice", (unsigned long)buffer);
+    STRCMP_EQUAL(expected, test_relay_remote_event_typing_signal);
+
+    /* Reset of buffer. */
+    recv ("{\"event_name\": \"typing_buffer_reset\", \"buffer_id\": 123, "
+          "\"body_type\": null, \"body\": null}");
+    STRCMP_EQUAL("typing_reset_buffer", test_relay_remote_event_typing_signal);
+    POINTERS_EQUAL(buffer, test_relay_remote_event_typing_signal_data);
+
+    unhook (hook);
+}
+
+/*
+ * Test functions:
  *   relay_remote_event_clear_buffers
  */
 
@@ -1305,6 +1576,7 @@ TEST(RelayRemoteEventWithRemote, SyncWithRemote)
     relay_remote_event_sync_with_remote (NULL);
     LONGS_EQUAL(0, peer_recv ());
 
+    /* Typing notifications of nicks disabled: typing not requested. */
     relay_remote_event_sync_with_remote (remote);
     CHECK(peer_recv () > 0);
     STRCMP_EQUAL("[{\"request\":\"GET /api/buffers?lines=-1000&nicks=true"
@@ -1312,6 +1584,17 @@ TEST(RelayRemoteEventWithRemote, SyncWithRemote)
                  "{\"request\":\"POST /api/sync\","
                  "\"body\":{\"colors\":\"weechat\"}}]",
                  data_sent);
+
+    /* Typing notifications of nicks enabled: typing requested. */
+    run_cmd_quiet ("/mute /set typing.look.enabled_nicks on");
+    relay_remote_event_sync_with_remote (remote);
+    CHECK(peer_recv () > 0);
+    STRCMP_EQUAL("[{\"request\":\"GET /api/buffers?lines=-1000&nicks=true"
+                 "&colors=weechat\",\"request_id\":\"initial_sync\"},"
+                 "{\"request\":\"POST /api/sync\","
+                 "\"body\":{\"colors\":\"weechat\",\"typing\":true}}]",
+                 data_sent);
+    run_cmd_quiet ("/mute /unset typing.look.enabled_nicks");
 }
 
 /*

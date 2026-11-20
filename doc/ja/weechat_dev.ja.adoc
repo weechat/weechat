@@ -515,6 +515,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |       tests-record.cpp                          | Record and search in messages displayed.
 |       core/                                     | core 向け単体テスト用のルートディレクトリ
+// TRANSLATION MISSING
+|          test-core-args.cpp                     | Tests: command-line arguments.
 |          test-core-arraylist.cpp                | テスト: 配列リスト
 // TRANSLATION MISSING
 |          test-core-backtrace.cpp                | Tests: backtrace.
@@ -522,6 +524,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-calc.cpp                     | Tests: calculation of expressions.
 // TRANSLATION MISSING
 |          test-core-command.cpp                  | Tests: commands.
+// TRANSLATION MISSING
+|          test-core-completion.cpp               | Tests: default completions.
 // TRANSLATION MISSING
 |          test-core-config-file.cpp              | Tests: configuration files.
 // TRANSLATION MISSING
@@ -539,6 +543,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          test-core-network.cpp                  | Tests: network functions.
 |          test-core-secure.cpp                   | テスト: データ保護
+// TRANSLATION MISSING
+|          test-core-secure-buffer.cpp            | Tests: secured data buffer.
+// TRANSLATION MISSING
+|          test-core-secure-config.cpp            | Tests: secured data configuration file.
 // TRANSLATION MISSING
 |          test-core-signal.cpp                   | テスト: signals.
 |          test-core-string.cpp                   | テスト: 文字列
@@ -688,6 +696,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-irc-tag.cpp                    | Tests: IRC message tags.
 // TRANSLATION MISSING
+|             test-irc-typing.cpp                 | Tests: IRC typing notifications.
+// TRANSLATION MISSING
 |             test-irc-upgrade.cpp                | Tests: upgrade of IRC plugin.
 // TRANSLATION MISSING
 |          logger/                                | Root of unit tests for logger plugin.
@@ -706,12 +716,18 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-relay-client.cpp               | Tests: clients of relay.
 // TRANSLATION MISSING
+|             test-relay-config.cpp               | Tests: configuration functions for Relay plugin.
+// TRANSLATION MISSING
 |             test-relay-http.cpp                 | Tests: HTTP functions for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-network.cpp              | Tests: network functions for Relay plugin.
 |             test-relay-raw.cpp                  | Tests: raw messages functions for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-remote.cpp               | Tests: remote functions for Relay plugin.
+// TRANSLATION MISSING
+|             test-relay-server.cpp               | Tests: server functions for Relay plugin.
+// TRANSLATION MISSING
+|             test-relay-upgrade.cpp              | Tests: upgrade of Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-websocket.cpp            | Tests: websocket functions for Relay plugin.
 // TRANSLATION MISSING
@@ -1084,6 +1100,10 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 // TRANSLATION MISSING
 * Do not declare functions `static`, so that they can be used in unit tests
   (declared with `extern`).
+// TRANSLATION MISSING
+* Declare in the header (_.h_) only the functions used in other files: an
+  internal helper used only in its own _.c_ file has no prototype in the
+  header (a unit test that calls it declares it with `extern`).
 * Emacs テキストエディタのユーザは以下の Lisp コードを
   _~/.emacs.el_ に追記することで、適切なインデントを行うことができます。
 
@@ -1582,8 +1602,7 @@ _component_ には以下から 1 つ選んで記入してください:
 | Continuous integration
 
 | debian
-| debian-devel/* +
-  debian-stable/*
+| debian/*
 // TRANSLATION MISSING
 | Debian packaging
 

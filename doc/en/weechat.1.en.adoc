@@ -43,6 +43,10 @@ include::includes/cmdline_options.en.adoc[tag=debug]
 
 include::includes/man.en.adoc[tag=plugin_options]
 
+== EXIT STATUS
+
+include::includes/man.en.adoc[tag=exit_status]
+
 == FILES
 
 include::includes/man.en.adoc[tag=files]

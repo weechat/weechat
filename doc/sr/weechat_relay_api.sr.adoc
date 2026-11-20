@@ -166,6 +166,16 @@ curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e
 curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" 'https://localhost:9000/api/version'
 ----
 
+// TRANSLATION MISSING
+The TOTP must contain exactly 6 digits, including leading zeros (for example
+`012345`), otherwise it is rejected.
+
+// TRANSLATION MISSING
+The JavaScript WebSocket API used in browsers can't set this header, so
+websocket clients send the TOTP in a sub-protocol instead _(WeeChat ≥ 5.0.0)_,
+see
+<<authentication_sec_websocket_protocol,Sec-WebSocket-Protocol>>.
+
 У случају грешке, враћа се одговор `401 Unauthorized` са пољем `error` у
 JSON подацима које описује грешку.
 
@@ -297,6 +307,36 @@ const ws = new WebSocket("wss://localhost:9000/api", [
 ])
 ----
 
+// TRANSLATION MISSING
+If TOTP is enabled (option `relay.network.totp_secret` is set), browser clients
+can't send the `x-weechat-totp` header either: they must add the sub-protocol
+`totp.weechat.<code>` _(WeeChat ≥ 5.0.0)_, where `<code>` is the TOTP value.
+The relay checks it like the header. Two TOTP sub-protocols in one request are
+rejected, and so is a request where the header and the sub-protocol carry
+different codes. Only `api.weechat` is selected in the response, so the TOTP is
+never sent back.
+
+// TRANSLATION MISSING
+For example with TOTP `123456`:
+
+[source,javascript]
+----
+const ws = new WebSocket("wss://localhost:9000/api", [
+  "api.weechat",
+  "base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk",
+  "totp.weechat.123456",
+])
+----
+
+// TRANSLATION MISSING
+If a reverse proxy sits in front of WeeChat, check its logging. Proxies and
+load balancers may log request headers, `Sec-WebSocket-Protocol` included, and
+that header carries the password as well as the TOTP. The TOTP expires within
+30 seconds with the default value of option `relay.network.totp_window` and a
+hashed password expires according to option `relay.network.time_window`, but a
+plain-text password stays valid until you change it: prefer a hashed password
+and disable header logging for the relay.
+
 [[compression]]
 == Компресија
 
@@ -369,7 +409,7 @@ Accept-Language: en-US,en;q=0.9,fr;q=0.8
 ----
 HTTP/1.1 204 No Content
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE
-Access-Control-Allow-Headers: origin, content-type, accept, authorization
+Access-Control-Allow-Headers: origin, content-type, accept, authorization, x-weechat-totp
 Access-Control-Allow-Origin: *
 Content-Type: application/json; charset=utf-8
 Content-Length: 0
@@ -520,10 +560,16 @@ Available infos:
 | Name | Type | Description
 
 // TRANSLATION MISSING
+| `language` | string
+| Language of WeeChat translated messages, for example `fr` or `pt_BR`, `en`
+  if messages are not translated; it is the language of the translation
+  actually used, taking into account the environment variable `LANGUAGE`
+
+// TRANSLATION MISSING
 | `locale` | string or null
 | WeeChat locale used for translated messages, for example `fr_FR.UTF-8`
   (category `LC_MESSAGES`); the language of messages can be different if the
-  environment variable `LANGUAGE` is set
+  environment variable `LANGUAGE` is set (see info `language`)
 |===
 
 // TRANSLATION MISSING
@@ -562,10 +608,37 @@ HTTP/1.1 200 OK
 ----
 [
     {
+        "name": "language",
+        "description": "Language of WeeChat translated messages"
+    },
+    {
         "name": "locale",
         "description": "WeeChat locale used for translated messages"
     }
 ]
+----
+
+// TRANSLATION MISSING
+Request example: get the language of WeeChat messages:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info/language'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "language",
+    "value": "fr"
+}
 ----
 
 // TRANSLATION MISSING
@@ -644,6 +717,23 @@ Path parameters:
 ** негативни број: враћа N линија од краја бафера
 ** `0`: не враћа ниједну линију
 ** позитивни број: враћа N линија од почетка бафера
+// TRANSLATION MISSING
+* `filtered` (string, optional, default: `include`): how lines filtered with
+  command `/filter` (lines with `displayed` set to `false`) are counted and
+  returned _(WeeChat ≥ 5.0.0)_:
+// TRANSLATION MISSING
+** `include`: count and return all lines
+// TRANSLATION MISSING
+** `between`: count only lines not filtered, and return the filtered lines
+   between them, so more lines than requested can be returned (the range of
+   lines ends at the end of buffer if the number of lines is negative and
+   starts at the beginning of buffer if it is positive); there is no limit on
+   the number of filtered lines returned, except the size of the buffer history
+// TRANSLATION MISSING
+** `exclude`: count and return only lines not filtered; the line with the
+   identifier `last_read_line_id` (read marker) can be filtered and then not
+   returned: the client displays the read marker after the last line returned
+   with an identifier lower than or equal to `last_read_line_id`
 * `nicks` (логичка, није обавезно, подразумевано: `false`): враћа надимке у баферу
 * `colors` (стринг, није обавезно, подразумевано: `ansi`): како се враћају стрингови са кодовима боје:
 ** `ansi`: враћају се ANSI кодови боје
@@ -724,7 +814,8 @@ HTTP/1.1 200 OK
             "charset_modifier": "irc.libera",
             "nick": "alice",
             "tls_version": "TLS1.3",
-            "host": "~alice@example.com"
+            "host": "~alice@example.com",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "last_read_line_id": -1,
@@ -757,7 +848,8 @@ HTTP/1.1 200 OK
             "server": "libera",
             "channel": "#weechat",
             "nick": "alice",
-            "host": "~alice@example.com"
+            "host": "~alice@example.com",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "last_read_line_id": -1,
@@ -868,7 +960,8 @@ HTTP/1.1 200 OK
         "server": "libera",
         "channel": "#weechat",
         "nick": "alice",
-        "host": "~alice@example.com"
+        "host": "~alice@example.com",
+        "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
     },
     "keys": [],
     "last_read_line_id": -1,
@@ -1089,6 +1182,21 @@ GET /api/buffers/{име_бафера}/lines/{id_линије}
 ** негативни број: враћа N линија од краја бафера (најновијих линија)
 ** `0`: не враћа се ниједна линија (дозвољено је, али нема смисла са овим ресурсом)
 ** позитивни број: враћа N линија од почетка бафера (најстаријих линија)
+// TRANSLATION MISSING
+* `filtered` (string, optional, default: `include`): how lines filtered with
+  command `/filter` (lines with `displayed` set to `false`) are counted and
+  returned (ignored with `line_id`: the line is always returned, even if
+  it is filtered) _(WeeChat ≥ 5.0.0)_:
+// TRANSLATION MISSING
+** `include`: count and return all lines
+// TRANSLATION MISSING
+** `between`: count only lines not filtered, and return the filtered lines
+   between them, so more lines than requested can be returned (the range of
+   lines ends at the end of buffer if the number of lines is negative and
+   starts at the beginning of buffer if it is positive); there is no limit on
+   the number of filtered lines returned, except the size of the buffer history
+// TRANSLATION MISSING
+** `exclude`: count and return only lines not filtered
 * `colors` (стринг, није обавезно, подразумевано: `ansi`): како да се врати стринг са кодовима боје:
 ** `ansi`: враћају се ANSI кодови боје
 ** `weechat`: враћају се WeeChat интерни кодови боје
@@ -1687,6 +1795,67 @@ HTTP/1.1 200 OK
 }
 ----
 
+[[resource_typing]]
+// TRANSLATION MISSING
+=== Typing
+
+// TRANSLATION MISSING
+Send a typing notification for a buffer.
+
+Крајња тачка:
+
+----
+POST /api/typing
+----
+
+Параметри тела:
+
+* `buffer_id` (цео број, није обавезно): јединствени идентификатор бафера (не треба
+  да се помеша са бројем бафера, то је нешто друго)
+* `buffer_name` (стринг, није обавезно, подразумевано: `core.weechat`): име бафера
+// TRANSLATION MISSING
+* `state` (string, **required**): typing state:
+// TRANSLATION MISSING
+** `active`: the user is typing a message
+// TRANSLATION MISSING
+** `paused`: the user has paused typing
+// TRANSLATION MISSING
+** `done`: the user has cleared the input without sending the message
+// TRANSLATION MISSING
+** `sent`: the user has sent the message
+
+// TRANSLATION MISSING
+While the user is typing, the state `active` must be sent again regularly
+(every 3 seconds is recommended).
+
+// TRANSLATION MISSING
+For IRC buffers, the typing state is sent to the IRC server only if the option
+`irc.look.typing_status_self` is enabled and if the server supports typing
+notifications (capability "message-tags"); the state `active` is changed to
+`done` if it is not received again for 6 seconds.
+
+// TRANSLATION MISSING
+The typing state is shared by all clients and the local user on a buffer: if a
+client sends `done` while another one is still typing in the same buffer, the
+state becomes `done` until `active` is received again.
+
+// TRANSLATION MISSING
+Request example: notify that the user is typing in channel #weechat:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "state": "active"}' \
+  'https://localhost:9000/api/typing'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+----
+
 [[resource_sync]]
 === Sync
 
@@ -1711,12 +1880,29 @@ POST /api/sync
   ажурирања надимака у баферима (користи се само ако је `sync` `true`)
 * `input` (логичка, није обавезно, подразумевано: `true`): `true` да се синхронизује улаз
   бафера са удаљеног релеја на локални клијент (користи се само ако је `sync` `true`)
+// TRANSLATION MISSING
+* `typing` (boolean, optional, default: `false`): `true` to synchronize typing
+  notifications (used only if `sync` is `true`)
 * `notify_only` (логичка, није обавезно, подразумевано: `false`): `true` to receive only
   new lines with a highlight or a private message (notify level greater than or
   equal to 2) and the events `upgrade`, `upgrade_ended` and `quit`, all other
-  events are not sent and parameters `nicks`, `input` and `options` are ignored
-  (used only if `sync` is `true`); this is useful for a mobile client in
-  background
+  events are not sent and parameters `nicks`, `input`, `typing` and `options`
+  are ignored (used only if `sync` is `true`); this is useful for a mobile
+  client in background
+// TRANSLATION MISSING
+* `filtered_lines` (boolean, optional, default: `true`): `false` to not receive
+  the lines filtered with command `/filter` (lines with `displayed` set to
+  `false`): the event `buffer_line_added` is not sent for a filtered line and
+  the event `buffer_opened` contains only lines not filtered; this does not
+  apply to buffers with free content, where all lines are always sent because
+  a line can replace a line already received (used only if `sync` is `true`)
+  _(WeeChat ≥ 5.0.0)_; the event `buffer_line_data_changed` is always sent,
+  with the field `displayed`, so that the client can add or remove the line
+  (an update of a line not received with `displayed` set to `false` can be
+  ignored); the client can fetch the lines of buffers with formatted content
+  with the same behavior with the parameter `filtered` set to `exclude` in
+  resource <<resource_buffers,buffers>> (for buffers with free content, the
+  parameter `filtered` must be `include`)
 * `colors` (стринг, није обавезно, подразумевано: `ansi`): како се враћају стрингови са
   кодовома боје (користи се само ако је `sync` `true`):
 ** `ansi`: враћају се ANSI кодови боје
@@ -1899,6 +2085,7 @@ GUID `258EAFA5-E914-47DA-95CA-C5AB0DC85B11` (SHA-1 се кодира у base64).
 * `option` (објекат)
 * `completion` (објекат)
 * `ping` (објекат)
+* `typing` (објекат)
 
 [TIP]
 Ове схеме можете да прегледате на мрежи: https://weechat.org/api/[WeeChat Relay API ^↗^^].
@@ -2069,6 +2256,7 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
 | `buffer_localvar_changed`             | buffer id | `buffer`      | бафер
 | `buffer_localvar_removed`             | buffer id | `buffer`      | бафер
 | `buffer_cleared`                      | buffer id | `buffer`      | бафер
+| `buffer_lines_filtered` ^(1)^         | buffer id | `buffer`      | бафер
 | `buffer_closing`                      | buffer id | `buffer`      | бафер
 | `buffer_closed`                       | buffer id | null          | null
 | `buffer_line_added`                   | buffer id | `line`        | бафер линија
@@ -2076,6 +2264,10 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
 | `input_prompt_changed`                | buffer id | `buffer`      | бафер
 | `input_text_changed`                  | buffer id | `buffer`      | бафер
 | `input_text_cursor_moved`             | buffer id | `buffer`      | бафер
+// TRANSLATION MISSING
+| `typing_nick_changed`                 | buffer id | `typing`      | typing state of a nick: `active`, `paused` or `done`
+// TRANSLATION MISSING
+| `typing_buffer_reset`                 | buffer id | null          | null
 | `nicklist_group_changed`              | buffer id | `nick_group`  | група надимака
 | `nicklist_group_added`                | buffer id | `nick_group`  | група надимака
 | `nicklist_group_removing`             | buffer id | `nick_group`  | група надимака
@@ -2087,13 +2279,23 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
 | `option_changed`                      | -1        | `option`      | option (only fields `name` and `value`)
 // TRANSLATION MISSING
 | `option_removed`                      | -1        | `option`      | option (only field `name`)
-| `upgrade` ^(1)^                       | -1        | null          | null
-| `upgrade_ended` ^(1)^                 | -1        | null          | null
+| `upgrade` ^(2)^                       | -1        | null          | null
+| `upgrade_ended` ^(2)^                 | -1        | null          | null
 | `quit`                                | -1        | null          | null
 |===
 
+// TRANSLATION MISSING
 [NOTE]
-^(1)^ Догађаји `upgrade` и `upgrade_ended` се шаљу само ако је клијент повезан чистим
+^(1)^ The event `buffer_lines_filtered` _(WeeChat ≥ 5.0.0)_ is sent when lines
+are filtered or unfiltered in the buffer after a change in filters (filter added,
+removed, enabled or disabled, filters toggled in buffer): the field `displayed`
+of lines already received is not up to date any more and some lines may be
+missing, so the client must fetch the lines of this buffer again, for example
+with the parameter `filtered` set to `exclude` or `between` in resource
+<<resource_buffers,buffers>>.
+
+[NOTE]
+^(2)^ Догађаји `upgrade` и `upgrade_ended` се шаљу само ако је клијент повезан чистим
 текстом (без TLS), јер се у случају TLS веза са клијентом најпре прекида пре
 него што се обави ажурирање (ажурирање TLS веза није подржано).
 
@@ -2134,7 +2336,8 @@ When `notify_only` is `true` in <<resource_sync,sync>> resource, only the events
             "nick": "alice",
             "host": "~alice@example.com",
             "server": "libera",
-            "channel": "#weechat"
+            "channel": "#weechat",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "lines": [],

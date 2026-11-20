@@ -447,10 +447,12 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       tests.cpp                                 | Programme utilisé pour lancer tous les tests.
 |       tests-record.cpp                          | Enregistrement et recherche dans les messages affichés.
 |       core/                                     | Racine des tests unitaires pour le cœur.
+|          test-core-args.cpp                     | Tests : paramètres de ligne de commande.
 |          test-core-arraylist.cpp                | Tests : listes avec tableau (« arraylists »).
 |          test-core-backtrace.cpp                | Tests : backtrace.
 |          test-core-calc.cpp                     | Tests : calcul d'expressions.
 |          test-core-command.cpp                  | Tests : commandes.
+|          test-core-completion.cpp               | Tests : complétions par défaut.
 |          test-core-config-file.cpp              | Tests : fichiers de configuration.
 |          test-core-crypto.cpp                   | Tests : fonctions cryptographiques.
 |          test-core-dir.cpp                      | Tests : répertoires/fichiers.
@@ -463,6 +465,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-list.cpp                     | Tests : listes.
 |          test-core-network.cpp                  | Tests : fonctions réseau.
 |          test-core-secure.cpp                   | Tests : données sécurisées.
+|          test-core-secure-buffer.cpp            | Tests : tampon des données sécurisées.
+|          test-core-secure-config.cpp            | Tests : fichier de configuration des données sécurisées.
 |          test-core-signal.cpp                   | Tests : signaux.
 |          test-core-string.cpp                   | Tests : chaînes.
 |          test-core-sys.cpp                      | Tests : fonctions système.
@@ -543,6 +547,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-irc-sasl.cpp                   | Tests : authentification SASL avec le protocole IRC.
 |             test-irc-server.cpp                 | Tests : serveur IRC.
 |             test-irc-tag.cpp                    | Tests : étiquettes des messages IRC.
+|             test-irc-typing.cpp                 | Tests : notifications de saisie IRC.
 |             test-irc-upgrade.cpp                | Tests : mise à jour de l'extension IRC.
 |          logger/                                | Racine des tests unitaires pour l'extension logger.
 |             test-logger.cpp                     | Tests : logger.
@@ -552,10 +557,13 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-relay-auth.cpp                 | Tests : authentification des clients.
 |             test-relay-bar-item.cpp             | Tests : objets de barre pour l'extension Relay.
 |             test-relay-client.cpp               | Tests : clients du relai.
+|             test-relay-config.cpp               | Tests : fonctions de configuration pour l'extension Relay.
 |             test-relay-http.cpp                 | Tests : fonctions HTTP pour l'extension Relay.
 |             test-relay-network.cpp              | Tests : fonctions réseau pour l'extension Relay.
 |             test-relay-raw.cpp                  | Tests : fonctions sur les messages bruts pour l'extension Relay.
 |             test-relay-remote.cpp               | Tests : fonctions remote pour l'extension Relay.
+|             test-relay-server.cpp               | Tests : fonctions serveur pour l'extension Relay.
+|             test-relay-upgrade.cpp              | Tests : mise à jour de l'extension Relay.
 |             test-relay-websocket.cpp            | Tests : fonctions websocket pour l'extension Relay.
 |             api/                                | Racine des tests unitaires pour le protocole relay "api".
 |                test-relay-api.cpp               | Tests : protocole relay "api" : fonctions générales.
@@ -886,6 +894,10 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 * Ne déclarez pas les fonctions `static`, afin qu'elles puissent être
   utilisées dans les tests unitaires (déclarées avec `extern`).
+* Déclarez dans l'en-tête (_.h_) seulement les fonctions utilisées dans
+  d'autres fichiers : une fonction interne utilisée uniquement dans son
+  fichier _.c_ n'a pas de prototype dans l'en-tête (un test unitaire qui
+  l'appelle la déclare avec `extern`).
 * Ce code Lisp peut être utilisé dans votre _~/.emacs.el_ pour indenter
   correctement si vous utilisez l'éditeur de texte Emacs :
 
@@ -1371,8 +1383,7 @@ Où _composant_ est :
 | Intégration continue
 
 | debian
-| debian-devel/* +
-  debian-stable/*
+| debian/*
 | Empaquetage Debian
 
 | tests/fuzz

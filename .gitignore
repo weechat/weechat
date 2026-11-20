@@ -4,10 +4,11 @@
 
 /build
 /builddir
-/debian
-/debian-devel/changelog
-/debian-devel/*.log
-/debian-devel/*-stamp
-/debian-stable/*.log
-/debian-stable/*-stamp
+/debian/*.log
+/debian/*-stamp
+/debian/*.substvars
+/debian/.debhelper/
+/debian/files
+/debian/tmp/
+/debian/weechat*/
 /release

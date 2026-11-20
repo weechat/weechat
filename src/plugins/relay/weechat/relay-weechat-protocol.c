@@ -400,15 +400,16 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                          && !totp_received)
                 {
                     totp_received = 1;
-                    if (totp_secret)
+                    if (totp_secret && relay_auth_check_totp_format (pos))
                     {
                         /* Validate the OTP received from the client. */
                         if (weechat_asprintf (
                                 &info_totp_args,
-                                "%s,%s,0,%d",
+                                "%s,%s,0,%d,%d",
                                 totp_secret,  /* The shared secret */
                                 pos,          /* The OTP from client */
-                                weechat_config_integer (relay_config_network_totp_window)) >= 0)
+                                weechat_config_integer (relay_config_network_totp_window),
+                                RELAY_AUTH_TOTP_DIGITS) >= 0)
                         {
                             info_totp = weechat_info_get ("totp_validate", info_totp_args);
                             if (info_totp && (strcmp (info_totp, "1") == 0))
@@ -648,8 +649,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
 
     /*
      * Delay the execution of command after we go back in the WeeChat
-     * main loop (some commands like /upgrade executed now can cause
-     * a crash).
+     * main loop, so that it is not executed while the data received from
+     * the client is being processed.
      */
     weechat_hashtable_set (options, "delay", "1");
 

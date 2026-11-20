@@ -146,6 +146,19 @@ TEST(GuiChat, StrlenScreen)
     snprintf (string, sizeof (string),
               "a" "\u00ad" "%s" "\u200b" "b", gui_color_get_custom ("red"));
     LONGS_EQUAL(2, gui_chat_strlen_screen (string));
+
+    /* Incomplete/invalid color codes: chars after the valid prefix are kept */
+    LONGS_EQUAL(0, gui_chat_strlen_screen ("\x19" "F"));
+    LONGS_EQUAL(5, gui_chat_strlen_screen ("\x19" "F :end"));
+    LONGS_EQUAL(5, gui_chat_strlen_screen ("\x19" "F0 :end"));
+    LONGS_EQUAL(5, gui_chat_strlen_screen ("\x19" "F@0001 :end"));
+    LONGS_EQUAL(5, gui_chat_strlen_screen ("\x19" "B :end"));
+    LONGS_EQUAL(8, gui_chat_strlen_screen ("\x19" "*0~05 :end"));
+    LONGS_EQUAL(5, gui_chat_strlen_screen ("\x19" "*05~ :end"));
+    LONGS_EQUAL(7, gui_chat_strlen_screen ("\x19" "@123ab :end"));
+    LONGS_EQUAL(6, gui_chat_strlen_screen ("\x19" "1x :end"));
+    LONGS_EQUAL(5, gui_chat_strlen_screen ("\x1A" " :end"));
+    LONGS_EQUAL(5, gui_chat_strlen_screen ("\x1B" " :end"));
 }
 
 /*

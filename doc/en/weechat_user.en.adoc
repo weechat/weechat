@@ -608,6 +608,11 @@ Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.en.adoc[tag=debug]
 
+[[exit_status]]
+==== Exit status
+
+include::includes/man.en.adoc[tag=exit_status]
+
 [[environment_variables]]
 === Environment variables
 
@@ -1436,6 +1441,16 @@ By default WeeChat and its default plugins interpret these variables:
 | host
 | any string
 | Self host (if known), set by irc plugin.
+
+| irc_caps
+| any string
+| List of IRC capabilities enabled on the server (names separated by commas,
+  for example `batch,message-tags,server-time`), set by irc plugin.
+
+| irc_clienttagdeny
+| any string
+| Client-only tags blocked by the IRC server (value of `CLIENTTAGDENY` in
+  message 005, for example `*,-draft/react`), set by irc plugin.
 
 | lag
 | any string

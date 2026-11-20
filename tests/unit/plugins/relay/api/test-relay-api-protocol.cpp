@@ -26,6 +26,7 @@ extern "C"
 #include "src/core/weechat.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
+#include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
 #include "src/plugins/plugin-config.h"
@@ -41,6 +42,11 @@ extern "C"
 extern void relay_client_recv_text (struct t_relay_client *client,
                                     const char *data);
 extern int relay_api_protocol_command_delay;
+extern int relay_api_protocol_sync_filtered_lines (struct t_relay_client *client,
+                                                   struct t_gui_buffer *buffer);
+extern int relay_api_protocol_get_request_buffer (struct t_relay_client *client,
+                                                  struct t_relay_json *json_body,
+                                                  struct t_gui_buffer **buffer);
 }
 
 /*
@@ -104,6 +110,31 @@ struct t_relay_client *ptr_relay_client = NULL;
 int data_sent_index = 0;
 char *data_sent[4] = { NULL, NULL, NULL, NULL };
 struct t_relay_json *json_body_sent[4] = { NULL, NULL, NULL, NULL };
+char test_relay_api_protocol_typing_signal[128];
+void *test_relay_api_protocol_typing_signal_data = NULL;
+
+/*
+ * Callback for signals "typing_self_*": save the signal name and data.
+ */
+
+int
+test_relay_api_protocol_typing_signal_cb (const void *pointer, void *data,
+                                          const char *signal,
+                                          const char *type_data,
+                                          void *signal_data)
+{
+    /* Make C++ compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) type_data;
+
+    snprintf (test_relay_api_protocol_typing_signal,
+              sizeof (test_relay_api_protocol_typing_signal),
+              "%s", signal);
+    test_relay_api_protocol_typing_signal_data = signal_data;
+
+    return WEECHAT_RC_OK;
+}
 
 TEST_GROUP(RelayApiProtocol)
 {
@@ -275,6 +306,145 @@ TEST(RelayApiProtocol, SignalUpgradeCb)
 
 /*
  * Test functions:
+ *   relay_api_protocol_sync_filtered_lines
+ */
+
+TEST(RelayApiProtocolWithClient, SyncFilteredLines)
+{
+    struct t_gui_buffer *buffer;
+
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_filtered_lines));
+    LONGS_EQUAL(1, relay_api_protocol_sync_filtered_lines (ptr_relay_client,
+                                                           gui_buffers));
+    LONGS_EQUAL(1, relay_api_protocol_sync_filtered_lines (ptr_relay_client,
+                                                           buffer));
+
+    RELAY_API_DATA(ptr_relay_client, sync_filtered_lines) = 0;
+    LONGS_EQUAL(0, relay_api_protocol_sync_filtered_lines (ptr_relay_client,
+                                                           gui_buffers));
+    LONGS_EQUAL(1, relay_api_protocol_sync_filtered_lines (ptr_relay_client,
+                                                           buffer));
+    RELAY_API_DATA(ptr_relay_client, sync_filtered_lines) = 1;
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_get_request_buffer
+ */
+
+TEST(RelayApiProtocolWithClient, GetRequestBuffer)
+{
+    struct t_relay_json *json;
+    struct t_gui_buffer *buffer;
+    char str_json[256];
+
+    json = relay_json_parse ("{}");
+    CHECK(json);
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (NULL, NULL, NULL));
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                           json, NULL));
+    buffer = gui_buffers;
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (NULL, json,
+                                                           &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+    buffer = gui_buffers;
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                           NULL, &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+
+    /* No buffer name/id: core buffer. */
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
+
+    /* Buffer name. */
+    json = relay_json_parse ("{\"buffer_name\": \"core.weechat\"}");
+    CHECK(json);
+    buffer = NULL;
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
+
+    /* Buffer name is not a string: ignored (core buffer). */
+    json = relay_json_parse ("{\"buffer_name\": 123}");
+    CHECK(json);
+    buffer = NULL;
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
+
+    /* Buffer name not found. */
+    json = relay_json_parse ("{\"buffer_name\": \"invalid\"}");
+    CHECK(json);
+    free_data_sent ();
+    LONGS_EQUAL(0, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 40\r\n"
+                 "\r\n"
+                 "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
+                 data_sent[0]);
+    relay_json_free (json);
+
+    /* Buffer id. */
+    snprintf (str_json, sizeof (str_json),
+              "{\"buffer_id\": %lld}", gui_buffers->id);
+    json = relay_json_parse (str_json);
+    CHECK(json);
+    buffer = NULL;
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
+
+    /* Buffer id is not a number. */
+    json = relay_json_parse ("{\"buffer_id\": \"abc\"}");
+    CHECK(json);
+    LONGS_EQUAL(-1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                           json, &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+    relay_json_free (json);
+
+    /* Buffer id not found. */
+    json = relay_json_parse ("{\"buffer_id\": 123}");
+    CHECK(json);
+    free_data_sent ();
+    LONGS_EQUAL(0, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(NULL, buffer);
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 36\r\n"
+                 "\r\n"
+                 "{\"error\":\"Buffer \\\"123\\\" not found\"}",
+                 data_sent[0]);
+    relay_json_free (json);
+
+    /* Buffer name has priority over buffer id. */
+    json = relay_json_parse ("{\"buffer_name\": \"core.weechat\", "
+                             "\"buffer_id\": 123}");
+    CHECK(json);
+    buffer = NULL;
+    LONGS_EQUAL(1, relay_api_protocol_get_request_buffer (ptr_relay_client,
+                                                          json, &buffer));
+    POINTERS_EQUAL(gui_buffers, buffer);
+    relay_json_free (json);
+}
+
+/*
+ * Test functions:
  *   relay_api_protocol_cb_preflight
  */
 
@@ -285,7 +455,7 @@ TEST(RelayApiProtocolWithClient, CbPreflight)
     STRCMP_EQUAL(
         "HTTP/1.1 204 No Content\r\n"
         "Access-Control-Allow-Methods: GET, POST, PUT, DELETE\r\n"
-        "Access-Control-Allow-Headers: origin, content-type, accept, authorization\r\n"
+        "Access-Control-Allow-Headers: origin, content-type, accept, authorization, x-weechat-totp\r\n"
         "Access-Control-Allow-Origin: *\r\n"
         "Content-Type: application/json; charset=utf-8\r\n"
         "Content-Length: 0\r\n"
@@ -384,6 +554,7 @@ TEST(RelayApiProtocolWithClient, CbVersion)
 
 /*
  * Test functions:
+ *   relay_api_protocol_info_language
  *   relay_api_protocol_info_locale
  *   relay_api_protocol_cb_info
  */
@@ -399,13 +570,27 @@ TEST(RelayApiProtocolWithClient, CbInfo)
     json = json_body_sent[0];
     CHECK(json);
     CHECK(relay_json_is_array (json));
-    LONGS_EQUAL(1, relay_json_array_size (json));
+    LONGS_EQUAL(2, relay_json_array_size (json));
     json_info = relay_json_array_get (json, 0);
+    CHECK(json_info);
+    WEE_CHECK_OBJ_STR("language", json_info, "name");
+    WEE_CHECK_OBJ_STR("Language of WeeChat translated messages",
+                      json_info, "description");
+    POINTERS_EQUAL(NULL, relay_json_object_get (json_info, "value"));
+    json_info = relay_json_array_get (json, 1);
     CHECK(json_info);
     WEE_CHECK_OBJ_STR("locale", json_info, "name");
     WEE_CHECK_OBJ_STR("WeeChat locale used for translated messages",
                       json_info, "description");
     POINTERS_EQUAL(NULL, relay_json_object_get (json_info, "value"));
+
+    /* Info "language" (tests run with English locale) */
+    test_client_recv_http ("GET /api/info/language", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("language", json, "name");
+    WEE_CHECK_OBJ_STR("en", json, "value");
 
     /* Info "locale" */
     test_client_recv_http ("GET /api/info/locale", NULL, NULL);
@@ -473,7 +658,19 @@ TEST(RelayApiProtocolWithClient, CbInfoWebsocket)
     json_body = relay_json_object_get (json, "body");
     CHECK(json_body);
     CHECK(relay_json_is_array (json_body));
-    LONGS_EQUAL(1, relay_json_array_size (json_body));
+    LONGS_EQUAL(2, relay_json_array_size (json_body));
+    relay_json_free (json);
+
+    /* Info "language" */
+    test_client_recv_text ("{\"request\": \"GET /api/info/language\"}");
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_NUM(200, json, "code");
+    WEE_CHECK_OBJ_STR("info", json, "body_type");
+    json_body = relay_json_object_get (json, "body");
+    CHECK(json_body);
+    WEE_CHECK_OBJ_STR("language", json_body, "name");
+    WEE_CHECK_OBJ_STR("en", json_body, "value");
     relay_json_free (json);
 
     /* Info "locale" */
@@ -497,6 +694,7 @@ TEST(RelayApiProtocolWithClient, CbInfoWebsocket)
 TEST(RelayApiProtocolWithClient, CbBuffers)
 {
     struct t_relay_json *json, *json_obj, *json_var, *json_groups;
+    struct t_gui_filter *ptr_filter;
     char str_http[256];
 
     /* Error: invalid buffer name */
@@ -647,6 +845,67 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_BOOL(0, json, "highlight");
     WEE_CHECK_OBJ_STR("", json, "prefix");
     WEE_CHECK_OBJ_STR("test line 2", json, "message");
+
+    /* Error: invalid value for parameter "filtered". */
+    test_client_recv_http ("GET /api/buffers/core.weechat/lines?filtered=xxx",
+                           NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 42\r\n"
+                 "\r\n"
+                 "{\"error\":\"Invalid parameter \\\"filtered\\\"\"}",
+                 data_sent[0]);
+
+    /* Get the last line not filtered (line 1 filtered). */
+    gui_chat_printf (NULL, "test line 1");
+    gui_chat_printf_date_tags (NULL, 0, "tag_test_filtered", "test line 2");
+    ptr_filter = gui_filter_new (1, "test_filtered", "core.weechat",
+                                 "tag_test_filtered", "*");
+    CHECK(ptr_filter);
+    gui_filter_buffer (gui_buffers, NULL);
+    test_client_recv_http (
+        "GET /api/buffers/core.weechat/lines?lines=-1&filtered=exclude",
+        NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent[0]);
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    LONGS_EQUAL(1, relay_json_array_size (json_body_sent[0]));
+    json = relay_json_array_get (json_body_sent[0], 0);
+    WEE_CHECK_OBJ_STR("test line 1", json, "message");
+    WEE_CHECK_OBJ_BOOL(1, json, "displayed");
+    test_client_recv_http (
+        "GET /api/buffers/core.weechat/lines?lines=-1&filtered=between",
+        NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent[0]);
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    LONGS_EQUAL(2, relay_json_array_size (json_body_sent[0]));
+    json = relay_json_array_get (json_body_sent[0], 1);
+    WEE_CHECK_OBJ_STR("test line 2", json, "message");
+    WEE_CHECK_OBJ_BOOL(0, json, "displayed");
+    test_client_recv_http (
+        "GET /api/buffers/core.weechat?lines=-1&filtered=exclude",
+        NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent[0]);
+    json = relay_json_object_get (json_body_sent[0], "lines");
+    CHECK(json);
+    LONGS_EQUAL(1, relay_json_array_size (json));
+    json = relay_json_array_get (json, 0);
+    WEE_CHECK_OBJ_STR("test line 1", json, "message");
+
+    /* Get a filtered line by id: always returned. */
+    snprintf (str_http, sizeof (str_http),
+              "GET /api/buffers/core.weechat/lines/%lld?filtered=exclude",
+              gui_buffers->own_lines->last_line->data->id);
+    test_client_recv_http (str_http, NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent[0]);
+    WEE_CHECK_OBJ_STR("test line 2", json_body_sent[0], "message");
+    WEE_CHECK_OBJ_BOOL(0, json_body_sent[0], "displayed");
+    gui_filter_free (ptr_filter);
+    gui_filter_buffer (gui_buffers, NULL);
 
     /* Get nicks. */
     test_client_recv_http ("GET /api/buffers/core.weechat/nicks", NULL, NULL);
@@ -1116,6 +1375,117 @@ TEST(RelayApiProtocolWithClient, CbInput)
 
 /*
  * Test functions:
+ *   relay_api_protocol_cb_typing
+ */
+
+TEST(RelayApiProtocolWithClient, CbTyping)
+{
+    struct t_hook *hook;
+    char body[256];
+
+    test_relay_api_protocol_typing_signal[0] = '\0';
+    test_relay_api_protocol_typing_signal_data = NULL;
+    hook = hook_signal (NULL, "typing_self_*",
+                        &test_relay_api_protocol_typing_signal_cb,
+                        NULL, NULL);
+
+    /* Error: no body. */
+    test_client_recv_http ("POST /api/typing", NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 23\r\n"
+                 "\r\n"
+                 "{\"error\":\"Bad request\"}",
+                 data_sent[0]);
+
+    /* Error: body is not an object. */
+    test_client_recv_http ("POST /api/typing", NULL, "[]");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: buffer not found (by name). */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_name\": \"invalid\", "
+                           "\"state\": \"active\"}");
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 40\r\n"
+                 "\r\n"
+                 "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
+                 data_sent[0]);
+
+    /* Error: buffer id is not a number. */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_id\": \"abc\", \"state\": \"active\"}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: buffer not found (by id). */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_id\": 123, \"state\": \"active\"}");
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 36\r\n"
+                 "\r\n"
+                 "{\"error\":\"Buffer \\\"123\\\" not found\"}",
+                 data_sent[0]);
+
+    /* Error: missing state. */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_name\": \"core.weechat\"}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: state is not a string. */
+    test_client_recv_http ("POST /api/typing", NULL, "{\"state\": 1}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* Error: invalid state. */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"state\": \"unknown\"}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+
+    /* No signal sent on errors. */
+    STRCMP_EQUAL("", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(NULL, test_relay_api_protocol_typing_signal_data);
+
+    /* State "active" on buffer (by name). */
+    test_client_recv_http ("POST /api/typing", NULL,
+                           "{\"buffer_name\": \"core.weechat\", "
+                           "\"state\": \"active\"}");
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+    STRCMP_EQUAL("typing_self_typing", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(gui_buffers, test_relay_api_protocol_typing_signal_data);
+
+    /* State "paused" on buffer (by id). */
+    test_relay_api_protocol_typing_signal_data = NULL;
+    snprintf (body, sizeof (body),
+              "{\"buffer_id\": %lld, \"state\": \"paused\"}",
+              gui_buffers->id);
+    test_client_recv_http ("POST /api/typing", NULL, body);
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+    STRCMP_EQUAL("typing_self_paused", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(gui_buffers, test_relay_api_protocol_typing_signal_data);
+
+    /* State "done" on default buffer. */
+    test_relay_api_protocol_typing_signal_data = NULL;
+    test_client_recv_http ("POST /api/typing", NULL, "{\"state\": \"done\"}");
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+    STRCMP_EQUAL("typing_self_cleared", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(gui_buffers, test_relay_api_protocol_typing_signal_data);
+
+    /* State "sent" on default buffer. */
+    test_relay_api_protocol_typing_signal_data = NULL;
+    test_client_recv_http ("POST /api/typing", NULL, "{\"state\": \"sent\"}");
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+    STRCMP_EQUAL("typing_self_sent", test_relay_api_protocol_typing_signal);
+    POINTERS_EQUAL(gui_buffers, test_relay_api_protocol_typing_signal_data);
+
+    unhook (hook);
+}
+
+/*
+ * Test functions:
  *   relay_api_protocol_cb_ping
  */
 
@@ -1219,6 +1589,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
     LONGS_EQUAL(RELAY_API_COLORS_STRIP, RELAY_API_DATA(ptr_relay_client, sync_colors));
     LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_notify_only));
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_filtered_lines));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_buffer));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_hsignal_nicklist));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_input));
@@ -1234,6 +1605,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_buffer));
     POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_hsignal_nicklist));
     POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_input));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
     CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_upgrade));
     POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_day_changed));
 
@@ -1440,6 +1812,201 @@ TEST(RelayApiProtocolWithClient, SignalBufferCbNotifyOnly)
 
 /*
  * Test functions:
+ *   relay_api_protocol_signal_buffer_cb (with "filtered_lines")
+ */
+
+TEST(RelayApiProtocolWithClient, SignalBufferCbFilteredLines)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_filter *ptr_filter;
+    struct t_relay_json *json, *json_obj, *json_lines;
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    ptr_filter = gui_filter_new (1, "test_filtered", "core.test",
+                                 "tag_test_filtered", "*");
+    CHECK(ptr_filter);
+
+    /* Default: filtered lines are sent. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_filtered_lines));
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    free_data_sent ();
+    gui_chat_printf_date_tags (buffer, 0, "tag_test_filtered", "test filtered");
+    CHECK(data_sent[0]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_line_added", json, "event_name");
+    WEE_CHECK_OBJ_STR("test filtered", relay_json_object_get (json, "body"), "message");
+    WEE_CHECK_OBJ_BOOL(0, relay_json_object_get (json, "body"), "displayed");
+    relay_json_free (json);
+    gui_buffer_close (buffer);
+
+    /* Filtered lines are not sent. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"filtered_lines\": false}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync",
+                   "{\"filtered_lines\":false}", "null");
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_filtered_lines));
+    free_data_sent ();
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    CHECK(data_sent[0]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_opened", json, "event_name");
+    relay_json_free (json);
+    free_data_sent ();
+    gui_chat_printf_date_tags (buffer, 0, "tag_test_filtered", "test filtered");
+    POINTERS_EQUAL(NULL, data_sent[0]);
+    gui_chat_printf_date_tags (buffer, 0, NULL, "test not filtered");
+    CHECK(data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_line_added", json, "event_name");
+    WEE_CHECK_OBJ_STR("test not filtered", relay_json_object_get (json, "body"), "message");
+    relay_json_free (json);
+
+    /* Buffer opened: only lines not filtered are sent. */
+    free_data_sent ();
+    (void) hook_signal_send ("buffer_opened",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    CHECK(data_sent[0]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_opened", json, "event_name");
+    json_lines = relay_json_object_get (relay_json_object_get (json, "body"),
+                                        "lines");
+    CHECK(json_lines);
+    LONGS_EQUAL(1, relay_json_array_size (json_lines));
+    WEE_CHECK_OBJ_STR("test not filtered", relay_json_array_get (json_lines, 0),
+                      "message");
+    relay_json_free (json);
+
+    free_data_sent ();
+    gui_buffer_close (buffer);
+    free_data_sent ();
+
+    /* Buffer with free content: line replaced by a filtered line is sent. */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+    free_data_sent ();
+    gui_chat_printf_y (buffer, 0, "test not filtered");
+    free_data_sent ();
+    gui_chat_printf_y_date_tags (buffer, 0, 0, "tag_test_filtered",
+                                 "test filtered");
+    CHECK(data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_line_added", json, "event_name");
+    WEE_CHECK_OBJ_NUM(0, relay_json_object_get (json, "body"), "y");
+    WEE_CHECK_OBJ_STR("test filtered", relay_json_object_get (json, "body"), "message");
+    WEE_CHECK_OBJ_BOOL(0, relay_json_object_get (json, "body"), "displayed");
+    relay_json_free (json);
+
+    /* Buffer with free content opened: filtered lines are sent. */
+    free_data_sent ();
+    (void) hook_signal_send ("buffer_opened",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    CHECK(data_sent[0]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_opened", json, "event_name");
+    json_lines = relay_json_object_get (relay_json_object_get (json, "body"),
+                                        "lines");
+    CHECK(json_lines);
+    LONGS_EQUAL(1, relay_json_array_size (json_lines));
+    WEE_CHECK_OBJ_STR("test filtered", relay_json_array_get (json_lines, 0),
+                      "message");
+    relay_json_free (json);
+
+    free_data_sent ();
+    gui_buffer_close (buffer);
+    gui_filter_free (ptr_filter);
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_signal_buffer_cb (signal "buffer_lines_filtered")
+ */
+
+TEST(RelayApiProtocolWithClient, SignalBufferCbLinesFiltered)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_filter *ptr_filter;
+    struct t_relay_json *json, *json_obj, *json_body;
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    gui_chat_printf_date_tags (buffer, 0, "tag_test_filtered", "test filtered");
+    ptr_filter = gui_filter_new (1, "test_filtered", "core.test",
+                                 "tag_test_filtered", "*");
+    CHECK(ptr_filter);
+
+    /* Line filtered: event sent, without lines. */
+    free_data_sent ();
+    gui_filter_buffer (buffer, NULL);
+    CHECK(data_sent[0]);
+    POINTERS_EQUAL(NULL, data_sent[1]);
+    json = relay_json_parse (data_sent[0]);
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("buffer_lines_filtered", json, "event_name");
+    WEE_CHECK_OBJ_NUM(buffer->id, json, "buffer_id");
+    WEE_CHECK_OBJ_STR("buffer", json, "body_type");
+    json_body = relay_json_object_get (json, "body");
+    CHECK(json_body);
+    WEE_CHECK_OBJ_STR("core.test", json_body, "name");
+    POINTERS_EQUAL(NULL, relay_json_object_get (json_body, "lines"));
+    relay_json_free (json);
+
+    /* No line changed: no event. */
+    free_data_sent ();
+    gui_filter_buffer (buffer, NULL);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* No event with "notify_only". */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"notify_only\": true}}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "{\"notify_only\":true}", "null");
+    gui_filter_free (ptr_filter);
+    free_data_sent ();
+    gui_filter_buffer (buffer, NULL);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
  *   relay_api_protocol_signal_day_changed_cb
  */
 
@@ -1484,6 +2051,171 @@ TEST(RelayApiProtocolWithClient, SignalDayChangedCb)
     free_data_sent ();
     (void) hook_signal_send ("day_changed",
                              WEECHAT_HOOK_SIGNAL_STRING, (void *)"2026-10-05");
+    POINTERS_EQUAL(NULL, data_sent[0]);
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_signal_typing_cb
+ */
+
+TEST(RelayApiProtocolWithClient, SignalTypingCb)
+{
+    char signal_data[128], expected[1024];
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    /* Typing not synchronized by default. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null", "null");
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_typing));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing;alice", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* Typing ignored with "notify_only". */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"typing\": true, "
+                           "\"notify_only\": true}}");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_typing));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"typing\": true}}");
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_typing));
+    CHECK(RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
+
+    /* Invalid signal data: no event sent. */
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, (void *)"");
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, (void *)"invalid");
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING,
+                             (void *)"0x0;typing;alice");
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING,
+                             (void *)"0x1;typing;alice");
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing", (unsigned long)gui_buffers);
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;unknown;alice", (unsigned long)gui_buffers);
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing;", (unsigned long)gui_buffers);
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    (void) hook_signal_send ("typing_reset_buffer",
+                             WEECHAT_HOOK_SIGNAL_POINTER, NULL);
+    POINTERS_EQUAL(NULL, data_sent[0]);
+
+    /* Typing states. */
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing;alice", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_nick_changed\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":\"typing\","
+              "\"body\":{\"nick\":\"alice\",\"state\":\"active\"}}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;paused;bob", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_nick_changed\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":\"typing\","
+              "\"body\":{\"nick\":\"bob\",\"state\":\"paused\"}}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;off;alice", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_nick_changed\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":\"typing\","
+              "\"body\":{\"nick\":\"alice\",\"state\":\"done\"}}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;cleared;bob", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_nick_changed\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":\"typing\","
+              "\"body\":{\"nick\":\"bob\",\"state\":\"done\"}}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    /* Reset of buffer. */
+    free_data_sent ();
+    (void) hook_signal_send ("typing_reset_buffer",
+                             WEECHAT_HOOK_SIGNAL_POINTER, gui_buffers);
+    snprintf (expected, sizeof (expected),
+              "{\"code\":0,"
+              "\"message\":\"Event\","
+              "\"event_name\":\"typing_buffer_reset\","
+              "\"buffer_id\":%lld,"
+              "\"body_type\":null,"
+              "\"body\":null}",
+              gui_buffers->id);
+    STRCMP_EQUAL(expected, data_sent[0]);
+
+    /* No event sent after typing is disabled. */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"typing\": false}}");
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_typing));
+    POINTERS_EQUAL(NULL, RELAY_API_DATA(ptr_relay_client, hook_signal_typing));
+    snprintf (signal_data, sizeof (signal_data),
+              "0x%lx;typing;alice", (unsigned long)gui_buffers);
+    free_data_sent ();
+    (void) hook_signal_send ("typing_set_nick",
+                             WEECHAT_HOOK_SIGNAL_STRING, signal_data);
+    (void) hook_signal_send ("typing_reset_buffer",
+                             WEECHAT_HOOK_SIGNAL_POINTER, gui_buffers);
     POINTERS_EQUAL(NULL, data_sent[0]);
 }
 

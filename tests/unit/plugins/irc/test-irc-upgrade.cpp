@@ -175,6 +175,17 @@ TEST(IrcUpgrade, SaveLoad)
     int raw_count;
 
     connect_and_join ();
+    RECV(":server CAP alice ACK :server-time message-tags");
+    ptr_channel = irc_channel_search (server, "#test");
+    CHECK(ptr_channel);
+    /*
+     * Remove local variables "irc_caps" and "irc_clienttagdeny", like an
+     * upgrade from WeeChat < 5.0.0: they must be set after upgrade.
+     */
+    gui_buffer_local_var_remove (server->buffer, "irc_caps");
+    gui_buffer_local_var_remove (server->buffer, "irc_clienttagdeny");
+    gui_buffer_local_var_remove (ptr_channel->buffer, "irc_caps");
+    gui_buffer_local_var_remove (ptr_channel->buffer, "irc_clienttagdeny");
     ptr_notify = irc_notify_search (server, "dave");
     CHECK(ptr_notify);
     ptr_notify->is_on_server = 1;
@@ -268,6 +279,19 @@ TEST(IrcUpgrade, SaveLoad)
     LONGS_EQUAL(1, ptr_pattern->temp_pattern);
     STRCMP_EQUAL("311", ptr_pattern->cmd_start);
     LONGS_EQUAL(raw_count, irc_raw_messages_count);
+
+    /* Local variables set after upgrade. */
+    STRCMP_EQUAL("message-tags,server-time",
+                 gui_buffer_get_string (server->buffer, "localvar_irc_caps"));
+    STRCMP_EQUAL("message-tags,server-time",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_irc_caps"));
+    STRCMP_EQUAL("*,-a",
+                 gui_buffer_get_string (server->buffer,
+                                        "localvar_irc_clienttagdeny"));
+    STRCMP_EQUAL("*,-a",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_irc_clienttagdeny"));
 
     /* Buffer callbacks restored on channel buffer. */
     ptr_buffer = ptr_channel->buffer;

@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 20:26+0100\n"
+"POT-Creation-Date: 2026-11-18 22:28+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -188,6 +188,29 @@ msgstr ""
 
 msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
 msgstr ""
+
+#. TRANSLATORS: "%s" is the command used to run WeeChat.
+#, c-format
+msgid "Try \"%s --help\" for more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: ambiguous option \"%s\"\n"
+msgstr "%s%s: erro: protocolo \"%s\" desconhecido"
+
+#, fuzzy, c-format
+msgid "Error: option \"--%s\" does not take an argument\n"
+msgstr "Erro: (%s) não é um diretório\n"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: unknown protocol \"%s\""
+msgid "Error: unknown option \"%s\"\n"
+msgstr "%s%s: erro: protocolo \"%s\" desconhecido"
+
+#, fuzzy
+msgid "Error: not enough memory\n"
+msgstr "%sMemória insuficiente"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -1101,21 +1124,6 @@ msgstr "%sErro: incapaz de salvar a sessão em arquivo"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%sErro: incapaz de salvar a sessão em arquivo"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%sCan't upgrade: there is one or more background process (hook type "
-#| "'process' or 'connect')"
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-"%sNão foi possível atualizar: existe um ou mais processos em segundo plano "
-"(tipo de hook 'process' ou 'connect')"
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr ""
-
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sNão foi possível atualizar: binário do WeeChat \"%s\" não existe"
@@ -1134,14 +1142,6 @@ msgstr "Nenhuma barra definida"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Atualizando WeeChat com o arquivo binário: \"%s\"..."
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr ""
-
-#, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr "***** Erro: exec falhou (programa: \"%s\"), saindo do WeeChat"
 
 #. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
@@ -6013,10 +6013,6 @@ msgid ""
 "utf8_strlen_screen, gui_chat_strlen_screen:"
 msgstr ""
 
-#, fuzzy
-msgid "Error: not enough memory\n"
-msgstr "%sMemória insuficiente"
-
 #, c-format
 msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
@@ -6386,6 +6382,21 @@ msgstr "%s: erro: dicionário \"%s\" não está disponível em seu sistema"
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Uso de memória (veja \"man mallinfo\" para ajuda):"
 
+msgid "Running WeeChat in background..."
+msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: unable to parse file \"%s\""
+msgid "unable to open /dev/null"
+msgstr "%s%s: não foi possível interpretar arquivo \"%s\""
+
+#, fuzzy
+msgid "fork error"
+msgstr "%s%s: erro: %s"
+
+msgid "OK"
+msgstr "OK"
+
 msgid "WeeChat default theme for light-background terminals"
 msgstr ""
 
@@ -6569,6 +6580,29 @@ msgstr ""
 #. TRANSLATORS: %.02fs is a float number + "s" ("seconds").
 #, c-format
 msgid "Upgrade done (%.02fs)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+"%sNão foi possível atualizar: existe um ou mais processos em segundo plano "
+"(tipo de hook 'process' ou 'connect')"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "***** Erro: exec falhou (programa: \"%s\"), saindo do WeeChat"
+
+#, c-format
+msgid "%sUpgrade aborted"
 msgstr ""
 
 msgid "invalid URL"
@@ -6774,16 +6808,6 @@ msgstr "Mouse está desabilitado"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', tamanho: %dx%d"
-
-msgid "Running WeeChat in background..."
-msgstr ""
-
-#, fuzzy
-msgid "fork error"
-msgstr "%s%s: erro: %s"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "condition(s) to display the bar item (evaluated, see /help eval)"
 msgstr ""
@@ -13438,6 +13462,13 @@ msgid ""
 "logger.file.rotation_compression_type"
 msgstr ""
 
+msgid ""
+"split multiline messages: write the date and prefix on each line of the "
+"message (the backlog then displays one message per line); if disabled, the "
+"next lines of the message start with two tabs (empty date and prefix), so "
+"that the backlog displays a single message"
+msgstr ""
+
 #, fuzzy
 #| msgid ""
 #| "timestamp used in log files (see man strftime for date/time specifiers)"
@@ -13614,6 +13645,11 @@ msgstr "charset interno do WeeChat"
 msgid "locale used for translating messages"
 msgstr "prefixo para mensagens de ação"
 
+msgid ""
+"language of translated messages (for example \"fr\" or \"pt_BR\"), \"en\" if "
+"messages are not translated"
+msgstr ""
+
 msgid "keyboard inactivity (seconds)"
 msgstr "tempo de inatividade do teclado (segundos)"
 
@@ -13719,7 +13755,8 @@ msgstr ""
 
 msgid ""
 "secret (in base32), one-time password, timestamp (optional, current time by "
-"default), number of passwords before/after to test (optional, 0 by default)"
+"default), number of passwords before/after to test (optional, 0 by default), "
+"number of digits (optional, between 4 and 10, 6 by default)"
 msgstr ""
 
 #, fuzzy
@@ -15081,6 +15118,11 @@ msgstr "%s%s: erro: protocolo \"%s\" desconhecido"
 #, fuzzy, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: erro: protocolo \"%s\" desconhecido"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid charset: \"%s\""
+msgid "%s%s: error: invalid port \"%s\""
+msgstr "%s%s: charset inválido: \"%s\""
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "
@@ -17310,6 +17352,12 @@ msgstr ""
 msgid "nicks of DCC chat"
 msgstr "apelidos do DCC chat"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 "abrir automaticamente buffer de transferência quando uma nova transferência "
@@ -17371,8 +17419,9 @@ msgstr ""
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "restringir arquivos/chats que estejam sendo enviados para utilizar somente "
 "portas no intervalo fornecido (útil para NAT) (sintaxe: uma única porta, por "
@@ -17468,6 +17517,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "%s%s: charset inválido: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: não foi possível criar socket para transferência"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s: não foi possível encontrar porta disponível para transferência"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -17666,14 +17723,6 @@ msgstr "%s%s: não é possível acessar o arquivo \"%s\""
 #, fuzzy, c-format
 msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr "%s%s: não foi possível criar socket para transferência"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: não foi possível criar socket para transferência"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: não foi possível encontrar porta disponível para transferência"
 
 #, c-format
 msgid "%s%s: error creating xfer"

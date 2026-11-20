@@ -164,6 +164,14 @@ in the `x-weechat-totp` header like this:
 curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" 'https://localhost:9000/api/version'
 ----
 
+The TOTP must contain exactly 6 digits, including leading zeros (for example
+`012345`), otherwise it is rejected.
+
+The JavaScript WebSocket API used in browsers can't set this header, so
+websocket clients send the TOTP in a sub-protocol instead _(WeeChat ≥ 5.0.0)_,
+see
+<<authentication_sec_websocket_protocol,Sec-WebSocket-Protocol>>.
+
 In case of error, a response `401 Unauthorized` is returned with a field `error`
 in JSON data that describes the error.
 
@@ -295,6 +303,33 @@ const ws = new WebSocket("wss://localhost:9000/api", [
 ])
 ----
 
+If TOTP is enabled (option `relay.network.totp_secret` is set), browser clients
+can't send the `x-weechat-totp` header either: they must add the sub-protocol
+`totp.weechat.<code>` _(WeeChat ≥ 5.0.0)_, where `<code>` is the TOTP value.
+The relay checks it like the header. Two TOTP sub-protocols in one request are
+rejected, and so is a request where the header and the sub-protocol carry
+different codes. Only `api.weechat` is selected in the response, so the TOTP is
+never sent back.
+
+For example with TOTP `123456`:
+
+[source,javascript]
+----
+const ws = new WebSocket("wss://localhost:9000/api", [
+  "api.weechat",
+  "base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk",
+  "totp.weechat.123456",
+])
+----
+
+If a reverse proxy sits in front of WeeChat, check its logging. Proxies and
+load balancers may log request headers, `Sec-WebSocket-Protocol` included, and
+that header carries the password as well as the TOTP. The TOTP expires within
+30 seconds with the default value of option `relay.network.totp_window` and a
+hashed password expires according to option `relay.network.time_window`, but a
+plain-text password stays valid until you change it: prefer a hashed password
+and disable header logging for the relay.
+
 [[compression]]
 == Compression
 
@@ -367,7 +402,7 @@ Response:
 ----
 HTTP/1.1 204 No Content
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE
-Access-Control-Allow-Headers: origin, content-type, accept, authorization
+Access-Control-Allow-Headers: origin, content-type, accept, authorization, x-weechat-totp
 Access-Control-Allow-Origin: *
 Content-Type: application/json; charset=utf-8
 Content-Length: 0
@@ -403,7 +438,8 @@ The response has the following fields:
 * `password_hash_iterations` (integer): the number of iterations to use if
   hash PBKDF2 is used
 * `totp` (boolean): `true` if TOTP is enabled in WeeChat (then the client must
-  send TOTP in specific header), `false` otherwise
+  send TOTP in header `x-weechat-totp` or in websocket sub-protocol
+  `totp.weechat.<code>`), `false` otherwise
 
 Request example:
 
@@ -511,10 +547,15 @@ Available infos:
 |===
 | Name | Type | Description
 
+| `language` | string
+| Language of WeeChat translated messages, for example `fr` or `pt_BR`, `en`
+  if messages are not translated; it is the language of the translation
+  actually used, taking into account the environment variable `LANGUAGE`
+
 | `locale` | string or null
 | WeeChat locale used for translated messages, for example `fr_FR.UTF-8`
   (category `LC_MESSAGES`); the language of messages can be different if the
-  environment variable `LANGUAGE` is set
+  environment variable `LANGUAGE` is set (see info `language`)
 |===
 
 Fields returned in the list of infos:
@@ -546,10 +587,36 @@ HTTP/1.1 200 OK
 ----
 [
     {
+        "name": "language",
+        "description": "Language of WeeChat translated messages"
+    },
+    {
         "name": "locale",
         "description": "WeeChat locale used for translated messages"
     }
 ]
+----
+
+Request example: get the language of WeeChat messages:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/info/language'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "name": "language",
+    "value": "fr"
+}
 ----
 
 Request example: get the WeeChat locale:
@@ -626,6 +693,19 @@ Query parameters:
 ** negative number: return N lines from the end of buffer
 ** `0`: do not return any line
 ** positive number: return N lines from the beginning of buffer
+* `filtered` (string, optional, default: `include`): how lines filtered with
+  command `/filter` (lines with `displayed` set to `false`) are counted and
+  returned _(WeeChat ≥ 5.0.0)_:
+** `include`: count and return all lines
+** `between`: count only lines not filtered, and return the filtered lines
+   between them, so more lines than requested can be returned (the range of
+   lines ends at the end of buffer if the number of lines is negative and
+   starts at the beginning of buffer if it is positive); there is no limit on
+   the number of filtered lines returned, except the size of the buffer history
+** `exclude`: count and return only lines not filtered; the line with the
+   identifier `last_read_line_id` (read marker) can be filtered and then not
+   returned: the client displays the read marker after the last line returned
+   with an identifier lower than or equal to `last_read_line_id`
 * `nicks` (boolean, optional, default: `false`): return nicks in buffer
 * `colors` (string, optional, default: `ansi`): how to return strings with color codes:
 ** `ansi`: return ANSI color codes
@@ -706,7 +786,8 @@ HTTP/1.1 200 OK
             "charset_modifier": "irc.libera",
             "nick": "alice",
             "tls_version": "TLS1.3",
-            "host": "~alice@example.com"
+            "host": "~alice@example.com",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "last_read_line_id": -1,
@@ -739,7 +820,8 @@ HTTP/1.1 200 OK
             "server": "libera",
             "channel": "#weechat",
             "nick": "alice",
-            "host": "~alice@example.com"
+            "host": "~alice@example.com",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "last_read_line_id": -1,
@@ -850,7 +932,8 @@ HTTP/1.1 200 OK
         "server": "libera",
         "channel": "#weechat",
         "nick": "alice",
-        "host": "~alice@example.com"
+        "host": "~alice@example.com",
+        "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
     },
     "keys": [],
     "last_read_line_id": -1,
@@ -1073,6 +1156,17 @@ Query parameters:
 ** negative number: return N lines from the end of buffer (newest lines)
 ** `0`: do not return any line (allowed but doesn't make sense with this resource)
 ** positive number: return N lines from the beginning of buffer (oldest lines)
+* `filtered` (string, optional, default: `include`): how lines filtered with
+  command `/filter` (lines with `displayed` set to `false`) are counted and
+  returned (ignored with `line_id`: the line is always returned, even if
+  it is filtered) _(WeeChat ≥ 5.0.0)_:
+** `include`: count and return all lines
+** `between`: count only lines not filtered, and return the filtered lines
+   between them, so more lines than requested can be returned (the range of
+   lines ends at the end of buffer if the number of lines is negative and
+   starts at the beginning of buffer if it is positive); there is no limit on
+   the number of filtered lines returned, except the size of the buffer history
+** `exclude`: count and return only lines not filtered
 * `colors` (string, optional, default: `ansi`): how to return strings with color codes:
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
@@ -1671,6 +1765,56 @@ HTTP/1.1 200 OK
 }
 ----
 
+[[resource_typing]]
+=== Typing
+
+Send a typing notification for a buffer.
+
+Endpoint:
+
+----
+POST /api/typing
+----
+
+Body parameters:
+
+* `buffer_id` (integer, optional): buffer unique identifier (not to be confused
+  with the buffer number, which is different)
+* `buffer_name` (string, optional, default: `core.weechat`): buffer name
+* `state` (string, **required**): typing state:
+** `active`: the user is typing a message
+** `paused`: the user has paused typing
+** `done`: the user has cleared the input without sending the message
+** `sent`: the user has sent the message
+
+While the user is typing, the state `active` must be sent again regularly
+(every 3 seconds is recommended).
+
+For IRC buffers, the typing state is sent to the IRC server only if the option
+`irc.look.typing_status_self` is enabled and if the server supports typing
+notifications (capability "message-tags"); the state `active` is changed to
+`done` if it is not received again for 6 seconds.
+
+The typing state is shared by all clients and the local user on a buffer: if a
+client sends `done` while another one is still typing in the same buffer, the
+state becomes `done` until `active` is received again.
+
+Request example: notify that the user is typing in channel #weechat:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "state": "active"}' \
+  'https://localhost:9000/api/typing'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+----
+
 [[resource_sync]]
 === Sync
 
@@ -1696,12 +1840,27 @@ Body parameters:
   in buffers (used only if `sync` is `true`)
 * `input` (boolean, optional, default: `true`): `true` to synchronize buffer input
   from remote relay to local client (used only if `sync` is `true`)
+* `typing` (boolean, optional, default: `false`): `true` to synchronize typing
+  notifications (used only if `sync` is `true`)
 * `notify_only` (boolean, optional, default: `false`): `true` to receive only
   new lines with a highlight or a private message (notify level greater than or
   equal to 2) and the events `upgrade`, `upgrade_ended` and `quit`, all other
-  events are not sent and parameters `nicks`, `input` and `options` are ignored
-  (used only if `sync` is `true`); this is useful for a mobile client in
-  background
+  events are not sent and parameters `nicks`, `input`, `typing` and `options`
+  are ignored (used only if `sync` is `true`); this is useful for a mobile
+  client in background
+* `filtered_lines` (boolean, optional, default: `true`): `false` to not receive
+  the lines filtered with command `/filter` (lines with `displayed` set to
+  `false`): the event `buffer_line_added` is not sent for a filtered line and
+  the event `buffer_opened` contains only lines not filtered; this does not
+  apply to buffers with free content, where all lines are always sent because
+  a line can replace a line already received (used only if `sync` is `true`)
+  _(WeeChat ≥ 5.0.0)_; the event `buffer_line_data_changed` is always sent,
+  with the field `displayed`, so that the client can add or remove the line
+  (an update of a line not received with `displayed` set to `false` can be
+  ignored); the client can fetch the lines of buffers with formatted content
+  with the same behavior with the parameter `filtered` set to `exclude` in
+  resource <<resource_buffers,buffers>> (for buffers with free content, the
+  parameter `filtered` must be `include`)
 * `colors` (string, optional, default: `ansi`): how to return strings with
   color codes (used only if `sync` is `true`):
 ** `ansi`: return ANSI color codes
@@ -1884,6 +2043,7 @@ Body types that can be returned:
 * `option` (object)
 * `completion` (object)
 * `ping` (object)
+* `typing` (object)
 
 [TIP]
 You can browse these schemas online: https://weechat.org/api/[WeeChat Relay API ^↗^^].
@@ -2054,6 +2214,7 @@ The following events are sent to the client, according to synchronization option
 | `buffer_localvar_changed`             | buffer id | `buffer`      | buffer
 | `buffer_localvar_removed`             | buffer id | `buffer`      | buffer
 | `buffer_cleared`                      | buffer id | `buffer`      | buffer
+| `buffer_lines_filtered` ^(1)^         | buffer id | `buffer`      | buffer
 | `buffer_closing`                      | buffer id | `buffer`      | buffer
 | `buffer_closed`                       | buffer id | null          | null
 | `buffer_line_added`                   | buffer id | `line`        | buffer line
@@ -2061,6 +2222,8 @@ The following events are sent to the client, according to synchronization option
 | `input_prompt_changed`                | buffer id | `buffer`      | buffer
 | `input_text_changed`                  | buffer id | `buffer`      | buffer
 | `input_text_cursor_moved`             | buffer id | `buffer`      | buffer
+| `typing_nick_changed`                 | buffer id | `typing`      | typing state of a nick: `active`, `paused` or `done`
+| `typing_buffer_reset`                 | buffer id | null          | null
 | `nicklist_group_changed`              | buffer id | `nick_group`  | nick group
 | `nicklist_group_added`                | buffer id | `nick_group`  | nick group
 | `nicklist_group_removing`             | buffer id | `nick_group`  | nick group
@@ -2070,13 +2233,22 @@ The following events are sent to the client, according to synchronization option
 | `day_changed`                         | -1        | null          | null
 | `option_changed`                      | -1        | `option`      | option (only fields `name` and `value`)
 | `option_removed`                      | -1        | `option`      | option (only field `name`)
-| `upgrade` ^(1)^                       | -1        | null          | null
-| `upgrade_ended` ^(1)^                 | -1        | null          | null
+| `upgrade` ^(2)^                       | -1        | null          | null
+| `upgrade_ended` ^(2)^                 | -1        | null          | null
 | `quit`                                | -1        | null          | null
 |===
 
 [NOTE]
-^(1)^ The events `upgrade` and `upgrade_ended` are sent only if the client is
+^(1)^ The event `buffer_lines_filtered` _(WeeChat ≥ 5.0.0)_ is sent when lines
+are filtered or unfiltered in the buffer after a change in filters (filter added,
+removed, enabled or disabled, filters toggled in buffer): the field `displayed`
+of lines already received is not up to date any more and some lines may be
+missing, so the client must fetch the lines of this buffer again, for example
+with the parameter `filtered` set to `exclude` or `between` in resource
+<<resource_buffers,buffers>>.
+
+[NOTE]
+^(2)^ The events `upgrade` and `upgrade_ended` are sent only if the client is
 connected with plain text (no TLS), because with TLS the client is disconnected
 before the upgrade is done (upgrade of TLS connections is not supported).
 
@@ -2117,7 +2289,8 @@ Example: new buffer: channel `#weechat` has been joined:
             "nick": "alice",
             "host": "~alice@example.com",
             "server": "libera",
-            "channel": "#weechat"
+            "channel": "#weechat",
+            "irc_caps": "account-notify,away-notify,batch,cap-notify,chghost,extended-join,message-tags,multi-prefix,server-time"
         },
         "keys": [],
         "lines": [],

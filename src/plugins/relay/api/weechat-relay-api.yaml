@@ -36,6 +36,7 @@ tags:
   - name: scripts
   - name: options
   - name: input
+  - name: typing
   - name: completion
   - name: ping
   - name: sync
@@ -203,6 +204,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/bufferLinesFree'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
       responses:
@@ -246,6 +248,7 @@ paths:
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/bufferLinesFree'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
       responses:
@@ -293,6 +296,7 @@ paths:
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/bufferLinesFree'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/bufferNicks'
         - $ref: '#/components/parameters/colors'
       responses:
@@ -339,6 +343,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/lines'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/colors'
       responses:
         '200':
@@ -431,6 +436,7 @@ paths:
         - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/lines'
+        - $ref: '#/components/parameters/filtered'
         - $ref: '#/components/parameters/colors'
       responses:
         '200':
@@ -762,6 +768,85 @@ paths:
                 $ref: '#/components/schemas/Error'
       security:
         - password: []
+  /typing:
+    post:
+      tags:
+        - typing
+      description: |
+        Send a typing notification for a buffer.
+
+        While the user is typing, the state `active` must be sent again
+        regularly (every 3 seconds is recommended).
+
+        For IRC buffers, the typing state is sent to the IRC server only if
+        the option `irc.look.typing_status_self` is enabled and if the server
+        supports typing notifications (capability "message-tags"); the state
+        `active` is changed to `done` if it is not received again for 6
+        seconds.
+
+        The typing state is shared by all clients and the local user on a
+        buffer: if a client sends `done` while another one is still typing in
+        the same buffer, the state becomes `done` until `active` is received
+        again.
+      operationId: typing
+      parameters:
+        - $ref: '#/components/parameters/totp'
+      requestBody:
+        description: Buffer and typing state
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                buffer_id:
+                  type: integer
+                  format: int64
+                  description: Buffer identifier (≥ 0)
+                buffer_name:
+                  type: string
+                  description: Buffer full name
+                  example: 'irc.libera.#weechat'
+                state:
+                  type: string
+                  enum:
+                    - active
+                    - paused
+                    - done
+                    - sent
+                  description: |
+                    Typing state: `active` (typing a message), `paused`
+                    (typing paused), `done` (input cleared without sending
+                    the message), `sent` (message sent)
+                  example: active
+              required:
+                - state
+            example:
+              buffer_name: 'irc.libera.#weechat'
+              state: active
+      responses:
+        '204':
+          description: Successful operation
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Buffer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - password: []
   /completion:
     post:
       tags:
@@ -911,6 +996,11 @@ paths:
                   type: boolean
                   description: Receive input changes in buffers (content and cursor position)
                   example: true
+                typing:
+                  type: boolean
+                  default: false
+                  description: Receive typing notifications
+                  example: true
                 notify_only:
                   type: boolean
                   default: false
@@ -918,7 +1008,21 @@ paths:
                     Receive only new lines with highlight or private message
                     (notify level >= 2), and events `upgrade`, `upgrade_ended`
                     and `quit`; all other events are not sent, and options
-                    `nicks`, `input` and `options` are ignored
+                    `nicks`, `input`, `typing` and `options` are ignored
+                  example: false
+                filtered_lines:
+                  type: boolean
+                  default: true
+                  description: |
+                    Receive lines filtered with /filter (lines with `displayed`
+                    set to `false`): if disabled, the event `buffer_line_added`
+                    is not sent for a filtered line, and the event
+                    `buffer_opened` contains only lines not filtered; this does
+                    not apply to buffers with free content, where all lines are
+                    always sent because a line can replace a line already
+                    received; the event `buffer_line_data_changed` is always
+                    sent, with the field `displayed` (an update of a line not
+                    received with `displayed` set to `false` can be ignored)
                   example: false
                 colors:
                   type: string
@@ -979,6 +1083,9 @@ components:
         The TOTP (Time-based One-Time Password) used in authentication
         if the remote relay has TOTP configured (option
         relay.network.totp_secret is set).
+        For websocket clients unable to set this header (like browsers),
+        the TOTP can be sent instead in the websocket sub-protocol
+        `totp.weechat.<code>` (header `Sec-WebSocket-Protocol`).
     bufferId:
       name: buffer_id
       in: path
@@ -1004,7 +1111,8 @@ components:
       schema:
         type: string
       description: >-
-        Info name
+        Info name: `language` (language of WeeChat translated messages) or
+        `locale` (WeeChat locale used for translated messages)
       example: 'locale'
     optionName:
       name: option_name
@@ -1063,6 +1171,28 @@ components:
         * positive number: return N lines from the beginning of buffer (oldest lines)
 
         Default value is `0` if "lines" is set to 0, otherwise all lines are returned.
+    filtered:
+      name: filtered
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - include
+          - between
+          - exclude
+        default: include
+      description: |
+        How lines filtered with /filter (lines with `displayed` set to `false`) are counted and returned:
+        * `include`: count and return all lines
+        * `between`: count only lines not filtered, and return the filtered lines between them
+          (so more lines than requested can be returned); the range of lines ends at the end
+          of buffer if the number of lines is negative, starts at the beginning of buffer
+          if it is positive
+        * `exclude`: count and return only lines not filtered; the line `last_read_line_id`
+          (read marker) can be filtered and then not returned: the client displays the
+          read marker after the last line returned with an identifier lower than or
+          equal to `last_read_line_id`
     bufferNicks:
       name: nicks
       in: query
@@ -1719,6 +1849,22 @@ components:
           example: '1714854355123456'
       required:
         - data
+    Typing:
+      type: object
+      properties:
+        nick:
+          type: string
+          example: alice
+        state:
+          type: string
+          enum:
+            - active
+            - paused
+            - done
+          example: active
+      required:
+        - nick
+        - state
 
   securitySchemes:
     password:
@@ -1748,3 +1894,6 @@ components:
         If TOTP is enabled on WeeChat/relay side (option relay.network.totp_secret
         is set), you must send the TOTP value in this header:
         `x-weechat-totp: 123456`.
+        For websocket clients unable to set this header (like browsers),
+        the TOTP can be sent instead in the websocket sub-protocol
+        `totp.weechat.123456` (header `Sec-WebSocket-Protocol`).

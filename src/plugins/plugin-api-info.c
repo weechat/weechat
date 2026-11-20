@@ -561,6 +561,24 @@ plugin_api_info_locale_cb (const void *pointer, void *data,
 }
 
 /*
+ * Return WeeChat info "language".
+ */
+
+char *
+plugin_api_info_language_cb (const void *pointer, void *data,
+                             const char *info_name,
+                             const char *arguments)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return util_get_language ();
+}
+
+/*
  * Return WeeChat info "inactivity".
  */
 
@@ -1102,7 +1120,8 @@ error:
  * Return WeeChat info "totp_validate": validates a Time-based One-Time
  * Password (TOTP).
  *
- * Arguments: "secret,otp,timestamp,window" (timestamp and window are optional).
+ * Arguments: "secret,otp,timestamp,window,digits" (timestamp, window and
+ * digits are optional).
  */
 
 char *
@@ -1111,7 +1130,7 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
                                   const char *arguments)
 {
     char value[16], **argv, *ptr_secret, *ptr_otp;
-    int argc, window, rc, number_int;
+    int argc, window, digits, rc, number_int;
     long long number_longlong;
     time_t totp_time;
 
@@ -1137,6 +1156,7 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
     ptr_otp = argv[1];
     totp_time = 0;
     window = 0;
+    digits = 6;
 
     if (argc > 2)
     {
@@ -1150,8 +1170,15 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
             goto error;
         window = number_int;
     }
+    if (argc > 4)
+    {
+        if (!util_parse_int (argv[4], 10, &number_int) || (number_int < 0))
+            goto error;
+        digits = number_int;
+    }
 
-    rc = weecrypto_totp_validate (ptr_secret, totp_time, window, ptr_otp);
+    rc = weecrypto_totp_validate (ptr_secret, totp_time, window, digits,
+                                  ptr_otp);
 
     snprintf (value, sizeof (value), "%d", rc);
 
@@ -2189,6 +2216,10 @@ plugin_api_info_init (void)
     hook_info (NULL, "locale",
                N_("locale used for translating messages"),
                NULL, &plugin_api_info_locale_cb, NULL, NULL);
+    hook_info (NULL, "language",
+               N_("language of translated messages (for example \"fr\" "
+                  "or \"pt_BR\"), \"en\" if messages are not translated"),
+               NULL, &plugin_api_info_language_cb, NULL, NULL);
     hook_info (NULL, "inactivity",
                N_("keyboard inactivity (seconds)"),
                NULL, &plugin_api_info_inactivity_cb, NULL, NULL);
@@ -2283,7 +2314,9 @@ plugin_api_info_init (void)
                   "is correct, otherwise 0"),
                N_("secret (in base32), one-time password, "
                   "timestamp (optional, current time by default), number of "
-                  "passwords before/after to test (optional, 0 by default)"),
+                  "passwords before/after to test (optional, 0 by default), "
+                  "number of digits (optional, between 4 and 10, 6 by "
+                  "default)"),
                &plugin_api_info_totp_validate_cb, NULL, NULL);
     hook_info (NULL, "plugin_loaded",
                N_("1 if plugin is loaded"),

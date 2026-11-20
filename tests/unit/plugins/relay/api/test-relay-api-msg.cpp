@@ -24,6 +24,7 @@ extern "C"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
+#include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-input.h"
 #include "src/gui/gui-line.h"
@@ -33,6 +34,31 @@ extern "C"
 #include "src/plugins/relay/relay-json.h"
 #include "src/plugins/relay/api/relay-api.h"
 #include "src/plugins/relay/api/relay-api-msg.h"
+}
+
+/*
+ * Build a string with messages of lines in a JSON array, separated by commas
+ * (for example: "1,2,3").
+ */
+
+void
+test_relay_api_msg_lines_messages (struct t_relay_json *json,
+                                   char *messages, int size)
+{
+    struct t_relay_json *json_message;
+    int i;
+
+    messages[0] = '\0';
+    for (i = 0; i < relay_json_array_size (json); i++)
+    {
+        json_message = relay_json_object_get (relay_json_array_get (json, i),
+                                              "message");
+        if (messages[0])
+            strncat (messages, ",", size - strlen (messages) - 1);
+        strncat (messages,
+                 (json_message) ? relay_json_get_string (json_message) : "?",
+                 size - strlen (messages) - 1);
+    }
 }
 
 /*
@@ -137,7 +163,9 @@ TEST(RelayApiMsg, BufferToJson)
     long long group_id;
     char *color;
 
-    json = relay_api_msg_buffer_to_json (NULL, 0L, 0L, 0, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (NULL, 0L, 0L,
+                                         RELAY_API_FILTERED_INCLUDE, 0,
+                                         RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     POINTERS_EQUAL(NULL, relay_json_object_get (json, "name"));
@@ -147,7 +175,9 @@ TEST(RelayApiMsg, BufferToJson)
     gui_buffer_set (gui_buffers, "key_bind_meta-y,2", "/test2 arg");
 
     /* Buffer without lines and nicks */
-    json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L, 0, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L,
+                                         RELAY_API_FILTERED_INCLUDE, 0,
+                                         RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
@@ -197,7 +227,9 @@ TEST(RelayApiMsg, BufferToJson)
     config_file_option_set_with_string ("weechat.notify.core.weechat",
                                         "highlight");
 
-    json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L, 0, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L,
+                                         RELAY_API_FILTERED_INCLUDE, 0,
+                                         RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_STR("highlight", json, "notify");
@@ -216,7 +248,9 @@ TEST(RelayApiMsg, BufferToJson)
     config_file_option_unset (ptr_option);
 
     /* Buffer with 2 lines, without nicks */
-    json = relay_api_msg_buffer_to_json (gui_buffers, 2L, 0L, 0, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (gui_buffers, 2L, 0L,
+                                         RELAY_API_FILTERED_INCLUDE, 0,
+                                         RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     json_lines = relay_json_object_get (json, "lines");
@@ -239,7 +273,9 @@ TEST(RelayApiMsg, BufferToJson)
     CHECK(gui_nicklist_add_nick (buffer, NULL, "root_nick_hidden", "cyan", "+", "yellow", 0));
 
     /* Buffer with no lines and 1 group / 4 nicks */
-    json = relay_api_msg_buffer_to_json (buffer, 1L, 0L, 1, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (buffer, 1L, 0L,
+                                         RELAY_API_FILTERED_INCLUDE, 1,
+                                         RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     WEE_CHECK_OBJ_BOOL(1, json, "nicklist");
@@ -371,7 +407,9 @@ TEST(RelayApiMsg, BufferToJson)
     gui_chat_printf_y (buffer, 3, "test line 4");
     gui_chat_printf_y (buffer, 4, "test line 5");
 
-    json = relay_api_msg_buffer_to_json (buffer, 1L, 2L, 0, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (buffer, 1L, 2L,
+                                         RELAY_API_FILTERED_INCLUDE, 0,
+                                         RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     json_lines = relay_json_object_get (json, "lines");
@@ -386,7 +424,9 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_STR("test line 2", json_line, "message");
     relay_json_free (json);
 
-    json = relay_api_msg_buffer_to_json (buffer, 1L, -2L, 0, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (buffer, 1L, -2L,
+                                         RELAY_API_FILTERED_INCLUDE, 0,
+                                         RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_object (json));
     json_lines = relay_json_object_get (json, "lines");
@@ -427,7 +467,9 @@ TEST(RelayApiMsg, LinesToJson)
     gui_chat_printf (NULL, "%s", str_msg2);
 
     /* Two lines with ANSI colors */
-    json = relay_api_msg_lines_to_json (gui_buffers, -2, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_lines_to_json (gui_buffers, -2,
+                                        RELAY_API_FILTERED_INCLUDE,
+                                        RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_array (json));
     LONGS_EQUAL(2, relay_json_array_size (json));
@@ -492,7 +534,9 @@ TEST(RelayApiMsg, LinesToJson)
     relay_json_free (json);
 
     /* With ANSI colors */
-    json = relay_api_msg_lines_to_json (gui_buffers, -1, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_lines_to_json (gui_buffers, -1,
+                                        RELAY_API_FILTERED_INCLUDE,
+                                        RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(relay_json_is_array (json));
     LONGS_EQUAL(1, relay_json_array_size (json));
@@ -508,7 +552,9 @@ TEST(RelayApiMsg, LinesToJson)
     relay_json_free (json);
 
     /* One line with WeeChat colors */
-    json = relay_api_msg_lines_to_json (gui_buffers, -1, RELAY_API_COLORS_WEECHAT);
+    json = relay_api_msg_lines_to_json (gui_buffers, -1,
+                                        RELAY_API_FILTERED_INCLUDE,
+                                        RELAY_API_COLORS_WEECHAT);
     CHECK(json);
     CHECK(relay_json_is_array (json));
     LONGS_EQUAL(1, relay_json_array_size (json));
@@ -521,7 +567,9 @@ TEST(RelayApiMsg, LinesToJson)
     relay_json_free (json);
 
     /* One line without colors */
-    json = relay_api_msg_lines_to_json (gui_buffers, -1, RELAY_API_COLORS_STRIP);
+    json = relay_api_msg_lines_to_json (gui_buffers, -1,
+                                        RELAY_API_FILTERED_INCLUDE,
+                                        RELAY_API_COLORS_STRIP);
     CHECK(json);
     CHECK(relay_json_is_array (json));
     LONGS_EQUAL(1, relay_json_array_size (json));
@@ -532,6 +580,136 @@ TEST(RelayApiMsg, LinesToJson)
                       json_line, "id");
     WEE_CHECK_OBJ_STR("this is the second line with green", json_line, "message");
     relay_json_free (json);
+}
+
+/*
+ * Test functions:
+ *   relay_api_msg_line_data_is_displayed
+ *   relay_api_msg_lines_to_json (with filtered lines)
+ *   relay_api_msg_buffer_to_json (with filtered lines)
+ */
+
+TEST(RelayApiMsg, LinesToJsonFiltered)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_filter *filter;
+    struct t_relay_json *json, *json_lines;
+    char messages[256];
+    int i;
+    const char *tags[6] = { "hide", "show", "hide", "show", "show", "hide" };
+    const char *msgs[6] = { "1", "2", "3", "4", "5", "6" };
+
+    buffer = gui_buffer_new_user ("test_filtered", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    for (i = 0; i < 6; i++)
+    {
+        gui_chat_printf_date_tags (buffer, 0, tags[i], "%s", msgs[i]);
+    }
+
+    /* Lines 1, 3 and 6 are filtered. */
+    filter = gui_filter_new (1, "test_filtered", "core.test_filtered",
+                             "hide", "*");
+    CHECK(filter);
+    gui_filter_buffer (buffer, NULL);
+    LONGS_EQUAL(0, relay_api_msg_line_data_is_displayed (NULL));
+    LONGS_EQUAL(0, relay_api_msg_line_data_is_displayed (buffer->own_lines->first_line->data));
+    LONGS_EQUAL(1, relay_api_msg_line_data_is_displayed (buffer->own_lines->first_line->next_line->data));
+    LONGS_EQUAL(0, relay_api_msg_line_data_is_displayed (buffer->own_lines->last_line->data));
+
+#define WEE_CHECK_LINES(__expected, __lines, __filtered)                \
+    json = relay_api_msg_lines_to_json (buffer, __lines, __filtered,    \
+                                        RELAY_API_COLORS_ANSI);         \
+    CHECK(json);                                                        \
+    CHECK(relay_json_is_array (json));                                  \
+    test_relay_api_msg_lines_messages (json, messages,                  \
+                                       sizeof (messages));              \
+    STRCMP_EQUAL(__expected, messages);                                 \
+    relay_json_free (json);
+
+    /* No lines. */
+    WEE_CHECK_LINES("", 0, RELAY_API_FILTERED_INCLUDE);
+    WEE_CHECK_LINES("", 0, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("", 0, RELAY_API_FILTERED_EXCLUDE);
+
+    /* Include filtered lines (count all lines). */
+    WEE_CHECK_LINES("5,6", -2, RELAY_API_FILTERED_INCLUDE);
+    WEE_CHECK_LINES("1,2", 2, RELAY_API_FILTERED_INCLUDE);
+    WEE_CHECK_LINES("1,2,3,4,5,6", -100, RELAY_API_FILTERED_INCLUDE);
+    WEE_CHECK_LINES("1,2,3,4,5,6", 100, RELAY_API_FILTERED_INCLUDE);
+    WEE_CHECK_LINES("1,2,3,4,5,6", LONG_MIN, RELAY_API_FILTERED_INCLUDE);
+    WEE_CHECK_LINES("1,2,3,4,5,6", LONG_MAX, RELAY_API_FILTERED_INCLUDE);
+
+    /* Filtered lines between lines not filtered. */
+    WEE_CHECK_LINES("5,6", -1, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("4,5,6", -2, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("2,3,4,5,6", -3, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("1,2,3,4,5,6", -4, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("1,2", 1, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("1,2,3,4", 2, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("1,2,3,4,5", 3, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("1,2,3,4,5,6", 4, RELAY_API_FILTERED_BETWEEN);
+
+    /* Exclude filtered lines. */
+    WEE_CHECK_LINES("5", -1, RELAY_API_FILTERED_EXCLUDE);
+    WEE_CHECK_LINES("4,5", -2, RELAY_API_FILTERED_EXCLUDE);
+    WEE_CHECK_LINES("2,4,5", -100, RELAY_API_FILTERED_EXCLUDE);
+    WEE_CHECK_LINES("2", 1, RELAY_API_FILTERED_EXCLUDE);
+    WEE_CHECK_LINES("2,4", 2, RELAY_API_FILTERED_EXCLUDE);
+    WEE_CHECK_LINES("2,4,5", 100, RELAY_API_FILTERED_EXCLUDE);
+    WEE_CHECK_LINES("2,4,5", LONG_MIN, RELAY_API_FILTERED_EXCLUDE);
+    WEE_CHECK_LINES("1,2,3,4,5,6", LONG_MIN, RELAY_API_FILTERED_BETWEEN);
+
+    /* Buffer with lines. */
+    json = relay_api_msg_buffer_to_json (buffer, -2L, 0L,
+                                         RELAY_API_FILTERED_EXCLUDE, 0,
+                                         RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    json_lines = relay_json_object_get (json, "lines");
+    CHECK(json_lines);
+    test_relay_api_msg_lines_messages (json_lines, messages, sizeof (messages));
+    STRCMP_EQUAL("4,5", messages);
+    relay_json_free (json);
+
+    /* All lines filtered. */
+    gui_filter_free (filter);
+    filter = gui_filter_new (1, "test_filtered", "core.test_filtered",
+                             "*", "*");
+    CHECK(filter);
+    gui_filter_buffer (buffer, NULL);
+    WEE_CHECK_LINES("5,6", -2, RELAY_API_FILTERED_INCLUDE);
+    WEE_CHECK_LINES("1,2,3,4,5,6", -2, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("1,2,3,4,5,6", 2, RELAY_API_FILTERED_BETWEEN);
+    WEE_CHECK_LINES("", -2, RELAY_API_FILTERED_EXCLUDE);
+    WEE_CHECK_LINES("", 2, RELAY_API_FILTERED_EXCLUDE);
+
+    gui_filter_free (filter);
+    gui_buffer_close (buffer);
+
+    /* Buffer with free content. */
+    buffer = gui_buffer_new_user ("test_filtered", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+    for (i = 0; i < 6; i++)
+    {
+        gui_chat_printf_y_date_tags (buffer, i, 0, tags[i], "%s", msgs[i]);
+    }
+    filter = gui_filter_new (1, "test_filtered", "core.test_filtered",
+                             "hide", "*");
+    CHECK(filter);
+    gui_filter_buffer (buffer, NULL);
+    json = relay_api_msg_buffer_to_json (buffer, 0L, -2L,
+                                         RELAY_API_FILTERED_BETWEEN, 0,
+                                         RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    json_lines = relay_json_object_get (json, "lines");
+    CHECK(json_lines);
+    test_relay_api_msg_lines_messages (json_lines, messages, sizeof (messages));
+    STRCMP_EQUAL("4,5,6", messages);
+    relay_json_free (json);
+
+    gui_filter_free (filter);
+    gui_buffer_close (buffer);
+
+#undef WEE_CHECK_LINES
 }
 
 /*

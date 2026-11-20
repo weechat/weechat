@@ -6,12 +6,16 @@
 
 # Build WeeChat Debian packages for a stable or development version.
 #
-# According to the version (stable/devel), a symbolic "debian" is made:
-#        debian/ --> debian-stable/
-#   or:  debian/ --> debian-devel/
+# Packaging files are in directory "debian", with the names of stable
+# packages (weechat, weechat-curses, ...); for a devel version, packages are
+# renamed on the fly (weechat-devel, weechat-devel-curses, ...).
 #
 # According to the distro version, a patch can be applied on debian files
 # (patches are in directory tools/debian/patches).
+#
+# IMPORTANT: this script modifies files in directory "debian" (patch, devel
+# packages, changelog); to restore them, run:
+#   git checkout -- debian && git clean -fd debian
 #
 # Script arguments:          Examples:
 #
@@ -111,6 +115,67 @@ test_patches ()
     exit ${patches_error}
 }
 
+# Convert files in directory "debian" to build devel packages:
+# weechat-xxx -> weechat-devel-xxx.
+
+convert_to_devel ()
+{
+    # Rename package files: weechat-xxx.* -> weechat-devel-xxx.*
+    for file in debian/weechat-*; do
+        if [ -f "${file}" ]; then
+            mv "${file}" "debian/weechat-devel-${file#debian/weechat-}"
+        fi
+    done
+
+    # Rename source and binary packages in debian/control, set maintainer
+    # and make each devel package conflict with its stable package
+    # (only binary packages built from this source are renamed).
+    awk -v maintainer="${PACKAGER_NAME} <${PACKAGER_EMAIL}>" '
+        function rename_pkgs(line,    result, name, before, after) {
+            result = ""
+            while (match(line, /weechat[-a-z0-9]*/)) {
+                name = substr(line, RSTART, RLENGTH)
+                before = (RSTART > 1) ? substr(line, RSTART - 1, 1) : " "
+                after = substr(line, RSTART + RLENGTH, 1)
+                result = result substr(line, 1, RSTART - 1)
+                if ((name in pkgs) && before ~ /[ ,|]/ && after ~ /^([ ,|]|)$/) {
+                    sub(/^weechat/, "weechat-devel", name)
+                }
+                result = result name
+                line = substr(line, RSTART + RLENGTH)
+            }
+            return result line
+        }
+        NR == FNR {
+            if ($1 == "Package:") pkgs[$2] = 1
+            next
+        }
+        /^[^ ]/ {
+            relation = ($1 ~ /^(Pre-Depends|Depends|Recommends|Suggests|Enhances|Breaks|Conflicts|Replaces|Provides):$/)
+        }
+        /^Source: / { $0 = "Source: weechat-devel" }
+        /^Maintainer: / { $0 = "Maintainer: " maintainer }
+        /^Package: / { stable_pkg = $2; $0 = "Package: weechat-devel" substr($2, 8) }
+        /^Description: / && stable_pkg != "" {
+            print "Conflicts: " stable_pkg
+            stable_pkg = ""
+        }
+        relation { $0 = rename_pkgs($0) }
+        { print }
+    ' debian/control debian/control > debian/control.devel
+    mv debian/control.devel debian/control
+
+    # Doc directories and menu entry.
+    sed -i \
+        -e 's|share/doc/weechat-doc/|share/doc/weechat-devel-doc/|g' \
+        -e 's|share/doc/weechat/html|share/doc/weechat-devel/html|g' \
+        debian/weechat-devel-doc.*
+    sed -i 's|?package(weechat-curses)|?package(weechat-devel-curses)|' debian/weechat-devel-curses.menu
+
+    # Devel packages have their own changelog (created with dch).
+    rm -f debian/changelog
+}
+
 # ================================== START ==================================
 
 # Package name/email
@@ -128,7 +193,7 @@ fi
 
 # Check git repository.
 root_dir=$(git rev-parse --show-toplevel)
-if [ -z "${root_dir}" ] || [ ! -e "${root_dir}/.git" ] || [ ! -d "${root_dir}/debian-stable" ]; then
+if [ -z "${root_dir}" ] || [ ! -e "${root_dir}/.git" ] || [ ! -d "${root_dir}/debian" ]; then
     error "this script must be run from WeeChat git repository."
 fi
 cd "${root_dir}"
@@ -194,7 +259,6 @@ fi
 
 if [ "${version}" = "devel" ]; then
     # Devel packages: weechat-devel(-xxx)_X.Y-1~dev20150511_arch.deb
-    DEB_DIR="debian-devel"
     DEB_NAME="weechat-devel"
     DEB_VERSION="$("${root_dir}/version.sh" devel)-1~dev$(date '+%Y%m%d')"
     if [ "${DEB_REVISION}" != "1" ]; then
@@ -205,7 +269,6 @@ if [ "${version}" = "devel" ]; then
     DCH_CHANGELOG="Repository snapshot"
 else
     # Stable packages: weechat-(-xxx)_X.Y-1_arch.deb
-    DEB_DIR="debian-stable"
     DEB_NAME="weechat"
     DEB_VERSION="${version}-${DEB_REVISION}"
     DCH_CREATE=""
@@ -225,13 +288,10 @@ if [ -f "${patch_file}" ]; then
     git apply "${patch_file}"
 fi
 
-# Create a symlink "debian" -> "debian-{stable|devel}".
-rm -f debian
-ln -s -f "${DEB_DIR}" debian
-
-# Update debian changelog.
+# Rename packages for devel version (weechat-xxx -> weechat-devel-xxx).
 if [ "${version}" = "devel" ]; then
-    rm -f "${DEB_DIR}/changelog"
+    echo " - Converting packages to devel"
+    convert_to_devel
 fi
 
 # Create/update changelog.

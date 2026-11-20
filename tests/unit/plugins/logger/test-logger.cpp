@@ -21,6 +21,8 @@ extern char *logger_get_file_path (void);
 
 extern char *logger_get_mask_expanded (struct t_gui_buffer *buffer,
                                        const char *mask);
+extern char *logger_build_message (const char *line_start, const char *message,
+                                   int split);
 }
 
 TEST_GROUP(Logger)
@@ -246,6 +248,75 @@ TEST(Logger, DayChangedSignalCb)
 TEST(Logger, GetLineTagInfo)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   logger_build_message
+ */
+
+TEST(Logger, BuildMessage)
+{
+    char *str;
+    const char *start = "2026-11-15 10:00:00.123456Z\tnick\t";
+
+    POINTERS_EQUAL(NULL, logger_build_message (NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, logger_build_message (NULL, "test", 0));
+    POINTERS_EQUAL(NULL, logger_build_message (start, NULL, 0));
+
+    /* Single line */
+    WEE_TEST_STR(start, logger_build_message (start, "", 0));
+    WEE_TEST_STR(start, logger_build_message (start, "", 1));
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tnick\tline 1",
+                 logger_build_message (start, "line 1", 0));
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tnick\tline 1",
+                 logger_build_message (start, "line 1", 1));
+    WEE_TEST_STR("\t\ttab\tin message",
+                 logger_build_message ("\t\t", "tab\tin message", 0));
+
+    /* Multiline, not split */
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tnick\tline 1\n"
+                 "\t\tline 2\n"
+                 "\t\tline 3",
+                 logger_build_message (start, "line 1\nline 2\rline 3", 0));
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tnick\t\n"
+                 "\t\tline 2\n"
+                 "\t\t\n"
+                 "\t\t\n"
+                 "\t\t",
+                 logger_build_message (start, "\nline 2\n\r\n", 0));
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tnick\tline 1\n"
+                 "\t\t2026-01-01 00:00:00\tfake\tmessage",
+                 logger_build_message (
+                     start, "line 1\n2026-01-01 00:00:00\tfake\tmessage", 0));
+
+    /* Multiline prefix */
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tA\n"
+                 "\t\t2026-01-01 00:00:00\tfake\tB",
+                 logger_build_message ("2026-11-15 10:00:00.123456Z\tA\n"
+                                       "2026-01-01 00:00:00\t",
+                                       "fake\tB", 0));
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tA\n"
+                 "\t\tB\tline 1\n"
+                 "\t\tline 2",
+                 logger_build_message ("2026-11-15 10:00:00.123456Z\tA\rB\t",
+                                       "line 1\nline 2", 0));
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tA\n"
+                 "\t\tB\tline 1\n"
+                 "2026-11-15 10:00:00.123456Z\tA\n"
+                 "\t\tB\tline 2",
+                 logger_build_message ("2026-11-15 10:00:00.123456Z\tA\nB\t",
+                                       "line 1\nline 2", 1));
+
+    /* Multiline, split */
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tnick\tline 1\n"
+                 "2026-11-15 10:00:00.123456Z\tnick\tline 2\n"
+                 "2026-11-15 10:00:00.123456Z\tnick\tline 3",
+                 logger_build_message (start, "line 1\nline 2\rline 3", 1));
+    WEE_TEST_STR("2026-11-15 10:00:00.123456Z\tnick\t\n"
+                 "2026-11-15 10:00:00.123456Z\tnick\tline 2\n"
+                 "2026-11-15 10:00:00.123456Z\tnick\t",
+                 logger_build_message (start, "\nline 2\n", 1));
 }
 
 /*

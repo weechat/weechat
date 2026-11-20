@@ -446,10 +446,14 @@ WeeChat „језгро” се налази у следећим директо�
 |       tests.cpp                                 | Програм који се користи за извршавање свих тестова.
 |       tests-record.cpp                          | Бележење и претрага у приказаним порукама.
 |       core/                                     | Корен unit тестова језгра.
+// TRANSLATION MISSING
+|          test-core-args.cpp                     | Tests: command-line arguments.
 |          test-core-arraylist.cpp                | Тестови: arraylists.
 |          test-core-backtrace.cpp                | Тестови: backtrace.
 |          test-core-calc.cpp                     | Тестови: калкулација израза.
 |          test-core-command.cpp                  | Тестови: команде.
+// TRANSLATION MISSING
+|          test-core-completion.cpp               | Tests: default completions.
 |          test-core-config-file.cpp              | Тестови: конфигурациони фајлови.
 |          test-core-crypto.cpp                   | Тестови: криптографске функције.
 |          test-core-dir.cpp                      | Тестови: функције директоријума/фајла.
@@ -462,6 +466,10 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-list.cpp                     | Тестови: листе.
 |          test-core-network.cpp                  | Тестови: мрежне функције.
 |          test-core-secure.cpp                   | Тестови: обезбеђени подаци.
+// TRANSLATION MISSING
+|          test-core-secure-buffer.cpp            | Tests: secured data buffer.
+// TRANSLATION MISSING
+|          test-core-secure-config.cpp            | Tests: secured data configuration file.
 |          test-core-signal.cpp                   | Тестови: сигнали.
 |          test-core-string.cpp                   | Тестови: стрингови.
 |          test-core-sys.cpp                      | Тестови: системске функције.
@@ -546,6 +554,8 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-irc-server.cpp                 | Тестови: IRC сервер.
 |             test-irc-tag.cpp                    | Тестови: IRC ознаке порука.
 // TRANSLATION MISSING
+|             test-irc-typing.cpp                 | Tests: IRC typing notifications.
+// TRANSLATION MISSING
 |             test-irc-upgrade.cpp                | Tests: upgrade of IRC plugin.
 |          logger/                                | Корен unit тестова за logger додатак.
 |             test-logger.cpp                     | Тестови: logger.
@@ -555,10 +565,16 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-relay-auth.cpp                 | Тестови: аутентификација клијената.
 |             test-relay-bar-item.cpp             | Тестови: ставке траке за Релеј додатак.
 |             test-relay-client.cpp               | Тестови: клијенти релеја.
+// TRANSLATION MISSING
+|             test-relay-config.cpp               | Tests: configuration functions for Relay plugin.
 |             test-relay-http.cpp                 | Тестови: HTTP функције за Релеј додатак.
 |             test-relay-network.cpp              | Tests: network functions for Relay plugin.
 |             test-relay-raw.cpp                  | Тестови: функције сирових порука за Релеј додатак.
 |             test-relay-remote.cpp               | Тестови: удаљене функције за Релеј додатак.
+// TRANSLATION MISSING
+|             test-relay-server.cpp               | Tests: server functions for Relay plugin.
+// TRANSLATION MISSING
+|             test-relay-upgrade.cpp              | Tests: upgrade of Relay plugin.
 |             test-relay-websocket.cpp            | Тестови: websocket функције за Релеј додатак.
 |             api/                                | Корен unit тестова за Релеј „api” протокол.
 |                test-relay-api.cpp               | Тестови: Релеј „api” протокол: опште функције.
@@ -876,6 +892,10 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 * Немојте да декларишете функције као `static`, тако да би могле да се користе у unit тестовима
   (декларисаним са `extern`).
+// TRANSLATION MISSING
+* Declare in the header (_.h_) only the functions used in other files: an
+  internal helper used only in its own _.c_ file has no prototype in the
+  header (a unit test that calls it declares it with `extern`).
 * Ако користите Emacs као текст едитор, за исправно увлачење можете у свом _~/.emacs.el_ употребити Lisp кôд који следи:
 
 [source,lisp]
@@ -1332,8 +1352,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 | Непрекидна интеграција
 
 | debian
-| debian-devel/* +
-  debian-stable/*
+| debian/*
 | Debian паковање
 
 | tests/fuzz

@@ -446,10 +446,12 @@ WeeChat "core" is located in following directories:
 |       tests.cpp                                 | Program used to run all tests.
 |       tests-record.cpp                          | Record and search in messages displayed.
 |       core/                                     | Root of unit tests for core.
+|          test-core-args.cpp                     | Tests: command-line arguments.
 |          test-core-arraylist.cpp                | Tests: arraylists.
 |          test-core-backtrace.cpp                | Tests: backtrace.
 |          test-core-calc.cpp                     | Tests: calculation of expressions.
 |          test-core-command.cpp                  | Tests: commands.
+|          test-core-completion.cpp               | Tests: default completions.
 |          test-core-config-file.cpp              | Tests: configuration files.
 |          test-core-crypto.cpp                   | Tests: cryptographic functions.
 |          test-core-dir.cpp                      | Tests: directory/file functions.
@@ -462,6 +464,8 @@ WeeChat "core" is located in following directories:
 |          test-core-list.cpp                     | Tests: lists.
 |          test-core-network.cpp                  | Tests: network functions.
 |          test-core-secure.cpp                   | Tests: secured data.
+|          test-core-secure-buffer.cpp            | Tests: secured data buffer.
+|          test-core-secure-config.cpp            | Tests: secured data configuration file.
 |          test-core-signal.cpp                   | Tests: signals.
 |          test-core-string.cpp                   | Tests: strings.
 |          test-core-sys.cpp                      | Tests: system functions.
@@ -542,6 +546,7 @@ WeeChat "core" is located in following directories:
 |             test-irc-sasl.cpp                   | Tests: SASL authentication with IRC protocol.
 |             test-irc-server.cpp                 | Tests: IRC server.
 |             test-irc-tag.cpp                    | Tests: IRC message tags.
+|             test-irc-typing.cpp                 | Tests: IRC typing notifications.
 |             test-irc-upgrade.cpp                | Tests: upgrade of IRC plugin.
 |          logger/                                | Root of unit tests for logger plugin.
 |             test-logger.cpp                     | Tests: logger.
@@ -551,10 +556,13 @@ WeeChat "core" is located in following directories:
 |             test-relay-auth.cpp                 | Tests: clients authentication.
 |             test-relay-bar-item.cpp             | Tests: bar items for Relay plugin.
 |             test-relay-client.cpp               | Tests: clients of relay.
+|             test-relay-config.cpp               | Tests: configuration functions for Relay plugin.
 |             test-relay-http.cpp                 | Tests: HTTP functions for Relay plugin.
 |             test-relay-network.cpp              | Tests: network functions for Relay plugin.
 |             test-relay-raw.cpp                  | Tests: raw messages functions for Relay plugin.
 |             test-relay-remote.cpp               | Tests: remote functions for Relay plugin.
+|             test-relay-server.cpp               | Tests: server functions for Relay plugin.
+|             test-relay-upgrade.cpp              | Tests: upgrade of Relay plugin.
 |             test-relay-websocket.cpp            | Tests: websocket functions for Relay plugin.
 |             api/                                | Root of unit tests for Relay "api" protocol.
 |                test-relay-api.cpp               | Tests: Relay "api" protocol: general functions.
@@ -871,6 +879,9 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 * Do not declare functions `static`, so that they can be used in unit tests
   (declared with `extern`).
+* Declare in the header (_.h_) only the functions used in other files: an
+  internal helper used only in its own _.c_ file has no prototype in the
+  header (a unit test that calls it declares it with `extern`).
 * This Lisp code can be used in your _~/.emacs.el_ to indent properly if you are
   using Emacs as text editor:
 
@@ -1343,8 +1354,7 @@ Where _component_ is one of following:
 | Continuous integration
 
 | debian
-| debian-devel/* +
-  debian-stable/*
+| debian/*
 | Debian packaging
 
 | tests/fuzz

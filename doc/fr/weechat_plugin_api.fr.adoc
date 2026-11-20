@@ -12937,6 +12937,10 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Pointeur : données de la ligne.
 | Les données de la ligne ont changé dans un tampon.
 
+| weechat | [[hook_signal_buffer_lines_filtered]] buffer_lines_filtered | 5.0.0
+| Pointeur : tampon.
+| Lignes filtrées ou non filtrées dans le tampon après un changement dans les filtres (filtre ajouté, supprimé, activé ou désactivé, filtres basculés dans le tampon).
+
 | weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
 | Pointeur : tampon.
 | Lignes cachées dans le tampon.

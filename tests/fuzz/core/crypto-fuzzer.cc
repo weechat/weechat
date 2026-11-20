@@ -46,12 +46,13 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 
     result = weecrypto_totp_generate (str, 1746358623, 6);
     if (result && result[0])
-        assert (weecrypto_totp_validate (str, 1746358623, 0, result));
+        assert (weecrypto_totp_validate (str, 1746358623, 0, 6, result));
     free (result);
     result = weecrypto_totp_generate (str, 1746358623, 12);
     if (result && result[0])
-        assert (weecrypto_totp_validate (str, 1746358623, 0, result));
+        assert (weecrypto_totp_validate (str, 1746358623, 0, 12, result));
     free (result);
+    weecrypto_totp_validate ("secretpasswordbase32", 1746358623, 1, 6, str);
 
     free (str);
 

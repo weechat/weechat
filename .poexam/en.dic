@@ -73,6 +73,7 @@ deinit
 deldict
 deloutq
 delvar
+dev
 dhkey
 dirs
 dlclose

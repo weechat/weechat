@@ -45,6 +45,7 @@ struct t_relay_api_protocol_info
 
 extern struct t_relay_api_protocol_info relay_api_protocol_infos[];
 
+extern struct t_relay_json *relay_api_protocol_info_language (struct t_relay_client *client);
 extern struct t_relay_json *relay_api_protocol_info_locale (struct t_relay_client *client);
 extern int relay_api_protocol_signal_buffer_cb (const void *pointer,
                                                 void *data,
@@ -59,6 +60,10 @@ extern int relay_api_protocol_signal_input_cb (const void *pointer, void *data,
                                                const char *signal,
                                                const char *type_data,
                                                void *signal_data);
+extern int relay_api_protocol_signal_typing_cb (const void *pointer, void *data,
+                                                const char *signal,
+                                                const char *type_data,
+                                                void *signal_data);
 extern int relay_api_protocol_signal_upgrade_cb (const void *pointer,
                                                  void *data,
                                                  const char *signal,

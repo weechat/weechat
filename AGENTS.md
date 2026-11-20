@@ -88,10 +88,10 @@ minimum version changes (same for the default value of a CMake option
   User's guide, in all languages, the tables of required and optional
   dependencies (package, version, features) and the table of CMake options
   (default value).
-- **Debian packaging:** in both `debian-devel/` and `debian-stable/`: `control`
-  (`Build-Depends`, packages), `rules` (CMake options), `*.install` and
-  `*.dirs` files of a new package; the patches for old Debian/Ubuntu versions
-  in `tools/debian/patches/` (applied by `tools/build_debian.sh`).
+- **Debian packaging:** in `debian/`: `control` (`Build-Depends`, packages),
+  `rules` (CMake options), `*.install` and `*.dirs` files of a new package; the
+  patches for old Debian/Ubuntu versions in `tools/debian/patches/` (applied by
+  `tools/build_debian.sh`).
 - **Cygwin:** [weechat.cygport.in](weechat.cygport.in) (`BUILD_REQUIRES`, CMake
   options).
 - **CI:** [.github/workflows/ci.yml](.github/workflows/ci.yml): the package
@@ -132,6 +132,9 @@ The rules most often missed:
 
 - Never declare C functions `static` (unit tests declare them `extern`),
   including helper functions in tests.
+- Declare in the header `.h` only the functions used in other files: an
+  internal helper used only in its own `.c` file has no prototype in the
+  header (a unit test that calls it declares it `extern`).
 - Comment every function, in the imperative mood ("Check if…", not
   "Checks if…"), and update this comment when the behavior of the function
   changes (parameters, return value, units…).

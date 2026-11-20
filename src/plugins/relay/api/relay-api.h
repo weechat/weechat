@@ -38,12 +38,24 @@ enum t_relay_api_colors
     RELAY_API_NUM_COLORS,
 };
 
+enum t_relay_api_filtered
+{
+    RELAY_API_FILTERED_INCLUDE = 0,    /* count and return filtered lines   */
+    RELAY_API_FILTERED_BETWEEN,        /* count lines not filtered, return  */
+                                       /* filtered lines between them       */
+    RELAY_API_FILTERED_EXCLUDE,        /* count and return only lines not   */
+                                       /* filtered                          */
+    /* number of values */
+    RELAY_API_NUM_FILTERED,
+};
+
 struct t_relay_api_data
 {
     struct t_hook *hook_signal_buffer;    /* hook for signals "buffer_*"    */
     struct t_hook *hook_hsignal_nicklist; /* hook for hsignals "nicklist_*" */
     struct t_hook *hook_signal_input;     /* hook for signal                */
                                           /* "input_text_changed"           */
+    struct t_hook *hook_signal_typing;    /* hook for signals "typing_*"    */
     struct t_hook *hook_signal_upgrade;   /* hook for signals "upgrade*"    */
                                           /* and "quit"                     */
     struct t_hook *hook_signal_day_changed; /* hook for signal              */
@@ -55,8 +67,11 @@ struct t_relay_api_data
     int sync_nicks;                       /* 1 if nicks are synchronized    */
     int sync_input;                       /* 1 if input is synchronized     */
                                           /* (WeeChat -> client)            */
+    int sync_typing;                      /* 1 if typing is synchronized    */
     int sync_notify_only;                 /* 1 to sync only highlights and  */
                                           /* private messages               */
+    int sync_filtered_lines;              /* 1 to sync lines filtered with  */
+                                          /* /filter, 0 to skip them        */
     enum t_relay_api_colors sync_colors;  /* colors to send with sync       */
     char **sync_options;                  /* options to sync (masks with    */
                                           /* "*"), NULL-terminated array    */
@@ -64,6 +79,7 @@ struct t_relay_api_data
 };
 
 extern int relay_api_search_colors (const char *colors);
+extern int relay_api_search_filtered (const char *filtered);
 extern void relay_api_add_sync_option (struct t_relay_client *client,
                                        const char *option);
 extern void relay_api_free_sync_options (struct t_relay_client *client);

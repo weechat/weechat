@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2010-2025 Nils Görs <weechatter@arcor.de>
+// SPDX-FileCopyrightText: 2010-2026 Nils Görs <weechatter@arcor.de>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -43,6 +43,10 @@ include::includes/cmdline_options.de.adoc[tag=debug]
 == OPTIONEN VON ERWEITERUNGEN
 
 include::includes/man.de.adoc[tag=plugin_options]
+
+== EXIT STATUS
+
+include::includes/man.de.adoc[tag=exit_status]
 
 == DATEIEN
 

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-08 20:26+0100\n"
+"POT-Creation-Date: 2026-11-18 22:28+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -158,6 +158,27 @@ msgstr ""
 
 msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
 msgstr ""
+
+#. TRANSLATORS: "%s" is the command used to run WeeChat.
+#, c-format
+msgid "Try \"%s --help\" for more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Error: ambiguous option \"%s\"\n"
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Error: option \"--%s\" does not take an argument\n"
+msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
+
+#, fuzzy, c-format
+msgid "Error: unknown option \"%s\"\n"
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy
+msgid "Error: not enough memory\n"
+msgstr "Nincs elég memória az új sorhoz\n"
 
 #, fuzzy, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -1063,16 +1084,6 @@ msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%s nem sikerült a folyamatot menteni\n"
 
 #, c-format
-msgid ""
-"%sCan't upgrade: there is one or more background process/thread running "
-"(hook type: process, connect or url)"
-msgstr ""
-
-#, c-format
-msgid "Check running hooks with command: %s"
-msgstr ""
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr ""
 
@@ -1088,14 +1099,6 @@ msgstr "Nincs aliasz definiálva.\n"
 #, fuzzy, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "WeeChat frissítése...\n"
-
-#, c-format
-msgid "%sUpgrade aborted"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
-msgstr "%s futtatási hiba (program: \"%s\"), a WeeChat kilép\n"
 
 #. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
@@ -5627,10 +5630,6 @@ msgid ""
 "utf8_strlen_screen, gui_chat_strlen_screen:"
 msgstr ""
 
-#, fuzzy
-msgid "Error: not enough memory\n"
-msgstr "Nincs elég memória az új sorhoz\n"
-
 #, c-format
 msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
@@ -6008,6 +6007,20 @@ msgstr "%s a \"%s\" modul nem található\n"
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr ""
 
+msgid "Running WeeChat in background..."
+msgstr ""
+
+#, fuzzy
+msgid "unable to open /dev/null"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy
+msgid "fork error"
+msgstr "%sSzerver: %s%s\n"
+
+msgid "OK"
+msgstr "Rendben"
+
 msgid "WeeChat default theme for light-background terminals"
 msgstr ""
 
@@ -6189,6 +6202,24 @@ msgstr "       IRC(%s)\n"
 #. TRANSLATORS: %.02fs is a float number + "s" ("seconds").
 #, c-format
 msgid "Upgrade done (%.02fs)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
+msgstr ""
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "%s futtatási hiba (program: \"%s\"), a WeeChat kilép\n"
+
+#, c-format
+msgid "%sUpgrade aborted"
 msgstr ""
 
 msgid "invalid URL"
@@ -6392,16 +6423,6 @@ msgstr "Nincs aliasz definiálva.\n"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr ""
-
-msgid "Running WeeChat in background..."
-msgstr ""
-
-#, fuzzy
-msgid "fork error"
-msgstr "%sSzerver: %s%s\n"
-
-msgid "OK"
-msgstr "Rendben"
 
 msgid "condition(s) to display the bar item (evaluated, see /help eval)"
 msgstr ""
@@ -12986,6 +13007,13 @@ msgid ""
 msgstr ""
 
 msgid ""
+"split multiline messages: write the date and prefix on each line of the "
+"message (the backlog then displays one message per line); if disabled, the "
+"next lines of the message start with two tabs (empty date and prefix), so "
+"that the backlog displays a single message"
+msgstr ""
+
+msgid ""
 "timestamp used in log files (see man strftime for date/time specifiers, "
 "extra specifiers are supported, see function util_strftimeval in Plugin API "
 "reference)"
@@ -13161,6 +13189,11 @@ msgstr ""
 msgid "locale used for translating messages"
 msgstr "válasz ping üzenetre"
 
+msgid ""
+"language of translated messages (for example \"fr\" or \"pt_BR\"), \"en\" if "
+"messages are not translated"
+msgstr ""
+
 msgid "keyboard inactivity (seconds)"
 msgstr ""
 
@@ -13263,7 +13296,8 @@ msgstr ""
 
 msgid ""
 "secret (in base32), one-time password, timestamp (optional, current time by "
-"default), number of passwords before/after to test (optional, 0 by default)"
+"default), number of passwords before/after to test (optional, 0 by default), "
+"number of digits (optional, between 4 and 10, 6 by default)"
 msgstr ""
 
 #, fuzzy
@@ -14562,6 +14596,10 @@ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: invalid port \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "
@@ -16702,6 +16740,12 @@ msgstr ""
 msgid "nicks of DCC chat"
 msgstr "felhasználók listája a szobában"
 
+#, c-format
+msgid ""
+"%s%s: invalid port range \"%s\" (expected a port or a range of ports between "
+"1 and 65535, for example: 5000 or 5000-5015)"
+msgstr ""
+
 msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 
@@ -16758,8 +16802,9 @@ msgstr "kimenő dcc forgalom IP/DNS-címe (ha üres, a helyi interfész IP-címe
 msgid ""
 "restricts outgoing files/chats and incoming/passive files to use only ports "
 "in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
-"port range, ie. 5000-5015, empty value means any port, it's recommended to "
-"use ports greater than 1024, because only root can use ports below 1024)"
+"port range, ie. 5000-5015, with ports between 1 and 65535, empty value means "
+"any port, it's recommended to use ports greater than 1024, because only root "
+"can use ports below 1024)"
 msgstr ""
 "korlátozza a dcc-t, hogy csak egy bizonyos tartományban lévő portokat "
 "használja (NAT esetén hasznos) (szintaxis: egyetlen port, pl. 5000 vagy egy "
@@ -16852,6 +16897,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
@@ -17054,14 +17107,6 @@ msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
 #, fuzzy, c-format
 msgid "%s%s: cannot get local address for xfer: error %d %s"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s nem sikerült a csatornát létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating xfer"

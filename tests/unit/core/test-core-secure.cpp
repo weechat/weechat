@@ -14,6 +14,7 @@ extern "C"
 #include <gcrypt.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-crypto.h"
+#include "src/core/core-hashtable.h"
 #include "src/core/core-secure.h"
 #include "src/core/core-secure-config.h"
 #include "src/core/core-string.h"
@@ -23,6 +24,41 @@ extern "C"
 
 extern int secure_derive_key (const char *salt, const char *passphrase,
                               unsigned char *key, int length_key);
+}
+
+/*
+ * Encrypt data with a passphrase and return it encoded in base16, as stored
+ * in file sec.conf.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+test_secure_encrypt_base16 (const char *passphrase, const char *data)
+{
+    char *buffer, *buffer_base16;
+    int length_buffer, rc;
+
+    buffer = NULL;
+    length_buffer = 0;
+    rc = secure_encrypt_data (
+        data, strlen (data) + 1,
+        weecrypto_get_hash_algo (
+            config_file_option_string (secure_config_crypt_hash_algo)),
+        weecrypto_get_cipher (
+            config_file_option_string (secure_config_crypt_cipher)),
+        passphrase,
+        &buffer,
+        &length_buffer);
+    if ((rc != 0) || !buffer)
+        return NULL;
+
+    buffer_base16 = (char *)malloc ((length_buffer * 2) + 1);
+    if (buffer_base16)
+        string_base16_encode (buffer, length_buffer, buffer_base16);
+    free (buffer);
+
+    return buffer_base16;
 }
 
 TEST_GROUP(CoreSecure)
@@ -135,4 +171,66 @@ TEST(CoreSecure, EncryptDecryptData)
             free (decrypted_data);
         }
     }
+}
+
+/*
+ * Test functions:
+ *   secure_decrypt_data_not_decrypted
+ *   secure_decrypt_data_not_decrypted_map_cb
+ */
+
+TEST(CoreSecure, DecryptDataNotDecrypted)
+{
+    char *value1, *value2, *value3;
+
+    hashtable_remove_all (secure_hashtable_data);
+    hashtable_remove_all (secure_hashtable_data_encrypted);
+
+    value1 = test_secure_encrypt_base16 (SECURE_PASSPHRASE, "value1");
+    CHECK(value1);
+    value2 = test_secure_encrypt_base16 (SECURE_PASSPHRASE, "value2");
+    CHECK(value2);
+    value3 = test_secure_encrypt_base16 ("other_passphrase", "value3");
+    CHECK(value3);
+
+    /* No passphrase. */
+    LONGS_EQUAL(-1, secure_decrypt_data_not_decrypted (NULL));
+    LONGS_EQUAL(-1, secure_decrypt_data_not_decrypted (""));
+
+    /* No encrypted data. */
+    LONGS_EQUAL(0, secure_decrypt_data_not_decrypted (SECURE_PASSPHRASE));
+
+    /* Names with a comma, data encrypted with another passphrase. */
+    hashtable_set (secure_hashtable_data_encrypted, "name1", value1);
+    hashtable_set (secure_hashtable_data_encrypted, "name,2", value2);
+    hashtable_set (secure_hashtable_data_encrypted, "name3", value3);
+    hashtable_set (secure_hashtable_data_encrypted, "name4", "");
+
+    LONGS_EQUAL(0, secure_decrypt_data_not_decrypted ("wrong"));
+    LONGS_EQUAL(0, secure_hashtable_data->items_count);
+    LONGS_EQUAL(4, secure_hashtable_data_encrypted->items_count);
+
+    LONGS_EQUAL(2, secure_decrypt_data_not_decrypted (SECURE_PASSPHRASE));
+    LONGS_EQUAL(2, secure_hashtable_data->items_count);
+    STRCMP_EQUAL("value1",
+                 (const char *)hashtable_get (secure_hashtable_data, "name1"));
+    STRCMP_EQUAL("value2",
+                 (const char *)hashtable_get (secure_hashtable_data, "name,2"));
+    LONGS_EQUAL(2, secure_hashtable_data_encrypted->items_count);
+    STRCMP_EQUAL(value3,
+                 (const char *)hashtable_get (secure_hashtable_data_encrypted,
+                                              "name3"));
+    CHECK(hashtable_has_key (secure_hashtable_data_encrypted, "name4"));
+
+    LONGS_EQUAL(1, secure_decrypt_data_not_decrypted ("other_passphrase"));
+    STRCMP_EQUAL("value3",
+                 (const char *)hashtable_get (secure_hashtable_data, "name3"));
+    LONGS_EQUAL(1, secure_hashtable_data_encrypted->items_count);
+
+    hashtable_remove_all (secure_hashtable_data);
+    hashtable_remove_all (secure_hashtable_data_encrypted);
+
+    free (value1);
+    free (value2);
+    free (value3);
 }

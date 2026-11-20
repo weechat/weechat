@@ -121,10 +121,10 @@ jobs:
   checks:
 
     env:
-      POEXAM_VERSION: "0.4.0"
-      REUSE_VERSION: "6.2.0"
-      RUFF_VERSION: "0.17.0"
-      TY_VERSION: "0.0.86"
+      POEXAM_VERSION: "0.5.0"
+      REUSE_VERSION: "6.3.0"
+      RUFF_VERSION: "0.17.5"
+      TY_VERSION: "0.0.104"
 
     strategy:
       fail-fast: false
@@ -227,7 +227,7 @@ jobs:
     timeout-minutes: 60
     env:
       PHP_INI_SCAN_DIR: /tmp/php-noscan  # Embed PHP loads no add-on extensions (see #2009).
-      SCHEMATHESIS_VERSION: "4.29.2"
+      SCHEMATHESIS_VERSION: "4.33.4"
 
     steps:
       - uses: actions/checkout@v7
@@ -304,17 +304,18 @@ jobs:
             cxx: "clang++"
             buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
-    name: "install (fedora:43, ${{ matrix.config.name }})"
+    name: "install (fedora:45, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     container:
-      image: fedora:43
+      image: fedora:45
 
     steps:
       - uses: actions/checkout@v7
 
       - name: Install dependencies
-        run: dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }} nodejs-devel
+        # uriparser-devel: PHP links with "-luriparser", but php-devel does not depend on it.
+        run: dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }} nodejs-devel uriparser-devel
 
       - name: Build and run tests
         env:

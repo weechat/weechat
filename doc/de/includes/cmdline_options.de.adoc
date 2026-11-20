@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2009-2025 Nils Görs <weechatter@arcor.de>
+// SPDX-FileCopyrightText: 2009-2026 Nils Görs <weechatter@arcor.de>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -11,14 +11,15 @@
     zeigt die Standardfarben im Terminal an.
 
 *--daemon*::
-    startet WeeChat im Hintergrund, als Deamon (funktioniert nur mit
-    dem Befehl *weechat-headless*).
+    Führen Sie WeeChat im Hintergrund als Daemon aus (nur mit dem Befehl
+    *weechat-headless*; bei *weechat* ist diese Option unbekannt, und es wird
+    ein Fehler ausgegeben).
 
 *--stdout*::
-    die Programmausgabe findet in der Standardausgabe an, anstatt sie in die Protokolldatei zu schreiben
-    Display log messages on standard output instead of writing them in log file
-    (funktioniert ausschließlich mit *weechat-headless* und ist nicht kompatibel mit Option
-    "--daemon").
+    Protokollmeldungen über die Standardausgabe ausgeben, anstatt sie in eine
+    Protokolldatei zu schreiben (nur beim Befehl *weechat-headless*;
+    bei *weechat* ist diese Option unbekannt, was zu einer Fehlermeldung führt;
+    wird ignoriert, wenn die Option ""--daemon"" angegeben ist).
 
 *-d*, *--dir* _<path>_::
     Erzwingen Sie ein einzelnes Verzeichnis für alle WeeChat-Dateien (Verzeichnis wird erstellt, wenn es nicht gefunden wird).

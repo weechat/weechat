@@ -31,6 +31,7 @@ extern struct t_config_option *logger_config_file_replacement_char;
 extern struct t_config_option *logger_config_file_rotation_compression_level;
 extern struct t_config_option *logger_config_file_rotation_compression_type;
 extern struct t_config_option *logger_config_file_rotation_size_max;
+extern struct t_config_option *logger_config_file_split_multiline;
 extern struct t_config_option *logger_config_file_time_format;
 
 extern unsigned long long logger_config_rotation_size_max;

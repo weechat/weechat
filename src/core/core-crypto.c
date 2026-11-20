@@ -605,6 +605,10 @@ error:
 /*
  * Validate a Time-based One-Time Password (TOTP).
  *
+ * The OTP must contain exactly "digits" chars, all being digits (from 0
+ * to 9), otherwise it is considered invalid: for example "1234" is not
+ * accepted if the expected OTP is "001234" with 6 digits.
+ *
  * Return:
  *   1: OTP is OK
  *   0: OTP is invalid
@@ -612,22 +616,31 @@ error:
 
 int
 weecrypto_totp_validate (const char *secret_base32, time_t totp_time,
-                         int window, const char *otp)
+                         int window, int digits, const char *otp)
 {
     char *secret, str_otp[16];
-    int length_secret, digits, rc, otp_ok;
+    int length_secret, rc, otp_ok;
     uint64_t i, moving_factor;
+    const char *ptr_otp;
 
     secret = NULL;
 
     if (!secret_base32 || !secret_base32[0] || (window < 0) || !otp || !otp[0])
         goto error;
 
-    digits = strlen (otp);
     if ((digits < WEECRYPTO_TOTP_MIN_DIGITS)
         || (digits > WEECRYPTO_TOTP_MAX_DIGITS))
     {
         goto error;
+    }
+
+    if ((int)strlen (otp) != digits)
+        goto error;
+
+    for (ptr_otp = otp; ptr_otp[0]; ptr_otp++)
+    {
+        if ((ptr_otp[0] < '0') || (ptr_otp[0] > '9'))
+            goto error;
     }
 
     secret = malloc (strlen (secret_base32) + 1);

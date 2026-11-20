@@ -15,6 +15,18 @@ For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.m
 
 ## Unreleased
 
+### Unknown command-line options
+
+WeeChat now exits with an error when an unknown command-line option is given (for example
+`weechat --foo`), instead of ignoring it silently. The options `--daemon` and `--stdout` are
+rejected by `weechat` (they are allowed only by `weechat-headless`), as well as `--doc-gen`.
+
+The exit code is now 2 when the command-line arguments are invalid (unknown option or missing
+argument), instead of 1.
+
+Scripts or wrappers starting WeeChat with an unknown option must be fixed.
+Arguments not starting with `-` (for example `irc://` URLs) are not affected.
+
 ### Line identifiers
 
 The identifier of a line (`id` in hdata `line_data`) is now a `long long` instead of an `int`,
@@ -55,6 +67,19 @@ In the focus hashtable (used in mouse/cursor keys and bar item `buffer_nicklist`
 compatibility: they are derived from the new key `_chat_line_id`.
 
 In triggers, `${date_printed}` becomes `${calc:${id}/1000000}`.
+
+### Info totp_validate
+
+The info `totp_validate` has a new optional argument with the number of digits of the
+one-time password (between 4 and 10, 6 by default), and the one-time password must have exactly
+this number of digits.
+
+Scripts validating one-time passwords that do not have 6 digits must now give the number of digits,
+for example with 8 digits:
+
+```python
+weechat.info_get("totp_validate", "secretpasswordbase32,12345678,0,0,8")
+```
 
 ### Relay
 
@@ -228,6 +253,44 @@ The text displayed before nick and after nick/target is set by options
 `irc.look.notice_nick_prefix` and `irc.look.notice_nick_suffix` (default: `-`), the text
 between nick and target is set by option `irc.look.notice_target_separator` (default: `:`),
 and their color is set by option `irc.color.notice`.
+
+### Multiline messages in log files
+
+The next lines of a multiline message are now written in log files with an empty date and prefix
+(two tabs at beginning of line), so that they can not be read as a new message:
+
+```text
+2026-11-15 10:00:00.123456Z	nick	line 1
+		line 2
+		line 3
+```
+
+The backlog displayed when a buffer is opened is the same as before, and log files written by
+older versions are still read as before.
+
+Tools parsing log files may need to be adapted, or the new option `logger.file.split_multiline`
+can be enabled to write the date and prefix on each line of multiline messages (the backlog then
+displays one message per line):
+
+```text
+/set logger.file.split_multiline on
+```
+
+### Xfer port range
+
+The value of option `xfer.network.port_range` is now checked: it must be empty (any port),
+a single port (for example `5000`) or a range of ports (for example `5000-5015`), without spaces,
+with ports between 1 and 65535 and the first port lower than or equal to the last one.
+
+An invalid value is now rejected by `/set`, and ignored with a warning when it is read from
+the configuration file: then any port is used.
+
+Previous versions tolerated some invalid values, for example `5000 - 5015` (with spaces) was
+used as the single port `5000`. If you use this option, check its value and fix it if needed:
+
+```text
+/set xfer.network.port_range 5000-5015
+```
 
 ## Version 4.10.0
 

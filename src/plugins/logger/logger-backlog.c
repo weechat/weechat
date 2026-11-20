@@ -152,9 +152,63 @@ logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
+ * Check if a line read in log file starts with a date (first line of a
+ * message).
+ *
+ * Return:
+ *   1: line starts with a date
+ *   0: line does not start with a date (next line of a multiline message)
+ */
+
+int
+logger_backlog_line_has_date (const char *line)
+{
+    char *str_date, *error;
+    const char *pos_tab;
+    struct tm tm_line;
+    struct timeval date_parsed;
+    int date_found;
+
+    if (!line)
+        return 0;
+
+    pos_tab = strchr (line, '\t');
+    if (!pos_tab || (pos_tab == line))
+        return 0;
+
+    str_date = weechat_strndup (line, pos_tab - line);
+    if (!str_date)
+        return 0;
+
+    date_found = 0;
+    if (weechat_util_parse_time (str_date, &date_parsed))
+    {
+        date_found = 1;
+    }
+    else
+    {
+        memset (&tm_line, 0, sizeof (struct tm));
+        error = strptime (
+            str_date,
+            weechat_config_string (logger_config_file_time_format),
+            &tm_line);
+        if (error && !error[0] && (tm_line.tm_year > 0))
+            date_found = 1;
+    }
+
+    free (str_date);
+
+    return date_found;
+}
+
+/*
  * Group lines by messages: each line with a timestamp is considered the first
  * line of a message, and subsequent lines without timestamp are the rest of
  * the message.
+ *
+ * The next lines of a message may start with two tabs (empty date and prefix,
+ * see option logger.file.split_multiline), they are removed so that the
+ * message is the same as in log files written without these tabs.
  *
  * Note: result must be freed after use.
  */
@@ -162,11 +216,9 @@ logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
 struct t_arraylist *
 logger_backlog_group_messages (struct t_arraylist *lines)
 {
-    int i, size, time_found;
-    char *message, *new_message, *str_date, *error;
-    const char *ptr_line, *pos_message;
-    struct tm tm_line;
-    struct timeval date_parsed;
+    int i, size, date_found;
+    char *message, *new_message;
+    const char *ptr_line;
     struct t_arraylist *messages;
 
     if (!lines)
@@ -186,6 +238,11 @@ logger_backlog_group_messages (struct t_arraylist *lines)
     {
         ptr_line = (const char *)weechat_arraylist_get (lines, i);
 
+        date_found = logger_backlog_line_has_date (ptr_line);
+
+        if (!date_found && (strncmp (ptr_line, "\t\t", 2) == 0))
+            ptr_line += 2;
+
         if (message)
         {
             if (weechat_asprintf (&new_message, "%s\n%s", ptr_line, message) < 0)
@@ -200,31 +257,7 @@ logger_backlog_group_messages (struct t_arraylist *lines)
                 goto error;
         }
 
-        time_found = 0;
-        pos_message = strchr (ptr_line, '\t');
-        if (pos_message)
-        {
-            str_date = weechat_strndup (ptr_line, pos_message - ptr_line);
-            if (str_date)
-            {
-                if (weechat_util_parse_time (str_date, &date_parsed))
-                {
-                    time_found = 1;
-                }
-                else
-                {
-                    memset (&tm_line, 0, sizeof (struct tm));
-                    error = strptime (
-                        str_date,
-                        weechat_config_string (logger_config_file_time_format),
-                        &tm_line);
-                    if (error && !error[0] && (tm_line.tm_year > 0))
-                        time_found = 1;
-                }
-                free (str_date);
-            }
-        }
-        if (time_found)
+        if (date_found)
         {
             /* Add message (will be freed when arraylist is destroyed). */
             weechat_arraylist_insert (messages, 0, message);

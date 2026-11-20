@@ -62,6 +62,7 @@
 #include "core-secure-config.h"
 #include "core-signal.h"
 #include "core-string.h"
+#include "core-sys.h"
 #include "core-theme.h"
 #include "core-upgrade.h"
 #include "core-url.h"
@@ -116,6 +117,10 @@ int weechat_no_gcrypt = 0;             /* remove init/deinit of gcrypt      */
                                        /* (useful with valgrind)            */
 struct t_weelist *weechat_startup_commands = NULL; /* startup commands      */
                                                    /* (option -r)           */
+int weechat_plugin_argc = 0;           /* number of arguments for plugins   */
+char **weechat_plugin_argv = NULL;     /* arguments for plugins: "-a", "-s" */
+                                       /* and non-option arguments (only    */
+                                       /* during init of plugins)           */
 int weechat_auto_connect = 1;          /* auto-connect to servers           */
 int weechat_auto_load_scripts = 1;     /* auto-load scripts                 */
 
@@ -324,6 +329,7 @@ weechat_shutdown (int return_code, int crash)
     free (weechat_local_charset);
     free (weechat_force_plugin_autoload);
     weelist_free (weechat_startup_commands);
+    free (weechat_plugin_argv);
     free (weechat_doc_gen_path);
 
     if (crash)
@@ -365,6 +371,16 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
 {
     int term_theme_light;               /* 1 if a light terminal detected   */
 
+    /*
+     * Parse command line arguments and daemonize (headless mode) before any
+     * other init (the daemon closes all file descriptors).
+     */
+    args_parse (argc, argv);
+    if (weechat_daemon && (args_action == ARGS_ACTION_NONE))
+        sys_daemonize ();
+
+    network_init_gcrypt ();             /* Initialize gcrypt.               */
+
     weechat_first_start_time = time (NULL); /* Initialize start time.       */
     gettimeofday (&weechat_current_start_timeval, NULL);
 
@@ -387,7 +403,6 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     command_init ();                    /* Initialize WeeChat commands.     */
     completion_init ();                 /* Add core completion hooks.       */
     gui_key_init ();                    /* Initialize keys.                 */
-    network_init_gcrypt ();             /* Initialize gcrypt.               */
     if (!secure_init ())                /* Initialize secured data.         */
         weechat_shutdown (EXIT_FAILURE, 0);
     if (!secure_config_init ())         /* Init secured data options: sec.* */
@@ -396,7 +411,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     theme_builtin_init ();              /* Register built-in themes.        */
     if (!config_weechat_init ())        /* Init WeeChat options: weechat.*  */
         weechat_shutdown (EXIT_FAILURE, 0);
-    args_parse (argc, argv);            /* Parse command line args.         */
+    args_run_action ();                 /* Run option like --help and exit. */
     dir_create_home_dirs ();            /* Create WeeChat home directories. */
     log_init ();                        /* Initialize log file.             */
     plugin_api_init ();                 /* Create some hooks.               */
@@ -421,7 +436,10 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     weechat_locale_check ();            /* Display warning if wrong locale. */
     command_startup (0);                /* Execute commands before plugins. */
     plugin_init (weechat_force_plugin_autoload, /* Initialize plugins.      */
-                 argc, argv);
+                 weechat_plugin_argc, weechat_plugin_argv);
+    free (weechat_plugin_argv);         /* Plugin args not needed any more. */
+    weechat_plugin_argv = NULL;
+    weechat_plugin_argc = 0;
     command_startup (1);                /* Execute commands after plugins.  */
     if (!weechat_upgrading)
         gui_layout_window_apply (gui_layout_current, -1);
@@ -469,5 +487,6 @@ weechat_end (void (*gui_end_cb)(int clean_exit))
     theme_end ();                       /* End theme registry.              */
     string_end ();                      /* End string.                      */
     weeurl_end ();
+    upgrade_weechat_cancel ();          /* Cancel scheduled upgrade.        */
     weechat_shutdown (-1, 0);           /* End everything else.             */
 }

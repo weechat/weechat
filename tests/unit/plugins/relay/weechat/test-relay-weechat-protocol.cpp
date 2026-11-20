@@ -527,6 +527,22 @@ TEST(RelayWeechatProtocol, CbInitTotp)
     LONGS_EQUAL(RELAY_STATUS_AUTH_FAILED,
                 init (RELAY_AUTH_PASSWORD_HASH_PLAIN, command));
 
+    /* Last 4 or 5 digits of the valid TOTP are rejected */
+    snprintf (command, sizeof (command),
+              "init password=secret,totp=%s", totp + 2);
+    LONGS_EQUAL(RELAY_STATUS_AUTH_FAILED,
+                init (RELAY_AUTH_PASSWORD_HASH_PLAIN, command));
+    snprintf (command, sizeof (command),
+              "init password=secret,totp=%s", totp + 1);
+    LONGS_EQUAL(RELAY_STATUS_AUTH_FAILED,
+                init (RELAY_AUTH_PASSWORD_HASH_PLAIN, command));
+
+    /* Extra arguments for info "totp_validate" (escaped commas) are rejected */
+    snprintf (command, sizeof (command),
+              "init password=secret,totp=%s\\,0\\,1\\,4", totp + 2);
+    LONGS_EQUAL(RELAY_STATUS_AUTH_FAILED,
+                init (RELAY_AUTH_PASSWORD_HASH_PLAIN, command));
+
     /* Only the first TOTP is checked */
     snprintf (command, sizeof (command),
               "init password=secret,totp=%s,totp=%s", totp, totp2);
