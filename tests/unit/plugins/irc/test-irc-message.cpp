@@ -17,10 +17,19 @@ extern "C"
 #include "src/core/core-hashtable.h"
 #include "src/core/core-hook.h"
 #include "src/core/core-string.h"
+#include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-ignore.h"
 #include "src/plugins/irc/irc-message.h"
 #include "src/plugins/irc/irc-server.h"
+
+extern int irc_message_split_string (struct t_irc_message_split_context *context,
+                                     const char *tags, const char *host,
+                                     const char *command, const char *target,
+                                     const char *prefix, const char *arguments,
+                                     const char *suffix, const char delimiter,
+                                     int max_length_nick_user_host,
+                                     int max_length);
 }
 
 #define NICK_256_WITH_SPACE "nick_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
@@ -1081,6 +1090,100 @@ TEST(IrcMessage, ReplaceVars)
                      "nick '$nick', channel '$channel', server '$server'", 1));
 
     irc_server_free (server);
+}
+
+/*
+ * Test functions:
+ *   irc_message_split_string (max length smaller than a char)
+ */
+
+TEST(IrcMessage, SplitStringTinyMaxLength)
+{
+    struct t_irc_message_split_context context;
+    char long_text[601];
+
+    context.hashtable = hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL, NULL);
+    CHECK(context.hashtable);
+
+    /* 2 bytes for arguments (15 - 13), "€" has 3 bytes */
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "a€b", "", ' ',
+                                             -1, 15));
+    LONGS_EQUAL(4, context.number);
+    STRCMP_EQUAL("PRIVMSG #c :a",
+                 (const char *)hashtable_get (context.hashtable, "msg1"));
+    STRCMP_EQUAL("PRIVMSG #c :€",
+                 (const char *)hashtable_get (context.hashtable, "msg2"));
+    STRCMP_EQUAL("PRIVMSG #c :b",
+                 (const char *)hashtable_get (context.hashtable, "msg3"));
+
+    /* 3 bytes for arguments (16 - 13), emoji has 4 bytes */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "😀😀",
+                                             "", ' ', -1, 16));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL("PRIVMSG #c :😀",
+                 (const char *)hashtable_get (context.hashtable, "msg1"));
+    STRCMP_EQUAL("PRIVMSG #c :😀",
+                 (const char *)hashtable_get (context.hashtable, "msg2"));
+
+    /* Delimiters at beginning, then text too long: no empty message */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", " abc", "", ' ',
+                                             -1, 15));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL("PRIVMSG #c :ab",
+                 (const char *)hashtable_get (context.hashtable, "msg1"));
+    STRCMP_EQUAL("PRIVMSG #c :c",
+                 (const char *)hashtable_get (context.hashtable, "msg2"));
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "  abc", "", ' ',
+                                             -1, 15));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL("PRIVMSG #c :ab",
+                 (const char *)hashtable_get (context.hashtable, "msg1"));
+    STRCMP_EQUAL("PRIVMSG #c :c",
+                 (const char *)hashtable_get (context.hashtable, "msg2"));
+    /* Only delimiters, longer than max length: they are sent as-is */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "   ", "", ' ',
+                                             -1, 15));
+    LONGS_EQUAL(2, context.number);
+    STRCMP_EQUAL("PRIVMSG #c :  ",
+                 (const char *)hashtable_get (context.hashtable, "msg1"));
+    memset (long_text, 'x', 600);
+    long_text[0] = ' ';
+    long_text[600] = '\0';
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", long_text, "", ' ',
+                                             -1, 512));
+    LONGS_EQUAL(3, context.number);
+    /* 499 bytes for arguments (512 - 13): 599 "x" in 2 messages */
+    STRNCMP_EQUAL("PRIVMSG #c :x",
+                  (const char *)hashtable_get (context.hashtable, "msg1"),
+                  13);
+    LONGS_EQUAL(12 + 499,
+                strlen ((const char *)hashtable_get (context.hashtable,
+                                                     "msg1")));
+    LONGS_EQUAL(12 + 100,
+                strlen ((const char *)hashtable_get (context.hashtable,
+                                                     "msg2")));
+
+    hashtable_free (context.hashtable);
 }
 
 /*

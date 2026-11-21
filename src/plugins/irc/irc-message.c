@@ -1008,6 +1008,15 @@ irc_message_split_add (struct t_irc_message_split_context *context,
  *   host + command + target + prefix + XXX + suffix
  * (where XXX is part of "arguments")
  *
+ * If a char of arguments does not fit in the max length, it is added anyway
+ * in a message, so that the split always advances (the message is then longer
+ * than the max length).
+ *
+ * Delimiters at the beginning of the remaining arguments are skipped if the
+ * text after them does not fit in the max length, so that a message is not
+ * sent with only these delimiters or empty arguments (trailing delimiters
+ * that fit in the max length are still sent as-is).
+ *
  * Return:
  *   1: OK
  *   0: error
@@ -1026,7 +1035,7 @@ irc_message_split_string (struct t_irc_message_split_context *context,
                           int max_length_nick_user_host,
                           int max_length)
 {
-    const char *pos, *pos_max, *pos_next, *pos_last_delim;
+    const char *pos, *pos_max, *pos_next, *pos_last_delim, *pos_first_text;
     char *message, *dup_arguments;
 
     if (!context)
@@ -1087,17 +1096,42 @@ irc_message_split_string (struct t_irc_message_split_context *context,
         pos = arguments;
         pos_max = pos + max_length;
         pos_last_delim = NULL;
+        pos_first_text = NULL;
         while (pos && pos[0])
         {
             if (pos[0] == delimiter)
                 pos_last_delim = pos;
+            else if (!pos_first_text)
+                pos_first_text = pos;
             pos_next = weechat_utf8_next_char (pos);
             if (!pos_next || (pos_next > pos_max))
                 break;
             pos = pos_next;
         }
         if (pos[0] && pos_last_delim)
+        {
+            if ((!pos_first_text || (pos_first_text > pos_last_delim))
+                && pos_last_delim[1])
+            {
+                /*
+                 * Only delimiters before the text that does not fit: skip
+                 * them, to not send a message without text (if nothing
+                 * follows them, they are sent as-is)
+                 */
+                arguments = pos_last_delim + 1;
+                continue;
+            }
             pos = pos_last_delim;
+        }
+        if (pos == arguments)
+        {
+            /*
+             * The next char does not fit in max length: take it anyway
+             * (the message is longer than max length), to always advance
+             */
+            pos_next = weechat_utf8_next_char (pos);
+            pos = (pos_next) ? pos_next : pos + 1;
+        }
         dup_arguments = weechat_strndup (arguments, pos - arguments);
         if (dup_arguments)
         {
