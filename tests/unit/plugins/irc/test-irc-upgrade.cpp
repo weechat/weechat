@@ -399,6 +399,31 @@ TEST(IrcUpgrade, ReadIndexCurrentAddressOutOfRange)
     LONGS_EQUAL(0, server->retry_array[0]);
 }
 
+TEST(IrcUpgrade, ReadInvalidMultilineLimits)
+{
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
+
+    /* Invalid multiline limits (accepted by WeeChat < 5.0.0): defaults. */
+    infolist = infolist_new (NULL);
+    item = infolist_new_item (infolist);
+    infolist_new_var_string (item, "name", IRC_FAKE_SERVER);
+    infolist_new_var_string (item, "buffer_name", "server." IRC_FAKE_SERVER);
+    infolist_new_var_integer (item, "fake_server", 1);
+    infolist_new_var_integer (item, "sock", -1);
+    infolist_new_var_integer (item, "multiline_max_bytes", 0);
+    infolist_new_var_integer (item, "multiline_max_lines", -1);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_upgrade_read_cb (NULL, NULL, NULL,
+                                     IRC_UPGRADE_TYPE_SERVER, infolist));
+    infolist_free (infolist);
+    POINTERS_EQUAL(server, irc_upgrade_current_server);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES,
+                server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES,
+                server->multiline_max_lines);
+}
+
 TEST(IrcUpgrade, LoadNoFile)
 {
     /* No upgrade file: error. */

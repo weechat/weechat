@@ -798,7 +798,7 @@ TEST(IrcMessage, ParseCapValue)
 
 /*
  * Test functions:
- *   irc_message_parse_multiline_value
+ *   irc_message_parse_cap_multiline_value
  */
 
 TEST(IrcMessage, ParseCapMultilineValue)
@@ -839,6 +839,25 @@ TEST(IrcMessage, ParseCapMultilineValue)
     irc_message_parse_cap_multiline_value (server, "max-bytes=2048,max-lines=8");
     LONGS_EQUAL(2048, server->multiline_max_bytes);
     LONGS_EQUAL(8, server->multiline_max_lines);
+
+    /* Invalid values: default values are used */
+    server->multiline_max_bytes = 0;
+    server->multiline_max_lines = 0;
+    irc_message_parse_cap_multiline_value (server, "max-bytes=0,max-lines=-1");
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES, server->multiline_max_lines);
+
+    server->multiline_max_bytes = 0;
+    server->multiline_max_lines = 0;
+    irc_message_parse_cap_multiline_value (server, "max-bytes=-5,max-lines=0");
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES, server->multiline_max_lines);
+
+    server->multiline_max_bytes = 0;
+    server->multiline_max_lines = 0;
+    irc_message_parse_cap_multiline_value (server, "max-bytes=abc,max-lines=10x");
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES, server->multiline_max_lines);
 
     irc_server_free (server);
 }

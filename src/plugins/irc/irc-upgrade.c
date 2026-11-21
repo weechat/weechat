@@ -519,6 +519,14 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     {
                         irc_upgrade_current_server->multiline_max_bytes = weechat_infolist_integer (infolist, "multiline_max_bytes");
                         irc_upgrade_current_server->multiline_max_lines = weechat_infolist_integer (infolist, "multiline_max_lines");
+                        /*
+                         * WeeChat < 5.0.0 accepted any integer from the
+                         * server: use default value if not positive.
+                         */
+                        if (irc_upgrade_current_server->multiline_max_bytes <= 0)
+                            irc_upgrade_current_server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+                        if (irc_upgrade_current_server->multiline_max_lines <= 0)
+                            irc_upgrade_current_server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
                     }
                     else
                     {

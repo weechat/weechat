@@ -577,6 +577,9 @@ irc_message_parse_cap_value (const char *value)
  *   - max-bytes: maximum allowed total byte length of multiline batched content
  *   - max-lines: maximum allowed number of lines in a multiline batch content
  *
+ * A missing or invalid value (not a positive integer) is replaced by the
+ * default value.
+ *
  * If multiline messages can be sent to the server (see function
  * irc_server_multiline_enabled), the local variables "multiline_max_bytes"
  * and "multiline_max_lines" are updated in channels and private buffers.
@@ -603,14 +606,14 @@ irc_message_parse_cap_multiline_value (struct t_irc_server *server,
     ptr_value = (const char *)weechat_hashtable_get (values, "max-bytes");
     if (ptr_value)
     {
-        if (weechat_util_parse_int (ptr_value, 10, &number))
+        if (weechat_util_parse_int (ptr_value, 10, &number) && (number > 0))
             server->multiline_max_bytes = number;
     }
 
     ptr_value = (const char *)weechat_hashtable_get (values, "max-lines");
     if (ptr_value)
     {
-        if (weechat_util_parse_int (ptr_value, 10, &number))
+        if (weechat_util_parse_int (ptr_value, 10, &number) && (number > 0))
             server->multiline_max_lines = number;
     }
 
