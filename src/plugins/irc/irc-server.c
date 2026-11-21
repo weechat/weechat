@@ -1686,8 +1686,29 @@ irc_server_set_buffer_input_prompt (struct t_irc_server *server)
 }
 
 /*
- * Set "input_multiline" to 1 or 0, according to capability draft/multiline
- * on all channels and private buffers.
+ * Check if multiline messages can be sent to the server: capabilities "batch"
+ * and "draft/multiline" must be both enabled.
+ *
+ * Return:
+ *   1: multiline messages can be sent
+ *   0: multiline messages can not be sent
+ */
+
+int
+irc_server_multiline_enabled (struct t_irc_server *server)
+{
+    if (!server)
+        return 0;
+
+    return (weechat_hashtable_has_key (server->cap_list, "batch")
+            && weechat_hashtable_has_key (server->cap_list, "draft/multiline")) ?
+        1 : 0;
+}
+
+/*
+ * Set "input_multiline" to 1 or 0 on all channels and private buffers
+ * (1 if multiline messages can be sent to the server, see function
+ * irc_server_multiline_enabled).
  */
 
 void

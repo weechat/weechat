@@ -400,6 +400,7 @@ extern void irc_server_set_buffer_input_prompt (struct t_irc_server *server);
 extern char *irc_server_get_caps (struct t_irc_server *server);
 extern void irc_server_set_buffer_caps (struct t_irc_server *server);
 extern void irc_server_set_buffer_clienttagdeny (struct t_irc_server *server);
+extern int irc_server_multiline_enabled (struct t_irc_server *server);
 extern void irc_server_set_buffer_input_multiline (struct t_irc_server *server,
                                                    int multiline);
 extern int irc_server_has_channels (struct t_irc_server *server);

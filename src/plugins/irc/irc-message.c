@@ -1719,8 +1719,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
         && (index_args + 1 <= argc - 1)
         && (weechat_strncmp (argv[index_args + 1], "\001", 1) != 0)
         && (weechat_strncmp (argv[index_args + 1], ":\001", 2) != 0)
-        && weechat_hashtable_has_key (server->cap_list, "batch")
-        && weechat_hashtable_has_key (server->cap_list, "draft/multiline"));
+        && irc_server_multiline_enabled (server));
 
     max_length_nick = (server && (server->nick_max_length > 0)) ?
         server->nick_max_length : 16;

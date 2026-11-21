@@ -2085,6 +2085,53 @@ TEST(IrcProtocolWithServer, cap_multiline_limits)
 
 /*
  * Test functions:
+ *   irc_protocol_cb_cap (property "input_multiline" in buffers)
+ */
+
+TEST(IrcProtocolWithServer, cap_input_multiline)
+{
+    struct t_irc_channel *ptr_channel, *ptr_channel_pv;
+
+    SRV_INIT_JOIN;
+
+    ptr_channel = ptr_server->channels;
+    CHECK(ptr_channel);
+    LONGS_EQUAL(0, ptr_channel->buffer->input_multiline);
+
+    /* Only "draft/multiline": multiline disabled */
+    RECV(":server CAP alice ACK :draft/multiline");
+    LONGS_EQUAL(0, ptr_channel->buffer->input_multiline);
+
+    /* "batch" enabled: multiline enabled */
+    RECV(":server CAP alice ACK :batch");
+    LONGS_EQUAL(1, ptr_channel->buffer->input_multiline);
+
+    /* New private buffer */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+    ptr_channel_pv = irc_channel_search (ptr_server, "bob");
+    CHECK(ptr_channel_pv);
+    LONGS_EQUAL(1, ptr_channel_pv->buffer->input_multiline);
+
+    /* "batch" removed: multiline disabled */
+    RECV(":server CAP alice DEL :batch");
+    LONGS_EQUAL(0, ptr_channel->buffer->input_multiline);
+    LONGS_EQUAL(0, ptr_channel_pv->buffer->input_multiline);
+    RECV(":server CAP alice ACK :batch");
+    LONGS_EQUAL(1, ptr_channel->buffer->input_multiline);
+    RECV(":server CAP alice ACK :-batch");
+    LONGS_EQUAL(0, ptr_channel->buffer->input_multiline);
+
+    /* Multi-line "CAP LIST": update only on last line */
+    RECV(":server CAP alice LIST * :batch");
+    LONGS_EQUAL(0, ptr_channel->buffer->input_multiline);
+    RECV(":server CAP alice LIST :draft/multiline");
+    LONGS_EQUAL(1, ptr_channel->buffer->input_multiline);
+    RECV(":server CAP alice LIST :batch");
+    LONGS_EQUAL(0, ptr_channel->buffer->input_multiline);
+}
+
+/*
+ * Test functions:
  *   irc_protocol_cb_cap (refresh of nick prefixes with "multi-prefix")
  */
 

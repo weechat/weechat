@@ -208,9 +208,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
         weechat_hashtable_set (
             buffer_props,
             "input_multiline",
-            (weechat_hashtable_has_key (server->cap_list, "batch")
-             && weechat_hashtable_has_key (server->cap_list, "draft/multiline")) ?
-            "1" : "0");
+            (irc_server_multiline_enabled (server)) ? "1" : "0");
         weechat_hashtable_set (buffer_props, "name", buffer_name);
         weechat_hashtable_set (buffer_props, "short_name", channel_name);
         weechat_hashtable_set (

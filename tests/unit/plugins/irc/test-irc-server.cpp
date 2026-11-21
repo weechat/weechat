@@ -1347,6 +1347,31 @@ TEST(IrcServer, SetClienttagdeny)
 
 /*
  * Test functions:
+ *   irc_server_multiline_enabled
+ */
+
+TEST(IrcServer, MultilineEnabled)
+{
+    struct t_irc_server *server;
+
+    LONGS_EQUAL(0, irc_server_multiline_enabled (NULL));
+
+    server = irc_server_alloc ("test_multiline");
+    CHECK(server);
+
+    LONGS_EQUAL(0, irc_server_multiline_enabled (server));
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    LONGS_EQUAL(0, irc_server_multiline_enabled (server));
+    hashtable_set (server->cap_list, "batch", NULL);
+    LONGS_EQUAL(1, irc_server_multiline_enabled (server));
+    hashtable_remove (server->cap_list, "draft/multiline");
+    LONGS_EQUAL(0, irc_server_multiline_enabled (server));
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
  *   irc_server_get_caps
  */
 
