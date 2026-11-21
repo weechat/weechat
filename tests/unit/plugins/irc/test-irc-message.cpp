@@ -2280,3 +2280,600 @@ TEST(IrcMessage, Split)
 
     irc_server_free (server);
 }
+
+/*
+ * Test functions:
+ *   irc_message_split (max length of a message received by other clients)
+ */
+
+TEST(IrcMessage, SplitMaxLength)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+    const char *ptr_msg;
+    char text[2048], msg[4096];
+    int length_nick_user_host;
+
+    server = irc_server_alloc ("test_split_max_length");
+    CHECK(server);
+
+    /*
+     * Message received by other clients: ":nick!user@host " (at most 93
+     * bytes with the default max lengths of nick, user and host: 16, 10 and
+     * 63), the message sent and "\r\n": a full part has exactly 512 bytes.
+     */
+    length_nick_user_host = 1 + 16 + 1 + 10 + 1 + 63 + 1;
+    memset (text, 'a', 1000);
+    text[1000] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    LONGS_EQUAL(512, length_nick_user_host + (int)strlen (ptr_msg) + 2);
+    hashtable_free (hashtable);
+
+    /* CTCP: the final "\01" is in the 512 bytes. */
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :\01ACTION %s\01", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    LONGS_EQUAL(512, length_nick_user_host + (int)strlen (ptr_msg) + 2);
+    LONGS_EQUAL('\01', ptr_msg[strlen (ptr_msg) - 1]);
+    hashtable_free (hashtable);
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
+ *   irc_message_split (with a char longer than the max length of a part)
+ */
+
+TEST(IrcMessage, SplitCharLongerThanMaxLength)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+
+    server = irc_server_alloc ("test_split_char_max_length");
+    CHECK(server);
+
+    /*
+     * The max length of a part is 2 bytes: each char of 4 bytes is sent in
+     * its own part (instead of an infinite loop with empty parts).
+     */
+    server->msg_max_length = 120;
+    hashtable = irc_message_split (server,
+                                   "PRIVMSG #abcdefghijkl :"
+                                   "\xf0\x9f\x98\x80" "\xf0\x9f\x98\x81");
+    CHECK(hashtable);
+    STRCMP_EQUAL("2", (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #abcdefghijkl :" "\xf0\x9f\x98\x80",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("PRIVMSG #abcdefghijkl :" "\xf0\x9f\x98\x81",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    hashtable_free (hashtable);
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
+ *   irc_message_split (with codes as long as the max length of a part)
+ */
+
+TEST(IrcMessage, SplitCodesLongerThanMaxLength)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+    const char *codes = "\x02\x1D\x1F\x16\x1E\x11\x04" "AABBCC,DDEEFF";
+    const char *ptr_args;
+    char msg[1024], expected[1024], text[64];
+    int i, found;
+
+    server = irc_server_alloc ("test_split_codes_max_length");
+    CHECK(server);
+
+    /* The max length of a part is 20 bytes. */
+    server->msg_max_length = 128;
+    memset (text, 'x', 44);
+    text[44] = '\0';
+
+    /*
+     * Codes longer than the max length, replaced by the codes of the
+     * formatting at their end (here only the last color), followed by text.
+     */
+    msg[0] = '\0';
+    strcat (msg, "PRIVMSG #ab :");
+    for (i = 0; i < 10; i++)
+    {
+        strcat (msg, "\x03" "04");
+    }
+    strcat (msg, text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("PRIVMSG #ab :\x03" "04xxxxxxxxxxxxxxxxx",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    hashtable_free (hashtable);
+
+    /* Same with a space after the codes: the part is not split at the space. */
+    msg[0] = '\0';
+    strcat (msg, "PRIVMSG #ab :");
+    for (i = 0; i < 10; i++)
+    {
+        strcat (msg, "\x03" "04");
+    }
+    strcat (msg, " ");
+    strcat (msg, text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("PRIVMSG #ab :\x03" "04 xxxxxxxxxxxxxxxx",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    hashtable_free (hashtable);
+
+    /*
+     * Codes of formatting as long as the max length: no text fits after
+     * them, the max length is honored (part with only the codes).
+     */
+    snprintf (msg, sizeof (msg), "PRIVMSG #ab :%s%s", codes, text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    snprintf (expected, sizeof (expected), "PRIVMSG #ab :%s", codes);
+    STRCMP_EQUAL(expected, (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("PRIVMSG #ab :xxxxxxxxxxxxxxxxxxxx",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    hashtable_free (hashtable);
+
+    /*
+     * Nothing fits after the codes sent again (max length of 4 bytes): the
+     * codes are not sent.
+     */
+    server->msg_max_length = 112;
+    hashtable = irc_message_split (server,
+                                   "PRIVMSG #ab :\x02" "aaa"
+                                   "\xf0\x9f\x98\x80");
+    CHECK(hashtable);
+    STRCMP_EQUAL("2", (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("\x02" "aaa", (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("\xf0\x9f\x98\x80",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* Code longer than the max length (5 bytes): the code is cut. */
+    server->msg_max_length = 113;
+    hashtable = irc_message_split (server,
+                                   "PRIVMSG #ab :\x04" "AABBCC,112233xyz");
+    CHECK(hashtable);
+    STRCMP_EQUAL("4", (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("\x04" "AABB", (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("CC,11", (const char *)hashtable_get (hashtable, "args2"));
+    STRCMP_EQUAL("2233x", (const char *)hashtable_get (hashtable, "args3"));
+    STRCMP_EQUAL("yz", (const char *)hashtable_get (hashtable, "args4"));
+    hashtable_free (hashtable);
+    server->msg_max_length = 128;
+
+    /*
+     * Multiline batch: the codes replaced start with "^O" (they change the
+     * formatting of the previous part if the parts are joined).
+     */
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    msg[0] = '\0';
+    strcat (msg, "PRIVMSG #ab :x\n\x02" "aaaaaaaaaaaaaaaaa ");
+    for (i = 0; i < 30; i++)
+    {
+        strcat (msg, "\x0F");
+    }
+    strcat (msg, "bbbb");
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    found = 0;
+    for (i = 1; i < 10; i++)
+    {
+        snprintf (expected, sizeof (expected), "args%d", i);
+        ptr_args = (const char *)hashtable_get (hashtable, expected);
+        if (ptr_args && (strcmp (ptr_args, "\x0F" "bbbb") == 0))
+            found = 1;
+    }
+    LONGS_EQUAL(1, found);
+    hashtable_free (hashtable);
+    hashtable_remove (server->cap_list, "batch");
+    hashtable_remove (server->cap_list, "draft/multiline");
+
+    /* Codes at the end without text after them: not sent. */
+    snprintf (msg, sizeof (msg),
+              "PRIVMSG #ab :\x02" "xxxxxxxxxxxxxxxxxxx" "\x0F\x03" "04");
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("1", (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #ab :\x02" "xxxxxxxxxxxxxxxxxxx",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    hashtable_free (hashtable);
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
+ *   irc_message_split (delimiter at the beginning of a part)
+ */
+
+TEST(IrcMessage, SplitDelimiterAtBeginningOfPart)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+    const char *ptr_args;
+    char text[2048], msg[4096], key[32];
+    int i, length, count;
+
+    server = irc_server_alloc ("test_split_delimiter");
+    CHECK(server);
+
+    /* Length of the first part of a long message. */
+    memset (text, 'a', 1000);
+    text[1000] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    length = strlen ((const char *)hashtable_get (hashtable, "args1"));
+    CHECK(length > 100);
+    hashtable_free (hashtable);
+
+    /*
+     * The first part ends before two spaces, so the second part starts with
+     * a space: it is split at the max length, not at this space (the part
+     * would be empty).
+     */
+    memset (text, 'a', length);
+    memcpy (text + length, "  ", 2);
+    memset (text + length + 2, 'b', 600);
+    text[length + 2 + 600] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    count = atoi ((const char *)hashtable_get (hashtable, "count"));
+    LONGS_EQUAL(3, count);
+    for (i = 1; i <= count; i++)
+    {
+        snprintf (key, sizeof (key), "args%d", i);
+        ptr_args = (const char *)hashtable_get (hashtable, key);
+        CHECK(ptr_args);
+        CHECK(ptr_args[0]);
+    }
+    hashtable_free (hashtable);
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
+ *   irc_message_split (PRIVMSG with IRC formatting codes)
+ */
+
+TEST(IrcMessage, SplitColors)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+    const char *args1, *args2, *ptr_args, *ptr_msg;
+    char text[4096], msg[8192], key[32];
+    char batch_ref[64], str_tag[128];
+    int i, length, count, count_batches, count_msgs, bytes;
+
+    server = irc_server_alloc ("test_split_colors");
+    CHECK(server);
+
+    /* Length of the first part of a long message without codes. */
+    memset (text, 'a', 1000);
+    text[1000] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    args1 = (const char *)hashtable_get (hashtable, "args1");
+    CHECK(args1);
+    length = strlen (args1);
+    CHECK(length > 100);
+    hashtable_free (hashtable);
+
+    /* Bold and text color are sent again at the beginning of next part. */
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :\x02\x03" "04%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    CHECK(atoi ((const char *)hashtable_get (hashtable, "count")) >= 2);
+    args2 = (const char *)hashtable_get (hashtable, "args2");
+    CHECK(args2);
+    STRNCMP_EQUAL("\x02\x03" "04aaa", args2, 6);
+    STRNCMP_EQUAL("PRIVMSG #channel :\x02\x03" "04aaa",
+                  (const char *)hashtable_get (hashtable, "msg2"), 24);
+    hashtable_free (hashtable);
+
+    /* Hex colors (text and background) are sent again too. */
+    snprintf (msg, sizeof (msg),
+              "PRIVMSG #channel :\x04" "FF7F00,000080%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    args2 = (const char *)hashtable_get (hashtable, "args2");
+    CHECK(args2);
+    STRNCMP_EQUAL("\x04" "FF7F00,000080aaa", args2, 17);
+    hashtable_free (hashtable);
+
+    /* A color code at the split position is not split. */
+    memset (text, 'a', length - 3);
+    snprintf (text + length - 3, sizeof (text) - length + 3,
+              "\x03" "12,05bbbbbbbbbb");
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("2", (const char *)hashtable_get (hashtable, "count"));
+    args1 = (const char *)hashtable_get (hashtable, "args1");
+    LONGS_EQUAL(length - 3, strlen (args1));
+    STRCMP_EQUAL("\x03" "12,05bbbbbbbbbb",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* Invalid UTF-8 byte before a color code: the code is not split. */
+    memset (text, 'a', length - 4);
+    snprintf (text + length - 4, sizeof (text) - length + 4,
+              "\xE9" "\x03" "04,05bbbbbbbbbb");
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("2", (const char *)hashtable_get (hashtable, "count"));
+    args1 = (const char *)hashtable_get (hashtable, "args1");
+    LONGS_EQUAL(length - 3, strlen (args1));
+    STRCMP_EQUAL("\x03" "04,05bbbbbbbbbb",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* Many color codes: each part has only complete codes. */
+    text[0] = '\0';
+    for (i = 0; i < 300; i++)
+        strcat (text, "\x03" "04,02a");
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    count = atoi ((const char *)hashtable_get (hashtable, "count"));
+    CHECK(count >= 4);
+    for (i = 1; i <= count; i++)
+    {
+        snprintf (key, sizeof (key), "args%d", i);
+        ptr_args = (const char *)hashtable_get (hashtable, key);
+        CHECK(ptr_args);
+        /* Parts after the first one start with the current colors. */
+        if (i > 1)
+        {
+            STRNCMP_EQUAL("\x03" "04,02", ptr_args, 6);
+            ptr_args += 6;
+        }
+        LONGS_EQUAL(0, strlen (ptr_args) % 7);
+        while (ptr_args[0])
+        {
+            STRNCMP_EQUAL("\x03" "04,02a", ptr_args, 7);
+            ptr_args += 7;
+        }
+    }
+    hashtable_free (hashtable);
+
+    /*
+     * Small max length: codes of formatting are reduced to the attributes
+     * or removed, and no message is longer than the max length.
+     */
+    config_file_option_set (
+        server->options[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH], "128", 1);
+    memset (text, 'a', 200);
+    text[200] = '\0';
+    snprintf (msg, sizeof (msg),
+              "PRIVMSG #channel :\x02\x1D\x1F\x16\x1E\x11\x04"
+              "AABBCC,DDEEFF%s",
+              text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    count = atoi ((const char *)hashtable_get (hashtable, "count"));
+    CHECK(count >= 2);
+    length = 0;
+    for (i = 1; i <= count; i++)
+    {
+        snprintf (key, sizeof (key), "msg%d", i);
+        CHECK(strlen ((const char *)hashtable_get (hashtable, key)) <= 128);
+        snprintf (key, sizeof (key), "args%d", i);
+        for (ptr_args = (const char *)hashtable_get (hashtable, key);
+             ptr_args[0]; ptr_args++)
+        {
+            if (ptr_args[0] == 'a')
+                length++;
+        }
+    }
+    LONGS_EQUAL(200, length);
+    hashtable_free (hashtable);
+    config_file_option_reset (
+        server->options[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH], 1);
+
+    /*
+     * Codes too long for a small max length: only the attributes are sent
+     * again (they are toggled by the next codes, so they must be kept).
+     */
+    config_file_option_set (
+        server->options[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH], "180", 1);
+    snprintf (msg, sizeof (msg),
+              "PRIVMSG #channel :"
+              "\x02\x1D\x1F\x16\x1E\x11\x04" "AABBCC,DDEEFF%s",
+              text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    count = atoi ((const char *)hashtable_get (hashtable, "count"));
+    CHECK(count >= 2);
+    for (i = 2; i <= count; i++)
+    {
+        snprintf (key, sizeof (key), "args%d", i);
+        ptr_args = (const char *)hashtable_get (hashtable, key);
+        STRNCMP_EQUAL("\x02\x16\x1D\x1E\x1F\x11" "a", ptr_args, 7);
+    }
+    hashtable_free (hashtable);
+    config_file_option_reset (
+        server->options[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH], 1);
+
+    /*
+     * Delimiter at the beginning of a part: no empty part, and no message
+     * with only codes.
+     */
+    memset (text, 'a', 399);
+    text[399] = '\0';
+    memset (text + 600, 'b', 450);
+    text[1050] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :\x02%s  %s",
+              text, text + 600);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    count = atoi ((const char *)hashtable_get (hashtable, "count"));
+    CHECK(count >= 2);
+    for (i = 1; i <= count; i++)
+    {
+        snprintf (key, sizeof (key), "args%d", i);
+        ptr_args = (const char *)hashtable_get (hashtable, key);
+        CHECK(ptr_args);
+        CHECK(ptr_args[0]);
+        CHECK(strcmp (ptr_args, "\x02") != 0);
+    }
+    hashtable_free (hashtable);
+
+    /*
+     * Multiline batch: the lines may be joined by IRC clients, so the codes
+     * sent again start with "^O" (reset).
+     */
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    memset (text, 'a', 1000);
+    text[1000] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :\x02%s\nline2", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    count = atoi ((const char *)hashtable_get (hashtable, "count"));
+    CHECK(count >= 4);
+    ptr_args = (const char *)hashtable_get (hashtable, "args2");
+    CHECK(ptr_args);
+    STRNCMP_EQUAL("\x02" "aaa", ptr_args, 4);
+    ptr_args = (const char *)hashtable_get (hashtable, "args3");
+    CHECK(ptr_args);
+    STRNCMP_EQUAL("\x0F\x02" "aaa", ptr_args, 5);
+    hashtable_free (hashtable);
+
+    /*
+     * Multiline batch with "max-lines": a line split in several messages
+     * counts for each message.
+     */
+    server->multiline_max_lines = 3;
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :a\nb\n%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("a\nb",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    STRCMP_EQUAL(text,
+                 (const char *)hashtable_get (hashtable, "multiline_args2"));
+    hashtable_free (hashtable);
+
+    /*
+     * Multiline batch with "max-lines": a line split in more messages than
+     * "max-lines" is sent in several batches.
+     */
+    server->multiline_max_lines = 2;
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :x\n%s", text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("x",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    CHECK(strchr ((const char *)hashtable_get (hashtable, "multiline_args2"),
+                  '\n'));
+    CHECK(hashtable_get (hashtable, "multiline_args3"));
+    POINTERS_EQUAL(NULL, hashtable_get (hashtable, "multiline_args4"));
+    count_batches = 0;
+    count_msgs = 0;
+    for (i = 1; ; i++)
+    {
+        snprintf (key, sizeof (key), "msg%d", i);
+        ptr_msg = (const char *)hashtable_get (hashtable, key);
+        if (!ptr_msg)
+            break;
+        if (strncmp (ptr_msg, "BATCH +", 7) == 0)
+        {
+            count_batches++;
+            count_msgs = 0;
+        }
+        else if (strstr (ptr_msg, " PRIVMSG "))
+        {
+            count_msgs++;
+            CHECK(count_msgs <= 2);
+        }
+    }
+    LONGS_EQUAL(3, count_batches);
+    hashtable_free (hashtable);
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+
+    /*
+     * Multiline batch with "max-bytes": the codes of formatting sent again in
+     * the messages of a split line are counted.
+     */
+    server->multiline_max_bytes = 3200;
+    memset (text, 'a', 3000);
+    text[3000] = '\0';
+    snprintf (msg, sizeof (msg),
+              "PRIVMSG #channel :s\n"
+              "\x02\x1D\x1F\x16\x1E\x11\x04" "AABBCC,DDEEFF%s",
+              text);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("s",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    CHECK(hashtable_get (hashtable, "multiline_args2"));
+    /*
+     * Each batch is ended, its messages have its reference, and the text of
+     * its messages does not exceed "max-bytes" (unless the batch has only one
+     * message).
+     */
+    batch_ref[0] = '\0';
+    count_batches = 0;
+    count_msgs = 0;
+    bytes = 0;
+    for (i = 1; ; i++)
+    {
+        snprintf (key, sizeof (key), "msg%d", i);
+        ptr_msg = (const char *)hashtable_get (hashtable, key);
+        if (!ptr_msg)
+            break;
+        if (strncmp (ptr_msg, "BATCH +", 7) == 0)
+        {
+            STRCMP_EQUAL("", batch_ref);
+            length = strchr (ptr_msg + 7, ' ') - (ptr_msg + 7);
+            CHECK(length < (int)sizeof (batch_ref));
+            memcpy (batch_ref, ptr_msg + 7, length);
+            batch_ref[length] = '\0';
+            count_batches++;
+            count_msgs = 0;
+            bytes = 0;
+        }
+        else if (strncmp (ptr_msg, "BATCH -", 7) == 0)
+        {
+            STRCMP_EQUAL(batch_ref, ptr_msg + 7);
+            CHECK((count_msgs == 1)
+                  || (bytes <= server->multiline_max_bytes));
+            batch_ref[0] = '\0';
+        }
+        else
+        {
+            snprintf (str_tag, sizeof (str_tag), "@batch=%s ", batch_ref);
+            CHECK(batch_ref[0]);
+            STRNCMP_EQUAL(str_tag, ptr_msg, strlen (str_tag));
+            snprintf (key, sizeof (key), "args%d", i);
+            bytes += strlen ((const char *)hashtable_get (hashtable, key));
+            count_msgs++;
+        }
+    }
+    STRCMP_EQUAL("", batch_ref);
+    CHECK(count_batches >= 2);
+    hashtable_free (hashtable);
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+
+    hashtable_remove (server->cap_list, "batch");
+    hashtable_remove (server->cap_list, "draft/multiline");
+
+    irc_server_free (server);
+}

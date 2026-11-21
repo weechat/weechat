@@ -728,6 +728,14 @@ Paramètres de la requête :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Exemple de requête : obtenir tous les tampons sans les lignes :
 
@@ -817,7 +825,7 @@ HTTP/1.1 200 OK
         "notify": "all",
         "title": "Welcome to the WeeChat official support channel",
         "modes": "+nt",
-        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[38;5;22m(\u001b[39mi\u001b[38;5;22m)",
         "input": "",
         "input_position": 0,
         "input_multiline": false,
@@ -928,7 +936,7 @@ HTTP/1.1 200 OK
     "notify": "all",
     "title": "Welcome to the WeeChat official support channel",
     "modes": "+nt",
-    "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+    "input_prompt": "\u001b[92m@\u001b[96malice\u001b[38;5;22m(\u001b[39mi\u001b[38;5;22m)",
     "input": "",
     "input_position": 0,
     "input_multiline": false,
@@ -1189,6 +1197,14 @@ Paramètres de requête :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Exemple de requête : obtenir les 1000 dernières lignes d'un tampon, sans codes
 couleur :
@@ -1287,6 +1303,14 @@ Paramètres de requête :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Exemple de requête : obtenir les pseudos d'un tampon :
 
@@ -1484,6 +1508,15 @@ Paramètres de chemin :
 * `option_name` (chaîne, obligatoire) : nom complet de l'option : fichier de
   configuration, section et option, séparés par des points (exemple :
   `weechat.look.buffer_time_format`)
+
+Paramètres de requête :
+
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors in the
+  values of color options (for example `#ff8800`); if `false`, RGB colors are
+  replaced by the nearest color of the 256-color palette (colors 16-255, for
+  example `208`)
+  _(WeeChat ≥ 5.0.0)_
 
 La valeur est retournée telle qu'elle est stockée dans l'option, comme la
 commande `/set` l'affiche : elle n'est pas évaluée (par exemple `${sec.data.xxx}`
@@ -1898,6 +1931,15 @@ Paramètres du corps :
 ** `ansi` : retourner les codes couleur ANSI
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
+// TRANSLATION MISSING
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`, and in the values of color options sent
+  in events `option_changed`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 * `options` (tableau de chaînes, facultatif, par défaut : `[]`) : options
   à synchroniser : les évènements `option_changed` et `option_removed` sont
   envoyés lorsqu'une option correspondant à l'un de ces noms est ajoutée,
@@ -2315,7 +2357,7 @@ Exemple : nouveau tampon : le canal `#weechat` a été rejoint :
         "notify": "all",
         "title": "",
         "modes": "",
-        "input_prompt": "\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input_prompt": "\u001b[96malice\u001b[38;5;22m(\u001b[39mi\u001b[38;5;22m)",
         "input": "",
         "input_position": 0,
         "input_multiline": false,

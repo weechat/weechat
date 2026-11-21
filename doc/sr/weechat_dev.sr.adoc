@@ -100,6 +100,8 @@ qweechat::
 |          curses/   | Unit тестови за функције Curses интерфејса.
 |       plugins/     | Unit тестови за додатке.
 |          alias/    | Unit тестови за alias додатак.
+// TRANSLATION MISSING
+|          exec/     | Unit tests for exec plugin.
 |          irc/      | Unit тестови за IRC додатак.
 |          logger/   | Unit тестови за logger додатак.
 |          relay/    | Unit тестови за relay додатак.
@@ -520,12 +522,18 @@ WeeChat „језгро” се налази у следећим директо�
 |          curses/                                | Корен unit тестова за Curses интерфејс.
 |             test-gui-curses-mouse.cpp           | Тестови: миш (Curses интерфејс).
 |             test-gui-curses-term.cpp            | Тестови: функције терминала (Curses интерфејс).
+// TRANSLATION MISSING
+|             test-gui-curses-window.cpp          | Tests: window functions (Curses interface).
 |       plugins/                                  | Корен unit тестова додатака.
 |          test-plugin-api-info.cpp               | Тестови: инфо функције API додатака.
 |          test-plugin-config.cpp                 | Тестови: функције конфигурације додатка.
 |          test-plugins.cpp                       | Тестови: plugins.
 |          alias/                                 | Корен unit тестова за alias додатак.
 |             test-alias.cpp                      | Тестови: алијаси.
+// TRANSLATION MISSING
+|          exec/                                  | Root of unit tests for exec plugin.
+// TRANSLATION MISSING
+|             test-exec.cpp                       | Tests: exec functions.
 |          irc/                                   | Корен unit тестова IRC додатка.
 |             test-irc-bar-item.cpp               | Тестови: IRC ставке траке.
 |             test-irc-batch.cpp                  | Тестови: IRC пакетни догађаји.
@@ -1098,6 +1106,11 @@ struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 
 * стандардна боја: необавезни атрибути + двоцифрени број
 * проширена боја: `+@+` + необавезни атрибути + петоцифрени број
+// TRANSLATION MISSING
+* RGB color _(WeeChat ≥ 5.0.0)_: `+@+` + optional attributes + `+#+` + RGB
+  value on 6 hexadecimal digits (for example `+@*#ff8800+`); it is allowed
+  in all foreground and background colors with `EXT` in table below, but not
+  in the ncurses pair ([hex]#19# + `EXT`), which is always 5 digits
 
 У следећој табели се подразумева следеће:
 

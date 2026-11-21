@@ -19,6 +19,7 @@ extern "C"
 #include <string.h>
 #include "src/core/core-config.h"
 #include "src/core/core-config-file.h"
+#include "src/core/core-hashtable.h"
 #include "src/core/core-hook.h"
 #include "src/core/core-string.h"
 #include "src/core/core-util.h"
@@ -29,6 +30,7 @@ extern "C"
 #include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
+#include "src/gui/gui-nicklist.h"
 #include "src/plugins/plugin-config.h"
 #include "src/plugins/weechat-plugin.h"
 #include "src/plugins/relay/relay.h"
@@ -727,6 +729,17 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "{\"error\":\"Sub-resource of buffers not found: \\\"invalid\\\"\"}",
                  data_sent[0]);
 
+    /* Error: empty value for "rgb_colors" */
+    test_client_recv_http ("GET /api/buffers?colors=weechat&rgb_colors=",
+                           NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 44\r\n"
+                 "\r\n"
+                 "{\"error\":\"Invalid parameter \\\"rgb_colors\\\"\"}",
+                 data_sent[0]);
+
     /* Error: too many parameters in path */
     test_client_recv_http ("GET /api/buffers/core.weechat/too/many/parameters",
                            NULL, NULL);
@@ -1224,6 +1237,27 @@ TEST(RelayApiProtocolWithClient, CbOptions)
     json_obj = relay_json_object_get (json, "string_values");
     CHECK(json_obj);
     LONGS_EQUAL(4, relay_json_array_size (json_obj));
+
+    /* Color option with a RGB value (parameter "rgb_colors") */
+    run_cmd_quiet ("/mute /set weechat.color.chat_nick_self #ff8800");
+    test_client_recv_http ("GET /api/options/weechat.color.chat_nick_self",
+                           NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("208", json, "value");
+    test_client_recv_http ("GET /api/options/weechat.color.chat_nick_self"
+                           "?rgb_colors=true",
+                           NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    WEE_CHECK_OBJ_STR("#ff8800", json, "value");
+    test_client_recv_http ("GET /api/options/weechat.color.chat_nick_self"
+                           "?rgb_colors=",
+                           NULL, NULL);
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+    run_cmd_quiet ("/mute /unset weechat.color.chat_nick_self");
 }
 
 /*
@@ -1579,6 +1613,37 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
 
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
+    LONGS_EQUAL(RELAY_API_COLORS_WEECHAT, RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+
+    /* WeeChat colors with RGB colors */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"colors\": \"weechat\", \"rgb_colors\": true}}");
+    LONGS_EQUAL(RELAY_API_COLORS_WEECHAT,
+                RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"colors\": \"weechat\", \"rgb_colors\": false}}");
+    LONGS_EQUAL(RELAY_API_COLORS_WEECHAT,
+                RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+
+    /* ANSI colors with RGB colors */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"colors\": \"ansi\", \"rgb_colors\": true}}");
+    LONGS_EQUAL(RELAY_API_COLORS_ANSI,
+                RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+
+    /* Without "rgb_colors", RGB colors are not kept */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"colors\": \"strip\"}}");
+    LONGS_EQUAL(RELAY_API_COLORS_STRIP,
+                RELAY_API_DATA(ptr_relay_client, sync_colors));
+    LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_rgb_colors));
+
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"sync\": true, \"nicks\": true, \"colors\": \"weechat\"}}");
     LONGS_EQUAL(RELAY_API_COLORS_WEECHAT, RELAY_API_DATA(ptr_relay_client, sync_colors));
 
     test_client_recv_text ("{\"request\": \"POST /api/sync\", "
@@ -2562,4 +2627,116 @@ TEST(RelayApiProtocolWithClient, RecvHttpMethodNotAllowed)
                  "\r\n"
                  "{\"error\":\"Method Not Allowed\"}",
                  data_sent[0]);
+}
+
+/*
+ * Test functions:
+ *   relay_api_protocol_signal_buffer_cb (RGB colors)
+ *   relay_api_protocol_hsignal_nicklist_cb (RGB colors)
+ *   relay_api_protocol_signal_input_cb (RGB colors)
+ */
+
+TEST(RelayApiProtocolWithClient, SignalCbRgbColors)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group;
+    struct t_gui_nick *nick;
+    struct t_hashtable *hashtable;
+    struct t_relay_json *json, *json_obj;
+    int rgb_colors;
+
+    test_client_recv_http_raw (
+        "GET /api HTTP/1.1\r\n"
+        "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Sec-WebSocket-Key: dbKbsCX3CxFBmQo09ah1OQ==\r\n"
+        "Connection: Upgrade\r\n"
+        "Upgrade: websocket\r\n"
+        "Host: 127.0.0.1:9000\r\n"
+        "\r\n");
+    STRNCMP_EQUAL("HTTP/1.1 101 Switching Protocols\r\n", data_sent[0],
+                  strlen ("HTTP/1.1 101 Switching Protocols\r\n"));
+
+    buffer = gui_buffer_new_user ("test_rgb", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    gui_buffer_set (buffer, "nicklist", "1");
+    group = gui_nicklist_add_group (buffer, NULL, "test_group", "#ff8800", 1);
+    CHECK(group);
+    nick = gui_nicklist_add_nick (buffer, group, "test_nick", "#ff8800", "@",
+                                  "#ff8800", 1);
+    CHECK(nick);
+    gui_chat_printf (buffer, "\x19" "F@#ff8800" "line");
+
+    hashtable = hashtable_new (32, WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_POINTER, NULL, NULL);
+    CHECK(hashtable);
+    hashtable_set (hashtable, "buffer", buffer);
+    hashtable_set (hashtable, "parent_group", buffer->nicklist_root);
+    hashtable_set (hashtable, "group", group);
+    hashtable_set (hashtable, "nick", nick);
+
+    for (rgb_colors = 0; rgb_colors <= 1; rgb_colors++)
+    {
+        test_client_recv_text (
+            (rgb_colors) ?
+            "{\"request\": \"POST /api/sync\", "
+            "\"body\": {\"colors\": \"weechat\", \"rgb_colors\": true}}" :
+            "{\"request\": \"POST /api/sync\", "
+            "\"body\": {\"colors\": \"weechat\"}}");
+
+        /* Line changed. */
+        free_data_sent ();
+        relay_api_protocol_signal_buffer_cb (
+            ptr_relay_client, NULL, "buffer_line_data_changed",
+            WEECHAT_HOOK_SIGNAL_POINTER, buffer->own_lines->last_line->data);
+        CHECK(data_sent[0]);
+        LONGS_EQUAL(rgb_colors, (strstr (data_sent[0], "@#ff8800")) ? 1 : 0);
+
+        /* Group and nick of nicklist. */
+        free_data_sent ();
+        relay_api_protocol_hsignal_nicklist_cb (ptr_relay_client, NULL,
+                                                "nicklist_group_changed",
+                                                hashtable);
+        CHECK(data_sent[0]);
+        json = relay_json_parse (data_sent[0]);
+        CHECK(json);
+        WEE_CHECK_OBJ_STR("nicklist_group_changed", json, "event_name");
+        WEE_CHECK_OBJ_STR((rgb_colors) ? "#ff8800" : "208",
+                          relay_json_object_get (json, "body"), "color_name");
+        relay_json_free (json);
+        free_data_sent ();
+        relay_api_protocol_hsignal_nicklist_cb (ptr_relay_client, NULL,
+                                                "nicklist_nick_changed",
+                                                hashtable);
+        CHECK(data_sent[0]);
+        json = relay_json_parse (data_sent[0]);
+        CHECK(json);
+        WEE_CHECK_OBJ_STR("nicklist_nick_changed", json, "event_name");
+        WEE_CHECK_OBJ_STR((rgb_colors) ? "#ff8800" : "208",
+                          relay_json_object_get (json, "body"), "color_name");
+        relay_json_free (json);
+
+        /* Input text changed. */
+        free_data_sent ();
+        relay_api_protocol_signal_input_cb (ptr_relay_client, NULL,
+                                            "input_text_changed",
+                                            WEECHAT_HOOK_SIGNAL_POINTER,
+                                            buffer);
+        CHECK(data_sent[0]);
+        json = relay_json_parse (data_sent[0]);
+        CHECK(json);
+        WEE_CHECK_OBJ_STR("input_text_changed", json, "event_name");
+        WEE_CHECK_OBJ_STR("test_rgb", relay_json_object_get (json, "body"),
+                          "short_name");
+        relay_json_free (json);
+    }
+
+    /* Stop sync before closing the buffer (no events sent). */
+    test_client_recv_text ("{\"request\": \"POST /api/sync\", "
+                           "\"body\": {\"sync\": false}}");
+    free_data_sent ();
+
+    hashtable_free (hashtable);
+    gui_buffer_close (buffer);
+    POINTERS_EQUAL(NULL, data_sent[0]);
 }

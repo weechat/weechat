@@ -66,6 +66,21 @@ TEST(CoreHashtable, HashDbj2)
 
 /*
  * Test functions:
+ *   hashtable_hash_mix64
+ */
+
+TEST(CoreHashtable, HashMix64)
+{
+    CHECK(hashtable_hash_mix64 (0ULL) == 0ULL);
+    CHECK(hashtable_hash_mix64 (0x12345670ULL) == 13003746006530497512ULL);
+
+    /* Values which differ only in high bits must have different hashes. */
+    CHECK((hashtable_hash_mix64 (1ULL << 40) % 64)
+          != (hashtable_hash_mix64 (1ULL << 41) % 64));
+}
+
+/*
+ * Test functions:
  *   hashtable_hash_key_pointer
  */
 

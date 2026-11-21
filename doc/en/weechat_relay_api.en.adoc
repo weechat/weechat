@@ -711,6 +711,13 @@ Query parameters:
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Request example: get all buffers without lines:
 
@@ -803,7 +810,7 @@ HTTP/1.1 200 OK
         "hidden": false,
         "title": "Welcome to the WeeChat official support channel",
         "modes": "+nt",
-        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[38;5;22m(\u001b[39mi\u001b[38;5;22m)",
         "input": "",
         "input_position": 0,
         "input_multiline": false,
@@ -915,7 +922,7 @@ HTTP/1.1 200 OK
     "hidden": false,
     "title": "Welcome to the WeeChat official support channel",
     "modes": "+nt",
-    "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+    "input_prompt": "\u001b[92m@\u001b[96malice\u001b[38;5;22m(\u001b[39mi\u001b[38;5;22m)",
     "input": "",
     "input_position": 0,
     "input_multiline": false,
@@ -1171,6 +1178,13 @@ Query parameters:
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Request example: get last 1000 lines of a buffer, without color codes:
 
@@ -1267,6 +1281,13 @@ Query parameters:
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, and in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 
 Request example: get nicks of a buffer:
 
@@ -1463,6 +1484,14 @@ Path parameters:
 
 * `option_name` (string, required): option full name: configuration file,
   section and option, separated by dots (example: `weechat.look.buffer_time_format`)
+
+Query parameters:
+
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors in the
+  values of color options (for example `#ff8800`); if `false`, RGB colors are
+  replaced by the nearest color of the 256-color palette (colors 16-255, for
+  example `208`)
+  _(WeeChat ≥ 5.0.0)_
 
 The value is returned as it is stored in the option, like the command `/set`
 displays it: it is not evaluated (for example `${sec.data.xxx}` is returned as-is).
@@ -1866,6 +1895,14 @@ Body parameters:
 ** `ansi`: return ANSI color codes
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
+* `rgb_colors` (boolean, optional, default: `false`): keep RGB colors: 24-bit
+  ANSI colors with `colors` set to `ansi`, `@#rrggbb` in WeeChat color codes
+  with `colors` set to `weechat`; if `false`, RGB colors (and RGB colors in
+  color names of nicks and groups, in the color of nick in tags of lines,
+  for example `prefix_nick_#ff8800`, and in the values of color options sent
+  in events `option_changed`) are replaced by the nearest color of the
+  256-color palette (colors 16-255)
+  _(WeeChat ≥ 5.0.0)_
 * `options` (array of strings, optional, default: `[]`): options to
   synchronize: the events `option_changed` and `option_removed` are sent when
   an option matching one of these names is added, changed or removed; the
@@ -2272,7 +2309,7 @@ Example: new buffer: channel `#weechat` has been joined:
         "hidden": false,
         "title": "",
         "modes": "",
-        "input_prompt": "\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input_prompt": "\u001b[96malice\u001b[38;5;22m(\u001b[39mi\u001b[38;5;22m)",
         "input": "",
         "input_position": 0,
         "input_multiline": false,

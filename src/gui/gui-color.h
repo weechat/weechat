@@ -137,19 +137,91 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_KEEPATTR_FLAG      0x2000000
 #define GUI_COLOR_EXTENDED_BLINK_FLAG         0x4000000
 #define GUI_COLOR_EXTENDED_DIM_FLAG           0x8000000
+#define GUI_COLOR_EXTENDED_ATTR_FLAGS                                   \
+    (GUI_COLOR_EXTENDED_BOLD_FLAG | GUI_COLOR_EXTENDED_REVERSE_FLAG       \
+     | GUI_COLOR_EXTENDED_ITALIC_FLAG | GUI_COLOR_EXTENDED_UNDERLINE_FLAG \
+     | GUI_COLOR_EXTENDED_BLINK_FLAG | GUI_COLOR_EXTENDED_DIM_FLAG)
 #define GUI_COLOR_EXTENDED_MASK               0x00FFFFF
 #define GUI_COLOR_EXTENDED_MAX                99999
 
-#define GUI_COLOR_REGEX_ANSI_DECODE             \
-    "\33("                                      \
-    "([()].)|"                                  \
-    "([<>])|"                                   \
-    "(\\[[0-9;?]*[A-Za-z]))"
+/*
+ * RGB colors ("#RRGGBB") are interned: each distinct RGB value gets a number
+ * above GUI_COLOR_EXTENDED_MAX, used like any other extended color number;
+ * in strings, the RGB value is always used: "@#RRGGBB" (instead of "@00123").
+ */
+#define GUI_COLOR_EXTENDED_RGB_CHAR           '#'
+#define GUI_COLOR_RGB_FIRST                   (GUI_COLOR_EXTENDED_MAX + 1)
+/* RGB colors used in options: numbers never change */
+#define GUI_COLOR_RGB_OPTIONS_FIRST           GUI_COLOR_RGB_FIRST
+#define GUI_COLOR_RGB_OPTIONS_MAX             100000
+/* RGB colors used in strings: numbers are reset with color pairs */
+#define GUI_COLOR_RGB_DISPLAY_FIRST                                     \
+    (GUI_COLOR_RGB_OPTIONS_FIRST + GUI_COLOR_RGB_OPTIONS_MAX)
+#define GUI_COLOR_RGB_DISPLAY_MAX             32768
+#define GUI_COLOR_RGB_LAST                                              \
+    (GUI_COLOR_RGB_DISPLAY_FIRST + GUI_COLOR_RGB_DISPLAY_MAX - 1)
+
+/* Size of cache for downgrade of RGB colors (power of 2) */
+#define GUI_COLOR_DOWNGRADE_CACHE_SIZE        64
+
+/*
+ * Regex to search ANSI escape sequences:
+ *   - chars SI and SO (shift in/out, select a character set): "\17" and
+ *     "\16";
+ *   - control sequence (CSI): "\33[", then parameter bytes (0x30-0x3F),
+ *     intermediate bytes (0x20-0x2F) and a final byte (0x40-0x7E) or the
+ *     char CAN or SUB, which cancel the sequence; the final byte is optional
+ *     (sequence cut or cancelled by another escape sequence), and DEL is
+ *     ignored inside the sequence;
+ *   - operating system command (OSC): "\33]" and text until BEL, "\33\\",
+ *     CAN or SUB (optional: an unterminated string ends at the end of the
+ *     line);
+ *   - device control string (DCS) and other strings: "\33P", "\33X", "\33^"
+ *     or "\33_" and text until BEL, "\33\\", CAN or SUB (optional: an
+ *     unterminated string ends at the end of the line);
+ *   - other escape sequences: "\33", then intermediate bytes (0x20-0x2F) and
+ *     a final byte (0x30-0x7E), for example "\337", "\33=", "\33#8" or
+ *     "\33(B"; the final byte is optional (sequence cut), so that "\33"
+ *     alone is matched too.
+ * DEL after "\33" is ignored too, for example "\33\177[1m" is "\33[1m".
+ * Chars are listed one by one instead of ranges like "[0-?]", which are
+ * invalid in some locales (for example "en_US.UTF-8"); the final bytes "[",
+ * "\\" and "]" are outside brackets and "/" is escaped, so that the regex
+ * (returned by info "color_ansi_regex") can be used in other regex engines
+ * (for example in JavaScript, Ruby, and PHP with "/" as delimiter); the
+ * alternatives are ordered so that regex engines which use the first
+ * matching alternative find the same match.
+ */
+#define GUI_COLOR_REGEX_ANSI_DECODE                                      \
+    "\16|\17|"                                                           \
+    "\33\177*("                                                          \
+    "(\\["                                                               \
+    "[0123456789:;<=>?\177]*"                                            \
+    "([ !\"#$%&'()*+,.\177-]|\\/)*"                                      \
+    "(([@ABCDEFGHIJKLMNOPQRSTUVWXYZ^_`abcdefghijklmnopqrstuvwxyz{|}~]|"  \
+    "\\[|\\\\|\\])|\30|\32)?"                                            \
+    ")|"                                                                 \
+    "(\\][^\a\n\30\32\33]*(\a|\30|\32|\33\\\\)?)|"                       \
+    "([PX^_][^\a\n\30\32\33]*(\a|\30|\32|\33\\\\)?)|"                    \
+    "(([ !\"#$%&'()*+,.\177-]|\\/)*"                                     \
+    "([0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ^_`abcdefghijklmnopqr" \
+    "stuvwxyz{|}~]|\\[|\\\\|\\]|\30|\32)?)"                              \
+    ")"
+
+/* RGB color in the result of ANSI color parsing: flag + 0xRRGGBB */
+#define GUI_COLOR_ANSI_RGB_FLAG               0x1000000
+
+/* Parameter given to the callback after the last parameter of a sequence */
+#define GUI_COLOR_ANSI_PARAM_END              -1
 
 #define GUI_COLOR_ANSI_DEFAULT_FG 39
 #define GUI_COLOR_ANSI_DEFAULT_BG 49
 
 #define GUI_COLOR_BUFFER_NAME "color"
+
+/* Callback for each parameter of an ANSI escape sequence */
+typedef void (t_gui_color_ansi_param_cb)(char **output, int value,
+                                         int color);
 
 /* Color structure */
 
@@ -158,7 +230,23 @@ struct t_gui_color
     int foreground;                /* foreground color                      */
     int background;                /* background color                      */
     int attributes;                /* attributes (bold, ..)                 */
+    int bold_light;                /* 1 if bold is used to display a light  */
+                                   /* color (terminal with < 16 colors)     */
     char *string;                  /* WeeChat color: "\x19??", ?? is #color */
+};
+
+/* Table of RGB colors (each RGB value has a color number) */
+
+struct t_gui_color_rgb_table
+{
+    int first;                     /* color number of first RGB color       */
+    int max;                       /* max number of RGB colors in table     */
+    int *values;                   /* RGB value of each color               */
+    int *term;                     /* nearest terminal color (cache)        */
+    int count;                     /* number of RGB colors in table         */
+    int size;                      /* allocated size of arrays              */
+    int term_limit;                /* limit used for the cache "term"       */
+    struct t_hashtable *index;     /* RGB value -> index in table           */
 };
 
 /* Custom color in palette */
@@ -176,6 +264,10 @@ extern struct t_hashtable *gui_color_hash_palette_color;
 extern struct t_hashtable *gui_color_hash_palette_alias;
 extern struct t_weelist *gui_color_list_with_alias;
 extern int gui_color_term256[];
+extern struct t_gui_color_rgb_table gui_color_rgb_options;
+extern struct t_gui_color_rgb_table gui_color_rgb_display;
+extern int gui_color_rgb_display_reset_needed;
+extern time_t gui_color_rgb_display_reset_last;
 
 /* Color functions */
 
@@ -186,14 +278,32 @@ extern void gui_color_attr_build_string (int color, char *str_attr);
 extern const char *gui_color_get_custom (const char *color_name);
 extern int gui_color_convert_term_to_rgb (int color);
 extern int gui_color_convert_rgb_to_term (int rgb, int limit);
-extern int gui_color_convert_term_to_direct (int color);
+extern int gui_color_convert_rgb_to_term_display (int rgb, int limit);
+extern int gui_color_ansi_is_indexed (const char *sequence);
+extern int gui_color_convert_term_to_direct (int color, int num_indexed);
+extern int gui_color_rgb_to_direct (int rgb);
+extern int gui_color_hue_to_rgb (int hue);
+extern const char *gui_color_suggest_term_direct (const char *term,
+                                                  int tmux);
+extern int gui_color_rgb_parse_exact (const char *string);
+extern unsigned long long gui_color_hash_key_cb (struct t_hashtable *hashtable,
+                                                const void *key);
+extern int gui_color_rgb_to_number_option (int rgb);
+extern void gui_color_rgb_display_reset (void);
+extern int gui_color_rgb_from_number (int number);
+extern int gui_color_rgb_to_term_cached (int number, int limit);
+extern const char *gui_color_extended_string (int number);
 extern int gui_color_parse_digits (const char *string, int max_digits,
                                    int *number);
-extern int gui_color_code_size_number (const char *string, int with_attr,
-                                       int *number);
+extern int gui_color_code_size_number_rgb (const char *string, int with_attr,
+                                           int *number, int *rgb);
 extern int gui_color_code_size (const char *string);
 extern char *gui_color_decode (const char *string, const char *replacement);
+extern char *gui_color_downgrade_rgb (const char *string);
+extern char *gui_color_downgrade_rgb_name (const char *name);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);
+extern char *gui_color_normalize_ansi (const char *string, int keep_colors);
+extern char *gui_color_encode_ansi_rgb (const char *string, int rgb_colors);
 extern char *gui_color_encode_ansi (const char *string);
 extern char *gui_color_emphasize (const char *string, const char *search,
                                   int case_sensitive, regex_t *regex);
@@ -217,6 +327,7 @@ extern int gui_color_assign_by_diff (int *color, const char *color_name,
 extern int gui_color_get_weechat_colors_number (void);
 extern int gui_color_get_term_colors (void);
 extern int gui_color_get_term_color_pairs (void);
+extern int gui_color_get_pair_colors (int pair, int *fg, int *bg);
 extern const char *gui_color_get_name (int num_color);
 extern void gui_color_free_vars (void);
 extern void gui_color_init_weechat (void);

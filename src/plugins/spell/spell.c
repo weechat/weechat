@@ -623,13 +623,35 @@ spell_get_suggestions (struct t_spell_speller_buffer *speller_buffer,
 }
 
 /*
+ * Check if a string starts with a hex color: 6 hexadecimal digits ("RRGGBB").
+ *
+ * Return:
+ *   1: string starts with a hex color
+ *   0: string does not start with a hex color
+ */
+
+int
+spell_is_hex_color (const char *string)
+{
+    int i;
+
+    for (i = 0; i < 6; i++)
+    {
+        if (!isxdigit ((unsigned char)string[i]))
+            return 0;
+    }
+
+    return 1;
+}
+
+/*
  * Skip WeeChat and IRC color codes in *string and add them to "result".
  */
 
 void
 spell_skip_color_codes (char **string, char **result)
 {
-    int color_code_size, length;
+    int color_code_size;
 
     while ((*string)[0])
     {
@@ -692,35 +714,26 @@ spell_skip_color_codes (char **string, char **result)
         }
         else if ((*string)[0] == '\x04')
         {
-            /* IRC hex color code */
+            /*
+             * IRC hex color code: colors have exactly 6 hexadecimal digits
+             * (like in the IRC plugin), "^D" followed by less digits is a
+             * color reset followed by text.
+             */
             weechat_string_dyn_concat (result, *string, 1);
             (*string)++;
-            if (isxdigit ((unsigned char)((*string)[0])))
+            if (spell_is_hex_color (*string))
             {
                 /* Foreground */
-                length = 1;
-                while ((length < 6)
-                       && isxdigit ((unsigned char)((*string)[length])))
-                {
-                    length++;
-                }
-                weechat_string_dyn_concat (result, *string, length);
-                (*string) += length;
+                weechat_string_dyn_concat (result, *string, 6);
+                (*string) += 6;
                 /*
                  * Background (only if a foreground is given, so
                  * "^D,FF0000" is a color reset followed by text ",FF0000").
                  */
-                if (((*string)[0] == ',')
-                    && (isxdigit ((unsigned char)((*string)[1]))))
+                if (((*string)[0] == ',') && spell_is_hex_color (*string + 1))
                 {
-                    length = 2;
-                    while ((length < 7)
-                           && isxdigit ((unsigned char)((*string)[length])))
-                    {
-                        length++;
-                    }
-                    weechat_string_dyn_concat (result, *string, length);
-                    (*string) += length;
+                    weechat_string_dyn_concat (result, *string, 7);
+                    (*string) += 7;
                 }
             }
         }

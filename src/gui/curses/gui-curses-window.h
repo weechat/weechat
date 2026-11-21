@@ -15,6 +15,7 @@ struct t_gui_window_saved_style
     int style_fg;
     int style_bg;
     int color_attr;
+    int color_bold;
     int emphasis;
     attr_t attrs;
     short pair;
@@ -28,6 +29,7 @@ struct t_gui_window_curses_objects
 };
 
 extern int gui_window_current_color_attr;
+extern int gui_window_current_color_bold;
 extern int gui_window_current_emphasis;
 
 extern void gui_window_read_terminal_size (void);

@@ -460,12 +460,13 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
         if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_FLAG)
         {
             snprintf (bar_color, sizeof (bar_color),
-                      "%c%c%c%s%05d",
+                      "%c%c%c%s%s",
                       GUI_COLOR_COLOR_CHAR,
                       GUI_COLOR_FG_CHAR,
                       GUI_COLOR_EXTENDED_CHAR,
                       str_attr,
-                      CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK);
+                      gui_color_extended_string (
+                          CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK));
         }
         else
         {
@@ -483,12 +484,13 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
         if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_FLAG)
         {
             snprintf (delimiter_color, sizeof (delimiter_color),
-                      "%c%c%c%s%05d",
+                      "%c%c%c%s%s",
                       GUI_COLOR_COLOR_CHAR,
                       GUI_COLOR_FG_CHAR,
                       GUI_COLOR_EXTENDED_CHAR,
                       str_attr,
-                      CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK);
+                      gui_color_extended_string (
+                          CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK));
         }
         else
         {

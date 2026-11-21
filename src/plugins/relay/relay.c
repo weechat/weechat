@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -111,6 +112,145 @@ relay_status_search (const char *name)
 
     /* Status not found */
     return -1;
+}
+
+/*
+ * Check if a string with WeeChat color codes contains a RGB color code: "@",
+ * optional attribute chars and "#rrggbb" (for example "\x19F@*#ff8800"), so
+ * that a string with only a "#" in text (for example a channel name) is not
+ * converted.
+ *
+ * Any punctuation char is accepted as attribute char, so that an attribute
+ * added in a later version is accepted too: a false positive only costs a
+ * conversion which keeps the text unchanged.
+ *
+ * Return:
+ *   1: string may contain a RGB color code
+ *   0: string has no RGB color code
+ */
+
+int
+relay_has_rgb_color_code (const char *string)
+{
+    const char *ptr_hash, *ptr_char;
+
+    if (!strchr (string, '\x19'))
+        return 0;
+
+    for (ptr_hash = strchr (string, '#'); ptr_hash;
+         ptr_hash = strchr (ptr_hash + 1, '#'))
+    {
+        ptr_char = ptr_hash;
+        while ((ptr_char > string)
+               && ispunct ((unsigned char)ptr_char[-1])
+               && (ptr_char[-1] != '@') && (ptr_char[-1] != '#'))
+        {
+            ptr_char--;
+        }
+        if ((ptr_char > string) && (ptr_char[-1] == '@'))
+            return 1;
+    }
+
+    return 0;
+}
+
+/*
+ * Replace RGB colors ("#rrggbb") by the nearest color of the 256-color
+ * palette, for clients that do not support RGB colors: in a string with
+ * WeeChat color codes (name == 0) or in a color name (name == 1).
+ *
+ * Return the converted string, NULL if the string has no RGB colors (quick
+ * test: "#", and a color code in a string).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+relay_downgrade_rgb (const char *string, int name)
+{
+    if (!string || !strchr (string, '#')
+        || (!name && !relay_has_rgb_color_code (string)))
+    {
+        return NULL;
+    }
+
+    return weechat_hook_modifier_exec ("color_downgrade_rgb",
+                                       (name) ? "name" : NULL, string);
+}
+
+/*
+ * Replace RGB colors ("#rrggbb") by the nearest color of the 256-color
+ * palette in a tag of a line, for clients that do not support RGB colors:
+ * only the color of tag "prefix_nick_xxx" (color of nick in prefix) is
+ * converted, for example "prefix_nick_#ff8800" becomes "prefix_nick_208".
+ *
+ * Return the converted tag, NULL if the tag is unchanged.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+relay_downgrade_tag (const char *tag)
+{
+    char *downgraded, *result;
+
+    if (!tag || (strncmp (tag, "prefix_nick_", 12) != 0))
+        return NULL;
+
+    downgraded = relay_downgrade_rgb (tag + 12, 1);
+    if (!downgraded)
+        return NULL;
+
+    result = NULL;
+    if (weechat_asprintf (&result, "prefix_nick_%s", downgraded) < 0)
+        result = NULL;
+    free (downgraded);
+
+    return result;
+}
+
+/*
+ * Replace RGB colors ("#rrggbb") by the nearest color of the 256-color
+ * palette in tags of a line separated by commas (for example
+ * "irc_privmsg,prefix_nick_#ff8800,log1"), for clients that do not support
+ * RGB colors (see function relay_downgrade_tag).
+ *
+ * Return the converted tags, NULL if the tags are unchanged.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+relay_downgrade_tags (const char *tags)
+{
+    char **list_tags, *downgraded, *result;
+    int i, num_tags, changed;
+
+    if (!tags || !strchr (tags, '#') || !strstr (tags, "prefix_nick_"))
+        return NULL;
+
+    list_tags = weechat_string_split (tags, ",", NULL, 0, 0, &num_tags);
+    if (!list_tags)
+        return NULL;
+
+    changed = 0;
+    for (i = 0; i < num_tags; i++)
+    {
+        downgraded = relay_downgrade_tag (list_tags[i]);
+        if (downgraded)
+        {
+            free (list_tags[i]);
+            list_tags[i] = downgraded;
+            changed = 1;
+        }
+    }
+
+    result = (changed) ?
+        weechat_string_rebuild_split_string ((const char **)list_tags, ",",
+                                             0, -1) : NULL;
+    weechat_string_free_split (list_tags);
+
+    return result;
 }
 
 /*

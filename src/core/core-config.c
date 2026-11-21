@@ -2163,7 +2163,12 @@ config_weechat_palette_create_option_cb (const void *pointer, void *data,
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
 
-    if (util_parse_int (option_name, 10, &number))
+    /*
+     * The number must not be greater than the max extended color: greater
+     * numbers are used for RGB colors.
+     */
+    if (util_parse_int (option_name, 10, &number)
+        && (number >= 0) && (number <= GUI_COLOR_EXTENDED_MAX))
     {
         if (option_name)
         {
@@ -2204,8 +2209,10 @@ config_weechat_palette_create_option_cb (const void *pointer, void *data,
     else
     {
         gui_chat_printf (NULL,
-                         _("%sPalette option must be numeric"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                         _("%sPalette option must be a number between 0 "
+                           "and %d"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         GUI_COLOR_EXTENDED_MAX);
     }
 
     return rc;

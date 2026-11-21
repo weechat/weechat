@@ -31,26 +31,33 @@ extern struct t_relay_json *relay_api_msg_buffer_to_json (struct t_gui_buffer *b
                                                           long lines_free,
                                                           enum t_relay_api_filtered filtered,
                                                           int nicks,
-                                                          enum t_relay_api_colors colors);
+                                                          enum t_relay_api_colors colors,
+                                                          int rgb_colors);
 extern struct t_relay_json *relay_api_msg_key_to_json (struct t_gui_key *key);
 extern struct t_relay_json *relay_api_msg_keys_to_json (struct t_gui_buffer *buffer);
 extern int relay_api_msg_line_data_is_displayed (struct t_gui_line_data *line_data);
 extern struct t_relay_json *relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
-                                                             enum t_relay_api_colors colors);
+                                                             enum t_relay_api_colors colors,
+                                                             int rgb_colors);
 extern struct t_relay_json *relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
                                                          long lines,
                                                          enum t_relay_api_filtered filtered,
-                                                         enum t_relay_api_colors colors);
+                                                         enum t_relay_api_colors colors,
+                                                         int rgb_colors);
 extern struct t_relay_json *relay_api_msg_nick_to_json (struct t_gui_nick *nick,
-                                                        enum t_relay_api_colors colors);
+                                                        enum t_relay_api_colors colors,
+                                                        int rgb_colors);
 extern struct t_relay_json *relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group,
-                                                              enum t_relay_api_colors colors);
+                                                              enum t_relay_api_colors colors,
+                                                              int rgb_colors);
 extern struct t_relay_json *relay_api_msg_completion_to_json (struct t_gui_completion *completion);
 extern struct t_relay_json *relay_api_msg_hotlist_to_json (struct t_gui_hotlist *hotlist);
 extern struct t_relay_json *relay_api_msg_script_to_json (struct t_hdata *hdata, void *script,
                                                           const char *extension);
 extern struct t_relay_json *relay_api_msg_option_value_to_json (struct t_config_option *option,
-                                                                int default_value);
-extern struct t_relay_json *relay_api_msg_option_to_json (struct t_config_option *option);
+                                                                int default_value,
+                                                                int rgb_colors);
+extern struct t_relay_json *relay_api_msg_option_to_json (struct t_config_option *option,
+                                                          int rgb_colors);
 
 #endif /* WEECHAT_PLUGIN_RELAY_API_MSG_H */

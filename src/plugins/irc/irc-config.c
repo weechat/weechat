@@ -2785,6 +2785,39 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_ANSI_COLORS:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "enum",
+                N_("IRC colors used to convert ANSI colors (for example in "
+                   "output of command \"/exec -o\") to IRC colors: "
+                   "basic = colors 0-15, "
+                   "extended = colors 0-98 (colors 16-98 are defined with "
+                   "RGB values in the IRC formatting specification), "
+                   "rgb = colors 0-98 and RGB colors sent as-is with IRC "
+                   "hex colors (\"^Drrggbb\"), which are not supported by "
+                   "all IRC clients (some display the hexadecimal digits as "
+                   "text); "
+                   "basic ANSI colors (30-37 and 90-97) are always converted "
+                   "to IRC colors 0-15, the option is used for terminal "
+                   "colors 16-255 and RGB colors: a terminal color used to "
+                   "display an IRC color 16-98 is converted to this IRC color, "
+                   "other colors to the nearest IRC color (or sent as-is with "
+                   "rgb); with \"/exec -o\", the option of the server of the "
+                   "buffer where the output is sent is used (with \"/exec "
+                   "-pipe\", the server of the current buffer, even if the "
+                   "command sends the output to another server)"),
+                "basic|extended|rgb", 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value,
+                callback_check_value_pointer,
+                callback_check_value_data,
+                callback_change,
+                callback_change_pointer,
+                callback_change_data,
+                NULL, NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_REGISTERED_MODE:
             new_option = weechat_config_new_option (
                 config_file, section,
@@ -4085,14 +4118,14 @@ irc_config_init (void)
         irc_config_color_term_remap = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
             "term_remap", "string|themable",
-            N_("remap terminal color numbers in messages using a hashtable "
-               "(used only for RGB colors as hexadecimal, which are first "
-               "translated to terminal color numbers): keys are \"fg,bg\" as "
-               "integers between -1 and 255 (-1 for fg: not specified, -1 for "
-               "bg: default background; if a color code has no background, "
-               "the current background in message is used), values are "
-               "WeeChat color names or numbers (format is: "
-               "\"1,-1:color1;2,7:color2\"), "
+            N_("remap RGB colors (hexadecimal) in messages using a "
+               "hashtable: keys are \"fg,bg\" with the nearest terminal color "
+               "numbers, as integers between -1 and 255 (-1 for fg: not "
+               "specified, -1 for bg: default background; if a color code has "
+               "no background, the current background in message is used), "
+               "values are WeeChat color names or numbers (format is: "
+               "\"1,-1:color1;2,7:color2\"); RGB colors which are not "
+               "remapped are kept as-is, "
                "example: \"0,-1:darkgray;0,90:white,blue\" to remap black to "
                "\"darkgray\" and black on dark magenta to \"white,blue\""),
             NULL, 0, 0, "0,-1:darkgray", NULL, 0,
