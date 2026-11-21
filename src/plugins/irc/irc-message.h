@@ -7,12 +7,15 @@
 #ifndef WEECHAT_PLUGIN_IRC_MESSAGE_H
 #define WEECHAT_PLUGIN_IRC_MESSAGE_H
 
+#include <limits.h>
+
+/* max length used when split of messages is disabled */
+#define IRC_MESSAGE_SPLIT_MAX_LENGTH_DISABLED (INT_MAX - 16)
+
 struct t_irc_message_split_context
 {
     struct t_hashtable *hashtable;     /* hashtable with msgs/args/count    */
     int number;                        /* current msg index (starts to 1)   */
-    long total_bytes;                  /* total bytes of messages split     */
-                                       /* (+ 1 byte between each message)   */
 };
 
 struct t_irc_server;

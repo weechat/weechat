@@ -30,6 +30,21 @@ extern int irc_message_split_string (struct t_irc_message_split_context *context
                                      const char *suffix, const char delimiter,
                                      int max_length_nick_user_host,
                                      int max_length);
+extern long irc_message_batch_bytes (const char *body);
+extern struct t_hashtable *irc_message_split_batch_line (const char *host,
+                                                         const char *command,
+                                                         const char *target,
+                                                         const char *line,
+                                                         int max_length_nick_user_host,
+                                                         int max_length,
+                                                         int max_bytes,
+                                                         int *messages);
+extern char *irc_message_build_batch_tags (const char *batch_ref,
+                                           const char *tags);
+extern void irc_message_new_batch (struct t_irc_message_split_context *context,
+                                   const char *target, char *batch_ref,
+                                   int batch_ref_size, char **multiline_args,
+                                   int *index_multiline_args);
 }
 
 #define NICK_256_WITH_SPACE "nick_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
@@ -1094,6 +1109,187 @@ TEST(IrcMessage, ReplaceVars)
 
 /*
  * Test functions:
+ *   irc_message_batch_bytes
+ *   irc_message_build_batch_tags
+ *   irc_message_split_batch_line
+ *   irc_message_new_batch
+ */
+
+TEST(IrcMessage, BatchHelpers)
+{
+    struct t_irc_message_split_context context;
+    struct t_hashtable *hashtable;
+    char *str, batch_ref[16 + 1], **multiline_args, msg[256], line[1024];
+    const char *ptr_args;
+    int i, index_multiline_args, messages;
+
+    /* irc_message_batch_bytes */
+    LONGS_EQUAL(1, irc_message_batch_bytes (NULL));
+    LONGS_EQUAL(1, irc_message_batch_bytes (""));
+    LONGS_EQUAL(4, irc_message_batch_bytes ("abc"));
+
+    /* irc_message_build_batch_tags */
+    POINTERS_EQUAL(NULL, irc_message_build_batch_tags (NULL, NULL));
+    WEE_TEST_STR("@batch=ref ", irc_message_build_batch_tags ("ref", NULL));
+    WEE_TEST_STR("@batch=ref ", irc_message_build_batch_tags ("ref", ""));
+    WEE_TEST_STR("@batch=ref;a=b;c=d ",
+                 irc_message_build_batch_tags ("ref", "@a=b;c=d "));
+
+    /* irc_message_split_batch_line */
+    POINTERS_EQUAL(NULL,
+                   irc_message_split_batch_line (NULL, "PRIVMSG", "#channel",
+                                                 "test", -1, 512, 4096, NULL));
+    hashtable = irc_message_split_batch_line (NULL, "PRIVMSG", "#channel",
+                                              "test", -1, 512, 4096, &messages);
+    CHECK(hashtable);
+    LONGS_EQUAL(1, messages);
+    STRCMP_EQUAL("PRIVMSG #channel :test",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("test", (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+    for (i = 0; i < 200; i++)
+        memcpy (line + (i * 5), "abcd ", 5);
+    line[999] = '\0';
+    hashtable = irc_message_split_batch_line (NULL, "PRIVMSG", "#channel",
+                                              line, -1, 512, 4096, &messages);
+    CHECK(hashtable);
+    LONGS_EQUAL(3, messages);
+    hashtable_free (hashtable);
+    /* Split disabled: the line is not split */
+    hashtable = irc_message_split_batch_line (
+        NULL, "PRIVMSG", "#channel", line, -1,
+        IRC_MESSAGE_SPLIT_MAX_LENGTH_DISABLED, 200, &messages);
+    CHECK(hashtable);
+    LONGS_EQUAL(1, messages);
+    STRCMP_EQUAL(line, (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+    /* Max bytes too small: the line is split with the max length */
+    hashtable = irc_message_split_batch_line (NULL, "PRIVMSG", "#channel",
+                                              line, -1, 512, 1, &messages);
+    CHECK(hashtable);
+    LONGS_EQUAL(3, messages);
+    for (i = 1; i <= messages; i++)
+    {
+        snprintf (msg, sizeof (msg), "msg%d", i);
+        CHECK(hashtable_get (hashtable, msg));
+        CHECK(strlen ((const char *)hashtable_get (hashtable, msg)) <= 512);
+    }
+    hashtable_free (hashtable);
+    /* Max bytes too small for any UTF-8 char: max length is not reduced */
+    hashtable = irc_message_split_batch_line (NULL, "PRIVMSG", "#channel",
+                                              "€€€", -1, 512, 3, &messages);
+    CHECK(hashtable);
+    LONGS_EQUAL(1, messages);
+    STRCMP_EQUAL("€€€", (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+    /* Max bytes with room for one emoji (4 bytes) in each message */
+    hashtable = irc_message_split_batch_line (NULL, "PRIVMSG", "#channel",
+                                              "😀😀", -1, 512, 5, &messages);
+    CHECK(hashtable);
+    LONGS_EQUAL(2, messages);
+    STRCMP_EQUAL("😀", (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("😀", (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+    /* Messages bigger than max bytes: the max length is reduced */
+    hashtable = irc_message_split_batch_line (NULL, "PRIVMSG", "#channel",
+                                              line, -1, 512, 200, &messages);
+    CHECK(hashtable);
+    CHECK(messages >= 5);
+    for (i = 1; i <= messages; i++)
+    {
+        snprintf (msg, sizeof (msg), "args%d", i);
+        ptr_args = (const char *)hashtable_get (hashtable, msg);
+        CHECK(ptr_args);
+        CHECK(irc_message_batch_bytes (ptr_args) <= 200);
+    }
+    hashtable_free (hashtable);
+
+    /* irc_message_new_batch */
+    index_multiline_args = 1;
+    irc_message_new_batch (NULL, NULL, NULL, 0, NULL, NULL);
+    context.hashtable = hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL, NULL);
+    CHECK(context.hashtable);
+    context.number = 1;
+    multiline_args = string_dyn_alloc (64);
+    CHECK(multiline_args);
+    string_dyn_concat (multiline_args, "line 1\nline 2", -1);
+    snprintf (batch_ref, sizeof (batch_ref), "%s", "abcdef");
+    irc_message_new_batch (&context, "#channel", batch_ref, sizeof (batch_ref),
+                           multiline_args, &index_multiline_args);
+    LONGS_EQUAL(3, context.number);
+    LONGS_EQUAL(2, index_multiline_args);
+    STRCMP_EQUAL("", *multiline_args);
+    STRCMP_EQUAL("BATCH -abcdef",
+                 (const char *)hashtable_get (context.hashtable, "msg1"));
+    STRCMP_EQUAL("line 1\nline 2",
+                 (const char *)hashtable_get (context.hashtable,
+                                              "multiline_args1"));
+    LONGS_EQUAL(16, strlen (batch_ref));
+    snprintf (msg, sizeof (msg),
+              "BATCH +%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (context.hashtable, "msg2"));
+    string_dyn_free (multiline_args, 1);
+    hashtable_free (context.hashtable);
+}
+
+/*
+ * Check that each multiline batch in a split hashtable has at most
+ * "max_lines" messages and "max_bytes" bytes (message bodies + 1 byte per
+ * message), and that there are "expected_batches" batches.
+ */
+
+void
+check_multiline_batches (struct t_hashtable *hashtable, int max_lines,
+                         int max_bytes, int expected_batches)
+{
+    char key[32];
+    const char *ptr_msg, *ptr_body;
+    int i, in_batch, lines, bytes, batches;
+
+    in_batch = 0;
+    lines = 0;
+    bytes = 0;
+    batches = 0;
+    for (i = 1; ; i++)
+    {
+        snprintf (key, sizeof (key), "msg%d", i);
+        ptr_msg = (const char *)hashtable_get (hashtable, key);
+        if (!ptr_msg)
+            break;
+        if (strncmp (ptr_msg, "BATCH +", 7) == 0)
+        {
+            CHECK(!in_batch);
+            in_batch = 1;
+            lines = 0;
+            bytes = 0;
+            batches++;
+        }
+        else if (strncmp (ptr_msg, "BATCH -", 7) == 0)
+        {
+            CHECK(in_batch);
+            CHECK(lines > 0);
+            CHECK(lines <= max_lines);
+            CHECK(bytes <= max_bytes);
+            in_batch = 0;
+        }
+        else
+        {
+            CHECK(in_batch);
+            ptr_body = strstr (ptr_msg, " :");
+            CHECK(ptr_body);
+            bytes += strlen (ptr_body + 2) + 1;
+            lines++;
+        }
+    }
+    CHECK(!in_batch);
+    LONGS_EQUAL(expected_batches, batches);
+}
+
+/*
+ * Test functions:
  *   irc_message_split_string (max length smaller than a char)
  */
 
@@ -1201,8 +1397,9 @@ TEST(IrcMessage, Split)
     struct t_irc_server *server;
     struct t_hashtable *hashtable;
     const char *ptr_msg, *pos1, *pos2;
-    char batch_ref[512], msg[4096];
-    int old_nick_max_length;
+    char batch_ref[512], msg[4096], long_line1[1300], long_line2[600];
+    char *long_text;
+    int i, j, old_nick_max_length;
 
     server = irc_server_alloc ("test_split_msg");
     CHECK(server);
@@ -2110,8 +2307,11 @@ TEST(IrcMessage, Split)
     hashtable_remove (server->cap_list, "batch");
     hashtable_remove (server->cap_list, "draft/multiline");
 
-    /* PRIVMSG with multiline exceeding "max-bytes" */
-    server->multiline_max_bytes = 200;
+    /*
+     * PRIVMSG with multiline exceeding "max-bytes" (bytes counted: body of
+     * each message + 1)
+     */
+    server->multiline_max_bytes = 75;
     server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
     hashtable_set (server->cap_list, "batch", NULL);
     hashtable_set (server->cap_list, "draft/multiline", NULL);
@@ -2189,6 +2389,136 @@ TEST(IrcMessage, Split)
     hashtable_free (hashtable);
     hashtable_remove (server->cap_list, "batch");
     hashtable_remove (server->cap_list, "draft/multiline");
+
+    /*
+     * PRIVMSG with multiline and long lines exceeding "max-lines": each long
+     * line is sent in multiple messages, which are counted as lines
+     */
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+    server->multiline_max_lines = 3;
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    memset (long_line1, 'a', 599);
+    long_line1[599] = '\0';
+    memset (long_line2, 'b', 599);
+    long_line2[599] = '\0';
+    snprintf (msg, sizeof (msg),
+              "PRIVMSG #channel :%s\n%s\nshort", long_line1, long_line2);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    /* batch 1: line 1 (2 msgs), batch 2: line 2 (2 msgs) + "short" */
+    STRCMP_EQUAL("9", (const char *)hashtable_get (hashtable, "count"));
+    check_multiline_batches (hashtable, 3, IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, 2);
+    STRNCMP_EQUAL("BATCH +", (const char *)hashtable_get (hashtable, "msg1"), 7);
+    STRNCMP_EQUAL("BATCH -", (const char *)hashtable_get (hashtable, "msg4"), 7);
+    STRNCMP_EQUAL("BATCH +", (const char *)hashtable_get (hashtable, "msg5"), 7);
+    STRNCMP_EQUAL("BATCH -", (const char *)hashtable_get (hashtable, "msg9"), 7);
+    STRCMP_EQUAL("short", (const char *)hashtable_get (hashtable, "args8"));
+    STRCMP_EQUAL(long_line1,
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    snprintf (msg, sizeof (msg), "%s\nshort", long_line2);
+    STRCMP_EQUAL(msg,
+                 (const char *)hashtable_get (hashtable, "multiline_args2"));
+    hashtable_free (hashtable);
+
+    /*
+     * PRIVMSG with multiline and a line longer than a whole batch: the line
+     * is split in multiple batches
+     */
+    server->multiline_max_lines = 2;
+    memset (long_line1, 'c', 999);
+    long_line1[999] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s\nshort", long_line1);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    /* batch 1: 2 msgs of the line, batch 2: last msg of the line + "short" */
+    STRCMP_EQUAL("8", (const char *)hashtable_get (hashtable, "count"));
+    check_multiline_batches (hashtable, 2, IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, 2);
+    STRCMP_EQUAL("short", (const char *)hashtable_get (hashtable, "args7"));
+    ptr_msg = (const char *)hashtable_get (hashtable, "multiline_args2");
+    CHECK(ptr_msg);
+    CHECK(strchr (ptr_msg, '\n'));
+    STRCMP_EQUAL("short", strchr (ptr_msg, '\n') + 1);
+    hashtable_free (hashtable);
+
+    /*
+     * PRIVMSG with multiline and a long line exceeding "max-bytes" (but not
+     * "max-lines"): the line is split in multiple batches
+     */
+    server->multiline_max_bytes = 1000;
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+    memset (long_line1, 'd', 1299);
+    long_line1[1299] = '\0';
+    snprintf (msg, sizeof (msg), "PRIVMSG #channel :%s\nshort", long_line1);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    check_multiline_batches (hashtable, IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES,
+                             1000, 2);
+    hashtable_free (hashtable);
+
+    /*
+     * PRIVMSG with multiline and very small "max-bytes" (smaller than an IRC
+     * message): each message fits in a batch
+     */
+    server->multiline_max_bytes = 200;
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+    long_text = (char *)malloc (4096);
+    CHECK(long_text);
+    strcpy (long_text, "PRIVMSG #channel :");
+    for (i = 0; i < 90; i++)
+        strcat (long_text, "abcd ");
+    strcat (long_text, "\nshort");
+    hashtable = irc_message_split (server, long_text);
+    CHECK(hashtable);
+    check_multiline_batches (hashtable, IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES,
+                             200, 3);
+    hashtable_free (hashtable);
+    free (long_text);
+
+    /*
+     * PRIVMSG with multiline and a line bigger than a batch after a short
+     * line: the line fills the current batch (which is not ended before)
+     */
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+    server->multiline_max_lines = 3;
+    long_text = (char *)malloc (4096);
+    CHECK(long_text);
+    strcpy (long_text, "PRIVMSG #channel :short\n");
+    for (i = 0; i < 300; i++)
+        strcat (long_text, "abcd ");
+    hashtable = irc_message_split (server, long_text);
+    CHECK(hashtable);
+    /* line of 4 messages: batch 1 = "short" + 2 msgs, batch 2 = 2 msgs */
+    check_multiline_batches (hashtable, 3,
+                             IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, 2);
+    STRCMP_EQUAL("short", (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+    free (long_text);
+
+    /*
+     * PRIVMSG with multiline: 10 long paragraphs separated by empty lines,
+     * with limits of UnrealIRCd (each batch must have at most 15 lines)
+     */
+    server->multiline_max_bytes = 5250;
+    server->multiline_max_lines = 15;
+    long_text = (char *)malloc (16384);
+    CHECK(long_text);
+    strcpy (long_text, "PRIVMSG #channel :");
+    for (i = 0; i < 10; i++)
+    {
+        if (i > 0)
+            strcat (long_text, "\n\n");
+        for (j = 0; j < 100; j++)
+            strcat (long_text, "lorem ips ");
+    }
+    hashtable = irc_message_split (server, long_text);
+    CHECK(hashtable);
+    check_multiline_batches (hashtable, 15, 5250, 3);
+    hashtable_free (hashtable);
+    free (long_text);
+    hashtable_remove (server->cap_list, "batch");
+    hashtable_remove (server->cap_list, "draft/multiline");
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
 
     /* PRIVMSG with newlines but no server: BATCH is not used */
     hashtable = irc_message_split (NULL, "PRIVMSG #channel :test\n\nline 3");
@@ -2378,6 +2708,33 @@ TEST(IrcMessage, Split)
                  "uis blandit. Maecenas quis leo nunc. In.",
                  (const char *)hashtable_get (hashtable, "args1"));
     hashtable_free (hashtable);
+
+    /*
+     * PRIVMSG with multiline, split_msg_max_length == 0 and a line bigger
+     * than "max-bytes": the line is not split
+     */
+    server->multiline_max_bytes = 200;
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    hashtable = irc_message_split (server,
+                                   "PRIVMSG #channel :" LOREM_IPSUM_512
+                                   "\nshort");
+    CHECK(hashtable);
+    /* batch 1: long line (not split), batch 2: "short" */
+    STRCMP_EQUAL("6", (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("short", (const char *)hashtable_get (hashtable, "args5"));
+    STRNCMP_EQUAL("Lorem ipsum dolor sit amet",
+                  (const char *)hashtable_get (hashtable, "args2"), 26);
+    STRNCMP_EQUAL("Maecenas quis leo nunc. In.",
+                  (const char *)hashtable_get (hashtable, "args2")
+                  + strlen ((const char *)hashtable_get (hashtable, "args2")) - 27,
+                  27);
+    hashtable_free (hashtable);
+    hashtable_remove (server->cap_list, "batch");
+    hashtable_remove (server->cap_list, "draft/multiline");
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+
     config_file_option_unset (
         irc_config_server_default[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH]);
 
