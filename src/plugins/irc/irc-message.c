@@ -1096,7 +1096,12 @@ irc_message_split_string (struct t_irc_message_split_context *context,
                 pos_last_delim = pos;
             pos_next = weechat_utf8_next_char (pos);
             if (!pos_next || (pos_next > pos_max))
+            {
+                /* At least one char in each part. */
+                if (pos == arguments)
+                    pos = pos_next;
                 break;
+            }
             pos = pos_next;
         }
         /*

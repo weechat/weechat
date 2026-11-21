@@ -2328,6 +2328,38 @@ TEST(IrcMessage, SplitMaxLength)
 
 /*
  * Test functions:
+ *   irc_message_split (with a char longer than the max length of a part)
+ */
+
+TEST(IrcMessage, SplitCharLongerThanMaxLength)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+
+    server = irc_server_alloc ("test_split_char_max_length");
+    CHECK(server);
+
+    /*
+     * The max length of a part is 2 bytes: each char of 4 bytes is sent in
+     * its own part (instead of an infinite loop with empty parts).
+     */
+    server->msg_max_length = 120;
+    hashtable = irc_message_split (server,
+                                   "PRIVMSG #abcdefghijkl :"
+                                   "\xf0\x9f\x98\x80" "\xf0\x9f\x98\x81");
+    CHECK(hashtable);
+    STRCMP_EQUAL("2", (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #abcdefghijkl :" "\xf0\x9f\x98\x80",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("PRIVMSG #abcdefghijkl :" "\xf0\x9f\x98\x81",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    hashtable_free (hashtable);
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
  *   irc_message_split (delimiter at the beginning of a part)
  */
 
