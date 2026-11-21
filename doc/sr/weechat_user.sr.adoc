@@ -1379,6 +1379,20 @@ _прозор_ је површина екрана која приказује б
 | било који стринг
 | Кашњење у комуникацији са сервером, поставља је irc додатак.
 
+// TRANSLATION MISSING
+| multiline_max_bytes
+| integer
+| Maximum number of bytes in a multiline message sent in a single message,
+  set only when buffer property `input_multiline` is enabled, by irc plugin
+  (limit of capability "draft/multiline").
+
+// TRANSLATION MISSING
+| multiline_max_lines
+| integer
+| Maximum number of lines in a multiline message sent in a single message,
+  set only when buffer property `input_multiline` is enabled, by irc plugin
+  (limit of capability "draft/multiline").
+
 | name
 | било који стринг
 | Име бафера (пазите, ово није пуно име и није довољно за идентификацију

@@ -1485,6 +1485,18 @@ Par défaut WeeChat et ses extensions par défaut interprètent ces variables :
 | toute chaîne
 | Lag sur le serveur, défini par l'extension irc.
 
+| multiline_max_bytes
+| entier
+| Nombre maximum d'octets dans un message multi-lignes envoyé en un seul
+  message, défini seulement quand la propriété de tampon `input_multiline` est
+  activée, par l'extension irc (limite de la capacité "draft/multiline").
+
+| multiline_max_lines
+| entier
+| Nombre maximum de lignes dans un message multi-lignes envoyé en un seul
+  message, défini seulement quand la propriété de tampon `input_multiline` est
+  activée, par l'extension irc (limite de la capacité "draft/multiline").
+
 | name
 | toute chaîne
 | Nom du tampon (attention, ce n'est pas le nom complet du tampon et ce nom

@@ -1023,6 +1023,8 @@ irc_upgrade_read_cb (const void *pointer, void *data,
  *   - "modes" (introduced in WeeChat 4.3.0)
  *   - local variables "irc_caps" and "irc_clienttagdeny" (introduced in
  *     WeeChat 5.0.0)
+ *   - local variables "multiline_max_bytes" and "multiline_max_lines"
+ *     (introduced in WeeChat 5.0.0)
  *
  * And set nick prefixes in nicklists (all prefixes can be displayed since
  * WeeChat 5.0.0).
@@ -1047,6 +1049,13 @@ irc_upgrade_set_buffer_properties (void)
          */
         irc_server_set_buffer_caps (ptr_server);
         irc_server_set_buffer_clienttagdeny (ptr_server);
+
+        /*
+         * Set local variables "multiline_max_bytes" and "multiline_max_lines"
+         * on all channels.
+         */
+        irc_server_set_buffer_input_multiline (
+            ptr_server, irc_server_multiline_enabled (ptr_server));
 
         /* Set modes on all channels. */
         for (ptr_channel = ptr_server->channels; ptr_channel;

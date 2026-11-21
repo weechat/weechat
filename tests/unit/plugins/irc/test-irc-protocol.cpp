@@ -2132,6 +2132,96 @@ TEST(IrcProtocolWithServer, cap_input_multiline)
 
 /*
  * Test functions:
+ *   irc_protocol_cb_cap (local variables "multiline_max_bytes" and
+ *                        "multiline_max_lines" in buffers)
+ */
+
+TEST(IrcProtocolWithServer, cap_multiline_localvar)
+{
+    struct t_irc_channel *ptr_channel, *ptr_channel_pv;
+
+    SRV_INIT_JOIN;
+
+    ptr_channel = ptr_server->channels;
+    CHECK(ptr_channel);
+
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_multiline_max_bytes"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_multiline_max_lines"));
+
+    /* Multiline enabled */
+    RECV(":server CAP alice LS :batch draft/multiline=max-bytes=8192,max-lines=50");
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_multiline_max_bytes"));
+    RECV(":server CAP alice ACK :batch draft/multiline");
+    LONGS_EQUAL(1, ptr_channel->buffer->input_multiline);
+    STRCMP_EQUAL("8192",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_multiline_max_bytes"));
+    STRCMP_EQUAL("50",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_multiline_max_lines"));
+
+    /* No local variables in server buffer */
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_server->buffer,
+                                          "localvar_multiline_max_bytes"));
+
+    /* New limits received while multiline is enabled */
+    RECV(":server CAP alice LS :batch draft/multiline=max-bytes=2048,max-lines=10");
+    STRCMP_EQUAL("2048",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_multiline_max_bytes"));
+    STRCMP_EQUAL("10",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_multiline_max_lines"));
+
+    /* New private buffer: local variables set on creation */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+    ptr_channel_pv = irc_channel_search (ptr_server, "bob");
+    CHECK(ptr_channel_pv);
+    STRCMP_EQUAL("2048",
+                 gui_buffer_get_string (ptr_channel_pv->buffer,
+                                        "localvar_multiline_max_bytes"));
+    STRCMP_EQUAL("10",
+                 gui_buffer_get_string (ptr_channel_pv->buffer,
+                                        "localvar_multiline_max_lines"));
+
+    /* Multiline disabled: local variables removed */
+    RECV(":server CAP alice DEL :draft/multiline");
+    LONGS_EQUAL(0, ptr_channel->buffer->input_multiline);
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_multiline_max_bytes"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_multiline_max_lines"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel_pv->buffer,
+                                          "localvar_multiline_max_bytes"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel_pv->buffer,
+                                          "localvar_multiline_max_lines"));
+
+    /* Only "draft/multiline" enabled: new limits do not enable multiline */
+    RECV(":server CAP alice ACK :draft/multiline -batch");
+    RECV(":server CAP alice NEW :draft/multiline=max-bytes=1024,max-lines=5");
+    LONGS_EQUAL(1024, ptr_server->multiline_max_bytes);
+    LONGS_EQUAL(0, ptr_channel->buffer->input_multiline);
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_multiline_max_bytes"));
+    POINTERS_EQUAL(NULL,
+                   gui_buffer_get_string (ptr_channel->buffer,
+                                          "localvar_multiline_max_lines"));
+}
+
+/*
+ * Test functions:
  *   irc_protocol_cb_cap (refresh of nick prefixes with "multi-prefix")
  */
 

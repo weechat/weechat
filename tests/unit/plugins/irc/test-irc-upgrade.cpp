@@ -179,7 +179,7 @@ TEST(IrcUpgrade, SaveLoad)
     RECV(":server CAP alice LS :batch draft/multiline=max-bytes=8192,max-lines=50");
     LONGS_EQUAL(8192, server->multiline_max_bytes);
     LONGS_EQUAL(50, server->multiline_max_lines);
-    RECV(":server CAP alice ACK :server-time message-tags");
+    RECV(":server CAP alice ACK :server-time message-tags batch draft/multiline");
     ptr_channel = irc_channel_search (server, "#test");
     CHECK(ptr_channel);
     /*
@@ -190,6 +190,8 @@ TEST(IrcUpgrade, SaveLoad)
     gui_buffer_local_var_remove (server->buffer, "irc_clienttagdeny");
     gui_buffer_local_var_remove (ptr_channel->buffer, "irc_caps");
     gui_buffer_local_var_remove (ptr_channel->buffer, "irc_clienttagdeny");
+    gui_buffer_local_var_remove (ptr_channel->buffer, "multiline_max_bytes");
+    gui_buffer_local_var_remove (ptr_channel->buffer, "multiline_max_lines");
     ptr_notify = irc_notify_search (server, "dave");
     CHECK(ptr_notify);
     ptr_notify->is_on_server = 1;
@@ -299,11 +301,17 @@ TEST(IrcUpgrade, SaveLoad)
     LONGS_EQUAL(raw_count, irc_raw_messages_count);
 
     /* Local variables set after upgrade. */
-    STRCMP_EQUAL("message-tags,server-time",
+    STRCMP_EQUAL("batch,draft/multiline,message-tags,server-time",
                  gui_buffer_get_string (server->buffer, "localvar_irc_caps"));
-    STRCMP_EQUAL("message-tags,server-time",
+    STRCMP_EQUAL("batch,draft/multiline,message-tags,server-time",
                  gui_buffer_get_string (ptr_channel->buffer,
                                         "localvar_irc_caps"));
+    STRCMP_EQUAL("8192",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_multiline_max_bytes"));
+    STRCMP_EQUAL("50",
+                 gui_buffer_get_string (ptr_channel->buffer,
+                                        "localvar_multiline_max_lines"));
     STRCMP_EQUAL("*,-a",
                  gui_buffer_get_string (server->buffer,
                                         "localvar_irc_clienttagdeny"));

@@ -178,6 +178,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
     int autojoin_join, manual_join, noswitch;
     const char *ptr_short_name;
     char str_number[32], *channel_name_lower, *buffer_name, *prompt, *caps;
+    char str_max_bytes[32], str_max_lines[32];
 
     buffer_created = 0;
     buffer_props = NULL;
@@ -205,10 +206,28 @@ irc_channel_create_buffer (struct t_irc_server *server,
         NULL, NULL);
     if (buffer_props)
     {
-        weechat_hashtable_set (
-            buffer_props,
-            "input_multiline",
-            (irc_server_multiline_enabled (server)) ? "1" : "0");
+        if (irc_server_multiline_enabled (server))
+        {
+            weechat_hashtable_set (buffer_props, "input_multiline", "1");
+            snprintf (str_max_bytes, sizeof (str_max_bytes),
+                      "%d", server->multiline_max_bytes);
+            snprintf (str_max_lines, sizeof (str_max_lines),
+                      "%d", server->multiline_max_lines);
+            weechat_hashtable_set (buffer_props,
+                                   "localvar_set_multiline_max_bytes",
+                                   str_max_bytes);
+            weechat_hashtable_set (buffer_props,
+                                   "localvar_set_multiline_max_lines",
+                                   str_max_lines);
+        }
+        else
+        {
+            weechat_hashtable_set (buffer_props, "input_multiline", "0");
+            weechat_hashtable_set (buffer_props,
+                                   "localvar_del_multiline_max_bytes", "");
+            weechat_hashtable_set (buffer_props,
+                                   "localvar_del_multiline_max_lines", "");
+        }
         weechat_hashtable_set (buffer_props, "name", buffer_name);
         weechat_hashtable_set (buffer_props, "short_name", channel_name);
         weechat_hashtable_set (

@@ -1466,6 +1466,20 @@ WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
 | dowolny ciąg
 | Opóźnienie serwera, ustawiane przez wtyczkę irc.
 
+// TRANSLATION MISSING
+| multiline_max_bytes
+| integer
+| Maximum number of bytes in a multiline message sent in a single message,
+  set only when buffer property `input_multiline` is enabled, by irc plugin
+  (limit of capability "draft/multiline").
+
+// TRANSLATION MISSING
+| multiline_max_lines
+| integer
+| Maximum number of lines in a multiline message sent in a single message,
+  set only when buffer property `input_multiline` is enabled, by irc plugin
+  (limit of capability "draft/multiline").
+
 | name
 | dowolny ciąg
 | Nazwa bufora (uważaj, nie jest to pełna nazwa i nie wystarczy ona do

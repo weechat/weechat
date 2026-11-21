@@ -1456,6 +1456,18 @@ By default WeeChat and its default plugins interpret these variables:
 | any string
 | Lag on the server, set by irc plugin.
 
+| multiline_max_bytes
+| integer
+| Maximum number of bytes in a multiline message sent in a single message,
+  set only when buffer property `input_multiline` is enabled, by irc plugin
+  (limit of capability "draft/multiline").
+
+| multiline_max_lines
+| integer
+| Maximum number of lines in a multiline message sent in a single message,
+  set only when buffer property `input_multiline` is enabled, by irc plugin
+  (limit of capability "draft/multiline").
+
 | name
 | any string
 | Buffer name (be careful, this is not the full name and this name is not

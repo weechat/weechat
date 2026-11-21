@@ -1709,6 +1709,10 @@ irc_server_multiline_enabled (struct t_irc_server *server)
  * Set "input_multiline" to 1 or 0 on all channels and private buffers
  * (1 if multiline messages can be sent to the server, see function
  * irc_server_multiline_enabled).
+ *
+ * The local variables "multiline_max_bytes" and "multiline_max_lines" are
+ * set with the limits of the server if multiline is 1, and removed if
+ * multiline is 0.
  */
 
 void
@@ -1716,9 +1720,15 @@ irc_server_set_buffer_input_multiline (struct t_irc_server *server,
                                        int multiline)
 {
     struct t_irc_channel *ptr_channel;
+    char str_max_bytes[32], str_max_lines[32];
 
     if (!server)
         return;
+
+    snprintf (str_max_bytes, sizeof (str_max_bytes),
+              "%d", server->multiline_max_bytes);
+    snprintf (str_max_lines, sizeof (str_max_lines),
+              "%d", server->multiline_max_lines);
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -1728,6 +1738,22 @@ irc_server_set_buffer_input_multiline (struct t_irc_server *server,
             weechat_buffer_set (ptr_channel->buffer,
                                 "input_multiline",
                                 (multiline) ? "1" : "0");
+            if (multiline)
+            {
+                weechat_buffer_set (ptr_channel->buffer,
+                                    "localvar_set_multiline_max_bytes",
+                                    str_max_bytes);
+                weechat_buffer_set (ptr_channel->buffer,
+                                    "localvar_set_multiline_max_lines",
+                                    str_max_lines);
+            }
+            else
+            {
+                weechat_buffer_set (ptr_channel->buffer,
+                                    "localvar_del_multiline_max_bytes", "");
+                weechat_buffer_set (ptr_channel->buffer,
+                                    "localvar_del_multiline_max_lines", "");
+            }
         }
     }
 }

@@ -1467,6 +1467,20 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 | beliebige Zeichenkette
 | Verzögerung auf dem Server, wird durch IRC Erweiterung genutzt.
 
+// TRANSLATION MISSING
+| multiline_max_bytes
+| integer
+| Maximum number of bytes in a multiline message sent in a single message,
+  set only when buffer property `input_multiline` is enabled, by irc plugin
+  (limit of capability "draft/multiline").
+
+// TRANSLATION MISSING
+| multiline_max_lines
+| integer
+| Maximum number of lines in a multiline message sent in a single message,
+  set only when buffer property `input_multiline` is enabled, by irc plugin
+  (limit of capability "draft/multiline").
+
 | name
 | beliebige Zeichenkette
 | Buffername (Vorsicht, dies ist nicht der vollständige Name des Buffers und reicht nicht aus, um einen Buffer zu identifizieren oder zu suchen).
