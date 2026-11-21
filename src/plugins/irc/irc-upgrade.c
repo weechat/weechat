@@ -642,6 +642,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     irc_upgrade_current_server->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
                     irc_upgrade_current_server->reconnect_start = weechat_infolist_time (infolist, "reconnect_start");
                     irc_upgrade_current_server->command_time = weechat_infolist_time (infolist, "command_time");
+                    irc_upgrade_current_server->monitor_time = weechat_infolist_time (infolist, "monitor_time");
                     irc_upgrade_current_server->autojoin_time = weechat_infolist_time (infolist, "autojoin_time");
                     irc_upgrade_current_server->autojoin_done = weechat_infolist_integer (infolist, "autojoin_done");
                     irc_upgrade_current_server->disable_autojoin = weechat_infolist_integer (infolist, "disable_autojoin");

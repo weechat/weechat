@@ -173,6 +173,7 @@ TEST(IrcUpgrade, SaveLoad)
     struct t_irc_redirect_pattern *ptr_pattern;
     struct t_gui_buffer *ptr_buffer;
     int raw_count;
+    time_t monitor_time;
 
     connect_and_join ();
     RECV(":server CAP alice LS :batch draft/multiline=max-bytes=8192,max-lines=50");
@@ -198,6 +199,9 @@ TEST(IrcUpgrade, SaveLoad)
                                     "311", "318", "319"));
     raw_count = irc_raw_messages_count;
     CHECK(raw_count > 0);
+    /* MONITOR is sent 5 seconds after message 001. */
+    monitor_time = server->monitor_time;
+    CHECK(monitor_time > 0);
 
     LONGS_EQUAL(1, irc_upgrade_save (0));
     CHECK(access (upgrade_filename, F_OK) == 0);
@@ -232,6 +236,7 @@ TEST(IrcUpgrade, SaveLoad)
     STRCMP_EQUAL("127.0.0.1", server->current_address);
     LONGS_EQUAL(8192, server->multiline_max_bytes);
     LONGS_EQUAL(50, server->multiline_max_lines);
+    LONGS_EQUAL(monitor_time, server->monitor_time);
 
     /* Channel. */
     ptr_channel = irc_channel_search (server, "#test");
