@@ -1319,6 +1319,11 @@ IRC_PROTOCOL_CALLBACK(cap)
                     {
                         weechat_hashtable_set (ctxt->server->cap_ls,
                                                str_name, pos_value + 1);
+                        if (strcmp (str_name, "draft/multiline") == 0)
+                        {
+                            irc_message_parse_cap_multiline_value (
+                                ctxt->server, pos_value + 1);
+                        }
                         free (str_name);
                     }
                 }
@@ -1326,6 +1331,11 @@ IRC_PROTOCOL_CALLBACK(cap)
                 {
                     weechat_hashtable_set (ctxt->server->cap_ls,
                                            caps_added[j], NULL);
+                    if (strcmp (caps_added[j], "draft/multiline") == 0)
+                    {
+                        irc_message_parse_cap_multiline_value (ctxt->server,
+                                                               NULL);
+                    }
                 }
             }
             weechat_string_free_split (caps_added);

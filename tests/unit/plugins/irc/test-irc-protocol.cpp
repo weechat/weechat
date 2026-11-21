@@ -2043,6 +2043,40 @@ TEST(IrcProtocolWithServer, cap)
 
 /*
  * Test functions:
+ *   irc_protocol_cb_cap (limits of capability "draft/multiline")
+ */
+
+TEST(IrcProtocolWithServer, cap_multiline_limits)
+{
+    SRV_INIT;
+
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES,
+                ptr_server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES,
+                ptr_server->multiline_max_lines);
+
+    /* CAP LS */
+    RECV(":server CAP alice LS :batch draft/multiline=max-bytes=8192,max-lines=50");
+    LONGS_EQUAL(8192, ptr_server->multiline_max_bytes);
+    LONGS_EQUAL(50, ptr_server->multiline_max_lines);
+
+    /* CAP NEW with new limits */
+    RECV(":server CAP alice DEL :draft/multiline");
+    RECV(":server CAP alice NEW :draft/multiline=max-bytes=2048,max-lines=10");
+    LONGS_EQUAL(2048, ptr_server->multiline_max_bytes);
+    LONGS_EQUAL(10, ptr_server->multiline_max_lines);
+
+    /* CAP NEW without value: default limits */
+    RECV(":server CAP alice DEL :draft/multiline");
+    RECV(":server CAP alice NEW :draft/multiline");
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES,
+                ptr_server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES,
+                ptr_server->multiline_max_lines);
+}
+
+/*
+ * Test functions:
  *   irc_protocol_cb_cap (refresh of nick prefixes with "multi-prefix")
  */
 

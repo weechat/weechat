@@ -188,6 +188,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: parse limits of capability "draft/multiline" (max bytes and lines) received in `CAP NEW`
 - irc: restore limits of capability "draft/multiline" (max bytes and lines) on `/upgrade`
 - irc: display reply to CTCP PING with a single argument, which was ignored
 - irc: add missing tag "irc_ctcp" in display of CTCP reply without arguments
