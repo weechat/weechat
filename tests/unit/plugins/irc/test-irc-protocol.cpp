@@ -2060,6 +2060,14 @@ TEST(IrcProtocolWithServer, cap_multiline_limits)
     LONGS_EQUAL(8192, ptr_server->multiline_max_bytes);
     LONGS_EQUAL(50, ptr_server->multiline_max_lines);
 
+    /* CAP LS without value: default limits */
+    RECV(":server CAP alice LS :batch draft/multiline");
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES,
+                ptr_server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES,
+                ptr_server->multiline_max_lines);
+    RECV(":server CAP alice LS :batch draft/multiline=max-bytes=8192,max-lines=50");
+
     /* CAP NEW with new limits */
     RECV(":server CAP alice DEL :draft/multiline");
     RECV(":server CAP alice NEW :draft/multiline=max-bytes=2048,max-lines=10");

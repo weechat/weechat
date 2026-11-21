@@ -1030,6 +1030,11 @@ IRC_PROTOCOL_CALLBACK(cap)
                 {
                     weechat_hashtable_set (ctxt->server->cap_ls,
                                            caps_supported[j], NULL);
+                    if (strcmp (caps_supported[j], "draft/multiline") == 0)
+                    {
+                        irc_message_parse_cap_multiline_value (ctxt->server,
+                                                               NULL);
+                    }
                 }
             }
             weechat_string_free_split (caps_supported);
