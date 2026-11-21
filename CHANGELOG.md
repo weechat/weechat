@@ -189,6 +189,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: fix undefined behavior in split of messages when the split is disabled (server option split_msg_max_length set to 0)
 - irc: fix empty message sent when the text to split starts with spaces followed by a word longer than the max length
 - irc: fix infinite loop when a message is split with a max length smaller than a UTF-8 char
 - irc: use default limits of capability "draft/multiline" when the server sends a value that is not a positive integer

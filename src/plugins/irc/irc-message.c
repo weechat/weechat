@@ -1035,7 +1035,7 @@ irc_message_split_string (struct t_irc_message_split_context *context,
                           int max_length_nick_user_host,
                           int max_length)
 {
-    const char *pos, *pos_max, *pos_next, *pos_last_delim, *pos_first_text;
+    const char *pos, *pos_next, *pos_last_delim, *pos_first_text;
     char *message, *dup_arguments;
 
     if (!context)
@@ -1094,7 +1094,6 @@ irc_message_split_string (struct t_irc_message_split_context *context,
     while (arguments && arguments[0])
     {
         pos = arguments;
-        pos_max = pos + max_length;
         pos_last_delim = NULL;
         pos_first_text = NULL;
         while (pos && pos[0])
@@ -1104,7 +1103,7 @@ irc_message_split_string (struct t_irc_message_split_context *context,
             else if (!pos_first_text)
                 pos_first_text = pos;
             pos_next = weechat_utf8_next_char (pos);
-            if (!pos_next || (pos_next > pos_max))
+            if (!pos_next || (pos_next - arguments > max_length))
                 break;
             pos = pos_next;
         }
