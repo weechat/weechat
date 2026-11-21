@@ -202,6 +202,11 @@ TEST(IrcUpgrade, SaveLoad)
     /* MONITOR is sent 5 seconds after message 001. */
     monitor_time = server->monitor_time;
     CHECK(monitor_time > 0);
+    /* Retry counts. */
+    LONGS_EQUAL(1, server->addresses_count);
+    CHECK(server->retry_array);
+    server->current_retry = 3;
+    server->retry_array[0] = 2;
 
     LONGS_EQUAL(1, irc_upgrade_save (0));
     CHECK(access (upgrade_filename, F_OK) == 0);
@@ -237,6 +242,9 @@ TEST(IrcUpgrade, SaveLoad)
     LONGS_EQUAL(8192, server->multiline_max_bytes);
     LONGS_EQUAL(50, server->multiline_max_lines);
     LONGS_EQUAL(monitor_time, server->monitor_time);
+    LONGS_EQUAL(3, server->current_retry);
+    CHECK(server->retry_array);
+    LONGS_EQUAL(2, server->retry_array[0]);
 
     /* Channel. */
     ptr_channel = irc_channel_search (server, "#test");
@@ -329,6 +337,58 @@ TEST(IrcUpgrade, SaveLoadDisconnected)
     CHECK(ptr_channel);
     LONGS_EQUAL(0, ptr_channel->nicks_count);
     POINTERS_EQUAL(NULL, irc_modelist_search (ptr_channel, 'b')->items);
+}
+
+TEST(IrcUpgrade, SaveLoadAddressesChanged)
+{
+    connect_and_join ();
+    LONGS_EQUAL(1, server->addresses_count);
+    CHECK(server->retry_array);
+    server->current_retry = 3;
+    server->retry_array[0] = 2;
+
+    LONGS_EQUAL(1, irc_upgrade_save (0));
+
+    /*
+     * Addresses changed in configuration: index of current address and
+     * retry counts are reset.
+     */
+    recreate_server ();
+    run_cmd_quiet ("/mute /set irc.server." IRC_FAKE_SERVER ".addresses "
+                   "\"fake:127.0.0.2\"");
+    LONGS_EQUAL(1, irc_upgrade_load ());
+
+    LONGS_EQUAL(0, server->index_current_address);
+    LONGS_EQUAL(0, server->current_retry);
+    CHECK(server->retry_array);
+    LONGS_EQUAL(0, server->retry_array[0]);
+}
+
+TEST(IrcUpgrade, ReadIndexCurrentAddressOutOfRange)
+{
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
+
+    /* Index of current address out of range: reset to 0. */
+    infolist = infolist_new (NULL);
+    item = infolist_new_item (infolist);
+    infolist_new_var_string (item, "name", IRC_FAKE_SERVER);
+    infolist_new_var_string (item, "buffer_name", "server." IRC_FAKE_SERVER);
+    infolist_new_var_integer (item, "fake_server", 1);
+    infolist_new_var_string (item, "addresses", "fake:127.0.0.1");
+    infolist_new_var_integer (item, "index_current_address", 5);
+    infolist_new_var_integer (item, "current_retry", 3);
+    infolist_new_var_integer (item, "retry_00000", 2);
+    infolist_new_var_integer (item, "sock", -1);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                irc_upgrade_read_cb (NULL, NULL, NULL,
+                                     IRC_UPGRADE_TYPE_SERVER, infolist));
+    infolist_free (infolist);
+    POINTERS_EQUAL(server, irc_upgrade_current_server);
+    LONGS_EQUAL(0, server->index_current_address);
+    LONGS_EQUAL(0, server->current_retry);
+    CHECK(server->retry_array);
+    LONGS_EQUAL(0, server->retry_array[0]);
 }
 
 TEST(IrcUpgrade, LoadNoFile)

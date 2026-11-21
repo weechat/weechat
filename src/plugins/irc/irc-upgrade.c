@@ -379,8 +379,49 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         if (ptr_buffer)
                             irc_upgrade_current_server->buffer = ptr_buffer;
                     }
-                    irc_upgrade_current_server->index_current_address =
-                        weechat_infolist_integer (infolist, "index_current_address");
+                    /*
+                     * Index of current address and retry counts are restored
+                     * only if the addresses did not change (they are read
+                     * again from configuration on upgrade) and if the index
+                     * is valid; otherwise they are reset to 0.
+                     * The raw value of option is compared, not the evaluated
+                     * addresses: if the result of evaluation changed (for
+                     * example with secured data), retry counts may be
+                     * restored on different addresses.
+                     * Note: retry count of each address is new in
+                     * WeeChat 5.0.0.
+                     */
+                    str = weechat_infolist_string (infolist, "addresses");
+                    index = weechat_infolist_integer (infolist, "index_current_address");
+                    if ((!str
+                         || (strcmp (str,
+                                     IRC_SERVER_OPTION_STRING(irc_upgrade_current_server,
+                                                              IRC_SERVER_OPTION_ADDRESSES)) == 0))
+                        && (index >= 0)
+                        && (index < irc_upgrade_current_server->addresses_count))
+                    {
+                        irc_upgrade_current_server->index_current_address = index;
+                        irc_upgrade_current_server->current_retry =
+                            weechat_infolist_integer (infolist, "current_retry");
+                        if (irc_upgrade_current_server->retry_array)
+                        {
+                            for (i = 0; i < irc_upgrade_current_server->addresses_count; i++)
+                            {
+                                snprintf (option_name, sizeof (option_name),
+                                          "retry_%05d", i);
+                                if (weechat_infolist_search_var (infolist, option_name))
+                                {
+                                    irc_upgrade_current_server->retry_array[i] =
+                                        weechat_infolist_integer (infolist, option_name);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        irc_upgrade_current_server->index_current_address = 0;
+                        irc_upgrade_current_server->current_retry = 0;
+                    }
                     str = weechat_infolist_string (infolist, "current_address");
                     if (str)
                     {

@@ -6865,10 +6865,11 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
                             int force_disconnected_state)
 {
     struct t_infolist_item *ptr_item;
-    int reconnect_delay;
+    int i, reconnect_delay;
     time_t reconnect_start;
     struct timeval lag_check_time;
     time_t lag_next_check;
+    char str_var[64];
 
     if (!infolist || !server)
         return 0;
@@ -7100,6 +7101,18 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "current_retry", server->current_retry))
             return 0;
+        if (server->retry_array)
+        {
+            for (i = 0; i < server->addresses_count; i++)
+            {
+                snprintf (str_var, sizeof (str_var), "retry_%05d", i);
+                if (!weechat_infolist_new_var_integer (ptr_item, str_var,
+                                                       server->retry_array[i]))
+                {
+                    return 0;
+                }
+            }
+        }
         if (!weechat_infolist_new_var_integer (ptr_item, "sock", server->sock))
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "is_connected", server->is_connected))
