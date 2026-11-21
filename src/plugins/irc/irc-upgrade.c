@@ -18,6 +18,7 @@
 #include "irc-config.h"
 #include "irc-input.h"
 #include "irc-list.h"
+#include "irc-message.h"
 #include "irc-modelist.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -467,6 +468,24 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         irc_upgrade_current_server->cap_ls, infolist, "cap_ls");
                     weechat_hashtable_add_from_infolist (
                         irc_upgrade_current_server->cap_list, infolist, "cap_list");
+                    /*
+                     * "multiline_max_bytes" and "multiline_max_lines" are new
+                     * in WeeChat 4.0.0; if not found, they are read from the
+                     * value of capability "draft/multiline" in "cap_ls".
+                     */
+                    if (weechat_infolist_search_var (infolist, "multiline_max_bytes")
+                        && weechat_infolist_search_var (infolist, "multiline_max_lines"))
+                    {
+                        irc_upgrade_current_server->multiline_max_bytes = weechat_infolist_integer (infolist, "multiline_max_bytes");
+                        irc_upgrade_current_server->multiline_max_lines = weechat_infolist_integer (infolist, "multiline_max_lines");
+                    }
+                    else
+                    {
+                        irc_message_parse_cap_multiline_value (
+                            irc_upgrade_current_server,
+                            weechat_hashtable_get (irc_upgrade_current_server->cap_ls,
+                                                   "draft/multiline"));
+                    }
 
                     str = weechat_infolist_string (infolist, "isupport");
                     if (str)

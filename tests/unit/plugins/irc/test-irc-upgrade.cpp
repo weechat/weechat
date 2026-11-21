@@ -175,6 +175,9 @@ TEST(IrcUpgrade, SaveLoad)
     int raw_count;
 
     connect_and_join ();
+    RECV(":server CAP alice LS :batch draft/multiline=max-bytes=8192,max-lines=50");
+    LONGS_EQUAL(8192, server->multiline_max_bytes);
+    LONGS_EQUAL(50, server->multiline_max_lines);
     RECV(":server CAP alice ACK :server-time message-tags");
     ptr_channel = irc_channel_search (server, "#test");
     CHECK(ptr_channel);
@@ -227,6 +230,8 @@ TEST(IrcUpgrade, SaveLoad)
     CHECK(server->isupport);
     CHECK(strstr (server->isupport, "MONITOR=100"));
     STRCMP_EQUAL("127.0.0.1", server->current_address);
+    LONGS_EQUAL(8192, server->multiline_max_bytes);
+    LONGS_EQUAL(50, server->multiline_max_lines);
 
     /* Channel. */
     ptr_channel = irc_channel_search (server, "#test");
@@ -355,6 +360,9 @@ TEST(IrcUpgrade, ReadOldVersion)
     infolist_new_var_integer (item, "cap_account_notify", 1);
     infolist_new_var_integer (item, "cap_extended_join", 1);
     infolist_new_var_string (item, "prefix", "(ov)@+");
+    /* No multiline limits: read from capability "draft/multiline". */
+    infolist_new_var_string (item, "cap_ls_name_00000", "draft/multiline");
+    infolist_new_var_string (item, "cap_ls_value_00000", "max-bytes=2048,max-lines=10");
     infolist_new_var_string (item, "isupport",
                              "LINELEN=1024 USERLEN=12 HOSTLEN=70 "
                              "UTF8MAPPING=rfc8265 UTF8ONLY CHANMODES=b,k,l,nt "
@@ -381,6 +389,8 @@ TEST(IrcUpgrade, ReadOldVersion)
     LONGS_EQUAL(1, server->utf8only);
     STRCMP_EQUAL("b,k,l,nt", server->chanmodes);
     LONGS_EQUAL(50, server->monitor);
+    LONGS_EQUAL(2048, server->multiline_max_bytes);
+    LONGS_EQUAL(10, server->multiline_max_lines);
 
     /* Channel with nicks speaking and smart filtered joins. */
     infolist = infolist_new (NULL);
