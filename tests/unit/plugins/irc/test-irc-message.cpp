@@ -28,9 +28,10 @@ extern int irc_message_split_string (struct t_irc_message_split_context *context
                                      const char *command, const char *target,
                                      const char *prefix, const char *arguments,
                                      const char *suffix, const char delimiter,
+                                     int keep_delimiter,
                                      int max_length_nick_user_host,
                                      int max_length);
-extern long irc_message_batch_bytes (const char *body);
+extern long irc_message_batch_bytes (const char *body, int concat);
 extern struct t_hashtable *irc_message_split_batch_line (const char *host,
                                                          const char *command,
                                                          const char *target,
@@ -40,7 +41,7 @@ extern struct t_hashtable *irc_message_split_batch_line (const char *host,
                                                          int max_bytes,
                                                          int *messages);
 extern char *irc_message_build_batch_tags (const char *batch_ref,
-                                           const char *tags);
+                                           const char *tags, int concat);
 extern void irc_message_new_batch (struct t_irc_message_split_context *context,
                                    const char *target, char *batch_ref,
                                    int batch_ref_size, char **multiline_args,
@@ -1119,21 +1120,28 @@ TEST(IrcMessage, BatchHelpers)
 {
     struct t_irc_message_split_context context;
     struct t_hashtable *hashtable;
-    char *str, batch_ref[16 + 1], **multiline_args, msg[256], line[1024];
+    char *str, batch_ref[16 + 1], **multiline_args, **line_concat, msg[256];
+    char line[1024];
     const char *ptr_args;
     int i, index_multiline_args, messages;
 
     /* irc_message_batch_bytes */
-    LONGS_EQUAL(1, irc_message_batch_bytes (NULL));
-    LONGS_EQUAL(1, irc_message_batch_bytes (""));
-    LONGS_EQUAL(4, irc_message_batch_bytes ("abc"));
+    LONGS_EQUAL(1, irc_message_batch_bytes (NULL, 0));
+    LONGS_EQUAL(1, irc_message_batch_bytes ("", 0));
+    LONGS_EQUAL(4, irc_message_batch_bytes ("abc", 0));
+    LONGS_EQUAL(0, irc_message_batch_bytes (NULL, 1));
+    LONGS_EQUAL(3, irc_message_batch_bytes ("abc", 1));
 
     /* irc_message_build_batch_tags */
-    POINTERS_EQUAL(NULL, irc_message_build_batch_tags (NULL, NULL));
-    WEE_TEST_STR("@batch=ref ", irc_message_build_batch_tags ("ref", NULL));
-    WEE_TEST_STR("@batch=ref ", irc_message_build_batch_tags ("ref", ""));
+    POINTERS_EQUAL(NULL, irc_message_build_batch_tags (NULL, NULL, 0));
+    WEE_TEST_STR("@batch=ref ", irc_message_build_batch_tags ("ref", NULL, 0));
+    WEE_TEST_STR("@batch=ref ", irc_message_build_batch_tags ("ref", "", 0));
     WEE_TEST_STR("@batch=ref;a=b;c=d ",
-                 irc_message_build_batch_tags ("ref", "@a=b;c=d "));
+                 irc_message_build_batch_tags ("ref", "@a=b;c=d ", 0));
+    WEE_TEST_STR("@batch=ref;draft/multiline-concat ",
+                 irc_message_build_batch_tags ("ref", NULL, 1));
+    WEE_TEST_STR("@batch=ref;draft/multiline-concat;a=b;c=d ",
+                 irc_message_build_batch_tags ("ref", "@a=b;c=d ", 1));
 
     /* irc_message_split_batch_line */
     POINTERS_EQUAL(NULL,
@@ -1154,6 +1162,21 @@ TEST(IrcMessage, BatchHelpers)
                                               line, -1, 512, 4096, &messages);
     CHECK(hashtable);
     LONGS_EQUAL(3, messages);
+    /* Spaces are kept: the concatenation of messages is the line */
+    line_concat = string_dyn_alloc (1024);
+    CHECK(line_concat);
+    for (i = 1; i <= messages; i++)
+    {
+        snprintf (msg, sizeof (msg), "args%d", i);
+        ptr_args = (const char *)hashtable_get (hashtable, msg);
+        CHECK(ptr_args);
+        CHECK(ptr_args[0]);
+        if (i < messages)
+            CHECK(ptr_args[strlen (ptr_args) - 1] == ' ');
+        string_dyn_concat (line_concat, ptr_args, -1);
+    }
+    STRCMP_EQUAL(line, *line_concat);
+    string_dyn_free (line_concat, 1);
     hashtable_free (hashtable);
     /* Split disabled: the line is not split */
     hashtable = irc_message_split_batch_line (
@@ -1200,7 +1223,7 @@ TEST(IrcMessage, BatchHelpers)
         snprintf (msg, sizeof (msg), "args%d", i);
         ptr_args = (const char *)hashtable_get (hashtable, msg);
         CHECK(ptr_args);
-        CHECK(irc_message_batch_bytes (ptr_args) <= 200);
+        CHECK(irc_message_batch_bytes (ptr_args, 0) <= 200);
     }
     hashtable_free (hashtable);
 
@@ -1238,7 +1261,9 @@ TEST(IrcMessage, BatchHelpers)
 /*
  * Check that each multiline batch in a split hashtable has at most
  * "max_lines" messages and "max_bytes" bytes (message bodies + 1 byte per
- * message), and that there are "expected_batches" batches.
+ * message without tag "draft/multiline-concat"), that the first message of
+ * a batch has no tag "draft/multiline-concat", that a message with this tag
+ * is not empty, and that there are "expected_batches" batches.
  */
 
 void
@@ -1247,7 +1272,7 @@ check_multiline_batches (struct t_hashtable *hashtable, int max_lines,
 {
     char key[32];
     const char *ptr_msg, *ptr_body;
-    int i, in_batch, lines, bytes, batches;
+    int i, in_batch, lines, bytes, batches, concat;
 
     in_batch = 0;
     lines = 0;
@@ -1280,7 +1305,16 @@ check_multiline_batches (struct t_hashtable *hashtable, int max_lines,
             CHECK(in_batch);
             ptr_body = strstr (ptr_msg, " :");
             CHECK(ptr_body);
-            bytes += strlen (ptr_body + 2) + 1;
+            concat = (strncmp (ptr_msg, "@batch=", 7) == 0)
+                && strstr (ptr_msg, ";draft/multiline-concat")
+                && (strstr (ptr_msg, ";draft/multiline-concat") < ptr_body);
+            if (concat)
+            {
+                CHECK(lines > 0);
+                /* not empty and not only spaces */
+                CHECK(ptr_body[2 + strspn (ptr_body + 2, " ")]);
+            }
+            bytes += strlen (ptr_body + 2) + ((concat) ? 0 : 1);
             lines++;
         }
     }
@@ -1307,7 +1341,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     /* 2 bytes for arguments (15 - 13), "€" has 3 bytes */
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
-                                             "#c", ":", "a€b", "", ' ',
+                                             "#c", ":", "a€b", "", ' ', 0,
                                              -1, 15));
     LONGS_EQUAL(4, context.number);
     STRCMP_EQUAL("PRIVMSG #c :a",
@@ -1322,7 +1356,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "😀😀",
-                                             "", ' ', -1, 16));
+                                             "", ' ', 0, -1, 16));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("PRIVMSG #c :😀",
                  (const char *)hashtable_get (context.hashtable, "msg1"));
@@ -1333,7 +1367,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     hashtable_remove_all (context.hashtable);
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
-                                             "#c", ":", " abc", "", ' ',
+                                             "#c", ":", " abc", "", ' ', 0,
                                              -1, 15));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("PRIVMSG #c :ab",
@@ -1343,7 +1377,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     hashtable_remove_all (context.hashtable);
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
-                                             "#c", ":", "  abc", "", ' ',
+                                             "#c", ":", "  abc", "", ' ', 0,
                                              -1, 15));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("PRIVMSG #c :ab",
@@ -1354,7 +1388,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     hashtable_remove_all (context.hashtable);
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
-                                             "#c", ":", "   ", "", ' ',
+                                             "#c", ":", "   ", "", ' ', 0,
                                              -1, 15));
     LONGS_EQUAL(2, context.number);
     STRCMP_EQUAL("PRIVMSG #c :  ",
@@ -1365,7 +1399,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     hashtable_remove_all (context.hashtable);
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
-                                             "#c", ":", long_text, "", ' ',
+                                             "#c", ":", long_text, "", ' ', 0,
                                              -1, 512));
     LONGS_EQUAL(3, context.number);
     /* 499 bytes for arguments (512 - 13): 599 "x" in 2 messages */
@@ -1378,6 +1412,109 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     LONGS_EQUAL(12 + 100,
                 strlen ((const char *)hashtable_get (context.hashtable,
                                                      "msg2")));
+
+    /* Keep delimiter: split after the space, which is kept */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "ab cd", "", ' ', 1,
+                                             -1, 16));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL("ab ",
+                 (const char *)hashtable_get (context.hashtable, "args1"));
+    STRCMP_EQUAL("cd",
+                 (const char *)hashtable_get (context.hashtable, "args2"));
+
+    /* Keep delimiter: a space that does not fit is not used to split */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "ab c", "", ' ', 1,
+                                             -1, 15));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL("ab",
+                 (const char *)hashtable_get (context.hashtable, "args1"));
+    STRCMP_EQUAL(" c",
+                 (const char *)hashtable_get (context.hashtable, "args2"));
+
+    /*
+     * Keep delimiter: only spaces fit in max length, they are skipped except
+     * the last one
+     */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "  abc", "", ' ', 1,
+                                             -1, 15));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL(" a",
+                 (const char *)hashtable_get (context.hashtable, "args1"));
+    STRCMP_EQUAL("bc",
+                 (const char *)hashtable_get (context.hashtable, "args2"));
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "ab  c", "", ' ', 1,
+                                             -1, 15));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL("ab",
+                 (const char *)hashtable_get (context.hashtable, "args1"));
+    STRCMP_EQUAL(" c",
+                 (const char *)hashtable_get (context.hashtable, "args2"));
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "a     b", "", ' ', 1,
+                                             -1, 15));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL("a ",
+                 (const char *)hashtable_get (context.hashtable, "args1"));
+    STRCMP_EQUAL(" b",
+                 (const char *)hashtable_get (context.hashtable, "args2"));
+
+    /* Keep delimiter: a single space with a char bigger than max length */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "ab €", "", ' ', 1,
+                                             -1, 15));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL("ab",
+                 (const char *)hashtable_get (context.hashtable, "args1"));
+    STRCMP_EQUAL(" €",
+                 (const char *)hashtable_get (context.hashtable, "args2"));
+
+    /* Keep delimiter: trailing spaces after the first message are dropped */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "ab   ", "", ' ', 1,
+                                             -1, 15));
+    LONGS_EQUAL(2, context.number);
+    STRCMP_EQUAL("ab",
+                 (const char *)hashtable_get (context.hashtable, "args1"));
+
+    /* Keep delimiter: only spaces, longer than max length */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "   ", "", ' ', 1,
+                                             -1, 15));
+    LONGS_EQUAL(2, context.number);
+    STRCMP_EQUAL("  ",
+                 (const char *)hashtable_get (context.hashtable, "args1"));
+
+    /* Keep delimiter: char bigger than max length */
+    hashtable_remove_all (context.hashtable);
+    context.number = 1;
+    LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
+                                             "#c", ":", "a €", "", ' ', 1,
+                                             -1, 15));
+    LONGS_EQUAL(3, context.number);
+    STRCMP_EQUAL("a ",
+                 (const char *)hashtable_get (context.hashtable, "args1"));
+    STRCMP_EQUAL("€",
+                 (const char *)hashtable_get (context.hashtable, "args2"));
 
     hashtable_free (context.hashtable);
 }
@@ -2492,6 +2629,87 @@ TEST(IrcMessage, Split)
     check_multiline_batches (hashtable, 3,
                              IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, 2);
     STRCMP_EQUAL("short", (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+    free (long_text);
+
+    /*
+     * PRIVMSG with multiline and a long line of words: messages after the
+     * first one have tag "draft/multiline-concat", spaces are kept at the
+     * end of messages, and the local echo is the line
+     */
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+    long_text = (char *)malloc (4096);
+    CHECK(long_text);
+    strcpy (long_text, "PRIVMSG #channel :");
+    for (i = 0; i < 150; i++)
+        strcat (long_text, "abcd ");
+    strcat (long_text, "end\nshort");
+    hashtable = irc_message_split (server, long_text);
+    CHECK(hashtable);
+    /* BATCH +, 2 msgs (line), 1 msg (short), BATCH - */
+    STRCMP_EQUAL("5", (const char *)hashtable_get (hashtable, "count"));
+    check_multiline_batches (hashtable, IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES,
+                             IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, 1);
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    snprintf (batch_ref, sizeof (batch_ref), "%s", ptr_msg + 7);
+    pos1 = strchr (batch_ref, ' ');
+    CHECK(pos1);
+    batch_ref[pos1 - batch_ref] = '\0';
+    snprintf (msg, sizeof (msg), "@batch=%s PRIVMSG #channel :abcd ",
+              batch_ref);
+    STRNCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg2"),
+                  strlen (msg));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s;draft/multiline-concat PRIVMSG #channel :",
+              batch_ref);
+    STRNCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg3"),
+                  strlen (msg));
+    snprintf (msg, sizeof (msg), "@batch=%s PRIVMSG #channel :short",
+              batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg4"));
+    ptr_msg = (const char *)hashtable_get (hashtable, "args2");
+    CHECK(ptr_msg);
+    LONGS_EQUAL(' ', ptr_msg[strlen (ptr_msg) - 1]);
+    STRCMP_EQUAL(long_text + 18,
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    hashtable_free (hashtable);
+    free (long_text);
+
+    /*
+     * PRIVMSG with multiline and a long run of spaces in a line: no message
+     * with tag "draft/multiline-concat" has only spaces
+     */
+    long_text = (char *)malloc (4096);
+    CHECK(long_text);
+    strcpy (long_text, "PRIVMSG #channel :aaaa");
+    for (i = 0; i < 120; i++)
+        strcat (long_text, "          ");
+    strcat (long_text, "bbbb\nshort");
+    hashtable = irc_message_split (server, long_text);
+    CHECK(hashtable);
+    check_multiline_batches (hashtable, IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES,
+                             IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, 1);
+    hashtable_free (hashtable);
+    free (long_text);
+
+    /*
+     * PRIVMSG with multiline and a long line ending with a long run of
+     * spaces: no message with tag "draft/multiline-concat" has only spaces
+     */
+    long_text = (char *)malloc (4096);
+    CHECK(long_text);
+    strcpy (long_text, "PRIVMSG #channel :");
+    for (i = 0; i < 100; i++)
+        strcat (long_text, "abcd ");
+    for (i = 0; i < 60; i++)
+        strcat (long_text, "          ");
+    strcat (long_text, "\nshort");
+    hashtable = irc_message_split (server, long_text);
+    CHECK(hashtable);
+    check_multiline_batches (hashtable, IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES,
+                             IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, 1);
     hashtable_free (hashtable);
     free (long_text);
 
