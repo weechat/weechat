@@ -4546,8 +4546,6 @@ Sections in file _otr.conf_:
 // TRANSLATION MISSING
 | Section | Control command    | Description
 // TRANSLATION MISSING
-| general | /set otr.general.* | General options.
-// TRANSLATION MISSING
 | color   | /set otr.color.*   | Colors.
 // TRANSLATION MISSING
 | look    | /set otr.look.*    | Look and feel.

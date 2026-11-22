@@ -20,18 +20,17 @@ struct t_config_file *otr_config_file = NULL;
 
 /* OTR config, sections */
 
-struct t_config_section *otr_config_section_general = NULL;
 struct t_config_section *otr_config_section_color = NULL;
 struct t_config_section *otr_config_section_look = NULL;
 struct t_config_section *otr_config_section_policy = NULL;
 
-/* OTR config, general section */
+/* OTR config, look section (options not in otr_config_look) */
 
-struct t_config_option *otr_config_general_debug = NULL;
-struct t_config_option *otr_config_general_hints = NULL;
-struct t_config_option *otr_config_general_no_send_tag_regex = NULL;
+struct t_config_option *otr_config_look_debug = NULL;
+struct t_config_option *otr_config_look_hints = NULL;
+struct t_config_option *otr_config_look_no_send_tag_regex = NULL;
 
-/* Compiled regex of option otr.general.no_send_tag_regex */
+/* Compiled regex of option otr.look.no_send_tag_regex */
 
 regex_t *otr_config_regex_no_send_tag = NULL;
 
@@ -156,7 +155,7 @@ otr_config_change_bar_cb (const void *pointer, void *data,
 }
 
 /*
- * Free the compiled regex of option otr.general.no_send_tag_regex.
+ * Free the compiled regex of option otr.look.no_send_tag_regex.
  */
 
 void
@@ -171,7 +170,7 @@ otr_config_free_regex_no_send_tag (void)
 }
 
 /*
- * Compile the regex of option otr.general.no_send_tag_regex (POSIX extended,
+ * Compile the regex of option otr.look.no_send_tag_regex (POSIX extended,
  * case insensitive).
  *
  * If the option is empty or if the regex is invalid, there is no compiled
@@ -185,7 +184,7 @@ otr_config_compile_regex_no_send_tag (void)
 
     otr_config_free_regex_no_send_tag ();
 
-    ptr_regex = weechat_config_string (otr_config_general_no_send_tag_regex);
+    ptr_regex = weechat_config_string (otr_config_look_no_send_tag_regex);
     if (!ptr_regex || !ptr_regex[0])
         return;
 
@@ -203,7 +202,7 @@ otr_config_compile_regex_no_send_tag (void)
 }
 
 /*
- * Callback for changes on option otr.general.no_send_tag_regex.
+ * Callback for changes on option otr.look.no_send_tag_regex.
  */
 
 void
@@ -432,14 +431,6 @@ otr_config_init (void)
         return 0;
 
     /* Sections */
-    otr_config_section_general = weechat_config_new_section (
-        otr_config_file, "general",
-        0, 0,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL);
     otr_config_section_color = weechat_config_new_section (
         otr_config_file, "color",
         0, 0,
@@ -464,29 +455,11 @@ otr_config_init (void)
         NULL, NULL, NULL,
         &otr_config_policy_create_option_cb, NULL, NULL,
         &otr_config_policy_delete_option_cb, NULL, NULL);
-    if (!otr_config_section_general || !otr_config_section_color
-        || !otr_config_section_look || !otr_config_section_policy)
+    if (!otr_config_section_color || !otr_config_section_look
+        || !otr_config_section_policy)
     {
         return 0;
     }
-
-    /* General */
-    otr_config_general_debug = otr_config_new_option (
-        otr_config_section_general, "debug", "boolean",
-        N_("display debug messages in buffer \"OTR Debug\" (metadata only, "
-           "never message contents)"),
-        "off", NULL);
-    otr_config_general_hints = otr_config_new_option (
-        otr_config_section_general, "hints", "boolean",
-        N_("Give helpful hints how to use this plugin and how to stay secure "
-           "while using OTR (recommended)"),
-        "on", NULL);
-    otr_config_general_no_send_tag_regex = otr_config_new_option (
-        otr_config_section_general, "no_send_tag_regex", "string",
-        N_("do not OTR whitespace tag messages to nicks matching this regex "
-           "(POSIX extended, case insensitive)"),
-        "^(alis|chanfix|global|.+serv|\\*.+)$",
-        &otr_config_change_no_send_tag_regex_cb);
 
     /* Colors */
     for (i = 0; i < OTR_CONFIG_NUM_COLOR_OPTIONS; i++)
@@ -513,6 +486,23 @@ otr_config_init (void)
             (otr_config_look_defs[i].update_bar) ?
             &otr_config_change_bar_cb : NULL);
     }
+
+    otr_config_look_debug = otr_config_new_option (
+        otr_config_section_look, "debug", "boolean",
+        N_("display debug messages in buffer \"OTR Debug\" (metadata only, "
+           "never message contents)"),
+        "off", NULL);
+    otr_config_look_hints = otr_config_new_option (
+        otr_config_section_look, "hints", "boolean",
+        N_("Give helpful hints how to use this plugin and how to stay secure "
+           "while using OTR (recommended)"),
+        "on", NULL);
+    otr_config_look_no_send_tag_regex = otr_config_new_option (
+        otr_config_section_look, "no_send_tag_regex", "string",
+        N_("do not OTR whitespace tag messages to nicks matching this regex "
+           "(POSIX extended, case insensitive)"),
+        "^(alis|chanfix|global|.+serv|\\*.+)$",
+        &otr_config_change_no_send_tag_regex_cb);
 
     /* Default policies */
     num_policy_defaults = (int)(sizeof (otr_config_policy_defaults)

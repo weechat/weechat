@@ -73,9 +73,9 @@ extern const int otr_config_policies_count;
 
 extern struct t_config_file *otr_config_file;
 extern struct t_config_section *otr_config_section_policy;
-extern struct t_config_option *otr_config_general_debug;
-extern struct t_config_option *otr_config_general_hints;
-extern struct t_config_option *otr_config_general_no_send_tag_regex;
+extern struct t_config_option *otr_config_look_debug;
+extern struct t_config_option *otr_config_look_hints;
+extern struct t_config_option *otr_config_look_no_send_tag_regex;
 
 extern regex_t *otr_config_regex_no_send_tag;
 extern struct t_config_option *otr_config_color[OTR_CONFIG_NUM_COLOR_OPTIONS];

@@ -24,7 +24,7 @@
 
 /*
  * Display a debug message in buffer "OTR Debug" (created if needed), only if
- * option otr.general.debug is enabled.
+ * option otr.look.debug is enabled.
  */
 
 void
@@ -33,8 +33,8 @@ otr_buffer_debug (const char *format, ...)
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *properties;
 
-    if (!otr_config_general_debug
-        || !weechat_config_boolean (otr_config_general_debug))
+    if (!otr_config_look_debug
+        || !weechat_config_boolean (otr_config_look_debug))
     {
         return;
     }
@@ -216,26 +216,26 @@ otr_buffer_ctx_print (ConnContext *context, int color, const char *format, ...)
 }
 
 /*
- * Display a hint for the peer of a libotr context, if option otr.general.hints
+ * Display a hint for the peer of a libotr context, if option otr.look.hints
  * is enabled.
  */
 
 void
 otr_buffer_ctx_hint (ConnContext *context, const char *message)
 {
-    if (weechat_config_boolean (otr_config_general_hints))
+    if (weechat_config_boolean (otr_config_look_hints))
         otr_buffer_ctx_print (context, OTR_CONFIG_LEVEL_HINT, "%s", message);
 }
 
 /*
- * Display a hint for a peer, if option otr.general.hints is enabled.
+ * Display a hint for a peer, if option otr.look.hints is enabled.
  */
 
 void
 otr_buffer_peer_hint (const char *server, const char *nick,
                       const char *message)
 {
-    if (weechat_config_boolean (otr_config_general_hints))
+    if (weechat_config_boolean (otr_config_look_hints))
         otr_buffer_peer_print (server, nick, OTR_CONFIG_LEVEL_HINT, message);
 }
 

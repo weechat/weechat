@@ -106,7 +106,7 @@ otr_policy_query (const char *account, const char *peer)
 
 /*
  * Check if the whitespace tag must not be sent to a peer (nick matching the
- * regex of option otr.general.no_send_tag_regex).
+ * regex of option otr.look.no_send_tag_regex).
  *
  * Return 1 if the tag must not be sent, 0 otherwise.
  */

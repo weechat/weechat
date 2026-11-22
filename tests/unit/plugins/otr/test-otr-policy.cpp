@@ -107,10 +107,10 @@ TEST(OtrPolicy, NoSendTag)
     LONGS_EQUAL(1, otr_policy_no_send_tag ("chanserv"));
     LONGS_EQUAL(1, otr_policy_no_send_tag ("*status"));
 
-    config_file_option_set (otr_config_general_no_send_tag_regex, "", 1);
+    config_file_option_set (otr_config_look_no_send_tag_regex, "", 1);
     LONGS_EQUAL(0, otr_policy_no_send_tag ("nickserv"));
 
-    config_file_option_reset (otr_config_general_no_send_tag_regex, 1);
+    config_file_option_reset (otr_config_look_no_send_tag_regex, 1);
     LONGS_EQUAL(1, otr_policy_no_send_tag ("nickserv"));
 }
 

@@ -4596,7 +4596,6 @@ Sections dans le fichier _otr.conf_ :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| general | /set otr.general.*   | Options générales.
 | color   | /set otr.color.*     | Couleurs.
 | look    | /set otr.look.*      | Aspect/présentation.
 | policy  | /set otr.policy.*    | Politiques (voir <<otr_policies,Politiques>>).

@@ -101,17 +101,17 @@ TEST(OtrConfig, RegexNoSendTag)
     CHECK(otr_config_regex_no_send_tag);
 
     /* Empty regex: no restriction. */
-    config_file_option_set (otr_config_general_no_send_tag_regex, "", 1);
+    config_file_option_set (otr_config_look_no_send_tag_regex, "", 1);
     POINTERS_EQUAL(NULL, otr_config_regex_no_send_tag);
 
     /* Invalid regex: no restriction. */
-    config_file_option_set (otr_config_general_no_send_tag_regex, "(", 1);
+    config_file_option_set (otr_config_look_no_send_tag_regex, "(", 1);
     POINTERS_EQUAL(NULL, otr_config_regex_no_send_tag);
 
-    config_file_option_set (otr_config_general_no_send_tag_regex, "^bob$", 1);
+    config_file_option_set (otr_config_look_no_send_tag_regex, "^bob$", 1);
     CHECK(otr_config_regex_no_send_tag);
 
-    config_file_option_reset (otr_config_general_no_send_tag_regex, 1);
+    config_file_option_reset (otr_config_look_no_send_tag_regex, 1);
     CHECK(otr_config_regex_no_send_tag);
 }
 

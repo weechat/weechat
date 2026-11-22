@@ -154,7 +154,7 @@ TEST(OtrBuffer, Debug)
     POINTERS_EQUAL(NULL, gui_buffer_search ("otr", "OTR Debug"));
 
     /* Debug enabled: buffer created, not logged. */
-    config_file_option_set (otr_config_general_debug, "on", 1);
+    config_file_option_set (otr_config_look_debug, "on", 1);
     otr_buffer_debug ("test %d", 1);
     ptr_buffer = gui_buffer_search ("otr", "OTR Debug");
     CHECK(ptr_buffer);
@@ -163,5 +163,5 @@ TEST(OtrBuffer, Debug)
     STRCMP_EQUAL("test 1", ptr_buffer->own_lines->last_line->data->message);
 
     gui_buffer_close (ptr_buffer);
-    config_file_option_reset (otr_config_general_debug, 1);
+    config_file_option_reset (otr_config_look_debug, 1);
 }
