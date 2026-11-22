@@ -364,12 +364,31 @@ TEST(OtrModifier, RemoveBatch)
                  otr_modifier_remove_batch_tag ("other_server",
                                                 "@batch=abc "));
 
+    /* Tag "draft/multiline-concat" removed only with a batch removed. */
+    WEE_TEST_STR("@+draft/reply=1 ",
+                 otr_modifier_remove_batch_tag (
+                     "srv_otr_batch",
+                     "@batch=abc;draft/multiline-concat;+draft/reply=1 "));
+    WEE_TEST_STR(NULL,
+                 otr_modifier_remove_batch_tag (
+                     "srv_otr_batch", "@batch=abc;draft/multiline-concat "));
+    WEE_TEST_STR("@batch=other;draft/multiline-concat ",
+                 otr_modifier_remove_batch_tag (
+                     "srv_otr_batch", "@batch=other;draft/multiline-concat "));
+
     /* Line of the batch removed and sent unencrypted: batch tag removed. */
     WEE_TEST_STR("PRIVMSG bob :\x01VERSION\x01",
                  otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
                                       "srv_otr_batch",
                                       "@batch=abc PRIVMSG bob "
                                       ":\x01VERSION\x01"));
+
+    /* Continuation of a line of the batch removed, sent unencrypted. */
+    WEE_TEST_STR("PRIVMSG bob :\x01VERSION\x01",
+                 otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                      "srv_otr_batch",
+                                      "@batch=abc;draft/multiline-concat "
+                                      "PRIVMSG bob :\x01VERSION\x01"));
 
     /* End of batch removed. */
     LONGS_EQUAL(1, otr_modifier_remove_batch ("srv_otr_batch", "BATCH -abc"));

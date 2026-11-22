@@ -773,7 +773,8 @@ end:
 
 /*
  * Remove tag "batch" from IRC tags of an outgoing message if this batch has
- * been removed (see function otr_modifier_remove_batch).
+ * been removed (see function otr_modifier_remove_batch); tag
+ * "draft/multiline-concat" (valid only in a batch) is removed too in this case.
  *
  * Tags are in format "@tag1;tag2 " (with "@" and the space after tags).
  *
@@ -810,17 +811,30 @@ otr_modifier_remove_batch_tag (const char *server, const char *tags)
         return strdup (tags);
     }
 
+    /* Check if the batch of the message has been removed. */
+    removed = 0;
     for (i = 0; i < num_items; i++)
     {
         if (strncmp (items[i], "batch=", 6) == 0)
         {
             weechat_asprintf (&key, "%s,%s", server, items[i] + 6);
-            removed = (key && otr_modifier_removed_batches
-                       && weechat_hashtable_has_key (
-                           otr_modifier_removed_batches, key)) ? 1 : 0;
+            if (key && otr_modifier_removed_batches
+                && weechat_hashtable_has_key (otr_modifier_removed_batches,
+                                              key))
+            {
+                removed = 1;
+            }
             free (key);
-            if (removed)
-                continue;
+        }
+    }
+
+    for (i = 0; i < num_items; i++)
+    {
+        if (removed
+            && ((strncmp (items[i], "batch=", 6) == 0)
+                || (strcmp (items[i], "draft/multiline-concat") == 0)))
+        {
+            continue;
         }
         weechat_string_dyn_concat (result, ((*result)[0]) ? ";" : "@", -1);
         weechat_string_dyn_concat (result, items[i], -1);
