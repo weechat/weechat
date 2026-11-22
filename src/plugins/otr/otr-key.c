@@ -414,6 +414,9 @@ otr_key_generate_child (void)
 /*
  * Send an OTR query to the peers waiting for the private key generated, so
  * that the OTR session (which could not start without the key) starts again.
+ *
+ * The state of key exchange started without the key is cleared before (see
+ * function otr_context_clear_auth).
  */
 
 void
@@ -437,6 +440,7 @@ otr_key_send_queries (struct t_otr_key_generation *generation)
         ptr_query = otr_policy_query (generation->account, peers[i]);
         if (!ptr_query)
             continue;
+        otr_context_clear_auth (generation->account, peers[i]);
         otr_buffer_peer_hint (
             ptr_server, peers[i],
             _("Sending OTR query... Please wait for the OTR session to start "

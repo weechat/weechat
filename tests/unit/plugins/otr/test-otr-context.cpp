@@ -26,6 +26,57 @@ TEST_GROUP(OtrContext)
 
 /*
  * Test functions:
+ *   otr_context_clear_auth
+ */
+
+TEST(OtrContext, ClearAuth)
+{
+    ConnContext *ptr_master, *ptr_child, *ptr_child_encrypted, *ptr_other;
+
+    ptr_master = otrl_context_find (otr_us, "bob", "alice@srv_otr_ctx_auth",
+                                    OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                    NULL, NULL, NULL);
+    ptr_child = otrl_context_find (otr_us, "bob", "alice@srv_otr_ctx_auth",
+                                   OTR_PROTOCOL, 0x12345678, 1,
+                                   NULL, NULL, NULL);
+    ptr_child_encrypted = otrl_context_find (otr_us, "bob",
+                                             "alice@srv_otr_ctx_auth",
+                                             OTR_PROTOCOL, 0x23456789, 1,
+                                             NULL, NULL, NULL);
+    ptr_other = otrl_context_find (otr_us, "carol", "alice@srv_otr_ctx_auth",
+                                   OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                   NULL, NULL, NULL);
+    CHECK(ptr_master);
+    CHECK(ptr_child);
+    CHECK(ptr_child_encrypted);
+    CHECK(ptr_other);
+    CHECK(ptr_child != ptr_master);
+
+    ptr_master->auth.authstate = OTRL_AUTHSTATE_AWAITING_DHKEY;
+    ptr_child->auth.authstate = OTRL_AUTHSTATE_AWAITING_DHKEY;
+    ptr_child_encrypted->auth.authstate = OTRL_AUTHSTATE_AWAITING_DHKEY;
+    ptr_child_encrypted->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+    ptr_other->auth.authstate = OTRL_AUTHSTATE_AWAITING_DHKEY;
+
+    otr_context_clear_auth (NULL, "bob");
+    otr_context_clear_auth ("alice@srv_otr_ctx_auth", NULL);
+    LONGS_EQUAL(OTRL_AUTHSTATE_AWAITING_DHKEY, ptr_master->auth.authstate);
+
+    /* Master and instances cleared, except encrypted ones and other peers. */
+    otr_context_clear_auth ("alice@srv_otr_ctx_auth", "bob");
+    LONGS_EQUAL(OTRL_AUTHSTATE_NONE, ptr_master->auth.authstate);
+    LONGS_EQUAL(OTRL_AUTHSTATE_NONE, ptr_child->auth.authstate);
+    LONGS_EQUAL(OTRL_AUTHSTATE_AWAITING_DHKEY,
+                ptr_child_encrypted->auth.authstate);
+    LONGS_EQUAL(OTRL_AUTHSTATE_AWAITING_DHKEY, ptr_other->auth.authstate);
+
+    ptr_child_encrypted->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+    otrl_auth_clear (&(ptr_child_encrypted->auth));
+    otrl_auth_clear (&(ptr_other->auth));
+}
+
+/*
+ * Test functions:
  *   otr_context_smp_asked
  *   otr_context_smp_reset
  */

@@ -33,6 +33,7 @@ extern struct t_otr_peer_data *otr_context_peer_data_for (const char *account,
                                                           const char *peer);
 extern struct t_otr_peer_data *otr_context_peer_data_ctx (ConnContext *context);
 extern ConnContext *otr_context_find (const char *account, const char *peer);
+extern void otr_context_clear_auth (const char *account, const char *peer);
 extern int otr_context_encrypted (ConnContext *context);
 extern int otr_context_verified (ConnContext *context);
 extern int otr_context_smp_asked (ConnContext *context);

@@ -98,6 +98,37 @@ otr_context_find (const char *account, const char *peer)
 }
 
 /*
+ * Clear the state of authenticated key exchange (AKE) in all libotr contexts
+ * (master and instances) of an account and a peer, except the encrypted ones.
+ *
+ * This is used when our private key has just been generated: a D-H Commit
+ * message sent by libotr before the key existed leaves an instance in state
+ * "awaiting D-H Key" without the message to send again, and then a D-H Commit
+ * message of the peer could be ignored without any answer.
+ */
+
+void
+otr_context_clear_auth (const char *account, const char *peer)
+{
+    ConnContext *ptr_context;
+
+    if (!otr_us || !account || !peer)
+        return;
+
+    for (ptr_context = otr_us->context_root; ptr_context;
+         ptr_context = ptr_context->next)
+    {
+        if ((strcmp (ptr_context->accountname, account) == 0)
+            && (strcmp (ptr_context->username, peer) == 0)
+            && (strcmp (ptr_context->protocol, OTR_PROTOCOL) == 0)
+            && !otr_context_encrypted (ptr_context))
+        {
+            otrl_auth_clear (&(ptr_context->auth));
+        }
+    }
+}
+
+/*
  * Check if a libotr context is encrypted.
  *
  * Return 1 if the context is encrypted, 0 otherwise.
