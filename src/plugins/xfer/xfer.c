@@ -151,6 +151,22 @@ xfer_signal_upgrade_cb (const void *pointer, void *data,
 
 
 /*
+ * Create a directory for xfer plugin (and parent directories if needed),
+ * display an error if the directory can not be created.
+ */
+
+void
+xfer_create_directory (const char *path)
+{
+    if (!weechat_mkdir_parents (path, 0700))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: unable to create directory \"%s\""),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME, path);
+    }
+}
+
+/*
  * Create directories for xfer plugin.
  */
 
@@ -174,7 +190,7 @@ xfer_create_directories (void)
         NULL, NULL, options);
     if (path)
     {
-        (void) weechat_mkdir_parents (path, 0700);
+        xfer_create_directory (path);
         free (path);
     }
 
@@ -184,7 +200,7 @@ xfer_create_directories (void)
         NULL, NULL, options);
     if (path)
     {
-        (void) weechat_mkdir_parents (path, 0700);
+        xfer_create_directory (path);
         free (path);
     }
 
