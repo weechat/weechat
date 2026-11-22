@@ -201,6 +201,9 @@ TEST(GuiFilter, Buffer)
     POINTERS_EQUAL(buffer1, test_filter_signal_buffer);
     LONGS_EQUAL(0, line_data1->displayed);
     LONGS_EQUAL(1, line_data2->displayed);
+    LONGS_EQUAL(1, buffer1->mixed_lines->lines_hidden);
+    LONGS_EQUAL(1, buffer1->own_lines->lines_hidden);
+    LONGS_EQUAL(0, buffer2->own_lines->lines_hidden);
     gui_filter_free (filter);
     filter = gui_filter_new (1, "test", "core.test_filter_*",
                              "tag_test_filter", "*");
@@ -210,15 +213,57 @@ TEST(GuiFilter, Buffer)
     POINTERS_EQUAL(buffer2, test_filter_signal_buffer);
     LONGS_EQUAL(0, line_data1->displayed);
     LONGS_EQUAL(0, line_data2->displayed);
+    LONGS_EQUAL(2, buffer1->mixed_lines->lines_hidden);
+    LONGS_EQUAL(1, buffer1->own_lines->lines_hidden);
+    LONGS_EQUAL(1, buffer2->own_lines->lines_hidden);
     test_filter_signal_buffers[0] = '\0';
     gui_filter_free (filter);
     gui_filter_buffer (buffer1, NULL);
     LONGS_EQUAL(6, test_filter_signal_count);
     LONGS_EQUAL(1, line_data1->displayed);
     LONGS_EQUAL(1, line_data2->displayed);
+    LONGS_EQUAL(0, buffer1->mixed_lines->lines_hidden);
+    LONGS_EQUAL(0, buffer1->own_lines->lines_hidden);
+    LONGS_EQUAL(0, buffer2->own_lines->lines_hidden);
     /* Signals sent in order of the first line changed in each buffer. */
     STRCMP_EQUAL("core.test_filter_1,core.test_filter_2",
                  test_filter_signal_buffers);
+
+    /* Merged buffers: filter of a single line. */
+    filter = gui_filter_new (1, "test", "core.test_filter_2",
+                             "tag_test_filter", "*");
+    CHECK(filter);
+    gui_filter_buffer (buffer2, line_data2);
+    LONGS_EQUAL(0, line_data2->displayed);
+    LONGS_EQUAL(1, buffer2->mixed_lines->lines_hidden);
+    LONGS_EQUAL(0, buffer1->own_lines->lines_hidden);
+    LONGS_EQUAL(1, buffer2->own_lines->lines_hidden);
+    gui_filter_free (filter);
+    gui_filter_buffer (buffer2, line_data2);
+    LONGS_EQUAL(1, line_data2->displayed);
+    LONGS_EQUAL(0, buffer2->mixed_lines->lines_hidden);
+    LONGS_EQUAL(0, buffer2->own_lines->lines_hidden);
+
+    /* Merged buffers, buffer zoomed: mixed lines are updated too. */
+    gui_buffer_zoom (buffer1);
+    LONGS_EQUAL(2, buffer1->active);
+    POINTERS_EQUAL(buffer1->own_lines, buffer1->lines);
+    filter = gui_filter_new (1, "test", "core.test_filter_1",
+                             "tag_test_filter", "*");
+    CHECK(filter);
+    gui_filter_buffer (buffer1, NULL);
+    LONGS_EQUAL(7, test_filter_signal_count);
+    LONGS_EQUAL(0, line_data1->displayed);
+    LONGS_EQUAL(1, buffer1->own_lines->lines_hidden);
+    LONGS_EQUAL(1, buffer1->mixed_lines->lines_hidden);
+    gui_filter_free (filter);
+    gui_filter_buffer (buffer1, NULL);
+    LONGS_EQUAL(8, test_filter_signal_count);
+    LONGS_EQUAL(1, line_data1->displayed);
+    LONGS_EQUAL(0, buffer1->own_lines->lines_hidden);
+    LONGS_EQUAL(0, buffer1->mixed_lines->lines_hidden);
+    gui_buffer_zoom (buffer1);
+    POINTERS_EQUAL(buffer1->mixed_lines, buffer1->lines);
 
     /* Merged buffer closed by the signal callback: no signal sent for it. */
     test_filter_close_buffer1 = buffer1;
@@ -228,7 +273,7 @@ TEST(GuiFilter, Buffer)
     CHECK(filter);
     test_filter_signal_buffers[0] = '\0';
     gui_filter_buffer (buffer1, NULL);
-    LONGS_EQUAL(7, test_filter_signal_count);
+    LONGS_EQUAL(9, test_filter_signal_count);
     POINTERS_EQUAL(NULL, test_filter_close_buffer1);
     STRCMP_EQUAL("core.test_filter_1", test_filter_signal_buffers);
     gui_filter_free (filter);

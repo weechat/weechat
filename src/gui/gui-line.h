@@ -50,7 +50,7 @@ struct t_gui_lines
     struct t_gui_line *last_read_line; /* last read line                    */
     int lines_count;                   /* number of lines                   */
     int first_line_not_read;           /* if 1, marker is before first line */
-    int lines_hidden;                  /* 1 if at least one line is hidden  */
+    int lines_hidden;                  /* number of hidden (filtered) lines */
     int buffer_max_length;             /* max length for buffer name (for   */
                                        /* mixed lines only)                 */
     int buffer_max_length_refresh;     /* refresh asked for buffer max len. */

@@ -126,12 +126,37 @@ gui_filter_buffer_send_signal_cb (void *data,
 }
 
 /*
+ * Adjust the number of hidden lines in "lines" when a line is filtered
+ * (line_displayed == 0) or unfiltered (line_displayed == 1), unless "lines"
+ * is NULL or is "lines_filtered" (lines being filtered, adjusted by the
+ * caller).
+ */
+
+void
+gui_filter_adjust_lines_hidden (struct t_gui_lines *lines,
+                                struct t_gui_lines *lines_filtered,
+                                int line_displayed)
+{
+    if (!lines || (lines == lines_filtered))
+        return;
+
+    if (!line_displayed)
+        (lines->lines_hidden)++;
+    else if (lines->lines_hidden > 0)
+        (lines->lines_hidden)--;
+}
+
+/*
  * Filter a buffer, using message filters.
  *
  * If line_data is NULL, filters all lines in buffer (lines of all merged
  * buffers if the buffer is merged) and sends the signal "buffer_lines_filtered"
  * for each buffer with at least one line filtered or unfiltered.
  * If line_data is not NULL, filters only this line_data.
+ *
+ * The number of hidden lines is updated in buffer lines (mixed lines if the
+ * buffer is merged, own lines if it is not merged or zoomed), and in the own
+ * lines and mixed lines of the buffer of each line changed.
  */
 
 void
@@ -161,6 +186,15 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
         {
             lines_changed = 1;
             lines_hidden += (line_displayed) ? -1 : 1;
+            /*
+             * Merged buffer: adjust the number of hidden lines in the own
+             * lines and the mixed lines of the buffer of this line, except
+             * the lines being filtered (buffer->lines), updated below.
+             */
+            gui_filter_adjust_lines_hidden (ptr_line_data->buffer->own_lines,
+                                            buffer->lines, line_displayed);
+            gui_filter_adjust_lines_hidden (ptr_line_data->buffer->mixed_lines,
+                                            buffer->lines, line_displayed);
             /*
              * Remember buffers with lines changed (lines of merged buffers),
              * in order of their first line changed (the hashtable keeps the
