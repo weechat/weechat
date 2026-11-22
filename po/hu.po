@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 16:59+0100\n"
+"POT-Creation-Date: 2026-11-22 17:07+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -6027,6 +6027,10 @@ msgstr ""
 #, c-format
 msgid "%sInvalid theme name \"%s\" (expected a name, not a path)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sUnable to create directory \"%s\""
+msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, fuzzy, c-format
 msgid "%sUnable to write theme file \"%s\" (%s)"

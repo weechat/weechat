@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 16:59+0100\n"
+"POT-Creation-Date: 2026-11-22 17:07+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -6865,6 +6865,11 @@ msgstr "WeeChat подразумевана тема за терминале са
 #, c-format
 msgid "%sInvalid theme name \"%s\" (expected a name, not a path)"
 msgstr "%sНеважеће име теме „%s” (очекује се име, а не путања)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgid "%sUnable to create directory \"%s\""
+msgstr "%s%s: није успело креирање директоријума за логове („%s”)"
 
 #, c-format
 msgid "%sUnable to write theme file \"%s\" (%s)"

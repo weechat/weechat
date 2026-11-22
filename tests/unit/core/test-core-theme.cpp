@@ -457,6 +457,47 @@ TEST(CoreTheme, WriteFile)
 
 /*
  * Test functions:
+ *   theme_write_file (directory "themes" can not be created)
+ */
+
+TEST(CoreTheme, WriteFileDirError)
+{
+    char *dir, *dir_save, *message;
+    struct stat st;
+    FILE *file;
+    int dir_saved;
+
+    dir = NULL;
+    dir_save = NULL;
+    string_asprintf (&dir, "%s/themes", weechat_config_dir);
+    string_asprintf (&dir_save, "%s/themes.save", weechat_config_dir);
+    CHECK(dir);
+    CHECK(dir_save);
+    string_asprintf (&message, "Unable to create directory \"%s\"", dir);
+    CHECK(message);
+
+    /* A file exists with the name of directory "themes". */
+    dir_saved = ((stat (dir, &st) == 0) && (rename (dir, dir_save) == 0)) ?
+        1 : 0;
+    file = fopen (dir, "w");
+    CHECK(file);
+    fclose (file);
+
+    record_start ();
+    POINTERS_EQUAL(NULL, theme_write_file ("test_wrt_err", NULL));
+    record_stop ();
+    CHECK(record_search ("core.weechat", "=!=", message, NULL));
+
+    unlink (dir);
+    if (dir_saved)
+        rename (dir_save, dir);
+    free (dir);
+    free (dir_save);
+    free (message);
+}
+
+/*
+ * Test functions:
  *   theme_make_backup
  */
 

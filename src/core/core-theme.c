@@ -621,7 +621,15 @@ theme_write_file (const char *name, const char *description)
     string_asprintf (&dir, "%s/themes", weechat_config_dir);
     if (!dir)
         return NULL;
-    dir_mkdir (dir, 0755);
+    if (!dir_mkdir (dir, 0755))
+    {
+        gui_chat_printf (NULL,
+                         _("%sUnable to create directory \"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         dir);
+        free (dir);
+        return NULL;
+    }
     free (dir);
 
     path = theme_user_file_path (name);

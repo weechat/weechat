@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 16:59+0100\n"
+"POT-Creation-Date: 2026-11-22 17:07+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -6862,6 +6862,11 @@ msgstr "Domyślny motyw WeeChat dla terminali z jasnym tłem"
 #, c-format
 msgid "%sInvalid theme name \"%s\" (expected a name, not a path)"
 msgstr "%sNieprawidłowa nazwa motywu „%s” (oczekiwano nazwy, a nie ścieżki)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgid "%sUnable to create directory \"%s\""
+msgstr "%s%s: nie można utworzyć katalogu dla logów (\"%s\")"
 
 #, c-format
 msgid "%sUnable to write theme file \"%s\" (%s)"
