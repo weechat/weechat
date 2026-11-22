@@ -503,6 +503,7 @@ otr_key_process_cb (const void *pointer, void *data, const char *command,
     {
         otr_key_print (OTR_CONFIG_LEVEL_SUCCESS, _("OTR key generated for %s."),
                        generation->account);
+        weechat_bar_item_update (OTR_BAR_ITEM);
         otr_key_send_queries (generation);
     }
 

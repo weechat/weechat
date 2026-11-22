@@ -754,6 +754,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          otr/                                   | Root of unit tests for OTR plugin.
 // TRANSLATION MISSING
+|             test-otr-bar-item.cpp               | Tests: OTR bar item.
+// TRANSLATION MISSING
 |             test-otr-buffer.cpp                 | Tests: OTR buffer functions.
 // TRANSLATION MISSING
 |             test-otr-callback.cpp               | Tests: libotr callbacks.

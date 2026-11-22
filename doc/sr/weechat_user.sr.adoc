@@ -895,7 +895,7 @@ _status_ трака садржи следеће подразумеване ст�
 | buffer_zoom           | !                      | `!` значи да је спојени бафер зумиран (само он се приказује), празна вредност значи да се приказују сви спојени бафери.
 | buffer_filter         | `+*+`                  | Индикатор филтрирања: `+*+` значи да су неке линије филтриране (скривене), празна вредност значи да се приказују све линије.
 // TRANSLATION MISSING
-| otr                   | `OTR:SEC,!AUTH,!LOG`   | OTR state of the current private buffer, see <<otr_status_bar,OTR status bar>>.
+| otr                   | `OTR:SEC,!AUTH,!LOG`   | OTR state of the current private buffer (empty if there is no OTR private key for the IRC account), see <<otr_status_bar,OTR status bar>>.
 | mouse_status          | `M`                    | Статус миша (празно ако је миш искључен), погледајте команду <<command_weechat_mouse,/mouse>> и <<key_bindings_toggle_keys,тастери преклопници>>.
 | scroll                | `-ЈОШ(50)-`            | Скрол индикатор, са бројем линија испод последње приказане линије.
 | lag                   | `Кашњење: 2.5`         | Индикатор кашњења, у секундама (скривен је ако је кашњење мало).
@@ -4090,7 +4090,9 @@ the sessions are never saved on disk).
 
 // TRANSLATION MISSING
 The bar item "otr" shows the OTR state of the current private buffer. It is
-displayed in the status bar by default (option weechat.bar.status.items).
+displayed in the status bar by default (option weechat.bar.status.items), and
+it is empty as long as you have no OTR private key for the IRC account (OTR has
+never been used with this nick on this server).
 
 // TRANSLATION MISSING
 For example, "OTR:SEC,!AUTH,!LOG" means that the conversation is encrypted,

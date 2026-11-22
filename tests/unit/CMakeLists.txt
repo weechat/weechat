@@ -182,6 +182,7 @@ if(BUILD_PLUGIN_OTR)
   pkg_check_modules(LIBOTR REQUIRED libotr>=4.0.0)
   include_directories(${LIBOTR_INCLUDE_DIRS})
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    plugins/otr/test-otr-bar-item.cpp
     plugins/otr/test-otr-buffer.cpp
     plugins/otr/test-otr-callback.cpp
     plugins/otr/test-otr-command.cpp

@@ -577,6 +577,9 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
         otr_irc_send_raw (server, ptr_peer, ptr_query);
     }
 
+    /* The bar item depends on our nick (private key of the account). */
+    weechat_bar_item_update (OTR_BAR_ITEM);
+
 end:
     free (server);
     free (info_nick);

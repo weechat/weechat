@@ -53,6 +53,23 @@ otr_bar_item_part (char **content, const char *separator, int *first,
 }
 
 /*
+ * Set the local variables "otr_encrypted", "otr_authenticated" and
+ * "otr_logged" in a private buffer.
+ */
+
+void
+otr_bar_item_set_localvars (struct t_gui_buffer *buffer, int encrypted,
+                            int verified, int logged)
+{
+    weechat_buffer_set (buffer, "localvar_set_otr_encrypted",
+                        (encrypted) ? "true" : "false");
+    weechat_buffer_set (buffer, "localvar_set_otr_authenticated",
+                        (verified) ? "true" : "false");
+    weechat_buffer_set (buffer, "localvar_set_otr_logged",
+                        (logged) ? "true" : "false");
+}
+
+/*
  * Callback for bar item "otr": OTR state of the private buffer (encrypted,
  * authenticated, logged).
  *
@@ -60,7 +77,8 @@ otr_bar_item_part (char **content, const char *separator, int *first,
  * set in the buffer.
  *
  * Return content of bar item (empty string if the buffer is not a private
- * buffer).
+ * buffer, or if OTR is not used: no private key for the IRC account and no
+ * OTR session).
  */
 
 char *
@@ -104,6 +122,15 @@ otr_bar_item_cb (const void *pointer, void *data, struct t_gui_bar_item *item,
     encrypted = otr_context_encrypted (ptr_context);
     verified = otr_context_verified (ptr_context);
     logged = otr_log_buffer_is_logged (ptr_buffer);
+
+    /* OTR not used: no private key for the account (and no session). */
+    if (!encrypted && !otrl_privkey_find (otr_us, account, OTR_PROTOCOL))
+    {
+        free (account);
+        free (peer);
+        otr_bar_item_set_localvars (ptr_buffer, 0, 0, logged);
+        return strdup ("");
+    }
 
     free (account);
     free (peer);
@@ -169,12 +196,7 @@ otr_bar_item_cb (const void *pointer, void *data, struct t_gui_bar_item *item,
     }
     weechat_string_dyn_free (states, 1);
 
-    weechat_buffer_set (ptr_buffer, "localvar_set_otr_encrypted",
-                        (encrypted) ? "true" : "false");
-    weechat_buffer_set (ptr_buffer, "localvar_set_otr_authenticated",
-                        (verified) ? "true" : "false");
-    weechat_buffer_set (ptr_buffer, "localvar_set_otr_logged",
-                        (logged) ? "true" : "false");
+    otr_bar_item_set_localvars (ptr_buffer, encrypted, verified, logged);
 
     return (result) ? weechat_string_dyn_free (result, 0) : strdup ("");
 }

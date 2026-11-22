@@ -576,6 +576,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-logger-backlog.cpp             | Tests : backlog logger.
 |             test-logger-tail.cpp                | Tests : fonctions "tail".
 |          otr/                                   | Racine des tests unitaires pour l'extension OTR.
+|             test-otr-bar-item.cpp               | Tests : objet de barre OTR.
 |             test-otr-buffer.cpp                 | Tests : fonctions de tampons OTR.
 |             test-otr-callback.cpp               | Tests : fonctions de rappel pour libotr.
 |             test-otr-command.cpp                | Tests : commandes OTR.

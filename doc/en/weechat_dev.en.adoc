@@ -575,6 +575,7 @@ WeeChat "core" is located in following directories:
 |             test-logger-backlog.cpp             | Tests: logger backlog.
 |             test-logger-tail.cpp                | Tests: logger tail functions.
 |          otr/                                   | Root of unit tests for OTR plugin.
+|             test-otr-bar-item.cpp               | Tests: OTR bar item.
 |             test-otr-buffer.cpp                 | Tests: OTR buffer functions.
 |             test-otr-callback.cpp               | Tests: libotr callbacks.
 |             test-otr-command.cpp                | Tests: OTR commands.

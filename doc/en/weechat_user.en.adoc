@@ -939,7 +939,7 @@ Bar _status_ has following default items:
 | buffer_nicklist_count | `4`                    | Number of nicks displayed in nicklist.
 | buffer_zoom           | !                      | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
 | buffer_filter         | `+*+`                  | Filtering indicator: `+*+` means some lines are filtered (hidden), empty value means all lines are displayed.
-| otr                   | `OTR:SEC,!AUTH,!LOG`   | OTR state of the current private buffer, see <<otr_status_bar,OTR status bar>>.
+| otr                   | `OTR:SEC,!AUTH,!LOG`   | OTR state of the current private buffer (empty if there is no OTR private key for the IRC account), see <<otr_status_bar,OTR status bar>>.
 | mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,toggle keys>>.
 | scroll                | `-MORE(50)-`           | Scroll indicator, with number of lines below last line displayed.
 | lag                   | `Lag: 2.5`             | Lag indicator, in seconds (hidden if lag is low).
@@ -4276,7 +4276,9 @@ the sessions are never saved on disk).
 === Status bar
 
 The bar item "otr" shows the OTR state of the current private buffer. It is
-displayed in the status bar by default (option weechat.bar.status.items).
+displayed in the status bar by default (option weechat.bar.status.items), and
+it is empty as long as you have no OTR private key for the IRC account (OTR has
+never been used with this nick on this server).
 
 For example, "OTR:SEC,!AUTH,!LOG" means that the conversation is encrypted,
 that the peer is not authenticated and that the conversation is not logged to
