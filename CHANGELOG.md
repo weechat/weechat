@@ -129,6 +129,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: return an error in functions mkdir_home, mkdir and mkdir_parents if path (or a parent path for mkdir_parents) exists and is not a directory
 - core: fix read of passphrase from command (option sec.crypt.passphrase_command) when the read is interrupted by a signal
 - core: fix loss of secured data still encrypted in file sec.conf after a partial decryption with command `/secure decrypt`
 - core: fix decryption of secured data with a comma in name with command `/secure decrypt`

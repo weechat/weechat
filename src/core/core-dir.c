@@ -85,11 +85,40 @@ dir_get_temp_dir (void)
 }
 
 /*
+ * Create a directory.
+ *
+ * Return:
+ *   1: OK (directory created or already existing)
+ *   0: error (for example if the path exists and is not a directory)
+ */
+
+int
+dir_mkdir (const char *directory, int mode)
+{
+    struct stat buf;
+
+    if (!directory)
+        return 0;
+
+    if (mkdir (directory, mode) < 0)
+    {
+        if ((errno != EEXIST)
+            || (stat (directory, &buf) < 0)
+            || !S_ISDIR(buf.st_mode))
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+/*
  * Create a directory in WeeChat home.
  *
  * Return:
- *   1: OK
- *   0: error
+ *   1: OK (directory created or already existing)
+ *   0: error (for example if the path exists and is not a directory)
  */
 
 int
@@ -141,13 +170,7 @@ dir_mkdir_home (const char *directory, int mode)
         goto end;
 
     /* Build directory, adding WeeChat home. */
-    if (mkdir (dir5, mode) < 0)
-    {
-        if (errno != EEXIST)
-            goto end;
-    }
-
-    rc = 1;
+    rc = dir_mkdir (dir5, mode);
 
 end:
     free (dir);
@@ -160,34 +183,12 @@ end:
 }
 
 /*
- * Create a directory.
- *
- * Return:
- *   1: OK
- *   0: error
- */
-
-int
-dir_mkdir (const char *directory, int mode)
-{
-    if (!directory)
-        return 0;
-
-    if (mkdir (directory, mode) < 0)
-    {
-        if (errno != EEXIST)
-            return 0;
-    }
-
-    return 1;
-}
-
-/*
  * Create a directory and make parent directories as needed.
  *
  * Return:
  *   1: OK
- *   0: error
+ *   0: error (for example if the path or a parent path exists and is not a
+ *      directory)
  */
 
 int
@@ -217,14 +218,11 @@ dir_mkdir_parents (const char *directory, int mode)
             pos_sep[0] = '\0';
 
         rc = stat (string, &buf);
-        if ((rc < 0) || !S_ISDIR(buf.st_mode))
+        if (((rc == 0) && !S_ISDIR(buf.st_mode))
+            || ((rc < 0) && !dir_mkdir (string, mode)))
         {
-            /* Try to create directory. */
-            if (!dir_mkdir (string, mode))
-            {
-                free (string);
-                return 0;
-            }
+            free (string);
+            return 0;
         }
 
         if (pos_sep)

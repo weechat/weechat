@@ -12,7 +12,9 @@ extern "C"
 {
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 #include "src/core/core-dir.h"
 #include "src/core/core-string.h"
@@ -43,7 +45,63 @@ TEST(CoreDir, GetTempDir)
 
 TEST(CoreDir, Mkdir)
 {
-    /* TODO: write tests */
+    char *path, *path_file, *path_sub, *path_file_sub;
+    struct stat st;
+    FILE *file;
+
+    path = string_eval_path_home ("${weechat_data_dir}/test_mkdir",
+                                  NULL, NULL, NULL);
+    CHECK(path);
+    dir_rmtree (path);
+    string_asprintf (&path_sub, "%s/a/b", path);
+    string_asprintf (&path_file, "%s/file", path);
+    string_asprintf (&path_file_sub, "%s/file/sub", path);
+    CHECK(path_sub);
+    CHECK(path_file);
+    CHECK(path_file_sub);
+
+    LONGS_EQUAL(0, dir_mkdir_home (NULL, 0700));
+    LONGS_EQUAL(0, dir_mkdir (NULL, 0700));
+    LONGS_EQUAL(0, dir_mkdir_parents (NULL, 0700));
+
+    /* Create directory, then directory already exists. */
+    LONGS_EQUAL(1, dir_mkdir (path, 0700));
+    LONGS_EQUAL(0, stat (path, &st));
+    CHECK(S_ISDIR(st.st_mode));
+    LONGS_EQUAL(1, dir_mkdir (path, 0700));
+
+    /* Create directory in WeeChat home, then directory already exists. */
+    LONGS_EQUAL(1, dir_mkdir_home ("test_mkdir/home", 0700));
+    LONGS_EQUAL(1, dir_mkdir_home ("${weechat_data_dir}/test_mkdir/home",
+                                   0700));
+    LONGS_EQUAL(1, dir_mkdir_home ("test_mkdir/home", 0700));
+
+    /* Create directory and parent directories. */
+    LONGS_EQUAL(1, dir_mkdir_parents (path_sub, 0700));
+    LONGS_EQUAL(0, stat (path_sub, &st));
+    CHECK(S_ISDIR(st.st_mode));
+
+    /* Directory already exists. */
+    LONGS_EQUAL(1, dir_mkdir_parents (path_sub, 0700));
+
+    /* A file exists with the name of the directory or of a parent. */
+    file = fopen (path_file, "w");
+    CHECK(file);
+    fclose (file);
+    LONGS_EQUAL(0, dir_mkdir_home ("test_mkdir/file", 0700));
+    LONGS_EQUAL(0, dir_mkdir_home ("${weechat_data_dir}/test_mkdir/file",
+                                   0700));
+    LONGS_EQUAL(0, dir_mkdir (path_file, 0700));
+    LONGS_EQUAL(0, dir_mkdir_parents (path_file, 0700));
+    LONGS_EQUAL(0, dir_mkdir_parents (path_file_sub, 0700));
+    LONGS_EQUAL(0, stat (path_file, &st));
+    CHECK(S_ISREG(st.st_mode));
+
+    dir_rmtree (path);
+    free (path);
+    free (path_sub);
+    free (path_file);
+    free (path_file_sub);
 }
 
 /*
