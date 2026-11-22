@@ -80,24 +80,24 @@ const struct t_otr_config_option_def
 const struct t_otr_config_option_def
     otr_config_look_defs[OTR_CONFIG_NUM_LOOK_OPTIONS] =
 {
-    { "bar.prefix", N_("prefix for bar item \"otr\""), "OTR:", 1 },
-    { "bar.state.encrypted",
+    { "bar_prefix", N_("prefix for bar item \"otr\""), "OTR:", 1 },
+    { "bar_state_encrypted",
       N_("shown in status bar when conversation is encrypted"), "SEC", 1 },
-    { "bar.state.unencrypted",
+    { "bar_state_unencrypted",
       N_("shown in status bar when conversation is not encrypted"),
       "!SEC", 1 },
-    { "bar.state.authenticated",
+    { "bar_state_authenticated",
       N_("shown in status bar when peer is authenticated"), "AUTH", 1 },
-    { "bar.state.unauthenticated",
+    { "bar_state_unauthenticated",
       N_("shown in status bar when peer is not authenticated"), "!AUTH", 1 },
-    { "bar.state.logged",
+    { "bar_state_logged",
       N_("shown in status bar when peer conversation is being logged to disk"),
       "LOG", 1 },
-    { "bar.state.notlogged",
+    { "bar_state_notlogged",
       N_("shown in status bar when peer conversation is not being logged to "
          "disk"),
       "!LOG", 1 },
-    { "bar.state.separator", N_("separator for states in status bar"),
+    { "bar_state_separator", N_("separator for states in status bar"),
       ",", 1 },
     { "prefix",
       N_("prefix used for messages from otr (note: content is evaluated, see "
