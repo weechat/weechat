@@ -20,6 +20,7 @@
 #include "otr-config.h"
 #include "otr-context.h"
 #include "otr-irc.h"
+#include "otr-key.h"
 #include "otr-log.h"
 #include "otr-policy.h"
 #include "otr-util.h"
@@ -348,6 +349,9 @@ otr_command_show_peer_fingerprints (const char *search)
 /*
  * Start an OTR session with a peer (send an OTR query).
  *
+ * If there is no private key for the account, the key is generated in
+ * background and the OTR query is sent when the key is generated.
+ *
  * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
  */
 
@@ -357,6 +361,7 @@ otr_command_start (struct t_gui_buffer *buffer,
 {
     char *account, *peer, *message;
     const char *ptr_query;
+    int has_key;
 
     /* Make C compiler happy. */
     (void) buffer;
@@ -373,10 +378,22 @@ otr_command_start (struct t_gui_buffer *buffer,
         goto end;
     }
 
+    /*
+     * No private key: generate it in background, the OTR query is sent when
+     * the key is generated (the peer can not start the session without our
+     * key).
+     */
+    has_key = (otrl_privkey_find (otr_us, account, OTR_PROTOCOL)) ? 1 : 0;
+
     otr_buffer_peer_hint (
         peer_ref->server, peer,
+        (has_key) ?
         _("Sending OTR query... Please wait for the OTR session to start "
-          "before sending a message."));
+          "before sending a message.") :
+        _("Generating a new OTR key for this account in background, the OTR "
+          "query will be sent when the key is generated... Please await "
+          "confirmation of the OTR session being started before sending a "
+          "message."));
     if (!otr_policy_for (account, peer, "send_tag"))
     {
         weechat_asprintf (
@@ -390,7 +407,10 @@ otr_command_start (struct t_gui_buffer *buffer,
             free (message);
         }
     }
-    otr_irc_send_raw (peer_ref->server, peer, ptr_query);
+    if (has_key)
+        otr_irc_send_raw (peer_ref->server, peer, ptr_query);
+    else
+        otr_key_generate (account, OTR_PROTOCOL, peer);
 
 end:
     free (account);

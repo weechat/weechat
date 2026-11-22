@@ -20,12 +20,15 @@ extern "C"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-command.h"
 #include "src/plugins/otr/otr-context.h"
+#include "src/plugins/otr/otr-key.h"
 
 extern int otr_command_split_args (const char *string, char **args,
                                    int max_args);
 extern const char *otr_command_get_policy_name (const char *name);
 extern const char *otr_command_get_policy_value (const char *value);
 extern void otr_command_show_peer_fingerprints (const char *search);
+extern struct t_otr_key_generation *otr_key_generation_search (const char *account,
+                                                               const char *protocol);
 }
 
 TEST_GROUP(OtrCommand)
@@ -272,4 +275,43 @@ TEST(OtrCommand, FinishHeldMessages)
 
     run_cmd_quiet ("/mute /disconnect test_otr_finish");
     run_cmd_quiet ("/mute /server del test_otr_finish");
+}
+
+/*
+ * Test functions:
+ *   otr_command_start (no private key)
+ */
+
+TEST(OtrCommand, StartWithoutKey)
+{
+    struct t_irc_server *server;
+    struct t_otr_key_generation *ptr_generation;
+
+    run_cmd_quiet ("/mute /server add test_otr_start fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_start");
+    server = irc_server_search ("test_otr_start");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+
+    POINTERS_EQUAL(NULL, otrl_privkey_find (otr_us, "alice@test_otr_start",
+                                            OTR_PROTOCOL));
+
+    /* No key: key generated, query sent later to the peer (in lower case). */
+    run_cmd_quiet ("/otr start Bob test_otr_start");
+    ptr_generation = otr_key_generation_search ("alice@test_otr_start",
+                                                OTR_PROTOCOL);
+    CHECK(ptr_generation);
+    STRCMP_EQUAL("bob", *(ptr_generation->peers));
+
+    /* Generation already running: only the peer is added. */
+    run_cmd_quiet ("/otr start carol test_otr_start");
+    POINTERS_EQUAL(ptr_generation,
+                   otr_key_generation_search ("alice@test_otr_start",
+                                              OTR_PROTOCOL));
+    STRCMP_EQUAL("bob\ncarol", *(ptr_generation->peers));
+
+    otr_key_generation_free_all ();
+
+    run_cmd_quiet ("/mute /disconnect test_otr_start");
+    run_cmd_quiet ("/mute /server del test_otr_start");
 }
