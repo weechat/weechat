@@ -42,6 +42,8 @@ extern struct t_hashtable *irc_message_split_batch_line (const char *host,
                                                          int *messages);
 extern char *irc_message_build_batch_tags (const char *batch_ref,
                                            const char *tags, int concat);
+extern int irc_message_split_get_msg_max_length (struct t_irc_server *server);
+extern int irc_message_split_get_max_length_nick_user_host (struct t_irc_server *server);
 extern void irc_message_new_batch (struct t_irc_message_split_context *context,
                                    const char *target, char *batch_ref,
                                    int batch_ref_size, char **multiline_args,
@@ -1517,6 +1519,74 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
                  (const char *)hashtable_get (context.hashtable, "args2"));
 
     hashtable_free (context.hashtable);
+}
+
+/*
+ * Test functions:
+ *   irc_message_split_get_msg_max_length
+ *   irc_message_split_get_max_length_nick_user_host
+ *   irc_message_split_get_privmsg_max_length
+ */
+
+TEST(IrcMessage, SplitGetMaxLength)
+{
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+    char msg[1024];
+
+    server = irc_server_alloc ("test_split_max");
+    CHECK(server);
+
+    LONGS_EQUAL(512, irc_message_split_get_msg_max_length (NULL));
+    LONGS_EQUAL(512, irc_message_split_get_msg_max_length (server));
+    server->msg_max_length = 1024;
+    LONGS_EQUAL(1024, irc_message_split_get_msg_max_length (server));
+    server->msg_max_length = 0;
+
+    /* ":" + 16 + "!" + 10 + "@" + 63 + " " */
+    LONGS_EQUAL(93, irc_message_split_get_max_length_nick_user_host (NULL));
+    LONGS_EQUAL(93, irc_message_split_get_max_length_nick_user_host (server));
+    server->nick_max_length = 32;
+    LONGS_EQUAL(109,
+                irc_message_split_get_max_length_nick_user_host (server));
+
+    /* 510 - 93 - "PRIVMSG " - target - " " - ":" */
+    LONGS_EQUAL(403, irc_message_split_get_privmsg_max_length (NULL, "nick"));
+    LONGS_EQUAL(408, irc_message_split_get_privmsg_max_length (NULL, NULL));
+    LONGS_EQUAL(387,
+                irc_message_split_get_privmsg_max_length (server, "nick"));
+
+    /* Text with the max length is not split, one more char is split. */
+    snprintf (msg, sizeof (msg), "PRIVMSG nick :%0387d", 0);
+    /* Message received by the nick: ":nick!user@host " + msg + "\r\n". */
+    LONGS_EQUAL(512, 109 + strlen (msg) + 2);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("1", (const char *)hashtable_get (hashtable, "count"));
+    hashtable_free (hashtable);
+    snprintf (msg, sizeof (msg), "PRIVMSG nick :%0388d", 0);
+    hashtable = irc_message_split (server, msg);
+    CHECK(hashtable);
+    STRCMP_EQUAL("2", (const char *)hashtable_get (hashtable, "count"));
+    hashtable_free (hashtable);
+
+    /* Very long target. */
+    memset (msg, 'a', 600);
+    msg[600] = '\0';
+    LONGS_EQUAL(0, irc_message_split_get_privmsg_max_length (server, msg));
+
+    /* Split disabled. */
+    config_file_option_set (
+        irc_config_server_default[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH],
+        "0", 1);
+    LONGS_EQUAL(IRC_MESSAGE_SPLIT_MAX_LENGTH_DISABLED,
+                irc_message_split_get_msg_max_length (server));
+    LONGS_EQUAL(-1, irc_message_split_get_privmsg_max_length (server, "nick"));
+    LONGS_EQUAL(403, irc_message_split_get_privmsg_max_length (NULL, "nick"));
+    config_file_option_unset (
+        irc_config_server_default[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH]);
+
+    irc_server_free (server);
 }
 
 /*

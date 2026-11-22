@@ -1945,6 +1945,87 @@ irc_message_split_005 (struct t_irc_message_split_context *context,
 }
 
 /*
+ * Get the max length of an IRC message sent to the server (including the
+ * final "\r\n"): it is the value of "LINELEN" in message 005 (isupport) if
+ * received, otherwise the server option "split_msg_max_length" (512 if server
+ * is NULL).
+ *
+ * Return IRC_MESSAGE_SPLIT_MAX_LENGTH_DISABLED if split of messages is
+ * disabled on the server.
+ */
+
+int
+irc_message_split_get_msg_max_length (struct t_irc_server *server)
+{
+    int max_length;
+
+    if (!server)
+        return 512;
+
+    max_length = (server->msg_max_length > 0) ?
+        server->msg_max_length :
+        IRC_SERVER_OPTION_INTEGER(server,
+                                  IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH);
+
+    /* If split disabled, use a high max_length to prevent any split. */
+    return (max_length == 0) ?
+        IRC_MESSAGE_SPLIT_MAX_LENGTH_DISABLED : max_length;
+}
+
+/*
+ * Get the max length of ":nick!user@host " added by the server when it sends
+ * a message from us to other people (the values "NICKLEN", "USERLEN" and
+ * "HOSTLEN" of message 005 are used if received, otherwise default values:
+ * 16, 10 and 63).
+ */
+
+int
+irc_message_split_get_max_length_nick_user_host (struct t_irc_server *server)
+{
+    int max_length_nick, max_length_user, max_length_host;
+
+    max_length_nick = (server && (server->nick_max_length > 0)) ?
+        server->nick_max_length : 16;
+    max_length_user = (server && (server->user_max_length > 0)) ?
+        server->user_max_length : 10;
+    max_length_host = (server && (server->host_max_length > 0)) ?
+        server->host_max_length : 63;
+
+    return 1 +                    /* ":"  */
+        max_length_nick +         /* nick */
+        1 +                       /* "!"  */
+        max_length_user +         /* user */
+        1 +                       /* @    */
+        max_length_host +         /* host */
+        1;                        /* " "  */
+}
+
+/*
+ * Get the max length of text in a message PRIVMSG sent to a target, so that
+ * the message is not split (in one line, without multiline).
+ *
+ * Return -1 if split of messages is disabled on the server.
+ */
+
+int
+irc_message_split_get_privmsg_max_length (struct t_irc_server *server,
+                                          const char *target)
+{
+    int max_length;
+
+    max_length = irc_message_split_get_msg_max_length (server);
+    if (max_length == IRC_MESSAGE_SPLIT_MAX_LENGTH_DISABLED)
+        return -1;
+
+    max_length = irc_message_split_get_max_length_args (
+        NULL, "PRIVMSG", (target) ? target : "", ":", "",
+        irc_message_split_get_max_length_nick_user_host (server),
+        max_length);
+
+    return (max_length < 0) ? 0 : max_length;
+}
+
+/*
  * Split an IRC message about to be sent to IRC server.
  *
  * The maximum length of an IRC message is 510 bytes for user data + final
@@ -1979,8 +2060,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
     char **argv, **argv_eol, *tags, *host, *command, *arguments, target[4096];
     char monitor_action[3];
     const char *pos;
-    int split_ok, split_privmsg, argc, index_args, max_length_nick;
-    int max_length_user, max_length_host, max_length_nick_user_host;
+    int split_ok, split_privmsg, argc, index_args, max_length_nick_user_host;
     int split_msg_max_length, multiline, multiline_max_bytes;
     int multiline_max_lines;
 
@@ -1997,21 +2077,14 @@ irc_message_split (struct t_irc_server *server, const char *message)
     argv_eol = NULL;
     multiline = 0;
 
+    split_msg_max_length = irc_message_split_get_msg_max_length (server);
     if (server)
     {
-        split_msg_max_length = (server->msg_max_length > 0) ?
-            server->msg_max_length :
-            IRC_SERVER_OPTION_INTEGER(
-                server, IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH);
-        /* If split disabled, use a high max_length to prevent any split. */
-        if (split_msg_max_length == 0)
-            split_msg_max_length = IRC_MESSAGE_SPLIT_MAX_LENGTH_DISABLED;
         multiline_max_bytes = server->multiline_max_bytes;
         multiline_max_lines = server->multiline_max_lines;
     }
     else
     {
-        split_msg_max_length = 512;
         multiline_max_bytes = 0;
         multiline_max_lines = 0;
     }
@@ -2084,20 +2157,8 @@ irc_message_split (struct t_irc_server *server, const char *message)
         && (weechat_strncmp (argv[index_args + 1], ":\001", 2) != 0)
         && irc_server_multiline_enabled (server));
 
-    max_length_nick = (server && (server->nick_max_length > 0)) ?
-        server->nick_max_length : 16;
-    max_length_user = (server && (server->user_max_length > 0)) ?
-        server->user_max_length : 10;
-    max_length_host = (server && (server->host_max_length > 0)) ?
-        server->host_max_length : 63;
-
-    max_length_nick_user_host = 1 +  /* ":"  */
-        max_length_nick +            /* nick */
-        1 +                          /* "!"  */
-        max_length_user +            /* user */
-        1 +                          /* @    */
-        max_length_host +            /* host */
-        1;                           /* " "  */
+    max_length_nick_user_host =
+        irc_message_split_get_max_length_nick_user_host (server);
 
     if (weechat_strcasecmp (command, "authenticate") == 0)
     {

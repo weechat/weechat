@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 16:47+0100\n"
+"POT-Creation-Date: 2026-11-22 16:59+0100\n"
 "PO-Revision-Date: 2026-09-25 07:56+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: Hungarian <weechat-dev@nongnu.org>\n"
@@ -11625,6 +11625,15 @@ msgid ""
 "nick in lower case, according to the casemapping of the server (default "
 "casemapping is \"rfc1459\")"
 msgstr ""
+
+msgid ""
+"max length of text (in bytes) in a message PRIVMSG sent to a target, so that "
+"the message is not split (-1 if split of messages is disabled)"
+msgstr ""
+
+#, fuzzy
+msgid "server,target (server is optional)"
+msgstr "szoba: szoba neve"
 
 #, fuzzy
 msgid "get nick from IRC host"

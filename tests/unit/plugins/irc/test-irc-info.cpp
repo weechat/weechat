@@ -187,6 +187,38 @@ TEST(IrcInfo, InfoIrcNickTolowerCb)
 
 /*
  * Test functions:
+ *   irc_info_info_irc_privmsg_max_length_cb
+ */
+
+TEST(IrcInfo, InfoIrcPrivmsgMaxLengthCb)
+{
+    struct t_irc_server *server;
+    char *str;
+
+    server = irc_server_alloc ("server");
+    CHECK(server);
+
+    WEE_TEST_STR(NULL, hook_info_get (NULL, "irc_privmsg_max_length", NULL));
+    WEE_TEST_STR("408", hook_info_get (NULL, "irc_privmsg_max_length", ""));
+    WEE_TEST_STR("403",
+                 hook_info_get (NULL, "irc_privmsg_max_length", "nick"));
+    WEE_TEST_STR("403",
+                 hook_info_get (NULL, "irc_privmsg_max_length",
+                                "unknown,nick"));
+    WEE_TEST_STR("403",
+                 hook_info_get (NULL, "irc_privmsg_max_length",
+                                "server,nick"));
+
+    server->nick_max_length = 32;
+    WEE_TEST_STR("387",
+                 hook_info_get (NULL, "irc_privmsg_max_length",
+                                "server,nick"));
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
  *   irc_info_info_irc_nick_from_host_cb
  */
 

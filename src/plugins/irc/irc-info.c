@@ -184,6 +184,48 @@ irc_info_info_irc_nick_tolower_cb (const void *pointer, void *data,
 }
 
 /*
+ * Return IRC info "irc_privmsg_max_length".
+ */
+
+char *
+irc_info_info_irc_privmsg_max_length_cb (const void *pointer, void *data,
+                                         const char *info_name,
+                                         const char *arguments)
+{
+    char *server, str_length[32];
+    const char *pos_target, *pos_comma;
+    struct t_irc_server *ptr_server;
+
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments)
+        return NULL;
+
+    ptr_server = NULL;
+    pos_target = arguments;
+    pos_comma = strchr (arguments, ',');
+    if (pos_comma)
+    {
+        pos_target = pos_comma + 1;
+        server = weechat_strndup (arguments, pos_comma - arguments);
+        if (server)
+        {
+            ptr_server = irc_server_search (server);
+            free (server);
+        }
+    }
+
+    snprintf (str_length, sizeof (str_length), "%d",
+              irc_message_split_get_privmsg_max_length (ptr_server,
+                                                        pos_target));
+
+    return strdup (str_length);
+}
+
+/*
  * Return IRC info "irc_nick_from_host".
  */
 
@@ -1381,6 +1423,13 @@ irc_info_init (void)
            "(default casemapping is \"rfc1459\")"),
         N_("server,nickname (server is optional)"),
         &irc_info_info_irc_nick_tolower_cb, NULL, NULL);
+    weechat_hook_info (
+        "irc_privmsg_max_length",
+        N_("max length of text (in bytes) in a message PRIVMSG sent to a "
+           "target, so that the message is not split (-1 if split of messages "
+           "is disabled)"),
+        N_("server,target (server is optional)"),
+        &irc_info_info_irc_privmsg_max_length_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_from_host",
         N_("get nick from IRC host"),
