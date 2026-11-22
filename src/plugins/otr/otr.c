@@ -166,11 +166,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!data_dir || !data_dir[0])
     {
         free (data_dir);
-        data_dir = weechat_info_get ("weechat_dir", "");
-    }
-    if (!data_dir || !data_dir[0])
-    {
-        free (data_dir);
         return WEECHAT_RC_ERROR;
     }
     weechat_asprintf (&otr_dir, "%s/otr", data_dir);
