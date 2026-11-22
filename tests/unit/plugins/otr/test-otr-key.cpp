@@ -136,7 +136,9 @@ TEST(OtrKey, Generation)
     STRCMP_EQUAL("bob\ncarol", *(generation->peers));
 
     /* Key already being generated: peer added, no new generation. */
-    otr_key_generate ("alice@srv_key", OTR_PROTOCOL, "dave");
+    LONGS_EQUAL(0, otr_key_generate (NULL, OTR_PROTOCOL, "dave"));
+    LONGS_EQUAL(0, otr_key_generate ("alice@srv_key", NULL, "dave"));
+    LONGS_EQUAL(1, otr_key_generate ("alice@srv_key", OTR_PROTOCOL, "dave"));
     POINTERS_EQUAL(generation, otr_key_generations);
     POINTERS_EQUAL(generation, last_otr_key_generation);
     STRCMP_EQUAL("bob\ncarol\ndave", *(generation->peers));
@@ -268,7 +270,8 @@ TEST(OtrKey, ProcessCb)
                                     0, OTR_TEST_KEY + 13, NULL));
     POINTERS_EQUAL(NULL, otr_key_generations);
     CHECK(otrl_privkey_find (otr_us, "alice@srv_key_cb", OTR_PROTOCOL));
-    LONGS_EQUAL(1, core_line_displayed (ptr_last_line, "OTR key generated."));
+    LONGS_EQUAL(1, core_line_displayed (
+                    ptr_last_line, "OTR key generated for alice@srv_key_cb."));
     LONGS_EQUAL(1, core_line_displayed (ptr_last_line, "Sending OTR query"));
 
     /* Error in child process: key not saved. */
@@ -281,5 +284,33 @@ TEST(OtrKey, ProcessCb)
     POINTERS_EQUAL(NULL, otrl_privkey_find (otr_us, "alice@srv_key_cb_error",
                                             OTR_PROTOCOL));
     LONGS_EQUAL(1, core_line_displayed (
-                    ptr_last_line, "key generation failed: generation error"));
+                    ptr_last_line,
+                    "generation of OTR key for alice@srv_key_cb_error failed: "
+                    "generation error"));
+
+    /* Process not run (no error from child process): key not saved. */
+    generation = new_generation ("alice@srv_key_cb_error");
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                otr_key_process_cb (generation, NULL, "func:otr_key_generate",
+                                    WEECHAT_HOOK_PROCESS_ERROR, NULL, NULL));
+    POINTERS_EQUAL(NULL, otr_key_generations);
+    LONGS_EQUAL(1, core_line_displayed (
+                    ptr_last_line,
+                    "generation of OTR key for alice@srv_key_cb_error failed: "
+                    "unable to run process"));
+
+    /* Invalid key received: key not saved. */
+    generation = new_generation ("alice@srv_key_cb_error");
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                otr_key_process_cb (generation, NULL, "func:otr_key_generate",
+                                    0, "invalid key", NULL));
+    POINTERS_EQUAL(NULL, otr_key_generations);
+    POINTERS_EQUAL(NULL, otrl_privkey_find (otr_us, "alice@srv_key_cb_error",
+                                            OTR_PROTOCOL));
+    LONGS_EQUAL(1, core_line_displayed (
+                    ptr_last_line,
+                    "generation of OTR key for alice@srv_key_cb_error failed: "
+                    "unable to save key in file"));
 }

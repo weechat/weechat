@@ -173,6 +173,24 @@ otr_key_write_account (FILE *file, const char *account, const char *protocol,
 }
 
 /*
+ * Display a message about the key generation of an account in core buffer
+ * ("color" is a level, for example OTR_CONFIG_LEVEL_INFO).
+ */
+
+void
+otr_key_print (int color, const char *format, const char *account)
+{
+    char *message;
+
+    weechat_asprintf (&message, format, account);
+    if (message)
+    {
+        otr_buffer_print_str (NULL, color, message);
+        free (message);
+    }
+}
+
+/*
  * Save a private key generated (S-expression "(private-key ...)" in text):
  * the file of private keys is written with the other known keys and the new
  * one, then all keys are read again by libotr.
@@ -314,12 +332,16 @@ otr_key_generate_child (void)
     privkey = gcry_sexp_find_token (key, "private-key", 0);
     gcry_sexp_release (key);
     if (!privkey)
+    {
+        fprintf (stderr, "private key not found");
         return 1;
+    }
 
     length = gcry_sexp_sprint (privkey, GCRYSEXP_FMT_ADVANCED, NULL, 0);
     buffer = malloc (length);
     if (!buffer)
     {
+        fprintf (stderr, "not enough memory");
         gcry_sexp_release (privkey);
         return 1;
     }
@@ -401,19 +423,27 @@ otr_key_process_cb (const void *pointer, void *data, const char *command,
     /* The process has ended: the hook is removed by WeeChat. */
     generation->hook = NULL;
 
-    if ((return_code == 0)
-        && otr_key_save (generation->account, generation->protocol,
-                         *(generation->output)))
+    if (return_code != 0)
     {
-        otr_buffer_print_str (NULL, OTR_CONFIG_LEVEL_SUCCESS,
-                              _("OTR key generated."));
-        otr_key_send_queries (generation);
+        otr_buffer_error_core (
+            _("generation of OTR key for %s failed: %s"),
+            generation->account,
+            ((*(generation->error))[0]) ?
+            *(generation->error) : _("unable to run process"));
+    }
+    else if (!otr_key_save (generation->account, generation->protocol,
+                            *(generation->output)))
+    {
+        otr_buffer_error_core (
+            _("generation of OTR key for %s failed: unable to save key in "
+              "file \"%s\""),
+            generation->account, otr_keyfile);
     }
     else
     {
-        otr_buffer_error_core (
-            _("key generation failed: %s"),
-            ((*(generation->error))[0]) ? *(generation->error) : "?");
+        otr_key_print (OTR_CONFIG_LEVEL_SUCCESS, _("OTR key generated for %s."),
+                       generation->account);
+        otr_key_send_queries (generation);
     }
 
     otr_key_generation_free (generation);
@@ -427,27 +457,32 @@ otr_key_process_cb (const void *pointer, void *data, const char *command,
  *
  * The peer (can be NULL) is waiting for the key: an OTR query is sent to the
  * peer when the key is generated.
+ *
+ * Return 1 if the key is being generated, 0 if error.
  */
 
-void
+int
 otr_key_generate (const char *account, const char *protocol, const char *peer)
 {
     struct t_otr_key_generation *new_generation;
+    const char *error;
 
     if (!account || !protocol)
-        return;
+        return 0;
+
+    error = _("not enough memory");
 
     /* Key already being generated: just remember the peer. */
     new_generation = otr_key_generation_search (account, protocol);
     if (new_generation)
     {
         otr_key_generation_add_peer (new_generation, peer);
-        return;
+        return 1;
     }
 
     new_generation = calloc (1, sizeof (*new_generation));
     if (!new_generation)
-        return;
+        goto error;
     new_generation->account = strdup (account);
     new_generation->protocol = strdup (protocol);
     new_generation->output = weechat_string_dyn_alloc (1024);
@@ -458,7 +493,7 @@ otr_key_generate (const char *account, const char *protocol, const char *peer)
         || !new_generation->peers)
     {
         otr_key_generation_free (new_generation);
-        return;
+        goto error;
     }
     otr_key_generation_add_peer (new_generation, peer);
 
@@ -469,16 +504,23 @@ otr_key_generate (const char *account, const char *protocol, const char *peer)
         otr_key_generations = new_generation;
     last_otr_key_generation = new_generation;
 
-    otr_buffer_print_str (
-        NULL, OTR_CONFIG_LEVEL_INFO,
-        _("Generating a new OTR key for this account in background..."));
-
     new_generation->hook = weechat_hook_process ("func:otr_key_generate", 0,
                                                  &otr_key_process_cb,
                                                  new_generation, NULL);
     if (!new_generation->hook)
     {
-        otr_buffer_error_core (_("key generation failed: %s"), "?");
+        error = _("unable to run process");
         otr_key_generation_free (new_generation);
+        goto error;
     }
+
+    otr_key_print (OTR_CONFIG_LEVEL_INFO,
+                   _("Generating OTR key for %s in background..."), account);
+
+    return 1;
+
+error:
+    otr_buffer_error_core (_("generation of OTR key for %s failed: %s"),
+                           account, error);
+    return 0;
 }

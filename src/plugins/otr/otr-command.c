@@ -361,7 +361,6 @@ otr_command_start (struct t_gui_buffer *buffer,
 {
     char *account, *peer, *message;
     const char *ptr_query;
-    int has_key;
 
     /* Make C compiler happy. */
     (void) buffer;
@@ -383,17 +382,30 @@ otr_command_start (struct t_gui_buffer *buffer,
      * the key is generated (the peer can not start the session without our
      * key).
      */
-    has_key = (otrl_privkey_find (otr_us, account, OTR_PROTOCOL)) ? 1 : 0;
+    if (otrl_privkey_find (otr_us, account, OTR_PROTOCOL))
+    {
+        otr_buffer_peer_hint (
+            peer_ref->server, peer,
+            _("Sending OTR query... Please wait for the OTR session to start "
+              "before sending a message."));
+        otr_irc_send_raw (peer_ref->server, peer, ptr_query);
+    }
+    else if (otr_key_generate (account, OTR_PROTOCOL, peer))
+    {
+        otr_buffer_peer_hint (
+            peer_ref->server, peer,
+            _("The OTR query will be sent when the OTR key is generated. "
+              "Please wait for the OTR session to start "
+              "before sending a message."));
+    }
+    else
+    {
+        otr_buffer_peer_print (peer_ref->server, peer, OTR_CONFIG_LEVEL_ERROR,
+                               _("OTR query not sent: unable to generate the "
+                                 "OTR key."));
+        goto end;
+    }
 
-    otr_buffer_peer_hint (
-        peer_ref->server, peer,
-        (has_key) ?
-        _("Sending OTR query... Please wait for the OTR session to start "
-          "before sending a message.") :
-        _("Generating a new OTR key for this account in background, the OTR "
-          "query will be sent when the key is generated... Please await "
-          "confirmation of the OTR session being started before sending a "
-          "message."));
     if (!otr_policy_for (account, peer, "send_tag"))
     {
         weechat_asprintf (
@@ -407,10 +419,6 @@ otr_command_start (struct t_gui_buffer *buffer,
             free (message);
         }
     }
-    if (has_key)
-        otr_irc_send_raw (peer_ref->server, peer, ptr_query);
-    else
-        otr_key_generate (account, OTR_PROTOCOL, peer);
 
 end:
     free (account);
