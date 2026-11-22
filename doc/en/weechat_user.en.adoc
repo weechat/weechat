@@ -4204,6 +4204,251 @@ Options:
 
 include::{autogendir}/autogen_user_options.en.adoc[tag=irc_options]
 
+[[otr]]
+== OTR
+
+The OTR plugin adds end-to-end encryption to private IRC conversations, with
+the https://otr.cypherpunks.ca/[Off-the-Record (OTR) Messaging ^↗^^]
+protocol (versions 2 and 3).
+
+OTR provides:
+
+* encryption: only you and your peer can read the messages, not the IRC
+  servers in between
+* authentication: you can check that your peer is who they claim to be
+* deniability: messages are not digitally signed, so nobody can prove who
+  wrote them
+* perfect forward secrecy: if your private key is compromised later, your
+  previous conversations can not be decrypted.
+
+OTR works only in private conversations (private buffers of the IRC plugin),
+not in channels. Your peer must use a client with OTR support, for example
+WeeChat with the OTR plugin.
+
+[[otr_start_session]]
+=== Start an OTR session
+
+In the private buffer with your peer, start the session with:
+
+----
+/otr start
+----
+
+You can also start it from any buffer, with the nick of the peer and the
+internal name of the IRC server:
+
+----
+/otr start bob libera
+----
+
+The first time, WeeChat generates your private key for this account (your
+nick on this server) in background: this can take a few seconds, the OTR query
+is sent when the key is generated.
+
+Your peer can start the session too: WeeChat answers automatically. A message
+is displayed when the session is established, for example:
+
+----
+:! otr !: Unauthenticated secured OTR conversation started.
+----
+
+To end the session:
+
+----
+/otr finish
+----
+
+When your peer ends the session, a message asks you to do the same with
+`/otr finish`: until then, your messages are not sent. Closing the private
+buffer ends the session too.
+
+[NOTE]
+If your own nick changes during a session, WeeChat sends a new OTR query to
+the peer, so that the session continues with your new nick.
+
+[[otr_status_bar]]
+=== Status bar
+
+The bar item "otr" shows the OTR state of the current private buffer. To
+display it in the status bar, add `[otr]` to the option
+weechat.bar.status.items.
+
+For example, "OTR:SEC,!AUTH,!LOG" means that the conversation is encrypted,
+that the peer is not authenticated and that the conversation is not logged to
+disk; when there is no OTR session, "OTR:!SEC" is displayed. The texts and
+colors can be changed with the options otr.look.bar.* and otr.color.status.*.
+
+[[otr_authentication]]
+=== Authentication
+
+An encrypted session is "unauthenticated" until you check that your peer is
+who they claim to be, either with fingerprints or with a shared secret.
+
+[[otr_fingerprints]]
+==== Fingerprints
+
+Each private key has a fingerprint. The command `/otr status` displays your
+fingerprint and the one of your peer: compare them over a secure channel (in
+person, by phone…), then mark the fingerprint of your peer as verified:
+
+----
+/otr trust
+----
+
+The command `/otr distrust` removes this mark. The command `/otr fingerprint`
+displays your own fingerprints, and `/otr fingerprint all` the fingerprints of
+all known peers.
+
+[[otr_smp]]
+==== Shared secret (SMP)
+
+With the Socialist Millionaire Protocol (SMP), you and your peer check that
+you know the same secret, without revealing it. Ask with an optional question
+and the secret:
+
+----
+/otr smp ask "Where did we meet?" "Berlin"
+----
+
+Your peer answers with:
+
+----
+/otr smp respond "Berlin"
+----
+
+The secret is case sensitive: your peer must type it exactly as you did
+("berlin" or "BERLIN" does not match "Berlin").
+
+When the secrets match, the peer who answered is authenticated by the one who
+asked. When you answer a question of your peer, your peer authenticates you,
+but you do not authenticate your peer: ask your own question to authenticate
+them too. A running verification can be aborted with `/otr smp abort`.
+
+[[otr_policies]]
+=== Policies
+
+The policies control the behavior of OTR:
+
+[width="100%",cols="3m,2m,10",options="header"]
+|===
+| Policy | Default | Description
+
+| allow_v2 | on
+| Allow OTR protocol version 2.
+
+| allow_v3 | on
+| Allow OTR protocol version 3.
+
+| require_encryption | off
+| Refuse to send unencrypted messages: messages sent before the session is
+  established are held, and sent once the session is encrypted.
+
+| log | off
+| Log OTR conversations to disk (see <<otr_logging,Logging>>).
+
+| send_tag | off
+| Advertise your OTR support with a whitespace tag added to your messages, so
+  that a session can start automatically.
+
+| html_escape | off
+| Escape HTML special chars in messages sent.
+
+| html_filter | on
+| Remove HTML in messages received.
+|===
+
+In a private buffer, `/otr policy` displays the policies of the peer and
+changes them, and with `default`, the policies of all peers:
+
+----
+/otr policy
+/otr policy send_tag on
+/otr policy default send_tag on
+----
+
+Policies are stored in options otr.policy.*: the most specific option is
+used, first `<server>.<nick>.<peer>.<name>` (for a peer, where `<nick>` is
+your nick), then `<server>.<nick>.<name>`, `<server>.<name>` and
+finally `default.<name>`.
+
+With the policy "require_encryption", the messages held are discarded if the
+policy is disabled before the session is established, or with
+`/otr finish`.
+
+[[otr_logging]]
+=== Logging
+
+By default (policy "log" disabled), logging of the private buffer is disabled
+during the OTR session, and the previous logger level is restored when the
+session ends.
+
+The command `/otr log` displays whether the conversation is logged, and
+`/otr log start` or `/otr log stop` changes it for the current session.
+
+OTR messages about a peer displayed in the core buffer (when there is no
+private buffer with the peer) are never logged.
+
+[[otr_files]]
+=== Files
+
+The OTR plugin stores its data in the directory _otr_ of the WeeChat data
+directory (by default _~/.local/share/weechat/otr_):
+
+[width="100%",cols="2m,4,6",options="header"]
+|===
+| File | Description | Sensitive data
+
+| otr.private_key
+| Your private keys (one per account: your nick on a server).
+| *Yes, highly sensitive*: this file must never be shared with anyone.
+
+| otr.fingerprints
+| Fingerprints of your peers and their trust level.
+| Possible: nicks of peers with an OTR session.
+
+| otr.instag
+| Instance tags (one per account).
+| No.
+|===
+
+[IMPORTANT]
+A private key is generated for each account, that is your nick on a server:
+with another nick (for example an alternative nick), a new key is generated
+and your peers have to authenticate you again.
+
+[[otr_limitations]]
+=== Limitations
+
+* Channels are not supported, and notices (command `/notice`) are sent
+  unencrypted.
+* CTCP other than ACTION (command `/me`) are sent unencrypted (for example
+  CTCP VERSION or DCC), so that the peer can answer them.
+* A multiline message (capability "draft/multiline") is sent as one message
+  per line during an OTR session.
+
+[[otr_commands]]
+=== Commands
+
+include::{autogendir}/autogen_user_commands.en.adoc[tag=otr_commands]
+
+[[otr_options]]
+=== Options
+
+Sections in file _otr.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| general | /set otr.general.* | General options.
+| color   | /set otr.color.*   | Colors.
+| look    | /set otr.look.*    | Look and feel.
+| policy  | /set otr.policy.*  | Policies (see <<otr_policies,Policies>>).
+|===
+
+Options:
+
+include::{autogendir}/autogen_user_options.en.adoc[tag=otr_options]
+
 [[xfer]]
 == Xfer
 

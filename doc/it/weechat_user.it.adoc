@@ -4493,6 +4493,312 @@ Options:
 
 include::{autogendir}/autogen_user_options.it.adoc[tag=irc_options]
 
+// TRANSLATION MISSING
+[[otr]]
+== OTR
+
+// TRANSLATION MISSING
+The OTR plugin adds end-to-end encryption to private IRC conversations, with
+the https://otr.cypherpunks.ca/[Off-the-Record (OTR) Messaging ^↗^^]
+protocol (versions 2 and 3).
+
+// TRANSLATION MISSING
+OTR provides:
+
+// TRANSLATION MISSING
+* encryption: only you and your peer can read the messages, not the IRC
+  servers in between
+* authentication: you can check that your peer is who they claim to be
+* deniability: messages are not digitally signed, so nobody can prove who
+  wrote them
+* perfect forward secrecy: if your private key is compromised later, your
+  previous conversations can not be decrypted.
+
+// TRANSLATION MISSING
+OTR works only in private conversations (private buffers of the IRC plugin),
+not in channels. Your peer must use a client with OTR support, for example
+WeeChat with the OTR plugin.
+
+// TRANSLATION MISSING
+[[otr_start_session]]
+=== Start an OTR session
+
+// TRANSLATION MISSING
+In the private buffer with your peer, start the session with:
+
+----
+/otr start
+----
+
+// TRANSLATION MISSING
+You can also start it from any buffer, with the nick of the peer and the
+internal name of the IRC server:
+
+----
+/otr start bob libera
+----
+
+// TRANSLATION MISSING
+The first time, WeeChat generates your private key for this account (your
+nick on this server) in background: this can take a few seconds, the OTR query
+is sent when the key is generated.
+
+// TRANSLATION MISSING
+Your peer can start the session too: WeeChat answers automatically. A message
+is displayed when the session is established, for example:
+
+----
+:! otr !: Unauthenticated secured OTR conversation started.
+----
+
+// TRANSLATION MISSING
+To end the session:
+
+----
+/otr finish
+----
+
+// TRANSLATION MISSING
+When your peer ends the session, a message asks you to do the same with
+`/otr finish`: until then, your messages are not sent. Closing the private
+buffer ends the session too.
+
+// TRANSLATION MISSING
+[NOTE]
+If your own nick changes during a session, WeeChat sends a new OTR query to
+the peer, so that the session continues with your new nick.
+
+// TRANSLATION MISSING
+[[otr_status_bar]]
+=== Status bar
+
+// TRANSLATION MISSING
+The bar item "otr" shows the OTR state of the current private buffer. To
+display it in the status bar, add `[otr]` to the option
+weechat.bar.status.items.
+
+// TRANSLATION MISSING
+For example, "OTR:SEC,!AUTH,!LOG" means that the conversation is encrypted,
+that the peer is not authenticated and that the conversation is not logged to
+disk; when there is no OTR session, "OTR:!SEC" is displayed. The texts and
+colors can be changed with the options otr.look.bar.* and otr.color.status.*.
+
+// TRANSLATION MISSING
+[[otr_authentication]]
+=== Authentication
+
+// TRANSLATION MISSING
+An encrypted session is "unauthenticated" until you check that your peer is
+who they claim to be, either with fingerprints or with a shared secret.
+
+// TRANSLATION MISSING
+[[otr_fingerprints]]
+==== Fingerprints
+
+// TRANSLATION MISSING
+Each private key has a fingerprint. The command `/otr status` displays your
+fingerprint and the one of your peer: compare them over a secure channel (in
+person, by phone…), then mark the fingerprint of your peer as verified:
+
+----
+/otr trust
+----
+
+// TRANSLATION MISSING
+The command `/otr distrust` removes this mark. The command `/otr fingerprint`
+displays your own fingerprints, and `/otr fingerprint all` the fingerprints of
+all known peers.
+
+// TRANSLATION MISSING
+[[otr_smp]]
+==== Shared secret (SMP)
+
+// TRANSLATION MISSING
+With the Socialist Millionaire Protocol (SMP), you and your peer check that
+you know the same secret, without revealing it. Ask with an optional question
+and the secret:
+
+----
+/otr smp ask "Where did we meet?" "Berlin"
+----
+
+// TRANSLATION MISSING
+Your peer answers with:
+
+----
+/otr smp respond "Berlin"
+----
+
+// TRANSLATION MISSING
+The secret is case sensitive: your peer must type it exactly as you did
+("berlin" or "BERLIN" does not match "Berlin").
+
+// TRANSLATION MISSING
+When the secrets match, the peer who answered is authenticated by the one who
+asked. When you answer a question of your peer, your peer authenticates you,
+but you do not authenticate your peer: ask your own question to authenticate
+them too. A running verification can be aborted with `/otr smp abort`.
+
+// TRANSLATION MISSING
+[[otr_policies]]
+=== Policies
+
+// TRANSLATION MISSING
+The policies control the behavior of OTR:
+
+[width="100%",cols="3m,2m,10",options="header"]
+|===
+// TRANSLATION MISSING
+| Policy | Default | Description
+
+// TRANSLATION MISSING
+| allow_v2 | on
+| Allow OTR protocol version 2.
+
+// TRANSLATION MISSING
+| allow_v3 | on
+| Allow OTR protocol version 3.
+
+// TRANSLATION MISSING
+| require_encryption | off
+| Refuse to send unencrypted messages: messages sent before the session is
+  established are held, and sent once the session is encrypted.
+
+// TRANSLATION MISSING
+| log | off
+| Log OTR conversations to disk (see <<otr_logging,Logging>>).
+
+// TRANSLATION MISSING
+| send_tag | off
+| Advertise your OTR support with a whitespace tag added to your messages, so
+  that a session can start automatically.
+
+// TRANSLATION MISSING
+| html_escape | off
+| Escape HTML special chars in messages sent.
+
+// TRANSLATION MISSING
+| html_filter | on
+| Remove HTML in messages received.
+|===
+
+// TRANSLATION MISSING
+In a private buffer, `/otr policy` displays the policies of the peer and
+changes them, and with `default`, the policies of all peers:
+
+----
+/otr policy
+/otr policy send_tag on
+/otr policy default send_tag on
+----
+
+// TRANSLATION MISSING
+Policies are stored in options otr.policy.*: the most specific option is
+used, first `<server>.<nick>.<peer>.<name>` (for a peer, where `<nick>` is
+your nick), then `<server>.<nick>.<name>`, `<server>.<name>` and
+finally `default.<name>`.
+
+// TRANSLATION MISSING
+With the policy "require_encryption", the messages held are discarded if the
+policy is disabled before the session is established, or with
+`/otr finish`.
+
+// TRANSLATION MISSING
+[[otr_logging]]
+=== Logging
+
+// TRANSLATION MISSING
+By default (policy "log" disabled), logging of the private buffer is disabled
+during the OTR session, and the previous logger level is restored when the
+session ends.
+
+// TRANSLATION MISSING
+The command `/otr log` displays whether the conversation is logged, and
+`/otr log start` or `/otr log stop` changes it for the current session.
+
+// TRANSLATION MISSING
+OTR messages about a peer displayed in the core buffer (when there is no
+private buffer with the peer) are never logged.
+
+// TRANSLATION MISSING
+[[otr_files]]
+=== Files
+
+// TRANSLATION MISSING
+The OTR plugin stores its data in the directory _otr_ of the WeeChat data
+directory (by default _~/.local/share/weechat/otr_):
+
+[width="100%",cols="2m,4,6",options="header"]
+|===
+// TRANSLATION MISSING
+| File | Description | Sensitive data
+
+// TRANSLATION MISSING
+| otr.private_key
+| Your private keys (one per account: your nick on a server).
+| *Yes, highly sensitive*: this file must never be shared with anyone.
+
+// TRANSLATION MISSING
+| otr.fingerprints
+| Fingerprints of your peers and their trust level.
+| Possible: nicks of peers with an OTR session.
+
+// TRANSLATION MISSING
+| otr.instag
+| Instance tags (one per account).
+| No.
+|===
+
+// TRANSLATION MISSING
+[IMPORTANT]
+A private key is generated for each account, that is your nick on a server:
+with another nick (for example an alternative nick), a new key is generated
+and your peers have to authenticate you again.
+
+// TRANSLATION MISSING
+[[otr_limitations]]
+=== Limitations
+
+// TRANSLATION MISSING
+* Channels are not supported, and notices (command `/notice`) are sent
+  unencrypted.
+* CTCP other than ACTION (command `/me`) are sent unencrypted (for example
+  CTCP VERSION or DCC), so that the peer can answer them.
+* A multiline message (capability "draft/multiline") is sent as one message
+  per line during an OTR session.
+
+// TRANSLATION MISSING
+[[otr_commands]]
+=== Commands
+
+include::{autogendir}/autogen_user_commands.it.adoc[tag=otr_commands]
+
+// TRANSLATION MISSING
+[[otr_options]]
+=== Options
+
+// TRANSLATION MISSING
+Sections in file _otr.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+// TRANSLATION MISSING
+| Section | Control command    | Description
+// TRANSLATION MISSING
+| general | /set otr.general.* | General options.
+// TRANSLATION MISSING
+| color   | /set otr.color.*   | Colors.
+// TRANSLATION MISSING
+| look    | /set otr.look.*    | Look and feel.
+// TRANSLATION MISSING
+| policy  | /set otr.policy.*  | Policies (see <<otr_policies,Policies>>).
+|===
+
+// TRANSLATION MISSING
+Options:
+
+include::{autogendir}/autogen_user_options.it.adoc[tag=otr_options]
+
 [[xfer]]
 == Xfer
 

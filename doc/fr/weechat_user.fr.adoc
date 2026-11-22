@@ -4347,6 +4347,265 @@ Options :
 
 include::{autogendir}/autogen_user_options.fr.adoc[tag=irc_options]
 
+[[otr]]
+== OTR
+
+L'extension OTR ajoute le chiffrement de bout en bout aux conversations
+privées IRC, avec le protocole
+https://otr.cypherpunks.ca/[Off-the-Record (OTR) Messaging ^↗^^]
+(versions 2 et 3).
+
+OTR fournit :
+
+* le chiffrement : seuls vous et votre correspondant pouvez lire les
+  messages, pas les serveurs IRC entre vous
+* l'authentification : vous pouvez vérifier que votre correspondant est bien
+  celui qu'il prétend être
+* la possibilité de nier : les messages ne sont pas signés numériquement,
+  donc personne ne peut prouver qui les a écrits
+* la confidentialité persistante ("perfect forward secrecy") : si votre
+  clé privée est compromise plus tard, vos conversations précédentes ne
+  peuvent pas être déchiffrées.
+
+OTR fonctionne seulement dans les conversations privées (tampons privés de
+l'extension IRC), pas dans les canaux. Votre correspondant doit utiliser un
+client qui supporte OTR, par exemple WeeChat avec l'extension OTR.
+
+[[otr_start_session]]
+=== Démarrer une session OTR
+
+Dans le tampon privé avec votre correspondant, démarrez la session avec :
+
+----
+/otr start
+----
+
+Vous pouvez aussi la démarrer depuis n'importe quel tampon, avec le pseudo du
+correspondant et le nom interne du serveur IRC :
+
+----
+/otr start bob libera
+----
+
+La première fois, WeeChat génère votre clé privée pour ce compte (votre
+pseudo sur ce serveur) en arrière-plan : cela peut prendre quelques secondes,
+la requête OTR est envoyée quand la clé est générée.
+
+Votre correspondant peut aussi démarrer la session : WeeChat répond
+automatiquement. Un message est affiché quand la session est établie, par
+exemple :
+
+----
+:! otr !: Unauthenticated secured OTR conversation started.
+----
+
+Pour terminer la session :
+
+----
+/otr finish
+----
+
+Quand votre correspondant termine la session, un message vous demande de
+faire de même avec `/otr finish` : en attendant, vos messages ne sont pas
+envoyés. La fermeture du tampon privé termine aussi la session.
+
+[NOTE]
+Si votre propre pseudo change pendant une session, WeeChat envoie une
+nouvelle requête OTR au correspondant, pour que la session continue avec votre
+nouveau pseudo.
+
+[[otr_status_bar]]
+=== Barre d'état
+
+L'objet de barre "otr" affiche l'état OTR du tampon privé courant. Pour
+l'afficher dans la barre d'état, ajoutez `[otr]` à l'option
+weechat.bar.status.items.
+
+Par exemple, "OTR:SEC,!AUTH,!LOG" signifie que la conversation est chiffrée,
+que le correspondant n'est pas authentifié et que la conversation n'est pas
+enregistrée sur disque ; quand il n'y a pas de session OTR, "OTR:!SEC" est
+affiché. Les textes et les couleurs peuvent être changés avec les options
+otr.look.bar.* et otr.color.status.*.
+
+[[otr_authentication]]
+=== Authentification
+
+Une session chiffrée est "non authentifiée" tant que vous n'avez pas vérifié
+que votre correspondant est bien celui qu'il prétend être, soit avec les
+empreintes, soit avec un secret partagé.
+
+[[otr_fingerprints]]
+==== Empreintes
+
+Chaque clé privée a une empreinte. La commande `/otr status` affiche votre
+empreinte et celle de votre correspondant : comparez-les par un canal sûr
+(en personne, par téléphone…), puis marquez l'empreinte de votre correspondant
+comme vérifiée :
+
+----
+/otr trust
+----
+
+La commande `/otr distrust` supprime cette marque. La commande
+`/otr fingerprint` affiche vos propres empreintes, et `/otr fingerprint all`
+les empreintes de tous les correspondants connus.
+
+[[otr_smp]]
+==== Secret partagé (SMP)
+
+Avec le protocole SMP ("Socialist Millionaire Protocol"), vous et votre
+correspondant vérifiez que vous connaissez le même secret, sans le révéler.
+Demandez avec une question optionnelle et le secret :
+
+----
+/otr smp ask "Où nous sommes-nous rencontrés ?" "Berlin"
+----
+
+Votre correspondant répond avec :
+
+----
+/otr smp respond "Berlin"
+----
+
+Le secret est sensible à la casse : votre correspondant doit le saisir
+exactement comme vous ("berlin" ou "BERLIN" ne correspond pas à "Berlin").
+
+Quand les secrets correspondent, le correspondant qui a répondu est
+authentifié par celui qui a demandé. Quand vous répondez à une question de
+votre correspondant, il vous authentifie, mais vous ne l'authentifiez pas :
+posez votre propre question pour l'authentifier aussi. Une vérification en
+cours peut être annulée avec `/otr smp abort`.
+
+[[otr_policies]]
+=== Politiques
+
+Les politiques contrôlent le comportement de OTR :
+
+[width="100%",cols="3m,2m,10",options="header"]
+|===
+| Politique | Défaut | Description
+
+| allow_v2 | on
+| Autoriser la version 2 du protocole OTR.
+
+| allow_v3 | on
+| Autoriser la version 3 du protocole OTR.
+
+| require_encryption | off
+| Refuser d'envoyer des messages non chiffrés : les messages envoyés avant
+  que la session soit établie sont retenus, et envoyés quand la session est
+  chiffrée.
+
+| log | off
+| Enregistrer les conversations OTR sur disque (voir
+  <<otr_logging,Enregistrement>>).
+
+| send_tag | off
+| Annoncer votre support de OTR avec une marque invisible (espaces) ajoutée à
+  vos messages, pour qu'une session puisse démarrer automatiquement.
+
+| html_escape | off
+| Échapper les caractères spéciaux HTML dans les messages envoyés.
+
+| html_filter | on
+| Supprimer le HTML dans les messages reçus.
+|===
+
+Dans un tampon privé, `/otr policy` affiche les politiques du correspondant et
+les change, et avec `default`, les politiques de tous les correspondants :
+
+----
+/otr policy
+/otr policy send_tag on
+/otr policy default send_tag on
+----
+
+Les politiques sont stockées dans les options otr.policy.* : l'option la
+plus spécifique est utilisée, d'abord `<serveur>.<pseudo>.<correspondant>.<nom>`
+(pour un correspondant, où `<pseudo>` est votre pseudo), puis
+`<serveur>.<pseudo>.<nom>`, `<serveur>.<nom>` et enfin `default.<nom>`.
+
+Avec la politique "require_encryption", les messages retenus sont supprimés si
+la politique est désactivée avant que la session soit établie, ou avec
+`/otr finish`.
+
+[[otr_logging]]
+=== Enregistrement
+
+Par défaut (politique "log" désactivée), l'enregistrement du tampon privé est
+désactivé pendant la session OTR, et le niveau d'enregistrement précédent est
+restauré quand la session se termine.
+
+La commande `/otr log` affiche si la conversation est enregistrée, et
+`/otr log start` ou `/otr log stop` change cela pour la session courante.
+
+Les messages OTR concernant un correspondant affichés dans le tampon core
+(quand il n'y a pas de tampon privé avec le correspondant) ne sont jamais
+enregistrés.
+
+[[otr_files]]
+=== Fichiers
+
+L'extension OTR stocke ses données dans le répertoire _otr_ du répertoire de
+données de WeeChat (par défaut _~/.local/share/weechat/otr_) :
+
+[width="100%",cols="2m,4,6",options="header"]
+|===
+| Fichier | Description | Données sensibles
+
+| otr.private_key
+| Vos clés privées (une par compte : votre pseudo sur un serveur).
+| *Oui, très sensibles* : ce fichier ne doit jamais être partagé avec
+  quiconque.
+
+| otr.fingerprints
+| Empreintes de vos correspondants et leur niveau de confiance.
+| Possible : pseudos des correspondants avec une session OTR.
+
+| otr.instag
+| Marqueurs d'instance (un par compte).
+| Non.
+|===
+
+[IMPORTANT]
+Une clé privée est générée pour chaque compte, c'est-à-dire votre pseudo sur un
+serveur : avec un autre pseudo (par exemple un pseudo alternatif), une
+nouvelle clé est générée et vos correspondants doivent vous authentifier à
+nouveau.
+
+[[otr_limitations]]
+=== Limitations
+
+* Les canaux ne sont pas supportés, et les notices (commande `/notice`) sont
+  envoyées non chiffrées.
+* Les CTCP autres que ACTION (commande `/me`) sont envoyés non chiffrés (par
+  exemple CTCP VERSION ou DCC), pour que le correspondant puisse y répondre.
+* Un message multi-lignes (capacité "draft/multiline") est envoyé avec un
+  message par ligne pendant une session OTR.
+
+[[otr_commands]]
+=== Commandes
+
+include::{autogendir}/autogen_user_commands.fr.adoc[tag=otr_commands]
+
+[[otr_options]]
+=== Options
+
+Sections dans le fichier _otr.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| general | /set otr.general.*   | Options générales.
+| color   | /set otr.color.*     | Couleurs.
+| look    | /set otr.look.*      | Aspect/présentation.
+| policy  | /set otr.policy.*    | Politiques (voir <<otr_policies,Politiques>>).
+|===
+
+Options :
+
+include::{autogendir}/autogen_user_options.fr.adoc[tag=otr_options]
+
 [[xfer]]
 == Xfer
 
