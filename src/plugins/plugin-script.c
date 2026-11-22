@@ -169,6 +169,28 @@ plugin_script_info_version_cb (const void *pointer, void *data,
 }
 
 /*
+ * Create a directory in WeeChat home, display an error if the directory can
+ * not be created.
+ */
+
+void
+plugin_script_create_dir (struct t_weechat_plugin *weechat_plugin,
+                          const char *path)
+{
+    char *path_eval;
+
+    if (weechat_mkdir_home (path, 0755))
+        return;
+
+    path_eval = weechat_string_eval_path_home (path, NULL, NULL, NULL);
+    weechat_printf (NULL,
+                    _("%s%s: unable to create directory \"%s\""),
+                    weechat_prefix ("error"), weechat_plugin->name,
+                    (path_eval) ? path_eval : path);
+    free (path_eval);
+}
+
+/*
  * Create directories for plugin in WeeChat data directory:
  *   - ${weechat_data_dir}/xxx
  *   - ${weechat_data_dir}/xxx/autoload
@@ -181,10 +203,10 @@ plugin_script_create_dirs (struct t_weechat_plugin *weechat_plugin)
 
     snprintf (path, sizeof (path),
               "${weechat_data_dir}/%s", weechat_plugin->name);
-    weechat_mkdir_home (path, 0755);
+    plugin_script_create_dir (weechat_plugin, path);
     snprintf (path, sizeof (path),
               "${weechat_data_dir}/%s/autoload", weechat_plugin->name);
-    weechat_mkdir_home (path, 0755);
+    plugin_script_create_dir (weechat_plugin, path);
 }
 
 /*
