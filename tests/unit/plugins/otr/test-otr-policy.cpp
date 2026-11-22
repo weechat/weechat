@@ -139,7 +139,7 @@ TEST(OtrPolicy, Format)
     CHECK(str);
     CHECK(strstr (str, "  allow_v2 ("));
     CHECK(strstr (str, ") : on\n"));
-    CHECK(strstr (str, "/otr policy default <name> on|off"));
+    CHECK(strstr (str, "/otr policy default <name> on|off|toggle"));
     free (str);
 
     str = otr_policy_format_peer ("alice@test", "bob");
@@ -147,6 +147,6 @@ TEST(OtrPolicy, Format)
     CHECK(strstr (str, "bob@test"));
     CHECK(strstr (str, "  send_tag ("));
     CHECK(strstr (str, ") : off\n"));
-    CHECK(strstr (str, "/otr policy <name> on|off"));
+    CHECK(strstr (str, "/otr policy <name> on|off|toggle"));
     free (str);
 }
