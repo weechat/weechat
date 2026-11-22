@@ -15588,7 +15588,7 @@ Paramètres :
 ** _clear_ : 1 si le tampon peut être effacé avec la commande `/buffer clear`, sinon 0 _(WeeChat ≥ 1.0)_
 ** _filter_ : 1 si les filtres sont activés sur le tampon, sinon 0 _(WeeChat ≥ 1.0)_
 ** _closing_ : 1 si le tampon est en cours de fermeture, sinon 0 _(WeeChat ≥ 1.0)_
-** _lines_hidden_ : 1 si au moins une ligne est cachée dans le tampon (filtrée), ou 0 si toutes les lignes sont affichées
+** _lines_hidden_ : nombre de lignes cachées dans le tampon (filtrées), 0 si toutes les lignes sont affichées
 ** _prefix_max_length_ : longueur maximale du préfixe dans ce tampon
 ** _time_for_each_line_ : 1 si l'heure est affichée pour chaque ligne du tampon (par défaut), sinon 0
 ** _prefix_for_each_line_ : 1 si le préfixe est affiché pour chaque ligne du tampon (par défaut), sinon 0 _(WeeChat ≥ 4.11.0)_

@@ -15959,7 +15959,8 @@ Argomenti:
 ** _filter_: 1 if filters are enabled on buffer, otherwise 0 _(WeeChat ≥ 1.0)_
 // TRANSLATION MISSING
 ** _closing_: 1 if buffer is closing, otherwise 0 _(WeeChat ≥ 1.0)_
-** _lines_hidden_: 1 se almeno una riga è nascosta sul buffer (filtrata), oppure 0 se vengono visualizzate tutte le righe
+// TRANSLATION MISSING
+** _lines_hidden_: number of lines hidden on buffer (filtered), 0 if all lines are displayed
 ** _prefix_max_length_: lunghezza massima del prefisso in questo buffer
 // TRANSLATION MISSING
 ** _time_for_each_line_: 1 se l'ora è visualizzata per ogni riga nel buffer (predefinito), altrimenti 0

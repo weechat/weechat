@@ -15244,7 +15244,7 @@ Arguments:
 ** _clear_: 1 if buffer can be cleared with command `/buffer clear`, otherwise 0 _(WeeChat ≥ 1.0)_
 ** _filter_: 1 if filters are enabled on buffer, otherwise 0 _(WeeChat ≥ 1.0)_
 ** _closing_: 1 if buffer is closing, otherwise 0 _(WeeChat ≥ 1.0)_
-** _lines_hidden_: 1 if at least one line is hidden on buffer (filtered), or 0 if all lines are displayed
+** _lines_hidden_: number of lines hidden on buffer (filtered), 0 if all lines are displayed
 ** _prefix_max_length_: max length for prefix in this buffer
 ** _time_for_each_line_: 1 if time is displayed for each line in buffer (default), otherwise 0
 ** _prefix_for_each_line_: 1 if prefix is displayed for each line in buffer (default), otherwise 0 _(WeeChat ≥ 4.11.0)_
