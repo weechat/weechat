@@ -344,6 +344,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       otr-context.c                | Données par correspondant attachées aux contextes libotr.
 |       otr-echo.c                   | Support de echo-message (IRCv3).
 |       otr-irc.c                    | Fonctions IRC pour OTR.
+|       otr-key.c                    | Génération des clés privées OTR en arrière-plan.
 |       otr-log.c                    | Contrôle de l'enregistrement des tampons pendant les sessions OTR.
 |       otr-message.c                | Conversion du texte des messages OTR.
 |       otr-modifier.c               | Modificateurs pour les messages privés IRC entrants et sortants.
@@ -580,6 +581,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-otr-context.cpp                | Tests : données par correspondant attachées aux contextes libotr.
 |             test-otr-echo.cpp                   | Tests : support de echo-message (IRCv3) pour OTR.
 |             test-otr-irc.cpp                    | Tests : fonctions IRC pour OTR.
+|             test-otr-key.cpp                    | Tests : génération des clés privées OTR.
 |             test-otr-log.cpp                    | Tests : contrôle de l'enregistrement des tampons.
 |             test-otr-message.cpp                | Tests : conversion du texte des messages OTR.
 |             test-otr-modifier.cpp               | Tests : modificateurs OTR.

@@ -16,6 +16,7 @@ add_library(otr MODULE
   otr-context.c otr-context.h
   otr-echo.c otr-echo.h
   otr-irc.c otr-irc.h
+  otr-key.c otr-key.h
   otr-log.c otr-log.h
   otr-message.c otr-message.h
   otr-modifier.c otr-modifier.h

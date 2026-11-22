@@ -343,6 +343,7 @@ WeeChat "core" is located in following directories:
 |       otr-context.c                | Per-peer data attached to libotr contexts.
 |       otr-echo.c                   | Support of IRCv3 echo-message.
 |       otr-irc.c                    | OTR IRC functions.
+|       otr-key.c                    | Generation of OTR private keys in background.
 |       otr-log.c                    | Control of buffer logging during OTR sessions.
 |       otr-message.c                | Conversion of OTR message text.
 |       otr-modifier.c               | Modifiers for incoming and outgoing IRC private messages.
@@ -579,6 +580,7 @@ WeeChat "core" is located in following directories:
 |             test-otr-context.cpp                | Tests: per-peer data attached to libotr contexts.
 |             test-otr-echo.cpp                   | Tests: OTR support of IRCv3 echo-message.
 |             test-otr-irc.cpp                    | Tests: OTR IRC functions.
+|             test-otr-key.cpp                    | Tests: generation of OTR private keys.
 |             test-otr-log.cpp                    | Tests: control of buffer logging.
 |             test-otr-message.cpp                | Tests: conversion of OTR message text.
 |             test-otr-modifier.cpp               | Tests: OTR modifiers.

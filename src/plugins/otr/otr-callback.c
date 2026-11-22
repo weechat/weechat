@@ -18,6 +18,7 @@
 #include "otr-config.h"
 #include "otr-context.h"
 #include "otr-irc.h"
+#include "otr-key.h"
 #include "otr-log.h"
 #include "otr-policy.h"
 #include "otr-util.h"
@@ -61,34 +62,24 @@ otr_callback_policy (void *opdata, ConnContext *context)
 }
 
 /*
- * Callback for libotr: generate a private key for an account (this blocks
- * WeeChat a few seconds).
+ * Callback for libotr: generate a private key for an account.
+ *
+ * The key is generated in background (WeeChat is not blocked), so libotr does
+ * not find the key when this function returns: the OTR query is sent again to
+ * the peer (given in opdata, struct t_otr_callback_data) when the key is
+ * generated.
  */
 
 void
 otr_callback_create_privkey (void *opdata, const char *accountname,
                              const char *protocol)
 {
-    gcry_error_t error;
+    struct t_otr_callback_data *ptr_data;
 
-    /* Make C compiler happy. */
-    (void) opdata;
+    ptr_data = (struct t_otr_callback_data *)opdata;
 
-    otr_buffer_print_str (
-        NULL, OTR_CONFIG_LEVEL_INFO,
-        _("Generating a new OTR key for this account. This can take a few "
-          "seconds and blocks WeeChat meanwhile..."));
-    error = otrl_privkey_generate (otr_us, otr_keyfile, accountname, protocol);
-    if (error)
-    {
-        otr_buffer_error_core (_("key generation failed: %s"),
-                               gcry_strerror (error));
-    }
-    else
-    {
-        otr_buffer_print_str (NULL, OTR_CONFIG_LEVEL_SUCCESS,
-                              _("OTR key generated."));
-    }
+    otr_key_generate (accountname, protocol,
+                      (ptr_data) ? ptr_data->peer : NULL);
 }
 
 /*

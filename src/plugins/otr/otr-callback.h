@@ -15,6 +15,8 @@ struct t_otr_callback_data
     char *unencrypted;                 /* plaintext received while session  */
                                        /* is encrypted (ignored by libotr)  */
     char *last_injected;               /* last OTR message sent by libotr   */
+    const char *peer;                  /* peer of the message (nick in      */
+                                       /* lower case), can be NULL          */
 };
 
 extern const OtrlMessageAppOps otr_callback_ops;

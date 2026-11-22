@@ -283,6 +283,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     own_nick = NULL;
     callback_data.unencrypted = NULL;
     callback_data.last_injected = NULL;
+    callback_data.peer = NULL;
     tlvs = NULL;
     ptr_context = NULL;
 
@@ -363,6 +364,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
      * which decrypts the message even if there is text before the tag).
      */
     was_otr = (strstr (assembled, "?OTR")) ? 1 : 0;
+    callback_data.peer = peer;
     ignore = otrl_message_receiving (otr_us, &otr_callback_ops,
                                      &callback_data, account, OTR_PROTOCOL,
                                      peer, assembled,
@@ -913,6 +915,7 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     shown = NULL;
     callback_data.unencrypted = NULL;
     callback_data.last_injected = NULL;
+    callback_data.peer = NULL;
 
     switch (otr_modifier_parse_out_privmsg (string, &tags, &target, &ptr_text))
     {
@@ -1036,6 +1039,7 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     action = otr_message_is_action (ptr_text);
     if (action)
         otr_no_tag++;
+    callback_data.peer = peer;
     error = otrl_message_sending (otr_us, &otr_callback_ops, &callback_data,
                                   account, OTR_PROTOCOL, peer,
                                   OTRL_INSTAG_BEST, plain, NULL, &new_message,

@@ -37,6 +37,7 @@
 #include "otr-context.h"
 #include "otr-echo.h"
 #include "otr-irc.h"
+#include "otr-key.h"
 #include "otr-log.h"
 #include "otr-modifier.h"
 
@@ -141,6 +142,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     otr_bar_item = NULL;
     otr_modifier_removed_batches = NULL;
     otr_modifier_assembly_timer = NULL;
+    otr_key_generations = NULL;
+    last_otr_key_generation = NULL;
 
     if (otrl_init (OTRL_VERSION_MAJOR, OTRL_VERSION_MINOR, OTRL_VERSION_SUB))
     {
@@ -275,6 +278,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (usernames);
 
         otr_echo_pending_clear_all ();
+        otr_key_generation_free_all ();
         otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
         otrl_userstate_free (otr_us);
         otr_us = NULL;

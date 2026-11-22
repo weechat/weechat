@@ -189,6 +189,7 @@ if(BUILD_PLUGIN_OTR)
     plugins/otr/test-otr-context.cpp
     plugins/otr/test-otr-echo.cpp
     plugins/otr/test-otr-irc.cpp
+    plugins/otr/test-otr-key.cpp
     plugins/otr/test-otr-log.cpp
     plugins/otr/test-otr-message.cpp
     plugins/otr/test-otr-modifier.cpp

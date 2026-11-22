@@ -392,6 +392,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |       otr-irc.c                    | OTR IRC functions.
 // TRANSLATION MISSING
+|       otr-key.c                    | Generation of OTR private keys in background.
+// TRANSLATION MISSING
 |       otr-log.c                    | Control of buffer logging during OTR sessions.
 // TRANSLATION MISSING
 |       otr-message.c                | Conversion of OTR message text.
@@ -761,6 +763,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-otr-echo.cpp                   | Tests: OTR support of IRCv3 echo-message.
 // TRANSLATION MISSING
 |             test-otr-irc.cpp                    | Tests: OTR IRC functions.
+// TRANSLATION MISSING
+|             test-otr-key.cpp                    | Tests: generation of OTR private keys.
 // TRANSLATION MISSING
 |             test-otr-log.cpp                    | Tests: control of buffer logging.
 // TRANSLATION MISSING
