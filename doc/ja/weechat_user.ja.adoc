@@ -4464,7 +4464,7 @@ weechat.bar.status.items.
 For example, "OTR:SEC,!AUTH,!LOG" means that the conversation is encrypted,
 that the peer is not authenticated and that the conversation is not logged to
 disk; when there is no OTR session, "OTR:!SEC" is displayed. The texts and
-colors can be changed with the options otr.look.bar* and otr.color.status.*.
+colors can be changed with the options otr.look.bar* and otr.color.status_*.
 
 // TRANSLATION MISSING
 [[otr_authentication]]

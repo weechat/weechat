@@ -4425,7 +4425,7 @@ Par exemple, "OTR:SEC,!AUTH,!LOG" signifie que la conversation est chiffrée,
 que le correspondant n'est pas authentifié et que la conversation n'est pas
 enregistrée sur disque ; quand il n'y a pas de session OTR, "OTR:!SEC" est
 affiché. Les textes et les couleurs peuvent être changés avec les options
-otr.look.bar* et otr.color.status.*.
+otr.look.bar* et otr.color.status_*.
 
 [[otr_authentication]]
 === Authentification
