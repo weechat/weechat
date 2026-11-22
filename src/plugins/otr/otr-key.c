@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 #include "../weechat-plugin.h"
 #include "otr.h"
@@ -176,6 +177,10 @@ otr_key_write_account (FILE *file, const char *account, const char *protocol,
  * the file of private keys is written with the other known keys and the new
  * one, then all keys are read again by libotr.
  *
+ * The keys are written in a new temporary file (mode 0600), which then
+ * replaces the file of private keys; if this file is a symbolic link, the
+ * target of the link is replaced and the link is kept.
+ *
  * Return 1 if OK, 0 if error.
  */
 
@@ -184,7 +189,7 @@ otr_key_save (const char *account, const char *protocol, const char *key)
 {
     gcry_sexp_t sexp_key, privkey;
     OtrlPrivKey *ptr_privkey;
-    char *tmp_filename;
+    char *filename, *tmp_filename;
     FILE *file;
     int fd, rc;
 
@@ -202,12 +207,24 @@ otr_key_save (const char *account, const char *protocol, const char *key)
     tmp_filename = NULL;
     file = NULL;
 
-    weechat_asprintf (&tmp_filename, "%s.tmp", otr_keyfile);
+    /* Write in the target of the link if the file is a symbolic link. */
+    filename = realpath (otr_keyfile, NULL);
+    if (!filename)
+        filename = strdup (otr_keyfile);
+    if (!filename)
+        goto end;
+
+    weechat_asprintf (&tmp_filename, "%s.tmp", filename);
     if (!tmp_filename)
         goto end;
 
-    /* The file contains private keys: readable only by the user. */
-    fd = open (tmp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+    /*
+     * The file contains private keys: always create a new file, readable only
+     * by the user (an existing file could have other permissions, or be a
+     * symbolic link).
+     */
+    unlink (tmp_filename);
+    fd = open (tmp_filename, O_WRONLY | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
     if (fd < 0)
         goto end;
     file = fdopen (fd, "w");
@@ -239,6 +256,8 @@ otr_key_save (const char *account, const char *protocol, const char *key)
         goto end;
     if (fprintf (file, ")\n") < 0)
         goto end;
+    if ((fflush (file) != 0) || (fsync (fileno (file)) != 0))
+        goto end;
 
     if (fclose (file) != 0)
     {
@@ -247,7 +266,7 @@ otr_key_save (const char *account, const char *protocol, const char *key)
     }
     file = NULL;
 
-    if (rename (tmp_filename, otr_keyfile) != 0)
+    if (rename (tmp_filename, filename) != 0)
         goto end;
 
     rc = (otrl_privkey_read (otr_us, otr_keyfile) == 0) ? 1 : 0;
@@ -258,6 +277,7 @@ end:
     if (!rc && tmp_filename)
         unlink (tmp_filename);
     free (tmp_filename);
+    free (filename);
     gcry_sexp_release (privkey);
     return rc;
 }

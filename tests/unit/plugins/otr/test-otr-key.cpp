@@ -12,8 +12,11 @@
 
 extern "C"
 {
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/stat.h>
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-line.h"
 #include "src/plugins/weechat-plugin.h"
@@ -191,6 +194,53 @@ TEST(OtrKey, Save)
     {
         CHECK(strcmp (ptr_privkey->accountname, "alice@srv_key_save") != 0);
     }
+}
+
+/*
+ * Test functions:
+ *   otr_key_save (permissions of file, symbolic link)
+ */
+
+TEST(OtrKey, SaveFile)
+{
+    char *tmp_filename, *target_filename;
+    struct stat st;
+    FILE *file;
+
+    tmp_filename = NULL;
+    target_filename = NULL;
+    weechat_asprintf (&tmp_filename, "%s.tmp", otr_keyfile);
+    weechat_asprintf (&target_filename, "%s.target", otr_keyfile);
+    CHECK(tmp_filename);
+    CHECK(target_filename);
+
+    /* Existing temporary file readable by all: file created with mode 0600. */
+    file = fopen (tmp_filename, "w");
+    CHECK(file);
+    fclose (file);
+    chmod (tmp_filename, 0644);
+    LONGS_EQUAL(1, otr_key_save ("alice@srv_key_file", OTR_PROTOCOL,
+                                 OTR_TEST_KEY));
+    LONGS_EQUAL(0, stat (otr_keyfile, &st));
+    LONGS_EQUAL(0600, st.st_mode & 0777);
+    LONGS_EQUAL(-1, access (tmp_filename, F_OK));
+
+    /* File of private keys is a symbolic link: the link is kept. */
+    LONGS_EQUAL(0, rename (otr_keyfile, target_filename));
+    LONGS_EQUAL(0, symlink (target_filename, otr_keyfile));
+    LONGS_EQUAL(1, otr_key_save ("bob@srv_key_file", OTR_PROTOCOL,
+                                 OTR_TEST_KEY));
+    LONGS_EQUAL(0, lstat (otr_keyfile, &st));
+    CHECK(S_ISLNK(st.st_mode));
+    LONGS_EQUAL(0, stat (target_filename, &st));
+    LONGS_EQUAL(0600, st.st_mode & 0777);
+    CHECK(otrl_privkey_find (otr_us, "alice@srv_key_file", OTR_PROTOCOL));
+    CHECK(otrl_privkey_find (otr_us, "bob@srv_key_file", OTR_PROTOCOL));
+    LONGS_EQUAL(0, unlink (otr_keyfile));
+    LONGS_EQUAL(0, rename (target_filename, otr_keyfile));
+
+    free (tmp_filename);
+    free (target_filename);
 }
 
 /*
