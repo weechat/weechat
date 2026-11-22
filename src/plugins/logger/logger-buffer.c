@@ -202,7 +202,14 @@ logger_buffer_set_log_filename (struct t_logger_buffer *logger_buffer)
         if (pos_last_sep)
         {
             pos_last_sep[0] = '\0';
-            weechat_mkdir_parents (log_filename, 0700);
+            if (!weechat_mkdir_parents (log_filename, 0700))
+            {
+                weechat_printf_date_tags (
+                    NULL, 0, "no_log",
+                    _("%s%s: unable to create directory \"%s\""),
+                    weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+                    log_filename);
+            }
             pos_last_sep[0] = dir_separator[0];
         }
         free (dir_separator);

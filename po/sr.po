@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 17:07+0100\n"
+"POT-Creation-Date: 2026-11-22 17:32+0100\n"
 "PO-Revision-Date: 2026-11-05 11:07+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -14060,6 +14060,11 @@ msgid ""
 msgstr ""
 "%s%s: није успело покретање логовања за бафер „%s”: име фајла „%s” већ "
 "користи неки други бафер (проверите своја лог подешавања)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgid "%s%s: unable to create directory \"%s\""
+msgstr "%s%s: није успело креирање директоријума за логове („%s”)"
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"

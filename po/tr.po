@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 17:07+0100\n"
+"POT-Creation-Date: 2026-11-22 17:32+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -14275,6 +14275,11 @@ msgstr ""
 "%s%s: \"%s\" arabelleği için günlükleme başlatılamıyor: \"%s\" dosya adı "
 "halihazırda başka bir arabellek tarafından kullanılıyor (günlük ayarlarınızı "
 "denetleyin)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgid "%s%s: unable to create directory \"%s\""
+msgstr "%s%s: Günlükler için dizin oluşturulamıyor (\"%s\""
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"

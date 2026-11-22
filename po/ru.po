@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 17:07+0100\n"
+"POT-Creation-Date: 2026-11-22 17:32+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -12852,6 +12852,10 @@ msgid ""
 "%s%s: unable to start logging for buffer \"%s\": filename \"%s\" is already "
 "used by another buffer (check your log settings)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create directory \"%s\""
+msgstr "%s не могу создать сервер \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"

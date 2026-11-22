@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 17:07+0100\n"
+"POT-Creation-Date: 2026-11-22 17:32+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -13400,6 +13400,11 @@ msgid ""
 msgstr ""
 "%s%s: nemohu spustit logování pro buffer \"%s\": jméno souboru \"%s\" je již "
 "použito jiným bufferem (zkontrolujte své nastavení logování)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgid "%s%s: unable to create directory \"%s\""
+msgstr "%s%s: nemohu vytvořit adresář pro logy (\"%s\")"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"

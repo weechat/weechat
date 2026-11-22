@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 17:07+0100\n"
+"POT-Creation-Date: 2026-11-22 17:32+0100\n"
 "PO-Revision-Date: 2026-11-17 10:02+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -14744,6 +14744,12 @@ msgstr ""
 "%s%s: Protokollierung für \"%s\" kann nicht vorgenommen werden: Die Datei "
 "\"%s\" wird schon durch einen anderen Buffer verwendet (Bitte Protokoll-"
 "Konfiguration überprüfen)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgid "%s%s: unable to create directory \"%s\""
+msgstr ""
+"%s%s: Verzeichnis für Protokoll-Dateien kann nicht erstellt werden (\"%s\")"
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"

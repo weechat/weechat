@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 17:07+0100\n"
+"POT-Creation-Date: 2026-11-22 17:32+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -14094,6 +14094,11 @@ msgid ""
 msgstr ""
 "%s%s: nie można zacząć logowania dla bufora \"%s\": plik \"%s\" jest już "
 "użyty dla innego bufora (sprawdź ustawienia logów)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgid "%s%s: unable to create directory \"%s\""
+msgstr "%s%s: nie można utworzyć katalogu dla logów (\"%s\")"
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"

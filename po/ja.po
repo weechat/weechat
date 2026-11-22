@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 17:07+0100\n"
+"POT-Creation-Date: 2026-11-22 17:32+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -14204,6 +14204,11 @@ msgid ""
 msgstr ""
 "%s%s: バッファ \"%s\" のログ保存を開始できません: ファイル名 \"%s\" は他の"
 "バッファで使われています (ログ設定を確認してください)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgid "%s%s: unable to create directory \"%s\""
+msgstr "%s%s: ログ用のディレクトリを作成できません (\"%s\")"
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"

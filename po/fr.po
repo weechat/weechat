@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-22 17:07+0100\n"
+"POT-Creation-Date: 2026-11-22 17:32+0100\n"
 "PO-Revision-Date: 2026-11-15 11:44+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
@@ -14477,6 +14477,10 @@ msgstr ""
 "%s%s : impossible de démarrer l'enregistrement pour le tampon \"%s\" : le "
 "nom de fichier \"%s\" est déjà utilisé par un autre tampon (vérifiez vos "
 "options d'enregistrement)"
+
+#, c-format
+msgid "%s%s: unable to create directory \"%s\""
+msgstr "%s%s : impossible de créer le répertoire \"%s\""
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
