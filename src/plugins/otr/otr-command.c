@@ -1111,71 +1111,93 @@ otr_command_init (void)
     weechat_hook_command (
         "otr",
         N_("Off-the-Record (OTR) encryption for private IRC conversations"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated. */
         N_("start|refresh [<nick> <server>]"
-            " || finish|end [<nick> <server>]"
-            " || status [<nick> <server>]"
-            " || trust|distrust [<nick> <server>]"
-            " || smp ask [<nick> <server>] [<question>] <secret>"
-            " || smp respond [<nick> <server>] <secret>"
-            " || smp abort [<nick> <server>]"
-            " || log [start|stop]"
-            " || policy [default] [<name> on|off|toggle]"
-            " || fingerprint [<search>|all]"),
-        N_("      start: start an OTR session with a peer (sends an OTR query)\n"
-            "    refresh: refresh the OTR session (same as start)\n"
-            "     finish: end the OTR session\n"
-            "        end: same as finish\n"
-            "     status: show whether the conversation is encrypted and authenticated, with both fingerprints\n"
-            "      trust: mark the current fingerprint of the peer as verified\n"
-            "   distrust: remove the verified mark from the current fingerprint of the peer\n"
-            "        smp: authenticate the peer with the Socialist Millionaire Protocol (SMP):\n"
-            "                 ask: send a shared secret, optionally with a question\n"
-            "             respond: answer the request of the peer\n"
-            "               abort: abort the running verification\n"
-            "        log: show or change logging of the current OTR session; the previous setting is restored when the session ends\n"
-            "     policy: show or change OTR policies, for the peer of the current private buffer or, with \"default\", for all peers\n"
-            "fingerprint: show your own fingerprints (without argument), those of all known peers (all) or of the peers matching <search>\n"
-            "\n"
-            "    nick: nick of the peer (default: peer of the current private buffer)\n"
-            "  server: internal name of the IRC server (default: server of the current private buffer)\n"
-            "question: question that the peer has to answer\n"
-            "  secret: secret that both you and the peer know\n"
-            "    name: name of the policy\n"
-            "  search: only show peers whose nick contains this text\n"
-            "\n"
-            "Policies:\n"
-            "            allow_v2: allow OTR protocol version 2\n"
-            "            allow_v3: allow OTR protocol version 3\n"
-            "  require_encryption: refuse to send unencrypted messages when OTR is enabled\n"
-            "                 log: enable logging of OTR conversations\n"
-            "            send_tag: advertise your OTR capability using the whitespace tag\n"
-            "         html_escape: escape HTML special characters in outgoing messages\n"
-            "         html_filter: filter HTML in incoming messages\n"
-            "\n"
-            "Note: OTR works for private conversations only, not for channels.\n"
-            "Note: the OTR state is displayed in the status bar by the bar item \"otr\" (in the default value of option weechat.bar.status.items); use /set otr.* to customize the item and the colors.\n"
-            "Note: default policies are stored in the options otr.policy_default.* and custom policies in the options otr.policy.*; a more specific option (peer) overrides a more general one (nick, server, default).\n"
-            "\n"
-            "Examples:\n"
-            "  start an OTR session in the current private buffer:\n"
-            "    /otr start\n"
-            "  verify the peer with a shared secret:\n"
-            "    /otr smp ask \"swordfish\"\n"
-            "  verify the peer with a question and a shared secret:\n"
-            "    /otr smp ask \"Where did we meet?\" \"Berlin\"\n"
-            "  answer an SMP request of the peer:\n"
-            "    /otr smp respond \"Berlin\"\n"
-            "  mark the fingerprint as verified after comparing it over a secure channel:\n"
-            "    /otr trust\n"
-            "  show the policies of the current peer and enable the whitespace tag for it:\n"
-            "    /otr policy\n"
-            "    /otr policy send_tag on\n"
-            "  enable the whitespace tag for all peers:\n"
-            "    /otr policy default send_tag on\n"
-            "  show the fingerprints of all known peers:\n"
-            "    /otr fingerprint all\n"
-            "  end the OTR session:\n"
-            "    /otr finish"),
+           " || finish|end [<nick> <server>]"
+           " || status [<nick> <server>]"
+           " || trust|distrust [<nick> <server>]"
+           " || smp ask [<nick> <server>] [<question>] <secret>"
+           " || smp respond [<nick> <server>] <secret>"
+           " || smp abort [<nick> <server>]"
+           " || log [start|stop]"
+           " || policy [default] [<name> on|off|toggle]"
+           " || fingerprint [<search>|all]"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[start]: start an OTR session with a peer (sends an OTR "
+               "query)"),
+            N_("raw[refresh]: refresh the OTR session (same as \"start\")"),
+            N_("raw[finish]: end the OTR session"),
+            N_("raw[end]: same as \"finish\""),
+            N_("raw[status]: show whether the conversation is encrypted and "
+               "authenticated, with both fingerprints"),
+            N_("raw[trust]: mark the current fingerprint of the peer as "
+               "verified"),
+            N_("raw[distrust]: remove the verified mark from the current "
+               "fingerprint of the peer"),
+            N_("raw[smp]: authenticate the peer with the Socialist Millionaire "
+               "Protocol (SMP):"),
+            N_("> raw[ask]: send a shared secret, optionally with a question"),
+            N_("> raw[respond]: answer the request of the peer"),
+            N_("> raw[abort]: abort the running verification"),
+            N_("raw[log]: show or change logging of the current OTR session; "
+               "the previous setting is restored when the session ends"),
+            N_("raw[policy]: show or change OTR policies, for the peer of the "
+               "current private buffer or, with \"default\", for all peers"),
+            N_("raw[fingerprint]: show your own fingerprints (without "
+               "argument), those of all known peers (\"all\") or of the peers "
+               "matching <search>"),
+            N_("nick: nick of the peer (default: peer of the current private "
+               "buffer)"),
+            N_("server: internal name of the IRC server (default: server of "
+               "the current private buffer)"),
+            N_("question: question that the peer has to answer"),
+            N_("secret: secret that both you and the peer know"),
+            N_("name: name of the policy:"),
+            N_("> raw[allow_v2]: allow OTR protocol version 2"),
+            N_("> raw[allow_v3]: allow OTR protocol version 3"),
+            N_("> raw[require_encryption]: refuse to send unencrypted messages "
+               "when OTR is enabled"),
+            N_("> raw[log]: enable logging of OTR conversations"),
+            N_("> raw[send_tag]: advertise your OTR capability using the "
+               "whitespace tag"),
+            N_("> raw[html_escape]: escape HTML special characters in outgoing "
+               "messages"),
+            N_("> raw[html_filter]: filter HTML in incoming messages"),
+            N_("search: only show peers whose nick contains this text"),
+            "",
+            N_("Note: OTR works for private conversations only, not for "
+               "channels."),
+            N_("Note: the OTR state is displayed in the status bar by the bar "
+               "item \"otr\" (in the default value of option "
+               "weechat.bar.status.items); use /set otr.* to customize the "
+               "item and the colors."),
+            N_("Note: default policies are stored in the options "
+               "otr.policy_default.* and custom policies in the options "
+               "otr.policy.*; a more specific option (peer) overrides a more "
+               "general one (nick, server, default)."),
+            "",
+            N_("Examples:"),
+            N_("  start an OTR session in the current private buffer:"),
+            AI("    /otr start"),
+            N_("  verify the peer with a shared secret:"),
+            AI("    /otr smp ask \"swordfish\""),
+            N_("  verify the peer with a question and a shared secret:"),
+            AI("    /otr smp ask \"Where did we meet?\" \"Berlin\""),
+            N_("  answer an SMP request of the peer:"),
+            AI("    /otr smp respond \"Berlin\""),
+            N_("  mark the fingerprint as verified after comparing it over a "
+               "secure channel:"),
+            AI("    /otr trust"),
+            N_("  show the policies of the current peer and enable the "
+               "whitespace tag for it:"),
+            AI("    /otr policy"),
+            AI("    /otr policy send_tag on"),
+            N_("  enable the whitespace tag for all peers:"),
+            AI("    /otr policy default send_tag on"),
+            N_("  show the fingerprints of all known peers:"),
+            AI("    /otr fingerprint all"),
+            N_("  end the OTR session:"),
+            AI("    /otr finish")),
         "start|refresh|finish|end|status|trust|distrust %(nick) %(irc_servers) %-"
         " || smp ask|respond|abort %(nick) %(irc_servers) %-"
         " || log start|stop %-"
