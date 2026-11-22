@@ -442,7 +442,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_INFO,
                 _("The peer has requested SMP verification.\n"
-                  "Respond with: /otr smp respond <secret>"));
+                  "Respond with: /otr smp respond <secret> (case sensitive)"));
             break;
         case OTRL_SMPEVENT_ASK_FOR_ANSWER:
             in_smp = 1;
@@ -452,7 +452,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_INFO,
                 _("The peer has requested SMP verification: %s\n"
-                  "Respond with: /otr smp respond <answer>"),
+                  "Respond with: /otr smp respond <secret> (case sensitive)"),
                 (peer_text) ? peer_text : "");
             free (peer_text);
             break;
