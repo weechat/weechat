@@ -161,7 +161,7 @@ otr_policy_format_default (void)
     }
     weechat_string_dyn_concat (result,
                                _("Change default policies with: "
-                                 "/otr policy default NAME on|off"),
+                                 "/otr policy default <name> on|off"),
                                -1);
 
     return weechat_string_dyn_free (result, 0);
@@ -207,7 +207,7 @@ otr_policy_format_peer (const char *account, const char *peer)
         weechat_string_dyn_concat (result, "\n", -1);
     }
     weechat_string_dyn_concat (
-        result, _("Change policies with: /otr policy NAME on|off"), -1);
+        result, _("Change policies with: /otr policy <name> on|off"), -1);
 
     return weechat_string_dyn_free (result, 0);
 }

@@ -239,9 +239,9 @@ otr_callback_verify_instructions (ConnContext *context)
           "  %s@%s's fingerprint: %s\n"
           "  then use the command: /otr trust %s %s\n\n"
           "2) SMP with a secret that you both know:\n"
-          "  /otr smp ask %s %s 'secret'\n\n"
+          "  /otr smp ask %s %s \"secret\"\n\n"
           "3) SMP with a question and a secret that you both know:\n"
-          "  /otr smp ask %s %s <'question'> 'secret'\n\n"
+          "  /otr smp ask %s %s \"The question\" \"secret\"\n\n"
           "Note: you can safely omit specifying the peer and server when\n"
           "      executing these commands from the private buffer of the "
           "peer."),
@@ -474,7 +474,8 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
                 otr_buffer_ctx_print (
                     context, OTR_CONFIG_LEVEL_INFO,
                     _("You may want to authenticate your peer by asking your "
-                      "own question:\n/otr smp ask <'question'> 'secret'"));
+                      "own question:\n"
+                      "/otr smp ask \"The question\" \"secret\""));
             }
             in_smp = 0;
             smp_question = 0;
