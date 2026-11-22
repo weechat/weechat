@@ -404,6 +404,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |       otr-theme.c                  | OTR contribution to built-in themes.
 // TRANSLATION MISSING
+|       otr-upgrade.c                | Save/restore OTR data when upgrading WeeChat.
+// TRANSLATION MISSING
 |       otr-util.c                   | OTR utility functions.
 |    perl/                           | perl プラグイン
 |       weechat-perl.c               | perl の主要関数 (スクリプトのロード/アンロード、perl コードの実行)
@@ -775,6 +777,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-otr-modifier.cpp               | Tests: OTR modifiers.
 // TRANSLATION MISSING
 |             test-otr-policy.cpp                 | Tests: OTR policies.
+// TRANSLATION MISSING
+|             test-otr-upgrade.cpp                | Tests: OTR upgrade.
 // TRANSLATION MISSING
 |             test-otr-util.cpp                   | Tests: OTR utility functions.
 // TRANSLATION MISSING

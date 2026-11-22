@@ -4415,6 +4415,12 @@ Si votre propre pseudo change pendant une session, WeeChat envoie une
 nouvelle requête OTR au correspondant, pour que la session continue avec votre
 nouveau pseudo.
 
+[NOTE]
+Avec `/upgrade`, les sessions OTR ne sont pas terminées : après la mise à
+jour, WeeChat envoie une nouvelle requête OTR aux correspondants, pour qu'une
+nouvelle session démarre (les clés des sessions ne sont jamais sauvegardées sur
+disque).
+
 [[otr_status_bar]]
 === Barre d'état
 

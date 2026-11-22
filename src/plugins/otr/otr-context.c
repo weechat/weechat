@@ -404,31 +404,47 @@ otr_context_send_held_messages (ConnContext *context)
  * If buffer_closing is 1, the private buffer with the peer is being closed (see
  * function otr_log_restore).
  *
- * Return 1 if a session was ended or if messages held for the session were
- * discarded, 0 if there was no session nor messages held for the peer.
+ * Without session, a logger level saved before a session is restored too (for
+ * example a session kept on upgrade, without new session after the upgrade).
+ *
+ * Return 1 if a session was ended, if messages held for the session were
+ * discarded or if a logger level was restored, 0 if there was nothing to do
+ * for the peer.
  */
 
 int
 otr_context_end_session (const char *account, const char *peer, int display,
                          int buffer_closing)
 {
-    ConnContext *ptr_context;
-    int count_dropped;
+    ConnContext *ptr_context, *ptr_master;
+    struct t_otr_peer_data *ptr_peer_data;
+    int count_dropped, restored;
 
     /* Messages held for the session are not sent anymore. */
     count_dropped = 0;
-    ptr_context = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
-                                     OTRL_INSTAG_MASTER, 0, NULL, NULL, NULL);
-    if (ptr_context)
+    ptr_master = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
+                                    OTRL_INSTAG_MASTER, 0, NULL, NULL, NULL);
+    if (ptr_master)
     {
         count_dropped = otr_context_drop_held_messages (
-            ptr_context, (struct t_otr_peer_data *)ptr_context->app_data,
+            ptr_master, (struct t_otr_peer_data *)ptr_master->app_data,
             display);
     }
 
     ptr_context = otr_context_find (account, peer);
     if (!ptr_context || (ptr_context->msgstate == OTRL_MSGSTATE_PLAINTEXT))
-        return (count_dropped > 0) ? 1 : 0;
+    {
+        restored = 0;
+        if (ptr_master)
+        {
+            ptr_peer_data = (struct t_otr_peer_data *)ptr_master->app_data;
+            restored = (ptr_peer_data
+                        && (ptr_peer_data->prev_log != OTR_LOG_UNTOUCHED)) ?
+                1 : 0;
+            otr_log_restore (ptr_master, ptr_peer_data, buffer_closing);
+        }
+        return ((count_dropped > 0) || restored) ? 1 : 0;
+    }
 
     otrl_message_disconnect_all_instances (otr_us, &otr_callback_ops, NULL,
                                            account, OTR_PROTOCOL, peer);

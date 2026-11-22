@@ -16,6 +16,7 @@ extern char *otr_irc_nick_tolower (const char *server, const char *nick);
 extern int otr_irc_privmsg_max_length (const char *server, const char *nick);
 extern int otr_irc_nick_equal (const char *server, const char *nick1,
                                const char *nick2);
+extern int otr_irc_server_connected (const char *server);
 extern char *otr_irc_make_account (const char *server);
 extern char *otr_irc_peer_account (const char *server, const char *peer);
 extern const char *otr_irc_account_server (const char *account);

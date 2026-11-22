@@ -349,6 +349,7 @@ WeeChat "core" is located in following directories:
 |       otr-modifier.c               | Modifiers for incoming and outgoing IRC private messages.
 |       otr-policy.c                 | OTR policies.
 |       otr-theme.c                  | OTR contribution to built-in themes.
+|       otr-upgrade.c                | Save/restore OTR data when upgrading WeeChat.
 |       otr-util.c                   | OTR utility functions.
 |    perl/                           | Perl plugin.
 |       weechat-perl.c               | Main perl functions (load/unload scripts, execute perl code).
@@ -586,6 +587,7 @@ WeeChat "core" is located in following directories:
 |             test-otr-message.cpp                | Tests: conversion of OTR message text.
 |             test-otr-modifier.cpp               | Tests: OTR modifiers.
 |             test-otr-policy.cpp                 | Tests: OTR policies.
+|             test-otr-upgrade.cpp                | Tests: OTR upgrade.
 |             test-otr-util.cpp                   | Tests: OTR utility functions.
 |          relay/                                 | Root of unit tests for Relay plugin.
 |             test-relay-auth.cpp                 | Tests: clients authentication.

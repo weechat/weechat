@@ -41,6 +41,7 @@
 #include "otr-log.h"
 #include "otr-modifier.h"
 #include "otr-theme.h"
+#include "otr-upgrade.h"
 
 
 WEECHAT_PLUGIN_NAME(OTR_PLUGIN_NAME);
@@ -145,6 +146,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     otr_modifier_assembly_timer = NULL;
     otr_key_generations = NULL;
     last_otr_key_generation = NULL;
+    otr_upgrade_keep_sessions = 0;
+    otr_upgrade_queries = NULL;
+    otr_upgrade_timer = NULL;
+    otr_upgrade_hook_connected = NULL;
 
     if (otrl_init (OTRL_VERSION_MAJOR, OTRL_VERSION_MINOR, OTRL_VERSION_SUB))
     {
@@ -213,73 +218,108 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("buffer_closing", &otr_buffer_closing_cb, NULL, NULL);
     weechat_hook_signal ("debug_libs", &otr_debug_libs_cb, NULL, NULL);
     weechat_hook_signal ("*,irc_in2_nick", &otr_irc_nick_cb, NULL, NULL);
+    weechat_hook_signal ("upgrade", &otr_upgrade_signal_cb, NULL, NULL);
 
     otr_bar_item = weechat_bar_item_new (OTR_BAR_ITEM,
                                          &otr_bar_item_cb, NULL, NULL);
     weechat_bar_item_update (OTR_BAR_ITEM);
 
+    if (weechat_otr_plugin->upgrading)
+        otr_upgrade_load ();
+
     return WEECHAT_RC_OK;
 }
 
 /*
- * End OTR plugin: end all OTR sessions, save fingerprints and configuration,
- * free data.
+ * End all OTR sessions politely (the peers are told that the session has
+ * ended), and restore the logger level of private buffers.
  */
 
-int
-weechat_plugin_end (struct t_weechat_plugin *plugin)
+void
+otr_end_all_sessions (void)
 {
     ConnContext *ptr_context;
     char **accounts, **usernames, **new_accounts, **new_usernames;
     int num_sessions, size_alloc, i;
 
+    /*
+     * Collect names first: the callbacks must not run while we walk libotr's
+     * context list.
+     */
+    accounts = NULL;
+    usernames = NULL;
+    num_sessions = 0;
+    size_alloc = 0;
+    for (ptr_context = otr_us->context_root; ptr_context;
+         ptr_context = ptr_context->next)
+    {
+        /*
+         * Without session, only a peer with a logger level saved before a
+         * session (to restore it), for example a session kept on upgrade,
+         * without new session after the upgrade.
+         */
+        if ((ptr_context->msgstate == OTRL_MSGSTATE_PLAINTEXT)
+            && (!ptr_context->app_data
+                || (((struct t_otr_peer_data *)ptr_context->app_data)->prev_log
+                    == OTR_LOG_UNTOUCHED)))
+        {
+            continue;
+        }
+        if (num_sessions == size_alloc)
+        {
+            size_alloc = (size_alloc) ? size_alloc * 2 : 8;
+            new_accounts = realloc (accounts,
+                                    (size_t)size_alloc * sizeof (char *));
+            if (!new_accounts)
+                break;
+            accounts = new_accounts;
+            new_usernames = realloc (usernames,
+                                     (size_t)size_alloc * sizeof (char *));
+            if (!new_usernames)
+                break;
+            usernames = new_usernames;
+        }
+        accounts[num_sessions] = strdup (ptr_context->accountname);
+        usernames[num_sessions] = strdup (ptr_context->username);
+        num_sessions++;
+    }
+    for (i = 0; i < num_sessions; i++)
+    {
+        if (accounts[i] && usernames[i])
+            otr_context_end_session (accounts[i], usernames[i], 0, 0);
+        free (accounts[i]);
+        free (usernames[i]);
+    }
+    free (accounts);
+    free (usernames);
+}
+
+/*
+ * End OTR plugin: end all OTR sessions (except on upgrade), save fingerprints
+ * and configuration, free data.
+ */
+
+int
+weechat_plugin_end (struct t_weechat_plugin *plugin)
+{
     /* Make C compiler happy. */
     (void) plugin;
 
     otr_shutdown = 1;
 
+    otr_upgrade_end ();
+
     if (otr_us)
     {
         /*
-         * End all sessions politely. Collect names first: the callbacks
-         * must not run while we walk libotr's context list.
+         * On upgrade (without quit), the sessions are not ended: a new
+         * session is started with the peers after the upgrade.
          */
-        accounts = NULL;
-        usernames = NULL;
-        num_sessions = 0;
-        size_alloc = 0;
-        for (ptr_context = otr_us->context_root; ptr_context;
-             ptr_context = ptr_context->next)
+        if (!otr_upgrade_keep_sessions
+            || !weechat_otr_plugin->unload_with_upgrade)
         {
-            if (ptr_context->msgstate == OTRL_MSGSTATE_PLAINTEXT)
-                continue;
-            if (num_sessions == size_alloc)
-            {
-                size_alloc = (size_alloc) ? size_alloc * 2 : 8;
-                new_accounts = realloc (accounts,
-                                        (size_t)size_alloc * sizeof (char *));
-                if (!new_accounts)
-                    break;
-                accounts = new_accounts;
-                new_usernames = realloc (usernames,
-                                         (size_t)size_alloc * sizeof (char *));
-                if (!new_usernames)
-                    break;
-                usernames = new_usernames;
-            }
-            accounts[num_sessions] = strdup (ptr_context->accountname);
-            usernames[num_sessions] = strdup (ptr_context->username);
-            num_sessions++;
+            otr_end_all_sessions ();
         }
-        for (i = 0; i < num_sessions; i++)
-        {
-            if (accounts[i] && usernames[i])
-                otr_context_end_session (accounts[i], usernames[i], 0, 0);
-            free (accounts[i]);
-            free (usernames[i]);
-        }
-        free (accounts);
-        free (usernames);
 
         otr_echo_pending_clear_all ();
         otr_key_generation_free_all ();

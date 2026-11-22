@@ -228,6 +228,41 @@ otr_irc_nick_equal (const char *server, const char *nick1, const char *nick2)
 }
 
 /*
+ * Check if an IRC server is connected (and registered: message 001 received).
+ *
+ * Return 1 if the server is connected, 0 otherwise.
+ */
+
+int
+otr_irc_server_connected (const char *server)
+{
+    struct t_hdata *ptr_hdata;
+    void *ptr_server;
+    const char *ptr_name;
+
+    if (!server || !server[0])
+        return 0;
+
+    ptr_hdata = weechat_hdata_get ("irc_server");
+    if (!ptr_hdata)
+        return 0;
+
+    for (ptr_server = weechat_hdata_get_list (ptr_hdata, "irc_servers");
+         ptr_server;
+         ptr_server = weechat_hdata_move (ptr_hdata, ptr_server, 1))
+    {
+        ptr_name = weechat_hdata_string (ptr_hdata, ptr_server, "name");
+        if (ptr_name && (strcmp (ptr_name, server) == 0))
+        {
+            return weechat_hdata_integer (ptr_hdata, ptr_server,
+                                          "is_connected");
+        }
+    }
+
+    return 0;
+}
+
+/*
  * Build the OTR account name for a server: "ownnick@server" (nick in lower
  * case, see function otr_irc_nick_tolower).
  *

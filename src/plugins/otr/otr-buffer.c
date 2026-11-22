@@ -19,6 +19,7 @@
 #include "otr-irc.h"
 #include "otr-log.h"
 #include "otr-policy.h"
+#include "otr-upgrade.h"
 #include "otr-util.h"
 
 
@@ -384,6 +385,14 @@ otr_buffer_closing_cb (const void *pointer, void *data, const char *signal,
      * and there is no OTR session with the peer, there is nothing to do.
      */
     peer = otr_irc_nick_tolower (peer_ref.server, peer_ref.nick);
+
+    /* OTR query pending after upgrade: it is not sent anymore. */
+    if (peer && otr_upgrade_cancel_query (peer_ref.server, peer, 1))
+    {
+        free (peer);
+        return WEECHAT_RC_OK;
+    }
+
     account = (peer) ? otr_irc_peer_account (peer_ref.server, peer) : NULL;
     if (account)
         otr_context_end_session (account, peer, 0, 1);

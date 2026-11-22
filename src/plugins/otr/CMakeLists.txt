@@ -22,6 +22,7 @@ add_library(otr MODULE
   otr-modifier.c otr-modifier.h
   otr-policy.c otr-policy.h
   otr-theme.c otr-theme.h
+  otr-upgrade.c otr-upgrade.h
   otr-util.c otr-util.h
 )
 set_target_properties(otr PROPERTIES PREFIX "")

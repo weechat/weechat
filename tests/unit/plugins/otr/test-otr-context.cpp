@@ -26,6 +26,28 @@ TEST_GROUP(OtrContext)
 
 /*
  * Test functions:
+ *   otr_context_end_session (without session)
+ */
+
+TEST(OtrContext, EndSessionWithoutSession)
+{
+    struct t_otr_peer_data *ptr_peer_data;
+
+    /* No session, no data: nothing done. */
+    LONGS_EQUAL(0, otr_context_end_session ("alice@srv_otr_ctx_end", "bob",
+                                            0, 0));
+
+    /* No session, logger level saved (for example after upgrade): restored. */
+    ptr_peer_data = otr_context_peer_data_for ("alice@srv_otr_ctx_end", "bob");
+    CHECK(ptr_peer_data);
+    ptr_peer_data->prev_log = OTR_LOG_DEFAULT;
+    LONGS_EQUAL(1, otr_context_end_session ("alice@srv_otr_ctx_end", "bob",
+                                            0, 0));
+    LONGS_EQUAL(OTR_LOG_UNTOUCHED, ptr_peer_data->prev_log);
+}
+
+/*
+ * Test functions:
  *   otr_context_clear_auth
  */
 

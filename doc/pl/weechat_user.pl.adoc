@@ -4332,6 +4332,12 @@ If your own nick changes during a session, WeeChat sends a new OTR query to
 the peer, so that the session continues with your new nick.
 
 // TRANSLATION MISSING
+[NOTE]
+With `/upgrade`, the OTR sessions are not ended: after the upgrade, WeeChat
+sends a new OTR query to the peers, so that a new session starts (the keys of
+the sessions are never saved on disk).
+
+// TRANSLATION MISSING
 [[otr_status_bar]]
 === Status bar
 

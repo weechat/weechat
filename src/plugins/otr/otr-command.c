@@ -23,6 +23,7 @@
 #include "otr-key.h"
 #include "otr-log.h"
 #include "otr-policy.h"
+#include "otr-upgrade.h"
 #include "otr-util.h"
 
 
@@ -436,6 +437,18 @@ int
 otr_command_finish (const struct t_otr_peer_ref *peer_ref)
 {
     char *account, *peer;
+
+    /* OTR query pending after upgrade (server not connected yet). */
+    peer = otr_irc_nick_tolower (peer_ref->server, peer_ref->nick);
+    if (peer && otr_upgrade_cancel_query (peer_ref->server, peer, 0))
+    {
+        otr_buffer_peer_print (
+            peer_ref->server, peer, OTR_CONFIG_LEVEL_INFO,
+            _("The OTR query will not be sent after /upgrade."));
+        free (peer);
+        return WEECHAT_RC_OK;
+    }
+    free (peer);
 
     if (!otr_command_resolve (peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;

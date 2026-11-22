@@ -350,6 +350,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       otr-modifier.c               | Modificateurs pour les messages privés IRC entrants et sortants.
 |       otr-policy.c                 | Politiques OTR.
 |       otr-theme.c                  | Contribution d'OTR aux thèmes intégrés.
+|       otr-upgrade.c                | Sauvegarde/restauration des données OTR lors de la mise à jour de WeeChat.
 |       otr-util.c                   | Fonctions utilitaires pour OTR.
 |    perl/                           | Extension Perl.
 |       weechat-perl.c               | Fonctions principales pour Perl (chargement/déchargement des scripts, exécution de code Perl).
@@ -587,6 +588,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-otr-message.cpp                | Tests : conversion du texte des messages OTR.
 |             test-otr-modifier.cpp               | Tests : modificateurs OTR.
 |             test-otr-policy.cpp                 | Tests : politiques OTR.
+|             test-otr-upgrade.cpp                | Tests : mise à jour OTR.
 |             test-otr-util.cpp                   | Tests : fonctions utilitaires pour OTR.
 |          relay/                                 | Racine des tests unitaires pour l'extension Relay.
 |             test-relay-auth.cpp                 | Tests : authentification des clients.

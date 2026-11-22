@@ -194,6 +194,7 @@ if(BUILD_PLUGIN_OTR)
     plugins/otr/test-otr-message.cpp
     plugins/otr/test-otr-modifier.cpp
     plugins/otr/test-otr-policy.cpp
+    plugins/otr/test-otr-upgrade.cpp
     plugins/otr/test-otr-util.cpp
   )
 endif()
