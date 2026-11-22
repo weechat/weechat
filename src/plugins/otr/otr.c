@@ -177,7 +177,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_asprintf (&otr_instagfile, "%s/otr.instag", otr_dir);
     if (!otr_keyfile || !otr_fprfile || !otr_instagfile)
         return WEECHAT_RC_ERROR;
-    weechat_mkdir_parents (otr_dir, 0700);
+    if (!weechat_mkdir_parents (otr_dir, 0700))
+    {
+        otr_buffer_error_core (_("unable to create directory \"%s\""),
+                               otr_dir);
+    }
 
     otr_us = otrl_userstate_create ();
     if (!otr_us)
