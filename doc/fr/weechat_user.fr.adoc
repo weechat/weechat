@@ -4520,10 +4520,12 @@ les change, et avec `default`, les politiques de tous les correspondants :
 /otr policy default send_tag on
 ----
 
-Les politiques sont stockées dans les options otr.policy.* : l'option la
-plus spécifique est utilisée, d'abord `<serveur>.<pseudo>.<correspondant>.<nom>`
-(pour un correspondant, où `<pseudo>` est votre pseudo), puis
-`<serveur>.<pseudo>.<nom>`, `<serveur>.<nom>` et enfin `default.<nom>`.
+Les politiques par défaut sont stockées dans les options otr.policy_default.*,
+et les politiques personnalisées dans les options otr.policy.* : l'option la
+plus spécifique est utilisée, d'abord
+`otr.policy.<serveur>.<pseudo>.<correspondant>.<nom>` (pour un correspondant,
+où `<pseudo>` est votre pseudo), puis `otr.policy.<serveur>.<pseudo>.<nom>`,
+`otr.policy.<serveur>.<nom>` et enfin `otr.policy_default.<nom>`.
 
 Avec la politique "require_encryption", les messages retenus sont supprimés si
 la politique est désactivée avant que la session soit établie, ou avec
@@ -4595,10 +4597,11 @@ Sections dans le fichier _otr.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section | Commande de contrôle | Description
-| color   | /set otr.color.*     | Couleurs.
-| look    | /set otr.look.*      | Aspect/présentation.
-| policy  | /set otr.policy.*    | Politiques (voir <<otr_policies,Politiques>>).
+| Section        | Commande de contrôle      | Description
+| color          | /set otr.color.*          | Couleurs.
+| look           | /set otr.look.*           | Aspect/présentation.
+| policy_default | /set otr.policy_default.* | Politiques par défaut (voir <<otr_policies,Politiques>>).
+| policy         | /set otr.policy.*         | Politiques personnalisées (voir <<otr_policies,Politiques>>).
 |===
 
 Options :

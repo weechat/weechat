@@ -965,7 +965,7 @@ otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
         && otr_command_get_policy_name (args[2])
         && otr_command_get_policy_value (args[3]))
     {
-        weechat_asprintf (&command, "/set otr.policy.default.%s %s",
+        weechat_asprintf (&command, "/set otr.policy_default.%s %s",
                           otr_command_get_policy_name (args[2]),
                           otr_command_get_policy_value (args[3]));
         if (command)
@@ -1140,7 +1140,7 @@ otr_command_init (void)
             "\n"
             "Note: OTR works for private conversations only, not for channels.\n"
             "Note: to show the OTR state in the status bar, add \"[otr]\" to the option weechat.bar.status.items; use /set otr.* to customize the item and the colors.\n"
-            "Note: policies are stored in the options otr.policy.*; a more specific option (peer) overrides a more general one (server, default).\n"
+            "Note: default policies are stored in the options otr.policy_default.* and custom policies in the options otr.policy.*; a more specific option (peer) overrides a more general one (nick, server, default).\n"
             "\n"
             "Examples:\n"
             "  start an OTR session in the current private buffer:\n"

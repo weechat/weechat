@@ -21,7 +21,8 @@
 /*
  * Get value of an OTR policy for an account and a peer, searching the options
  * from the most specific to the most general: "server.nick.peer.name",
- * "server.nick.name", "server.name", "default.name".
+ * "server.nick.name", "server.name" in section "policy", then "name" in section
+ * "policy_default".
  *
  * Return 1 if the policy is enabled, 0 if it is disabled or not found.
  */
@@ -58,10 +59,8 @@ otr_policy_for (const char *account, const char *peer, const char *name)
     }
     if (!ptr_option)
     {
-        snprintf (option_name, sizeof (option_name), "default.%s", name);
-        ptr_option = weechat_config_search_option (otr_config_file,
-                                                   otr_config_section_policy,
-                                                   option_name);
+        ptr_option = weechat_config_search_option (
+            otr_config_file, otr_config_section_policy_default, name);
     }
 
     return (ptr_option) ? weechat_config_boolean (ptr_option) : 0;
@@ -130,7 +129,7 @@ otr_policy_no_send_tag (const char *peer)
 char *
 otr_policy_format_default (void)
 {
-    char **result, option_name[128];
+    char **result;
     struct t_config_option *ptr_option;
     int i;
 
@@ -142,11 +141,9 @@ otr_policy_format_default (void)
     weechat_string_dyn_concat (result, "\n", -1);
     for (i = 0; i < OTR_CONFIG_NUM_POLICIES; i++)
     {
-        snprintf (option_name, sizeof (option_name),
-                  "default.%s", otr_config_policies[i].name);
-        ptr_option = weechat_config_search_option (otr_config_file,
-                                                   otr_config_section_policy,
-                                                   option_name);
+        ptr_option = weechat_config_search_option (
+            otr_config_file, otr_config_section_policy_default,
+            otr_config_policies[i].name);
         weechat_string_dyn_concat (result, "  ", -1);
         weechat_string_dyn_concat (result, otr_config_policies[i].name, -1);
         weechat_string_dyn_concat (result, " (", -1);

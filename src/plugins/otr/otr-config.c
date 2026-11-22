@@ -22,6 +22,7 @@ struct t_config_file *otr_config_file = NULL;
 
 struct t_config_section *otr_config_section_color = NULL;
 struct t_config_section *otr_config_section_look = NULL;
+struct t_config_section *otr_config_section_policy_default = NULL;
 struct t_config_section *otr_config_section_policy = NULL;
 
 /* OTR config, look section (options not in otr_config_look) */
@@ -122,18 +123,18 @@ const struct t_otr_policy otr_config_policies[] =
 const int otr_config_policies_count =
     (int)(sizeof (otr_config_policies) / sizeof (otr_config_policies[0]));
 
-/* Definition of default policies options */
+/* Definition of default policies options (section "policy_default") */
 
 const struct t_otr_config_option_def otr_config_policy_defaults[] =
 {
-    { "default.allow_v2", N_("default allow OTR v2 policy"), "on", 0 },
-    { "default.allow_v3", N_("default allow OTR v3 policy"), "on", 0 },
-    { "default.require_encryption", N_("default require encryption policy"),
+    { "allow_v2", N_("default allow OTR v2 policy"), "on", 0 },
+    { "allow_v3", N_("default allow OTR v3 policy"), "on", 0 },
+    { "require_encryption", N_("default require encryption policy"),
       "off", 0 },
-    { "default.log", N_("default enable logging to disk"), "off", 0 },
-    { "default.send_tag", N_("default send tag policy"), "off", 0 },
-    { "default.html_escape", N_("default HTML escape policy"), "off", 0 },
-    { "default.html_filter", N_("default HTML filter policy"), "on", 0 },
+    { "log", N_("default enable logging to disk"), "off", 0 },
+    { "send_tag", N_("default send tag policy"), "off", 0 },
+    { "html_escape", N_("default HTML escape policy"), "off", 0 },
+    { "html_filter", N_("default HTML filter policy"), "on", 0 },
 };
 
 
@@ -221,7 +222,7 @@ otr_config_change_no_send_tag_regex_cb (const void *pointer, void *data,
  * Get the value inherited by a policy option (name without "otr.policy."), from
  * the options of upper levels: for example for "server.nick.peer.name", the
  * value of the first option found among "server.nick.name", "server.name" and
- * "default.name".
+ * "otr.policy_default.name".
  *
  * Return the boolean value inherited, 0 if no option is found.
  */
@@ -255,7 +256,7 @@ otr_config_policy_inherited (struct t_config_file *config_file,
         }
         else
         {
-            weechat_asprintf (&parent_name, "default.%s", ptr_name);
+            parent_name = NULL;
         }
         if (parent_name)
         {
@@ -265,6 +266,12 @@ otr_config_policy_inherited (struct t_config_file *config_file,
         }
         if (!pos)
             break;
+    }
+
+    if (!ptr_option)
+    {
+        ptr_option = weechat_config_search_option (
+            config_file, otr_config_section_policy_default, ptr_name);
     }
 
     free (prefix);
@@ -347,50 +354,6 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Callback to delete an option in section "policy": the default policies
- * ("default.xxx") are reset to their default value instead of being deleted,
- * any other option is deleted.
- */
-
-int
-otr_config_policy_delete_option_cb (const void *pointer, void *data,
-                                    struct t_config_file *config_file,
-                                    struct t_config_section *section,
-                                    struct t_config_option *option)
-{
-    const char *ptr_name;
-    int i, num_policy_defaults;
-
-    /* Make C compiler happy. */
-    (void) pointer;
-    (void) data;
-    (void) config_file;
-    (void) section;
-
-    ptr_name = weechat_config_option_get_string (option, "name");
-    num_policy_defaults = (int)(sizeof (otr_config_policy_defaults)
-                                / sizeof (otr_config_policy_defaults[0]));
-    for (i = 0; ptr_name && (i < num_policy_defaults); i++)
-    {
-        if (strcmp (ptr_name, otr_config_policy_defaults[i].name) != 0)
-            continue;
-        switch (weechat_config_option_reset (option, 1))
-        {
-            case WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
-                return WEECHAT_CONFIG_OPTION_UNSET_OK_RESET;
-            case WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
-                return WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET;
-            default:
-                return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
-        }
-    }
-
-    weechat_config_option_free (option);
-
-    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
-}
-
-/*
  * Create an option in OTR configuration file, with the same default and current
  * value.
  *
@@ -447,6 +410,14 @@ otr_config_init (void)
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
+    otr_config_section_policy_default = weechat_config_new_section (
+        otr_config_file, "policy_default",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     otr_config_section_policy = weechat_config_new_section (
         otr_config_file, "policy",
         1, 1,
@@ -454,9 +425,9 @@ otr_config_init (void)
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         &otr_config_policy_create_option_cb, NULL, NULL,
-        &otr_config_policy_delete_option_cb, NULL, NULL);
+        NULL, NULL, NULL);
     if (!otr_config_section_color || !otr_config_section_look
-        || !otr_config_section_policy)
+        || !otr_config_section_policy_default || !otr_config_section_policy)
     {
         return 0;
     }
@@ -509,7 +480,7 @@ otr_config_init (void)
                                 / sizeof (otr_config_policy_defaults[0]));
     for (i = 0; i < num_policy_defaults; i++)
     {
-        otr_config_new_option (otr_config_section_policy,
+        otr_config_new_option (otr_config_section_policy_default,
                                otr_config_policy_defaults[i].name, "boolean",
                                otr_config_policy_defaults[i].description,
                                otr_config_policy_defaults[i].default_value,

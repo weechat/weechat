@@ -72,6 +72,7 @@ extern const struct t_otr_policy otr_config_policies[];
 extern const int otr_config_policies_count;
 
 extern struct t_config_file *otr_config_file;
+extern struct t_config_section *otr_config_section_policy_default;
 extern struct t_config_section *otr_config_section_policy;
 extern struct t_config_option *otr_config_look_debug;
 extern struct t_config_option *otr_config_look_hints;

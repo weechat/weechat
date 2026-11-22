@@ -4366,10 +4366,11 @@ changes them, and with `default`, the policies of all peers:
 /otr policy default send_tag on
 ----
 
-Policies are stored in options otr.policy.*: the most specific option is
-used, first `<server>.<nick>.<peer>.<name>` (for a peer, where `<nick>` is
-your nick), then `<server>.<nick>.<name>`, `<server>.<name>` and
-finally `default.<name>`.
+Default policies are stored in options otr.policy_default.*, and custom
+policies in options otr.policy.*: the most specific option is used, first
+`otr.policy.<server>.<nick>.<peer>.<name>` (for a peer, where `<nick>` is your
+nick), then `otr.policy.<server>.<nick>.<name>`, `otr.policy.<server>.<name>`
+and finally `otr.policy_default.<name>`.
 
 With the policy "require_encryption", the messages held are discarded if the
 policy is disabled before the session is established, or with
@@ -4438,10 +4439,11 @@ Sections in file _otr.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section | Control command    | Description
-| color   | /set otr.color.*   | Colors.
-| look    | /set otr.look.*    | Look and feel.
-| policy  | /set otr.policy.*  | Policies (see <<otr_policies,Policies>>).
+| Section        | Control command           | Description
+| color          | /set otr.color.*          | Colors.
+| look           | /set otr.look.*           | Look and feel.
+| policy_default | /set otr.policy_default.* | Default policies (see <<otr_policies,Policies>>).
+| policy         | /set otr.policy.*         | Custom policies (see <<otr_policies,Policies>>).
 |===
 
 Options:

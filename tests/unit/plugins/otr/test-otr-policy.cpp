@@ -68,6 +68,17 @@ TEST(OtrPolicy, PolicyFor)
         config_file_option_unset (ptr_option);
     }
     LONGS_EQUAL(1, otr_policy_for ("alice@test", "bob", "allow_v2"));
+
+    /* Server named "default": custom policy, not a default policy. */
+    config_file_option_set_with_string ("otr.policy.default.allow_v2", "off");
+    LONGS_EQUAL(0, otr_policy_for ("alice@default", "bob", "allow_v2"));
+    LONGS_EQUAL(1, otr_policy_for ("alice@test", "bob", "allow_v2"));
+    config_file_search_with_string ("otr.policy.default.allow_v2", NULL, NULL,
+                                    &ptr_option, NULL);
+    CHECK(ptr_option);
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED,
+                config_file_option_unset (ptr_option));
+    LONGS_EQUAL(1, otr_policy_for ("alice@default", "bob", "allow_v2"));
 }
 
 /*
@@ -79,16 +90,16 @@ TEST(OtrPolicy, Query)
 {
     STRCMP_EQUAL("?OTRv23?", otr_policy_query ("alice@test", "bob"));
 
-    config_file_option_set_with_string ("otr.policy.default.allow_v2", "off");
+    config_file_option_set_with_string ("otr.policy_default.allow_v2", "off");
     STRCMP_EQUAL("?OTRv3?", otr_policy_query ("alice@test", "bob"));
 
-    config_file_option_set_with_string ("otr.policy.default.allow_v3", "off");
+    config_file_option_set_with_string ("otr.policy_default.allow_v3", "off");
     POINTERS_EQUAL(NULL, otr_policy_query ("alice@test", "bob"));
 
-    config_file_option_set_with_string ("otr.policy.default.allow_v2", "on");
+    config_file_option_set_with_string ("otr.policy_default.allow_v2", "on");
     STRCMP_EQUAL("?OTRv2?", otr_policy_query ("alice@test", "bob"));
 
-    config_file_option_set_with_string ("otr.policy.default.allow_v3", "on");
+    config_file_option_set_with_string ("otr.policy_default.allow_v3", "on");
     STRCMP_EQUAL("?OTRv23?", otr_policy_query ("alice@test", "bob"));
 }
 

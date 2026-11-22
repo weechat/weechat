@@ -4693,10 +4693,11 @@ changes them, and with `default`, the policies of all peers:
 ----
 
 // TRANSLATION MISSING
-Policies are stored in options otr.policy.*: the most specific option is
-used, first `<server>.<nick>.<peer>.<name>` (for a peer, where `<nick>` is
-your nick), then `<server>.<nick>.<name>`, `<server>.<name>` and
-finally `default.<name>`.
+Default policies are stored in options otr.policy_default.*, and custom
+policies in options otr.policy.*: the most specific option is used, first
+`otr.policy.<server>.<nick>.<peer>.<name>` (for a peer, where `<nick>` is your
+nick), then `otr.policy.<server>.<nick>.<name>`, `otr.policy.<server>.<name>`
+and finally `otr.policy_default.<name>`.
 
 // TRANSLATION MISSING
 With the policy "require_encryption", the messages held are discarded if the
@@ -4783,13 +4784,15 @@ Sections in file _otr.conf_:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 // TRANSLATION MISSING
-| Section | Control command    | Description
+| Section        | Control command           | Description
 // TRANSLATION MISSING
-| color   | /set otr.color.*   | Colors.
+| color          | /set otr.color.*          | Colors.
 // TRANSLATION MISSING
-| look    | /set otr.look.*    | Look and feel.
+| look           | /set otr.look.*           | Look and feel.
 // TRANSLATION MISSING
-| policy  | /set otr.policy.*  | Policies (see <<otr_policies,Policies>>).
+| policy_default | /set otr.policy_default.* | Default policies (see <<otr_policies,Policies>>).
+// TRANSLATION MISSING
+| policy         | /set otr.policy.*         | Custom policies (see <<otr_policies,Policies>>).
 |===
 
 // TRANSLATION MISSING
