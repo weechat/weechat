@@ -1338,11 +1338,11 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
                                        NULL, NULL);
     CHECK(context.hashtable);
 
-    /* 2 bytes for arguments (15 - 13), "€" has 3 bytes */
+    /* 2 bytes for arguments (16 - 14), "€" has 3 bytes */
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "a€b", "", ' ', 0,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(4, context.number);
     STRCMP_EQUAL("PRIVMSG #c :a",
                  (const char *)hashtable_get (context.hashtable, "msg1"));
@@ -1351,12 +1351,12 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     STRCMP_EQUAL("PRIVMSG #c :b",
                  (const char *)hashtable_get (context.hashtable, "msg3"));
 
-    /* 3 bytes for arguments (16 - 13), emoji has 4 bytes */
+    /* 3 bytes for arguments (17 - 14), emoji has 4 bytes */
     hashtable_remove_all (context.hashtable);
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "😀😀",
-                                             "", ' ', 0, -1, 16));
+                                             "", ' ', 0, -1, 17));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("PRIVMSG #c :😀",
                  (const char *)hashtable_get (context.hashtable, "msg1"));
@@ -1368,7 +1368,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", " abc", "", ' ', 0,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("PRIVMSG #c :ab",
                  (const char *)hashtable_get (context.hashtable, "msg1"));
@@ -1378,7 +1378,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "  abc", "", ' ', 0,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("PRIVMSG #c :ab",
                  (const char *)hashtable_get (context.hashtable, "msg1"));
@@ -1389,7 +1389,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "   ", "", ' ', 0,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(2, context.number);
     STRCMP_EQUAL("PRIVMSG #c :  ",
                  (const char *)hashtable_get (context.hashtable, "msg1"));
@@ -1402,14 +1402,14 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
                                              "#c", ":", long_text, "", ' ', 0,
                                              -1, 512));
     LONGS_EQUAL(3, context.number);
-    /* 499 bytes for arguments (512 - 13): 599 "x" in 2 messages */
+    /* 498 bytes for arguments (512 - 14): 599 "x" in 2 messages */
     STRNCMP_EQUAL("PRIVMSG #c :x",
                   (const char *)hashtable_get (context.hashtable, "msg1"),
                   13);
-    LONGS_EQUAL(12 + 499,
+    LONGS_EQUAL(12 + 498,
                 strlen ((const char *)hashtable_get (context.hashtable,
                                                      "msg1")));
-    LONGS_EQUAL(12 + 100,
+    LONGS_EQUAL(12 + 101,
                 strlen ((const char *)hashtable_get (context.hashtable,
                                                      "msg2")));
 
@@ -1418,7 +1418,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "ab cd", "", ' ', 1,
-                                             -1, 16));
+                                             -1, 17));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("ab ",
                  (const char *)hashtable_get (context.hashtable, "args1"));
@@ -1430,7 +1430,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "ab c", "", ' ', 1,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("ab",
                  (const char *)hashtable_get (context.hashtable, "args1"));
@@ -1445,7 +1445,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "  abc", "", ' ', 1,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL(" a",
                  (const char *)hashtable_get (context.hashtable, "args1"));
@@ -1455,7 +1455,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "ab  c", "", ' ', 1,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("ab",
                  (const char *)hashtable_get (context.hashtable, "args1"));
@@ -1465,7 +1465,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "a     b", "", ' ', 1,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("a ",
                  (const char *)hashtable_get (context.hashtable, "args1"));
@@ -1477,7 +1477,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "ab €", "", ' ', 1,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("ab",
                  (const char *)hashtable_get (context.hashtable, "args1"));
@@ -1489,7 +1489,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "ab   ", "", ' ', 1,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(2, context.number);
     STRCMP_EQUAL("ab",
                  (const char *)hashtable_get (context.hashtable, "args1"));
@@ -1499,7 +1499,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "   ", "", ' ', 1,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(2, context.number);
     STRCMP_EQUAL("  ",
                  (const char *)hashtable_get (context.hashtable, "args1"));
@@ -1509,7 +1509,7 @@ TEST(IrcMessage, SplitStringTinyMaxLength)
     context.number = 1;
     LONGS_EQUAL(1, irc_message_split_string (&context, NULL, NULL, "PRIVMSG",
                                              "#c", ":", "a €", "", ' ', 1,
-                                             -1, 15));
+                                             -1, 16));
     LONGS_EQUAL(3, context.number);
     STRCMP_EQUAL("a ",
                  (const char *)hashtable_get (context.hashtable, "args1"));

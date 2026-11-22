@@ -190,6 +190,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - guile: fix crash when a script loads another script during its initialization
 - guile, php, python: display error in core buffer instead of returning it in info "xxx_eval" ([#1362](https://github.com/weechat/weechat/issues/1362))
 - guile: fix return value of functions mkdir_home, mkdir and mkdir_parents when the directory cannot be created
+- irc: fix split of messages one byte too long, the space after the target was not counted
 - irc: send long lines of a multiline message with tag "draft/multiline-concat", so that they are received as a single line, without losing the spaces between words
 - irc: respect the limits of lines and bytes of a multiline batch when long lines are split in multiple messages, the batch could be rejected by the server
 - irc: fix undefined behavior in split of messages when the split is disabled (server option split_msg_max_length set to 0)

@@ -1002,8 +1002,8 @@ irc_message_split_get_max_length_args (const char *host,
     else
         max_length -= (host) ? strlen (host) + 1 : 0;
     max_length -= (command) ? strlen (command) + 1 : 0;
-    if (target)
-        max_length -= strlen (target);
+    if (target && target[0])
+        max_length -= strlen (target) + 1;  /* Target + " " */
     if (prefix)
         max_length -= strlen (prefix);
     if (suffix)
