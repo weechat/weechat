@@ -7,6 +7,7 @@
 
 /* IRC functions for OTR plugin */
 
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -157,6 +158,45 @@ otr_irc_nick_tolower (const char *server, const char *nick)
     free (info_args);
 
     return result;
+}
+
+/*
+ * Get the max length of text in a message PRIVMSG sent to a nick on a server,
+ * so that the IRC plugin does not split the message (an OTR message split in
+ * two IRC messages can not be read by the peer).
+ *
+ * Return the max length, -1 if unknown (split of messages disabled on the
+ * server or IRC plugin not loaded).
+ */
+
+int
+otr_irc_privmsg_max_length (const char *server, const char *nick)
+{
+    char *info_args, *info, *error;
+    long max_length;
+
+    if (!nick)
+        return -1;
+
+    weechat_asprintf (&info_args, "%s,%s", (server) ? server : "", nick);
+    if (!info_args)
+        return -1;
+
+    info = weechat_info_get ("irc_privmsg_max_length", info_args);
+
+    max_length = -1;
+    if (info && info[0])
+    {
+        error = NULL;
+        max_length = strtol (info, &error, 10);
+        if (!error || error[0] || (max_length < 0) || (max_length > INT_MAX))
+            max_length = -1;
+    }
+
+    free (info_args);
+    free (info);
+
+    return (int)max_length;
 }
 
 /*

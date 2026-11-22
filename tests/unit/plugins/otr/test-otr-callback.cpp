@@ -30,6 +30,7 @@ extern void otr_callback_handle_msg_event (void *opdata,
                                            ConnContext *context,
                                            const char *message,
                                            gcry_error_t error);
+extern int otr_callback_max_message_size (void *opdata, ConnContext *context);
 extern void otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
                                            ConnContext *context,
                                            unsigned short progress,
@@ -39,6 +40,35 @@ extern void otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
 TEST_GROUP(OtrCallback)
 {
 };
+
+/*
+ * Test functions:
+ *   otr_callback_max_message_size
+ */
+
+TEST(OtrCallback, MaxMessageSize)
+{
+    ConnContext *ptr_context;
+    char nick[401];
+
+    /* Unknown server: 510 - 93 - "PRIVMSG " - "bob " - ":". */
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_cb_max",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    LONGS_EQUAL(404, otr_callback_max_message_size (NULL, ptr_context));
+    otrl_context_forget (ptr_context);
+
+    /* Very long nick: min size is 100. */
+    memset (nick, 'a', sizeof (nick) - 1);
+    nick[sizeof (nick) - 1] = '\0';
+    ptr_context = otrl_context_find (otr_us, nick, "alice@srv_otr_cb_max",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    LONGS_EQUAL(100, otr_callback_max_message_size (NULL, ptr_context));
+    otrl_context_forget (ptr_context);
+}
 
 /*
  * Test functions:

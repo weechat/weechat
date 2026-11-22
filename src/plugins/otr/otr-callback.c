@@ -178,9 +178,12 @@ otr_callback_write_fingerprints (void *opdata)
 }
 
 /*
- * Callback for libotr: get the max size of an OTR message, according to the max
- * size of an IRC message and the length of the nick of the peer (libotr
- * fragments longer messages).
+ * Callback for libotr: get the max size of an OTR message, so that the IRC
+ * plugin does not split it (libotr fragments longer messages).
+ *
+ * The max size is given by the IRC plugin (it depends on the server and the
+ * nick of the peer); if unknown, it is computed with the default max size of
+ * an IRC message and the length of the nick of the peer.
  *
  * Return max size of an OTR message (at least 100).
  */
@@ -193,7 +196,10 @@ otr_callback_max_message_size (void *opdata, ConnContext *context)
     /* Make C compiler happy. */
     (void) opdata;
 
-    max_size = 415 - 10 - (int)strlen (context->username);
+    max_size = otr_irc_privmsg_max_length (
+        otr_irc_account_server (context->accountname), context->username);
+    if (max_size < 0)
+        max_size = 415 - 10 - (int)strlen (context->username);
 
     return (max_size < 100) ? 100 : max_size;
 }

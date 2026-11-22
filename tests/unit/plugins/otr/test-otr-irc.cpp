@@ -207,6 +207,40 @@ TEST(OtrIrc, NickTolower)
 
 /*
  * Test functions:
+ *   otr_irc_privmsg_max_length
+ */
+
+TEST(OtrIrc, PrivmsgMaxLength)
+{
+    struct t_irc_server *server;
+
+    LONGS_EQUAL(-1, otr_irc_privmsg_max_length ("test", NULL));
+
+    /* Unknown server: 510 - 93 - "PRIVMSG " - nick - " " - ":". */
+    LONGS_EQUAL(403, otr_irc_privmsg_max_length ("unknown_server", "nick"));
+    LONGS_EQUAL(403, otr_irc_privmsg_max_length (NULL, "nick"));
+
+    run_cmd_quiet ("/mute /server add test_otr_max fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_max");
+    server = irc_server_search ("test_otr_max");
+    CHECK(server);
+
+    LONGS_EQUAL(403, otr_irc_privmsg_max_length ("test_otr_max", "nick"));
+
+    /* NICKLEN=32 received from server. */
+    server->nick_max_length = 32;
+    LONGS_EQUAL(387, otr_irc_privmsg_max_length ("test_otr_max", "nick"));
+
+    /* Split disabled. */
+    run_cmd_quiet ("/mute /set irc.server.test_otr_max.split_msg_max_length 0");
+    LONGS_EQUAL(-1, otr_irc_privmsg_max_length ("test_otr_max", "nick"));
+
+    run_cmd_quiet ("/mute /disconnect test_otr_max");
+    run_cmd_quiet ("/mute /server del test_otr_max");
+}
+
+/*
+ * Test functions:
  *   otr_irc_is_nick
  */
 
