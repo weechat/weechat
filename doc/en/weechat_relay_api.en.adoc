@@ -712,6 +712,35 @@ Query parameters:
 ** `weechat`: return WeeChat internal color codes
 ** `strip`: strip colors
 
+Each buffer has the number of lines in the buffer _(WeeChat ≥ 5.0.0)_:
+
+* `lines_count` (integer): number of lines in the buffer (all lines, filtered or not)
+* `lines_filtered` (integer): number of lines filtered with command `/filter`
+  (lines with `displayed` set to `false`)
+
+The client can compute how many lines can still be fetched in the buffer:
+
+* with `filtered` set to `include`: `lines_count` minus the number of lines
+  already received
+* with `filtered` set to `between` or `exclude`: `lines_count` - `lines_filtered`
+  minus the number of lines already received with `displayed` set to `true`
+  (filtered lines received with `between` are not counted).
+
+These numbers are updated in all events with a buffer (for example
+`buffer_lines_filtered` and `buffer_cleared`), but not when a line is added or
+changed (the client can update them with the events `buffer_line_added` and
+`buffer_line_data_changed`, using the field `displayed` of the line, compared
+to its previous value for a changed line), and not
+when the oldest lines are removed from the buffer because of the history limit
+(options _weechat.history.max_buffer_lines_number_ and
+_weechat.history.max_buffer_lines_minutes_): receiving fewer lines than
+requested means that there are no more lines in the buffer.
+
+With the option `filtered_lines` set to `false` in resource `POST /api/sync`,
+the event `buffer_line_added` is not sent for filtered lines, so the client can
+only update the difference `lines_count` - `lines_filtered`, which is the number
+of lines counted with `filtered` set to `between` or `exclude`.
+
 Request example: get all buffers without lines:
 
 [source,shell]
@@ -749,6 +778,8 @@ HTTP/1.1 200 OK
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
+        "lines_count": 24,
+        "lines_filtered": 0,
         "local_variables": {
             "plugin": "core",
             "name": "weechat"
@@ -777,6 +808,8 @@ HTTP/1.1 200 OK
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
+        "lines_count": 98,
+        "lines_filtered": 0,
         "local_variables": {
             "plugin": "irc",
             "name": "server.libera",
@@ -813,6 +846,8 @@ HTTP/1.1 200 OK
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
+        "lines_count": 1042,
+        "lines_filtered": 12,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#weechat",
@@ -866,6 +901,8 @@ HTTP/1.1 200 OK
     "time_displayed": true,
     "prefix_displayed": true,
     "day_change": true,
+    "lines_count": 24,
+    "lines_filtered": 0,
     "local_variables": {
         "plugin": "core",
         "name": "weechat"
@@ -925,6 +962,8 @@ HTTP/1.1 200 OK
     "time_displayed": true,
     "prefix_displayed": true,
     "day_change": true,
+    "lines_count": 1042,
+    "lines_filtered": 12,
     "local_variables": {
         "plugin": "irc",
         "name": "libera.#weechat",
@@ -1030,6 +1069,8 @@ HTTP/1.1 200 OK
     "time_displayed": true,
     "prefix_displayed": true,
     "day_change": true,
+    "lines_count": 3810,
+    "lines_filtered": 0,
     "local_variables": {
         "plugin": "fset",
         "name": "fset",
@@ -2282,6 +2323,8 @@ Example: new buffer: channel `#weechat` has been joined:
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
+        "lines_count": 0,
+        "lines_filtered": 0,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#weechat",

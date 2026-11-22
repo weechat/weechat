@@ -389,6 +389,21 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     MSG_ADD_HDATA_VAR(bool, "prefix_displayed", integer, "prefix_for_each_line");
     MSG_ADD_HDATA_VAR(bool, "day_change", integer, "day_change");
 
+    /* Number of lines and lines filtered with /filter */
+    ptr_lines = weechat_hdata_pointer (hdata, buffer, "own_lines");
+    relay_json_object_add (
+        json, "lines_count",
+        relay_json_new_number (
+            (ptr_lines) ?
+            weechat_hdata_integer (relay_hdata_lines, ptr_lines,
+                                   "lines_count") : 0));
+    relay_json_object_add (
+        json, "lines_filtered",
+        relay_json_new_number (
+            (ptr_lines) ?
+            weechat_hdata_integer (relay_hdata_lines, ptr_lines,
+                                   "lines_hidden") : 0));
+
     /* Local variables */
     json_local_vars = relay_json_new_object ();
     if (json_local_vars)

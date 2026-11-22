@@ -1397,6 +1397,14 @@ components:
           type: boolean
           description: day change message is displayed in the buffer
           example: true
+        lines_count:
+          type: integer
+          description: number of lines in the buffer (all lines, filtered or not)
+          example: 1042
+        lines_filtered:
+          type: integer
+          description: number of lines filtered with command /filter (lines with "displayed" set to false)
+          example: 12
         local_variables:
           type: object
           description: the buffer local variables
@@ -1450,6 +1458,8 @@ components:
         - time_displayed
         - prefix_displayed
         - day_change
+        - lines_count
+        - lines_filtered
         - local_variables
         - keys
     Key:

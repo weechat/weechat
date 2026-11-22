@@ -729,6 +729,39 @@ Paramètres de la requête :
 ** `weechat` : retourner les codes couleur internes WeeChat
 ** `strip` : supprimer les couleurs
 
+Chaque tampon a le nombre de lignes du tampon _(WeeChat ≥ 5.0.0)_ :
+
+* `lines_count` (entier) : nombre de lignes dans le tampon (toutes les
+  lignes, filtrées ou non)
+* `lines_filtered` (entier) : nombre de lignes filtrées avec la commande
+  `/filter` (lignes avec `displayed` à `false`)
+
+Le client peut calculer combien de lignes peuvent encore être récupérées dans
+le tampon :
+
+* avec `filtered` à `include` : `lines_count` moins le nombre de lignes déjà
+  reçues
+* avec `filtered` à `between` ou `exclude` : `lines_count` - `lines_filtered`
+  moins le nombre de lignes déjà reçues avec `displayed` à `true` (les lignes
+  filtrées reçues avec `between` ne sont pas comptées).
+
+Ces nombres sont mis à jour dans tous les évènements avec un tampon (par
+exemple `buffer_lines_filtered` et `buffer_cleared`), mais pas lorsqu'une ligne
+est ajoutée ou modifiée (le client peut les mettre à jour avec les évènements
+`buffer_line_added` et `buffer_line_data_changed`, en utilisant le champ
+`displayed` de la ligne, comparé à sa valeur précédente pour une ligne
+modifiée), et pas lorsque les lignes les plus anciennes sont
+supprimées du tampon à cause de la limite de l'historique (options
+_weechat.history.max_buffer_lines_number_ et
+_weechat.history.max_buffer_lines_minutes_) : recevoir moins de lignes que
+demandé signifie qu'il n'y a plus de lignes dans le tampon.
+
+Avec l'option `filtered_lines` à `false` dans la ressource `POST /api/sync`,
+l'évènement `buffer_line_added` n'est pas envoyé pour les lignes filtrées, donc
+le client peut seulement mettre à jour la différence `lines_count` -
+`lines_filtered`, qui est le nombre de lignes comptées avec `filtered` à
+`between` ou `exclude`.
+
 Exemple de requête : obtenir tous les tampons sans les lignes :
 
 [source,shell]
@@ -765,6 +798,8 @@ HTTP/1.1 200 OK
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
+        "lines_count": 24,
+        "lines_filtered": 0,
         "local_variables": {
             "plugin": "core",
             "name": "weechat"
@@ -792,6 +827,8 @@ HTTP/1.1 200 OK
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
+        "lines_count": 98,
+        "lines_filtered": 0,
         "local_variables": {
             "plugin": "irc",
             "name": "server.libera",
@@ -827,6 +864,8 @@ HTTP/1.1 200 OK
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
+        "lines_count": 1042,
+        "lines_filtered": 12,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#weechat",
@@ -880,6 +919,8 @@ HTTP/1.1 200 OK
     "time_displayed": true,
     "prefix_displayed": true,
     "day_change": true,
+    "lines_count": 24,
+    "lines_filtered": 0,
     "local_variables": {
         "plugin": "core",
         "name": "weechat"
@@ -938,6 +979,8 @@ HTTP/1.1 200 OK
     "time_displayed": true,
     "prefix_displayed": true,
     "day_change": true,
+    "lines_count": 1042,
+    "lines_filtered": 12,
     "local_variables": {
         "plugin": "irc",
         "name": "libera.#weechat",
@@ -1042,6 +1085,8 @@ HTTP/1.1 200 OK
     "time_displayed": true,
     "prefix_displayed": true,
     "day_change": true,
+    "lines_count": 3810,
+    "lines_filtered": 0,
     "local_variables": {
         "plugin": "fset",
         "name": "fset",
@@ -2325,6 +2370,8 @@ Exemple : nouveau tampon : le canal `#weechat` a été rejoint :
         "time_displayed": true,
         "prefix_displayed": true,
         "day_change": true,
+        "lines_count": 0,
+        "lines_filtered": 0,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#weechat",
