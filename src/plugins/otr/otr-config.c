@@ -102,7 +102,7 @@ const struct t_otr_config_option_def
     { "prefix",
       N_("prefix used for messages from otr (note: content is evaluated, see "
          "/help eval)"),
-      "${color:default}:! ${color:brown}otr${color:default} !:", 0 },
+      "${color:default}=${color:brown}otr${color:default}=", 0 },
 };
 
 /* OTR policies */

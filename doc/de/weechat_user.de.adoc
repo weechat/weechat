@@ -4348,7 +4348,7 @@ Your peer can start the session too: WeeChat answers automatically. A message
 is displayed when the session is established, for example:
 
 ----
-:! otr !: Unauthenticated secured OTR conversation started.
+=otr= Unauthenticated OTR session started.
 ----
 
 // TRANSLATION MISSING

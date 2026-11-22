@@ -4396,7 +4396,7 @@ automatiquement. Un message est affiché quand la session est établie, par
 exemple :
 
 ----
-:! otr !: Unauthenticated secured OTR conversation started.
+=otr= Unauthenticated OTR session started.
 ----
 
 Pour terminer la session :

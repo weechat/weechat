@@ -36,7 +36,7 @@ const char *otr_theme_light[][2] =
     { "otr.color.status.unauthenticated", "red" },
     { "otr.color.status.unencrypted",     "red" },
     { "otr.look.prefix",
-      "${color:default}:! ${color:94}otr${color:default} !:" },
+      "${color:default}=${color:94}otr${color:default}=" },
     { NULL,                               NULL },
 };
 
