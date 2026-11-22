@@ -1153,7 +1153,7 @@ otr_command_init (void)
             "         html_filter: filter HTML in incoming messages\n"
             "\n"
             "Note: OTR works for private conversations only, not for channels.\n"
-            "Note: to show the OTR state in the status bar, add \"[otr]\" to the option weechat.bar.status.items; use /set otr.* to customize the item and the colors.\n"
+            "Note: the OTR state is displayed in the status bar by the bar item \"otr\" (in the default value of option weechat.bar.status.items); use /set otr.* to customize the item and the colors.\n"
             "Note: default policies are stored in the options otr.policy_default.* and custom policies in the options otr.policy.*; a more specific option (peer) overrides a more general one (nick, server, default).\n"
             "\n"
             "Examples:\n"

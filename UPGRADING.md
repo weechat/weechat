@@ -389,6 +389,19 @@ used as the single port `5000`. If you use this option, check its value and fix 
 /set xfer.network.port_range 5000-5015
 ```
 
+### Bar item "otr"
+
+The bar item "otr" (OTR plugin) has been added to the status bar by default, after
+the buffer name. It displays the OTR state of the current private buffer.
+
+The default value is used only when the bar is created, so if you upgrade from an older
+version, you must add `[otr]` manually in your option weechat.bar.status.items, for example
+with the new default value:
+
+```text
+/set weechat.bar.status.items "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+buffer_filter,[otr],mouse_status,scroll,[lag],[hotlist],[typing],completion"
+```
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer

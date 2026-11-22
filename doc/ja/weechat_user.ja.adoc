@@ -1005,6 +1005,8 @@ By default, the screen is divided up into the following areas:
 | buffer_zoom           | !                      | `!` はマージされたバッファがズームされている状態 (ズームされたものだけを表示する状態) を示します、空の場合はすべてのマージされたバッファが表示されていることを示します
 | buffer_filter         | `+*+`                  | フィルタ表示: `+*+` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
 // TRANSLATION MISSING
+| otr                   | `OTR:SEC,!AUTH,!LOG`   | OTR state of the current private buffer, see <<otr_status_bar,OTR status bar>>.
+// TRANSLATION MISSING
 | mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,toggle keys>>.
 | scroll                | `-MORE(50)-`           | スクロール表示、最後の行が表示されてから追加された行数を含む。
 | lag                   | `Lag: 2.5`             | 遅延秒表示 (遅延が短い場合は非表示)
@@ -4456,9 +4458,8 @@ the peer, so that the session continues with your new nick.
 === Status bar
 
 // TRANSLATION MISSING
-The bar item "otr" shows the OTR state of the current private buffer. To
-display it in the status bar, add `[otr]` to the option
-weechat.bar.status.items.
+The bar item "otr" shows the OTR state of the current private buffer. It is
+displayed in the status bar by default (option weechat.bar.status.items).
 
 // TRANSLATION MISSING
 For example, "OTR:SEC,!AUTH,!LOG" means that the conversation is encrypted,

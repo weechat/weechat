@@ -946,6 +946,8 @@ Pasek _status_ posiada następujące domyślne elementy:
 | buffer_nicklist_count | `4`                    | Ilość nicków wyświetlanych na liście nicków.
 | buffer_zoom           | !                      | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane.
 | buffer_filter         | `+*+`                  | Wskaźnik filtrowania: `+*+` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane.
+// TRANSLATION MISSING
+| otr                   | `OTR:SEC,!AUTH,!LOG`   | OTR state of the current private buffer, see <<otr_status_bar,OTR status bar>>.
 | mouse_status          | `M`                    | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona), zobacz <<command_weechat_mouse,/mouse>> i <<key_bindings_toggle_keys,Włącz/wyłącz>>.
 | scroll                | `-Więcej(50)-`         | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej.
 | lag                   | `Lag: 2.5`             | Wskaźnik opóźnienia, w sekundach (ukryty dla niskich opóźnień).
@@ -4334,9 +4336,8 @@ the peer, so that the session continues with your new nick.
 === Status bar
 
 // TRANSLATION MISSING
-The bar item "otr" shows the OTR state of the current private buffer. To
-display it in the status bar, add `[otr]` to the option
-weechat.bar.status.items.
+The bar item "otr" shows the OTR state of the current private buffer. It is
+displayed in the status bar by default (option weechat.bar.status.items).
 
 // TRANSLATION MISSING
 For example, "OTR:SEC,!AUTH,!LOG" means that the conversation is encrypted,
