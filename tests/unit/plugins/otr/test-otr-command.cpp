@@ -27,8 +27,6 @@ extern int otr_command_split_args (const char *string, char **args,
 extern const char *otr_command_get_policy_name (const char *name);
 extern const char *otr_command_get_policy_value (const char *value);
 extern void otr_command_show_peer_fingerprints (const char *search);
-extern struct t_otr_key_generation *otr_key_generation_search (const char *account,
-                                                               const char *protocol);
 }
 
 TEST_GROUP(OtrCommand)
@@ -309,6 +307,10 @@ TEST(OtrCommand, StartWithoutKey)
                    otr_key_generation_search ("alice@test_otr_start",
                                               OTR_PROTOCOL));
     STRCMP_EQUAL("bob\ncarol", *(ptr_generation->peers));
+
+    /* End before the key is generated: no query sent later to the peer. */
+    run_cmd_quiet ("/otr end bob test_otr_start");
+    STRCMP_EQUAL("carol", *(ptr_generation->peers));
 
     otr_key_generation_free_all ();
 

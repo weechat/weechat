@@ -440,7 +440,16 @@ otr_command_finish (const struct t_otr_peer_ref *peer_ref)
     if (!otr_command_resolve (peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;
 
-    if (!otr_context_end_session (account, peer, 1, 0))
+    /* OTR key being generated: the OTR query will not be sent. */
+    if (otr_key_generation_remove_peer (
+            otr_key_generation_search (account, OTR_PROTOCOL), peer))
+    {
+        otr_buffer_peer_print (
+            peer_ref->server, peer, OTR_CONFIG_LEVEL_INFO,
+            _("The OTR query will not be sent when the OTR key is "
+              "generated."));
+    }
+    else if (!otr_context_end_session (account, peer, 1, 0))
     {
         otr_buffer_peer_print (
             peer_ref->server, peer, OTR_CONFIG_LEVEL_INFO,

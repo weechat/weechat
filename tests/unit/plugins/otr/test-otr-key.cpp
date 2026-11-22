@@ -23,8 +23,6 @@ extern "C"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-key.h"
 
-extern struct t_otr_key_generation *otr_key_generation_search (
-    const char *account, const char *protocol);
 extern void otr_key_generation_add_peer (
     struct t_otr_key_generation *generation, const char *peer);
 extern int otr_key_save (const char *account, const char *protocol,
@@ -109,6 +107,7 @@ TEST_GROUP(OtrKey)
  * Test functions:
  *   otr_key_generation_search
  *   otr_key_generation_add_peer
+ *   otr_key_generation_remove_peer
  *   otr_key_generation_free
  *   otr_key_generation_free_all
  */
@@ -142,6 +141,19 @@ TEST(OtrKey, Generation)
     POINTERS_EQUAL(generation, otr_key_generations);
     POINTERS_EQUAL(generation, last_otr_key_generation);
     STRCMP_EQUAL("bob\ncarol\ndave", *(generation->peers));
+
+    /* Peer removed (no OTR query sent to this peer). */
+    LONGS_EQUAL(0, otr_key_generation_remove_peer (NULL, "bob"));
+    LONGS_EQUAL(0, otr_key_generation_remove_peer (generation, NULL));
+    LONGS_EQUAL(0, otr_key_generation_remove_peer (generation, ""));
+    LONGS_EQUAL(0, otr_key_generation_remove_peer (generation, "eve"));
+    STRCMP_EQUAL("bob\ncarol\ndave", *(generation->peers));
+    LONGS_EQUAL(1, otr_key_generation_remove_peer (generation, "carol"));
+    STRCMP_EQUAL("bob\ndave", *(generation->peers));
+    LONGS_EQUAL(1, otr_key_generation_remove_peer (generation, "bob"));
+    LONGS_EQUAL(1, otr_key_generation_remove_peer (generation, "dave"));
+    STRCMP_EQUAL("", *(generation->peers));
+    LONGS_EQUAL(0, otr_key_generation_remove_peer (generation, "dave"));
 
     otr_key_generation_free_all ();
     POINTERS_EQUAL(NULL, otr_key_generations);
@@ -288,7 +300,7 @@ TEST(OtrKey, ProcessCb)
                     "generation of OTR key for alice@srv_key_cb_error failed: "
                     "generation error"));
 
-    /* Process not run (no error from child process): key not saved. */
+    /* Process failed or timeout reached: key not saved. */
     generation = new_generation ("alice@srv_key_cb_error");
     ptr_last_line = gui_buffers->own_lines->last_line;
     LONGS_EQUAL(WEECHAT_RC_OK,
@@ -298,7 +310,7 @@ TEST(OtrKey, ProcessCb)
     LONGS_EQUAL(1, core_line_displayed (
                     ptr_last_line,
                     "generation of OTR key for alice@srv_key_cb_error failed: "
-                    "unable to run process"));
+                    "process failed or timeout reached"));
 
     /* Invalid key received: key not saved. */
     generation = new_generation ("alice@srv_key_cb_error");

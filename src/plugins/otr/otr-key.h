@@ -8,6 +8,10 @@
 #ifndef WEECHAT_PLUGIN_OTR_KEY_H
 #define WEECHAT_PLUGIN_OTR_KEY_H
 
+/* Max duration of the key generation (in milliseconds). */
+
+#define OTR_KEY_GENERATION_TIMEOUT (5 * 60 * 1000)
+
 /* Private key being generated in background (child process). */
 
 struct t_otr_key_generation
@@ -28,6 +32,10 @@ extern struct t_otr_key_generation *last_otr_key_generation;
 
 extern int otr_key_generate (const char *account, const char *protocol,
                              const char *peer);
+extern struct t_otr_key_generation *otr_key_generation_search (
+    const char *account, const char *protocol);
+extern int otr_key_generation_remove_peer (
+    struct t_otr_key_generation *generation, const char *peer);
 extern void otr_key_generation_free_all (void);
 
 #endif /* WEECHAT_PLUGIN_OTR_KEY_H */

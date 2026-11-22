@@ -90,6 +90,62 @@ otr_key_generation_add_peer (struct t_otr_key_generation *generation,
 }
 
 /*
+ * Remove a peer waiting for a private key: no OTR query will be sent to this
+ * peer when the key is generated.
+ *
+ * Return 1 if the peer was waiting for the key, 0 otherwise.
+ */
+
+int
+otr_key_generation_remove_peer (struct t_otr_key_generation *generation,
+                                const char *peer)
+{
+    char **peers, **new_peers;
+    int i, num_peers, found;
+
+    if (!generation || !peer || !peer[0])
+        return 0;
+
+    peers = weechat_string_split (*(generation->peers), "\n", NULL, 0, 0,
+                                  &num_peers);
+    if (!peers)
+        return 0;
+
+    new_peers = weechat_string_dyn_alloc (64);
+    if (!new_peers)
+    {
+        weechat_string_free_split (peers);
+        return 0;
+    }
+
+    found = 0;
+    for (i = 0; i < num_peers; i++)
+    {
+        if (strcmp (peers[i], peer) == 0)
+        {
+            found = 1;
+            continue;
+        }
+        if ((*new_peers)[0])
+            weechat_string_dyn_concat (new_peers, "\n", -1);
+        weechat_string_dyn_concat (new_peers, peers[i], -1);
+    }
+    weechat_string_free_split (peers);
+
+    if (found)
+    {
+        weechat_string_dyn_free (generation->peers, 1);
+        generation->peers = new_peers;
+    }
+    else
+    {
+        weechat_string_dyn_free (new_peers, 1);
+    }
+
+    return found;
+}
+
+/*
  * Free a private key generation and remove it from the list; the process
  * generating the key is killed if it is still running.
  */
@@ -429,7 +485,7 @@ otr_key_process_cb (const void *pointer, void *data, const char *command,
             _("generation of OTR key for %s failed: %s"),
             generation->account,
             ((*(generation->error))[0]) ?
-            *(generation->error) : _("unable to run process"));
+            *(generation->error) : _("process failed or timeout reached"));
     }
     else if (!otr_key_save (generation->account, generation->protocol,
                             *(generation->output)))
@@ -504,7 +560,8 @@ otr_key_generate (const char *account, const char *protocol, const char *peer)
         otr_key_generations = new_generation;
     last_otr_key_generation = new_generation;
 
-    new_generation->hook = weechat_hook_process ("func:otr_key_generate", 0,
+    new_generation->hook = weechat_hook_process ("func:otr_key_generate",
+                                                 OTR_KEY_GENERATION_TIMEOUT,
                                                  &otr_key_process_cb,
                                                  new_generation, NULL);
     if (!new_generation->hook)
