@@ -505,7 +505,9 @@ otr_config_init (void)
     {
         otr_config_look[i] = otr_config_new_option (
             otr_config_section_look,
-            otr_config_look_defs[i].name, "string",
+            otr_config_look_defs[i].name,
+            /* The prefix contains color names. */
+            (i == OTR_CONFIG_LOOK_PREFIX) ? "string|themable" : "string",
             otr_config_look_defs[i].description,
             otr_config_look_defs[i].default_value,
             (otr_config_look_defs[i].update_bar) ?

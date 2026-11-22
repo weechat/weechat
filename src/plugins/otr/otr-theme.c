@@ -1,0 +1,80 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Sébastien Helleu <flashcode@flashtux.org>
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+/* OTR plugin contribution to built-in themes */
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <stddef.h>
+
+#include "../weechat-plugin.h"
+#include "otr.h"
+#include "otr-theme.h"
+
+
+/*
+ * OTR contribution to the "light" theme: option values tuned for a
+ * light-background terminal. Each row is { option_full_name, value };
+ * the table is NULL-terminated.
+ */
+
+const char *otr_theme_light[][2] =
+{
+    { "otr.color.buffer.error",           "red" },
+    { "otr.color.buffer.hint",            "blue" },
+    { "otr.color.buffer.success",         "green" },
+    { "otr.color.buffer.warning",         "94" },
+    { "otr.color.status.authenticated",   "green" },
+    { "otr.color.status.encrypted",       "green" },
+    { "otr.color.status.logged",          "red" },
+    { "otr.color.status.notlogged",       "green" },
+    { "otr.color.status.unauthenticated", "red" },
+    { "otr.color.status.unencrypted",     "red" },
+    { "otr.look.prefix",
+      "${color:default}:! ${color:94}otr${color:default} !:" },
+    { NULL,                               NULL },
+};
+
+/*
+ * Register OTR's contribution to one theme from a NULL-terminated
+ * table of {option, value} rows.
+ */
+
+void
+otr_theme_register (const char *name, const char *entries[][2])
+{
+    struct t_hashtable *overrides;
+    int i;
+
+    if (!name || !entries)
+        return;
+
+    overrides = weechat_hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL, NULL);
+    if (!overrides)
+        return;
+
+    for (i = 0; entries[i][0]; i++)
+        weechat_hashtable_set (overrides, entries[i][0], entries[i][1]);
+
+    weechat_theme_register (name, overrides);
+
+    weechat_hashtable_free (overrides);
+}
+
+/*
+ * Register all built-in theme contributions from OTR.
+ */
+
+void
+otr_theme_init (void)
+{
+    otr_theme_register ("light", otr_theme_light);
+}

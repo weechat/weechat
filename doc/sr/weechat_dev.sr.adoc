@@ -367,6 +367,8 @@ WeeChat „језгро” се налази у следећим директо�
 // TRANSLATION MISSING
 |       otr-policy.c                 | OTR policies.
 // TRANSLATION MISSING
+|       otr-theme.c                  | OTR contribution to built-in themes.
+// TRANSLATION MISSING
 |       otr-util.c                   | OTR utility functions.
 |    perl/                           | Perl додатак.
 |       weechat-perl.c               | Главне perl функције (учитавање/уклањање скрипти, извршавање perl кода).

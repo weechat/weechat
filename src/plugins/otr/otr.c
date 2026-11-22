@@ -40,6 +40,7 @@
 #include "otr-key.h"
 #include "otr-log.h"
 #include "otr-modifier.h"
+#include "otr-theme.h"
 
 
 WEECHAT_PLUGIN_NAME(OTR_PLUGIN_NAME);
@@ -158,6 +159,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                         weechat_prefix ("error"), OTR_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
+
+    otr_theme_init ();
 
     data_dir = weechat_info_get ("weechat_data_dir", "");
     if (!data_dir || !data_dir[0])
