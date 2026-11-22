@@ -17,6 +17,7 @@ extern "C"
 #include "src/plugins/plugin.h"
 #include "src/plugins/otr/otr-config.h"
 
+extern int otr_config_policy_name_valid (const char *option_name);
 extern int otr_config_policy_value_valid (const char *value);
 extern int otr_config_policy_inherited (struct t_config_file *config_file,
                                         struct t_config_section *section,
@@ -75,6 +76,16 @@ TEST(OtrConfig, PolicyCreateDelete)
                                     NULL, NULL, &ptr_option, NULL);
     POINTERS_EQUAL(NULL, ptr_option);
 
+    /* Custom policy with an invalid name is not created. */
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_with_string (
+                    "otr.policy.allow_v2", "off"));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_with_string (
+                    "otr.policy.test.alice.bob.sendtag", "on"));
+    POINTERS_EQUAL(NULL, option ("otr.policy.allow_v2"));
+    POINTERS_EQUAL(NULL, option ("otr.policy.test.alice.bob.sendtag"));
+
     /* Custom policy with an invalid value is not created. */
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set_with_string (
@@ -85,6 +96,28 @@ TEST(OtrConfig, PolicyCreateDelete)
     config_file_search_with_string ("otr.policy.test.alice.bob.send_tag",
                                     NULL, NULL, &ptr_option, NULL);
     POINTERS_EQUAL(NULL, ptr_option);
+}
+
+/*
+ * Test functions:
+ *   otr_config_policy_name_valid
+ */
+
+TEST(OtrConfig, PolicyNameValid)
+{
+    LONGS_EQUAL(0, otr_config_policy_name_valid (NULL));
+    LONGS_EQUAL(0, otr_config_policy_name_valid (""));
+    LONGS_EQUAL(0, otr_config_policy_name_valid ("log"));
+    LONGS_EQUAL(0, otr_config_policy_name_valid (".log"));
+    LONGS_EQUAL(0, otr_config_policy_name_valid ("libera..log"));
+    LONGS_EQUAL(0, otr_config_policy_name_valid ("libera.log."));
+    LONGS_EQUAL(0, otr_config_policy_name_valid ("libera.unknown"));
+    LONGS_EQUAL(0, otr_config_policy_name_valid ("libera.LOG"));
+
+    LONGS_EQUAL(1, otr_config_policy_name_valid ("libera.log"));
+    LONGS_EQUAL(1, otr_config_policy_name_valid ("libera.alice.log"));
+    LONGS_EQUAL(1, otr_config_policy_name_valid ("libera.alice.bob.log"));
+    LONGS_EQUAL(1, otr_config_policy_name_valid ("irc.libera.chat.send_tag"));
 }
 
 /*

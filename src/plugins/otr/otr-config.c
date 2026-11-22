@@ -309,8 +309,43 @@ otr_config_policy_value_valid (const char *value)
 }
 
 /*
+ * Check if the name of an option in section "policy" is valid: format
+ * "server[.nick[.peer]].name", where name is a known policy, without empty
+ * part.
+ *
+ * Return 1 if the name is valid, 0 otherwise.
+ */
+
+int
+otr_config_policy_name_valid (const char *option_name)
+{
+    const char *ptr_name;
+    int i;
+
+    if (!option_name || !option_name[0] || (option_name[0] == '.')
+        || strstr (option_name, ".."))
+    {
+        return 0;
+    }
+
+    ptr_name = strrchr (option_name, '.');
+    if (!ptr_name)
+        return 0;
+    ptr_name++;
+
+    for (i = 0; i < otr_config_policies_count; i++)
+    {
+        if (strcmp (otr_config_policies[i].name, ptr_name) == 0)
+            return 1;
+    }
+
+    return 0;
+}
+
+/*
  * Callback to create an option in section "policy" (boolean, "off" if no value
- * is given); the option is not created if the value is not a valid boolean
+ * is given); the option is not created if the name is not valid (see function
+ * otr_config_policy_name_valid) or if the value is not a valid boolean
  * (the value is checked before the option is created: WeeChat runs the config
  * hooks when an option is created, see function
  * otr_modifier_policy_changed_cb).
@@ -332,6 +367,8 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
 
+    if (!otr_config_policy_name_valid (option_name))
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
     ptr_value = (value) ? value : "off";
     if (!otr_config_policy_value_valid (ptr_value))
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
