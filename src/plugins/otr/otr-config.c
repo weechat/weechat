@@ -82,25 +82,28 @@ const struct t_otr_config_option_def
 {
     { "bar_prefix", N_("prefix for bar item \"otr\""), "OTR:", 1 },
     { "bar_state_encrypted",
-      N_("shown in status bar when conversation is encrypted"), "SEC", 1 },
+      N_("shown in status bar when the conversation is encrypted"),
+      "SEC", 1 },
     { "bar_state_unencrypted",
-      N_("shown in status bar when conversation is not encrypted"),
+      N_("shown in status bar when the conversation is not encrypted"),
       "!SEC", 1 },
     { "bar_state_authenticated",
-      N_("shown in status bar when peer is authenticated"), "AUTH", 1 },
+      N_("shown in status bar when the peer is authenticated"),
+      "AUTH", 1 },
     { "bar_state_unauthenticated",
-      N_("shown in status bar when peer is not authenticated"), "!AUTH", 1 },
+      N_("shown in status bar when the peer is not authenticated"),
+      "!AUTH", 1 },
     { "bar_state_logged",
-      N_("shown in status bar when peer conversation is being logged to disk"),
+      N_("shown in status bar when the conversation is being logged to disk"),
       "LOG", 1 },
     { "bar_state_notlogged",
-      N_("shown in status bar when peer conversation is not being logged to "
+      N_("shown in status bar when the conversation is not being logged to "
          "disk"),
       "!LOG", 1 },
     { "bar_state_separator", N_("separator for states in status bar"),
       ",", 1 },
     { "prefix",
-      N_("prefix used for messages from otr (note: content is evaluated, see "
+      N_("prefix used for messages from OTR (note: content is evaluated, see "
          "/help eval)"),
       "${color:default}=${color:brown}otr${color:default}=", 0 },
 };
@@ -117,7 +120,7 @@ const struct t_otr_policy otr_config_policies[] =
     { "send_tag",
       N_("advertise your OTR capability using the whitespace tag") },
     { "html_escape",
-      N_("escape HTML special characters in outbound messages") },
+      N_("escape HTML special characters in outgoing messages") },
     { "html_filter", N_("filter HTML in incoming messages") },
 };
 const int otr_config_policies_count =
@@ -131,7 +134,7 @@ const struct t_otr_config_option_def otr_config_policy_defaults[] =
     { "allow_v3", N_("default allow OTR v3 policy"), "on", 0 },
     { "require_encryption", N_("default require encryption policy"),
       "off", 0 },
-    { "log", N_("default enable logging to disk"), "off", 0 },
+    { "log", N_("default log policy"), "off", 0 },
     { "send_tag", N_("default send tag policy"), "off", 0 },
     { "html_escape", N_("default HTML escape policy"), "off", 0 },
     { "html_filter", N_("default HTML filter policy"), "on", 0 },
@@ -502,13 +505,13 @@ otr_config_init (void)
         "off", NULL);
     otr_config_look_hints = otr_config_new_option (
         otr_config_section_look, "hints", "boolean",
-        N_("Give helpful hints how to use this plugin and how to stay secure "
-           "while using OTR (recommended)"),
+        N_("give helpful hints on how to use this plugin and how to stay "
+           "secure while using OTR (recommended)"),
         "on", NULL);
     otr_config_look_no_send_tag_regex = otr_config_new_option (
         otr_config_section_look, "no_send_tag_regex", "string",
-        N_("do not OTR whitespace tag messages to nicks matching this regex "
-           "(POSIX extended, case insensitive)"),
+        N_("do not add the OTR whitespace tag to messages sent to nicks "
+           "matching this regex (POSIX extended, case insensitive)"),
         "^(alis|chanfix|global|.+serv|\\*.+)$",
         &otr_config_change_no_send_tag_regex_cb);
 

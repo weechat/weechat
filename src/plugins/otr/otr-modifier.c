@@ -968,7 +968,7 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     if (!account || !peer)
     {
         otr_buffer_error_core (
-            _("not connected to server %s; message not sent"), ptr_server);
+            _("not connected to server \"%s\"; message not sent"), ptr_server);
         result = strdup ("");
         goto end;
     }
@@ -1050,7 +1050,7 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
     if (error)
     {
         otr_buffer_peer_print (ptr_server, peer, OTR_CONFIG_LEVEL_ERROR,
-                               _("Failed to send message; it was NOT sent."));
+                               _("Failed to send message."));
         otr_buffer_debug ("otrl_message_sending: %s", gcry_strerror (error));
         result = strdup ("");
         goto end;
@@ -1097,7 +1097,7 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         {
             otr_buffer_peer_print (
                 ptr_server, peer, OTR_CONFIG_LEVEL_ERROR,
-                _("Failed to send message; it was NOT sent."));
+                _("Failed to send message."));
             otr_buffer_peer_print (
                 ptr_server, peer, OTR_CONFIG_LEVEL_ERROR,
                 _("OTR is disabled by policy (allow_v2 and allow_v3 are both "

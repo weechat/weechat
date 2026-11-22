@@ -330,12 +330,12 @@ otr_callback_gone_secure (void *opdata, ConnContext *context)
         {
             otr_buffer_ctx_hint (
                 context,
-                _("You have enabled the recording to disk of OTR "
-                  "conversations. By doing this you are potentially putting "
+                _("You have enabled the recording of OTR conversations to "
+                  "disk. By doing this you are potentially putting "
                   "yourself and your peer at risk. Please consider "
                   "disabling this policy with \"/otr policy default log off\". "
                   "To disable logging for this OTR session, use \"/otr log "
-                  "stop\""));
+                  "stop\"."));
         }
     }
 
@@ -554,9 +554,9 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
         case OTRL_MSGEVENT_ENCRYPTION_REQUIRED:
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_ERROR,
-                _("Your message was NOT sent in the clear, because policy "
-                  "requires an encrypted connection. It is held back and will "
-                  "be sent once the OTR session is established."));
+                _("Your message was NOT sent unencrypted, because the "
+                  "policy requires an OTR session. It is held back "
+                  "and will be sent once the OTR session is established."));
             otr_buffer_ctx_hint (
                 context,
                 _("Wait for the OTR session to start or change the policy to "
@@ -593,7 +593,7 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
         case OTRL_MSGEVENT_RCVDMSG_NOT_IN_PRIVATE:
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_WARNING,
-                _("Received encrypted data but no private session "
+                _("Received encrypted data but no OTR session is "
                   "established."));
             break;
         case OTRL_MSGEVENT_RCVDMSG_UNREADABLE:

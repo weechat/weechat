@@ -484,7 +484,7 @@ otr_command_status (const struct t_otr_peer_ref *peer_ref)
     {
         otr_buffer_peer_print (
             peer_ref->server, peer, OTR_CONFIG_LEVEL_WARNING,
-            _("This current conversation is not encrypted."));
+            _("This conversation is not encrypted."));
         goto end;
     }
 
@@ -770,11 +770,7 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
     ConnContext *ptr_context;
 
     if (!otr_command_peer_args (buffer, args + 1, 0, &peer_ref))
-    {
-        otr_buffer_print_str (NULL, OTR_CONFIG_LEVEL_ERROR,
-                              _("OTR LOG: Not in an OTR session"));
-        return WEECHAT_RC_OK;
-    }
+        return WEECHAT_RC_ERROR;
 
     if (!otr_command_resolve (&peer_ref, &account, &peer))
         return WEECHAT_RC_ERROR;
@@ -784,8 +780,9 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
 
     if (!otr_context_encrypted (ptr_context))
     {
-        otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_ERROR,
-                               _("OTR LOG: Not in an OTR session"));
+        otr_buffer_peer_print (
+            peer_ref.server, peer, OTR_CONFIG_LEVEL_ERROR,
+            _("This conversation is not encrypted."));
     }
     else if (num_args == 1)
     {
@@ -811,7 +808,7 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
                                  "be logged. Please keep in mind that by doing "
                                  "so you are potentially putting yourself and "
                                  "your peer at risk. You can disable "
-                                 "this by doing /otr log stop"));
+                                 "this with \"/otr log stop\"."));
         weechat_command (buffer, "/mute logger set 9");
     }
     else if ((strcmp (args[1], "stop") == 0)
@@ -1152,7 +1149,7 @@ otr_command_init (void)
             "  require_encryption: refuse to send unencrypted messages when OTR is enabled\n"
             "                 log: enable logging of OTR conversations\n"
             "            send_tag: advertise your OTR capability using the whitespace tag\n"
-            "         html_escape: escape HTML special characters in outbound messages\n"
+            "         html_escape: escape HTML special characters in outgoing messages\n"
             "         html_filter: filter HTML in incoming messages\n"
             "\n"
             "Note: OTR works for private conversations only, not for channels.\n"
