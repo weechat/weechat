@@ -4423,20 +4423,21 @@ The policies control the behavior of OTR:
 
 // TRANSLATION MISSING
 | allow_v2 | on
-| Allow OTR protocol version 2.
+| Allow version 2 of the OTR protocol.
 
 // TRANSLATION MISSING
 | allow_v3 | on
-| Allow OTR protocol version 3.
+| Allow version 3 of the OTR protocol.
 
 // TRANSLATION MISSING
 | require_encryption | off
 | Refuse to send unencrypted messages: messages sent before the session is
-  established are held, and sent once the session is encrypted.
+  established are held, and sent once the session is encrypted (CTCP messages
+  other than ACTION are still sent unencrypted).
 
 // TRANSLATION MISSING
 | log | off
-| Log OTR conversations to disk (see <<otr_logging,Logging>>).
+| Keep logging enabled during OTR sessions (see <<otr_logging,Logging>>).
 
 // TRANSLATION MISSING
 | send_tag | off
@@ -4445,11 +4446,11 @@ The policies control the behavior of OTR:
 
 // TRANSLATION MISSING
 | html_escape | off
-| Escape HTML special chars in messages sent.
+| Escape HTML special chars in encrypted messages sent.
 
 // TRANSLATION MISSING
 | html_filter | on
-| Remove HTML in messages received.
+| Remove HTML in decrypted messages received.
 |===
 
 // TRANSLATION MISSING

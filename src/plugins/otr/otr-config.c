@@ -112,16 +112,22 @@ const struct t_otr_config_option_def
 
 const struct t_otr_policy otr_config_policies[] =
 {
-    { "allow_v2", N_("allow OTR protocol version 2") },
-    { "allow_v3", N_("allow OTR protocol version 3") },
+    { "allow_v2", N_("allow version 2 of the OTR protocol") },
+    { "allow_v3", N_("allow version 3 of the OTR protocol") },
     { "require_encryption",
-      N_("refuse to send unencrypted messages when OTR is enabled") },
-    { "log", N_("enable logging of OTR conversations") },
+      N_("refuse to send unencrypted messages: messages sent before the OTR "
+         "session is established are held, and sent once the session is "
+         "encrypted (CTCP messages other than ACTION are still sent "
+         "unencrypted)") },
+    { "log",
+      N_("keep logging enabled during OTR sessions (if off, logging is "
+         "disabled for the session and restored when it ends)") },
     { "send_tag",
-      N_("advertise your OTR capability using the whitespace tag") },
+      N_("advertise your OTR support with a whitespace tag added to your "
+         "messages, so that an OTR session can start automatically") },
     { "html_escape",
-      N_("escape HTML special characters in outgoing messages") },
-    { "html_filter", N_("filter HTML in incoming messages") },
+      N_("escape HTML special chars in encrypted messages sent") },
+    { "html_filter", N_("remove HTML in decrypted messages received") },
 };
 const int otr_config_policies_count =
     (int)(sizeof (otr_config_policies) / sizeof (otr_config_policies[0]));
@@ -130,14 +136,39 @@ const int otr_config_policies_count =
 
 const struct t_otr_config_option_def otr_config_policy_defaults[] =
 {
-    { "allow_v2", N_("default allow OTR v2 policy"), "on", 0 },
-    { "allow_v3", N_("default allow OTR v3 policy"), "on", 0 },
-    { "require_encryption", N_("default require encryption policy"),
+    { "allow_v2",
+      N_("allow version 2 of the OTR protocol (default value, options "
+         "otr.policy.* can override this value)"),
+      "on", 0 },
+    { "allow_v3",
+      N_("allow version 3 of the OTR protocol (default value, options "
+         "otr.policy.* can override this value)"),
+      "on", 0 },
+    { "require_encryption",
+      N_("refuse to send unencrypted messages: messages sent before the OTR "
+         "session is established are held, and sent once the session is "
+         "encrypted (CTCP messages other than ACTION are still sent "
+         "unencrypted) (default value, options otr.policy.* can override this "
+         "value)"),
       "off", 0 },
-    { "log", N_("default log policy"), "off", 0 },
-    { "send_tag", N_("default send tag policy"), "off", 0 },
-    { "html_escape", N_("default HTML escape policy"), "off", 0 },
-    { "html_filter", N_("default HTML filter policy"), "on", 0 },
+    { "log",
+      N_("keep logging enabled during OTR sessions (if off, logging is "
+         "disabled for the session and restored when it ends) (default value, "
+         "options otr.policy.* can override this value)"),
+      "off", 0 },
+    { "send_tag",
+      N_("advertise your OTR support with a whitespace tag added to your "
+         "messages, so that an OTR session can start automatically (default "
+         "value, options otr.policy.* can override this value)"),
+      "off", 0 },
+    { "html_escape",
+      N_("escape HTML special chars in encrypted messages sent (default "
+         "value, options otr.policy.* can override this value)"),
+      "off", 0 },
+    { "html_filter",
+      N_("remove HTML in decrypted messages received (default value, options "
+         "otr.policy.* can override this value)"),
+      "on", 0 },
 };
 
 

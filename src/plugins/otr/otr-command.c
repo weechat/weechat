@@ -1166,16 +1166,17 @@ otr_command_init (void)
             N_("question: question that the peer has to answer"),
             N_("secret: secret that both you and the peer know"),
             N_("name: name of the policy:"),
-            N_("> raw[allow_v2]: allow OTR protocol version 2"),
-            N_("> raw[allow_v3]: allow OTR protocol version 3"),
+            N_("> raw[allow_v2]: allow version 2 of the OTR protocol"),
+            N_("> raw[allow_v3]: allow version 3 of the OTR protocol"),
             N_("> raw[require_encryption]: refuse to send unencrypted messages "
-               "when OTR is enabled"),
-            N_("> raw[log]: enable logging of OTR conversations"),
-            N_("> raw[send_tag]: advertise your OTR capability using the "
-               "whitespace tag"),
-            N_("> raw[html_escape]: escape HTML special characters in outgoing "
-               "messages"),
-            N_("> raw[html_filter]: filter HTML in incoming messages"),
+               "(held until the OTR session is encrypted)"),
+            N_("> raw[log]: keep logging enabled during OTR sessions"),
+            N_("> raw[send_tag]: advertise your OTR support with a whitespace "
+               "tag added to your messages"),
+            N_("> raw[html_escape]: escape HTML special chars in encrypted "
+               "messages sent"),
+            N_("> raw[html_filter]: remove HTML in decrypted messages "
+               "received"),
             N_("search: only show peers whose nick contains this text"),
             "",
             N_("Note: OTR works for private conversations only, not for "

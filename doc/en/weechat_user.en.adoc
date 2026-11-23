@@ -4341,27 +4341,28 @@ The policies control the behavior of OTR:
 | Policy | Default | Description
 
 | allow_v2 | on
-| Allow OTR protocol version 2.
+| Allow version 2 of the OTR protocol.
 
 | allow_v3 | on
-| Allow OTR protocol version 3.
+| Allow version 3 of the OTR protocol.
 
 | require_encryption | off
 | Refuse to send unencrypted messages: messages sent before the session is
-  established are held, and sent once the session is encrypted.
+  established are held, and sent once the session is encrypted (CTCP messages
+  other than ACTION are still sent unencrypted).
 
 | log | off
-| Log OTR conversations to disk (see <<otr_logging,Logging>>).
+| Keep logging enabled during OTR sessions (see <<otr_logging,Logging>>).
 
 | send_tag | off
 | Advertise your OTR support with a whitespace tag added to your messages, so
   that a session can start automatically.
 
 | html_escape | off
-| Escape HTML special chars in messages sent.
+| Escape HTML special chars in encrypted messages sent.
 
 | html_filter | on
-| Remove HTML in messages received.
+| Remove HTML in decrypted messages received.
 |===
 
 In a private buffer, `/otr policy` displays the policies of the peer and

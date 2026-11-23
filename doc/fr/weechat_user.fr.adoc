@@ -4502,10 +4502,11 @@ Les politiques contrôlent le comportement de OTR :
 | require_encryption | off
 | Refuser d'envoyer des messages non chiffrés : les messages envoyés avant
   que la session soit établie sont retenus, et envoyés quand la session est
-  chiffrée.
+  chiffrée (les messages CTCP autres que ACTION sont quand même envoyés non
+  chiffrés).
 
 | log | off
-| Enregistrer les conversations OTR sur disque (voir
+| Garder l'enregistrement activé pendant les sessions OTR (voir
   <<otr_logging,Enregistrement>>).
 
 | send_tag | off
@@ -4513,10 +4514,10 @@ Les politiques contrôlent le comportement de OTR :
   vos messages, pour qu'une session puisse démarrer automatiquement.
 
 | html_escape | off
-| Échapper les caractères spéciaux HTML dans les messages envoyés.
+| Échapper les caractères spéciaux HTML dans les messages chiffrés envoyés.
 
 | html_filter | on
-| Supprimer le HTML dans les messages reçus.
+| Supprimer le HTML dans les messages déchiffrés reçus.
 |===
 
 Dans un tampon privé, `/otr policy` affiche les politiques du correspondant et
