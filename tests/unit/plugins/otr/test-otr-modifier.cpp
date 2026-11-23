@@ -21,6 +21,7 @@ extern "C"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-context.h"
+#include "src/plugins/otr/otr-key.h"
 #include "src/plugins/otr/otr-modifier.h"
 
 extern int otr_modifier_is_base64_part (const char *line);
@@ -33,6 +34,8 @@ extern int otr_modifier_parse_out_privmsg (const char *message, char **tags,
 extern int otr_modifier_all_targets_channels (const char *server,
                                               const char *targets);
 extern int otr_modifier_must_hold (const char *account, const char *peer);
+extern int otr_modifier_compute_policies ();
+extern int otr_modifier_otr_used (int outgoing);
 extern int otr_modifier_remove_batch (const char *server,
                                       const char *message);
 extern char *otr_modifier_remove_batch_tag (const char *server,
@@ -219,6 +222,221 @@ TEST(OtrModifier, AllTargetsChannels)
     LONGS_EQUAL(1, otr_modifier_all_targets_channels ("test", "#chan"));
     LONGS_EQUAL(1, otr_modifier_all_targets_channels ("test", "#a,#b"));
     LONGS_EQUAL(1, otr_modifier_all_targets_channels ("test", ",#a,,#b,"));
+}
+
+/*
+ * Test functions:
+ *   otr_modifier_compute_policies
+ *   otr_modifier_otr_used
+ */
+
+TEST(OtrModifier, OtrUsed)
+{
+    struct t_otr_peer_data *ptr_peer_data;
+    ConnContext *ptr_context;
+
+    /* OTR not used. */
+    LONGS_EQUAL(0, otr_modifier_compute_policies ());
+    LONGS_EQUAL(0, otr_modifier_otr_used (0));
+    LONGS_EQUAL(0, otr_modifier_otr_used (1));
+
+    /* Whitespace tag sent: OTR used for outgoing messages only. */
+    config_file_option_set_with_string ("otr.policy_default.send_tag", "on");
+    LONGS_EQUAL(OTR_MODIFIER_POLICY_SEND_TAG,
+                otr_modifier_compute_policies ());
+    LONGS_EQUAL(0, otr_modifier_otr_used (0));
+    LONGS_EQUAL(1, otr_modifier_otr_used (1));
+    config_file_option_set_with_string ("otr.policy_default.send_tag", "off");
+    LONGS_EQUAL(0, otr_modifier_otr_used (1));
+
+    /* Encryption required for a peer: OTR used. */
+    config_file_option_set_with_string (
+        "otr.policy.srv_otr_used.alice.bob.require_encryption", "on");
+    LONGS_EQUAL(OTR_MODIFIER_POLICY_REQUIRE_ENCRYPTION,
+                otr_modifier_compute_policies ());
+    LONGS_EQUAL(1, otr_modifier_otr_used (0));
+    LONGS_EQUAL(1, otr_modifier_otr_used (1));
+    run_cmd_quiet (
+        "/mute /unset otr.policy.srv_otr_used.alice.bob.require_encryption");
+    LONGS_EQUAL(0, otr_modifier_otr_used (0));
+    LONGS_EQUAL(0, otr_modifier_otr_used (1));
+
+    /* OTR session started with a peer: OTR used. */
+    ptr_peer_data = otr_context_peer_data_for ("alice@srv_otr_used", "bob");
+    CHECK(ptr_peer_data);
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_used",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    ptr_context->msgstate = OTRL_MSGSTATE_FINISHED;
+    LONGS_EQUAL(1, otr_modifier_otr_used (0));
+    LONGS_EQUAL(1, otr_modifier_otr_used (1));
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+    LONGS_EQUAL(0, otr_modifier_otr_used (0));
+
+    /* Messages held: OTR used. */
+    CHECK(otr_context_hold_message (ptr_peer_data, "held"));
+    LONGS_EQUAL(1, otr_modifier_otr_used (0));
+    LONGS_EQUAL(1, otr_modifier_otr_used (1));
+    otr_context_clear_held_messages (ptr_peer_data);
+    LONGS_EQUAL(0, otr_modifier_otr_used (1));
+
+    /*
+     * Whitespace tag sent, no answer yet: OTR used for incoming messages
+     * (only if the policy "send_tag" is still enabled).
+     */
+    ptr_context->otr_offer = ConnContext::OFFER_SENT;
+    LONGS_EQUAL(0, otr_modifier_otr_used (0));
+    config_file_option_set_with_string ("otr.policy_default.send_tag", "on");
+    LONGS_EQUAL(1, otr_modifier_otr_used (0));
+    ptr_context->otr_offer = ConnContext::OFFER_REJECTED;
+    LONGS_EQUAL(0, otr_modifier_otr_used (0));
+    config_file_option_set_with_string ("otr.policy_default.send_tag", "off");
+    ptr_context->otr_offer = ConnContext::OFFER_NOT;
+
+    /* OTR message being assembled: OTR used for incoming messages. */
+    ptr_peer_data->assembly = strdup ("?OTR:AAMR");
+    LONGS_EQUAL(1, otr_modifier_otr_used (0));
+    LONGS_EQUAL(0, otr_modifier_otr_used (1));
+    free (ptr_peer_data->assembly);
+    ptr_peer_data->assembly = NULL;
+    LONGS_EQUAL(0, otr_modifier_otr_used (0));
+
+    /* Private key being generated: OTR used for outgoing messages. */
+    LONGS_EQUAL(1, otr_key_generate ("alice@srv_otr_used", OTR_PROTOCOL,
+                                     NULL));
+    LONGS_EQUAL(0, otr_modifier_otr_used (0));
+    LONGS_EQUAL(1, otr_modifier_otr_used (1));
+    otr_key_generation_free_all ();
+    LONGS_EQUAL(0, otr_modifier_otr_used (1));
+
+    /* Multiline batch removed: OTR used for outgoing messages. */
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+    run_cmd_quiet ("/mute /server add srv_otr_used fake:127.0.0.1");
+    LONGS_EQUAL(1, otr_modifier_remove_batch (
+                    "srv_otr_used", "BATCH +abc draft/multiline bob"));
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+    LONGS_EQUAL(0, otr_modifier_otr_used (0));
+    LONGS_EQUAL(1, otr_modifier_otr_used (1));
+    otr_modifier_free_removed_batches ();
+    LONGS_EQUAL(0, otr_modifier_otr_used (1));
+    run_cmd_quiet ("/mute /server del srv_otr_used");
+
+    otrl_context_forget (ptr_context);
+}
+
+/*
+ * Test functions:
+ *   otr_modifier_in_cb (OTR not used)
+ *   otr_modifier_out_cb (OTR not used)
+ */
+
+TEST(OtrModifier, OtrNotUsed)
+{
+    struct t_irc_server *server;
+    ConnContext *ptr_context;
+    char *str;
+
+    run_cmd_quiet ("/mute /server add srv_otr_unused fake:127.0.0.1");
+    run_cmd_quiet ("/connect srv_otr_unused");
+    server = irc_server_search ("srv_otr_unused");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+    server->is_connected = 1;
+
+    /* Incoming message without OTR: unchanged, not handled (no context). */
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                       "srv_otr_unused",
+                                       ":bob!u@h PRIVMSG alice :hello"));
+    POINTERS_EQUAL(NULL,
+                   otrl_context_find (otr_us, "bob", "alice@srv_otr_unused",
+                                      OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                      NULL, NULL, NULL));
+
+    /* Outgoing message: unchanged, not handled (no context). */
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                                        "srv_otr_unused",
+                                        "PRIVMSG carol :hello"));
+    POINTERS_EQUAL(NULL,
+                   otrl_context_find (otr_us, "carol", "alice@srv_otr_unused",
+                                      OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                      NULL, NULL, NULL));
+
+    /* Whitespace tag sent: outgoing message handled (tag added). */
+    config_file_option_set_with_string ("otr.policy_default.send_tag", "on");
+    str = otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                               "srv_otr_unused", "PRIVMSG carol :hello");
+    CHECK(str);
+    STRNCMP_EQUAL("PRIVMSG carol :hello" OTRL_MESSAGE_TAG_BASE, str,
+                  strlen ("PRIVMSG carol :hello" OTRL_MESSAGE_TAG_BASE));
+    free (str);
+    CHECK(otrl_context_find (otr_us, "carol", "alice@srv_otr_unused",
+                             OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                             NULL, NULL, NULL));
+
+    /*
+     * Whitespace tag sent, plain text answer of the peer: handled, so that
+     * libotr stops sending the tag (peer does not use OTR).
+     */
+    ptr_context = otrl_context_find (otr_us, "carol", "alice@srv_otr_unused",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    LONGS_EQUAL(ConnContext::OFFER_SENT, ptr_context->otr_offer);
+    POINTERS_EQUAL(NULL,
+                   otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                       "srv_otr_unused",
+                                       ":carol!u@h PRIVMSG alice :hello"));
+    LONGS_EQUAL(ConnContext::OFFER_REJECTED, ptr_context->otr_offer);
+    otrl_context_forget (ptr_context);
+    config_file_option_set_with_string ("otr.policy_default.send_tag", "off");
+
+    /*
+     * OTR message split over several IRC lines: the next lines (only base64
+     * chars) are assembled.
+     */
+    WEE_TEST_STR("",
+                 otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                     "srv_otr_unused",
+                                     ":eve!u@h PRIVMSG alice :?OTR:AAMR"));
+    WEE_TEST_STR("",
+                 otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg",
+                                     "srv_otr_unused",
+                                     ":eve!u@h PRIVMSG alice :QUJD"));
+    ptr_context = otrl_context_find (otr_us, "eve", "alice@srv_otr_unused",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    STRCMP_EQUAL("?OTR:AAMRQUJD",
+                 ((struct t_otr_peer_data *)ptr_context->app_data)->assembly);
+    otrl_context_forget (ptr_context);
+
+    /* Incoming OTR query: always handled (context created). */
+    otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg", "srv_otr_unused",
+                        ":dave!u@h PRIVMSG alice :?OTRv23?");
+    ptr_context = otrl_context_find (otr_us, "dave", "alice@srv_otr_unused",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    otrl_context_forget (ptr_context);
+
+    /* Outgoing OTR query typed by the user: rewritten by libotr. */
+    str = otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
+                               "srv_otr_unused", "PRIVMSG frank :?OTR?");
+    CHECK(str);
+    STRNCMP_EQUAL("PRIVMSG frank :?OTRv", str,
+                  strlen ("PRIVMSG frank :?OTRv"));
+    free (str);
+    ptr_context = otrl_context_find (otr_us, "frank", "alice@srv_otr_unused",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    otrl_context_forget (ptr_context);
+
+    run_cmd_quiet ("/mute /disconnect srv_otr_unused");
+    run_cmd_quiet ("/mute /server del srv_otr_unused");
 }
 
 /*

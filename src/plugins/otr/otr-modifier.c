@@ -20,6 +20,7 @@
 #include "otr-context.h"
 #include "otr-echo.h"
 #include "otr-irc.h"
+#include "otr-key.h"
 #include "otr-message.h"
 #include "otr-modifier.h"
 #include "otr-policy.h"
@@ -37,6 +38,13 @@ struct t_hashtable *otr_modifier_removed_batches = NULL;
  * assembly starts, removed when there is no assembly anymore).
  */
 struct t_hook *otr_modifier_assembly_timer = NULL;
+
+/*
+ * Policies enabled in at least one option otr.policy_default.* or
+ * otr.policy.* (OTR_MODIFIER_POLICY_*), -1 if not computed yet (computed again
+ * when a policy option changes).
+ */
+int otr_modifier_policies = -1;
 
 
 /*
@@ -228,6 +236,139 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
 }
 
 /*
+ * Compute the policies enabled in at least one option otr.policy_default.* or
+ * otr.policy.*, used to know if OTR is used (see function
+ * otr_modifier_otr_used).
+ *
+ * Return a combination of OTR_MODIFIER_POLICY_* (0 if no policy is enabled).
+ */
+
+int
+otr_modifier_compute_policies (void)
+{
+    struct t_infolist *infolist;
+    const char *ptr_name, *ptr_value;
+    int policies;
+
+    policies = 0;
+
+    infolist = weechat_infolist_get ("option", NULL, "otr.policy*");
+    if (!infolist)
+        return policies;
+
+    while (weechat_infolist_next (infolist))
+    {
+        ptr_value = weechat_infolist_string (infolist, "value");
+        if (!ptr_value || (strcmp (ptr_value, "on") != 0))
+            continue;
+        ptr_name = strrchr (weechat_infolist_string (infolist, "full_name"),
+                            '.');
+        if (!ptr_name)
+            continue;
+        ptr_name++;
+        if (strcmp (ptr_name, "require_encryption") == 0)
+            policies |= OTR_MODIFIER_POLICY_REQUIRE_ENCRYPTION;
+        else if (strcmp (ptr_name, "send_tag") == 0)
+            policies |= OTR_MODIFIER_POLICY_SEND_TAG;
+    }
+
+    weechat_infolist_free (infolist);
+
+    return policies;
+}
+
+/*
+ * Check if OTR is used, to know if a message must be handled by the modifiers
+ * (if OTR is not used, messages are not parsed, so that the OTR plugin has
+ * almost no overhead for users who do not use OTR).
+ *
+ * OTR is used if one of these conditions is true:
+ *   - an OTR session is started (encrypted or finished) with a peer,
+ *   - messages are held until the OTR session is encrypted,
+ *   - the policy "require_encryption" is enabled in an option,
+ *   - for incoming messages:
+ *     - an OTR message split over several IRC lines is being assembled (the
+ *       next lines contain only base64 chars, see function
+ *       otr_modifier_assemble),
+ *     - the policy "send_tag" is enabled in an option and the whitespace tag
+ *       was sent to a peer who has not answered yet (libotr must receive the
+ *       answer, to stop sending the tag if the peer does not use OTR),
+ *   - for outgoing messages:
+ *     - the policy "send_tag" is enabled in an option (the whitespace tag is
+ *       added to messages),
+ *     - a private key is being generated,
+ *     - a multiline batch has been removed (lines of the batch are expected).
+ *
+ * Incoming OTR messages (OTR query, whitespace tag, key exchange, encrypted
+ * data) and outgoing OTR queries are always handled: they are detected before
+ * (see functions otr_modifier_in_cb and otr_modifier_out_cb).
+ *
+ * Some conditions can stay true longer than needed, which only makes messages
+ * parsed (the behavior is the same):
+ *   - the whitespace tag marked as sent in an instance context (libotr only
+ *     updates the master context when the peer answers),
+ *   - a multiline batch removed and never closed (for example after a
+ *     disconnection): outgoing messages are handled until the plugin is
+ *     unloaded.
+ *
+ * When OTR is not used, outgoing messages are not checked at all, for example
+ * messages to several targets including a nick are sent (they are refused
+ * when OTR is used, see function otr_modifier_out_cb).
+ *
+ * Return 1 if OTR is used, 0 otherwise.
+ */
+
+int
+otr_modifier_otr_used (int outgoing)
+{
+    ConnContext *ptr_context;
+    struct t_otr_peer_data *ptr_peer_data;
+
+    if (!otr_us)
+        return 0;
+
+    if (otr_modifier_policies < 0)
+        otr_modifier_policies = otr_modifier_compute_policies ();
+
+    if (otr_modifier_policies & OTR_MODIFIER_POLICY_REQUIRE_ENCRYPTION)
+        return 1;
+
+    if (outgoing)
+    {
+        if ((otr_modifier_policies & OTR_MODIFIER_POLICY_SEND_TAG)
+            || otr_key_generations
+            || (otr_modifier_removed_batches
+                && (weechat_hashtable_get_integer (otr_modifier_removed_batches,
+                                                   "items_count") > 0)))
+        {
+            return 1;
+        }
+    }
+
+    for (ptr_context = otr_us->context_root; ptr_context;
+         ptr_context = ptr_context->next)
+    {
+        if (ptr_context->msgstate != OTRL_MSGSTATE_PLAINTEXT)
+            return 1;
+        if (!outgoing
+            && (otr_modifier_policies & OTR_MODIFIER_POLICY_SEND_TAG)
+            && (ptr_context->otr_offer == OFFER_SENT))
+        {
+            return 1;
+        }
+        ptr_peer_data = (struct t_otr_peer_data *)ptr_context->app_data;
+        if (ptr_peer_data
+            && (ptr_peer_data->held_messages
+                || (!outgoing && ptr_peer_data->assembly)))
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+/*
  * Callback for modifier "irc_in_privmsg": decrypt incoming OTR private messages
  * and replace the echo of own OTR messages.
  *
@@ -257,6 +398,17 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
 
     if (!otr_us)
         return NULL;
+
+    /*
+     * No OTR message (OTR query, whitespace tag, key exchange, encrypted data,
+     * error) and OTR not used: the message is left unchanged, without being
+     * parsed.
+     */
+    if (!strstr (string, "?OTR") && !strstr (string, OTRL_MESSAGE_TAG_BASE)
+        && !otr_modifier_otr_used (0))
+    {
+        return NULL;
+    }
 
     hashtable_in = weechat_hashtable_new (8,
                                           WEECHAT_HASHTABLE_STRING,
@@ -646,6 +798,9 @@ otr_modifier_policy_changed_cb (const void *pointer, void *data,
     (void) option;
     (void) value;
 
+    /* Policies enabled are computed again when needed. */
+    otr_modifier_policies = -1;
+
     if (!otr_us)
         return WEECHAT_RC_OK;
 
@@ -902,6 +1057,14 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         return NULL;
     if (!otr_us)
         return strdup ("");
+
+    /*
+     * No OTR query typed by the user (for example "?OTR?", rewritten by libotr
+     * into a query with the allowed versions) and OTR not used: the message is
+     * left unchanged, without being parsed.
+     */
+    if (!strstr (string, "?OTR") && !otr_modifier_otr_used (1))
+        return NULL;
 
     ptr_server = modifier_data;
     tags = NULL;

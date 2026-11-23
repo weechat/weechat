@@ -143,6 +143,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     otr_us = NULL;
     otr_bar_item = NULL;
     otr_modifier_removed_batches = NULL;
+    otr_modifier_policies = -1;
     otr_modifier_assembly_timer = NULL;
     otr_key_generations = NULL;
     last_otr_key_generation = NULL;

@@ -8,7 +8,13 @@
 #ifndef WEECHAT_PLUGIN_OTR_MODIFIER_H
 #define WEECHAT_PLUGIN_OTR_MODIFIER_H
 
+/* Policies enabled in at least one option (see otr_modifier_policies). */
+
+#define OTR_MODIFIER_POLICY_REQUIRE_ENCRYPTION 1
+#define OTR_MODIFIER_POLICY_SEND_TAG           2
+
 extern struct t_hashtable *otr_modifier_removed_batches;
+extern int otr_modifier_policies;
 extern struct t_hook *otr_modifier_assembly_timer;
 
 extern int otr_modifier_assembly_timer_cb (const void *pointer, void *data,
