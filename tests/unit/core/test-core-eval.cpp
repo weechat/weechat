@@ -962,6 +962,59 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("test string", "${base_decode:32,ORSXG5BAON2HE2LOM4======}");
     WEE_CHECK_EVAL("test string", "${base_decode:64,dGVzdCBzdHJpbmc=}");
 
+    /* Test base_convert. */
+    WEE_CHECK_EVAL("", "${base_convert:}");
+    WEE_CHECK_EVAL("", "${base_convert:16}");
+    WEE_CHECK_EVAL("", "${base_convert:16,10}");
+    WEE_CHECK_EVAL("", "${base_convert:16,10,}");
+    WEE_CHECK_EVAL("", "${base_convert:,10,ff}");
+    WEE_CHECK_EVAL("", "${base_convert:16,,ff}");
+    WEE_CHECK_EVAL("", "${base_convert:1,10,0}");
+    WEE_CHECK_EVAL("", "${base_convert:37,10,0}");
+    WEE_CHECK_EVAL("", "${base_convert:16,1,ff}");
+    WEE_CHECK_EVAL("", "${base_convert:16,37,ff}");
+    WEE_CHECK_EVAL("", "${base_convert:abc,10,ff}");
+    WEE_CHECK_EVAL("", "${base_convert:16,10,-}");
+    WEE_CHECK_EVAL("", "${base_convert:16,10,0x}");
+    WEE_CHECK_EVAL("", "${base_convert:16,10,-0x}");
+    WEE_CHECK_EVAL("", "${base_convert:16,10,fg}");
+    WEE_CHECK_EVAL("", "${base_convert:16,10, ff}");
+    WEE_CHECK_EVAL("", "${base_convert:10,16,0x10}");
+    WEE_CHECK_EVAL("", "${base_convert:2,10,102}");
+    WEE_CHECK_EVAL("", "${base_convert:8,10,0x10}");
+    WEE_CHECK_EVAL("", "${base_convert:10,10,9223372036854775808}");
+    WEE_CHECK_EVAL("", "${base_convert:10,10,-9223372036854775809}");
+    WEE_CHECK_EVAL("", "${base_convert:16,10,10000000000000000}");
+    WEE_CHECK_EVAL("16711680", "${base_convert:16,10,ff0000}");
+    WEE_CHECK_EVAL("16711680", "${base_convert:16,10,FF0000}");
+    WEE_CHECK_EVAL("16711680", "${base_convert:16,10,0xff0000}");
+    WEE_CHECK_EVAL("16711680", "${base_convert:16,10,0XFF0000}");
+    WEE_CHECK_EVAL("-255", "${base_convert:16,10,-0xff}");
+    WEE_CHECK_EVAL("255", "${base_convert:16,10,+ff}");
+    WEE_CHECK_EVAL("ff0000", "${base_convert:10,16,16711680}");
+    WEE_CHECK_EVAL("101010", "${base_convert:10,2,42}");
+    WEE_CHECK_EVAL("-101010", "${base_convert:10,2,-42}");
+    WEE_CHECK_EVAL("42", "${base_convert:2,10,0b101010}");
+    WEE_CHECK_EVAL("77", "${base_convert:2,8,111111}");
+    WEE_CHECK_EVAL("63", "${base_convert:8,10,0o77}");
+    WEE_CHECK_EVAL("1295", "${base_convert:36,10,zz}");
+    WEE_CHECK_EVAL("zz", "${base_convert:10,36,1295}");
+    WEE_CHECK_EVAL("0", "${base_convert:10,2,0}");
+    WEE_CHECK_EVAL("0", "${base_convert:10,2,-0}");
+    WEE_CHECK_EVAL("0", "${base_convert:10,16,000}");
+    WEE_CHECK_EVAL("123", "${base_convert:10,10,00123}");
+    WEE_CHECK_EVAL("9223372036854775807",
+                   "${base_convert:10,10,9223372036854775807}");
+    WEE_CHECK_EVAL("-9223372036854775808",
+                   "${base_convert:10,10,-9223372036854775808}");
+    WEE_CHECK_EVAL("7fffffffffffffff",
+                   "${base_convert:10,16,9223372036854775807}");
+    WEE_CHECK_EVAL("-8000000000000000",
+                   "${base_convert:10,16,-9223372036854775808}");
+    WEE_CHECK_EVAL("-1000000000000000000000000000000000000000000000000000000000000000",
+                   "${base_convert:10,2,-9223372036854775808}");
+    WEE_CHECK_EVAL("ff00", "${base_convert:10,16,${calc:255*256}}");
+
     /* Test date. */
     WEE_CHECK_EVAL("", "${date:}");
     value = eval_expression ("${date}", pointers, extra_vars, options);

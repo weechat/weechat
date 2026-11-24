@@ -3441,6 +3441,25 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   == `+test string+`
 
 // TRANSLATION MISSING
+| `+${base_convert:from,to,xxx}+` | 5.0.0
+| Integer number (signed 64-bit) converted from base "from" to base "to",
+  between 2 and 36; the number can have a sign (`-` or `+`) and a prefix
+  (`0x` in base 16, `0o` in base 8, `0b` in base 2), digits are case
+  insensitive; the result is in lower case, without prefix
+  (empty string if a base or the number is invalid).
+| >> `+${base_convert:16,10,ff0000}+` +
+  == `+16711680+` +
+  +
+  >> `+${base_convert:16,10,-0xff}+` +
+  == `+-255+` +
+  +
+  >> `+${base_convert:10,2,42}+` +
+  == `+101010+` +
+  +
+  >> `+${base_convert:36,10,zz}+` +
+  == `+1295+`
+
+// TRANSLATION MISSING
 | `+${date}+` +
   `+${date:xxx}+` | 1.3
 | 現在の日付/時刻、カスタム書式を使うことも可能です (see function <<_util_strftimeval,util_strftimeval>>)、

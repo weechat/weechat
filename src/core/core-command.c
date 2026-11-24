@@ -9068,6 +9068,8 @@ command_init (void)
             N_("  - ${info:name,arguments}: the info (arguments are optional)"),
             N_("  - ${base_encode:base,string}: the string encoded to base: 16, 32, 64 or 64url"),
             N_("  - ${base_decode:base,string}: the string decoded from base: 16, 32, 64 or 64url"),
+            N_("  - ${base_convert:from,to,number}: the integer number converted from base "
+               "\"from\" to base \"to\" (bases between 2 and 36)"),
             N_("  - ${date} or ${date:format}: current date/time"),
             N_("  - ${env:NAME}: the environment variable"),
             N_("  - ${if:condition?value_if_true:value_if_false}: the result of ternary operator"),
@@ -9165,6 +9167,8 @@ command_init (void)
             AI("  /eval -n ${random:0,10}                          ==> 3"),
             AI("  /eval -n ${base_encode:64,test}                  ==> dGVzdA=="),
             AI("  /eval -n ${base_decode:64,dGVzdA==}              ==> test"),
+            AI("  /eval -n ${base_convert:16,10,ff0000}            ==> 16711680"),
+            AI("  /eval -n ${base_convert:10,2,42}                 ==> 101010"),
             AI("  /eval -n ${define:len,${calc:5+3}}${len}x${len}  ==> 8x8"),
             "",
             N_("Examples (conditions):"),

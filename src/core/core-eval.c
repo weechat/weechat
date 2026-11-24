@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <ctype.h>
 #include <errno.h>
 #include <limits.h>
 #include <regex.h>
@@ -962,6 +963,113 @@ end:
 }
 
 /*
+ * Convert an integer number from a base to another base.
+ *
+ * Format of text is: "from,to,number" where "from" and "to" are bases between
+ * 2 and 36, and "number" is a signed 64-bit integer in base "from", with an
+ * optional sign ("-" or "+") and an optional prefix ("0x" in base 16, "0o" in
+ * base 8, "0b" in base 2); digits are case insensitive.
+ *
+ * The result is in lower case, without prefix, with a sign "-" if the number
+ * is negative.
+ *
+ * Return an empty string if a base or the number is invalid, or if the
+ * number does not fit in a signed 64-bit integer.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_base_convert (const char *text)
+{
+    const char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
+    const char *ptr_number, *ptr_comma;
+    char str_base[16], str_result[128], *ptr_result;
+    int base_from, base_to, i, negative, digit;
+    unsigned long long value, max_value;
+
+    /* Base "from". */
+    ptr_comma = strchr (text, ',');
+    if (!ptr_comma || (ptr_comma - text >= (int)sizeof (str_base)))
+        return strdup ("");
+    memcpy (str_base, text, ptr_comma - text);
+    str_base[ptr_comma - text] = '\0';
+    if (!util_parse_int (str_base, 10, &base_from)
+        || (base_from < 2) || (base_from > 36))
+        return strdup ("");
+    text = ptr_comma + 1;
+
+    /* Base "to". */
+    ptr_comma = strchr (text, ',');
+    if (!ptr_comma || (ptr_comma - text >= (int)sizeof (str_base)))
+        return strdup ("");
+    memcpy (str_base, text, ptr_comma - text);
+    str_base[ptr_comma - text] = '\0';
+    if (!util_parse_int (str_base, 10, &base_to)
+        || (base_to < 2) || (base_to > 36))
+        return strdup ("");
+    ptr_number = ptr_comma + 1;
+
+    /* Optional sign. */
+    negative = 0;
+    if ((ptr_number[0] == '-') || (ptr_number[0] == '+'))
+    {
+        negative = (ptr_number[0] == '-');
+        ptr_number++;
+    }
+
+    /* Optional prefix. */
+    if ((ptr_number[0] == '0')
+        && (((base_from == 16) && ((ptr_number[1] == 'x') || (ptr_number[1] == 'X')))
+            || ((base_from == 8) && ((ptr_number[1] == 'o') || (ptr_number[1] == 'O')))
+            || ((base_from == 2) && ((ptr_number[1] == 'b') || (ptr_number[1] == 'B')))))
+    {
+        ptr_number += 2;
+    }
+
+    if (!ptr_number[0])
+        return strdup ("");
+
+    /* Parse the number (absolute value), with overflow check. */
+    max_value = (negative) ?
+        (unsigned long long)LLONG_MAX + 1ULL : (unsigned long long)LLONG_MAX;
+    value = 0;
+    for (i = 0; ptr_number[i]; i++)
+    {
+        if (isdigit ((unsigned char)ptr_number[i]))
+            digit = ptr_number[i] - '0';
+        else if ((ptr_number[i] >= 'a') && (ptr_number[i] <= 'z'))
+            digit = ptr_number[i] - 'a' + 10;
+        else if ((ptr_number[i] >= 'A') && (ptr_number[i] <= 'Z'))
+            digit = ptr_number[i] - 'A' + 10;
+        else
+            return strdup ("");
+        if (digit >= base_from)
+            return strdup ("");
+        if (value > (max_value - digit) / (unsigned long long)base_from)
+            return strdup ("");
+        value = (value * base_from) + digit;
+    }
+
+    /* Format the number in base "to". */
+    ptr_result = str_result + sizeof (str_result) - 1;
+    ptr_result[0] = '\0';
+    do
+    {
+        ptr_result--;
+        ptr_result[0] = digits[value % (unsigned long long)base_to];
+        value /= (unsigned long long)base_to;
+    } while (value > 0);
+    if (negative && (ptr_result[0] != '0'))
+    {
+        ptr_result--;
+        ptr_result[0] = '-';
+    }
+
+    return strdup (ptr_result);
+}
+
+/*
  * Return a date.
  *
  * Note: result must be freed after use.
@@ -1665,6 +1773,8 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
  *   - ${info:name,arguments}: the info (arguments are optional)
  *   - ${base_encode:base,string}: the string encoded to base: 16, 32, 64 or 64url
  *   - ${base_decode:base,string}: the string decoded from base: 16, 32, 64 or 64url
+ *   - ${base_convert:from,to,number}: the integer number converted from base
+ *     "from" to base "to" (bases between 2 and 36)
  *   - ${date} or ${date:format}: current date/time
  *   - ${env:NAME}: the environment variable
  *   - ${if:condition?value_if_true:value_if_false}: the result of ternary operator
@@ -1956,6 +2066,13 @@ eval_replace_vars_cb (void *data,
     if (strncmp (text, "base_decode:", 12) == 0)
     {
         value = eval_string_base_decode (text + 12);
+        goto end;
+    }
+
+    /* Convert a number from a base to another base */
+    if (strncmp (text, "base_convert:", 13) == 0)
+    {
+        value = eval_string_base_convert (text + 13);
         goto end;
     }
 

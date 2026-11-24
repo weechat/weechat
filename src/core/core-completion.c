@@ -2267,6 +2267,7 @@ completion_list_add_eval_variables_cb (const void *pointer, void *data,
 {
     char *eval_variables[] = {
         "${\\string}",
+        "${base_convert:from,to,number}",
         "${base_decode:16,string}",
         "${base_decode:32,string}",
         "${base_decode:64,string}",

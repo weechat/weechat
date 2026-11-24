@@ -3387,6 +3387,24 @@ première étendue à la dernière) :
   >> `+${base_decode:64,dGVzdCBzdHJpbmc=}+` +
   == `+test string+`
 
+| `+${base_convert:from,to,xxx}+` | 5.0.0
+| Nombre entier (64 bits signé) converti de la base "from" vers la base "to",
+  entre 2 et 36 ; le nombre peut avoir un signe (`-` ou `+`) et un préfixe
+  (`0x` en base 16, `0o` en base 8, `0b` en base 2), les chiffres sont
+  insensibles à la casse ; le résultat est en minuscules, sans préfixe
+  (chaîne vide si une base ou le nombre est invalide).
+| >> `+${base_convert:16,10,ff0000}+` +
+  == `+16711680+` +
+  +
+  >> `+${base_convert:16,10,-0xff}+` +
+  == `+-255+` +
+  +
+  >> `+${base_convert:10,2,42}+` +
+  == `+101010+` +
+  +
+  >> `+${base_convert:36,10,zz}+` +
+  == `+1295+`
+
 | `+${date}+` +
   `+${date:xxx}+` | 1.3
 | La date/heure courante, avec un format personnalisé (voir la fonction
