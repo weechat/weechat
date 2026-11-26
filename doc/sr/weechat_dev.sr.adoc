@@ -473,6 +473,7 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-gui-nicklist.cpp                 | Тестови: функције листе надимака.
 |          curses/                               | Корен unit тестова за Curses интерфејс.
 |             test-gui-curses-mouse.cpp          | Тестови: миш (Curses интерфејс).
+|             test-gui-curses-window.cpp         | Тестови: функције прозора (Curses интерфејс).
 |       plugins/                                 | Корен unit тестова додатака.
 |          irc/                                  | Корен unit тестова IRC додатка.
 |             test-irc-batch.cpp                 | Тестови: IRC пакетни догађаји.

@@ -108,6 +108,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/gui/test-gui-nick.cpp
   unit/gui/test-gui-nicklist.cpp
   unit/gui/curses/test-gui-curses-mouse.cpp
+  unit/gui/curses/test-gui-curses-window.cpp
   scripts/test-scripts.cpp
 )
 add_library(weechat_unit_tests_core STATIC ${LIB_WEECHAT_UNIT_TESTS_CORE_SRC})
