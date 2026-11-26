@@ -294,6 +294,9 @@ jobs:
       matrix:
         os:
           - ubuntu-26.04
+        fedora:
+          - "45"
+          - "rawhide"
         config:
           - name: "gcc"
             cc: "gcc"
@@ -304,11 +307,13 @@ jobs:
             cxx: "clang++"
             buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
-    name: "install (fedora:45, ${{ matrix.config.name }})"
+    name: "install (fedora:${{ matrix.fedora }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
+    # Rawhide is a moving target: report failures without failing the workflow.
+    continue-on-error: ${{ matrix.fedora == 'rawhide' }}
     container:
-      image: fedora:45
+      image: fedora:${{ matrix.fedora }}
 
     steps:
       - uses: actions/checkout@v7
