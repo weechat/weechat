@@ -8,6 +8,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 _The file [UPGRADING.md](UPGRADING.md) contains important information about upgrades, for example manual actions to perform when upgrading from a version to another one (most changes are automated, but some of them cannot be)._
 
+## [Unreleased]
+
+### Security
+
+- core: fix out-of-bounds read and write when displaying a WeeChat color code with an invalid background color, which could be received from a remote relay
+
 ## [4.10.5] - 2026-11-26
 
 ### Fixed

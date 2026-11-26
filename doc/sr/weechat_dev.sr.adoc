@@ -488,6 +488,7 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-gui-nicklist.cpp                  | Тестови: функције листе надимака.
 |          curses/                                | Корен unit тестова за Curses интерфејс.
 |             test-gui-curses-mouse.cpp           | Тестови: миш (Curses интерфејс).
+|             test-gui-curses-window.cpp          | Тестови: функције прозора (Curses интерфејс).
 |       scripts/                                  | Корен тестова за API скриптовања.
 |          test-scripts.cpp                       | Програм који се користи за извршавање тестова API скриптовања.
 |          python/                                | Python скрипте које генеришу и покрећу тестове API скриптовања.
