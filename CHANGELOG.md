@@ -330,6 +330,32 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - xfer: limit size of partial message received in DCC chat to prevent memory exhaustion ([#2349](https://github.com/weechat/weechat/issues/2349))
 - xfer: remove path from filename received in DCC file transfer to prevent writing the file outside the download directory ([#2348](https://github.com/weechat/weechat/issues/2348))
 
+## [4.10.5] - 2026-11-26
+
+### Fixed
+
+- core: fix loss of secured data still encrypted in file sec.conf after a partial decryption with command `/secure decrypt`
+- core: fix decryption of secured data with a comma in name with command `/secure decrypt`
+- core: keep secured data encrypted when it cannot be decrypted with the passphrase on reload of file sec.conf, instead of deleting it
+- core: fix memory leak in completion of plugin commands when the plugin is not found
+- core: fix crash when a plugin is unloaded or reloaded with command `/plugin` executed by a plugin or script, delay the command ([#2380](https://github.com/weechat/weechat/issues/2380))
+- core: fix crash when command `/upgrade` is executed by a script, execute the upgrade in the main loop ([#2380](https://github.com/weechat/weechat/issues/2380))
+- irc: display reply to CTCP PING with a single argument, which was ignored
+- irc: add missing tag "irc_ctcp" in display of CTCP reply without arguments
+- irc: ignore text after a received CTCP, which was parsed as another CTCP (one message could trigger two CTCP replies)
+- irc: fix display of own CTCP when there is text after the CTCP
+- perl: fix warnings "Subroutine redefined" when loading multiple scripts with Perl built without multiplicity
+- ruby: restore the current script when a function of a script fails
+- scripts: fix crash when a script is unloaded or reloaded while one of its functions is running, delay the unload until the function has returned ([#2380](https://github.com/weechat/weechat/issues/2380))
+- xfer: fix possible removal of an unrelated hook when a transfer lasts longer than the timeout (option xfer.network.timeout)
+- xfer: fail a file receive when DCC ACCEPT is not received after a resume request, after the timeout (option xfer.network.timeout), and release the socket and port of a passive receive
+- xfer: fail the transfer when option xfer.network.port_range contains a port lower than 1 or greater than 65535, instead of binding an unexpected port or looping forever
+
+### Security
+
+- core: fix decoding of incomplete WeeChat color codes in functions string_remove_color and string_color_code_size, which could remove the sender of an IRC message received with a crafted message tag ([#2382](https://github.com/weechat/weechat/pull/2382))
+- xfer: open the socket of a passive file receive (reverse DCC) only when the transfer is accepted, to prevent a remote peer from exhausting file descriptors with many DCC offers ([#2384](https://github.com/weechat/weechat/pull/2384))
+
 ## [4.10.4] - 2026-11-09
 
 ### Added
@@ -4905,6 +4931,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - nicklist can be moved on top, bottom, left or right of window
 
 [Unreleased]: https://github.com/weechat/weechat/compare/v4.10.0...HEAD
+[4.10.5]: https://github.com/weechat/weechat/compare/v4.10.4...v4.10.5
 [4.10.4]: https://github.com/weechat/weechat/compare/v4.10.3...v4.10.4
 [4.10.3]: https://github.com/weechat/weechat/compare/v4.10.2...v4.10.3
 [4.10.2]: https://github.com/weechat/weechat/compare/v4.10.1...v4.10.2
