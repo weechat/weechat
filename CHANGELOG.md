@@ -301,6 +301,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Security
 
+- core: fix out-of-bounds read and write when displaying a WeeChat color code with an invalid background color, which could be received from a remote relay
 - core: fix decoding of incomplete WeeChat color codes in functions string_remove_color and string_color_code_size, which could remove the sender of an IRC message received with a crafted message tag ([#2382](https://github.com/weechat/weechat/pull/2382))
 - core: fix integer overflow in dynamic strings when their size exceeds 4 GiB ([GHSA-h394-85x4-68c7](https://github.com/weechat/weechat/security/advisories/GHSA-h394-85x4-68c7))
 - core: fix heap buffer overflow in charset conversion when the converted string is more than 4 times longer than the input and contains invalid chars, for example with charset TSCII ([GHSA-q32h-5qvq-3936](https://github.com/weechat/weechat/security/advisories/GHSA-q32h-5qvq-3936))
