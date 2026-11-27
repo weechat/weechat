@@ -248,6 +248,7 @@ TEST_GROUP(Scripts)
  * Tests scripting API.
  */
 
+#if defined(HAVE_PYTHON) && defined(HAVE_SCRIPT)
 TEST(Scripts, API)
 {
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
@@ -482,6 +483,7 @@ TEST(Scripts, API)
 
     printf ("TEST(Scripts, API)");
 }
+#endif /* defined(HAVE_PYTHON) && defined(HAVE_SCRIPT) */
 
 /*
  * Tests load of scripts by a script during its initialization: the outer

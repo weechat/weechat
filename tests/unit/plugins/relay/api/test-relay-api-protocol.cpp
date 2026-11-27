@@ -988,6 +988,7 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
  *   relay_api_protocol_cb_scripts
  */
 
+#if defined(HAVE_PYTHON) && defined(HAVE_SCRIPT)
 TEST(RelayApiProtocolWithClient, CbScripts)
 {
     struct t_relay_json *json, *json_obj;
@@ -1041,6 +1042,7 @@ TEST(RelayApiProtocolWithClient, CbScripts)
               "/script unload -q weechat_testapi.py");
     run_cmd (str_command);
 }
+#endif /* defined(HAVE_PYTHON) && defined(HAVE_SCRIPT) */
 
 /*
  * Test functions:

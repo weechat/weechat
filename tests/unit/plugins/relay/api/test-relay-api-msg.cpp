@@ -942,6 +942,7 @@ TEST(RelayApiMsg, HotlistToJson)
  *   relay_api_msg_script_to_json
  */
 
+#if defined(HAVE_PYTHON) && defined(HAVE_SCRIPT)
 TEST(RelayApiMsg, ScriptToJson)
 {
     struct t_hdata *ptr_hdata;
@@ -996,6 +997,7 @@ TEST(RelayApiMsg, ScriptToJson)
               "/script unload -q weechat_testapi.py");
     run_cmd (str_command);
 }
+#endif /* defined(HAVE_PYTHON) && defined(HAVE_SCRIPT) */
 
 /*
  * Test functions:
