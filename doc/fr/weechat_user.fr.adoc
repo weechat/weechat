@@ -1861,6 +1861,46 @@ Une sauvegarde est écrite au préalable (même garde-fou que
 annulée avant qu'aucune option ne soit modifiée. L'option
 `+weechat.look.theme+` est également remise à vide.
 
+[[themes_partial]]
+==== Appliquer ou réinitialiser seulement certaines options
+
+Un thème peut être appliqué sur certaines options seulement, avec des
+masques sur les noms complets des options (le caractère joker `+*+` est
+autorisé, un masque commençant par `+!+` exclut des options) ;
+par exemple pour appliquer le thème clair seulement sur les options
+IRC, sauf les couleurs des pseudos :
+
+----
+/theme apply light irc.* !irc.color.nick_*
+----
+
+Avec l'option `+-default+`, seules les options ayant leur valeur par
+défaut sont modifiées, donc les options modifiées manuellement sont
+conservées ; cela est utile pour appliquer le thème sur les
+options d'une extension chargée après le thème :
+
+----
+/theme apply -default light
+----
+
+Les masques sont également autorisés avec `+/theme reset+`, par exemple
+pour réinitialiser seulement les options de buflist :
+
+----
+/theme reset buflist.*
+----
+
+Si seulement des masques commençant par `+!+` sont donnés, toutes les
+autres options sont utilisées, par exemple pour réinitialiser toutes les
+options sauf les options IRC :
+
+----
+/theme reset !irc.*
+----
+
+Avec des masques ou l'option `+-default+`, l'option
+`+weechat.look.theme+` n'est pas modifiée.
+
 [[themes_save_delete]]
 ==== Sauvegarder et supprimer des thèmes utilisateur
 

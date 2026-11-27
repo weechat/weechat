@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-24 19:20+0100\n"
+"POT-Creation-Date: 2026-11-27 09:22+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -3754,8 +3754,8 @@ msgstr "lista de itens da barra"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
-"[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
-"<new> || del <name> || info <name>"
+"[list [-backups]] || apply [-default] <name> [<mask>...] || reset "
+"[<mask>...] || save <name> || rename <old> <new> || del <name> || info <name>"
 msgstr ""
 
 #, fuzzy
@@ -3773,6 +3773,11 @@ msgid ""
 "raw[apply]: apply a theme (set every themable option to the value from the "
 "theme); if a file named <name>.theme exists in directory \"themes\" it "
 "shadows any built-in theme of the same name"
+msgstr ""
+
+msgid ""
+"raw[-default]: change only options with their default value (options changed "
+"by the user are kept)"
 msgstr ""
 
 msgid ""
@@ -3805,6 +3810,13 @@ msgid "name: name of a theme"
 msgstr "habilita suporte à mouse"
 
 msgid ""
+"mask: apply or reset only options matching this mask (full option name, "
+"wildcard \"*\" is allowed, a mask starting with \"!\" excludes options, with "
+"only exclusions all other options are used); many masks can be given; with "
+"masks or option -default, the option weechat.look.theme is not changed"
+msgstr ""
+
+msgid ""
 "Themes are named bundles of option overrides. Built-in themes are registered "
 "in memory by core/plugins/scripts; user themes are read from files in "
 "directory \"themes\" inside the WeeChat configuration directory."
@@ -3817,6 +3829,21 @@ msgid ""
 "backup-<timestamp>`. This is controlled by the option "
 "weechat.look.theme_backup."
 msgstr ""
+
+msgid "  apply theme \"light\" only on options that have not been changed:"
+msgstr ""
+
+msgid "  apply theme \"light\" only on irc options, except nick colors:"
+msgstr ""
+
+#, fuzzy
+#| msgid "unset/reset config options"
+msgid "  reset buflist options:"
+msgstr "indefine/restaura opções de configuração"
+
+#, fuzzy
+msgid "  reset all options except irc options:"
+msgstr "pointeiro do plugin (opcional)"
 
 #, fuzzy
 #| msgid "values for a configuration option"

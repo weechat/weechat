@@ -456,7 +456,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     {
         /* Switch to "light" theme if terminal background was detected as "light". */
         if (term_theme_light)
-            theme_apply ("light");
+            theme_apply ("light", NULL, 0);
     }
 }
 

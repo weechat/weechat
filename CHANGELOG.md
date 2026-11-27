@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
+- core: add option `-default` and masks in commands `/theme apply` and `/theme reset` to apply or reset only some options
 - core: add conversion of integer numbers between bases in evaluation of expressions with `base_convert:from,to,number`
 - core: add signal "buffer_lines_filtered"
 - core: add jump to buffer with command `/N` (for example `/42`) and option weechat.look.command_buffer_number ([#762](https://github.com/weechat/weechat/issues/762))

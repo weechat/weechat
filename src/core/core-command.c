@@ -7322,7 +7322,7 @@ COMMAND_CALLBACK(theme)
     struct t_theme *ptr_theme, *file_theme;
     const char *ptr_active, *ptr_name;
     char *path, *dir;
-    int i, size, show_backups;
+    int i, size, show_backups, index_name, only_default;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -7409,17 +7409,32 @@ COMMAND_CALLBACK(theme)
         return WEECHAT_RC_OK;
     }
 
-    /* "/theme apply <name>": apply a theme */
+    /* "/theme apply [-default] <name> [<mask>...]": apply a theme */
     if (string_strcmp (argv[1], "apply") == 0)
     {
         COMMAND_MIN_ARGS(3, "apply");
-        return theme_apply (argv[2]);
+        index_name = 2;
+        only_default = 0;
+        if (strcmp (argv[2], "-default") == 0)
+        {
+            COMMAND_MIN_ARGS(4, "apply -default");
+            index_name = 3;
+            only_default = 1;
+        }
+        return theme_apply (
+            argv[index_name],
+            (argc > index_name + 1) ?
+            (const char **)&argv[index_name + 1] : NULL,
+            only_default);
     }
 
-    /* "/theme reset": reset every themable option to its default value */
+    /*
+     * "/theme reset [<mask>...]": reset themable options to their default
+     * value
+     */
     if (string_strcmp (argv[1], "reset") == 0)
     {
-        return theme_reset ();
+        return theme_reset ((argc > 2) ? (const char **)&argv[2] : NULL);
     }
 
     /* "/theme save <name>": write a user theme file */
@@ -10092,8 +10107,8 @@ command_init (void)
         N_("manage color themes"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated. */
         N_("[list [-backups]]"
-           " || apply <name>"
-           " || reset"
+           " || apply [-default] <name> [<mask>...]"
+           " || reset [<mask>...]"
            " || save <name>"
            " || rename <old> <new>"
            " || del <name>"
@@ -10107,6 +10122,8 @@ command_init (void)
                "value from the theme); if a file named <name>.theme "
                "exists in directory \"themes\" it shadows any built-in "
                "theme of the same name"),
+            N_("raw[-default]: change only options with their default value "
+               "(options changed by the user are kept)"),
             N_("raw[reset]: reset every themable option to its default "
                "value (restores the original look shipped with WeeChat)"),
             N_("raw[save]: save current themable options to a file "
@@ -10119,6 +10136,12 @@ command_init (void)
             N_("raw[info]: display details on a theme (name, description, "
                "creation date, WeeChat version, number of option overrides)"),
             N_("name: name of a theme"),
+            N_("mask: apply or reset only options matching this mask "
+               "(full option name, wildcard \"*\" is allowed, a mask "
+               "starting with \"!\" excludes options, with only exclusions "
+               "all other options are used); many masks can be "
+               "given; with masks or option -default, the option "
+               "weechat.look.theme is not changed"),
             "",
             N_("Themes are named bundles of option overrides. Built-in themes "
                "are registered in memory by core/plugins/scripts; user themes "
@@ -10129,10 +10152,23 @@ command_init (void)
                "themable values in directory \"themes\" before applying "
                "(file name: \"backup-<timestamp>.theme\"); the previous "
                "state can be restored with: `/theme apply backup-<timestamp>`. "
-               "This is controlled by the option weechat.look.theme_backup.")),
+               "This is controlled by the option weechat.look.theme_backup."),
+            "",
+            N_("Examples:"),
+            N_("  apply theme \"light\" only on options that have not been "
+               "changed:"),
+            AI("    /theme apply -default light"),
+            N_("  apply theme \"light\" only on irc options, except nick "
+               "colors:"),
+            AI("    /theme apply light irc.* !irc.color.nick_*"),
+            N_("  reset buflist options:"),
+            AI("    /theme reset buflist.*"),
+            N_("  reset all options except irc options:"),
+            AI("    /theme reset !irc.*")),
         "list -backups"
-        " || apply %(theme_themes_all)"
-        " || reset"
+        " || apply -default|%(theme_themes_all) "
+        "%(theme_themes_all)|%(config_options)|%*"
+        " || reset %(config_options)|%*"
         " || save %(theme_themes_user)"
         " || rename %(theme_themes_files)"
         " || del %(theme_themes_user)"

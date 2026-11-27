@@ -1970,6 +1970,49 @@ A backup is written first (same gate as `+/theme apply+`); on backup
 failure the reset is aborted before any option is changed.
 `+weechat.look.theme+` is cleared too.
 
+// TRANSLATION MISSING
+[[themes_partial]]
+==== Applying or resetting only some options
+
+// TRANSLATION MISSING
+A theme can be applied on some options only, with masks on the full
+option names (wildcard `+*+` is allowed, a mask starting with `+!+`
+excludes options); for example to apply the light theme only on IRC
+options, except nick colors:
+
+----
+/theme apply light irc.* !irc.color.nick_*
+----
+
+// TRANSLATION MISSING
+With option `+-default+`, only options with their default value are
+changed, so options changed manually are kept; this is useful to apply
+the theme on the options of a plugin loaded after the theme:
+
+----
+/theme apply -default light
+----
+
+// TRANSLATION MISSING
+Masks are allowed with `+/theme reset+` as well, for example to reset
+only buflist options:
+
+----
+/theme reset buflist.*
+----
+
+// TRANSLATION MISSING
+If only masks starting with `+!+` are given, all other options are used,
+for example to reset all options except IRC options:
+
+----
+/theme reset !irc.*
+----
+
+// TRANSLATION MISSING
+With masks or option `+-default+`, the option `+weechat.look.theme+` is
+not changed.
+
 [[themes_save_delete]]
 ==== Saving and deleting user themes
 

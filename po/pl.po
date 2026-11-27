@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-24 19:20+0100\n"
+"POT-Creation-Date: 2026-11-27 09:22+0100\n"
 "PO-Revision-Date: 2026-11-01 20:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -3916,9 +3916,13 @@ msgid "manage color themes"
 msgstr "zarządza kolorami motywów"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
+#, fuzzy
+#| msgid ""
+#| "[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
+#| "<new> || del <name> || info <name>"
 msgid ""
-"[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
-"<new> || del <name> || info <name>"
+"[list [-backups]] || apply [-default] <name> [<mask>...] || reset "
+"[<mask>...] || save <name> || rename <old> <new> || del <name> || info <name>"
 msgstr ""
 "[list [-backups]] || apply <nazwa> || reset || save <nazwa> || rename "
 "<stary> <nowy> || del <nazwa> || info <nazwa>"
@@ -3943,6 +3947,11 @@ msgstr ""
 "raw[apply]: zastosuj motyw (ustaw wszystkie opcje motywu na wartość z "
 "motywu); jeśli plik o nazwie <nazwa>.theme istnieje w katalogu „themes”, "
 "przysłania on wszystkie wbudowane motywy o tej samej nazwie"
+
+msgid ""
+"raw[-default]: change only options with their default value (options changed "
+"by the user are kept)"
+msgstr ""
 
 msgid ""
 "raw[reset]: reset every themable option to its default value (restores the "
@@ -3977,6 +3986,13 @@ msgid "name: name of a theme"
 msgstr "nazwa: nazwa motywu"
 
 msgid ""
+"mask: apply or reset only options matching this mask (full option name, "
+"wildcard \"*\" is allowed, a mask starting with \"!\" excludes options, with "
+"only exclusions all other options are used); many masks can be given; with "
+"masks or option -default, the option weechat.look.theme is not changed"
+msgstr ""
+
+msgid ""
 "Themes are named bundles of option overrides. Built-in themes are registered "
 "in memory by core/plugins/scripts; user themes are read from files in "
 "directory \"themes\" inside the WeeChat configuration directory."
@@ -3997,6 +4013,22 @@ msgstr ""
 "<znacznik czasu>.theme”); poprzedni stan można przywrócić poleceniem: `/"
 "theme apply backup-<znacznik czasu>`. Kontroluje to opcja "
 "weechat.look.theme_backup."
+
+msgid "  apply theme \"light\" only on options that have not been changed:"
+msgstr ""
+
+msgid "  apply theme \"light\" only on irc options, except nick colors:"
+msgstr ""
+
+#, fuzzy
+#| msgid "reset config options"
+msgid "  reset buflist options:"
+msgstr "zresetuj opcje konfiguracyjną"
+
+#, fuzzy
+#| msgid "fset option pointer (optional)"
+msgid "  reset all options except irc options:"
+msgstr "wskaźnik opcji fset (opcjonalne)"
 
 msgid "toggle value of a config option"
 msgstr "przełącza wartość opcji konfiguracyjnej"

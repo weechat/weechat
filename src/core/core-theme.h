@@ -40,6 +40,18 @@ struct t_theme
     struct t_theme *next_theme;
 };
 
+/*
+ * Filter on options applied or reset by a theme:
+ *   - masks: NULL-terminated list of masks on full option names (negative
+ *     masks "!mask" allowed), NULL for all options
+ *   - only_default: change only options with their default value
+ */
+struct t_theme_filter
+{
+    const char **masks;                   /* masks on option names or NULL   */
+    int only_default;                     /* 1: only options with default    */
+};
+
 extern struct t_theme *themes;
 extern struct t_theme *last_theme;
 extern int theme_applying;                /* gate for config_change_color    */
@@ -55,8 +67,9 @@ extern int theme_overrides_count (struct t_theme *theme);
 extern const char *theme_get_override (struct t_theme *theme,
                                        const char *option_name);
 extern struct t_arraylist *theme_list (void);
-extern int theme_apply (const char *name);
-extern int theme_reset (void);
+extern int theme_apply (const char *name, const char **masks,
+                        int only_default);
+extern int theme_reset (const char **masks);
 extern int theme_save (const char *name);
 extern int theme_rename (const char *old_name, const char *new_name);
 extern int theme_delete (const char *name);

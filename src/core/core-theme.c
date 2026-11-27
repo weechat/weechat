@@ -727,7 +727,50 @@ theme_make_backup (void)
 }
 
 /*
+ * Check if a full option name ("config.section.option") matches a list of
+ * masks (negative masks "!mask" are allowed, see string_match_list).
+ *
+ * If the list contains only negative masks (or is empty), all options match
+ * except the ones matching a negative mask.
+ *
+ * Return:
+ *   1: option name matches masks, or masks is NULL (all options match)
+ *   0: option name does not match masks
+ */
+
+int
+theme_option_match_masks (const char *option_name, const char **masks)
+{
+    const char **ptr_mask;
+
+    if (!masks)
+        return 1;
+
+    if (!option_name)
+        return 0;
+
+    for (ptr_mask = masks; *ptr_mask; ptr_mask++)
+    {
+        if ((*ptr_mask)[0] != '!')
+            return string_match_list (option_name, masks, 1);
+    }
+
+    /* Only negative masks: all options match except the excluded ones. */
+    for (ptr_mask = masks; *ptr_mask; ptr_mask++)
+    {
+        if (string_match (option_name, *ptr_mask + 1, 1))
+            return 0;
+    }
+
+    return 1;
+}
+
+/*
  * Apply one override entry (callback for hashtable_map during apply).
+ *
+ * Argument "data" is a pointer to a struct t_theme_filter (can be NULL to
+ * apply all entries): entries not matching the masks are silently skipped,
+ * as well as options that have been changed when only_default is set.
  *
  * Refuse entries pointing to options that do not exist or that are not
  * themable, logging a warning to the core buffer; the apply itself still
@@ -740,11 +783,19 @@ theme_apply_set_option_cb (void *data,
                            const void *key,
                            const void *value)
 {
+    struct t_theme_filter *filter;
     struct t_config_option *option = NULL;
 
     /* Make C compiler happy. */
-    (void) data;
     (void) hashtable;
+
+    filter = (struct t_theme_filter *)data;
+
+    if (filter
+        && !theme_option_match_masks ((const char *)key, filter->masks))
+    {
+        return;
+    }
 
     config_file_search_with_string ((const char *)key,
                                     NULL, NULL, &option, NULL);
@@ -763,6 +814,11 @@ theme_apply_set_option_cb (void *data,
             _("%sTheme: option \"%s\" is not themable, skipped"),
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
             (const char *)key);
+        return;
+    }
+    if (filter && filter->only_default
+        && config_file_option_has_changed (option))
+    {
         return;
     }
     config_file_option_set (option, (const char *)value, 1);
@@ -992,7 +1048,15 @@ theme_file_parse (const char *path)
 }
 
 /*
- * Apply a theme registered in memory.
+ * Apply a theme: a user theme file or a theme registered in memory.
+ *
+ * If masks is not NULL (NULL-terminated list of masks on full option names,
+ * negative masks "!mask" allowed), only the options matching the masks are
+ * changed. If only_default is 1, only the options with their default value
+ * are changed (options changed by the user are kept).
+ *
+ * The active-theme label (weechat.look.theme) is set to the theme name only
+ * for a full apply (masks is NULL and only_default is 0).
  *
  * If weechat.look.theme_backup is on (and the target name does not begin
  * with "backup-"), a backup file is written first; on backup failure the
@@ -1008,8 +1072,9 @@ theme_file_parse (const char *path)
  */
 
 int
-theme_apply (const char *name)
+theme_apply (const char *name, const char **masks, int only_default)
 {
+    struct t_theme_filter filter;
     struct t_theme *file_theme = NULL;
     struct t_theme *theme = NULL;
     struct t_theme_contribution *ptr_contribution;
@@ -1068,12 +1133,14 @@ theme_apply (const char *name)
      * Later contributions naturally win for duplicate keys because
      * config_file_option_set is called for each in sequence.
      */
+    filter.masks = masks;
+    filter.only_default = only_default;
     theme_applying = 1;
     for (ptr_contribution = theme->contributions; ptr_contribution;
          ptr_contribution = ptr_contribution->next_contribution)
     {
         hashtable_map (ptr_contribution->overrides,
-                       &theme_apply_set_option_cb, NULL);
+                       &theme_apply_set_option_cb, &filter);
     }
     theme_applying = 0;
 
@@ -1087,8 +1154,9 @@ theme_apply (const char *name)
         gui_window_ask_refresh (1);
     }
 
-    /* Persist the active theme label. */
-    config_file_option_set (config_look_theme, name, 1);
+    /* Persist the active theme label (only for a full apply). */
+    if (!masks && !only_default)
+        config_file_option_set (config_look_theme, name, 1);
 
     /* Tell the user about the backup. */
     if (backup_name)
@@ -1110,22 +1178,27 @@ theme_apply (const char *name)
 /*
  * Reset every themable option to its default value.
  *
+ * If masks is not NULL (NULL-terminated list of masks on full option names,
+ * negative masks "!mask" allowed), only the options matching the masks are
+ * reset.
+ *
  * Same backup-first safety as theme_apply: if weechat.look.theme_backup
  * is on, a backup file is written before any option is touched, and the
- * reset is aborted if the backup cannot be written. The active-theme
- * label (weechat.look.theme) is reset to its default (empty string).
+ * reset is aborted if the backup cannot be written. For a full reset (masks
+ * is NULL), the active-theme label (weechat.look.theme) is reset to its
+ * default (empty string).
  *
  * Return WEECHAT_RC_OK on success, WEECHAT_RC_ERROR if the backup is
  * required but failed.
  */
 
 int
-theme_reset (void)
+theme_reset (const char **masks)
 {
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    char *backup_name = NULL;
+    char *backup_name = NULL, *option_name;
 
     if (CONFIG_BOOLEAN(config_look_theme_backup))
     {
@@ -1155,8 +1228,25 @@ theme_reset (void)
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
-                if (ptr_option->themable)
-                    config_file_option_reset (ptr_option, 1);
+                if (!ptr_option->themable)
+                    continue;
+                if (masks)
+                {
+                    if (string_asprintf (&option_name, "%s.%s.%s",
+                                         ptr_config->name,
+                                         ptr_section->name,
+                                         ptr_option->name) < 0)
+                    {
+                        continue;
+                    }
+                    if (!theme_option_match_masks (option_name, masks))
+                    {
+                        free (option_name);
+                        continue;
+                    }
+                    free (option_name);
+                }
+                config_file_option_reset (ptr_option, 1);
             }
         }
     }
@@ -1168,8 +1258,9 @@ theme_reset (void)
         gui_window_ask_refresh (1);
     }
 
-    /* Clear active-theme label. */
-    config_file_option_reset (config_look_theme, 1);
+    /* Clear active-theme label (only for a full reset). */
+    if (!masks)
+        config_file_option_reset (config_look_theme, 1);
 
     if (backup_name)
     {

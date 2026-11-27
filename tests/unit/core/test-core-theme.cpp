@@ -35,6 +35,8 @@ extern char *theme_user_file_path (const char *name);
 extern char *theme_make_backup_name (void);
 extern char *theme_write_file (const char *name, const char *description);
 extern char *theme_file_strip_quotes (char *value);
+extern int theme_option_match_masks (const char *option_name,
+                                     const char **masks);
 extern struct t_theme *theme_file_parse (const char *path);
 }
 
@@ -536,9 +538,9 @@ TEST(CoreTheme, Apply)
     int saved_backup;
 
     /* NULL / empty / missing name => error */
-    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply (NULL));
-    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply (""));
-    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply ("does_not_exist"));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply (NULL, NULL, 0));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply ("", NULL, 0));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply ("does_not_exist", NULL, 0));
 
     /* Snapshot the option we will mutate + supporting state. */
     opt_prefix_error = NULL;
@@ -558,7 +560,7 @@ TEST(CoreTheme, Apply)
     theme_register (NULL, NULL, "apply_test", overrides);
     hashtable_free (overrides);
 
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("apply_test"));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("apply_test", NULL, 0));
 
     /* Override took effect. */
     STRCMP_EQUAL("TEST!", CONFIG_STRING(opt_prefix_error));
@@ -572,6 +574,220 @@ TEST(CoreTheme, Apply)
                             (saved_backup) ? "on" : "off", 1);
 
     free (saved_prefix_error);
+    free (saved_theme_label);
+}
+
+/*
+ * Test functions:
+ *   theme_option_match_masks
+ */
+
+TEST(CoreTheme, OptionMatchMasks)
+{
+    const char *masks_none[] = { NULL };
+    const char *masks_irc[] = { "irc.*", NULL };
+    const char *masks_exclude[] = { "irc.*", "!irc.color.*", NULL };
+    const char *masks_only_exclude[] = { "!irc.*", "!buflist.*", NULL };
+    const char *masks_many[] = { "irc.*", "buflist.format.lag", NULL };
+
+    /* NULL masks: all options match */
+    LONGS_EQUAL(1, theme_option_match_masks (NULL, NULL));
+    LONGS_EQUAL(1, theme_option_match_masks ("irc.color.input_nick", NULL));
+
+    LONGS_EQUAL(0, theme_option_match_masks (NULL, masks_irc));
+    LONGS_EQUAL(0, theme_option_match_masks (NULL, masks_none));
+
+    /* Empty list of masks: all options match */
+    LONGS_EQUAL(1, theme_option_match_masks ("irc.color.input_nick",
+                                             masks_none));
+
+    LONGS_EQUAL(1, theme_option_match_masks ("irc.color.input_nick",
+                                             masks_irc));
+    LONGS_EQUAL(0, theme_option_match_masks ("IRC.color.input_nick",
+                                             masks_irc));
+    LONGS_EQUAL(0, theme_option_match_masks ("weechat.color.separator",
+                                             masks_irc));
+
+    LONGS_EQUAL(1, theme_option_match_masks ("irc.look.nick_prefix",
+                                             masks_exclude));
+    LONGS_EQUAL(0, theme_option_match_masks ("irc.color.input_nick",
+                                             masks_exclude));
+
+    /* Only negative masks: all options match except the excluded ones */
+    LONGS_EQUAL(1, theme_option_match_masks ("weechat.color.separator",
+                                             masks_only_exclude));
+    LONGS_EQUAL(0, theme_option_match_masks ("irc.color.input_nick",
+                                             masks_only_exclude));
+    LONGS_EQUAL(0, theme_option_match_masks ("buflist.format.lag",
+                                             masks_only_exclude));
+
+    LONGS_EQUAL(1, theme_option_match_masks ("irc.color.input_nick",
+                                             masks_many));
+    LONGS_EQUAL(1, theme_option_match_masks ("buflist.format.lag",
+                                             masks_many));
+    LONGS_EQUAL(0, theme_option_match_masks ("buflist.format.number",
+                                             masks_many));
+}
+
+/*
+ * Test functions:
+ *   theme_apply_set_option_cb
+ *   theme_apply (with masks)
+ */
+
+TEST(CoreTheme, ApplyMasks)
+{
+    struct t_hashtable *overrides;
+    struct t_config_option *opt_error, *opt_network, *opt_separator;
+    char *saved_error, *saved_network, *saved_separator, *saved_theme_label;
+    const char *masks_look[] = { "weechat.look.*", NULL };
+    const char *masks_exclude[] = { "weechat.*", "!weechat.look.prefix_n*",
+                                    NULL };
+    const char *masks_no_match[] = { "irc.*", NULL };
+    int saved_backup, color_red, color_blue;
+
+    opt_error = NULL;
+    config_file_search_with_string ("weechat.look.prefix_error",
+                                    NULL, NULL, &opt_error, NULL);
+    CHECK(opt_error);
+    opt_network = NULL;
+    config_file_search_with_string ("weechat.look.prefix_network",
+                                    NULL, NULL, &opt_network, NULL);
+    CHECK(opt_network);
+    opt_separator = NULL;
+    config_file_search_with_string ("weechat.color.separator",
+                                    NULL, NULL, &opt_separator, NULL);
+    CHECK(opt_separator);
+
+    saved_error = strdup (CONFIG_STRING(opt_error));
+    saved_network = strdup (CONFIG_STRING(opt_network));
+    saved_separator = config_file_option_value_to_string (opt_separator,
+                                                          0, 0, 0);
+    saved_theme_label = strdup (CONFIG_STRING(config_look_theme));
+    saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
+
+    config_file_option_set (config_look_theme_backup, "off", 1);
+    config_file_option_set (config_look_theme, "label_before", 1);
+    config_file_option_set (opt_error, "E", 1);
+    config_file_option_set (opt_network, "N", 1);
+    config_file_option_set (opt_separator, "red", 1);
+    color_red = CONFIG_COLOR(opt_separator);
+    config_file_option_set (opt_separator, "blue", 1);
+    color_blue = CONFIG_COLOR(opt_separator);
+    CHECK(color_red != color_blue);
+
+    overrides = make_overrides ("weechat.look.prefix_error", "E2",
+                                "weechat.look.prefix_network", "N2");
+    hashtable_set (overrides, "weechat.color.separator", "red");
+    /* Option not found, excluded by masks: silently skipped. */
+    hashtable_set (overrides, "unknown.section.option", "value");
+    theme_register (NULL, NULL, "masks_test", overrides);
+    hashtable_free (overrides);
+
+    /* Mask matching nothing: no change. */
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                theme_apply ("masks_test", masks_no_match, 0));
+    STRCMP_EQUAL("E", CONFIG_STRING(opt_error));
+    STRCMP_EQUAL("N", CONFIG_STRING(opt_network));
+    LONGS_EQUAL(color_blue, CONFIG_COLOR(opt_separator));
+    STRCMP_EQUAL("label_before", CONFIG_STRING(config_look_theme));
+
+    /* Exclusion mask. */
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                theme_apply ("masks_test", masks_exclude, 0));
+    STRCMP_EQUAL("E2", CONFIG_STRING(opt_error));
+    STRCMP_EQUAL("N", CONFIG_STRING(opt_network));
+    LONGS_EQUAL(color_red, CONFIG_COLOR(opt_separator));
+    STRCMP_EQUAL("label_before", CONFIG_STRING(config_look_theme));
+
+    /* Mask on a section. */
+    config_file_option_set (opt_error, "E", 1);
+    config_file_option_set (opt_separator, "blue", 1);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                theme_apply ("masks_test", masks_look, 0));
+    STRCMP_EQUAL("E2", CONFIG_STRING(opt_error));
+    STRCMP_EQUAL("N2", CONFIG_STRING(opt_network));
+    LONGS_EQUAL(color_blue, CONFIG_COLOR(opt_separator));
+    STRCMP_EQUAL("label_before", CONFIG_STRING(config_look_theme));
+
+    /* Restore previous state. */
+    config_file_option_set (opt_error, saved_error, 1);
+    config_file_option_set (opt_network, saved_network, 1);
+    config_file_option_set (opt_separator, saved_separator, 1);
+    config_file_option_set (config_look_theme, saved_theme_label, 1);
+    config_file_option_set (config_look_theme_backup,
+                            (saved_backup) ? "on" : "off", 1);
+
+    free (saved_error);
+    free (saved_network);
+    free (saved_separator);
+    free (saved_theme_label);
+}
+
+/*
+ * Test functions:
+ *   theme_apply_set_option_cb
+ *   theme_apply (only options with default value)
+ */
+
+TEST(CoreTheme, ApplyOnlyDefault)
+{
+    struct t_hashtable *overrides;
+    struct t_config_option *opt_error, *opt_network;
+    char *saved_error, *saved_network, *saved_theme_label;
+    const char *masks_error[] = { "weechat.look.prefix_error", NULL };
+    int saved_backup;
+
+    opt_error = NULL;
+    config_file_search_with_string ("weechat.look.prefix_error",
+                                    NULL, NULL, &opt_error, NULL);
+    CHECK(opt_error);
+    opt_network = NULL;
+    config_file_search_with_string ("weechat.look.prefix_network",
+                                    NULL, NULL, &opt_network, NULL);
+    CHECK(opt_network);
+
+    saved_error = strdup (CONFIG_STRING(opt_error));
+    saved_network = strdup (CONFIG_STRING(opt_network));
+    saved_theme_label = strdup (CONFIG_STRING(config_look_theme));
+    saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
+
+    config_file_option_set (config_look_theme_backup, "off", 1);
+    config_file_option_set (config_look_theme, "label_before", 1);
+
+    /* prefix_error has its default value, prefix_network is changed. */
+    config_file_option_reset (opt_error, 1);
+    config_file_option_set (opt_network, "USER", 1);
+
+    overrides = make_overrides ("weechat.look.prefix_error", "E2",
+                                "weechat.look.prefix_network", "N2");
+    theme_register (NULL, NULL, "default_test", overrides);
+    hashtable_free (overrides);
+
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("default_test", NULL, 1));
+    STRCMP_EQUAL("E2", CONFIG_STRING(opt_error));
+    STRCMP_EQUAL("USER", CONFIG_STRING(opt_network));
+    STRCMP_EQUAL("label_before", CONFIG_STRING(config_look_theme));
+
+    /* With masks: an option with default value not matching is kept. */
+    config_file_option_reset (opt_error, 1);
+    config_file_option_reset (opt_network, 1);
+    LONGS_EQUAL(WEECHAT_RC_OK,
+                theme_apply ("default_test", masks_error, 1));
+    STRCMP_EQUAL("E2", CONFIG_STRING(opt_error));
+    STRCMP_EQUAL(CONFIG_STRING_DEFAULT(opt_network),
+                 CONFIG_STRING(opt_network));
+    STRCMP_EQUAL("label_before", CONFIG_STRING(config_look_theme));
+
+    /* Restore previous state. */
+    config_file_option_set (opt_error, saved_error, 1);
+    config_file_option_set (opt_network, saved_network, 1);
+    config_file_option_set (config_look_theme, saved_theme_label, 1);
+    config_file_option_set (config_look_theme_backup,
+                            (saved_backup) ? "on" : "off", 1);
+
+    free (saved_error);
+    free (saved_network);
     free (saved_theme_label);
 }
 
@@ -599,7 +815,7 @@ TEST(CoreTheme, ApplyBackupRecursionGuard)
 
     /* Before apply: count *.theme files in the themes directory */
     /* (we just verify no NEW backup-2* file appears for this apply). */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("backup-recursion-test"));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("backup-recursion-test", NULL, 0));
 
     /*
      * The only file that should exist is the one we are restoring;
@@ -690,7 +906,7 @@ TEST(CoreTheme, ApplyFileShadowsBuiltin)
     fclose (f);
 
     /* Apply: the file value must win over the registry value. */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("shadow_test"));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("shadow_test", NULL, 0));
     STRCMP_EQUAL("FROM_FILE", CONFIG_STRING(opt_prefix_error));
 
     /* Clean up. */
@@ -742,7 +958,7 @@ TEST(CoreTheme, ApplyMergeAcrossContributions)
     theme_register (&fake_plugin_b, NULL, "merge_test", o2);
     hashtable_free (o2);
 
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("merge_test"));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("merge_test", NULL, 0));
     /* Later contribution wins. */
     STRCMP_EQUAL("FROM_B", CONFIG_STRING(opt));
 
@@ -783,12 +999,12 @@ TEST(CoreTheme, Reset)
                                 NULL, NULL);
     theme_register (NULL, NULL, "reset_test", overrides);
     hashtable_free (overrides);
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("reset_test"));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("reset_test", NULL, 0));
     STRCMP_EQUAL("RESET_ME!", CONFIG_STRING(opt_prefix_error));
     STRCMP_EQUAL("reset_test", CONFIG_STRING(config_look_theme));
 
     /* Reset: themable option goes back to its default, label is cleared. */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_reset ());
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_reset (NULL));
     STRCMP_EQUAL(default_prefix_error, CONFIG_STRING(opt_prefix_error));
     STRCMP_EQUAL(CONFIG_STRING_DEFAULT(config_look_theme),
                  CONFIG_STRING(config_look_theme));
@@ -802,6 +1018,65 @@ TEST(CoreTheme, Reset)
     free (saved_prefix_error);
     free (saved_theme_label);
     free (default_prefix_error);
+}
+
+/*
+ * Test functions:
+ *   theme_reset (with masks)
+ */
+
+TEST(CoreTheme, ResetMasks)
+{
+    struct t_config_option *opt_error, *opt_network;
+    char *saved_error, *saved_network, *saved_theme_label;
+    const char *masks[] = { "weechat.look.prefix_*",
+                            "!weechat.look.prefix_network", NULL };
+    const char *masks_exclude[] = { "!weechat.look.prefix_error", NULL };
+    int saved_backup;
+
+    opt_error = NULL;
+    config_file_search_with_string ("weechat.look.prefix_error",
+                                    NULL, NULL, &opt_error, NULL);
+    CHECK(opt_error);
+    opt_network = NULL;
+    config_file_search_with_string ("weechat.look.prefix_network",
+                                    NULL, NULL, &opt_network, NULL);
+    CHECK(opt_network);
+
+    saved_error = strdup (CONFIG_STRING(opt_error));
+    saved_network = strdup (CONFIG_STRING(opt_network));
+    saved_theme_label = strdup (CONFIG_STRING(config_look_theme));
+    saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
+
+    config_file_option_set (config_look_theme_backup, "off", 1);
+    config_file_option_set (config_look_theme, "label_before", 1);
+    config_file_option_set (opt_error, "E", 1);
+    config_file_option_set (opt_network, "N", 1);
+
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_reset (masks));
+    STRCMP_EQUAL(CONFIG_STRING_DEFAULT(opt_error),
+                 CONFIG_STRING(opt_error));
+    STRCMP_EQUAL("N", CONFIG_STRING(opt_network));
+    STRCMP_EQUAL("label_before", CONFIG_STRING(config_look_theme));
+
+    /* Only negative masks: reset all options except the excluded ones. */
+    config_file_option_set (opt_error, "E", 1);
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_reset (masks_exclude));
+    STRCMP_EQUAL("E", CONFIG_STRING(opt_error));
+    STRCMP_EQUAL(CONFIG_STRING_DEFAULT(opt_network),
+                 CONFIG_STRING(opt_network));
+    STRCMP_EQUAL("label_before", CONFIG_STRING(config_look_theme));
+
+    /* Restore previous state. */
+    config_file_option_set (opt_error, saved_error, 1);
+    config_file_option_set (opt_network, saved_network, 1);
+    config_file_option_set (config_look_theme, saved_theme_label, 1);
+    config_file_option_set (config_look_theme_backup,
+                            (saved_backup) ? "on" : "off", 1);
+
+    free (saved_error);
+    free (saved_network);
+    free (saved_theme_label);
 }
 
 /*
