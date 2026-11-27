@@ -17,6 +17,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 #cmakedefine01 BUILD_PLUGIN_FSET
 #cmakedefine01 BUILD_PLUGIN_IRC
 #cmakedefine01 BUILD_PLUGIN_LOGGER
+#cmakedefine01 BUILD_PLUGIN_OTR
 #cmakedefine01 BUILD_PLUGIN_RELAY
 #cmakedefine01 BUILD_PLUGIN_SCRIPT
 #cmakedefine01 BUILD_SCRIPTING_PLUGINS
