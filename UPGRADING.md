@@ -389,10 +389,22 @@ used as the single port `5000`. If you use this option, check its value and fix 
 /set xfer.network.port_range 5000-5015
 ```
 
-### Bar item "otr"
+### OTR plugin
 
-The bar item "otr" (OTR plugin) has been added to the status bar by default, after
-the buffer name. It displays the OTR state of the current private buffer.
+The new OTR plugin replaces the script [otr.py](https://weechat.org/scripts/source/otr.py/):
+both must not be loaded at the same time, because they would both process the same private
+messages. If you use this script, remove it:
+
+```text
+/script remove otr.py
+```
+
+The private keys and fingerprints of the script are not used by the plugin: a new private key
+is generated for each account and your peers have to authenticate you again (see
+[OTR](https://weechat.org/doc/weechat/user/#otr) in the user's guide).
+
+The bar item "otr" has been added to the status bar by default, after the buffer name. It displays
+the OTR state of the current private buffer.
 
 The default value is used only when the bar is created, so if you upgrade from an older
 version, you must add `[otr]` manually in your option weechat.bar.status.items, for example
@@ -400,6 +412,12 @@ with the new default value:
 
 ```text
 /set weechat.bar.status.items "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+buffer_filter,[otr],mouse_status,scroll,[lag],[hotlist],[typing],completion"
+```
+
+If you use the light theme, you can apply it on the options of the OTR plugin with this command:
+
+```text
+/theme apply light otr.*
 ```
 
 ## Version 4.10.0
