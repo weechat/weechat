@@ -1186,7 +1186,7 @@ spell プラグインをリロードしてください:
 * 最新の安定版を使う
   (古いバージョンよりもメモリリークの可能性が減ると思われます)
 * 使わないプラグインのロードを禁止する、例えば:
-  buflist、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、php、spell、xfer (DCC で使用)。
+  buflist、fifo、logger、otr、perl、python、ruby、lua、tcl、guile、javascript、php、spell、xfer (DCC で使用)。
   `/help weechat.plugin.autoload` を参照してください。
 * 本当に必要なスクリプトだけをロード
 // TRANSLATION MISSING

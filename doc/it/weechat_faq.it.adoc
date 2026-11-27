@@ -1253,7 +1253,7 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
   rispetto le versioni precedenti)
 // TRANSLATION MISSING
 * non caricare alcuni plugin se non vengono utilizzati, ad esempio: buflist,
-  fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, spell, xfer (usato per DCC).
+  fifo, logger, otr, perl, python, ruby, lua, tcl, guile, javascript, php, spell, xfer (usato per DCC).
   See `/help weechat.plugin.autoload`.
 * caricare solo gli script veramente necessari
 // TRANSLATION MISSING

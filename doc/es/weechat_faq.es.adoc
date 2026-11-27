@@ -1187,8 +1187,8 @@ Puede intentar estos trucos para consumir menos memoria:
 * Utilice la última versión estable (ya que se supone que tendrá menos problemas de memoria
   que las versiones anteriores).
 * No cargue los complementos que no vaya a utilizar, por ejemplo: buflist,
-  fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, spell,
-  xfer (usado para DCC). Vea `/help weechat.plugin.autoload`.
+  fifo, logger, otr, perl, python, ruby, lua, tcl, guile, javascript, php,
+  spell, xfer (usado para DCC). Vea `/help weechat.plugin.autoload`.
 * Cargue solo los scripts que realmente necesite.
 * No cargue los certificados del sistema si TLS *NO* es utilizado: inhabilite esta opción mediante:
   _weechat.network.gnutls_ca_system_.

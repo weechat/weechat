@@ -1036,7 +1036,7 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 Ако желите да програм троши мање меморије, следите следеће савете:
 
 * Користите последњу стабилну верзију (требало би да има мање цурења меморије од старијих верзија).
-* Не учитавајте додатке које заиста и не користите, на пример: buflist, fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, spell, xfer (користи се за DCC). Погледајте `/help weechat.plugin.autoload`.
+* Не учитавајте додатке које заиста и не користите, на пример: buflist, fifo, logger, otr, perl, python, ruby, lua, tcl, guile, javascript, php, spell, xfer (користи се за DCC). Погледајте `/help weechat.plugin.autoload`.
 * Учитавајте само скрипте које су вам заста неопходне.
 * Не учитавајте системске сертификате ако се TLS *НЕ* користи: искључите следећу опцију: _weechat.network.gnutls_ca_system.
 * Смањите вредност опције _weechat.history.max_buffer_lines_number_ или поставите вредност опције _weechat.history.max_buffer_lines_minutes_.
