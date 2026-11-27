@@ -948,8 +948,8 @@ TEST(RelayApiMsg, ScriptToJson)
     struct t_hdata *ptr_hdata;
     void *ptr_script;
     struct t_relay_json *json, *json_obj;
-    char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
-    char *test_scripts_dir, str_command[(PATH_MAX * 2) + 128];
+    char path_testapigen[PATH_MAX];
+    char str_command[(PATH_MAX * 2) + 128];
     const char *ptr_test_scripts_dir;
 
     POINTERS_EQUAL(NULL, relay_api_msg_script_to_json (NULL, NULL, NULL));
@@ -963,19 +963,13 @@ TEST(RelayApiMsg, ScriptToJson)
 
     /* Load a python script for this test. */
     ptr_test_scripts_dir = getenv ("WEECHAT_TESTS_SCRIPTS_DIR");
-    test_scripts_dir = strdup (
-        (ptr_test_scripts_dir) ?
-        ptr_test_scripts_dir : "./scripts/python");
+    if (!ptr_test_scripts_dir)
+        ptr_test_scripts_dir = "./scripts/python";
     snprintf (path_testapigen, sizeof (path_testapigen),
               "%s%s%s",
-              test_scripts_dir,
+              ptr_test_scripts_dir,
               DIR_SEPARATOR,
               "testapigen.py");
-    snprintf (path_testapi, sizeof (path_testapi),
-              "%s%s%s",
-              test_scripts_dir,
-              DIR_SEPARATOR,
-              "testapi.py");
     snprintf (str_command, sizeof (str_command),
               "/script load %s", path_testapigen);
     run_cmd (str_command);
