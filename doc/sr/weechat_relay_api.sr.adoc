@@ -953,7 +953,7 @@ HTTP/1.1 200 OK
             "highlight": false,
             "notify_level": 0,
             "prefix": "",
-            "message": "Учитани додаци: alias, buflist, charset, exec, fifo, fset, guile, irc, javascript, logger, lua, perl, php, python, relay, ruby, script, spell, tcl, trigger, typing, xfer",
+            "message": "Учитани додаци: alias, buflist, charset, exec, fifo, fset, guile, irc, javascript, logger, lua, otr, perl, php, python, relay, ruby, script, spell, tcl, trigger, typing, xfer",
             "tags": []
         }
     ],
