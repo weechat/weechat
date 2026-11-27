@@ -400,7 +400,7 @@ jobs:
             cc: "clang"
             cxx: "clang++"
             # JavaScript disabled: no libnode, and V8 from quarterly packages is too old (V8 >= 11.3 required).
-            buildargs: "-DBUILD_MAN=ON -DBUILD_DOC=ON -DBUILD_TESTS=ON -DBUILD_FUZZERS=ON -DBUILD_PLUGIN_JAVASCRIPT=OFF"
+            buildargs: "-DBUILD_MAN=ON -DBUILD_DOC=ON -DBUILD_TESTS=ON -DBUILD_FUZZERS=ON -DBUILD_DOC_ALLOW_INCOMPLETE=ON -DBUILD_PLUGIN_JAVASCRIPT=OFF"
 
     name: "install (freebsd, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}

@@ -136,7 +136,7 @@ if(BUILD_DOC AND NOT BUILD_HEADLESS)
   message(FATAL_ERROR "Headless mode is required to build documentation.")
 endif()
 
-# All plugins (except javascript) are required for documentation.
+# All plugins are required for documentation.
 if(BUILD_DOC
     AND NOT BUILD_DOC_ALLOW_INCOMPLETE
     AND (NOT ENABLE_NLS
@@ -157,6 +157,7 @@ if(BUILD_DOC
       OR NOT BUILD_PLUGIN_LUA
       OR NOT BUILD_PLUGIN_TCL
       OR NOT BUILD_PLUGIN_GUILE
+      OR NOT BUILD_PLUGIN_JAVASCRIPT
       OR NOT BUILD_PLUGIN_PHP
       OR NOT BUILD_PLUGIN_SPELL
       OR NOT BUILD_PLUGIN_TRIGGER

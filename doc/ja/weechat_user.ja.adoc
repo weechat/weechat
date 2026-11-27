@@ -387,7 +387,7 @@ List of available options:
 
 | BUILD_SCRIPTING_PLUGINS | `ON`, `OFF` | ON
 | すべての<<scripting_plugins,スクリプトプラグイン>>
-  (Python、Perl、Ruby、Lua、Tcl、Guile、PHP) のコンパイル。
+  (Python、Perl、Ruby、Lua、Tcl、Guile、JavaScript、PHP) のコンパイル。
 
 | BUILD_TESTS | `ON`, `OFF` | OFF
 | コンパイルテスト。

@@ -95,7 +95,12 @@ The Debian/Ubuntu packages built from the sources include again the package `wee
 (except on Debian Bullseye/Bookworm and Ubuntu Jammy/Noble, where libnode is too old).
 
 If V8 is not available or too old, the plugin must be disabled with
-`-DBUILD_PLUGIN_JAVASCRIPT=OFF`.
+`-DBUILD_PLUGIN_JAVASCRIPT=OFF`. All plugins are required to build the documentation, so if it is
+built, the option `-DBUILD_DOC_ALLOW_INCOMPLETE=ON` must be added as well:
+
+```bash
+cmake .. -DBUILD_DOC=ON -DBUILD_PLUGIN_JAVASCRIPT=OFF -DBUILD_DOC_ALLOW_INCOMPLETE=ON
+```
 
 ### Unknown command-line options
 

@@ -31,11 +31,12 @@ diff --git a/debian/control b/debian/control
 diff --git a/debian/rules b/debian/rules
 --- a/debian/rules
 +++ b/debian/rules
-@@ -8,6 +8,7 @@ override_dh_auto_configure:
+@@ -8,6 +8,8 @@ override_dh_auto_configure:
  	dh_auto_configure --buildsystem=cmake -- \
  		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
  		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
 +		-DBUILD_PLUGIN_JAVASCRIPT:BOOL=OFF \
++		-DBUILD_DOC_ALLOW_INCOMPLETE:BOOL=ON \
  		-DBUILD_DOC:BOOL=ON \
  		-DBUILD_MAN:BOOL=ON \
  		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \

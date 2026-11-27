@@ -352,7 +352,7 @@ make install
 
 | BUILD_SCRIPTING_PLUGINS | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,script додатке>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile, PHP).
+  Guile, JavaScript, PHP).
 
 | BUILD_TESTS | `ON`, `OFF` | OFF
 | Компајлира тестове.

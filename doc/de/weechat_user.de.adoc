@@ -362,7 +362,7 @@ Liste der verfügbaren Optionen:
 
 | BUILD_SCRIPTING_PLUGINS | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Skripten-Erweiterungen>> (Python, Perl, Ruby,
-  Lua, Tcl, Guile, PHP).
+  Lua, Tcl, Guile, JavaScript, PHP).
 
 | BUILD_TESTS | `ON`, `OFF` | OFF
 | kompiliert Testumgebung.

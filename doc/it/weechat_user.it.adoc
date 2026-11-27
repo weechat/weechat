@@ -404,7 +404,7 @@ List of available options:
 
 | BUILD_SCRIPTING_PLUGINS | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile, PHP).
+  Guile, JavaScript, PHP).
 
 | BUILD_TESTS | `ON`, `OFF` | OFF
 | Compile tests.
