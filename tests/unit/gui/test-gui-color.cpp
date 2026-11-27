@@ -1174,7 +1174,12 @@ TEST(GuiColor, EncodeAnsi)
     snprintf (string, sizeof (string),
               "test_" "%s" "bar_delim",
               gui_color_get_custom ("bar_delim"));
-    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[48;5;22m" "bar_delim", string);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[38;5;22m" "bar_delim", string);
+    config_file_option_set (config_color_chat_delimiters, "lightred", 1);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[91m" "bar_delim", string);
+    config_file_option_set (config_color_chat_delimiters, "default", 1);
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[39m" "bar_delim", string);
+    config_file_option_reset (config_color_chat_delimiters, 1);
 
     /* Text color */
     snprintf (string, sizeof (string),

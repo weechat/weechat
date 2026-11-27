@@ -133,6 +133,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Fixed
 
+- core: fix conversion of bar delimiter color to ANSI (foreground instead of background)
 - core: fix number of hidden lines in merged buffers when lines are filtered or unfiltered
 - core: display an error if directory "themes" can not be created when a theme is saved
 - core: return an error in functions mkdir_home, mkdir and mkdir_parents if path (or a parent path for mkdir_parents) exists and is not a directory
