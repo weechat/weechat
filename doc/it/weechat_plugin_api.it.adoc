@@ -10489,6 +10489,13 @@ Argomenti:
 ** reset:
 *** _reset_: ripristina colore ed attributi
 *** _resetcolor_: ripristina colore (mantiene attributi) _(WeeChat ≥ 0.3.6)_
+// TRANSLATION MISSING
+** save/restore:
+*** _save_: save current color and attributes on a stack, emptied at the
+    beginning of each line and each bar item (up to 32 levels: a save beyond
+    this limit is ignored, as well as its restore) _(WeeChat ≥ 5.0.0)_
+*** _restore_: restore color and attributes saved by the last _save_ (nothing
+    is done if there is no saved style) _(WeeChat ≥ 5.0.0)_
 
 Il formato del colore è: attributi (opzionale) + nome colore +",sfondo"
 (opzionale). Gli attributi possibili sono:

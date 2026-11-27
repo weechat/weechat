@@ -280,6 +280,16 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
                         if (apply_style)
                             gui_window_toggle_emphasis ();
                         break;
+                    case GUI_COLOR_SAVE_CHAR: /* Save style */
+                        string++;
+                        if (apply_style)
+                            gui_window_user_style_push (GUI_WINDOW_OBJECTS(window)->win_chat);
+                        break;
+                    case GUI_COLOR_RESTORE_CHAR: /* Restore style */
+                        string++;
+                        if (apply_style)
+                            gui_window_user_style_pop (GUI_WINDOW_OBJECTS(window)->win_chat);
+                        break;
                     case GUI_COLOR_BAR_CHAR: /* Bar color */
                         string++;
                         switch (string[0])
@@ -1421,6 +1431,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         window->win_chat_cursor_x = x;
         window->win_chat_cursor_y = y;
         gui_window_current_emphasis = 0;
+        gui_window_user_style_reset ();
     }
 
     nick_offline = CONFIG_BOOLEAN(config_look_color_nick_offline)
@@ -1773,6 +1784,7 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
     window->win_chat_cursor_x = 0;
     window->win_chat_cursor_y = y;
     gui_window_current_emphasis = 0;
+    gui_window_user_style_reset ();
 
     gui_chat_clrtoeol (window);
 

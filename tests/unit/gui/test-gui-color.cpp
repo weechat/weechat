@@ -10,9 +10,15 @@
 
 extern "C"
 {
+#include <string.h>
 #include "src/core/core-config.h"
 #include "src/core/core-string.h"
 #include "src/gui/gui-color.h"
+
+extern void gui_color_ansi_state_update (struct t_gui_color_ansi_state *state,
+                                         const char *string);
+extern void gui_color_ansi_state_restore (char **output,
+                                          struct t_gui_color_ansi_state *state);
 }
 
 #define WEE_CHECK_DECODE(__result, __string, __replacement)             \
@@ -70,6 +76,20 @@ TEST(GuiColor, GetCustom)
               GUI_COLOR_COLOR_CHAR,
               GUI_COLOR_EMPHASIS_CHAR);
     STRCMP_EQUAL(string, gui_color_get_custom ("emphasis"));
+
+    /* save */
+    snprintf (string, sizeof (string),
+              "%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_SAVE_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("save"));
+
+    /* restore */
+    snprintf (string, sizeof (string),
+              "%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_RESTORE_CHAR);
+    STRCMP_EQUAL(string, gui_color_get_custom ("restore"));
 
     /* blink */
     snprintf (string, sizeof (string),
@@ -440,6 +460,10 @@ TEST(GuiColor, CodeSize)
     /* emphasis */
     LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("emphasis")));
 
+    /* save/restore */
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("save")));
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("restore")));
+
     /* blink */
     LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("blink")));
     LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("-blink")));
@@ -580,6 +604,15 @@ TEST(GuiColor, Decode)
     WEE_CHECK_DECODE("test_emphasis", string, NULL);
     WEE_CHECK_DECODE("test_emphasis", string, "");
     WEE_CHECK_DECODE("test_[color]emphasis", string, "[color]");
+
+    /* save/restore */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "save" "%s" "_end",
+              gui_color_get_custom ("save"),
+              gui_color_get_custom ("restore"));
+    WEE_CHECK_DECODE("test_save_end", string, NULL);
+    WEE_CHECK_DECODE("test_save_end", string, "");
+    WEE_CHECK_DECODE("test_[color]save[color]_end", string, "[color]");
 
     /* blink */
     snprintf (string, sizeof (string),
@@ -916,6 +949,67 @@ TEST(GuiColor, DecodeAnsi)
 
 /*
  * Test functions:
+ *   gui_color_ansi_state_update
+ *   gui_color_ansi_state_restore
+ */
+
+TEST(GuiColor, AnsiState)
+{
+    struct t_gui_color_ansi_state state;
+    char **output;
+
+    memset (&state, 0, sizeof (state));
+
+    /* NULL/empty/no ANSI codes */
+    gui_color_ansi_state_update (NULL, "\x1B[1m");
+    gui_color_ansi_state_update (&state, NULL);
+    gui_color_ansi_state_update (&state, "");
+    gui_color_ansi_state_update (&state, "test");
+    STRCMP_EQUAL("", state.fg);
+    STRCMP_EQUAL("", state.bg);
+    LONGS_EQUAL(0, state.attrs);
+
+    /* Invalid or incomplete sequences are ignored. */
+    gui_color_ansi_state_update (&state, "\x1B[1x \x1B[31");
+    STRCMP_EQUAL("", state.fg);
+    LONGS_EQUAL(0, state.attrs);
+
+    /* Attributes, colors, several parameters in one sequence. */
+    gui_color_ansi_state_update (&state, "\x1B[1;4m\x1B[92m\x1B[48;5;240m");
+    STRCMP_EQUAL("92", state.fg);
+    STRCMP_EQUAL("48;5;240", state.bg);
+    LONGS_EQUAL((1 << 1) | (1 << 4), state.attrs);
+    gui_color_ansi_state_update (&state, "\x1B[24m\x1B[38;5;214;105m");
+    STRCMP_EQUAL("38;5;214", state.fg);
+    STRCMP_EQUAL("105", state.bg);
+    LONGS_EQUAL(1 << 1, state.attrs);
+
+    /* Restore. */
+    output = string_dyn_alloc (64);
+    gui_color_ansi_state_restore (NULL, &state);
+    gui_color_ansi_state_restore (output, NULL);
+    STRCMP_EQUAL("", *output);
+    gui_color_ansi_state_restore (output, &state);
+    STRCMP_EQUAL("\x1B[0m\x1B[1m\x1B[38;5;214m\x1B[105m", *output);
+    string_dyn_free (output, 1);
+
+    /* Normal intensity (22) removes bold and dim. */
+    gui_color_ansi_state_update (&state, "\x1B[1m\x1B[2m\x1B[22m");
+    LONGS_EQUAL(0, state.attrs);
+    gui_color_ansi_state_update (&state, "\x1B[1m");
+
+    /* Default colors, then full reset. */
+    gui_color_ansi_state_update (&state, "\x1B[39m\x1B[49m");
+    STRCMP_EQUAL("", state.fg);
+    STRCMP_EQUAL("", state.bg);
+    LONGS_EQUAL(1 << 1, state.attrs);
+    gui_color_ansi_state_update (&state, "\x1B[31m\x1B[0m");
+    STRCMP_EQUAL("", state.fg);
+    LONGS_EQUAL(0, state.attrs);
+}
+
+/*
+ * Test functions:
  *   gui_color_encode_ansi
  */
 
@@ -931,6 +1025,90 @@ TEST(GuiColor, EncodeAnsi)
     snprintf (string, sizeof (string),
               "test_" "%s" "reset", gui_color_get_custom ("reset"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[0m" "reset", string);
+
+    /* save/restore: nothing saved (default colors) */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "save" "%s" "_end",
+              gui_color_get_custom ("save"),
+              gui_color_get_custom ("restore"));
+    WEE_CHECK_ENCODE_ANSI("test_save" "\x1B[0m" "_end", string);
+
+    /* save/restore: restore color and attributes */
+    snprintf (string, sizeof (string),
+              "%s" "a" "%s" "%s" "b" "%s" "%s" "c" "%s" "d" "%s" "e",
+              gui_color_get_custom ("blue"),
+              gui_color_get_custom ("save"),
+              gui_color_get_custom ("_red"),
+              gui_color_get_custom ("save"),
+              gui_color_get_custom ("214"),
+              gui_color_get_custom ("restore"),
+              gui_color_get_custom ("restore"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[34m" "a"
+        "\x1B[4m" "\x1B[31m" "b"
+        "\x1B[38;5;214m" "c"
+        "\x1B[0m" "\x1B[4m" "\x1B[31m" "d"
+        "\x1B[0m" "\x1B[34m" "e",
+        string);
+
+    /* save/restore: "-dim" (ANSI 22) removes bold too */
+    snprintf (string, sizeof (string),
+              "%s%s%s" "a" "%s" "%s" "b" "%s" "c",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"),
+              gui_color_get_custom ("save"),
+              gui_color_get_custom ("red"),
+              gui_color_get_custom ("restore"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[1m" "\x1B[2m" "\x1B[22m" "a"
+        "\x1B[31m" "b"
+        "\x1B[0m" "c",
+        string);
+
+    /* save/restore: attributes removed, background, extended colors */
+    snprintf (string, sizeof (string),
+              "%s%s%s" "a" "%s" "%s%s" "b" "%s" "c",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("italic"),
+              gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("save"),
+              gui_color_get_custom ("214,red"),
+              gui_color_get_custom ("reverse"),
+              gui_color_get_custom ("restore"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[1m" "\x1B[3m" "\x1B[21m" "a"
+        "\x1B[38;5;214m" "\x1B[41m" "\x1B[7m" "b"
+        "\x1B[0m" "\x1B[3m" "c",
+        string);
+    snprintf (string, sizeof (string),
+              "%s" "a" "%s" "%s" "b" "%s" "c",
+              gui_color_get_custom ("214,240"),
+              gui_color_get_custom ("save"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("restore"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[38;5;214m" "\x1B[48;5;240m" "a"
+        "\x1B[0m" "b"
+        "\x1B[0m" "\x1B[38;5;214m" "\x1B[48;5;240m" "c",
+        string);
+
+    /* save/restore: codes before a full reset are not restored */
+    snprintf (string, sizeof (string),
+              "%s" "a" "%s" "%s" "%s" "b" "%s" "c" "%s" "d" "%s",
+              gui_color_get_custom ("blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("save"),
+              gui_color_get_custom ("red"),
+              gui_color_get_custom ("restore"),
+              gui_color_get_custom ("restore"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[34m" "a"
+        "\x1B[0m" "\x1B[1m" "b"
+        "\x1B[31m" "c"
+        "\x1B[0m" "\x1B[1m" "d",
+        string);
 
     /* blink */
     snprintf (string, sizeof (string),

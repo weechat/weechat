@@ -1152,6 +1152,10 @@ struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 | [hex]#19# + `b` + `i`                             | [hex]#19# `+bi+`             | траке       | Почетак ставке.
 | [hex]#19# + `b` + `l` (мало L)                    | [hex]#19# `+bl+`             | траке       | Почетак линије ставке.
 | [hex]#19# + `E`                                   | [hex]#19# `+E+`              | чет + траке | Наглашавање текста _(WeeChat ≥ 0.4.2)_.
+// TRANSLATION MISSING
+| [hex]#19# + `S`                                   | [hex]#19# `+S+`              | chat + bars | Save attributes and color on a stack, emptied at the beginning of each line and each bar item (up to 32 levels: a save beyond this limit is ignored, as well as its restore) _(WeeChat ≥ 5.0.0)_.
+// TRANSLATION MISSING
+| [hex]#19# + `R`                                   | [hex]#19# `+R+`              | chat + bars | Restore attributes and color saved by the last [hex]#19# `+S+` (nothing is done if there is no saved style) _(WeeChat ≥ 5.0.0)_.
 | [hex]#19# + [hex]#1C#                             | [hex]#19# [hex]#1C#          | чет + траке | Ресет боје (уз задржавање атрибута).
 | [hex]#1A# + `(a)`                                 | [hex]#1A# [hex]#01#          | чет + траке | Постављање атрибута.
 | [hex]#1B# + `(a)`                                 | [hex]#1B# [hex]#01#          | чет + траке | Уклањање атрибута.

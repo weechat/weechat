@@ -219,6 +219,14 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         string++;
                         gui_window_toggle_emphasis ();
                         break;
+                    case GUI_COLOR_SAVE_CHAR: /* Save style */
+                        string++;
+                        gui_window_user_style_push (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                        break;
+                    case GUI_COLOR_RESTORE_CHAR: /* Restore style */
+                        string++;
+                        gui_window_user_style_pop (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                        break;
                     case GUI_COLOR_BAR_CHAR: /* Bar color */
                         switch (string[1])
                         {
@@ -259,6 +267,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                 break;
                             case GUI_COLOR_BAR_START_ITEM:
                                 string += 2;
+                                /* Styles saved in an item are not restored in next items. */
+                                gui_window_user_style_reset ();
                                 if (*index_item < 0)
                                 {
                                     *index_item = 0;
@@ -454,6 +464,8 @@ gui_bar_window_expand_spacers (const char *string, int length_on_screen,
                     case GUI_COLOR_FG_BG_CHAR:
                     case GUI_COLOR_EXTENDED_CHAR:
                     case GUI_COLOR_EMPHASIS_CHAR:
+                    case GUI_COLOR_SAVE_CHAR:
+                    case GUI_COLOR_RESTORE_CHAR:
                     case GUI_COLOR_RESET_CHAR:
                         string_dyn_concat (result, string, 2);
                         string += 2;
@@ -587,6 +599,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     index_line = 0;
 
     gui_window_current_emphasis = 0;
+    gui_window_user_style_reset ();
 
     bar_position = CONFIG_ENUM(bar_window->bar->options[GUI_BAR_OPTION_POSITION]);
     bar_filling = gui_bar_get_filling (bar_window->bar);
@@ -779,6 +792,13 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 if ((bar_window->scroll_y == 0)
                     || (line >= bar_window->scroll_y))
                 {
+                    /*
+                     * Without horizontal filling, there is no marker for
+                     * start of item: styles saved in a line are not restored
+                     * in next lines.
+                     */
+                    if (bar_filling != GUI_BAR_FILLING_HORIZONTAL)
+                        gui_window_user_style_reset ();
                     if (!gui_bar_window_print_string (bar_window,
                                                       window,
                                                       bar_filling,

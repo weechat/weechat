@@ -96,6 +96,16 @@ In the "api" protocol, JSON is now parsed strictly, as specified in RFC 8259:
 - data after the JSON value (for example `{"request": "GET /api/version"}xyz`), numbers with
   leading zeros (like `01`) and strings with invalid UTF-8 are rejected.
 
+Two color codes have been added to save and restore color and attributes: `0x19` + `S` (save
+current style on a stack, up to 32 levels) and `0x19` + `R` (restore the style saved by the last
+`0x19` + `S`), see [Color codes in strings](https://weechat.org/doc/weechat/dev/#color_codes_in_strings)
+in the Developer's guide.
+
+Relay clients receiving WeeChat colors ("weechat" protocol, or "api" protocol with `colors=weechat`)
+must handle these codes, or at least skip them (two chars).
+In the "api" protocol, they are converted to ANSI codes with `colors=ansi` (default value), and
+removed with `colors=strip`.
+
 ### cJSON is not used any more
 
 The CMake option `ENABLE_CJSON` has been removed: WeeChat now has its own JSON parser

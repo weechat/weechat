@@ -58,6 +58,11 @@ int gui_window_current_emphasis;       /* 1 if text emphasis is enabled     */
 struct t_gui_window_saved_style gui_window_saved_style[GUI_WINDOW_MAX_SAVED_STYLES];
                                        /* circular list of saved styles     */
 int gui_window_saved_style_index = 0;  /* index in list of savec styles     */
+struct t_gui_window_saved_style gui_window_user_style[GUI_COLOR_MAX_SAVED_STYLES];
+                                       /* stack of styles saved by color    */
+                                       /* codes "save" and "restore"        */
+int gui_window_user_style_depth = 0;   /* depth of user styles stack (can   */
+                                       /* be greater than the stack size)   */
 
 
 /*
@@ -215,27 +220,55 @@ gui_window_clrtoeol (WINDOW *window)
 }
 
 /*
+ * Save current style in a saved style structure.
+ */
+
+void
+gui_window_style_save_to (WINDOW *window,
+                          struct t_gui_window_saved_style *saved_style)
+{
+    attr_t *ptr_attrs;
+    short *ptr_pair;
+
+    saved_style->style_fg = gui_window_current_style_fg;
+    saved_style->style_bg = gui_window_current_style_bg;
+    saved_style->color_attr = gui_window_current_color_attr;
+    saved_style->emphasis = gui_window_current_emphasis;
+    ptr_attrs = &saved_style->attrs;
+    ptr_pair = &saved_style->pair;
+    wattr_get (window, ptr_attrs, ptr_pair, NULL);
+}
+
+/*
+ * Restore style from a saved style structure.
+ */
+
+void
+gui_window_style_restore_from (WINDOW *window,
+                               struct t_gui_window_saved_style *saved_style)
+{
+    gui_window_current_style_fg = saved_style->style_fg;
+    gui_window_current_style_bg = saved_style->style_bg;
+    gui_window_current_color_attr = saved_style->color_attr;
+    gui_window_current_emphasis = saved_style->emphasis;
+    wattr_set (window, saved_style->attrs, saved_style->pair, NULL);
+    /*
+     * For unknown reason, the wattr_set function sometimes
+     * fails to set the color pair under FreeBSD, so we force
+     * it again with wcolor_set.
+     */
+    wcolor_set (window, saved_style->pair, NULL);
+}
+
+/*
  * Save current style.
  */
 
 void
 gui_window_save_style (WINDOW *window)
 {
-    struct t_gui_window_saved_style *ptr_saved_style;
-    attr_t *ptr_attrs;
-    short *ptr_pair;
-
-    /* Get pointer on saved style. */
-    ptr_saved_style = &gui_window_saved_style[gui_window_saved_style_index];
-
-    /* Save current style. */
-    ptr_saved_style->style_fg = gui_window_current_style_fg;
-    ptr_saved_style->style_bg = gui_window_current_style_bg;
-    ptr_saved_style->color_attr = gui_window_current_color_attr;
-    ptr_saved_style->emphasis = gui_window_current_emphasis;
-    ptr_attrs = &ptr_saved_style->attrs;
-    ptr_pair = &ptr_saved_style->pair;
-    wattr_get (window, ptr_attrs, ptr_pair, NULL);
+    gui_window_style_save_to (
+        window, &gui_window_saved_style[gui_window_saved_style_index]);
 
     /* Increment style index (circular list). */
     gui_window_saved_style_index++;
@@ -250,28 +283,69 @@ gui_window_save_style (WINDOW *window)
 void
 gui_window_restore_style (WINDOW *window)
 {
-    struct t_gui_window_saved_style *ptr_saved_style;
-
     /* Decrement style index (circular list). */
     gui_window_saved_style_index--;
     if (gui_window_saved_style_index < 0)
         gui_window_saved_style_index = GUI_WINDOW_MAX_SAVED_STYLES - 1;
 
-    /* Get pointer on saved style. */
-    ptr_saved_style = &gui_window_saved_style[gui_window_saved_style_index];
+    gui_window_style_restore_from (
+        window, &gui_window_saved_style[gui_window_saved_style_index]);
+}
 
-    /* Restore style. */
-    gui_window_current_style_fg = ptr_saved_style->style_fg;
-    gui_window_current_style_bg = ptr_saved_style->style_bg;
-    gui_window_current_color_attr = ptr_saved_style->color_attr;
-    gui_window_current_emphasis = ptr_saved_style->emphasis;
-    wattr_set (window, ptr_saved_style->attrs, ptr_saved_style->pair, NULL);
-    /*
-     * For unknown reason, the wattr_set function sometimes
-     * fails to set the color pair under FreeBSD, so we force
-     * it again with wcolor_set.
-     */
-    wcolor_set (window, ptr_saved_style->pair, NULL);
+/*
+ * Push current style on the stack of user styles (color code "save").
+ *
+ * If the stack is full, the style is not saved but the depth is still
+ * incremented, so that the matching restore does nothing.
+ */
+
+void
+gui_window_user_style_push (WINDOW *window)
+{
+    if (gui_window_user_style_depth < GUI_COLOR_MAX_SAVED_STYLES)
+    {
+        gui_window_style_save_to (
+            window, &gui_window_user_style[gui_window_user_style_depth]);
+    }
+    gui_window_user_style_depth++;
+}
+
+/*
+ * Pop style from the stack of user styles and restore it (color code
+ * "restore").
+ *
+ * The text emphasis is not restored: it is toggled by the search in buffer,
+ * independently of the user styles.
+ *
+ * Nothing is done if the stack is empty.
+ */
+
+void
+gui_window_user_style_pop (WINDOW *window)
+{
+    int emphasis;
+
+    if (gui_window_user_style_depth <= 0)
+        return;
+
+    gui_window_user_style_depth--;
+    if (gui_window_user_style_depth < GUI_COLOR_MAX_SAVED_STYLES)
+    {
+        emphasis = gui_window_current_emphasis;
+        gui_window_style_restore_from (
+            window, &gui_window_user_style[gui_window_user_style_depth]);
+        gui_window_current_emphasis = emphasis;
+    }
+}
+
+/*
+ * Empty the stack of user styles.
+ */
+
+void
+gui_window_user_style_reset (void)
+{
+    gui_window_user_style_depth = 0;
 }
 
 /*

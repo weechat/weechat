@@ -10306,6 +10306,13 @@ const char *weechat_color (const char *color_name);
 ** リセット:
 *** _reset_: 色と属性をリセット
 *** _resetcolor_: 色をリセット (属性はリセットしない) _(WeeChat バージョン 0.3.6 以上で利用可)_
+// TRANSLATION MISSING
+** save/restore:
+*** _save_: save current color and attributes on a stack, emptied at the
+    beginning of each line and each bar item (up to 32 levels: a save beyond
+    this limit is ignored, as well as its restore) _(WeeChat ≥ 5.0.0)_
+*** _restore_: restore color and attributes saved by the last _save_ (nothing
+    is done if there is no saved style) _(WeeChat ≥ 5.0.0)_
 
 色の書式: 属性 (任意) + 色名 + ",background"
 (任意)。以下の属性を使えます:

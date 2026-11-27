@@ -17,6 +17,7 @@ extern "C"
 
 extern int gui_window_current_style_fg;
 extern int gui_window_current_style_bg;
+extern int gui_window_user_style_depth;
 extern int gui_color_term_colors;
 extern void gui_window_string_apply_color_fg_bg (unsigned char **string,
                                                  WINDOW *window);
@@ -82,4 +83,81 @@ TEST(GuiCursesWindow, StringApplyColorFgBg)
     gui_color_reset_pairs ();
     gui_window_current_style_fg = saved_fg;
     gui_window_current_style_bg = saved_bg;
+}
+
+/*
+ * Test functions:
+ *   gui_window_user_style_push
+ *   gui_window_user_style_pop
+ *   gui_window_user_style_reset
+ */
+
+TEST(GuiCursesWindow, UserStyle)
+{
+    int saved_fg, saved_bg, saved_emphasis, i;
+
+    saved_fg = gui_window_current_style_fg;
+    saved_bg = gui_window_current_style_bg;
+    saved_emphasis = gui_window_current_emphasis;
+
+    gui_window_user_style_reset ();
+    LONGS_EQUAL(0, gui_window_user_style_depth);
+
+    /* Pop with empty stack: no effect. */
+    gui_window_current_style_fg = 1;
+    gui_window_current_style_bg = 2;
+    gui_window_user_style_pop (stdscr);
+    LONGS_EQUAL(0, gui_window_user_style_depth);
+    LONGS_EQUAL(1, gui_window_current_style_fg);
+    LONGS_EQUAL(2, gui_window_current_style_bg);
+
+    /* Nested push/pop. */
+    gui_window_current_emphasis = 0;
+    gui_window_user_style_push (stdscr);
+    LONGS_EQUAL(1, gui_window_user_style_depth);
+    gui_window_current_style_fg = 3;
+    gui_window_current_style_bg = 4;
+    gui_window_current_emphasis = 1;
+    gui_window_user_style_push (stdscr);
+    LONGS_EQUAL(2, gui_window_user_style_depth);
+    gui_window_current_style_fg = 5;
+    gui_window_current_style_bg = 6;
+    gui_window_current_emphasis = 0;
+    gui_window_user_style_pop (stdscr);
+    LONGS_EQUAL(1, gui_window_user_style_depth);
+    LONGS_EQUAL(3, gui_window_current_style_fg);
+    LONGS_EQUAL(4, gui_window_current_style_bg);
+    /* Emphasis is not restored (it is toggled by search in buffer). */
+    LONGS_EQUAL(0, gui_window_current_emphasis);
+    gui_window_current_emphasis = 1;
+    gui_window_user_style_pop (stdscr);
+    LONGS_EQUAL(0, gui_window_user_style_depth);
+    LONGS_EQUAL(1, gui_window_current_style_fg);
+    LONGS_EQUAL(2, gui_window_current_style_bg);
+    LONGS_EQUAL(1, gui_window_current_emphasis);
+
+    /* Stack overflow: extra pops do nothing until the stack is reached. */
+    for (i = 0; i < 36; i++)
+    {
+        gui_window_current_style_fg = 100 + i;
+        gui_window_user_style_push (stdscr);
+    }
+    LONGS_EQUAL(36, gui_window_user_style_depth);
+    gui_window_current_style_fg = 999;
+    for (i = 0; i < 4; i++)
+    {
+        gui_window_user_style_pop (stdscr);
+        LONGS_EQUAL(999, gui_window_current_style_fg);
+    }
+    LONGS_EQUAL(32, gui_window_user_style_depth);
+    gui_window_user_style_pop (stdscr);
+    LONGS_EQUAL(131, gui_window_current_style_fg);
+
+    /* Reset. */
+    gui_window_user_style_reset ();
+    LONGS_EQUAL(0, gui_window_user_style_depth);
+
+    gui_window_current_style_fg = saved_fg;
+    gui_window_current_style_bg = saved_bg;
+    gui_window_current_emphasis = saved_emphasis;
 }

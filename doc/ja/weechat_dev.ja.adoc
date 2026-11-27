@@ -1385,6 +1385,10 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 | [hex]#19# + `b` + `i`                             | [hex]#19# `+bi+`             | bars        | 要素を開始
 | [hex]#19# + `b` + `l` (小文字の L)                | [hex]#19# `+bl+`             | bars        | 行要素を開始
 | [hex]#19# + `E`                                   | [hex]#19# `+E+`              | chat + bars | テキストを強調 _(WeeChat バージョン 0.4.2 以上で利用可)_
+// TRANSLATION MISSING
+| [hex]#19# + `S`                                   | [hex]#19# `+S+`              | chat + bars | Save attributes and color on a stack, emptied at the beginning of each line and each bar item (up to 32 levels: a save beyond this limit is ignored, as well as its restore) _(WeeChat ≥ 5.0.0)_.
+// TRANSLATION MISSING
+| [hex]#19# + `R`                                   | [hex]#19# `+R+`              | chat + bars | Restore attributes and color saved by the last [hex]#19# `+S+` (nothing is done if there is no saved style) _(WeeChat ≥ 5.0.0)_.
 | [hex]#19# + [hex]#1C#                             | [hex]#19# [hex]#1C#          | chat + bars | 色をリセット (属性は保存)
 | [hex]#1A# + `(a)`                                 | [hex]#1A# [hex]#01#          | chat + bars | 属性を設定
 | [hex]#1B# + `(a)`                                 | [hex]#1B# [hex]#01#          | chat + bars | 属性を削除

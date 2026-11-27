@@ -116,6 +116,11 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_UNDERLINE_CHAR     '_'
 #define GUI_COLOR_EXTENDED_KEEPATTR_CHAR      '|'
 #define GUI_COLOR_EMPHASIS_CHAR               'E'
+#define GUI_COLOR_SAVE_CHAR                   'S'
+#define GUI_COLOR_RESTORE_CHAR                'R'
+
+/* Max number of styles saved with color code "save" */
+#define GUI_COLOR_MAX_SAVED_STYLES            32
 
 /* Color codes specific to bars */
 #define GUI_COLOR_BAR_CHAR                    'b'
@@ -159,6 +164,18 @@ struct t_gui_color
     int background;                /* background color                      */
     int attributes;                /* attributes (bold, ..)                 */
     char *string;                  /* WeeChat color: "\x19??", ?? is #color */
+};
+
+/* ANSI state (colors and attributes), used to encode WeeChat colors to ANSI */
+
+struct t_gui_color_ansi_state
+{
+    char fg[32];                   /* ANSI foreground ("31", "38;5;214"),   */
+                                   /* empty string for default color        */
+    char bg[32];                   /* ANSI background ("41", "48;5;214"),   */
+                                   /* empty string for default color        */
+    int attrs;                     /* ANSI attributes: bit N set if SGR     */
+                                   /* attribute N (1 to 7) is set           */
 };
 
 /* Custom color in palette */

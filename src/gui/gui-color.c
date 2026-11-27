@@ -309,6 +309,20 @@ gui_color_get_custom (const char *color_name)
                   GUI_COLOR_COLOR_CHAR,
                   GUI_COLOR_EMPHASIS_CHAR);
     }
+    else if (strcmp (ptr_color_name, "save") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%c%c",
+                  GUI_COLOR_COLOR_CHAR,
+                  GUI_COLOR_SAVE_CHAR);
+    }
+    else if (strcmp (ptr_color_name, "restore") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%c%c",
+                  GUI_COLOR_COLOR_CHAR,
+                  GUI_COLOR_RESTORE_CHAR);
+    }
     else if (strcmp (ptr_color_name, "blink") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
@@ -778,6 +792,8 @@ gui_color_code_size (const char *string)
                                                               0, NULL);
                     break;
                 case GUI_COLOR_EMPHASIS_CHAR:
+                case GUI_COLOR_SAVE_CHAR:
+                case GUI_COLOR_RESTORE_CHAR:
                     ptr_string++;
                     break;
                 case GUI_COLOR_BAR_CHAR:
@@ -1260,7 +1276,150 @@ gui_color_encode_ansi_number (char **output, const char *string,
 }
 
 /*
+ * Update an ANSI state with ANSI codes (SGR sequences, like "\x1B[1m") found
+ * in a string.
+ */
+
+void
+gui_color_ansi_state_update (struct t_gui_color_ansi_state *state,
+                             const char *string)
+{
+    const char *ptr_string;
+    int params[16], num_params, value, i;
+
+    if (!state || !string)
+        return;
+
+    ptr_string = string;
+    while ((ptr_string = strstr (ptr_string, "\x1B[")) != NULL)
+    {
+        ptr_string += 2;
+
+        /* Read parameters, separated by ";" and ending with "m". */
+        num_params = 0;
+        value = 0;
+        while (1)
+        {
+            if (isdigit ((unsigned char)ptr_string[0]))
+            {
+                if (value < 1000000)
+                    value = (value * 10) + (ptr_string[0] - '0');
+            }
+            else if ((ptr_string[0] == ';') || (ptr_string[0] == 'm'))
+            {
+                if (num_params < (int)(sizeof (params) / sizeof (params[0])))
+                    params[num_params++] = value;
+                value = 0;
+                if (ptr_string[0] == 'm')
+                {
+                    ptr_string++;
+                    break;
+                }
+            }
+            else
+            {
+                /* Not a SGR sequence: ignore it. */
+                num_params = 0;
+                break;
+            }
+            ptr_string++;
+        }
+
+        /* Apply parameters. */
+        for (i = 0; i < num_params; i++)
+        {
+            value = params[i];
+            if (value == 0)
+            {
+                state->fg[0] = '\0';
+                state->bg[0] = '\0';
+                state->attrs = 0;
+            }
+            else if ((value >= 1) && (value <= 7))
+            {
+                state->attrs |= (1 << value);
+            }
+            else if (value == 22)
+            {
+                /* Normal intensity: neither bold nor dim. */
+                state->attrs &= ~((1 << 1) | (1 << 2));
+            }
+            else if ((value >= 21) && (value <= 27))
+            {
+                state->attrs &= ~(1 << (value - 20));
+            }
+            else if (((value >= 30) && (value <= 37))
+                     || ((value >= 90) && (value <= 97)))
+            {
+                snprintf (state->fg, sizeof (state->fg), "%d", value);
+            }
+            else if (value == 39)
+            {
+                state->fg[0] = '\0';
+            }
+            else if (((value >= 40) && (value <= 47))
+                     || ((value >= 100) && (value <= 107)))
+            {
+                snprintf (state->bg, sizeof (state->bg), "%d", value);
+            }
+            else if (value == 49)
+            {
+                state->bg[0] = '\0';
+            }
+            else if (((value == 38) || (value == 48))
+                     && (i + 2 < num_params) && (params[i + 1] == 5))
+            {
+                snprintf ((value == 38) ? state->fg : state->bg,
+                          sizeof (state->fg),
+                          "%d;5;%d", value, params[i + 2]);
+                i += 2;
+            }
+        }
+    }
+}
+
+/*
+ * Add ANSI codes to output to restore an ANSI state: full reset, then
+ * attributes, foreground and background colors.
+ */
+
+void
+gui_color_ansi_state_restore (char **output,
+                              struct t_gui_color_ansi_state *state)
+{
+    char str_concat[64];
+    int i;
+
+    if (!output || !state)
+        return;
+
+    string_dyn_concat (output, "\x1B[0m", -1);
+    for (i = 1; i <= 7; i++)
+    {
+        if (state->attrs & (1 << i))
+        {
+            snprintf (str_concat, sizeof (str_concat), "\x1B[%dm", i);
+            string_dyn_concat (output, str_concat, -1);
+        }
+    }
+    if (state->fg[0])
+    {
+        snprintf (str_concat, sizeof (str_concat), "\x1B[%sm", state->fg);
+        string_dyn_concat (output, str_concat, -1);
+    }
+    if (state->bg[0])
+    {
+        snprintf (str_concat, sizeof (str_concat), "\x1B[%sm", state->bg);
+        string_dyn_concat (output, str_concat, -1);
+    }
+}
+
+/*
  * Replace WeeChat colors by ANSI colors.
+ *
+ * Color codes "save" and "restore" are emulated: the ANSI state (colors and
+ * attributes) is tracked, saved on a stack (up to GUI_COLOR_MAX_SAVED_STYLES
+ * levels) and sent again on restore, after a full reset.
  *
  * Note: result must be freed after use.
  */
@@ -1270,7 +1429,10 @@ gui_color_encode_ansi (const char *string)
 {
     const unsigned char *ptr_string;
     char **out, str_concat[128];
-    int color, length, ansi_color, fg, bg, attrs;
+    int color, length, ansi_color, fg, bg, attrs, is_text, depth;
+    struct t_gui_color_ansi_state state;
+    struct t_gui_color_ansi_state saved_states[GUI_COLOR_MAX_SAVED_STYLES];
+    string_dyn_size_t size_before;
 
     if (!string)
         return NULL;
@@ -1279,9 +1441,14 @@ gui_color_encode_ansi (const char *string)
     if (!out)
         return NULL;
 
+    memset (&state, 0, sizeof (state));
+    depth = 0;
+
     ptr_string = (unsigned char *)string;
     while (ptr_string && ptr_string[0])
     {
+        size_before = ((struct t_string_dyn *)out)->size;
+        is_text = 0;
         switch (ptr_string[0])
         {
             case GUI_COLOR_COLOR_CHAR:
@@ -1330,6 +1497,24 @@ gui_color_encode_ansi (const char *string)
                         break;
                     case GUI_COLOR_EMPHASIS_CHAR:
                         ptr_string++;
+                        break;
+                    case GUI_COLOR_SAVE_CHAR:
+                        ptr_string++;
+                        if (depth < GUI_COLOR_MAX_SAVED_STYLES)
+                            saved_states[depth] = state;
+                        depth++;
+                        break;
+                    case GUI_COLOR_RESTORE_CHAR:
+                        ptr_string++;
+                        if (depth > 0)
+                        {
+                            depth--;
+                            if (depth < GUI_COLOR_MAX_SAVED_STYLES)
+                            {
+                                gui_color_ansi_state_restore (
+                                    out, &saved_states[depth]);
+                            }
+                        }
                         break;
                     case GUI_COLOR_BAR_CHAR:
                         ptr_string++;
@@ -1503,8 +1688,12 @@ gui_color_encode_ansi (const char *string)
                     length = 1;
                 string_dyn_concat (out, (const char *)ptr_string, length);
                 ptr_string += length;
+                is_text = 1;
                 break;
         }
+        /* Update ANSI state with the codes just added. */
+        if (!is_text)
+            gui_color_ansi_state_update (&state, *out + size_before - 1);
     }
 
     return string_dyn_free (out, 0);

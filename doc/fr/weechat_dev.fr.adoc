@@ -1169,6 +1169,8 @@ Toutes les combinaisons sont résumées dans ce tableau :
 | [hex]#19# + `b` + `i`                             | [hex]#19# `+bi+`             | barres        | Début d'objet.
 | [hex]#19# + `b` + `l` (lower L)                   | [hex]#19# `+bl+`             | barres        | Ligne de démarrage d'objet.
 | [hex]#19# + `E`                                   | [hex]#19# `+E+`              | chat + barres | Texte mis en valeur _(WeeChat ≥ 0.4.2)_.
+| [hex]#19# + `S`                                   | [hex]#19# `+S+`              | chat + barres | Sauvegarder les attributs et la couleur dans une pile, vidée au début de chaque ligne et de chaque objet de barre (jusqu'à 32 niveaux : une sauvegarde au-delà de cette limite est ignorée, ainsi que sa restauration) _(WeeChat ≥ 5.0.0)_.
+| [hex]#19# + `R`                                   | [hex]#19# `+R+`              | chat + barres | Restaurer les attributs et la couleur sauvegardés par le dernier [hex]#19# `+S+` (rien n'est fait s'il n'y a pas de style sauvegardé) _(WeeChat ≥ 5.0.0)_.
 | [hex]#19# + [hex]#1C#                             | [hex]#19# [hex]#1C#          | chat + barres | Réinitialiser la couleur (garder les attributs).
 | [hex]#1A# + `(a)`                                 | [hex]#1A# [hex]#01#          | chat + barres | Activer un attribut.
 | [hex]#1B# + `(a)`                                 | [hex]#1B# [hex]#01#          | chat + barres | Supprimer un attribut.

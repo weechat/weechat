@@ -10296,6 +10296,14 @@ Paramètres :
 *** _reset_ : réinitialiser la couleur et les attributs
 *** _resetcolor_ : réinitialiser la couleur (garder les attributs)
     _(WeeChat ≥ 0.3.6)_
+** sauvegarde/restauration :
+*** _save_ : sauvegarder la couleur et les attributs courants dans une pile,
+    vidée au début de chaque ligne et de chaque objet de barre (jusqu'à 32
+    niveaux : une sauvegarde au-delà de cette limite est ignorée, ainsi que sa
+    restauration) _(WeeChat ≥ 5.0.0)_
+*** _restore_ : restaurer la couleur et les attributs sauvegardés par le
+    dernier _save_ (rien n'est fait s'il n'y a pas de style sauvegardé)
+    _(WeeChat ≥ 5.0.0)_
 
 Le format de la couleur est : attributs (optionnel) + nom de couleur + ",fond"
 (optionnel). Les attributs possibles sont :

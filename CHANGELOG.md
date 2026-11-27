@@ -12,6 +12,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Added
 
+- core: add colors "save" and "restore" to save and restore color and attributes (stack of 32 levels)
 - core: add option `-default` and masks in commands `/theme apply` and `/theme reset` to apply or reset only some options
 - core: add conversion of integer numbers between bases in evaluation of expressions with `base_convert:from,to,number`
 - core: add signal "buffer_lines_filtered"

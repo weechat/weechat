@@ -910,6 +910,12 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");
     WEE_CHECK_EVAL(gui_color_get_custom ("*214"), "${color:*214}");
     snprintf (str_value, sizeof (str_value),
+              "%s" "%s" "test" "%s",
+              gui_color_get_custom ("save"),
+              gui_color_get_custom ("_red"),
+              gui_color_get_custom ("restore"));
+    WEE_CHECK_EVAL(str_value, "${color:save}${color:_red}test${color:restore}");
+    snprintf (str_value, sizeof (str_value),
               "%s-test-",
               gui_color_from_option (config_color_chat_delimiters));
     WEE_CHECK_EVAL(str_value, "${color:chat_delimiters}-test-");
