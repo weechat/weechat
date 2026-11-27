@@ -82,6 +82,21 @@ If you build in an existing build directory, the old options remain in the CMake
 without any effect: remove the file `CMakeCache.txt` (or the whole build directory) before
 running `cmake` again.
 
+### JavaScript plugin built by default
+
+The JavaScript plugin is built by default again (it was disabled by default since version 2.9).
+It now requires V8 ≥ 11.3, provided by one of these libraries:
+
+- Node.js shared library (libnode), version ≥ 20: package `libnode-dev` on Debian/Ubuntu,
+  `nodejs-devel` on Fedora/Red Hat, `nodejs-dev` on Alpine;
+- standalone V8 library, for example package `v8` with Homebrew on macOS.
+
+The Debian/Ubuntu packages built from the sources include again the package `weechat-javascript`
+(except on Debian Bullseye/Bookworm and Ubuntu Jammy/Noble, where libnode is too old).
+
+If V8 is not available or too old, the plugin must be disabled with
+`-DBUILD_PLUGIN_JAVASCRIPT=OFF`.
+
 ### Unknown command-line options
 
 WeeChat now exits with an error when an unknown command-line option is given (for example
