@@ -764,6 +764,7 @@ The files in the WeeChat home directory are:
 | javascript.conf | Configuration file for _javascript_ plugin | No.
 | logger.conf     | Configuration file for _logger_ plugin     | No.
 | lua.conf        | Configuration file for _lua_ plugin        | No.
+| otr.conf        | Configuration file for _otr_ plugin        | No.
 | perl.conf       | Configuration file for _perl_ plugin       | No.
 | php.conf        | Configuration file for _php_ plugin        | No.
 | python.conf     | Configuration file for _python_ plugin     | No.
@@ -5825,6 +5826,7 @@ Default plugins are:
 | fset       | Fast set of WeeChat and plugins options.
 | irc        | IRC chat protocol.
 | logger     | Log buffers to files.
+| otr        | End-to-end encryption of IRC private messages with Off-the-Record (OTR) messaging.
 | relay      | Relay data via network.
 | script     | Script manager.
 | python     | Python scripting API.

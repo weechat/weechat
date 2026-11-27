@@ -736,6 +736,8 @@ WeeChat подразумевано користи XDG директоријуме
 | javascript.conf | Конфигурациони фајл за _javascript_ додатак | Не.
 | logger.conf     | Конфигурациони фајл за _logger_ додатак     | Не.
 | lua.conf        | Конфигурациони фајл за _lua_ додатак        | Не.
+// TRANSLATION MISSING
+| otr.conf        | Configuration file for _otr_ plugin        | No.
 | perl.conf       | Конфигурациони фајл за _perl_ додатак       | Не.
 | php.conf        | Конфигурациони фајл за _php_ додатак        | Не.
 | python.conf     | Конфигурациони фајл за _python_ додатак     | Не.
@@ -5618,6 +5620,8 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=trigger_options]
 | fset       | Брзо постављање опција програма WeeChat и опција додатака.
 | irc        | IRC чет протокол.
 | logger     | Логовање бафера у фајлове.
+// TRANSLATION MISSING
+| otr        | End-to-end encryption of IRC private messages with Off-the-Record (OTR) messaging.
 | relay      | Релеј података преко мреже.
 | script     | Управљач скриптама.
 | python     | Python API .

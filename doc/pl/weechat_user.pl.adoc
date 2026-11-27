@@ -770,6 +770,8 @@ Pliki tworzone w katalogu domowym WeeChat:
 | javascript.conf | Plik konfiguracyjny wtyczki _javascript_     | Nie.
 | logger.conf     | Plik konfiguracyjny wtyczki _logger_         | Nie.
 | lua.conf        | Plik konfiguracyjny wtyczki _lua_            | Nie.
+// TRANSLATION MISSING
+| otr.conf        | Configuration file for _otr_ plugin        | No.
 | perl.conf       | Plik konfiguracyjny wtyczki _perl_           | Nie.
 | php.conf        | Plik konfiguracyjny wtyczki _php_            | Nie.
 | python.conf     | Plik konfiguracyjny wtyczki _python_         | Nie.
@@ -5964,6 +5966,8 @@ Domyślne wtyczki:
 | fset       | Szybkie ustawianie opcji WeeChat i wtyczek.
 | irc        | Protokół IRC.
 | logger     | Logowanie zawartości buforów do plików.
+// TRANSLATION MISSING
+| otr        | End-to-end encryption of IRC private messages with Off-the-Record (OTR) messaging.
 | relay      | Przekazuje dane przez sieć.
 | script     | Zarządzanie skryptami.
 | python     | Wsparcie dla skryptów napisanych w Pythonie.

@@ -818,6 +818,8 @@ WeeChat ホームディレクトリには以下のファイルが含まれます
 | javascript.conf | _javascript_ プラグイン用の設定ファイル | 保護されません
 | logger.conf     | _logger_ プラグイン用の設定ファイル     | 保護されません
 | lua.conf        | _lua_ プラグイン用の設定ファイル        | 保護されません
+// TRANSLATION MISSING
+| otr.conf        | Configuration file for _otr_ plugin        | No.
 | perl.conf       | _perl_ プラグイン用の設定ファイル       | 保護されません
 | php.conf        | _php_ プラグイン用の設定ファイル        | 保護されません
 | python.conf     | _python_ プラグイン用の設定ファイル     | 保護されません
@@ -6111,6 +6113,8 @@ When a plugin is unloaded, WeeChat removes:
 | fset       | WeeChat とプラグインのオプションを高速設定
 | irc        | IRC チャットプロトコル
 | logger     | バッファの内容をファイルに保存
+// TRANSLATION MISSING
+| otr        | End-to-end encryption of IRC private messages with Off-the-Record (OTR) messaging.
 | relay      | ネットワーク経由でデータを中継
 | script     | スクリプトマネージャ
 | python     | Python スクリプト API

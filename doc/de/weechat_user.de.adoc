@@ -773,6 +773,8 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | javascript.conf | Konfiguration für _javascript_-Erweiterung | Nein.
 | logger.conf     | Konfiguration für _logger_-Erweiterung     | Nein.
 | lua.conf        | Konfiguration für _lua_-Erweiterung        | Nein.
+// TRANSLATION MISSING
+| otr.conf        | Configuration file for _otr_ plugin        | No.
 | perl.conf       | Konfiguration für _perl_-Erweiterung       | Nein.
 | php.conf        | Konfiguration für _php_-Erweiterung        | Nein.
 | python.conf     | Konfiguration für _python_-Erweiterung     | Nein.
@@ -6013,6 +6015,8 @@ Standarderweiterungen:
 | fset        | Optionen von WeeChat und Erweiterungen schnell anpassen.
 | irc         | IRC Chat-Protokoll.
 | logger      | erstellt Protokolldateien von Buffern.
+// TRANSLATION MISSING
+| otr        | End-to-end encryption of IRC private messages with Off-the-Record (OTR) messaging.
 | relay       | Daten via Netzwerk übermitteln.
 | script      | Skripten-Manager.
 | python      | Python-Skript API.
