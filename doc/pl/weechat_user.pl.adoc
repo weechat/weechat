@@ -284,6 +284,10 @@ Lista dostępnych opcji:
 | Wymusza wygenerowanie dokumentacji nawet w przypadku jeśli nie wszystkie
   wtyczki zostaną skompilowane (nie zalecane: dokumentacja nie będzie kompletna).
 
+// TRANSLATION MISSING
+| BUILD_FUZZERS | `ON`, `OFF` | OFF
+| Compile fuzz targets (requires Clang with libFuzzer).
+
 | BUILD_HEADLESS | `ON`, `OFF` | ON
 | Kompilacja pliku binarnego w trybie headless.
 

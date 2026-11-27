@@ -281,6 +281,9 @@ Liste des options disponibles :
 | Forcer la construction de la documentation même si des extensions ne sont pas
   compilées (déconseillé : les documentations seront incomplètes).
 
+| BUILD_FUZZERS | `ON`, `OFF` | OFF
+| Compiler les cibles de fuzzing (nécessite Clang avec libFuzzer).
+
 | BUILD_HEADLESS | `ON`, `OFF` | ON
 | Compiler le binaire sans interface (« headless »).
 

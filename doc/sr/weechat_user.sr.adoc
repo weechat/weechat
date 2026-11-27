@@ -275,6 +275,10 @@ make install
 | Форсира изградњу документације чак и ако неки додаци нису компајлирани
   (не препоручује се: документација неће бити комплетна).
 
+// TRANSLATION MISSING
+| BUILD_FUZZERS | `ON`, `OFF` | OFF
+| Compile fuzz targets (requires Clang with libFuzzer).
+
 | BUILD_HEADLESS | `ON`, `OFF` | ON
 | Компајлира извршни фајл без корисничког интерфејса.
 

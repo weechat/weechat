@@ -326,6 +326,10 @@ List of available options:
 | Force build of documentation even if some plugins are not compiled
   (not recommended: docs will be incomplete).
 
+// TRANSLATION MISSING
+| BUILD_FUZZERS | `ON`, `OFF` | OFF
+| Compile fuzz targets (requires Clang with libFuzzer).
+
 | BUILD_HEADLESS | `ON`, `OFF` | ON
 | Compile headless binary.
 

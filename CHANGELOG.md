@@ -57,6 +57,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 
 ### Changed
 
+- core: display CMake option BUILD_FUZZERS in output of command line option `--build-info`
 - core, plugins: use plural forms or reword messages displaying a count
 - core: close file descriptors faster when running in background with option `--daemon` in headless mode
 - **breaking:** core: exit with an error on unknown command-line option, exit with code 2 on invalid command-line arguments

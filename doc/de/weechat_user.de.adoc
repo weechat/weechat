@@ -285,6 +285,10 @@ Liste der verfügbaren Optionen:
 | Erstellung der Dokumentation erzwingen, auch wenn einige Erweiterungen nicht kompiliert sind
   (nicht empfohlen: Dokumente sind unvollständig).
 
+// TRANSLATION MISSING
+| BUILD_FUZZERS | `ON`, `OFF` | OFF
+| Compile fuzz targets (requires Clang with libFuzzer).
+
 | BUILD_HEADLESS | `ON`, `OFF` | ON
 | Kompilieren der headless Binärdatei.
 

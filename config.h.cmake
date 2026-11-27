@@ -37,6 +37,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 #cmakedefine01 BUILD_DOC
 #cmakedefine01 BUILD_DOC_ALLOW_INCOMPLETE
 #cmakedefine01 BUILD_TESTS
+#cmakedefine01 BUILD_FUZZERS
 #cmakedefine01 ENABLE_CODE_COVERAGE
 
 #cmakedefine HAVE_SYS_RESOURCE_H
