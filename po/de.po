@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-24 19:20+0100\n"
-"PO-Revision-Date: 2026-11-17 10:02+0100\n"
+"PO-Revision-Date: 2026-11-27 08:04+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -2158,6 +2158,8 @@ msgid ""
 "  - ${base_convert:from,to,number}: the integer number converted from base "
 "\"from\" to base \"to\" (bases between 2 and 36)"
 msgstr ""
+"  - ${base_convert:from,to,number}: die Ganzzahl, umgewandelt von der Basis "
+"\"from\" in die Basis \"to\" (Basen zwischen 2 und 36)"
 
 msgid "  - ${date} or ${date:format}: current date/time"
 msgstr "  - ${date} or ${date:format}: aktuelles Datum/Uhrzeit"
@@ -7222,11 +7224,9 @@ msgstr "WeeChat-Standarddesign für Terminals mit hellem Hintergrund"
 msgid "%sInvalid theme name \"%s\" (expected a name, not a path)"
 msgstr "%sUngültiger Name für Theme \"%s\" (Name erwartet, kein Pfad)"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+#, c-format
 msgid "%sUnable to create directory \"%s\""
-msgstr ""
-"%s%s: Verzeichnis für Protokoll-Dateien kann nicht erstellt werden (\"%s\")"
+msgstr "%sVerzeichnis \"%s\" konnte nicht erstellt werden"
 
 #, c-format
 msgid "%sUnable to write theme file \"%s\" (%s)"
@@ -13541,16 +13541,19 @@ msgid ""
 "nick in lower case, according to the casemapping of the server (default "
 "casemapping is \"rfc1459\")"
 msgstr ""
+"Nickname in Kleinschreibung, gemäß der vom Server verwendeten Groß-/"
+"Kleinschreibungskonvention (die Standardkonvention ist \"rfc1459\")"
 
 msgid ""
 "max length of text (in bytes) in a message PRIVMSG sent to a target, so that "
 "the message is not split (-1 if split of messages is disabled)"
 msgstr ""
+"Maximale Textlänge (in Bytes) einer an ein Ziel gesendeten PRIVMSG-"
+"Nachricht, damit diese nicht aufgeteilt wird (-1, falls die Aufteilung von "
+"Nachrichten deaktiviert ist)"
 
-#, fuzzy
-#| msgid "server,channel (server is optional)"
 msgid "server,target (server is optional)"
-msgstr "Server,Kanal (Server ist optional)"
+msgstr "server,target (Server ist optional)"
 
 msgid "get nick from IRC host"
 msgstr "Nicknamen des IRC-Hosts erhalten"
@@ -14750,11 +14753,9 @@ msgstr ""
 "\"%s\" wird schon durch einen anderen Buffer verwendet (Bitte Protokoll-"
 "Konfiguration überprüfen)"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to create directory for logs (\"%s\")"
+#, c-format
 msgid "%s%s: unable to create directory \"%s\""
-msgstr ""
-"%s%s: Verzeichnis für Protokoll-Dateien kann nicht erstellt werden (\"%s\")"
+msgstr "%s%s: Verzeichnis \"%s\" konnte nicht erstellt werden"
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
@@ -16707,10 +16708,9 @@ msgstr "%s%s: Unbekanntes Protokoll \"%s\""
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: Fehler: dieser Name ist für das Protokoll \"%s\" nicht erlaubt"
 
-#, fuzzy, c-format
-#| msgid "%s%s: invalid charset: \"%s\""
+#, c-format
 msgid "%s%s: error: invalid port \"%s\""
-msgstr "%s%s: Ungültiger Zeichensatz: \"%s\""
+msgstr "%s%s: Fehler: ungültiger Port \"%s\""
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "
