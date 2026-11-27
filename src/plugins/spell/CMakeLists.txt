@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-if(ENABLE_ENCHANT)
+if(USE_ENCHANT)
   pkg_check_modules(ENCHANT REQUIRED enchant-2)
 else()
   find_package(Aspell REQUIRED)
@@ -24,7 +24,7 @@ set_target_properties(spell PROPERTIES PREFIX "")
 if(ENCHANT_FOUND)
   include_directories(${ENCHANT_INCLUDE_DIRS})
   target_link_libraries(spell ${ENCHANT_LDFLAGS} coverage_config)
-  add_definitions(-DUSE_ENCHANT)
+  add_definitions(-DHAVE_ENCHANT)
 else()
   if(ASPELL_FOUND)
     include_directories(${ASPELL_INCLUDE_PATH})

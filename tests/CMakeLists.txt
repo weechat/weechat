@@ -2,11 +2,11 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-if(ENABLE_FUZZ)
+if(BUILD_FUZZERS)
   add_subdirectory(fuzz)
 endif()
 
-if(ENABLE_TESTS)
+if(BUILD_TESTS)
   add_subdirectory(unit)
 else()
   add_test(NAME notests COMMAND true)

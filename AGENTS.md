@@ -35,7 +35,7 @@ Unit tests require [CppUTest](https://cpputest.github.io/) (package
 Build with debug info and tests:
 
 ```bash
-cmake -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_TESTS=ON
+cmake -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON
 cmake --build build -j
 ```
 
@@ -48,7 +48,7 @@ cd build && ctest -V
 Build the documentation (requires `asciidoctor`), to check changes in `doc/`:
 
 ```bash
-cmake -B build -DENABLE_DOC=ON -DENABLE_MAN=ON
+cmake -B build -DBUILD_DOC=ON -DBUILD_MAN=ON
 cmake --build build -j
 ```
 
@@ -72,8 +72,8 @@ tests, copyright headers…).
 ## Dependencies
 
 When a dependency is added or removed, becomes required or optional, or its
-minimum version changes (same for the default value of a CMake option
-`ENABLE_xxx`), update in the same commit all the places that list it:
+minimum version changes (same for the default value of a CMake option),
+update in the same commit all the places that list it:
 
 - **Build:** [CMakeLists.txt](CMakeLists.txt) (options, `pkg_check_modules` and
   `find_package` with the minimum version), `cmake/Find*.cmake`,

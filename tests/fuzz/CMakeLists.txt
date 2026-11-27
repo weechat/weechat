@@ -39,7 +39,7 @@ foreach(fuzz_target ${FUZZ_CORE_TARGETS})
 endforeach()
 
 # Fuzz targets: relay plugin
-if(ENABLE_RELAY)
+if(BUILD_PLUGIN_RELAY)
   add_executable(weechat_relay_json_fuzzer
     plugins/relay/json-fuzzer.cc
     ${PROJECT_SOURCE_DIR}/src/plugins/relay/relay-json.c

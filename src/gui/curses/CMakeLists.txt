@@ -4,10 +4,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-if(ENABLE_NCURSES)
+if(BUILD_NCURSES)
   subdirs(normal)
 endif()
 
-if(ENABLE_HEADLESS)
+if(BUILD_HEADLESS)
   subdirs(headless)
 endif()

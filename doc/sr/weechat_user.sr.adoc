@@ -268,110 +268,110 @@ make install
   Вредност такође може да буде и 4 директоријума раздвојена са две тачке, у следећем редоследу:
   config, data, cache, runtime.
 
-| ENABLE_ALIAS | `ON`, `OFF` | ON
-| Компајлира <<command_aliases,Alias додатак>>.
-
-| ENABLE_BUFLIST | `ON`, `OFF` | ON
-| Компајлира <<buflist,Buflist додатак>>.
-
-| ENABLE_CHARSET | `ON`, `OFF` | ON
-| Компајлира <<charset,Charset додатак>>.
-
-| ENABLE_MAN | `ON`, `OFF` | OFF
-| Изграђује man страницу.
-
-| ENABLE_DOC | `ON`, `OFF` | OFF
+| BUILD_DOC | `ON`, `OFF` | OFF
 | Изграђује HTML документацију.
 
-| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| BUILD_DOC_ALLOW_INCOMPLETE | `ON`, `OFF` | OFF
 | Форсира изградњу документације чак и ако неки додаци нису компајлирани
   (не препоручује се: документација неће бити комплетна).
 
-| ENABLE_ENCHANT | `ON`, `OFF` | OFF
-| Компајлира <<spell_checking,Spell додатак>> са Enchant.
-
-| ENABLE_EXEC | `ON`, `OFF` | ON
-| Компајлира <<external_commands,Exec додатак>>.
-
-| ENABLE_FIFO | `ON`, `OFF` | ON
-| Компајлира <<fifo_pipe,Fifo додатак>>.
-
-| ENABLE_FSET | `ON`, `OFF` | ON
-| Компајлира <<fset,Fset додатак>>.
-
-| ENABLE_GUILE | `ON`, `OFF` | ON
-| Компајлира <<scripting_plugins,Guile додатак>> (Scheme).
-
-| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| BUILD_HEADLESS | `ON`, `OFF` | ON
 | Компајлира извршни фајл без корисничког интерфејса.
 
-| ENABLE_IRC | `ON`, `OFF` | ON
-| Компајлира <<irc,IRC додатак>>.
+| BUILD_MAN | `ON`, `OFF` | OFF
+| Изграђује man страницу.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON
-| Компајлира <<scripting_plugins,JavaScript додатак>>.
-
-| ENABLE_LARGEFILE | `ON`, `OFF` | ON
-| Подршка за велике фајлове.
-
-| ENABLE_LOGGER | `ON`, `OFF` | ON
-| Компајлира <<buffer_logging,Logger додатак>>.
-
-| ENABLE_LUA | `ON`, `OFF` | ON
-| Компајлира <<scripting_plugins,Lua додатак>>.
-
-| ENABLE_NCURSES | `ON`, `OFF` | ON
+| BUILD_NCURSES | `ON`, `OFF` | ON
 | Компајлира Ncurses интерфејс.
 
-| ENABLE_NLS | `ON`, `OFF` | ON
-| Укључује NLS (преводе).
+| BUILD_PLUGIN_ALIAS | `ON`, `OFF` | ON
+| Компајлира <<command_aliases,Alias додатак>>.
 
-| ENABLE_PERL | `ON`, `OFF` | ON
+| BUILD_PLUGIN_BUFLIST | `ON`, `OFF` | ON
+| Компајлира <<buflist,Buflist додатак>>.
+
+| BUILD_PLUGIN_CHARSET | `ON`, `OFF` | ON
+| Компајлира <<charset,Charset додатак>>.
+
+| BUILD_PLUGIN_EXEC | `ON`, `OFF` | ON
+| Компајлира <<external_commands,Exec додатак>>.
+
+| BUILD_PLUGIN_FIFO | `ON`, `OFF` | ON
+| Компајлира <<fifo_pipe,Fifo додатак>>.
+
+| BUILD_PLUGIN_FSET | `ON`, `OFF` | ON
+| Компајлира <<fset,Fset додатак>>.
+
+| BUILD_PLUGIN_GUILE | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,Guile додатак>> (Scheme).
+
+| BUILD_PLUGIN_IRC | `ON`, `OFF` | ON
+| Компајлира <<irc,IRC додатак>>.
+
+| BUILD_PLUGIN_JAVASCRIPT | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,JavaScript додатак>>.
+
+| BUILD_PLUGIN_LOGGER | `ON`, `OFF` | ON
+| Компајлира <<buffer_logging,Logger додатак>>.
+
+| BUILD_PLUGIN_LUA | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,Lua додатак>>.
+
+| BUILD_PLUGIN_PERL | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,Perl додатак>>.
 
-| ENABLE_PHP | `ON`, `OFF` | ON
+| BUILD_PLUGIN_PHP | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,PHP додатак>>.
 
-| ENABLE_PYTHON | `ON`, `OFF` | ON
+| BUILD_PLUGIN_PYTHON | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,Python додатак>>.
 
-| ENABLE_RELAY | `ON`, `OFF` | ON
+| BUILD_PLUGIN_RELAY | `ON`, `OFF` | ON
 | Компајлира <<relay,Relay додатак>>.
 
-| ENABLE_RUBY | `ON`, `OFF` | ON
+| BUILD_PLUGIN_RUBY | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,Ruby додатак>>.
 
-| ENABLE_SCRIPT | `ON`, `OFF` | ON
+| BUILD_PLUGIN_SCRIPT | `ON`, `OFF` | ON
 | Компајлира <<script_manager,Script додатак>>.
 
-| ENABLE_SCRIPTS | `ON`, `OFF` | ON
+| BUILD_PLUGIN_SPELL | `ON`, `OFF` | ON
+| Компајлира <<spell_checking,Spell додатак>>.
+
+| BUILD_PLUGIN_TCL | `ON`, `OFF` | ON
+| Компајлира <<scripting_plugins,Tcl додатак>>.
+
+| BUILD_PLUGIN_TRIGGER | `ON`, `OFF` | ON
+| Компајлира <<trigger,Trigger додатак>>.
+
+| BUILD_PLUGIN_TYPING | `ON`, `OFF` | ON
+| Компајлира <<typing_notifications,Typing додатак>>.
+
+| BUILD_PLUGIN_XFER | `ON`, `OFF` | ON
+| Компајлира <<xfer,Xfer додатак>>.
+
+| BUILD_SCRIPTING_PLUGINS | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,script додатке>> (Python, Perl, Ruby, Lua, Tcl,
   Guile, PHP).
 
-| ENABLE_SPELL | `ON`, `OFF` | ON
-| Компајлира <<spell_checking,Spell додатак>>.
-
-| ENABLE_TCL | `ON`, `OFF` | ON
-| Компајлира <<scripting_plugins,Tcl додатак>>.
-
-| ENABLE_TRIGGER | `ON`, `OFF` | ON
-| Компајлира <<trigger,Trigger додатак>>.
-
-| ENABLE_TYPING | `ON`, `OFF` | ON
-| Компајлира <<typing_notifications,Typing додатак>>.
-
-| ENABLE_XFER | `ON`, `OFF` | ON
-| Компајлира <<xfer,Xfer додатак>>.
-
-| ENABLE_ZSTD | `ON`, `OFF` | ON
-| Укључује https://facebook.github.io/zstd/[Zstandard ^↗^^] компресију.
-
-| ENABLE_TESTS | `ON`, `OFF` | OFF
+| BUILD_TESTS | `ON`, `OFF` | OFF
 | Компајлира тестове.
 
 | ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF
 | Компајлира са опцијама за покривеност кода. +
   Ова опција би требало да се се користи само за тестирање, да се измери покривеност теста.
+
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON
+| Подршка за велике фајлове.
+
+| ENABLE_NLS | `ON`, `OFF` | ON
+| Укључује NLS (преводе).
+
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Укључује https://facebook.github.io/zstd/[Zstandard ^↗^^] компресију.
+
+| USE_ENCHANT | `ON`, `OFF` | OFF
+| Компајлира <<spell_checking,Spell додатак>> са Enchant.
 |===
 
 Остале команде могу да се прикажу следећом командом:
@@ -400,7 +400,7 @@ ccmake ..
 
 [source,shell]
 ----
-cmake .. -DENABLE_TESTS=ON
+cmake .. -DBUILD_TESTS=ON
 ----
 
 Након компајлирања могу да се покрену из директоријума у који је изграђен програм:

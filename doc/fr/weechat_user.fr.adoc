@@ -274,111 +274,111 @@ Liste des options disponibles :
   La valeur peut aussi être 4 répertoires séparés par ":", dans cet ordre :
   config, data, cache, runtime.
 
-| ENABLE_ALIAS | `ON`, `OFF` | ON
-| Compiler <<command_aliases,l'extension Alias>>.
-
-| ENABLE_BUFLIST | `ON`, `OFF` | ON
-| Compiler <<buflist,l'extension Buflist>>.
-
-| ENABLE_CHARSET | `ON`, `OFF` | ON
-| Compiler <<charset,l'extension Charset>>.
-
-| ENABLE_MAN | `ON`, `OFF` | OFF
-| Construire la page man.
-
-| ENABLE_DOC | `ON`, `OFF` | OFF
+| BUILD_DOC | `ON`, `OFF` | OFF
 | Construire la documentation HTML.
 
-| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| BUILD_DOC_ALLOW_INCOMPLETE | `ON`, `OFF` | OFF
 | Forcer la construction de la documentation même si des extensions ne sont pas
   compilées (déconseillé : les documentations seront incomplètes).
 
-| ENABLE_ENCHANT | `ON`, `OFF` | OFF
-| Compiler <<spell_checking,l'extension Spell>> avec Enchant.
-
-| ENABLE_EXEC | `ON`, `OFF` | ON
-| Compiler <<external_commands,l'extension Exec>>.
-
-| ENABLE_FIFO | `ON`, `OFF` | ON
-| Compiler <<fifo_pipe,l'extension Fifo>>.
-
-| ENABLE_FSET | `ON`, `OFF` | ON
-| Compiler <<fset,l'extension Fset>>.
-
-| ENABLE_GUILE | `ON`, `OFF` | ON
-| Compiler <<scripting_plugins,l'extension Guile>> (Scheme).
-
-| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| BUILD_HEADLESS | `ON`, `OFF` | ON
 | Compiler le binaire sans interface (« headless »).
 
-| ENABLE_IRC | `ON`, `OFF` | ON
-| Compiler <<irc,l'extension IRC>>.
+| BUILD_MAN | `ON`, `OFF` | OFF
+| Construire la page man.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON
-| Compiler <<scripting_plugins,l'extension JavaScript>>.
-
-| ENABLE_LARGEFILE | `ON`, `OFF` | ON
-| Support des gros fichiers.
-
-| ENABLE_LOGGER | `ON`, `OFF` | ON
-| Compiler <<buffer_logging,l'extension Logger>>.
-
-| ENABLE_LUA | `ON`, `OFF` | ON
-| Compiler <<scripting_plugins,l'extension Lua>>.
-
-| ENABLE_NCURSES | `ON`, `OFF` | ON
+| BUILD_NCURSES | `ON`, `OFF` | ON
 | Compiler l'interface Ncurses.
 
-| ENABLE_NLS | `ON`, `OFF` | ON
-| Activer NLS (traductions).
+| BUILD_PLUGIN_ALIAS | `ON`, `OFF` | ON
+| Compiler <<command_aliases,l'extension Alias>>.
 
-| ENABLE_PERL | `ON`, `OFF` | ON
+| BUILD_PLUGIN_BUFLIST | `ON`, `OFF` | ON
+| Compiler <<buflist,l'extension Buflist>>.
+
+| BUILD_PLUGIN_CHARSET | `ON`, `OFF` | ON
+| Compiler <<charset,l'extension Charset>>.
+
+| BUILD_PLUGIN_EXEC | `ON`, `OFF` | ON
+| Compiler <<external_commands,l'extension Exec>>.
+
+| BUILD_PLUGIN_FIFO | `ON`, `OFF` | ON
+| Compiler <<fifo_pipe,l'extension Fifo>>.
+
+| BUILD_PLUGIN_FSET | `ON`, `OFF` | ON
+| Compiler <<fset,l'extension Fset>>.
+
+| BUILD_PLUGIN_GUILE | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension Guile>> (Scheme).
+
+| BUILD_PLUGIN_IRC | `ON`, `OFF` | ON
+| Compiler <<irc,l'extension IRC>>.
+
+| BUILD_PLUGIN_JAVASCRIPT | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension JavaScript>>.
+
+| BUILD_PLUGIN_LOGGER | `ON`, `OFF` | ON
+| Compiler <<buffer_logging,l'extension Logger>>.
+
+| BUILD_PLUGIN_LUA | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension Lua>>.
+
+| BUILD_PLUGIN_PERL | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,l'extension Perl>>.
 
-| ENABLE_PHP | `ON`, `OFF` | ON
+| BUILD_PLUGIN_PHP | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,l'extension PHP>>.
 
-| ENABLE_PYTHON | `ON`, `OFF` | ON
+| BUILD_PLUGIN_PYTHON | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,l'extension Python>>.
 
-| ENABLE_RELAY | `ON`, `OFF` | ON
+| BUILD_PLUGIN_RELAY | `ON`, `OFF` | ON
 | Compiler <<relay,l'extension Relay>>.
 
-| ENABLE_RUBY | `ON`, `OFF` | ON
+| BUILD_PLUGIN_RUBY | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,l'extension Ruby>>.
 
-| ENABLE_SCRIPT | `ON`, `OFF` | ON
+| BUILD_PLUGIN_SCRIPT | `ON`, `OFF` | ON
 | Compiler <<script_manager,l'extension Script>>.
 
-| ENABLE_SCRIPTS | `ON`, `OFF` | ON
+| BUILD_PLUGIN_SPELL | `ON`, `OFF` | ON
+| Compiler <<spell_checking,l'extension Spell>>.
+
+| BUILD_PLUGIN_TCL | `ON`, `OFF` | ON
+| Compiler <<scripting_plugins,l'extension Tcl>>.
+
+| BUILD_PLUGIN_TRIGGER | `ON`, `OFF` | ON
+| Compiler <<trigger,l'extension Trigger>>.
+
+| BUILD_PLUGIN_TYPING | `ON`, `OFF` | ON
+| Compiler <<typing_notifications,l'extension Typing>>.
+
+| BUILD_PLUGIN_XFER | `ON`, `OFF` | ON
+| Compiler <<xfer,l'extension Xfer>>.
+
+| BUILD_SCRIPTING_PLUGINS | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,les extensions de script>> (Python, Perl, Ruby,
   Lua, Tcl, Guile, PHP).
 
-| ENABLE_SPELL | `ON`, `OFF` | ON
-| Compiler <<spell_checking,l'extension Spell>>.
-
-| ENABLE_TCL | `ON`, `OFF` | ON
-| Compiler <<scripting_plugins,l'extension Tcl>>.
-
-| ENABLE_TRIGGER | `ON`, `OFF` | ON
-| Compiler <<trigger,l'extension Trigger>>.
-
-| ENABLE_TYPING | `ON`, `OFF` | ON
-| Compiler <<typing_notifications,l'extension Typing>>.
-
-| ENABLE_XFER | `ON`, `OFF` | ON
-| Compiler <<xfer,l'extension Xfer>>.
-
-| ENABLE_ZSTD | `ON`, `OFF` | ON
-| Activer la compression https://facebook.github.io/zstd/[Zstandard ^↗^^].
-
-| ENABLE_TESTS | `ON`, `OFF` | OFF
+| BUILD_TESTS | `ON`, `OFF` | OFF
 | Compiler les tests.
 
 | ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF
 | Compiler avec les options de couverture de code. +
   Cette option ne devrait être utilisée que pour les tests, pour mesurer la
   couverture de tests.
+
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON
+| Support des gros fichiers.
+
+| ENABLE_NLS | `ON`, `OFF` | ON
+| Activer NLS (traductions).
+
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Activer la compression https://facebook.github.io/zstd/[Zstandard ^↗^^].
+
+| USE_ENCHANT | `ON`, `OFF` | OFF
+| Compiler <<spell_checking,l'extension Spell>> avec Enchant.
 |===
 
 Les autres options peuvent être affichées avec cette commande :
@@ -407,7 +407,7 @@ Les tests doivent être activés pour compiler WeeChat :
 
 [source,shell]
 ----
-cmake .. -DENABLE_TESTS=ON
+cmake .. -DBUILD_TESTS=ON
 ----
 
 Ils peuvent être lancés après compilation depuis le répertoire de construction :

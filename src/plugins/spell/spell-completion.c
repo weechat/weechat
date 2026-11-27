@@ -47,7 +47,7 @@ spell_completion_langs_cb (const void *pointer, void *data,
  * Add a dictionary to completion when using enchant.
  */
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
 void
 spell_completion_enchant_add_dict_cb (const char *lang_tag,
                                       const char *provider_name,
@@ -63,7 +63,7 @@ spell_completion_enchant_add_dict_cb (const char *lang_tag,
     weechat_completion_list_add ((struct t_gui_completion *)user_data,
                                  lang_tag, 0, WEECHAT_LIST_POS_SORT);
 }
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
 /*
  * Add spell dictionaries (only installed dictionaries) to completion list.
@@ -75,12 +75,12 @@ spell_completion_dicts_cb (const void *pointer, void *data,
                            struct t_gui_buffer *buffer,
                            struct t_gui_completion *completion)
 {
-#ifndef USE_ENCHANT
+#ifndef HAVE_ENCHANT
     struct AspellConfig *config;
     AspellDictInfoList *list;
     AspellDictInfoEnumeration *elements;
     const AspellDictInfo *dict;
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -88,7 +88,7 @@ spell_completion_dicts_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
     enchant_broker_list_dicts (spell_enchant_broker,
                                spell_completion_enchant_add_dict_cb,
                                completion);
@@ -111,7 +111,7 @@ spell_completion_dicts_cb (const void *pointer, void *data,
 
     delete_aspell_dict_info_enumeration (elements);
     delete_aspell_config (config);
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
     return WEECHAT_RC_OK;
 }

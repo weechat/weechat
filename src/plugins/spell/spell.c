@@ -45,9 +45,9 @@ int spell_enabled = 0;
 char *spell_nick_completer = NULL;
 int spell_len_nick_completer = 0;
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
 EnchantBroker *spell_enchant_broker = NULL;
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
 /*
  * Aspell supported languages, updated on 2012-07-05.
@@ -502,11 +502,11 @@ spell_check_word (struct t_spell_speller_buffer *speller_buffer,
     {
         for (i = 0; speller_buffer->spellers[i]; i++)
         {
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
             if (enchant_dict_check (speller_buffer->spellers[i], word, strlen (word)) == 0)
 #else
             if (aspell_speller_check (speller_buffer->spellers[i], word, -1) == 1)
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
                 return 1;
         }
     }
@@ -530,13 +530,13 @@ spell_get_suggestions (struct t_spell_speller_buffer *speller_buffer,
     int i, size, max_suggestions, num_suggestions;
     char *suggestions, *suggestions2;
     const char *ptr_word;
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
     char **elements;
     size_t num_elements;
 #else
     const AspellWordList *list;
     AspellStringEnumeration *elements;
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
     max_suggestions = weechat_config_integer (spell_config_check_suggestions);
     if (max_suggestions < 0)
@@ -552,7 +552,7 @@ spell_get_suggestions (struct t_spell_speller_buffer *speller_buffer,
     {
         for (i = 0; speller_buffer->spellers[i]; i++)
         {
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
             elements = enchant_dict_suggest (speller_buffer->spellers[i], word,
                                              -1, &num_elements);
             if (elements)
@@ -608,7 +608,7 @@ spell_get_suggestions (struct t_spell_speller_buffer *speller_buffer,
                 }
                 delete_aspell_string_enumeration (elements);
             }
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
         }
     }
 
@@ -1148,7 +1148,7 @@ spell_debug_libs_cb (const void *pointer, void *data, const char *signal,
     (void) type_data;
     (void) signal_data;
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
     weechat_printf (NULL, "  %s: enchant %s",
                     SPELL_PLUGIN_NAME, enchant_get_version ());
 #else
@@ -1158,7 +1158,7 @@ spell_debug_libs_cb (const void *pointer, void *data, const char *signal,
 #else
     weechat_printf (NULL, "  %s: aspell (?)", SPELL_PLUGIN_NAME);
 #endif /* HAVE_ASPELL_VERSION_STRING */
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
     return WEECHAT_RC_OK;
 }
@@ -1202,7 +1202,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     spell_warning_aspell_config ();
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
     /* Acquire enchant broker. */
     spell_enchant_broker = enchant_broker_init ();
     if (!spell_enchant_broker)
@@ -1212,7 +1212,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "enchant.myspell.dictionary.path",
                              ENCHANT_MYSPELL_DICT_DIR);
 #endif
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
     if (!spell_speller_init ())
         return WEECHAT_RC_ERROR;
@@ -1276,11 +1276,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     spell_speller_end ();
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
     /* Release enchant broker. */
     enchant_broker_free (spell_enchant_broker);
     spell_enchant_broker = NULL;
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
     if (spell_nick_completer)
     {

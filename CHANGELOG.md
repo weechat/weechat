@@ -99,6 +99,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - **breaking:** api: convert variable "interval" from string to long in infolist "hook" (hook timer)
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
 - buflist: display only the first char of nick prefix in variable `${nick_prefix}`, so that buffers stay aligned when a nick has multiple prefixes in nicklist
+- **breaking:** build: rename CMake options: ENABLE_xxx to BUILD_xxx for interfaces, documentation, tests and fuzzers, ENABLE_xxx to BUILD_PLUGIN_xxx for plugins, ENABLE_DOC_INCOMPLETE to BUILD_DOC_ALLOW_INCOMPLETE, ENABLE_SCRIPTS to BUILD_SCRIPTING_PLUGINS, ENABLE_ENCHANT to USE_ENCHANT
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: accept a number or a string with a number as integer data in function hook_signal_send, return an error if the data is not a valid integer
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
 - irc: send self typing status "done" if signal "typing_self_typing" is not received for 6 seconds

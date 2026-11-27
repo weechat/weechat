@@ -90,18 +90,18 @@ RUN set -eux ; \
         cmake \
             .. \
             -DCMAKE_INSTALL_PREFIX=/opt/weechat \
-            -DENABLE_MAN=ON \
-            -DENABLE_HEADLESS=ON \
+            -DBUILD_MAN=ON \
+            -DBUILD_HEADLESS=ON \
         ; \
     else \
         cmake \
             .. \
             -DCMAKE_INSTALL_PREFIX=/opt/weechat \
-            -DENABLE_MAN=ON \
-            -DENABLE_SCRIPT=OFF \
-            -DENABLE_SCRIPTS=OFF \
-            -DENABLE_SPELL=OFF \
-            -DENABLE_HEADLESS=ON \
+            -DBUILD_MAN=ON \
+            -DBUILD_PLUGIN_SCRIPT=OFF \
+            -DBUILD_SCRIPTING_PLUGINS=OFF \
+            -DBUILD_PLUGIN_SPELL=OFF \
+            -DBUILD_HEADLESS=ON \
         ; \
     fi ; \
     make -j "$(nproc)" ; \

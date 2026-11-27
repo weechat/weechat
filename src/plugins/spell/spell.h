@@ -8,11 +8,11 @@
 #ifndef WEECHAT_PLUGIN_SPELL_H
 #define WEECHAT_PLUGIN_SPELL_H
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
 #include <enchant.h>
 #else
 #include <aspell.h>
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
 #define weechat_plugin weechat_spell_plugin
 #define SPELL_PLUGIN_NAME "spell"
@@ -24,9 +24,9 @@ struct t_spell_code
     char *name;
 };
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
 extern EnchantBroker *spell_enchant_broker;
-#endif /* USE_ENCHANT */
+#endif /* HAVE_ENCHANT */
 
 extern struct t_weechat_plugin *weechat_spell_plugin;
 extern int spell_enabled;

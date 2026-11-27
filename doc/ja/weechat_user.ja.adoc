@@ -300,114 +300,114 @@ List of available options:
   The value can also  be 4 directories separated by colons, in this order:
   config, data, cache, runtime.
 
-| ENABLE_ALIAS | `ON`, `OFF` | ON
-| <<command_aliases,Alias プラグイン>>のコンパイル。
-
-| ENABLE_BUFLIST | `ON`, `OFF` | ON
-| <<buflist,Buflist プラグイン>>のコンパイル。
-
-| ENABLE_CHARSET | `ON`, `OFF` | ON
-| <<charset,Charset プラグイン>>のコンパイル。
-
-// TRANSLATION MISSING
-| ENABLE_MAN | `ON`, `OFF` | OFF
-| man ページのコンパイル。
-
-| ENABLE_DOC | `ON`, `OFF` | OFF
+| BUILD_DOC | `ON`, `OFF` | OFF
 | HTML 文書のコンパイル。
 
 // TRANSLATION MISSING
-| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| BUILD_DOC_ALLOW_INCOMPLETE | `ON`, `OFF` | OFF
 | Force build of documentation even if some plugins are not compiled
   (not recommended: docs will be incomplete).
 
-| ENABLE_ENCHANT | `ON`, `OFF` | OFF
-| Enchant と含めた <<spell_checking,Spell プラグイン>>のコンパイル。
-
-| ENABLE_EXEC | `ON`, `OFF` | ON
-| <<external_commands,Exec プラグイン>>のコンパイル。
-
-| ENABLE_FIFO | `ON`, `OFF` | ON
-| <<fifo_pipe,Fifo プラグイン>>のコンパイル。
-
-| ENABLE_FSET | `ON`, `OFF` | ON
-| <<fset,Fset プラグイン>>のコンパイル。
-
-| ENABLE_GUILE | `ON`, `OFF` | ON
-| <<scripting_plugins,Guile プラグイン>> (Scheme) のコンパイル。
-
 // TRANSLATION MISSING
-| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| BUILD_HEADLESS | `ON`, `OFF` | ON
 | Compile headless binary.
 
-| ENABLE_IRC | `ON`, `OFF` | ON
-| <<irc,IRC プラグイン>>のコンパイル
+// TRANSLATION MISSING
+| BUILD_MAN | `ON`, `OFF` | OFF
+| man ページのコンパイル。
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON
-| <<scripting_plugins,JavaScript プラグイン>>のコンパイル。
-
-| ENABLE_LARGEFILE | `ON`, `OFF` | ON
-| 巨大ファイルのサポート。
-
-| ENABLE_LOGGER | `ON`, `OFF` | ON
-| <<buffer_logging,Logger プラグイン>>のコンパイル。
-
-| ENABLE_LUA | `ON`, `OFF` | ON
-| <<scripting_plugins,Lua プラグイン>>のコンパイル。
-
-| ENABLE_NCURSES | `ON`, `OFF` | ON
+| BUILD_NCURSES | `ON`, `OFF` | ON
 | Ncurses インターフェースのコンパイル。
 
-| ENABLE_NLS | `ON`, `OFF` | ON
-| NLS の有効化 (多言語サポート)。
+| BUILD_PLUGIN_ALIAS | `ON`, `OFF` | ON
+| <<command_aliases,Alias プラグイン>>のコンパイル。
 
-| ENABLE_PERL | `ON`, `OFF` | ON
+| BUILD_PLUGIN_BUFLIST | `ON`, `OFF` | ON
+| <<buflist,Buflist プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_CHARSET | `ON`, `OFF` | ON
+| <<charset,Charset プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_EXEC | `ON`, `OFF` | ON
+| <<external_commands,Exec プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_FIFO | `ON`, `OFF` | ON
+| <<fifo_pipe,Fifo プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_FSET | `ON`, `OFF` | ON
+| <<fset,Fset プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_GUILE | `ON`, `OFF` | ON
+| <<scripting_plugins,Guile プラグイン>> (Scheme) のコンパイル。
+
+| BUILD_PLUGIN_IRC | `ON`, `OFF` | ON
+| <<irc,IRC プラグイン>>のコンパイル
+
+| BUILD_PLUGIN_JAVASCRIPT | `ON`, `OFF` | ON
+| <<scripting_plugins,JavaScript プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_LOGGER | `ON`, `OFF` | ON
+| <<buffer_logging,Logger プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_LUA | `ON`, `OFF` | ON
+| <<scripting_plugins,Lua プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_PERL | `ON`, `OFF` | ON
 | <<scripting_plugins,Perl プラグイン>>のコンパイル。
 
-| ENABLE_PHP | `ON`, `OFF` | ON
+| BUILD_PLUGIN_PHP | `ON`, `OFF` | ON
 | <<scripting_plugins,PHP プラグイン>>のコンパイル。
 
-| ENABLE_PYTHON | `ON`, `OFF` | ON
+| BUILD_PLUGIN_PYTHON | `ON`, `OFF` | ON
 | <<scripting_plugins,Python プラグイン>>のコンパイル。
 
-| ENABLE_RELAY | `ON`, `OFF` | ON
+| BUILD_PLUGIN_RELAY | `ON`, `OFF` | ON
 | <<relay,リレープラグイン>>のコンパイル。
 
-| ENABLE_RUBY | `ON`, `OFF` | ON
+| BUILD_PLUGIN_RUBY | `ON`, `OFF` | ON
 | <<scripting_plugins,Ruby プラグイン>>のコンパイル。
 
-| ENABLE_SCRIPT | `ON`, `OFF` | ON
+| BUILD_PLUGIN_SCRIPT | `ON`, `OFF` | ON
 | <<script_manager,スクリプトプラグイン>>のコンパイル。
 
-| ENABLE_SCRIPTS | `ON`, `OFF` | ON
+| BUILD_PLUGIN_SPELL | `ON`, `OFF` | ON
+| <<spell_checking,Spell プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_TCL | `ON`, `OFF` | ON
+| <<scripting_plugins,Tcl プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_TRIGGER | `ON`, `OFF` | ON
+| <<trigger,Trigger プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_TYPING | `ON`, `OFF` | ON
+| <<typing_notifications,Typing プラグイン>>のコンパイル。
+
+| BUILD_PLUGIN_XFER | `ON`, `OFF` | ON
+| <<xfer,Xfer プラグイン>>のコンパイル。
+
+| BUILD_SCRIPTING_PLUGINS | `ON`, `OFF` | ON
 | すべての<<scripting_plugins,スクリプトプラグイン>>
   (Python、Perl、Ruby、Lua、Tcl、Guile、PHP) のコンパイル。
 
-| ENABLE_SPELL | `ON`, `OFF` | ON
-| <<spell_checking,Spell プラグイン>>のコンパイル。
-
-| ENABLE_TCL | `ON`, `OFF` | ON
-| <<scripting_plugins,Tcl プラグイン>>のコンパイル。
-
-| ENABLE_TRIGGER | `ON`, `OFF` | ON
-| <<trigger,Trigger プラグイン>>のコンパイル。
-
-| ENABLE_TYPING | `ON`, `OFF` | ON
-| <<typing_notifications,Typing プラグイン>>のコンパイル。
-
-| ENABLE_XFER | `ON`, `OFF` | ON
-| <<xfer,Xfer プラグイン>>のコンパイル。
-
-// TRANSLATION MISSING
-| ENABLE_ZSTD | `ON`, `OFF` | ON
-| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
-
-| ENABLE_TESTS | `ON`, `OFF` | OFF
+| BUILD_TESTS | `ON`, `OFF` | OFF
 | コンパイルテスト。
 
 | ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF
 | コードカバレッジオプションを有効化してコンパイル。 +
   このオプションはテスト網羅率を測定するために用意されています。
+
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON
+| 巨大ファイルのサポート。
+
+| ENABLE_NLS | `ON`, `OFF` | ON
+| NLS の有効化 (多言語サポート)。
+
+// TRANSLATION MISSING
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
+
+| USE_ENCHANT | `ON`, `OFF` | OFF
+| Enchant と含めた <<spell_checking,Spell プラグイン>>のコンパイル。
 |===
 
 その他のオプションは以下のコマンドで確認してください:
@@ -437,7 +437,7 @@ ccmake ..
 
 [source,shell]
 ----
-cmake .. -DENABLE_TESTS=ON
+cmake .. -DBUILD_TESTS=ON
 ----
 
 コンパイル終了後、build ディレクトリでテストを起動してください:

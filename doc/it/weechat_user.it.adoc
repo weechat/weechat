@@ -319,112 +319,112 @@ List of available options:
   The value can also  be 4 directories separated by colons, in this order:
   config, data, cache, runtime.
 
-| ENABLE_ALIAS | `ON`, `OFF` | ON
-| Compile <<command_aliases,Alias plugin>>.
-
-| ENABLE_BUFLIST | `ON`, `OFF` | ON
-| Compile <<buflist,Buflist plugin>>.
-
-| ENABLE_CHARSET | `ON`, `OFF` | ON
-| Compile <<charset,Charset plugin>>.
-
-// TRANSLATION MISSING
-| ENABLE_MAN | `ON`, `OFF` | OFF
-| Build man page.
-
-| ENABLE_DOC | `ON`, `OFF` | OFF
+| BUILD_DOC | `ON`, `OFF` | OFF
 | Build HTML documentation.
 
-| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| BUILD_DOC_ALLOW_INCOMPLETE | `ON`, `OFF` | OFF
 | Force build of documentation even if some plugins are not compiled
   (not recommended: docs will be incomplete).
 
-| ENABLE_ENCHANT | `ON`, `OFF` | OFF
-| Compile <<spell_checking,Spell plugin>> with Enchant.
-
-| ENABLE_EXEC | `ON`, `OFF` | ON
-| Compile <<external_commands,Exec plugin>>.
-
-| ENABLE_FIFO | `ON`, `OFF` | ON
-| Compile <<fifo_pipe,Fifo plugin>>.
-
-| ENABLE_FSET | `ON`, `OFF` | ON
-| Compile <<fset,Fset plugin>>.
-
-| ENABLE_GUILE | `ON`, `OFF` | ON
-| Compile <<scripting_plugins,Guile plugin>> (Scheme).
-
-| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| BUILD_HEADLESS | `ON`, `OFF` | ON
 | Compile headless binary.
 
-| ENABLE_IRC | `ON`, `OFF` | ON
-| Compile <<irc,IRC plugin>>.
+// TRANSLATION MISSING
+| BUILD_MAN | `ON`, `OFF` | OFF
+| Build man page.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON
-| Compile <<scripting_plugins,JavaScript plugin>>.
-
-| ENABLE_LARGEFILE | `ON`, `OFF` | ON
-| Support of large files.
-
-| ENABLE_LOGGER | `ON`, `OFF` | ON
-| Compile <<buffer_logging,Logger plugin>>.
-
-| ENABLE_LUA | `ON`, `OFF` | ON
-| Compile <<scripting_plugins,Lua plugin>>.
-
-| ENABLE_NCURSES | `ON`, `OFF` | ON
+| BUILD_NCURSES | `ON`, `OFF` | ON
 | Compile Ncurses interface.
 
-| ENABLE_NLS | `ON`, `OFF` | ON
-| Enable NLS (translations).
+| BUILD_PLUGIN_ALIAS | `ON`, `OFF` | ON
+| Compile <<command_aliases,Alias plugin>>.
 
-| ENABLE_PERL | `ON`, `OFF` | ON
+| BUILD_PLUGIN_BUFLIST | `ON`, `OFF` | ON
+| Compile <<buflist,Buflist plugin>>.
+
+| BUILD_PLUGIN_CHARSET | `ON`, `OFF` | ON
+| Compile <<charset,Charset plugin>>.
+
+| BUILD_PLUGIN_EXEC | `ON`, `OFF` | ON
+| Compile <<external_commands,Exec plugin>>.
+
+| BUILD_PLUGIN_FIFO | `ON`, `OFF` | ON
+| Compile <<fifo_pipe,Fifo plugin>>.
+
+| BUILD_PLUGIN_FSET | `ON`, `OFF` | ON
+| Compile <<fset,Fset plugin>>.
+
+| BUILD_PLUGIN_GUILE | `ON`, `OFF` | ON
+| Compile <<scripting_plugins,Guile plugin>> (Scheme).
+
+| BUILD_PLUGIN_IRC | `ON`, `OFF` | ON
+| Compile <<irc,IRC plugin>>.
+
+| BUILD_PLUGIN_JAVASCRIPT | `ON`, `OFF` | ON
+| Compile <<scripting_plugins,JavaScript plugin>>.
+
+| BUILD_PLUGIN_LOGGER | `ON`, `OFF` | ON
+| Compile <<buffer_logging,Logger plugin>>.
+
+| BUILD_PLUGIN_LUA | `ON`, `OFF` | ON
+| Compile <<scripting_plugins,Lua plugin>>.
+
+| BUILD_PLUGIN_PERL | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,Perl plugin>>.
 
-| ENABLE_PHP | `ON`, `OFF` | ON
+| BUILD_PLUGIN_PHP | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,PHP plugin>>.
 
-| ENABLE_PYTHON | `ON`, `OFF` | ON
+| BUILD_PLUGIN_PYTHON | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,Python plugin>>.
 
-| ENABLE_RELAY | `ON`, `OFF` | ON
+| BUILD_PLUGIN_RELAY | `ON`, `OFF` | ON
 | Compile <<relay,Relay plugin>>.
 
-| ENABLE_RUBY | `ON`, `OFF` | ON
+| BUILD_PLUGIN_RUBY | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,Ruby plugin>>.
 
-| ENABLE_SCRIPT | `ON`, `OFF` | ON
+| BUILD_PLUGIN_SCRIPT | `ON`, `OFF` | ON
 | Compile <<script_manager,Script plugin>>.
 
-| ENABLE_SCRIPTS | `ON`, `OFF` | ON
+| BUILD_PLUGIN_SPELL | `ON`, `OFF` | ON
+| Compile <<spell_checking,Spell plugin>>.
+
+| BUILD_PLUGIN_TCL | `ON`, `OFF` | ON
+| Compile <<scripting_plugins,Tcl plugin>>.
+
+| BUILD_PLUGIN_TRIGGER | `ON`, `OFF` | ON
+| Compile <<trigger,Trigger plugin>>.
+
+| BUILD_PLUGIN_TYPING | `ON`, `OFF` | ON
+| Compile <<typing_notifications,Typing plugin>>.
+
+| BUILD_PLUGIN_XFER | `ON`, `OFF` | ON
+| Compile <<xfer,Xfer plugin>>.
+
+| BUILD_SCRIPTING_PLUGINS | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
   Guile, PHP).
 
-| ENABLE_SPELL | `ON`, `OFF` | ON
-| Compile <<spell_checking,Spell plugin>>.
-
-| ENABLE_TCL | `ON`, `OFF` | ON
-| Compile <<scripting_plugins,Tcl plugin>>.
-
-| ENABLE_TRIGGER | `ON`, `OFF` | ON
-| Compile <<trigger,Trigger plugin>>.
-
-| ENABLE_TYPING | `ON`, `OFF` | ON
-| Compile <<typing_notifications,Typing plugin>>.
-
-| ENABLE_XFER | `ON`, `OFF` | ON
-| Compile <<xfer,Xfer plugin>>.
-
-// TRANSLATION MISSING
-| ENABLE_ZSTD | `ON`, `OFF` | ON
-| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
-
-| ENABLE_TESTS | `ON`, `OFF` | OFF
+| BUILD_TESTS | `ON`, `OFF` | OFF
 | Compile tests.
 
 | ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF
 | Compile with code coverage options. +
   This option should be used only for tests, to measure test coverage.
+
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON
+| Support of large files.
+
+| ENABLE_NLS | `ON`, `OFF` | ON
+| Enable NLS (translations).
+
+// TRANSLATION MISSING
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
+
+| USE_ENCHANT | `ON`, `OFF` | OFF
+| Compile <<spell_checking,Spell plugin>> with Enchant.
 |===
 
 The other options can be displayed with this command:
@@ -454,7 +454,7 @@ Tests must be enabled when compiling WeeChat:
 
 [source,shell]
 ----
-cmake .. -DENABLE_TESTS=ON
+cmake .. -DBUILD_TESTS=ON
 ----
 
 They can be launched after compilation from the build directory:

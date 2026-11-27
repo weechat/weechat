@@ -15,6 +15,73 @@ For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.m
 
 ## Unreleased
 
+### CMake options
+
+Most CMake options have been renamed, so that the prefix tells what the option controls:
+
+- `BUILD_xxx`: build a component or not: interfaces, plugins (`BUILD_PLUGIN_xxx`),
+  documentation, tests and fuzzers;
+- `ENABLE_xxx`: enable a feature in the compiled code (`ENABLE_NLS`, `ENABLE_LARGEFILE`,
+  `ENABLE_ZSTD` and `ENABLE_CODE_COVERAGE`, which are unchanged);
+- `USE_xxx`: use a specific library (`USE_ENCHANT`).
+
+The old names are not supported any more: they have no effect (CMake only displays a warning
+"Manually-specified variables were not used by the project"), so any build script, package
+recipe or CI configuration using them must be updated.
+
+The build options displayed by `weechat --build-info` use the new names as well, for example
+`BUILD_PLUGIN_IRC: ON` instead of `ENABLE_IRC: ON`.
+
+| Old option              | New option                   |
+| ----------------------- | ---------------------------- |
+| `ENABLE_NCURSES`        | `BUILD_NCURSES`              |
+| `ENABLE_HEADLESS`       | `BUILD_HEADLESS`             |
+| `ENABLE_MAN`            | `BUILD_MAN`                  |
+| `ENABLE_DOC`            | `BUILD_DOC`                  |
+| `ENABLE_DOC_INCOMPLETE` | `BUILD_DOC_ALLOW_INCOMPLETE` |
+| `ENABLE_TESTS`          | `BUILD_TESTS`                |
+| `ENABLE_FUZZ`           | `BUILD_FUZZERS`              |
+| `ENABLE_ALIAS`          | `BUILD_PLUGIN_ALIAS`         |
+| `ENABLE_BUFLIST`        | `BUILD_PLUGIN_BUFLIST`       |
+| `ENABLE_CHARSET`        | `BUILD_PLUGIN_CHARSET`       |
+| `ENABLE_EXEC`           | `BUILD_PLUGIN_EXEC`          |
+| `ENABLE_FIFO`           | `BUILD_PLUGIN_FIFO`          |
+| `ENABLE_FSET`           | `BUILD_PLUGIN_FSET`          |
+| `ENABLE_IRC`            | `BUILD_PLUGIN_IRC`           |
+| `ENABLE_LOGGER`         | `BUILD_PLUGIN_LOGGER`        |
+| `ENABLE_RELAY`          | `BUILD_PLUGIN_RELAY`         |
+| `ENABLE_SCRIPT`         | `BUILD_PLUGIN_SCRIPT`        |
+| `ENABLE_SPELL`          | `BUILD_PLUGIN_SPELL`         |
+| `ENABLE_TRIGGER`        | `BUILD_PLUGIN_TRIGGER`       |
+| `ENABLE_TYPING`         | `BUILD_PLUGIN_TYPING`        |
+| `ENABLE_XFER`           | `BUILD_PLUGIN_XFER`          |
+| `ENABLE_SCRIPTS`        | `BUILD_SCRIPTING_PLUGINS`    |
+| `ENABLE_PERL`           | `BUILD_PLUGIN_PERL`          |
+| `ENABLE_PYTHON`         | `BUILD_PLUGIN_PYTHON`        |
+| `ENABLE_RUBY`           | `BUILD_PLUGIN_RUBY`          |
+| `ENABLE_LUA`            | `BUILD_PLUGIN_LUA`           |
+| `ENABLE_TCL`            | `BUILD_PLUGIN_TCL`           |
+| `ENABLE_GUILE`          | `BUILD_PLUGIN_GUILE`         |
+| `ENABLE_JAVASCRIPT`     | `BUILD_PLUGIN_JAVASCRIPT`    |
+| `ENABLE_PHP`            | `BUILD_PLUGIN_PHP`           |
+| `ENABLE_ENCHANT`        | `USE_ENCHANT`                |
+
+For example, this command:
+
+```bash
+cmake .. -DENABLE_DOC=ON -DENABLE_MAN=ON -DENABLE_TESTS=ON -DENABLE_PHP=OFF
+```
+
+must be replaced by:
+
+```bash
+cmake .. -DBUILD_DOC=ON -DBUILD_MAN=ON -DBUILD_TESTS=ON -DBUILD_PLUGIN_PHP=OFF
+```
+
+If you build in an existing build directory, the old options remain in the CMake cache
+without any effect: remove the file `CMakeCache.txt` (or the whole build directory) before
+running `cmake` again.
+
 ### Unknown command-line options
 
 WeeChat now exits with an error when an unknown command-line option is given (for example

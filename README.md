@@ -68,9 +68,9 @@ make install
 CMake options can be given with `-DOPTION=VALUE`, for example:
 
 - `-DCMAKE_BUILD_TYPE=Debug`: build with debug info (recommended if you are using a development version)
-- `-DENABLE_PHP=OFF`: disable a plugin (here the PHP plugin)
-- `-DENABLE_DOC=ON -DENABLE_MAN=ON`: build HTML documentation and man page
-- `-DENABLE_TESTS=ON`: build tests (run them with `ctest -V`)
+- `-DBUILD_PLUGIN_PHP=OFF`: disable a plugin (here the PHP plugin)
+- `-DBUILD_DOC=ON -DBUILD_MAN=ON`: build HTML documentation and man page
+- `-DBUILD_TESTS=ON`: build tests (run them with `ctest -V`)
 
 See the [list of CMake options](https://weechat.org/doc/weechat/user/#build).
 

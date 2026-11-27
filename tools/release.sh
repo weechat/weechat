@@ -113,9 +113,9 @@ release_build ()
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="${build_dir}/install" \
         -DWEECHAT_HOME="${build_dir}/home" \
-        -DENABLE_DOC=ON \
-        -DENABLE_MAN=ON \
-        -DENABLE_TESTS=ON \
+        -DBUILD_DOC=ON \
+        -DBUILD_MAN=ON \
+        -DBUILD_TESTS=ON \
         "${root_dir}"
     make install
     make test CTEST_OUTPUT_ON_FAILURE=TRUE
@@ -143,9 +143,9 @@ release_test_pkg ()
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="${pkg_build_dir}/install" \
         -DWEECHAT_HOME="${pkg_build_dir}/home" \
-        -DENABLE_DOC=ON \
-        -DENABLE_MAN=ON \
-        -DENABLE_TESTS=ON \
+        -DBUILD_DOC=ON \
+        -DBUILD_MAN=ON \
+        -DBUILD_TESTS=ON \
         "${pkg_dir}"
     make install
     make test CTEST_OUTPUT_ON_FAILURE=TRUE

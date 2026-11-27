@@ -75,41 +75,46 @@ else()
   set(INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}")
 endif()
 
-option(ENABLE_NCURSES        "Compile the Ncurses interface"            ON)
-option(ENABLE_HEADLESS       "Compile the headless binary"              ON)
-option(ENABLE_NLS            "Enable Native Language Support"           ON)
-option(ENABLE_LARGEFILE      "Enable Large File Support"                ON)
-option(ENABLE_ZSTD           "Enable Zstandard compression"             ON)
-option(ENABLE_ALIAS          "Enable Alias plugin"                      ON)
-option(ENABLE_BUFLIST        "Enable Buflist plugin"                    ON)
-option(ENABLE_CHARSET        "Enable Charset plugin"                    ON)
-option(ENABLE_EXEC           "Enable Exec plugin"                       ON)
-option(ENABLE_FIFO           "Enable FIFO plugin"                       ON)
-option(ENABLE_FSET           "Enable Fast Set plugin"                   ON)
-option(ENABLE_IRC            "Enable IRC plugin"                        ON)
-option(ENABLE_LOGGER         "Enable Logger plugin"                     ON)
-option(ENABLE_RELAY          "Enable Relay plugin"                      ON)
-option(ENABLE_SCRIPT         "Enable Script plugin (script manager)"    ON)
-option(ENABLE_SCRIPTS        "Enable script plugins (perl, python, …)"  ON)
-option(ENABLE_PERL           "Enable Perl scripting language"           ON)
-option(ENABLE_PYTHON         "Enable Python scripting language"         ON)
-option(ENABLE_RUBY           "Enable Ruby scripting language"           ON)
-option(ENABLE_LUA            "Enable Lua scripting language"            ON)
-option(ENABLE_TCL            "Enable Tcl scripting language"            ON)
-option(ENABLE_GUILE          "Enable Scheme (guile) scripting language" ON)
-option(ENABLE_JAVASCRIPT     "Enable JavaScript scripting language"     ON)
-option(ENABLE_PHP            "Enable PHP scripting language"            ON)
-option(ENABLE_SPELL          "Enable Spell checker plugin"              ON)
-option(ENABLE_ENCHANT        "Use Enchant lib in Spell checker plugin"  OFF)
-option(ENABLE_TRIGGER        "Enable Trigger plugin"                    ON)
-option(ENABLE_TYPING         "Enable Typing plugin"                     ON)
-option(ENABLE_XFER           "Enable Xfer plugin"                       ON)
-option(ENABLE_MAN            "Enable build of man page"                 OFF)
-option(ENABLE_DOC            "Enable build of documentation"            OFF)
-option(ENABLE_DOC_INCOMPLETE "Enable incomplete doc"                    OFF)
-option(ENABLE_TESTS          "Enable tests"                             OFF)
-option(ENABLE_FUZZ           "Enable fuzz testing"                      OFF)
-option(ENABLE_CODE_COVERAGE  "Enable code coverage"                     OFF)
+# Interfaces and features
+option(BUILD_NCURSES              "Build the Ncurses interface"     ON)
+option(BUILD_HEADLESS             "Build the headless binary"       ON)
+option(ENABLE_NLS                 "Enable Native Language Support"  ON)
+option(ENABLE_LARGEFILE           "Enable Large File Support"       ON)
+option(ENABLE_ZSTD                "Enable Zstandard compression"    ON)
+
+# Plugins
+option(BUILD_PLUGIN_ALIAS         "Build Alias plugin"              ON)
+option(BUILD_PLUGIN_BUFLIST       "Build Buflist plugin"            ON)
+option(BUILD_PLUGIN_CHARSET       "Build Charset plugin"            ON)
+option(BUILD_PLUGIN_EXEC          "Build Exec plugin"               ON)
+option(BUILD_PLUGIN_FIFO          "Build FIFO plugin"               ON)
+option(BUILD_PLUGIN_FSET          "Build Fast Set plugin"           ON)
+option(BUILD_PLUGIN_IRC           "Build IRC plugin"                ON)
+option(BUILD_PLUGIN_LOGGER        "Build Logger plugin"             ON)
+option(BUILD_PLUGIN_RELAY         "Build Relay plugin"              ON)
+option(BUILD_PLUGIN_SCRIPT        "Build Script plugin"             ON)
+option(BUILD_SCRIPTING_PLUGINS    "Build all scripting plugins"     ON)
+option(BUILD_PLUGIN_PERL          "Build Perl plugin"               ON)
+option(BUILD_PLUGIN_PYTHON        "Build Python plugin"             ON)
+option(BUILD_PLUGIN_RUBY          "Build Ruby plugin"               ON)
+option(BUILD_PLUGIN_LUA           "Build Lua plugin"                ON)
+option(BUILD_PLUGIN_TCL           "Build Tcl plugin"                ON)
+option(BUILD_PLUGIN_GUILE         "Build Guile (Scheme) plugin"     ON)
+option(BUILD_PLUGIN_JAVASCRIPT    "Build JavaScript plugin"         ON)
+option(BUILD_PLUGIN_PHP           "Build PHP plugin"                ON)
+option(BUILD_PLUGIN_SPELL         "Build Spell checker plugin"      ON)
+option(USE_ENCHANT                "Use Enchant lib in Spell plugin" OFF)
+option(BUILD_PLUGIN_TRIGGER       "Build Trigger plugin"            ON)
+option(BUILD_PLUGIN_TYPING        "Build Typing plugin"             ON)
+option(BUILD_PLUGIN_XFER          "Build Xfer plugin"               ON)
+
+# Documentation, tests and code coverage
+option(BUILD_MAN                  "Build man page"                  OFF)
+option(BUILD_DOC                  "Build documentation"             OFF)
+option(BUILD_DOC_ALLOW_INCOMPLETE "Allow incomplete doc"            OFF)
+option(BUILD_TESTS                "Build tests"                     OFF)
+option(BUILD_FUZZERS              "Build fuzzers"                   OFF)
+option(ENABLE_CODE_COVERAGE       "Enable code coverage"            OFF)
 
 # Code coverage
 add_library(coverage_config INTERFACE)
@@ -127,30 +132,46 @@ if(ENABLE_CODE_COVERAGE)
 endif()
 
 # Headless mode is required for documentation.
-if(ENABLE_DOC AND NOT ENABLE_HEADLESS)
+if(BUILD_DOC AND NOT BUILD_HEADLESS)
   message(FATAL_ERROR "Headless mode is required to build documentation.")
 endif()
 
 # All plugins (except javascript) are required for documentation.
-if(ENABLE_DOC AND NOT ENABLE_DOC_INCOMPLETE
-    AND (NOT ENABLE_NLS OR NOT ENABLE_ALIAS OR NOT ENABLE_BUFLIST
-      OR NOT ENABLE_CHARSET OR NOT ENABLE_EXEC OR NOT ENABLE_FIFO
-      OR NOT ENABLE_FSET OR NOT ENABLE_IRC OR NOT ENABLE_LOGGER
-      OR NOT ENABLE_RELAY OR NOT ENABLE_SCRIPT OR NOT ENABLE_SCRIPTS
-      OR NOT ENABLE_PERL OR NOT ENABLE_PYTHON OR NOT ENABLE_RUBY
-      OR NOT ENABLE_LUA OR NOT ENABLE_TCL OR NOT ENABLE_GUILE
-      OR NOT ENABLE_PHP OR NOT ENABLE_SPELL OR NOT ENABLE_TRIGGER
-      OR NOT ENABLE_TYPING OR NOT ENABLE_XFER))
+if(BUILD_DOC
+    AND NOT BUILD_DOC_ALLOW_INCOMPLETE
+    AND (NOT ENABLE_NLS
+      OR NOT BUILD_PLUGIN_ALIAS
+      OR NOT BUILD_PLUGIN_BUFLIST
+      OR NOT BUILD_PLUGIN_CHARSET
+      OR NOT BUILD_PLUGIN_EXEC
+      OR NOT BUILD_PLUGIN_FIFO
+      OR NOT BUILD_PLUGIN_FSET
+      OR NOT BUILD_PLUGIN_IRC
+      OR NOT BUILD_PLUGIN_LOGGER
+      OR NOT BUILD_PLUGIN_RELAY
+      OR NOT BUILD_PLUGIN_SCRIPT
+      OR NOT BUILD_SCRIPTING_PLUGINS
+      OR NOT BUILD_PLUGIN_PERL
+      OR NOT BUILD_PLUGIN_PYTHON
+      OR NOT BUILD_PLUGIN_RUBY
+      OR NOT BUILD_PLUGIN_LUA
+      OR NOT BUILD_PLUGIN_TCL
+      OR NOT BUILD_PLUGIN_GUILE
+      OR NOT BUILD_PLUGIN_PHP
+      OR NOT BUILD_PLUGIN_SPELL
+      OR NOT BUILD_PLUGIN_TRIGGER
+      OR NOT BUILD_PLUGIN_TYPING
+      OR NOT BUILD_PLUGIN_XFER))
   message(
     FATAL_ERROR
     " All plugins are required to build documentation.\n"
     " If you really want to build incomplete docs, enable this option:\n"
-    "   -DENABLE_DOC_INCOMPLETE=ON"
+    "   -DBUILD_DOC_ALLOW_INCOMPLETE=ON"
   )
 endif()
 
 # Headless mode is required for tests.
-if(ENABLE_TESTS AND NOT ENABLE_HEADLESS)
+if(BUILD_TESTS AND NOT BUILD_HEADLESS)
   message(FATAL_ERROR "Headless mode is required for tests.")
 endif()
 

@@ -14,35 +14,35 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-if(ENABLE_PYTHON)
+if(BUILD_PLUGIN_PYTHON)
   add_definitions(-DHAVE_PYTHON)
 endif()
-if(ENABLE_PERL)
+if(BUILD_PLUGIN_PERL)
   add_definitions(-DHAVE_PERL)
 endif()
-if(ENABLE_RUBY)
+if(BUILD_PLUGIN_RUBY)
   add_definitions(-DHAVE_RUBY)
 endif()
-if(ENABLE_LUA)
+if(BUILD_PLUGIN_LUA)
   add_definitions(-DHAVE_LUA)
 endif()
-if(ENABLE_TCL)
+if(BUILD_PLUGIN_TCL)
   add_definitions(-DHAVE_TCL)
 endif()
-if(ENABLE_GUILE)
+if(BUILD_PLUGIN_GUILE)
   add_definitions(-DHAVE_GUILE)
 endif()
-if(ENABLE_JAVASCRIPT)
+if(BUILD_PLUGIN_JAVASCRIPT)
   add_definitions(-DHAVE_JAVASCRIPT)
 endif()
-if(ENABLE_PHP)
+if(BUILD_PLUGIN_PHP)
   add_definitions(-DHAVE_PHP)
 endif()
-if(ENABLE_SPELL)
-  if(ENABLE_ENCHANT)
+if(BUILD_PLUGIN_SPELL)
+  if(USE_ENCHANT)
     pkg_check_modules(ENCHANT REQUIRED enchant-2)
     include_directories(${ENCHANT_INCLUDE_DIRS})
-    add_definitions(-DUSE_ENCHANT)
+    add_definitions(-DHAVE_ENCHANT)
   else()
     find_package(Aspell REQUIRED)
     include_directories(${ASPELL_INCLUDE_PATH})
@@ -131,13 +131,13 @@ set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
   plugins/test-plugin-config.cpp
 )
 
-if(ENABLE_ALIAS)
+if(BUILD_PLUGIN_ALIAS)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/alias/test-alias.cpp
   )
 endif()
 
-if(ENABLE_IRC)
+if(BUILD_PLUGIN_IRC)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/irc/test-irc-bar-item.cpp
     plugins/irc/test-irc-batch.cpp
@@ -167,7 +167,7 @@ if(ENABLE_IRC)
   )
 endif()
 
-if(ENABLE_LOGGER)
+if(BUILD_PLUGIN_LOGGER)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/logger/test-logger.cpp
     plugins/logger/test-logger-backlog.cpp
@@ -175,7 +175,7 @@ if(ENABLE_LOGGER)
   )
 endif()
 
-if (ENABLE_RELAY)
+if (BUILD_PLUGIN_RELAY)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/relay/test-relay-auth.cpp
     plugins/relay/test-relay-bar-item.cpp
@@ -200,20 +200,20 @@ if (ENABLE_RELAY)
   )
 endif()
 
-if(ENABLE_SCRIPT)
+if(BUILD_PLUGIN_SCRIPT)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/script/test-script-repo.cpp
   )
 endif()
 
-if(ENABLE_SPELL)
+if(BUILD_PLUGIN_SPELL)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/spell/test-spell.cpp
     plugins/spell/test-spell-config.cpp
   )
 endif()
 
-if(ENABLE_TRIGGER)
+if(BUILD_PLUGIN_TRIGGER)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/trigger/test-trigger.cpp
     plugins/trigger/test-trigger-callback.cpp
@@ -222,14 +222,14 @@ if(ENABLE_TRIGGER)
   )
 endif()
 
-if(ENABLE_TYPING)
+if(BUILD_PLUGIN_TYPING)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/typing/test-typing.cpp
     plugins/typing/test-typing-status.cpp
   )
 endif()
 
-if(ENABLE_XFER)
+if(BUILD_PLUGIN_XFER)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/xfer/test-xfer.cpp
     plugins/xfer/test-xfer-chat.cpp

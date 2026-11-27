@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-if(ENABLE_MAN OR ENABLE_DOC)
+if(BUILD_MAN OR BUILD_DOC)
 
   # Docs languages
   set(AUTOGEN_LANG de en fr it ja pl sr)
@@ -140,7 +140,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a docinfo1
     )
 
-    if(ENABLE_DOC)
+    if(BUILD_DOC)
       set(AUTOGEN_FILES "")
       foreach(lang ${AUTOGEN_LANG})
         LIST(APPEND AUTOGEN_FILES
@@ -177,7 +177,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       )
     endif()
 
-    if(ENABLE_MAN)
+    if(BUILD_MAN)
       foreach(lang ${MAN_LANG})
         if(${lang} STREQUAL "en")
           set(MANDIR_LANG "${MANDIR}/man1")
@@ -198,7 +198,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         add_custom_target(doc-man-weechat-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat.${lang}.1")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat.${lang}.1" DESTINATION "${MANDIR_LANG}" RENAME "weechat.1")
         # Man page: weechat-headless
-        if(ENABLE_HEADLESS)
+        if(BUILD_HEADLESS)
           add_custom_command(
             OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.${lang}.1"
             COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o "weechat-headless.${lang}.1" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat-headless.1.${lang}.adoc"
@@ -215,7 +215,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       endforeach()
     endif()
 
-    if(ENABLE_DOC)
+    if(BUILD_DOC)
       # User's guide
       foreach(lang ${USER_LANG})
         add_custom_command(
