@@ -994,8 +994,10 @@ TEST(RelayApiMsg, ScriptToJson)
 
     /* Unload script. */
     snprintf (str_command, sizeof (str_command),
-              "/script unload -q weechat_testapi.py");
+              "/script unload -q testapigen.py");
     run_cmd (str_command);
+
+    POINTERS_EQUAL(NULL, hdata_get_list (ptr_hdata, "scripts"));
 }
 #endif /* defined(HAVE_PYTHON) && defined(HAVE_SCRIPT) */
 

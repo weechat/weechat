@@ -1039,8 +1039,15 @@ TEST(RelayApiProtocolWithClient, CbScripts)
 
     /* Unload script. */
     snprintf (str_command, sizeof (str_command),
-              "/script unload -q weechat_testapi.py");
+              "/script unload -q testapigen.py");
     run_cmd (str_command);
+
+    /* Get scripts (no scripts loaded). */
+    test_client_recv_http ("GET /api/scripts", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent[0]);
+    CHECK(relay_json_is_array (json_body_sent[0]));
+    LONGS_EQUAL(0, relay_json_array_size (json_body_sent[0]));
 }
 #endif /* defined(HAVE_PYTHON) && defined(HAVE_SCRIPT) */
 
