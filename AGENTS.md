@@ -60,6 +60,9 @@ Rules:
 - Add unit tests in `tests/unit/` for any non-trivial change; tests must be
   fast (no sleep, no wait for a timeout), the test suite duration must grow by
   a few milliseconds only.
+- In test files, include every system header used (for example `<string.h>`
+  for `memset` or `strcmp`): CppUTest includes some of them on Debian/Ubuntu
+  but not on Fedora/Rocky, where the CI build fails.
 - When fixing an infinite loop, never run the unfixed code to prove that a test
   catches it.
 
