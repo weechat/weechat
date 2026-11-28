@@ -44,7 +44,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - irc: add field "all_prefixes" (all prefixes of nick, from higher to lower) in hdata and infolist "irc_nick"
 - irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))
 - javascript, php, tcl: add `eval` option in script commands and info "xxx_eval" ([#128](https://github.com/weechat/weechat/issues/128))
-- otr: new plugin "otr": end-to-end encryption of IRC private messages with Off-the-Record (OTR) messaging, add bar item "otr" in default status bar
+- otr: new plugin "otr": end-to-end encryption of IRC private messages with Off-the-Record (OTR) messaging, add bar item "otr" in default status bar ([#298](https://github.com/weechat/weechat/issues/298), [#2377](https://github.com/weechat/weechat/issues/2377))
 - relay: add option relay.network.allowed_networks to restrict connections to IPv4/IPv6 networks in CIDR notation ([#2364](https://github.com/weechat/weechat/issues/2364))
 - relay/api: add fields "lines_count" and "lines_filtered" in buffers, to know how many lines can still be fetched
 - relay/api: add resource `POST /api/typing` and option "typing" in resource `POST /api/sync` to receive typing notifications
