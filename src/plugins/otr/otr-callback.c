@@ -209,58 +209,6 @@ otr_callback_max_message_size (void *opdata, ConnContext *context)
 }
 
 /*
- * Build instructions to verify the identity of the peer of a libotr context
- * (with fingerprints or SMP).
- *
- * Note: result must be freed after use.
- */
-
-char *
-otr_callback_verify_instructions (ConnContext *context)
-{
-    char own_fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
-    char peer_fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN], *instructions;
-    const char *ptr_server, *ptr_nick;
-
-    ptr_server = otr_irc_account_server (context->accountname);
-
-    snprintf (own_fingerprint, sizeof (own_fingerprint), "?");
-    snprintf (peer_fingerprint, sizeof (peer_fingerprint), "?");
-    otrl_privkey_fingerprint (otr_us, own_fingerprint, context->accountname,
-                              context->protocol);
-    if (context->active_fingerprint)
-    {
-        otrl_privkey_hash_to_human (peer_fingerprint,
-                                    context->active_fingerprint->fingerprint);
-    }
-
-    ptr_nick = otr_irc_nick_display (ptr_server, context->username);
-
-    weechat_asprintf (
-        &instructions,
-        _("You can verify that this peer is who they claim to be in\n"
-          "one of the following ways:\n\n"
-          "1) Verify each other's fingerprints using a secure channel:\n"
-          "  Your fingerprint: %s\n"
-          "  %s@%s's fingerprint: %s\n"
-          "  then use the command: /otr trust %s %s\n\n"
-          "2) SMP with a secret that you both know:\n"
-          "  /otr smp ask %s %s \"secret\"\n\n"
-          "3) SMP with a question and a secret that you both know:\n"
-          "  /otr smp ask %s %s \"The question\" \"secret\"\n\n"
-          "Note: you can safely omit specifying the peer and server when\n"
-          "      executing these commands from the private buffer of the "
-          "peer."),
-        own_fingerprint,
-        ptr_nick, ptr_server, peer_fingerprint,
-        ptr_nick, ptr_server,
-        ptr_nick, ptr_server,
-        ptr_nick, ptr_server);
-
-    return instructions;
-}
-
-/*
  * Callback for libotr: display the new fingerprint of a peer.
  */
 
@@ -291,7 +239,7 @@ otr_callback_new_fingerprint (void *opdata, OtrlUserState us,
  * Callback for libotr: the OTR session with a peer is now encrypted.
  *
  * Logging is disabled (unless policy "log" is enabled), and if the peer is not
- * authenticated, instructions to authenticate it are displayed.
+ * authenticated, hints on how to authenticate it are displayed.
  */
 
 void
@@ -299,7 +247,6 @@ otr_callback_gone_secure (void *opdata, ConnContext *context)
 {
     struct t_otr_peer_data *ptr_peer_data;
     struct t_gui_buffer *ptr_buffer;
-    char *instructions;
     int verified;
 
     /* Make C compiler happy. */
@@ -356,12 +303,15 @@ otr_callback_gone_secure (void *opdata, ConnContext *context)
         otr_buffer_ctx_print (
             context, OTR_CONFIG_LEVEL_WARNING,
             _("Unauthenticated OTR session started."));
-        instructions = otr_callback_verify_instructions (context);
-        if (instructions)
-        {
-            otr_buffer_ctx_hint (context, instructions);
-            free (instructions);
-        }
+        otr_buffer_ctx_hint (
+            context,
+            _("You can verify that this peer is who they claim to be by "
+              "comparing your fingerprints or with a shared secret (SMP), see "
+              "/help otr."));
+        otr_buffer_ctx_hint (
+            context,
+            _("Note: in the private buffer of the peer, the nick and server "
+              "can be omitted in /otr commands."));
     }
 
     weechat_bar_item_update (OTR_BAR_ITEM);
