@@ -1168,7 +1168,8 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         /*
          * Messages held are not sent yet (they are sent with a timer when
          * the session becomes encrypted): the message is held after them, to
-         * keep the order of messages.
+         * keep the order of messages; if it can not be held, it is not sent
+         * (it would be sent before them).
          */
         ptr_master_context = otrl_context_find (otr_us, peer, account,
                                                 OTR_PROTOCOL,
@@ -1176,9 +1177,14 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
                                                 NULL, NULL, NULL);
         ptr_peer_data = (ptr_master_context) ?
             (struct t_otr_peer_data *)ptr_master_context->app_data : NULL;
-        if (ptr_peer_data && ptr_peer_data->held_messages
-            && otr_context_hold_message (ptr_peer_data, ptr_text))
+        if (ptr_peer_data && ptr_peer_data->held_messages)
         {
+            if (!otr_context_hold_message (ptr_peer_data, ptr_text))
+            {
+                otr_buffer_peer_print (ptr_server, peer,
+                                       OTR_CONFIG_LEVEL_ERROR,
+                                       _("Failed to send message."));
+            }
             result = strdup ("");
             goto end;
         }
