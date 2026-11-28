@@ -107,6 +107,7 @@ otr_command_split_args (const char *string, char **args, int max_args)
         }
         if (quote)
         {
+            otr_util_wipe (arg, ptr_arg - arg);
             free (arg);
             goto error;
         }
@@ -119,7 +120,7 @@ otr_command_split_args (const char *string, char **args, int max_args)
 error:
     for (i = 0; i < num_args; i++)
     {
-        free (args[i]);
+        otr_util_free_secret (args[i]);
     }
     return -1;
 }
@@ -1108,7 +1109,7 @@ otr_command_otr (const void *pointer, void *data, struct t_gui_buffer *buffer,
 
     for (i = 0; i < num_args; i++)
     {
-        free (args[i]);
+        otr_util_free_secret (args[i]);
     }
 
     return rc;
@@ -1153,7 +1154,7 @@ otr_command_has_smp_secret (const char *string)
 
     for (i = 0; i < num_args; i++)
     {
-        free (args[i]);
+        otr_util_free_secret (args[i]);
     }
 
     return rc;

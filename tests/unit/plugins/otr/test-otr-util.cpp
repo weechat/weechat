@@ -13,12 +13,50 @@
 extern "C"
 {
 #include <stdlib.h>
+#include <string.h>
 #include "src/plugins/otr/otr-util.h"
 }
 
 TEST_GROUP(OtrUtil)
 {
 };
+
+/*
+ * Test functions:
+ *   otr_util_wipe
+ */
+
+TEST(OtrUtil, Wipe)
+{
+    char buffer[8], zero[8];
+
+    memset (zero, 0, sizeof (zero));
+
+    otr_util_wipe (NULL, 0);
+    otr_util_wipe (NULL, 8);
+
+    memcpy (buffer, "secret!", 8);
+    otr_util_wipe (buffer, 0);
+    MEMCMP_EQUAL("secret!", buffer, 8);
+
+    otr_util_wipe (buffer, 3);
+    MEMCMP_EQUAL("\0\0\0ret!", buffer, 8);
+
+    otr_util_wipe (buffer, sizeof (buffer));
+    MEMCMP_EQUAL(zero, buffer, 8);
+}
+
+/*
+ * Test functions:
+ *   otr_util_free_secret
+ */
+
+TEST(OtrUtil, FreeSecret)
+{
+    otr_util_free_secret (NULL);
+    otr_util_free_secret (strdup (""));
+    otr_util_free_secret (strdup ("secret"));
+}
 
 /*
  * Test functions:

@@ -22,6 +22,7 @@
 #include "otr-irc.h"
 #include "otr-key.h"
 #include "otr-policy.h"
+#include "otr-util.h"
 
 
 struct t_otr_key_generation *otr_key_generations = NULL;
@@ -171,7 +172,7 @@ otr_key_generation_free (struct t_otr_key_generation *generation)
         weechat_unhook (generation->hook);
     free (generation->account);
     free (generation->protocol);
-    weechat_string_dyn_free (generation->output, 1);
+    otr_util_free_secret (weechat_string_dyn_free (generation->output, 0));
     weechat_string_dyn_free (generation->error, 1);
     weechat_string_dyn_free (generation->peers, 1);
     free (generation);
@@ -220,6 +221,7 @@ otr_key_write_account (FILE *file, const char *account, const char *protocol,
     {
         gcry_sexp_sprint (sexp_account, GCRYSEXP_FMT_ADVANCED, buffer, length);
         rc = (fprintf (file, "%s\n", buffer) >= 0) ? 1 : 0;
+        otr_util_wipe (buffer, length);
         free (buffer);
     }
 
@@ -406,6 +408,7 @@ otr_key_generate_child (void)
 
     fprintf (stdout, "%s", buffer);
     fflush (stdout);
+    otr_util_wipe (buffer, length);
     free (buffer);
 
     return 0;
@@ -546,7 +549,8 @@ otr_key_generate (const char *account, const char *protocol, const char *peer)
         goto error;
     new_generation->account = strdup (account);
     new_generation->protocol = strdup (protocol);
-    new_generation->output = weechat_string_dyn_alloc (1024);
+    /* Big enough for the key: no realloc leaving copies of the key. */
+    new_generation->output = weechat_string_dyn_alloc (4096);
     new_generation->error = weechat_string_dyn_alloc (64);
     new_generation->peers = weechat_string_dyn_alloc (64);
     if (!new_generation->account || !new_generation->protocol

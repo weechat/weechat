@@ -16,6 +16,39 @@
 
 
 /*
+ * Pointer to function memset, called through a volatile pointer so that the
+ * C compiler can not remove the wipe of memory freed just after.
+ */
+void *(*volatile otr_util_memset) (void *, int, size_t) = &memset;
+
+
+/*
+ * Wipe a memory area containing a secret (private key, SMP secret...).
+ */
+
+void
+otr_util_wipe (void *pointer, size_t size)
+{
+    if (pointer && (size > 0))
+        otr_util_memset (pointer, 0, size);
+}
+
+/*
+ * Wipe a string containing a secret (private key, SMP secret...), then free
+ * it.
+ */
+
+void
+otr_util_free_secret (char *string)
+{
+    if (!string)
+        return;
+
+    otr_util_wipe (string, strlen (string));
+    free (string);
+}
+
+/*
  * Duplicate a string (NULL is duplicated as an empty string).
  *
  * Note: result must be freed after use.

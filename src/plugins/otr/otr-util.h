@@ -8,6 +8,8 @@
 #ifndef WEECHAT_PLUGIN_OTR_UTIL_H
 #define WEECHAT_PLUGIN_OTR_UTIL_H
 
+extern void otr_util_wipe (void *pointer, size_t size);
+extern void otr_util_free_secret (char *string);
 extern char *otr_util_dupstr (const char *string);
 extern char *otr_util_irc_sanitize (const char *string);
 extern char *otr_util_peer_text (const char *text);
