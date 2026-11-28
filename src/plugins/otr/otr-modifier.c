@@ -577,11 +577,11 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
             otr_context_smp_reset (otr_context_peer_data_ctx (ptr_context));
             otr_buffer_ctx_print (
                 ptr_context, OTR_CONFIG_LEVEL_INFO,
-                _("%s has ended the OTR session. You should do the "
-                  "same:\n/otr finish"),
+                _("%s has ended the OTR session. You should do the same: %s"),
                 otr_irc_nick_display (
                     otr_irc_account_server (ptr_context->accountname),
-                    ptr_context->username));
+                    ptr_context->username),
+                "/otr finish");
         }
         otrl_tlv_free (tlvs);
     }

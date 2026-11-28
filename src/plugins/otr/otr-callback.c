@@ -397,8 +397,9 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             smp_asked = 1;
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_INFO,
-                _("The peer has requested SMP verification.\n"
-                  "Respond with: /otr smp respond <secret> (case sensitive)"));
+                _("The peer has requested SMP verification; respond with: "
+                  "%s <secret> (case sensitive)"),
+                "/otr smp respond");
             break;
         case OTRL_SMPEVENT_ASK_FOR_ANSWER:
             in_smp = 1;
@@ -407,9 +408,10 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             peer_text = otr_util_peer_text (question);
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_INFO,
-                _("The peer has requested SMP verification: %s\n"
-                  "Respond with: /otr smp respond <secret> (case sensitive)"),
-                (peer_text) ? peer_text : "");
+                _("The peer has requested SMP verification with the question "
+                  "\"%s\"; respond with: %s <secret> (case sensitive)"),
+                (peer_text) ? peer_text : "",
+                "/otr smp respond");
             free (peer_text);
             break;
         case OTRL_SMPEVENT_IN_PROGRESS:
@@ -430,8 +432,8 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
                 otr_buffer_ctx_print (
                     context, OTR_CONFIG_LEVEL_INFO,
                     _("You may want to authenticate your peer by asking your "
-                      "own question:\n"
-                      "/otr smp ask \"The question\" \"secret\""));
+                      "own question: %s <question> <secret>"),
+                    "/otr smp ask");
             }
             in_smp = 0;
             smp_question = 0;
@@ -513,11 +515,14 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
                 _("Your message was NOT sent unencrypted, because the "
                   "policy requires an OTR session. It is held back "
                   "and will be sent once the OTR session is established."));
-            otr_buffer_ctx_hint (
-                context,
-                _("Wait for the OTR session to start or change the policy to "
-                  "allow unencrypted messages:\n"
-                  "/otr policy require_encryption off"));
+            if (weechat_config_boolean (otr_config_look_hints))
+            {
+                otr_buffer_ctx_print (
+                    context, OTR_CONFIG_LEVEL_HINT,
+                    _("Wait for the OTR session to start or change the policy "
+                      "to allow unencrypted messages: %s"),
+                    "/otr policy require_encryption off");
+            }
             break;
         case OTRL_MSGEVENT_ENCRYPTION_ERROR:
             otr_buffer_ctx_print (
@@ -528,8 +533,8 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
         case OTRL_MSGEVENT_CONNECTION_ENDED:
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_ERROR,
-                _("Your message was not sent. End your OTR "
-                  "session:\n/otr finish"));
+                _("Your message was not sent. End your OTR session: %s"),
+                "/otr finish");
             break;
         case OTRL_MSGEVENT_SETUP_ERROR:
             otr_buffer_ctx_print (

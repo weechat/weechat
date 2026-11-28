@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-28 15:05+0100\n"
+"POT-Creation-Date: 2026-11-28 15:09+0100\n"
 "PO-Revision-Date: 2026-10-10 21:22+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -13604,15 +13604,16 @@ msgstr ""
 msgid "OTR session refreshed."
 msgstr ""
 
+#, c-format
 msgid ""
-"The peer has requested SMP verification.\n"
-"Respond with: /otr smp respond <secret> (case sensitive)"
+"The peer has requested SMP verification; respond with: %s <secret> (case "
+"sensitive)"
 msgstr ""
 
 #, c-format
 msgid ""
-"The peer has requested SMP verification: %s\n"
-"Respond with: /otr smp respond <secret> (case sensitive)"
+"The peer has requested SMP verification with the question \"%s\"; respond "
+"with: %s <secret> (case sensitive)"
 msgstr ""
 
 #, c-format
@@ -13622,9 +13623,10 @@ msgstr ""
 msgid "SMP verification succeeded."
 msgstr ""
 
+#, c-format
 msgid ""
-"You may want to authenticate your peer by asking your own question:\n"
-"/otr smp ask \"The question\" \"secret\""
+"You may want to authenticate your peer by asking your own question: %s "
+"<question> <secret>"
 msgstr ""
 
 #, fuzzy
@@ -13650,18 +13652,17 @@ msgid ""
 "established."
 msgstr ""
 
+#, c-format
 msgid ""
 "Wait for the OTR session to start or change the policy to allow unencrypted "
-"messages:\n"
-"/otr policy require_encryption off"
+"messages: %s"
 msgstr ""
 
 msgid "An error occurred while encrypting your message. It was NOT sent."
 msgstr ""
 
-msgid ""
-"Your message was not sent. End your OTR session:\n"
-"/otr finish"
+#, c-format
+msgid "Your message was not sent. End your OTR session: %s"
 msgstr ""
 
 #, c-format
@@ -14198,9 +14199,7 @@ msgid "Logging restored (default level)."
 msgstr ""
 
 #, c-format
-msgid ""
-"%s has ended the OTR session. You should do the same:\n"
-"/otr finish"
+msgid "%s has ended the OTR session. You should do the same: %s"
 msgstr ""
 
 #, fuzzy

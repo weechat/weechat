@@ -107,8 +107,9 @@ TEST(OtrCallback, HandleSmpEvent)
         NULL, OTRL_SMPEVENT_ASK_FOR_ANSWER, ptr_context, 25,
         (char *)"question?\nSMP verification succeeded.");
     /* The question of the peer can not add a line (fake OTR message). */
-    CHECK(strstr (gui_buffers->own_lines->last_line->prev_line->data->message,
-                  "verification: question? SMP verification succeeded."));
+    CHECK(strstr (gui_buffers->own_lines->last_line->data->message,
+                  "question \"question? SMP verification succeeded.\"; "
+                  "respond with: /otr smp respond <secret>"));
     LONGS_EQUAL(1, ptr_peer_data->in_smp);
     LONGS_EQUAL(1, ptr_peer_data->smp_question);
     LONGS_EQUAL(1, ptr_peer_data->smp_asked);
