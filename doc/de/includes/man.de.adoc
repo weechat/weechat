@@ -15,14 +15,15 @@ Um dem WeeChat IRC Support-Channel, mit dem Nick "mynick", beizutreten:
 
     irc://mynick@irc.libera.chat/#weechat
 
-Um eine IPv6 Adresse zu nutzen, muss diese in eckige Klammern gesetzt werden:
+Eine IPv6-Adresse kann in eckige Klammern gesetzt werden, um nach der Adresse einen Port
+anzugeben, zum Beispiel:
 
     irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
 // end::plugin_options[]
 
 // tag::files[]
 $HOME/.config/weechat/weechat.conf::
-    WeeChats Konfigurationsdatei
+    Hauptkonfigurationsdatei von WeeChat
 
 $HOME/.config/weechat/plugins.conf::
     Konfigurationsdatei für Erweiterungen
@@ -102,23 +103,20 @@ $HOME/.config/weechat/xfer.conf::
 $HOME/.local/share/weechat/weechat.log::
     WeeChat Protokolldatei
 
-// TRANSLATION MISSING
 $HOME/.local/share/weechat/otr/otr.private_key::
-    private keys for _otr_ plugin (highly sensitive: never share this file)
+    private Schlüssel für _otr_ Erweiterung (hoch sensibel: diese Datei niemals weitergeben)
 
-// TRANSLATION MISSING
 $HOME/.local/share/weechat/otr/otr.fingerprints::
-    fingerprints of peers for _otr_ plugin
+    Fingerprints der Gesprächspartner für _otr_ Erweiterung
 
-// TRANSLATION MISSING
 $HOME/.local/share/weechat/otr/otr.instag::
-    instance tags for _otr_ plugin
+    Instanz-Tags für _otr_ Erweiterung
 // end::files[]
 
 // tag::exit_status[]
 0::
     Erfolg: WeeChat wurde regulär beendet (zum Beispiel über den Befehl `/quit`),
-    oder es wurde eine Option wie ""--help"" oder ""--version"" angegeben.
+    oder es wurde eine Option wie "--help" oder "--version" angegeben.
 
 1::
     Fehler: WeeChat konnte nicht starten oder wurde aufgrund eines Fehlers

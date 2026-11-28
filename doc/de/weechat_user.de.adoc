@@ -18,7 +18,7 @@ https://weechat.org/doc/[this page ^↗^^].
 == Einleitung
 
 WeeChat (Wee Enhanced Environment for Chat) ist ein freier, schneller und
-schlanker Chat-Client der für unterschiedliche Betriebssysteme entwickelt wird.
+schlanker Chat-Client, der für unterschiedliche Betriebssysteme entwickelt wird.
 
 [[features]]
 === Funktionen
@@ -26,7 +26,7 @@ schlanker Chat-Client der für unterschiedliche Betriebssysteme entwickelt wird.
 wesentliche Merkmale:
 
 * Unterstützung verschiedener Protokolle (in der Hauptsache das IRC-Protokoll)
-* mehrere Server Verbindungen sind möglich (mittels TLS, IPv6, proxy)
+* mehrere Serververbindungen sind möglich (mittels TLS, IPv6, proxy)
 * klein, schnell und schlank
 * den eigenen, persönlichen, Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
 * IRC RFCs konform
@@ -77,9 +77,9 @@ Binärpakete sind für folgende Distributionen erhältlich:
 * macOS (mittels https://brew.sh/[Homebrew ^↗^^]): `brew install weechat`
   (für Hilfe siehe: `brew info weechat`)
 
-zusätzliche Pakete können bzw. sollten installiert werden. Zum Beispiel: weechat-plugins.
+Zusätzliche Pakete können bzw. sollten installiert werden. Zum Beispiel: weechat-plugins.
 
-Für nicht aufgeführte Distributionen schauen Sie bitte in die jeweiligen Anleitung der Distribution,
+Für nicht aufgeführte Distributionen schauen Sie bitte in die jeweilige Anleitung der Distribution,
 wie man Pakete installiert.
 
 [[containers]]
@@ -110,7 +110,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 |===
 | Paket ^(1)^ | Version | Funktionen
 
-| C Kompiler (gcc / clang) |
+| C-Compiler (gcc / clang) |
 | kompiliert C Quelldaten.
 
 | cmake | ≥ 3.18
@@ -130,12 +130,12 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 
 | libgnutls28-dev | ≥ 3.6.3
 | IRC-Erweiterung: Unterstützung von TLS Verbindungen, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE). +
-  Relay-Erweiterung: Untersützung von TLS Verbindungen.
+  Relay-Erweiterung: Unterstützung von TLS Verbindungen.
 
 | zlib1g-dev |
-| Logger-Erweitertung: Kompression von rotierenden Protokolldateien (gzip). +
-  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://zlib.net/[zlib ^↗^^]
-  (api und weechat Protokollen). +
+| Logger-Erweiterung: Kompression von rotierenden Protokolldateien (gzip). +
+  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> Client) mit https://zlib.net/[zlib ^↗^^]
+  (api- und weechat-Protokolle). +
   Script-Erweiterung: Lesen der Repository-Indexdatei (gzip).
 |===
 
@@ -154,23 +154,21 @@ WeeChat optional sind:
 | Paket ^(1)^ | Version | Funktionen
 
 | {cpp} compiler (pass:[g++ / clang++]) |
-| zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
+| zum Erstellen der Binärdatei und um Tests auszuführen, JavaScript Erweiterung.
 
 | gettext |
-| Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
+| Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist Englisch).
 
 | ca-certificates |
 | Zertifikate für TLS Verbindungen.
 
 | libzstd-dev | ≥ 1.4.0
-// TRANLSATION MISSING
 | Logger-Erweiterung: Kompression von rotierenden Protokolldateien (zstandard). +
-  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^]
-  (api and weechat protocols).
+  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> Client) mit https://facebook.github.io/zstd/[Zstandard ^↗^^]
+  (api- und weechat-Protokolle).
 
-// TRANSLATION MISSING
 | libotr5-dev | ≥ 4.0.0
-| OTR plugin.
+| OTR Erweiterung.
 
 | libaspell-dev / libenchant-2-dev |
 | Spell Erweiterung.
@@ -218,7 +216,7 @@ WeeChat optional sind:
 | Build Dokumentation.
 
 | libcpputest-dev | ≥ 3.4
-| zum Erstellen und um Test auszuführen.
+| zum Erstellen und um Tests auszuführen.
 |===
 
 [NOTE]
@@ -269,7 +267,7 @@ Liste der verfügbaren Optionen:
 | Option | Wert | Standardwert | Beschreibung
 
 | CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` |
-| Art des builds: `Debug` (oder `RelWithDebInfo`) sollte verwendet werden, wenn meine eine Entwicklerversion
+| Art des builds: `Debug` (oder `RelWithDebInfo`) sollte verwendet werden, wenn man eine Entwicklerversion
   von WeeChat nutzt.
 
 | CMAKE_INSTALL_PREFIX | Verzeichnis | /usr/local
@@ -279,7 +277,7 @@ Liste der verfügbaren Optionen:
 | Standard-Verzeichnis in welchem die Daten liegen. +
   Bei einem leeren Wert (empfohlen) werden standardmäßig XDG-Verzeichnisse verwendet.
   Wird ein Verzeichnis angegeben, wird dieses Verzeichnis für alle Dateien verwendet.
-  Man kann auch vier, durch Doppelpunkt, getrennten Verzeichnissen angeben. Die Reihenfolge gibt folgende
+  Man kann auch vier durch Doppelpunkte getrennte Verzeichnisse angeben. Die Reihenfolge gibt folgende
   Ziele an: Konfiguration, Daten, Cache, Laufzeit.
 
 | BUILD_DOC | `ON`, `OFF` | OFF
@@ -289,9 +287,8 @@ Liste der verfügbaren Optionen:
 | Erstellung der Dokumentation erzwingen, auch wenn einige Erweiterungen nicht kompiliert sind
   (nicht empfohlen: Dokumente sind unvollständig).
 
-// TRANSLATION MISSING
 | BUILD_FUZZERS | `ON`, `OFF` | OFF
-| Compile fuzz targets (requires Clang with libFuzzer).
+| kompiliert Fuzz-Targets (benötigt Clang mit libFuzzer).
 
 | BUILD_HEADLESS | `ON`, `OFF` | ON
 | Kompilieren der headless Binärdatei.
@@ -335,9 +332,8 @@ Liste der verfügbaren Optionen:
 | BUILD_PLUGIN_LUA | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Lua Erweiterung>>.
 
-// TRANSLATION MISSING
 | BUILD_PLUGIN_OTR | `ON`, `OFF` | ON
-| Compile OTR plugin.
+| kompiliert <<otr,OTR Erweiterung>>.
 
 | BUILD_PLUGIN_PERL | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Perl Erweiterung>>.
@@ -418,7 +414,7 @@ Folgende Pakete werden *benötigt* um Tests zu kompilieren:
 * libcpputest-dev
 * C++ compiler
 
-Tests muss aktiviert werden wenn WeeChat kompiliert wird:
+Tests müssen aktiviert werden, wenn WeeChat kompiliert wird:
 
 [source,shell]
 ----
@@ -503,7 +499,7 @@ Um _core_ Dateien zu aktivieren kann folgende Option genutzt werden:
 ----
 
 Wird eine WeeChat Version ≤ 0.3.8 verwendet oder man möchte die _core_ Dateien
-aktivieren, bevor WeeChat gestaret wird, wird der Befehl `ulimit` benötigt.
+aktivieren, bevor WeeChat gestartet wird, wird der Befehl `ulimit` benötigt.
 
 Zum Beispiel muss unter Linux in einer _bash_ Shell folgender Befehl in die `~/.bashrc`
 Datei eingetragen werden:
@@ -525,7 +521,7 @@ ulimit -c 200000
 
 Sollte WeeChat abstürzen, wird durch das System eine _core_ oder _core.12345_
 Datei erstellt (_12345_ ist dabei die Prozess-ID). Dazu muss aber die
-entprechende <<core_files,Option aktiviert sein>>.
+entsprechende <<core_files,Option aktiviert sein>>.
 Diese Core-Datei wird in dem Verzeichnis erzeugt aus welchem WeeChat gestartet wurde
 (dies ist *nicht* das Verzeichnis in welchem sich WeeChat befindet!).
 
@@ -608,7 +604,7 @@ Um WeeChat zu starten muss folgender Befehl ausgeführt werden:
 weechat
 ----
 
-Wird WeeChat das erste mal ausgeführt, wird die Standardkonfiguration und
+Wird WeeChat das erste Mal ausgeführt, wird die Standardkonfiguration und
 die entsprechenden Dateien im Verzeichnis _~/.config/weechat_ erstellt.
 (siehe <<files_and_directories,Dateien und Verzeichnisse>>).
 
@@ -625,7 +621,7 @@ Einige zusätzliche Optionen sollten nur für Debug-Zwecke genutzt werden:
 include::includes/cmdline_options.de.adoc[tag=debug]
 
 [[exit_status]]
-==== Exit status
+==== Exit-Status
 
 include::includes/man.de.adoc[tag=exit_status]
 
@@ -646,7 +642,7 @@ Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurde
 === Farbunterstützung
 
 WeeChat kann bis zu 32767 Farbpaarungen nutzen um einen Text in Bars oder im
-Chatbereich darzustellen (der Terminal muss natürlich 256 Farben unterstützten).
+Chatbereich darzustellen (das Terminal muss natürlich 256 Farben unterstützen).
 
 Gemäß der Einstellung in der _TERM_-Umgebungsvariable bestehen folgende Einschränkungen
 was die Farbdarstellung in WeeChat betrifft:
@@ -670,7 +666,7 @@ nutzen möchte:
 
 * falls screen genutzt wird: _screen-256color_
 * für tmux: _screen-256color_ oder _tmux-256color_
-* ausserhalb screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
+* außerhalb screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
 
 [NOTE]
 Es sollte das Paket "ncurses-term" installiert werden um die Werte der _TERM_
@@ -696,7 +692,7 @@ geändert werden:
 === Dateien und Verzeichnisse
 
 [[xdg_directories]]
-==== XDG directories
+==== XDG-Verzeichnisse
 
 WeeChat verwendet standardmäßig XDG-Verzeichnisse
 (gemäß https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification ^↗^^]). +
@@ -762,7 +758,7 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | weechat.conf    | Hauptkonfiguration von WeeChat             | möglich (Beispiel: Auflistung der Kanäle im Buffers-Layout).
 | sec.conf        | Konfigurationsdatei mit sensiblen Daten    | *Ja, hoch sensibel*: diese Datei sollte niemals weitergegeben werden.
 | plugins.conf    | Konfigurationsdatei für Erweiterungen      | möglich, hängt von der Erweiterung/Skript ab.
-| alias.conf      | Konfigurationsdatei: Alias-Erweiterung     | möglich, hängt von den Aliases ab.
+| alias.conf      | Konfigurationsdatei: Alias-Erweiterung     | möglich, hängt von den Aliasen ab.
 | buflist.conf    | Konfiguration für _buflist_-Erweiterung    | Nein.
 | charset.conf    | Konfiguration für _charset_-Erweiterung    | Nein.
 | exec.conf       | Konfiguration für _exec_-Erweiterung       | Nein.
@@ -773,12 +769,11 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | javascript.conf | Konfiguration für _javascript_-Erweiterung | Nein.
 | logger.conf     | Konfiguration für _logger_-Erweiterung     | Nein.
 | lua.conf        | Konfiguration für _lua_-Erweiterung        | Nein.
-// TRANSLATION MISSING
-| otr.conf        | Configuration file for _otr_ plugin        | No.
+| otr.conf        | Konfiguration für _otr_-Erweiterung        | Nein.
 | perl.conf       | Konfiguration für _perl_-Erweiterung       | Nein.
 | php.conf        | Konfiguration für _php_-Erweiterung        | Nein.
 | python.conf     | Konfiguration für _python_-Erweiterung     | Nein.
-| relay.conf      | Konfiguration für _relay_-Erweiterung      | *Ja*: es kann das Relay-Passwort und das TOTP (Einmalkennwort) enthalten (sofern nicht in `sec.conf` gesichert), erlaubt OP Adressen/Websocket und geöffnete Ports.
+| relay.conf      | Konfiguration für _relay_-Erweiterung      | *Ja*: es kann das Relay-Passwort und das TOTP (Einmalkennwort) enthalten (sofern nicht in `sec.conf` gesichert), erlaubte IP-Adressen/WebSocket und geöffnete Ports.
 | ruby.conf       | Konfiguration für _ruby_-Erweiterung       | Nein.
 | script.conf     | Konfiguration für _script_-Erweiterung     | Nein.
 | spell.conf      | Konfiguration für _spell_-Erweiterung      | Nein.
@@ -791,7 +786,7 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 
 [IMPORTANT]
 Es wird *nicht empfohlen* die Konfigurationsdateien manuell zu editieren, da WeeChat
-diese Dateien zu jeder Zeit überschreiben kann (zum Beispiel:  <<command_weechat_quit,/quit>>)
+diese Dateien zu jeder Zeit überschreiben kann (zum Beispiel: <<command_weechat_quit,/quit>>)
 und man eine veränderte Datei mit dem Befehl <<command_weechat_reload,/reload>> neu
 laden muss (mit dem Risiko von Datenverlust da Daten kommentarlos überschrieben werden,
 bevor man diese ggf. gesichert hat <<command_weechat_save,/save>>). +
@@ -807,17 +802,17 @@ auf diese neue Version zu wechseln.
 Zunächst müssen Sie die neue WeeChat Version als Binärdatei installieren.
 Entweder installieren Sie WeeChat mittels Ihrem Paketmanager oder Sie
 kompilieren WeeChat selber. Dadurch befindet sich die `weechat`-Binärdatei
-und alle erforderlichen Dateien in den selben Pfaden. +
+und alle erforderlichen Dateien in denselben Pfaden. +
 Diese Installation kann durchgeführt werden, während WeeChat ausgeführt wird.
 
 [[upgrade_command]]
 === Upgrade Befehl
 
-WeeChat kann die neue Binärdatei mit Hilfe des  <<command_weechat_upgrade,/upgrade>>
+WeeChat kann die neue Binärdatei mit Hilfe des <<command_weechat_upgrade,/upgrade>>
 Befehls starten: der Bufferinhalt und nicht-TLS Verbindungen bleiben dabei erhalten. +
 Eine TLS-Verbindung wird während des Upgrades getrennt und wird automatisch,
-nach dem Beenden des Upgrades, wiederhergestellt (das aufrechterhalten einer
-TLS-Sitzungen ist derzeit, mit GnuTLS, nicht möglich).
+nach dem Beenden des Upgrades, wiederhergestellt (das Aufrechterhalten einer
+TLS-Sitzung ist derzeit, mit GnuTLS, nicht möglich).
 
 Der Befehl kann auch verwendet werden, wenn Sie den Computer neu starten müssen,
 z.B. um den Kernel zu aktualisieren oder WeeChat auf einen anderen Computer zu verschieben:
@@ -841,7 +836,7 @@ weechat --upgrade
 [[restart_upgrading_notes]]
 ==== Hinweise zum Upgrade
 
-Nach einem Upgrade, wird *dringend empfohlen* das Dokukment
+Nach einem Upgrade, wird *dringend empfohlen* das Dokument
 https://github.com/weechat/weechat/blob/main/UPGRADING.md[UPGRADING.md ^↗^^]
 zu lesen. Dieses Dokument enthält wichtige Informationen zu wichtigen Änderungen und
 einige manuelle Aktionen, die erforderlich sein könnten.
@@ -944,11 +939,10 @@ Die _status_-Bar besitzt als Standardeinträge:
 | buffer_name           | `#test`                | Name des aktuellen Buffers.
 | buffer_modes          | `+n`                   | IRC Kanal-Modi.
 | buffer_nicklist_count | `4`                    | Anzahl der Nicks die in der Nickliste angezeigt werden.
-| buffer_zoom           | !                      | `!` bedeutet, dass ein zusammengefügter Buffer gezoomed (nur dieser Buffer wird angezeigt) wird.
-| buffer_filter         | `+*+`                  | Filteranzeige: `+*+` bedeutet das Zeilen gefiltert (unterdrückt) werden. Ein leerer Eintrag zeigt an, dass alle Zeilen dargestellt werden.
-// TRANSLATION MISSING
-| otr                   | `OTR:SEC,!AUTH,!LOG`   | OTR state of the current private buffer (empty if there is no OTR private key for the IRC account), see <<otr_status_bar,OTR status bar>>.
-| mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,Tasten zum Umschalten von Funktionen>>.
+| buffer_zoom           | !                      | `!` bedeutet, dass ein zusammengefügter Buffer gezoomt (nur dieser Buffer wird angezeigt) wird.
+| buffer_filter         | `+*+`                  | Filteranzeige: `+*+` bedeutet, dass Zeilen gefiltert (unterdrückt) werden. Ein leerer Eintrag zeigt an, dass alle Zeilen dargestellt werden.
+| otr                   | `OTR:SEC,!AUTH,!LOG`   | OTR-Status des aktuellen privaten Buffers (leer, falls für den IRC-Account kein privater OTR-Schlüssel vorhanden ist), siehe <<otr_status_bar,OTR-Statusleiste>>.
+| mouse_status          | `M`                    | Mausstatus (leer, falls die Maus deaktiviert ist), siehe Befehl <<command_weechat_mouse,/mouse>> und <<key_bindings_toggle_keys,Tasten zum Umschalten von Funktionen>>.
 | scroll                | `-MORE(50)-`           | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind.
 | lag                   | `Lag: 2.5`             | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering).
 | hotlist               | `H: 3:#abc(2,5), 5`    | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Kanal _#abc_, eine ungelesene Nachricht in Buffer #5).
@@ -963,7 +957,7 @@ In der _input_ Bar lautet die Standardeinstellung:
 | Item         | Beispiel                                    | Beschreibung
 | input_prompt | `@Flashy(i)`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf libera, unsichtbar).
 | away         | `away`                                      | Abwesenheitsanzeige.
-| input_search | `Search lines (~ str,msg)`                  | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten).
+| input_search | `Search lines (~ str,msg)`                  | Suchindikatoren ("`~`": Groß- und Kleinschreibung ignorieren, "`==`": Groß- und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten).
 | input_paste  | `Paste 7 lines ? [ctrl-y] Ja [ctrl-n] Nein` | Nachfrage, ob sieben Zeilen eingefügt werden sollen.
 | input_text   | `hi peter!`                                 | Text der eingegeben wird.
 |===
@@ -971,8 +965,8 @@ In der _input_ Bar lautet die Standardeinstellung:
 Es existieren zwei Suchmodi:
 
 * Suche in Zeilen, zum Beispiel `[Search lines (~ str,msg)]`, mit folgenden Infos:
-** `~`: Groß-und Kleinschreibung ignorieren
-** `==`: Groß-und Kleinschreibung berücksichtigen
+** `~`: Groß- und Kleinschreibung ignorieren
+** `==`: Groß- und Kleinschreibung berücksichtigen
 ** `str`: einfache Textsuche
 ** `regex`: suche mit regulären Ausdrücken
 ** `msg`: Suche in Nachrichten
@@ -980,8 +974,8 @@ Es existieren zwei Suchmodi:
 ** `pre\|msg`: Suche in Präfix und Nachrichten
 * Suche im Befehlsverlauf, zum Beispiel `[Search command (~ str,local)]`,
   mit den folgenden Informationen:
-** `~`: Groß-und Kleinschreibung ignorieren
-** `==`: Groß-und Kleinschreibung berücksichtigen
+** `~`: Groß- und Kleinschreibung ignorieren
+** `==`: Groß- und Kleinschreibung berücksichtigen
 ** `str`: einfache Textsuche
 ** `regex`: suche mit regulären Ausdrücken
 ** `local`: suche im lokalen Bufferverlauf
@@ -1090,7 +1084,7 @@ Zeichen, genutzt werden:
 |===
 
 [NOTE]
-Der selbe Code (ohne Nummer für kbd:[Ctrl+c], kbd:[c] und kbd:[Ctrl+c], kbd:[d])
+Derselbe Code (ohne Nummer für kbd:[Ctrl+c], kbd:[c] und kbd:[Ctrl+c], kbd:[d])
 kann verwendet werden, um das Attribut zu stoppen.
 
 Farbtabelle für kbd:[Ctrl+c], kbd:[c]:
@@ -1098,7 +1092,7 @@ Farbtabelle für kbd:[Ctrl+c], kbd:[c]:
 include::{autogendir}/autogen_user_irc_colors.de.adoc[tag=irc_colors]
 
 [NOTE]
-Um sich alle verfügbaren Farben anzeigen zu lassen, die der Terminal
+Um sich alle verfügbaren Farben anzeigen zu lassen, die das Terminal
 unterstützt, kann man in WeeChat die Tastenkombination kbd:[Alt+c]
 im `/color` Buffer nutzen oder im Terminal den Befehl `weechat --colors` ausführen.
 
@@ -1125,7 +1119,7 @@ mittels der Option <<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
 [[buffers_and_windows]]
 === Buffer und Fenster
 
-Ein _Buffer_ setzt sich zusammen aus einer Nummer, besitzt einem Namen, hat Zeilen die angezeigt
+Ein _Buffer_ setzt sich zusammen aus einer Nummer, besitzt einen Namen, hat Zeilen die angezeigt
 werden (und noch anderen Daten).
 
 Beispiele von Buffern:
@@ -1155,7 +1149,7 @@ Dies entspricht dem Befehl `/buffer *42` (siehe Option
 [[window_split_examples]]
 ==== Beispiele
 
-Beispiele für eine horizontal Fensteraufteilung (`/window splith`):
+Beispiele für eine horizontale Fensteraufteilung (`/window splith`):
 
 ....
                                ▼ Fenster #2 (Buffer #4)
@@ -1265,8 +1259,8 @@ Der vereinfachte Anzeigemodus hat folgende Funktionen:
 * ncurses wird nicht genutzt, deshalb werden URLs am Ende der Zeile nicht abgeschnitten.
 
 Der Standardtastenbefehl um den vereinfachten Textmodus zu aktivieren ist kbd:[Alt+l] (`L`),
-mit dem selben Tastenbefehl wird dieser Modus wieder beendet (dieser Modus kann auch
-mit jeder beliegen Tasteneingabe beendet werden, siehe Option
+mit demselben Tastenbefehl wird dieser Modus wieder beendet (dieser Modus kann auch
+mit jeder beliebigen Tasteneingabe beendet werden, siehe Option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
 Das Format für die Zeitanzeige kann mit folgender Option angepasst werden
@@ -1305,7 +1299,7 @@ Im normalen Modus sieht WeeChat wie folgt aus:
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-Der selbe Bildschirm sieht im vereinfachten Anzeigemodus wie folgt aus:
+Derselbe Bildschirm sieht im vereinfachten Anzeigemodus wie folgt aus:
 
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
@@ -1336,7 +1330,7 @@ Der selbe Bildschirm sieht im vereinfachten Anzeigemodus wie folgt aus:
 ....
 
 Es kann nun die URL von _joe_ ohne Probleme angeklickt werden (dies setzt
-natürlich voraus, dass der Terminal das Anwählen von URLs unterstützt).
+natürlich voraus, dass das Terminal das Anwählen von URLs unterstützt).
 
 [[buffers]]
 === Buffern
@@ -1353,7 +1347,7 @@ Zeilen die in einem formatierten Buffer dargestellt werden haben folgende Felder
 | Datum/Zeit(Ausgabe)  | Nein                  | Datum/Zeit wenn WeeChat eine Nachricht ausgibt.
 | Präfix               | Ja                    | Präfix einer Nachricht, gewöhnlich der Nick.
 | Nachricht            | Ja                    | Die eigentliche Nachricht.
-| Ansicht              | Nein                  | Boolean: wahr, falls Zeile angezeigt wird, unwahr, falls die Zeile if line gefiltert wird. Siehe Befehl <<command_weechat_filter,/filter>>.
+| Ansicht              | Nein                  | Boolean: wahr, falls Zeile angezeigt wird, unwahr, falls die Zeile gefiltert wird. Siehe Befehl <<command_weechat_filter,/filter>>.
 | Highlight            | Nein                  | Boolean: wahr, falls die Zeile ein Highlight enthält, unwahr, falls nicht.
 | Tags                 | mittels `/debug tags` | Tags die im Zusammenhang mit der Zeile stehen (siehe <<lines_tags,lines tags>>).
 |===
@@ -1371,7 +1365,7 @@ WeeChat nutzt Tags für unterschiedliche Aufgaben:
 * logging
 * für Befehle <<command_weechat_filter,/filter>>
 
-Tags kann man sich mit dem Befehl `/debug tags` anzeigen lassen (den Befehl ein zweites mal ausführen um die Tags wieder unsichtbar zu machen).
+Tags kann man sich mit dem Befehl `/debug tags` anzeigen lassen (den Befehl ein zweites Mal ausführen um die Tags wieder unsichtbar zu machen).
 
 Tags die häufig verwendet werden (keine vollständige Auflistung):
 
@@ -1379,10 +1373,10 @@ Tags die häufig verwendet werden (keine vollständige Auflistung):
 |===
 | Tag              | Beschreibung
 | no_filter        | Zeile kann nicht gefiltert werden.
-| no_highlight     | die Zeile kann nicht gehiglighted werden.
+| no_highlight     | die Zeile kann nicht gehighlightet werden.
 | no_log           | Zeile wird nicht in die Log-Datei geschrieben.
 | log0 … log9      | Grad der Protokollierung (siehe den Befehl <<command_logger_logger,/logger>>).
-| notify_none      | Diese Zeile wird erzeugt keinen Hotlist-Eintrag. ^(1)^
+| notify_none      | Diese Zeile erzeugt keinen Hotlist-Eintrag. ^(1)^
 | notify_message   | Diese Zeile ist eine User Nachricht. ^(1)^
 | notify_private   | Diese Zeile ist eine private Nachricht. ^(1)^
 | notify_highlight | Diese Zeile beinhaltet eine Highlight Nachricht. ^(1)^
@@ -1391,7 +1385,7 @@ Tags die häufig verwendet werden (keine vollständige Auflistung):
 | prefix_nick_ccc  | Präfix für den Nick mit der Farbe "ccc".
 | host_xxx         | Username und Host in der Nachricht.
 | irc_xxx          | IRC Nachricht "xxx" (kann ein Befehl oder eine dreistellige Zahl sein).
-| irc_numeric      | IRC nummerische Nachricht.
+| irc_numeric      | IRC numerische Nachricht.
 | irc_error        | Fehler vom IRC Server.
 | irc_action       | Action von einem Nick (Befehl `/me`).
 | irc_ctcp         | CTCP Nachricht.
@@ -1437,7 +1431,7 @@ So entfernen Sie die lokale Variable "completion_default_template":
 /buffer delvar completion_default_template
 ----
 
-Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese Variablen:
+Standardmäßig interpretieren WeeChat und seine Standard-Erweiterungen diese Variablen:
 
 [width="100%",cols="2m,2,5",options="header"]
 |===
@@ -1462,7 +1456,7 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 
 | filter
 | beliebige Zeichenkette
-| Filter für einige Buffer definiert, zum Beispiel`/fset`, `/list` (irc), `/server raw` (irc)
+| Filter für einige Buffer definiert, zum Beispiel `/fset`, `/list` (irc), `/server raw` (irc)
   und `/script`.
 
 | host
@@ -1563,12 +1557,12 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 |===
 
 [NOTE]
-Externe Erweitertungen und Skripte können andere lokale Variablen definieren und verwenden.
+Externe Erweiterungen und Skripte können andere lokale Variablen definieren und verwenden.
 
 [[buflist]]
 === Liste der Buffer
 
-Die Buflist-Erweiterung dient dazu eine Liste der geöffneten Buffer in einer Bar-Item, mit Namen
+Die Buflist-Erweiterung dient dazu eine Liste der geöffneten Buffer in einem Bar-Item mit Namen
 "buflist", darzustellen (vier weitere Bar-Items sind dabei verfügbar "buflist2", "buflist3", "buflist4"
 und "buflist5"). +
 Eine Standardbar, "buflist", wird beim Programmstart automatisch mit folgendem Inhalt erstellt.
@@ -1622,7 +1616,7 @@ include::includes/key_bindings.de.adoc[]
 Die fset Erweiterung stellt eine Liste aller Optionen in einem Buffer dar und erleichtert
 die Konfiguration von WeeChat und Erweiterungen.
 
-Beispiel des fset-Buffer, der Optionen anzeigt, die mit `weechat.look` beginnen:
+Beispiel des fset-Buffers, der Optionen anzeigt, die mit `weechat.look` beginnen:
 
 [subs="quotes"]
 ....
@@ -1724,7 +1718,7 @@ Um zum Beispiel die Uhrzeit in einem Buffer in einem schönen Orange darstellen 
 /set weechat.color.chat_time 214
 ----
 
-oder falls man den Hintergrund der Statusleiste in einm sehr dunklen Grün haben möchte:
+oder falls man den Hintergrund der Statusleiste in einem sehr dunklen Grün haben möchte:
 
 ----
 /set weechat.bar.status.color_bg 22
@@ -1747,14 +1741,14 @@ Beispiel:
 [[colors_attributes]]
 ==== Attribute
 
-Er ist möglich einer Farbe ein Attribut hinzuzufügen. Dazu wird dem
+Es ist möglich, einer Farbe ein Attribut hinzuzufügen. Dazu wird dem
 Farbnamen oder der Farbnummer ein- oder mehrere Attribute vorangestellt.
 
 * `+%+`: blinken
 * `+.+`: "dim" (halb hell)
 * `+*+` : fett
 * `+!+` : invertierte Darstellung
-* `+/+` : kursiven
+* `+/+` : kursiv
 * `+_+` : unterstrichen
 * `+|+`: Attribute beibehalten: blinken/dim/fett/invertierte Darstellung/kursiv/unterstrichen nicht zurücksetzen, wenn die Farbe geändert wird
 
@@ -1774,7 +1768,7 @@ darzustellen:
 
 Um einer Standard-Terminalfarbe (-1) ein Attribut hinzuzufügen muss eine Zahl
 gewählt werden die größer ist als die letzte genutzte Farbe des Terminals.
-Zum Beispiel; maximale Farbwahl in WeeChat: 99999.
+Zum Beispiel: maximale Farbwahl in WeeChat: 99999.
 
 Um der Vordergrundfarbe des Terminals das Attribut "fett" zuzuordnen:
 
@@ -1804,7 +1798,7 @@ Sie können alle Optionen, die ein Theme anpassen kann, im
 <<command_fset_fset,/fset>> Buffer mit dem `+t:themable+` Filter anzeigen lassen.
 
 [[themes_apply]]
-==== Applying a theme
+==== Ein Theme anwenden
 
 So wechseln Sie zum integrierten hellen Hintergrunddesign:
 
@@ -1849,48 +1843,44 @@ Zunächst wird ein Backup erstellt (gleicher Schritt wie bei `+/theme apply+`);
 schlägt das Backup fehl, wird der Vorgang abgebrochen, bevor eine
 Option geändert wird. Auch `+weechat.look.theme+` wird zurückgesetzt.
 
-// TRANSLATION MISSING
 [[themes_partial]]
-==== Applying or resetting only some options
+==== Nur einige Optionen anwenden oder zurücksetzen
 
-// TRANSLATION MISSING
-A theme can be applied on some options only, with masks on the full
-option names (wildcard `+*+` is allowed, a mask starting with `+!+`
-excludes options); for example to apply the light theme only on IRC
-options, except nick colors:
+Ein Theme kann auch nur auf einige Optionen angewendet werden, mithilfe von
+Masken für die vollständigen Optionsnamen (der Platzhalter `+*+` ist erlaubt,
+eine Maske, die mit `+!+` beginnt, schließt Optionen aus); um zum Beispiel das
+helle Theme nur auf IRC-Optionen anzuwenden, ausgenommen die Nick-Farben:
 
 ----
 /theme apply light irc.* !irc.color.nick_*
 ----
 
-// TRANSLATION MISSING
-With option `+-default+`, only options with their default value are
-changed, so options changed manually are kept; this is useful to apply
-the theme on the options of a plugin loaded after the theme:
+Mit der Option `+-default+` werden nur Optionen geändert, die noch ihren
+Standardwert besitzen, manuell geänderte Optionen bleiben also erhalten; dies
+ist nützlich, um das Theme auf die Optionen einer Erweiterung anzuwenden, die
+erst nach dem Theme geladen wurde:
 
 ----
 /theme apply -default light
 ----
 
-// TRANSLATION MISSING
-Masks are allowed with `+/theme reset+` as well, for example to reset
-only buflist options:
+Masken können auch mit `+/theme reset+` verwendet werden, zum Beispiel um
+nur die Buflist-Optionen zurückzusetzen:
 
 ----
 /theme reset buflist.*
 ----
 
-// TRANSLATION MISSING
-If only masks starting with `+!+` are given, all other options are used,
-for example to reset all options except IRC options:
+Werden ausschließlich Masken angegeben, die mit `+!+` beginnen, werden alle
+übrigen Optionen verwendet, zum Beispiel um alle Optionen außer den IRC-Optionen
+zurückzusetzen:
 
 ----
 /theme reset !irc.*
 ----
 
-// TRANSLATION MISSING
-With masks or option `+-default+`, the option `+weechat.look.theme+` is
-not changed.
+Bei Verwendung von Masken oder der Option `+-default+` wird die Option
+`+weechat.look.theme+` nicht verändert.
 
 [[themes_save_delete]]
 ==== Speichern und Löschen von Benutzer-Themes
@@ -1979,22 +1969,22 @@ Wenn `+/theme apply <name>+` ausgeführt wird:
   geparst und verwendet (sie überlagert ein etwaiges eingebautes Theme gleichen Namens).
 * Andernfalls wird die interne Theme-Registratur herangezogen; interne Themes
   werden programmatisch durch Core, Erweiterungen und Skripte registriert (siehe
-  die Erweitung- und Skripting-Dokumentation zu `+weechat_theme_register+`).
+  die Erweiterungs- und Skripting-Dokumentation zu `+weechat_theme_register+`).
 
 Liefert keine der beiden Quellen den Namen, wird die Ausführung des Befehls abgelehnt.
 
 [[charset]]
 === Charset
 
-Die Charset-Erweiterung übernimmt das de-/kodieren der Zeichensätze.
+Die Charset-Erweiterung übernimmt das De-/Kodieren der Zeichensätze.
 
-Es existiert ein Standardzeichensatz zum de-/kodieren und spezielle Zeichensätze
+Es existiert ein Standardzeichensatz zum De-/Kodieren und spezielle Zeichensätze
 für Buffer (oder Gruppen von Buffern).
 
 Diese Erweiterung ist optional, sie wird aber empfohlen. Wenn diese Erweiterung
 nicht genutzt wird steht WeeChat lediglich UTF-8 zur Verfügung.
 
-Die Charset Erweiterung wird automatisch von WeeChat geladen. Um sicher zu gehen
+Die Charset Erweiterung wird automatisch von WeeChat geladen. Um sicherzugehen,
 dass diese Erweiterung geladen wurde führen Sie folgenden Befehl aus:
 
 ----
@@ -2011,7 +2001,7 @@ Befehl nachgeladen werden:
 Wird die Erweiterung nicht geladen dann sollten Sie WeeChat nochmals mit allen
 Erweiterungen und der Charset Unterstützung kompilieren.
 
-Wird die Charset Erweiterung gestartet dann wird der Terminal und der interne
+Wird die Charset Erweiterung gestartet dann wird der Terminal- und der interne
 Zeichensatz genutzt. Welcher Terminal Zeichensatz genutzt wird hängt davon ab
 welchen Zeichensatz Sie lokal nutzen. Intern wird UTF-8 genutzt.
 
@@ -2024,7 +2014,7 @@ charset: terminal: ISO-8859-15, internal: UTF-8
 [[charset_set]]
 ==== Zeichensatz auswählen
 
-Um einen Zeichensatz zum de-/kodieren zu bestimmen wird der Befehl `/set` genutzt.
+Um einen Zeichensatz zum De-/Kodieren zu bestimmen wird der Befehl `/set` genutzt.
 
 Beispiel:
 
@@ -2033,17 +2023,17 @@ Beispiel:
 /set charset.default.encode ISO-8859-15
 ----
 
-Wenn der globale Zeichensatz zum dekodieren nicht gesetzt ist (dies tritt beim
-ersten Aufruf des Charset Erweiterung auf) dann wird automatisch der Zeichensatz
+Wenn der globale Zeichensatz zum Dekodieren nicht gesetzt ist (dies tritt beim
+ersten Aufruf der Charset-Erweiterung auf) dann wird automatisch der Zeichensatz
 genutzt der vom Terminal verwendet wird (sofern dieser nicht UTF-8 ist) oder
 der Standardzeichensatz _ISO-8859-1_.
 
-Der Standardwert zum kodieren ist nicht gesetzt. Deshalb wird der interne Zeichensatz
+Der Standardwert zum Kodieren ist nicht gesetzt. Deshalb wird der interne Zeichensatz
 (UTF-8) genutzt.
 
 Um einen Zeichensatz für IRC Server einzustellen wird der Befehl `/charset` im Server
 Buffer ausgeführt. Wird nur der Zeichensatz als Argument übergeben wird dieser sowohl
-zum kodieren als auch dekodieren genutzt.
+zum Kodieren als auch zum Dekodieren genutzt.
 
 Beispiel:
 
@@ -2059,7 +2049,7 @@ ist identisch mit den Befehlen:
 ----
 
 Um den Zeichensatz in einem IRC-Kanal (oder in einem privaten Buffer) zu ändern
-wird der selbe Befehl im entsprechenden Buffer genutzt.
+wird derselbe Befehl im entsprechenden Buffer genutzt.
 
 Um die Zeichenkodierung für alle Kanäle und privaten Buffer eines IRC Server zu ändern:
 
@@ -2094,9 +2084,9 @@ Sektionen in Datei _charset.conf_:
 | Sektion | Steuerbefehl                                | Beschreibung
 | default | /set charset.default.*                      | Vorgegebener Zeichensatz zum De-/kodieren.
 | decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Zeichensatz zum dekodieren (Optionen können in Sektion hinzugefügt/entfernt werden).
+            /set charset.decode.*                       | Zeichensatz zum Dekodieren (Optionen können in Sektion hinzugefügt/entfernt werden).
 | encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Zeichensatz zum kodieren (Optionen können in Sektion hinzugefügt/entfernt werden).
+            /set charset.encode.*                       | Zeichensatz zum Kodieren (Optionen können in Sektion hinzugefügt/entfernt werden).
 |===
 
 Optionen:
@@ -2131,7 +2121,7 @@ Der Standardwert ist _all_.
 | none                   | (keine)
 | highlight              | highlight + private Nachrichten
 | message                | highlight + private Nachrichten + normale Nachrichten
-| all                    | highlight + private Nachrichten + normal Nachrichten + Nachrichten mit einer niedrigen Priorität
+| all                    | highlight + private Nachrichten + normale Nachrichten + Nachrichten mit einer niedrigen Priorität
 |===
 
 Benachrichtigungsstufen können für mehrere Buffer definiert werden. Zum Beispiel
@@ -2158,11 +2148,11 @@ Befehl festgelegt werden:
 [[max_hotlist_level_nicks]]
 ==== Maximaler Hotlist-Level für Nicks
 
-Es ist möglich den sogenannten maximalen Hotlist-Level für einzele Nicks einzustellen,
+Es ist möglich den sogenannten maximalen Hotlist-Level für einzelne Nicks einzustellen,
 per Buffer oder für mehrere Gruppen (wie IRC Server).
 
 Die Buffer-Eigenschaft "hotlist_max_level_nicks" kann mit einer Anzahl von Nicks genutzt werden
-und für jeden einzelen Nick kann ein maximler Hotlist-Level eingestellt wertden. Mögliche Stufen sind:
+und für jeden einzelnen Nick kann ein maximaler Hotlist-Level eingestellt werden. Mögliche Stufen sind:
 
 * -1: keine Änderungen an der Hotlist für den entsprechenden Nick
 * 0: niedrige Priorität (zum Beispiel join/part Nachrichten)
@@ -2211,8 +2201,8 @@ deklariert, falls diese den eigenen Nick beinhalten. Deshalb ist ein highlight a
 vom jeweiligen Buffer (ein Nick kann je nach Buffer unterschiedlich sein)
 
 Es können weitere Wörter zu den highlights hinzugefügt werden, mit der Option
-<<option_weechat.look.highlight,weechat.look.highlight>>,  zum Beispiel um
-neben dem eigenen Nick auch die Wörter "Wort1","Wort2" und alle Wörter die mit
+<<option_weechat.look.highlight,weechat.look.highlight>>, zum Beispiel um
+neben dem eigenen Nick auch die Wörter "Wort1", "Wort2" und alle Wörter die mit
 "Test" beginnen zu highlighten:
 
 ----
@@ -2230,20 +2220,21 @@ zu highlighten:
 ----
 
 Die Trennzeichen die Wörter umschließen können angepasst werden, mit der
-Option:  <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
+Option: <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
 
 [[highlights_tags]]
 ==== Tags zu highlight hinzufügen
 
 Zeilen die in einem Buffer dargestellt werden enthalten "tags" welche zusätzliche
 Informationen über die Herkunft der Nachricht oder über die Nachricht selbst
-beinhalten. + Diese "tags" können mit dem Befehl `/debug tags` dargestellt werden
+beinhalten. +
+Diese "tags" können mit dem Befehl `/debug tags` dargestellt werden
 (um die Anzeige wieder zu entfernen, nochmals den Befehl ausführen).
 
 Um Tags als Highlights zu nutzen wird folgende Option verwendet:
 <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
 Tags werden durch Kommata getrennt und mehrere Tags können mit
-`+++` genutzt werden um ein logischen "und" zu erstellen.
+`+++` genutzt werden um ein logisches "und" zu erstellen.
 
 Zum Beispiel um alle Nachrichten vom Nick "FlashCode" und alle notice-Nachrichten
 von Nicks die mit "toto" beginnen zu highlighten:
@@ -2314,7 +2305,7 @@ weitere Beispiele:
 /set logger.level.irc.libera 3
 ----
 
-* Level 2 für alle IRC Buffers nutzen:
+* Level 2 für alle IRC Buffer nutzen:
 
 ----
 /set logger.level.irc 2
@@ -2353,7 +2344,7 @@ die Erweiterung ("logger.mask.irc").
 
 Um Protokolldateien mit einer Datumsrelevanz zu erstellen müssen
 Datumsspezifikationen in der Maske genutzt werden (siehe
-`man strftime` für das Format, extra specifiers are supported, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]). Zum Beispiel:
+`man strftime` für das Format, zusätzliche Platzhalter werden unterstützt, siehe link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]). Zum Beispiel:
 
 ----
 /set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
@@ -2407,12 +2398,12 @@ Erstellt eine Struktur in folgender Form:
 ....
 
 [[logger_rotation_compression]]
-==== Rotation und Kompressions
+==== Rotation und Kompression
 
 Es ist möglich, eine maximale Größe für Protokolldateien zu definieren, und wenn diese
 erreicht ist, findet eine automatische Rotation der Protokolldatei statt.
 
-Die rotierenden Protokolldateien können mit gzip kompromiert werden oder mit
+Die rotierenden Protokolldateien können mit gzip komprimiert werden oder mit
 https://facebook.github.io/zstd/[zstd ^↗^^].
 
 [NOTE]
@@ -2435,7 +2426,7 @@ und mit 1000 multiplizieren, um beispielsweise die maximale Größe auf 2,5 GB f
 /set logger.file.rotation_size_max "2500m"
 ----
 
-Mit diesen Einstellungen erhalten Sie eine Dateisktruktur wie die folgende (in diesem Beispiel
+Mit diesen Einstellungen erhalten Sie eine Dateistruktur wie die folgende (in diesem Beispiel
 gibt es nur eine Rotation für das Protokoll des #weechat-Kanals):
 
 ....
@@ -2466,7 +2457,7 @@ Sektionen in Datei _logger.conf_:
 | color   | /set logger.color.* | Farben.
 | file    | /set logger.file.*  | Optionen für Protokolldateien.
 | level   | /set logger.level.* | Protokollierungslevel pro Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
-| mask    | /set logger.mask.*  | Dateinamenmaske pro buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
+| mask    | /set logger.mask.*  | Dateinamenmaske pro Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
 |===
 
 Optionen:
@@ -2504,16 +2495,17 @@ kbd:[Alt+%] die Mausunterstützung für 10 Sekunden deaktiviert werden:
 ----
 
 [IMPORTANT]
-Ist die Maus in WeeChat aktiviert werden alle Mausereignisse duch WeeChat gefangen.
+Ist die Maus in WeeChat aktiviert werden alle Mausereignisse durch WeeChat gefangen.
 Dadurch werden Aktionen wie Kopieren+Einfügen oder Klicks auf URLs nicht an das
-Terminal weitergereicht. + Mittels der kbd:[Shift] Taste kann aber das Mausereignis
+Terminal weitergereicht. +
+Mittels der kbd:[Shift] Taste kann aber das Mausereignis
 an das Terminal weitergeleitet werden, als ob die Maus deaktiviert wäre (bei
-einigen  Terminals, wie z.B. iTerm, muß die Taste kbd:[Alt] anstelle von
+einigen Terminals, wie z.B. iTerm, muss die Taste kbd:[Alt] anstelle von
 kbd:[Shift] verwendet werden).
 
 [NOTE]
-Sollten Probleme bei der Mausunterstützung auftreten, dann sollte Bitte die
-link:weechat_faq.de.html#mouse[WeeChat FAQ / Mausunterstützung ^↗^^].
+Sollten Probleme bei der Mausunterstützung auftreten, dann sollten Sie die
+link:weechat_faq.de.html#mouse[WeeChat FAQ / Mausunterstützung ^↗^^] lesen.
 
 [[mouse_bind_events]]
 ==== Befehle einem Maus-Ereignis zuweisen
@@ -2584,7 +2576,7 @@ Liste von unvollständigen Ereignissen (nur für Mausknopf, nützlich für Erwei
 | event-drag | Maus wurde mit gedrücktem Mausknopf bewegt
 |===
 
-Bespiele von Ereignissen:
+Beispiele von Ereignissen:
 
 * `button1`
 * `ctrl-button1`
@@ -2596,7 +2588,7 @@ Bespiele von Ereignissen:
 * `alt-ctrl-wheeldown`
 
 [TIP]
-Wird eine Funktion im "mouse"-Kontext hinzufügt ist es möglich, mehrere
+Wird eine Funktion im "mouse"-Kontext hinzugefügt, ist es möglich, mehrere
 Mausereignisse mittels `+*+` abzufangen. Zum Beispiel fängt
 `+button1-gesture-*+` alle Mausgesten ab, die mit der linken Maustaste
 eingeleitet werden.
@@ -2613,7 +2605,7 @@ Mit der Spell Erweiterung findet eine Rechtschreibprüfung Einzug in WeeChat.
 Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
 
 Die Rechtschreibprüfung ist standardmäßig deaktiviert und kann mittels dem
-Tastenbefehl [Alt+s] umgeschaltet werden.
+Tastenbefehl kbd:[Alt+s] umgeschaltet werden.
 
 [[spell_dictionaries]]
 ==== Wörterbücher
@@ -2622,7 +2614,7 @@ Um die Rechtschreibprüfung nutzen zu können muss vorab ein Wörterbuch definie
 welches genutzt werden soll. Dies kann entweder global oder per Buffer geschehen.
 
 Verschiedene Wörterbücher können parallel verwendet werden. WeeChat gleicht dann
-die Wörter mit allen Wörterbüchern ab,
+die Wörter mit allen Wörterbüchern ab.
 
 Um zum Beispiel Englisch und Deutsch zu nutzen:
 
@@ -2637,7 +2629,7 @@ Beispiel in einem französischen Kanal:
 /spell setdict fr
 ----
 
-Um einer Gruppe von Buffern das selbe Wörterbuch zuzuordnen, zum Beispiel das
+Um einer Gruppe von Buffern dasselbe Wörterbuch zuzuordnen, zum Beispiel das
 deutsche Wörterbuch für alle Kanäle auf dem libera IRC Server:
 
 ----
@@ -2652,7 +2644,7 @@ Für weitere Informationen, siehe den Befehl <<command_spell_spell,/spell>>.
 Optionen für die Rechtschreibprüfung können definiert werden indem man die entsprechende
 Option in die Sektion "option" der Aspell-Konfiguration hinzufügt.
 
-Den Name der Option findet man in der ASpell-Konfigurationsdatei. Eine Auflistung aller
+Den Namen der Option findet man in der ASpell-Konfigurationsdatei. Eine Auflistung aller
 möglichen Optionen erhält man durch:
 
 [source,shell]
@@ -2669,13 +2661,13 @@ Um zum Beispiel die Option "ignore-case" einzuschalten:
 [[spell_suggestions]]
 ==== Rechtschreibkorrektur
 
-Eine Rechtschreibkorrektur wird in der Bar-Item "spell_suggest" angezeigt.
+Eine Rechtschreibkorrektur wird im Bar-Item "spell_suggest" angezeigt.
 Die Anzahl an Vorschlägen, für die Rechtschreibkorrektur, kann mit der Option
 _spell.check.suggestions_ bestimmt werden.
 
 Um die Rechtschreibkorrektur zu aktivieren, muss für die Option _spell.check.suggestions_
 ein Wert ≥ 0 eingestellt werden und das Bar-Item "spell_suggest" zu einer Bar, zum
-Beispiel _status_, hinzufügt werden.
+Beispiel _status_, hinzugefügt werden.
 
 Beispiel der Rechtschreibkorrektur, mit einem deutschen Wörterbuch (`de`):
 
@@ -2745,7 +2737,7 @@ Aufzählung von Bar-Optionen:
 
 | priority | integer ≥ 0
 | Priorität für die Bar: legt die Reihenfolge fest in der die Bars angeordnet werden sollen,
-  wenn mehrere Bars den selben Typ und Position besitzen. +
+  wenn mehrere Bars denselben Typ und Position besitzen. +
   Die Bars werden vom Rand zur Mitte des Bildschirms gezeichnet. Eine höhere Priorität
   bewirkt, dass die Bar näher am Rand gezeichnet wird. +
   Beispiel: Die _input_ Bar hat eine Priorität von 1000 und wird somit vor der _status_ Bars
@@ -2782,11 +2774,11 @@ Aufzählung von Bar-Optionen:
 | Eine Aufzählung von _items_ (siehe <<bar_items,items>> für weitere Informationen).
 
 | filling_left_right | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+`
-| Art, wie der Inhalt der Bar die `links` oder `rechts` gezeichnet wird, dargestellt wird (siehe
+| Art, wie der Inhalt einer Bar dargestellt wird, die `links` oder `rechts` gezeichnet wird (siehe
   <<bar_filling,filling>> für weitere Informationen).
 
 | filling_top_bottom | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+`
-| Art, wie der Inhalt der Bar die `oben` oder `unten` gezeichnet wird, dargestellt wird (siehe
+| Art, wie der Inhalt einer Bar dargestellt wird, die `oben` oder `unten` gezeichnet wird (siehe
   <<bar_filling,filling>> für weitere Informationen).
 
 | conditions | string
@@ -2822,15 +2814,15 @@ Beispiel einer Bar mit den Items,
 
 Ein Item namens `spacer` (Abstandshalter) kann verwendet werden, um Items auszurichten (links, mittig, rechts).
 
-Wenn mindestens ein `spacer` in einer Bar verwendung findet, wird die gesamte Breite der Bar verwendet:
-Die Abstandshalter werden automatisch mit der gleichen Größe (oder fast) erweitert.+
+Wenn mindestens ein `spacer` in einer Bar Verwendung findet, wird die gesamte Breite der Bar verwendet:
+Die Abstandshalter werden automatisch mit der gleichen Größe (oder fast) erweitert. +
 Falls eine Bar nicht groß genug für alle Elemente ist, werden keine Abstandshalter angezeigt.
 
 [NOTE]
 Ein `spacer` Bar-Item kann nur in Bars verwendet werden die die Position `top` oder `bottom` besitzen,
 sowie eine `horizontal` Ausrichtung haben, sowie eine Größe von `1`.
 
-Beipiel einer Bar mit den Items
+Beispiel einer Bar mit den Items
 "[time],spacer,buffer_number+:+buffer_plugin+.+buffer_name,spacer,[buffer_last_number]":
 
 ....
@@ -2844,7 +2836,7 @@ Beipiel einer Bar mit den Items
 
 Eine Besonderheit stellt die Möglichkeit dar, ein Item eines bestimmten Buffers
 anzuzeigen. Syntax: "@buffer:item" ("buffer" ist der vollständige Name des Buffers
-und "item" der Name der Bar-Item)
+und "item" der Name des Bar-Items).
 
 Dies ist für root-Bars sinnvoll, um gezielt ein Item eines bestimmten Buffers
 anzuzeigen, welcher nicht im aktuellen Fenster oder überhaupt nicht sichtbar
@@ -2872,7 +2864,7 @@ Konfigurationsoptionen definiert werden:
 In beiden Optionen können die folgenden Variablen verwendet werden:
 
 * `window`: Zeiger auf das Fenster, in dem die Bar angezeigt wird (`NULL` für root-Bars).
-* `buffer`: Zeiger auf den Buffer, in dem die Bar angezeigt wird (aktueller Bar für root-Bars.
+* `buffer`: Zeiger auf den Buffer, in dem die Bar angezeigt wird (aktueller Buffer für root-Bars).
 
 Beispiele für Bedingungen:
 
@@ -2880,7 +2872,7 @@ Beispiele für Bedingungen:
 |===
 | Bedingung | Beschreibung
 | `${window}` | Wird nur in Fenster-Bars angezeigt
-| `${buffer.number} == 1` | Wird in allem Buffern angezeigt, wo die Nummer =1 ist
+| `${buffer.number} == 1` | Wird in allen Buffern angezeigt, wo die Nummer =1 ist
 | `${buffer.plugin.name} == irc` | Wird in allen IRC Buffern angezeigt
 | `${type} == channel` | Element wird in den Buffern angezeigt wo die lokale Variable `type` vom Typ `channel` gesetzt ist (Beispiel: alle IRC Kanäle)
 | `${type} == private` | Element wird in den Buffern angezeigt wo die lokale Variable `type` vom Typ `private` gesetzt ist (Beispiel: alle privaten IRC Buffer)
@@ -2888,7 +2880,7 @@ Beispiele für Bedingungen:
 
 [NOTE]
 Es gibt keine integrierte Möglichkeit, die benutzerdefinierten Elemente zu aktualisieren.
-Dazu muss die  <<trigger,Trigger>> Erweitertung genutzt werden,  beispielsweise über einen
+Dazu muss die <<trigger,Trigger>> Erweiterung genutzt werden, beispielsweise über einen
 oder mehrere Signale die abgefragt werden.
 
 Weitere Informationen und Beispiele finden Sie unter dem Befehl <<command_weechat_item,/item>>.
@@ -2903,11 +2895,11 @@ Es gibt folgende vier Möglichkeiten um Text innerhalb einer Bar darzustellen:
    von der vorherigen getrennt.
 * `+vertical+`: die Items werden von oben nach unten dargestellt. Neue Zeilen werden
   neben der vorherigen dargestellt.
-* `+columns_horizontal+`: Item werden in Spalten dargestellt, wobei der Text linksbündig
+* `+columns_horizontal+`: Items werden in Spalten dargestellt, wobei der Text linksbündig
   ausgerichtet ist. Das erste Item wird in der linken oberen Ecke angezeigt und das
-  zweite Item ist in der selben Zeile, auf der rechten Seite.
-* `+columns_vertical+`: Item werden in Spalten dargestellt, wobei der Text linksbündig
-  ausgerichtet ist. Das erste Item wird in der linken oben Ecke angezeigt und das
+  zweite Item ist in derselben Zeile, auf der rechten Seite.
+* `+columns_vertical+`: Items werden in Spalten dargestellt, wobei der Text linksbündig
+  ausgerichtet ist. Das erste Item wird in der linken oberen Ecke angezeigt und das
   zweite Item wird eine Zeile darunter angezeigt.
 
 Die Standard-Bars _title_, _status_ und _input_ nutzen eine _horizontal_
@@ -3000,14 +2992,14 @@ Folgende Zeiger sind verfügbar:
 * `+${buffer}+`: der Buffer eines Fensters in dem der Zustand ausgewertet wird
 
 Beispiel für die Anzeige der Nicklist-Bar in allen Buffern mit einer Benutzerliste,
-allerdings nur dann, wenn die Breite des Terminals größer >100 ist:
+allerdings nur dann, wenn die Breite des Terminals größer als 100 ist:
 
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && ${info:term_width} > 100"
 ----
 
-Die selben Bedingungen wie oben, aber diesmal wird die Benutzerliste immer für
-den Buffer _&bitlbee_ angezeit (auch dann, wenn das Terminal kleiner ist, als
+Dieselben Bedingungen wie oben, aber diesmal wird die Benutzerliste immer für
+den Buffer _&bitlbee_ angezeigt (auch dann, wenn das Terminal kleiner ist, als
 der angegebene Wert):
 
 ----
@@ -3061,7 +3053,7 @@ diese manuell einzugeben.
 Die Daten werden in drei Schritten verschlüsselt:
 
 . erstellt einen Schlüssel anhand der Passphrase (optional mit Salt).
-. errechnet einen Hash über die Daten die verschlüsselt werden soll.
+. errechnet einen Hash über die Daten die verschlüsselt werden sollen.
 . verschlüsselt den Hash + Daten (Ausgabe ist: Salt + Hash/Daten verschlüsselt)
 
 [NOTE]
@@ -3109,7 +3101,7 @@ Passwörter beinhalten. Dies dient dazu Passwörter nicht im Klartext als
 Wert einer Option zu sichern. Dazu wird folgendes Format, anstelle des
 Passwortes, verwendet: "${sec.data.xxx}". "xxx" ist hierbei der Name den man
 dem Passwort zugeordnet hat (siehe oben, mittels `/secure set xxx ...`). +
-Für eine vollständige Liste der unterstützen Optionen, siehe den Befehl <<command_weechat_secure,/secure>>.
+Für eine vollständige Liste der unterstützten Optionen, siehe den Befehl <<command_weechat_secure,/secure>>.
 
 Um z.B. das oben eingestellte _libera_ Passwort für eine
 <<irc_sasl_authentication,SASL Authentifizierung>> zu nutzen:
@@ -3125,7 +3117,7 @@ Die Alias-Erweiterung erlaubt es, für Befehle, sogenannte Kurzbefehle (einen Al
 
 Einige Aliase existieren standardmäßig, deren Namen sind in Großbuchstaben erstellt (um
 sie von Standardbefehlen zu unterscheiden); bei Befehlen wird in WeeChat nicht zwischen
-Groß- und Kleinschreinung unterschieden, der Befehl `/close` führt den Alias `/CLOSE` aus.
+Groß- und Kleinschreibung unterschieden, der Befehl `/close` führt den Alias `/CLOSE` aus.
 
 Liste der standardmäßigen Aliase:
 
@@ -3183,7 +3175,7 @@ Sektion in Datei _weechat.conf_:
 |===
 | Sektion    | Steuerbefehl                               | Beschreibung
 | debug      | <<command_weechat_debug,/debug set>>       +
-               /set weechat.debug.*                       | Debug level, für Core und Erweitertungen (Optionen können in Sektion hinzugefügt/entfernt werden).
+               /set weechat.debug.*                       | Debug level, für Core und Erweiterungen (Optionen können in Sektion hinzugefügt/entfernt werden).
 | startup    | /set weechat.startup.*                     | Optionen die nach dem Programmstart ausgeführt werden.
 | look       | /set weechat.look.*                        | Erscheinungsbild.
 | palette    | <<command_weechat_color,/color alias>>     +
@@ -3215,7 +3207,7 @@ include::{autogendir}/autogen_user_options.de.adoc[tag=weechat_options]
 [[irc]]
 == IRC
 
-Die IRC Erweiterung ist konzipiert um mittels dem IRC Protokoll mit anderen Menschen zu chatten.
+Die IRC Erweiterung ist konzipiert um mittels des IRC-Protokolls mit anderen Menschen zu chatten.
 
 Die Erweiterung ist Multi-Server fähig und verfügt über alle IRC Befehle, einschließlich DCC Chat
 und Datenübertragung (via xfer Erweiterung, siehe <<xfer,Xfer Erweiterung>>).
@@ -3223,7 +3215,7 @@ und Datenübertragung (via xfer Erweiterung, siehe <<xfer,Xfer Erweiterung>>).
 [[irc_command_line_options]]
 === Kommandozeilen Befehle
 
-Es ist möglich eine oder mehrere URL von IRC Servern zu übergeben:
+Es ist möglich eine oder mehrere URLs von IRC Servern zu übergeben:
 
 ----
 irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
@@ -3288,8 +3280,8 @@ zu Problemen führen. In diesem Fall können Sie eine Befehlsverzögerung einste
 [[irc_servers_options]]
 ==== Server-Optionen
 
-Serveroptinen haben folgenden Aufbau `irc.server.<server>.<option>` hierbei ist `<server>`
-der interne Name des Server und `<option>` ist der Name der Option. +
+Serveroptionen haben folgenden Aufbau `irc.server.<server>.<option>` hierbei ist `<server>`
+der interne Name des Servers und `<option>` ist der Name der Option. +
 Der Wert einer Serveroption wird von `irc.server_default.xxx` geerbt
 wenn die Serveroption den Sonderwert `null` hat.
 
@@ -3364,7 +3356,7 @@ geerbten Wert verwendet, der jetzt `on` anstelle des Standardwerts `off` ist:
 ==== TLS Zertifikate
 
 Wenn eine Verbindung mittels TLS zu einem IRC Server hergestellt wird dann überprüft
-WeeChat immer ob dieser Verbindung sicher ist.
+WeeChat immer ob diese Verbindung sicher ist.
 
 Einige Optionen dienen dazu eine TLS Verbindung zu nutzen:
 
@@ -3372,7 +3364,7 @@ weechat.network.gnutls_ca_system::
     lädt beim Start die standardmäßigen vertrauenswürdigen Zertifizierungsstellen des Systems
 
 weechat.network.gnutls_ca_user::
-    zusätzliche Datei (en) von Zertifizierungsstellen
+    zusätzliche Datei(en) von Zertifizierungsstellen
 
 irc.server.xxx.tls_cert::
     Datei mit den TLS Zertifikaten die genutzt werden um automatisch Ihren Nick
@@ -3386,7 +3378,7 @@ irc.server.xxx.tls_verify::
     überprüft ob der TLS Verbindung uneingeschränkt vertraut werden kann (Standardwert: AN)
 
 [NOTE]
-Die Option "tls_verify" ist Vorgabe mäßig immer eingeschaltet. Das gewährleistet dass
+Die Option "tls_verify" ist standardmäßig immer eingeschaltet. Das gewährleistet dass
 die Verifizierung sehr streng genommen wird und dadurch vielleicht versagt. Auch wenn
 die Verbindung mit einer vorherigen Version (<0.3.1) funktioniert hat.
 
@@ -3408,7 +3400,7 @@ das auch beispielsweise `~/.weechat` sein kann.
 [NOTE]
 Es ist möglich mehrere Zertifikate in der Datei CAs.pem zu verwenden.
 
-* In WeeChat, sofern der Server "oftc" schon hinzufügt wurde:
+* In WeeChat, sofern der Server "oftc" schon hinzugefügt wurde:
 
 ----
 /connect oftc
@@ -3430,7 +3422,7 @@ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.p
 Sie müssen `~/.config/weechat` durch den Pfad zu Ihrem WeeChat-Konfigurationsverzeichnis ersetzen,
 das auch beispielsweise `~/.weechat` sein kann.
 
-* In WeeChat, sofern der Server "oftc" schon hinzufügt wurde:
+* In WeeChat, sofern der Server "oftc" schon hinzugefügt wurde:
 
 ----
 /set irc.server.oftc.tls_cert "${weechat_config_dir}/tls/nick.pem"
@@ -3491,7 +3483,7 @@ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | 
 
 Nun Verbindung zum Server herstellen, identifizieren (z.B. mittels "nickserv identify")
 und den öffentlichen Schlüssel für den eigenen Zugang festlegen (der base64 Schlüssel
-im Beispiel muss durch den eigenen öffentlichen Schlüssel ersetzt werden:
+im Beispiel muss durch den eigenen öffentlichen Schlüssel ersetzt werden):
 
 ----
 /connect libera
@@ -3516,7 +3508,7 @@ Erneut mit dem Server verbinden:
 [[irc_servers_connection]]
 ==== Verbindung zum Server
 
-Um sich mit einem Server zu Verbinden, nutzt man den
+Um sich mit einem Server zu verbinden, nutzt man den
 <<command_irc_connect,/connect>> Befehl:
 
 ----
@@ -3548,10 +3540,10 @@ um unabhängige Serverbuffer zu haben:
 ----
 
 [[irc_tor_sasl]]
-==== Connect with Tor and SASL
+==== Verbindung mit Tor und SASL
 
-Einige Server unterstützen eine Verbindungen mittels https://www.torproject.org/[Tor ^↗^^],
-dies ist ein Netzwerk mit virtueller Tunneln, durch welchen Personen und Gruppen ihre
+Einige Server unterstützen eine Verbindung mittels https://www.torproject.org/[Tor ^↗^^],
+dies ist ein Netzwerk aus virtuellen Tunneln, durch das Personen und Gruppen ihre
 Privatsphäre und Sicherheit im Internet verbessern können.
 
 Im ersten Schritt muss Tor installiert werden. Für Debian (und Derivate):
@@ -3598,7 +3590,7 @@ Abschließend, stellen Sie eine Verbindung zum Server her:
 ----
 
 [[irc_ircv3_support]]
-=== IRCv3 support
+=== IRCv3-Unterstützung
 
 WeeChat unterstützt folgende https://ircv3.net/irc/[IRCv3 extensions ^↗^^]:
 
@@ -3634,7 +3626,7 @@ auf https://ircv3.net/software/clients[this page ^↗^^].
 Spezifikation: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^^]
 
 Diese Funktion ermöglicht es dem Server, Nachrichten zu senden, wenn Benutzer sich auf dem
-Server identifizieren oder diese zurück ziehen. +
+Server identifizieren oder sich wieder abmelden. +
 WeeChat zeigt solche Nachrichten an, wenn die Option
 <<option_irc.look.display_account_message,irc.look.display_account_message>>
 aktiviert ist (Standardwert).
@@ -3656,7 +3648,7 @@ Diese Fähigkeit ermöglicht es dem Server, einen Account als Nachrichten-Tag an
 die an den Client gesendet werden. +
 WeeChat analysiert dieses Tag und speichert es in der Nachricht, aber es wird nicht verwendet oder
 angezeigt. Mit dem <<command_weechat_filter,/filter>> Befehl kann man diese Nachrichten explizit filtern,
-in dem die Accounts nutzt.
+indem man die Accounts nutzt.
 
 Beispiel einer empfangenen IRC-Rohnachricht:
 
@@ -3682,7 +3674,7 @@ Nachricht, mit Tags:
 Spezifikation: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^^]
 
 Diese Funktion ermöglicht es dem Server, Abwesenheits-Benachrichtigungen für Benutzer zu versenden,
-die die selben Kanälen besuchen, wie Sie.
+die dieselben Kanäle besuchen, wie Sie.
 
 Wenn der Abwesenheitsstatus für einen Benutzer geändert wird (abwesend oder zurück), wird dies mit
 einer bestimmten Farbe in der Nickliste dargestellt. Siehe folgende Optionen:
@@ -3771,7 +3763,7 @@ Die Funktion wird automatisch aktiviert, wenn der Server sie unterstützt und ka
 Befehl deaktiviert werden:
 `/set irc.server_default.capabilities "*,!draft/multiline"`. +
 Wenn die Funktion deaktiviert ist, wird eine mehrzeilige Nachricht einfach in mehreren Nachrichten gesendet,
-als ob sie die Nachrichten nacheinander an den Server gesendet wurden.
+als ob Sie die Nachrichten nacheinander an den Server gesendet hätten.
 
 Beispiel einer IRC Nutzer Nachricht, die über zwei Zeilen geht (`Dies ist ein Test`
 / `über zwei Zeilen`), und im Kanal #test gesendet wird:
@@ -3933,7 +3925,7 @@ Spezifikation: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-
 Diese Funktion ermöglicht es dem Server, Hostnamen bei <<command_irc_names,/names>> zu senden.
 
 [NOTE]
-WeeChat zeigt keine Hostnamen in der Aushabe des `/names` Befehls an.
+WeeChat zeigt keine Hostnamen in der Ausgabe des `/names` Befehls an.
 
 Beispiel für unverarbeitete IRC-Nachrichten, die ohne die Fähigkeit empfangen wurden:
 
@@ -4028,12 +4020,12 @@ Person in einem Kanal, eine vorgegebene Zeit, nicht geschrieben hat:
 - part: Person verlässt den Kanal
 - quit: Person meldet sich vom Server ab
 - account: Person ändert seinen Account
-- chghost: Persin ändert Name oder Host
+- chghost: Person ändert Name oder Host
 - mode: Modus des Kanals wurde geändert
 - nick: Person hat seinen Nick geändert
 - setname: Person hat seinen Realname geändert
 
-Der intelligente Filterung ist standardmäßig aktiviert, es muss jedoch ein Filter hinzugefügt werden,
+Die intelligente Filterung ist standardmäßig aktiviert, es muss jedoch ein Filter hinzugefügt werden,
 damit die Zeilen im Buffer unterdrückt werden. Zum Beispiel:
 
 ----
@@ -4041,7 +4033,7 @@ damit die Zeilen im Buffer unterdrückt werden. Zum Beispiel:
 ----
 
 Dabei ist es möglich, einen Filter für nur einen Kanal oder für mehrere Kanäle zu erstellen, die mit
-dem selben Namen beginnen (siehe den Befehl <<command_weechat_filter,/filter>>):
+demselben Namen beginnen (siehe den Befehl <<command_weechat_filter,/filter>>):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
@@ -4055,7 +4047,7 @@ Um eine längere Verzögerung (in Minuten) einzurichten:
 
 Falls jemand in den letzten 10 Minuten nichts geschrieben hat, werden seine join/part/quit Nachrichten
 standardmäßig in dem Kanal ausgeblendet. Um diese trotzdem angezeigt zu bekommen,
-muss man die Taste  kbd:[Alt+=] (Filter umschalten) drücken.
+muss man die Taste kbd:[Alt+=] (Filter umschalten) drücken.
 
 [[irc_ctcp_replies]]
 === CTCP Antworten
@@ -4095,7 +4087,7 @@ man lediglich den internen Servernamen vor die CTCP Anfrage setzen:
 /set irc.ctcp.libera.version "WeeChat ${version} (for libera)"
 ----
 
-Sollen die CTCP Antworten wieder auf die Standardeinstellungen zurück gesetzt werden
+Sollen die CTCP Antworten wieder auf die Standardeinstellungen zurückgesetzt werden
 dann müssen Sie lediglich die Option löschen:
 
 ----
@@ -4124,7 +4116,7 @@ die folgenden zusätzlichen Variablen sind verfügbar:
 [NOTE]
 ^(1)^ Die Git Version wird durch die Ausgabe des Befehls `git describe` ermittelt.
 Dies erfordert, dass WeeChat aus dem Git Repository heraus kompiliert wurde
-und das Git überhaupt installiert ist.
+und dass Git überhaupt installiert ist.
 
 Die Standard-CTCP-Antworten sind:
 
@@ -4202,7 +4194,7 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | 327       | whois         | whois (Host)
 | 328       |               | Channel URL
 | 329       |               | Erstellungsdatum des Channel
-| 330       | whois         | whois (eingelogged als)
+| 330       | whois         | whois (eingeloggt als)
 | 331       |               | kein Topic für Channel
 | 332       |               | Channel-Topic
 | 333       |               | Infos über Topic
@@ -4212,8 +4204,8 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | 343       | whois         | whois (ist opered als)
 | 344       | reop          | channel reop
 | 345       | reop          | channel reop (Ende)
-| 346       | invitelist    | Einladung Liste
-| 347       | invitelist    | Einladung Liste (Ende)
+| 346       | invitelist    | Einladungsliste
+| 347       | invitelist    | Einladungsliste (Ende)
 | 348       | exceptionlist | exception Liste
 | 349       | exceptionlist | exception Liste (Ende)
 | 351       |               | Server Version
@@ -4235,10 +4227,10 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | 729       | quietlist     | Ende der quiet Liste
 | 732       | monitor       | Liste der Nicks welche überwacht werden
 | 733       | monitor       | Liste der Nicks welche überwacht werden (Ende)
-| 901       |               | Sie sind nun eingelogged
+| 901       |               | Sie sind nun eingeloggt
 |===
 
-andere nummerische Befehle können angepasst werden.
+Andere numerische Befehle können angepasst werden.
 
 Den IRC Nachrichten kann der Servername vorangestellt werden um zu spezifizieren
 von welchem IRC Server die Nachricht gekommen ist. Zum Beispiel: `libera.whois`.
@@ -4297,211 +4289,181 @@ Optionen:
 
 include::{autogendir}/autogen_user_options.de.adoc[tag=irc_options]
 
-// TRANSLATION MISSING
 [[otr]]
 == OTR
 
-// TRANSLATION MISSING
-The OTR plugin adds end-to-end encryption to private IRC conversations, with
-the https://otr.cypherpunks.ca/[Off-the-Record (OTR) Messaging ^↗^^]
-protocol (versions 2 and 3).
+Die OTR-Erweiterung ergänzt private IRC-Unterhaltungen um eine Ende-zu-Ende-Verschlüsselung
+mit dem https://otr.cypherpunks.ca/[Off-the-Record (OTR) Messaging ^↗^^]
+Protokoll (Versionen 2 und 3).
 
-// TRANSLATION MISSING
-OTR provides:
+OTR bietet:
 
-// TRANSLATION MISSING
-* encryption: only you and your peer can read the messages, not the IRC
-  servers in between
-* authentication: you can check that your peer is who they claim to be
-* deniability: messages are not digitally signed, so nobody can prove who
-  wrote them
-* perfect forward secrecy: if your private key is compromised later, your
-  previous conversations can not be decrypted.
+* Verschlüsselung: nur Sie und Ihr Gesprächspartner können die Nachrichten lesen, nicht
+  die dazwischenliegenden IRC-Server
+* Authentifizierung: Sie können überprüfen, ob Ihr Gesprächspartner der ist, für den
+  er sich ausgibt
+* Abstreitbarkeit: Nachrichten werden nicht digital signiert, daher kann niemand
+  beweisen, wer sie geschrieben hat
+* Perfect Forward Secrecy: sollte Ihr privater Schlüssel später kompromittiert werden,
+  können Ihre früheren Unterhaltungen trotzdem nicht entschlüsselt werden.
 
-// TRANSLATION MISSING
-OTR works only in private conversations (private buffers of the IRC plugin),
-not in channels. Your peer must use a client with OTR support, for example
-WeeChat with the OTR plugin.
+OTR funktioniert nur in privaten Unterhaltungen (private Buffer der IRC-Erweiterung),
+nicht in Kanälen. Ihr Gesprächspartner muss einen Client mit OTR-Unterstützung nutzen,
+zum Beispiel WeeChat mit der OTR-Erweiterung.
 
-// TRANSLATION MISSING
 [[otr_start_session]]
-=== Start an OTR session
+=== OTR-Sitzung starten
 
-// TRANSLATION MISSING
-In the private buffer with your peer, start the session with:
+Starten Sie die Sitzung im privaten Buffer mit Ihrem Gesprächspartner:
 
 ----
 /otr start
 ----
 
-// TRANSLATION MISSING
-You can also start it from any buffer, with the nick of the peer and the
-internal name of the IRC server:
+Die Sitzung kann auch aus jedem beliebigen Buffer gestartet werden, unter Angabe des
+Nicks des Gesprächspartners und des internen Namens des IRC-Servers:
 
 ----
 /otr start bob libera
 ----
 
-// TRANSLATION MISSING
-The first time, WeeChat generates your private key for this account (your
-nick on this server) in background: this can take a few seconds, the OTR query
-is sent when the key is generated.
+Beim ersten Mal erzeugt WeeChat im Hintergrund Ihren privaten Schlüssel für diesen
+Account (Ihr Nick auf diesem Server): dies kann einige Sekunden dauern, die OTR-Anfrage
+wird gesendet, sobald der Schlüssel erzeugt wurde.
 
-// TRANSLATION MISSING
-Your peer can start the session too: WeeChat answers automatically. A message
-is displayed when the session is established, for example:
+Ihr Gesprächspartner kann die Sitzung ebenfalls starten: WeeChat antwortet automatisch.
+Sobald die Sitzung aufgebaut ist, wird eine Nachricht angezeigt, zum Beispiel:
 
 ----
-=otr= Unauthenticated OTR session started.
+=otr= Nicht authentifizierte OTR-Sitzung gestartet.
 ----
 
-// TRANSLATION MISSING
-To end the session:
+Um die Sitzung zu beenden:
 
 ----
 /otr finish
 ----
 
-// TRANSLATION MISSING
-When your peer ends the session, a message asks you to do the same with
-`/otr finish`: until then, your messages are not sent. Closing the private
-buffer ends the session too.
+Beendet Ihr Gesprächspartner die Sitzung, werden Sie in einer Nachricht aufgefordert,
+dies ebenfalls mit `/otr finish` zu tun: bis dahin werden Ihre Nachrichten nicht
+gesendet. Das Schließen des privaten Buffers beendet die Sitzung ebenfalls.
 
-// TRANSLATION MISSING
 [NOTE]
-If your own nick changes during a session, WeeChat sends a new OTR query to
-the peer, so that the session continues with your new nick.
+Ändert sich Ihr eigener Nick während einer Sitzung, sendet WeeChat eine neue
+OTR-Anfrage an den Gesprächspartner, damit die Sitzung mit Ihrem neuen Nick
+fortgesetzt wird.
 
-// TRANSLATION MISSING
 [NOTE]
-With `/upgrade`, the OTR sessions are not ended: after the upgrade, WeeChat
-sends a new OTR query to the peers, so that a new session starts (the keys of
-the sessions are never saved on disk).
+Bei einem `/upgrade` werden die OTR-Sitzungen nicht beendet: nach dem Upgrade sendet
+WeeChat eine neue OTR-Anfrage an die Gesprächspartner, damit eine neue Sitzung startet
+(die Schlüssel der Sitzungen werden niemals auf dem Datenträger gespeichert).
 
-// TRANSLATION MISSING
 [[otr_status_bar]]
-=== Status bar
+=== Statusleiste
 
-// TRANSLATION MISSING
-The bar item "otr" shows the OTR state of the current private buffer. It is
-displayed in the status bar by default (option weechat.bar.status.items), and
-it is empty as long as you have no OTR private key for the IRC account (OTR has
-never been used with this nick on this server).
+Das Bar-Item "otr" zeigt den OTR-Status des aktuellen privaten Buffers an. Es wird
+standardmäßig in der Statusleiste angezeigt (Option weechat.bar.status.items) und
+bleibt leer, solange Sie keinen privaten OTR-Schlüssel für den IRC-Account besitzen
+(OTR wurde mit diesem Nick auf diesem Server noch nie verwendet).
 
-// TRANSLATION MISSING
-For example, "OTR:SEC,!AUTH,!LOG" means that the conversation is encrypted,
-that the peer is not authenticated and that the conversation is not logged to
-disk; when there is no OTR session, "OTR:!SEC" is displayed. The texts and
-colors can be changed with the options otr.look.bar* and otr.color.status_*.
+Zum Beispiel bedeutet "OTR:SEC,!AUTH,!LOG", dass die Unterhaltung verschlüsselt ist,
+der Gesprächspartner nicht authentifiziert ist und die Unterhaltung nicht auf dem
+Datenträger protokolliert wird; besteht keine OTR-Sitzung, wird "OTR:!SEC" angezeigt.
+Die Texte und Farben können mit den Optionen otr.look.bar* und otr.color.status_*
+angepasst werden.
 
-// TRANSLATION MISSING
 [[otr_authentication]]
-=== Authentication
+=== Authentifizierung
 
-// TRANSLATION MISSING
-An encrypted session is "unauthenticated" until you check that your peer is
-who they claim to be, either with fingerprints or with a shared secret.
+Eine verschlüsselte Sitzung gilt als "nicht authentifiziert", bis Sie überprüft haben,
+dass Ihr Gesprächspartner der ist, für den er sich ausgibt – entweder mittels
+Fingerprints oder mit einem gemeinsamen Geheimnis.
 
-// TRANSLATION MISSING
 [[otr_fingerprints]]
 ==== Fingerprints
 
-// TRANSLATION MISSING
-Each private key has a fingerprint. The command `/otr status` displays your
-fingerprint and the one of your peer: compare them over a secure channel (in
-person, by phone…), then mark the fingerprint of your peer as verified:
+Jeder private Schlüssel besitzt einen Fingerprint. Der Befehl `/otr status` zeigt
+Ihren Fingerprint und den Ihres Gesprächspartners an: vergleichen Sie beide über einen
+sicheren Kanal (persönlich, per Telefon…) und markieren Sie anschließend den
+Fingerprint Ihres Gesprächspartners als verifiziert:
 
 ----
 /otr trust
 ----
 
-// TRANSLATION MISSING
-The command `/otr distrust` removes this mark. The command `/otr fingerprint`
-displays your own fingerprints, and `/otr fingerprint all` the fingerprints of
-all known peers.
+Der Befehl `/otr distrust` entfernt diese Markierung. Der Befehl `/otr fingerprint`
+zeigt Ihre eigenen Fingerprints an und `/otr fingerprint all` die Fingerprints aller
+bekannten Gesprächspartner.
 
-// TRANSLATION MISSING
 [[otr_smp]]
-==== Shared secret (SMP)
+==== Gemeinsames Geheimnis (SMP)
 
-// TRANSLATION MISSING
-With the Socialist Millionaire Protocol (SMP), you and your peer check that
-you know the same secret, without revealing it. Ask with an optional question
-and the secret:
+Mit dem Socialist Millionaire Protocol (SMP) überprüfen Sie und Ihr Gesprächspartner,
+ob Sie dasselbe Geheimnis kennen, ohne es preiszugeben. Stellen Sie die Anfrage mit
+einer optionalen Frage und dem Geheimnis:
 
 ----
-/otr smp ask "Where did we meet?" "Berlin"
+/otr smp ask "Wo haben wir uns kennengelernt?" "Berlin"
 ----
 
-// TRANSLATION MISSING
-Your peer answers with:
+Ihr Gesprächspartner antwortet mit:
 
 ----
 /otr smp respond Berlin
 ----
 
-// TRANSLATION MISSING
-The secret of `/otr smp respond` is the rest of the line, as typed: it can
-contain spaces and quotes, without quoting it (for example
-`/otr smp respond it's Berlin`).
+Das Geheimnis bei `/otr smp respond` ist der Rest der Zeile, genau so wie er eingegeben
+wurde: es kann Leerzeichen und Anführungszeichen enthalten, ohne dass es in
+Anführungszeichen gesetzt werden muss (zum Beispiel
+`/otr smp respond im "Café Berlin"`).
 
-// TRANSLATION MISSING
-The secret is case sensitive: your peer must type it exactly as you did
-("berlin" or "BERLIN" does not match "Berlin").
+Beim Geheimnis wird die Groß-/Kleinschreibung beachtet: Ihr Gesprächspartner muss es
+genau so eingeben wie Sie ("berlin" oder "BERLIN" stimmt nicht mit "Berlin" überein).
 
-// TRANSLATION MISSING
-When the secrets match, the peer who answered is authenticated by the one who
-asked. When you answer a question of your peer, your peer authenticates you,
-but you do not authenticate your peer: ask your own question to authenticate
-them too. A running verification can be aborted with `/otr smp abort`.
+Stimmen die Geheimnisse überein, wird der antwortende Gesprächspartner vom fragenden
+authentifiziert. Wenn Sie eine Frage Ihres Gesprächspartners beantworten,
+authentifiziert Ihr Gesprächspartner Sie, aber Sie authentifizieren damit nicht Ihren
+Gesprächspartner: stellen Sie eine eigene Frage, um ihn ebenfalls zu authentifizieren.
+Eine laufende Überprüfung kann mit `/otr smp abort` abgebrochen werden.
 
-// TRANSLATION MISSING
 [[otr_policies]]
-=== Policies
+=== Richtlinien
 
-// TRANSLATION MISSING
-The policies control the behavior of OTR:
+Die Richtlinien steuern das Verhalten von OTR:
 
 [width="100%",cols="3m,2m,10",options="header"]
 |===
-// TRANSLATION MISSING
-| Policy | Default | Description
+| Richtlinie | Standard | Beschreibung
 
-// TRANSLATION MISSING
 | allow_v2 | on
-| Allow version 2 of the OTR protocol.
+| Erlaubt Version 2 des OTR-Protokolls.
 
-// TRANSLATION MISSING
 | allow_v3 | on
-| Allow version 3 of the OTR protocol.
+| Erlaubt Version 3 des OTR-Protokolls.
 
-// TRANSLATION MISSING
 | require_encryption | off
-| Refuse to send unencrypted messages: messages sent before the session is
-  established are held, and sent once the session is encrypted (CTCP messages
-  other than ACTION are still sent unencrypted).
+| Verweigert das Senden unverschlüsselter Nachrichten: Nachrichten, die vor dem Aufbau
+  der Sitzung gesendet werden, werden zurückgehalten und gesendet, sobald die Sitzung
+  verschlüsselt ist (CTCP-Nachrichten außer ACTION werden weiterhin unverschlüsselt
+  gesendet).
 
-// TRANSLATION MISSING
 | log | off
-| Keep logging enabled during OTR sessions (see <<otr_logging,Logging>>).
+| Protokollierung während OTR-Sitzungen aktiviert lassen (siehe <<otr_logging,Protokollierung>>).
 
-// TRANSLATION MISSING
 | send_tag | off
-| Advertise your OTR support with a whitespace tag added to your messages, so
-  that a session can start automatically.
+| Signalisiert Ihre OTR-Unterstützung durch ein Whitespace-Tag, das an Ihre Nachrichten
+  angehängt wird, damit eine Sitzung automatisch starten kann.
 
-// TRANSLATION MISSING
 | html_escape | off
-| Escape HTML special chars in encrypted messages sent.
+| HTML-Sonderzeichen in gesendeten verschlüsselten Nachrichten maskieren.
 
-// TRANSLATION MISSING
 | html_filter | on
-| Remove HTML in decrypted messages received.
+| HTML aus empfangenen entschlüsselten Nachrichten entfernen.
 |===
 
-// TRANSLATION MISSING
-In a private buffer, `/otr policy` displays the policies of the peer and
-changes them, and with `default`, the policies of all peers:
+In einem privaten Buffer zeigt `/otr policy` die Richtlinien des Gesprächspartners an
+und ändert sie; mit `default` werden die Richtlinien aller Gesprächspartner angezeigt
+bzw. geändert:
 
 ----
 /otr policy
@@ -4509,111 +4471,89 @@ changes them, and with `default`, the policies of all peers:
 /otr policy default send_tag on
 ----
 
-// TRANSLATION MISSING
-Default policies are stored in options otr.policy_default.*, and custom
-policies in options otr.policy.*: the most specific option is used, first
-`otr.policy.<server>.<nick>.<peer>.<name>` (for a peer, where `<nick>` is your
-nick), then `otr.policy.<server>.<nick>.<name>`, `otr.policy.<server>.<name>`
-and finally `otr.policy_default.<name>`.
+Standardrichtlinien werden in den Optionen otr.policy_default.* gespeichert und
+benutzerdefinierte Richtlinien in den Optionen otr.policy.*: es wird die spezifischste
+Option verwendet, zuerst `otr.policy.<server>.<nick>.<peer>.<name>` (für einen
+Gesprächspartner, wobei `<nick>` Ihr eigener Nick ist), dann
+`otr.policy.<server>.<nick>.<name>`, `otr.policy.<server>.<name>` und schließlich
+`otr.policy_default.<name>`.
 
-// TRANSLATION MISSING
-With the policy "require_encryption", the messages held are discarded if the
-policy is disabled before the session is established, or with
+Bei der Richtlinie "require_encryption" werden die zurückgehaltenen Nachrichten
+verworfen, wenn die Richtlinie vor dem Aufbau der Sitzung deaktiviert wird oder bei
 `/otr finish`.
 
-// TRANSLATION MISSING
 [[otr_logging]]
-=== Logging
+=== Protokollierung
 
-// TRANSLATION MISSING
-By default (policy "log" disabled), logging of the private buffer is disabled
-during the OTR session, and the previous logger level is restored when the
-session ends.
+Standardmäßig (Richtlinie "log" deaktiviert) wird die Protokollierung des privaten
+Buffers während der OTR-Sitzung deaktiviert, und der vorherige Logger-Level wird
+wiederhergestellt, sobald die Sitzung endet.
 
-// TRANSLATION MISSING
-The command `/otr log` displays whether the conversation is logged, and
-`/otr log start` or `/otr log stop` changes it for the current session.
+Der Befehl `/otr log` zeigt an, ob die Unterhaltung protokolliert wird, und
+`/otr log start` bzw. `/otr log stop` ändert dies für die aktuelle Sitzung.
 
-// TRANSLATION MISSING
-OTR messages about a peer displayed in the core buffer (when there is no
-private buffer with the peer) are never logged.
+OTR-Nachrichten zu einem Gesprächspartner, die im Core-Buffer angezeigt werden (wenn
+kein privater Buffer mit dem Gesprächspartner existiert), werden niemals protokolliert.
 
-// TRANSLATION MISSING
 [[otr_files]]
-=== Files
+=== Dateien
 
-// TRANSLATION MISSING
-The OTR plugin stores its data in the directory _otr_ of the WeeChat data
-directory (by default _~/.local/share/weechat/otr_):
+Die OTR-Erweiterung speichert ihre Daten im Verzeichnis _otr_ des
+WeeChat-Datenverzeichnisses (standardmäßig _~/.local/share/weechat/otr_):
 
 [width="100%",cols="2m,4,6",options="header"]
 |===
-// TRANSLATION MISSING
-| File | Description | Sensitive data
+| Datei | Beschreibung | sensible Daten
 
-// TRANSLATION MISSING
 | otr.private_key
-| Your private keys (one per account: your nick on a server).
-| *Yes, highly sensitive*: this file must never be shared with anyone.
+| Ihre privaten Schlüssel (einer pro Account: Ihr Nick auf einem Server).
+| *Ja, hoch sensibel*: diese Datei darf niemals weitergegeben werden.
 
-// TRANSLATION MISSING
 | otr.fingerprints
-| Fingerprints of your peers and their trust level.
-| Possible: nicks of peers with an OTR session.
+| Fingerprints Ihrer Gesprächspartner und deren Vertrauensstufe.
+| möglich: Nicks von Gesprächspartnern mit einer OTR-Sitzung.
 
-// TRANSLATION MISSING
 | otr.instag
-| Instance tags (one per account).
-| No.
+| Instanz-Tags (eines pro Account).
+| Nein.
 |===
 
-// TRANSLATION MISSING
 [IMPORTANT]
-A private key is generated for each account, that is your nick on a server:
-with another nick (for example an alternative nick), a new key is generated
-and your peers have to authenticate you again.
+Für jeden Account, also Ihren Nick auf einem Server, wird ein eigener privater
+Schlüssel erzeugt: mit einem anderen Nick (zum Beispiel einem alternativen Nick) wird
+ein neuer Schlüssel erzeugt, und Ihre Gesprächspartner müssen Sie erneut
+authentifizieren.
 
-// TRANSLATION MISSING
 [[otr_limitations]]
-=== Limitations
+=== Einschränkungen
 
-// TRANSLATION MISSING
-* Channels are not supported, and notices (command `/notice`) are sent
-  unencrypted.
-* CTCP other than ACTION (command `/me`) are sent unencrypted (for example
-  CTCP VERSION or DCC), so that the peer can answer them.
-* A multiline message (capability "draft/multiline") is sent as one message
-  per line during an OTR session.
+* Kanäle werden nicht unterstützt, und Notices (Befehl `/notice`) werden
+  unverschlüsselt gesendet.
+* CTCP-Nachrichten außer ACTION (Befehl `/me`) werden unverschlüsselt gesendet (zum
+  Beispiel CTCP VERSION oder DCC), damit der Gesprächspartner sie beantworten kann.
+* Eine mehrzeilige Nachricht (Fähigkeit "draft/multiline") wird während einer
+  OTR-Sitzung als eine Nachricht pro Zeile gesendet.
 
-// TRANSLATION MISSING
 [[otr_commands]]
-=== Commands
+=== Befehle
 
 include::{autogendir}/autogen_user_commands.de.adoc[tag=otr_commands]
 
-// TRANSLATION MISSING
 [[otr_options]]
-=== Options
+=== Optionen
 
-// TRANSLATION MISSING
-Sections in file _otr.conf_:
+Sektionen in Datei _otr.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-// TRANSLATION MISSING
-| Section        | Control command           | Description
-// TRANSLATION MISSING
-| color          | /set otr.color.*          | Colors.
-// TRANSLATION MISSING
-| look           | /set otr.look.*           | Look and feel.
-// TRANSLATION MISSING
-| policy_default | /set otr.policy_default.* | Default policies (see <<otr_policies,Policies>>).
-// TRANSLATION MISSING
-| policy         | /set otr.policy.*         | Custom policies (see <<otr_policies,Policies>>).
+| Sektion        | Steuerbefehl              | Beschreibung
+| color          | /set otr.color.*          | Farben.
+| look           | /set otr.look.*           | Erscheinungsbild.
+| policy_default | /set otr.policy_default.* | Standardrichtlinien (siehe <<otr_policies,Richtlinien>>).
+| policy         | /set otr.policy.*         | Benutzerdefinierte Richtlinien (siehe <<otr_policies,Richtlinien>>).
 |===
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::{autogendir}/autogen_user_options.de.adoc[tag=otr_options]
 
@@ -4652,13 +4592,13 @@ include::{autogendir}/autogen_user_options.de.adoc[tag=xfer_options]
 [[typing_notifications]]
 == Schreibbenachrichtigung
 
-Die typing-Erweitertung wird verwendet, um andere Benutzer darüber zu informieren,
+Die typing-Erweiterung wird verwendet, um andere Benutzer darüber zu informieren,
 dass Sie Nachrichten schreiben, und zeigt eine Liste der Benutzer an, die derzeit
 eine Nachricht in dem Buffer eingeben.
 
-Es wird von der IRC-Erweiterung für Kanäle- und private Buffern verwendet, sofern
-die "message-tags"-Fähigkeit aktiviert ist (dies kann mit folgendenen Befehl,
-wie folgt überprüfen werden <<command_irc_cap,/cap>>). +
+Es wird von der IRC-Erweiterung für Kanal- und private Buffer verwendet, sofern
+die "message-tags"-Fähigkeit aktiviert ist (dies kann mit dem Befehl
+<<command_irc_cap,/cap>> überprüft werden). +
 
 Unter der Haube wird das Typing-Client-Tag folgendermaßen verwendet
 https://ircv3.net/specs/client-tags/typing[this specification ^↗^^].
@@ -4692,7 +4632,7 @@ Nachricht und "alice" hat eine Nachricht getippt, machte aber eine Pause:
 === Signale gesendet
 
 Wenn Sie eine Nachricht eingeben (Befehle, die mit `/` beginnen, werden ignoriert),
-sendet die typing-Erweitertung Signale, um andere Erweiterungen (wie z.B. IRC) darüber
+sendet die typing-Erweiterung Signale, um andere Erweiterungen (wie z.B. IRC) darüber
 zu informieren, dass Sie eine Nachricht eingeben. Diese Erweiterungen können dann
 Tippbenachrichtigungen an andere Benutzer senden.
 
@@ -4701,10 +4641,10 @@ Die folgenden Signale werden gesendet, wenn Sie eine Nachricht schreiben:
 [width="100%",cols="1,1,5",options="header"]
 |===
 | Signal              | Argumente        | Beschreibung
-| typing_self_typing  | Pointer: buffer. | Du schreibst eine Nachricht.
-| typing_self_paused  | Pointer: buffer. | Du machst beim Schrieben einer Nachricht, eine Pause.
-| typing_self_cleared | Pointer: buffer. | Du hast die Eingabezeile gelöscht, ohne die Nachricht zu senden.
-| typing_self_sent    | Pointer: buffer. | Du hast die Nachricht in den Buffer geschickt.
+| typing_self_typing  | Pointer: buffer. | Sie schreiben eine Nachricht.
+| typing_self_paused  | Pointer: buffer. | Sie machen beim Schreiben einer Nachricht eine Pause.
+| typing_self_cleared | Pointer: buffer. | Sie haben die Eingabezeile gelöscht, ohne die Nachricht zu senden.
+| typing_self_sent    | Pointer: buffer. | Sie haben die Nachricht in den Buffer geschickt.
 |===
 
 [[typing_signals_caught]]
@@ -4781,7 +4721,7 @@ Dieses Passwort wird bei allen Protokollen verwendet.
 TOTP (Time-based One-Time Password) kann als sekundärer Authentifizierungsfaktor
 für die Protokolle _api_ und _weechat_ zusätzlich zum Passwort verwendet werden.
 
-Diese Funktion is optional und erhöht den Sicherheitsgrad.
+Diese Funktion ist optional und erhöht den Sicherheitsgrad.
 
 Ein Einmal-Passwort kann mit folgenden Anwendungen erstellt werden, zum Beispiel:
 
@@ -4793,7 +4733,7 @@ Ein Einmal-Passwort kann mit folgenden Anwendungen erstellt werden, zum Beispiel
   https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android ^↗^^],
   https://apps.apple.com/fr/app/google-authenticator/id388497605[iOS ^↗^^]
 
-Die geheime TOTP Zeichenkette muss in WeeChat und der Anwendung gesetzt werden, welches
+Die geheime TOTP Zeichenkette muss in WeeChat und der Anwendung gesetzt werden, welche
 für die Erstellung des Einmal-Passwort zuständig ist.
 
 Die Zeichenkette muss base32 enkodiert sein, ausschließlich Buchstaben und Zahlen zwischen 2 und 7
@@ -4842,7 +4782,7 @@ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay
 Sie müssen `~/.config/weechat` durch den Pfad zu Ihrem WeeChat-Konfigurationsverzeichnis ersetzen,
 das auch beispielsweise `~/.weechat` sein kann.
 
-Sollte WeeChat schon gestartet worden sein, kann man das Zertifikat und der private
+Sollte WeeChat schon gestartet worden sein, können das Zertifikat und der private
 Schlüssel mittels folgendem Befehl nachträglich geladen werden:
 
 ----
@@ -4877,7 +4817,7 @@ Die Relay Erweiterung kann wie ein IRC Proxy genutzt werden. Dabei simuliert
 die Erweiterung einen IRC Server und man kann sich mit jedem IRC Client zu WeeChat
 verbinden.
 
-Es kann für jeden IRC Server ein Port definiert werden, oder aber man nutzt ein Port
+Es kann für jeden IRC Server ein Port definiert werden, oder aber man nutzt einen Port
 für alle Server.
 
 Wird ein Port für alle Server genutzt, dann muss der Client den internen Namen
@@ -4913,7 +4853,7 @@ folgenden Befehlen einrichten:
 ----
 
 [[relay_api_protocol]]
-=== API protocol
+=== API-Protokoll
 
 Die Relay-Erweiterung kann Daten über ein HTTP REST API-Protokoll an einen Remote-WeeChat oder eine Remote-Schnittstelle senden.
 
@@ -4932,14 +4872,14 @@ Zum Beispiel:
 Jetzt kann man sich über Port 9000 mit einem WeeChat oder einer Remote-Schnittstelle
 verbinden, indem das Passwort „mypassword“ verwendet wird.
 
-Um eine lokale Verbindung via _api_ Relay mittels WeeChat herzustelen:
+Um eine lokale Verbindung via _api_ Relay mittels WeeChat herzustellen:
 
 ----
 /remote add weechat http://localhost:9000 -password=mypassword
 /remote connect weechat
 ----
 
-Um eine entfernte Verbindung via _api_Relay mittels WeeChat herzustelen
+Um eine entfernte Verbindung via _api_-Relay mittels WeeChat herzustellen
 (TLS wird dringend empfohlen):
 
 ----
@@ -5071,15 +5011,15 @@ Sektionen in Datei _exec.conf_:
 | color   | /set exec.color.*   | Farben.
 |===
 
-Options:
+Optionen:
 
 include::{autogendir}/autogen_user_options.de.adoc[tag=exec_options]
 
 [[fifo_pipe]]
 == FIFO Pipe
 
-Sie können WeeChat fern steuern indem Sie Befehle oder einen Text an die FIFO Pipe
-schicken (dazu muss die Option "fifo.file.enabled" aktiviert sein (standardmäßig
+Sie können WeeChat fernsteuern indem Sie Befehle oder einen Text an die FIFO Pipe
+schicken (dazu muss die Option "fifo.file.enabled" aktiviert sein, standardmäßig
 ist diese Option aktiviert).
 
 Die FIFO-Pipe befindet sich im WeeChat-Laufzeitverzeichnis und wird standardmäßig
@@ -5109,7 +5049,7 @@ einige Beispiele:
 echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
-* Schickt eine Nachrich in den IRC #weechat Channel:
+* Schickt eine Nachricht in den IRC #weechat Channel:
 
 [source,shell]
 ----
@@ -5163,7 +5103,7 @@ include::{autogendir}/autogen_user_options.de.adoc[tag=fifo_options]
 == Trigger
 
 Trigger ist das Schweizer Armeemesser für WeeChat. Es können verschiedene
-Hooks überwacht werden (signal. modifier, print, ...), der Inhalt von
+Hooks überwacht werden (signal, modifier, print, ...), der Inhalt von
 Daten kann verändert werden, es können ein- oder mehrere Befehle ausgeführt
 werden. Eine Bedingung kann genutzt werden um damit zu verhindern, dass der
 Trigger unter bestimmten Umständen ausgeführt wird.
@@ -5273,7 +5213,7 @@ Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette
 abgearbeitet:
 
 . Überprüfung von Bedingungen; falls unwahr, beenden
-. ersetze Text mittels erweitertem regulärer POSIX Ausdruck (sofern im Trigger definiert)
+. ersetze Text mittels erweitertem regulärem POSIX-Ausdruck (sofern im Trigger definiert)
 . ein oder mehrere Befehle werden ausgeführt (sofern im Trigger definiert)
 . Beendigung mit einem Rückgabewert (ausgenommen sind die Hooks _modifier_,
   _line_, _focus_, _info_ und _info_hashtable_)
@@ -5477,11 +5417,11 @@ Leerzeichen. Verwenden Sie stattdessen `+[^[:space:]]+`.
 
 Zutreffende Gruppen können in _replace_ verwendet werden:
 
-* `+${re:0}+` nach `+${re:99}+`: `+${re:0}+` ist die ganze Trefferanzahl, `+${re:1}+` nach
+* `+${re:0}+` bis `+${re:99}+`: `+${re:0}+` ist der gesamte Treffer, `+${re:1}+` bis
   `+${re:99}+` sind als Gruppen erfasst.
-* `pass:[${re:+}]`: das letzte Treffer (mit der höchsten Zahl)
-* `+${re:#}+`: index of last group captured
-* `+${re:repl_index}+`: index of replacement being done (starts to 1)
+* `pass:[${re:+}]`: der letzte Treffer (mit der höchsten Zahl)
+* `+${re:#}+`: Index der zuletzt erfassten Gruppe
+* `+${re:repl_index}+`: Index der gerade durchgeführten Ersetzung (beginnt bei 1)
 * `+${hide:c,${re:N}}+`: Treffer "N" mit allen Zeichen die durch "c" ersetzt wurden
   (Beispiele: `+${hide:*,${re:2}}+` ist die Gruppe #2, mit allen Zeichen die durch
   `+*+` ersetzt wurden).
@@ -5538,7 +5478,7 @@ y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 ==== Variablen
 
 Wenn _var_ nicht in der Hashtabelle vorhanden ist, wird es automatisch mit einem
-leerer Wert erstellt. Dies ermöglicht das Erstellen benutzerdefinierter temporärer Variablen.
+leeren Wert erstellt. Dies ermöglicht das Erstellen benutzerdefinierter temporärer Variablen.
 
 Wenn _var_ nicht angegeben ist, wird die Standardvariable verwendet, sie hängt vom Hook-Typ ab:
 
@@ -5560,14 +5500,14 @@ Wenn _var_ nicht angegeben ist, wird die Standardvariable verwendet, sie hängt 
 |===
 
 [NOTE]
-^(1)^ Alle Variablen können im Trigger upgedated werden, aber nur diese Variablen
+^(1)^ Alle Variablen können im Trigger aktualisiert werden, aber nur diese Variablen
 haben einen Einfluss auf den Wert der vom Trigger zurückgegeben wird und dann von
 WeeChat genutzt wird.
 
 [[trigger_command]]
 === Befehl
 
-Der Befehl wird erst ausgeführt nach dem mittels eines regulären Ausdruckes
+Der Befehl wird erst ausgeführt, nachdem mittels eines regulären Ausdruckes
 der Text verändert wurde. Mehrere Befehle können durch Semikolon voneinander
 getrennt werden.
 
@@ -5606,7 +5546,7 @@ Alle Callbacks setzen folgende Variablen in das hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable        | Typ    | Beschreibung
-| tg_trigger_name | string | Name des Trigger.
+| tg_trigger_name | string | Name des Triggers.
 | tg_hook_type    | string | Hook-Typ: "signal", "command", etc.
 |===
 
@@ -5619,7 +5559,7 @@ Der Callback von "signal" legt folgende Variablen in der Hashtable an:
 |===
 | Variable       | Typ    | Beschreibung
 | tg_signal      | string | Name des Signals.
-| tg_signal_data | string | Daten die vom Signal gesendet wurde.
+| tg_signal_data | string | Daten, die vom Signal gesendet wurden.
 |===
 
 Sollte das Signal eine IRC Nachricht beinhalten, wird die Nachricht analysiert
@@ -5630,7 +5570,7 @@ und die Daten in einer Hashtable gesichert:
 | Variable             | Typ     | Beschreibung
 | irc_server           | pointer | Pointer auf IRC Server (Variable in hdata vom Typ "irc_server" kann verwendet werden, wie `+${irc_server.name}+`).
 | irc_channel          | pointer | Pointer auf IRC Channel (Variable in hdata vom Typ "irc_channel" kann verwendet werden, wie `+${irc_channel.name}+`).
-| server               | string  | Name des Server (Beispiel: "libera").
+| server               | string  | Name des Servers (Beispiel: "libera").
 | tags                 | string  | Tags in Nachricht (findet selten Verwendung).
 | message_without_tags | string  | Nachricht ohne Tags.
 | nick                 | string  | Nick. ^(1)^
@@ -5638,9 +5578,9 @@ und die Daten in einer Hashtable gesichert:
 | command              | string  | IRC Befehl (Beispiel: "PRIVMSG", "NOTICE", ...).
 | channel              | string  | IRC Channel.
 | arguments            | string  | Argumente des Befehls (Beinhaltet Wert von _channel_).
-| text                 | string  | Text (zum Beipiel eine Nachricht eines Users).
+| text                 | string  | Text (zum Beispiel eine Nachricht eines Users).
 | pos_command          | string  | Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird).
-| pos_arguments        | string  | Index von_arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird).
+| pos_arguments        | string  | Index von _arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird).
 | pos_channel          | string  | Index von _channel_ innerhalb einer Nachricht ("-1" falls _channel_ nicht gefunden wird).
 | pos_text             | string  | Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird).
 |===
@@ -5717,7 +5657,7 @@ Der Callback von "line" legt folgende Variablen in der Hashtable an:
 | y                  | string  | Zeilennummer bei einem Buffer mit freier Einteilung (≥ 0), -1 für einen Buffer mit formatiertem Inhalt.
 | date               | string  | Datum der Zeile (Zeitstempel).
 | date_usec          | string  | Mikrosekunden des Zeilendatums.
-| str_time           | string  | Datum für Darstellung. Kann Farbkodierungen erhalten.
+| str_time           | string  | Datum für Darstellung. Kann Farbkodierungen enthalten.
 | tags               | string  | Tags einer Nachricht (Komma wird automatisch zu Beginn und Ende den Tags hinzugefügt).
 | displayed          | string  | "1" wenn Zeile dargestellt wird, "0" wenn Zeile gefiltert wird.
 | notify_level       | string  | "-1" = keine Benachrichtigung, "0" = niedrige Stufe, "1" = Nachricht, "2" = private Nachricht, "3" = Highlight
@@ -5735,7 +5675,7 @@ Variablen die mittels Tags in der Nachricht gesetzt werden:
 | Variable           | Typ    | Beschreibung
 | tg_tags_count      | string | Anzahl an Tags der Nachricht.
 | tg_tag_nick        | string | Nick (extrahiert aus Tag "nick_xxx").
-| tg_tag_prefix_nick | string | Nickfarbe für Präfix (extrahier aus Tag "prefix_nick_ccc").
+| tg_tag_prefix_nick | string | Nickfarbe für Präfix (extrahiert aus Tag "prefix_nick_ccc").
 | tg_tag_host        | string | Username und Host, Format: username@host (extrahiert aus Tag "host_xxx").
 | tg_tag_notify      | string | Benachrichtigungsstufe (_none_, _message_, _private_, _highlight_).
 | tg_tag_irc_xxx     | string | Tag einer IRC Nachricht (Schlüssel "xxx"). ^(1)^
@@ -5772,7 +5712,7 @@ Variablen die mittels Tags in der Nachricht gesetzt werden:
 | tg_tags            | string | Tags einer Nachricht (Komma wird automatisch zu Beginn und Ende den Tags hinzugefügt).
 | tg_tags_count      | string | Anzahl an Tags der Nachricht.
 | tg_tag_nick        | string | Nick (extrahiert aus Tag "nick_xxx").
-| tg_tag_prefix_nick | string | Nickfarbe für Präfix (extrahier aus Tag "prefix_nick_ccc").
+| tg_tag_prefix_nick | string | Nickfarbe für Präfix (extrahiert aus Tag "prefix_nick_ccc").
 | tg_tag_host        | string | Username und Host, Format: username@host (extrahiert aus Tag "host_xxx").
 | tg_tag_notify      | string | Benachrichtigungsstufe (_none_, _message_, _private_, _highlight_).
 | tg_tag_irc_xxx     | string | Tag einer IRC Nachricht (Schlüssel "xxx"). ^(1)^
@@ -5902,7 +5842,7 @@ automatisch eine `pong` Antwort:
 ----
 
 [[trigger_example_responsive_layout]]
-==== reaktives layout
+==== Reaktives Layout
 
 Der nachfolgende Trigger kann verwendet werden um Anpassungen vorzunehmen, falls
 sich die Größe des Terminalfensters verändert:
@@ -5915,7 +5855,7 @@ sich die Größe des Terminalfensters verändert:
 Der Trigger nutzt das Signal "signal_sigwinch", welches durch WeeChat verschickt wird
 sobald das Signal SIGWINCH vom Terminal empfangen wird.
 
-Die Bedingung `+${info:term_width}+` überprüft die Breite des Terminal (zusätzlich kann
+Die Bedingung `+${info:term_width}+` überprüft die Breite des Terminals (zusätzlich kann
 auch `+${info:term_height}+` genutzt werden).
 
 In obigem Beispiel wird die Nicklist versteckt, sobald das Terminal verkleinert wird.
@@ -5923,7 +5863,7 @@ Die Benutzerliste wird wieder angezeigt, sobald die Breite des Terminals größe
 gleich 100 Zeichen ist.
 
 [[trigger_example_config_save]]
-==== automatisches speichern der Konfiguration
+==== Automatisches Speichern der Konfiguration
 
 Die Konfigurationsdateien (`+*.conf+`), können automatisch jede Stunde
 gespeichert werden:
@@ -5936,9 +5876,9 @@ Argumente für den Hook-Timer sind:
 
 * _3600000_: 3600 * 1000 Millisekunden, der Callback wird jede Stunde ausgeführt
 * _0_: Abgleich der Sekunden (es findet keine Justierung statt)
-* _0_: maximale Anzahl an aufrufen (0 = unbegrenzt)
+* _0_: maximale Anzahl an Aufrufen (0 = unbegrenzt)
 
-Der Befehl `/mute /save` sorgt dafür, dass die Konfiguration ohne kommentarlos
+Der Befehl `/mute /save` sorgt dafür, dass die Konfiguration kommentarlos
 gespeichert wird (es findet keine Ausgabe im Core-Buffer statt).
 
 [[trigger_commands]]
@@ -5993,7 +5933,7 @@ mit dem Befehl alle installierten Erweiterungen aufgelistet werden.
 Sobald eine Erweiterung beendet wird, entfernt WeeChat:
 
 * Buffer
-* Konfigurationsoptionen (Optionen die in Datein geschrieben wurden)
+* Konfigurationsoptionen (Optionen, die in Dateien geschrieben wurden)
 * alle Hooks: commands, modifiers, process, etc.
 * Infos und Infolisten
 * hdata
@@ -6013,15 +5953,14 @@ Standarderweiterungen:
 |===
 | Erweiterung | Beschreibung
 | alias       | definiert Alias für Befehle.
-| buflist     | Bar-Item mit der Liste aller Buffern.
-| charset     | Zeichensatz (de)-kodierung in Buffern.
+| buflist     | Bar-Item mit der Liste aller Buffer.
+| charset     | Zeichensatz-(De-)Kodierung in Buffern.
 | exec        | ausführen von externen Befehlen aus WeeChat heraus.
 | fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann.
 | fset        | Optionen von WeeChat und Erweiterungen schnell anpassen.
 | irc         | IRC Chat-Protokoll.
 | logger      | erstellt Protokolldateien von Buffern.
-// TRANSLATION MISSING
-| otr        | End-to-end encryption of IRC private messages with Off-the-Record (OTR) messaging.
+| otr         | Ende-zu-Ende-Verschlüsselung privater IRC-Nachrichten mit Off-the-Record (OTR) Messaging.
 | relay       | Daten via Netzwerk übermitteln.
 | script      | Skripten-Manager.
 | python      | Python-Skript API.
@@ -6280,11 +6219,11 @@ Dokumentation als auch die FAQ gelesen hat, welche mit WeeChat bereitgestellt wi
 Unterstützung im IRC findet man auf dem Server _irc.libera.chat_:
 
 * offizielle Kanäle (Entwickler vertreten):
-** _#weechat_ (englisch)
-** _#weechat-fr_ (französisch)
+** _#weechat_ (Englisch)
+** _#weechat-fr_ (Französisch)
 * keine offiziellen Kanäle:
-** _#weechat-de_ (deutsch)
-** _#weechat-fi_ (finnisch)
+** _#weechat-de_ (Deutsch)
+** _#weechat-fi_ (Finnisch)
 
 Weitere Möglichkeiten der Unterstützung finden Sie unter
 https://weechat.org/about/support/[this page ^↗^^].
