@@ -94,6 +94,7 @@ otr_modifier_drop_assembly (struct t_otr_peer_data *peer_data)
     free (peer_data->assembly);
     peer_data->assembly = NULL;
     peer_data->assembly_length = 0;
+    peer_data->assembly_first_length = 0;
     peer_data->assembly_time = 0;
 }
 
@@ -161,8 +162,14 @@ otr_modifier_assembly_timer_cb (const void *pointer, void *data,
 
 /*
  * Add a received line to the assembly buffer of a peer: an OTR encoded message
- * ("?OTR:...") that does not end with "." has been split over several IRC
- * lines, and the next lines (only base64 chars) are added until the final ".".
+ * ("?OTR:" followed by base64 chars) that does not end with "." has been split
+ * over several IRC lines, and the next lines (only base64 chars) are added until
+ * the final ".".
+ *
+ * The sender splits the message at the max length of IRC lines, so a line in
+ * the middle (not ending with ".") which is much shorter than the first line is
+ * not a continuation (for example "ok" received after an incomplete OTR
+ * message).
  *
  * Any other line (plain text, OTR query, OTR fragment, OTR error) is returned
  * as-is; if an OTR message was being assembled, it is dropped (it is dropped
@@ -190,6 +197,8 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
     if (peer_data->assembly)
     {
         if (otr_modifier_is_base64_part (line)
+            && ((line[length - 1] == '.')
+                || (length >= peer_data->assembly_first_length / 2))
             && (peer_data->assembly_length + length + 1 <= OTR_MAX_ASSEMBLY))
         {
             new_assembly = realloc (peer_data->assembly,
@@ -205,6 +214,7 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
             *message = peer_data->assembly;
             peer_data->assembly = NULL;
             peer_data->assembly_length = 0;
+            peer_data->assembly_first_length = 0;
             peer_data->assembly_time = 0;
             return 1;
         }
@@ -213,6 +223,7 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
     }
 
     if ((strncmp (line, "?OTR:", 5) == 0) && (line[length - 1] != '.')
+        && otr_modifier_is_base64_part (line + 5)
         && (length + 1 <= OTR_MAX_ASSEMBLY))
     {
         /* Start of an OTR encoded message split over several IRC lines. */
@@ -220,6 +231,7 @@ otr_modifier_assemble (struct t_otr_peer_data *peer_data, const char *line,
         if (!peer_data->assembly)
             return 0;
         peer_data->assembly_length = length;
+        peer_data->assembly_first_length = length;
         peer_data->assembly_time = time (NULL);
         if (!otr_modifier_assembly_timer)
         {

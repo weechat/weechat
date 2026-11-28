@@ -118,13 +118,36 @@ TEST(OtrModifier, Assemble)
                                           &message));
     POINTERS_EQUAL(NULL, message);
     STRCMP_EQUAL("?OTR:AAMDabc", peer_data.assembly);
-    LONGS_EQUAL(0, otr_modifier_assemble (&peer_data, "def", &message));
+    LONGS_EQUAL(0, otr_modifier_assemble (&peer_data, "defghi", &message));
     POINTERS_EQUAL(NULL, message);
-    LONGS_EQUAL(1, otr_modifier_assemble (&peer_data, "ghi.", &message));
-    STRCMP_EQUAL("?OTR:AAMDabcdefghi.", message);
+    LONGS_EQUAL(1, otr_modifier_assemble (&peer_data, "j.", &message));
+    STRCMP_EQUAL("?OTR:AAMDabcdefghij.", message);
     free (message);
     POINTERS_EQUAL(NULL, peer_data.assembly);
     LONGS_EQUAL(0, peer_data.assembly_length);
+
+    /* Plain text starting with "?OTR:" (not base64) must not be hidden. */
+    message = NULL;
+    LONGS_EQUAL(1, otr_modifier_assemble (&peer_data, "?OTR: what is that",
+                                          &message));
+    STRCMP_EQUAL("?OTR: what is that", message);
+    free (message);
+    POINTERS_EQUAL(NULL, peer_data.assembly);
+    message = NULL;
+    LONGS_EQUAL(1, otr_modifier_assemble (&peer_data, "?OTR:", &message));
+    STRCMP_EQUAL("?OTR:", message);
+    free (message);
+    POINTERS_EQUAL(NULL, peer_data.assembly);
+
+    /* Short base64 line (not a continuation) after an incomplete message. */
+    message = NULL;
+    LONGS_EQUAL(0, otr_modifier_assemble (&peer_data, "?OTR:AAMDabcdef",
+                                          &message));
+    LONGS_EQUAL(1, otr_modifier_assemble (&peer_data, "ok", &message));
+    STRCMP_EQUAL("ok", message);
+    free (message);
+    POINTERS_EQUAL(NULL, peer_data.assembly);
+    LONGS_EQUAL(0, peer_data.assembly_first_length);
 
     /* Incomplete OTR message dropped by a line which is not base64. */
     message = NULL;
