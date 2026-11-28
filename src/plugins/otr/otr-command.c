@@ -795,7 +795,8 @@ end:
 }
 
 /*
- * Run subcommand "log": display or change logging of the current OTR session.
+ * Run subcommand "log": display or change logging of the current OTR session
+ * (the logging state is displayed if there is nothing to change).
  *
  * Return:
  *   WEECHAT_RC_OK: OK
@@ -810,6 +811,14 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
     struct t_otr_peer_data *ptr_peer_data;
     char *account, *peer;
     ConnContext *ptr_context;
+    int logged;
+
+    if ((num_args == 2)
+        && (strcmp (args[1], "start") != 0)
+        && (strcmp (args[1], "stop") != 0))
+    {
+        return WEECHAT_RC_ERROR;
+    }
 
     if (!otr_command_peer_args (buffer, args + 1, 0, &peer_ref))
         return WEECHAT_RC_ERROR;
@@ -819,6 +828,7 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
 
     ptr_context = otr_context_find (account, peer);
     ptr_peer_data = otr_context_peer_data_for (account, peer);
+    logged = otr_log_buffer_is_logged (buffer);
 
     if (!otr_context_encrypted (ptr_context))
     {
@@ -826,23 +836,7 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
             peer_ref.server, peer, OTR_CONFIG_LEVEL_ERROR,
             _("This conversation is not encrypted."));
     }
-    else if (num_args == 1)
-    {
-        if (otr_log_buffer_is_logged (buffer))
-        {
-            otr_buffer_peer_print (
-                peer_ref.server, peer, OTR_CONFIG_LEVEL_WARNING,
-                _("This conversation is currently being logged."));
-        }
-        else
-        {
-            otr_buffer_peer_print (
-                peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
-                _("This conversation is currently NOT being logged."));
-        }
-    }
-    else if ((strcmp (args[1], "start") == 0)
-             && !otr_log_buffer_is_logged (buffer))
+    else if ((num_args == 2) && (strcmp (args[1], "start") == 0) && !logged)
     {
         otr_log_save_level (ptr_peer_data, buffer);
         otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_WARNING,
@@ -853,14 +847,26 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
                                  "this with \"/otr log stop\"."));
         weechat_command (buffer, "/mute logger set 9");
     }
-    else if ((strcmp (args[1], "stop") == 0)
-             && otr_log_buffer_is_logged (buffer))
+    else if ((num_args == 2) && (strcmp (args[1], "stop") == 0) && logged)
     {
         otr_log_save_level (ptr_peer_data, buffer);
         weechat_command (buffer, "/mute logger set 0");
         otr_buffer_peer_print (peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
                                _("From this point on, this conversation will "
                                  "NOT be logged anymore."));
+    }
+    else if (logged)
+    {
+        /* Without argument, or nothing to change: display the state. */
+        otr_buffer_peer_print (
+            peer_ref.server, peer, OTR_CONFIG_LEVEL_WARNING,
+            _("This conversation is currently being logged."));
+    }
+    else
+    {
+        otr_buffer_peer_print (
+            peer_ref.server, peer, OTR_CONFIG_LEVEL_INFO,
+            _("This conversation is currently NOT being logged."));
     }
     weechat_bar_item_update (OTR_BAR_ITEM);
 

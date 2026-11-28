@@ -19,6 +19,8 @@ extern "C"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-history.h"
 #include "src/gui/gui-line.h"
+#include "src/plugins/weechat-plugin.h"
+#include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-command.h"
@@ -32,6 +34,8 @@ extern const char *otr_command_get_policy_value (const char *value);
 extern void otr_command_show_peer_fingerprints (const char *search);
 extern int otr_command_has_smp_secret (const char *string);
 extern int otr_command_start (const struct t_otr_peer_ref *peer_ref);
+extern int otr_command_log (struct t_gui_buffer *buffer, char **args,
+                            int num_args);
 }
 
 TEST_GROUP(OtrCommand)
@@ -379,6 +383,58 @@ TEST(OtrCommand, StartDisabledByPolicy)
     run_cmd_quiet ("/mute /unset otr.policy.test_otr_start_pol.*");
     run_cmd_quiet ("/mute /disconnect test_otr_start_pol");
     run_cmd_quiet ("/mute /server del test_otr_start_pol");
+}
+
+/*
+ * Test functions:
+ *   otr_command_log
+ */
+
+TEST(OtrCommand, Log)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    ConnContext *ptr_context;
+    char *args[2];
+
+    run_cmd_quiet ("/mute /server add test_otr_cmd_log fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_cmd_log");
+    server = irc_server_search ("test_otr_cmd_log");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+    run_cmd_quiet ("/mute /set logger.file.auto_log off");
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "bob", 0, 0);
+    CHECK(channel);
+    ptr_context = otrl_context_find (otr_us, "bob", "alice@test_otr_cmd_log",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
+                                     NULL, NULL, NULL);
+    CHECK(ptr_context);
+    ptr_context->msgstate = OTRL_MSGSTATE_ENCRYPTED;
+
+    args[0] = (char *)"log";
+
+    /* Invalid argument: error. */
+    args[1] = (char *)"foo";
+    LONGS_EQUAL(WEECHAT_RC_ERROR, otr_command_log (channel->buffer, args, 2));
+
+    /* Without argument: state displayed. */
+    LONGS_EQUAL(WEECHAT_RC_OK, otr_command_log (channel->buffer, args, 1));
+    CHECK(strstr (channel->buffer->own_lines->last_line->data->message,
+                  "This conversation is currently NOT being logged."));
+
+    /* Nothing to change: state displayed. */
+    args[1] = (char *)"stop";
+    gui_buffer_clear (channel->buffer);
+    LONGS_EQUAL(WEECHAT_RC_OK, otr_command_log (channel->buffer, args, 2));
+    CHECK(channel->buffer->own_lines->last_line);
+    CHECK(strstr (channel->buffer->own_lines->last_line->data->message,
+                  "This conversation is currently NOT being logged."));
+
+    ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+    gui_buffer_close (channel->buffer);
+    run_cmd_quiet ("/mute /unset logger.file.auto_log");
+    run_cmd_quiet ("/mute /disconnect test_otr_cmd_log");
+    run_cmd_quiet ("/mute /server del test_otr_cmd_log");
 }
 
 /*
