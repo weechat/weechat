@@ -7,12 +7,10 @@
 
 /* Generation of OTR private keys in background */
 
-#include <fcntl.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/stat.h>
 
 #include "../weechat-plugin.h"
 #include "otr.h"
@@ -231,8 +229,11 @@ otr_key_write_account (FILE *file, const char *account, const char *protocol,
 }
 
 /*
- * Write the fingerprints of peers in the file of fingerprints; an error is
- * displayed if the file can not be written.
+ * Write the fingerprints of peers in the file of fingerprints: they are written
+ * in a new temporary file (mode 0600), which then replaces the file of
+ * fingerprints (if this file is a symbolic link, the target of the link is
+ * replaced and the link is kept); an error is displayed if the file can not be
+ * written.
  *
  * Return 1 if OK, 0 if error.
  */
@@ -240,21 +241,29 @@ otr_key_write_account (FILE *file, const char *account, const char *protocol,
 int
 otr_key_write_fingerprints (void)
 {
+    char *filename, *tmp_filename;
+    FILE *file;
     gcry_error_t error;
 
     if (!otr_us || !otr_fprfile)
         return 0;
 
-    error = otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
-    if (error)
+    error = 0;
+    file = otr_util_file_replace_start (otr_fprfile, &filename, &tmp_filename);
+    if (file)
     {
-        otr_buffer_error_core (
-            _("unable to save OTR fingerprints in file \"%s\": %s"),
-            otr_fprfile, gcry_strerror (error));
-        return 0;
+        error = otrl_privkey_write_fingerprints_FILEp (otr_us, file);
+        if (otr_util_file_replace_end (file, filename, tmp_filename,
+                                       (error) ? 0 : 1))
+        {
+            return 1;
+        }
     }
 
-    return 1;
+    otr_buffer_error_core (
+        _("unable to save OTR fingerprints in file \"%s\": %s"),
+        otr_fprfile, (error) ? gcry_strerror (error) : strerror (errno));
+    return 0;
 }
 
 /*
@@ -284,17 +293,25 @@ otr_key_print (int color, const char *format, const char *account)
  * replaces the file of private keys; if this file is a symbolic link, the
  * target of the link is replaced and the link is kept.
  *
+ * If error is not NULL and the key can not be saved, *error is set to the
+ * reason of the failure (static string, must not be freed).
+ *
  * Return 1 if OK, 0 if error.
  */
 
 int
-otr_key_save (const char *account, const char *protocol, const char *key)
+otr_key_save (const char *account, const char *protocol, const char *key,
+              const char **error)
 {
     gcry_sexp_t sexp_key, privkey;
+    gcry_error_t gcry_error;
     OtrlPrivKey *ptr_privkey;
     char *filename, *tmp_filename;
     FILE *file;
-    int fd, rc;
+    int write_ok, rc;
+
+    if (error)
+        *error = _("invalid key");
 
     if (!otr_us || !account || !protocol || !key || !key[0])
         return 0;
@@ -307,80 +324,46 @@ otr_key_save (const char *account, const char *protocol, const char *key)
         return 0;
 
     rc = 0;
-    tmp_filename = NULL;
-    file = NULL;
 
-    /* Write in the target of the link if the file is a symbolic link. */
-    filename = realpath (otr_keyfile, NULL);
-    if (!filename)
-        filename = strdup (otr_keyfile);
-    if (!filename)
-        goto end;
-
-    weechat_asprintf (&tmp_filename, "%s.tmp", filename);
-    if (!tmp_filename)
-        goto end;
-
-    /*
-     * The file contains private keys: always create a new file, readable only
-     * by the user (an existing file could have other permissions, or be a
-     * symbolic link).
-     */
-    unlink (tmp_filename);
-    fd = open (tmp_filename, O_WRONLY | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
-    if (fd < 0)
-        goto end;
-    file = fdopen (fd, "w");
-    if (!file)
-    {
-        close (fd);
-        goto end;
-    }
-
-    if (fprintf (file, "(privkeys\n") < 0)
-        goto end;
-    for (ptr_privkey = otr_us->privkey_root; ptr_privkey;
-         ptr_privkey = ptr_privkey->next)
-    {
-        /* The new key replaces the key of the same account. */
-        if ((strcmp (ptr_privkey->accountname, account) == 0)
-            && (strcmp (ptr_privkey->protocol, protocol) == 0))
-        {
-            continue;
-        }
-        if (!otr_key_write_account (file, ptr_privkey->accountname,
-                                    ptr_privkey->protocol,
-                                    ptr_privkey->privkey))
-        {
-            goto end;
-        }
-    }
-    if (!otr_key_write_account (file, account, protocol, privkey))
-        goto end;
-    if (fprintf (file, ")\n") < 0)
-        goto end;
-    if ((fflush (file) != 0) || (fsync (fileno (file)) != 0))
-        goto end;
-
-    if (fclose (file) != 0)
-    {
-        file = NULL;
-        goto end;
-    }
-    file = NULL;
-
-    if (rename (tmp_filename, filename) != 0)
-        goto end;
-
-    rc = (otrl_privkey_read (otr_us, otr_keyfile) == 0) ? 1 : 0;
-
-end:
+    /* The file contains private keys: new file readable only by the user. */
+    file = otr_util_file_replace_start (otr_keyfile, &filename, &tmp_filename);
     if (file)
-        fclose (file);
-    if (!rc && tmp_filename)
-        unlink (tmp_filename);
-    free (tmp_filename);
-    free (filename);
+    {
+        write_ok = (fprintf (file, "(privkeys\n") >= 0) ? 1 : 0;
+        for (ptr_privkey = otr_us->privkey_root; write_ok && ptr_privkey;
+             ptr_privkey = ptr_privkey->next)
+        {
+            /* The new key replaces the key of the same account. */
+            if ((strcmp (ptr_privkey->accountname, account) == 0)
+                && (strcmp (ptr_privkey->protocol, protocol) == 0))
+            {
+                continue;
+            }
+            write_ok = otr_key_write_account (file, ptr_privkey->accountname,
+                                              ptr_privkey->protocol,
+                                              ptr_privkey->privkey);
+        }
+        write_ok = (write_ok
+                    && otr_key_write_account (file, account, protocol, privkey)
+                    && (fprintf (file, ")\n") >= 0)) ? 1 : 0;
+        if (otr_util_file_replace_end (file, filename, tmp_filename, write_ok))
+        {
+            gcry_error = otrl_privkey_read (otr_us, otr_keyfile);
+            if (gcry_error == 0)
+                rc = 1;
+            else if (error)
+                *error = gcry_strerror (gcry_error);
+        }
+        else if (error)
+        {
+            *error = strerror (errno);
+        }
+    }
+    else if (error)
+    {
+        *error = strerror (errno);
+    }
+
     gcry_sexp_release (privkey);
     return rc;
 }
@@ -492,10 +475,13 @@ otr_key_process_cb (const void *pointer, void *data, const char *command,
                     int return_code, const char *out, const char *err)
 {
     struct t_otr_key_generation *generation;
+    const char *error;
 
     /* Make C compiler happy. */
     (void) data;
     (void) command;
+
+    error = NULL;
 
     if (return_code == WEECHAT_HOOK_PROCESS_CHILD)
         return otr_key_generate_child ();
@@ -522,12 +508,12 @@ otr_key_process_cb (const void *pointer, void *data, const char *command,
             *(generation->error) : _("process failed or timeout reached"));
     }
     else if (!otr_key_save (generation->account, generation->protocol,
-                            *(generation->output)))
+                            *(generation->output), &error))
     {
         otr_buffer_error_core (
             _("generation of OTR key for %s failed: unable to save key in "
-              "file \"%s\""),
-            generation->account, otr_keyfile);
+              "file \"%s\": %s"),
+            generation->account, otr_keyfile, error);
     }
     else
     {

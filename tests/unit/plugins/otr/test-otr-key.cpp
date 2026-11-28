@@ -12,6 +12,7 @@
 
 extern "C"
 {
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,7 +27,7 @@ extern "C"
 extern void otr_key_generation_add_peer (
     struct t_otr_key_generation *generation, const char *peer);
 extern int otr_key_save (const char *account, const char *protocol,
-                         const char *key);
+                         const char *key, const char **error);
 extern int otr_key_process_cb (const void *pointer, void *data,
                                const char *command, int return_code,
                                const char *out, const char *err);
@@ -169,32 +170,41 @@ TEST(OtrKey, Generation)
 TEST(OtrKey, Save)
 {
     OtrlPrivKey *ptr_privkey;
+    const char *error;
 
-    LONGS_EQUAL(0, otr_key_save (NULL, OTR_PROTOCOL, OTR_TEST_KEY));
-    LONGS_EQUAL(0, otr_key_save ("alice@srv_key_save", NULL, OTR_TEST_KEY));
-    LONGS_EQUAL(0, otr_key_save ("alice@srv_key_save", OTR_PROTOCOL, NULL));
-    LONGS_EQUAL(0, otr_key_save ("alice@srv_key_save", OTR_PROTOCOL, ""));
+    LONGS_EQUAL(0, otr_key_save (NULL, OTR_PROTOCOL, OTR_TEST_KEY, NULL));
+    LONGS_EQUAL(0, otr_key_save ("alice@srv_key_save", NULL, OTR_TEST_KEY,
+                                 NULL));
+    LONGS_EQUAL(0, otr_key_save ("alice@srv_key_save", OTR_PROTOCOL, NULL,
+                                 NULL));
+    LONGS_EQUAL(0, otr_key_save ("alice@srv_key_save", OTR_PROTOCOL, "",
+                                 NULL));
+    error = NULL;
     LONGS_EQUAL(0, otr_key_save ("alice@srv_key_save", OTR_PROTOCOL,
-                                 "invalid key"));
+                                 "invalid key", &error));
+    STRCMP_EQUAL("invalid key", error);
+    error = NULL;
     LONGS_EQUAL(0, otr_key_save ("alice@srv_key_save", OTR_PROTOCOL,
-                                 "(public-key (dsa (y #01#)))"));
+                                 "(public-key (dsa (y #01#)))", &error));
+    STRCMP_EQUAL("invalid key", error);
     POINTERS_EQUAL(NULL, otrl_privkey_find (otr_us, "alice@srv_key_save",
                                             OTR_PROTOCOL));
 
     /* Key saved and loaded in libotr. */
+    error = NULL;
     LONGS_EQUAL(1, otr_key_save ("alice@srv_key_save", OTR_PROTOCOL,
-                                 OTR_TEST_KEY));
+                                 OTR_TEST_KEY, &error));
     CHECK(otrl_privkey_find (otr_us, "alice@srv_key_save", OTR_PROTOCOL));
 
     /* Another account: both keys are kept. */
     LONGS_EQUAL(1, otr_key_save ("bob@srv_key_save", OTR_PROTOCOL,
-                                 OTR_TEST_KEY));
+                                 OTR_TEST_KEY, NULL));
     CHECK(otrl_privkey_find (otr_us, "alice@srv_key_save", OTR_PROTOCOL));
     CHECK(otrl_privkey_find (otr_us, "bob@srv_key_save", OTR_PROTOCOL));
 
     /* Same account again: key replaced (only one key for the account). */
     LONGS_EQUAL(1, otr_key_save ("alice@srv_key_save", OTR_PROTOCOL,
-                                 OTR_TEST_KEY));
+                                 OTR_TEST_KEY, NULL));
     CHECK(otrl_privkey_find (otr_us, "alice@srv_key_save", OTR_PROTOCOL));
     for (ptr_privkey = otr_us->privkey_root; ptr_privkey;
          ptr_privkey = ptr_privkey->next)
@@ -212,12 +222,13 @@ TEST(OtrKey, Save)
 
 /*
  * Test functions:
- *   otr_key_save (permissions of file, symbolic link)
+ *   otr_key_save (permissions of file, symbolic link, file error)
  */
 
 TEST(OtrKey, SaveFile)
 {
-    char *tmp_filename, *target_filename;
+    char *tmp_filename, *target_filename, *old_keyfile;
+    const char *error;
     struct stat st;
     FILE *file;
 
@@ -234,7 +245,7 @@ TEST(OtrKey, SaveFile)
     fclose (file);
     chmod (tmp_filename, 0644);
     LONGS_EQUAL(1, otr_key_save ("alice@srv_key_file", OTR_PROTOCOL,
-                                 OTR_TEST_KEY));
+                                 OTR_TEST_KEY, NULL));
     LONGS_EQUAL(0, stat (otr_keyfile, &st));
     LONGS_EQUAL(0600, st.st_mode & 0777);
     LONGS_EQUAL(-1, access (tmp_filename, F_OK));
@@ -243,7 +254,7 @@ TEST(OtrKey, SaveFile)
     LONGS_EQUAL(0, rename (otr_keyfile, target_filename));
     LONGS_EQUAL(0, symlink (target_filename, otr_keyfile));
     LONGS_EQUAL(1, otr_key_save ("bob@srv_key_file", OTR_PROTOCOL,
-                                 OTR_TEST_KEY));
+                                 OTR_TEST_KEY, NULL));
     LONGS_EQUAL(0, lstat (otr_keyfile, &st));
     CHECK(S_ISLNK(st.st_mode));
     LONGS_EQUAL(0, stat (target_filename, &st));
@@ -252,6 +263,15 @@ TEST(OtrKey, SaveFile)
     CHECK(otrl_privkey_find (otr_us, "bob@srv_key_file", OTR_PROTOCOL));
     LONGS_EQUAL(0, unlink (otr_keyfile));
     LONGS_EQUAL(0, rename (target_filename, otr_keyfile));
+
+    /* Directory of the file does not exist: error with the reason. */
+    old_keyfile = otr_keyfile;
+    otr_keyfile = (char *)"/nonexistent_otr_dir/otr.private_key";
+    error = NULL;
+    LONGS_EQUAL(0, otr_key_save ("carol@srv_key_file", OTR_PROTOCOL,
+                                 OTR_TEST_KEY, &error));
+    STRCMP_EQUAL(strerror (ENOENT), error);
+    otr_keyfile = old_keyfile;
 
     free (tmp_filename);
     free (target_filename);
@@ -325,6 +345,7 @@ TEST(OtrKey, ProcessCb)
                     ptr_last_line,
                     "generation of OTR key for alice@srv_key_cb_error failed: "
                     "unable to save key in file"));
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line, ": invalid key"));
 }
 
 /*

@@ -10,6 +10,10 @@
 
 extern void otr_util_wipe (void *pointer, size_t size);
 extern void otr_util_free_secret (char *string);
+extern FILE *otr_util_file_replace_start (const char *filename, char **target,
+                                          char **tmp_filename);
+extern int otr_util_file_replace_end (FILE *file, char *target,
+                                      char *tmp_filename, int write_ok);
 extern char *otr_util_dupstr (const char *string);
 extern char *otr_util_irc_sanitize (const char *string);
 extern char *otr_util_peer_text (const char *text);
