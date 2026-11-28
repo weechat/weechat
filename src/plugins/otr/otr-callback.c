@@ -583,7 +583,7 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_ERROR,
                 _("Error setting up the OTR session: %s"),
-                (error) ? gcry_strerror (error) : "unknown error");
+                (error) ? gcry_strerror (error) : _("unknown error"));
             break;
         case OTRL_MSGEVENT_MSG_REFLECTED:
             otr_buffer_ctx_print (
