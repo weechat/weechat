@@ -372,9 +372,12 @@ otr_command_start (const struct t_otr_peer_ref *peer_ref)
 {
     char *account, *peer, *message;
     const char *ptr_query;
+    int rc;
 
     if (!otr_command_resolve (peer_ref, &account, &peer))
         return OTR_COMMAND_RC_ERROR_DISPLAYED;
+
+    rc = OTR_COMMAND_RC_ERROR_DISPLAYED;
 
     ptr_query = otr_policy_query (account, peer);
     if (!ptr_query)
@@ -414,6 +417,8 @@ otr_command_start (const struct t_otr_peer_ref *peer_ref)
         goto end;
     }
 
+    rc = WEECHAT_RC_OK;
+
     if (!otr_policy_for (account, peer, "send_tag"))
     {
         weechat_asprintf (
@@ -431,7 +436,7 @@ otr_command_start (const struct t_otr_peer_ref *peer_ref)
 end:
     free (account);
     free (peer);
-    return WEECHAT_RC_OK;
+    return rc;
 }
 
 /*

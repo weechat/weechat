@@ -12,8 +12,10 @@
 
 extern "C"
 {
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "src/core/core-config-file.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-history.h"
 #include "src/gui/gui-line.h"
@@ -29,6 +31,7 @@ extern const char *otr_command_get_policy_name (const char *name);
 extern const char *otr_command_get_policy_value (const char *value);
 extern void otr_command_show_peer_fingerprints (const char *search);
 extern int otr_command_has_smp_secret (const char *string);
+extern int otr_command_start (const struct t_otr_peer_ref *peer_ref);
 }
 
 TEST_GROUP(OtrCommand)
@@ -320,6 +323,42 @@ TEST(OtrCommand, ErrorDisplayedOnce)
     ptr_last_line = gui_buffers->own_lines->last_line;
     run_cmd_quiet ("/otr status bob");
     LONGS_EQUAL(1, core_line_displayed (ptr_last_line, "invalid arguments"));
+}
+
+/*
+ * Test functions:
+ *   otr_command_start (OTR disabled by policy)
+ */
+
+TEST(OtrCommand, StartDisabledByPolicy)
+{
+    struct t_irc_server *server;
+    struct t_otr_peer_ref peer_ref;
+    struct t_gui_line *ptr_last_line;
+
+    run_cmd_quiet ("/mute /server add test_otr_start_pol fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_start_pol");
+    server = irc_server_search ("test_otr_start_pol");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+
+    config_file_option_set_with_string (
+        "otr.policy.test_otr_start_pol.alice.bob.allow_v2", "off");
+    config_file_option_set_with_string (
+        "otr.policy.test_otr_start_pol.alice.bob.allow_v3", "off");
+
+    snprintf (peer_ref.nick, sizeof (peer_ref.nick), "bob");
+    snprintf (peer_ref.server, sizeof (peer_ref.server), "test_otr_start_pol");
+    LONGS_EQUAL(OTR_COMMAND_RC_ERROR_DISPLAYED, otr_command_start (&peer_ref));
+
+    /* Error displayed once by the command. */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    run_cmd_quiet ("/otr start bob test_otr_start_pol");
+    LONGS_EQUAL(0, core_line_displayed (ptr_last_line, "invalid arguments"));
+
+    run_cmd_quiet ("/mute /unset otr.policy.test_otr_start_pol.*");
+    run_cmd_quiet ("/mute /disconnect test_otr_start_pol");
+    run_cmd_quiet ("/mute /server del test_otr_start_pol");
 }
 
 /*
