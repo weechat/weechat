@@ -341,7 +341,10 @@ otr_command_show_peer_fingerprints (const char *search)
     {
         if (ptr_context->their_instance != OTRL_INSTAG_MASTER)
             continue;
-        snprintf (peer, sizeof (peer), "%s", ptr_context->username);
+        snprintf (peer, sizeof (peer), "%s",
+                  otr_irc_nick_display (
+                      otr_irc_account_server (ptr_context->accountname),
+                      ptr_context->username));
         if (search && !weechat_strcasestr (peer, search))
             continue;
         for (ptr_fingerprint = ptr_context->fingerprint_root.next;
@@ -433,7 +436,7 @@ otr_command_start (const struct t_otr_peer_ref *peer_ref)
             &message,
             _("To try OTR on all conversations with %s@%s: /otr policy "
               "send_tag on"),
-            peer, peer_ref->server);
+            otr_irc_nick_display (peer_ref->server, peer), peer_ref->server);
         if (message)
         {
             otr_buffer_peer_hint (peer_ref->server, peer, message);
@@ -593,7 +596,8 @@ otr_command_trust (const struct t_otr_peer_ref *peer_ref, int trust)
                           (trust) ?
                           _("%s@%s is now authenticated.") :
                           _("%s@%s is no longer authenticated."),
-                          peer, peer_ref->server);
+                          otr_irc_nick_display (peer_ref->server, peer),
+                          peer_ref->server);
         if (message)
         {
             otr_buffer_peer_print (peer_ref->server, peer,
@@ -788,7 +792,7 @@ otr_command_smp (struct t_gui_buffer *buffer, char **args, int num_args)
         weechat_asprintf (
             &message,
             _("There is currently no OTR session with %s@%s."),
-            peer, peer_ref.server);
+            otr_irc_nick_display (peer_ref.server, peer), peer_ref.server);
         if (message)
         {
             otr_buffer_peer_print (peer_ref.server, peer,
@@ -814,7 +818,7 @@ otr_command_smp (struct t_gui_buffer *buffer, char **args, int num_args)
             weechat_asprintf (
                 &message,
                 _("There is no SMP request from %s@%s to respond to."),
-                peer, peer_ref.server);
+                otr_irc_nick_display (peer_ref.server, peer), peer_ref.server);
             if (message)
             {
                 otr_buffer_peer_print (peer_ref.server, peer,

@@ -182,7 +182,10 @@ otr_buffer_peer_print (const char *server, const char *nick, int color,
     message_with_nick = NULL;
 
     if (nick && nick[0] && !otr_buffer_is_private (ptr_buffer))
-        weechat_asprintf (&message_with_nick, "[%s] %s", nick, message);
+    {
+        weechat_asprintf (&message_with_nick, "[%s] %s",
+                          otr_irc_nick_display (server, nick), message);
+    }
 
     /*
      * Not in the private buffer with the peer (for example in core buffer):

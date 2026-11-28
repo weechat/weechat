@@ -16,10 +16,16 @@ extern "C"
 #include <string.h>
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-line.h"
+#include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/otr/otr.h"
+#include "src/plugins/otr/otr-buffer.h"
 #include "src/plugins/otr/otr-context.h"
 #include "src/plugins/otr/otr-irc.h"
+#include "src/plugins/otr/otr-modifier.h"
+
+extern void otr_irc_nick_rename (const char *server, const char *old_nick,
+                                 const char *new_nick);
 }
 
 TEST_GROUP(OtrIrc)
@@ -159,6 +165,108 @@ TEST(OtrIrc, NickCb)
 
     run_cmd_quiet ("/mute /disconnect test_otr_nick");
     run_cmd_quiet ("/mute /server del test_otr_nick");
+}
+
+/*
+ * Test functions:
+ *   otr_irc_nick_key
+ *   otr_irc_nick_remember
+ *   otr_irc_nick_rename
+ *   otr_irc_nick_display
+ *   otr_irc_nicks_free
+ */
+
+TEST(OtrIrc, NickDisplay)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_gui_line *ptr_last_line;
+    ConnContext *ptr_context;
+
+    otr_irc_nicks_free ();
+
+    POINTERS_EQUAL(NULL, otr_irc_nick_display (NULL, NULL));
+    STRCMP_EQUAL("bob", otr_irc_nick_display (NULL, "bob"));
+    STRCMP_EQUAL("bob", otr_irc_nick_display ("", "bob"));
+
+    /* Nick not known: nick given. */
+    STRCMP_EQUAL("flashcode", otr_irc_nick_display ("srv_disp", "flashcode"));
+    POINTERS_EQUAL(NULL, otr_irc_nicks);
+
+    /* Nick remembered: real case displayed, for any case of nick given. */
+    otr_irc_nick_remember ("srv_disp", "FlashCode", 1);
+    CHECK(otr_irc_nicks);
+    STRCMP_EQUAL("FlashCode", otr_irc_nick_display ("srv_disp", "flashcode"));
+    STRCMP_EQUAL("FlashCode", otr_irc_nick_display ("srv_disp", "FLASHCODE"));
+    STRCMP_EQUAL("flashcode", otr_irc_nick_display ("srv_other", "flashcode"));
+
+    /* Nick known: not replaced if replace is 0. */
+    otr_irc_nick_remember ("srv_disp", "flashcode", 0);
+    STRCMP_EQUAL("FlashCode", otr_irc_nick_display ("srv_disp", "flashcode"));
+    otr_irc_nick_remember ("srv_disp", "FLASHcode", 1);
+    STRCMP_EQUAL("FLASHcode", otr_irc_nick_display ("srv_disp", "flashcode"));
+
+    /* Casemapping rfc1459: "[]" are lower case of "{}". */
+    otr_irc_nick_remember ("srv_disp", "Flash[X]", 1);
+    STRCMP_EQUAL("Flash[X]", otr_irc_nick_display ("srv_disp", "flash{x}"));
+
+    /* Nick change of a known nick: new nick remembered, old one removed. */
+    otr_irc_nick_rename ("srv_disp", "FLASHcode", "FlashCode_");
+    STRCMP_EQUAL("FlashCode_",
+                 otr_irc_nick_display ("srv_disp", "flashcode_"));
+    STRCMP_EQUAL("flashcode", otr_irc_nick_display ("srv_disp", "flashcode"));
+
+    /* Nick change of an unknown nick: not remembered. */
+    otr_irc_nick_rename ("srv_disp", "carol", "Carol2");
+    STRCMP_EQUAL("carol2", otr_irc_nick_display ("srv_disp", "carol2"));
+
+    otr_irc_nicks_free ();
+    POINTERS_EQUAL(NULL, otr_irc_nicks);
+    otr_irc_nicks_free ();
+
+    run_cmd_quiet ("/mute /server add test_otr_disp fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_otr_disp");
+    server = irc_server_search ("test_otr_disp");
+    CHECK(server);
+    irc_server_set_nick (server, "alice");
+    server->is_connected = 1;
+
+    /* Nick not known: nick displayed in the private buffer. */
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "Bob", 0, 0);
+    CHECK(channel);
+    STRCMP_EQUAL("Bob", otr_irc_nick_display ("test_otr_disp", "bob"));
+    gui_buffer_close (channel->buffer);
+    STRCMP_EQUAL("bob", otr_irc_nick_display ("test_otr_disp", "bob"));
+
+    /* Real case of nick received in a message, displayed in core buffer. */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    otr_modifier_in_cb (NULL, NULL, "irc_in_privmsg", "test_otr_disp",
+                        ":FlashCode!u@h PRIVMSG alice :?OTR Error: test");
+    STRCMP_EQUAL("FlashCode",
+                 otr_irc_nick_display ("test_otr_disp", "flashcode"));
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line,
+                                        "[FlashCode] Received OTR error: "
+                                        "test"));
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    otr_buffer_peer_print ("test_otr_disp", "flashcode", 0, "message");
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line,
+                                        "[FlashCode] message"));
+
+    /* Nick change of the peer. */
+    otr_irc_nick_cb (NULL, NULL, "test_otr_disp,irc_in2_nick", NULL,
+                     (void *)":FlashCode!u@h NICK :FlashCode2");
+    STRCMP_EQUAL("FlashCode2",
+                 otr_irc_nick_display ("test_otr_disp", "flashcode2"));
+
+    ptr_context = otrl_context_find (otr_us, "flashcode", "alice@test_otr_disp",
+                                     OTR_PROTOCOL, OTRL_INSTAG_MASTER, 0,
+                                     NULL, NULL, NULL);
+    if (ptr_context)
+        otrl_context_forget (ptr_context);
+    otr_irc_nicks_free ();
+
+    run_cmd_quiet ("/mute /disconnect test_otr_disp");
+    run_cmd_quiet ("/mute /server del test_otr_disp");
 }
 
 /*

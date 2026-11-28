@@ -181,7 +181,9 @@ otr_policy_format_peer (const char *account, const char *peer)
         return NULL;
 
     weechat_asprintf (&header, _("Current OTR policies for %s@%s:"),
-                      peer, otr_irc_account_server (account));
+                      otr_irc_nick_display (otr_irc_account_server (account),
+                                            peer),
+                      otr_irc_account_server (account));
     if (header)
     {
         weechat_string_dyn_concat (result, header, -1);

@@ -22,6 +22,14 @@
 
 
 /*
+ * Nicks of peers with their real case, for display: the key is
+ * "server,nick" (nick in lower case, see function otr_irc_nick_tolower), the
+ * value is the nick as received (for example "FlashCode").
+ */
+struct t_hashtable *otr_irc_nicks = NULL;
+
+
+/*
  * Search the IRC buffer for a server and a nick.
  *
  * Return pointer to buffer, NULL if not found.
@@ -158,6 +166,146 @@ otr_irc_nick_tolower (const char *server, const char *nick)
     free (info_args);
 
     return result;
+}
+
+/*
+ * Build the key of a nick in the hashtable of nicks with their real case:
+ * "server,nick" (nick in lower case).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+otr_irc_nick_key (const char *server, const char *nick)
+{
+    char *nick_lower, *key;
+
+    nick_lower = otr_irc_nick_tolower (server, nick);
+    if (!nick_lower)
+        return NULL;
+
+    weechat_asprintf (&key, "%s,%s", server, nick_lower);
+
+    free (nick_lower);
+
+    return key;
+}
+
+/*
+ * Remember the real case of the nick of a peer (for example "FlashCode"), to
+ * display it in OTR messages (instead of the nick in lower case used by OTR).
+ *
+ * If replace is 0, the nick is remembered only if it is not known yet.
+ */
+
+void
+otr_irc_nick_remember (const char *server, const char *nick, int replace)
+{
+    char *key;
+
+    if (!server || !server[0] || !nick || !nick[0])
+        return;
+
+    if (!otr_irc_nicks)
+    {
+        otr_irc_nicks = weechat_hashtable_new (32,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               NULL, NULL);
+        if (!otr_irc_nicks)
+            return;
+    }
+
+    key = otr_irc_nick_key (server, nick);
+    if (!key)
+        return;
+
+    if (replace || !weechat_hashtable_has_key (otr_irc_nicks, key))
+        weechat_hashtable_set (otr_irc_nicks, key, nick);
+
+    free (key);
+}
+
+/*
+ * Handle the nick change of a peer whose real case is known: the new nick is
+ * remembered instead of the old one (nothing is done for other nicks, so that
+ * nick changes of all users in channels are not remembered).
+ */
+
+void
+otr_irc_nick_rename (const char *server, const char *old_nick,
+                     const char *new_nick)
+{
+    char *old_key;
+
+    if (!otr_irc_nicks || !server || !old_nick || !new_nick || !new_nick[0])
+        return;
+
+    old_key = otr_irc_nick_key (server, old_nick);
+    if (!old_key)
+        return;
+
+    if (weechat_hashtable_has_key (otr_irc_nicks, old_key))
+    {
+        weechat_hashtable_remove (otr_irc_nicks, old_key);
+        otr_irc_nick_remember (server, new_nick, 1);
+    }
+
+    free (old_key);
+}
+
+/*
+ * Get the nick of a peer with its real case, for display: the nick as
+ * received from the peer, or as displayed in the private buffer with the peer.
+ *
+ * Return the nick with its real case, or the nick given if it is not known.
+ *
+ * Note: the result must be used immediately (it can be freed when another
+ * nick is remembered or when the private buffer is renamed).
+ */
+
+const char *
+otr_irc_nick_display (const char *server, const char *nick)
+{
+    struct t_gui_buffer *ptr_buffer;
+    const char *ptr_nick;
+    char *key;
+
+    if (!server || !server[0] || !nick || !nick[0])
+        return nick;
+
+    if (otr_irc_nicks)
+    {
+        key = otr_irc_nick_key (server, nick);
+        ptr_nick = (key) ? weechat_hashtable_get (otr_irc_nicks, key) : NULL;
+        free (key);
+        if (ptr_nick)
+            return ptr_nick;
+    }
+
+    ptr_buffer = otr_irc_buffer (server, nick);
+    if (otr_buffer_is_private (ptr_buffer))
+    {
+        ptr_nick = weechat_buffer_get_string (ptr_buffer, "localvar_channel");
+        if (ptr_nick && ptr_nick[0])
+            return ptr_nick;
+    }
+
+    return nick;
+}
+
+/*
+ * Free the nicks of peers with their real case.
+ */
+
+void
+otr_irc_nicks_free (void)
+{
+    if (otr_irc_nicks)
+    {
+        weechat_hashtable_free (otr_irc_nicks);
+        otr_irc_nicks = NULL;
+    }
 }
 
 /*
@@ -491,10 +639,13 @@ otr_irc_nick_cb (const void *pointer, void *data, const char *signal,
     if (!ptr_old_nick || !ptr_old_nick[0] || !ptr_new_nick || !ptr_new_nick[0])
         goto end;
 
-    /* Only our own nick change is handled. */
+    /* Nick change of another user: only the real case of nick is updated. */
     info_nick = weechat_info_get ("irc_nick", server);
     if (!otr_irc_nick_equal (server, info_nick, ptr_new_nick))
+    {
+        otr_irc_nick_rename (server, ptr_old_nick, ptr_new_nick);
         goto end;
+    }
 
     new_account = otr_irc_make_account (server);
     held_peers = weechat_string_dyn_alloc (64);

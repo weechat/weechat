@@ -220,7 +220,7 @@ otr_callback_verify_instructions (ConnContext *context)
 {
     char own_fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
     char peer_fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN], *instructions;
-    const char *ptr_server;
+    const char *ptr_server, *ptr_nick;
 
     ptr_server = otr_irc_account_server (context->accountname);
 
@@ -233,6 +233,8 @@ otr_callback_verify_instructions (ConnContext *context)
         otrl_privkey_hash_to_human (peer_fingerprint,
                                     context->active_fingerprint->fingerprint);
     }
+
+    ptr_nick = otr_irc_nick_display (ptr_server, context->username);
 
     weechat_asprintf (
         &instructions,
@@ -250,10 +252,10 @@ otr_callback_verify_instructions (ConnContext *context)
           "      executing these commands from the private buffer of the "
           "peer."),
         own_fingerprint,
-        context->username, ptr_server, peer_fingerprint,
-        context->username, ptr_server,
-        context->username, ptr_server,
-        context->username, ptr_server);
+        ptr_nick, ptr_server, peer_fingerprint,
+        ptr_nick, ptr_server,
+        ptr_nick, ptr_server,
+        ptr_nick, ptr_server);
 
     return instructions;
 }

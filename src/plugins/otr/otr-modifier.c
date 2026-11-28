@@ -512,6 +512,9 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     if (!account)
         goto end;
 
+    /* Real case of the nick of the peer, displayed in OTR messages. */
+    otr_irc_nick_remember (ptr_server, ptr_nick, 1);
+
     /*
      * CTCP: only a plaintext ACTION is flagged, in the same cases as libotr
      * does for other plaintext messages: OTR session started (encrypted or
@@ -576,7 +579,9 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
                 ptr_context, OTR_CONFIG_LEVEL_INFO,
                 _("%s has ended the OTR session. You should do the "
                   "same:\n/otr finish"),
-                ptr_context->username);
+                otr_irc_nick_display (
+                    otr_irc_account_server (ptr_context->accountname),
+                    ptr_context->username));
         }
         otrl_tlv_free (tlvs);
     }
@@ -1180,6 +1185,12 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         result = strdup ("");
         goto end;
     }
+
+    /*
+     * Real case of the nick of the peer (as typed by the user), only if not
+     * known yet: the nick received from the peer is more reliable.
+     */
+    otr_irc_nick_remember (ptr_server, target, 0);
 
     /* Encryption required, no OTR session yet: message held. */
     if (otr_modifier_must_hold (account, peer))
