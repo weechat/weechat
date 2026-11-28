@@ -192,7 +192,8 @@ otr_command_resolve (const struct t_otr_peer_ref *peer_ref, char **account,
 }
 
 /*
- * Add a row with 4 columns to a table (for display).
+ * Add a row with 4 columns to a table (for display); the row is not added if
+ * there is not enough memory.
  */
 
 void
@@ -225,12 +226,20 @@ otr_command_table_add (struct t_otr_table *table, const char *column1,
     for (i = 0; i < 4; i++)
     {
         table->rows[table->num_rows][i] = otr_util_dupstr (columns[i]);
-        if (table->rows[table->num_rows][i])
+        if (!table->rows[table->num_rows][i])
         {
-            length = strlen (table->rows[table->num_rows][i]);
-            if (length > table->column_width[i])
-                table->column_width[i] = length;
+            while (--i >= 0)
+            {
+                free (table->rows[table->num_rows][i]);
+            }
+            return;
         }
+    }
+    for (i = 0; i < 4; i++)
+    {
+        length = strlen (table->rows[table->num_rows][i]);
+        if (length > table->column_width[i])
+            table->column_width[i] = length;
     }
     table->num_rows++;
 }
