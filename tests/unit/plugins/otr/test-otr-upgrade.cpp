@@ -17,6 +17,7 @@ extern "C"
 #include <string.h>
 #include <unistd.h>
 #include "src/core/core-hook.h"
+#include "src/core/core-infolist.h"
 #include "src/core/core-string.h"
 #include "src/core/weechat.h"
 #include "src/plugins/weechat-plugin.h"
@@ -28,6 +29,7 @@ extern "C"
 
 extern int otr_upgrade_save (int save_sessions);
 extern int otr_upgrade_query_pending (const char *account, const char *peer);
+extern void otr_upgrade_restore_peer (struct t_infolist *infolist);
 extern int otr_upgrade_timer_cb (const void *pointer, void *data,
                                  int remaining_calls);
 extern int otr_upgrade_server_connected_cb (const void *pointer, void *data,
@@ -99,6 +101,50 @@ TEST_GROUP(OtrUpgrade)
         }
     }
 };
+
+/*
+ * Test functions:
+ *   otr_upgrade_restore_peer
+ */
+
+TEST(OtrUpgrade, RestorePeerWithoutPrevLog)
+{
+    struct t_otr_peer_data *ptr_peer_data;
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
+    int i;
+
+    for (i = 0; i < 2; i++)
+    {
+        reset_peer (TEST_ACCOUNT, "bob");
+        ptr_peer_data = otr_context_peer_data_for (TEST_ACCOUNT, "bob");
+        CHECK(ptr_peer_data);
+        ptr_peer_data->prev_log = 5;
+
+        infolist = infolist_new (NULL);
+        CHECK(infolist);
+        item = infolist_new_item (infolist);
+        CHECK(item);
+        infolist_new_var_string (item, "account", TEST_ACCOUNT);
+        infolist_new_var_string (item, "peer", "bob");
+        infolist_new_var_string (item, "log_option", "logger.level.irc.x");
+        if (i == 1)
+            infolist_new_var_integer (item, "prev_log", 0);
+        CHECK(infolist_next (infolist));
+
+        otr_upgrade_restore_peer (infolist);
+        infolist_free (infolist);
+
+        /* Without "prev_log", the logger level is not changed (not 0). */
+        LONGS_EQUAL((i == 1) ? 0 : OTR_LOG_UNTOUCHED, ptr_peer_data->prev_log);
+        STRCMP_EQUAL("logger.level.irc.x", ptr_peer_data->log_option);
+
+        string_dyn_free (otr_upgrade_queries, 1);
+        otr_upgrade_queries = NULL;
+    }
+
+    reset_peer (TEST_ACCOUNT, "bob");
+}
 
 /*
  * Test functions:

@@ -297,8 +297,13 @@ otr_upgrade_restore_peer (struct t_infolist *infolist)
     if (!ptr_peer_data)
         return;
 
-    /* Logger level before the session, restored when the session ends. */
-    ptr_peer_data->prev_log = weechat_infolist_integer (infolist, "prev_log");
+    /*
+     * Logger level before the session, restored when the session ends (if the
+     * variable is missing, the level is not changed: 0 is a valid level).
+     */
+    ptr_peer_data->prev_log = (weechat_infolist_search_var (infolist,
+                                                            "prev_log")) ?
+        weechat_infolist_integer (infolist, "prev_log") : OTR_LOG_UNTOUCHED;
     str = weechat_infolist_string (infolist, "log_option");
     free (ptr_peer_data->log_option);
     ptr_peer_data->log_option = (str && str[0]) ? strdup (str) : NULL;
