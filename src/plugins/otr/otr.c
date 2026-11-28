@@ -110,6 +110,34 @@ otr_debug_libs_cb (const void *pointer, void *data, const char *signal,
 }
 
 /*
+ * Free data allocated by the initialization of the plugin when it fails
+ * (function weechat_plugin_end is not called in this case).
+ */
+
+void
+otr_init_free (void)
+{
+    if (otr_us)
+    {
+        otrl_userstate_free (otr_us);
+        otr_us = NULL;
+    }
+
+    /* The configuration file is freed by WeeChat with the plugin. */
+    otr_config_file = NULL;
+    otr_config_free_regex_no_send_tag ();
+
+    free (otr_dir);
+    otr_dir = NULL;
+    free (otr_keyfile);
+    otr_keyfile = NULL;
+    free (otr_fprfile);
+    otr_fprfile = NULL;
+    free (otr_instagfile);
+    otr_instagfile = NULL;
+}
+
+/*
  * Initialize OTR plugin.
  */
 
@@ -165,7 +193,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     {
         weechat_printf (NULL, "%s%s: could not create configuration",
                         weechat_prefix ("error"), OTR_PLUGIN_NAME);
-        return WEECHAT_RC_ERROR;
+        goto error;
     }
 
     otr_theme_init ();
@@ -174,17 +202,17 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!data_dir || !data_dir[0])
     {
         free (data_dir);
-        return WEECHAT_RC_ERROR;
+        goto error;
     }
     weechat_asprintf (&otr_dir, "%s/otr", data_dir);
     free (data_dir);
     if (!otr_dir)
-        return WEECHAT_RC_ERROR;
+        goto error;
     weechat_asprintf (&otr_keyfile, "%s/otr.private_key", otr_dir);
     weechat_asprintf (&otr_fprfile, "%s/otr.fingerprints", otr_dir);
     weechat_asprintf (&otr_instagfile, "%s/otr.instag", otr_dir);
     if (!otr_keyfile || !otr_fprfile || !otr_instagfile)
-        return WEECHAT_RC_ERROR;
+        goto error;
     if (!weechat_mkdir_parents (otr_dir, 0700))
     {
         otr_buffer_error_core (_("unable to create directory \"%s\""),
@@ -193,7 +221,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     otr_us = otrl_userstate_create ();
     if (!otr_us)
-        return WEECHAT_RC_ERROR;
+        goto error;
     if (otr_file_exists (otr_keyfile))
         otrl_privkey_read (otr_us, otr_keyfile);
     if (otr_file_exists (otr_fprfile))
@@ -231,6 +259,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         otr_upgrade_load ();
 
     return WEECHAT_RC_OK;
+
+error:
+    otr_init_free ();
+    return WEECHAT_RC_ERROR;
 }
 
 /*
