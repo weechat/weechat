@@ -80,6 +80,31 @@ otr_modifier_is_base64_part (const char *line)
 }
 
 /*
+ * Check if a message received is OTR encrypted data ("?OTR:AAMD..." or
+ * "?OTR:AAID...", the OTR tag can be after some text, like in libotr) or an OTR
+ * fragment ("?OTR|..." or "?OTR,...", which can be the last fragment of OTR
+ * encrypted data).
+ *
+ * Return 1 if the message is OTR encrypted data or an OTR fragment, 0
+ * otherwise.
+ */
+
+int
+otr_modifier_is_encrypted_data (const char *message)
+{
+    const char *ptr_tag;
+
+    if (!message)
+        return 0;
+
+    if (otrl_proto_message_type (message) == OTRL_MSGTYPE_DATA)
+        return 1;
+
+    ptr_tag = strstr (message, "?OTR");
+    return (ptr_tag && ((ptr_tag[4] == '|') || (ptr_tag[4] == ','))) ? 1 : 0;
+}
+
+/*
  * Drop the OTR message being assembled for a peer (incomplete message).
  */
 
@@ -401,7 +426,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     struct t_otr_callback_data callback_data;
     OtrlTLV *tlvs;
     ConnContext *ptr_context;
-    int ignore, was_otr, encrypted, disconnected;
+    int ignore, encrypted_data, encrypted, disconnected;
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -524,10 +549,12 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
     }
 
     /*
-     * OTR message: the OTR tag can be anywhere in the message (like in libotr,
-     * which decrypts the message even if there is text before the tag).
+     * OTR encrypted data: the OTR tag can be anywhere in the message (like in
+     * libotr, which decrypts the message even if there is text before the
+     * tag); a plain text message containing "?OTR" is not considered as a
+     * decrypted message.
      */
-    was_otr = (strstr (assembled, "?OTR")) ? 1 : 0;
+    encrypted_data = otr_modifier_is_encrypted_data (assembled);
     callback_data.peer = peer;
     ignore = otrl_message_receiving (otr_us, &otr_callback_ops,
                                      &callback_data, account, OTR_PROTOCOL,
@@ -580,7 +607,7 @@ otr_modifier_in_cb (const void *pointer, void *data, const char *modifier,
         encrypted = disconnected
             || otr_context_encrypted (
                 (ptr_context) ? ptr_context : otr_context_find (account, peer));
-        if (new_message && was_otr && encrypted)
+        if (new_message && encrypted_data && encrypted)
         {
             /* Decrypted message */
             if (otr_policy_for (account, peer, "html_filter"))

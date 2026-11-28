@@ -25,6 +25,7 @@ extern "C"
 #include "src/plugins/otr/otr-modifier.h"
 
 extern int otr_modifier_is_base64_part (const char *line);
+extern int otr_modifier_is_encrypted_data (const char *message);
 extern int otr_modifier_assembly_stale (struct t_otr_peer_data *peer_data,
                                         time_t now);
 extern int otr_modifier_assemble (struct t_otr_peer_data *peer_data,
@@ -89,6 +90,34 @@ TEST(OtrModifier, IsBase64Part)
     LONGS_EQUAL(1, otr_modifier_is_base64_part ("abc"));
     LONGS_EQUAL(1, otr_modifier_is_base64_part ("abc."));
     LONGS_EQUAL(1, otr_modifier_is_base64_part ("AZaz09+/=="));
+}
+
+/*
+ * Test functions:
+ *   otr_modifier_is_encrypted_data
+ */
+
+TEST(OtrModifier, IsEncryptedData)
+{
+    LONGS_EQUAL(0, otr_modifier_is_encrypted_data (NULL));
+    LONGS_EQUAL(0, otr_modifier_is_encrypted_data (""));
+    LONGS_EQUAL(0, otr_modifier_is_encrypted_data ("hello"));
+    LONGS_EQUAL(0, otr_modifier_is_encrypted_data ("?OTR is that you"));
+    LONGS_EQUAL(0, otr_modifier_is_encrypted_data ("hello ?OTR"));
+    LONGS_EQUAL(0, otr_modifier_is_encrypted_data ("?OTRv23?"));
+    LONGS_EQUAL(0, otr_modifier_is_encrypted_data ("?OTR Error: test"));
+    LONGS_EQUAL(0, otr_modifier_is_encrypted_data ("?OTR:AAMCabc."));
+    LONGS_EQUAL(0, otr_modifier_is_encrypted_data ("?OTR:"));
+
+    /* Encrypted data (versions 3 and 2), optionally after some text. */
+    LONGS_EQUAL(1, otr_modifier_is_encrypted_data ("?OTR:AAMDabc."));
+    LONGS_EQUAL(1, otr_modifier_is_encrypted_data ("?OTR:AAIDabc."));
+    LONGS_EQUAL(1, otr_modifier_is_encrypted_data ("text ?OTR:AAMDabc."));
+
+    /* Fragments (versions 3 and 2). */
+    LONGS_EQUAL(1, otr_modifier_is_encrypted_data (
+                    "?OTR|5a73a599|27e31597,00001,00002,abc,"));
+    LONGS_EQUAL(1, otr_modifier_is_encrypted_data ("?OTR,1,2,abc,"));
 }
 
 /*
