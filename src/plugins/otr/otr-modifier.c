@@ -1215,6 +1215,9 @@ otr_modifier_out_cb (const void *pointer, void *data, const char *modifier,
         otr_buffer_peer_print (ptr_server, peer, OTR_CONFIG_LEVEL_ERROR,
                                _("Failed to send message."));
         otr_buffer_debug ("otrl_message_sending: %s", gcry_strerror (error));
+        /* Libotr can return an error with a message allocated. */
+        if (new_message)
+            otrl_message_free (new_message);
         result = strdup ("");
         goto end;
     }
