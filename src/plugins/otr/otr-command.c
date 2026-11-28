@@ -416,9 +416,7 @@ otr_command_start (const struct t_otr_peer_ref *peer_ref)
     {
         otr_buffer_peer_hint (
             peer_ref->server, peer,
-            _("The OTR query will be sent when the OTR key is generated. "
-              "Please wait for the OTR session to start "
-              "before sending a message."));
+            _("The OTR query will be sent when the OTR key is generated."));
     }
     else
     {
