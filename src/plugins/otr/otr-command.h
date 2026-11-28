@@ -31,8 +31,6 @@ struct t_otr_table
 extern int otr_command_peer_args (struct t_gui_buffer *buffer, char **args,
                                   int num_args,
                                   struct t_otr_peer_ref *peer_ref);
-extern int otr_command_resolve (const struct t_otr_peer_ref *peer_ref,
-                                char **account, char **peer);
 extern void otr_command_init (void);
 
 #endif /* WEECHAT_PLUGIN_OTR_COMMAND_H */

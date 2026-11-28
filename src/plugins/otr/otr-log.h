@@ -11,7 +11,6 @@
 struct t_otr_peer_data;
 
 extern int otr_log_buffer_is_logged (struct t_gui_buffer *buffer);
-extern int otr_log_buffer_log_level (struct t_gui_buffer *buffer);
 extern void otr_log_save_level (struct t_otr_peer_data *peer_data,
                                 struct t_gui_buffer *buffer);
 extern void otr_log_disable (ConnContext *context,

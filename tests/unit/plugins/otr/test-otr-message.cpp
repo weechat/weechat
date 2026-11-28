@@ -16,6 +16,7 @@ extern "C"
 #include "src/core/core-string.h"
 #include "src/plugins/otr/otr-message.h"
 
+extern const char *otr_message_action_text (const char *message, int *length);
 extern void otr_message_utf8_append (char **string, unsigned long code_point);
 }
 

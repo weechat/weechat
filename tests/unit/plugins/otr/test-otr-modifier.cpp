@@ -29,6 +29,8 @@ extern int otr_modifier_assembly_stale (struct t_otr_peer_data *peer_data,
                                         time_t now);
 extern int otr_modifier_assemble (struct t_otr_peer_data *peer_data,
                                   const char *line, char **message);
+extern int otr_modifier_assembly_timer_cb (const void *pointer, void *data,
+                                           int remaining_calls);
 extern int otr_modifier_parse_out_privmsg (const char *message, char **tags,
                                            char **target, const char **text);
 extern int otr_modifier_all_targets_channels (const char *server,

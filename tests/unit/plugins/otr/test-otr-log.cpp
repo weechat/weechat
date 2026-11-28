@@ -20,6 +20,8 @@ extern "C"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-context.h"
 #include "src/plugins/otr/otr-log.h"
+
+extern int otr_log_buffer_log_level (struct t_gui_buffer *buffer);
 }
 
 #define OTR_TEST_LOGGER_OPTION "logger.level.irc.test_otr_log.bob"
