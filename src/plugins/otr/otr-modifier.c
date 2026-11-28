@@ -758,8 +758,11 @@ otr_modifier_must_hold (const char *account, const char *peer)
 }
 
 /*
- * Hold a message sent to a peer until the OTR session is encrypted: a message
- * is displayed and an OTR query is sent with the first message held.
+ * Hold a message sent to a peer until the OTR session is encrypted: with the
+ * first message held, a message is displayed and an OTR query is sent.
+ *
+ * If the message can not be held, an error is displayed (the message is never
+ * sent in plain text).
  */
 
 void
@@ -771,11 +774,15 @@ otr_modifier_hold_message (const char *server, const char *account,
     int first;
 
     ptr_peer_data = otr_context_peer_data_for (account, peer);
-    if (!ptr_peer_data)
+    first = (ptr_peer_data && ptr_peer_data->held_messages) ? 0 : 1;
+    if (!ptr_peer_data || !otr_context_hold_message (ptr_peer_data, message))
+    {
+        otr_buffer_peer_print (server, peer, OTR_CONFIG_LEVEL_ERROR,
+                               _("Failed to send message."));
         return;
+    }
 
-    first = (ptr_peer_data->held_messages) ? 0 : 1;
-    if (!otr_context_hold_message (ptr_peer_data, message))
+    if (!first)
         return;
 
     ptr_context = otrl_context_find (otr_us, peer, account, OTR_PROTOCOL,
@@ -786,8 +793,7 @@ otr_modifier_hold_message (const char *server, const char *account,
             NULL, OTRL_MSGEVENT_ENCRYPTION_REQUIRED, ptr_context, NULL, 0);
     }
 
-    if (first)
-        otr_irc_send_raw (server, peer, otr_policy_query (account, peer));
+    otr_irc_send_raw (server, peer, otr_policy_query (account, peer));
 }
 
 /*

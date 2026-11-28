@@ -46,6 +46,31 @@ extern char *otr_modifier_remove_batch_tag (const char *server,
 
 TEST_GROUP(OtrModifier)
 {
+    /*
+     * Count lines containing a string in all buffers.
+     */
+    int count_lines (const char *string)
+    {
+        struct t_gui_buffer *ptr_buffer;
+        struct t_gui_line *ptr_line;
+        int count;
+
+        count = 0;
+        for (ptr_buffer = gui_buffers; ptr_buffer;
+             ptr_buffer = ptr_buffer->next_buffer)
+        {
+            for (ptr_line = ptr_buffer->own_lines->first_line; ptr_line;
+                 ptr_line = ptr_line->next_line)
+            {
+                if (ptr_line->data->message
+                    && strstr (ptr_line->data->message, string))
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 };
 
 /*
@@ -666,6 +691,7 @@ TEST(OtrModifier, HoldMessages)
     struct t_otr_peer_data *ptr_peer_data;
     ConnContext *ptr_context;
     char *str;
+    int count;
 
     run_cmd_quiet ("/mute /server add srv_otr_hold fake:127.0.0.1");
     run_cmd_quiet ("/connect srv_otr_hold");
@@ -688,6 +714,7 @@ TEST(OtrModifier, HoldMessages)
 
     /* Encryption required and no session: messages held. */
     LONGS_EQUAL(1, otr_modifier_must_hold ("alice@srv_otr_hold", "bob"));
+    count = count_lines ("NOT sent unencrypted");
     WEE_TEST_STR("",
                  otr_modifier_out_cb (NULL, NULL, "irc_out_privmsg",
                                       "srv_otr_hold", "PRIVMSG bob :line 1"));
@@ -697,6 +724,9 @@ TEST(OtrModifier, HoldMessages)
                                       "@a=1 PRIVMSG bob :line 2"));
     CHECK(ptr_peer_data->held_messages);
     STRCMP_EQUAL("line 1\nline 2", *(ptr_peer_data->held_messages));
+
+    /* Message displayed only for the first message held. */
+    LONGS_EQUAL(count + 1, count_lines ("NOT sent unencrypted"));
 
     /* Multiline batch removed: its lines are held. */
     LONGS_EQUAL(1, otr_modifier_remove_batch (
