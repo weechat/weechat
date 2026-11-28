@@ -30,6 +30,7 @@ struct t_otr_key_generation
 extern struct t_otr_key_generation *otr_key_generations;
 extern struct t_otr_key_generation *last_otr_key_generation;
 
+extern int otr_key_write_fingerprints (void);
 extern int otr_key_generate (const char *account, const char *protocol,
                              const char *peer);
 extern struct t_otr_key_generation *otr_key_generation_search (

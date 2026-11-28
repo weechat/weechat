@@ -579,7 +579,7 @@ otr_command_trust (const struct t_otr_peer_ref *peer_ref, int trust)
     {
         otrl_context_set_trust (ptr_context->active_fingerprint,
                                 (trust) ? "verified" : "");
-        otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
+        otr_key_write_fingerprints ();
         weechat_asprintf (&message,
                           (trust) ?
                           _("%s@%s is now authenticated.") :

@@ -178,7 +178,7 @@ otr_callback_write_fingerprints (void *opdata)
     /* Make C compiler happy. */
     (void) opdata;
 
-    otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
+    otr_key_write_fingerprints ();
 }
 
 /*

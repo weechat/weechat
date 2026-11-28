@@ -231,6 +231,33 @@ otr_key_write_account (FILE *file, const char *account, const char *protocol,
 }
 
 /*
+ * Write the fingerprints of peers in the file of fingerprints; an error is
+ * displayed if the file can not be written.
+ *
+ * Return 1 if OK, 0 if error.
+ */
+
+int
+otr_key_write_fingerprints (void)
+{
+    gcry_error_t error;
+
+    if (!otr_us || !otr_fprfile)
+        return 0;
+
+    error = otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
+    if (error)
+    {
+        otr_buffer_error_core (
+            _("unable to save OTR fingerprints in file \"%s\": %s"),
+            otr_fprfile, gcry_strerror (error));
+        return 0;
+    }
+
+    return 1;
+}
+
+/*
  * Display a message about the key generation of an account in core buffer
  * ("color" is a level, for example OTR_CONFIG_LEVEL_INFO).
  */

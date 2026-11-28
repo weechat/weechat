@@ -358,7 +358,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
         otr_echo_pending_clear_all ();
         otr_key_generation_free_all ();
-        otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
+        otr_key_write_fingerprints ();
         otrl_userstate_free (otr_us);
         otr_us = NULL;
     }

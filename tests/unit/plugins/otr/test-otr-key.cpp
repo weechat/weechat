@@ -326,3 +326,33 @@ TEST(OtrKey, ProcessCb)
                     "generation of OTR key for alice@srv_key_cb_error failed: "
                     "unable to save key in file"));
 }
+
+/*
+ * Test functions:
+ *   otr_key_write_fingerprints
+ */
+
+TEST(OtrKey, WriteFingerprints)
+{
+    struct t_gui_line *ptr_last_line;
+    char *old_fprfile;
+
+    /* File written. */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    LONGS_EQUAL(1, otr_key_write_fingerprints ());
+    LONGS_EQUAL(0, core_line_displayed (ptr_last_line,
+                                        "unable to save OTR fingerprints"));
+
+    /* File in a directory which does not exist: error displayed. */
+    old_fprfile = otr_fprfile;
+    otr_fprfile = strdup ("/nonexistent_dir_otr_test/otr.fingerprints");
+    CHECK(otr_fprfile);
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    LONGS_EQUAL(0, otr_key_write_fingerprints ());
+    LONGS_EQUAL(1, core_line_displayed (
+                    ptr_last_line,
+                    "unable to save OTR fingerprints in file "
+                    "\"/nonexistent_dir_otr_test/otr.fingerprints\""));
+    free (otr_fprfile);
+    otr_fprfile = old_fprfile;
+}
