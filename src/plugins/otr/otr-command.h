@@ -8,6 +8,12 @@
 #ifndef WEECHAT_PLUGIN_OTR_COMMAND_H
 #define WEECHAT_PLUGIN_OTR_COMMAND_H
 
+/*
+ * Return code of functions of subcommands of /otr: error already displayed
+ * (converted to WEECHAT_RC_ERROR by the command callback).
+ */
+#define OTR_COMMAND_RC_ERROR_DISPLAYED -2
+
 struct t_otr_peer_ref
 {
     char nick[128];                    /* nick of the peer                  */

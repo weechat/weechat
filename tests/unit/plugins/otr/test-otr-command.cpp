@@ -289,6 +289,41 @@ TEST(OtrCommand, PeerArgs)
 
 /*
  * Test functions:
+ *   otr_command_otr (error already displayed)
+ */
+
+TEST(OtrCommand, ErrorDisplayedOnce)
+{
+    struct t_gui_line *ptr_last_line;
+    const char *commands[] = {
+        "/otr start bob srv_otr_cmd_unknown",
+        "/otr finish bob srv_otr_cmd_unknown",
+        "/otr status bob srv_otr_cmd_unknown",
+        "/otr trust bob srv_otr_cmd_unknown",
+        "/otr smp abort bob srv_otr_cmd_unknown",
+        NULL,
+    };
+    int i;
+
+    for (i = 0; commands[i]; i++)
+    {
+        ptr_last_line = gui_buffers->own_lines->last_line;
+        run_cmd_quiet (commands[i]);
+        LONGS_EQUAL(1, core_line_displayed (ptr_last_line,
+                                            "not connected to server "
+                                            "\"srv_otr_cmd_unknown\""));
+        LONGS_EQUAL(0, core_line_displayed (ptr_last_line,
+                                            "invalid arguments"));
+    }
+
+    /* Invalid arguments: error displayed. */
+    ptr_last_line = gui_buffers->own_lines->last_line;
+    run_cmd_quiet ("/otr status bob");
+    LONGS_EQUAL(1, core_line_displayed (ptr_last_line, "invalid arguments"));
+}
+
+/*
+ * Test functions:
  *   otr_command_finish (messages held)
  */
 

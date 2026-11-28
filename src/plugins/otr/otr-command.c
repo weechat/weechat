@@ -354,7 +354,8 @@ otr_command_show_peer_fingerprints (const char *search)
  * If there is no private key for the account, the key is generated in
  * background and the OTR query is sent when the key is generated.
  *
- * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ * Return WEECHAT_RC_OK if OK, OTR_COMMAND_RC_ERROR_DISPLAYED if error (already
+ * displayed).
  */
 
 int
@@ -368,7 +369,7 @@ otr_command_start (struct t_gui_buffer *buffer,
     (void) buffer;
 
     if (!otr_command_resolve (peer_ref, &account, &peer))
-        return WEECHAT_RC_ERROR;
+        return OTR_COMMAND_RC_ERROR_DISPLAYED;
 
     ptr_query = otr_policy_query (account, peer);
     if (!ptr_query)
@@ -431,7 +432,8 @@ end:
 /*
  * End the OTR session with a peer.
  *
- * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ * Return WEECHAT_RC_OK if OK, OTR_COMMAND_RC_ERROR_DISPLAYED if error (already
+ * displayed).
  */
 
 int
@@ -452,7 +454,7 @@ otr_command_finish (const struct t_otr_peer_ref *peer_ref)
     free (peer);
 
     if (!otr_command_resolve (peer_ref, &account, &peer))
-        return WEECHAT_RC_ERROR;
+        return OTR_COMMAND_RC_ERROR_DISPLAYED;
 
     /* OTR key being generated: the OTR query will not be sent. */
     if (otr_key_generation_remove_peer (
@@ -479,7 +481,8 @@ otr_command_finish (const struct t_otr_peer_ref *peer_ref)
  * Display the status of the OTR session with a peer (encryption, fingerprints,
  * authentication).
  *
- * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ * Return WEECHAT_RC_OK if OK, OTR_COMMAND_RC_ERROR_DISPLAYED if error (already
+ * displayed).
  */
 
 int
@@ -491,7 +494,7 @@ otr_command_status (const struct t_otr_peer_ref *peer_ref)
     ConnContext *ptr_context;
 
     if (!otr_command_resolve (peer_ref, &account, &peer))
-        return WEECHAT_RC_ERROR;
+        return OTR_COMMAND_RC_ERROR_DISPLAYED;
 
     ptr_context = otr_context_find (account, peer);
     if (!otr_context_encrypted (ptr_context))
@@ -549,7 +552,8 @@ end:
  * Mark the active fingerprint of a peer as verified (if trust is 1) or not
  * verified (if trust is 0).
  *
- * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ * Return WEECHAT_RC_OK if OK, OTR_COMMAND_RC_ERROR_DISPLAYED if error (already
+ * displayed).
  */
 
 int
@@ -559,7 +563,7 @@ otr_command_trust (const struct t_otr_peer_ref *peer_ref, int trust)
     ConnContext *ptr_context;
 
     if (!otr_command_resolve (peer_ref, &account, &peer))
-        return WEECHAT_RC_ERROR;
+        return OTR_COMMAND_RC_ERROR_DISPLAYED;
 
     ptr_context = otr_context_find (account, peer);
     if (otr_context_encrypted (ptr_context) && ptr_context->active_fingerprint)
@@ -596,7 +600,10 @@ otr_command_trust (const struct t_otr_peer_ref *peer_ref, int trust)
  * Run subcommand "smp": ask, respond or abort the authentication of a peer with
  * SMP (Socialist Millionaire Protocol).
  *
- * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ * Return:
+ *   WEECHAT_RC_OK: OK
+ *   WEECHAT_RC_ERROR: invalid arguments (error not displayed)
+ *   OTR_COMMAND_RC_ERROR_DISPLAYED: error (already displayed)
  */
 
 int
@@ -676,7 +683,7 @@ otr_command_smp (struct t_gui_buffer *buffer, char **args, int num_args)
         return WEECHAT_RC_ERROR;
 
     if (!otr_command_resolve (&peer_ref, &account, &peer))
-        return WEECHAT_RC_ERROR;
+        return OTR_COMMAND_RC_ERROR_DISPLAYED;
 
     ptr_context = otr_context_find (account, peer);
     if (!otr_context_encrypted (ptr_context))
@@ -772,7 +779,10 @@ end:
 /*
  * Run subcommand "log": display or change logging of the current OTR session.
  *
- * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ * Return:
+ *   WEECHAT_RC_OK: OK
+ *   WEECHAT_RC_ERROR: invalid arguments (error not displayed)
+ *   OTR_COMMAND_RC_ERROR_DISPLAYED: error (already displayed)
  */
 
 int
@@ -787,7 +797,7 @@ otr_command_log (struct t_gui_buffer *buffer, char **args, int num_args)
         return WEECHAT_RC_ERROR;
 
     if (!otr_command_resolve (&peer_ref, &account, &peer))
-        return WEECHAT_RC_ERROR;
+        return OTR_COMMAND_RC_ERROR_DISPLAYED;
 
     ptr_context = otr_context_find (account, peer);
     ptr_peer_data = otr_context_peer_data_for (account, peer);
@@ -913,7 +923,10 @@ otr_command_print_policies_here (struct t_gui_buffer *buffer, const char *text)
  * Run subcommand "policy": display or change OTR policies of the current peer
  * or default OTR policies.
  *
- * Return WEECHAT_RC_OK if OK, WEECHAT_RC_ERROR if error.
+ * Return:
+ *   WEECHAT_RC_OK: OK
+ *   WEECHAT_RC_ERROR: invalid arguments (error not displayed)
+ *   OTR_COMMAND_RC_ERROR_DISPLAYED: error (already displayed)
  */
 
 int
@@ -955,11 +968,10 @@ otr_command_policy (struct t_gui_buffer *buffer, char **args, int num_args)
     if ((num_args == 3) && otr_command_get_policy_name (args[1])
         && otr_command_get_policy_value (args[2]))
     {
-        if (!otr_command_peer_args (buffer, NULL, 0, &peer_ref)
-            || !otr_command_resolve (&peer_ref, &account, &peer))
-        {
+        if (!otr_command_peer_args (buffer, NULL, 0, &peer_ref))
             return WEECHAT_RC_ERROR;
-        }
+        if (!otr_command_resolve (&peer_ref, &account, &peer))
+            return OTR_COMMAND_RC_ERROR_DISPLAYED;
         ptr_policy = otr_command_get_policy_name (args[1]);
         otr_irc_account_nick (account, nick, sizeof (nick));
         snprintf (option_name, sizeof (option_name), "%s.%s.%s.%s",
@@ -1101,7 +1113,11 @@ otr_command_otr (const void *pointer, void *data, struct t_gui_buffer *buffer,
         rc = WEECHAT_RC_OK;
     }
 
-    if (rc == WEECHAT_RC_ERROR)
+    if (rc == OTR_COMMAND_RC_ERROR_DISPLAYED)
+    {
+        rc = WEECHAT_RC_ERROR;
+    }
+    else if (rc == WEECHAT_RC_ERROR)
     {
         otr_buffer_error_core (_("invalid arguments or not in a private "
                                  "buffer, see /help otr"));
