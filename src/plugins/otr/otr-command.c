@@ -368,14 +368,10 @@ otr_command_show_peer_fingerprints (const char *search)
  */
 
 int
-otr_command_start (struct t_gui_buffer *buffer,
-                   const struct t_otr_peer_ref *peer_ref)
+otr_command_start (const struct t_otr_peer_ref *peer_ref)
 {
     char *account, *peer, *message;
     const char *ptr_query;
-
-    /* Make C compiler happy. */
-    (void) buffer;
 
     if (!otr_command_resolve (peer_ref, &account, &peer))
         return OTR_COMMAND_RC_ERROR_DISPLAYED;
@@ -1070,7 +1066,7 @@ otr_command_otr (const void *pointer, void *data, struct t_gui_buffer *buffer,
             || (strcmp (ptr_command, "refresh") == 0)))
     {
         if (otr_command_peer_args (buffer, args + 1, num_args - 1, &peer_ref))
-            rc = otr_command_start (buffer, &peer_ref);
+            rc = otr_command_start (&peer_ref);
     }
     else if (((num_args == 1) || (num_args == 3))
              && ((strcmp (ptr_command, "finish") == 0)
