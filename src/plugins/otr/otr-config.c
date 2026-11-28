@@ -425,6 +425,25 @@ otr_config_policy_create_option_cb (const void *pointer, void *data,
 }
 
 /*
+ * Reload OTR configuration file: the custom policies are removed before the
+ * file is read, so that a policy removed from the file is removed in WeeChat
+ * (instead of being reset to its default value, which is its current value).
+ */
+
+int
+otr_config_reload_cb (const void *pointer, void *data,
+                      struct t_config_file *config_file)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+
+    weechat_config_section_free_options (otr_config_section_policy);
+
+    return weechat_config_reload (config_file);
+}
+
+/*
  * Create an option in OTR configuration file, with the same default and current
  * value.
  *
@@ -460,7 +479,7 @@ otr_config_init (void)
     int i, num_policy_defaults;
 
     otr_config_file = weechat_config_new (OTR_CONFIG_PRIO_NAME,
-                                          NULL, NULL, NULL);
+                                          &otr_config_reload_cb, NULL, NULL);
     if (!otr_config_file)
         return 0;
 

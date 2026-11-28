@@ -22,6 +22,8 @@ extern int otr_config_policy_value_valid (const char *value);
 extern int otr_config_policy_inherited (struct t_config_file *config_file,
                                         struct t_config_section *section,
                                         const char *option_name);
+extern int otr_config_reload_cb (const void *pointer, void *data,
+                                 struct t_config_file *config_file);
 }
 
 TEST_GROUP(OtrConfig)
@@ -96,6 +98,39 @@ TEST(OtrConfig, PolicyCreateDelete)
     config_file_search_with_string ("otr.policy.test.alice.bob.send_tag",
                                     NULL, NULL, &ptr_option, NULL);
     POINTERS_EQUAL(NULL, ptr_option);
+}
+
+/*
+ * Test functions:
+ *   otr_config_reload_cb
+ */
+
+TEST(OtrConfig, Reload)
+{
+    /* Policy saved in file. */
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_with_string (
+                    "otr.policy.test.alice.saved.log", "on"));
+    LONGS_EQUAL(WEECHAT_CONFIG_WRITE_OK, config_file_write (otr_config_file));
+
+    /* Policy not saved in file. */
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_with_string (
+                    "otr.policy.test.alice.not_saved.log", "on"));
+    CHECK(option ("otr.policy.test.alice.not_saved.log"));
+
+    /* Policy not saved in file is removed by the reload. */
+    LONGS_EQUAL(WEECHAT_CONFIG_READ_OK,
+                otr_config_reload_cb (NULL, NULL, otr_config_file));
+    POINTERS_EQUAL(NULL, option ("otr.policy.test.alice.not_saved.log"));
+    CHECK(option ("otr.policy.test.alice.saved.log"));
+    LONGS_EQUAL(1,
+                CONFIG_BOOLEAN(option ("otr.policy.test.alice.saved.log")));
+
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED,
+                config_file_option_unset (
+                    option ("otr.policy.test.alice.saved.log")));
+    LONGS_EQUAL(WEECHAT_CONFIG_WRITE_OK, config_file_write (otr_config_file));
 }
 
 /*
