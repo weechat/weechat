@@ -24,6 +24,10 @@
 #include "otr-util.h"
 
 
+/* Timer to call otrl_message_poll (requested by libotr with timer_control). */
+struct t_hook *otr_callback_poll_timer = NULL;
+
+
 /*
  * Callback for libotr: get the OTR policy for a context, built from the OTR
  * policies options.
@@ -637,6 +641,52 @@ otr_callback_handle_msg_event (void *opdata, OtrlMessageEvent event,
     }
 }
 
+/*
+ * Callback for timer: let libotr wipe the stale private state (old keys), for
+ * forward secrecy.
+ */
+
+int
+otr_callback_poll_timer_cb (const void *pointer, void *data,
+                            int remaining_calls)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) remaining_calls;
+
+    if (otr_us)
+        otrl_message_poll (otr_us, &otr_callback_ops, NULL);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for libotr: remove the poll timer and, if interval (in seconds) is
+ * greater than 0, create a new timer calling otrl_message_poll every interval
+ * seconds.
+ */
+
+void
+otr_callback_timer_control (void *opdata, unsigned int interval)
+{
+    /* Make C compiler happy. */
+    (void) opdata;
+
+    if (otr_callback_poll_timer)
+    {
+        weechat_unhook (otr_callback_poll_timer);
+        otr_callback_poll_timer = NULL;
+    }
+
+    if ((interval > 0) && !otr_shutdown)
+    {
+        otr_callback_poll_timer = weechat_hook_timer (
+            (long)interval * 1000, 0, 0,
+            &otr_callback_poll_timer_cb, NULL, NULL);
+    }
+}
+
 const OtrlMessageAppOps otr_callback_ops = {
     .policy = &otr_callback_policy,
     .create_privkey = &otr_callback_create_privkey,
@@ -653,4 +703,5 @@ const OtrlMessageAppOps otr_callback_ops = {
     .handle_smp_event = &otr_callback_handle_smp_event,
     .handle_msg_event = &otr_callback_handle_msg_event,
     .create_instag = &otr_callback_create_instag,
+    .timer_control = &otr_callback_timer_control,
 };

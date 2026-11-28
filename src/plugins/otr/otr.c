@@ -31,6 +31,7 @@
 #include "otr.h"
 #include "otr-bar-item.h"
 #include "otr-buffer.h"
+#include "otr-callback.h"
 #include "otr-command.h"
 #include "otr-completion.h"
 #include "otr-config.h"
@@ -141,6 +142,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     otr_injecting = 0;
     otr_no_tag = 0;
     otr_us = NULL;
+    otr_callback_poll_timer = NULL;
     otr_bar_item = NULL;
     otr_modifier_removed_batches = NULL;
     otr_modifier_policies = -1;
@@ -327,6 +329,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         otrl_privkey_write_fingerprints (otr_us, otr_fprfile);
         otrl_userstate_free (otr_us);
         otr_us = NULL;
+    }
+
+    if (otr_callback_poll_timer)
+    {
+        weechat_unhook (otr_callback_poll_timer);
+        otr_callback_poll_timer = NULL;
     }
 
     if (otr_bar_item)

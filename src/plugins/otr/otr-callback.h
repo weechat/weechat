@@ -19,6 +19,7 @@ struct t_otr_callback_data
                                        /* lower case), can be NULL          */
 };
 
+extern struct t_hook *otr_callback_poll_timer;
 extern const OtrlMessageAppOps otr_callback_ops;
 
 #endif /* WEECHAT_PLUGIN_OTR_CALLBACK_H */

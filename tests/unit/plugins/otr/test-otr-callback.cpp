@@ -14,8 +14,10 @@ extern "C"
 {
 #include <stdlib.h>
 #include <string.h>
+#include "src/core/core-hook.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-line.h"
+#include "src/plugins/weechat-plugin.h"
 #include "src/plugins/otr/otr.h"
 #include "src/plugins/otr/otr-callback.h"
 #include "src/plugins/otr/otr-context.h"
@@ -35,6 +37,9 @@ extern void otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
                                            ConnContext *context,
                                            unsigned short progress,
                                            char *question);
+extern int otr_callback_poll_timer_cb (const void *pointer, void *data,
+                                       int remaining_calls);
+extern void otr_callback_timer_control (void *opdata, unsigned int interval);
 }
 
 TEST_GROUP(OtrCallback)
@@ -197,4 +202,41 @@ TEST(OtrCallback, HandleSmpEventAbort)
     otr_callback_handle_smp_event (NULL, OTRL_SMPEVENT_ERROR, ptr_context,
                                    0, NULL);
     LONGS_EQUAL(OTRL_SMP_EXPECT1, ptr_context->smstate->nextExpected);
+}
+
+/*
+ * Test functions:
+ *   otr_callback_poll_timer_cb
+ *   otr_callback_timer_control
+ */
+
+TEST(OtrCallback, TimerControl)
+{
+    /* Libotr calls timer_control. */
+    POINTERS_EQUAL(&otr_callback_timer_control, otr_callback_ops.timer_control);
+
+    /* Create the poll timer. */
+    otr_callback_timer_control (NULL, 60);
+    CHECK(otr_callback_poll_timer);
+    LONGS_EQUAL(60000, HOOK_TIMER(otr_callback_poll_timer, interval));
+
+    /* Replace the poll timer. */
+    otr_callback_timer_control (NULL, 30);
+    CHECK(otr_callback_poll_timer);
+    LONGS_EQUAL(30000, HOOK_TIMER(otr_callback_poll_timer, interval));
+
+    /* Poll (no stale private state to wipe). */
+    LONGS_EQUAL(WEECHAT_RC_OK, otr_callback_poll_timer_cb (NULL, NULL, 0));
+
+    /* Remove the poll timer. */
+    otr_callback_timer_control (NULL, 0);
+    POINTERS_EQUAL(NULL, otr_callback_poll_timer);
+    otr_callback_timer_control (NULL, 0);
+    POINTERS_EQUAL(NULL, otr_callback_poll_timer);
+
+    /* No poll timer created during shutdown. */
+    otr_shutdown = 1;
+    otr_callback_timer_control (NULL, 60);
+    POINTERS_EQUAL(NULL, otr_callback_poll_timer);
+    otr_shutdown = 0;
 }
