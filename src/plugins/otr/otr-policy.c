@@ -129,7 +129,7 @@ otr_policy_no_send_tag (const char *peer)
 char *
 otr_policy_format_default (void)
 {
-    char **result;
+    char **result, *hint;
     struct t_config_option *ptr_option;
     int i;
 
@@ -149,17 +149,21 @@ otr_policy_format_default (void)
         weechat_string_dyn_concat (result, " (", -1);
         weechat_string_dyn_concat (result,
                                    _(otr_config_policies[i].description), -1);
-        weechat_string_dyn_concat (result, ") : ", -1);
+        weechat_string_dyn_concat (result, "): ", -1);
         weechat_string_dyn_concat (
             result,
             (ptr_option && weechat_config_boolean (ptr_option)) ? "on" : "off",
             -1);
         weechat_string_dyn_concat (result, "\n", -1);
     }
-    weechat_string_dyn_concat (result,
-                               _("Change default policies with: "
-                                 "/otr policy default <name> on|off|toggle"),
-                               -1);
+    weechat_asprintf (&hint, _("Change default policies with: %s <name> "
+                               "on|off|toggle"),
+                      "/otr policy default");
+    if (hint)
+    {
+        weechat_string_dyn_concat (result, hint, -1);
+        free (hint);
+    }
 
     return weechat_string_dyn_free (result, 0);
 }
@@ -173,7 +177,7 @@ otr_policy_format_default (void)
 char *
 otr_policy_format_peer (const char *account, const char *peer)
 {
-    char **result, *header;
+    char **result, *header, *hint;
     int i;
 
     result = weechat_string_dyn_alloc (256);
@@ -197,7 +201,7 @@ otr_policy_format_peer (const char *account, const char *peer)
         weechat_string_dyn_concat (result, " (", -1);
         weechat_string_dyn_concat (result,
                                    _(otr_config_policies[i].description), -1);
-        weechat_string_dyn_concat (result, ") : ", -1);
+        weechat_string_dyn_concat (result, "): ", -1);
         weechat_string_dyn_concat (
             result,
             (otr_policy_for (account, peer, otr_config_policies[i].name)) ?
@@ -205,10 +209,13 @@ otr_policy_format_peer (const char *account, const char *peer)
             -1);
         weechat_string_dyn_concat (result, "\n", -1);
     }
-    weechat_string_dyn_concat (
-        result,
-        _("Change policies with: /otr policy <name> on|off|toggle"),
-        -1);
+    weechat_asprintf (&hint, _("Change policies with: %s <name> on|off|toggle"),
+                      "/otr policy");
+    if (hint)
+    {
+        weechat_string_dyn_concat (result, hint, -1);
+        free (hint);
+    }
 
     return weechat_string_dyn_free (result, 0);
 }

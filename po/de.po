@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-28 15:09+0100\n"
+"POT-Creation-Date: 2026-11-28 15:13+0100\n"
 "PO-Revision-Date: 2026-11-27 10:48+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -15829,14 +15829,16 @@ msgstr "%s%s: Keine Verbindung zum Server \"%s\"!"
 msgid "Current default OTR policies:"
 msgstr ""
 
-msgid "Change default policies with: /otr policy default <name> on|off|toggle"
+#, c-format
+msgid "Change default policies with: %s <name> on|off|toggle"
 msgstr ""
 
 #, c-format
 msgid "Current OTR policies for %s@%s:"
 msgstr ""
 
-msgid "Change policies with: /otr policy <name> on|off|toggle"
+#, c-format
+msgid "Change policies with: %s <name> on|off|toggle"
 msgstr ""
 
 msgid "Starting a new OTR session after /upgrade..."

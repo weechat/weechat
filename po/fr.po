@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-28 15:09+0100\n"
+"POT-Creation-Date: 2026-11-28 15:13+0100\n"
 "PO-Revision-Date: 2026-11-15 11:44+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
@@ -15625,17 +15625,17 @@ msgstr "non connecté au serveur \"%s\" ; message non envoyé"
 msgid "Current default OTR policies:"
 msgstr "Politiques OTR par défaut actuelles :"
 
-msgid "Change default policies with: /otr policy default <name> on|off|toggle"
-msgstr ""
-"Changez les politiques par défaut avec : /otr policy default <nom> on|off|"
-"toggle"
+#, c-format
+msgid "Change default policies with: %s <name> on|off|toggle"
+msgstr "Changez les politiques par défaut avec : %s <nom> on|off|toggle"
 
 #, c-format
 msgid "Current OTR policies for %s@%s:"
 msgstr "Politiques OTR actuelles pour %s@%s :"
 
-msgid "Change policies with: /otr policy <name> on|off|toggle"
-msgstr "Changez les politiques avec : /otr policy <nom> on|off|toggle"
+#, c-format
+msgid "Change policies with: %s <name> on|off|toggle"
+msgstr "Changez les politiques avec : %s <nom> on|off|toggle"
 
 msgid "Starting a new OTR session after /upgrade..."
 msgstr "Démarrage d'une nouvelle session OTR après /upgrade..."

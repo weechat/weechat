@@ -138,7 +138,7 @@ TEST(OtrPolicy, Format)
     str = otr_policy_format_default ();
     CHECK(str);
     CHECK(strstr (str, "  allow_v2 ("));
-    CHECK(strstr (str, ") : on\n"));
+    CHECK(strstr (str, "): on\n"));
     CHECK(strstr (str, "/otr policy default <name> on|off|toggle"));
     free (str);
 
@@ -146,7 +146,7 @@ TEST(OtrPolicy, Format)
     CHECK(str);
     CHECK(strstr (str, "bob@test"));
     CHECK(strstr (str, "  send_tag ("));
-    CHECK(strstr (str, ") : off\n"));
+    CHECK(strstr (str, "): off\n"));
     CHECK(strstr (str, "/otr policy <name> on|off|toggle"));
     free (str);
 }
