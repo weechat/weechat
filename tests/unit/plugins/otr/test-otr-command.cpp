@@ -15,6 +15,7 @@ extern "C"
 #include <stdlib.h>
 #include <string.h>
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-history.h"
 #include "src/gui/gui-line.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/otr/otr.h"
@@ -27,6 +28,7 @@ extern int otr_command_split_args (const char *string, char **args,
 extern const char *otr_command_get_policy_name (const char *name);
 extern const char *otr_command_get_policy_value (const char *value);
 extern void otr_command_show_peer_fingerprints (const char *search);
+extern int otr_command_has_smp_secret (const char *string);
 }
 
 TEST_GROUP(OtrCommand)
@@ -99,6 +101,56 @@ TEST(OtrCommand, SplitArgs)
     LONGS_EQUAL(-1, otr_command_split_args ("a 'unterminated", args, 16));
     LONGS_EQUAL(-1, otr_command_split_args ("a \"unterminated", args, 16));
     LONGS_EQUAL(-1, otr_command_split_args ("a b c", args, 2));
+}
+
+/*
+ * Test functions:
+ *   otr_command_has_smp_secret
+ */
+
+TEST(OtrCommand, HasSmpSecret)
+{
+    LONGS_EQUAL(0, otr_command_has_smp_secret (NULL));
+    LONGS_EQUAL(0, otr_command_has_smp_secret (""));
+    LONGS_EQUAL(0, otr_command_has_smp_secret ("hello"));
+    LONGS_EQUAL(0, otr_command_has_smp_secret ("otr smp ask secret"));
+    LONGS_EQUAL(0, otr_command_has_smp_secret ("//otr smp ask secret"));
+    LONGS_EQUAL(0, otr_command_has_smp_secret ("/otr"));
+    LONGS_EQUAL(0, otr_command_has_smp_secret ("/otr start"));
+    LONGS_EQUAL(0, otr_command_has_smp_secret ("/otr smp"));
+    LONGS_EQUAL(0, otr_command_has_smp_secret ("/otr smp abort"));
+    LONGS_EQUAL(0, otr_command_has_smp_secret ("/otrx smp ask secret"));
+    LONGS_EQUAL(0, otr_command_has_smp_secret ("/msg bob /otr smp ask secret"));
+
+    LONGS_EQUAL(1, otr_command_has_smp_secret ("/otr smp ask"));
+    LONGS_EQUAL(1, otr_command_has_smp_secret ("/otr smp ask secret"));
+    LONGS_EQUAL(1, otr_command_has_smp_secret ("/otr  smp  ask  \"a b\""));
+    LONGS_EQUAL(1, otr_command_has_smp_secret ("/otr smp ask bob libera "
+                                               "\"Question?\" \"secret\""));
+    LONGS_EQUAL(1, otr_command_has_smp_secret ("/otr smp respond secret"));
+    LONGS_EQUAL(1, otr_command_has_smp_secret ("/otr \"smp\" 'respond' x"));
+
+    /* Invalid arguments: dropped, they may contain a secret. */
+    LONGS_EQUAL(1, otr_command_has_smp_secret ("/otr smp ask \"secret"));
+}
+
+/*
+ * Test functions:
+ *   otr_command_history_add_cb
+ */
+
+TEST(OtrCommand, HistoryAdd)
+{
+    gui_history_add (gui_buffers, "/otr smp abort");
+    STRCMP_EQUAL("/otr smp abort", gui_history->text);
+
+    gui_history_add (gui_buffers, "/otr smp ask \"swordfish\"");
+    STRCMP_EQUAL("/otr smp abort", gui_history->text);
+    STRCMP_EQUAL("/otr smp abort", gui_buffers->history->text);
+
+    gui_history_add (gui_buffers, "/otr smp respond Berlin");
+    STRCMP_EQUAL("/otr smp abort", gui_history->text);
+    STRCMP_EQUAL("/otr smp abort", gui_buffers->history->text);
 }
 
 /*

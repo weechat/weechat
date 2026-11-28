@@ -1115,12 +1115,79 @@ otr_command_otr (const void *pointer, void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * Check if a text entered by the user is the command "/otr smp ask" or
+ * "/otr smp respond", which contains the SMP secret (or the command /otr
+ * with invalid arguments, which may also contain a secret).
+ *
+ * Return:
+ *   1: text is a command /otr with a SMP secret
+ *   0: text is not a command /otr with a SMP secret
+ */
+
+int
+otr_command_has_smp_secret (const char *string)
+{
+    const char *ptr_string;
+    char *args[16];
+    int num_args, rc, i;
+
+    if (!string || weechat_string_input_for_buffer (string))
+        return 0;
+
+    /* Skip the command char. */
+    ptr_string = weechat_utf8_next_char (string);
+    if (!ptr_string || (strncmp (ptr_string, "otr", 3) != 0)
+        || (ptr_string[3] && !isspace ((unsigned char)ptr_string[3])))
+    {
+        return 0;
+    }
+
+    num_args = otr_command_split_args (ptr_string + 3, args, 16);
+    if (num_args < 0)
+        return 1;
+
+    rc = ((num_args >= 2)
+          && (strcmp (args[0], "smp") == 0)
+          && ((strcmp (args[1], "ask") == 0)
+              || (strcmp (args[1], "respond") == 0))) ? 1 : 0;
+
+    for (i = 0; i < num_args; i++)
+    {
+        free (args[i]);
+    }
+
+    return rc;
+}
+
+/*
+ * Callback for modifier "history_add": do not add to history the commands
+ * /otr with a SMP secret.
+ */
+
+char *
+otr_command_history_add_cb (const void *pointer, void *data,
+                            const char *modifier, const char *modifier_data,
+                            const char *string)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+    (void) modifier_data;
+
+    return (otr_command_has_smp_secret (string)) ? strdup ("") : NULL;
+}
+
+/*
  * Hook OTR command.
  */
 
 void
 otr_command_init (void)
 {
+    weechat_hook_modifier ("history_add", &otr_command_history_add_cb,
+                           NULL, NULL);
+
     weechat_hook_command (
         "otr",
         N_("Off-the-Record (OTR) encryption for private IRC conversations"),
