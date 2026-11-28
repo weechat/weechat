@@ -9,6 +9,7 @@ Hashtable
 Helleu
 IPs
 Sébastien
+Unencrypted
 WeeChat
 Xfer
 abc
@@ -110,6 +111,7 @@ hostname
 hostnames
 hotlist
 hsignal
+html
 http
 https
 hup
@@ -183,6 +185,7 @@ oftc
 ok
 ol
 osinfo
+otr
 outqueue
 ovh
 paramN
@@ -221,6 +224,7 @@ setrlimit
 setvar
 signon
 skipempty
+smp
 sockaddr
 splith
 splitv
@@ -251,6 +255,7 @@ unalias
 unban
 unbindctxt
 undef
+unencrypted
 unescaped
 unhide
 unhold

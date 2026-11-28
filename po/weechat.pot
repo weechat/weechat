@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-27 09:22+0100\n"
+"POT-Creation-Date: 2026-11-28 14:28+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12010,6 +12010,647 @@ msgid ""
 msgstr ""
 
 msgid "Support of lua scripts"
+msgstr ""
+
+#, c-format
+msgid ""
+"You can verify that this peer is who they claim to be in\n"
+"one of the following ways:\n"
+"\n"
+"1) Verify each other's fingerprints using a secure channel:\n"
+"  Your fingerprint: %s\n"
+"  %s@%s's fingerprint: %s\n"
+"  then use the command: /otr trust %s %s\n"
+"\n"
+"2) SMP with a secret that you both know:\n"
+"  /otr smp ask %s %s \"secret\"\n"
+"\n"
+"3) SMP with a question and a secret that you both know:\n"
+"  /otr smp ask %s %s \"The question\" \"secret\"\n"
+"\n"
+"Note: you can safely omit specifying the peer and server when\n"
+"      executing these commands from the private buffer of the peer."
+msgstr ""
+
+#, c-format
+msgid "New fingerprint: %s"
+msgstr ""
+
+msgid ""
+"You have enabled the recording of OTR conversations to disk. By doing this "
+"you are potentially putting yourself and your peer at risk. Please consider "
+"disabling this policy with \"/otr policy default log off\". To disable "
+"logging for this OTR session, use \"/otr log stop\"."
+msgstr ""
+
+msgid "Authenticated OTR session started."
+msgstr ""
+
+msgid "Unauthenticated OTR session started."
+msgstr ""
+
+msgid "OTR session refreshed."
+msgstr ""
+
+msgid ""
+"The peer has requested SMP verification.\n"
+"Respond with: /otr smp respond <secret> (case sensitive)"
+msgstr ""
+
+#, c-format
+msgid ""
+"The peer has requested SMP verification: %s\n"
+"Respond with: /otr smp respond <secret> (case sensitive)"
+msgstr ""
+
+#, c-format
+msgid "SMP progressing (%u%%)."
+msgstr ""
+
+msgid "SMP verification succeeded."
+msgstr ""
+
+msgid ""
+"You may want to authenticate your peer by asking your own question:\n"
+"/otr smp ask \"The question\" \"secret\""
+msgstr ""
+
+msgid "SMP verification failed."
+msgstr ""
+
+msgid "SMP aborted."
+msgstr ""
+
+msgid "SMP aborted: the peer behaved incorrectly."
+msgstr ""
+
+msgid "SMP error."
+msgstr ""
+
+msgid ""
+"Your message was NOT sent unencrypted, because the policy requires an OTR "
+"session. It is held back and will be sent once the OTR session is "
+"established."
+msgstr ""
+
+msgid ""
+"Wait for the OTR session to start or change the policy to allow unencrypted "
+"messages:\n"
+"/otr policy require_encryption off"
+msgstr ""
+
+msgid "An error occurred while encrypting your message. It was NOT sent."
+msgstr ""
+
+msgid ""
+"Your message was not sent. End your OTR session:\n"
+"/otr finish"
+msgstr ""
+
+#, c-format
+msgid "Error setting up the OTR session: %s"
+msgstr ""
+
+msgid "unknown error"
+msgstr ""
+
+msgid "Received our own OTR message (reflected); ignored."
+msgstr ""
+
+msgid "The last message was resent."
+msgstr ""
+
+msgid "Received encrypted data but no OTR session is established."
+msgstr ""
+
+msgid "Received an unreadable encrypted message."
+msgstr ""
+
+msgid "Received a malformed OTR message."
+msgstr ""
+
+#, c-format
+msgid "Received OTR error: %s"
+msgstr ""
+
+msgid "Received an unrecognized OTR message."
+msgstr ""
+
+msgid "Received a message meant for another client instance of yours; ignored."
+msgstr ""
+
+#, c-format
+msgid "not connected to server \"%s\""
+msgstr ""
+
+msgid "unverified"
+msgstr ""
+
+msgid "SMP verified"
+msgstr ""
+
+msgid "verified"
+msgstr ""
+
+msgid "OTR is disabled by policy (allow_v2 and allow_v3 are both off)."
+msgstr ""
+
+msgid ""
+"Sending OTR query... Please wait for the OTR session to start before sending "
+"a message."
+msgstr ""
+
+msgid ""
+"The OTR query will be sent when the OTR key is generated. Please wait for "
+"the OTR session to start before sending a message."
+msgstr ""
+
+msgid "OTR query not sent: unable to generate the OTR key."
+msgstr ""
+
+#, c-format
+msgid "To try OTR on all conversations with %s@%s: /otr policy send_tag on"
+msgstr ""
+
+msgid "The OTR query will not be sent after /upgrade."
+msgstr ""
+
+msgid "The OTR query will not be sent when the OTR key is generated."
+msgstr ""
+
+msgid "There is no OTR session to finish."
+msgstr ""
+
+msgid "This conversation is not encrypted."
+msgstr ""
+
+msgid "This conversation is encrypted."
+msgstr ""
+
+#, c-format
+msgid "Your fingerprint: %s"
+msgstr ""
+
+#, c-format
+msgid "Your peer's fingerprint: %s"
+msgstr ""
+
+msgid "The peer's identity has been verified."
+msgstr ""
+
+msgid "You have not verified the peer's identity yet."
+msgstr ""
+
+#, c-format
+msgid "%s@%s is now authenticated."
+msgstr ""
+
+#, c-format
+msgid "%s@%s is no longer authenticated."
+msgstr ""
+
+msgid "No active fingerprint. Start an OTR session first: /otr start"
+msgstr ""
+
+#, c-format
+msgid "There is currently no OTR session with %s@%s."
+msgstr ""
+
+#, c-format
+msgid "There is no SMP request from %s@%s to respond to."
+msgstr ""
+
+msgid "SMP question sent."
+msgstr ""
+
+msgid "SMP secret sent."
+msgstr ""
+
+msgid ""
+"From this point on, this conversation will be logged. Please keep in mind "
+"that by doing so you are potentially putting yourself and your peer at risk. "
+"You can disable this with \"/otr log stop\"."
+msgstr ""
+
+msgid "From this point on, this conversation will NOT be logged anymore."
+msgstr ""
+
+msgid "This conversation is currently being logged."
+msgstr ""
+
+msgid "This conversation is currently NOT being logged."
+msgstr ""
+
+msgid "invalid arguments, see /help otr"
+msgstr ""
+
+msgid "invalid arguments or not in a private buffer, see /help otr"
+msgstr ""
+
+msgid "Off-the-Record (OTR) encryption for private IRC conversations"
+msgstr ""
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
+msgid ""
+"start|refresh [<nick> <server>] || finish|end [<nick> <server>] || status "
+"[<nick> <server>] || trust|distrust [<nick> <server>] || smp ask [<nick> "
+"<server>] [<question>] <secret> || smp respond [<nick> <server>] <secret> || "
+"smp abort [<nick> <server>] || log [start|stop] || policy [default] [<name> "
+"on|off|toggle] || fingerprint [<search>|all]"
+msgstr ""
+
+msgid "raw[start]: start an OTR session with a peer (sends an OTR query)"
+msgstr ""
+
+msgid "raw[refresh]: refresh the OTR session (same as \"start\")"
+msgstr ""
+
+msgid "raw[finish]: end the OTR session"
+msgstr ""
+
+msgid "raw[end]: same as \"finish\""
+msgstr ""
+
+msgid ""
+"raw[status]: show whether the conversation is encrypted and authenticated, "
+"with both fingerprints"
+msgstr ""
+
+msgid "raw[trust]: mark the current fingerprint of the peer as verified"
+msgstr ""
+
+msgid ""
+"raw[distrust]: remove the verified mark from the current fingerprint of the "
+"peer"
+msgstr ""
+
+msgid ""
+"raw[smp]: authenticate the peer with the Socialist Millionaire Protocol "
+"(SMP):"
+msgstr ""
+
+msgid "> raw[ask]: send a shared secret, optionally with a question"
+msgstr ""
+
+msgid ""
+"> raw[respond]: answer the request of the peer (the secret is the rest of "
+"the line, quotes are optional)"
+msgstr ""
+
+msgid "> raw[abort]: abort the running verification"
+msgstr ""
+
+msgid ""
+"raw[log]: show or change logging of the current OTR session; the previous "
+"setting is restored when the session ends"
+msgstr ""
+
+msgid ""
+"raw[policy]: show or change OTR policies, for the peer of the current "
+"private buffer or, with \"default\", for all peers"
+msgstr ""
+
+msgid ""
+"raw[fingerprint]: show your own fingerprints (without argument), those of "
+"all known peers (\"all\") or of the peers matching <search>"
+msgstr ""
+
+msgid "nick: nick of the peer (default: peer of the current private buffer)"
+msgstr ""
+
+msgid ""
+"server: internal name of the IRC server (default: server of the current "
+"private buffer)"
+msgstr ""
+
+msgid "question: question that the peer has to answer"
+msgstr ""
+
+msgid "secret: secret that both you and the peer know"
+msgstr ""
+
+msgid "name: name of the policy:"
+msgstr ""
+
+msgid "> raw[allow_v2]: allow version 2 of the OTR protocol"
+msgstr ""
+
+msgid "> raw[allow_v3]: allow version 3 of the OTR protocol"
+msgstr ""
+
+msgid ""
+"> raw[require_encryption]: refuse to send unencrypted messages (held until "
+"the OTR session is encrypted)"
+msgstr ""
+
+msgid "> raw[log]: keep logging enabled during OTR sessions"
+msgstr ""
+
+msgid ""
+"> raw[send_tag]: advertise your OTR support with a whitespace tag added to "
+"your messages"
+msgstr ""
+
+msgid ""
+"> raw[html_escape]: escape HTML special chars in encrypted messages sent"
+msgstr ""
+
+msgid "> raw[html_filter]: remove HTML in decrypted messages received"
+msgstr ""
+
+msgid "search: only show peers whose nick contains this text"
+msgstr ""
+
+msgid "Note: OTR works for private conversations only, not for channels."
+msgstr ""
+
+msgid ""
+"Note: the OTR state is displayed in the status bar by the bar item \"otr\" "
+"(in the default value of option weechat.bar.status.items); use /set otr.* to "
+"customize the item and the colors."
+msgstr ""
+
+msgid ""
+"Note: default policies are stored in the options otr.policy_default.* and "
+"custom policies in the options otr.policy.*; a more specific option (peer) "
+"overrides a more general one (nick, server, default)."
+msgstr ""
+
+msgid "  start an OTR session in the current private buffer:"
+msgstr ""
+
+msgid "  verify the peer with a shared secret:"
+msgstr ""
+
+msgid "  verify the peer with a question and a shared secret:"
+msgstr ""
+
+msgid "  answer an SMP request of the peer:"
+msgstr ""
+
+msgid ""
+"  mark the fingerprint as verified after comparing it over a secure channel:"
+msgstr ""
+
+msgid ""
+"  show the policies of the current peer and enable the whitespace tag for it:"
+msgstr ""
+
+msgid "  enable the whitespace tag for all peers:"
+msgstr ""
+
+msgid "  show the fingerprints of all known peers:"
+msgstr ""
+
+msgid "  end the OTR session:"
+msgstr ""
+
+msgid "OTR policies"
+msgstr ""
+
+msgid "default text color for bar item \"otr\""
+msgstr ""
+
+msgid "text color for encrypted indicator in status bar"
+msgstr ""
+
+msgid "text color for unencrypted indicator in status bar"
+msgstr ""
+
+msgid "text color for authenticated indicator in status bar"
+msgstr ""
+
+msgid "text color for unauthenticated indicator in status bar"
+msgstr ""
+
+msgid "text color for logged indicator in status bar"
+msgstr ""
+
+msgid "text color for not logged indicator in status bar"
+msgstr ""
+
+msgid "text color for hints"
+msgstr ""
+
+msgid "text color for informational messages"
+msgstr ""
+
+msgid "text color for success messages"
+msgstr ""
+
+msgid "text color for warnings"
+msgstr ""
+
+msgid "text color for errors"
+msgstr ""
+
+msgid "prefix for bar item \"otr\""
+msgstr ""
+
+msgid "shown in status bar when the conversation is encrypted"
+msgstr ""
+
+msgid "shown in status bar when the conversation is not encrypted"
+msgstr ""
+
+msgid "shown in status bar when the peer is authenticated"
+msgstr ""
+
+msgid "shown in status bar when the peer is not authenticated"
+msgstr ""
+
+msgid "shown in status bar when the conversation is being logged to disk"
+msgstr ""
+
+msgid "shown in status bar when the conversation is not being logged to disk"
+msgstr ""
+
+msgid "separator for states in status bar"
+msgstr ""
+
+msgid ""
+"prefix used for messages from OTR (note: content is evaluated, see /help "
+"eval)"
+msgstr ""
+
+msgid "allow version 2 of the OTR protocol"
+msgstr ""
+
+msgid "allow version 3 of the OTR protocol"
+msgstr ""
+
+msgid ""
+"refuse to send unencrypted messages: messages sent before the OTR session is "
+"established are held, and sent once the session is encrypted (CTCP messages "
+"other than ACTION are still sent unencrypted)"
+msgstr ""
+
+msgid ""
+"keep logging enabled during OTR sessions (if off, logging is disabled for "
+"the session and restored when it ends)"
+msgstr ""
+
+msgid ""
+"advertise your OTR support with a whitespace tag added to your messages, so "
+"that an OTR session can start automatically"
+msgstr ""
+
+msgid "escape HTML special chars in encrypted messages sent"
+msgstr ""
+
+msgid "remove HTML in decrypted messages received"
+msgstr ""
+
+msgid ""
+"allow version 2 of the OTR protocol (default value, options otr.policy.* can "
+"override this value)"
+msgstr ""
+
+msgid ""
+"allow version 3 of the OTR protocol (default value, options otr.policy.* can "
+"override this value)"
+msgstr ""
+
+msgid ""
+"refuse to send unencrypted messages: messages sent before the OTR session is "
+"established are held, and sent once the session is encrypted (CTCP messages "
+"other than ACTION are still sent unencrypted) (default value, options "
+"otr.policy.* can override this value)"
+msgstr ""
+
+msgid ""
+"keep logging enabled during OTR sessions (if off, logging is disabled for "
+"the session and restored when it ends) (default value, options otr.policy.* "
+"can override this value)"
+msgstr ""
+
+msgid ""
+"advertise your OTR support with a whitespace tag added to your messages, so "
+"that an OTR session can start automatically (default value, options "
+"otr.policy.* can override this value)"
+msgstr ""
+
+msgid ""
+"escape HTML special chars in encrypted messages sent (default value, options "
+"otr.policy.* can override this value)"
+msgstr ""
+
+msgid ""
+"remove HTML in decrypted messages received (default value, options "
+"otr.policy.* can override this value)"
+msgstr ""
+
+msgid ""
+"display debug messages in buffer \"OTR Debug\" (metadata only, never message "
+"contents)"
+msgstr ""
+
+msgid ""
+"give helpful hints on how to use this plugin and how to stay secure while "
+"using OTR (recommended)"
+msgstr ""
+
+msgid ""
+"do not add the OTR whitespace tag to messages sent to nicks matching this "
+"regex (POSIX extended, case insensitive)"
+msgstr ""
+
+#, c-format
+msgid "%d message held for the OTR session has been discarded."
+msgid_plural "%d messages held for the OTR session have been discarded."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "OTR session ended."
+msgstr ""
+
+#, c-format
+msgid "unable to save OTR fingerprints in file \"%s\": %s"
+msgstr ""
+
+msgid "invalid key"
+msgstr ""
+
+#, c-format
+msgid "generation of OTR key for %s failed: %s"
+msgstr ""
+
+msgid "process failed or timeout reached"
+msgstr ""
+
+#, c-format
+msgid ""
+"generation of OTR key for %s failed: unable to save key in file \"%s\": %s"
+msgstr ""
+
+#, c-format
+msgid "OTR key generated for %s."
+msgstr ""
+
+msgid "unable to run process"
+msgstr ""
+
+#, c-format
+msgid "Generating OTR key for %s in background..."
+msgstr ""
+
+msgid ""
+"Logging is disabled for this OTR session; it will be restored when the "
+"session ends."
+msgstr ""
+
+#, c-format
+msgid "Logging restored (level %d)."
+msgstr ""
+
+msgid "Logging restored (default level)."
+msgstr ""
+
+#, c-format
+msgid ""
+"%s has ended the OTR session. You should do the same:\n"
+"/otr finish"
+msgstr ""
+
+msgid "Failed to send message."
+msgstr ""
+
+msgid "unable to parse outgoing message; message not sent"
+msgstr ""
+
+msgid ""
+"messages to several targets including a nick are not supported with OTR; "
+"message not sent"
+msgstr ""
+
+#, c-format
+msgid "not connected to server \"%s\"; message not sent"
+msgstr ""
+
+msgid "Current default OTR policies:"
+msgstr ""
+
+msgid "Change default policies with: /otr policy default <name> on|off|toggle"
+msgstr ""
+
+#, c-format
+msgid "Current OTR policies for %s@%s:"
+msgstr ""
+
+msgid "Change policies with: /otr policy <name> on|off|toggle"
+msgstr ""
+
+msgid "Starting a new OTR session after /upgrade..."
+msgstr ""
+
+msgid "Off-the-Record (OTR) messaging protocol"
+msgstr ""
+
+#, c-format
+msgid "unable to create directory \"%s\""
+msgstr ""
+
+msgid "Unencrypted message received:"
 msgstr ""
 
 msgid "Support of perl scripts"
