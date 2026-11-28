@@ -269,7 +269,7 @@ TEST(OtrCommand, ShowPeerFingerprints)
 TEST(OtrCommand, PeerArgs)
 {
     struct t_otr_peer_ref peer_ref;
-    char *args[2];
+    char *args[2], long_nick[129], long_server[129];
 
     /* No arguments, not in a private buffer. */
     LONGS_EQUAL(0, otr_command_peer_args (gui_buffers, NULL, 0, &peer_ref));
@@ -287,6 +287,26 @@ TEST(OtrCommand, PeerArgs)
     args[0] = (char *)"bob,carol";
     LONGS_EQUAL(0, otr_command_peer_args (NULL, args, 2, &peer_ref));
     args[0] = (char *)"bob carol";
+    LONGS_EQUAL(0, otr_command_peer_args (NULL, args, 2, &peer_ref));
+
+    /* Max length of nick and server (127 chars): OK. */
+    memset (long_nick, 'a', sizeof (long_nick) - 1);
+    long_nick[127] = '\0';
+    memset (long_server, 's', sizeof (long_server) - 1);
+    long_server[127] = '\0';
+    args[0] = long_nick;
+    args[1] = long_server;
+    LONGS_EQUAL(1, otr_command_peer_args (NULL, args, 2, &peer_ref));
+    STRCMP_EQUAL(long_nick, peer_ref.nick);
+    STRCMP_EQUAL(long_server, peer_ref.server);
+
+    /* Nick or server too long: refused (not truncated). */
+    long_nick[127] = 'a';
+    long_nick[128] = '\0';
+    LONGS_EQUAL(0, otr_command_peer_args (NULL, args, 2, &peer_ref));
+    long_nick[127] = '\0';
+    long_server[127] = 's';
+    long_server[128] = '\0';
     LONGS_EQUAL(0, otr_command_peer_args (NULL, args, 2, &peer_ref));
 }
 

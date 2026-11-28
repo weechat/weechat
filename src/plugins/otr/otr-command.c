@@ -129,7 +129,8 @@ error:
  * Get the peer from command arguments "<nick> <server>" (if num_args is 2) or,
  * without arguments, from the current private buffer.
  *
- * Return 1 if OK, 0 if error (for example the nick given is a channel).
+ * Return 1 if OK, 0 if error (for example the nick given is a channel, or the
+ * nick or server is too long).
  */
 
 int
@@ -143,25 +144,32 @@ otr_command_peer_args (struct t_gui_buffer *buffer, char **args, int num_args,
         /* Only a nick is allowed (not a channel or a list of targets). */
         if (!otr_irc_is_nick (args[1], args[0]))
             return 0;
-        snprintf (peer_ref->nick, sizeof (peer_ref->nick), "%s", args[0]);
-        snprintf (peer_ref->server, sizeof (peer_ref->server), "%s", args[1]);
-        return 1;
+        ptr_nick = args[0];
+        ptr_server = args[1];
     }
-
-    if ((num_args == 0) && otr_buffer_is_private (buffer))
+    else if ((num_args == 0) && otr_buffer_is_private (buffer))
     {
         ptr_nick = weechat_buffer_get_string (buffer, "localvar_channel");
         ptr_server = weechat_buffer_get_string (buffer, "localvar_server");
-        if (ptr_nick && ptr_server)
-        {
-            snprintf (peer_ref->nick, sizeof (peer_ref->nick), "%s", ptr_nick);
-            snprintf (peer_ref->server, sizeof (peer_ref->server),
-                      "%s", ptr_server);
-            return 1;
-        }
+        if (!ptr_nick || !ptr_server)
+            return 0;
+    }
+    else
+    {
+        return 0;
     }
 
-    return 0;
+    /* Refuse a nick or server too long (instead of truncating it). */
+    if ((strlen (ptr_nick) >= sizeof (peer_ref->nick))
+        || (strlen (ptr_server) >= sizeof (peer_ref->server)))
+    {
+        return 0;
+    }
+
+    snprintf (peer_ref->nick, sizeof (peer_ref->nick), "%s", ptr_nick);
+    snprintf (peer_ref->server, sizeof (peer_ref->server), "%s", ptr_server);
+
+    return 1;
 }
 
 /*
