@@ -4637,8 +4637,13 @@ and the secret:
 Your peer answers with:
 
 ----
-/otr smp respond "Berlin"
+/otr smp respond Berlin
 ----
+
+// TRANSLATION MISSING
+The secret of `/otr smp respond` is the rest of the line, as typed: it can
+contain spaces and quotes, without quoting it (for example
+`/otr smp respond it's Berlin`).
 
 // TRANSLATION MISSING
 The secret is case sensitive: your peer must type it exactly as you did

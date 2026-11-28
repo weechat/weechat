@@ -4473,8 +4473,12 @@ Demandez avec une question optionnelle et le secret :
 Votre correspondant répond avec :
 
 ----
-/otr smp respond "Berlin"
+/otr smp respond Berlin
 ----
+
+Le secret de `/otr smp respond` est le reste de la ligne, tel que saisi :
+il peut contenir des espaces et des guillemets, sans le mettre entre guillemets
+(par exemple `/otr smp respond c'est Berlin`).
 
 Le secret est sensible à la casse : votre correspondant doit le saisir
 exactement comme vous ("berlin" ou "BERLIN" ne correspond pas à "Berlin").

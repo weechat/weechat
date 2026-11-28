@@ -615,6 +615,85 @@ otr_command_trust (const struct t_otr_peer_ref *peer_ref, int trust)
 }
 
 /*
+ * Duplicate a string without the quotes around it if the whole string is
+ * quoted with double or single quotes (for example "the secret" or
+ * 'the secret').
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+otr_command_unquote (const char *string)
+{
+    size_t length;
+
+    length = strlen (string);
+    if ((length >= 2)
+        && ((string[0] == '"') || (string[0] == '\''))
+        && (strchr (string + 1, string[0]) == string + length - 1))
+    {
+        return weechat_strndup (string + 1, length - 2);
+    }
+
+    return strdup (string);
+}
+
+/*
+ * Build the arguments of subcommand "smp respond" from the command line
+ * (argv[1] is "smp" and argv[2] is "respond"): "smp", "respond", optional nick
+ * and server (if the first two words after "respond" are a valid nick and the
+ * name of an IRC server, followed by a secret) and the secret.
+ *
+ * The secret is the rest of the command line, as typed (it can contain spaces,
+ * quotes and backslashes), without the quotes around it if the whole secret is
+ * quoted.
+ *
+ * Return number of arguments stored in args (3 or 5), -1 if error (no secret
+ * or not enough memory).
+ *
+ * Note: arguments stored in args must be freed after use.
+ */
+
+int
+otr_command_smp_respond_args (int argc, char **argv, char **argv_eol,
+                              char **args)
+{
+    int num_args, index_secret, i;
+
+    if (argc < 4)
+        return -1;
+
+    num_args = 0;
+    index_secret = 3;
+
+    args[num_args++] = strdup ("smp");
+    args[num_args++] = strdup ("respond");
+    if ((argc >= 6)
+        && otr_irc_server_search (argv[4])
+        && otr_irc_is_nick (argv[4], argv[3]))
+    {
+        args[num_args++] = strdup (argv[3]);
+        args[num_args++] = strdup (argv[4]);
+        index_secret = 5;
+    }
+    args[num_args++] = otr_command_unquote (argv_eol[index_secret]);
+
+    for (i = 0; i < num_args; i++)
+    {
+        if (!args[i])
+        {
+            for (i = 0; i < num_args; i++)
+            {
+                otr_util_free_secret (args[i]);
+            }
+            return -1;
+        }
+    }
+
+    return num_args;
+}
+
+/*
  * Run subcommand "smp": ask, respond or abort the authentication of a peer with
  * SMP (Socialist Millionaire Protocol).
  *
@@ -1065,13 +1144,24 @@ otr_command_otr (const void *pointer, void *data, struct t_gui_buffer *buffer,
     /* Make C compiler happy. */
     (void) pointer;
     (void) data;
-    (void) argv;
 
     num_args = 0;
     rc = WEECHAT_RC_ERROR;
 
-    if (argc > 1)
+    /*
+     * The secret of "smp respond" is the rest of the line, as typed: it is
+     * not split like other arguments (so that it can contain spaces or
+     * quotes, for example: it's Berlin).
+     */
+    if ((argc >= 3) && (strcmp (argv[1], "smp") == 0)
+        && (strcmp (argv[2], "respond") == 0))
+    {
+        num_args = otr_command_smp_respond_args (argc, argv, argv_eol, args);
+    }
+    else if (argc > 1)
+    {
         num_args = otr_command_split_args (argv_eol[1], args, 16);
+    }
     if (num_args <= 0)
     {
         otr_buffer_error_core (_("invalid arguments, see /help otr"));
@@ -1258,7 +1348,8 @@ otr_command_init (void)
             N_("raw[smp]: authenticate the peer with the Socialist Millionaire "
                "Protocol (SMP):"),
             N_("> raw[ask]: send a shared secret, optionally with a question"),
-            N_("> raw[respond]: answer the request of the peer"),
+            N_("> raw[respond]: answer the request of the peer (the secret is "
+               "the rest of the line, quotes are optional)"),
             N_("> raw[abort]: abort the running verification"),
             N_("raw[log]: show or change logging of the current OTR session; "
                "the previous setting is restored when the session ends"),
@@ -1306,7 +1397,7 @@ otr_command_init (void)
             N_("  verify the peer with a question and a shared secret:"),
             AI("    /otr smp ask \"Where did we meet?\" \"Berlin\""),
             N_("  answer an SMP request of the peer:"),
-            AI("    /otr smp respond \"Berlin\""),
+            AI("    /otr smp respond Berlin"),
             N_("  mark the fingerprint as verified after comparing it over a "
                "secure channel:"),
             AI("    /otr trust"),

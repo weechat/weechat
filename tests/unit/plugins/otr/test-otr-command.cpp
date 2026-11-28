@@ -16,6 +16,7 @@ extern "C"
 #include <stdlib.h>
 #include <string.h>
 #include "src/core/core-config-file.h"
+#include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-history.h"
 #include "src/gui/gui-line.h"
@@ -33,6 +34,9 @@ extern const char *otr_command_get_policy_name (const char *name);
 extern const char *otr_command_get_policy_value (const char *value);
 extern void otr_command_show_peer_fingerprints (const char *search);
 extern int otr_command_has_smp_secret (const char *string);
+extern char *otr_command_unquote (const char *string);
+extern int otr_command_smp_respond_args (int argc, char **argv,
+                                         char **argv_eol, char **args);
 extern int otr_command_start (const struct t_otr_peer_ref *peer_ref);
 extern int otr_command_log (struct t_gui_buffer *buffer, char **args,
                             int num_args);
@@ -108,6 +112,106 @@ TEST(OtrCommand, SplitArgs)
     LONGS_EQUAL(-1, otr_command_split_args ("a 'unterminated", args, 16));
     LONGS_EQUAL(-1, otr_command_split_args ("a \"unterminated", args, 16));
     LONGS_EQUAL(-1, otr_command_split_args ("a b c", args, 2));
+}
+
+/*
+ * Test functions:
+ *   otr_command_unquote
+ */
+
+TEST(OtrCommand, Unquote)
+{
+    char *str;
+
+    WEE_TEST_STR("", otr_command_unquote (""));
+    WEE_TEST_STR("abc", otr_command_unquote ("abc"));
+    WEE_TEST_STR("the answer", otr_command_unquote ("the answer"));
+    WEE_TEST_STR("\"", otr_command_unquote ("\""));
+    WEE_TEST_STR("", otr_command_unquote ("\"\""));
+    WEE_TEST_STR("the answer", otr_command_unquote ("\"the answer\""));
+    WEE_TEST_STR("the answer", otr_command_unquote ("'the answer'"));
+    WEE_TEST_STR("it's Berlin", otr_command_unquote ("\"it's Berlin\""));
+    WEE_TEST_STR("\"the answer'", otr_command_unquote ("\"the answer'"));
+    WEE_TEST_STR("\"a\" \"b\"", otr_command_unquote ("\"a\" \"b\""));
+    WEE_TEST_STR("it's Berlin", otr_command_unquote ("it's Berlin"));
+}
+
+/*
+ * Test functions:
+ *   otr_command_smp_respond_args
+ */
+
+TEST(OtrCommand, SmpRespondArgs)
+{
+    const char *tests[][4] = {
+        /* command line, expected nick, server, secret */
+        { "/otr smp respond", NULL, NULL, NULL },
+        { "/otr smp respond Berlin", "", "", "Berlin" },
+        { "/otr smp respond the answer", "", "", "the answer" },
+        { "/otr smp respond   the  answer  ", "", "", "the  answer" },
+        { "/otr smp respond it's Berlin", "", "", "it's Berlin" },
+        { "/otr smp respond back\\slash", "", "", "back\\slash" },
+        { "/otr smp respond \"the answer\"", "", "", "the answer" },
+        { "/otr smp respond 'the answer'", "", "", "the answer" },
+        { "/otr smp respond \"a\" b", "", "", "\"a\" b" },
+        { "/otr smp respond bob srv_otr_respond", "", "",
+          "bob srv_otr_respond" },
+        { "/otr smp respond bob srv_otr_respond the answer",
+          "bob", "srv_otr_respond", "the answer" },
+        { "/otr smp respond bob srv_otr_respond \"Berlin\"",
+          "bob", "srv_otr_respond", "Berlin" },
+        { "/otr smp respond bob unknown_srv_otr the answer", "", "",
+          "bob unknown_srv_otr the answer" },
+        { "/otr smp respond #chan srv_otr_respond the answer", "", "",
+          "#chan srv_otr_respond the answer" },
+    };
+    char **argv, **argv_eol, *args[16];
+    int i, j, argc, num_args;
+
+    run_cmd_quiet ("/mute /server add srv_otr_respond fake:127.0.0.1");
+
+    for (i = 0; i < (int)(sizeof (tests) / sizeof (tests[0])); i++)
+    {
+        /* Same split as WeeChat for the arguments of a command. */
+        argv = string_split (tests[i][0], " ", NULL,
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                             0, &argc);
+        argv_eol = string_split (tests[i][0], " ", NULL,
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                                 | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                                 0, NULL);
+        CHECK(argv);
+        CHECK(argv_eol);
+        num_args = otr_command_smp_respond_args (argc, argv, argv_eol, args);
+        if (!tests[i][3])
+        {
+            LONGS_EQUAL(-1, num_args);
+        }
+        else
+        {
+            LONGS_EQUAL((tests[i][1][0]) ? 5 : 3, num_args);
+            STRCMP_EQUAL("smp", args[0]);
+            STRCMP_EQUAL("respond", args[1]);
+            if (tests[i][1][0])
+            {
+                STRCMP_EQUAL(tests[i][1], args[2]);
+                STRCMP_EQUAL(tests[i][2], args[3]);
+            }
+            STRCMP_EQUAL(tests[i][3], args[num_args - 1]);
+            for (j = 0; j < num_args; j++)
+            {
+                free (args[j]);
+            }
+        }
+        string_free_split (argv);
+        string_free_split (argv_eol);
+    }
+
+    run_cmd_quiet ("/mute /server del srv_otr_respond");
 }
 
 /*
@@ -200,6 +304,9 @@ TEST(OtrCommand, Smp)
     ConnContext *ptr_context;
     struct t_otr_peer_data *ptr_peer_data;
 
+    /* Server must exist to be recognized in "smp respond <nick> <server>". */
+    run_cmd_quiet ("/mute /server add srv_otr_cmd_smp fake:127.0.0.1");
+
     ptr_context = otrl_context_find (otr_us, "bob", "alice@srv_otr_cmd_smp",
                                      OTR_PROTOCOL, OTRL_INSTAG_MASTER, 1,
                                      NULL, NULL, NULL);
@@ -215,6 +322,11 @@ TEST(OtrCommand, Smp)
                   "There is no SMP request from bob@srv_otr_cmd_smp"));
     LONGS_EQUAL(0, ptr_peer_data->smp_asked);
 
+    /* Secret with several words and an apostrophe (no quotes needed). */
+    run_cmd_quiet ("/otr smp respond bob srv_otr_cmd_smp it's a secret");
+    CHECK(strstr (gui_buffers->own_lines->last_line->data->message,
+                  "There is no SMP request from bob@srv_otr_cmd_smp"));
+
     /*
      * Request of the peer, but no SMP state in libotr (for example after the
      * end of the session): refused (no crash in libotr).
@@ -226,6 +338,8 @@ TEST(OtrCommand, Smp)
     ptr_peer_data->smp_asked = 0;
 
     ptr_context->msgstate = OTRL_MSGSTATE_PLAINTEXT;
+
+    run_cmd_quiet ("/mute /server del srv_otr_cmd_smp");
 }
 
 /*
