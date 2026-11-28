@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-11-28 15:13+0100\n"
+"POT-Creation-Date: 2026-11-28 15:15+0100\n"
 "PO-Revision-Date: 2026-11-01 20:49+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
@@ -14079,12 +14079,14 @@ msgstr ""
 msgid "OTR session refreshed."
 msgstr ""
 
+#. TRANSLATORS: in "<secret>", only "secret" may be translated.
 #, c-format
 msgid ""
 "The peer has requested SMP verification; respond with: %s <secret> (case "
 "sensitive)"
 msgstr ""
 
+#. TRANSLATORS: in "<secret>", only "secret" may be translated.
 #, c-format
 msgid ""
 "The peer has requested SMP verification with the question \"%s\"; respond "
@@ -14098,6 +14100,7 @@ msgstr ""
 msgid "SMP verification succeeded."
 msgstr ""
 
+#. TRANSLATORS: in "<question> <secret>", only "question" and "secret" may be translated.
 #, c-format
 msgid ""
 "You may want to authenticate your peer by asking your own question: %s "
@@ -14702,6 +14705,7 @@ msgstr "%s%s: ¡no conectado al servidor \"%s\"!"
 msgid "Current default OTR policies:"
 msgstr ""
 
+#. TRANSLATORS: in "<name> on|off|toggle", only "name" may be translated.
 #, c-format
 msgid "Change default policies with: %s <name> on|off|toggle"
 msgstr ""
@@ -14710,6 +14714,7 @@ msgstr ""
 msgid "Current OTR policies for %s@%s:"
 msgstr ""
 
+#. TRANSLATORS: in "<name> on|off|toggle", only "name" may be translated.
 #, c-format
 msgid "Change policies with: %s <name> on|off|toggle"
 msgstr ""

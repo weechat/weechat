@@ -397,6 +397,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             smp_asked = 1;
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_INFO,
+                /* TRANSLATORS: in "<secret>", only "secret" may be translated. */
                 _("The peer has requested SMP verification; respond with: "
                   "%s <secret> (case sensitive)"),
                 "/otr smp respond");
@@ -408,6 +409,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             peer_text = otr_util_peer_text (question);
             otr_buffer_ctx_print (
                 context, OTR_CONFIG_LEVEL_INFO,
+                /* TRANSLATORS: in "<secret>", only "secret" may be translated. */
                 _("The peer has requested SMP verification with the question "
                   "\"%s\"; respond with: %s <secret> (case sensitive)"),
                 (peer_text) ? peer_text : "",
@@ -431,6 +433,7 @@ otr_callback_handle_smp_event (void *opdata, OtrlSMPEvent event,
             {
                 otr_buffer_ctx_print (
                     context, OTR_CONFIG_LEVEL_INFO,
+                    /* TRANSLATORS: in "<question> <secret>", only "question" and "secret" may be translated. */
                     _("You may want to authenticate your peer by asking your "
                       "own question: %s <question> <secret>"),
                     "/otr smp ask");

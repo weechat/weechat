@@ -156,6 +156,7 @@ otr_policy_format_default (void)
             -1);
         weechat_string_dyn_concat (result, "\n", -1);
     }
+    /* TRANSLATORS: in "<name> on|off|toggle", only "name" may be translated. */
     weechat_asprintf (&hint, _("Change default policies with: %s <name> "
                                "on|off|toggle"),
                       "/otr policy default");
@@ -209,6 +210,7 @@ otr_policy_format_peer (const char *account, const char *peer)
             -1);
         weechat_string_dyn_concat (result, "\n", -1);
     }
+    /* TRANSLATORS: in "<name> on|off|toggle", only "name" may be translated. */
     weechat_asprintf (&hint, _("Change policies with: %s <name> on|off|toggle"),
                       "/otr policy");
     if (hint)
