@@ -20,6 +20,16 @@
 
 
 /*
+ * Commands to restore the logger level of buffers closed (separated by "\n"),
+ * run by a timer after the buffers are closed.
+ */
+char **otr_log_pending_restores = NULL;
+
+/* Timer to run the commands in otr_log_pending_restores. */
+struct t_hook *otr_log_restore_timer = NULL;
+
+
+/*
  * Check if a buffer is currently logged to disk.
  *
  * Return 1 if the buffer is logged, 0 otherwise.
@@ -159,8 +169,32 @@ otr_log_disable (ConnContext *context, struct t_otr_peer_data *peer_data)
 }
 
 /*
- * Callback of timer used to restore the logger level after a buffer is closed:
- * run the command given in data.
+ * Run the commands to restore the logger level of buffers closed.
+ */
+
+void
+otr_log_run_pending_restores (void)
+{
+    char **commands;
+    int i, num_commands;
+
+    if (!otr_log_pending_restores)
+        return;
+
+    commands = weechat_string_split (*otr_log_pending_restores, "\n", NULL,
+                                     0, 0, &num_commands);
+    weechat_string_dyn_free (otr_log_pending_restores, 1);
+    otr_log_pending_restores = NULL;
+
+    for (i = 0; commands && (i < num_commands); i++)
+    {
+        weechat_command (NULL, commands[i]);
+    }
+    weechat_string_free_split (commands);
+}
+
+/*
+ * Callback of timer used to restore the logger level after buffers are closed.
  */
 
 int
@@ -168,12 +202,60 @@ otr_log_restore_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     /* Make C compiler happy. */
     (void) pointer;
+    (void) data;
     (void) remaining_calls;
 
-    if (data)
-        weechat_command (NULL, (const char *)data);
+    /* Timer with a single call: removed by WeeChat after this call. */
+    otr_log_restore_timer = NULL;
+
+    otr_log_run_pending_restores ();
 
     return WEECHAT_RC_OK;
+}
+
+/*
+ * Add a command to restore the logger level of a buffer being closed: it is run
+ * by a timer, after the buffer is closed (the command is run immediately if it
+ * can not be added).
+ */
+
+void
+otr_log_add_pending_restore (const char *command)
+{
+    if (!otr_log_pending_restores)
+        otr_log_pending_restores = weechat_string_dyn_alloc (64);
+    if (!otr_log_pending_restores)
+    {
+        weechat_command (NULL, command);
+        return;
+    }
+
+    if ((*otr_log_pending_restores)[0])
+        weechat_string_dyn_concat (otr_log_pending_restores, "\n", -1);
+    weechat_string_dyn_concat (otr_log_pending_restores, command, -1);
+
+    if (!otr_log_restore_timer)
+    {
+        otr_log_restore_timer = weechat_hook_timer (
+            1, 0, 1, &otr_log_restore_timer_cb, NULL, NULL);
+    }
+}
+
+/*
+ * End logging control: the logger levels of buffers closed which are not
+ * restored yet (timer not run) are restored now.
+ */
+
+void
+otr_log_end (void)
+{
+    if (otr_log_restore_timer)
+    {
+        weechat_unhook (otr_log_restore_timer);
+        otr_log_restore_timer = NULL;
+    }
+
+    otr_log_run_pending_restores ();
 }
 
 /*
@@ -259,16 +341,10 @@ otr_log_restore (ConnContext *context, struct t_otr_peer_data *peer_data,
     if (command)
     {
         if (buffer_closing)
-        {
-            /* Command is freed by WeeChat when the timer is removed. */
-            weechat_hook_timer (1, 0, 1,
-                                &otr_log_restore_timer_cb, NULL, command);
-        }
+            otr_log_add_pending_restore (command);
         else
-        {
             weechat_command (NULL, command);
-            free (command);
-        }
+        free (command);
     }
 
     otr_log_forget_level (peer_data);

@@ -13,6 +13,7 @@
 extern "C"
 {
 #include <stdlib.h>
+#include <string.h>
 #include "src/core/core-config-file.h"
 #include "src/gui/gui-buffer.h"
 #include "src/plugins/irc/irc-channel.h"
@@ -250,4 +251,52 @@ TEST(OtrLog, DisableLevelSaved)
 
     run_cmd_quiet ("/mute /disconnect test_otr_saved");
     run_cmd_quiet ("/mute /server del test_otr_saved");
+}
+
+/*
+ * Test functions:
+ *   otr_log_add_pending_restore
+ *   otr_log_run_pending_restores
+ *   otr_log_end
+ */
+
+TEST(OtrLog, PendingRestores)
+{
+    struct t_otr_peer_data peer_data;
+    struct t_config_option *ptr_option;
+
+    memset (&peer_data, 0, sizeof (peer_data));
+
+    /* Buffer closing: logger levels restored later, by a timer. */
+    peer_data.prev_log = 3;
+    peer_data.log_option = strdup ("logger.level.irc.test_otr_pending.bob");
+    otr_log_restore (NULL, &peer_data, 1);
+    peer_data.prev_log = 4;
+    peer_data.log_option = strdup ("logger.level.irc.test_otr_pending.carol");
+    otr_log_restore (NULL, &peer_data, 1);
+    LONGS_EQUAL(OTR_LOG_UNTOUCHED, peer_data.prev_log);
+    POINTERS_EQUAL(NULL, peer_data.log_option);
+    CHECK(otr_log_restore_timer);
+    CHECK(otr_log_pending_restores);
+    STRCMP_EQUAL("/mute set logger.level.irc.test_otr_pending.bob 3\n"
+                 "/mute set logger.level.irc.test_otr_pending.carol 4",
+                 *otr_log_pending_restores);
+    POINTERS_EQUAL(NULL, option ("logger.level.irc.test_otr_pending.bob"));
+
+    /* End of plugin before the timer: logger levels restored now. */
+    otr_log_end ();
+    POINTERS_EQUAL(NULL, otr_log_restore_timer);
+    POINTERS_EQUAL(NULL, otr_log_pending_restores);
+    ptr_option = option ("logger.level.irc.test_otr_pending.bob");
+    CHECK(ptr_option);
+    LONGS_EQUAL(3, CONFIG_INTEGER(ptr_option));
+    ptr_option = option ("logger.level.irc.test_otr_pending.carol");
+    CHECK(ptr_option);
+    LONGS_EQUAL(4, CONFIG_INTEGER(ptr_option));
+
+    /* Nothing pending: nothing done. */
+    otr_log_end ();
+    POINTERS_EQUAL(NULL, otr_log_pending_restores);
+
+    run_cmd_quiet ("/mute /unset logger.level.irc.test_otr_pending.*");
 }

@@ -171,6 +171,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     otr_no_tag = 0;
     otr_us = NULL;
     otr_callback_poll_timer = NULL;
+    otr_log_pending_restores = NULL;
+    otr_log_restore_timer = NULL;
     otr_bar_item = NULL;
     otr_modifier_removed_batches = NULL;
     otr_modifier_policies = -1;
@@ -362,6 +364,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         otrl_userstate_free (otr_us);
         otr_us = NULL;
     }
+
+    otr_log_end ();
 
     if (otr_callback_poll_timer)
     {

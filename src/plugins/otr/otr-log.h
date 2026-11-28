@@ -10,6 +10,9 @@
 
 struct t_otr_peer_data;
 
+extern char **otr_log_pending_restores;
+extern struct t_hook *otr_log_restore_timer;
+
 extern int otr_log_buffer_is_logged (struct t_gui_buffer *buffer);
 extern void otr_log_save_level (struct t_otr_peer_data *peer_data,
                                 struct t_gui_buffer *buffer);
@@ -20,6 +23,7 @@ extern void otr_log_restore (ConnContext *context,
                              int buffer_closing);
 extern void otr_log_buffer_renamed (struct t_otr_peer_data *peer_data,
                                     struct t_gui_buffer *buffer);
+extern void otr_log_end (void);
 extern int otr_log_logger_level_update_cb (const void *pointer, void *data,
                                            const char *option,
                                            const char *value);
