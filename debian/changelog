@@ -1,3 +1,9 @@
+weechat (4.10.5-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #1151101)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 28 Nov 2026 08:05:32 +0100
+
 weechat (4.10.0-1) unstable; urgency=medium
 
   * New upstream release
