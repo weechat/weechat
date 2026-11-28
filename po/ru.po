@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-28 15:15+0100\n"
-"PO-Revision-Date: 2026-10-10 21:22+0200\n"
+"PO-Revision-Date: 2026-11-28 15:35+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -17913,11 +17913,3 @@ msgid ""
 msgstr ""
 "%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
 "найден или завершён\n"
-
-#, fuzzy
-#~ msgid "color for delimiters around nick and target in notices"
-#~ msgstr "цвет  текущего окна с сообщениями"
-
-#, fuzzy
-#~ msgid "raw[add]: add a notification"
-#~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"

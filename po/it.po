@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-28 15:15+0100\n"
-"PO-Revision-Date: 2026-11-01 20:49+0100\n"
+"PO-Revision-Date: 2026-11-28 15:34+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -19145,13 +19145,3 @@ msgid ""
 msgstr ""
 "%s%s: impossibile accettare di riprendere il file \"%s\" (porta: %d, "
 "posizione di avvio: %llu): xfer non trovato o non pronto per il trasferimento"
-
-#, fuzzy
-#~| msgid "color for text \"Notice\" in notices"
-#~ msgid "color for delimiters around nick and target in notices"
-#~ msgstr "colore per il testo \"Notifica\" nelle notifiche"
-
-#, fuzzy
-#~| msgid "%s%s: error adding notification"
-#~ msgid "raw[add]: add a notification"
-#~ msgstr "%s%s: errore nell'aggiunta della notifica"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-28 15:15+0100\n"
-"PO-Revision-Date: 2026-11-01 20:49+0100\n"
+"PO-Revision-Date: 2026-11-28 15:34+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -19050,13 +19050,3 @@ msgid ""
 msgstr ""
 "%s%s: no es posible aceptar la continuación del archivo \"%s\" (puerto: %d, "
 "posición inicial: %llu): xfer encontrado o no está listo para transferir"
-
-#, fuzzy
-#~| msgid "color for text \"Notice\" in notices"
-#~ msgid "color for delimiters around nick and target in notices"
-#~ msgstr "color para el texto \"Aviso\" en los mensajes de aviso"
-
-#, fuzzy
-#~| msgid "%s%s: error adding notification"
-#~ msgid "raw[add]: add a notification"
-#~ msgstr "%s%s: error al agregar la notificación"

@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-28 15:15+0100\n"
-"PO-Revision-Date: 2026-11-01 20:50+0100\n"
+"PO-Revision-Date: 2026-11-28 15:35+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
 "Language: ja\n"
@@ -19775,13 +19775,3 @@ msgid ""
 msgstr ""
 "%s%s: ファイル \"%s\" のリジュームが承認されませんでした (ポート: %d、開始位"
 "置: %llu): xfer が見つからないか、転送準備が整っていません"
-
-#, fuzzy
-#~| msgid "color for text \"Notice\" in notices"
-#~ msgid "color for delimiters around nick and target in notices"
-#~ msgstr "notices に含まれるテキスト \"Notice\" の色"
-
-#, fuzzy
-#~| msgid "%s%s: error adding notification"
-#~ msgid "raw[add]: add a notification"
-#~ msgstr "%s%s: 通知の追加中にエラー"

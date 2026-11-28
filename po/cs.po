@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-28 15:15+0100\n"
-"PO-Revision-Date: 2026-11-01 20:49+0100\n"
+"PO-Revision-Date: 2026-11-28 15:34+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -18735,13 +18735,3 @@ msgid ""
 msgstr ""
 "%s%s: nelze akceptovat obnovení souboru \"%s\" (port: %d, počáteční pozice: "
 "%llu): xfer nenalezen nebo není připraven pro přenos"
-
-#, fuzzy
-#~| msgid "color for text \"Notice\" in notices"
-#~ msgid "color for delimiters around nick and target in notices"
-#~ msgstr "barva textu \"Notice\" v upozorněních"
-
-#, fuzzy
-#~| msgid "%s%s: error adding notification"
-#~ msgid "raw[add]: add a notification"
-#~ msgstr "%s%s: chyba při přidávání notifikace"

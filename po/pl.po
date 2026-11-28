@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-28 15:15+0100\n"
-"PO-Revision-Date: 2026-11-01 20:50+0100\n"
+"PO-Revision-Date: 2026-11-28 15:35+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
 "Language: pl\n"
@@ -19562,14 +19562,3 @@ msgid ""
 msgstr ""
 "%s%s: nie można zaakceptować wznowienia pliku \"%s\" (port: %d, pozycja "
 "startowa: %llu): xfer nie znaleziony lub nie gotowy do transferu"
-
-#, fuzzy
-#~| msgid "color for text \"Notice\" in notices"
-#~ msgid "color for delimiters around nick and target in notices"
-#~ msgstr "kolor tekstu \"Notice\" w podświetleniach"
-
-#~ msgid "raw[add]: add a notification"
-#~ msgstr "raw[add]: dodaje powiadomienie"
-
-#~ msgid "raw[addreplace]: add or replace a notification"
-#~ msgstr "raw[addreplace]: dodaj lub zastąp powiadomienie"

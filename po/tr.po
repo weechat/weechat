@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-11-28 15:15+0100\n"
-"PO-Revision-Date: 2026-11-01 20:50+0100\n"
+"PO-Revision-Date: 2026-11-28 15:35+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
 "Language: tr\n"
@@ -19923,13 +19923,3 @@ msgid ""
 msgstr ""
 "%s%s: \"%s\" dosyası sürdürümü kabul edilemiyor (kapı: %d, başlangıç konumu: "
 "%llu): xfer bulunamadı veya aktarım için hazır değil"
-
-#, fuzzy
-#~| msgid "color for text \"Notice\" in notices"
-#~ msgid "color for delimiters around nick and target in notices"
-#~ msgstr "İhbarlarda \"İhbar\" metninin rengi"
-
-#, fuzzy
-#~| msgid "%s%s: error adding notification"
-#~ msgid "raw[add]: add a notification"
-#~ msgstr "%s%s: Bildirim eklerken hata"
